@@ -69,7 +69,6 @@ var xAutomationSessionGetApplicationInfo func(uintptr) *ApplicationInfo
 //
 // Get the #WebKitAutomationSession previously set with webkit_automation_session_set_application_info().
 func (x *AutomationSession) GetApplicationInfo() *ApplicationInfo {
-
 	cret := xAutomationSessionGetApplicationInfo(x.GoPointer())
 	return cret
 }
@@ -78,7 +77,6 @@ var xAutomationSessionGetId func(uintptr) string
 
 // Get the unique identifier of a #WebKitAutomationSession
 func (x *AutomationSession) GetId() string {
-
 	cret := xAutomationSessionGetId(x.GoPointer())
 	return cret
 }
@@ -94,9 +92,7 @@ var xAutomationSessionSetApplicationInfo func(uintptr, *ApplicationInfo)
 // after the automation session has been fully created, so this must be called in the callback of
 // #WebKitWebContext::automation-started signal.
 func (x *AutomationSession) SetApplicationInfo(InfoVar *ApplicationInfo) {
-
 	xAutomationSessionSetApplicationInfo(x.GoPointer(), InfoVar)
-
 }
 
 func (c *AutomationSession) GoPointer() uintptr {
@@ -152,7 +148,6 @@ func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) Web
 
 		CreateWebViewCls := cbFn(fa)
 		return CreateWebViewCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -173,7 +168,6 @@ func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint32
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

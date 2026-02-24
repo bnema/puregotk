@@ -166,5 +166,4 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryMonitorDupDefault, libs, "g_memory_monitor_dup_default")
 
 	core.PuregoSafeRegister(&xMemoryMonitorGLibType, libs, "g_memory_monitor_get_type")
-
 }

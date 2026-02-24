@@ -20,7 +20,6 @@ var xBoxedCopy func(types.GType, uintptr) uintptr
 
 // Provide a copy of a boxed structure @src_boxed which is of type @boxed_type.
 func BoxedCopy(BoxedTypeVar types.GType, SrcBoxedVar uintptr) uintptr {
-
 	cret := xBoxedCopy(BoxedTypeVar, SrcBoxedVar)
 	return cret
 }
@@ -29,9 +28,7 @@ var xBoxedFree func(types.GType, uintptr)
 
 // Free the boxed structure @boxed which is of type @boxed_type.
 func BoxedFree(BoxedTypeVar types.GType, BoxedVar uintptr) {
-
 	xBoxedFree(BoxedTypeVar, BoxedVar)
-
 }
 
 var xBoxedTypeRegisterStatic func(string, uintptr, uintptr) types.GType
@@ -46,7 +43,6 @@ var xBoxedTypeRegisterStatic func(string, uintptr, uintptr) types.GType
 // instead of calling g_boxed_type_register_static() directly. The macro
 // will create the appropriate `*_get_type()` function for the boxed type.
 func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedFreeVar *BoxedFreeFunc) types.GType {
-
 	cret := xBoxedTypeRegisterStatic(NameVar, glib.NewCallback(BoxedCopyVar), glib.NewCallback(BoxedFreeVar))
 	return cret
 }
@@ -66,5 +62,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoxedCopy, libs, "g_boxed_copy")
 	core.PuregoSafeRegister(&xBoxedFree, libs, "g_boxed_free")
 	core.PuregoSafeRegister(&xBoxedTypeRegisterStatic, libs, "g_boxed_type_register_static")
-
 }

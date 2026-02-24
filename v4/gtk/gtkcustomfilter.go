@@ -77,9 +77,7 @@ var xCustomFilterSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // If a previous function was set, its @user_destroy
 // will be called.
 func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-
 	xCustomFilterSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
-
 }
 
 func (c *CustomFilter) GoPointer() uintptr {
@@ -110,5 +108,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewCustomFilter, libs, "gtk_custom_filter_new")
 
 	core.PuregoSafeRegister(&xCustomFilterSetFilterFunc, libs, "gtk_custom_filter_set_filter_func")
-
 }

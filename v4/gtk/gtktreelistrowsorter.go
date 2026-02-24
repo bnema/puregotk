@@ -93,9 +93,7 @@ var xTreeListRowSorterSetSorter func(uintptr, uintptr)
 // This sorter will be passed the [property@Gtk.TreeListRow:item] of
 // the tree list rows passed to @self.
 func (x *TreeListRowSorter) SetSorter(SorterVar *Sorter) {
-
 	xTreeListRowSorterSetSorter(x.GoPointer(), SorterVar.GoPointer())
-
 }
 
 func (c *TreeListRowSorter) GoPointer() uintptr {
@@ -127,5 +125,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTreeListRowSorterGetSorter, libs, "gtk_tree_list_row_sorter_get_sorter")
 	core.PuregoSafeRegister(&xTreeListRowSorterSetSorter, libs, "gtk_tree_list_row_sorter_set_sorter")
-
 }

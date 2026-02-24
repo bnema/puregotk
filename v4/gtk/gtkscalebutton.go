@@ -116,7 +116,6 @@ var xScaleButtonGetActive func(uintptr) bool
 // Returns %TRUE if the scale button is pressed in and %FALSE
 // if it is raised.
 func (x *ScaleButton) GetActive() bool {
-
 	cret := xScaleButtonGetActive(x.GoPointer())
 	return cret
 }
@@ -144,7 +143,6 @@ var xScaleButtonGetHasFrame func(uintptr) bool
 
 // Returns whether the button has a frame.
 func (x *ScaleButton) GetHasFrame() bool {
-
 	cret := xScaleButtonGetHasFrame(x.GoPointer())
 	return cret
 }
@@ -204,7 +202,6 @@ var xScaleButtonGetValue func(uintptr) float64
 
 // Gets the current value of the scale button.
 func (x *ScaleButton) GetValue() float64 {
-
 	cret := xScaleButtonGetValue(x.GoPointer())
 	return cret
 }
@@ -216,27 +213,21 @@ var xScaleButtonSetAdjustment func(uintptr, uintptr)
 //
 // See [method@Gtk.Range.set_adjustment] for details.
 func (x *ScaleButton) SetAdjustment(AdjustmentVar *Adjustment) {
-
 	xScaleButtonSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xScaleButtonSetHasFrame func(uintptr, bool)
 
 // Sets the style of the button.
 func (x *ScaleButton) SetHasFrame(HasFrameVar bool) {
-
 	xScaleButtonSetHasFrame(x.GoPointer(), HasFrameVar)
-
 }
 
 var xScaleButtonSetIcons func(uintptr, []string)
 
 // Sets the icons to be used by the scale button.
 func (x *ScaleButton) SetIcons(IconsVar []string) {
-
 	xScaleButtonSetIcons(x.GoPointer(), IconsVar)
-
 }
 
 var xScaleButtonSetValue func(uintptr, float64)
@@ -249,9 +240,7 @@ var xScaleButtonSetValue func(uintptr, float64)
 // The scale button emits the [signal@Gtk.ScaleButton::value-changed]
 // signal if the value changes.
 func (x *ScaleButton) SetValue(ValueVar float64) {
-
 	xScaleButtonSetValue(x.GoPointer(), ValueVar)
-
 }
 
 func (c *ScaleButton) GoPointer() uintptr {
@@ -371,7 +360,6 @@ func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -396,7 +384,6 @@ func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -416,7 +403,6 @@ func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint32
 		cbFn := *cb
 
 		cbFn(fa, ValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -433,9 +419,7 @@ func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint32
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ScaleButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -456,7 +440,6 @@ func (x *ScaleButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ScaleButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -481,7 +464,6 @@ func (x *ScaleButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ScaleButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -520,30 +502,23 @@ func (x *ScaleButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ScaleButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ScaleButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ScaleButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ScaleButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -556,9 +531,7 @@ func (x *ScaleButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ScaleButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -566,9 +539,7 @@ func (x *ScaleButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ScaleButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -577,9 +548,7 @@ func (x *ScaleButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ScaleButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -601,9 +570,7 @@ func (x *ScaleButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ScaleButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -613,9 +580,7 @@ func (x *ScaleButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *ScaleButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -637,9 +602,7 @@ func (x *ScaleButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *ScaleButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -649,9 +612,7 @@ func (x *ScaleButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *ScaleButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -674,9 +635,7 @@ func (x *ScaleButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []Ac
 //
 // ```
 func (x *ScaleButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -686,9 +645,7 @@ func (x *ScaleButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *ScaleButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -696,23 +653,19 @@ func (x *ScaleButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ScaleButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ScaleButton) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ScaleButton) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -742,5 +695,4 @@ func init() {
 	core.PuregoSafeRegister(&xScaleButtonSetHasFrame, libs, "gtk_scale_button_set_has_frame")
 	core.PuregoSafeRegister(&xScaleButtonSetIcons, libs, "gtk_scale_button_set_icons")
 	core.PuregoSafeRegister(&xScaleButtonSetValue, libs, "gtk_scale_button_set_value")
-
 }

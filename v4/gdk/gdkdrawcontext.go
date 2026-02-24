@@ -61,9 +61,7 @@ var xDrawContextBeginFrame func(uintptr, *cairo.Region)
 // use of [GskRenderer](../gsk4/class.Renderer.html)s, so application code
 // does not need to call these functions explicitly.
 func (x *DrawContext) BeginFrame(RegionVar *cairo.Region) {
-
 	xDrawContextBeginFrame(x.GoPointer(), RegionVar)
-
 }
 
 var xDrawContextEndFrame func(uintptr)
@@ -77,9 +75,7 @@ var xDrawContextEndFrame func(uintptr)
 // implicitly before returning; it is not recommended to call `glFlush()`
 // explicitly before calling this function.
 func (x *DrawContext) EndFrame() {
-
 	xDrawContextEndFrame(x.GoPointer())
-
 }
 
 var xDrawContextGetDisplay func(uintptr) uintptr
@@ -110,7 +106,6 @@ var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
 // If @context is not in between calls to [method@Gdk.DrawContext.begin_frame]
 // and [method@Gdk.DrawContext.end_frame], %NULL will be returned.
 func (x *DrawContext) GetFrameRegion() *cairo.Region {
-
 	cret := xDrawContextGetFrameRegion(x.GoPointer())
 	return cret
 }
@@ -140,7 +135,6 @@ var xDrawContextIsInFrame func(uintptr) bool
 // and [method@Gdk.DrawContext.end_frame]. In this situation, drawing commands
 // may be effecting the contents of the @context's surface.
 func (x *DrawContext) IsInFrame() bool {
-
 	cret := xDrawContextIsInFrame(x.GoPointer())
 	return cret
 }
@@ -176,5 +170,4 @@ func init() {
 	core.PuregoSafeRegister(&xDrawContextGetFrameRegion, libs, "gdk_draw_context_get_frame_region")
 	core.PuregoSafeRegister(&xDrawContextGetSurface, libs, "gdk_draw_context_get_surface")
 	core.PuregoSafeRegister(&xDrawContextIsInFrame, libs, "gdk_draw_context_is_in_frame")
-
 }

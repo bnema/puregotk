@@ -47,7 +47,6 @@ var xBackForwardListItemGetOriginalUri func(uintptr) string
 //
 // See also webkit_back_forward_list_item_get_uri().
 func (x *BackForwardListItem) GetOriginalUri() string {
-
 	cret := xBackForwardListItemGetOriginalUri(x.GoPointer())
 	return cret
 }
@@ -56,7 +55,6 @@ var xBackForwardListItemGetTitle func(uintptr) string
 
 // Obtain the title of the item.
 func (x *BackForwardListItem) GetTitle() string {
-
 	cret := xBackForwardListItemGetTitle(x.GoPointer())
 	return cret
 }
@@ -69,7 +67,6 @@ var xBackForwardListItemGetUri func(uintptr) string
 // for example, redirected to a new location.
 // See also webkit_back_forward_list_item_get_original_uri().
 func (x *BackForwardListItem) GetUri() string {
-
 	cret := xBackForwardListItemGetUri(x.GoPointer())
 	return cret
 }

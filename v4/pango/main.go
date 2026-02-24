@@ -10,7 +10,6 @@ import (
 var xLayoutDeserializeErrorQuark func() glib.Quark
 
 func LayoutDeserializeErrorQuark() glib.Quark {
-
 	cret := xLayoutDeserializeErrorQuark()
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xLayoutDeserializeErrorQuark, libs, "pango_layout_deserialize_error_quark")
-
 }

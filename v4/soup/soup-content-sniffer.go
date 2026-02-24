@@ -69,7 +69,6 @@ var xContentSnifferSniff func(uintptr, uintptr, *glib.Bytes, **glib.HashTable) s
 // The result may also be influenced by the Content-Type declared in @msg's
 // response headers.
 func (x *ContentSniffer) Sniff(MsgVar *Message, BufferVar *glib.Bytes, ParamsVar **glib.HashTable) string {
-
 	cret := xContentSnifferSniff(x.GoPointer(), MsgVar.GoPointer(), BufferVar, ParamsVar)
 	return cret
 }
@@ -102,5 +101,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewContentSniffer, libs, "soup_content_sniffer_new")
 
 	core.PuregoSafeRegister(&xContentSnifferSniff, libs, "soup_content_sniffer_sniff")
-
 }

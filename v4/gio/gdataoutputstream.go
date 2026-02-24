@@ -192,7 +192,6 @@ var xDataOutputStreamGetByteOrder func(uintptr) DataStreamByteOrder
 
 // Gets the byte order for the stream.
 func (x *DataOutputStream) GetByteOrder() DataStreamByteOrder {
-
 	cret := xDataOutputStreamGetByteOrder(x.GoPointer())
 	return cret
 }
@@ -208,7 +207,6 @@ func (x *DataOutputStream) PutByte(DataVar byte, CancellableVar *Cancellable) (b
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutInt16 func(uintptr, int16, uintptr, **glib.Error) bool
@@ -222,7 +220,6 @@ func (x *DataOutputStream) PutInt16(DataVar int16, CancellableVar *Cancellable) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutInt32 func(uintptr, int32, uintptr, **glib.Error) bool
@@ -236,7 +233,6 @@ func (x *DataOutputStream) PutInt32(DataVar int32, CancellableVar *Cancellable) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutInt64 func(uintptr, int64, uintptr, **glib.Error) bool
@@ -250,7 +246,6 @@ func (x *DataOutputStream) PutInt64(DataVar int64, CancellableVar *Cancellable) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutString func(uintptr, string, uintptr, **glib.Error) bool
@@ -264,7 +259,6 @@ func (x *DataOutputStream) PutString(StrVar string, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutUint16 func(uintptr, uint16, uintptr, **glib.Error) bool
@@ -278,7 +272,6 @@ func (x *DataOutputStream) PutUint16(DataVar uint16, CancellableVar *Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutUint32 func(uintptr, uint32, uintptr, **glib.Error) bool
@@ -292,7 +285,6 @@ func (x *DataOutputStream) PutUint32(DataVar uint32, CancellableVar *Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamPutUint64 func(uintptr, uint64, uintptr, **glib.Error) bool
@@ -306,16 +298,13 @@ func (x *DataOutputStream) PutUint64(DataVar uint64, CancellableVar *Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataOutputStreamSetByteOrder func(uintptr, DataStreamByteOrder)
 
 // Sets the byte order of the data output stream to @order.
 func (x *DataOutputStream) SetByteOrder(OrderVar DataStreamByteOrder) {
-
 	xDataOutputStreamSetByteOrder(x.GoPointer(), OrderVar)
-
 }
 
 func (c *DataOutputStream) GoPointer() uintptr {
@@ -331,7 +320,6 @@ func (c *DataOutputStream) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *DataOutputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -339,7 +327,6 @@ func (x *DataOutputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *DataOutputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -366,12 +353,10 @@ func (x *DataOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancella
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *DataOutputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -393,7 +378,6 @@ func (x *DataOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -422,5 +406,4 @@ func init() {
 	core.PuregoSafeRegister(&xDataOutputStreamPutUint32, libs, "g_data_output_stream_put_uint32")
 	core.PuregoSafeRegister(&xDataOutputStreamPutUint64, libs, "g_data_output_stream_put_uint64")
 	core.PuregoSafeRegister(&xDataOutputStreamSetByteOrder, libs, "g_data_output_stream_set_byte_order")
-
 }

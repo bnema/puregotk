@@ -341,7 +341,6 @@ var xSocketControlMessageGetLevel func(uintptr) int32
 // Returns the "level" (i.e. the originating protocol) of the control message.
 // This is often SOL_SOCKET.
 func (x *SocketControlMessage) GetLevel() int32 {
-
 	cret := xSocketControlMessageGetLevel(x.GoPointer())
 	return cret
 }
@@ -351,7 +350,6 @@ var xSocketControlMessageGetMsgType func(uintptr) int32
 // Returns the protocol specific type of the control message.
 // For instance, for UNIX fd passing this would be SCM_RIGHTS.
 func (x *SocketControlMessage) GetMsgType() int32 {
-
 	cret := xSocketControlMessageGetMsgType(x.GoPointer())
 	return cret
 }
@@ -361,7 +359,6 @@ var xSocketControlMessageGetSize func(uintptr) uint
 // Returns the space required for the control message, not including
 // headers or alignment.
 func (x *SocketControlMessage) GetSize() uint {
-
 	cret := xSocketControlMessageGetSize(x.GoPointer())
 	return cret
 }
@@ -375,9 +372,7 @@ var xSocketControlMessageSerialize func(uintptr, uintptr)
 // returned by g_socket_control_message_get_size() on this
 // object.
 func (x *SocketControlMessage) Serialize(DataVar uintptr) {
-
 	xSocketControlMessageSerialize(x.GoPointer(), DataVar)
-
 }
 
 func (c *SocketControlMessage) GoPointer() uintptr {
@@ -433,5 +428,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketControlMessageSerialize, libs, "g_socket_control_message_serialize")
 
 	core.PuregoSafeRegister(&xSocketControlMessageDeserialize, libs, "g_socket_control_message_deserialize")
-
 }

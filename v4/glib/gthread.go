@@ -100,9 +100,7 @@ var xCondBroadcast func(uintptr)
 // It is good practice to lock the same mutex as the waiting threads
 // while calling this function, though not required.
 func (x *Cond) Broadcast() {
-
 	xCondBroadcast(x.GoPointer())
-
 }
 
 var xCondClear func(uintptr)
@@ -115,9 +113,7 @@ var xCondClear func(uintptr)
 // Calling g_cond_clear() for a #GCond on which threads are
 // blocking leads to undefined behaviour.
 func (x *Cond) Clear() {
-
 	xCondClear(x.GoPointer())
-
 }
 
 var xCondFree func(uintptr)
@@ -127,9 +123,7 @@ var xCondFree func(uintptr)
 // Calling g_cond_free() for a #GCond on which threads are
 // blocking leads to undefined behaviour.
 func (x *Cond) Free() {
-
 	xCondFree(x.GoPointer())
-
 }
 
 var xCondInit func(uintptr)
@@ -146,9 +140,7 @@ var xCondInit func(uintptr)
 // Calling g_cond_init() on an already-initialised #GCond leads
 // to undefined behaviour.
 func (x *Cond) Init() {
-
 	xCondInit(x.GoPointer())
-
 }
 
 var xCondSignal func(uintptr)
@@ -158,9 +150,7 @@ var xCondSignal func(uintptr)
 // It is good practice to hold the same lock as the waiting thread
 // while calling this function, though not required.
 func (x *Cond) Signal() {
-
 	xCondSignal(x.GoPointer())
-
 }
 
 var xCondTimedWait func(uintptr, *Mutex, *TimeVal) bool
@@ -177,7 +167,6 @@ var xCondTimedWait func(uintptr, *Mutex, *TimeVal) bool
 // To easily calculate @abs_time a combination of g_get_real_time()
 // and g_time_val_add() can be used.
 func (x *Cond) TimedWait(MutexVar *Mutex, AbsTimeVar *TimeVal) bool {
-
 	cret := xCondTimedWait(x.GoPointer(), MutexVar, AbsTimeVar)
 	return cret
 }
@@ -199,9 +188,7 @@ var xCondWait func(uintptr, *Mutex)
 // For this reason, g_cond_wait() must always be used in a loop.  See
 // the documentation for #GCond for a complete example.
 func (x *Cond) Wait(MutexVar *Mutex) {
-
 	xCondWait(x.GoPointer(), MutexVar)
-
 }
 
 var xCondWaitUntil func(uintptr, *Mutex, int64) bool
@@ -257,7 +244,6 @@ var xCondWaitUntil func(uintptr, *Mutex, int64) bool
 // have to start over waiting again (which would lead to a total wait
 // time of more than 5 seconds).
 func (x *Cond) WaitUntil(MutexVar *Mutex, EndTimeVar int64) bool {
-
 	cret := xCondWaitUntil(x.GoPointer(), MutexVar, EndTimeVar)
 	return cret
 }
@@ -280,7 +266,6 @@ func (x *Once) GoPointer() uintptr {
 var xOnceImpl func(uintptr, uintptr, uintptr) uintptr
 
 func (x *Once) Impl(FuncVar *ThreadFunc, ArgVar uintptr) uintptr {
-
 	cret := xOnceImpl(x.GoPointer(), NewCallback(FuncVar), ArgVar)
 	return cret
 }
@@ -324,7 +309,6 @@ var xPrivateGet func(uintptr) uintptr
 // Values are never copied between threads (when a new thread is
 // created, for example).
 func (x *Private) Get() uintptr {
-
 	cret := xPrivateGet(x.GoPointer())
 	return cret
 }
@@ -338,9 +322,7 @@ var xPrivateReplace func(uintptr, uintptr)
 // the previous value was non-%NULL then the #GDestroyNotify handler for
 // @key is run on it.
 func (x *Private) Replace(ValueVar uintptr) {
-
 	xPrivateReplace(x.GoPointer(), ValueVar)
-
 }
 
 var xPrivateSet func(uintptr, uintptr)
@@ -351,9 +333,7 @@ var xPrivateSet func(uintptr, uintptr)
 // This function differs from g_private_replace() in the following way:
 // the #GDestroyNotify for @key is not called on the old value.
 func (x *Private) Set(ValueVar uintptr) {
-
 	xPrivateSet(x.GoPointer(), ValueVar)
-
 }
 
 // The GRWLock struct is an opaque data structure to represent a
@@ -443,9 +423,7 @@ var xRWLockClear func(uintptr)
 // Calling g_rw_lock_clear() when any thread holds the lock
 // leads to undefined behaviour.
 func (x *RWLock) Clear() {
-
 	xRWLockClear(x.GoPointer())
-
 }
 
 var xRWLockInit func(uintptr)
@@ -476,9 +454,7 @@ var xRWLockInit func(uintptr)
 // Calling g_rw_lock_init() on an already initialized #GRWLock leads
 // to undefined behaviour.
 func (x *RWLock) Init() {
-
 	xRWLockInit(x.GoPointer())
-
 }
 
 var xRWLockReaderLock func(uintptr)
@@ -499,9 +475,7 @@ var xRWLockReaderLock func(uintptr)
 // held on the same lock simultaneously. If the limit is hit,
 // or if a deadlock is detected, a critical warning will be emitted.
 func (x *RWLock) ReaderLock() {
-
 	xRWLockReaderLock(x.GoPointer())
-
 }
 
 var xRWLockReaderTrylock func(uintptr) bool
@@ -510,7 +484,6 @@ var xRWLockReaderTrylock func(uintptr) bool
 // the read lock was successfully obtained. Otherwise it
 // returns %FALSE.
 func (x *RWLock) ReaderTrylock() bool {
-
 	cret := xRWLockReaderTrylock(x.GoPointer())
 	return cret
 }
@@ -522,9 +495,7 @@ var xRWLockReaderUnlock func(uintptr)
 // Calling g_rw_lock_reader_unlock() on a lock that is not held
 // by the current thread leads to undefined behaviour.
 func (x *RWLock) ReaderUnlock() {
-
 	xRWLockReaderUnlock(x.GoPointer())
-
 }
 
 var xRWLockWriterLock func(uintptr)
@@ -536,9 +507,7 @@ var xRWLockWriterLock func(uintptr)
 // Calling g_rw_lock_writer_lock() while the current thread already
 // owns a read or write lock on @rw_lock leads to undefined behaviour.
 func (x *RWLock) WriterLock() {
-
 	xRWLockWriterLock(x.GoPointer())
-
 }
 
 var xRWLockWriterTrylock func(uintptr) bool
@@ -548,7 +517,6 @@ var xRWLockWriterTrylock func(uintptr) bool
 // returns %FALSE.
 // Otherwise it locks @rw_lock and returns %TRUE.
 func (x *RWLock) WriterTrylock() bool {
-
 	cret := xRWLockWriterTrylock(x.GoPointer())
 	return cret
 }
@@ -560,9 +528,7 @@ var xRWLockWriterUnlock func(uintptr)
 // Calling g_rw_lock_writer_unlock() on a lock that is not held
 // by the current thread leads to undefined behaviour.
 func (x *RWLock) WriterUnlock() {
-
 	xRWLockWriterUnlock(x.GoPointer())
-
 }
 
 // The GRecMutex struct is an opaque data structure to represent a
@@ -600,9 +566,7 @@ var xRecMutexClear func(uintptr)
 // Calling g_rec_mutex_clear() on a locked recursive mutex leads
 // to undefined behaviour.
 func (x *RecMutex) Clear() {
-
 	xRecMutexClear(x.GoPointer())
-
 }
 
 var xRecMutexInit func(uintptr)
@@ -635,9 +599,7 @@ var xRecMutexInit func(uintptr)
 // To undo the effect of g_rec_mutex_init() when a recursive mutex
 // is no longer needed, use g_rec_mutex_clear().
 func (x *RecMutex) Init() {
-
 	xRecMutexInit(x.GoPointer())
-
 }
 
 var xRecMutexLock func(uintptr)
@@ -649,9 +611,7 @@ var xRecMutexLock func(uintptr)
 // The mutex will only become available again when it is unlocked
 // as many times as it has been locked.
 func (x *RecMutex) Lock() {
-
 	xRecMutexLock(x.GoPointer())
-
 }
 
 var xRecMutexTrylock func(uintptr) bool
@@ -660,7 +620,6 @@ var xRecMutexTrylock func(uintptr) bool
 // by another thread, it immediately returns %FALSE. Otherwise
 // it locks @rec_mutex and returns %TRUE.
 func (x *RecMutex) Trylock() bool {
-
 	cret := xRecMutexTrylock(x.GoPointer())
 	return cret
 }
@@ -674,9 +633,7 @@ var xRecMutexUnlock func(uintptr)
 // Calling g_rec_mutex_unlock() on a recursive mutex that is not
 // locked by the current thread leads to undefined behaviour.
 func (x *RecMutex) Unlock() {
-
 	xRecMutexUnlock(x.GoPointer())
-
 }
 
 // A #GStaticMutex works like a #GMutex.
@@ -749,15 +706,12 @@ var xStaticMutexFree func(uintptr)
 // Calling g_static_mutex_free() on a locked mutex may result in
 // undefined behaviour.
 func (x *StaticMutex) Free() {
-
 	xStaticMutexFree(x.GoPointer())
-
 }
 
 var xStaticMutexGetMutexImpl func(uintptr) *Mutex
 
 func (x *StaticMutex) GetMutexImpl() *Mutex {
-
 	cret := xStaticMutexGetMutexImpl(x.GoPointer())
 	return cret
 }
@@ -767,9 +721,7 @@ var xStaticMutexInit func(uintptr)
 // Initializes @mutex.
 // Alternatively you can initialize it with %G_STATIC_MUTEX_INIT.
 func (x *StaticMutex) Init() {
-
 	xStaticMutexInit(x.GoPointer())
-
 }
 
 // A #GStaticPrivate works almost like a #GPrivate, but it has one
@@ -818,9 +770,7 @@ var xStaticPrivateFree func(uintptr)
 // a #GStaticPrivate as a member of a structure and the structure is
 // freed, you should also free the #GStaticPrivate.
 func (x *StaticPrivate) Free() {
-
 	xStaticPrivateFree(x.GoPointer())
-
 }
 
 var xStaticPrivateGet func(uintptr) uintptr
@@ -829,7 +779,6 @@ var xStaticPrivateGet func(uintptr) uintptr
 //
 // This function works even if g_thread_init() has not yet been called.
 func (x *StaticPrivate) Get() uintptr {
-
 	cret := xStaticPrivateGet(x.GoPointer())
 	return cret
 }
@@ -839,9 +788,7 @@ var xStaticPrivateInit func(uintptr)
 // Initializes @private_key. Alternatively you can initialize it with
 // %G_STATIC_PRIVATE_INIT.
 func (x *StaticPrivate) Init() {
-
 	xStaticPrivateInit(x.GoPointer())
-
 }
 
 var xStaticPrivateSet func(uintptr, uintptr, uintptr)
@@ -858,9 +805,7 @@ var xStaticPrivateSet func(uintptr, uintptr, uintptr)
 //
 // @notify is used quite differently from @destructor in g_private_new().
 func (x *StaticPrivate) Set(DataVar uintptr, NotifyVar *DestroyNotify) {
-
 	xStaticPrivateSet(x.GoPointer(), DataVar, NewCallback(NotifyVar))
-
 }
 
 // The #GStaticRWLock struct represents a read-write lock. A read-write
@@ -968,9 +913,7 @@ var xStaticRWLockFree func(uintptr)
 // a #GStaticRWLock as a member of a structure, and the structure is
 // freed, you should also free the #GStaticRWLock.
 func (x *StaticRWLock) Free() {
-
 	xStaticRWLockFree(x.GoPointer())
-
 }
 
 var xStaticRWLockInit func(uintptr)
@@ -979,9 +922,7 @@ var xStaticRWLockInit func(uintptr)
 // can be used. Alternatively you can initialize it with
 // %G_STATIC_RW_LOCK_INIT.
 func (x *StaticRWLock) Init() {
-
 	xStaticRWLockInit(x.GoPointer())
-
 }
 
 var xStaticRWLockReaderLock func(uintptr)
@@ -998,9 +939,7 @@ var xStaticRWLockReaderLock func(uintptr)
 // recursively lock for reading, but that can result in a deadlock, due
 // to writer preference.
 func (x *StaticRWLock) ReaderLock() {
-
 	xStaticRWLockReaderLock(x.GoPointer())
-
 }
 
 var xStaticRWLockReaderTrylock func(uintptr) bool
@@ -1011,7 +950,6 @@ var xStaticRWLockReaderTrylock func(uintptr) bool
 // @lock for reading and returns %TRUE. This lock has to be unlocked by
 // g_static_rw_lock_reader_unlock().
 func (x *StaticRWLock) ReaderTrylock() bool {
-
 	cret := xStaticRWLockReaderTrylock(x.GoPointer())
 	return cret
 }
@@ -1022,9 +960,7 @@ var xStaticRWLockReaderUnlock func(uintptr)
 // locks for reading have been unlocked, the waiting thread is woken up
 // and can lock @lock for writing.
 func (x *StaticRWLock) ReaderUnlock() {
-
 	xStaticRWLockReaderUnlock(x.GoPointer())
-
 }
 
 var xStaticRWLockWriterLock func(uintptr)
@@ -1037,9 +973,7 @@ var xStaticRWLockWriterLock func(uintptr)
 // @lock (neither for reading nor writing). This lock has to be
 // unlocked by g_static_rw_lock_writer_unlock().
 func (x *StaticRWLock) WriterLock() {
-
 	xStaticRWLockWriterLock(x.GoPointer())
-
 }
 
 var xStaticRWLockWriterTrylock func(uintptr) bool
@@ -1049,7 +983,6 @@ var xStaticRWLockWriterTrylock func(uintptr) bool
 // %FALSE. Otherwise it locks @lock for writing and returns %TRUE. This
 // lock has to be unlocked by g_static_rw_lock_writer_unlock().
 func (x *StaticRWLock) WriterTrylock() bool {
-
 	cret := xStaticRWLockWriterTrylock(x.GoPointer())
 	return cret
 }
@@ -1063,9 +996,7 @@ var xStaticRWLockWriterUnlock func(uintptr)
 // lock @lock for reading, the waiting threads are woken up and can
 // lock @lock for reading.
 func (x *StaticRWLock) WriterUnlock() {
-
 	xStaticRWLockWriterUnlock(x.GoPointer())
-
 }
 
 // A #GStaticRecMutex works like a #GStaticMutex, but it can be locked
@@ -1106,9 +1037,7 @@ var xStaticRecMutexFree func(uintptr)
 // a #GStaticRecMutex as a member of a structure and the structure is
 // freed, you should also free the #GStaticRecMutex.
 func (x *StaticRecMutex) Free() {
-
 	xStaticRecMutexFree(x.GoPointer())
-
 }
 
 var xStaticRecMutexInit func(uintptr)
@@ -1117,9 +1046,7 @@ var xStaticRecMutexInit func(uintptr)
 // can be used. Alternatively you can initialize it with
 // %G_STATIC_REC_MUTEX_INIT.
 func (x *StaticRecMutex) Init() {
-
 	xStaticRecMutexInit(x.GoPointer())
-
 }
 
 var xStaticRecMutexLock func(uintptr)
@@ -1129,18 +1056,14 @@ var xStaticRecMutexLock func(uintptr)
 // thread. If @mutex is already locked by the calling thread, this
 // functions increases the depth of @mutex and returns immediately.
 func (x *StaticRecMutex) Lock() {
-
 	xStaticRecMutexLock(x.GoPointer())
-
 }
 
 var xStaticRecMutexLockFull func(uintptr, uint32)
 
 // Works like calling g_static_rec_mutex_lock() for @mutex @depth times.
 func (x *StaticRecMutex) LockFull(DepthVar uint32) {
-
 	xStaticRecMutexLockFull(x.GoPointer(), DepthVar)
-
 }
 
 var xStaticRecMutexTrylock func(uintptr) bool
@@ -1151,7 +1074,6 @@ var xStaticRecMutexTrylock func(uintptr) bool
 // functions increases the depth of @mutex and immediately returns
 // %TRUE.
 func (x *StaticRecMutex) Trylock() bool {
-
 	cret := xStaticRecMutexTrylock(x.GoPointer())
 	return cret
 }
@@ -1164,9 +1086,7 @@ var xStaticRecMutexUnlock func(uintptr)
 // blocked in a g_static_rec_mutex_lock() call for @mutex, it will be
 // woken and can lock @mutex itself.
 func (x *StaticRecMutex) Unlock() {
-
 	xStaticRecMutexUnlock(x.GoPointer())
-
 }
 
 var xStaticRecMutexUnlockFull func(uintptr) uint32
@@ -1179,7 +1099,6 @@ var xStaticRecMutexUnlockFull func(uintptr) uint32
 // g_static_rec_mutex_lock_full() with the depth returned by this
 // function.
 func (x *StaticRecMutex) UnlockFull() uint32 {
-
 	cret := xStaticRecMutexUnlockFull(x.GoPointer())
 	return cret
 }
@@ -1249,7 +1168,6 @@ var xNewThread func(string, uintptr, uintptr) *Thread
 // Starting with GLib 2.64 the behaviour is now consistent between Windows and
 // POSIX and all threads inherit their parent thread's priority.
 func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
-
 	cret := xNewThread(NameVar, NewCallback(FuncVar), DataVar)
 	return cret
 }
@@ -1269,7 +1187,6 @@ func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xThreadGetName func(uintptr) string
@@ -1278,7 +1195,6 @@ var xThreadGetName func(uintptr) string
 //
 // This function is intended for debugging purposes.
 func (x *Thread) GetName() string {
-
 	cret := xThreadGetName(x.GoPointer())
 	return cret
 }
@@ -1302,7 +1218,6 @@ var xThreadJoin func(uintptr) uintptr
 // to be freed. Use g_thread_ref() to obtain an extra reference if you
 // want to keep the GThread alive beyond the g_thread_join() call.
 func (x *Thread) Join() uintptr {
-
 	cret := xThreadJoin(x.GoPointer())
 	return cret
 }
@@ -1311,7 +1226,6 @@ var xThreadRef func(uintptr) *Thread
 
 // Increase the reference count on @thread.
 func (x *Thread) Ref() *Thread {
-
 	cret := xThreadRef(x.GoPointer())
 	return cret
 }
@@ -1320,9 +1234,7 @@ var xThreadSetPriority func(uintptr, ThreadPriority)
 
 // This function does nothing.
 func (x *Thread) SetPriority(PriorityVar ThreadPriority) {
-
 	xThreadSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 var xThreadUnref func(uintptr)
@@ -1334,9 +1246,7 @@ var xThreadUnref func(uintptr)
 // it is running, so it is safe to drop your own reference to it
 // if you don't need it anymore.
 func (x *Thread) Unref() {
-
 	xThreadUnref(x.GoPointer())
-
 }
 
 // This function table is no longer used by g_thread_init()
@@ -2029,7 +1939,6 @@ var xCondNew func() *Cond
 
 // Allocates and initializes a new #GCond.
 func CondNew() *Cond {
-
 	cret := xCondNew()
 	return cret
 }
@@ -2041,7 +1950,6 @@ var xGetNumProcessors func() uint32
 // used as a parameter to g_thread_pool_new() for CPU bound tasks and
 // similar cases.
 func GetNumProcessors() uint32 {
-
 	cret := xGetNumProcessors()
 	return cret
 }
@@ -2050,7 +1958,6 @@ var xMutexNew func() *Mutex
 
 // Allocates and initializes a new #GMutex.
 func MutexNew() *Mutex {
-
 	cret := xMutexNew()
 	return cret
 }
@@ -2085,7 +1992,6 @@ var xOnceInitEnter func(uintptr) bool
 // While @location has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func OnceInitEnter(LocationVar uintptr) bool {
-
 	cret := xOnceInitEnter(LocationVar)
 	return cret
 }
@@ -2093,7 +1999,6 @@ func OnceInitEnter(LocationVar uintptr) bool {
 var xOnceInitEnterImpl func(uint) bool
 
 func OnceInitEnterImpl(LocationVar uint) bool {
-
 	cret := xOnceInitEnterImpl(LocationVar)
 	return cret
 }
@@ -2118,7 +2023,6 @@ var xOnceInitEnterPointer func(uintptr) bool
 //
 // ]|
 func OnceInitEnterPointer(LocationVar uintptr) bool {
-
 	cret := xOnceInitEnterPointer(LocationVar)
 	return cret
 }
@@ -2134,9 +2038,7 @@ var xOnceInitLeave func(uintptr, uint)
 // While @location has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func OnceInitLeave(LocationVar uintptr, ResultVar uint) {
-
 	xOnceInitLeave(LocationVar, ResultVar)
-
 }
 
 var xOnceInitLeavePointer func(uintptr, uintptr)
@@ -2150,16 +2052,13 @@ var xOnceInitLeavePointer func(uintptr, uintptr)
 // This functions behaves in the same way as g_once_init_leave(), but
 // can be used to initialize pointers (or #guintptr) instead of #gsize.
 func OnceInitLeavePointer(LocationVar uintptr, ResultVar uintptr) {
-
 	xOnceInitLeavePointer(LocationVar, ResultVar)
-
 }
 
 var xPrivateNew func(uintptr) *Private
 
 // Creates a new #GPrivate.
 func PrivateNew(NotifyVar *DestroyNotify) *Private {
-
 	cret := xPrivateNew(NewCallback(NotifyVar))
 	return cret
 }
@@ -2186,7 +2085,6 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority, **Error) *Thread
@@ -2200,7 +2098,6 @@ func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xThreadExit func(uintptr)
@@ -2219,9 +2116,7 @@ var xThreadExit func(uintptr)
 // this function from a thread created with another threading library
 // or or from within a #GThreadPool.
 func ThreadExit(RetvalVar uintptr) {
-
 	xThreadExit(RetvalVar)
-
 }
 
 var xThreadForeach func(uintptr, uintptr)
@@ -2238,16 +2133,13 @@ var xThreadForeach func(uintptr, uintptr)
 // Due to thread lifetime checks, this function has an execution complexity
 // which is quadratic in the number of existing threads.
 func ThreadForeach(ThreadFuncVar *Func, UserDataVar uintptr) {
-
 	xThreadForeach(NewCallback(ThreadFuncVar), UserDataVar)
-
 }
 
 var xThreadGetInitialized func() bool
 
 // Indicates if g_thread_init() has been called.
 func ThreadGetInitialized() bool {
-
 	cret := xThreadGetInitialized()
 	return cret
 }
@@ -2277,17 +2169,13 @@ var xThreadInit func(uintptr)
 //	functions of GLib. Those can be used without having to link
 //	with the thread libraries.
 func ThreadInit(VtableVar uintptr) {
-
 	xThreadInit(VtableVar)
-
 }
 
 var xThreadInitWithErrorcheckMutexes func(uintptr)
 
 func ThreadInitWithErrorcheckMutexes(VtableVar uintptr) {
-
 	xThreadInitWithErrorcheckMutexes(VtableVar)
-
 }
 
 var xThreadSelf func() *Thread
@@ -2302,7 +2190,6 @@ var xThreadSelf func() *Thread
 // (i.e. comparisons) but you must not use GLib functions (such
 // as g_thread_join()) on these threads.
 func ThreadSelf() *Thread {
-
 	cret := xThreadSelf()
 	return cret
 }
@@ -2314,9 +2201,7 @@ var xThreadYield func()
 //
 // This function is often used as a method to make busy wait less evil.
 func ThreadYield() {
-
 	xThreadYield()
-
 }
 
 func init() {
@@ -2416,5 +2301,4 @@ func init() {
 	core.PuregoSafeRegister(&xThreadRef, libs, "g_thread_ref")
 	core.PuregoSafeRegister(&xThreadSetPriority, libs, "g_thread_set_priority")
 	core.PuregoSafeRegister(&xThreadUnref, libs, "g_thread_unref")
-
 }

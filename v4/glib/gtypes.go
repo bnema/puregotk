@@ -120,9 +120,7 @@ var xTimeValAdd func(uintptr, int32)
 // Adds the given number of microseconds to @time_. @microseconds can
 // also be negative to decrease the value of @time_.
 func (x *TimeVal) Add(MicrosecondsVar int32) {
-
 	xTimeValAdd(x.GoPointer(), MicrosecondsVar)
-
 }
 
 var xTimeValToIso8601 func(uintptr) string
@@ -162,7 +160,6 @@ var xTimeValToIso8601 func(uintptr) string
 // The return value of g_time_val_to_iso8601() has been nullable since GLib
 // 2.54; before then, GLib would crash under the same conditions.
 func (x *TimeVal) ToIso8601() string {
-
 	cret := xTimeValToIso8601(x.GoPointer())
 	return cret
 }
@@ -249,5 +246,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTimeValAdd, libs, "g_time_val_add")
 	core.PuregoSafeRegister(&xTimeValToIso8601, libs, "g_time_val_to_iso8601")
-
 }

@@ -326,22 +326,22 @@ func (x *DBusObjectManagerBase) GetObject(ObjectPathVar string) *DBusObjectBase 
 
 // Gets the object path that @manager is for.
 func (x *DBusObjectManagerBase) GetObjectPath() string {
-
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
 	return cret
 }
 
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerBase) GetObjects() *glib.List {
-
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
 	return cret
 }
 
-var XGDbusObjectManagerGetInterface func(uintptr, string, string) uintptr
-var XGDbusObjectManagerGetObject func(uintptr, string) uintptr
-var XGDbusObjectManagerGetObjectPath func(uintptr) string
-var XGDbusObjectManagerGetObjects func(uintptr) *glib.List
+var (
+	XGDbusObjectManagerGetInterface  func(uintptr, string, string) uintptr
+	XGDbusObjectManagerGetObject     func(uintptr, string) uintptr
+	XGDbusObjectManagerGetObjectPath func(uintptr) string
+	XGDbusObjectManagerGetObjects    func(uintptr) *glib.List
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -361,5 +361,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObject, libs, "g_dbus_object_manager_get_object")
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObjectPath, libs, "g_dbus_object_manager_get_object_path")
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObjects, libs, "g_dbus_object_manager_get_objects")
-
 }

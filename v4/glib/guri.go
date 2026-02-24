@@ -195,7 +195,6 @@ var xUriGetAuthParams func(uintptr) string
 // Depending on the URI scheme, g_uri_parse_params() may be useful for
 // further parsing this information.
 func (x *Uri) GetAuthParams() string {
-
 	cret := xUriGetAuthParams(x.GoPointer())
 	return cret
 }
@@ -204,7 +203,6 @@ var xUriGetFlags func(uintptr) UriFlags
 
 // Gets @uri's flags set upon construction.
 func (x *Uri) GetFlags() UriFlags {
-
 	cret := xUriGetFlags(x.GoPointer())
 	return cret
 }
@@ -214,7 +212,6 @@ var xUriGetFragment func(uintptr) string
 // Gets @uri's fragment, which may contain `%`-encoding, depending on
 // the flags with which @uri was created.
 func (x *Uri) GetFragment() string {
-
 	cret := xUriGetFragment(x.GoPointer())
 	return cret
 }
@@ -231,7 +228,6 @@ var xUriGetHost func(uintptr) string
 // be a scope ID attached to the address. Eg, `fe80::1234%“em1` (or
 // `fe80::1234%“25em1` if the string is still encoded).
 func (x *Uri) GetHost() string {
-
 	cret := xUriGetHost(x.GoPointer())
 	return cret
 }
@@ -242,7 +238,6 @@ var xUriGetPassword func(uintptr) string
 // the flags with which @uri was created. (If @uri was not created
 // with %G_URI_FLAGS_HAS_PASSWORD then this will be %NULL.)
 func (x *Uri) GetPassword() string {
-
 	cret := xUriGetPassword(x.GoPointer())
 	return cret
 }
@@ -252,7 +247,6 @@ var xUriGetPath func(uintptr) string
 // Gets @uri's path, which may contain `%`-encoding, depending on the
 // flags with which @uri was created.
 func (x *Uri) GetPath() string {
-
 	cret := xUriGetPath(x.GoPointer())
 	return cret
 }
@@ -261,7 +255,6 @@ var xUriGetPort func(uintptr) int32
 
 // Gets @uri's port.
 func (x *Uri) GetPort() int32 {
-
 	cret := xUriGetPort(x.GoPointer())
 	return cret
 }
@@ -274,7 +267,6 @@ var xUriGetQuery func(uintptr) string
 // For queries consisting of a series of `name=value` parameters,
 // #GUriParamsIter or g_uri_parse_params() may be useful.
 func (x *Uri) GetQuery() string {
-
 	cret := xUriGetQuery(x.GoPointer())
 	return cret
 }
@@ -284,7 +276,6 @@ var xUriGetScheme func(uintptr) string
 // Gets @uri's scheme. Note that this will always be all-lowercase,
 // regardless of the string or strings that @uri was created from.
 func (x *Uri) GetScheme() string {
-
 	cret := xUriGetScheme(x.GoPointer())
 	return cret
 }
@@ -296,7 +287,6 @@ var xUriGetUser func(uintptr) string
 // If @uri was not created with %G_URI_FLAGS_HAS_PASSWORD or
 // %G_URI_FLAGS_HAS_AUTH_PARAMS, this is the same as g_uri_get_userinfo().
 func (x *Uri) GetUser() string {
-
 	cret := xUriGetUser(x.GoPointer())
 	return cret
 }
@@ -306,7 +296,6 @@ var xUriGetUserinfo func(uintptr) string
 // Gets @uri's userinfo, which may contain `%`-encoding, depending on
 // the flags with which @uri was created.
 func (x *Uri) GetUserinfo() string {
-
 	cret := xUriGetUserinfo(x.GoPointer())
 	return cret
 }
@@ -325,14 +314,12 @@ func (x *Uri) ParseRelative(UriRefVar string, FlagsVar UriFlags) (*Uri, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriRef func(uintptr) *Uri
 
 // Increments the reference count of @uri by one.
 func (x *Uri) Ref() *Uri {
-
 	cret := xUriRef(x.GoPointer())
 	return cret
 }
@@ -352,7 +339,6 @@ var xUriToString func(uintptr) string
 // or private data in its query string, and the returned string is going to be
 // logged, then consider using g_uri_to_string_partial() to redact parts.
 func (x *Uri) ToString() string {
-
 	cret := xUriToString(x.GoPointer())
 	return cret
 }
@@ -362,7 +348,6 @@ var xUriToStringPartial func(uintptr, UriHideFlags) string
 // Returns a string representing @uri, subject to the options in
 // @flags. See g_uri_to_string() and #GUriHideFlags for more details.
 func (x *Uri) ToStringPartial(FlagsVar UriHideFlags) string {
-
 	cret := xUriToStringPartial(x.GoPointer(), FlagsVar)
 	return cret
 }
@@ -374,9 +359,7 @@ var xUriUnref func(uintptr)
 // When the reference count reaches zero, the resources allocated by
 // @uri are freed
 func (x *Uri) Unref() {
-
 	xUriUnref(x.GoPointer())
-
 }
 
 // Many URI schemes include one or more attribute/value pairs as part of the URI
@@ -444,9 +427,7 @@ var xUriParamsIterInit func(uintptr, string, int, string, UriParamsFlags)
 //
 // ]|
 func (x *UriParamsIter) Init(ParamsVar string, LengthVar int, SeparatorsVar string, FlagsVar UriParamsFlags) {
-
 	xUriParamsIterInit(x.GoPointer(), ParamsVar, LengthVar, SeparatorsVar, FlagsVar)
-
 }
 
 var xUriParamsIterNext func(uintptr, *string, *string, **Error) bool
@@ -468,7 +449,6 @@ func (x *UriParamsIter) Next(AttributeVar *string, ValueVar *string) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 const (
@@ -605,7 +585,6 @@ var xUriBuild func(UriFlags, string, string, string, int32, string, string, stri
 // See also g_uri_build_with_user(), which allows specifying the
 // components of the "userinfo" separately.
 func UriBuild(FlagsVar UriFlags, SchemeVar string, UserinfoVar string, HostVar string, PortVar int32, PathVar string, QueryVar string, FragmentVar string) *Uri {
-
 	cret := xUriBuild(FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
 	return cret
 }
@@ -621,7 +600,6 @@ var xUriBuildWithUser func(UriFlags, string, string, string, string, string, int
 // of the ‘userinfo’ field separately. Note that @user must be non-%NULL
 // if either @password or @auth_params is non-%NULL.
 func UriBuildWithUser(FlagsVar UriFlags, SchemeVar string, UserVar string, PasswordVar string, AuthParamsVar string, HostVar string, PortVar int32, PathVar string, QueryVar string, FragmentVar string) *Uri {
-
 	cret := xUriBuildWithUser(FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
 	return cret
 }
@@ -640,7 +618,6 @@ var xUriEscapeBytes func([]byte, uint, string) string
 // Though technically incorrect, this will also allow escaping nul
 // bytes as `%“00`.
 func UriEscapeBytes(UnescapedVar []byte, LengthVar uint, ReservedCharsAllowedVar string) string {
-
 	cret := xUriEscapeBytes(UnescapedVar, LengthVar, ReservedCharsAllowedVar)
 	return cret
 }
@@ -656,7 +633,6 @@ var xUriEscapeString func(string, string, bool) string
 // in the URI specification, since those are allowed unescaped in some
 // portions of a URI.
 func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar string, AllowUtf8Var bool) string {
-
 	cret := xUriEscapeString(UnescapedVar, ReservedCharsAllowedVar, AllowUtf8Var)
 	return cret
 }
@@ -679,7 +655,6 @@ func UriIsValid(UriStringVar string, FlagsVar UriFlags) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriJoin func(UriFlags, string, string, string, int32, string, string, string) string
@@ -699,7 +674,6 @@ var xUriJoin func(UriFlags, string, string, string, int32, string, string, strin
 // %G_URI_FLAGS_HAS_PASSWORD and %G_URI_FLAGS_HAS_AUTH_PARAMS are ignored if set
 // in @flags.
 func UriJoin(FlagsVar UriFlags, SchemeVar string, UserinfoVar string, HostVar string, PortVar int32, PathVar string, QueryVar string, FragmentVar string) string {
-
 	cret := xUriJoin(FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
 	return cret
 }
@@ -716,7 +690,6 @@ var xUriJoinWithUser func(UriFlags, string, string, string, string, string, int3
 // %G_URI_FLAGS_HAS_PASSWORD and %G_URI_FLAGS_HAS_AUTH_PARAMS are ignored if set
 // in @flags.
 func UriJoinWithUser(FlagsVar UriFlags, SchemeVar string, UserVar string, PasswordVar string, AuthParamsVar string, HostVar string, PortVar int32, PathVar string, QueryVar string, FragmentVar string) string {
-
 	cret := xUriJoinWithUser(FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
 	return cret
 }
@@ -734,7 +707,6 @@ func UriParse(UriStringVar string, FlagsVar UriFlags) (*Uri, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriParseParams func(string, int, string, UriParamsFlags, **Error) *HashTable
@@ -771,7 +743,6 @@ func UriParseParams(ParamsVar string, LengthVar int, SeparatorsVar string, Flags
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriParseScheme func(string) string
@@ -784,7 +755,6 @@ var xUriParseScheme func(string) string
 // ]|
 // Common schemes include `file`, `https`, `svn+ssh`, etc.
 func UriParseScheme(UriVar string) string {
-
 	cret := xUriParseScheme(UriVar)
 	return cret
 }
@@ -802,7 +772,6 @@ var xUriPeekScheme func(string) string
 // Unlike g_uri_parse_scheme(), the returned scheme is normalized to
 // all-lowercase and does not need to be freed.
 func UriPeekScheme(UriVar string) string {
-
 	cret := xUriPeekScheme(UriVar)
 	return cret
 }
@@ -824,7 +793,6 @@ func UriResolveRelative(BaseUriStringVar string, UriRefVar string, FlagsVar UriF
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriSplit func(string, UriFlags, *string, *string, *string, *int32, *string, *string, *string, **Error) bool
@@ -853,7 +821,6 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserinfoVa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriSplitNetwork func(string, UriFlags, *string, *string, *int32, **Error) bool
@@ -872,7 +839,6 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar *string, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriSplitWithUser func(string, UriFlags, *string, *string, *string, *string, *string, *int32, *string, *string, *string, **Error) bool
@@ -896,7 +862,6 @@ func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, Us
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriUnescapeBytes func(string, int, string, **Error) *Bytes
@@ -919,7 +884,6 @@ func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriUnescapeSegment func(string, string, string) string
@@ -935,7 +899,6 @@ var xUriUnescapeSegment func(string, string, string) string
 // Note: `NUL` byte is not accepted in the output, in contrast to
 // g_uri_unescape_bytes().
 func UriUnescapeSegment(EscapedStringVar string, EscapedStringEndVar string, IllegalCharactersVar string) string {
-
 	cret := xUriUnescapeSegment(EscapedStringVar, EscapedStringEndVar, IllegalCharactersVar)
 	return cret
 }
@@ -950,7 +913,6 @@ var xUriUnescapeString func(string, string) string
 // want to avoid for instance having a slash being expanded in an
 // escaped path element, which might confuse pathname handling.
 func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar string) string {
-
 	cret := xUriUnescapeString(EscapedStringVar, IllegalCharactersVar)
 	return cret
 }
@@ -1007,5 +969,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xUriParamsIterInit, libs, "g_uri_params_iter_init")
 	core.PuregoSafeRegister(&xUriParamsIterNext, libs, "g_uri_params_iter_next")
-
 }

@@ -29,9 +29,7 @@ var xDragSurfaceSizeSetSize func(uintptr, int32, int32)
 
 // Sets the size the drag surface prefers to be resized to.
 func (x *DragSurfaceSize) SetSize(WidthVar int32, HeightVar int32) {
-
 	xDragSurfaceSizeSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
@@ -49,5 +47,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSurfaceSizeGLibType, libs, "gdk_drag_surface_size_get_type")
 
 	core.PuregoSafeRegister(&xDragSurfaceSizeSetSize, libs, "gdk_drag_surface_size_set_size")
-
 }

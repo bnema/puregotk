@@ -23,7 +23,6 @@ func MarkupParserFinish(ContextVar *glib.MarkupParseContext, AttrListVar **AttrL
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xMarkupParserNew func(uint32) *glib.MarkupParseContext
@@ -51,7 +50,6 @@ var xMarkupParserNew func(uint32) *glib.MarkupParseContext
 // from streams. To simply parse a string containing Pango markup,
 // the [func@Pango.parse_markup] API is recommended instead.
 func MarkupParserNew(AccelMarkerVar uint32) *glib.MarkupParseContext {
-
 	cret := xMarkupParserNew(AccelMarkerVar)
 	return cret
 }
@@ -83,7 +81,6 @@ func ParseMarkup(MarkupTextVar string, LengthVar int32, AccelMarkerVar uint32, A
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -101,5 +98,4 @@ func init() {
 	core.PuregoSafeRegister(&xMarkupParserFinish, libs, "pango_markup_parser_finish")
 	core.PuregoSafeRegister(&xMarkupParserNew, libs, "pango_markup_parser_new")
 	core.PuregoSafeRegister(&xParseMarkup, libs, "pango_parse_markup")
-
 }

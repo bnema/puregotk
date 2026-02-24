@@ -351,7 +351,6 @@ func NewPixbufAnimationFromFile(FilenameVar string) (*PixbufAnimation, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufAnimationFromResource func(string, **glib.Error) uintptr
@@ -375,7 +374,6 @@ func NewPixbufAnimationFromResource(ResourcePathVar string) (*PixbufAnimation, e
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufAnimationFromStream func(uintptr, uintptr, **glib.Error) uintptr
@@ -407,7 +405,6 @@ func NewPixbufAnimationFromStream(StreamVar *gio.InputStream, CancellableVar *gi
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufAnimationFromStreamFinish func(uintptr, **glib.Error) uintptr
@@ -429,14 +426,12 @@ func NewPixbufAnimationFromStreamFinish(AsyncResultVar gio.AsyncResult) (*Pixbuf
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xPixbufAnimationGetHeight func(uintptr) int32
 
 // Queries the height of the bounding box of a pixbuf animation.
 func (x *PixbufAnimation) GetHeight() int32 {
-
 	cret := xPixbufAnimationGetHeight(x.GoPointer())
 	return cret
 }
@@ -521,7 +516,6 @@ var xPixbufAnimationGetWidth func(uintptr) int32
 
 // Queries the width of the bounding box of a pixbuf animation.
 func (x *PixbufAnimation) GetWidth() int32 {
-
 	cret := xPixbufAnimationGetWidth(x.GoPointer())
 	return cret
 }
@@ -535,7 +529,6 @@ var xPixbufAnimationIsStaticImage func(uintptr) bool
 // return `TRUE`. Use gdk_pixbuf_animation_get_static_image() to retrieve
 // the image.
 func (x *PixbufAnimation) IsStaticImage() bool {
-
 	cret := xPixbufAnimationIsStaticImage(x.GoPointer())
 	return cret
 }
@@ -560,9 +553,7 @@ var xPixbufAnimationUnref func(uintptr)
 
 // Removes a reference from an animation.
 func (x *PixbufAnimation) Unref() {
-
 	xPixbufAnimationUnref(x.GoPointer())
-
 }
 
 func (c *PixbufAnimation) GoPointer() uintptr {
@@ -587,9 +578,7 @@ var xPixbufAnimationNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
 // You can then call gdk_pixbuf_animation_new_from_stream_finish() to get the
 // result of the operation.
 func PixbufAnimationNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // An opaque object representing an iterator which points to a
@@ -634,7 +623,6 @@ var xPixbufAnimationIterAdvance func(uintptr, *glib.TimeVal) bool
 // if `TRUE`, you need to call gdk_pixbuf_animation_iter_get_pixbuf()
 // and update the display with the new pixbuf.
 func (x *PixbufAnimationIter) Advance(CurrentTimeVar *glib.TimeVal) bool {
-
 	cret := xPixbufAnimationIterAdvance(x.GoPointer(), CurrentTimeVar)
 	return cret
 }
@@ -651,7 +639,6 @@ var xPixbufAnimationIterGetDelayTime func(uintptr) int32
 // image file to avoid updates that are just too quick. The minimum timeout
 // for GIF images is currently 20 milliseconds.
 func (x *PixbufAnimationIter) GetDelayTime() int32 {
-
 	cret := xPixbufAnimationIterGetDelayTime(x.GoPointer())
 	return cret
 }
@@ -696,7 +683,6 @@ var xPixbufAnimationIterOnCurrentlyLoadingFrame func(uintptr) bool
 // streaming in to the loader. So if you're on the currently loading frame,
 // you will need to redraw the screen for the updated area.
 func (x *PixbufAnimationIter) OnCurrentlyLoadingFrame() bool {
-
 	cret := xPixbufAnimationIterOnCurrentlyLoadingFrame(x.GoPointer())
 	return cret
 }
@@ -747,5 +733,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufAnimationIterGetDelayTime, libs, "gdk_pixbuf_animation_iter_get_delay_time")
 	core.PuregoSafeRegister(&xPixbufAnimationIterGetPixbuf, libs, "gdk_pixbuf_animation_iter_get_pixbuf")
 	core.PuregoSafeRegister(&xPixbufAnimationIterOnCurrentlyLoadingFrame, libs, "gdk_pixbuf_animation_iter_on_currently_loading_frame")
-
 }

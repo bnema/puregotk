@@ -108,20 +108,18 @@ func (x *PermissionRequestBase) SetGoPointer(ptr uintptr) {
 
 // Allow the action which triggered this request.
 func (x *PermissionRequestBase) Allow() {
-
 	XWebkitPermissionRequestAllow(x.GoPointer())
-
 }
 
 // Deny the action which triggered this request.
 func (x *PermissionRequestBase) Deny() {
-
 	XWebkitPermissionRequestDeny(x.GoPointer())
-
 }
 
-var XWebkitPermissionRequestAllow func(uintptr)
-var XWebkitPermissionRequestDeny func(uintptr)
+var (
+	XWebkitPermissionRequestAllow func(uintptr)
+	XWebkitPermissionRequestDeny  func(uintptr)
+)
 
 func init() {
 	core.SetPackageName("WEBKIT", "webkitgtk-6.0")

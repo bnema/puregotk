@@ -95,7 +95,6 @@ var xSwitchGetActive func(uintptr) bool
 
 // Gets whether the `GtkSwitch` is in its “on” or “off” state.
 func (x *Switch) GetActive() bool {
-
 	cret := xSwitchGetActive(x.GoPointer())
 	return cret
 }
@@ -104,7 +103,6 @@ var xSwitchGetState func(uintptr) bool
 
 // Gets the underlying state of the `GtkSwitch`.
 func (x *Switch) GetState() bool {
-
 	cret := xSwitchGetState(x.GoPointer())
 	return cret
 }
@@ -113,9 +111,7 @@ var xSwitchSetActive func(uintptr, bool)
 
 // Changes the state of @self to the desired one.
 func (x *Switch) SetActive(IsActiveVar bool) {
-
 	xSwitchSetActive(x.GoPointer(), IsActiveVar)
-
 }
 
 var xSwitchSetState func(uintptr, bool)
@@ -127,9 +123,7 @@ var xSwitchSetState func(uintptr, bool)
 //
 // See [signal@Gtk.Switch::state-set] for details.
 func (x *Switch) SetState(StateVar bool) {
-
 	xSwitchSetState(x.GoPointer(), StateVar)
-
 }
 
 func (c *Switch) GoPointer() uintptr {
@@ -205,7 +199,6 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -235,7 +228,6 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -252,9 +244,7 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Switch) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -275,7 +265,6 @@ func (x *Switch) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Switch) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -300,7 +289,6 @@ func (x *Switch) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Switch) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -339,30 +327,23 @@ func (x *Switch) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Switch) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Switch) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Switch) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Switch) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -375,9 +356,7 @@ func (x *Switch) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Switch) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -385,9 +364,7 @@ func (x *Switch) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Switch) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -396,9 +373,7 @@ func (x *Switch) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Switch) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -420,9 +395,7 @@ func (x *Switch) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Switch) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -432,9 +405,7 @@ func (x *Switch) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Switch) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -456,9 +427,7 @@ func (x *Switch) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acces
 //
 // ```
 func (x *Switch) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -468,9 +437,7 @@ func (x *Switch) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Switch) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -493,9 +460,7 @@ func (x *Switch) UpdateRelationValue(NRelationsVar int32, RelationsVar []Accessi
 //
 // ```
 func (x *Switch) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -505,21 +470,17 @@ func (x *Switch) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 //
 // This function is meant to be used by language bindings.
 func (x *Switch) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *Switch) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *Switch) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -538,9 +499,7 @@ func (x *Switch) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *Switch) SetActionName(ActionNameVar string) {
-
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -553,9 +512,7 @@ func (x *Switch) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *Switch) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -577,9 +534,7 @@ func (x *Switch) SetActionTarget(FormatStringVar string, varArgs ...interface{})
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *Switch) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -588,9 +543,7 @@ func (x *Switch) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *Switch) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -598,7 +551,6 @@ func (x *Switch) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Switch) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -623,5 +575,4 @@ func init() {
 	core.PuregoSafeRegister(&xSwitchGetState, libs, "gtk_switch_get_state")
 	core.PuregoSafeRegister(&xSwitchSetActive, libs, "gtk_switch_set_active")
 	core.PuregoSafeRegister(&xSwitchSetState, libs, "gtk_switch_set_state")
-
 }

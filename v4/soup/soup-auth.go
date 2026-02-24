@@ -254,9 +254,7 @@ var xAuthAuthenticate func(uintptr, string, string)
 // Normally this will cause the auth's message to be requeued with the new
 // authentication info.
 func (x *Auth) Authenticate(UsernameVar string, PasswordVar string) {
-
 	xAuthAuthenticate(x.GoPointer(), UsernameVar, PasswordVar)
-
 }
 
 var xAuthCanAuthenticate func(uintptr) bool
@@ -264,7 +262,6 @@ var xAuthCanAuthenticate func(uintptr) bool
 // Tests if @auth is able to authenticate by providing credentials to the
 // [method@Auth.authenticate].
 func (x *Auth) CanAuthenticate() bool {
-
 	cret := xAuthCanAuthenticate(x.GoPointer())
 	return cret
 }
@@ -277,25 +274,20 @@ var xAuthCancel func(uintptr)
 // when no credentials are provided ([method@Auth.authenticate] is not called).
 // The #SoupAuth will be cancelled on dispose if it hans't been authenticated.
 func (x *Auth) Cancel() {
-
 	xAuthCancel(x.GoPointer())
-
 }
 
 var xAuthFreeProtectionSpace func(uintptr, *glib.SList)
 
 // Frees @space.
 func (x *Auth) FreeProtectionSpace(SpaceVar *glib.SList) {
-
 	xAuthFreeProtectionSpace(x.GoPointer(), SpaceVar)
-
 }
 
 var xAuthGetAuthority func(uintptr) string
 
 // Returns the authority (host:port) that @auth is associated with.
 func (x *Auth) GetAuthority() string {
-
 	cret := xAuthGetAuthority(x.GoPointer())
 	return cret
 }
@@ -307,7 +299,6 @@ var xAuthGetAuthorization func(uintptr, uintptr) string
 // (The session will only call this if [method@Auth.is_authenticated] returned
 // %TRUE.)
 func (x *Auth) GetAuthorization(MsgVar *Message) string {
-
 	cret := xAuthGetAuthorization(x.GoPointer(), MsgVar.GoPointer())
 	return cret
 }
@@ -321,7 +312,6 @@ var xAuthGetInfo func(uintptr) string
 // domain (eg, the URLs associated with them take the same usernames and
 // passwords).
 func (x *Auth) GetInfo() string {
-
 	cret := xAuthGetInfo(x.GoPointer())
 	return cret
 }
@@ -334,7 +324,6 @@ var xAuthGetProtectionSpace func(uintptr, *glib.Uri) *glib.SList
 // of @auth's protection space, unless otherwise discovered not to
 // be.)
 func (x *Auth) GetProtectionSpace(SourceUriVar *glib.Uri) *glib.SList {
-
 	cret := xAuthGetProtectionSpace(x.GoPointer(), SourceUriVar)
 	return cret
 }
@@ -347,7 +336,6 @@ var xAuthGetRealm func(uintptr) string
 // given server, and may be some string that is meaningful to the user.
 // (Although it is probably not localized.)
 func (x *Auth) GetRealm() string {
-
 	cret := xAuthGetRealm(x.GoPointer())
 	return cret
 }
@@ -357,7 +345,6 @@ var xAuthGetSchemeName func(uintptr) string
 // soup_auth_get_scheme_name: (attributes org.gtk.Method.get_property=scheme-name)
 // Returns @auth's scheme name. (Eg, "Basic", "Digest", or "NTLM")
 func (x *Auth) GetSchemeName() string {
-
 	cret := xAuthGetSchemeName(x.GoPointer())
 	return cret
 }
@@ -366,7 +353,6 @@ var xAuthIsAuthenticated func(uintptr) bool
 
 // Tests if @auth has been given a username and password.
 func (x *Auth) IsAuthenticated() bool {
-
 	cret := xAuthIsAuthenticated(x.GoPointer())
 	return cret
 }
@@ -375,7 +361,6 @@ var xAuthIsCancelled func(uintptr) bool
 
 // Tests if @auth has been cancelled
 func (x *Auth) IsCancelled() bool {
-
 	cret := xAuthIsCancelled(x.GoPointer())
 	return cret
 }
@@ -385,7 +370,6 @@ var xAuthIsForProxy func(uintptr) bool
 // Tests whether or not @auth is associated with a proxy server rather
 // than an "origin" server.
 func (x *Auth) IsForProxy() bool {
-
 	cret := xAuthIsForProxy(x.GoPointer())
 	return cret
 }
@@ -398,7 +382,6 @@ var xAuthIsReady func(uintptr, uintptr) bool
 // some auth types (eg, NTLM), the auth may be sendable (eg, as an
 // authentication request) even before it is authenticated.
 func (x *Auth) IsReady(MsgVar *Message) bool {
-
 	cret := xAuthIsReady(x.GoPointer(), MsgVar.GoPointer())
 	return cret
 }
@@ -410,7 +393,6 @@ var xAuthUpdate func(uintptr, uintptr, string) bool
 //
 // As with [ctor@Auth.new], this is normally only used by [class@Session].
 func (x *Auth) Update(MsgVar *Message, AuthHeaderVar string) bool {
-
 	cret := xAuthUpdate(x.GoPointer(), MsgVar.GoPointer(), AuthHeaderVar)
 	return cret
 }
@@ -532,5 +514,4 @@ func init() {
 	core.PuregoSafeRegister(&xAuthIsForProxy, libs, "soup_auth_is_for_proxy")
 	core.PuregoSafeRegister(&xAuthIsReady, libs, "soup_auth_is_ready")
 	core.PuregoSafeRegister(&xAuthUpdate, libs, "soup_auth_update")
-
 }

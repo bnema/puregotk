@@ -86,5 +86,4 @@ func init() {
 	core.PuregoSafeRegister(&xBroadwayRendererGLibType, libs, "gsk_broadway_renderer_get_type")
 
 	core.PuregoSafeRegister(&xNewBroadwayRenderer, libs, "gsk_broadway_renderer_new")
-
 }

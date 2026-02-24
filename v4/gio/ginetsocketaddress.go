@@ -110,7 +110,6 @@ var xInetSocketAddressGetFlowinfo func(uintptr) uint32
 //
 // If not overridden this value will be inherited from [property@Gio.InetSocketAddress:address].
 func (x *InetSocketAddress) GetFlowinfo() uint32 {
-
 	cret := xInetSocketAddressGetFlowinfo(x.GoPointer())
 	return cret
 }
@@ -119,7 +118,6 @@ var xInetSocketAddressGetPort func(uintptr) uint16
 
 // Gets @address's port.
 func (x *InetSocketAddress) GetPort() uint16 {
-
 	cret := xInetSocketAddressGetPort(x.GoPointer())
 	return cret
 }
@@ -131,7 +129,6 @@ var xInetSocketAddressGetScopeId func(uintptr) uint32
 //
 // If not overridden this value will be inherited from [property@Gio.InetSocketAddress:address].
 func (x *InetSocketAddress) GetScopeId() uint32 {
-
 	cret := xInetSocketAddressGetScopeId(x.GoPointer())
 	return cret
 }
@@ -248,7 +245,6 @@ func (x *InetSocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *InetSocketAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
@@ -274,5 +270,4 @@ func init() {
 	core.PuregoSafeRegister(&xInetSocketAddressGetFlowinfo, libs, "g_inet_socket_address_get_flowinfo")
 	core.PuregoSafeRegister(&xInetSocketAddressGetPort, libs, "g_inet_socket_address_get_port")
 	core.PuregoSafeRegister(&xInetSocketAddressGetScopeId, libs, "g_inet_socket_address_get_scope_id")
-
 }

@@ -53,7 +53,6 @@ func NewMappedFile(FilenameVar string, WritableVar bool) (*MappedFile, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xNewMappedFileFromFd func(int32, bool, **Error) *MappedFile
@@ -77,7 +76,6 @@ func NewMappedFileFromFd(FdVar int32, WritableVar bool) (*MappedFile, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xMappedFileFree func(uintptr)
@@ -85,9 +83,7 @@ var xMappedFileFree func(uintptr)
 // This call existed before #GMappedFile had refcounting and is currently
 // exactly the same as g_mapped_file_unref().
 func (x *MappedFile) Free() {
-
 	xMappedFileFree(x.GoPointer())
-
 }
 
 var xMappedFileGetBytes func(uintptr) *Bytes
@@ -96,7 +92,6 @@ var xMappedFileGetBytes func(uintptr) *Bytes
 // The mapped contents of the file must not be modified after creating this
 // bytes object, because a #GBytes should be immutable.
 func (x *MappedFile) GetBytes() *Bytes {
-
 	cret := xMappedFileGetBytes(x.GoPointer())
 	return cret
 }
@@ -110,7 +105,6 @@ var xMappedFileGetContents func(uintptr) string
 //
 // If the file is empty then %NULL is returned.
 func (x *MappedFile) GetContents() string {
-
 	cret := xMappedFileGetContents(x.GoPointer())
 	return cret
 }
@@ -119,7 +113,6 @@ var xMappedFileGetLength func(uintptr) uint
 
 // Returns the length of the contents of a #GMappedFile.
 func (x *MappedFile) GetLength() uint {
-
 	cret := xMappedFileGetLength(x.GoPointer())
 	return cret
 }
@@ -129,7 +122,6 @@ var xMappedFileRef func(uintptr) *MappedFile
 // Increments the reference count of @file by one.  It is safe to call
 // this function from any thread.
 func (x *MappedFile) Ref() *MappedFile {
-
 	cret := xMappedFileRef(x.GoPointer())
 	return cret
 }
@@ -143,9 +135,7 @@ var xMappedFileUnref func(uintptr)
 //
 // Since 2.22
 func (x *MappedFile) Unref() {
-
 	xMappedFileUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -171,5 +161,4 @@ func init() {
 	core.PuregoSafeRegister(&xMappedFileGetLength, libs, "g_mapped_file_get_length")
 	core.PuregoSafeRegister(&xMappedFileRef, libs, "g_mapped_file_ref")
 	core.PuregoSafeRegister(&xMappedFileUnref, libs, "g_mapped_file_unref")
-
 }

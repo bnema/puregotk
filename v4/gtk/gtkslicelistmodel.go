@@ -85,7 +85,6 @@ var xSliceListModelGetOffset func(uintptr) uint32
 
 // Gets the offset set via gtk_slice_list_model_set_offset().
 func (x *SliceListModel) GetOffset() uint32 {
-
 	cret := xSliceListModelGetOffset(x.GoPointer())
 	return cret
 }
@@ -94,7 +93,6 @@ var xSliceListModelGetSize func(uintptr) uint32
 
 // Gets the size set via gtk_slice_list_model_set_size().
 func (x *SliceListModel) GetSize() uint32 {
-
 	cret := xSliceListModelGetSize(x.GoPointer())
 	return cret
 }
@@ -105,9 +103,7 @@ var xSliceListModelSetModel func(uintptr, uintptr)
 //
 // The model's item type must conform to @self's item type.
 func (x *SliceListModel) SetModel(ModelVar gio.ListModel) {
-
 	xSliceListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xSliceListModelSetOffset func(uintptr, uint32)
@@ -117,9 +113,7 @@ var xSliceListModelSetOffset func(uintptr, uint32)
 // If the offset is too large for the sliced model,
 // @self will end up empty.
 func (x *SliceListModel) SetOffset(OffsetVar uint32) {
-
 	xSliceListModelSetOffset(x.GoPointer(), OffsetVar)
-
 }
 
 var xSliceListModelSetSize func(uintptr, uint32)
@@ -130,9 +124,7 @@ var xSliceListModelSetSize func(uintptr, uint32)
 // It can however have fewer items if the offset is too large
 // or the model sliced from doesn't have enough items.
 func (x *SliceListModel) SetSize(SizeVar uint32) {
-
 	xSliceListModelSetSize(x.GoPointer(), SizeVar)
-
 }
 
 func (c *SliceListModel) GoPointer() uintptr {
@@ -198,7 +190,6 @@ func (x *SliceListModel) GetPropertySize() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *SliceListModel) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -212,7 +203,6 @@ func (x *SliceListModel) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SliceListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -223,7 +213,6 @@ func (x *SliceListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SliceListModel) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -274,9 +263,7 @@ func (x *SliceListModel) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SliceListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -285,9 +272,7 @@ func (x *SliceListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, Add
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SliceListModel) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -306,9 +291,7 @@ func (x *SliceListModel) GetSection(PositionVar uint32, OutStartVar *uint32, Out
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SliceListModel) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
@@ -333,5 +316,4 @@ func init() {
 	core.PuregoSafeRegister(&xSliceListModelSetModel, libs, "gtk_slice_list_model_set_model")
 	core.PuregoSafeRegister(&xSliceListModelSetOffset, libs, "gtk_slice_list_model_set_offset")
 	core.PuregoSafeRegister(&xSliceListModelSetSize, libs, "gtk_slice_list_model_set_size")
-
 }

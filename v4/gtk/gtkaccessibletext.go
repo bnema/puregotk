@@ -279,9 +279,7 @@ func (x *AccessibleTextBase) SetGoPointer(ptr uintptr) {
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *AccessibleTextBase) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -294,9 +292,7 @@ func (x *AccessibleTextBase) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *AccessibleTextBase) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint32, EndVar uint32) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -305,14 +301,14 @@ func (x *AccessibleTextBase) UpdateContents(ChangeVar AccessibleTextContentChang
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *AccessibleTextBase) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
-var XGtkAccessibleTextUpdateCaretPosition func(uintptr)
-var XGtkAccessibleTextUpdateContents func(uintptr, AccessibleTextContentChange, uint32, uint32)
-var XGtkAccessibleTextUpdateSelectionBound func(uintptr)
+var (
+	XGtkAccessibleTextUpdateCaretPosition  func(uintptr)
+	XGtkAccessibleTextUpdateContents       func(uintptr, AccessibleTextContentChange, uint32, uint32)
+	XGtkAccessibleTextUpdateSelectionBound func(uintptr)
+)
 
 const (
 	// An attribute for the background color, expressed as an RGB value
@@ -498,5 +494,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateCaretPosition, libs, "gtk_accessible_text_update_caret_position")
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateContents, libs, "gtk_accessible_text_update_contents")
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateSelectionBound, libs, "gtk_accessible_text_update_selection_bound")
-
 }

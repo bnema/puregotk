@@ -202,7 +202,6 @@ func (x *DBusInterfaceBase) DupObject() *DBusObjectBase {
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
 func (x *DBusInterfaceBase) GetInfo() *DBusInterfaceInfo {
-
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
 	return cret
 }
@@ -230,15 +229,15 @@ func (x *DBusInterfaceBase) GetObject() *DBusObjectBase {
 //
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceBase) SetObject(ObjectVar DBusObject) {
-
 	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
-var XGDbusInterfaceDupObject func(uintptr) uintptr
-var XGDbusInterfaceGetInfo func(uintptr) *DBusInterfaceInfo
-var XGDbusInterfaceGetObject func(uintptr) uintptr
-var XGDbusInterfaceSetObject func(uintptr, uintptr)
+var (
+	XGDbusInterfaceDupObject func(uintptr) uintptr
+	XGDbusInterfaceGetInfo   func(uintptr) *DBusInterfaceInfo
+	XGDbusInterfaceGetObject func(uintptr) uintptr
+	XGDbusInterfaceSetObject func(uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -258,5 +257,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDbusInterfaceGetInfo, libs, "g_dbus_interface_get_info")
 	core.PuregoSafeRegister(&XGDbusInterfaceGetObject, libs, "g_dbus_interface_get_object")
 	core.PuregoSafeRegister(&XGDbusInterfaceSetObject, libs, "g_dbus_interface_set_object")
-
 }

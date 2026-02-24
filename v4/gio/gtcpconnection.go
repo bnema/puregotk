@@ -52,7 +52,6 @@ var xTcpConnectionGetGracefulDisconnect func(uintptr) bool
 // Checks if graceful disconnects are used. See
 // g_tcp_connection_set_graceful_disconnect().
 func (x *TcpConnection) GetGracefulDisconnect() bool {
-
 	cret := xTcpConnectionGetGracefulDisconnect(x.GoPointer())
 	return cret
 }
@@ -69,9 +68,7 @@ var xTcpConnectionSetGracefulDisconnect func(uintptr, bool)
 // other side and for it to acknowledge this by closing the socket, which may
 // take a while. For this reason it is disabled by default.
 func (x *TcpConnection) SetGracefulDisconnect(GracefulDisconnectVar bool) {
-
 	xTcpConnectionSetGracefulDisconnect(x.GoPointer(), GracefulDisconnectVar)
-
 }
 
 func (c *TcpConnection) GoPointer() uintptr {
@@ -118,5 +115,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTcpConnectionGetGracefulDisconnect, libs, "g_tcp_connection_get_graceful_disconnect")
 	core.PuregoSafeRegister(&xTcpConnectionSetGracefulDisconnect, libs, "g_tcp_connection_set_graceful_disconnect")
-
 }

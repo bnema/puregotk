@@ -102,9 +102,7 @@ var xNotificationAddButton func(uintptr, string, string)
 // See g_action_parse_detailed_name() for a description of the format
 // for @detailed_action.
 func (x *Notification) AddButton(LabelVar string, DetailedActionVar string) {
-
 	xNotificationAddButton(x.GoPointer(), LabelVar, DetailedActionVar)
-
 }
 
 var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...interface{})
@@ -117,9 +115,7 @@ var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...in
 // g_variant_new(). @action will be activated with that #GVariant as its
 // parameter.
 func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
-
 	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, TargetFormatVar, varArgs...)
-
 }
 
 var xNotificationAddButtonWithTargetValue func(uintptr, string, string, *glib.Variant)
@@ -130,18 +126,14 @@ var xNotificationAddButtonWithTargetValue func(uintptr, string, string, *glib.Va
 // If @target is non-%NULL, @action will be activated with @target as
 // its parameter.
 func (x *Notification) AddButtonWithTargetValue(LabelVar string, ActionVar string, TargetVar *glib.Variant) {
-
 	xNotificationAddButtonWithTargetValue(x.GoPointer(), LabelVar, ActionVar, TargetVar)
-
 }
 
 var xNotificationSetBody func(uintptr, string)
 
 // Sets the body of @notification to @body.
 func (x *Notification) SetBody(BodyVar string) {
-
 	xNotificationSetBody(x.GoPointer(), BodyVar)
-
 }
 
 var xNotificationSetCategory func(uintptr, string)
@@ -153,9 +145,7 @@ var xNotificationSetCategory func(uintptr, string)
 //
 // Standard categories are [listed in the specification](https://specifications.freedesktop.org/notification-spec/latest/ar01s06.html).
 func (x *Notification) SetCategory(CategoryVar string) {
-
 	xNotificationSetCategory(x.GoPointer(), CategoryVar)
-
 }
 
 var xNotificationSetDefaultAction func(uintptr, string)
@@ -172,9 +162,7 @@ var xNotificationSetDefaultAction func(uintptr, string)
 // When no default action is set, the application that the notification
 // was sent on is activated.
 func (x *Notification) SetDefaultAction(DetailedActionVar string) {
-
 	xNotificationSetDefaultAction(x.GoPointer(), DetailedActionVar)
-
 }
 
 var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...interface{})
@@ -191,9 +179,7 @@ var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...inte
 // When no default action is set, the application that the notification
 // was sent on is activated.
 func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
-
 	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, TargetFormatVar, varArgs...)
-
 }
 
 var xNotificationSetDefaultActionAndTargetValue func(uintptr, string, *glib.Variant)
@@ -208,18 +194,14 @@ var xNotificationSetDefaultActionAndTargetValue func(uintptr, string, *glib.Vari
 // When no default action is set, the application that the notification
 // was sent on is activated.
 func (x *Notification) SetDefaultActionAndTargetValue(ActionVar string, TargetVar *glib.Variant) {
-
 	xNotificationSetDefaultActionAndTargetValue(x.GoPointer(), ActionVar, TargetVar)
-
 }
 
 var xNotificationSetIcon func(uintptr, uintptr)
 
 // Sets the icon of @notification to @icon.
 func (x *Notification) SetIcon(IconVar Icon) {
-
 	xNotificationSetIcon(x.GoPointer(), IconVar.GoPointer())
-
 }
 
 var xNotificationSetPriority func(uintptr, NotificationPriority)
@@ -227,27 +209,21 @@ var xNotificationSetPriority func(uintptr, NotificationPriority)
 // Sets the priority of @notification to @priority. See
 // #GNotificationPriority for possible values.
 func (x *Notification) SetPriority(PriorityVar NotificationPriority) {
-
 	xNotificationSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 var xNotificationSetTitle func(uintptr, string)
 
 // Sets the title of @notification to @title.
 func (x *Notification) SetTitle(TitleVar string) {
-
 	xNotificationSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xNotificationSetUrgent func(uintptr, bool)
 
 // Deprecated in favor of g_notification_set_priority().
 func (x *Notification) SetUrgent(UrgentVar bool) {
-
 	xNotificationSetUrgent(x.GoPointer(), UrgentVar)
-
 }
 
 func (c *Notification) GoPointer() uintptr {
@@ -289,5 +265,4 @@ func init() {
 	core.PuregoSafeRegister(&xNotificationSetPriority, libs, "g_notification_set_priority")
 	core.PuregoSafeRegister(&xNotificationSetTitle, libs, "g_notification_set_title")
 	core.PuregoSafeRegister(&xNotificationSetUrgent, libs, "g_notification_set_urgent")
-
 }

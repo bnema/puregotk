@@ -99,7 +99,6 @@ var xColumnViewColumnGetExpand func(uintptr) bool
 
 // Returns whether this column should expand.
 func (x *ColumnViewColumn) GetExpand() bool {
-
 	cret := xColumnViewColumnGetExpand(x.GoPointer())
 	return cret
 }
@@ -126,7 +125,6 @@ var xColumnViewColumnGetFixedWidth func(uintptr) int32
 
 // Gets the fixed width of the column.
 func (x *ColumnViewColumn) GetFixedWidth() int32 {
-
 	cret := xColumnViewColumnGetFixedWidth(x.GoPointer())
 	return cret
 }
@@ -153,7 +151,6 @@ var xColumnViewColumnGetId func(uintptr) string
 
 // Returns the ID set with [method@Gtk.ColumnViewColumn.set_id].
 func (x *ColumnViewColumn) GetId() string {
-
 	cret := xColumnViewColumnGetId(x.GoPointer())
 	return cret
 }
@@ -162,7 +159,6 @@ var xColumnViewColumnGetResizable func(uintptr) bool
 
 // Returns whether this column is resizable.
 func (x *ColumnViewColumn) GetResizable() bool {
-
 	cret := xColumnViewColumnGetResizable(x.GoPointer())
 	return cret
 }
@@ -188,7 +184,6 @@ var xColumnViewColumnGetTitle func(uintptr) string
 
 // Returns the title set with [method@Gtk.ColumnViewColumn.set_title].
 func (x *ColumnViewColumn) GetTitle() string {
-
 	cret := xColumnViewColumnGetTitle(x.GoPointer())
 	return cret
 }
@@ -197,7 +192,6 @@ var xColumnViewColumnGetVisible func(uintptr) bool
 
 // Returns whether this column is visible.
 func (x *ColumnViewColumn) GetVisible() bool {
-
 	cret := xColumnViewColumnGetVisible(x.GoPointer())
 	return cret
 }
@@ -209,9 +203,7 @@ var xColumnViewColumnSetExpand func(uintptr, bool)
 // The extra space is shared equally amongst all columns that
 // have are set to expand.
 func (x *ColumnViewColumn) SetExpand(ExpandVar bool) {
-
 	xColumnViewColumnSetExpand(x.GoPointer(), ExpandVar)
-
 }
 
 var xColumnViewColumnSetFactory func(uintptr, uintptr)
@@ -219,9 +211,7 @@ var xColumnViewColumnSetFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items
 // for this column.
 func (x *ColumnViewColumn) SetFactory(FactoryVar *ListItemFactory) {
-
 	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xColumnViewColumnSetFixedWidth func(uintptr, int32)
@@ -233,9 +223,7 @@ var xColumnViewColumnSetFixedWidth func(uintptr, int32)
 // Setting a fixed width overrides the automatically calculated
 // width. Interactive resizing also sets the “fixed-width” property.
 func (x *ColumnViewColumn) SetFixedWidth(FixedWidthVar int32) {
-
 	xColumnViewColumnSetFixedWidth(x.GoPointer(), FixedWidthVar)
-
 }
 
 var xColumnViewColumnSetHeaderMenu func(uintptr, uintptr)
@@ -243,9 +231,7 @@ var xColumnViewColumnSetHeaderMenu func(uintptr, uintptr)
 // Sets the menu model that is used to create the context menu
 // for the column header.
 func (x *ColumnViewColumn) SetHeaderMenu(MenuVar *gio.MenuModel) {
-
 	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVar.GoPointer())
-
 }
 
 var xColumnViewColumnSetId func(uintptr, string)
@@ -257,18 +243,14 @@ var xColumnViewColumnSetId func(uintptr, string)
 //
 // It is up to callers to ensure uniqueness of IDs.
 func (x *ColumnViewColumn) SetId(IdVar string) {
-
 	xColumnViewColumnSetId(x.GoPointer(), IdVar)
-
 }
 
 var xColumnViewColumnSetResizable func(uintptr, bool)
 
 // Sets whether this column should be resizable by dragging.
 func (x *ColumnViewColumn) SetResizable(ResizableVar bool) {
-
 	xColumnViewColumnSetResizable(x.GoPointer(), ResizableVar)
-
 }
 
 var xColumnViewColumnSetSorter func(uintptr, uintptr)
@@ -284,9 +266,7 @@ var xColumnViewColumnSetSorter func(uintptr, uintptr)
 // See [method@Gtk.ColumnView.get_sorter] for the necessary steps
 // for setting up customizable sorting for [class@Gtk.ColumnView].
 func (x *ColumnViewColumn) SetSorter(SorterVar *Sorter) {
-
 	xColumnViewColumnSetSorter(x.GoPointer(), SorterVar.GoPointer())
-
 }
 
 var xColumnViewColumnSetTitle func(uintptr, string)
@@ -297,18 +277,14 @@ var xColumnViewColumnSetTitle func(uintptr, string)
 // for this column and is therefore user-facing text that should
 // be translated.
 func (x *ColumnViewColumn) SetTitle(TitleVar string) {
-
 	xColumnViewColumnSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xColumnViewColumnSetVisible func(uintptr, bool)
 
 // Sets whether this column should be visible in views.
 func (x *ColumnViewColumn) SetVisible(VisibleVar bool) {
-
 	xColumnViewColumnSetVisible(x.GoPointer(), VisibleVar)
-
 }
 
 func (c *ColumnViewColumn) GoPointer() uintptr {
@@ -473,5 +449,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewColumnSetSorter, libs, "gtk_column_view_column_set_sorter")
 	core.PuregoSafeRegister(&xColumnViewColumnSetTitle, libs, "gtk_column_view_column_set_title")
 	core.PuregoSafeRegister(&xColumnViewColumnSetVisible, libs, "gtk_column_view_column_set_visible")
-
 }

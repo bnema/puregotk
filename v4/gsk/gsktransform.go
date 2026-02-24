@@ -16,7 +16,6 @@ var xTransformParse func(string, **Transform) bool
 // If @string does not describe a valid transform, false
 // is returned and `NULL` is put in @out_transform.
 func TransformParse(StringVar string, OutTransformVar **Transform) bool {
-
 	cret := xTransformParse(StringVar, OutTransformVar)
 	return cret
 }
@@ -34,5 +33,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xTransformParse, libs, "gsk_transform_parse")
-
 }

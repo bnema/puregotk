@@ -101,9 +101,7 @@ func (x *SymbolicPaintableBase) SetGoPointer(ptr uintptr) {
 // If less than 4 colors are provided, GTK will pad the array with default
 // colors.
 func (x *SymbolicPaintableBase) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
-
 	XGtkSymbolicPaintableSnapshotSymbolic(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
-
 }
 
 var XGtkSymbolicPaintableSnapshotSymbolic func(uintptr, uintptr, float64, float64, []gdk.RGBA, uint)
@@ -123,5 +121,4 @@ func init() {
 	core.PuregoSafeRegister(&xSymbolicPaintableGLibType, libs, "gtk_symbolic_paintable_get_type")
 
 	core.PuregoSafeRegister(&XGtkSymbolicPaintableSnapshotSymbolic, libs, "gtk_symbolic_paintable_snapshot_symbolic")
-
 }

@@ -147,16 +147,12 @@ func (x *CellEditableBase) SetGoPointer(ptr uintptr) {
 
 // Emits the `GtkCellEditable::editing-done` signal.
 func (x *CellEditableBase) EditingDone() {
-
 	XGtkCellEditableEditingDone(x.GoPointer())
-
 }
 
 // Emits the `GtkCellEditable::remove-widget` signal.
 func (x *CellEditableBase) RemoveWidget() {
-
 	XGtkCellEditableRemoveWidget(x.GoPointer())
-
 }
 
 // Begins editing on a @cell_editable.
@@ -170,9 +166,7 @@ func (x *CellEditableBase) RemoveWidget() {
 // Note that the @cell_editable is created on-demand for the current edit; its
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *CellEditableBase) StartEditing(EventVar *gdk.Event) {
-
 	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
-
 }
 
 // SetPropertyEditingCanceled sets the "editing-canceled" property.
@@ -196,9 +190,11 @@ func (x *CellEditableBase) GetPropertyEditingCanceled() bool {
 	return v.GetBoolean()
 }
 
-var XGtkCellEditableEditingDone func(uintptr)
-var XGtkCellEditableRemoveWidget func(uintptr)
-var XGtkCellEditableStartEditing func(uintptr, uintptr)
+var (
+	XGtkCellEditableEditingDone  func(uintptr)
+	XGtkCellEditableRemoveWidget func(uintptr)
+	XGtkCellEditableStartEditing func(uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -217,5 +213,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkCellEditableEditingDone, libs, "gtk_cell_editable_editing_done")
 	core.PuregoSafeRegister(&XGtkCellEditableRemoveWidget, libs, "gtk_cell_editable_remove_widget")
 	core.PuregoSafeRegister(&XGtkCellEditableStartEditing, libs, "gtk_cell_editable_start_editing")
-
 }

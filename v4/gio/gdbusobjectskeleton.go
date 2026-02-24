@@ -107,9 +107,7 @@ var xDBusObjectSkeletonAddInterface func(uintptr, uintptr)
 // Note that @object takes its own reference on @interface_ and holds
 // it until removed.
 func (x *DBusObjectSkeleton) AddInterface(InterfaceVar *DBusInterfaceSkeleton) {
-
 	xDBusObjectSkeletonAddInterface(x.GoPointer(), InterfaceVar.GoPointer())
-
 }
 
 var xDBusObjectSkeletonFlush func(uintptr)
@@ -118,18 +116,14 @@ var xDBusObjectSkeletonFlush func(uintptr)
 // interfaces belonging to @object. See that method for when flushing
 // is useful.
 func (x *DBusObjectSkeleton) Flush() {
-
 	xDBusObjectSkeletonFlush(x.GoPointer())
-
 }
 
 var xDBusObjectSkeletonRemoveInterface func(uintptr, uintptr)
 
 // Removes @interface_ from @object.
 func (x *DBusObjectSkeleton) RemoveInterface(InterfaceVar *DBusInterfaceSkeleton) {
-
 	xDBusObjectSkeletonRemoveInterface(x.GoPointer(), InterfaceVar.GoPointer())
-
 }
 
 var xDBusObjectSkeletonRemoveInterfaceByName func(uintptr, string)
@@ -139,18 +133,14 @@ var xDBusObjectSkeletonRemoveInterfaceByName func(uintptr, string)
 // If no D-Bus interface of the given interface exists, this function
 // does nothing.
 func (x *DBusObjectSkeleton) RemoveInterfaceByName(InterfaceNameVar string) {
-
 	xDBusObjectSkeletonRemoveInterfaceByName(x.GoPointer(), InterfaceNameVar)
-
 }
 
 var xDBusObjectSkeletonSetObjectPath func(uintptr, string)
 
 // Sets the object path for @object.
 func (x *DBusObjectSkeleton) SetObjectPath(ObjectPathVar string) {
-
 	xDBusObjectSkeletonSetObjectPath(x.GoPointer(), ObjectPathVar)
-
 }
 
 func (c *DBusObjectSkeleton) GoPointer() uintptr {
@@ -201,7 +191,6 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 		cbFn := *cb
 
 		return cbFn(fa, InterfaceVarp, InvocationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -225,14 +214,12 @@ func (x *DBusObjectSkeleton) GetInterface(InterfaceNameVar string) *DBusInterfac
 
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectSkeleton) GetInterfaces() *glib.List {
-
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
 	return cret
 }
 
 // Gets the object path for @object.
 func (x *DBusObjectSkeleton) GetObjectPath() string {
-
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
 	return cret
 }
@@ -258,5 +245,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterface, libs, "g_dbus_object_skeleton_remove_interface")
 	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterfaceByName, libs, "g_dbus_object_skeleton_remove_interface_by_name")
 	core.PuregoSafeRegister(&xDBusObjectSkeletonSetObjectPath, libs, "g_dbus_object_skeleton_set_object_path")
-
 }

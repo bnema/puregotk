@@ -413,9 +413,7 @@ var xInputStreamClearPending func(uintptr)
 
 // Clears the pending flag on @stream.
 func (x *InputStream) ClearPending() {
-
 	xInputStreamClearPending(x.GoPointer())
-
 }
 
 var xInputStreamClose func(uintptr, uintptr, **glib.Error) bool
@@ -451,7 +449,6 @@ func (x *InputStream) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -467,9 +464,7 @@ var xInputStreamCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
 // asynchronicity, so they are optional for inheriting classes. However, if you
 // override one you must override all.
 func (x *InputStream) CloseAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xInputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xInputStreamCloseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -483,14 +478,12 @@ func (x *InputStream) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamHasPending func(uintptr) bool
 
 // Checks if an input stream has pending actions.
 func (x *InputStream) HasPending() bool {
-
 	cret := xInputStreamHasPending(x.GoPointer())
 	return cret
 }
@@ -499,7 +492,6 @@ var xInputStreamIsClosed func(uintptr) bool
 
 // Checks if an input stream is closed.
 func (x *InputStream) IsClosed() bool {
-
 	cret := xInputStreamIsClosed(x.GoPointer())
 	return cret
 }
@@ -535,7 +527,6 @@ func (x *InputStream) Read(BufferVar *[]byte, CountVar uint, CancellableVar *Can
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAll func(uintptr, *[]byte, uint, *uint, uintptr, **glib.Error) bool
@@ -567,7 +558,6 @@ func (x *InputStream) ReadAll(BufferVar *[]byte, CountVar uint, BytesReadVar *ui
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAllAsync func(uintptr, *[]byte, uint, int32, uintptr, uintptr, uintptr)
@@ -583,9 +573,7 @@ var xInputStreamReadAllAsync func(uintptr, *[]byte, uint, int32, uintptr, uintpt
 // value) will be executed before an outstanding request with lower
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadAllAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xInputStreamReadAllFinish func(uintptr, uintptr, *uint, **glib.Error) bool
@@ -607,7 +595,6 @@ func (x *InputStream) ReadAllFinish(ResultVar AsyncResult, BytesReadVar *uint) (
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAsync func(uintptr, *[]byte, uint, int32, uintptr, uintptr, uintptr)
@@ -636,9 +623,7 @@ var xInputStreamReadAsync func(uintptr, *[]byte, uint, int32, uintptr, uintptr, 
 // asynchronicity, so they are optional for inheriting classes. However, if you
 // override one you must override all.
 func (x *InputStream) ReadAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) *glib.Bytes
@@ -674,7 +659,6 @@ func (x *InputStream) ReadBytes(CountVar uint, CancellableVar *Cancellable) (*gl
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadBytesAsync func(uintptr, uint, int32, uintptr, uintptr, uintptr)
@@ -700,9 +684,7 @@ var xInputStreamReadBytesAsync func(uintptr, uint, int32, uintptr, uintptr, uint
 // value) will be executed before an outstanding request with lower
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadBytesAsync(CountVar uint, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xInputStreamReadBytesFinish func(uintptr, uintptr, **glib.Error) *glib.Bytes
@@ -716,7 +698,6 @@ func (x *InputStream) ReadBytesFinish(ResultVar AsyncResult) (*glib.Bytes, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadFinish func(uintptr, uintptr, **glib.Error) int
@@ -730,7 +711,6 @@ func (x *InputStream) ReadFinish(ResultVar AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamSetPending func(uintptr) bool
@@ -746,7 +726,6 @@ func (x *InputStream) SetPending() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamSkip func(uintptr, uint, uintptr, **glib.Error) int
@@ -773,7 +752,6 @@ func (x *InputStream) Skip(CountVar uint, CancellableVar *Cancellable) (int, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamSkipAsync func(uintptr, uint, int32, uintptr, uintptr, uintptr)
@@ -802,9 +780,7 @@ var xInputStreamSkipAsync func(uintptr, uint, int32, uintptr, uintptr, uintptr)
 // implement asynchronicity, so they are optional for inheriting classes.
 // However, if you override one, you must override all.
 func (x *InputStream) SkipAsync(CountVar uint, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xInputStreamSkipAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xInputStreamSkipFinish func(uintptr, uintptr, **glib.Error) int
@@ -818,7 +794,6 @@ func (x *InputStream) SkipFinish(ResultVar AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *InputStream) GoPointer() uintptr {
@@ -865,5 +840,4 @@ func init() {
 	core.PuregoSafeRegister(&xInputStreamSkip, libs, "g_input_stream_skip")
 	core.PuregoSafeRegister(&xInputStreamSkipAsync, libs, "g_input_stream_skip_async")
 	core.PuregoSafeRegister(&xInputStreamSkipFinish, libs, "g_input_stream_skip_finish")
-
 }

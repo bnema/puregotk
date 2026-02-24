@@ -132,7 +132,6 @@ func NewSubprocessv(ArgvVar []string, FlagsVar SubprocessFlags) (*Subprocess, er
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSubprocessCommunicate func(uintptr, *glib.Bytes, uintptr, **glib.Bytes, **glib.Bytes, **glib.Error) bool
@@ -186,7 +185,6 @@ func (x *Subprocess) Communicate(StdinBufVar *glib.Bytes, CancellableVar *Cancel
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessCommunicateAsync func(uintptr, *glib.Bytes, uintptr, uintptr, uintptr)
@@ -194,9 +192,7 @@ var xSubprocessCommunicateAsync func(uintptr, *glib.Bytes, uintptr, uintptr, uin
 // Asynchronous version of g_subprocess_communicate().  Complete
 // invocation with g_subprocess_communicate_finish().
 func (x *Subprocess) CommunicateAsync(StdinBufVar *glib.Bytes, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSubprocessCommunicateFinish func(uintptr, uintptr, **glib.Bytes, **glib.Bytes, **glib.Error) bool
@@ -210,7 +206,6 @@ func (x *Subprocess) CommunicateFinish(ResultVar AsyncResult, StdoutBufVar **gli
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessCommunicateUtf8 func(uintptr, string, uintptr, *string, *string, **glib.Error) bool
@@ -228,7 +223,6 @@ func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancell
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uintptr)
@@ -236,9 +230,7 @@ var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uint
 // Asynchronous version of g_subprocess_communicate_utf8().  Complete
 // invocation with g_subprocess_communicate_utf8_finish().
 func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSubprocessCommunicateUtf8Finish func(uintptr, uintptr, *string, *string, **glib.Error) bool
@@ -252,7 +244,6 @@ func (x *Subprocess) CommunicateUtf8Finish(ResultVar AsyncResult, StdoutBufVar *
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessForceExit func(uintptr)
@@ -265,9 +256,7 @@ var xSubprocessForceExit func(uintptr)
 //
 // On Unix, this function sends %SIGKILL.
 func (x *Subprocess) ForceExit() {
-
 	xSubprocessForceExit(x.GoPointer())
-
 }
 
 var xSubprocessGetExitStatus func(uintptr) int32
@@ -281,7 +270,6 @@ var xSubprocessGetExitStatus func(uintptr) int32
 // It is an error to call this function before g_subprocess_wait() and
 // unless g_subprocess_get_if_exited() returned %TRUE.
 func (x *Subprocess) GetExitStatus() int32 {
-
 	cret := xSubprocessGetExitStatus(x.GoPointer())
 	return cret
 }
@@ -292,7 +280,6 @@ var xSubprocessGetIdentifier func(uintptr) string
 // On Windows, returns the result of GetProcessId() also as a string.
 // If the subprocess has terminated, this will return %NULL.
 func (x *Subprocess) GetIdentifier() string {
-
 	cret := xSubprocessGetIdentifier(x.GoPointer())
 	return cret
 }
@@ -307,7 +294,6 @@ var xSubprocessGetIfExited func(uintptr) bool
 // It is an error to call this function before g_subprocess_wait() has
 // returned.
 func (x *Subprocess) GetIfExited() bool {
-
 	cret := xSubprocessGetIfExited(x.GoPointer())
 	return cret
 }
@@ -321,7 +307,6 @@ var xSubprocessGetIfSignaled func(uintptr) bool
 // It is an error to call this function before g_subprocess_wait() has
 // returned.
 func (x *Subprocess) GetIfSignaled() bool {
-
 	cret := xSubprocessGetIfSignaled(x.GoPointer())
 	return cret
 }
@@ -340,7 +325,6 @@ var xSubprocessGetStatus func(uintptr) int32
 // It is an error to call this function before g_subprocess_wait() has
 // returned.
 func (x *Subprocess) GetStatus() int32 {
-
 	cret := xSubprocessGetStatus(x.GoPointer())
 	return cret
 }
@@ -417,7 +401,6 @@ var xSubprocessGetSuccessful func(uintptr) bool
 // It is an error to call this function before g_subprocess_wait() has
 // returned.
 func (x *Subprocess) GetSuccessful() bool {
-
 	cret := xSubprocessGetSuccessful(x.GoPointer())
 	return cret
 }
@@ -432,7 +415,6 @@ var xSubprocessGetTermSig func(uintptr) int32
 // It is an error to call this function before g_subprocess_wait() and
 // unless g_subprocess_get_if_signaled() returned %TRUE.
 func (x *Subprocess) GetTermSig() int32 {
-
 	cret := xSubprocessGetTermSig(x.GoPointer())
 	return cret
 }
@@ -447,9 +429,7 @@ var xSubprocessSendSignal func(uintptr, int32)
 //
 // This API is not available on Windows.
 func (x *Subprocess) SendSignal(SignalNumVar int32) {
-
 	xSubprocessSendSignal(x.GoPointer(), SignalNumVar)
-
 }
 
 var xSubprocessWait func(uintptr, uintptr, **glib.Error) bool
@@ -473,7 +453,6 @@ func (x *Subprocess) Wait(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessWaitAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -482,9 +461,7 @@ var xSubprocessWaitAsync func(uintptr, uintptr, uintptr, uintptr)
 //
 // This is the asynchronous version of g_subprocess_wait().
 func (x *Subprocess) WaitAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSubprocessWaitCheck func(uintptr, uintptr, **glib.Error) bool
@@ -498,7 +475,6 @@ func (x *Subprocess) WaitCheck(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessWaitCheckAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -507,9 +483,7 @@ var xSubprocessWaitCheckAsync func(uintptr, uintptr, uintptr, uintptr)
 //
 // This is the asynchronous version of g_subprocess_wait_check().
 func (x *Subprocess) WaitCheckAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSubprocessWaitCheckFinish func(uintptr, uintptr, **glib.Error) bool
@@ -524,7 +498,6 @@ func (x *Subprocess) WaitCheckFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSubprocessWaitFinish func(uintptr, uintptr, **glib.Error) bool
@@ -539,7 +512,6 @@ func (x *Subprocess) WaitFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *Subprocess) GoPointer() uintptr {
@@ -608,7 +580,6 @@ func (x *Subprocess) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -652,5 +623,4 @@ func init() {
 	core.PuregoSafeRegister(&xSubprocessWaitCheckAsync, libs, "g_subprocess_wait_check_async")
 	core.PuregoSafeRegister(&xSubprocessWaitCheckFinish, libs, "g_subprocess_wait_check_finish")
 	core.PuregoSafeRegister(&xSubprocessWaitFinish, libs, "g_subprocess_wait_finish")
-
 }

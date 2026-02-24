@@ -140,7 +140,6 @@ var xGestureGetBoundingBox func(uintptr, *gdk.Rectangle) bool
 // infinitely small area, @rect width and height will thus be 0
 // regardless of the number of touchpoints.
 func (x *Gesture) GetBoundingBox(RectVar *gdk.Rectangle) bool {
-
 	cret := xGestureGetBoundingBox(x.GoPointer(), RectVar)
 	return cret
 }
@@ -153,7 +152,6 @@ var xGestureGetBoundingBoxCenter func(uintptr, *float64, *float64) bool
 //
 // Otherwise, %FALSE will be returned.
 func (x *Gesture) GetBoundingBoxCenter(XVar *float64, YVar *float64) bool {
-
 	cret := xGestureGetBoundingBoxCenter(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -182,7 +180,6 @@ var xGestureGetGroup func(uintptr) *glib.List
 
 // Returns all gestures in the group of @gesture
 func (x *Gesture) GetGroup() *glib.List {
-
 	cret := xGestureGetGroup(x.GoPointer())
 	return cret
 }
@@ -212,7 +209,6 @@ var xGestureGetLastUpdatedSequence func(uintptr) *gdk.EventSequence
 
 // Returns the `GdkEventSequence` that was last updated on @gesture.
 func (x *Gesture) GetLastUpdatedSequence() *gdk.EventSequence {
-
 	cret := xGestureGetLastUpdatedSequence(x.GoPointer())
 	return cret
 }
@@ -225,7 +221,6 @@ var xGestureGetPoint func(uintptr, *gdk.EventSequence, *float64, *float64) bool
 //
 // The coordinates are always relative to the widget allocation.
 func (x *Gesture) GetPoint(SequenceVar *gdk.EventSequence, XVar *float64, YVar *float64) bool {
-
 	cret := xGestureGetPoint(x.GoPointer(), SequenceVar, XVar, YVar)
 	return cret
 }
@@ -234,7 +229,6 @@ var xGestureGetSequenceState func(uintptr, *gdk.EventSequence) EventSequenceStat
 
 // Returns the @sequence state, as seen by @gesture.
 func (x *Gesture) GetSequenceState(SequenceVar *gdk.EventSequence) EventSequenceState {
-
 	cret := xGestureGetSequenceState(x.GoPointer(), SequenceVar)
 	return cret
 }
@@ -244,7 +238,6 @@ var xGestureGetSequences func(uintptr) *glib.List
 // Returns the list of `GdkEventSequences` currently being interpreted
 // by @gesture.
 func (x *Gesture) GetSequences() *glib.List {
-
 	cret := xGestureGetSequences(x.GoPointer())
 	return cret
 }
@@ -269,9 +262,7 @@ var xGestureGroup func(uintptr, uintptr)
 // `GtkWidget` will switch the state for that sequence to
 // %GTK_EVENT_SEQUENCE_DENIED.
 func (x *Gesture) Group(GestureVar *Gesture) {
-
 	xGestureGroup(x.GoPointer(), GestureVar.GoPointer())
-
 }
 
 var xGestureHandlesSequence func(uintptr, *gdk.EventSequence) bool
@@ -279,7 +270,6 @@ var xGestureHandlesSequence func(uintptr, *gdk.EventSequence) bool
 // Returns %TRUE if @gesture is currently handling events
 // corresponding to @sequence.
 func (x *Gesture) HandlesSequence(SequenceVar *gdk.EventSequence) bool {
-
 	cret := xGestureHandlesSequence(x.GoPointer(), SequenceVar)
 	return cret
 }
@@ -291,7 +281,6 @@ var xGestureIsActive func(uintptr) bool
 // A gesture is active while there are touch sequences
 // interacting with it.
 func (x *Gesture) IsActive() bool {
-
 	cret := xGestureIsActive(x.GoPointer())
 	return cret
 }
@@ -300,7 +289,6 @@ var xGestureIsGroupedWith func(uintptr, uintptr) bool
 
 // Returns %TRUE if both gestures pertain to the same group.
 func (x *Gesture) IsGroupedWith(OtherVar *Gesture) bool {
-
 	cret := xGestureIsGroupedWith(x.GoPointer(), OtherVar.GoPointer())
 	return cret
 }
@@ -312,7 +300,6 @@ var xGestureIsRecognized func(uintptr) bool
 // A gesture is recognized if there are as many interacting
 // touch sequences as required by @gesture.
 func (x *Gesture) IsRecognized() bool {
-
 	cret := xGestureIsRecognized(x.GoPointer())
 	return cret
 }
@@ -367,7 +354,6 @@ var xGestureSetSequenceState func(uintptr, *gdk.EventSequence, EventSequenceStat
 // be initialized to the group's global state when the second
 // gesture processes the event.
 func (x *Gesture) SetSequenceState(SequenceVar *gdk.EventSequence, StateVar EventSequenceState) bool {
-
 	cret := xGestureSetSequenceState(x.GoPointer(), SequenceVar, StateVar)
 	return cret
 }
@@ -423,7 +409,6 @@ var xGestureSetState func(uintptr, EventSequenceState) bool
 // be initialized to the group's global state when the second
 // gesture processes the event.
 func (x *Gesture) SetState(StateVar EventSequenceState) bool {
-
 	cret := xGestureSetState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -432,9 +417,7 @@ var xGestureUngroup func(uintptr)
 
 // Separates @gesture into an isolated group.
 func (x *Gesture) Ungroup() {
-
 	xGestureUngroup(x.GoPointer())
-
 }
 
 func (c *Gesture) GoPointer() uintptr {
@@ -488,7 +471,6 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -517,7 +499,6 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -545,7 +526,6 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -568,7 +548,6 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -590,7 +569,6 @@ func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -628,5 +606,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureSetSequenceState, libs, "gtk_gesture_set_sequence_state")
 	core.PuregoSafeRegister(&xGestureSetState, libs, "gtk_gesture_set_state")
 	core.PuregoSafeRegister(&xGestureUngroup, libs, "gtk_gesture_ungroup")
-
 }

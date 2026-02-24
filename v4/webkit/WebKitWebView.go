@@ -1840,9 +1840,7 @@ var xWebViewCallAsyncJavascriptFunction func(uintptr, string, int, *glib.Variant
 //
 // ```
 func (x *WebView) CallAsyncJavascriptFunction(BodyVar string, LengthVar int, ArgumentsVar *glib.Variant, WorldNameVar string, SourceUriVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewCallAsyncJavascriptFunction(x.GoPointer(), BodyVar, LengthVar, ArgumentsVar, WorldNameVar, SourceUriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewCallAsyncJavascriptFunctionFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -1863,7 +1861,6 @@ func (x *WebView) CallAsyncJavascriptFunctionFinish(ResultVar gio.AsyncResult) (
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xWebViewCanExecuteEditingCommand func(uintptr, string, uintptr, uintptr, uintptr)
@@ -1873,9 +1870,7 @@ var xWebViewCanExecuteEditingCommand func(uintptr, string, uintptr, uintptr, uin
 // When the operation is finished, @callback will be called. You can then call
 // webkit_web_view_can_execute_editing_command_finish() to get the result of the operation.
 func (x *WebView) CanExecuteEditingCommand(CommandVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewCanExecuteEditingCommand(x.GoPointer(), CommandVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewCanExecuteEditingCommandFinish func(uintptr, uintptr, **glib.Error) bool
@@ -1889,14 +1884,12 @@ func (x *WebView) CanExecuteEditingCommandFinish(ResultVar gio.AsyncResult) (boo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebViewCanGoBack func(uintptr) bool
 
 // Determines whether @web_view has a previous history item.
 func (x *WebView) CanGoBack() bool {
-
 	cret := xWebViewCanGoBack(x.GoPointer())
 	return cret
 }
@@ -1905,7 +1898,6 @@ var xWebViewCanGoForward func(uintptr) bool
 
 // Determines whether @web_view has a next history item.
 func (x *WebView) CanGoForward() bool {
-
 	cret := xWebViewCanGoForward(x.GoPointer())
 	return cret
 }
@@ -1914,7 +1906,6 @@ var xWebViewCanShowMimeType func(uintptr, string) bool
 
 // Whether or not a MIME type can be displayed in @web_view.
 func (x *WebView) CanShowMimeType(MimeTypeVar string) bool {
-
 	cret := xWebViewCanShowMimeType(x.GoPointer(), MimeTypeVar)
 	return cret
 }
@@ -1997,9 +1988,7 @@ var xWebViewEvaluateJavascript func(uintptr, string, int, string, string, uintpt
 //
 // ```
 func (x *WebView) EvaluateJavascript(ScriptVar string, LengthVar int, WorldNameVar string, SourceUriVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewEvaluateJavascript(x.GoPointer(), ScriptVar, LengthVar, WorldNameVar, SourceUriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewEvaluateJavascriptFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -2020,7 +2009,6 @@ func (x *WebView) EvaluateJavascriptFinish(ResultVar gio.AsyncResult) (*javascri
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xWebViewExecuteEditingCommand func(uintptr, string)
@@ -2030,9 +2018,7 @@ var xWebViewExecuteEditingCommand func(uintptr, string)
 // You can use webkit_web_view_can_execute_editing_command() to check whether
 // it's possible to execute the command.
 func (x *WebView) ExecuteEditingCommand(CommandVar string) {
-
 	xWebViewExecuteEditingCommand(x.GoPointer(), CommandVar)
-
 }
 
 var xWebViewExecuteEditingCommandWithArgument func(uintptr, string, string)
@@ -2043,16 +2029,13 @@ var xWebViewExecuteEditingCommandWithArgument func(uintptr, string, string)
 // webkit_web_view_can_execute_editing_command() to check whether
 // it's possible to execute the command.
 func (x *WebView) ExecuteEditingCommandWithArgument(CommandVar string, ArgumentVar string) {
-
 	xWebViewExecuteEditingCommandWithArgument(x.GoPointer(), CommandVar, ArgumentVar)
-
 }
 
 var xWebViewGetAutomationPresentationType func(uintptr) AutomationBrowsingContextPresentation
 
 // Get the presentation type of #WebKitWebView when created for automation.
 func (x *WebView) GetAutomationPresentationType() AutomationBrowsingContextPresentation {
-
 	cret := xWebViewGetAutomationPresentationType(x.GoPointer())
 	return cret
 }
@@ -2084,16 +2067,13 @@ var xWebViewGetBackgroundColor func(uintptr, *gdk.RGBA)
 // the actual contents are rendered.
 // For more information see also webkit_web_view_set_background_color()
 func (x *WebView) GetBackgroundColor(RgbaVar *gdk.RGBA) {
-
 	xWebViewGetBackgroundColor(x.GoPointer(), RgbaVar)
-
 }
 
 var xWebViewGetCameraCaptureState func(uintptr) MediaCaptureState
 
 // Get the camera capture state of a #WebKitWebView.
 func (x *WebView) GetCameraCaptureState() MediaCaptureState {
-
 	cret := xWebViewGetCameraCaptureState(x.GoPointer())
 	return cret
 }
@@ -2119,7 +2099,6 @@ var xWebViewGetCustomCharset func(uintptr) string
 
 // Returns the current custom character encoding name of @web_view.
 func (x *WebView) GetCustomCharset() string {
-
 	cret := xWebViewGetCustomCharset(x.GoPointer())
 	return cret
 }
@@ -2128,7 +2107,6 @@ var xWebViewGetDefaultContentSecurityPolicy func(uintptr) string
 
 // Gets the configured default Content-Security-Policy.
 func (x *WebView) GetDefaultContentSecurityPolicy() string {
-
 	cret := xWebViewGetDefaultContentSecurityPolicy(x.GoPointer())
 	return cret
 }
@@ -2137,7 +2115,6 @@ var xWebViewGetDisplayCaptureState func(uintptr) MediaCaptureState
 
 // Get the display capture state of a #WebKitWebView.
 func (x *WebView) GetDisplayCaptureState() MediaCaptureState {
-
 	cret := xWebViewGetDisplayCaptureState(x.GoPointer())
 	return cret
 }
@@ -2166,7 +2143,6 @@ var xWebViewGetEstimatedLoadProgress func(uintptr) float64
 // You can monitor the estimated progress of a load operation by
 // connecting to the notify::estimated-load-progress signal of @web_view.
 func (x *WebView) GetEstimatedLoadProgress() float64 {
-
 	cret := xWebViewGetEstimatedLoadProgress(x.GoPointer())
 	return cret
 }
@@ -2252,7 +2228,6 @@ var xWebViewGetIsMuted func(uintptr) bool
 
 // Gets the mute state of @web_view.
 func (x *WebView) GetIsMuted() bool {
-
 	cret := xWebViewGetIsMuted(x.GoPointer())
 	return cret
 }
@@ -2261,7 +2236,6 @@ var xWebViewGetIsWebProcessResponsive func(uintptr) bool
 
 // Get whether the current web process of a #WebKitWebView is responsive.
 func (x *WebView) GetIsWebProcessResponsive() bool {
-
 	cret := xWebViewGetIsWebProcessResponsive(x.GoPointer())
 	return cret
 }
@@ -2287,7 +2261,6 @@ var xWebViewGetMicrophoneCaptureState func(uintptr) MediaCaptureState
 
 // Get the microphone capture state of a #WebKitWebView.
 func (x *WebView) GetMicrophoneCaptureState() MediaCaptureState {
-
 	cret := xWebViewGetMicrophoneCaptureState(x.GoPointer())
 	return cret
 }
@@ -2314,7 +2287,6 @@ var xWebViewGetPageId func(uintptr) uint64
 // Get the identifier of the #WebKitWebPage corresponding to
 // the #WebKitWebView
 func (x *WebView) GetPageId() uint64 {
-
 	cret := xWebViewGetPageId(x.GoPointer())
 	return cret
 }
@@ -2323,7 +2295,6 @@ var xWebViewGetSessionState func(uintptr) *WebViewSessionState
 
 // Gets the current session state of @web_view
 func (x *WebView) GetSessionState() *WebViewSessionState {
-
 	cret := xWebViewGetSessionState(x.GoPointer())
 	return cret
 }
@@ -2368,9 +2339,7 @@ var xWebViewGetSnapshot func(uintptr, SnapshotRegion, SnapshotOptions, uintptr, 
 // call webkit_web_view_get_snapshot_finish() to get the result of the
 // operation.
 func (x *WebView) GetSnapshot(RegionVar SnapshotRegion, OptionsVar SnapshotOptions, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewGetSnapshot(x.GoPointer(), RegionVar, OptionsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewGetSnapshotFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -2391,7 +2360,6 @@ func (x *WebView) GetSnapshotFinish(ResultVar gio.AsyncResult) (*gdk.Texture, er
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xWebViewGetThemeColor func(uintptr, *gdk.RGBA) bool
@@ -2400,7 +2368,6 @@ var xWebViewGetThemeColor func(uintptr, *gdk.RGBA) bool
 // If the @web_view doesn't have a theme color it will fill the @rgba
 // with transparent black content.
 func (x *WebView) GetThemeColor(RgbaVar *gdk.RGBA) bool {
-
 	cret := xWebViewGetThemeColor(x.GoPointer(), RgbaVar)
 	return cret
 }
@@ -2412,7 +2379,6 @@ var xWebViewGetTitle func(uintptr) string
 // You can connect to notify::title signal of @web_view to
 // be notified when the title has been received.
 func (x *WebView) GetTitle() string {
-
 	cret := xWebViewGetTitle(x.GoPointer())
 	return cret
 }
@@ -2436,7 +2402,6 @@ var xWebViewGetTlsInfo func(uintptr, **gio.TlsCertificate, *gio.TlsCertificateFl
 // if the current #WebKitTLSErrorsPolicy is %WEBKIT_TLS_ERRORS_POLICY_FAIL, in
 // which case subresources that fail certificate verification will be blocked.
 func (x *WebView) GetTlsInfo(CertificateVar **gio.TlsCertificate, ErrorsVar *gio.TlsCertificateFlags) bool {
-
 	cret := xWebViewGetTlsInfo(x.GoPointer(), CertificateVar, ErrorsVar)
 	return cret
 }
@@ -2504,7 +2469,6 @@ var xWebViewGetUri func(uintptr) string
 // You can monitor the active URI by connecting to the notify::uri
 // signal of @web_view.
 func (x *WebView) GetUri() string {
-
 	cret := xWebViewGetUri(x.GoPointer())
 	return cret
 }
@@ -2530,7 +2494,6 @@ var xWebViewGetWebExtensionMode func(uintptr) WebExtensionMode
 
 // Get the view's #WebKitWebExtensionMode.
 func (x *WebView) GetWebExtensionMode() WebExtensionMode {
-
 	cret := xWebViewGetWebExtensionMode(x.GoPointer())
 	return cret
 }
@@ -2585,7 +2548,6 @@ var xWebViewGetZoomLevel func(uintptr) float64
 // Get the zoom level of @web_view, i.e. the factor by which the
 // view contents are scaled with respect to their original size.
 func (x *WebView) GetZoomLevel() float64 {
-
 	cret := xWebViewGetZoomLevel(x.GoPointer())
 	return cret
 }
@@ -2597,9 +2559,7 @@ var xWebViewGoBack func(uintptr)
 // You can monitor the load operation by connecting to
 // #WebKitWebView::load-changed signal.
 func (x *WebView) GoBack() {
-
 	xWebViewGoBack(x.GoPointer())
-
 }
 
 var xWebViewGoForward func(uintptr)
@@ -2609,9 +2569,7 @@ var xWebViewGoForward func(uintptr)
 // You can monitor the load operation by connecting to
 // #WebKitWebView::load-changed signal.
 func (x *WebView) GoForward() {
-
 	xWebViewGoForward(x.GoPointer())
-
 }
 
 var xWebViewGoToBackForwardListItem func(uintptr, uintptr)
@@ -2621,9 +2579,7 @@ var xWebViewGoToBackForwardListItem func(uintptr, uintptr)
 // You can monitor the load operation by connecting to
 // #WebKitWebView::load-changed signal.
 func (x *WebView) GoToBackForwardListItem(ListItemVar *BackForwardListItem) {
-
 	xWebViewGoToBackForwardListItem(x.GoPointer(), ListItemVar.GoPointer())
-
 }
 
 var xWebViewIsControlledByAutomation func(uintptr) bool
@@ -2634,7 +2590,6 @@ var xWebViewIsControlledByAutomation func(uintptr) bool
 // Only #WebKitWebView&lt;!-- --&gt;s controlled by automation can be used in an
 // automation session.
 func (x *WebView) IsControlledByAutomation() bool {
-
 	cret := xWebViewIsControlledByAutomation(x.GoPointer())
 	return cret
 }
@@ -2647,7 +2602,6 @@ var xWebViewIsEditable func(uintptr) bool
 // CONTENTEDITABLE attribute has been set on the element or one of its parent
 // elements. By default a #WebKitWebView is not editable.
 func (x *WebView) IsEditable() bool {
-
 	cret := xWebViewIsEditable(x.GoPointer())
 	return cret
 }
@@ -2662,7 +2616,6 @@ var xWebViewIsLoading func(uintptr) bool
 // details about the status of the load operation, for example to start a spinner
 // when the view is loading a page and stop it when it finishes.
 func (x *WebView) IsLoading() bool {
-
 	cret := xWebViewIsLoading(x.GoPointer())
 	return cret
 }
@@ -2676,7 +2629,6 @@ var xWebViewIsPlayingAudio func(uintptr) bool
 // is useful when the application wants to provide visual feedback when a
 // page is producing sound.
 func (x *WebView) IsPlayingAudio() bool {
-
 	cret := xWebViewIsPlayingAudio(x.GoPointer())
 	return cret
 }
@@ -2690,9 +2642,7 @@ var xWebViewLoadAlternateHtml func(uintptr, string, string, string)
 // error page, then the back-forward list is maintained appropriately.
 // For everything else this method works the same way as webkit_web_view_load_html().
 func (x *WebView) LoadAlternateHtml(ContentVar string, ContentUriVar string, BaseUriVar string) {
-
 	xWebViewLoadAlternateHtml(x.GoPointer(), ContentVar, ContentUriVar, BaseUriVar)
-
 }
 
 var xWebViewLoadBytes func(uintptr, *glib.Bytes, string, string, string)
@@ -2704,9 +2654,7 @@ var xWebViewLoadBytes func(uintptr, *glib.Bytes, string, string, string)
 // When @base_uri is %NULL, it defaults to "about:blank".
 // You can monitor the load operation by connecting to #WebKitWebView::load-changed signal.
 func (x *WebView) LoadBytes(BytesVar *glib.Bytes, MimeTypeVar string, EncodingVar string, BaseUriVar string) {
-
 	xWebViewLoadBytes(x.GoPointer(), BytesVar, MimeTypeVar, EncodingVar, BaseUriVar)
-
 }
 
 var xWebViewLoadHtml func(uintptr, string, string)
@@ -2722,9 +2670,7 @@ var xWebViewLoadHtml func(uintptr, string, string)
 // it defaults to "about:blank". The mime type of the document will be "text/html".
 // You can monitor the load operation by connecting to #WebKitWebView::load-changed signal.
 func (x *WebView) LoadHtml(ContentVar string, BaseUriVar string) {
-
 	xWebViewLoadHtml(x.GoPointer(), ContentVar, BaseUriVar)
-
 }
 
 var xWebViewLoadPlainText func(uintptr, string)
@@ -2734,9 +2680,7 @@ var xWebViewLoadPlainText func(uintptr, string)
 // The mime type of document will be "text/plain". You can monitor the load
 // operation by connecting to #WebKitWebView::load-changed signal.
 func (x *WebView) LoadPlainText(PlainTextVar string) {
-
 	xWebViewLoadPlainText(x.GoPointer(), PlainTextVar)
-
 }
 
 var xWebViewLoadRequest func(uintptr, uintptr)
@@ -2746,9 +2690,7 @@ var xWebViewLoadRequest func(uintptr, uintptr)
 // You can monitor the load operation by connecting to
 // #WebKitWebView::load-changed signal.
 func (x *WebView) LoadRequest(RequestVar *URIRequest) {
-
 	xWebViewLoadRequest(x.GoPointer(), RequestVar.GoPointer())
-
 }
 
 var xWebViewLoadUri func(uintptr, string)
@@ -2758,9 +2700,7 @@ var xWebViewLoadUri func(uintptr, string)
 // You can monitor the load operation by connecting to
 // #WebKitWebView::load-changed signal.
 func (x *WebView) LoadUri(UriVar string) {
-
 	xWebViewLoadUri(x.GoPointer(), UriVar)
-
 }
 
 var xWebViewReload func(uintptr)
@@ -2769,9 +2709,7 @@ var xWebViewReload func(uintptr)
 //
 // See also webkit_web_view_reload_bypass_cache().
 func (x *WebView) Reload() {
-
 	xWebViewReload(x.GoPointer())
-
 }
 
 var xWebViewReloadBypassCache func(uintptr)
@@ -2779,18 +2717,14 @@ var xWebViewReloadBypassCache func(uintptr)
 // Reloads the current contents of @web_view without
 // using any cached data.
 func (x *WebView) ReloadBypassCache() {
-
 	xWebViewReloadBypassCache(x.GoPointer())
-
 }
 
 var xWebViewRestoreSessionState func(uintptr, *WebViewSessionState)
 
 // Restore the @web_view session state from @state
 func (x *WebView) RestoreSessionState(StateVar *WebViewSessionState) {
-
 	xWebViewRestoreSessionState(x.GoPointer(), StateVar)
-
 }
 
 var xWebViewSave func(uintptr, SaveMode, uintptr, uintptr, uintptr)
@@ -2805,9 +2739,7 @@ var xWebViewSave func(uintptr, SaveMode, uintptr, uintptr, uintptr)
 // then call webkit_web_view_save_finish() to get the result of the
 // operation.
 func (x *WebView) Save(SaveModeVar SaveMode, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewSave(x.GoPointer(), SaveModeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewSaveFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -2828,7 +2760,6 @@ func (x *WebView) SaveFinish(ResultVar gio.AsyncResult) (*gio.InputStream, error
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xWebViewSaveToFile func(uintptr, uintptr, SaveMode, uintptr, uintptr, uintptr)
@@ -2843,9 +2774,7 @@ var xWebViewSaveToFile func(uintptr, uintptr, SaveMode, uintptr, uintptr, uintpt
 // then call webkit_web_view_save_to_file_finish() to get the result of the
 // operation.
 func (x *WebView) SaveToFile(FileVar gio.File, SaveModeVar SaveMode, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewSaveToFile(x.GoPointer(), FileVar.GoPointer(), SaveModeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewSaveToFileFinish func(uintptr, uintptr, **glib.Error) bool
@@ -2859,7 +2788,6 @@ func (x *WebView) SaveToFileFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebViewSendMessageToPage func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -2871,9 +2799,7 @@ var xWebViewSendMessageToPage func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be called. You can then call
 // webkit_web_view_send_message_to_page_finish() to get the message reply.
 func (x *WebView) SendMessageToPage(MessageVar *UserMessage, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebViewSendMessageToPage(x.GoPointer(), MessageVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebViewSendMessageToPageFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -2894,7 +2820,6 @@ func (x *WebView) SendMessageToPageFinish(ResultVar gio.AsyncResult) (*UserMessa
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xWebViewSetBackgroundColor func(uintptr, *gdk.RGBA)
@@ -2906,9 +2831,7 @@ var xWebViewSetBackgroundColor func(uintptr, *gdk.RGBA)
 // specifies a background color, it will take precedence over the @rgba color.
 // By default the @web_view background color is opaque white.
 func (x *WebView) SetBackgroundColor(RgbaVar *gdk.RGBA) {
-
 	xWebViewSetBackgroundColor(x.GoPointer(), RgbaVar)
-
 }
 
 var xWebViewSetCameraCaptureState func(uintptr, MediaCaptureState)
@@ -2919,9 +2842,7 @@ var xWebViewSetCameraCaptureState func(uintptr, MediaCaptureState)
 // state of the device has been set to %WEBKIT_MEDIA_CAPTURE_STATE_NONE it cannot be changed
 // anymore. The page can however request capture again using the mediaDevices API.
 func (x *WebView) SetCameraCaptureState(StateVar MediaCaptureState) {
-
 	xWebViewSetCameraCaptureState(x.GoPointer(), StateVar)
-
 }
 
 var xWebViewSetCorsAllowlist func(uintptr, []string)
@@ -2943,9 +2864,7 @@ var xWebViewSetCorsAllowlist func(uintptr, []string)
 // If this function is called multiple times, only the allowlist set by
 // the most recent call will be effective.
 func (x *WebView) SetCorsAllowlist(AllowlistVar []string) {
-
 	xWebViewSetCorsAllowlist(x.GoPointer(), AllowlistVar)
-
 }
 
 var xWebViewSetCustomCharset func(uintptr, string)
@@ -2957,9 +2876,7 @@ var xWebViewSetCustomCharset func(uintptr, string)
 // current page. Setting the custom character encoding to %NULL removes the character
 // encoding override.
 func (x *WebView) SetCustomCharset(CharsetVar string) {
-
 	xWebViewSetCustomCharset(x.GoPointer(), CharsetVar)
-
 }
 
 var xWebViewSetDisplayCaptureState func(uintptr, MediaCaptureState)
@@ -2970,9 +2887,7 @@ var xWebViewSetDisplayCaptureState func(uintptr, MediaCaptureState)
 // state of the device has been set to %WEBKIT_MEDIA_CAPTURE_STATE_NONE it cannot be changed
 // anymore. The page can however request capture again using the mediaDevices API.
 func (x *WebView) SetDisplayCaptureState(StateVar MediaCaptureState) {
-
 	xWebViewSetDisplayCaptureState(x.GoPointer(), StateVar)
-
 }
 
 var xWebViewSetEditable func(uintptr, bool)
@@ -2988,9 +2903,7 @@ var xWebViewSetEditable func(uintptr, bool)
 // document are editable. This function provides a way to make the contents
 // of a #WebKitWebView editable without altering the document or DOM structure.
 func (x *WebView) SetEditable(EditableVar bool) {
-
 	xWebViewSetEditable(x.GoPointer(), EditableVar)
-
 }
 
 var xWebViewSetInputMethodContext func(uintptr, uintptr)
@@ -3000,18 +2913,14 @@ var xWebViewSetInputMethodContext func(uintptr, uintptr)
 // Set the #WebKitInputMethodContext to be used by @web_view, or %NULL to not use any input method.
 // Note that the same #WebKitInputMethodContext can't be set on more than one #WebKitWebView at the same time.
 func (x *WebView) SetInputMethodContext(ContextVar *InputMethodContext) {
-
 	xWebViewSetInputMethodContext(x.GoPointer(), ContextVar.GoPointer())
-
 }
 
 var xWebViewSetIsMuted func(uintptr, bool)
 
 // Sets the mute state of @web_view.
 func (x *WebView) SetIsMuted(MutedVar bool) {
-
 	xWebViewSetIsMuted(x.GoPointer(), MutedVar)
-
 }
 
 var xWebViewSetMicrophoneCaptureState func(uintptr, MediaCaptureState)
@@ -3022,9 +2931,7 @@ var xWebViewSetMicrophoneCaptureState func(uintptr, MediaCaptureState)
 // state of the device has been set to %WEBKIT_MEDIA_CAPTURE_STATE_NONE it cannot be changed
 // anymore. The page can however request capture again using the mediaDevices API.
 func (x *WebView) SetMicrophoneCaptureState(StateVar MediaCaptureState) {
-
 	xWebViewSetMicrophoneCaptureState(x.GoPointer(), StateVar)
-
 }
 
 var xWebViewSetSettings func(uintptr, uintptr)
@@ -3037,9 +2944,7 @@ var xWebViewSetSettings func(uintptr, uintptr)
 // The same #WebKitSettings object can be shared
 // by multiple #WebKitWebView&lt;!-- --&gt;s.
 func (x *WebView) SetSettings(SettingsVar *Settings) {
-
 	xWebViewSetSettings(x.GoPointer(), SettingsVar.GoPointer())
-
 }
 
 var xWebViewSetZoomLevel func(uintptr, float64)
@@ -3049,9 +2954,7 @@ var xWebViewSetZoomLevel func(uintptr, float64)
 // Set the zoom level of @web_view, i.e. the factor by which the
 // view contents are scaled with respect to their original size.
 func (x *WebView) SetZoomLevel(ZoomLevelVar float64) {
-
 	xWebViewSetZoomLevel(x.GoPointer(), ZoomLevelVar)
-
 }
 
 var xWebViewStopLoading func(uintptr)
@@ -3063,9 +2966,7 @@ var xWebViewStopLoading func(uintptr)
 // #WebKitWebView::load-failed signal will be emitted with
 // %WEBKIT_NETWORK_ERROR_CANCELLED error.
 func (x *WebView) StopLoading() {
-
 	xWebViewStopLoading(x.GoPointer())
-
 }
 
 var xWebViewTerminateWebProcess func(uintptr)
@@ -3076,9 +2977,7 @@ var xWebViewTerminateWebProcess func(uintptr)
 // using this method, the #WebKitWebView::web-process-terminated signal is emitted with
 // %WEBKIT_WEB_PROCESS_TERMINATED_BY_API as the reason for termination.
 func (x *WebView) TerminateWebProcess() {
-
 	xWebViewTerminateWebProcess(x.GoPointer())
-
 }
 
 var xWebViewTryClose func(uintptr)
@@ -3090,9 +2989,7 @@ var xWebViewTryClose func(uintptr)
 // onbeforeunload event handler or the user confirms to close the page,
 // the #WebKitWebView::close signal is emitted, otherwise nothing happens.
 func (x *WebView) TryClose() {
-
 	xWebViewTryClose(x.GoPointer())
-
 }
 
 func (c *WebView) GoPointer() uintptr {
@@ -3337,7 +3234,6 @@ func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3361,7 +3257,6 @@ func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3421,7 +3316,6 @@ func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) u
 		cbFn := *cb
 
 		return cbFn(fa, ContextMenuVarp, HitTestResultVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3442,7 +3336,6 @@ func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3477,7 +3370,6 @@ func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
 
 		CreateCls := cbFn(fa, NavigationActionVarp)
 		return CreateCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3540,7 +3432,6 @@ func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionT
 		cbFn := *cb
 
 		return cbFn(fa, DecisionVarp, DecisionTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3567,7 +3458,6 @@ func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3589,7 +3479,6 @@ func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureConte
 		cbFn := *cb
 
 		cbFn(fa, EventVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3612,7 +3501,6 @@ func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3678,7 +3566,6 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, LoadEventVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3707,7 +3594,6 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr
 		cbFn := *cb
 
 		return cbFn(fa, LoadEventVarp, FailingUriVarp, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3735,7 +3621,6 @@ func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintp
 		cbFn := *cb
 
 		return cbFn(fa, FailingUriVarp, CertificateVarp, ErrorsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3762,7 +3647,6 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) 
 		cbFn := *cb
 
 		cbFn(fa, HitTestResultVarp, ModifiersVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3830,7 +3714,6 @@ func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint
 		cbFn := *cb
 
 		return cbFn(fa, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3858,7 +3741,6 @@ func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, PrintOperationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3884,7 +3766,6 @@ func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) u
 		cbFn := *cb
 
 		return cbFn(fa, QueryVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3909,7 +3790,6 @@ func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3932,7 +3812,6 @@ func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)
 		cbFn := *cb
 
 		cbFn(fa, ResourceVarp, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3958,7 +3837,6 @@ func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -3990,7 +3868,6 @@ func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32
 		cbFn := *cb
 
 		return cbFn(fa, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4020,7 +3897,6 @@ func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 
 		cbFn := *cb
 
 		return cbFn(fa, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4074,7 +3950,6 @@ func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, DialogVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4099,7 +3974,6 @@ func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint3
 		cbFn := *cb
 
 		return cbFn(fa, NotificationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4126,7 +4000,6 @@ func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool
 		cbFn := *cb
 
 		return cbFn(fa, MenuVarp, RectangleVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4156,7 +4029,6 @@ func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, RequestVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4183,7 +4055,6 @@ func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) ui
 		cbFn := *cb
 
 		return cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4204,7 +4075,6 @@ func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTermin
 		cbFn := *cb
 
 		cbFn(fa, ReasonVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -4221,9 +4091,7 @@ func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTermin
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *WebView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -4244,7 +4112,6 @@ func (x *WebView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *WebView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -4269,7 +4136,6 @@ func (x *WebView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *WebView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -4308,30 +4174,23 @@ func (x *WebView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *WebView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *WebView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *WebView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *WebView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -4344,9 +4203,7 @@ func (x *WebView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *WebView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -4354,9 +4211,7 @@ func (x *WebView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *WebView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -4365,9 +4220,7 @@ func (x *WebView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *WebView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -4389,9 +4242,7 @@ func (x *WebView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *WebView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -4401,9 +4252,7 @@ func (x *WebView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *WebView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -4425,9 +4274,7 @@ func (x *WebView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.
 //
 // ```
 func (x *WebView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -4437,9 +4284,7 @@ func (x *WebView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *WebView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -4462,9 +4307,7 @@ func (x *WebView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.Ac
 //
 // ```
 func (x *WebView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -4474,9 +4317,7 @@ func (x *WebView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *WebView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -4484,7 +4325,6 @@ func (x *WebView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *WebView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }

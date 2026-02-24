@@ -96,9 +96,7 @@ var xFlattenListModelSetModel func(uintptr, uintptr)
 
 // Sets a new model to be flattened.
 func (x *FlattenListModel) SetModel(ModelVar gio.ListModel) {
-
 	xFlattenListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 func (c *FlattenListModel) GoPointer() uintptr {
@@ -130,7 +128,6 @@ func (x *FlattenListModel) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *FlattenListModel) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -144,7 +141,6 @@ func (x *FlattenListModel) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *FlattenListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -155,7 +151,6 @@ func (x *FlattenListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *FlattenListModel) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -206,9 +201,7 @@ func (x *FlattenListModel) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *FlattenListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -217,9 +210,7 @@ func (x *FlattenListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, A
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *FlattenListModel) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -238,9 +229,7 @@ func (x *FlattenListModel) GetSection(PositionVar uint32, OutStartVar *uint32, O
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *FlattenListModel) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
@@ -262,5 +251,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlattenListModelGetModel, libs, "gtk_flatten_list_model_get_model")
 	core.PuregoSafeRegister(&xFlattenListModelGetModelForItem, libs, "gtk_flatten_list_model_get_model_for_item")
 	core.PuregoSafeRegister(&xFlattenListModelSetModel, libs, "gtk_flatten_list_model_set_model")
-
 }

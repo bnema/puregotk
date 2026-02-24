@@ -44,7 +44,6 @@ var xNewPatternSpec func(string) *PatternSpec
 
 // Compiles a pattern to a [type@GLib.PatternSpec].
 func NewPatternSpec(PatternVar string) *PatternSpec {
-
 	cret := xNewPatternSpec(PatternVar)
 	return cret
 }
@@ -53,7 +52,6 @@ var xPatternSpecCopy func(uintptr) *PatternSpec
 
 // Copies @pspec in a new [type@GLib.PatternSpec].
 func (x *PatternSpec) Copy() *PatternSpec {
-
 	cret := xPatternSpecCopy(x.GoPointer())
 	return cret
 }
@@ -63,7 +61,6 @@ var xPatternSpecEqual func(uintptr, *PatternSpec) bool
 // Compares two compiled pattern specs and returns whether they will
 // match the same set of strings.
 func (x *PatternSpec) Equal(Pspec2Var *PatternSpec) bool {
-
 	cret := xPatternSpecEqual(x.GoPointer(), Pspec2Var)
 	return cret
 }
@@ -72,9 +69,7 @@ var xPatternSpecFree func(uintptr)
 
 // Frees the memory allocated for the [type@GLib.PatternSpec].
 func (x *PatternSpec) Free() {
-
 	xPatternSpecFree(x.GoPointer())
-
 }
 
 var xPatternSpecMatch func(uintptr, uint, string, string) bool
@@ -99,7 +94,6 @@ var xPatternSpecMatch func(uintptr, uint, string, string) bool
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar string) bool {
-
 	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVar)
 	return cret
 }
@@ -112,7 +106,6 @@ var xPatternSpecMatchString func(uintptr, string) bool
 // matched against more than one pattern, consider using
 // [method@GLib.PatternSpec.match] instead while supplying the reversed string.
 func (x *PatternSpec) MatchString(StringVar string) bool {
-
 	cret := xPatternSpecMatchString(x.GoPointer(), StringVar)
 	return cret
 }
@@ -139,7 +132,6 @@ var xPatternMatch func(*PatternSpec, uint32, string, string) bool
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint32, StringVar string, StringReversedVar string) bool {
-
 	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVar)
 	return cret
 }
@@ -153,7 +145,6 @@ var xPatternMatchSimple func(string, string) bool
 // the pattern once with [ctor@GLib.PatternSpec.new] and call
 // [method@GLib.PatternSpec.match_string] repeatedly.
 func PatternMatchSimple(PatternVar string, StringVar string) bool {
-
 	cret := xPatternMatchSimple(PatternVar, StringVar)
 	return cret
 }
@@ -166,7 +157,6 @@ var xPatternMatchString func(*PatternSpec, string) bool
 // matched against more than one pattern, consider using
 // [method@GLib.PatternSpec.match] instead while supplying the reversed string.
 func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
-
 	cret := xPatternMatchString(PspecVar, StringVar)
 	return cret
 }
@@ -196,5 +186,4 @@ func init() {
 	core.PuregoSafeRegister(&xPatternSpecFree, libs, "g_pattern_spec_free")
 	core.PuregoSafeRegister(&xPatternSpecMatch, libs, "g_pattern_spec_match")
 	core.PuregoSafeRegister(&xPatternSpecMatchString, libs, "g_pattern_spec_match_string")
-
 }

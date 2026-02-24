@@ -38,7 +38,6 @@ func DirOpen(PathVar string, FlagsVar uint32) (*Dir, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDirClose func(uintptr)
@@ -52,9 +51,7 @@ var xDirClose func(uintptr)
 // [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
 // [method@GLib.Dir.close] on it.
 func (x *Dir) Close() {
-
 	xDirClose(x.GoPointer())
-
 }
 
 var xDirReadName func(uintptr) string
@@ -73,7 +70,6 @@ var xDirReadName func(uintptr) string
 // On Windows, as is true of all GLib functions which operate on
 // filenames, the returned name is in UTF-8.
 func (x *Dir) ReadName() string {
-
 	cret := xDirReadName(x.GoPointer())
 	return cret
 }
@@ -82,7 +78,6 @@ var xDirRef func(uintptr) *Dir
 
 // Increment the reference count of `dir`.
 func (x *Dir) Ref() *Dir {
-
 	cret := xDirRef(x.GoPointer())
 	return cret
 }
@@ -92,9 +87,7 @@ var xDirRewind func(uintptr)
 // Resets the given directory. The next call to g_dir_read_name()
 // will return the first entry again.
 func (x *Dir) Rewind() {
-
 	xDirRewind(x.GoPointer())
-
 }
 
 var xDirUnref func(uintptr)
@@ -111,9 +104,7 @@ var xDirUnref func(uintptr)
 // [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
 // [method@GLib.Dir.close] on it.
 func (x *Dir) Unref() {
-
 	xDirUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -137,5 +128,4 @@ func init() {
 	core.PuregoSafeRegister(&xDirRef, libs, "g_dir_ref")
 	core.PuregoSafeRegister(&xDirRewind, libs, "g_dir_rewind")
 	core.PuregoSafeRegister(&xDirUnref, libs, "g_dir_unref")
-
 }

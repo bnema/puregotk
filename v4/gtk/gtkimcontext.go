@@ -818,7 +818,6 @@ var xIMContextActivateOsk func(uintptr, uintptr) bool
 // to the platform, other environmental factors may result in an on-screen
 // keyboard effectively not showing up.
 func (x *IMContext) ActivateOsk(EventVar *gdk.Event) bool {
-
 	cret := xIMContextActivateOsk(x.GoPointer(), EventVar.GoPointer())
 	return cret
 }
@@ -843,7 +842,6 @@ var xIMContextDeleteSurrounding func(uintptr, int32, int32) bool
 // substitutions in the existing text in response to new input.
 // It is not useful for applications.
 func (x *IMContext) DeleteSurrounding(OffsetVar int32, NCharsVar int32) bool {
-
 	cret := xIMContextDeleteSurrounding(x.GoPointer(), OffsetVar, NCharsVar)
 	return cret
 }
@@ -854,7 +852,6 @@ var xIMContextFilterKey func(uintptr, bool, uintptr, uintptr, uint32, uint32, gd
 // to another input method without necessarily having a `GdkEvent`
 // available.
 func (x *IMContext) FilterKey(PressVar bool, SurfaceVar *gdk.Surface, DeviceVar *gdk.Device, TimeVar uint32, KeycodeVar uint32, StateVar gdk.ModifierType, GroupVar int32) bool {
-
 	cret := xIMContextFilterKey(x.GoPointer(), PressVar, SurfaceVar.GoPointer(), DeviceVar.GoPointer(), TimeVar, KeycodeVar, StateVar, GroupVar)
 	return cret
 }
@@ -867,7 +864,6 @@ var xIMContextFilterKeypress func(uintptr, uintptr) bool
 // If this function returns %TRUE, then no further processing
 // should be done for this key event.
 func (x *IMContext) FilterKeypress(EventVar *gdk.Event) bool {
-
 	cret := xIMContextFilterKeypress(x.GoPointer(), EventVar.GoPointer())
 	return cret
 }
@@ -880,9 +876,7 @@ var xIMContextFocusIn func(uintptr)
 // The input method may, for example, change the displayed
 // feedback to reflect this change.
 func (x *IMContext) FocusIn() {
-
 	xIMContextFocusIn(x.GoPointer())
-
 }
 
 var xIMContextFocusOut func(uintptr)
@@ -893,9 +887,7 @@ var xIMContextFocusOut func(uintptr)
 // The input method may, for example, change the displayed
 // feedback or reset the contexts state to reflect this change.
 func (x *IMContext) FocusOut() {
-
 	xIMContextFocusOut(x.GoPointer())
-
 }
 
 var xIMContextGetPreeditString func(uintptr, *string, **pango.AttrList, *int32)
@@ -905,9 +897,7 @@ var xIMContextGetPreeditString func(uintptr, *string, **pango.AttrList, *int32)
 //
 // This string should be displayed inserted at the insertion point.
 func (x *IMContext) GetPreeditString(StrVar *string, AttrsVar **pango.AttrList, CursorPosVar *int32) {
-
 	xIMContextGetPreeditString(x.GoPointer(), StrVar, AttrsVar, CursorPosVar)
-
 }
 
 var xIMContextGetSurrounding func(uintptr, *string, *int32) bool
@@ -928,7 +918,6 @@ var xIMContextGetSurrounding func(uintptr, *string, *int32) bool
 // `::retrieve-surrounding` signal, so input methods must be prepared to
 // function without context.
 func (x *IMContext) GetSurrounding(TextVar *string, CursorIndexVar *int32) bool {
-
 	cret := xIMContextGetSurrounding(x.GoPointer(), TextVar, CursorIndexVar)
 	return cret
 }
@@ -951,7 +940,6 @@ var xIMContextGetSurroundingWithSelection func(uintptr, *string, *int32, *int32)
 // `::retrieve-surrounding` signal, so input methods must be prepared to
 // function without context.
 func (x *IMContext) GetSurroundingWithSelection(TextVar *string, CursorIndexVar *int32, AnchorIndexVar *int32) bool {
-
 	cret := xIMContextGetSurroundingWithSelection(x.GoPointer(), TextVar, CursorIndexVar, AnchorIndexVar)
 	return cret
 }
@@ -963,9 +951,7 @@ var xIMContextReset func(uintptr)
 //
 // This will typically cause the input method to clear the preedit state.
 func (x *IMContext) Reset() {
-
 	xIMContextReset(x.GoPointer())
-
 }
 
 var xIMContextSetClientWidget func(uintptr, uintptr)
@@ -976,9 +962,7 @@ var xIMContextSetClientWidget func(uintptr, uintptr)
 // used in order to correctly position status windows, and may
 // also be used for purposes internal to the input method.
 func (x *IMContext) SetClientWidget(WidgetVar *Widget) {
-
 	xIMContextSetClientWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xIMContextSetCursorLocation func(uintptr, *gdk.Rectangle)
@@ -988,9 +972,7 @@ var xIMContextSetCursorLocation func(uintptr, *gdk.Rectangle)
 //
 // The location is relative to the client widget.
 func (x *IMContext) SetCursorLocation(AreaVar *gdk.Rectangle) {
-
 	xIMContextSetCursorLocation(x.GoPointer(), AreaVar)
-
 }
 
 var xIMContextSetSurrounding func(uintptr, string, int32, int32)
@@ -1002,9 +984,7 @@ var xIMContextSetSurrounding func(uintptr, string, int32, int32)
 // [signal@Gtk.IMContext::retrieve-surrounding] signal, and will
 // likely have no effect if called at other times.
 func (x *IMContext) SetSurrounding(TextVar string, LenVar int32, CursorIndexVar int32) {
-
 	xIMContextSetSurrounding(x.GoPointer(), TextVar, LenVar, CursorIndexVar)
-
 }
 
 var xIMContextSetSurroundingWithSelection func(uintptr, string, int32, int32, int32)
@@ -1014,9 +994,7 @@ var xIMContextSetSurroundingWithSelection func(uintptr, string, int32, int32, in
 // [signal@Gtk.IMContext::retrieve_surrounding] signal, and will likely
 // have no effect if called at other times.
 func (x *IMContext) SetSurroundingWithSelection(TextVar string, LenVar int32, CursorIndexVar int32, AnchorIndexVar int32) {
-
 	xIMContextSetSurroundingWithSelection(x.GoPointer(), TextVar, LenVar, CursorIndexVar, AnchorIndexVar)
-
 }
 
 var xIMContextSetUsePreedit func(uintptr, bool)
@@ -1028,9 +1006,7 @@ var xIMContextSetUsePreedit func(uintptr, bool)
 // may use some other method to display feedback, such as displaying
 // it in a child of the root window.
 func (x *IMContext) SetUsePreedit(UsePreeditVar bool) {
-
 	xIMContextSetUsePreedit(x.GoPointer(), UsePreeditVar)
-
 }
 
 func (c *IMContext) GoPointer() uintptr {
@@ -1064,7 +1040,6 @@ func (x *IMContext) ConnectCommit(cb *func(IMContext, string)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, StrVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1085,7 +1060,6 @@ func (x *IMContext) ConnectDeleteSurrounding(cb *func(IMContext, int32, int32) b
 		cbFn := *cb
 
 		return cbFn(fa, OffsetVarp, NCharsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1109,7 +1083,6 @@ func (x *IMContext) ConnectPreeditChanged(cb *func(IMContext)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1130,7 +1103,6 @@ func (x *IMContext) ConnectPreeditEnd(cb *func(IMContext)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1151,7 +1123,6 @@ func (x *IMContext) ConnectPreeditStart(cb *func(IMContext)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1175,7 +1146,6 @@ func (x *IMContext) ConnectRetrieveSurrounding(cb *func(IMContext) bool) uint32 
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1211,5 +1181,4 @@ func init() {
 	core.PuregoSafeRegister(&xIMContextSetSurrounding, libs, "gtk_im_context_set_surrounding")
 	core.PuregoSafeRegister(&xIMContextSetSurroundingWithSelection, libs, "gtk_im_context_set_surrounding_with_selection")
 	core.PuregoSafeRegister(&xIMContextSetUsePreedit, libs, "gtk_im_context_set_use_preedit")
-
 }

@@ -126,7 +126,6 @@ var xFixedLayoutChildGetTransform func(uintptr) *gsk.Transform
 
 // Retrieves the transformation of the child.
 func (x *FixedLayoutChild) GetTransform() *gsk.Transform {
-
 	cret := xFixedLayoutChildGetTransform(x.GoPointer())
 	return cret
 }
@@ -135,9 +134,7 @@ var xFixedLayoutChildSetTransform func(uintptr, *gsk.Transform)
 
 // Sets the transformation of the child of a `GtkFixedLayout`.
 func (x *FixedLayoutChild) SetTransform(TransformVar *gsk.Transform) {
-
 	xFixedLayoutChildSetTransform(x.GoPointer(), TransformVar)
-
 }
 
 func (c *FixedLayoutChild) GoPointer() uintptr {
@@ -188,5 +185,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xFixedLayoutChildGetTransform, libs, "gtk_fixed_layout_child_get_transform")
 	core.PuregoSafeRegister(&xFixedLayoutChildSetTransform, libs, "gtk_fixed_layout_child_set_transform")
-
 }

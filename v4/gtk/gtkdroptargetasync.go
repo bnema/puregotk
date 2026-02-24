@@ -90,7 +90,6 @@ var xDropTargetAsyncGetActions func(uintptr) gdk.DragAction
 
 // Gets the actions that this drop target supports.
 func (x *DropTargetAsync) GetActions() gdk.DragAction {
-
 	cret := xDropTargetAsyncGetActions(x.GoPointer())
 	return cret
 }
@@ -101,7 +100,6 @@ var xDropTargetAsyncGetFormats func(uintptr) *gdk.ContentFormats
 //
 // If the result is %NULL, all formats are expected to be supported.
 func (x *DropTargetAsync) GetFormats() *gdk.ContentFormats {
-
 	cret := xDropTargetAsyncGetFormats(x.GoPointer())
 	return cret
 }
@@ -114,27 +112,21 @@ var xDropTargetAsyncRejectDrop func(uintptr, uintptr)
 // on whether to accept a drag or not until after reading
 // the data.
 func (x *DropTargetAsync) RejectDrop(DropVar *gdk.Drop) {
-
 	xDropTargetAsyncRejectDrop(x.GoPointer(), DropVar.GoPointer())
-
 }
 
 var xDropTargetAsyncSetActions func(uintptr, gdk.DragAction)
 
 // Sets the actions that this drop target supports.
 func (x *DropTargetAsync) SetActions(ActionsVar gdk.DragAction) {
-
 	xDropTargetAsyncSetActions(x.GoPointer(), ActionsVar)
-
 }
 
 var xDropTargetAsyncSetFormats func(uintptr, *gdk.ContentFormats)
 
 // Sets the data formats that this drop target will accept.
 func (x *DropTargetAsync) SetFormats(FormatsVar *gdk.ContentFormats) {
-
 	xDropTargetAsyncSetFormats(x.GoPointer(), FormatsVar)
-
 }
 
 func (c *DropTargetAsync) GoPointer() uintptr {
@@ -192,7 +184,6 @@ func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool)
 		cbFn := *cb
 
 		return cbFn(fa, DropVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -214,7 +205,6 @@ func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, fl
 		cbFn := *cb
 
 		return cbFn(fa, DropVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -237,7 +227,6 @@ func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) u
 		cbFn := *cb
 
 		cbFn(fa, DropVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -257,7 +246,6 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, f
 		cbFn := *cb
 
 		return cbFn(fa, DropVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -290,7 +278,6 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64
 		cbFn := *cb
 
 		return cbFn(fa, DropVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -318,5 +305,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropTargetAsyncRejectDrop, libs, "gtk_drop_target_async_reject_drop")
 	core.PuregoSafeRegister(&xDropTargetAsyncSetActions, libs, "gtk_drop_target_async_set_actions")
 	core.PuregoSafeRegister(&xDropTargetAsyncSetFormats, libs, "gtk_drop_target_async_set_formats")
-
 }

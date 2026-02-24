@@ -37,7 +37,6 @@ var xTriangleAlloc func() *Triangle
 //
 // The contents of the returned structure are undefined.
 func TriangleAlloc() *Triangle {
-
 	cret := xTriangleAlloc()
 	return cret
 }
@@ -46,7 +45,6 @@ var xTriangleContainsPoint func(uintptr, *Point3D) bool
 
 // Checks whether the given triangle @t contains the point @p.
 func (x *Triangle) ContainsPoint(PVar *Point3D) bool {
-
 	cret := xTriangleContainsPoint(x.GoPointer(), PVar)
 	return cret
 }
@@ -55,7 +53,6 @@ var xTriangleEqual func(uintptr, *Triangle) bool
 
 // Checks whether the two given #graphene_triangle_t are equal.
 func (x *Triangle) Equal(BVar *Triangle) bool {
-
 	cret := xTriangleEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -64,16 +61,13 @@ var xTriangleFree func(uintptr)
 
 // Frees the resources allocated by graphene_triangle_alloc().
 func (x *Triangle) Free() {
-
 	xTriangleFree(x.GoPointer())
-
 }
 
 var xTriangleGetArea func(uintptr) float32
 
 // Computes the area of the given #graphene_triangle_t.
 func (x *Triangle) GetArea() float32 {
-
 	cret := xTriangleGetArea(x.GoPointer())
 	return cret
 }
@@ -97,7 +91,6 @@ var xTriangleGetBarycoords func(uintptr, *Point3D, *Vec2) bool
 //   - `res.x = u`
 //   - `res.y = v`
 func (x *Triangle) GetBarycoords(PVar *Point3D, ResVar *Vec2) bool {
-
 	cret := xTriangleGetBarycoords(x.GoPointer(), PVar, ResVar)
 	return cret
 }
@@ -106,9 +99,7 @@ var xTriangleGetBoundingBox func(uintptr, *Box)
 
 // Computes the bounding box of the given #graphene_triangle_t.
 func (x *Triangle) GetBoundingBox(ResVar *Box) {
-
 	xTriangleGetBoundingBox(x.GoPointer(), ResVar)
-
 }
 
 var xTriangleGetMidpoint func(uintptr, *Point3D)
@@ -118,27 +109,21 @@ var xTriangleGetMidpoint func(uintptr, *Point3D)
 // The midpoint G is the [centroid](https://en.wikipedia.org/wiki/Centroid#Triangle_centroid)
 // of the triangle, i.e. the intersection of its medians.
 func (x *Triangle) GetMidpoint(ResVar *Point3D) {
-
 	xTriangleGetMidpoint(x.GoPointer(), ResVar)
-
 }
 
 var xTriangleGetNormal func(uintptr, *Vec3)
 
 // Computes the normal vector of the given #graphene_triangle_t.
 func (x *Triangle) GetNormal(ResVar *Vec3) {
-
 	xTriangleGetNormal(x.GoPointer(), ResVar)
-
 }
 
 var xTriangleGetPlane func(uintptr, *Plane)
 
 // Computes the plane based on the vertices of the given #graphene_triangle_t.
 func (x *Triangle) GetPlane(ResVar *Plane) {
-
 	xTriangleGetPlane(x.GoPointer(), ResVar)
-
 }
 
 var xTriangleGetPoints func(uintptr, *Point3D, *Point3D, *Point3D)
@@ -146,9 +131,7 @@ var xTriangleGetPoints func(uintptr, *Point3D, *Point3D, *Point3D)
 // Retrieves the three vertices of the given #graphene_triangle_t and returns
 // their coordinates as #graphene_point3d_t.
 func (x *Triangle) GetPoints(AVar *Point3D, BVar *Point3D, CVar *Point3D) {
-
 	xTriangleGetPoints(x.GoPointer(), AVar, BVar, CVar)
-
 }
 
 var xTriangleGetUv func(uintptr, *Point3D, *Vec2, *Vec2, *Vec2, *Vec2) bool
@@ -166,7 +149,6 @@ var xTriangleGetUv func(uintptr, *Point3D, *Vec2, *Vec2, *Vec2, *Vec2) bool
 //
 // See also: graphene_triangle_get_barycoords()
 func (x *Triangle) GetUv(PVar *Point3D, UvAVar *Vec2, UvBVar *Vec2, UvCVar *Vec2, ResVar *Vec2) bool {
-
 	cret := xTriangleGetUv(x.GoPointer(), PVar, UvAVar, UvBVar, UvCVar, ResVar)
 	return cret
 }
@@ -175,9 +157,7 @@ var xTriangleGetVertices func(uintptr, *Vec3, *Vec3, *Vec3)
 
 // Retrieves the three vertices of the given #graphene_triangle_t.
 func (x *Triangle) GetVertices(AVar *Vec3, BVar *Vec3, CVar *Vec3) {
-
 	xTriangleGetVertices(x.GoPointer(), AVar, BVar, CVar)
-
 }
 
 var xTriangleInitFromFloat func(uintptr, [3]float32, [3]float32, [3]float32) *Triangle
@@ -186,7 +166,6 @@ var xTriangleInitFromFloat func(uintptr, [3]float32, [3]float32, [3]float32) *Tr
 // of floating point values, each representing the coordinates of
 // a point in 3D space.
 func (x *Triangle) InitFromFloat(AVar [3]float32, BVar [3]float32, CVar [3]float32) *Triangle {
-
 	cret := xTriangleInitFromFloat(x.GoPointer(), AVar, BVar, CVar)
 	return cret
 }
@@ -195,7 +174,6 @@ var xTriangleInitFromPoint3d func(uintptr, *Point3D, *Point3D, *Point3D) *Triang
 
 // Initializes a #graphene_triangle_t using the three given 3D points.
 func (x *Triangle) InitFromPoint3d(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Triangle {
-
 	cret := xTriangleInitFromPoint3d(x.GoPointer(), AVar, BVar, CVar)
 	return cret
 }
@@ -204,7 +182,6 @@ var xTriangleInitFromVec3 func(uintptr, *Vec3, *Vec3, *Vec3) *Triangle
 
 // Initializes a #graphene_triangle_t using the three given vectors.
 func (x *Triangle) InitFromVec3(AVar *Vec3, BVar *Vec3, CVar *Vec3) *Triangle {
-
 	cret := xTriangleInitFromVec3(x.GoPointer(), AVar, BVar, CVar)
 	return cret
 }
@@ -240,5 +217,4 @@ func init() {
 	core.PuregoSafeRegister(&xTriangleInitFromFloat, libs, "graphene_triangle_init_from_float")
 	core.PuregoSafeRegister(&xTriangleInitFromPoint3d, libs, "graphene_triangle_init_from_point3d")
 	core.PuregoSafeRegister(&xTriangleInitFromVec3, libs, "graphene_triangle_init_from_vec3")
-
 }

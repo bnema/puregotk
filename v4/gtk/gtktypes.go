@@ -43,7 +43,6 @@ var xNewBitsetEmpty func() *Bitset
 
 // Creates a new empty bitset.
 func NewBitsetEmpty() *Bitset {
-
 	cret := xNewBitsetEmpty()
 	return cret
 }
@@ -52,7 +51,6 @@ var xNewBitsetRange func(uint32, uint32) *Bitset
 
 // Creates a bitset with the given range set.
 func NewBitsetRange(StartVar uint32, NItemsVar uint32) *Bitset {
-
 	cret := xNewBitsetRange(StartVar, NItemsVar)
 	return cret
 }
@@ -61,7 +59,6 @@ var xBitsetAdd func(uintptr, uint32) bool
 
 // Adds @value to @self if it wasn't part of it before.
 func (x *Bitset) Add(ValueVar uint32) bool {
-
 	cret := xBitsetAdd(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -71,9 +68,7 @@ var xBitsetAddRange func(uintptr, uint32, uint32)
 // Adds all values from @start (inclusive) to @start + @n_items
 // (exclusive) in @self.
 func (x *Bitset) AddRange(StartVar uint32, NItemsVar uint32) {
-
 	xBitsetAddRange(x.GoPointer(), StartVar, NItemsVar)
-
 }
 
 var xBitsetAddRangeClosed func(uintptr, uint32, uint32)
@@ -81,9 +76,7 @@ var xBitsetAddRangeClosed func(uintptr, uint32, uint32)
 // Adds the closed range [@first, @last], so @first, @last and all
 // values in between. @first must be smaller than @last.
 func (x *Bitset) AddRangeClosed(FirstVar uint32, LastVar uint32) {
-
 	xBitsetAddRangeClosed(x.GoPointer(), FirstVar, LastVar)
-
 }
 
 var xBitsetAddRectangle func(uintptr, uint32, uint32, uint32, uint32)
@@ -91,16 +84,13 @@ var xBitsetAddRectangle func(uintptr, uint32, uint32, uint32, uint32)
 // Interprets the values as a 2-dimensional boolean grid with the given @stride
 // and inside that grid, adds a rectangle with the given @width and @height.
 func (x *Bitset) AddRectangle(StartVar uint32, WidthVar uint32, HeightVar uint32, StrideVar uint32) {
-
 	xBitsetAddRectangle(x.GoPointer(), StartVar, WidthVar, HeightVar, StrideVar)
-
 }
 
 var xBitsetContains func(uintptr, uint32) bool
 
 // Checks if the given @value has been added to @self
 func (x *Bitset) Contains(ValueVar uint32) bool {
-
 	cret := xBitsetContains(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -109,7 +99,6 @@ var xBitsetCopy func(uintptr) *Bitset
 
 // Creates a copy of @self.
 func (x *Bitset) Copy() *Bitset {
-
 	cret := xBitsetCopy(x.GoPointer())
 	return cret
 }
@@ -125,16 +114,13 @@ var xBitsetDifference func(uintptr, *Bitset)
 // It is allowed for @self and @other to be the same bitset. The bitset
 // will be emptied in that case.
 func (x *Bitset) Difference(OtherVar *Bitset) {
-
 	xBitsetDifference(x.GoPointer(), OtherVar)
-
 }
 
 var xBitsetEquals func(uintptr, *Bitset) bool
 
 // Returns %TRUE if @self and @other contain the same values.
 func (x *Bitset) Equals(OtherVar *Bitset) bool {
-
 	cret := xBitsetEquals(x.GoPointer(), OtherVar)
 	return cret
 }
@@ -145,7 +131,6 @@ var xBitsetGetMaximum func(uintptr) uint32
 //
 // If @self is empty, 0 is returned.
 func (x *Bitset) GetMaximum() uint32 {
-
 	cret := xBitsetGetMaximum(x.GoPointer())
 	return cret
 }
@@ -156,7 +141,6 @@ var xBitsetGetMinimum func(uintptr) uint32
 //
 // If @self is empty, `G_MAXUINT` is returned.
 func (x *Bitset) GetMinimum() uint32 {
-
 	cret := xBitsetGetMinimum(x.GoPointer())
 	return cret
 }
@@ -167,7 +151,6 @@ var xBitsetGetNth func(uintptr, uint32) uint32
 //
 // If @nth is &gt;= the size of @self, 0 is returned.
 func (x *Bitset) GetNth(NthVar uint32) uint32 {
-
 	cret := xBitsetGetNth(x.GoPointer(), NthVar)
 	return cret
 }
@@ -183,7 +166,6 @@ var xBitsetGetSize func(uintptr) uint64
 // are sure this cannot happen (it can't with `GListModel`), be sure
 // to use a 64bit type.
 func (x *Bitset) GetSize() uint64 {
-
 	cret := xBitsetGetSize(x.GoPointer())
 	return cret
 }
@@ -197,7 +179,6 @@ var xBitsetGetSizeInRange func(uintptr, uint32, uint32) uint64
 // set, the return value is `G_MAXUINT + 1`. Unless you are sure this cannot
 // happen (it can't with `GListModel`), be sure to use a 64bit type.
 func (x *Bitset) GetSizeInRange(FirstVar uint32, LastVar uint32) uint64 {
-
 	cret := xBitsetGetSizeInRange(x.GoPointer(), FirstVar, LastVar)
 	return cret
 }
@@ -211,16 +192,13 @@ var xBitsetIntersect func(uintptr, *Bitset)
 // It is allowed for @self and @other to be the same bitset. Nothing will
 // happen in that case.
 func (x *Bitset) Intersect(OtherVar *Bitset) {
-
 	xBitsetIntersect(x.GoPointer(), OtherVar)
-
 }
 
 var xBitsetIsEmpty func(uintptr) bool
 
 // Check if no value is contained in bitset.
 func (x *Bitset) IsEmpty() bool {
-
 	cret := xBitsetIsEmpty(x.GoPointer())
 	return cret
 }
@@ -229,7 +207,6 @@ var xBitsetRef func(uintptr) *Bitset
 
 // Acquires a reference on the given `GtkBitset`.
 func (x *Bitset) Ref() *Bitset {
-
 	cret := xBitsetRef(x.GoPointer())
 	return cret
 }
@@ -238,7 +215,6 @@ var xBitsetRemove func(uintptr, uint32) bool
 
 // Removes @value from @self if it was part of it before.
 func (x *Bitset) Remove(ValueVar uint32) bool {
-
 	cret := xBitsetRemove(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -247,9 +223,7 @@ var xBitsetRemoveAll func(uintptr)
 
 // Removes all values from the bitset so that it is empty again.
 func (x *Bitset) RemoveAll() {
-
 	xBitsetRemoveAll(x.GoPointer())
-
 }
 
 var xBitsetRemoveRange func(uintptr, uint32, uint32)
@@ -257,9 +231,7 @@ var xBitsetRemoveRange func(uintptr, uint32, uint32)
 // Removes all values from @start (inclusive) to @start + @n_items (exclusive)
 // in @self.
 func (x *Bitset) RemoveRange(StartVar uint32, NItemsVar uint32) {
-
 	xBitsetRemoveRange(x.GoPointer(), StartVar, NItemsVar)
-
 }
 
 var xBitsetRemoveRangeClosed func(uintptr, uint32, uint32)
@@ -267,9 +239,7 @@ var xBitsetRemoveRangeClosed func(uintptr, uint32, uint32)
 // Removes the closed range [@first, @last], so @first, @last and all
 // values in between. @first must be smaller than @last.
 func (x *Bitset) RemoveRangeClosed(FirstVar uint32, LastVar uint32) {
-
 	xBitsetRemoveRangeClosed(x.GoPointer(), FirstVar, LastVar)
-
 }
 
 var xBitsetRemoveRectangle func(uintptr, uint32, uint32, uint32, uint32)
@@ -277,9 +247,7 @@ var xBitsetRemoveRectangle func(uintptr, uint32, uint32, uint32, uint32)
 // Interprets the values as a 2-dimensional boolean grid with the given @stride
 // and inside that grid, removes a rectangle with the given @width and @height.
 func (x *Bitset) RemoveRectangle(StartVar uint32, WidthVar uint32, HeightVar uint32, StrideVar uint32) {
-
 	xBitsetRemoveRectangle(x.GoPointer(), StartVar, WidthVar, HeightVar, StrideVar)
-
 }
 
 var xBitsetShiftLeft func(uintptr, uint32)
@@ -288,9 +256,7 @@ var xBitsetShiftLeft func(uintptr, uint32)
 //
 // Values smaller than @amount are discarded.
 func (x *Bitset) ShiftLeft(AmountVar uint32) {
-
 	xBitsetShiftLeft(x.GoPointer(), AmountVar)
-
 }
 
 var xBitsetShiftRight func(uintptr, uint32)
@@ -299,9 +265,7 @@ var xBitsetShiftRight func(uintptr, uint32)
 //
 // Values that end up too large to be held in a #guint are discarded.
 func (x *Bitset) ShiftRight(AmountVar uint32) {
-
 	xBitsetShiftRight(x.GoPointer(), AmountVar)
-
 }
 
 var xBitsetSplice func(uintptr, uint32, uint32, uint32)
@@ -317,9 +281,7 @@ var xBitsetSplice func(uintptr, uint32, uint32, uint32)
 // larger than @position by @added spaces to the right. This frees
 // up space that can then be filled.
 func (x *Bitset) Splice(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	xBitsetSplice(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 var xBitsetSubtract func(uintptr, *Bitset)
@@ -331,9 +293,7 @@ var xBitsetSubtract func(uintptr, *Bitset)
 // It is allowed for @self and @other to be the same bitset. The bitset
 // will be emptied in that case.
 func (x *Bitset) Subtract(OtherVar *Bitset) {
-
 	xBitsetSubtract(x.GoPointer(), OtherVar)
-
 }
 
 var xBitsetUnion func(uintptr, *Bitset)
@@ -345,9 +305,7 @@ var xBitsetUnion func(uintptr, *Bitset)
 // It is allowed for @self and @other to be the same bitset. Nothing will
 // happen in that case.
 func (x *Bitset) Union(OtherVar *Bitset) {
-
 	xBitsetUnion(x.GoPointer(), OtherVar)
-
 }
 
 var xBitsetUnref func(uintptr)
@@ -357,9 +315,7 @@ var xBitsetUnref func(uintptr)
 // If the reference was the last, the resources associated to the @self are
 // freed.
 func (x *Bitset) Unref() {
-
 	xBitsetUnref(x.GoPointer())
-
 }
 
 // A CSS style change.
@@ -393,7 +349,6 @@ var xNewScrollInfo func() *ScrollInfo
 
 // Creates a new scroll info for scrolling an element into view.
 func NewScrollInfo() *ScrollInfo {
-
 	cret := xNewScrollInfo()
 	return cret
 }
@@ -402,7 +357,6 @@ var xScrollInfoGetEnableHorizontal func(uintptr) bool
 
 // Checks if horizontal scrolling is enabled.
 func (x *ScrollInfo) GetEnableHorizontal() bool {
-
 	cret := xScrollInfoGetEnableHorizontal(x.GoPointer())
 	return cret
 }
@@ -411,7 +365,6 @@ var xScrollInfoGetEnableVertical func(uintptr) bool
 
 // Checks if vertical scrolling is enabled.
 func (x *ScrollInfo) GetEnableVertical() bool {
-
 	cret := xScrollInfoGetEnableVertical(x.GoPointer())
 	return cret
 }
@@ -420,7 +373,6 @@ var xScrollInfoRef func(uintptr) *ScrollInfo
 
 // Increases the reference count of a `GtkScrollInfo` by one.
 func (x *ScrollInfo) Ref() *ScrollInfo {
-
 	cret := xScrollInfoRef(x.GoPointer())
 	return cret
 }
@@ -429,18 +381,14 @@ var xScrollInfoSetEnableHorizontal func(uintptr, bool)
 
 // Turns horizontal scrolling on or off.
 func (x *ScrollInfo) SetEnableHorizontal(HorizontalVar bool) {
-
 	xScrollInfoSetEnableHorizontal(x.GoPointer(), HorizontalVar)
-
 }
 
 var xScrollInfoSetEnableVertical func(uintptr, bool)
 
 // Turns vertical scrolling on or off.
 func (x *ScrollInfo) SetEnableVertical(VerticalVar bool) {
-
 	xScrollInfoSetEnableVertical(x.GoPointer(), VerticalVar)
-
 }
 
 var xScrollInfoUnref func(uintptr)
@@ -449,9 +397,7 @@ var xScrollInfoUnref func(uintptr)
 //
 // If the resulting reference count is zero, frees the self.
 func (x *ScrollInfo) Unref() {
-
 	xScrollInfoUnref(x.GoPointer())
-
 }
 
 const (
@@ -522,5 +468,4 @@ func init() {
 	core.PuregoSafeRegister(&xScrollInfoSetEnableHorizontal, libs, "gtk_scroll_info_set_enable_horizontal")
 	core.PuregoSafeRegister(&xScrollInfoSetEnableVertical, libs, "gtk_scroll_info_set_enable_vertical")
 	core.PuregoSafeRegister(&xScrollInfoUnref, libs, "gtk_scroll_info_unref")
-
 }

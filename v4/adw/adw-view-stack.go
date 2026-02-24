@@ -235,7 +235,6 @@ var xViewStackGetEnableTransitions func(uintptr) bool
 // [property@ViewStack:transition-running] to know when the transition is
 // running.
 func (x *ViewStack) GetEnableTransitions() bool {
-
 	cret := xViewStackGetEnableTransitions(x.GoPointer())
 	return cret
 }
@@ -244,7 +243,6 @@ var xViewStackGetHhomogeneous func(uintptr) bool
 
 // Gets whether @self is horizontally homogeneous.
 func (x *ViewStack) GetHhomogeneous() bool {
-
 	cret := xViewStackGetHhomogeneous(x.GoPointer())
 	return cret
 }
@@ -290,7 +288,6 @@ var xViewStackGetTransitionDuration func(uintptr) uint32
 
 // Gets the transition animation duration for @self.
 func (x *ViewStack) GetTransitionDuration() uint32 {
-
 	cret := xViewStackGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -303,7 +300,6 @@ var xViewStackGetTransitionRunning func(uintptr) bool
 // then immediately to `FALSE`, so it's possible to rely on its notifications
 // to know that a transition has happened.
 func (x *ViewStack) GetTransitionRunning() bool {
-
 	cret := xViewStackGetTransitionRunning(x.GoPointer())
 	return cret
 }
@@ -312,7 +308,6 @@ var xViewStackGetVhomogeneous func(uintptr) bool
 
 // Gets whether @self is vertically homogeneous.
 func (x *ViewStack) GetVhomogeneous() bool {
-
 	cret := xViewStackGetVhomogeneous(x.GoPointer())
 	return cret
 }
@@ -338,7 +333,6 @@ var xViewStackGetVisibleChildName func(uintptr) string
 
 // Returns the name of the currently visible child of @self.
 func (x *ViewStack) GetVisibleChildName() string {
-
 	cret := xViewStackGetVisibleChildName(x.GoPointer())
 	return cret
 }
@@ -347,18 +341,14 @@ var xViewStackRemove func(uintptr, uintptr)
 
 // Removes a child widget from @self.
 func (x *ViewStack) Remove(ChildVar *gtk.Widget) {
-
 	xViewStackRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xViewStackSetEnableTransitions func(uintptr, bool)
 
 // Sets whether @self uses a crossfade transition between pages.
 func (x *ViewStack) SetEnableTransitions(EnableTransitionsVar bool) {
-
 	xViewStackSetEnableTransitions(x.GoPointer(), EnableTransitionsVar)
-
 }
 
 var xViewStackSetHhomogeneous func(uintptr, bool)
@@ -371,9 +361,7 @@ var xViewStackSetHhomogeneous func(uintptr, bool)
 // If it's `FALSE`, the stack may change width when a different child becomes
 // visible.
 func (x *ViewStack) SetHhomogeneous(HhomogeneousVar bool) {
-
 	xViewStackSetHhomogeneous(x.GoPointer(), HhomogeneousVar)
-
 }
 
 var xViewStackSetTransitionDuration func(uintptr, uint32)
@@ -382,9 +370,7 @@ var xViewStackSetTransitionDuration func(uintptr, uint32)
 //
 // Only used when [property@ViewStack:enable-transitions] is set to `TRUE`.
 func (x *ViewStack) SetTransitionDuration(DurationVar uint32) {
-
 	xViewStackSetTransitionDuration(x.GoPointer(), DurationVar)
-
 }
 
 var xViewStackSetVhomogeneous func(uintptr, bool)
@@ -397,18 +383,14 @@ var xViewStackSetVhomogeneous func(uintptr, bool)
 // If it's `FALSE`, the stack may change height when a different child becomes
 // visible.
 func (x *ViewStack) SetVhomogeneous(VhomogeneousVar bool) {
-
 	xViewStackSetVhomogeneous(x.GoPointer(), VhomogeneousVar)
-
 }
 
 var xViewStackSetVisibleChild func(uintptr, uintptr)
 
 // Makes @child the visible child of @self.
 func (x *ViewStack) SetVisibleChild(ChildVar *gtk.Widget) {
-
 	xViewStackSetVisibleChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xViewStackSetVisibleChildName func(uintptr, string)
@@ -417,9 +399,7 @@ var xViewStackSetVisibleChildName func(uintptr, string)
 //
 // See [property@ViewStack:visible-child].
 func (x *ViewStack) SetVisibleChildName(NameVar string) {
-
 	xViewStackSetVisibleChildName(x.GoPointer(), NameVar)
-
 }
 
 func (c *ViewStack) GoPointer() uintptr {
@@ -580,9 +560,7 @@ func (x *ViewStack) GetPropertyVisibleChildName() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ViewStack) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -603,7 +581,6 @@ func (x *ViewStack) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ViewStack) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -628,7 +605,6 @@ func (x *ViewStack) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ViewStack) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -667,30 +643,23 @@ func (x *ViewStack) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ViewStack) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ViewStack) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ViewStack) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ViewStack) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -703,9 +672,7 @@ func (x *ViewStack) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ViewStack) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -713,9 +680,7 @@ func (x *ViewStack) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ViewStack) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -724,9 +689,7 @@ func (x *ViewStack) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ViewStack) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -748,9 +711,7 @@ func (x *ViewStack) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *ViewStack) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -760,9 +721,7 @@ func (x *ViewStack) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStack) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -784,9 +743,7 @@ func (x *ViewStack) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gt
 //
 // ```
 func (x *ViewStack) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -796,9 +753,7 @@ func (x *ViewStack) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStack) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -821,9 +776,7 @@ func (x *ViewStack) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.
 //
 // ```
 func (x *ViewStack) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -833,9 +786,7 @@ func (x *ViewStack) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStack) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -843,7 +794,6 @@ func (x *ViewStack) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessibl
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ViewStack) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -869,7 +819,6 @@ var xViewStackPageGetBadgeNumber func(uintptr) uint32
 
 // Gets the badge number for this page.
 func (x *ViewStackPage) GetBadgeNumber() uint32 {
-
 	cret := xViewStackPageGetBadgeNumber(x.GoPointer())
 	return cret
 }
@@ -895,7 +844,6 @@ var xViewStackPageGetIconName func(uintptr) string
 
 // Gets the icon name of the page.
 func (x *ViewStackPage) GetIconName() string {
-
 	cret := xViewStackPageGetIconName(x.GoPointer())
 	return cret
 }
@@ -904,7 +852,6 @@ var xViewStackPageGetName func(uintptr) string
 
 // Gets the name of the page.
 func (x *ViewStackPage) GetName() string {
-
 	cret := xViewStackPageGetName(x.GoPointer())
 	return cret
 }
@@ -913,7 +860,6 @@ var xViewStackPageGetNeedsAttention func(uintptr) bool
 
 // Gets whether the page requires the user attention.
 func (x *ViewStackPage) GetNeedsAttention() bool {
-
 	cret := xViewStackPageGetNeedsAttention(x.GoPointer())
 	return cret
 }
@@ -922,7 +868,6 @@ var xViewStackPageGetTitle func(uintptr) string
 
 // Gets the page title.
 func (x *ViewStackPage) GetTitle() string {
-
 	cret := xViewStackPageGetTitle(x.GoPointer())
 	return cret
 }
@@ -931,7 +876,6 @@ var xViewStackPageGetUseUnderline func(uintptr) bool
 
 // Gets whether underlines in the page title indicate mnemonics.
 func (x *ViewStackPage) GetUseUnderline() bool {
-
 	cret := xViewStackPageGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -943,7 +887,6 @@ var xViewStackPageGetVisible func(uintptr) bool
 // This is independent from the [property@Gtk.Widget:visible]
 // property of its widget.
 func (x *ViewStackPage) GetVisible() bool {
-
 	cret := xViewStackPageGetVisible(x.GoPointer())
 	return cret
 }
@@ -957,27 +900,21 @@ var xViewStackPageSetBadgeNumber func(uintptr, uint32)
 //
 // It can be used together with [property@ViewStack{age}:needs-attention].
 func (x *ViewStackPage) SetBadgeNumber(BadgeNumberVar uint32) {
-
 	xViewStackPageSetBadgeNumber(x.GoPointer(), BadgeNumberVar)
-
 }
 
 var xViewStackPageSetIconName func(uintptr, string)
 
 // Sets the icon name of the page.
 func (x *ViewStackPage) SetIconName(IconNameVar string) {
-
 	xViewStackPageSetIconName(x.GoPointer(), IconNameVar)
-
 }
 
 var xViewStackPageSetName func(uintptr, string)
 
 // Sets the name of the page.
 func (x *ViewStackPage) SetName(NameVar string) {
-
 	xViewStackPageSetName(x.GoPointer(), NameVar)
-
 }
 
 var xViewStackPageSetNeedsAttention func(uintptr, bool)
@@ -986,27 +923,21 @@ var xViewStackPageSetNeedsAttention func(uintptr, bool)
 //
 // [class@ViewSwitcher] will display it as a dot next to the page icon.
 func (x *ViewStackPage) SetNeedsAttention(NeedsAttentionVar bool) {
-
 	xViewStackPageSetNeedsAttention(x.GoPointer(), NeedsAttentionVar)
-
 }
 
 var xViewStackPageSetTitle func(uintptr, string)
 
 // Sets the page title.
 func (x *ViewStackPage) SetTitle(TitleVar string) {
-
 	xViewStackPageSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xViewStackPageSetUseUnderline func(uintptr, bool)
 
 // Sets whether underlines in the page title indicate mnemonics.
 func (x *ViewStackPage) SetUseUnderline(UseUnderlineVar bool) {
-
 	xViewStackPageSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 var xViewStackPageSetVisible func(uintptr, bool)
@@ -1016,9 +947,7 @@ var xViewStackPageSetVisible func(uintptr, bool)
 // This is independent from the [property@Gtk.Widget:visible] property of
 // [property@ViewStackPage:child].
 func (x *ViewStackPage) SetVisible(VisibleVar bool) {
-
 	xViewStackPageSetVisible(x.GoPointer(), VisibleVar)
-
 }
 
 func (c *ViewStackPage) GoPointer() uintptr {
@@ -1181,9 +1110,7 @@ func (x *ViewStackPage) GetPropertyVisible() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ViewStackPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1204,7 +1131,6 @@ func (x *ViewStackPage) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ViewStackPage) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1229,7 +1155,6 @@ func (x *ViewStackPage) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ViewStackPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1268,30 +1193,23 @@ func (x *ViewStackPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ViewStackPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ViewStackPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ViewStackPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ViewStackPage) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1304,9 +1222,7 @@ func (x *ViewStackPage) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ViewStackPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1314,9 +1230,7 @@ func (x *ViewStackPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ViewStackPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1325,9 +1239,7 @@ func (x *ViewStackPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ViewStackPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1349,9 +1261,7 @@ func (x *ViewStackPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState
 //
 // ```
 func (x *ViewStackPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1361,9 +1271,7 @@ func (x *ViewStackPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStackPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1385,9 +1293,7 @@ func (x *ViewStackPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar 
 //
 // ```
 func (x *ViewStackPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1397,9 +1303,7 @@ func (x *ViewStackPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStackPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1422,9 +1326,7 @@ func (x *ViewStackPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []
 //
 // ```
 func (x *ViewStackPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1434,9 +1336,7 @@ func (x *ViewStackPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ViewStackPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // An auxiliary class used by [class@ViewStack].
@@ -1485,9 +1385,7 @@ var xViewStackPagesSetSelectedPage func(uintptr, uintptr)
 //
 // See [property@ViewStack:visible-child].
 func (x *ViewStackPages) SetSelectedPage(PageVar *ViewStackPage) {
-
 	xViewStackPagesSetSelectedPage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 func (c *ViewStackPages) GoPointer() uintptr {
@@ -1511,7 +1409,6 @@ func (c *ViewStackPages) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *ViewStackPages) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -1525,7 +1422,6 @@ func (x *ViewStackPages) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ViewStackPages) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -1536,7 +1432,6 @@ func (x *ViewStackPages) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ViewStackPages) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -1587,9 +1482,7 @@ func (x *ViewStackPages) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ViewStackPages) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the set containing all currently selected items in the model.
@@ -1598,7 +1491,6 @@ func (x *ViewStackPages) ItemsChanged(PositionVar uint32, RemovedVar uint32, Add
 // consider using [method@Gtk.SelectionModel.is_selected] or if you are only
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *ViewStackPages) GetSelection() *gtk.Bitset {
-
 	cret := gtk.XGtkSelectionModelGetSelection(x.GoPointer())
 	return cret
 }
@@ -1611,35 +1503,30 @@ func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
 func (x *ViewStackPages) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *gtk.Bitset {
-
 	cret := gtk.XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
 
 // Checks if the given item is selected.
 func (x *ViewStackPages) IsSelected(PositionVar uint32) bool {
-
 	cret := gtk.XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to select all items in the model.
 func (x *ViewStackPages) SelectAll() bool {
-
 	cret := gtk.XGtkSelectionModelSelectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to select an item in the model.
 func (x *ViewStackPages) SelectItem(PositionVar uint32, UnselectRestVar bool) bool {
-
 	cret := gtk.XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
 func (x *ViewStackPages) SelectRange(PositionVar uint32, NItemsVar uint32, UnselectRestVar bool) bool {
-
 	cret := gtk.XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -1649,9 +1536,7 @@ func (x *ViewStackPages) SelectRange(PositionVar uint32, NItemsVar uint32, Unsel
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *ViewStackPages) SelectionChanged(PositionVar uint32, NItemsVar uint32) {
-
 	gtk.XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Make selection changes.
@@ -1691,28 +1576,24 @@ func (x *ViewStackPages) SelectionChanged(PositionVar uint32, NItemsVar uint32) 
 // same bitset, which would mean that every item in the set should
 // be selected.
 func (x *ViewStackPages) SetSelection(SelectedVar *gtk.Bitset, MaskVar *gtk.Bitset) bool {
-
 	cret := gtk.XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
 	return cret
 }
 
 // Requests to unselect all items in the model.
 func (x *ViewStackPages) UnselectAll() bool {
-
 	cret := gtk.XGtkSelectionModelUnselectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to unselect an item in the model.
 func (x *ViewStackPages) UnselectItem(PositionVar uint32) bool {
-
 	cret := gtk.XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
 func (x *ViewStackPages) UnselectRange(PositionVar uint32, NItemsVar uint32) bool {
-
 	cret := gtk.XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
@@ -1777,5 +1658,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xViewStackPagesGetSelectedPage, libs, "adw_view_stack_pages_get_selected_page")
 	core.PuregoSafeRegister(&xViewStackPagesSetSelectedPage, libs, "adw_view_stack_pages_set_selected_page")
-
 }

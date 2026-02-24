@@ -106,5 +106,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererPixbufGLibType, libs, "gtk_cell_renderer_pixbuf_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererPixbuf, libs, "gtk_cell_renderer_pixbuf_new")
-
 }

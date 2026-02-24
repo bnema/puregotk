@@ -13,9 +13,7 @@ var xNetworkingInit func()
 // you only need to call it if you directly call system networking
 // functions (without calling any GLib networking functions first).
 func NetworkingInit() {
-
 	xNetworkingInit()
-
 }
 
 func init() {
@@ -31,5 +29,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xNetworkingInit, libs, "g_networking_init")
-
 }

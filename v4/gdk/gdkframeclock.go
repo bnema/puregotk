@@ -117,9 +117,7 @@ var xFrameClockBeginUpdating func(uintptr)
 // times and frames will be requested until gdk_frame_clock_end_updating()
 // is called the same number of times.
 func (x *FrameClock) BeginUpdating() {
-
 	xFrameClockBeginUpdating(x.GoPointer())
-
 }
 
 var xFrameClockEndUpdating func(uintptr)
@@ -128,16 +126,13 @@ var xFrameClockEndUpdating func(uintptr)
 //
 // See the documentation for [method@Gdk.FrameClock.begin_updating].
 func (x *FrameClock) EndUpdating() {
-
 	xFrameClockEndUpdating(x.GoPointer())
-
 }
 
 var xFrameClockGetCurrentTimings func(uintptr) *FrameTimings
 
 // Gets the frame timings for the current frame.
 func (x *FrameClock) GetCurrentTimings() *FrameTimings {
-
 	cret := xFrameClockGetCurrentTimings(x.GoPointer())
 	return cret
 }
@@ -147,7 +142,6 @@ var xFrameClockGetFps func(uintptr) float64
 // Calculates the current frames-per-second, based on the
 // frame timings of @frame_clock.
 func (x *FrameClock) GetFps() float64 {
-
 	cret := xFrameClockGetFps(x.GoPointer())
 	return cret
 }
@@ -157,7 +151,6 @@ var xFrameClockGetFrameCounter func(uintptr) int64
 // `GdkFrameClock` maintains a 64-bit counter that increments for
 // each frame drawn.
 func (x *FrameClock) GetFrameCounter() int64 {
-
 	cret := xFrameClockGetFrameCounter(x.GoPointer())
 	return cret
 }
@@ -172,7 +165,6 @@ var xFrameClockGetFrameTime func(uintptr) int64
 // the actual previous frame time, or if that’s too old, an updated
 // time.
 func (x *FrameClock) GetFrameTime() int64 {
-
 	cret := xFrameClockGetFrameTime(x.GoPointer())
 	return cret
 }
@@ -188,7 +180,6 @@ var xFrameClockGetHistoryStart func(uintptr) int64
 // [method@Gdk.FrameClock.get_history_start] and
 // [method@Gdk.FrameClock.get_frame_counter], inclusive.
 func (x *FrameClock) GetHistoryStart() int64 {
-
 	cret := xFrameClockGetHistoryStart(x.GoPointer())
 	return cret
 }
@@ -203,9 +194,7 @@ var xFrameClockGetRefreshInfo func(uintptr, int64, *int64, *int64)
 // predicts a presentation time that is a multiple of the refresh
 // interval after the last presentation time, and later than @base_time.
 func (x *FrameClock) GetRefreshInfo(BaseTimeVar int64, RefreshIntervalReturnVar *int64, PresentationTimeReturnVar *int64) {
-
 	xFrameClockGetRefreshInfo(x.GoPointer(), BaseTimeVar, RefreshIntervalReturnVar, PresentationTimeReturnVar)
-
 }
 
 var xFrameClockGetTimings func(uintptr, int64) *FrameTimings
@@ -217,7 +206,6 @@ var xFrameClockGetTimings func(uintptr, int64) *FrameTimings
 // [method@Gdk.FrameTimings.get_complete] and
 // [method@Gdk.FrameClock.get_history_start].
 func (x *FrameClock) GetTimings(FrameCounterVar int64) *FrameTimings {
-
 	cret := xFrameClockGetTimings(x.GoPointer(), FrameCounterVar)
 	return cret
 }
@@ -236,9 +224,7 @@ var xFrameClockRequestPhase func(uintptr, FrameClockPhase)
 // since this allows GTK to adjust system parameters to get maximally
 // smooth animations.
 func (x *FrameClock) RequestPhase(PhaseVar FrameClockPhase) {
-
 	xFrameClockRequestPhase(x.GoPointer(), PhaseVar)
-
 }
 
 func (c *FrameClock) GoPointer() uintptr {
@@ -267,7 +253,6 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -289,7 +274,6 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -312,7 +296,6 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -336,7 +319,6 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -362,7 +344,6 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -385,7 +366,6 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -411,7 +391,6 @@ func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -444,5 +423,4 @@ func init() {
 	core.PuregoSafeRegister(&xFrameClockGetRefreshInfo, libs, "gdk_frame_clock_get_refresh_info")
 	core.PuregoSafeRegister(&xFrameClockGetTimings, libs, "gdk_frame_clock_get_timings")
 	core.PuregoSafeRegister(&xFrameClockRequestPhase, libs, "gdk_frame_clock_request_phase")
-
 }

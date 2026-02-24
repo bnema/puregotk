@@ -141,16 +141,13 @@ var xDragSourceDragCancel func(uintptr)
 
 // Cancels a currently ongoing drag operation.
 func (x *DragSource) DragCancel() {
-
 	xDragSourceDragCancel(x.GoPointer())
-
 }
 
 var xDragSourceGetActions func(uintptr) gdk.DragAction
 
 // Gets the actions that are currently set on the `GtkDragSource`.
 func (x *DragSource) GetActions() gdk.DragAction {
-
 	cret := xDragSourceGetActions(x.GoPointer())
 	return cret
 }
@@ -201,9 +198,7 @@ var xDragSourceSetActions func(uintptr, gdk.DragAction)
 // This function can be called before a drag is started,
 // or in a handler for the [signal@Gtk.DragSource::prepare] signal.
 func (x *DragSource) SetActions(ActionsVar gdk.DragAction) {
-
 	xDragSourceSetActions(x.GoPointer(), ActionsVar)
-
 }
 
 var xDragSourceSetContent func(uintptr, uintptr)
@@ -219,9 +214,7 @@ var xDragSourceSetContent func(uintptr, uintptr)
 // You may consider setting the content provider back to
 // %NULL in a [signal@Gtk.DragSource::drag-end] signal handler.
 func (x *DragSource) SetContent(ContentVar *gdk.ContentProvider) {
-
 	xDragSourceSetContent(x.GoPointer(), ContentVar.GoPointer())
-
 }
 
 var xDragSourceSetIcon func(uintptr, uintptr, int32, int32)
@@ -237,9 +230,7 @@ var xDragSourceSetIcon func(uintptr, uintptr, int32, int32)
 // a [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] signal handler.
 func (x *DragSource) SetIcon(PaintableVar gdk.Paintable, HotXVar int32, HotYVar int32) {
-
 	xDragSourceSetIcon(x.GoPointer(), PaintableVar.GoPointer(), HotXVar, HotYVar)
-
 }
 
 func (c *DragSource) GoPointer() uintptr {
@@ -269,7 +260,6 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, DragVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -293,7 +283,6 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 		cbFn := *cb
 
 		return cbFn(fa, DragVarp, ReasonVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -317,7 +306,6 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 
 		cbFn := *cb
 
 		cbFn(fa, DragVarp, DeleteDataVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -343,7 +331,6 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.C
 
 		PrepareCls := cbFn(fa, XVarp, YVarp)
 		return PrepareCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -373,5 +360,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSourceSetActions, libs, "gtk_drag_source_set_actions")
 	core.PuregoSafeRegister(&xDragSourceSetContent, libs, "gtk_drag_source_set_content")
 	core.PuregoSafeRegister(&xDragSourceSetIcon, libs, "gtk_drag_source_set_icon")
-
 }

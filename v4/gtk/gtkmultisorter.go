@@ -70,9 +70,7 @@ var xMultiSorterAppend func(uintptr, uintptr)
 // @self will consult all existing sorters before it will
 // sort with the given @sorter.
 func (x *MultiSorter) Append(SorterVar *Sorter) {
-
 	xMultiSorterAppend(x.GoPointer(), SorterVar.GoPointer())
-
 }
 
 var xMultiSorterRemove func(uintptr, uint32)
@@ -82,9 +80,7 @@ var xMultiSorterRemove func(uintptr, uint32)
 //
 // If @position is larger than the number of sorters, nothing happens.
 func (x *MultiSorter) Remove(PositionVar uint32) {
-
 	xMultiSorterRemove(x.GoPointer(), PositionVar)
-
 }
 
 func (c *MultiSorter) GoPointer() uintptr {
@@ -116,7 +112,6 @@ func (x *MultiSorter) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *MultiSorter) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -130,7 +125,6 @@ func (x *MultiSorter) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *MultiSorter) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -141,7 +135,6 @@ func (x *MultiSorter) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *MultiSorter) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -192,9 +185,7 @@ func (x *MultiSorter) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *MultiSorter) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -202,7 +193,6 @@ func (x *MultiSorter) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedV
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MultiSorter) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -225,5 +215,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xMultiSorterAppend, libs, "gtk_multi_sorter_append")
 	core.PuregoSafeRegister(&xMultiSorterRemove, libs, "gtk_multi_sorter_remove")
-
 }

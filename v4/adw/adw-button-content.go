@@ -112,7 +112,6 @@ var xButtonContentGetCanShrink func(uintptr) bool
 
 // gets whether the button can be smaller than the natural size of its contents.
 func (x *ButtonContent) GetCanShrink() bool {
-
 	cret := xButtonContentGetCanShrink(x.GoPointer())
 	return cret
 }
@@ -121,7 +120,6 @@ var xButtonContentGetIconName func(uintptr) string
 
 // Gets the name of the displayed icon.
 func (x *ButtonContent) GetIconName() string {
-
 	cret := xButtonContentGetIconName(x.GoPointer())
 	return cret
 }
@@ -130,7 +128,6 @@ var xButtonContentGetLabel func(uintptr) string
 
 // Gets the displayed label.
 func (x *ButtonContent) GetLabel() string {
-
 	cret := xButtonContentGetLabel(x.GoPointer())
 	return cret
 }
@@ -139,7 +136,6 @@ var xButtonContentGetUseUnderline func(uintptr) bool
 
 // Gets whether an underline in the text indicates a mnemonic.
 func (x *ButtonContent) GetUseUnderline() bool {
-
 	cret := xButtonContentGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -152,9 +148,7 @@ var xButtonContentSetCanShrink func(uintptr, bool)
 //
 // See [method@Gtk.Button.set_can_shrink].
 func (x *ButtonContent) SetCanShrink(CanShrinkVar bool) {
-
 	xButtonContentSetCanShrink(x.GoPointer(), CanShrinkVar)
-
 }
 
 var xButtonContentSetIconName func(uintptr, string)
@@ -163,18 +157,14 @@ var xButtonContentSetIconName func(uintptr, string)
 //
 // If empty, the icon is not shown.
 func (x *ButtonContent) SetIconName(IconNameVar string) {
-
 	xButtonContentSetIconName(x.GoPointer(), IconNameVar)
-
 }
 
 var xButtonContentSetLabel func(uintptr, string)
 
 // Sets the displayed label.
 func (x *ButtonContent) SetLabel(LabelVar string) {
-
 	xButtonContentSetLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xButtonContentSetUseUnderline func(uintptr, bool)
@@ -185,9 +175,7 @@ var xButtonContentSetUseUnderline func(uintptr, bool)
 //
 // See [property@ButtonContent:label].
 func (x *ButtonContent) SetUseUnderline(UseUnderlineVar bool) {
-
 	xButtonContentSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 func (c *ButtonContent) GoPointer() uintptr {
@@ -299,9 +287,7 @@ func (x *ButtonContent) GetPropertyUseUnderline() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ButtonContent) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -322,7 +308,6 @@ func (x *ButtonContent) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ButtonContent) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -347,7 +332,6 @@ func (x *ButtonContent) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ButtonContent) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -386,30 +370,23 @@ func (x *ButtonContent) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ButtonContent) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ButtonContent) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ButtonContent) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ButtonContent) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -422,9 +399,7 @@ func (x *ButtonContent) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ButtonContent) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -432,9 +407,7 @@ func (x *ButtonContent) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ButtonContent) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -443,9 +416,7 @@ func (x *ButtonContent) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ButtonContent) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -467,9 +438,7 @@ func (x *ButtonContent) UpdatePlatformState(StateVar gtk.AccessiblePlatformState
 //
 // ```
 func (x *ButtonContent) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -479,9 +448,7 @@ func (x *ButtonContent) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *ButtonContent) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -503,9 +470,7 @@ func (x *ButtonContent) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar 
 //
 // ```
 func (x *ButtonContent) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -515,9 +480,7 @@ func (x *ButtonContent) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *ButtonContent) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -540,9 +503,7 @@ func (x *ButtonContent) UpdateRelationValue(NRelationsVar int32, RelationsVar []
 //
 // ```
 func (x *ButtonContent) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -552,9 +513,7 @@ func (x *ButtonContent) UpdateState(FirstStateVar gtk.AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ButtonContent) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -562,7 +521,6 @@ func (x *ButtonContent) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ButtonContent) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -591,5 +549,4 @@ func init() {
 	core.PuregoSafeRegister(&xButtonContentSetIconName, libs, "adw_button_content_set_icon_name")
 	core.PuregoSafeRegister(&xButtonContentSetLabel, libs, "adw_button_content_set_label")
 	core.PuregoSafeRegister(&xButtonContentSetUseUnderline, libs, "adw_button_content_set_use_underline")
-
 }

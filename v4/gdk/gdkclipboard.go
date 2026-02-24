@@ -85,7 +85,6 @@ var xClipboardGetFormats func(uintptr) *ContentFormats
 
 // Gets the formats that the clipboard can provide its current contents in.
 func (x *Clipboard) GetFormats() *ContentFormats {
-
 	cret := xClipboardGetFormats(x.GoPointer())
 	return cret
 }
@@ -100,7 +99,6 @@ var xClipboardIsLocal func(uintptr) bool
 // Note that [method@Gdk.Clipboard.get_content] may return %NULL
 // even on a local clipboard. In this case the clipboard is empty.
 func (x *Clipboard) IsLocal() bool {
-
 	cret := xClipboardIsLocal(x.GoPointer())
 	return cret
 }
@@ -113,9 +111,7 @@ var xClipboardReadAsync func(uintptr, []string, int32, uintptr, uintptr, uintptr
 // The clipboard will choose the most suitable mime type from the given list
 // to fulfill the request, preferring the ones listed first.
 func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xClipboardReadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
@@ -138,7 +134,6 @@ func (x *Clipboard) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xClipboardReadTextAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -149,9 +144,7 @@ var xClipboardReadTextAsync func(uintptr, uintptr, uintptr, uintptr)
 // Use that function or [method@Gdk.Clipboard.read_async] directly if you
 // need more control over the operation.
 func (x *Clipboard) ReadTextAsync(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xClipboardReadTextAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xClipboardReadTextFinish func(uintptr, uintptr, **glib.Error) string
@@ -167,7 +160,6 @@ func (x *Clipboard) ReadTextFinish(ResultVar gio.AsyncResult) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xClipboardReadTextureAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -178,9 +170,7 @@ var xClipboardReadTextureAsync func(uintptr, uintptr, uintptr, uintptr)
 // Use that function or [method@Gdk.Clipboard.read_async] directly if you
 // need more control over the operation.
 func (x *Clipboard) ReadTextureAsync(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xClipboardReadTextureAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xClipboardReadTextureFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -203,7 +193,6 @@ func (x *Clipboard) ReadTextureFinish(ResultVar gio.AsyncResult) (*Texture, erro
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xClipboardReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uintptr)
@@ -215,9 +204,7 @@ var xClipboardReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr,
 // the value will be copied directly. Otherwise, GDK will try to use
 // [func@content_deserialize_async] to convert the clipboard's data.
 func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xClipboardReadValueFinish func(uintptr, uintptr, **glib.Error) *gobject.Value
@@ -233,7 +220,6 @@ func (x *Clipboard) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xClipboardSet func(uintptr, types.GType, ...interface{})
@@ -250,9 +236,7 @@ var xClipboardSet func(uintptr, types.GType, ...interface{})
 // gdk_clipboard_set (clipboard, GDK_TYPE_TEXTURE, some_texture);
 // ```
 func (x *Clipboard) Set(TypeVar types.GType, varArgs ...interface{}) {
-
 	xClipboardSet(x.GoPointer(), TypeVar, varArgs...)
-
 }
 
 var xClipboardSetContent func(uintptr, uintptr) bool
@@ -270,7 +254,6 @@ var xClipboardSetContent func(uintptr, uintptr) bool
 // @clipboard's read functions, @clipboard will select the best format to
 // transfer the contents and then request that format from @provider.
 func (x *Clipboard) SetContent(ProviderVar *ContentProvider) bool {
-
 	cret := xClipboardSetContent(x.GoPointer(), ProviderVar.GoPointer())
 	return cret
 }
@@ -279,36 +262,28 @@ var xClipboardSetText func(uintptr, string)
 
 // Puts the given @text into the clipboard.
 func (x *Clipboard) SetText(TextVar string) {
-
 	xClipboardSetText(x.GoPointer(), TextVar)
-
 }
 
 var xClipboardSetTexture func(uintptr, uintptr)
 
 // Puts the given @texture into the clipboard.
 func (x *Clipboard) SetTexture(TextureVar *Texture) {
-
 	xClipboardSetTexture(x.GoPointer(), TextureVar.GoPointer())
-
 }
 
 var xClipboardSetValist func(uintptr, types.GType, []interface{})
 
 // Sets the clipboard to contain the value collected from the given @args.
 func (x *Clipboard) SetValist(TypeVar types.GType, ArgsVar []interface{}) {
-
 	xClipboardSetValist(x.GoPointer(), TypeVar, ArgsVar)
-
 }
 
 var xClipboardSetValue func(uintptr, *gobject.Value)
 
 // Sets the @clipboard to contain the given @value.
 func (x *Clipboard) SetValue(ValueVar *gobject.Value) {
-
 	xClipboardSetValue(x.GoPointer(), ValueVar)
-
 }
 
 var xClipboardStoreAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -326,9 +301,7 @@ var xClipboardStoreAsync func(uintptr, int32, uintptr, uintptr, uintptr)
 // [GtkApplication](../gtk4/class.Application.html)
 // is shut down, so you likely don't need to call it.
 func (x *Clipboard) StoreAsync(IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xClipboardStoreFinish func(uintptr, uintptr, **glib.Error) bool
@@ -344,7 +317,6 @@ func (x *Clipboard) StoreFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *Clipboard) GoPointer() uintptr {
@@ -387,7 +359,6 @@ func (x *Clipboard) ConnectChanged(cb *func(Clipboard)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -428,5 +399,4 @@ func init() {
 	core.PuregoSafeRegister(&xClipboardSetValue, libs, "gdk_clipboard_set_value")
 	core.PuregoSafeRegister(&xClipboardStoreAsync, libs, "gdk_clipboard_store_async")
 	core.PuregoSafeRegister(&xClipboardStoreFinish, libs, "gdk_clipboard_store_finish")
-
 }

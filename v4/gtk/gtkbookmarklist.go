@@ -66,7 +66,6 @@ var xBookmarkListGetAttributes func(uintptr) string
 
 // Gets the attributes queried on the children.
 func (x *BookmarkList) GetAttributes() string {
-
 	cret := xBookmarkListGetAttributes(x.GoPointer())
 	return cret
 }
@@ -76,7 +75,6 @@ var xBookmarkListGetFilename func(uintptr) string
 // Returns the filename of the bookmark file that
 // this list is loading.
 func (x *BookmarkList) GetFilename() string {
-
 	cret := xBookmarkListGetFilename(x.GoPointer())
 	return cret
 }
@@ -85,7 +83,6 @@ var xBookmarkListGetIoPriority func(uintptr) int32
 
 // Gets the IO priority to use while loading file.
 func (x *BookmarkList) GetIoPriority() int32 {
-
 	cret := xBookmarkListGetIoPriority(x.GoPointer())
 	return cret
 }
@@ -98,7 +95,6 @@ var xBookmarkListIsLoading func(uintptr) bool
 // going on. The order in which are added is undefined and may change
 // in between runs.
 func (x *BookmarkList) IsLoading() bool {
-
 	cret := xBookmarkListIsLoading(x.GoPointer())
 	return cret
 }
@@ -110,9 +106,7 @@ var xBookmarkListSetAttributes func(uintptr, string)
 // If @attributes is %NULL, no attributes will be queried, but a list
 // of `GFileInfo`s will still be created.
 func (x *BookmarkList) SetAttributes(AttributesVar string) {
-
 	xBookmarkListSetAttributes(x.GoPointer(), AttributesVar)
-
 }
 
 var xBookmarkListSetIoPriority func(uintptr, int32)
@@ -121,9 +115,7 @@ var xBookmarkListSetIoPriority func(uintptr, int32)
 //
 // The default IO priority is %G_PRIORITY_DEFAULT.
 func (x *BookmarkList) SetIoPriority(IoPriorityVar int32) {
-
 	xBookmarkListSetIoPriority(x.GoPointer(), IoPriorityVar)
-
 }
 
 func (c *BookmarkList) GoPointer() uintptr {
@@ -214,7 +206,6 @@ func (x *BookmarkList) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *BookmarkList) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -228,7 +219,6 @@ func (x *BookmarkList) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *BookmarkList) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -239,7 +229,6 @@ func (x *BookmarkList) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *BookmarkList) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -290,9 +279,7 @@ func (x *BookmarkList) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *BookmarkList) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
@@ -317,5 +304,4 @@ func init() {
 	core.PuregoSafeRegister(&xBookmarkListIsLoading, libs, "gtk_bookmark_list_is_loading")
 	core.PuregoSafeRegister(&xBookmarkListSetAttributes, libs, "gtk_bookmark_list_set_attributes")
 	core.PuregoSafeRegister(&xBookmarkListSetIoPriority, libs, "gtk_bookmark_list_set_io_priority")
-
 }

@@ -37,9 +37,7 @@ var xOptionContextAddGroup func(uintptr, *OptionGroup)
 // will recognize the options in the group. Note that this will take
 // ownership of the @group and thus the @group should not be freed.
 func (x *OptionContext) AddGroup(GroupVar *OptionGroup) {
-
 	xOptionContextAddGroup(x.GoPointer(), GroupVar)
-
 }
 
 var xOptionContextAddMainEntries func(uintptr, []OptionEntry, string)
@@ -47,9 +45,7 @@ var xOptionContextAddMainEntries func(uintptr, []OptionEntry, string)
 // A convenience function which creates a main group if it doesn't
 // exist, adds the @entries to it and sets the translation domain.
 func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar string) {
-
 	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, TranslationDomainVar)
-
 }
 
 var xOptionContextFree func(uintptr)
@@ -60,16 +56,13 @@ var xOptionContextFree func(uintptr)
 // Please note that parsed arguments need to be freed separately (see
 // #GOptionEntry).
 func (x *OptionContext) Free() {
-
 	xOptionContextFree(x.GoPointer())
-
 }
 
 var xOptionContextGetDescription func(uintptr) string
 
 // Returns the description. See g_option_context_set_description().
 func (x *OptionContext) GetDescription() string {
-
 	cret := xOptionContextGetDescription(x.GoPointer())
 	return cret
 }
@@ -84,7 +77,6 @@ var xOptionContextGetHelp func(uintptr, bool, *OptionGroup) string
 // To obtain the help text for an option group, call
 // `g_option_context_get_help (context, FALSE, group)`.
 func (x *OptionContext) GetHelp(MainHelpVar bool, GroupVar *OptionGroup) string {
-
 	cret := xOptionContextGetHelp(x.GoPointer(), MainHelpVar, GroupVar)
 	return cret
 }
@@ -94,7 +86,6 @@ var xOptionContextGetHelpEnabled func(uintptr) bool
 // Returns whether automatic `--help` generation
 // is turned on for @context. See g_option_context_set_help_enabled().
 func (x *OptionContext) GetHelpEnabled() bool {
-
 	cret := xOptionContextGetHelpEnabled(x.GoPointer())
 	return cret
 }
@@ -104,7 +95,6 @@ var xOptionContextGetIgnoreUnknownOptions func(uintptr) bool
 // Returns whether unknown options are ignored or not. See
 // g_option_context_set_ignore_unknown_options().
 func (x *OptionContext) GetIgnoreUnknownOptions() bool {
-
 	cret := xOptionContextGetIgnoreUnknownOptions(x.GoPointer())
 	return cret
 }
@@ -113,7 +103,6 @@ var xOptionContextGetMainGroup func(uintptr) *OptionGroup
 
 // Returns a pointer to the main group of @context.
 func (x *OptionContext) GetMainGroup() *OptionGroup {
-
 	cret := xOptionContextGetMainGroup(x.GoPointer())
 	return cret
 }
@@ -124,7 +113,6 @@ var xOptionContextGetStrictPosix func(uintptr) bool
 //
 // See g_option_context_set_strict_posix() for more information.
 func (x *OptionContext) GetStrictPosix() bool {
-
 	cret := xOptionContextGetStrictPosix(x.GoPointer())
 	return cret
 }
@@ -133,7 +121,6 @@ var xOptionContextGetSummary func(uintptr) string
 
 // Returns the summary. See g_option_context_set_summary().
 func (x *OptionContext) GetSummary() string {
-
 	cret := xOptionContextGetSummary(x.GoPointer())
 	return cret
 }
@@ -169,7 +156,6 @@ func (x *OptionContext) Parse(ArgcVar int32, ArgvVar []string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xOptionContextParseStrv func(uintptr, []string, **Error) bool
@@ -198,7 +184,6 @@ func (x *OptionContext) ParseStrv(ArgumentsVar []string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xOptionContextSetDescription func(uintptr, string)
@@ -209,9 +194,7 @@ var xOptionContextSetDescription func(uintptr, string)
 // Note that the summary is translated (see
 // g_option_context_set_translate_func()).
 func (x *OptionContext) SetDescription(DescriptionVar string) {
-
 	xOptionContextSetDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xOptionContextSetHelpEnabled func(uintptr, bool)
@@ -221,9 +204,7 @@ var xOptionContextSetHelpEnabled func(uintptr, bool)
 // `-?`, `--help-all` and `--help-groupname` and creates suitable
 // output to stdout.
 func (x *OptionContext) SetHelpEnabled(HelpEnabledVar bool) {
-
 	xOptionContextSetHelpEnabled(x.GoPointer(), HelpEnabledVar)
-
 }
 
 var xOptionContextSetIgnoreUnknownOptions func(uintptr, bool)
@@ -236,9 +217,7 @@ var xOptionContextSetIgnoreUnknownOptions func(uintptr, bool)
 // which don't start with a dash). But note that GOption cannot reliably
 // determine whether a non-option belongs to a preceding unknown option.
 func (x *OptionContext) SetIgnoreUnknownOptions(IgnoreUnknownVar bool) {
-
 	xOptionContextSetIgnoreUnknownOptions(x.GoPointer(), IgnoreUnknownVar)
-
 }
 
 var xOptionContextSetMainGroup func(uintptr, *OptionGroup)
@@ -248,9 +227,7 @@ var xOptionContextSetMainGroup func(uintptr, *OptionGroup)
 // the only difference is that the options in the main group are
 // treated differently when generating `--help` output.
 func (x *OptionContext) SetMainGroup(GroupVar *OptionGroup) {
-
 	xOptionContextSetMainGroup(x.GoPointer(), GroupVar)
-
 }
 
 var xOptionContextSetStrictPosix func(uintptr, bool)
@@ -280,9 +257,7 @@ var xOptionContextSetStrictPosix func(uintptr, bool)
 // examining the verb name, which should be present in argv[1] after
 // parsing).
 func (x *OptionContext) SetStrictPosix(StrictPosixVar bool) {
-
 	xOptionContextSetStrictPosix(x.GoPointer(), StrictPosixVar)
-
 }
 
 var xOptionContextSetSummary func(uintptr, string)
@@ -294,9 +269,7 @@ var xOptionContextSetSummary func(uintptr, string)
 // g_option_context_set_translate_func() and
 // g_option_context_set_translation_domain()).
 func (x *OptionContext) SetSummary(SummaryVar string) {
-
 	xOptionContextSetSummary(x.GoPointer(), SummaryVar)
-
 }
 
 var xOptionContextSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -313,9 +286,7 @@ var xOptionContextSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // If you are using gettext(), you only need to set the translation
 // domain, see g_option_context_set_translation_domain().
 func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
-
 	xOptionContextSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
-
 }
 
 var xOptionContextSetTranslationDomain func(uintptr, string)
@@ -323,9 +294,7 @@ var xOptionContextSetTranslationDomain func(uintptr, string)
 // A convenience function to use gettext() for translating
 // user-visible strings.
 func (x *OptionContext) SetTranslationDomain(DomainVar string) {
-
 	xOptionContextSetTranslationDomain(x.GoPointer(), DomainVar)
-
 }
 
 // - %G_OPTION_ARG_NONE: %gboolean
@@ -403,7 +372,6 @@ var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
 // that it matches the style of built-in GLib group titles such as
 // ‘Application Options:’.
 func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar string, UserDataVar uintptr, DestroyVar *DestroyNotify) *OptionGroup {
-
 	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallbackNullable(DestroyVar))
 	return cret
 }
@@ -412,9 +380,7 @@ var xOptionGroupAddEntries func(uintptr, []OptionEntry)
 
 // Adds the options specified in @entries to @group.
 func (x *OptionGroup) AddEntries(EntriesVar []OptionEntry) {
-
 	xOptionGroupAddEntries(x.GoPointer(), EntriesVar)
-
 }
 
 var xOptionGroupFree func(uintptr)
@@ -422,16 +388,13 @@ var xOptionGroupFree func(uintptr)
 // Frees a #GOptionGroup. Note that you must not free groups
 // which have been added to a #GOptionContext.
 func (x *OptionGroup) Free() {
-
 	xOptionGroupFree(x.GoPointer())
-
 }
 
 var xOptionGroupRef func(uintptr) *OptionGroup
 
 // Increments the reference count of @group by one.
 func (x *OptionGroup) Ref() *OptionGroup {
-
 	cret := xOptionGroupRef(x.GoPointer())
 	return cret
 }
@@ -444,9 +407,7 @@ var xOptionGroupSetErrorHook func(uintptr, uintptr)
 // Note that the user data to be passed to @error_func can be
 // specified when constructing the group with g_option_group_new().
 func (x *OptionGroup) SetErrorHook(ErrorFuncVar *OptionErrorFunc) {
-
 	xOptionGroupSetErrorHook(x.GoPointer(), NewCallback(ErrorFuncVar))
-
 }
 
 var xOptionGroupSetParseHooks func(uintptr, uintptr, uintptr)
@@ -459,9 +420,7 @@ var xOptionGroupSetParseHooks func(uintptr, uintptr, uintptr)
 // @post_parse_func can be specified when constructing the group
 // with g_option_group_new().
 func (x *OptionGroup) SetParseHooks(PreParseFuncVar *OptionParseFunc, PostParseFuncVar *OptionParseFunc) {
-
 	xOptionGroupSetParseHooks(x.GoPointer(), NewCallbackNullable(PreParseFuncVar), NewCallbackNullable(PostParseFuncVar))
-
 }
 
 var xOptionGroupSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -473,9 +432,7 @@ var xOptionGroupSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // If you are using gettext(), you only need to set the translation
 // domain, see g_option_group_set_translation_domain().
 func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
-
 	xOptionGroupSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
-
 }
 
 var xOptionGroupSetTranslationDomain func(uintptr, string)
@@ -483,9 +440,7 @@ var xOptionGroupSetTranslationDomain func(uintptr, string)
 // A convenience function to use gettext() for translating
 // user-visible strings.
 func (x *OptionGroup) SetTranslationDomain(DomainVar string) {
-
 	xOptionGroupSetTranslationDomain(x.GoPointer(), DomainVar)
-
 }
 
 var xOptionGroupUnref func(uintptr)
@@ -494,9 +449,7 @@ var xOptionGroupUnref func(uintptr)
 // If the reference count drops to 0, the @group will be freed.
 // and all memory allocated by the @group is released.
 func (x *OptionGroup) Unref() {
-
 	xOptionGroupUnref(x.GoPointer())
-
 }
 
 const (
@@ -654,5 +607,4 @@ func init() {
 	core.PuregoSafeRegister(&xOptionGroupSetTranslateFunc, libs, "g_option_group_set_translate_func")
 	core.PuregoSafeRegister(&xOptionGroupSetTranslationDomain, libs, "g_option_group_set_translation_domain")
 	core.PuregoSafeRegister(&xOptionGroupUnref, libs, "g_option_group_unref")
-
 }

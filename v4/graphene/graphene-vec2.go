@@ -38,7 +38,6 @@ var xVec2Alloc func() *Vec2
 //
 // Use graphene_vec2_init() to initialize the vector.
 func Vec2Alloc() *Vec2 {
-
 	cret := xVec2Alloc()
 	return cret
 }
@@ -48,9 +47,7 @@ var xVec2Add func(uintptr, *Vec2, *Vec2)
 // Adds each component of the two passed vectors and places
 // each result into the components of @res.
 func (x *Vec2) Add(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Add(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2Divide func(uintptr, *Vec2, *Vec2)
@@ -59,16 +56,13 @@ var xVec2Divide func(uintptr, *Vec2, *Vec2)
 // component of the second operand @b, and places the results into the
 // vector @res.
 func (x *Vec2) Divide(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Divide(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2Dot func(uintptr, *Vec2) float32
 
 // Computes the dot product of the two given vectors.
 func (x *Vec2) Dot(BVar *Vec2) float32 {
-
 	cret := xVec2Dot(x.GoPointer(), BVar)
 	return cret
 }
@@ -77,7 +71,6 @@ var xVec2Equal func(uintptr, *Vec2) bool
 
 // Checks whether the two given #graphene_vec2_t are equal.
 func (x *Vec2) Equal(V2Var *Vec2) bool {
-
 	cret := xVec2Equal(x.GoPointer(), V2Var)
 	return cret
 }
@@ -86,16 +79,13 @@ var xVec2Free func(uintptr)
 
 // Frees the resources allocated by @v
 func (x *Vec2) Free() {
-
 	xVec2Free(x.GoPointer())
-
 }
 
 var xVec2GetX func(uintptr) float32
 
 // Retrieves the X component of the #graphene_vec2_t.
 func (x *Vec2) GetX() float32 {
-
 	cret := xVec2GetX(x.GoPointer())
 	return cret
 }
@@ -104,7 +94,6 @@ var xVec2GetY func(uintptr) float32
 
 // Retrieves the Y component of the #graphene_vec2_t.
 func (x *Vec2) GetY() float32 {
-
 	cret := xVec2GetY(x.GoPointer())
 	return cret
 }
@@ -115,7 +104,6 @@ var xVec2Init func(uintptr, float32, float32) *Vec2
 //
 // This function can be called multiple times.
 func (x *Vec2) Init(XVar float32, YVar float32) *Vec2 {
-
 	cret := xVec2Init(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -124,7 +112,6 @@ var xVec2InitFromFloat func(uintptr, [2]float32) *Vec2
 
 // Initializes @v with the contents of the given array.
 func (x *Vec2) InitFromFloat(SrcVar [2]float32) *Vec2 {
-
 	cret := xVec2InitFromFloat(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -133,7 +120,6 @@ var xVec2InitFromVec2 func(uintptr, *Vec2) *Vec2
 
 // Copies the contents of @src into @v.
 func (x *Vec2) InitFromVec2(SrcVar *Vec2) *Vec2 {
-
 	cret := xVec2InitFromVec2(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -142,16 +128,13 @@ var xVec2Interpolate func(uintptr, *Vec2, float64, *Vec2)
 
 // Linearly interpolates @v1 and @v2 using the given @factor.
 func (x *Vec2) Interpolate(V2Var *Vec2, FactorVar float64, ResVar *Vec2) {
-
 	xVec2Interpolate(x.GoPointer(), V2Var, FactorVar, ResVar)
-
 }
 
 var xVec2Length func(uintptr) float32
 
 // Computes the length of the given vector.
 func (x *Vec2) Length() float32 {
-
 	cret := xVec2Length(x.GoPointer())
 	return cret
 }
@@ -161,9 +144,7 @@ var xVec2Max func(uintptr, *Vec2, *Vec2)
 // Compares the two given vectors and places the maximum
 // values of each component into @res.
 func (x *Vec2) Max(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Max(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2Min func(uintptr, *Vec2, *Vec2)
@@ -171,9 +152,7 @@ var xVec2Min func(uintptr, *Vec2, *Vec2)
 // Compares the two given vectors and places the minimum
 // values of each component into @res.
 func (x *Vec2) Min(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Min(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2Multiply func(uintptr, *Vec2, *Vec2)
@@ -181,9 +160,7 @@ var xVec2Multiply func(uintptr, *Vec2, *Vec2)
 // Multiplies each component of the two passed vectors and places
 // each result into the components of @res.
 func (x *Vec2) Multiply(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Multiply(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2Near func(uintptr, *Vec2, float32) bool
@@ -191,7 +168,6 @@ var xVec2Near func(uintptr, *Vec2, float32) bool
 // Compares the two given #graphene_vec2_t vectors and checks
 // whether their values are within the given @epsilon.
 func (x *Vec2) Near(V2Var *Vec2, EpsilonVar float32) bool {
-
 	cret := xVec2Near(x.GoPointer(), V2Var, EpsilonVar)
 	return cret
 }
@@ -200,27 +176,21 @@ var xVec2Negate func(uintptr, *Vec2)
 
 // Negates the given #graphene_vec2_t.
 func (x *Vec2) Negate(ResVar *Vec2) {
-
 	xVec2Negate(x.GoPointer(), ResVar)
-
 }
 
 var xVec2Normalize func(uintptr, *Vec2)
 
 // Computes the normalized vector for the given vector @v.
 func (x *Vec2) Normalize(ResVar *Vec2) {
-
 	xVec2Normalize(x.GoPointer(), ResVar)
-
 }
 
 var xVec2Scale func(uintptr, float32, *Vec2)
 
 // Multiplies all components of the given vector with the given scalar @factor.
 func (x *Vec2) Scale(FactorVar float32, ResVar *Vec2) {
-
 	xVec2Scale(x.GoPointer(), FactorVar, ResVar)
-
 }
 
 var xVec2Subtract func(uintptr, *Vec2, *Vec2)
@@ -229,25 +199,20 @@ var xVec2Subtract func(uintptr, *Vec2, *Vec2)
 // corresponding component of the second operand @b and places
 // each result into the components of @res.
 func (x *Vec2) Subtract(BVar *Vec2, ResVar *Vec2) {
-
 	xVec2Subtract(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec2ToFloat func(uintptr, *[2]float32)
 
 // Stores the components of @v into an array.
 func (x *Vec2) ToFloat(DestVar *[2]float32) {
-
 	xVec2ToFloat(x.GoPointer(), DestVar)
-
 }
 
 var xVec2One func() *Vec2
 
 // Retrieves a constant vector with (1, 1) components.
 func Vec2One() *Vec2 {
-
 	cret := xVec2One()
 	return cret
 }
@@ -256,7 +221,6 @@ var xVec2XAxis func() *Vec2
 
 // Retrieves a constant vector with (1, 0) components.
 func Vec2XAxis() *Vec2 {
-
 	cret := xVec2XAxis()
 	return cret
 }
@@ -265,7 +229,6 @@ var xVec2YAxis func() *Vec2
 
 // Retrieves a constant vector with (0, 1) components.
 func Vec2YAxis() *Vec2 {
-
 	cret := xVec2YAxis()
 	return cret
 }
@@ -274,7 +237,6 @@ var xVec2Zero func() *Vec2
 
 // Retrieves a constant vector with (0, 0) components.
 func Vec2Zero() *Vec2 {
-
 	cret := xVec2Zero()
 	return cret
 }
@@ -321,5 +283,4 @@ func init() {
 	core.PuregoSafeRegister(&xVec2Scale, libs, "graphene_vec2_scale")
 	core.PuregoSafeRegister(&xVec2Subtract, libs, "graphene_vec2_subtract")
 	core.PuregoSafeRegister(&xVec2ToFloat, libs, "graphene_vec2_to_float")
-
 }

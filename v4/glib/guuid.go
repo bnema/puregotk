@@ -17,7 +17,6 @@ var xUuidStringIsValid func(string) bool
 // Note that hyphens are required within the UUID string itself,
 // as per the aforementioned RFC.
 func UuidStringIsValid(StrVar string) bool {
-
 	cret := xUuidStringIsValid(StrVar)
 	return cret
 }
@@ -28,7 +27,6 @@ var xUuidStringRandom func() string
 // randomness guarantees as #GRand, so must not be used for cryptographic
 // purposes such as key generation, nonces, salts or one-time pads.
 func UuidStringRandom() string {
-
 	cret := xUuidStringRandom()
 	return cret
 }
@@ -47,5 +45,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xUuidStringIsValid, libs, "g_uuid_string_is_valid")
 	core.PuregoSafeRegister(&xUuidStringRandom, libs, "g_uuid_string_random")
-
 }

@@ -59,7 +59,6 @@ func (x *MatchInfo) ExpandReferences(StringToExpandVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xMatchInfoFetch func(uintptr, int32) string
@@ -81,7 +80,6 @@ var xMatchInfoFetch func(uintptr, int32) string
 // The string is fetched from the string passed to the match function,
 // so you cannot call this function after freeing the string.
 func (x *MatchInfo) Fetch(MatchNumVar int32) string {
-
 	cret := xMatchInfoFetch(x.GoPointer(), MatchNumVar)
 	return cret
 }
@@ -105,7 +103,6 @@ var xMatchInfoFetchAll func(uintptr) []string
 // The strings are fetched from the string passed to the match function,
 // so you cannot call this function after freeing the string.
 func (x *MatchInfo) FetchAll() []string {
-
 	cret := xMatchInfoFetchAll(x.GoPointer())
 	return cret
 }
@@ -121,7 +118,6 @@ var xMatchInfoFetchNamed func(uintptr, string) string
 // The string is fetched from the string passed to the match function,
 // so you cannot call this function after freeing the string.
 func (x *MatchInfo) FetchNamed(NameVar string) string {
-
 	cret := xMatchInfoFetchNamed(x.GoPointer(), NameVar)
 	return cret
 }
@@ -137,7 +133,6 @@ var xMatchInfoFetchNamedPos func(uintptr, string, *int32, *int32) bool
 // As @end_pos is set to the byte after the final byte of the match (on success),
 // the length of the match can be calculated as `end_pos - start_pos`.
 func (x *MatchInfo) FetchNamedPos(NameVar string, StartPosVar *int32, EndPosVar *int32) bool {
-
 	cret := xMatchInfoFetchNamedPos(x.GoPointer(), NameVar, StartPosVar, EndPosVar)
 	return cret
 }
@@ -352,7 +347,6 @@ var xMatchInfoFetchPos func(uintptr, int32, *int32, *int32) bool
 // 3         N/A                       0            2147483647         2147483647
 // ```
 func (x *MatchInfo) FetchPos(MatchNumVar int32, StartPosVar *int32, EndPosVar *int32) bool {
-
 	cret := xMatchInfoFetchPos(x.GoPointer(), MatchNumVar, StartPosVar, EndPosVar)
 	return cret
 }
@@ -362,9 +356,7 @@ var xMatchInfoFree func(uintptr)
 // If @match_info is not %NULL, calls g_match_info_unref(); otherwise does
 // nothing.
 func (x *MatchInfo) Free() {
-
 	xMatchInfoFree(x.GoPointer())
-
 }
 
 var xMatchInfoGetMatchCount func(uintptr) int32
@@ -378,7 +370,6 @@ var xMatchInfoGetMatchCount func(uintptr) int32
 // count is not that of the number of capturing parentheses but that of
 // the number of matched substrings.
 func (x *MatchInfo) GetMatchCount() int32 {
-
 	cret := xMatchInfoGetMatchCount(x.GoPointer())
 	return cret
 }
@@ -389,7 +380,6 @@ var xMatchInfoGetRegex func(uintptr) *Regex
 // and must not be freed. Use g_regex_ref() if you need to keep it
 // after you free @match_info object.
 func (x *MatchInfo) GetRegex() *Regex {
-
 	cret := xMatchInfoGetRegex(x.GoPointer())
 	return cret
 }
@@ -400,7 +390,6 @@ var xMatchInfoGetString func(uintptr) string
 // string passed to g_regex_match() or g_regex_replace() so
 // you may not free it before calling this function.
 func (x *MatchInfo) GetString() string {
-
 	cret := xMatchInfoGetString(x.GoPointer())
 	return cret
 }
@@ -441,7 +430,6 @@ var xMatchInfoIsPartialMatch func(uintptr) bool
 //
 // See pcrepartial(3) for more information on partial matching.
 func (x *MatchInfo) IsPartialMatch() bool {
-
 	cret := xMatchInfoIsPartialMatch(x.GoPointer())
 	return cret
 }
@@ -450,7 +438,6 @@ var xMatchInfoMatches func(uintptr) bool
 
 // Returns whether the previous match operation succeeded.
 func (x *MatchInfo) Matches() bool {
-
 	cret := xMatchInfoMatches(x.GoPointer())
 	return cret
 }
@@ -471,14 +458,12 @@ func (x *MatchInfo) Next() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xMatchInfoRef func(uintptr) *MatchInfo
 
 // Increases reference count of @match_info by 1.
 func (x *MatchInfo) Ref() *MatchInfo {
-
 	cret := xMatchInfoRef(x.GoPointer())
 	return cret
 }
@@ -488,9 +473,7 @@ var xMatchInfoUnref func(uintptr)
 // Decreases reference count of @match_info by 1. When reference count drops
 // to zero, it frees all the memory associated with the match_info structure.
 func (x *MatchInfo) Unref() {
-
 	xMatchInfoUnref(x.GoPointer())
-
 }
 
 // A `GRegex` is a compiled form of a regular expression.
@@ -655,14 +638,12 @@ func NewRegex(PatternVar string, CompileOptionsVar RegexCompileFlags, MatchOptio
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexGetCaptureCount func(uintptr) int32
 
 // Returns the number of capturing subpatterns in the pattern.
 func (x *Regex) GetCaptureCount() int32 {
-
 	cret := xRegexGetCaptureCount(x.GoPointer())
 	return cret
 }
@@ -675,7 +656,6 @@ var xRegexGetCompileFlags func(uintptr) RegexCompileFlags
 // include flags set by option expressions such as `(?i)` found at the
 // top-level within the compiled pattern.
 func (x *Regex) GetCompileFlags() RegexCompileFlags {
-
 	cret := xRegexGetCompileFlags(x.GoPointer())
 	return cret
 }
@@ -684,7 +664,6 @@ var xRegexGetHasCrOrLf func(uintptr) bool
 
 // Checks whether the pattern contains explicit CR or LF references.
 func (x *Regex) GetHasCrOrLf() bool {
-
 	cret := xRegexGetHasCrOrLf(x.GoPointer())
 	return cret
 }
@@ -693,7 +672,6 @@ var xRegexGetMatchFlags func(uintptr) RegexMatchFlags
 
 // Returns the match options that @regex was created with.
 func (x *Regex) GetMatchFlags() RegexMatchFlags {
-
 	cret := xRegexGetMatchFlags(x.GoPointer())
 	return cret
 }
@@ -704,7 +682,6 @@ var xRegexGetMaxBackref func(uintptr) int32
 // in the pattern, or 0 if the pattern does not contain
 // back references.
 func (x *Regex) GetMaxBackref() int32 {
-
 	cret := xRegexGetMaxBackref(x.GoPointer())
 	return cret
 }
@@ -715,7 +692,6 @@ var xRegexGetMaxLookbehind func(uintptr) int32
 // pattern. This information is useful when doing multi-segment matching using
 // the partial matching facilities.
 func (x *Regex) GetMaxLookbehind() int32 {
-
 	cret := xRegexGetMaxLookbehind(x.GoPointer())
 	return cret
 }
@@ -725,7 +701,6 @@ var xRegexGetPattern func(uintptr) string
 // Gets the pattern string associated with @regex, i.e. a copy of
 // the string passed to g_regex_new().
 func (x *Regex) GetPattern() string {
-
 	cret := xRegexGetPattern(x.GoPointer())
 	return cret
 }
@@ -734,7 +709,6 @@ var xRegexGetStringNumber func(uintptr, string) int32
 
 // Retrieves the number of the subexpression named @name.
 func (x *Regex) GetStringNumber(NameVar string) int32 {
-
 	cret := xRegexGetStringNumber(x.GoPointer(), NameVar)
 	return cret
 }
@@ -784,7 +758,6 @@ var xRegexMatch func(uintptr, string, RegexMatchFlags, **MatchInfo) bool
 // you use any #GMatchInfo method (except g_match_info_free()) after
 // freeing or modifying @string then the behaviour is undefined.
 func (x *Regex) Match(StringVar string, MatchOptionsVar RegexMatchFlags, MatchInfoVar **MatchInfo) bool {
-
 	cret := xRegexMatch(x.GoPointer(), StringVar, MatchOptionsVar, MatchInfoVar)
 	return cret
 }
@@ -806,7 +779,6 @@ var xRegexMatchAll func(uintptr, string, RegexMatchFlags, **MatchInfo) bool
 // you use any #GMatchInfo method (except g_match_info_free()) after
 // freeing or modifying @string then the behaviour is undefined.
 func (x *Regex) MatchAll(StringVar string, MatchOptionsVar RegexMatchFlags, MatchInfoVar **MatchInfo) bool {
-
 	cret := xRegexMatchAll(x.GoPointer(), StringVar, MatchOptionsVar, MatchInfoVar)
 	return cret
 }
@@ -859,7 +831,6 @@ func (x *Regex) MatchAllFull(StringVar []string, StringLenVar int, StartPosition
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexMatchFull func(uintptr, []string, int, int32, RegexMatchFlags, **MatchInfo, **Error) bool
@@ -925,14 +896,12 @@ func (x *Regex) MatchFull(StringVar []string, StringLenVar int, StartPositionVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexRef func(uintptr) *Regex
 
 // Increases reference count of @regex by 1.
 func (x *Regex) Ref() *Regex {
-
 	cret := xRegexRef(x.GoPointer())
 	return cret
 }
@@ -973,7 +942,6 @@ func (x *Regex) Replace(StringVar []string, StringLenVar int, StartPositionVar i
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexReplaceEval func(uintptr, []string, int, int32, RegexMatchFlags, uintptr, uintptr, **Error) string
@@ -1033,7 +1001,6 @@ func (x *Regex) ReplaceEval(StringVar []string, StringLenVar int, StartPositionV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexReplaceLiteral func(uintptr, []string, int, int32, string, RegexMatchFlags, **Error) string
@@ -1054,7 +1021,6 @@ func (x *Regex) ReplaceLiteral(StringVar []string, StringLenVar int, StartPositi
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexSplit func(uintptr, string, RegexMatchFlags) []string
@@ -1077,7 +1043,6 @@ var xRegexSplit func(uintptr, string, RegexMatchFlags) []string
 // For example splitting "ab c" using as a separator "\s*", you will get
 // "a", "b" and "c".
 func (x *Regex) Split(StringVar string, MatchOptionsVar RegexMatchFlags) []string {
-
 	cret := xRegexSplit(x.GoPointer(), StringVar, MatchOptionsVar)
 	return cret
 }
@@ -1113,7 +1078,6 @@ func (x *Regex) SplitFull(StringVar []string, StringLenVar int, StartPositionVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexUnref func(uintptr)
@@ -1121,9 +1085,7 @@ var xRegexUnref func(uintptr)
 // Decreases reference count of @regex by 1. When reference count drops
 // to zero, it frees all the memory associated with the regex structure.
 func (x *Regex) Unref() {
-
 	xRegexUnref(x.GoPointer())
-
 }
 
 // Flags specifying compile-time options.
@@ -1493,7 +1455,6 @@ func RegexCheckReplacement(ReplacementVar string, HasReferencesVar *bool) (bool,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRegexEscapeNul func(string, int32) string
@@ -1504,7 +1465,6 @@ var xRegexEscapeNul func(string, int32) string
 // For completeness, @length can be -1 for a nul-terminated string.
 // In this case the output string will be of course equal to @string.
 func RegexEscapeNul(StringVar string, LengthVar int32) string {
-
 	cret := xRegexEscapeNul(StringVar, LengthVar)
 	return cret
 }
@@ -1519,7 +1479,6 @@ var xRegexEscapeString func(string, int32) string
 // in this case remember to specify the correct length of @string
 // in @length.
 func RegexEscapeString(StringVar string, LengthVar int32) string {
-
 	cret := xRegexEscapeString(StringVar, LengthVar)
 	return cret
 }
@@ -1537,7 +1496,6 @@ var xRegexMatchSimple func(string, string, RegexCompileFlags, RegexMatchFlags) b
 // once, it's more efficient to compile the pattern once with
 // g_regex_new() and then use g_regex_match().
 func RegexMatchSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) bool {
-
 	cret := xRegexMatchSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
 	return cret
 }
@@ -1572,7 +1530,6 @@ var xRegexSplitSimple func(string, string, RegexCompileFlags, RegexMatchFlags) [
 // characters. For example splitting "ab c" using as a separator
 // "\s*", you will get "a", "b" and "c".
 func RegexSplitSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) []string {
-
 	cret := xRegexSplitSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
 	return cret
 }
@@ -1636,5 +1593,4 @@ func init() {
 	core.PuregoSafeRegister(&xRegexSplit, libs, "g_regex_split")
 	core.PuregoSafeRegister(&xRegexSplitFull, libs, "g_regex_split_full")
 	core.PuregoSafeRegister(&xRegexUnref, libs, "g_regex_unref")
-
 }

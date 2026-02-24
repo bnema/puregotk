@@ -10,7 +10,6 @@ var xVariantParserGetErrorQuark func() Quark
 
 // Same as g_variant_error_quark().
 func VariantParserGetErrorQuark() Quark {
-
 	cret := xVariantParserGetErrorQuark()
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xVariantParserGetErrorQuark, libs, "g_variant_parser_get_error_quark")
-
 }

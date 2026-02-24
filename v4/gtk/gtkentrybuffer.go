@@ -430,7 +430,6 @@ var xEntryBufferDeleteText func(uintptr, uint32, int32) uint32
 // Note that the positions are specified in characters,
 // not bytes.
 func (x *EntryBuffer) DeleteText(PositionVar uint32, NCharsVar int32) uint32 {
-
 	cret := xEntryBufferDeleteText(x.GoPointer(), PositionVar, NCharsVar)
 	return cret
 }
@@ -439,18 +438,14 @@ var xEntryBufferEmitDeletedText func(uintptr, uint32, uint32)
 
 // Used when subclassing `GtkEntryBuffer`.
 func (x *EntryBuffer) EmitDeletedText(PositionVar uint32, NCharsVar uint32) {
-
 	xEntryBufferEmitDeletedText(x.GoPointer(), PositionVar, NCharsVar)
-
 }
 
 var xEntryBufferEmitInsertedText func(uintptr, uint32, string, uint32)
 
 // Used when subclassing `GtkEntryBuffer`.
 func (x *EntryBuffer) EmitInsertedText(PositionVar uint32, CharsVar string, NCharsVar uint32) {
-
 	xEntryBufferEmitInsertedText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
-
 }
 
 var xEntryBufferGetBytes func(uintptr) uint
@@ -459,7 +454,6 @@ var xEntryBufferGetBytes func(uintptr) uint
 //
 // See [method@Gtk.EntryBuffer.get_length].
 func (x *EntryBuffer) GetBytes() uint {
-
 	cret := xEntryBufferGetBytes(x.GoPointer())
 	return cret
 }
@@ -468,7 +462,6 @@ var xEntryBufferGetLength func(uintptr) uint32
 
 // Retrieves the length in characters of the buffer.
 func (x *EntryBuffer) GetLength() uint32 {
-
 	cret := xEntryBufferGetLength(x.GoPointer())
 	return cret
 }
@@ -477,7 +470,6 @@ var xEntryBufferGetMaxLength func(uintptr) int32
 
 // Retrieves the maximum allowed length of the text in @buffer.
 func (x *EntryBuffer) GetMaxLength() int32 {
-
 	cret := xEntryBufferGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -489,7 +481,6 @@ var xEntryBufferGetText func(uintptr) string
 // The memory pointer returned by this call will not change
 // unless this object emits a signal, or is finalized.
 func (x *EntryBuffer) GetText() string {
-
 	cret := xEntryBufferGetText(x.GoPointer())
 	return cret
 }
@@ -506,7 +497,6 @@ var xEntryBufferInsertText func(uintptr, uint32, string, int32) uint32
 //
 // Note that the position and length are in characters, not in bytes.
 func (x *EntryBuffer) InsertText(PositionVar uint32, CharsVar string, NCharsVar int32) uint32 {
-
 	cret := xEntryBufferInsertText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
 	return cret
 }
@@ -518,9 +508,7 @@ var xEntryBufferSetMaxLength func(uintptr, int32)
 // If the current contents are longer than the given length, then
 // they will be truncated to fit.
 func (x *EntryBuffer) SetMaxLength(MaxLengthVar int32) {
-
 	xEntryBufferSetMaxLength(x.GoPointer(), MaxLengthVar)
-
 }
 
 var xEntryBufferSetText func(uintptr, string, int32)
@@ -533,9 +521,7 @@ var xEntryBufferSetText func(uintptr, string, int32)
 //
 // Note that @n_chars is in characters, not in bytes.
 func (x *EntryBuffer) SetText(CharsVar string, NCharsVar int32) {
-
 	xEntryBufferSetText(x.GoPointer(), CharsVar, NCharsVar)
-
 }
 
 func (c *EntryBuffer) GoPointer() uintptr {
@@ -607,7 +593,6 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) 
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp, NCharsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -627,7 +612,6 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint32, string, 
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp, CharsVarp, NCharsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -660,5 +644,4 @@ func init() {
 	core.PuregoSafeRegister(&xEntryBufferInsertText, libs, "gtk_entry_buffer_insert_text")
 	core.PuregoSafeRegister(&xEntryBufferSetMaxLength, libs, "gtk_entry_buffer_set_max_length")
 	core.PuregoSafeRegister(&xEntryBufferSetText, libs, "gtk_entry_buffer_set_text")
-
 }

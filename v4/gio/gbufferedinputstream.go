@@ -328,7 +328,6 @@ func (x *BufferedInputStream) Fill(CountVar int, CancellableVar *Cancellable) (i
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBufferedInputStreamFillAsync func(uintptr, int, int32, uintptr, uintptr, uintptr)
@@ -340,9 +339,7 @@ var xBufferedInputStreamFillAsync func(uintptr, int, int32, uintptr, uintptr, ui
 // If @count is `-1` then the attempted read size is equal to the number
 // of bytes that are required to fill the buffer.
 func (x *BufferedInputStream) FillAsync(CountVar int, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xBufferedInputStreamFillAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xBufferedInputStreamFillFinish func(uintptr, uintptr, **glib.Error) int
@@ -356,14 +353,12 @@ func (x *BufferedInputStream) FillFinish(ResultVar AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBufferedInputStreamGetAvailable func(uintptr) uint
 
 // Gets the size of the available data within the stream.
 func (x *BufferedInputStream) GetAvailable() uint {
-
 	cret := xBufferedInputStreamGetAvailable(x.GoPointer())
 	return cret
 }
@@ -372,7 +367,6 @@ var xBufferedInputStreamGetBufferSize func(uintptr) uint
 
 // Gets the size of the input buffer.
 func (x *BufferedInputStream) GetBufferSize() uint {
-
 	cret := xBufferedInputStreamGetBufferSize(x.GoPointer())
 	return cret
 }
@@ -382,7 +376,6 @@ var xBufferedInputStreamPeek func(uintptr, []byte, uint, uint) uint
 // Peeks in the buffer, copying data of size @count into @buffer,
 // offset @offset bytes.
 func (x *BufferedInputStream) Peek(BufferVar []byte, OffsetVar uint, CountVar uint) uint {
-
 	cret := xBufferedInputStreamPeek(x.GoPointer(), BufferVar, OffsetVar, CountVar)
 	return cret
 }
@@ -393,7 +386,6 @@ var xBufferedInputStreamPeekBuffer func(uintptr, *uint) uintptr
 // buffer must not be modified and will become invalid when reading from
 // the stream or filling the buffer.
 func (x *BufferedInputStream) PeekBuffer(CountVar *uint) uintptr {
-
 	cret := xBufferedInputStreamPeekBuffer(x.GoPointer(), CountVar)
 	return cret
 }
@@ -421,7 +413,6 @@ func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int32, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBufferedInputStreamSetBufferSize func(uintptr, uint)
@@ -430,9 +421,7 @@ var xBufferedInputStreamSetBufferSize func(uintptr, uint)
 // size of the contents of the buffer. The buffer can never be resized
 // smaller than its current contents.
 func (x *BufferedInputStream) SetBufferSize(SizeVar uint) {
-
 	xBufferedInputStreamSetBufferSize(x.GoPointer(), SizeVar)
-
 }
 
 func (c *BufferedInputStream) GoPointer() uintptr {
@@ -465,7 +454,6 @@ func (x *BufferedInputStream) GetPropertyBufferSize() uint32 {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *BufferedInputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -473,7 +461,6 @@ func (x *BufferedInputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *BufferedInputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -500,12 +487,10 @@ func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cance
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *BufferedInputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -527,7 +512,6 @@ func (x *BufferedInputStream) Truncate(OffsetVar int64, CancellableVar *Cancella
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -556,5 +540,4 @@ func init() {
 	core.PuregoSafeRegister(&xBufferedInputStreamPeekBuffer, libs, "g_buffered_input_stream_peek_buffer")
 	core.PuregoSafeRegister(&xBufferedInputStreamReadByte, libs, "g_buffered_input_stream_read_byte")
 	core.PuregoSafeRegister(&xBufferedInputStreamSetBufferSize, libs, "g_buffered_input_stream_set_buffer_size")
-
 }

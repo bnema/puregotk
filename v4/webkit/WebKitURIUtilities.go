@@ -16,7 +16,6 @@ var xUriForDisplay func(string) string
 // against IDN homograph attacks, so in some cases the host part of the returned
 // URI may be in Punycode if the safety check fails.
 func UriForDisplay(UriVar string) string {
-
 	cret := xUriForDisplay(UriVar)
 	return cret
 }
@@ -34,5 +33,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xUriForDisplay, libs, "webkit_uri_for_display")
-
 }

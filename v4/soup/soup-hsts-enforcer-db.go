@@ -107,5 +107,4 @@ func init() {
 	core.PuregoSafeRegister(&xHSTSEnforcerDBGLibType, libs, "soup_hsts_enforcer_db_get_type")
 
 	core.PuregoSafeRegister(&xNewHSTSEnforcerDB, libs, "soup_hsts_enforcer_db_new")
-
 }

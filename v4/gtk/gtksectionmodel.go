@@ -105,9 +105,7 @@ func (x *SectionModelBase) SetGoPointer(ptr uintptr) {
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SectionModelBase) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -126,13 +124,13 @@ func (x *SectionModelBase) GetSection(PositionVar uint32, OutStartVar *uint32, O
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SectionModelBase) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
-var XGtkSectionModelGetSection func(uintptr, uint32, *uint32, *uint32)
-var XGtkSectionModelSectionsChanged func(uintptr, uint32, uint32)
+var (
+	XGtkSectionModelGetSection      func(uintptr, uint32, *uint32, *uint32)
+	XGtkSectionModelSectionsChanged func(uintptr, uint32, uint32)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -150,5 +148,4 @@ func init() {
 
 	core.PuregoSafeRegister(&XGtkSectionModelGetSection, libs, "gtk_section_model_get_section")
 	core.PuregoSafeRegister(&XGtkSectionModelSectionsChanged, libs, "gtk_section_model_sections_changed")
-
 }

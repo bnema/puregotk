@@ -314,7 +314,6 @@ func (x *Server) AcceptIostream(StreamVar *gio.IOStream, LocalAddrVar *gio.Socke
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xServerAddAuthDomain func(uintptr, uintptr)
@@ -331,9 +330,7 @@ var xServerAddAuthDomain func(uintptr, uintptr)
 // SoupServer:100-continue Expectation, @server will reject it before the
 // request body is sent.
 func (x *Server) AddAuthDomain(AuthDomainVar *AuthDomain) {
-
 	xServerAddAuthDomain(x.GoPointer(), AuthDomainVar.GoPointer())
-
 }
 
 var xServerAddEarlyHandler func(uintptr, string, uintptr, uintptr, uintptr)
@@ -365,9 +362,7 @@ var xServerAddEarlyHandler func(uintptr, string, uintptr, uintptr, uintptr)
 // [signal@ServerMessage::got-body] is emitted, the non-early handler will be
 // run as well.
 func (x *Server) AddEarlyHandler(PathVar string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xServerAddEarlyHandler(x.GoPointer(), PathVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xServerAddHandler func(uintptr, string, uintptr, uintptr, uintptr)
@@ -406,9 +401,7 @@ var xServerAddHandler func(uintptr, string, uintptr, uintptr, uintptr)
 // more chunks are available.) When you are done, call
 // [method@MessageBody.complete] to indicate that no more chunks are coming.
 func (x *Server) AddHandler(PathVar string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xServerAddHandler(x.GoPointer(), PathVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xServerAddWebsocketExtension func(uintptr, types.GType)
@@ -422,9 +415,7 @@ var xServerAddWebsocketExtension func(uintptr, types.GType)
 // Note that [class@WebsocketExtensionDeflate] is supported by default, use
 // [method@Server.remove_websocket_extension] if you want to disable it.
 func (x *Server) AddWebsocketExtension(ExtensionTypeVar types.GType) {
-
 	xServerAddWebsocketExtension(x.GoPointer(), ExtensionTypeVar)
-
 }
 
 var xServerAddWebsocketHandler func(uintptr, string, string, []string, uintptr, uintptr, uintptr)
@@ -448,9 +439,7 @@ var xServerAddWebsocketHandler func(uintptr, string, string, []string, uintptr, 
 // whatever checks are needed and
 // setting a failure status code if the handshake should be rejected.
 func (x *Server) AddWebsocketHandler(PathVar string, OriginVar string, ProtocolsVar []string, CallbackVar *ServerWebsocketCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xServerAddWebsocketHandler(x.GoPointer(), PathVar, OriginVar, ProtocolsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xServerDisconnect func(uintptr)
@@ -464,9 +453,7 @@ var xServerDisconnect func(uintptr)
 // You can call [method@Server.listen], etc, after calling this function
 // if you want to start listening again.
 func (x *Server) Disconnect() {
-
 	xServerDisconnect(x.GoPointer())
-
 }
 
 var xServerGetListeners func(uintptr) *glib.SList
@@ -476,7 +463,6 @@ var xServerGetListeners func(uintptr) *glib.SList
 // You should treat these sockets as read-only; writing to or
 // modifiying any of these sockets may cause @server to malfunction.
 func (x *Server) GetListeners() *glib.SList {
-
 	cret := xServerGetListeners(x.GoPointer())
 	return cret
 }
@@ -485,7 +471,6 @@ var xServerGetTlsAuthMode func(uintptr) gio.TlsAuthenticationMode
 
 // Gets the @server SSL/TLS client authentication mode.
 func (x *Server) GetTlsAuthMode() gio.TlsAuthenticationMode {
-
 	cret := xServerGetTlsAuthMode(x.GoPointer())
 	return cret
 }
@@ -536,7 +521,6 @@ var xServerGetUris func(uintptr) *glib.SList
 // the addresses `0.0.0.0` and `::`, rather than actually returning separate
 // URIs for each interface on the system.
 func (x *Server) GetUris() *glib.SList {
-
 	cret := xServerGetUris(x.GoPointer())
 	return cret
 }
@@ -557,7 +541,6 @@ var xServerIsHttps func(uintptr) bool
 // currently is or not. Use [method@Server.get_uris] to see if it currently has
 // any https listeners.
 func (x *Server) IsHttps() bool {
-
 	cret := xServerIsHttps(x.GoPointer())
 	return cret
 }
@@ -588,7 +571,6 @@ func (x *Server) Listen(AddressVar *gio.SocketAddress, OptionsVar ServerListenOp
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xServerListenAll func(uintptr, uint32, ServerListenOptions, **glib.Error) bool
@@ -612,7 +594,6 @@ func (x *Server) ListenAll(PortVar uint32, OptionsVar ServerListenOptions) (bool
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xServerListenLocal func(uintptr, uint32, ServerListenOptions, **glib.Error) bool
@@ -634,7 +615,6 @@ func (x *Server) ListenLocal(PortVar uint32, OptionsVar ServerListenOptions) (bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xServerListenSocket func(uintptr, uintptr, ServerListenOptions, **glib.Error) bool
@@ -650,7 +630,6 @@ func (x *Server) ListenSocket(SocketVar *gio.Socket, OptionsVar ServerListenOpti
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xServerPauseMessage func(uintptr, uintptr)
@@ -666,27 +645,21 @@ var xServerPauseMessage func(uintptr, uintptr)
 // [callback@ServerCallback] or emitted in a [signal@Server::request-read]
 // signal.
 func (x *Server) PauseMessage(MsgVar *ServerMessage) {
-
 	xServerPauseMessage(x.GoPointer(), MsgVar.GoPointer())
-
 }
 
 var xServerRemoveAuthDomain func(uintptr, uintptr)
 
 // Removes @auth_domain from @server.
 func (x *Server) RemoveAuthDomain(AuthDomainVar *AuthDomain) {
-
 	xServerRemoveAuthDomain(x.GoPointer(), AuthDomainVar.GoPointer())
-
 }
 
 var xServerRemoveHandler func(uintptr, string)
 
 // Removes all handlers (early and normal) registered at @path.
 func (x *Server) RemoveHandler(PathVar string) {
-
 	xServerRemoveHandler(x.GoPointer(), PathVar)
-
 }
 
 var xServerRemoveWebsocketExtension func(uintptr, types.GType)
@@ -694,36 +667,28 @@ var xServerRemoveWebsocketExtension func(uintptr, types.GType)
 // Removes support for WebSocket extension of type @extension_type (or any subclass of
 // @extension_type) from @server.
 func (x *Server) RemoveWebsocketExtension(ExtensionTypeVar types.GType) {
-
 	xServerRemoveWebsocketExtension(x.GoPointer(), ExtensionTypeVar)
-
 }
 
 var xServerSetTlsAuthMode func(uintptr, gio.TlsAuthenticationMode)
 
 // Sets @server's #GTlsAuthenticationMode to use for SSL/TLS client authentication.
 func (x *Server) SetTlsAuthMode(ModeVar gio.TlsAuthenticationMode) {
-
 	xServerSetTlsAuthMode(x.GoPointer(), ModeVar)
-
 }
 
 var xServerSetTlsCertificate func(uintptr, uintptr)
 
 // Sets @server up to do https, using the given SSL/TLS @certificate.
 func (x *Server) SetTlsCertificate(CertificateVar *gio.TlsCertificate) {
-
 	xServerSetTlsCertificate(x.GoPointer(), CertificateVar.GoPointer())
-
 }
 
 var xServerSetTlsDatabase func(uintptr, uintptr)
 
 // Sets @server's #GTlsDatabase to use for validating SSL/TLS client certificates.
 func (x *Server) SetTlsDatabase(TlsDatabaseVar *gio.TlsDatabase) {
-
 	xServerSetTlsDatabase(x.GoPointer(), TlsDatabaseVar.GoPointer())
-
 }
 
 var xServerUnpauseMessage func(uintptr, uintptr)
@@ -740,9 +705,7 @@ var xServerUnpauseMessage func(uintptr, uintptr)
 // [callback@ServerCallback] or emitted in a [signal@Server::request-read]
 // signal.
 func (x *Server) UnpauseMessage(MsgVar *ServerMessage) {
-
 	xServerUnpauseMessage(x.GoPointer(), MsgVar.GoPointer())
-
 }
 
 func (c *Server) GoPointer() uintptr {
@@ -863,7 +826,6 @@ func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -884,7 +846,6 @@ func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -911,7 +872,6 @@ func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -942,7 +902,6 @@ func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -992,5 +951,4 @@ func init() {
 	core.PuregoSafeRegister(&xServerSetTlsCertificate, libs, "soup_server_set_tls_certificate")
 	core.PuregoSafeRegister(&xServerSetTlsDatabase, libs, "soup_server_set_tls_database")
 	core.PuregoSafeRegister(&xServerUnpauseMessage, libs, "soup_server_unpause_message")
-
 }

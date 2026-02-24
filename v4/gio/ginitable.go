@@ -148,7 +148,6 @@ func (x *InitableBase) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var XGInitableInit func(uintptr, uintptr, **glib.Error) bool
@@ -173,7 +172,6 @@ func InitableNewv(ObjectTypeVar types.GType, NParametersVar uint32, ParametersVa
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -193,5 +191,4 @@ func init() {
 	core.PuregoSafeRegister(&xInitableGLibType, libs, "g_initable_get_type")
 
 	core.PuregoSafeRegister(&XGInitableInit, libs, "g_initable_init")
-
 }

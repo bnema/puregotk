@@ -75,7 +75,6 @@ var xGetDebugFlags func() DebugFlags
 // This function is intended for GTK modules that want
 // to adjust their debug output based on GTK debug flags.
 func GetDebugFlags() DebugFlags {
-
 	cret := xGetDebugFlags()
 	return cret
 }
@@ -84,9 +83,7 @@ var xSetDebugFlags func(DebugFlags)
 
 // Sets the GTK debug flags.
 func SetDebugFlags(FlagsVar DebugFlags) {
-
 	xSetDebugFlags(FlagsVar)
-
 }
 
 func init() {
@@ -105,5 +102,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGetDebugFlags, libs, "gtk_get_debug_flags")
 	core.PuregoSafeRegister(&xSetDebugFlags, libs, "gtk_set_debug_flags")
-
 }

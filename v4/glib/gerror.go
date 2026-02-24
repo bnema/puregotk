@@ -64,7 +64,6 @@ var xNewError func(Quark, int32, string, ...interface{}) *Error
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewError(DomainVar Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) *Error {
-
 	cret := xNewError(DomainVar, CodeVar, FormatVar, varArgs...)
 	return cret
 }
@@ -76,7 +75,6 @@ var xNewErrorLiteral func(Quark, int32, string) *Error
 // @message contains text you don't have control over,
 // that could include printf() escape sequences.
 func NewErrorLiteral(DomainVar Quark, CodeVar int32, MessageVar string) *Error {
-
 	cret := xNewErrorLiteral(DomainVar, CodeVar, MessageVar)
 	return cret
 }
@@ -86,7 +84,6 @@ var xNewErrorValist func(Quark, int32, string, []interface{}) *Error
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewErrorValist(DomainVar Quark, CodeVar int32, FormatVar string, ArgsVar []interface{}) *Error {
-
 	cret := xNewErrorValist(DomainVar, CodeVar, FormatVar, ArgsVar)
 	return cret
 }
@@ -95,7 +92,6 @@ var xErrorCopy func(uintptr) *Error
 
 // Makes a copy of @error.
 func (x *Error) Copy() *Error {
-
 	cret := xErrorCopy(x.GoPointer())
 	return cret
 }
@@ -104,9 +100,7 @@ var xErrorFree func(uintptr)
 
 // Frees a #GError and associated resources.
 func (x *Error) Free() {
-
 	xErrorFree(x.GoPointer())
-
 }
 
 var xErrorMatches func(uintptr, Quark, int32) bool
@@ -122,7 +116,6 @@ var xErrorMatches func(uintptr, Quark, int32) bool
 // extended in the future to provide a more specific error code for
 // a certain case, your code will still work.
 func (x *Error) Matches(DomainVar Quark, CodeVar int32) bool {
-
 	cret := xErrorMatches(x.GoPointer(), DomainVar, CodeVar)
 	return cret
 }
@@ -139,7 +132,6 @@ func ClearError() error {
 		return nil
 	}
 	return cerr
-
 }
 
 var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
@@ -148,7 +140,6 @@ var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
 // @error_type_name will be duplicated. Otherwise does the same as
 // g_error_domain_register_static().
 func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
-
 	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
 	return cret
 }
@@ -173,7 +164,6 @@ var xErrorDomainRegisterStatic func(string, uint, uintptr, uintptr, uintptr) Qua
 // Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
 // already takes care of passing valid information to this function.
 func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
-
 	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
 	return cret
 }
@@ -187,9 +177,7 @@ var xPrefixError func(**Error, string, ...interface{})
 // If `*err` is %NULL (ie: an error variable is present but there is no
 // error condition) then also do nothing.
 func PrefixError(ErrVar **Error, FormatVar string, varArgs ...interface{}) {
-
 	xPrefixError(ErrVar, FormatVar, varArgs...)
-
 }
 
 var xPrefixErrorLiteral func(**Error, string)
@@ -197,9 +185,7 @@ var xPrefixErrorLiteral func(**Error, string)
 // Prefixes @prefix to an existing error message. If @err or `*err` is
 // %NULL (i.e.: no error variable) then do nothing.
 func PrefixErrorLiteral(ErrVar **Error, PrefixVar string) {
-
 	xPrefixErrorLiteral(ErrVar, PrefixVar)
-
 }
 
 var xPropagateError func(**Error, *Error)
@@ -213,9 +199,7 @@ var xPropagateError func(**Error, *Error)
 // to keep using the same GError*, you need to set it to %NULL
 // after calling this function on it.
 func PropagateError(DestVar **Error, SrcVar *Error) {
-
 	xPropagateError(DestVar, SrcVar)
-
 }
 
 var xPropagatePrefixedError func(**Error, *Error, string, ...interface{})
@@ -224,9 +208,7 @@ var xPropagatePrefixedError func(**Error, *Error, string, ...interface{})
 // `*dest` must be %NULL. After the move, add a prefix as with
 // g_prefix_error().
 func PropagatePrefixedError(DestVar **Error, SrcVar *Error, FormatVar string, varArgs ...interface{}) {
-
 	xPropagatePrefixedError(DestVar, SrcVar, FormatVar, varArgs...)
-
 }
 
 var xSetError func(**Error, Quark, int32, string, ...interface{})
@@ -234,9 +216,7 @@ var xSetError func(**Error, Quark, int32, string, ...interface{})
 // Does nothing if @err is %NULL; if @err is non-%NULL, then `*err`
 // must be %NULL. A new #GError is created and assigned to `*err`.
 func SetError(ErrVar **Error, DomainVar Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) {
-
 	xSetError(ErrVar, DomainVar, CodeVar, FormatVar, varArgs...)
-
 }
 
 var xSetErrorLiteral func(**Error, Quark, int32, string)
@@ -247,9 +227,7 @@ var xSetErrorLiteral func(**Error, Quark, int32, string)
 // Use this function if @message contains text you don't have control over,
 // that could include printf() escape sequences.
 func SetErrorLiteral(ErrVar **Error, DomainVar Quark, CodeVar int32, MessageVar string) {
-
 	xSetErrorLiteral(ErrVar, DomainVar, CodeVar, MessageVar)
-
 }
 
 func init() {
@@ -283,5 +261,4 @@ func init() {
 	core.PuregoSafeRegister(&xErrorCopy, libs, "g_error_copy")
 	core.PuregoSafeRegister(&xErrorFree, libs, "g_error_free")
 	core.PuregoSafeRegister(&xErrorMatches, libs, "g_error_matches")
-
 }

@@ -34,7 +34,6 @@ var xScriptMessageReplyRef func(uintptr) *ScriptMessageReply
 
 // Atomically increments the reference count of @script_message_reply by one.
 func (x *ScriptMessageReply) Ref() *ScriptMessageReply {
-
 	cret := xScriptMessageReplyRef(x.GoPointer())
 	return cret
 }
@@ -43,9 +42,7 @@ var xScriptMessageReplyReturnErrorMessage func(uintptr, string)
 
 // Reply to a script message with an error message.
 func (x *ScriptMessageReply) ReturnErrorMessage(ErrorMessageVar string) {
-
 	xScriptMessageReplyReturnErrorMessage(x.GoPointer(), ErrorMessageVar)
-
 }
 
 var xScriptMessageReplyReturnValue func(uintptr, uintptr)
@@ -54,9 +51,7 @@ var xScriptMessageReplyReturnValue func(uintptr, uintptr)
 //
 // This function can be called twice for passing the reply value in.
 func (x *ScriptMessageReply) ReturnValue(ReplyValueVar *javascriptcore.Value) {
-
 	xScriptMessageReplyReturnValue(x.GoPointer(), ReplyValueVar.GoPointer())
-
 }
 
 var xScriptMessageReplyUnref func(uintptr)
@@ -67,9 +62,7 @@ var xScriptMessageReplyUnref func(uintptr)
 // #WebKitScriptMessageReply is released. This function is MT-safe and may
 // be called from any thread.
 func (x *ScriptMessageReply) Unref() {
-
 	xScriptMessageReplyUnref(x.GoPointer())
-
 }
 
 type UserContentManagerClass struct {
@@ -136,9 +129,7 @@ var xUserContentManagerAddFilter func(uintptr, *UserContentFilter)
 //
 // Filters need to be saved and loaded from #WebKitUserContentFilterStore.
 func (x *UserContentManager) AddFilter(FilterVar *UserContentFilter) {
-
 	xUserContentManagerAddFilter(x.GoPointer(), FilterVar)
-
 }
 
 var xUserContentManagerAddScript func(uintptr, *UserScript)
@@ -148,9 +139,7 @@ var xUserContentManagerAddScript func(uintptr, *UserScript)
 // The same #WebKitUserScript can be reused with multiple
 // #WebKitUserContentManager instances.
 func (x *UserContentManager) AddScript(ScriptVar *UserScript) {
-
 	xUserContentManagerAddScript(x.GoPointer(), ScriptVar)
-
 }
 
 var xUserContentManagerAddStyleSheet func(uintptr, *UserStyleSheet)
@@ -160,9 +149,7 @@ var xUserContentManagerAddStyleSheet func(uintptr, *UserStyleSheet)
 // The same #WebKitUserStyleSheet can be reused with multiple
 // #WebKitUserContentManager instances.
 func (x *UserContentManager) AddStyleSheet(StylesheetVar *UserStyleSheet) {
-
 	xUserContentManagerAddStyleSheet(x.GoPointer(), StylesheetVar)
-
 }
 
 var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, string) bool
@@ -196,7 +183,6 @@ var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, string
 // The registered handler can be unregistered by using
 // webkit_user_content_manager_unregister_script_message_handler().
 func (x *UserContentManager) RegisterScriptMessageHandler(NameVar string, WorldNameVar string) bool {
-
 	cret := xUserContentManagerRegisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVar)
 	return cret
 }
@@ -219,7 +205,6 @@ var xUserContentManagerRegisterScriptMessageHandlerWithReply func(uintptr, strin
 // The registered handler can be unregistered by using
 // webkit_user_content_manager_unregister_script_message_handler().
 func (x *UserContentManager) RegisterScriptMessageHandlerWithReply(NameVar string, WorldNameVar string) bool {
-
 	cret := xUserContentManagerRegisterScriptMessageHandlerWithReply(x.GoPointer(), NameVar, WorldNameVar)
 	return cret
 }
@@ -228,9 +213,7 @@ var xUserContentManagerRemoveAllFilters func(uintptr)
 
 // Removes all content filters from the given #WebKitUserContentManager.
 func (x *UserContentManager) RemoveAllFilters() {
-
 	xUserContentManagerRemoveAllFilters(x.GoPointer())
-
 }
 
 var xUserContentManagerRemoveAllScripts func(uintptr)
@@ -239,18 +222,14 @@ var xUserContentManagerRemoveAllScripts func(uintptr)
 //
 // See also webkit_user_content_manager_remove_script().
 func (x *UserContentManager) RemoveAllScripts() {
-
 	xUserContentManagerRemoveAllScripts(x.GoPointer())
-
 }
 
 var xUserContentManagerRemoveAllStyleSheets func(uintptr)
 
 // Removes all user style sheets from the given #WebKitUserContentManager.
 func (x *UserContentManager) RemoveAllStyleSheets() {
-
 	xUserContentManagerRemoveAllStyleSheets(x.GoPointer())
-
 }
 
 var xUserContentManagerRemoveFilter func(uintptr, *UserContentFilter)
@@ -259,9 +238,7 @@ var xUserContentManagerRemoveFilter func(uintptr, *UserContentFilter)
 //
 // Since 2.24
 func (x *UserContentManager) RemoveFilter(FilterVar *UserContentFilter) {
-
 	xUserContentManagerRemoveFilter(x.GoPointer(), FilterVar)
-
 }
 
 var xUserContentManagerRemoveFilterById func(uintptr, string)
@@ -272,9 +249,7 @@ var xUserContentManagerRemoveFilterById func(uintptr, string)
 // identifier of a #WebKitUserContentFilter as returned by
 // webkit_user_content_filter_get_identifier().
 func (x *UserContentManager) RemoveFilterById(FilterIdVar string) {
-
 	xUserContentManagerRemoveFilterById(x.GoPointer(), FilterIdVar)
-
 }
 
 var xUserContentManagerRemoveScript func(uintptr, *UserScript)
@@ -283,9 +258,7 @@ var xUserContentManagerRemoveScript func(uintptr, *UserScript)
 //
 // See also webkit_user_content_manager_remove_all_scripts().
 func (x *UserContentManager) RemoveScript(ScriptVar *UserScript) {
-
 	xUserContentManagerRemoveScript(x.GoPointer(), ScriptVar)
-
 }
 
 var xUserContentManagerRemoveStyleSheet func(uintptr, *UserStyleSheet)
@@ -294,9 +267,7 @@ var xUserContentManagerRemoveStyleSheet func(uintptr, *UserStyleSheet)
 //
 // See also webkit_user_content_manager_remove_all_style_sheets().
 func (x *UserContentManager) RemoveStyleSheet(StylesheetVar *UserStyleSheet) {
-
 	xUserContentManagerRemoveStyleSheet(x.GoPointer(), StylesheetVar)
-
 }
 
 var xUserContentManagerUnregisterScriptMessageHandler func(uintptr, string, string)
@@ -311,9 +282,7 @@ var xUserContentManagerUnregisterScriptMessageHandler func(uintptr, string, stri
 //
 // See also webkit_user_content_manager_register_script_message_handler().
 func (x *UserContentManager) UnregisterScriptMessageHandler(NameVar string, WorldNameVar string) {
-
 	xUserContentManagerUnregisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVar)
-
 }
 
 func (c *UserContentManager) GoPointer() uintptr {
@@ -343,7 +312,6 @@ func (x *UserContentManager) ConnectScriptMessageReceived(cb *func(UserContentMa
 		cbFn := *cb
 
 		cbFn(fa, ValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -374,7 +342,6 @@ func (x *UserContentManager) ConnectScriptMessageWithReplyReceived(cb *func(User
 		cbFn := *cb
 
 		return cbFn(fa, ValueVarp, ReplyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

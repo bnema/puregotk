@@ -111,7 +111,6 @@ func (x *CicpParams) BuildColorState() (*ColorState, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCicpParamsGetColorPrimaries func(uintptr) uint32
@@ -119,7 +118,6 @@ var xCicpParamsGetColorPrimaries func(uintptr) uint32
 // Returns the value of the color-primaries property
 // of @self.
 func (x *CicpParams) GetColorPrimaries() uint32 {
-
 	cret := xCicpParamsGetColorPrimaries(x.GoPointer())
 	return cret
 }
@@ -128,7 +126,6 @@ var xCicpParamsGetMatrixCoefficients func(uintptr) uint32
 
 // Gets the matrix-coefficients property of @self.
 func (x *CicpParams) GetMatrixCoefficients() uint32 {
-
 	cret := xCicpParamsGetMatrixCoefficients(x.GoPointer())
 	return cret
 }
@@ -137,7 +134,6 @@ var xCicpParamsGetRange func(uintptr) CicpRange
 
 // Gets the range property of @self.
 func (x *CicpParams) GetRange() CicpRange {
-
 	cret := xCicpParamsGetRange(x.GoPointer())
 	return cret
 }
@@ -146,7 +142,6 @@ var xCicpParamsGetTransferFunction func(uintptr) uint32
 
 // Gets the transfer-function property of @self.
 func (x *CicpParams) GetTransferFunction() uint32 {
-
 	cret := xCicpParamsGetTransferFunction(x.GoPointer())
 	return cret
 }
@@ -155,9 +150,7 @@ var xCicpParamsSetColorPrimaries func(uintptr, uint32)
 
 // Sets the color-primaries property of @self.
 func (x *CicpParams) SetColorPrimaries(ColorPrimariesVar uint32) {
-
 	xCicpParamsSetColorPrimaries(x.GoPointer(), ColorPrimariesVar)
-
 }
 
 var xCicpParamsSetMatrixCoefficients func(uintptr, uint32)
@@ -165,27 +158,21 @@ var xCicpParamsSetMatrixCoefficients func(uintptr, uint32)
 // @self a `GdkCicpParams`
 // Sets the matrix-coefficients property of @self.
 func (x *CicpParams) SetMatrixCoefficients(MatrixCoefficientsVar uint32) {
-
 	xCicpParamsSetMatrixCoefficients(x.GoPointer(), MatrixCoefficientsVar)
-
 }
 
 var xCicpParamsSetRange func(uintptr, CicpRange)
 
 // Sets the range property of @self
 func (x *CicpParams) SetRange(RangeVar CicpRange) {
-
 	xCicpParamsSetRange(x.GoPointer(), RangeVar)
-
 }
 
 var xCicpParamsSetTransferFunction func(uintptr, uint32)
 
 // Sets the transfer-function property of @self.
 func (x *CicpParams) SetTransferFunction(TransferFunctionVar uint32) {
-
 	xCicpParamsSetTransferFunction(x.GoPointer(), TransferFunctionVar)
-
 }
 
 func (c *CicpParams) GoPointer() uintptr {
@@ -333,5 +320,4 @@ func init() {
 	core.PuregoSafeRegister(&xCicpParamsSetMatrixCoefficients, libs, "gdk_cicp_params_set_matrix_coefficients")
 	core.PuregoSafeRegister(&xCicpParamsSetRange, libs, "gdk_cicp_params_set_range")
 	core.PuregoSafeRegister(&xCicpParamsSetTransferFunction, libs, "gdk_cicp_params_set_transfer_function")
-
 }

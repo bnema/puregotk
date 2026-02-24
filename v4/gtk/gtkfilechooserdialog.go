@@ -248,9 +248,7 @@ func (c *FileChooserDialog) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FileChooserDialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -271,7 +269,6 @@ func (x *FileChooserDialog) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FileChooserDialog) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -296,7 +293,6 @@ func (x *FileChooserDialog) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FileChooserDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -335,30 +331,23 @@ func (x *FileChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FileChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FileChooserDialog) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FileChooserDialog) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FileChooserDialog) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -371,9 +360,7 @@ func (x *FileChooserDialog) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FileChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -381,9 +368,7 @@ func (x *FileChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FileChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -392,9 +377,7 @@ func (x *FileChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FileChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -416,9 +399,7 @@ func (x *FileChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState
 //
 // ```
 func (x *FileChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -428,9 +409,7 @@ func (x *FileChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -452,9 +431,7 @@ func (x *FileChooserDialog) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *FileChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -464,9 +441,7 @@ func (x *FileChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -489,9 +464,7 @@ func (x *FileChooserDialog) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *FileChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -501,9 +474,7 @@ func (x *FileChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -511,7 +482,6 @@ func (x *FileChooserDialog) UpdateStateValue(NStatesVar int32, StatesVar []Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FileChooserDialog) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -525,9 +495,7 @@ func (x *FileChooserDialog) GetBuildableId() string {
 // [signal@Gtk.Dialog::response] signal handler using
 // [method@Gtk.FileChooser.get_choice].
 func (x *FileChooserDialog) AddChoice(IdVar string, LabelVar string, OptionsVar []string, OptionLabelsVar []string) {
-
 	XGtkFileChooserAddChoice(x.GoPointer(), IdVar, LabelVar, OptionsVar, OptionLabelsVar)
-
 }
 
 // Adds @filter to the list of filters that the user can select between.
@@ -538,9 +506,7 @@ func (x *FileChooserDialog) AddChoice(IdVar string, LabelVar string, OptionsVar 
 // Note that the @chooser takes ownership of the filter if it is floating,
 // so you have to ref and sink it if you want to keep a reference.
 func (x *FileChooserDialog) AddFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserAddFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Adds a folder to be displayed with the shortcut folders
@@ -553,26 +519,22 @@ func (x *FileChooserDialog) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets the type of operation that the file chooser is performing.
 func (x *FileChooserDialog) GetAction() FileChooserAction {
-
 	cret := XGtkFileChooserGetAction(x.GoPointer())
 	return cret
 }
 
 // Gets the currently selected option in the 'choice' with the given ID.
 func (x *FileChooserDialog) GetChoice(IdVar string) string {
-
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
 	return cret
 }
 
 // Gets whether file chooser will offer to create new folders.
 func (x *FileChooserDialog) GetCreateFolders() bool {
-
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
 	return cret
 }
@@ -596,7 +558,6 @@ func (x *FileChooserDialog) GetCurrentFolder() *gio.FileBase {
 // This is meant to be used in save dialogs, to get the currently typed
 // filename when the file itself does not exist yet.
 func (x *FileChooserDialog) GetCurrentName() string {
-
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
 	return cret
 }
@@ -675,7 +636,6 @@ func (x *FileChooserDialog) GetFilters() *gio.ListModelBase {
 // Gets whether multiple files can be selected in the file
 // chooser.
 func (x *FileChooserDialog) GetSelectMultiple() bool {
-
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
 	return cret
 }
@@ -699,16 +659,12 @@ func (x *FileChooserDialog) GetShortcutFolders() *gio.ListModelBase {
 
 // Removes a 'choice' that has been added with gtk_file_chooser_add_choice().
 func (x *FileChooserDialog) RemoveChoice(IdVar string) {
-
 	XGtkFileChooserRemoveChoice(x.GoPointer(), IdVar)
-
 }
 
 // Removes @filter from the list of filters that the user can select between.
 func (x *FileChooserDialog) RemoveFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserRemoveFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Removes a folder from the shortcut folders in a file chooser.
@@ -720,7 +676,6 @@ func (x *FileChooserDialog) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the type of operation that the chooser is performing.
@@ -731,9 +686,7 @@ func (x *FileChooserDialog) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 // if the action is %GTK_FILE_CHOOSER_ACTION_SAVE but not if the
 // action is %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserDialog) SetAction(ActionVar FileChooserAction) {
-
 	XGtkFileChooserSetAction(x.GoPointer(), ActionVar)
-
 }
 
 // Selects an option in a 'choice' that has been added with
@@ -741,9 +694,7 @@ func (x *FileChooserDialog) SetAction(ActionVar FileChooserAction) {
 //
 // For a boolean choice, the possible options are "true" and "false".
 func (x *FileChooserDialog) SetChoice(IdVar string, OptionVar string) {
-
 	XGtkFileChooserSetChoice(x.GoPointer(), IdVar, OptionVar)
-
 }
 
 // Sets whether file chooser will offer to create new folders.
@@ -751,9 +702,7 @@ func (x *FileChooserDialog) SetChoice(IdVar string, OptionVar string) {
 // This is only relevant if the action is not set to be
 // %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserDialog) SetCreateFolders(CreateFoldersVar bool) {
-
 	XGtkFileChooserSetCreateFolders(x.GoPointer(), CreateFoldersVar)
-
 }
 
 // Sets the current folder for @chooser from a `GFile`.
@@ -765,7 +714,6 @@ func (x *FileChooserDialog) SetCurrentFolder(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current name in the file selector, as if entered
@@ -782,9 +730,7 @@ func (x *FileChooserDialog) SetCurrentFolder(FileVar gio.File) (bool, error) {
 // Please see the documentation for those functions for an example
 // of using [method@Gtk.FileChooser.set_current_name] as well.
 func (x *FileChooserDialog) SetCurrentName(NameVar string) {
-
 	XGtkFileChooserSetCurrentName(x.GoPointer(), NameVar)
-
 }
 
 // Sets @file as the current filename for the file chooser.
@@ -840,7 +786,6 @@ func (x *FileChooserDialog) SetFile(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current filter.
@@ -853,9 +798,7 @@ func (x *FileChooserDialog) SetFile(FileVar gio.File) (bool, error) {
 // empty is useful if you want to restrict the displayed
 // set of files without letting the user change it.
 func (x *FileChooserDialog) SetFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserSetFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Sets whether multiple files can be selected in the file chooser.
@@ -864,9 +807,7 @@ func (x *FileChooserDialog) SetFilter(FilterVar *FileFilter) {
 // %GTK_FILE_CHOOSER_ACTION_OPEN or
 // %GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 func (x *FileChooserDialog) SetSelectMultiple(SelectMultipleVar bool) {
-
 	XGtkFileChooserSetSelectMultiple(x.GoPointer(), SelectMultipleVar)
-
 }
 
 // Returns the renderer that is used for this `GtkNative`.
@@ -904,27 +845,21 @@ func (x *FileChooserDialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *FileChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *FileChooserDialog) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *FileChooserDialog) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -971,9 +906,7 @@ func (x *FileChooserDialog) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *FileChooserDialog) SetFocus(FocusVar *Widget) {
-
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -991,5 +924,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileChooserDialogGLibType, libs, "gtk_file_chooser_dialog_get_type")
 
 	core.PuregoSafeRegister(&xNewFileChooserDialog, libs, "gtk_file_chooser_dialog_new")
-
 }

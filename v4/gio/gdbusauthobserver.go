@@ -116,7 +116,6 @@ var xDBusAuthObserverAllowMechanism func(uintptr, string) bool
 
 // Emits the #GDBusAuthObserver::allow-mechanism signal on @observer.
 func (x *DBusAuthObserver) AllowMechanism(MechanismVar string) bool {
-
 	cret := xDBusAuthObserverAllowMechanism(x.GoPointer(), MechanismVar)
 	return cret
 }
@@ -125,7 +124,6 @@ var xDBusAuthObserverAuthorizeAuthenticatedPeer func(uintptr, uintptr, uintptr) 
 
 // Emits the #GDBusAuthObserver::authorize-authenticated-peer signal on @observer.
 func (x *DBusAuthObserver) AuthorizeAuthenticatedPeer(StreamVar *IOStream, CredentialsVar *Credentials) bool {
-
 	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVar.GoPointer())
 	return cret
 }
@@ -154,7 +152,6 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 		cbFn := *cb
 
 		return cbFn(fa, MechanismVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -175,7 +172,6 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 		cbFn := *cb
 
 		return cbFn(fa, StreamVarp, CredentialsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -200,5 +196,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDBusAuthObserverAllowMechanism, libs, "g_dbus_auth_observer_allow_mechanism")
 	core.PuregoSafeRegister(&xDBusAuthObserverAuthorizeAuthenticatedPeer, libs, "g_dbus_auth_observer_authorize_authenticated_peer")
-
 }

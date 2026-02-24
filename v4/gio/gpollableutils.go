@@ -16,7 +16,6 @@ var xPollableSourceNew func(uintptr) *glib.Source
 // anything on its own; use g_source_add_child_source() to add other
 // sources to it to cause it to trigger.
 func PollableSourceNew(PollableStreamVar *gobject.Object) *glib.Source {
-
 	cret := xPollableSourceNew(PollableStreamVar.GoPointer())
 	return cret
 }
@@ -28,7 +27,6 @@ var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) *glib.Source
 // g_pollable_source_new(), but also attaching @child_source (with a
 // dummy callback), and @cancellable, if they are non-%NULL.
 func PollableSourceNewFull(PollableStreamVar *gobject.Object, ChildSourceVar *glib.Source, CancellableVar *Cancellable) *glib.Source {
-
 	cret := xPollableSourceNewFull(PollableStreamVar.GoPointer(), ChildSourceVar, CancellableVar.GoPointer())
 	return cret
 }
@@ -52,7 +50,6 @@ func PollableStreamRead(StreamVar *InputStream, BufferVar []byte, CountVar uint,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPollableStreamWrite func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int
@@ -75,7 +72,6 @@ func PollableStreamWrite(StreamVar *OutputStream, BufferVar []byte, CountVar uin
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPollableStreamWriteAll func(uintptr, []byte, uint, bool, *uint, uintptr, **glib.Error) bool
@@ -106,7 +102,6 @@ func PollableStreamWriteAll(StreamVar *OutputStream, BufferVar []byte, CountVar 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -126,5 +121,4 @@ func init() {
 	core.PuregoSafeRegister(&xPollableStreamRead, libs, "g_pollable_stream_read")
 	core.PuregoSafeRegister(&xPollableStreamWrite, libs, "g_pollable_stream_write")
 	core.PuregoSafeRegister(&xPollableStreamWriteAll, libs, "g_pollable_stream_write_all")
-
 }

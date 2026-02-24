@@ -70,7 +70,6 @@ var xHashTableIterGetHashTable func(uintptr) *HashTable
 
 // Returns the #GHashTable associated with @iter.
 func (x *HashTableIter) GetHashTable() *HashTable {
-
 	cret := xHashTableIterGetHashTable(x.GoPointer())
 	return cret
 }
@@ -97,9 +96,7 @@ var xHashTableIterInit func(uintptr, *HashTable)
 //
 // ]|
 func (x *HashTableIter) Init(HashTableVar *HashTable) {
-
 	xHashTableIterInit(x.GoPointer(), HashTableVar)
-
 }
 
 var xHashTableIterNext func(uintptr, *uintptr, *uintptr) bool
@@ -108,7 +105,6 @@ var xHashTableIterNext func(uintptr, *uintptr, *uintptr) bool
 // pointed to as a result of this advancement. If %FALSE is returned,
 // @key and @value are not set, and the iterator becomes invalid.
 func (x *HashTableIter) Next(KeyVar *uintptr, ValueVar *uintptr) bool {
-
 	cret := xHashTableIterNext(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
@@ -136,9 +132,7 @@ var xHashTableIterRemove func(uintptr)
 //
 // ]|
 func (x *HashTableIter) Remove() {
-
 	xHashTableIterRemove(x.GoPointer())
-
 }
 
 var xHashTableIterReplace func(uintptr, uintptr)
@@ -150,9 +144,7 @@ var xHashTableIterReplace func(uintptr, uintptr)
 // If you supplied a @value_destroy_func when creating the
 // #GHashTable, the old value is freed using that function.
 func (x *HashTableIter) Replace(ValueVar uintptr) {
-
 	xHashTableIterReplace(x.GoPointer(), ValueVar)
-
 }
 
 var xHashTableIterSteal func(uintptr)
@@ -163,9 +155,7 @@ var xHashTableIterSteal func(uintptr)
 // after g_hash_table_iter_next() returned %TRUE, and cannot
 // be called more than once for the same key/value pair.
 func (x *HashTableIter) Steal() {
-
 	xHashTableIterSteal(x.GoPointer())
-
 }
 
 var xDirectEqual func(uintptr, uintptr) bool
@@ -178,7 +168,6 @@ var xDirectEqual func(uintptr, uintptr) bool
 // This equality function is also appropriate for keys that are integers
 // stored in pointers, such as `GINT_TO_POINTER (n)`.
 func DirectEqual(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xDirectEqual(V1Var, V2Var)
 	return cret
 }
@@ -193,7 +182,6 @@ var xDirectHash func(uintptr) uint32
 // This hash function is also appropriate for keys that are integers
 // stored in pointers, such as `GINT_TO_POINTER (n)`.
 func DirectHash(VVar uintptr) uint32 {
-
 	cret := xDirectHash(VVar)
 	return cret
 }
@@ -206,7 +194,6 @@ var xDoubleEqual func(uintptr, uintptr) bool
 // parameter, when using non-%NULL pointers to doubles as keys in a
 // #GHashTable.
 func DoubleEqual(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xDoubleEqual(V1Var, V2Var)
 	return cret
 }
@@ -218,7 +205,6 @@ var xDoubleHash func(uintptr) uint32
 // It can be passed to g_hash_table_new() as the @hash_func parameter,
 // when using non-%NULL pointers to doubles as keys in a #GHashTable.
 func DoubleHash(VVar uintptr) uint32 {
-
 	cret := xDoubleHash(VVar)
 	return cret
 }
@@ -241,7 +227,6 @@ var xHashTableAdd func(*HashTable, uintptr) bool
 // indicate whether the newly added value was already in the hash table
 // or not.
 func HashTableAdd(HashTableVar *HashTable, KeyVar uintptr) bool {
-
 	cret := xHashTableAdd(HashTableVar, KeyVar)
 	return cret
 }
@@ -250,7 +235,6 @@ var xHashTableContains func(*HashTable, uintptr) bool
 
 // Checks if @key is in @hash_table.
 func HashTableContains(HashTableVar *HashTable, KeyVar uintptr) bool {
-
 	cret := xHashTableContains(HashTableVar, KeyVar)
 	return cret
 }
@@ -264,9 +248,7 @@ var xHashTableDestroy func(*HashTable)
 // functions you supplied will be called on all keys and values during the
 // destruction phase.
 func HashTableDestroy(HashTableVar *HashTable) {
-
 	xHashTableDestroy(HashTableVar)
-
 }
 
 var xHashTableFind func(*HashTable, uintptr, uintptr) uintptr
@@ -285,7 +267,6 @@ var xHashTableFind func(*HashTable, uintptr, uintptr) uintptr
 // (keep in mind that an O(n) find/foreach operation issued for all n
 // values in a hash table ends up needing O(n*n) operations).
 func HashTableFind(HashTableVar *HashTable, PredicateVar *HRFunc, UserDataVar uintptr) uintptr {
-
 	cret := xHashTableFind(HashTableVar, NewCallback(PredicateVar), UserDataVar)
 	return cret
 }
@@ -305,9 +286,7 @@ var xHashTableForeach func(*HashTable, uintptr, uintptr)
 // See g_hash_table_find() for performance caveats for linear
 // order searches in contrast to g_hash_table_lookup().
 func HashTableForeach(HashTableVar *HashTable, FuncVar *HFunc, UserDataVar uintptr) {
-
 	xHashTableForeach(HashTableVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xHashTableForeachRemove func(*HashTable, uintptr, uintptr) uint32
@@ -321,7 +300,6 @@ var xHashTableForeachRemove func(*HashTable, uintptr, uintptr) uint32
 // See #GHashTableIter for an alternative way to loop over the
 // key/value pairs in the hash table.
 func HashTableForeachRemove(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint32 {
-
 	cret := xHashTableForeachRemove(HashTableVar, NewCallback(FuncVar), UserDataVar)
 	return cret
 }
@@ -336,7 +314,6 @@ var xHashTableForeachSteal func(*HashTable, uintptr, uintptr) uint32
 // See #GHashTableIter for an alternative way to loop over the
 // key/value pairs in the hash table.
 func HashTableForeachSteal(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint32 {
-
 	cret := xHashTableForeachSteal(HashTableVar, NewCallback(FuncVar), UserDataVar)
 	return cret
 }
@@ -352,7 +329,6 @@ var xHashTableGetKeysAsPtrArray func(*HashTable) uintptr
 //
 // You should always unref the returned array with g_ptr_array_unref().
 func HashTableGetKeysAsPtrArray(HashTableVar *HashTable) uintptr {
-
 	cret := xHashTableGetKeysAsPtrArray(HashTableVar)
 	return cret
 }
@@ -368,7 +344,6 @@ var xHashTableGetValuesAsPtrArray func(*HashTable) uintptr
 //
 // You should always unref the returned array with g_ptr_array_unref().
 func HashTableGetValuesAsPtrArray(HashTableVar *HashTable) uintptr {
-
 	cret := xHashTableGetValuesAsPtrArray(HashTableVar)
 	return cret
 }
@@ -388,7 +363,6 @@ var xHashTableInsert func(*HashTable, uintptr, uintptr) bool
 // indicate whether the newly added value was already in the hash table
 // or not.
 func HashTableInsert(HashTableVar *HashTable, KeyVar uintptr, ValueVar uintptr) bool {
-
 	cret := xHashTableInsert(HashTableVar, KeyVar, ValueVar)
 	return cret
 }
@@ -400,7 +374,6 @@ var xHashTableLookup func(*HashTable, uintptr) uintptr
 // and has the value %NULL. If you need this distinction, use
 // g_hash_table_lookup_extended().
 func HashTableLookup(HashTableVar *HashTable, KeyVar uintptr) uintptr {
-
 	cret := xHashTableLookup(HashTableVar, KeyVar)
 	return cret
 }
@@ -416,7 +389,6 @@ var xHashTableLookupExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 // whether the %NULL key exists, provided the hash and equal functions
 // of @hash_table are %NULL-safe.
 func HashTableLookupExtended(HashTableVar *HashTable, LookupKeyVar uintptr, OrigKeyVar *uintptr, ValueVar *uintptr) bool {
-
 	cret := xHashTableLookupExtended(HashTableVar, LookupKeyVar, OrigKeyVar, ValueVar)
 	return cret
 }
@@ -432,7 +404,6 @@ var xHashTableNewSimilar func(*HashTable) *HashTable
 // The returned hash table will be empty; it will not contain the keys
 // or values from @other_hash_table.
 func HashTableNewSimilar(OtherHashTableVar *HashTable) *HashTable {
-
 	cret := xHashTableNewSimilar(OtherHashTableVar)
 	return cret
 }
@@ -442,7 +413,6 @@ var xHashTableRef func(*HashTable) *HashTable
 // Atomically increments the reference count of @hash_table by one.
 // This function is MT-safe and may be called from any thread.
 func HashTableRef(HashTableVar *HashTable) *HashTable {
-
 	cret := xHashTableRef(HashTableVar)
 	return cret
 }
@@ -456,7 +426,6 @@ var xHashTableRemove func(*HashTable, uintptr) bool
 // you have to make sure that any dynamically allocated values are freed
 // yourself.
 func HashTableRemove(HashTableVar *HashTable, KeyVar uintptr) bool {
-
 	cret := xHashTableRemove(HashTableVar, KeyVar)
 	return cret
 }
@@ -470,9 +439,7 @@ var xHashTableRemoveAll func(*HashTable)
 // otherwise you have to make sure that any dynamically allocated
 // values are freed yourself.
 func HashTableRemoveAll(HashTableVar *HashTable) {
-
 	xHashTableRemoveAll(HashTableVar)
-
 }
 
 var xHashTableReplace func(*HashTable, uintptr, uintptr) bool
@@ -489,7 +456,6 @@ var xHashTableReplace func(*HashTable, uintptr, uintptr) bool
 // indicate whether the newly added value was already in the hash table
 // or not.
 func HashTableReplace(HashTableVar *HashTable, KeyVar uintptr, ValueVar uintptr) bool {
-
 	cret := xHashTableReplace(HashTableVar, KeyVar, ValueVar)
 	return cret
 }
@@ -498,7 +464,6 @@ var xHashTableSize func(*HashTable) uint32
 
 // Returns the number of elements contained in the #GHashTable.
 func HashTableSize(HashTableVar *HashTable) uint32 {
-
 	cret := xHashTableSize(HashTableVar)
 	return cret
 }
@@ -508,7 +473,6 @@ var xHashTableSteal func(*HashTable, uintptr) bool
 // Removes a key and its associated value from a #GHashTable without
 // calling the key and value destroy functions.
 func HashTableSteal(HashTableVar *HashTable, KeyVar uintptr) bool {
-
 	cret := xHashTableSteal(HashTableVar, KeyVar)
 	return cret
 }
@@ -518,9 +482,7 @@ var xHashTableStealAll func(*HashTable)
 // Removes all keys and their associated values from a #GHashTable
 // without calling the key and value destroy functions.
 func HashTableStealAll(HashTableVar *HashTable) {
-
 	xHashTableStealAll(HashTableVar)
-
 }
 
 var xHashTableStealAllKeys func(*HashTable) uintptr
@@ -530,7 +492,6 @@ var xHashTableStealAllKeys func(*HashTable) uintptr
 // as a #GPtrArray with the free func set to the @hash_table key
 // destroy function.
 func HashTableStealAllKeys(HashTableVar *HashTable) uintptr {
-
 	cret := xHashTableStealAllKeys(HashTableVar)
 	return cret
 }
@@ -542,7 +503,6 @@ var xHashTableStealAllValues func(*HashTable) uintptr
 // as a #GPtrArray with the free func set to the @hash_table value
 // destroy function.
 func HashTableStealAllValues(HashTableVar *HashTable) uintptr {
-
 	cret := xHashTableStealAllValues(HashTableVar)
 	return cret
 }
@@ -567,7 +527,6 @@ var xHashTableStealExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 // stealing both the key and the value from such a dictionary, the value was
 // %NULL. Since 2.82, the returned value and key will be the same.
 func HashTableStealExtended(HashTableVar *HashTable, LookupKeyVar uintptr, StolenKeyVar *uintptr, StolenValueVar *uintptr) bool {
-
 	cret := xHashTableStealExtended(HashTableVar, LookupKeyVar, StolenKeyVar, StolenValueVar)
 	return cret
 }
@@ -579,9 +538,7 @@ var xHashTableUnref func(*HashTable)
 // destroyed, and all memory allocated by the hash table is released.
 // This function is MT-safe and may be called from any thread.
 func HashTableUnref(HashTableVar *HashTable) {
-
 	xHashTableUnref(HashTableVar)
-
 }
 
 var xInt64Equal func(uintptr, uintptr) bool
@@ -592,7 +549,6 @@ var xInt64Equal func(uintptr, uintptr) bool
 // parameter, when using non-%NULL pointers to 64-bit integers as keys in a
 // #GHashTable.
 func Int64Equal(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xInt64Equal(V1Var, V2Var)
 	return cret
 }
@@ -605,7 +561,6 @@ var xInt64Hash func(uintptr) uint32
 // when using non-%NULL pointers to 64-bit integer values as keys in a
 // #GHashTable.
 func Int64Hash(VVar uintptr) uint32 {
-
 	cret := xInt64Hash(VVar)
 	return cret
 }
@@ -622,7 +577,6 @@ var xIntEqual func(uintptr, uintptr) bool
 // directly: if your hash table's keys are of the form
 // `GINT_TO_POINTER (n)`, use g_direct_equal() instead.
 func IntEqual(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xIntEqual(V1Var, V2Var)
 	return cret
 }
@@ -637,7 +591,6 @@ var xIntHash func(uintptr) uint32
 // directly: if your hash table's keys are of the form
 // `GINT_TO_POINTER (n)`, use g_direct_hash() instead.
 func IntHash(VVar uintptr) uint32 {
-
 	cret := xIntHash(VVar)
 	return cret
 }
@@ -653,7 +606,6 @@ var xStrEqual func(uintptr, uintptr) bool
 // for general purpose comparisons of non-%NULL strings. For a %NULL-safe string
 // comparison function, see g_strcmp0().
 func StrEqual(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xStrEqual(V1Var, V2Var)
 	return cret
 }
@@ -675,7 +627,6 @@ var xStrHash func(uintptr) uint32
 // For example, it produces some hash collisions with strings as short
 // as 2.
 func StrHash(VVar uintptr) uint32 {
-
 	cret := xStrHash(VVar)
 	return cret
 }
@@ -735,5 +686,4 @@ func init() {
 	core.PuregoSafeRegister(&xHashTableIterRemove, libs, "g_hash_table_iter_remove")
 	core.PuregoSafeRegister(&xHashTableIterReplace, libs, "g_hash_table_iter_replace")
 	core.PuregoSafeRegister(&xHashTableIterSteal, libs, "g_hash_table_iter_steal")
-
 }

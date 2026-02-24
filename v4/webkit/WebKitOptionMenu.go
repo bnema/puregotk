@@ -53,9 +53,7 @@ var xOptionMenuActivateItem func(uintptr, uint32)
 // webkit_option_menu_close() after activating an item, calling this function again will have no
 // effect.
 func (x *OptionMenu) ActivateItem(IndexVar uint32) {
-
 	xOptionMenuActivateItem(x.GoPointer(), IndexVar)
-
 }
 
 var xOptionMenuClose func(uintptr)
@@ -68,9 +66,7 @@ var xOptionMenuClose func(uintptr)
 // nor webkit_option_menu_activate_item() have been called, the element value remains
 // unchanged.
 func (x *OptionMenu) Close() {
-
 	xOptionMenuClose(x.GoPointer())
-
 }
 
 var xOptionMenuGetEvent func(uintptr) uintptr
@@ -96,7 +92,6 @@ var xOptionMenuGetItem func(uintptr, uint32) *OptionMenuItem
 
 // Returns the #WebKitOptionMenuItem at @index in @menu.
 func (x *OptionMenu) GetItem(IndexVar uint32) *OptionMenuItem {
-
 	cret := xOptionMenuGetItem(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -105,7 +100,6 @@ var xOptionMenuGetNItems func(uintptr) uint32
 
 // Gets the length of the @menu.
 func (x *OptionMenu) GetNItems() uint32 {
-
 	cret := xOptionMenuGetNItems(x.GoPointer())
 	return cret
 }
@@ -119,9 +113,7 @@ var xOptionMenuSelectItem func(uintptr, uint32)
 // explicitly activate the item with webkit_option_menu_select_item() or close the menu with
 // webkit_option_menu_close() in which case the currently selected item will be activated.
 func (x *OptionMenu) SelectItem(IndexVar uint32) {
-
 	xOptionMenuSelectItem(x.GoPointer(), IndexVar)
-
 }
 
 func (c *OptionMenu) GoPointer() uintptr {
@@ -150,7 +142,6 @@ func (x *OptionMenu) ConnectClose(cb *func(OptionMenu)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

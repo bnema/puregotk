@@ -65,7 +65,6 @@ var xListHeaderGetEnd func(uintptr) uint32
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ListHeader) GetEnd() uint32 {
-
 	cret := xListHeaderGetEnd(x.GoPointer())
 	return cret
 }
@@ -97,7 +96,6 @@ var xListHeaderGetNItems func(uintptr) uint32
 //
 // If @self is unbound, 0 is returned.
 func (x *ListHeader) GetNItems() uint32 {
-
 	cret := xListHeaderGetNItems(x.GoPointer())
 	return cret
 }
@@ -109,7 +107,6 @@ var xListHeaderGetStart func(uintptr) uint32
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ListHeader) GetStart() uint32 {
-
 	cret := xListHeaderGetStart(x.GoPointer())
 	return cret
 }
@@ -122,9 +119,7 @@ var xListHeaderSetChild func(uintptr, uintptr)
 // setting up a header so that the widget can be reused when
 // binding it multiple times.
 func (x *ListHeader) SetChild(ChildVar *Widget) {
-
 	xListHeaderSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 func (c *ListHeader) GoPointer() uintptr {
@@ -182,5 +177,4 @@ func init() {
 	core.PuregoSafeRegister(&xListHeaderGetNItems, libs, "gtk_list_header_get_n_items")
 	core.PuregoSafeRegister(&xListHeaderGetStart, libs, "gtk_list_header_get_start")
 	core.PuregoSafeRegister(&xListHeaderSetChild, libs, "gtk_list_header_set_child")
-
 }

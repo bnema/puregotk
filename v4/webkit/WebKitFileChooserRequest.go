@@ -65,9 +65,7 @@ var xFileChooserRequestCancel func(uintptr)
 // won't be properly completed and the browser will keep the request
 // pending forever, which might cause the browser to hang.
 func (x *FileChooserRequest) Cancel() {
-
 	xFileChooserRequestCancel(x.GoPointer())
-
 }
 
 var xFileChooserRequestGetMimeTypes func(uintptr) []string
@@ -81,7 +79,6 @@ var xFileChooserRequestGetMimeTypes func(uintptr) []string
 // the file chooser dialog to the user, to decide whether to allow the
 // user to select multiple files at once or only one.
 func (x *FileChooserRequest) GetMimeTypes() []string {
-
 	cret := xFileChooserRequestGetMimeTypes(x.GoPointer())
 	return cret
 }
@@ -121,7 +118,6 @@ var xFileChooserRequestGetSelectMultiple func(uintptr) bool
 // which depends on the HTML input element having a 'multiple'
 // attribute defined.
 func (x *FileChooserRequest) GetSelectMultiple() bool {
-
 	cret := xFileChooserRequestGetSelectMultiple(x.GoPointer())
 	return cret
 }
@@ -140,7 +136,6 @@ var xFileChooserRequestGetSelectedFiles func(uintptr) []string
 // file chooser dialog to the user, to decide whether to perform some
 // extra action, like pre-selecting the files from a previous request.
 func (x *FileChooserRequest) GetSelectedFiles() []string {
-
 	cret := xFileChooserRequestGetSelectedFiles(x.GoPointer())
 	return cret
 }
@@ -150,9 +145,7 @@ var xFileChooserRequestSelectFiles func(uintptr, []string)
 // Ask WebKit to select local files for upload and complete the
 // request.
 func (x *FileChooserRequest) SelectFiles(FilesVar []string) {
-
 	xFileChooserRequestSelectFiles(x.GoPointer(), FilesVar)
-
 }
 
 func (c *FileChooserRequest) GoPointer() uintptr {

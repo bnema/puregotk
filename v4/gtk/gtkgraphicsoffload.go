@@ -112,7 +112,6 @@ var xGraphicsOffloadGetBlackBackground func(uintptr) bool
 //
 // See [method@Gtk.GraphicsOffload.set_black_background].
 func (x *GraphicsOffload) GetBlackBackground() bool {
-
 	cret := xGraphicsOffloadGetBlackBackground(x.GoPointer())
 	return cret
 }
@@ -138,7 +137,6 @@ var xGraphicsOffloadGetEnabled func(uintptr) GraphicsOffloadEnabled
 
 // Returns whether offload is enabled for @self.
 func (x *GraphicsOffload) GetEnabled() GraphicsOffloadEnabled {
-
 	cret := xGraphicsOffloadGetEnabled(x.GoPointer())
 	return cret
 }
@@ -160,18 +158,14 @@ var xGraphicsOffloadSetBlackBackground func(uintptr, bool)
 // [single-pixel buffer](https://wayland.app/protocols/single-pixel-buffer-v1)
 // protocol.
 func (x *GraphicsOffload) SetBlackBackground(ValueVar bool) {
-
 	xGraphicsOffloadSetBlackBackground(x.GoPointer(), ValueVar)
-
 }
 
 var xGraphicsOffloadSetChild func(uintptr, uintptr)
 
 // Sets the child of @self.
 func (x *GraphicsOffload) SetChild(ChildVar *Widget) {
-
 	xGraphicsOffloadSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xGraphicsOffloadSetEnabled func(uintptr, GraphicsOffloadEnabled)
@@ -179,9 +173,7 @@ var xGraphicsOffloadSetEnabled func(uintptr, GraphicsOffloadEnabled)
 // Sets whether this GtkGraphicsOffload widget will attempt
 // to offload the content of its child widget.
 func (x *GraphicsOffload) SetEnabled(EnabledVar GraphicsOffloadEnabled) {
-
 	xGraphicsOffloadSetEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 func (c *GraphicsOffload) GoPointer() uintptr {
@@ -222,9 +214,7 @@ func (x *GraphicsOffload) GetPropertyBlackBackground() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *GraphicsOffload) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -245,7 +235,6 @@ func (x *GraphicsOffload) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *GraphicsOffload) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -270,7 +259,6 @@ func (x *GraphicsOffload) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *GraphicsOffload) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -309,30 +297,23 @@ func (x *GraphicsOffload) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *GraphicsOffload) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *GraphicsOffload) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *GraphicsOffload) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *GraphicsOffload) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -345,9 +326,7 @@ func (x *GraphicsOffload) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *GraphicsOffload) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -355,9 +334,7 @@ func (x *GraphicsOffload) SetAccessibleParent(ParentVar Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *GraphicsOffload) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -366,9 +343,7 @@ func (x *GraphicsOffload) UpdateNextAccessibleSibling(NewSiblingVar Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *GraphicsOffload) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -390,9 +365,7 @@ func (x *GraphicsOffload) UpdatePlatformState(StateVar AccessiblePlatformState) 
 //
 // ```
 func (x *GraphicsOffload) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -402,9 +375,7 @@ func (x *GraphicsOffload) UpdateProperty(FirstPropertyVar AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *GraphicsOffload) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -426,9 +397,7 @@ func (x *GraphicsOffload) UpdatePropertyValue(NPropertiesVar int32, PropertiesVa
 //
 // ```
 func (x *GraphicsOffload) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -438,9 +407,7 @@ func (x *GraphicsOffload) UpdateRelation(FirstRelationVar AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *GraphicsOffload) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -463,9 +430,7 @@ func (x *GraphicsOffload) UpdateRelationValue(NRelationsVar int32, RelationsVar 
 //
 // ```
 func (x *GraphicsOffload) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -475,9 +440,7 @@ func (x *GraphicsOffload) UpdateState(FirstStateVar AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *GraphicsOffload) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -485,7 +448,6 @@ func (x *GraphicsOffload) UpdateStateValue(NStatesVar int32, StatesVar []Accessi
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *GraphicsOffload) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -514,5 +476,4 @@ func init() {
 	core.PuregoSafeRegister(&xGraphicsOffloadSetBlackBackground, libs, "gtk_graphics_offload_set_black_background")
 	core.PuregoSafeRegister(&xGraphicsOffloadSetChild, libs, "gtk_graphics_offload_set_child")
 	core.PuregoSafeRegister(&xGraphicsOffloadSetEnabled, libs, "gtk_graphics_offload_set_enabled")
-
 }

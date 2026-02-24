@@ -71,9 +71,7 @@ var xURISchemeResponseSetContentType func(uintptr, string)
 
 // Sets the content type for the @response
 func (x *URISchemeResponse) SetContentType(ContentTypeVar string) {
-
 	xURISchemeResponseSetContentType(x.GoPointer(), ContentTypeVar)
-
 }
 
 var xURISchemeResponseSetHttpHeaders func(uintptr, *soup.MessageHeaders)
@@ -83,9 +81,7 @@ var xURISchemeResponseSetHttpHeaders func(uintptr, *soup.MessageHeaders)
 // @headers need to be of the type %SOUP_MESSAGE_HEADERS_RESPONSE.
 // Any existing headers will be overwritten.
 func (x *URISchemeResponse) SetHttpHeaders(HeadersVar *soup.MessageHeaders) {
-
 	xURISchemeResponseSetHttpHeaders(x.GoPointer(), HeadersVar)
-
 }
 
 var xURISchemeResponseSetStatus func(uintptr, uint32, string)
@@ -94,9 +90,7 @@ var xURISchemeResponseSetStatus func(uintptr, uint32, string)
 //
 // If @status_code is a known value and @reason_phrase is %NULL, the @reason_phrase will be set automatically.
 func (x *URISchemeResponse) SetStatus(StatusCodeVar uint32, ReasonPhraseVar string) {
-
 	xURISchemeResponseSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVar)
-
 }
 
 func (c *URISchemeResponse) GoPointer() uintptr {

@@ -109,7 +109,6 @@ var xGridViewGetEnableRubberband func(uintptr) bool
 
 // Returns whether rows can be selected by dragging with the mouse.
 func (x *GridView) GetEnableRubberband() bool {
-
 	cret := xGridViewGetEnableRubberband(x.GoPointer())
 	return cret
 }
@@ -135,7 +134,6 @@ var xGridViewGetMaxColumns func(uintptr) uint32
 
 // Gets the maximum number of columns that the grid will use.
 func (x *GridView) GetMaxColumns() uint32 {
-
 	cret := xGridViewGetMaxColumns(x.GoPointer())
 	return cret
 }
@@ -144,7 +142,6 @@ var xGridViewGetMinColumns func(uintptr) uint32
 
 // Gets the minimum number of columns that the grid will use.
 func (x *GridView) GetMinColumns() uint32 {
-
 	cret := xGridViewGetMinColumns(x.GoPointer())
 	return cret
 }
@@ -171,7 +168,6 @@ var xGridViewGetSingleClickActivate func(uintptr) bool
 // Returns whether items will be activated on single click and
 // selected on hover.
 func (x *GridView) GetSingleClickActivate() bool {
-
 	cret := xGridViewGetSingleClickActivate(x.GoPointer())
 	return cret
 }
@@ -180,7 +176,6 @@ var xGridViewGetTabBehavior func(uintptr) ListTabBehavior
 
 // Gets the behavior set for the &lt;kbd&gt;Tab&lt;/kbd&gt; key.
 func (x *GridView) GetTabBehavior() ListTabBehavior {
-
 	cret := xGridViewGetTabBehavior(x.GoPointer())
 	return cret
 }
@@ -193,27 +188,21 @@ var xGridViewScrollTo func(uintptr, uint32, ListScrollFlags, *ScrollInfo)
 // This function works no matter if the gridview is shown or focused.
 // If it isn't, then the changes will take effect once that happens.
 func (x *GridView) ScrollTo(PosVar uint32, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
-
 	xGridViewScrollTo(x.GoPointer(), PosVar, FlagsVar, ScrollVar)
-
 }
 
 var xGridViewSetEnableRubberband func(uintptr, bool)
 
 // Sets whether selections can be changed by dragging with the mouse.
 func (x *GridView) SetEnableRubberband(EnableRubberbandVar bool) {
-
 	xGridViewSetEnableRubberband(x.GoPointer(), EnableRubberbandVar)
-
 }
 
 var xGridViewSetFactory func(uintptr, uintptr)
 
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *GridView) SetFactory(FactoryVar *ListItemFactory) {
-
 	xGridViewSetFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xGridViewSetMaxColumns func(uintptr, uint32)
@@ -225,9 +214,7 @@ var xGridViewSetMaxColumns func(uintptr, uint32)
 // If @max_columns is smaller than the minimum set via
 // [method@Gtk.GridView.set_min_columns], that value is used instead.
 func (x *GridView) SetMaxColumns(MaxColumnsVar uint32) {
-
 	xGridViewSetMaxColumns(x.GoPointer(), MaxColumnsVar)
-
 }
 
 var xGridViewSetMinColumns func(uintptr, uint32)
@@ -239,9 +226,7 @@ var xGridViewSetMinColumns func(uintptr, uint32)
 // If @min_columns is smaller than the minimum set via
 // [method@Gtk.GridView.set_max_columns], that value is ignored.
 func (x *GridView) SetMinColumns(MinColumnsVar uint32) {
-
 	xGridViewSetMinColumns(x.GoPointer(), MinColumnsVar)
-
 }
 
 var xGridViewSetModel func(uintptr, uintptr)
@@ -250,9 +235,7 @@ var xGridViewSetModel func(uintptr, uintptr)
 //
 // This must be a [iface@Gtk.SelectionModel].
 func (x *GridView) SetModel(ModelVar SelectionModel) {
-
 	xGridViewSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xGridViewSetSingleClickActivate func(uintptr, bool)
@@ -260,18 +243,14 @@ var xGridViewSetSingleClickActivate func(uintptr, bool)
 // Sets whether items should be activated on single click and
 // selected on hover.
 func (x *GridView) SetSingleClickActivate(SingleClickActivateVar bool) {
-
 	xGridViewSetSingleClickActivate(x.GoPointer(), SingleClickActivateVar)
-
 }
 
 var xGridViewSetTabBehavior func(uintptr, ListTabBehavior)
 
 // Sets the behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys.
 func (x *GridView) SetTabBehavior(TabBehaviorVar ListTabBehavior) {
-
 	xGridViewSetTabBehavior(x.GoPointer(), TabBehaviorVar)
-
 }
 
 func (c *GridView) GoPointer() uintptr {
@@ -377,7 +356,6 @@ func (x *GridView) ConnectActivate(cb *func(GridView, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -394,9 +372,7 @@ func (x *GridView) ConnectActivate(cb *func(GridView, uint32)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *GridView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -417,7 +393,6 @@ func (x *GridView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *GridView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -442,7 +417,6 @@ func (x *GridView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *GridView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -481,30 +455,23 @@ func (x *GridView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *GridView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *GridView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *GridView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *GridView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -517,9 +484,7 @@ func (x *GridView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *GridView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -527,9 +492,7 @@ func (x *GridView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *GridView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -538,9 +501,7 @@ func (x *GridView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *GridView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -562,9 +523,7 @@ func (x *GridView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *GridView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -574,9 +533,7 @@ func (x *GridView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *GridView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -598,9 +555,7 @@ func (x *GridView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acc
 //
 // ```
 func (x *GridView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -610,9 +565,7 @@ func (x *GridView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *GridView) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -635,9 +588,7 @@ func (x *GridView) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acces
 //
 // ```
 func (x *GridView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -647,9 +598,7 @@ func (x *GridView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *GridView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -657,23 +606,19 @@ func (x *GridView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *GridView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *GridView) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *GridView) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 // Returns the size of a non-scrolling border around the
@@ -683,7 +628,6 @@ func (x *GridView) SetOrientation(OrientationVar Orientation) {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *GridView) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -705,7 +649,6 @@ func (x *GridView) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *GridView) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -727,16 +670,13 @@ func (x *GridView) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *GridView) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *GridView) SetHadjustment(HadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -744,16 +684,12 @@ func (x *GridView) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *GridView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *GridView) SetVadjustment(VadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -761,9 +697,7 @@ func (x *GridView) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *GridView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
@@ -797,5 +731,4 @@ func init() {
 	core.PuregoSafeRegister(&xGridViewSetModel, libs, "gtk_grid_view_set_model")
 	core.PuregoSafeRegister(&xGridViewSetSingleClickActivate, libs, "gtk_grid_view_set_single_click_activate")
 	core.PuregoSafeRegister(&xGridViewSetTabBehavior, libs, "gtk_grid_view_set_tab_behavior")
-
 }

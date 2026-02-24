@@ -44,7 +44,6 @@ var xRectContainsPoint func(uintptr, *Point) bool
 
 // Checks whether a #graphene_rect_t contains the given coordinates.
 func (x *Rect) ContainsPoint(PVar *Point) bool {
-
 	cret := xRectContainsPoint(x.GoPointer(), PVar)
 	return cret
 }
@@ -54,7 +53,6 @@ var xRectContainsRect func(uintptr, *Rect) bool
 // Checks whether a #graphene_rect_t fully contains the given
 // rectangle.
 func (x *Rect) ContainsRect(BVar *Rect) bool {
-
 	cret := xRectContainsRect(x.GoPointer(), BVar)
 	return cret
 }
@@ -63,7 +61,6 @@ var xRectEqual func(uintptr, *Rect) bool
 
 // Checks whether the two given rectangle are equal.
 func (x *Rect) Equal(BVar *Rect) bool {
-
 	cret := xRectEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -72,25 +69,20 @@ var xRectExpand func(uintptr, *Point, *Rect)
 
 // Expands a #graphene_rect_t to contain the given #graphene_point_t.
 func (x *Rect) Expand(PVar *Point, ResVar *Rect) {
-
 	xRectExpand(x.GoPointer(), PVar, ResVar)
-
 }
 
 var xRectFree func(uintptr)
 
 // Frees the resources allocated by graphene_rect_alloc().
 func (x *Rect) Free() {
-
 	xRectFree(x.GoPointer())
-
 }
 
 var xRectGetArea func(uintptr) float32
 
 // Compute the area of given normalized rectangle.
 func (x *Rect) GetArea() float32 {
-
 	cret := xRectGetArea(x.GoPointer())
 	return cret
 }
@@ -99,34 +91,27 @@ var xRectGetBottomLeft func(uintptr, *Point)
 
 // Retrieves the coordinates of the bottom-left corner of the given rectangle.
 func (x *Rect) GetBottomLeft(PVar *Point) {
-
 	xRectGetBottomLeft(x.GoPointer(), PVar)
-
 }
 
 var xRectGetBottomRight func(uintptr, *Point)
 
 // Retrieves the coordinates of the bottom-right corner of the given rectangle.
 func (x *Rect) GetBottomRight(PVar *Point) {
-
 	xRectGetBottomRight(x.GoPointer(), PVar)
-
 }
 
 var xRectGetCenter func(uintptr, *Point)
 
 // Retrieves the coordinates of the center of the given rectangle.
 func (x *Rect) GetCenter(PVar *Point) {
-
 	xRectGetCenter(x.GoPointer(), PVar)
-
 }
 
 var xRectGetHeight func(uintptr) float32
 
 // Retrieves the normalized height of the given rectangle.
 func (x *Rect) GetHeight() float32 {
-
 	cret := xRectGetHeight(x.GoPointer())
 	return cret
 }
@@ -135,34 +120,27 @@ var xRectGetTopLeft func(uintptr, *Point)
 
 // Retrieves the coordinates of the top-left corner of the given rectangle.
 func (x *Rect) GetTopLeft(PVar *Point) {
-
 	xRectGetTopLeft(x.GoPointer(), PVar)
-
 }
 
 var xRectGetTopRight func(uintptr, *Point)
 
 // Retrieves the coordinates of the top-right corner of the given rectangle.
 func (x *Rect) GetTopRight(PVar *Point) {
-
 	xRectGetTopRight(x.GoPointer(), PVar)
-
 }
 
 var xRectGetVertices func(uintptr, *[4]Vec2)
 
 // Computes the four vertices of a #graphene_rect_t.
 func (x *Rect) GetVertices(VerticesVar *[4]Vec2) {
-
 	xRectGetVertices(x.GoPointer(), VerticesVar)
-
 }
 
 var xRectGetWidth func(uintptr) float32
 
 // Retrieves the normalized width of the given rectangle.
 func (x *Rect) GetWidth() float32 {
-
 	cret := xRectGetWidth(x.GoPointer())
 	return cret
 }
@@ -172,7 +150,6 @@ var xRectGetX func(uintptr) float32
 // Retrieves the normalized X coordinate of the origin of the given
 // rectangle.
 func (x *Rect) GetX() float32 {
-
 	cret := xRectGetX(x.GoPointer())
 	return cret
 }
@@ -182,7 +159,6 @@ var xRectGetY func(uintptr) float32
 // Retrieves the normalized Y coordinate of the origin of the given
 // rectangle.
 func (x *Rect) GetY() float32 {
-
 	cret := xRectGetY(x.GoPointer())
 	return cret
 }
@@ -194,7 +170,6 @@ var xRectInit func(uintptr, float32, float32, float32, float32) *Rect
 // This function will implicitly normalize the #graphene_rect_t
 // before returning.
 func (x *Rect) Init(XVar float32, YVar float32, WidthVar float32, HeightVar float32) *Rect {
-
 	cret := xRectInit(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -206,7 +181,6 @@ var xRectInitFromRect func(uintptr, *Rect) *Rect
 // This function will implicitly normalize the #graphene_rect_t
 // before returning.
 func (x *Rect) InitFromRect(SrcVar *Rect) *Rect {
-
 	cret := xRectInitFromRect(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -228,7 +202,6 @@ var xRectInset func(uintptr, float32, float32) *Rect
 // If the size of the resulting inset rectangle has a negative width or
 // height then the size will be set to zero.
 func (x *Rect) Inset(DXVar float32, DYVar float32) *Rect {
-
 	cret := xRectInset(x.GoPointer(), DXVar, DYVar)
 	return cret
 }
@@ -250,9 +223,7 @@ var xRectInsetR func(uintptr, float32, float32, *Rect)
 // If the size of the resulting inset rectangle has a negative width or
 // height then the size will be set to zero.
 func (x *Rect) InsetR(DXVar float32, DYVar float32, ResVar *Rect) {
-
 	xRectInsetR(x.GoPointer(), DXVar, DYVar, ResVar)
-
 }
 
 var xRectInterpolate func(uintptr, *Rect, float64, *Rect)
@@ -260,9 +231,7 @@ var xRectInterpolate func(uintptr, *Rect, float64, *Rect)
 // Linearly interpolates the origin and size of the two given
 // rectangles.
 func (x *Rect) Interpolate(BVar *Rect, FactorVar float64, ResVar *Rect) {
-
 	xRectInterpolate(x.GoPointer(), BVar, FactorVar, ResVar)
-
 }
 
 var xRectIntersection func(uintptr, *Rect, *Rect) bool
@@ -276,7 +245,6 @@ var xRectIntersection func(uintptr, *Rect, *Rect) bool
 // If the two rectangles do not intersect, @res will contain
 // a degenerate rectangle with origin in (0, 0) and a size of 0.
 func (x *Rect) Intersection(BVar *Rect, ResVar *Rect) bool {
-
 	cret := xRectIntersection(x.GoPointer(), BVar, ResVar)
 	return cret
 }
@@ -289,7 +257,6 @@ var xRectNormalize func(uintptr) *Rect
 // positive values, and that the origin is the top-left corner of
 // the rectangle.
 func (x *Rect) Normalize() *Rect {
-
 	cret := xRectNormalize(x.GoPointer())
 	return cret
 }
@@ -302,9 +269,7 @@ var xRectNormalizeR func(uintptr, *Rect)
 // positive values, and that the origin is in the top-left corner
 // of the rectangle.
 func (x *Rect) NormalizeR(ResVar *Rect) {
-
 	xRectNormalizeR(x.GoPointer(), ResVar)
-
 }
 
 var xRectOffset func(uintptr, float32, float32) *Rect
@@ -313,7 +278,6 @@ var xRectOffset func(uintptr, float32, float32) *Rect
 //
 // The size of the rectangle is unchanged.
 func (x *Rect) Offset(DXVar float32, DYVar float32) *Rect {
-
 	cret := xRectOffset(x.GoPointer(), DXVar, DYVar)
 	return cret
 }
@@ -324,9 +288,7 @@ var xRectOffsetR func(uintptr, float32, float32, *Rect)
 //
 // The size of the rectangle is left unchanged.
 func (x *Rect) OffsetR(DXVar float32, DYVar float32, ResVar *Rect) {
-
 	xRectOffsetR(x.GoPointer(), DXVar, DYVar, ResVar)
-
 }
 
 var xRectRound func(uintptr, *Rect)
@@ -341,9 +303,7 @@ var xRectRound func(uintptr, *Rect)
 // This function is the equivalent of calling `floor` on
 // the coordinates of the origin, and `ceil` on the size.
 func (x *Rect) Round(ResVar *Rect) {
-
 	xRectRound(x.GoPointer(), ResVar)
-
 }
 
 var xRectRoundExtents func(uintptr, *Rect)
@@ -370,9 +330,7 @@ var xRectRoundExtents func(uintptr, *Rect)
 // by a move in the anti-origin, leaving the corners of the
 // original rectangle outside the rounded one.
 func (x *Rect) RoundExtents(ResVar *Rect) {
-
 	xRectRoundExtents(x.GoPointer(), ResVar)
-
 }
 
 var xRectRoundToPixel func(uintptr) *Rect
@@ -381,7 +339,6 @@ var xRectRoundToPixel func(uintptr) *Rect
 // their nearest integer values; the rounding is guaranteed
 // to be large enough to contain the original rectangle.
 func (x *Rect) RoundToPixel() *Rect {
-
 	cret := xRectRoundToPixel(x.GoPointer())
 	return cret
 }
@@ -391,9 +348,7 @@ var xRectScale func(uintptr, float32, float32, *Rect)
 // Scales the size and origin of a rectangle horizontaly by @s_h,
 // and vertically by @s_v. The result @res is normalized.
 func (x *Rect) Scale(SHVar float32, SVVar float32, ResVar *Rect) {
-
 	xRectScale(x.GoPointer(), SHVar, SVVar, ResVar)
-
 }
 
 var xRectUnion func(uintptr, *Rect, *Rect)
@@ -404,9 +359,7 @@ var xRectUnion func(uintptr, *Rect, *Rect)
 //
 // The union in the image above is the blue outline.
 func (x *Rect) Union(BVar *Rect, ResVar *Rect) {
-
 	xRectUnion(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xRectAlloc func() *Rect
@@ -415,7 +368,6 @@ var xRectAlloc func() *Rect
 //
 // The contents of the returned rectangle are undefined.
 func RectAlloc() *Rect {
-
 	cret := xRectAlloc()
 	return cret
 }
@@ -425,7 +377,6 @@ var xRectZero func() *Rect
 // Returns a degenerate rectangle with origin fixed at (0, 0) and
 // a size of 0, 0.
 func RectZero() *Rect {
-
 	cret := xRectZero()
 	return cret
 }
@@ -478,5 +429,4 @@ func init() {
 	core.PuregoSafeRegister(&xRectRoundToPixel, libs, "graphene_rect_round_to_pixel")
 	core.PuregoSafeRegister(&xRectScale, libs, "graphene_rect_scale")
 	core.PuregoSafeRegister(&xRectUnion, libs, "graphene_rect_union")
-
 }

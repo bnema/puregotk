@@ -109,7 +109,6 @@ var xLinkButtonGetUri func(uintptr) string
 
 // Retrieves the URI of the `GtkLinkButton`.
 func (x *LinkButton) GetUri() string {
-
 	cret := xLinkButtonGetUri(x.GoPointer())
 	return cret
 }
@@ -123,7 +122,6 @@ var xLinkButtonGetVisited func(uintptr) bool
 //
 // The state may also be changed using [method@Gtk.LinkButton.set_visited].
 func (x *LinkButton) GetVisited() bool {
-
 	cret := xLinkButtonGetVisited(x.GoPointer())
 	return cret
 }
@@ -134,9 +132,7 @@ var xLinkButtonSetUri func(uintptr, string)
 //
 // As a side-effect this unsets the “visited” state of the button.
 func (x *LinkButton) SetUri(UriVar string) {
-
 	xLinkButtonSetUri(x.GoPointer(), UriVar)
-
 }
 
 var xLinkButtonSetVisited func(uintptr, bool)
@@ -145,9 +141,7 @@ var xLinkButtonSetVisited func(uintptr, bool)
 //
 // See [method@Gtk.LinkButton.get_visited] for more details.
 func (x *LinkButton) SetVisited(VisitedVar bool) {
-
 	xLinkButtonSetVisited(x.GoPointer(), VisitedVar)
-
 }
 
 func (c *LinkButton) GoPointer() uintptr {
@@ -219,7 +213,6 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -236,9 +229,7 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *LinkButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -259,7 +250,6 @@ func (x *LinkButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *LinkButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -284,7 +274,6 @@ func (x *LinkButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *LinkButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -323,30 +312,23 @@ func (x *LinkButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *LinkButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *LinkButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *LinkButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *LinkButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -359,9 +341,7 @@ func (x *LinkButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *LinkButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -369,9 +349,7 @@ func (x *LinkButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *LinkButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -380,9 +358,7 @@ func (x *LinkButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *LinkButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -404,9 +380,7 @@ func (x *LinkButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *LinkButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -416,9 +390,7 @@ func (x *LinkButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *LinkButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -440,9 +412,7 @@ func (x *LinkButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []A
 //
 // ```
 func (x *LinkButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -452,9 +422,7 @@ func (x *LinkButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *LinkButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -477,9 +445,7 @@ func (x *LinkButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acc
 //
 // ```
 func (x *LinkButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -489,21 +455,17 @@ func (x *LinkButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *LinkButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *LinkButton) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *LinkButton) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -522,9 +484,7 @@ func (x *LinkButton) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *LinkButton) SetActionName(ActionNameVar string) {
-
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -537,9 +497,7 @@ func (x *LinkButton) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *LinkButton) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -561,9 +519,7 @@ func (x *LinkButton) SetActionTarget(FormatStringVar string, varArgs ...interfac
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *LinkButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -572,9 +528,7 @@ func (x *LinkButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *LinkButton) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -582,7 +536,6 @@ func (x *LinkButton) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *LinkButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -608,5 +561,4 @@ func init() {
 	core.PuregoSafeRegister(&xLinkButtonGetVisited, libs, "gtk_link_button_get_visited")
 	core.PuregoSafeRegister(&xLinkButtonSetUri, libs, "gtk_link_button_set_uri")
 	core.PuregoSafeRegister(&xLinkButtonSetVisited, libs, "gtk_link_button_set_visited")
-
 }

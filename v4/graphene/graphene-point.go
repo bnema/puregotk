@@ -54,7 +54,6 @@ var xPointAlloc func() *Point
 //
 // ]|
 func PointAlloc() *Point {
-
 	cret := xPointAlloc()
 	return cret
 }
@@ -63,7 +62,6 @@ var xPointDistance func(uintptr, *Point, *float32, *float32) float32
 
 // Computes the distance between @a and @b.
 func (x *Point) Distance(BVar *Point, DXVar *float32, DYVar *float32) float32 {
-
 	cret := xPointDistance(x.GoPointer(), BVar, DXVar, DYVar)
 	return cret
 }
@@ -77,7 +75,6 @@ var xPointEqual func(uintptr, *Point) bool
 // you want to control the fuzziness of the match, you can use
 // graphene_point_near() instead.
 func (x *Point) Equal(BVar *Point) bool {
-
 	cret := xPointEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -86,9 +83,7 @@ var xPointFree func(uintptr)
 
 // Frees the resources allocated by graphene_point_alloc().
 func (x *Point) Free() {
-
 	xPointFree(x.GoPointer())
-
 }
 
 var xPointInit func(uintptr, float32, float32) *Point
@@ -97,7 +92,6 @@ var xPointInit func(uintptr, float32, float32) *Point
 //
 // It's safe to call this function multiple times.
 func (x *Point) Init(XVar float32, YVar float32) *Point {
-
 	cret := xPointInit(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -106,7 +100,6 @@ var xPointInitFromPoint func(uintptr, *Point) *Point
 
 // Initializes @p with the same coordinates of @src.
 func (x *Point) InitFromPoint(SrcVar *Point) *Point {
-
 	cret := xPointInitFromPoint(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -115,7 +108,6 @@ var xPointInitFromVec2 func(uintptr, *Vec2) *Point
 
 // Initializes @p with the coordinates inside the given #graphene_vec2_t.
 func (x *Point) InitFromVec2(SrcVar *Vec2) *Point {
-
 	cret := xPointInitFromVec2(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -125,9 +117,7 @@ var xPointInterpolate func(uintptr, *Point, float64, *Point)
 // Linearly interpolates the coordinates of @a and @b using the
 // given @factor.
 func (x *Point) Interpolate(BVar *Point, FactorVar float64, ResVar *Point) {
-
 	xPointInterpolate(x.GoPointer(), BVar, FactorVar, ResVar)
-
 }
 
 var xPointNear func(uintptr, *Point, float32) bool
@@ -135,7 +125,6 @@ var xPointNear func(uintptr, *Point, float32) bool
 // Checks whether the two points @a and @b are within
 // the threshold of @epsilon.
 func (x *Point) Near(BVar *Point, EpsilonVar float32) bool {
-
 	cret := xPointNear(x.GoPointer(), BVar, EpsilonVar)
 	return cret
 }
@@ -145,16 +134,13 @@ var xPointToVec2 func(uintptr, *Vec2)
 // Stores the coordinates of the given #graphene_point_t into a
 // #graphene_vec2_t.
 func (x *Point) ToVec2(VVar *Vec2) {
-
 	xPointToVec2(x.GoPointer(), VVar)
-
 }
 
 var xPointZero func() *Point
 
 // Returns a point fixed at (0, 0).
 func PointZero() *Point {
-
 	cret := xPointZero()
 	return cret
 }
@@ -186,5 +172,4 @@ func init() {
 	core.PuregoSafeRegister(&xPointInterpolate, libs, "graphene_point_interpolate")
 	core.PuregoSafeRegister(&xPointNear, libs, "graphene_point_near")
 	core.PuregoSafeRegister(&xPointToVec2, libs, "graphene_point_to_vec2")
-
 }

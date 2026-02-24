@@ -209,14 +209,11 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Asynchronous version of g_proxy_connect().
 func (x *ProxyBase) ConnectAsync(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // See g_proxy_connect().
@@ -235,7 +232,6 @@ func (x *ProxyBase) ConnectFinish(ResultVar AsyncResult) (*IOStream, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Some proxy protocols expect to be passed a hostname, which they
@@ -246,15 +242,16 @@ func (x *ProxyBase) ConnectFinish(ResultVar AsyncResult) (*IOStream, error) {
 // #GProxyAddress containing the stringified IP address to
 // g_proxy_connect() or g_proxy_connect_async().
 func (x *ProxyBase) SupportsHostname() bool {
-
 	cret := XGProxySupportsHostname(x.GoPointer())
 	return cret
 }
 
-var XGProxyConnect func(uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
-var XGProxyConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
-var XGProxyConnectFinish func(uintptr, uintptr, **glib.Error) uintptr
-var XGProxySupportsHostname func(uintptr) bool
+var (
+	XGProxyConnect          func(uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
+	XGProxyConnectAsync     func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGProxyConnectFinish    func(uintptr, uintptr, **glib.Error) uintptr
+	XGProxySupportsHostname func(uintptr) bool
+)
 
 const (
 	// Extension point for proxy functionality.
@@ -299,5 +296,4 @@ func init() {
 	core.PuregoSafeRegister(&XGProxyConnectAsync, libs, "g_proxy_connect_async")
 	core.PuregoSafeRegister(&XGProxyConnectFinish, libs, "g_proxy_connect_finish")
 	core.PuregoSafeRegister(&XGProxySupportsHostname, libs, "g_proxy_supports_hostname")
-
 }

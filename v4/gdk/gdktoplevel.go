@@ -77,18 +77,14 @@ func (x *ToplevelBase) SetGoPointer(ptr uintptr) {
 //
 // You might use this function to implement draggable titlebars.
 func (x *ToplevelBase) BeginMove(DeviceVar *Device, ButtonVar int32, XVar float64, YVar float64, TimestampVar uint32) {
-
 	XGdkToplevelBeginMove(x.GoPointer(), DeviceVar.GoPointer(), ButtonVar, XVar, YVar, TimestampVar)
-
 }
 
 // Begins an interactive resize operation.
 //
 // You might use this function to implement a “window resize grip.”
 func (x *ToplevelBase) BeginResize(EdgeVar SurfaceEdge, DeviceVar *Device, ButtonVar int32, XVar float64, YVar float64, TimestampVar uint32) {
-
 	XGdkToplevelBeginResize(x.GoPointer(), EdgeVar, DeviceVar.GoPointer(), ButtonVar, XVar, YVar, TimestampVar)
-
 }
 
 // Sets keyboard focus to @surface.
@@ -97,14 +93,11 @@ func (x *ToplevelBase) BeginResize(EdgeVar SurfaceEdge, DeviceVar *Device, Butto
 // should be used on a [GtkWindow](../gtk4/class.Window.html), rather than
 // calling this function.
 func (x *ToplevelBase) Focus(TimestampVar uint32) {
-
 	XGdkToplevelFocus(x.GoPointer(), TimestampVar)
-
 }
 
 // The capabilities that are available for this toplevel.
 func (x *ToplevelBase) GetCapabilities() ToplevelCapabilities {
-
 	cret := XGdkToplevelGetCapabilities(x.GoPointer())
 	return cret
 }
@@ -112,7 +105,6 @@ func (x *ToplevelBase) GetCapabilities() ToplevelCapabilities {
 // Returns the gravity that is used when changing the toplevel
 // size programmatically.
 func (x *ToplevelBase) GetGravity() Gravity {
-
 	cret := XGdkToplevelGetGravity(x.GoPointer())
 	return cret
 }
@@ -120,7 +112,6 @@ func (x *ToplevelBase) GetGravity() Gravity {
 // Gets the bitwise or of the currently active surface state flags,
 // from the `GdkToplevelState` enumeration.
 func (x *ToplevelBase) GetState() ToplevelState {
-
 	cret := XGdkToplevelGetState(x.GoPointer())
 	return cret
 }
@@ -147,16 +138,13 @@ func (x *ToplevelBase) GetState() ToplevelState {
 // The caller can be notified whenever the request is granted or revoked
 // by listening to the [property@Gdk.Toplevel:shortcuts-inhibited] property.
 func (x *ToplevelBase) InhibitSystemShortcuts(EventVar *Event) {
-
 	XGdkToplevelInhibitSystemShortcuts(x.GoPointer(), EventVar.GoPointer())
-
 }
 
 // Asks to lower the @toplevel below other windows.
 //
 // The windowing system may choose to ignore the request.
 func (x *ToplevelBase) Lower() bool {
-
 	cret := XGdkToplevelLower(x.GoPointer())
 	return cret
 }
@@ -165,7 +153,6 @@ func (x *ToplevelBase) Lower() bool {
 //
 // The windowing system may choose to ignore the request.
 func (x *ToplevelBase) Minimize() bool {
-
 	cret := XGdkToplevelMinimize(x.GoPointer())
 	return cret
 }
@@ -182,9 +169,7 @@ func (x *ToplevelBase) Minimize() bool {
 // Presenting is asynchronous and the specified layout parameters are not
 // guaranteed to be respected.
 func (x *ToplevelBase) Present(LayoutVar *ToplevelLayout) {
-
 	XGdkToplevelPresent(x.GoPointer(), LayoutVar)
-
 }
 
 // Restore default system keyboard shortcuts which were previously
@@ -192,9 +177,7 @@ func (x *ToplevelBase) Present(LayoutVar *ToplevelLayout) {
 //
 // This undoes the effect of [method@Gdk.Toplevel.inhibit_system_shortcuts].
 func (x *ToplevelBase) RestoreSystemShortcuts() {
-
 	XGdkToplevelRestoreSystemShortcuts(x.GoPointer())
-
 }
 
 // Sets the toplevel to be decorated.
@@ -203,9 +186,7 @@ func (x *ToplevelBase) RestoreSystemShortcuts() {
 // that the surface has its own, client-side decorations and
 // does not need to have window decorations added.
 func (x *ToplevelBase) SetDecorated(DecoratedVar bool) {
-
 	XGdkToplevelSetDecorated(x.GoPointer(), DecoratedVar)
-
 }
 
 // Sets the toplevel to be deletable.
@@ -213,17 +194,13 @@ func (x *ToplevelBase) SetDecorated(DecoratedVar bool) {
 // Setting @deletable to %TRUE hints the desktop environment
 // that it should offer the user a way to close the surface.
 func (x *ToplevelBase) SetDeletable(DeletableVar bool) {
-
 	XGdkToplevelSetDeletable(x.GoPointer(), DeletableVar)
-
 }
 
 // Sets the gravity that is used when changing the toplevel
 // size programmatically.
 func (x *ToplevelBase) SetGravity(GravityVar Gravity) {
-
 	XGdkToplevelSetGravity(x.GoPointer(), GravityVar)
-
 }
 
 // Sets a list of icons for the surface.
@@ -236,9 +213,7 @@ func (x *ToplevelBase) SetGravity(GravityVar Gravity) {
 //
 // Note that some platforms don't support surface icons.
 func (x *ToplevelBase) SetIconList(SurfacesVar *glib.List) {
-
 	XGdkToplevelSetIconList(x.GoPointer(), SurfacesVar)
-
 }
 
 // Sets the toplevel to be modal.
@@ -251,9 +226,7 @@ func (x *ToplevelBase) SetIconList(SurfacesVar *glib.List) {
 // You should only use this on surfaces for which you have
 // previously called [method@Gdk.Toplevel.set_transient_for].
 func (x *ToplevelBase) SetModal(ModalVar bool) {
-
 	XGdkToplevelSetModal(x.GoPointer(), ModalVar)
-
 }
 
 // Sets the startup notification ID.
@@ -262,9 +235,7 @@ func (x *ToplevelBase) SetModal(ModalVar bool) {
 // [gtk_window_set_startup_id()](../gtk4/method.Window.set_startup_id.html)
 // instead of this low-level function.
 func (x *ToplevelBase) SetStartupId(StartupIdVar string) {
-
 	XGdkToplevelSetStartupId(x.GoPointer(), StartupIdVar)
-
 }
 
 // Sets the title of a toplevel surface.
@@ -272,9 +243,7 @@ func (x *ToplevelBase) SetStartupId(StartupIdVar string) {
 // The title maybe be displayed in the titlebar,
 // in lists of windows, etc.
 func (x *ToplevelBase) SetTitle(TitleVar string) {
-
 	XGdkToplevelSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 // Sets a transient-for parent.
@@ -287,9 +256,7 @@ func (x *ToplevelBase) SetTitle(TitleVar string) {
 // See [gtk_window_set_transient_for()](../gtk4/method.Window.set_transient_for.html)
 // if you’re using [GtkWindow](../gtk4/class.Window.html).
 func (x *ToplevelBase) SetTransientFor(ParentVar *Surface) {
-
 	XGdkToplevelSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
-
 }
 
 // Asks the windowing system to show the window menu.
@@ -299,7 +266,6 @@ func (x *ToplevelBase) SetTransientFor(ParentVar *Surface) {
 // for windows using client-side decorations, activating it with a
 // right-click on the window decorations.
 func (x *ToplevelBase) ShowWindowMenu(EventVar *Event) bool {
-
 	cret := XGdkToplevelShowWindowMenu(x.GoPointer(), EventVar.GoPointer())
 	return cret
 }
@@ -307,14 +273,12 @@ func (x *ToplevelBase) ShowWindowMenu(EventVar *Event) bool {
 // Returns whether the desktop environment supports
 // tiled window states.
 func (x *ToplevelBase) SupportsEdgeConstraints() bool {
-
 	cret := XGdkToplevelSupportsEdgeConstraints(x.GoPointer())
 	return cret
 }
 
 // Performs a title bar gesture.
 func (x *ToplevelBase) TitlebarGesture(GestureVar TitlebarGesture) bool {
-
 	cret := XGdkToplevelTitlebarGesture(x.GoPointer(), GestureVar)
 	return cret
 }
@@ -461,28 +425,30 @@ func (x *ToplevelBase) GetPropertyTitle() string {
 	return v.GetString()
 }
 
-var XGdkToplevelBeginMove func(uintptr, uintptr, int32, float64, float64, uint32)
-var XGdkToplevelBeginResize func(uintptr, SurfaceEdge, uintptr, int32, float64, float64, uint32)
-var XGdkToplevelFocus func(uintptr, uint32)
-var XGdkToplevelGetCapabilities func(uintptr) ToplevelCapabilities
-var XGdkToplevelGetGravity func(uintptr) Gravity
-var XGdkToplevelGetState func(uintptr) ToplevelState
-var XGdkToplevelInhibitSystemShortcuts func(uintptr, uintptr)
-var XGdkToplevelLower func(uintptr) bool
-var XGdkToplevelMinimize func(uintptr) bool
-var XGdkToplevelPresent func(uintptr, *ToplevelLayout)
-var XGdkToplevelRestoreSystemShortcuts func(uintptr)
-var XGdkToplevelSetDecorated func(uintptr, bool)
-var XGdkToplevelSetDeletable func(uintptr, bool)
-var XGdkToplevelSetGravity func(uintptr, Gravity)
-var XGdkToplevelSetIconList func(uintptr, *glib.List)
-var XGdkToplevelSetModal func(uintptr, bool)
-var XGdkToplevelSetStartupId func(uintptr, string)
-var XGdkToplevelSetTitle func(uintptr, string)
-var XGdkToplevelSetTransientFor func(uintptr, uintptr)
-var XGdkToplevelShowWindowMenu func(uintptr, uintptr) bool
-var XGdkToplevelSupportsEdgeConstraints func(uintptr) bool
-var XGdkToplevelTitlebarGesture func(uintptr, TitlebarGesture) bool
+var (
+	XGdkToplevelBeginMove               func(uintptr, uintptr, int32, float64, float64, uint32)
+	XGdkToplevelBeginResize             func(uintptr, SurfaceEdge, uintptr, int32, float64, float64, uint32)
+	XGdkToplevelFocus                   func(uintptr, uint32)
+	XGdkToplevelGetCapabilities         func(uintptr) ToplevelCapabilities
+	XGdkToplevelGetGravity              func(uintptr) Gravity
+	XGdkToplevelGetState                func(uintptr) ToplevelState
+	XGdkToplevelInhibitSystemShortcuts  func(uintptr, uintptr)
+	XGdkToplevelLower                   func(uintptr) bool
+	XGdkToplevelMinimize                func(uintptr) bool
+	XGdkToplevelPresent                 func(uintptr, *ToplevelLayout)
+	XGdkToplevelRestoreSystemShortcuts  func(uintptr)
+	XGdkToplevelSetDecorated            func(uintptr, bool)
+	XGdkToplevelSetDeletable            func(uintptr, bool)
+	XGdkToplevelSetGravity              func(uintptr, Gravity)
+	XGdkToplevelSetIconList             func(uintptr, *glib.List)
+	XGdkToplevelSetModal                func(uintptr, bool)
+	XGdkToplevelSetStartupId            func(uintptr, string)
+	XGdkToplevelSetTitle                func(uintptr, string)
+	XGdkToplevelSetTransientFor         func(uintptr, uintptr)
+	XGdkToplevelShowWindowMenu          func(uintptr, uintptr) bool
+	XGdkToplevelSupportsEdgeConstraints func(uintptr) bool
+	XGdkToplevelTitlebarGesture         func(uintptr, TitlebarGesture) bool
+)
 
 // Reflects what features a `GdkToplevel` supports.
 type ToplevelCapabilities int
@@ -683,5 +649,4 @@ func init() {
 	core.PuregoSafeRegister(&XGdkToplevelShowWindowMenu, libs, "gdk_toplevel_show_window_menu")
 	core.PuregoSafeRegister(&XGdkToplevelSupportsEdgeConstraints, libs, "gdk_toplevel_supports_edge_constraints")
 	core.PuregoSafeRegister(&XGdkToplevelTitlebarGesture, libs, "gdk_toplevel_titlebar_gesture")
-
 }

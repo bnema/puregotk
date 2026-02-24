@@ -49,7 +49,6 @@ var xNewFileAttributeInfoList func() *FileAttributeInfoList
 
 // Creates a new file attribute info list.
 func NewFileAttributeInfoList() *FileAttributeInfoList {
-
 	cret := xNewFileAttributeInfoList()
 	return cret
 }
@@ -59,16 +58,13 @@ var xFileAttributeInfoListAdd func(uintptr, string, FileAttributeType, FileAttri
 // Adds a new attribute with @name to the @list, setting
 // its @type and @flags.
 func (x *FileAttributeInfoList) Add(NameVar string, TypeVar FileAttributeType, FlagsVar FileAttributeInfoFlags) {
-
 	xFileAttributeInfoListAdd(x.GoPointer(), NameVar, TypeVar, FlagsVar)
-
 }
 
 var xFileAttributeInfoListDup func(uintptr) *FileAttributeInfoList
 
 // Makes a duplicate of a file attribute info list.
 func (x *FileAttributeInfoList) Dup() *FileAttributeInfoList {
-
 	cret := xFileAttributeInfoListDup(x.GoPointer())
 	return cret
 }
@@ -77,7 +73,6 @@ var xFileAttributeInfoListLookup func(uintptr, string) *FileAttributeInfo
 
 // Gets the file attribute with the name @name from @list.
 func (x *FileAttributeInfoList) Lookup(NameVar string) *FileAttributeInfo {
-
 	cret := xFileAttributeInfoListLookup(x.GoPointer(), NameVar)
 	return cret
 }
@@ -86,7 +81,6 @@ var xFileAttributeInfoListRef func(uintptr) *FileAttributeInfoList
 
 // References a file attribute info list.
 func (x *FileAttributeInfoList) Ref() *FileAttributeInfoList {
-
 	cret := xFileAttributeInfoListRef(x.GoPointer())
 	return cret
 }
@@ -96,9 +90,7 @@ var xFileAttributeInfoListUnref func(uintptr)
 // Removes a reference from the given @list. If the reference count
 // falls to zero, the @list is deleted.
 func (x *FileAttributeInfoList) Unref() {
-
 	xFileAttributeInfoListUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -122,5 +114,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileAttributeInfoListLookup, libs, "g_file_attribute_info_list_lookup")
 	core.PuregoSafeRegister(&xFileAttributeInfoListRef, libs, "g_file_attribute_info_list_ref")
 	core.PuregoSafeRegister(&xFileAttributeInfoListUnref, libs, "g_file_attribute_info_list_unref")
-
 }

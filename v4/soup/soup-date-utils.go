@@ -40,7 +40,6 @@ var xDateTimeNewFromHttpString func(string) *glib.DateTime
 // and reasonable approximations thereof. (Eg, it is lenient about whitespace,
 // leading "0"s, etc.)
 func DateTimeNewFromHttpString(DateStringVar string) *glib.DateTime {
-
 	cret := xDateTimeNewFromHttpString(DateStringVar)
 	return cret
 }
@@ -49,7 +48,6 @@ var xDateTimeToString func(*glib.DateTime, DateFormat) string
 
 // Converts @date to a string in the format described by @format.
 func DateTimeToString(DateVar *glib.DateTime, FormatVar DateFormat) string {
-
 	cret := xDateTimeToString(DateVar, FormatVar)
 	return cret
 }
@@ -70,5 +68,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDateTimeNewFromHttpString, libs, "soup_date_time_new_from_http_string")
 	core.PuregoSafeRegister(&xDateTimeToString, libs, "soup_date_time_to_string")
-
 }

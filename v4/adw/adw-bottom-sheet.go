@@ -135,7 +135,6 @@ var xBottomSheetGetAlign func(uintptr) float32
 
 // Gets horizontal alignment of the bottom sheet.
 func (x *BottomSheet) GetAlign() float32 {
-
 	cret := xBottomSheetGetAlign(x.GoPointer())
 	return cret
 }
@@ -164,7 +163,6 @@ var xBottomSheetGetBottomBarHeight func(uintptr) int32
 // It can be used to shift the content upwards permanently to accommodate for
 // the bottom bar.
 func (x *BottomSheet) GetBottomBarHeight() int32 {
-
 	cret := xBottomSheetGetBottomBarHeight(x.GoPointer())
 	return cret
 }
@@ -173,7 +171,6 @@ var xBottomSheetGetCanClose func(uintptr) bool
 
 // Gets whether the bottom sheet can be closed by user.
 func (x *BottomSheet) GetCanClose() bool {
-
 	cret := xBottomSheetGetCanClose(x.GoPointer())
 	return cret
 }
@@ -182,7 +179,6 @@ var xBottomSheetGetCanOpen func(uintptr) bool
 
 // Gets whether the bottom sheet can be opened by user.
 func (x *BottomSheet) GetCanOpen() bool {
-
 	cret := xBottomSheetGetCanOpen(x.GoPointer())
 	return cret
 }
@@ -208,7 +204,6 @@ var xBottomSheetGetFullWidth func(uintptr) bool
 
 // Gets whether the bottom sheet takes the full width.
 func (x *BottomSheet) GetFullWidth() bool {
-
 	cret := xBottomSheetGetFullWidth(x.GoPointer())
 	return cret
 }
@@ -217,7 +212,6 @@ var xBottomSheetGetModal func(uintptr) bool
 
 // Gets whether the bottom sheet is modal.
 func (x *BottomSheet) GetModal() bool {
-
 	cret := xBottomSheetGetModal(x.GoPointer())
 	return cret
 }
@@ -226,7 +220,6 @@ var xBottomSheetGetOpen func(uintptr) bool
 
 // Gets whether the bottom sheet is open.
 func (x *BottomSheet) GetOpen() bool {
-
 	cret := xBottomSheetGetOpen(x.GoPointer())
 	return cret
 }
@@ -235,7 +228,6 @@ var xBottomSheetGetRevealBottomBar func(uintptr) bool
 
 // Gets whether the bottom bar is revealed.
 func (x *BottomSheet) GetRevealBottomBar() bool {
-
 	cret := xBottomSheetGetRevealBottomBar(x.GoPointer())
 	return cret
 }
@@ -263,7 +255,6 @@ var xBottomSheetGetSheetHeight func(uintptr) int32
 //
 // It can be used to shift the content upwards when the bottom sheet is open.
 func (x *BottomSheet) GetSheetHeight() int32 {
-
 	cret := xBottomSheetGetSheetHeight(x.GoPointer())
 	return cret
 }
@@ -272,7 +263,6 @@ var xBottomSheetGetShowDragHandle func(uintptr) bool
 
 // Gets whether to show a drag handle in the bottom sheet.
 func (x *BottomSheet) GetShowDragHandle() bool {
-
 	cret := xBottomSheetGetShowDragHandle(x.GoPointer())
 	return cret
 }
@@ -286,9 +276,7 @@ var xBottomSheetSetAlign func(uintptr, float32)
 //
 // Only used when [property@BottomSheet:full-width] is set to `FALSE`.
 func (x *BottomSheet) SetAlign(AlignVar float32) {
-
 	xBottomSheetSetAlign(x.GoPointer(), AlignVar)
-
 }
 
 var xBottomSheetSetBottomBar func(uintptr, uintptr)
@@ -301,9 +289,7 @@ var xBottomSheetSetBottomBar func(uintptr, uintptr)
 // Bottom bar can be temporarily hidden using the
 // [property@BottomSheet:reveal-bottom-bar] property.
 func (x *BottomSheet) SetBottomBar(BottomBarVar *gtk.Widget) {
-
 	xBottomSheetSetBottomBar(x.GoPointer(), BottomBarVar.GoPointer())
-
 }
 
 var xBottomSheetSetCanClose func(uintptr, bool)
@@ -315,9 +301,7 @@ var xBottomSheetSetCanClose func(uintptr, bool)
 //
 // Bottom sheet can still be closed using [property@BottomSheet:open].
 func (x *BottomSheet) SetCanClose(CanCloseVar bool) {
-
 	xBottomSheetSetCanClose(x.GoPointer(), CanCloseVar)
-
 }
 
 var xBottomSheetSetCanOpen func(uintptr, bool)
@@ -330,9 +314,7 @@ var xBottomSheetSetCanOpen func(uintptr, bool)
 //
 // Bottom sheet can still be opened using [property@BottomSheet:open].
 func (x *BottomSheet) SetCanOpen(CanOpenVar bool) {
-
 	xBottomSheetSetCanOpen(x.GoPointer(), CanOpenVar)
-
 }
 
 var xBottomSheetSetContent func(uintptr, uintptr)
@@ -341,9 +323,7 @@ var xBottomSheetSetContent func(uintptr, uintptr)
 //
 // It's always shown, and the bottom sheet is overlaid over it.
 func (x *BottomSheet) SetContent(ContentVar *gtk.Widget) {
-
 	xBottomSheetSetContent(x.GoPointer(), ContentVar.GoPointer())
-
 }
 
 var xBottomSheetSetFullWidth func(uintptr, bool)
@@ -352,9 +332,7 @@ var xBottomSheetSetFullWidth func(uintptr, bool)
 //
 // When full width, [property@BottomSheet:align] is ignored.
 func (x *BottomSheet) SetFullWidth(FullWidthVar bool) {
-
 	xBottomSheetSetFullWidth(x.GoPointer(), FullWidthVar)
-
 }
 
 var xBottomSheetSetModal func(uintptr, bool)
@@ -367,18 +345,14 @@ var xBottomSheetSetModal func(uintptr, bool)
 //
 // Otherwise, the content is accessible even when the bottom sheet is open.
 func (x *BottomSheet) SetModal(ModalVar bool) {
-
 	xBottomSheetSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xBottomSheetSetOpen func(uintptr, bool)
 
 // Sets whether the bottom sheet is open.
 func (x *BottomSheet) SetOpen(OpenVar bool) {
-
 	xBottomSheetSetOpen(x.GoPointer(), OpenVar)
-
 }
 
 var xBottomSheetSetRevealBottomBar func(uintptr, bool)
@@ -390,9 +364,7 @@ var xBottomSheetSetRevealBottomBar func(uintptr, bool)
 // See [property@BottomSheet:bottom-bar] and
 // [property@BottomSheet:bottom-bar-height].
 func (x *BottomSheet) SetRevealBottomBar(RevealVar bool) {
-
 	xBottomSheetSetRevealBottomBar(x.GoPointer(), RevealVar)
-
 }
 
 var xBottomSheetSetSheet func(uintptr, uintptr)
@@ -401,9 +373,7 @@ var xBottomSheetSetSheet func(uintptr, uintptr)
 //
 // Only shown when [property@BottomSheet:open] is `TRUE`.
 func (x *BottomSheet) SetSheet(SheetVar *gtk.Widget) {
-
 	xBottomSheetSetSheet(x.GoPointer(), SheetVar.GoPointer())
-
 }
 
 var xBottomSheetSetShowDragHandle func(uintptr, bool)
@@ -418,9 +388,7 @@ var xBottomSheetSetShowDragHandle func(uintptr, bool)
 // Showing drag handle also allows to swipe the bottom sheet down (and to swipe
 // the bottom bar up) with a pointer, instead of just touchscreen.
 func (x *BottomSheet) SetShowDragHandle(ShowDragHandleVar bool) {
-
 	xBottomSheetSetShowDragHandle(x.GoPointer(), ShowDragHandleVar)
-
 }
 
 func (c *BottomSheet) GoPointer() uintptr {
@@ -679,7 +647,6 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -688,7 +655,6 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *BottomSheet) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -697,14 +663,12 @@ func (x *BottomSheet) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *BottomSheet) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *BottomSheet) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -714,7 +678,6 @@ func (x *BottomSheet) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *BottomSheet) GetSnapPoints(NSnapPointsVar *int32) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -729,9 +692,7 @@ func (x *BottomSheet) GetSnapPoints(NSnapPointsVar *int32) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *BottomSheet) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -744,9 +705,7 @@ func (x *BottomSheet) GetSwipeArea(NavigationDirectionVar NavigationDirection, I
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *BottomSheet) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -767,7 +726,6 @@ func (x *BottomSheet) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *BottomSheet) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -792,7 +750,6 @@ func (x *BottomSheet) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *BottomSheet) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -831,30 +788,23 @@ func (x *BottomSheet) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *BottomSheet) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *BottomSheet) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *BottomSheet) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *BottomSheet) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -867,9 +817,7 @@ func (x *BottomSheet) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *BottomSheet) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -877,9 +825,7 @@ func (x *BottomSheet) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *BottomSheet) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -888,9 +834,7 @@ func (x *BottomSheet) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *BottomSheet) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -912,9 +856,7 @@ func (x *BottomSheet) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *BottomSheet) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -924,9 +866,7 @@ func (x *BottomSheet) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *BottomSheet) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -948,9 +888,7 @@ func (x *BottomSheet) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *BottomSheet) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -960,9 +898,7 @@ func (x *BottomSheet) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *BottomSheet) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -985,9 +921,7 @@ func (x *BottomSheet) UpdateRelationValue(NRelationsVar int32, RelationsVar []gt
 //
 // ```
 func (x *BottomSheet) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -997,9 +931,7 @@ func (x *BottomSheet) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *BottomSheet) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1007,7 +939,6 @@ func (x *BottomSheet) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessi
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *BottomSheet) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1052,5 +983,4 @@ func init() {
 	core.PuregoSafeRegister(&xBottomSheetSetRevealBottomBar, libs, "adw_bottom_sheet_set_reveal_bottom_bar")
 	core.PuregoSafeRegister(&xBottomSheetSetSheet, libs, "adw_bottom_sheet_set_sheet")
 	core.PuregoSafeRegister(&xBottomSheetSetShowDragHandle, libs, "adw_bottom_sheet_set_show_drag_handle")
-
 }

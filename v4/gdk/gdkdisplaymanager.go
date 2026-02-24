@@ -47,9 +47,7 @@ var xSetAllowedBackends func(string)
 // as [func@Gdk.Display.open], `gtk_init()`, or `gtk_init_check()`
 // in order to take effect.
 func SetAllowedBackends(BackendsVar string) {
-
 	xSetAllowedBackends(BackendsVar)
-
 }
 
 // Offers notification when displays appear or disappear.
@@ -138,7 +136,6 @@ var xDisplayManagerListDisplays func(uintptr) *glib.SList
 
 // List all currently open displays.
 func (x *DisplayManager) ListDisplays() *glib.SList {
-
 	cret := xDisplayManagerListDisplays(x.GoPointer())
 	return cret
 }
@@ -164,9 +161,7 @@ var xDisplayManagerSetDefaultDisplay func(uintptr, uintptr)
 
 // Sets @display as the default display.
 func (x *DisplayManager) SetDefaultDisplay(DisplayVar *Display) {
-
 	xDisplayManagerSetDefaultDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 func (c *DisplayManager) GoPointer() uintptr {
@@ -193,7 +188,6 @@ func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr))
 		cbFn := *cb
 
 		cbFn(fa, DisplayVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -247,5 +241,4 @@ func init() {
 	core.PuregoSafeRegister(&xDisplayManagerSetDefaultDisplay, libs, "gdk_display_manager_set_default_display")
 
 	core.PuregoSafeRegister(&xDisplayManagerGet, libs, "gdk_display_manager_get")
-
 }

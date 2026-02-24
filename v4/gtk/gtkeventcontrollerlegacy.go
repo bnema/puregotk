@@ -80,7 +80,6 @@ func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uin
 		cbFn := *cb
 
 		return cbFn(fa, EventVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -102,5 +101,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerLegacyGLibType, libs, "gtk_event_controller_legacy_get_type")
 
 	core.PuregoSafeRegister(&xNewEventControllerLegacy, libs, "gtk_event_controller_legacy_new")
-
 }

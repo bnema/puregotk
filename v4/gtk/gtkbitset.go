@@ -40,7 +40,6 @@ var xBitsetIterGetValue func(uintptr) uint32
 // If @iter is not valid and [method@Gtk.BitsetIter.is_valid]
 // returns %FALSE, this function returns 0.
 func (x *BitsetIter) GetValue() uint32 {
-
 	cret := xBitsetIterGetValue(x.GoPointer())
 	return cret
 }
@@ -49,7 +48,6 @@ var xBitsetIterIsValid func(uintptr) bool
 
 // Checks if @iter points to a valid value.
 func (x *BitsetIter) IsValid() bool {
-
 	cret := xBitsetIterIsValid(x.GoPointer())
 	return cret
 }
@@ -61,7 +59,6 @@ var xBitsetIterNext func(uintptr, *uint32) bool
 // If it was already pointing to the last value in the set,
 // %FALSE is returned and @iter is invalidated.
 func (x *BitsetIter) Next(ValueVar *uint32) bool {
-
 	cret := xBitsetIterNext(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -73,7 +70,6 @@ var xBitsetIterPrevious func(uintptr, *uint32) bool
 // If it was already pointing to the first value in the set,
 // %FALSE is returned and @iter is invalidated.
 func (x *BitsetIter) Previous(ValueVar *uint32) bool {
-
 	cret := xBitsetIterPrevious(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -85,7 +81,6 @@ var xBitsetIterInitAt func(*BitsetIter, *Bitset, uint32, *uint32) bool
 // If @target is not found, finds the next value after it.
 // If no value &gt;= @target exists in @set, this function returns %FALSE.
 func BitsetIterInitAt(IterVar *BitsetIter, SetVar *Bitset, TargetVar uint32, ValueVar *uint32) bool {
-
 	cret := xBitsetIterInitAt(IterVar, SetVar, TargetVar, ValueVar)
 	return cret
 }
@@ -97,7 +92,6 @@ var xBitsetIterInitFirst func(*BitsetIter, *Bitset, *uint32) bool
 //
 // If @set is empty, %FALSE is returned and @value is set to %G_MAXUINT.
 func BitsetIterInitFirst(IterVar *BitsetIter, SetVar *Bitset, ValueVar *uint32) bool {
-
 	cret := xBitsetIterInitFirst(IterVar, SetVar, ValueVar)
 	return cret
 }
@@ -109,7 +103,6 @@ var xBitsetIterInitLast func(*BitsetIter, *Bitset, *uint32) bool
 //
 // If @set is empty, %FALSE is returned.
 func BitsetIterInitLast(IterVar *BitsetIter, SetVar *Bitset, ValueVar *uint32) bool {
-
 	cret := xBitsetIterInitLast(IterVar, SetVar, ValueVar)
 	return cret
 }
@@ -136,5 +129,4 @@ func init() {
 	core.PuregoSafeRegister(&xBitsetIterIsValid, libs, "gtk_bitset_iter_is_valid")
 	core.PuregoSafeRegister(&xBitsetIterNext, libs, "gtk_bitset_iter_next")
 	core.PuregoSafeRegister(&xBitsetIterPrevious, libs, "gtk_bitset_iter_previous")
-
 }

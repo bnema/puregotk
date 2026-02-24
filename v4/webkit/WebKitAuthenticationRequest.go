@@ -93,9 +93,7 @@ var xAuthenticationRequestAuthenticate func(uintptr, *Credential)
 // Authenticate the #WebKitAuthenticationRequest using the #WebKitCredential
 // supplied. To continue without credentials, pass %NULL as @credential.
 func (x *AuthenticationRequest) Authenticate(CredentialVar *Credential) {
-
 	xAuthenticationRequestAuthenticate(x.GoPointer(), CredentialVar)
-
 }
 
 var xAuthenticationRequestCanSaveCredentials func(uintptr) bool
@@ -109,7 +107,6 @@ var xAuthenticationRequestCanSaveCredentials func(uintptr) bool
 // disabled in #WebKitWebsiteDataManager, unless credentials saving has been
 // explicitly enabled with webkit_authentication_request_set_can_save_credentials().
 func (x *AuthenticationRequest) CanSaveCredentials() bool {
-
 	cret := xAuthenticationRequestCanSaveCredentials(x.GoPointer())
 	return cret
 }
@@ -121,16 +118,13 @@ var xAuthenticationRequestCancel func(uintptr)
 // This will also cancel the page loading and result in a
 // #WebKitWebView::load-failed signal with a #WebKitNetworkError of type %WEBKIT_NETWORK_ERROR_CANCELLED being emitted.
 func (x *AuthenticationRequest) Cancel() {
-
 	xAuthenticationRequestCancel(x.GoPointer())
-
 }
 
 var xAuthenticationRequestGetCertificatePinFlags func(uintptr) gio.TlsPasswordFlags
 
 // Get the #GTlsPasswordFlags of the %WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_PIN_REQUESTED authentication challenge.
 func (x *AuthenticationRequest) GetCertificatePinFlags() gio.TlsPasswordFlags {
-
 	cret := xAuthenticationRequestGetCertificatePinFlags(x.GoPointer())
 	return cret
 }
@@ -139,7 +133,6 @@ var xAuthenticationRequestGetHost func(uintptr) string
 
 // Get the host that this authentication challenge is applicable to.
 func (x *AuthenticationRequest) GetHost() string {
-
 	cret := xAuthenticationRequestGetHost(x.GoPointer())
 	return cret
 }
@@ -148,7 +141,6 @@ var xAuthenticationRequestGetPort func(uintptr) uint32
 
 // Get the port that this authentication challenge is applicable to.
 func (x *AuthenticationRequest) GetPort() uint32 {
-
 	cret := xAuthenticationRequestGetPort(x.GoPointer())
 	return cret
 }
@@ -161,7 +153,6 @@ var xAuthenticationRequestGetProposedCredential func(uintptr) *Credential
 // stored from a previous session. The client can use this directly for
 // authentication or construct their own #WebKitCredential.
 func (x *AuthenticationRequest) GetProposedCredential() *Credential {
-
 	cret := xAuthenticationRequestGetProposedCredential(x.GoPointer())
 	return cret
 }
@@ -170,7 +161,6 @@ var xAuthenticationRequestGetRealm func(uintptr) string
 
 // Get the realm that this authentication challenge is applicable to.
 func (x *AuthenticationRequest) GetRealm() string {
-
 	cret := xAuthenticationRequestGetRealm(x.GoPointer())
 	return cret
 }
@@ -179,7 +169,6 @@ var xAuthenticationRequestGetScheme func(uintptr) AuthenticationScheme
 
 // Get the authentication scheme of the authentication challenge.
 func (x *AuthenticationRequest) GetScheme() AuthenticationScheme {
-
 	cret := xAuthenticationRequestGetScheme(x.GoPointer())
 	return cret
 }
@@ -188,7 +177,6 @@ var xAuthenticationRequestGetSecurityOrigin func(uintptr) *SecurityOrigin
 
 // Get the #WebKitSecurityOrigin that this authentication challenge is applicable to.
 func (x *AuthenticationRequest) GetSecurityOrigin() *SecurityOrigin {
-
 	cret := xAuthenticationRequestGetSecurityOrigin(x.GoPointer())
 	return cret
 }
@@ -199,7 +187,6 @@ var xAuthenticationRequestIsForProxy func(uintptr) bool
 //
 // Determine whether the authentication challenge is associated with a proxy server rather than an "origin" server.
 func (x *AuthenticationRequest) IsForProxy() bool {
-
 	cret := xAuthenticationRequestIsForProxy(x.GoPointer())
 	return cret
 }
@@ -208,7 +195,6 @@ var xAuthenticationRequestIsRetry func(uintptr) bool
 
 // Determine whether this this is a first attempt or a retry for this authentication challenge.
 func (x *AuthenticationRequest) IsRetry() bool {
-
 	cret := xAuthenticationRequestIsRetry(x.GoPointer())
 	return cret
 }
@@ -226,9 +212,7 @@ var xAuthenticationRequestSetCanSaveCredentials func(uintptr, bool)
 // Note that storing of credentials will not be allowed on ephemeral
 // sessions in any case.
 func (x *AuthenticationRequest) SetCanSaveCredentials(EnabledVar bool) {
-
 	xAuthenticationRequestSetCanSaveCredentials(x.GoPointer(), EnabledVar)
-
 }
 
 var xAuthenticationRequestSetProposedCredential func(uintptr, *Credential)
@@ -242,9 +226,7 @@ var xAuthenticationRequestSetProposedCredential func(uintptr, *Credential)
 // credentials.)
 // Passing a %NULL @credential will clear the proposed credential.
 func (x *AuthenticationRequest) SetProposedCredential(CredentialVar *Credential) {
-
 	xAuthenticationRequestSetProposedCredential(x.GoPointer(), CredentialVar)
-
 }
 
 func (c *AuthenticationRequest) GoPointer() uintptr {
@@ -273,7 +255,6 @@ func (x *AuthenticationRequest) ConnectAuthenticated(cb *func(AuthenticationRequ
 		cbFn := *cb
 
 		cbFn(fa, CredentialVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -295,7 +276,6 @@ func (x *AuthenticationRequest) ConnectCancelled(cb *func(AuthenticationRequest)
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

@@ -120,7 +120,6 @@ func NewIOChannelFile(FilenameVar string, ModeVar string) (*IOChannel, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelUnixNew func(int32) *IOChannel
@@ -148,7 +147,6 @@ var xIOChannelUnixNew func(int32) *IOChannel
 // valid file descriptor and socket. If that happens a warning is
 // issued, and GLib assumes that it is the file descriptor you mean.
 func IOChannelUnixNew(FdVar int32) *IOChannel {
-
 	cret := xIOChannelUnixNew(FdVar)
 	return cret
 }
@@ -159,9 +157,7 @@ var xIOChannelClose func(uintptr)
 // flushed, ignoring errors. The channel will not be freed until the
 // last reference is dropped using g_io_channel_unref().
 func (x *IOChannel) Close() {
-
 	xIOChannelClose(x.GoPointer())
-
 }
 
 var xIOChannelFlush func(uintptr) IOStatus
@@ -175,7 +171,6 @@ func (x *IOChannel) Flush() (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelGetBufferCondition func(uintptr) IOCondition
@@ -184,7 +179,6 @@ var xIOChannelGetBufferCondition func(uintptr) IOCondition
 // is data to be read/space to write data in the internal buffers in
 // the #GIOChannel. Only the flags %G_IO_IN and %G_IO_OUT may be set.
 func (x *IOChannel) GetBufferCondition() IOCondition {
-
 	cret := xIOChannelGetBufferCondition(x.GoPointer())
 	return cret
 }
@@ -193,7 +187,6 @@ var xIOChannelGetBufferSize func(uintptr) uint
 
 // Gets the buffer size.
 func (x *IOChannel) GetBufferSize() uint {
-
 	cret := xIOChannelGetBufferSize(x.GoPointer())
 	return cret
 }
@@ -202,7 +195,6 @@ var xIOChannelGetBuffered func(uintptr) bool
 
 // Returns whether @channel is buffered.
 func (x *IOChannel) GetBuffered() bool {
-
 	cret := xIOChannelGetBuffered(x.GoPointer())
 	return cret
 }
@@ -214,7 +206,6 @@ var xIOChannelGetCloseOnUnref func(uintptr) bool
 // destroyed. The default value of this is %TRUE for channels created
 // by g_io_channel_new_file (), and %FALSE for all other channels.
 func (x *IOChannel) GetCloseOnUnref() bool {
-
 	cret := xIOChannelGetCloseOnUnref(x.GoPointer())
 	return cret
 }
@@ -225,7 +216,6 @@ var xIOChannelGetEncoding func(uintptr) string
 // The internal encoding is always UTF-8. The encoding %NULL
 // makes the channel safe for binary data.
 func (x *IOChannel) GetEncoding() string {
-
 	cret := xIOChannelGetEncoding(x.GoPointer())
 	return cret
 }
@@ -242,7 +232,6 @@ var xIOChannelGetFlags func(uintptr) IOFlags
 // should immediately call g_io_channel_get_flags() to update
 // the internal values of these flags.
 func (x *IOChannel) GetFlags() IOFlags {
-
 	cret := xIOChannelGetFlags(x.GoPointer())
 	return cret
 }
@@ -254,7 +243,6 @@ var xIOChannelGetLineTerm func(uintptr, *int32) string
 // indicates autodetection. Since 2.84, the return value is always
 // nul-terminated.
 func (x *IOChannel) GetLineTerm(LengthVar *int32) string {
-
 	cret := xIOChannelGetLineTerm(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -267,16 +255,13 @@ var xIOChannelInit func(uintptr)
 // #GIOChannel, and so is not often needed by the application
 // programmer (unless you are creating a new type of #GIOChannel).
 func (x *IOChannel) Init() {
-
 	xIOChannelInit(x.GoPointer())
-
 }
 
 var xIOChannelRead func(uintptr, string, uint, uint) IOError
 
 // Reads data from a #GIOChannel.
 func (x *IOChannel) Read(BufVar string, CountVar uint, BytesReadVar uint) IOError {
-
 	cret := xIOChannelRead(x.GoPointer(), BufVar, CountVar, BytesReadVar)
 	return cret
 }
@@ -292,7 +277,6 @@ func (x *IOChannel) ReadChars(BufVar *[]byte, CountVar uint, BytesReadVar *uint)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelReadLine func(uintptr, *string, *uint, *uint, **Error) IOStatus
@@ -309,7 +293,6 @@ func (x *IOChannel) ReadLine(StrReturnVar *string, LengthVar *uint, TerminatorPo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelReadLineString func(uintptr, *String, uint, **Error) IOStatus
@@ -323,7 +306,6 @@ func (x *IOChannel) ReadLineString(BufferVar *String, TerminatorPosVar uint) (IO
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelReadToEnd func(uintptr, *[]byte, *uint, **Error) IOStatus
@@ -337,7 +319,6 @@ func (x *IOChannel) ReadToEnd(StrReturnVar *[]byte, LengthVar *uint) (IOStatus, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelReadUnichar func(uintptr, *uint32, **Error) IOStatus
@@ -352,14 +333,12 @@ func (x *IOChannel) ReadUnichar(ThecharVar *uint32) (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelRef func(uintptr) *IOChannel
 
 // Increments the reference count of a #GIOChannel.
 func (x *IOChannel) Ref() *IOChannel {
-
 	cret := xIOChannelRef(x.GoPointer())
 	return cret
 }
@@ -369,7 +348,6 @@ var xIOChannelSeek func(uintptr, int64, SeekType) IOError
 // Sets the current position in the #GIOChannel, similar to the standard
 // library function fseek().
 func (x *IOChannel) Seek(OffsetVar int64, TypeVar SeekType) IOError {
-
 	cret := xIOChannelSeek(x.GoPointer(), OffsetVar, TypeVar)
 	return cret
 }
@@ -385,16 +363,13 @@ func (x *IOChannel) SeekPosition(OffsetVar int64, TypeVar SeekType) (IOStatus, e
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelSetBufferSize func(uintptr, uint)
 
 // Sets the buffer size.
 func (x *IOChannel) SetBufferSize(SizeVar uint) {
-
 	xIOChannelSetBufferSize(x.GoPointer(), SizeVar)
-
 }
 
 var xIOChannelSetBuffered func(uintptr, bool)
@@ -419,9 +394,7 @@ var xIOChannelSetBuffered func(uintptr, bool)
 //
 // The default state of the channel is buffered.
 func (x *IOChannel) SetBuffered(BufferedVar bool) {
-
 	xIOChannelSetBuffered(x.GoPointer(), BufferedVar)
-
 }
 
 var xIOChannelSetCloseOnUnref func(uintptr, bool)
@@ -433,9 +406,7 @@ var xIOChannelSetCloseOnUnref func(uintptr, bool)
 // Setting this flag to %TRUE for a channel you have already closed
 // can cause problems when the final reference to the #GIOChannel is dropped.
 func (x *IOChannel) SetCloseOnUnref(DoCloseVar bool) {
-
 	xIOChannelSetCloseOnUnref(x.GoPointer(), DoCloseVar)
-
 }
 
 var xIOChannelSetEncoding func(uintptr, string, **Error) IOStatus
@@ -482,7 +453,6 @@ func (x *IOChannel) SetEncoding(EncodingVar string) (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelSetFlags func(uintptr, IOFlags, **Error) IOStatus
@@ -496,7 +466,6 @@ func (x *IOChannel) SetFlags(FlagsVar IOFlags) (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelSetLineTerm func(uintptr, string, int32)
@@ -504,9 +473,7 @@ var xIOChannelSetLineTerm func(uintptr, string, int32)
 // This sets the string that #GIOChannel uses to determine
 // where in the file a line break occurs.
 func (x *IOChannel) SetLineTerm(LineTermVar string, LengthVar int32) {
-
 	xIOChannelSetLineTerm(x.GoPointer(), LineTermVar, LengthVar)
-
 }
 
 var xIOChannelShutdown func(uintptr, bool, **Error) IOStatus
@@ -522,7 +489,6 @@ func (x *IOChannel) Shutdown(FlushVar bool) (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelUnixGetFd func(uintptr) int32
@@ -532,7 +498,6 @@ var xIOChannelUnixGetFd func(uintptr) int32
 // On Windows this function returns the file descriptor or socket of
 // the #GIOChannel.
 func (x *IOChannel) UnixGetFd() int32 {
-
 	cret := xIOChannelUnixGetFd(x.GoPointer())
 	return cret
 }
@@ -541,16 +506,13 @@ var xIOChannelUnref func(uintptr)
 
 // Decrements the reference count of a #GIOChannel.
 func (x *IOChannel) Unref() {
-
 	xIOChannelUnref(x.GoPointer())
-
 }
 
 var xIOChannelWrite func(uintptr, string, uint, uint) IOError
 
 // Writes data to a #GIOChannel.
 func (x *IOChannel) Write(BufVar string, CountVar uint, BytesWrittenVar uint) IOError {
-
 	cret := xIOChannelWrite(x.GoPointer(), BufVar, CountVar, BytesWrittenVar)
 	return cret
 }
@@ -571,7 +533,6 @@ func (x *IOChannel) WriteChars(BufVar []byte, CountVar int, BytesWrittenVar *uin
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOChannelWriteUnichar func(uintptr, uint32, **Error) IOStatus
@@ -586,7 +547,6 @@ func (x *IOChannel) WriteUnichar(ThecharVar uint32) (IOStatus, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // A table of functions used to handle different types of #GIOChannel
@@ -1017,7 +977,6 @@ var xIoAddWatch func(*IOChannel, IOCondition, uintptr, uintptr) uint32
 // Adds the #GIOChannel into the default main loop context
 // with the default priority.
 func IoAddWatch(ChannelVar *IOChannel, ConditionVar IOCondition, FuncVar *IOFunc, UserDataVar uintptr) uint32 {
-
 	cret := xIoAddWatch(ChannelVar, ConditionVar, NewCallback(FuncVar), UserDataVar)
 	return cret
 }
@@ -1031,7 +990,6 @@ var xIoAddWatchFull func(*IOChannel, int32, IOCondition, uintptr, uintptr, uintp
 // and attaches it to the main loop context with g_source_attach().
 // You can do these steps manually if you need greater control.
 func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int32, ConditionVar IOCondition, FuncVar *IOFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, NewCallback(FuncVar), UserDataVar, NewCallback(NotifyVar))
 	return cret
 }
@@ -1040,7 +998,6 @@ var xIoChannelErrorFromErrno func(int32) IOChannelError
 
 // Converts an `errno` error number to a #GIOChannelError.
 func IoChannelErrorFromErrno(EnVar int32) IOChannelError {
-
 	cret := xIoChannelErrorFromErrno(EnVar)
 	return cret
 }
@@ -1062,7 +1019,6 @@ var xIoCreateWatch func(*IOChannel, IOCondition) *Source
 // puts the socket in non-blocking mode. This is a side-effect of the
 // implementation and unavoidable.
 func IoCreateWatch(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
-
 	cret := xIoCreateWatch(ChannelVar, ConditionVar)
 	return cret
 }
@@ -1122,5 +1078,4 @@ func init() {
 	core.PuregoSafeRegister(&xIOChannelWrite, libs, "g_io_channel_write")
 	core.PuregoSafeRegister(&xIOChannelWriteChars, libs, "g_io_channel_write_chars")
 	core.PuregoSafeRegister(&xIOChannelWriteUnichar, libs, "g_io_channel_write_unichar")
-
 }

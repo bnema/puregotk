@@ -251,7 +251,6 @@ func (x *AsyncResultBase) GetSourceObject() *gobject.Object {
 
 // Gets the user data from a [iface@Gio.AsyncResult].
 func (x *AsyncResultBase) GetUserData() uintptr {
-
 	cret := XGAsyncResultGetUserData(x.GoPointer())
 	return cret
 }
@@ -259,7 +258,6 @@ func (x *AsyncResultBase) GetUserData() uintptr {
 // Checks if @res has the given @source_tag (generally a function
 // pointer indicating the function @res was created by).
 func (x *AsyncResultBase) IsTagged(SourceTagVar uintptr) bool {
-
 	cret := XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
 	return cret
 }
@@ -282,13 +280,14 @@ func (x *AsyncResultBase) LegacyPropagateError() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGAsyncResultGetSourceObject func(uintptr) uintptr
-var XGAsyncResultGetUserData func(uintptr) uintptr
-var XGAsyncResultIsTagged func(uintptr, uintptr) bool
-var XGAsyncResultLegacyPropagateError func(uintptr) bool
+var (
+	XGAsyncResultGetSourceObject      func(uintptr) uintptr
+	XGAsyncResultGetUserData          func(uintptr) uintptr
+	XGAsyncResultIsTagged             func(uintptr, uintptr) bool
+	XGAsyncResultLegacyPropagateError func(uintptr) bool
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -308,5 +307,4 @@ func init() {
 	core.PuregoSafeRegister(&XGAsyncResultGetUserData, libs, "g_async_result_get_user_data")
 	core.PuregoSafeRegister(&XGAsyncResultIsTagged, libs, "g_async_result_is_tagged")
 	core.PuregoSafeRegister(&XGAsyncResultLegacyPropagateError, libs, "g_async_result_legacy_propagate_error")
-
 }

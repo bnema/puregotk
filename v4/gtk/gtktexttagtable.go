@@ -81,7 +81,6 @@ var xTextTagTableAdd func(uintptr, uintptr) bool
 // @tag must not be in a tag table already, and may not have
 // the same name as an already-added tag.
 func (x *TextTagTable) Add(TagVar *TextTag) bool {
-
 	cret := xTextTagTableAdd(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -93,16 +92,13 @@ var xTextTagTableForeach func(uintptr, uintptr, uintptr)
 // Note that the table may not be modified while iterating
 // over it (you can’t add/remove tags).
 func (x *TextTagTable) Foreach(FuncVar *TextTagTableForeach, DataVar uintptr) {
-
 	xTextTagTableForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
-
 }
 
 var xTextTagTableGetSize func(uintptr) int32
 
 // Returns the size of the table (number of tags)
 func (x *TextTagTable) GetSize() int32 {
-
 	cret := xTextTagTableGetSize(x.GoPointer())
 	return cret
 }
@@ -133,9 +129,7 @@ var xTextTagTableRemove func(uintptr, uintptr)
 // removed, so the tag will end up destroyed if you don’t have
 // a reference to it.
 func (x *TextTagTable) Remove(TagVar *TextTag) {
-
 	xTextTagTableRemove(x.GoPointer(), TagVar.GoPointer())
-
 }
 
 func (c *TextTagTable) GoPointer() uintptr {
@@ -162,7 +156,6 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, TagVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -182,7 +175,6 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 		cbFn := *cb
 
 		cbFn(fa, TagVarp, SizeChangedVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -205,7 +197,6 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32
 		cbFn := *cb
 
 		cbFn(fa, TagVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -217,7 +208,6 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TextTagTable) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -243,5 +233,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextTagTableGetSize, libs, "gtk_text_tag_table_get_size")
 	core.PuregoSafeRegister(&xTextTagTableLookup, libs, "gtk_text_tag_table_lookup")
 	core.PuregoSafeRegister(&xTextTagTableRemove, libs, "gtk_text_tag_table_remove")
-
 }

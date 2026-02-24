@@ -75,9 +75,7 @@ var xTextIterAssign func(uintptr, *TextIter)
 //
 // The function is used by language bindings.
 func (x *TextIter) Assign(OtherVar *TextIter) {
-
 	xTextIterAssign(x.GoPointer(), OtherVar)
-
 }
 
 var xTextIterBackwardChar func(uintptr) bool
@@ -88,7 +86,6 @@ var xTextIterBackwardChar func(uintptr) bool
 // in the buffer (character offset 0), this function returns %FALSE
 // for convenience when writing loops.
 func (x *TextIter) BackwardChar() bool {
-
 	cret := xTextIterBackwardChar(x.GoPointer())
 	return cret
 }
@@ -105,7 +102,6 @@ var xTextIterBackwardChars func(uintptr, int32) bool
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE.
 func (x *TextIter) BackwardChars(CountVar int32) bool {
-
 	cret := xTextIterBackwardChars(x.GoPointer(), CountVar)
 	return cret
 }
@@ -114,7 +110,6 @@ var xTextIterBackwardCursorPosition func(uintptr) bool
 
 // Like [method@Gtk.TextIter.forward_cursor_position], but moves backward.
 func (x *TextIter) BackwardCursorPosition() bool {
-
 	cret := xTextIterBackwardCursorPosition(x.GoPointer())
 	return cret
 }
@@ -125,7 +120,6 @@ var xTextIterBackwardCursorPositions func(uintptr, int32) bool
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
 func (x *TextIter) BackwardCursorPositions(CountVar int32) bool {
-
 	cret := xTextIterBackwardCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -135,7 +129,6 @@ var xTextIterBackwardFindChar func(uintptr, uintptr, uintptr, *TextIter) bool
 // Same as [method@Gtk.TextIter.forward_find_char],
 // but goes backward from @iter.
 func (x *TextIter) BackwardFindChar(PredVar *TextCharPredicate, UserDataVar uintptr, LimitVar *TextIter) bool {
-
 	cret := xTextIterBackwardFindChar(x.GoPointer(), glib.NewCallback(PredVar), UserDataVar, LimitVar)
 	return cret
 }
@@ -152,7 +145,6 @@ var xTextIterBackwardLine func(uintptr) bool
 // in a loop calling this function, the line number may not change on
 // every iteration, if your first iteration is on line 0.)
 func (x *TextIter) BackwardLine() bool {
-
 	cret := xTextIterBackwardLine(x.GoPointer())
 	return cret
 }
@@ -170,7 +162,6 @@ var xTextIterBackwardLines func(uintptr, int32) bool
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves forward by 0 - @count lines.
 func (x *TextIter) BackwardLines(CountVar int32) bool {
-
 	cret := xTextIterBackwardLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -182,7 +173,6 @@ var xTextIterBackwardSearch func(uintptr, string, TextSearchFlags, *TextIter, *T
 // @match_end will never be set to a `GtkTextIter` located after @iter,
 // even if there is a possible @match_start before or at @iter.
 func (x *TextIter) BackwardSearch(StrVar string, FlagsVar TextSearchFlags, MatchStartVar *TextIter, MatchEndVar *TextIter, LimitVar *TextIter) bool {
-
 	cret := xTextIterBackwardSearch(x.GoPointer(), StrVar, FlagsVar, MatchStartVar, MatchEndVar, LimitVar)
 	return cret
 }
@@ -197,7 +187,6 @@ var xTextIterBackwardSentenceStart func(uintptr) bool
 // Sentence boundaries are determined by Pango and should
 // be correct for nearly any language.
 func (x *TextIter) BackwardSentenceStart() bool {
-
 	cret := xTextIterBackwardSentenceStart(x.GoPointer())
 	return cret
 }
@@ -208,7 +197,6 @@ var xTextIterBackwardSentenceStarts func(uintptr, int32) bool
 //
 // If @count is negative, moves forward instead of backward.
 func (x *TextIter) BackwardSentenceStarts(CountVar int32) bool {
-
 	cret := xTextIterBackwardSentenceStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -225,7 +213,6 @@ var xTextIterBackwardToTagToggle func(uintptr, uintptr) bool
 // to the location of the toggle, or the start of the buffer
 // if no toggle is found.
 func (x *TextIter) BackwardToTagToggle(TagVar *TextTag) bool {
-
 	cret := xTextIterBackwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -236,7 +223,6 @@ var xTextIterBackwardVisibleCursorPosition func(uintptr) bool
 //
 // See [method@Gtk.TextIter.backward_cursor_position] for details.
 func (x *TextIter) BackwardVisibleCursorPosition() bool {
-
 	cret := xTextIterBackwardVisibleCursorPosition(x.GoPointer())
 	return cret
 }
@@ -247,7 +233,6 @@ var xTextIterBackwardVisibleCursorPositions func(uintptr, int32) bool
 //
 // See [method@Gtk.TextIter.backward_cursor_position] for details.
 func (x *TextIter) BackwardVisibleCursorPositions(CountVar int32) bool {
-
 	cret := xTextIterBackwardVisibleCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -264,7 +249,6 @@ var xTextIterBackwardVisibleLine func(uintptr) bool
 // in a loop calling this function, the line number may not change on
 // every iteration, if your first iteration is on line 0.)
 func (x *TextIter) BackwardVisibleLine() bool {
-
 	cret := xTextIterBackwardVisibleLine(x.GoPointer())
 	return cret
 }
@@ -282,7 +266,6 @@ var xTextIterBackwardVisibleLines func(uintptr, int32) bool
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves forward by 0 - @count lines.
 func (x *TextIter) BackwardVisibleLines(CountVar int32) bool {
-
 	cret := xTextIterBackwardVisibleLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -297,7 +280,6 @@ var xTextIterBackwardVisibleWordStart func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language.
 func (x *TextIter) BackwardVisibleWordStart() bool {
-
 	cret := xTextIterBackwardVisibleWordStart(x.GoPointer())
 	return cret
 }
@@ -306,7 +288,6 @@ var xTextIterBackwardVisibleWordStarts func(uintptr, int32) bool
 
 // Calls [method@Gtk.TextIter.backward_visible_word_start] up to @count times.
 func (x *TextIter) BackwardVisibleWordStarts(CountVar int32) bool {
-
 	cret := xTextIterBackwardVisibleWordStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -321,7 +302,6 @@ var xTextIterBackwardWordStart func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language
 func (x *TextIter) BackwardWordStart() bool {
-
 	cret := xTextIterBackwardWordStart(x.GoPointer())
 	return cret
 }
@@ -330,7 +310,6 @@ var xTextIterBackwardWordStarts func(uintptr, int32) bool
 
 // Calls [method@Gtk.TextIter.backward_word_start] up to @count times.
 func (x *TextIter) BackwardWordStarts(CountVar int32) bool {
-
 	cret := xTextIterBackwardWordStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -346,7 +325,6 @@ var xTextIterCanInsert func(uintptr, bool) bool
 // [method@Gtk.TextBuffer.insert_interactive] uses this function
 // to decide whether insertions are allowed at a given position.
 func (x *TextIter) CanInsert(DefaultEditabilityVar bool) bool {
-
 	cret := xTextIterCanInsert(x.GoPointer(), DefaultEditabilityVar)
 	return cret
 }
@@ -359,7 +337,6 @@ var xTextIterCompare func(uintptr, *TextIter) int32
 // Ordering is in character offset order, i.e. the first character
 // in the buffer is less than the second character in the buffer.
 func (x *TextIter) Compare(RhsVar *TextIter) int32 {
-
 	cret := xTextIterCompare(x.GoPointer(), RhsVar)
 	return cret
 }
@@ -374,7 +351,6 @@ var xTextIterCopy func(uintptr) *TextIter
 //
 // The function is used by language bindings.
 func (x *TextIter) Copy() *TextIter {
-
 	cret := xTextIterCopy(x.GoPointer())
 	return cret
 }
@@ -395,7 +371,6 @@ var xTextIterEditable func(uintptr, bool) bool
 // editable range. Use [method@Gtk.TextIter.can_insert] to handle this
 // case.
 func (x *TextIter) Editable(DefaultSettingVar bool) bool {
-
 	cret := xTextIterEditable(x.GoPointer(), DefaultSettingVar)
 	return cret
 }
@@ -414,7 +389,6 @@ var xTextIterEndsLine func(uintptr) bool
 // iterator is considered to be at the end of a line, even though there
 // are no paragraph delimiter chars there.
 func (x *TextIter) EndsLine() bool {
-
 	cret := xTextIterEndsLine(x.GoPointer())
 	return cret
 }
@@ -426,7 +400,6 @@ var xTextIterEndsSentence func(uintptr) bool
 // Sentence boundaries are determined by Pango and should
 // be correct for nearly any language.
 func (x *TextIter) EndsSentence() bool {
-
 	cret := xTextIterEndsSentence(x.GoPointer())
 	return cret
 }
@@ -444,7 +417,6 @@ var xTextIterEndsTag func(uintptr, uintptr) bool
 // returns %TRUE, [method@Gtk.TextIter.has_tag] will return
 // %FALSE for the same parameters.
 func (x *TextIter) EndsTag(TagVar *TextTag) bool {
-
 	cret := xTextIterEndsTag(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -456,7 +428,6 @@ var xTextIterEndsWord func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language.
 func (x *TextIter) EndsWord() bool {
-
 	cret := xTextIterEndsWord(x.GoPointer())
 	return cret
 }
@@ -471,7 +442,6 @@ var xTextIterEqual func(uintptr, *TextIter) bool
 // iterator and comparing the offsets yourself. Also, it’s a
 // bit faster than [method@Gtk.TextIter.compare].
 func (x *TextIter) Equal(RhsVar *TextIter) bool {
-
 	cret := xTextIterEqual(x.GoPointer(), RhsVar)
 	return cret
 }
@@ -486,7 +456,6 @@ var xTextIterForwardChar func(uintptr) bool
 // one character before it, @iter will now point at the end iterator,
 // and this function returns %FALSE for convenience when writing loops.
 func (x *TextIter) ForwardChar() bool {
-
 	cret := xTextIterForwardChar(x.GoPointer())
 	return cret
 }
@@ -503,7 +472,6 @@ var xTextIterForwardChars func(uintptr, int32) bool
 // (the last iterator in the buffer is not dereferenceable). If @count
 // is 0, the function does nothing and returns %FALSE.
 func (x *TextIter) ForwardChars(CountVar int32) bool {
-
 	cret := xTextIterForwardChars(x.GoPointer(), CountVar)
 	return cret
 }
@@ -526,7 +494,6 @@ var xTextIterForwardCursorPosition func(uintptr) bool
 // See also the [struct@Pango.LogAttr] struct and the [func@Pango.break]
 // function.
 func (x *TextIter) ForwardCursorPosition() bool {
-
 	cret := xTextIterForwardCursorPosition(x.GoPointer())
 	return cret
 }
@@ -537,7 +504,6 @@ var xTextIterForwardCursorPositions func(uintptr, int32) bool
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
 func (x *TextIter) ForwardCursorPositions(CountVar int32) bool {
-
 	cret := xTextIterForwardCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -550,7 +516,6 @@ var xTextIterForwardFindChar func(uintptr, uintptr, uintptr, *TextIter) bool
 // If @pred never returns %TRUE, @iter is set to @limit if
 // @limit is non-%NULL, otherwise to the end iterator.
 func (x *TextIter) ForwardFindChar(PredVar *TextCharPredicate, UserDataVar uintptr, LimitVar *TextIter) bool {
-
 	cret := xTextIterForwardFindChar(x.GoPointer(), glib.NewCallback(PredVar), UserDataVar, LimitVar)
 	return cret
 }
@@ -564,7 +529,6 @@ var xTextIterForwardLine func(uintptr) bool
 // the operation, the iter is at the end of the buffer and not
 // dereferenceable, returns %FALSE. Otherwise, returns %TRUE.
 func (x *TextIter) ForwardLine() bool {
-
 	cret := xTextIterForwardLine(x.GoPointer())
 	return cret
 }
@@ -582,7 +546,6 @@ var xTextIterForwardLines func(uintptr, int32) bool
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves backward by 0 - @count lines.
 func (x *TextIter) ForwardLines(CountVar int32) bool {
-
 	cret := xTextIterForwardLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -600,7 +563,6 @@ var xTextIterForwardSearch func(uintptr, string, TextSearchFlags, *TextIter, *Te
 // @match_start will never be set to a `GtkTextIter` located before @iter,
 // even if there is a possible @match_end after or at @iter.
 func (x *TextIter) ForwardSearch(StrVar string, FlagsVar TextSearchFlags, MatchStartVar *TextIter, MatchEndVar *TextIter, LimitVar *TextIter) bool {
-
 	cret := xTextIterForwardSearch(x.GoPointer(), StrVar, FlagsVar, MatchStartVar, MatchEndVar, LimitVar)
 	return cret
 }
@@ -615,7 +577,6 @@ var xTextIterForwardSentenceEnd func(uintptr) bool
 // Sentence boundaries are determined by Pango and should
 // be correct for nearly any language.
 func (x *TextIter) ForwardSentenceEnd() bool {
-
 	cret := xTextIterForwardSentenceEnd(x.GoPointer())
 	return cret
 }
@@ -626,7 +587,6 @@ var xTextIterForwardSentenceEnds func(uintptr, int32) bool
 //
 // If @count is negative, moves backward instead of forward.
 func (x *TextIter) ForwardSentenceEnds(CountVar int32) bool {
-
 	cret := xTextIterForwardSentenceEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -639,9 +599,7 @@ var xTextIterForwardToEnd func(uintptr)
 // [method@Gtk.TextIter.get_char] called on the end iterator
 // returns 0, which is convenient for writing loops.
 func (x *TextIter) ForwardToEnd() {
-
 	xTextIterForwardToEnd(x.GoPointer())
-
 }
 
 var xTextIterForwardToLineEnd func(uintptr) bool
@@ -658,7 +616,6 @@ var xTextIterForwardToLineEnd func(uintptr) bool
 // not end in paragraph delimiters, moves to the end iterator (end of
 // the last line), and returns %FALSE.
 func (x *TextIter) ForwardToLineEnd() bool {
-
 	cret := xTextIterForwardToLineEnd(x.GoPointer())
 	return cret
 }
@@ -675,7 +632,6 @@ var xTextIterForwardToTagToggle func(uintptr, uintptr) bool
 // the location of the toggle, or to the end of the buffer
 // if no toggle is found.
 func (x *TextIter) ForwardToTagToggle(TagVar *TextTag) bool {
-
 	cret := xTextIterForwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -686,7 +642,6 @@ var xTextIterForwardVisibleCursorPosition func(uintptr) bool
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
 func (x *TextIter) ForwardVisibleCursorPosition() bool {
-
 	cret := xTextIterForwardVisibleCursorPosition(x.GoPointer())
 	return cret
 }
@@ -697,7 +652,6 @@ var xTextIterForwardVisibleCursorPositions func(uintptr, int32) bool
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
 func (x *TextIter) ForwardVisibleCursorPositions(CountVar int32) bool {
-
 	cret := xTextIterForwardVisibleCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -711,7 +665,6 @@ var xTextIterForwardVisibleLine func(uintptr) bool
 // the end of the buffer and is now not dereferenceable, or if @iter was
 // already at the end of the buffer.
 func (x *TextIter) ForwardVisibleLine() bool {
-
 	cret := xTextIterForwardVisibleLine(x.GoPointer())
 	return cret
 }
@@ -729,7 +682,6 @@ var xTextIterForwardVisibleLines func(uintptr, int32) bool
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves backward by 0 - @count lines.
 func (x *TextIter) ForwardVisibleLines(CountVar int32) bool {
-
 	cret := xTextIterForwardVisibleLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -744,7 +696,6 @@ var xTextIterForwardVisibleWordEnd func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language
 func (x *TextIter) ForwardVisibleWordEnd() bool {
-
 	cret := xTextIterForwardVisibleWordEnd(x.GoPointer())
 	return cret
 }
@@ -753,7 +704,6 @@ var xTextIterForwardVisibleWordEnds func(uintptr, int32) bool
 
 // Calls [method@Gtk.TextIter.forward_visible_word_end] up to @count times.
 func (x *TextIter) ForwardVisibleWordEnds(CountVar int32) bool {
-
 	cret := xTextIterForwardVisibleWordEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -768,7 +718,6 @@ var xTextIterForwardWordEnd func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language.
 func (x *TextIter) ForwardWordEnd() bool {
-
 	cret := xTextIterForwardWordEnd(x.GoPointer())
 	return cret
 }
@@ -777,7 +726,6 @@ var xTextIterForwardWordEnds func(uintptr, int32) bool
 
 // Calls [method@Gtk.TextIter.forward_word_end] up to @count times.
 func (x *TextIter) ForwardWordEnds(CountVar int32) bool {
-
 	cret := xTextIterForwardWordEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -790,9 +738,7 @@ var xTextIterFree func(uintptr)
 // and is not especially useful for applications, because
 // iterators can simply be allocated on the stack.
 func (x *TextIter) Free() {
-
 	xTextIterFree(x.GoPointer())
-
 }
 
 var xTextIterGetBuffer func(uintptr) uintptr
@@ -817,7 +763,6 @@ var xTextIterGetBytesInLine func(uintptr) int32
 // Returns the number of bytes in the line containing @iter,
 // including the paragraph delimiters.
 func (x *TextIter) GetBytesInLine() int32 {
-
 	cret := xTextIterGetBytesInLine(x.GoPointer())
 	return cret
 }
@@ -834,7 +779,6 @@ var xTextIterGetChar func(uintptr) uint32
 //
 // So you can write a loop which ends when this function returns 0.
 func (x *TextIter) GetChar() uint32 {
-
 	cret := xTextIterGetChar(x.GoPointer())
 	return cret
 }
@@ -844,7 +788,6 @@ var xTextIterGetCharsInLine func(uintptr) int32
 // Returns the number of characters in the line containing @iter,
 // including the paragraph delimiters.
 func (x *TextIter) GetCharsInLine() int32 {
-
 	cret := xTextIterGetCharsInLine(x.GoPointer())
 	return cret
 }
@@ -876,7 +819,6 @@ var xTextIterGetLanguage func(uintptr) *pango.Language
 // If no tags affecting language apply to @iter, the return
 // value is identical to that of [func@Gtk.get_default_language].
 func (x *TextIter) GetLanguage() *pango.Language {
-
 	cret := xTextIterGetLanguage(x.GoPointer())
 	return cret
 }
@@ -888,7 +830,6 @@ var xTextIterGetLine func(uintptr) int32
 // Lines in a `GtkTextBuffer` are numbered beginning
 // with 0 for the first line in the buffer.
 func (x *TextIter) GetLine() int32 {
-
 	cret := xTextIterGetLine(x.GoPointer())
 	return cret
 }
@@ -902,7 +843,6 @@ var xTextIterGetLineIndex func(uintptr) int32
 // UTF-8, and that characters can require a variable
 // number of bytes to represent.
 func (x *TextIter) GetLineIndex() int32 {
-
 	cret := xTextIterGetLineIndex(x.GoPointer())
 	return cret
 }
@@ -914,7 +854,6 @@ var xTextIterGetLineOffset func(uintptr) int32
 //
 // The first character on the line has offset 0.
 func (x *TextIter) GetLineOffset() int32 {
-
 	cret := xTextIterGetLineOffset(x.GoPointer())
 	return cret
 }
@@ -929,7 +868,6 @@ var xTextIterGetMarks func(uintptr) *glib.SList
 //
 // The returned list is not in any meaningful order.
 func (x *TextIter) GetMarks() *glib.SList {
-
 	cret := xTextIterGetMarks(x.GoPointer())
 	return cret
 }
@@ -943,7 +881,6 @@ var xTextIterGetOffset func(uintptr) int32
 // Use [method@Gtk.TextBuffer.get_iter_at_offset] to convert
 // an offset back into an iterator.
 func (x *TextIter) GetOffset() int32 {
-
 	cret := xTextIterGetOffset(x.GoPointer())
 	return cret
 }
@@ -980,7 +917,6 @@ var xTextIterGetSlice func(uintptr, *TextIter) string
 // text as well, so it is not a reliable indicator that a paintable or
 // widget is in the buffer.
 func (x *TextIter) GetSlice(EndVar *TextIter) string {
-
 	cret := xTextIterGetSlice(x.GoPointer(), EndVar)
 	return cret
 }
@@ -995,7 +931,6 @@ var xTextIterGetTags func(uintptr) *glib.SList
 // The `GtkTextTag`s in the list don’t have a reference added,
 // but you have to free the list itself.
 func (x *TextIter) GetTags() *glib.SList {
-
 	cret := xTextIterGetTags(x.GoPointer())
 	return cret
 }
@@ -1010,7 +945,6 @@ var xTextIterGetText func(uintptr, *TextIter) string
 // byte offsets in the buffer. If you want offsets to correspond, see
 // [method@Gtk.TextIter.get_slice].
 func (x *TextIter) GetText(EndVar *TextIter) string {
-
 	cret := xTextIterGetText(x.GoPointer(), EndVar)
 	return cret
 }
@@ -1026,7 +960,6 @@ var xTextIterGetToggledTags func(uintptr, bool) *glib.SList
 // a tag is toggled off, then some non-empty range following @iter
 // does not have the tag applied to it.
 func (x *TextIter) GetToggledTags(ToggledOnVar bool) *glib.SList {
-
 	cret := xTextIterGetToggledTags(x.GoPointer(), ToggledOnVar)
 	return cret
 }
@@ -1038,7 +971,6 @@ var xTextIterGetVisibleLineIndex func(uintptr) int32
 // are invisible due to tags with the “invisible” flag
 // toggled on.
 func (x *TextIter) GetVisibleLineIndex() int32 {
-
 	cret := xTextIterGetVisibleLineIndex(x.GoPointer())
 	return cret
 }
@@ -1050,7 +982,6 @@ var xTextIterGetVisibleLineOffset func(uintptr) int32
 // are invisible due to tags with the “invisible” flag
 // toggled on.
 func (x *TextIter) GetVisibleLineOffset() int32 {
-
 	cret := xTextIterGetVisibleLineOffset(x.GoPointer())
 	return cret
 }
@@ -1064,7 +995,6 @@ var xTextIterGetVisibleSlice func(uintptr, *TextIter) string
 // a `GtkTextTag` with the “invisible” attribute turned on has
 // been applied to it.
 func (x *TextIter) GetVisibleSlice(EndVar *TextIter) string {
-
 	cret := xTextIterGetVisibleSlice(x.GoPointer(), EndVar)
 	return cret
 }
@@ -1078,7 +1008,6 @@ var xTextIterGetVisibleText func(uintptr, *TextIter) string
 // a `GtkTextTag` with the “invisible” attribute turned on has
 // been applied to it.
 func (x *TextIter) GetVisibleText(EndVar *TextIter) string {
-
 	cret := xTextIterGetVisibleText(x.GoPointer(), EndVar)
 	return cret
 }
@@ -1091,7 +1020,6 @@ var xTextIterHasTag func(uintptr, uintptr) bool
 // See also [method@Gtk.TextIter.starts_tag] and
 // [method@Gtk.TextIter.ends_tag].
 func (x *TextIter) HasTag(TagVar *TextTag) bool {
-
 	cret := xTextIterHasTag(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -1102,7 +1030,6 @@ var xTextIterInRange func(uintptr, *TextIter, *TextIter) bool
 //
 // @start and @end must be in ascending order.
 func (x *TextIter) InRange(StartVar *TextIter, EndVar *TextIter) bool {
-
 	cret := xTextIterInRange(x.GoPointer(), StartVar, EndVar)
 	return cret
 }
@@ -1116,7 +1043,6 @@ var xTextIterInsideSentence func(uintptr) bool
 // Sentence boundaries are determined by Pango and should be correct
 // for nearly any language.
 func (x *TextIter) InsideSentence() bool {
-
 	cret := xTextIterInsideSentence(x.GoPointer())
 	return cret
 }
@@ -1133,7 +1059,6 @@ var xTextIterInsideWord func(uintptr) bool
 // then this function returns %TRUE too, since @iter points to
 // the first character of the word.
 func (x *TextIter) InsideWord() bool {
-
 	cret := xTextIterInsideWord(x.GoPointer())
 	return cret
 }
@@ -1146,7 +1071,6 @@ var xTextIterIsCursorPosition func(uintptr) bool
 // [struct@Pango.LogAttr] or [func@Pango.break] for details
 // on what a cursor position is.
 func (x *TextIter) IsCursorPosition() bool {
-
 	cret := xTextIterIsCursorPosition(x.GoPointer())
 	return cret
 }
@@ -1159,7 +1083,6 @@ var xTextIterIsEnd func(uintptr) bool
 // in the buffer. [method@Gtk.TextIter.is_end] is the most efficient
 // way to check whether an iterator is the end iterator.
 func (x *TextIter) IsEnd() bool {
-
 	cret := xTextIterIsEnd(x.GoPointer())
 	return cret
 }
@@ -1168,7 +1091,6 @@ var xTextIterIsStart func(uintptr) bool
 
 // Returns %TRUE if @iter is the first iterator in the buffer.
 func (x *TextIter) IsStart() bool {
-
 	cret := xTextIterIsStart(x.GoPointer())
 	return cret
 }
@@ -1185,9 +1107,7 @@ var xTextIterOrder func(uintptr, *TextIter)
 // such as [method@Gtk.TextIter.in_range], that expect a
 // pre-sorted range.
 func (x *TextIter) Order(SecondVar *TextIter) {
-
 	xTextIterOrder(x.GoPointer(), SecondVar)
-
 }
 
 var xTextIterSetLine func(uintptr, int32)
@@ -1197,9 +1117,7 @@ var xTextIterSetLine func(uintptr, int32)
 // If @line_number is negative or larger than or equal to the number of lines
 // in the buffer, moves @iter to the start of the last line in the buffer.
 func (x *TextIter) SetLine(LineNumberVar int32) {
-
 	xTextIterSetLine(x.GoPointer(), LineNumberVar)
-
 }
 
 var xTextIterSetLineIndex func(uintptr, int32)
@@ -1209,9 +1127,7 @@ var xTextIterSetLineIndex func(uintptr, int32)
 // the start of a character, it can’t be in the middle of a UTF-8
 // encoded character.
 func (x *TextIter) SetLineIndex(ByteOnLineVar int32) {
-
 	xTextIterSetLineIndex(x.GoPointer(), ByteOnLineVar)
-
 }
 
 var xTextIterSetLineOffset func(uintptr, int32)
@@ -1223,9 +1139,7 @@ var xTextIterSetLineOffset func(uintptr, int32)
 // next line. See [method@Gtk.TextIter.set_line_index] if you have a byte
 // index rather than a character offset.
 func (x *TextIter) SetLineOffset(CharOnLineVar int32) {
-
 	xTextIterSetLineOffset(x.GoPointer(), CharOnLineVar)
-
 }
 
 var xTextIterSetOffset func(uintptr, int32)
@@ -1235,9 +1149,7 @@ var xTextIterSetOffset func(uintptr, int32)
 // @char_offset counts from the start
 // of the entire text buffer, starting with 0.
 func (x *TextIter) SetOffset(CharOffsetVar int32) {
-
 	xTextIterSetOffset(x.GoPointer(), CharOffsetVar)
-
 }
 
 var xTextIterSetVisibleLineIndex func(uintptr, int32)
@@ -1246,9 +1158,7 @@ var xTextIterSetVisibleLineIndex func(uintptr, int32)
 // bytes, i.e. text with a tag making it invisible is not counted
 // in the index.
 func (x *TextIter) SetVisibleLineIndex(ByteOnLineVar int32) {
-
 	xTextIterSetVisibleLineIndex(x.GoPointer(), ByteOnLineVar)
-
 }
 
 var xTextIterSetVisibleLineOffset func(uintptr, int32)
@@ -1257,9 +1167,7 @@ var xTextIterSetVisibleLineOffset func(uintptr, int32)
 // characters, i.e. text with a tag making it invisible is not
 // counted in the offset.
 func (x *TextIter) SetVisibleLineOffset(CharOnLineVar int32) {
-
 	xTextIterSetVisibleLineOffset(x.GoPointer(), CharOnLineVar)
-
 }
 
 var xTextIterStartsLine func(uintptr) bool
@@ -1272,7 +1180,6 @@ var xTextIterStartsLine func(uintptr) bool
 // it doesn’t have to compute the offset, it just has to see
 // whether it’s 0.
 func (x *TextIter) StartsLine() bool {
-
 	cret := xTextIterStartsLine(x.GoPointer())
 	return cret
 }
@@ -1284,7 +1191,6 @@ var xTextIterStartsSentence func(uintptr) bool
 // Sentence boundaries are determined by Pango and
 // should be correct for nearly any language.
 func (x *TextIter) StartsSentence() bool {
-
 	cret := xTextIterStartsSentence(x.GoPointer())
 	return cret
 }
@@ -1302,7 +1208,6 @@ var xTextIterStartsTag func(uintptr, uintptr) bool
 // this function returns %TRUE, [method@Gtk.TextIter.has_tag]
 // will also return %TRUE for the same parameters.
 func (x *TextIter) StartsTag(TagVar *TextTag) bool {
-
 	cret := xTextIterStartsTag(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -1314,7 +1219,6 @@ var xTextIterStartsWord func(uintptr) bool
 // Word breaks are determined by Pango and should be correct
 // for nearly any language.
 func (x *TextIter) StartsWord() bool {
-
 	cret := xTextIterStartsWord(x.GoPointer())
 	return cret
 }
@@ -1327,7 +1231,6 @@ var xTextIterTogglesTag func(uintptr, uintptr) bool
 // This is equivalent to (gtk_text_iter_starts_tag() ||
 // gtk_text_iter_ends_tag())
 func (x *TextIter) TogglesTag(TagVar *TextTag) bool {
-
 	cret := xTextIterTogglesTag(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -1464,5 +1367,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextIterStartsTag, libs, "gtk_text_iter_starts_tag")
 	core.PuregoSafeRegister(&xTextIterStartsWord, libs, "gtk_text_iter_starts_word")
 	core.PuregoSafeRegister(&xTextIterTogglesTag, libs, "gtk_text_iter_toggles_tag")
-
 }

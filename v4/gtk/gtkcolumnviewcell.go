@@ -73,7 +73,6 @@ var xColumnViewCellGetFocusable func(uintptr) bool
 // Checks if a list item has been set to be focusable via
 // gtk_column_view_cell_set_focusable().
 func (x *ColumnViewCell) GetFocusable() bool {
-
 	cret := xColumnViewCellGetFocusable(x.GoPointer())
 	return cret
 }
@@ -103,7 +102,6 @@ var xColumnViewCellGetPosition func(uintptr) uint32
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ColumnViewCell) GetPosition() uint32 {
-
 	cret := xColumnViewCellGetPosition(x.GoPointer())
 	return cret
 }
@@ -115,7 +113,6 @@ var xColumnViewCellGetSelected func(uintptr) bool
 // The selected state is maintained by the list widget and its model
 // and cannot be set otherwise.
 func (x *ColumnViewCell) GetSelected() bool {
-
 	cret := xColumnViewCellGetSelected(x.GoPointer())
 	return cret
 }
@@ -128,9 +125,7 @@ var xColumnViewCellSetChild func(uintptr, uintptr)
 // setting up a listitem so that the widget can be reused when
 // binding it multiple times.
 func (x *ColumnViewCell) SetChild(ChildVar *Widget) {
-
 	xColumnViewCellSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xColumnViewCellSetFocusable func(uintptr, bool)
@@ -145,9 +140,7 @@ var xColumnViewCellSetFocusable func(uintptr, bool)
 //
 // By default, list items are focusable.
 func (x *ColumnViewCell) SetFocusable(FocusableVar bool) {
-
 	xColumnViewCellSetFocusable(x.GoPointer(), FocusableVar)
-
 }
 
 func (c *ColumnViewCell) GoPointer() uintptr {
@@ -215,5 +208,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewCellGetSelected, libs, "gtk_column_view_cell_get_selected")
 	core.PuregoSafeRegister(&xColumnViewCellSetChild, libs, "gtk_column_view_cell_set_child")
 	core.PuregoSafeRegister(&xColumnViewCellSetFocusable, libs, "gtk_column_view_cell_set_focusable")
-
 }

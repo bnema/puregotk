@@ -342,9 +342,7 @@ var xContentProviderContentChanged func(uintptr)
 
 // Emits the ::content-changed signal.
 func (x *ContentProvider) ContentChanged() {
-
 	xContentProviderContentChanged(x.GoPointer())
-
 }
 
 var xContentProviderGetValue func(uintptr, *gobject.Value, **glib.Error) bool
@@ -364,14 +362,12 @@ func (x *ContentProvider) GetValue(ValueVar *gobject.Value) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xContentProviderRefFormats func(uintptr) *ContentFormats
 
 // Gets the formats that the provider can provide its current contents in.
 func (x *ContentProvider) RefFormats() *ContentFormats {
-
 	cret := xContentProviderRefFormats(x.GoPointer())
 	return cret
 }
@@ -385,7 +381,6 @@ var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
 //
 // This can be assumed to be a subset of [method@Gdk.ContentProvider.ref_formats].
 func (x *ContentProvider) RefStorableFormats() *ContentFormats {
-
 	cret := xContentProviderRefStorableFormats(x.GoPointer())
 	return cret
 }
@@ -401,9 +396,7 @@ var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int32, uin
 //
 // The given @stream will not be closed.
 func (x *ContentProvider) WriteMimeTypeAsync(MimeTypeVar string, StreamVar *gio.OutputStream, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xContentProviderWriteMimeTypeAsync(x.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xContentProviderWriteMimeTypeFinish func(uintptr, uintptr, **glib.Error) bool
@@ -419,7 +412,6 @@ func (x *ContentProvider) WriteMimeTypeFinish(ResultVar gio.AsyncResult) (bool, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *ContentProvider) GoPointer() uintptr {
@@ -462,7 +454,6 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -494,5 +485,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentProviderRefStorableFormats, libs, "gdk_content_provider_ref_storable_formats")
 	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeAsync, libs, "gdk_content_provider_write_mime_type_async")
 	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeFinish, libs, "gdk_content_provider_write_mime_type_finish")
-
 }

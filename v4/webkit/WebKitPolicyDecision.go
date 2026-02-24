@@ -260,9 +260,7 @@ var xPolicyDecisionDownload func(uintptr)
 
 // Spawn a download from this decision.
 func (x *PolicyDecision) Download() {
-
 	xPolicyDecisionDownload(x.GoPointer())
-
 }
 
 var xPolicyDecisionIgnore func(uintptr)
@@ -272,18 +270,14 @@ var xPolicyDecisionIgnore func(uintptr)
 // Ignore the action which triggered this decision. For instance, for a
 // #WebKitResponsePolicyDecision, this would cancel the request.
 func (x *PolicyDecision) Ignore() {
-
 	xPolicyDecisionIgnore(x.GoPointer())
-
 }
 
 var xPolicyDecisionUse func(uintptr)
 
 // Accept the action which triggered this decision.
 func (x *PolicyDecision) Use() {
-
 	xPolicyDecisionUse(x.GoPointer())
-
 }
 
 var xPolicyDecisionUseWithPolicies func(uintptr, uintptr)
@@ -298,9 +292,7 @@ var xPolicyDecisionUseWithPolicies func(uintptr, uintptr)
 // be accepted under the priviso no movies are allowed to autoplay. The
 // autoplay policy in this case would be set in the @policies.
 func (x *PolicyDecision) UseWithPolicies(PoliciesVar *WebsitePolicies) {
-
 	xPolicyDecisionUseWithPolicies(x.GoPointer(), PoliciesVar.GoPointer())
-
 }
 
 func (c *PolicyDecision) GoPointer() uintptr {

@@ -38,7 +38,6 @@ var xPlaneAlloc func() *Plane
 //
 // The contents of the returned structure are undefined.
 func PlaneAlloc() *Plane {
-
 	cret := xPlaneAlloc()
 	return cret
 }
@@ -47,7 +46,6 @@ var xPlaneDistance func(uintptr, *Point3D) float32
 
 // Computes the distance of @point from a #graphene_plane_t.
 func (x *Plane) Distance(PointVar *Point3D) float32 {
-
 	cret := xPlaneDistance(x.GoPointer(), PointVar)
 	return cret
 }
@@ -56,7 +54,6 @@ var xPlaneEqual func(uintptr, *Plane) bool
 
 // Checks whether the two given #graphene_plane_t are equal.
 func (x *Plane) Equal(BVar *Plane) bool {
-
 	cret := xPlaneEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -65,9 +62,7 @@ var xPlaneFree func(uintptr)
 
 // Frees the resources allocated by graphene_plane_alloc().
 func (x *Plane) Free() {
-
 	xPlaneFree(x.GoPointer())
-
 }
 
 var xPlaneGetConstant func(uintptr) float32
@@ -75,7 +70,6 @@ var xPlaneGetConstant func(uintptr) float32
 // Retrieves the distance along the normal vector of the
 // given #graphene_plane_t from the origin.
 func (x *Plane) GetConstant() float32 {
-
 	cret := xPlaneGetConstant(x.GoPointer())
 	return cret
 }
@@ -85,9 +79,7 @@ var xPlaneGetNormal func(uintptr, *Vec3)
 // Retrieves the normal vector pointing towards the origin of the
 // given #graphene_plane_t.
 func (x *Plane) GetNormal(NormalVar *Vec3) {
-
 	xPlaneGetNormal(x.GoPointer(), NormalVar)
-
 }
 
 var xPlaneInit func(uintptr, *Vec3, float32) *Plane
@@ -95,7 +87,6 @@ var xPlaneInit func(uintptr, *Vec3, float32) *Plane
 // Initializes the given #graphene_plane_t using the given @normal vector
 // and @constant values.
 func (x *Plane) Init(NormalVar *Vec3, ConstantVar float32) *Plane {
-
 	cret := xPlaneInit(x.GoPointer(), NormalVar, ConstantVar)
 	return cret
 }
@@ -105,7 +96,6 @@ var xPlaneInitFromPlane func(uintptr, *Plane) *Plane
 // Initializes the given #graphene_plane_t using the normal
 // vector and constant of another #graphene_plane_t.
 func (x *Plane) InitFromPlane(SrcVar *Plane) *Plane {
-
 	cret := xPlaneInitFromPlane(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -115,7 +105,6 @@ var xPlaneInitFromPoint func(uintptr, *Vec3, *Point3D) *Plane
 // Initializes the given #graphene_plane_t using the given normal vector
 // and an arbitrary co-planar point.
 func (x *Plane) InitFromPoint(NormalVar *Vec3, PointVar *Point3D) *Plane {
-
 	cret := xPlaneInitFromPoint(x.GoPointer(), NormalVar, PointVar)
 	return cret
 }
@@ -128,7 +117,6 @@ var xPlaneInitFromPoints func(uintptr, *Point3D, *Point3D, *Point3D) *Plane
 // The winding order is counter-clockwise, and determines which direction
 // the normal vector will point.
 func (x *Plane) InitFromPoints(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Plane {
-
 	cret := xPlaneInitFromPoints(x.GoPointer(), AVar, BVar, CVar)
 	return cret
 }
@@ -138,7 +126,6 @@ var xPlaneInitFromVec4 func(uintptr, *Vec4) *Plane
 // Initializes the given #graphene_plane_t using the components of
 // the given #graphene_vec4_t vector.
 func (x *Plane) InitFromVec4(SrcVar *Vec4) *Plane {
-
 	cret := xPlaneInitFromVec4(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -148,9 +135,7 @@ var xPlaneNegate func(uintptr, *Plane)
 // Negates the normal vector and constant of a #graphene_plane_t, effectively
 // mirroring the plane across the origin.
 func (x *Plane) Negate(ResVar *Plane) {
-
 	xPlaneNegate(x.GoPointer(), ResVar)
-
 }
 
 var xPlaneNormalize func(uintptr, *Plane)
@@ -158,9 +143,7 @@ var xPlaneNormalize func(uintptr, *Plane)
 // Normalizes the vector of the given #graphene_plane_t,
 // and adjusts the constant accordingly.
 func (x *Plane) Normalize(ResVar *Plane) {
-
 	xPlaneNormalize(x.GoPointer(), ResVar)
-
 }
 
 var xPlaneTransform func(uintptr, *Matrix, *Matrix, *Plane)
@@ -174,9 +157,7 @@ var xPlaneTransform func(uintptr, *Matrix, *Matrix, *Plane)
 // the normal matrix beforehand to avoid incurring in the cost of
 // recomputing it every time.
 func (x *Plane) Transform(MatrixVar *Matrix, NormalMatrixVar *Matrix, ResVar *Plane) {
-
 	xPlaneTransform(x.GoPointer(), MatrixVar, NormalMatrixVar, ResVar)
-
 }
 
 func init() {
@@ -208,5 +189,4 @@ func init() {
 	core.PuregoSafeRegister(&xPlaneNegate, libs, "graphene_plane_negate")
 	core.PuregoSafeRegister(&xPlaneNormalize, libs, "graphene_plane_normalize")
 	core.PuregoSafeRegister(&xPlaneTransform, libs, "graphene_plane_transform")
-
 }

@@ -58,7 +58,6 @@ var xNewHmac func(ChecksumType, []byte, uint) *Hmac
 // Support for digests of type %G_CHECKSUM_SHA512 has been added in GLib 2.42.
 // Support for %G_CHECKSUM_SHA384 was added in GLib 2.52.
 func NewHmac(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint) *Hmac {
-
 	cret := xNewHmac(DigestTypeVar, KeyVar, KeyLenVar)
 	return cret
 }
@@ -69,7 +68,6 @@ var xHmacCopy func(uintptr) *Hmac
 // g_hmac_get_string() or g_hmac_get_digest(), the copied
 // HMAC will be closed as well.
 func (x *Hmac) Copy() *Hmac {
-
 	cret := xHmacCopy(x.GoPointer())
 	return cret
 }
@@ -82,9 +80,7 @@ var xHmacGetDigest func(uintptr, []byte, uint)
 // Once this function has been called, the #GHmac is closed and can
 // no longer be updated with g_checksum_update().
 func (x *Hmac) GetDigest(BufferVar []byte, DigestLenVar uint) {
-
 	xHmacGetDigest(x.GoPointer(), BufferVar, DigestLenVar)
-
 }
 
 var xHmacGetString func(uintptr) string
@@ -96,7 +92,6 @@ var xHmacGetString func(uintptr) string
 //
 // The hexadecimal characters will be lower case.
 func (x *Hmac) GetString() string {
-
 	cret := xHmacGetString(x.GoPointer())
 	return cret
 }
@@ -107,7 +102,6 @@ var xHmacRef func(uintptr) *Hmac
 //
 // This function is MT-safe and may be called from any thread.
 func (x *Hmac) Ref() *Hmac {
-
 	cret := xHmacRef(x.GoPointer())
 	return cret
 }
@@ -121,9 +115,7 @@ var xHmacUnref func(uintptr)
 // This function is MT-safe and may be called from any thread.
 // Frees the memory allocated for @hmac.
 func (x *Hmac) Unref() {
-
 	xHmacUnref(x.GoPointer())
-
 }
 
 var xHmacUpdate func(uintptr, []byte, int)
@@ -133,9 +125,7 @@ var xHmacUpdate func(uintptr, []byte, int)
 // The HMAC must still be open, that is g_hmac_get_string() or
 // g_hmac_get_digest() must not have been called on @hmac.
 func (x *Hmac) Update(DataVar []byte, LengthVar int) {
-
 	xHmacUpdate(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 var xComputeHmacForBytes func(ChecksumType, *Bytes, *Bytes) string
@@ -146,7 +136,6 @@ var xComputeHmacForBytes func(ChecksumType, *Bytes, *Bytes) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeHmacForBytes(DigestTypeVar ChecksumType, KeyVar *Bytes, DataVar *Bytes) string {
-
 	cret := xComputeHmacForBytes(DigestTypeVar, KeyVar, DataVar)
 	return cret
 }
@@ -159,7 +148,6 @@ var xComputeHmacForData func(ChecksumType, []byte, uint, []byte, uint) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeHmacForData(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint, DataVar []byte, LengthVar uint) string {
-
 	cret := xComputeHmacForData(DigestTypeVar, KeyVar, KeyLenVar, DataVar, LengthVar)
 	return cret
 }
@@ -170,7 +158,6 @@ var xComputeHmacForString func(ChecksumType, []byte, uint, string, int) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeHmacForString(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint, StrVar string, LengthVar int) string {
-
 	cret := xComputeHmacForString(DigestTypeVar, KeyVar, KeyLenVar, StrVar, LengthVar)
 	return cret
 }
@@ -201,5 +188,4 @@ func init() {
 	core.PuregoSafeRegister(&xHmacRef, libs, "g_hmac_ref")
 	core.PuregoSafeRegister(&xHmacUnref, libs, "g_hmac_unref")
 	core.PuregoSafeRegister(&xHmacUpdate, libs, "g_hmac_update")
-
 }

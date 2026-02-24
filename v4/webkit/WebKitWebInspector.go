@@ -68,18 +68,14 @@ var xWebInspectorAttach func(uintptr)
 // The signal #WebKitWebInspector::attach
 // will be emitted. If the inspector is already attached it does nothing.
 func (x *WebInspector) Attach() {
-
 	xWebInspectorAttach(x.GoPointer())
-
 }
 
 var xWebInspectorClose func(uintptr)
 
 // Request @inspector to be closed.
 func (x *WebInspector) Close() {
-
 	xWebInspectorClose(x.GoPointer())
-
 }
 
 var xWebInspectorDetach func(uintptr)
@@ -89,9 +85,7 @@ var xWebInspectorDetach func(uintptr)
 // The signal #WebKitWebInspector::detach
 // will be emitted. If the inspector is already detached it does nothing.
 func (x *WebInspector) Detach() {
-
 	xWebInspectorDetach(x.GoPointer())
-
 }
 
 var xWebInspectorGetAttachedHeight func(uintptr) uint32
@@ -102,7 +96,6 @@ var xWebInspectorGetAttachedHeight func(uintptr) uint32
 // it's attached. If the inspector view is not attached this
 // returns 0.
 func (x *WebInspector) GetAttachedHeight() uint32 {
-
 	cret := xWebInspectorGetAttachedHeight(x.GoPointer())
 	return cret
 }
@@ -112,7 +105,6 @@ var xWebInspectorGetCanAttach func(uintptr) bool
 // Whether the @inspector can be attached to the same window that contains
 // the inspected view.
 func (x *WebInspector) GetCanAttach() bool {
-
 	cret := xWebInspectorGetCanAttach(x.GoPointer())
 	return cret
 }
@@ -126,7 +118,6 @@ var xWebInspectorGetInspectedUri func(uintptr) string
 // has been closed or when inspected view was loaded from a HTML string
 // instead of a URI.
 func (x *WebInspector) GetInspectedUri() string {
-
 	cret := xWebInspectorGetInspectedUri(x.GoPointer())
 	return cret
 }
@@ -156,7 +147,6 @@ var xWebInspectorIsAttached func(uintptr) bool
 // Whether the @inspector view is currently attached to the same window that contains
 // the inspected view.
 func (x *WebInspector) IsAttached() bool {
-
 	cret := xWebInspectorIsAttached(x.GoPointer())
 	return cret
 }
@@ -165,9 +155,7 @@ var xWebInspectorShow func(uintptr)
 
 // Request @inspector to be shown.
 func (x *WebInspector) Show() {
-
 	xWebInspectorShow(x.GoPointer())
-
 }
 
 func (c *WebInspector) GoPointer() uintptr {
@@ -227,7 +215,6 @@ func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -257,7 +244,6 @@ func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -279,7 +265,6 @@ func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -307,7 +292,6 @@ func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -335,7 +319,6 @@ func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

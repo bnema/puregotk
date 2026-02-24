@@ -76,5 +76,4 @@ func init() {
 	core.PuregoSafeRegister(&xSimpleIOStreamGLibType, libs, "g_simple_io_stream_get_type")
 
 	core.PuregoSafeRegister(&xNewSimpleIOStream, libs, "g_simple_io_stream_new")
-
 }

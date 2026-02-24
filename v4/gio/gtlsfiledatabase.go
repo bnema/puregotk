@@ -102,7 +102,6 @@ func TlsFileDatabaseNew(AnchorsVar string) (*TlsFileDatabaseBase, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -120,5 +119,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsFileDatabaseNew, libs, "g_tls_file_database_new")
 
 	core.PuregoSafeRegister(&xTlsFileDatabaseGLibType, libs, "g_tls_file_database_get_type")
-
 }

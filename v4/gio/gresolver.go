@@ -453,7 +453,6 @@ var xResolverErrorQuark func() glib.Quark
 
 // Gets the #GResolver Error Quark.
 func ResolverErrorQuark() glib.Quark {
-
 	cret := xResolverErrorQuark()
 	return cret
 }
@@ -497,7 +496,6 @@ var xResolverGetTimeout func(uintptr) uint32
 
 // Get the timeout applied to all resolver lookups. See #GResolver:timeout.
 func (x *Resolver) GetTimeout() uint32 {
-
 	cret := xResolverGetTimeout(x.GoPointer())
 	return cret
 }
@@ -521,7 +519,6 @@ func (x *Resolver) LookupByAddress(AddressVar *InetAddress, CancellableVar *Canc
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupByAddressAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -530,9 +527,7 @@ var xResolverLookupByAddressAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // associated hostname, and eventually calls @callback, which must
 // call g_resolver_lookup_by_address_finish() to get the final result.
 func (x *Resolver) LookupByAddressAsync(AddressVar *InetAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xResolverLookupByAddressAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xResolverLookupByAddressFinish func(uintptr, uintptr, **glib.Error) string
@@ -551,7 +546,6 @@ func (x *Resolver) LookupByAddressFinish(ResultVar AsyncResult) (string, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupByName func(uintptr, string, uintptr, **glib.Error) *glib.List
@@ -587,7 +581,6 @@ func (x *Resolver) LookupByName(HostnameVar string, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupByNameAsync func(uintptr, string, uintptr, uintptr, uintptr)
@@ -597,9 +590,7 @@ var xResolverLookupByNameAsync func(uintptr, string, uintptr, uintptr, uintptr)
 // must call g_resolver_lookup_by_name_finish() to get the result.
 // See g_resolver_lookup_by_name() for more details.
 func (x *Resolver) LookupByNameAsync(HostnameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xResolverLookupByNameAsync(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xResolverLookupByNameFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -618,7 +609,6 @@ func (x *Resolver) LookupByNameFinish(ResultVar AsyncResult) (*glib.List, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupByNameWithFlags func(uintptr, string, ResolverNameLookupFlags, uintptr, **glib.Error) *glib.List
@@ -634,7 +624,6 @@ func (x *Resolver) LookupByNameWithFlags(HostnameVar string, FlagsVar ResolverNa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupByNameWithFlagsAsync func(uintptr, string, ResolverNameLookupFlags, uintptr, uintptr, uintptr)
@@ -644,9 +633,7 @@ var xResolverLookupByNameWithFlagsAsync func(uintptr, string, ResolverNameLookup
 // must call g_resolver_lookup_by_name_with_flags_finish() to get the result.
 // See g_resolver_lookup_by_name() for more details.
 func (x *Resolver) LookupByNameWithFlagsAsync(HostnameVar string, FlagsVar ResolverNameLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xResolverLookupByNameWithFlagsAsync(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xResolverLookupByNameWithFlagsFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -665,7 +652,6 @@ func (x *Resolver) LookupByNameWithFlagsFinish(ResultVar AsyncResult) (*glib.Lis
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupRecords func(uintptr, string, ResolverRecordType, uintptr, **glib.Error) *glib.List
@@ -688,7 +674,6 @@ func (x *Resolver) LookupRecords(RrnameVar string, RecordTypeVar ResolverRecordT
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupRecordsAsync func(uintptr, string, ResolverRecordType, uintptr, uintptr, uintptr)
@@ -698,9 +683,7 @@ var xResolverLookupRecordsAsync func(uintptr, string, ResolverRecordType, uintpt
 // g_resolver_lookup_records_finish() to get the final result. See
 // g_resolver_lookup_records() for more details.
 func (x *Resolver) LookupRecordsAsync(RrnameVar string, RecordTypeVar ResolverRecordType, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xResolverLookupRecordsAsync(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xResolverLookupRecordsFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -721,7 +704,6 @@ func (x *Resolver) LookupRecordsFinish(ResultVar AsyncResult) (*glib.List, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupService func(uintptr, string, string, string, uintptr, **glib.Error) *glib.List
@@ -755,7 +737,6 @@ func (x *Resolver) LookupService(ServiceVar string, ProtocolVar string, DomainVa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverLookupServiceAsync func(uintptr, string, string, string, uintptr, uintptr, uintptr)
@@ -766,9 +747,7 @@ var xResolverLookupServiceAsync func(uintptr, string, string, string, uintptr, u
 // get the final result. See g_resolver_lookup_service() for more
 // details.
 func (x *Resolver) LookupServiceAsync(ServiceVar string, ProtocolVar string, DomainVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xResolverLookupServiceAsync(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xResolverLookupServiceFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -787,7 +766,6 @@ func (x *Resolver) LookupServiceFinish(ResultVar AsyncResult) (*glib.List, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResolverSetDefault func(uintptr)
@@ -802,18 +780,14 @@ var xResolverSetDefault func(uintptr)
 // implements its own cache policies on top of that, and then set
 // itself as the default resolver for all later code to use.
 func (x *Resolver) SetDefault() {
-
 	xResolverSetDefault(x.GoPointer())
-
 }
 
 var xResolverSetTimeout func(uintptr, uint32)
 
 // Set the timeout applied to all resolver lookups. See #GResolver:timeout.
 func (x *Resolver) SetTimeout(TimeoutMsVar uint32) {
-
 	xResolverSetTimeout(x.GoPointer(), TimeoutMsVar)
-
 }
 
 func (c *Resolver) GoPointer() uintptr {
@@ -876,7 +850,6 @@ func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -890,9 +863,7 @@ var xResolverFreeAddresses func(*glib.List)
 // (This is a convenience method; you can also simply free the results
 // by hand.)
 func ResolverFreeAddresses(AddressesVar *glib.List) {
-
 	xResolverFreeAddresses(AddressesVar)
-
 }
 
 var xResolverFreeTargets func(*glib.List)
@@ -902,9 +873,7 @@ var xResolverFreeTargets func(*glib.List)
 // (This is a convenience method; you can also simply free the
 // results by hand.)
 func ResolverFreeTargets(TargetsVar *glib.List) {
-
 	xResolverFreeTargets(TargetsVar)
-
 }
 
 var xResolverGetDefault func() uintptr
@@ -965,5 +934,4 @@ func init() {
 	core.PuregoSafeRegister(&xResolverFreeAddresses, libs, "g_resolver_free_addresses")
 	core.PuregoSafeRegister(&xResolverFreeTargets, libs, "g_resolver_free_targets")
 	core.PuregoSafeRegister(&xResolverGetDefault, libs, "g_resolver_get_default")
-
 }

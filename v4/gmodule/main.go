@@ -10,7 +10,6 @@ import (
 var xModuleErrorQuark func() glib.Quark
 
 func ModuleErrorQuark() glib.Quark {
-
 	cret := xModuleErrorQuark()
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xModuleErrorQuark, libs, "g_module_error_quark")
-
 }

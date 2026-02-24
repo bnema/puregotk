@@ -66,9 +66,7 @@ var xSubprocessLauncherClose func(uintptr)
 // is disposed, but is provided separately so that garbage collected
 // language bindings can call it earlier to guarantee when FDs are closed.
 func (x *SubprocessLauncher) Close() {
-
 	xSubprocessLauncherClose(x.GoPointer())
-
 }
 
 var xSubprocessLauncherGetenv func(uintptr, string) string
@@ -79,7 +77,6 @@ var xSubprocessLauncherGetenv func(uintptr, string) string
 // On UNIX, the returned string can be an arbitrary byte string.
 // On Windows, it will be UTF-8.
 func (x *SubprocessLauncher) Getenv(VariableVar string) string {
-
 	cret := xSubprocessLauncherGetenv(x.GoPointer(), VariableVar)
 	return cret
 }
@@ -100,9 +97,7 @@ var xSubprocessLauncherSetChildSetup func(uintptr, uintptr, uintptr, uintptr)
 //
 // Child setup functions are only available on UNIX.
 func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
 	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
-
 }
 
 var xSubprocessLauncherSetCwd func(uintptr, string)
@@ -113,9 +108,7 @@ var xSubprocessLauncherSetCwd func(uintptr, string)
 // By default processes are launched with the current working directory
 // of the launching process at the time of launch.
 func (x *SubprocessLauncher) SetCwd(CwdVar string) {
-
 	xSubprocessLauncherSetCwd(x.GoPointer(), CwdVar)
-
 }
 
 var xSubprocessLauncherSetEnviron func(uintptr, []string)
@@ -140,9 +133,7 @@ var xSubprocessLauncherSetEnviron func(uintptr, []string)
 // On UNIX, all strings in this array can be arbitrary byte strings.
 // On Windows, they should be in UTF-8.
 func (x *SubprocessLauncher) SetEnviron(EnvVar []string) {
-
 	xSubprocessLauncherSetEnviron(x.GoPointer(), EnvVar)
-
 }
 
 var xSubprocessLauncherSetFlags func(uintptr, SubprocessFlags)
@@ -160,9 +151,7 @@ var xSubprocessLauncherSetFlags func(uintptr, SubprocessFlags)
 // function like g_subprocess_launcher_set_stdin_file_path() or
 // g_subprocess_launcher_take_stdout_fd().
 func (x *SubprocessLauncher) SetFlags(FlagsVar SubprocessFlags) {
-
 	xSubprocessLauncherSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
@@ -182,9 +171,7 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStderrFilePath(PathVar string) {
-
 	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVar)
-
 }
 
 var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
@@ -200,9 +187,7 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdinFilePath(PathVar string) {
-
 	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVar)
-
 }
 
 var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
@@ -219,9 +204,7 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdoutFilePath(PathVar string) {
-
 	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVar)
-
 }
 
 var xSubprocessLauncherSetenv func(uintptr, string, string, bool)
@@ -233,9 +216,7 @@ var xSubprocessLauncherSetenv func(uintptr, string, string, bool)
 // strings, except that the variable's name cannot contain '='.
 // On Windows, they should be in UTF-8.
 func (x *SubprocessLauncher) Setenv(VariableVar string, ValueVar string, OverwriteVar bool) {
-
 	xSubprocessLauncherSetenv(x.GoPointer(), VariableVar, ValueVar, OverwriteVar)
-
 }
 
 var xSubprocessLauncherSpawn func(uintptr, **glib.Error, string, ...interface{}) uintptr
@@ -272,7 +253,6 @@ func (x *SubprocessLauncher) Spawnv(ArgvVar []string) (*Subprocess, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSubprocessLauncherTakeFd func(uintptr, int32, int32)
@@ -290,9 +270,7 @@ var xSubprocessLauncherTakeFd func(uintptr, int32, int32)
 // `--passphrase-fd` providing a file descriptor number where it expects
 // the passphrase to be written.
 func (x *SubprocessLauncher) TakeFd(SourceFdVar int32, TargetFdVar int32) {
-
 	xSubprocessLauncherTakeFd(x.GoPointer(), SourceFdVar, TargetFdVar)
-
 }
 
 var xSubprocessLauncherTakeStderrFd func(uintptr, int32)
@@ -314,9 +292,7 @@ var xSubprocessLauncherTakeStderrFd func(uintptr, int32)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStderrFd(FdVar int32) {
-
 	xSubprocessLauncherTakeStderrFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherTakeStdinFd func(uintptr, int32)
@@ -340,9 +316,7 @@ var xSubprocessLauncherTakeStdinFd func(uintptr, int32)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStdinFd(FdVar int32) {
-
 	xSubprocessLauncherTakeStdinFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherTakeStdoutFd func(uintptr, int32)
@@ -365,9 +339,7 @@ var xSubprocessLauncherTakeStdoutFd func(uintptr, int32)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStdoutFd(FdVar int32) {
-
 	xSubprocessLauncherTakeStdoutFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherUnsetenv func(uintptr, string)
@@ -378,9 +350,7 @@ var xSubprocessLauncherUnsetenv func(uintptr, string)
 // On UNIX, the variable's name can be an arbitrary byte string not
 // containing '='. On Windows, it should be in UTF-8.
 func (x *SubprocessLauncher) Unsetenv(VariableVar string) {
-
 	xSubprocessLauncherUnsetenv(x.GoPointer(), VariableVar)
-
 }
 
 func (c *SubprocessLauncher) GoPointer() uintptr {
@@ -427,5 +397,4 @@ func init() {
 	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdinFd, libs, "g_subprocess_launcher_take_stdin_fd")
 	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdoutFd, libs, "g_subprocess_launcher_take_stdout_fd")
 	core.PuregoSafeRegister(&xSubprocessLauncherUnsetenv, libs, "g_subprocess_launcher_unsetenv")
-
 }

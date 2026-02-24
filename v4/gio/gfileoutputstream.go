@@ -435,7 +435,6 @@ var xFileOutputStreamGetEtag func(uintptr) string
 // This must be called after the stream has been written
 // and closed, as the etag can change while writing.
 func (x *FileOutputStream) GetEtag() string {
-
 	cret := xFileOutputStreamGetEtag(x.GoPointer())
 	return cret
 }
@@ -474,7 +473,6 @@ func (x *FileOutputStream) QueryInfo(AttributesVar string, CancellableVar *Cance
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileOutputStreamQueryInfoAsync func(uintptr, string, int32, uintptr, uintptr, uintptr)
@@ -486,9 +484,7 @@ var xFileOutputStreamQueryInfoAsync func(uintptr, string, int32, uintptr, uintpt
 // For the synchronous version of this function, see
 // g_file_output_stream_query_info().
 func (x *FileOutputStream) QueryInfoAsync(AttributesVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileOutputStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileOutputStreamQueryInfoFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -510,7 +506,6 @@ func (x *FileOutputStream) QueryInfoFinish(ResultVar AsyncResult) (*FileInfo, er
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *FileOutputStream) GoPointer() uintptr {
@@ -526,7 +521,6 @@ func (c *FileOutputStream) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *FileOutputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -534,7 +528,6 @@ func (x *FileOutputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *FileOutputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -561,12 +554,10 @@ func (x *FileOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancella
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *FileOutputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -588,7 +579,6 @@ func (x *FileOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -609,5 +599,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileOutputStreamQueryInfo, libs, "g_file_output_stream_query_info")
 	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoAsync, libs, "g_file_output_stream_query_info_async")
 	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoFinish, libs, "g_file_output_stream_query_info_finish")
-
 }

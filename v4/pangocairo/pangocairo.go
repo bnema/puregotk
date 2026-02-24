@@ -51,7 +51,6 @@ func (x *FontBase) SetGoPointer(ptr uintptr) {
 // The scaled font can be referenced and kept using
 // cairo_scaled_font_reference().
 func (x *FontBase) GetScaledFont() *cairo.ScaledFont {
-
 	cret := XPangoCairoFontGetScaledFont(x.GoPointer())
 	return cret
 }
@@ -110,7 +109,6 @@ func (x *FontMapBase) CreateContext() *pango.Context {
 
 // Gets the type of Cairo font backend that @fontmap uses.
 func (x *FontMapBase) GetFontType() cairo.FontType {
-
 	cret := XPangoCairoFontMapGetFontType(x.GoPointer())
 	return cret
 }
@@ -119,7 +117,6 @@ func (x *FontMapBase) GetFontType() cairo.FontType {
 //
 // See [method@PangoCairo.FontMap.set_resolution].
 func (x *FontMapBase) GetResolution() float64 {
-
 	cret := XPangoCairoFontMapGetResolution(x.GoPointer())
 	return cret
 }
@@ -140,9 +137,7 @@ func (x *FontMapBase) GetResolution() float64 {
 // font map to be released and a new default font map to be created
 // on demand, using [func@PangoCairo.FontMap.new].
 func (x *FontMapBase) SetDefault() {
-
 	XPangoCairoFontMapSetDefault(x.GoPointer())
-
 }
 
 // Sets the resolution for the fontmap.
@@ -152,16 +147,16 @@ func (x *FontMapBase) SetDefault() {
 // default value is 96, meaning that a 10 point font will be 13
 // units high. (10 * 96. / 72. = 13.3).
 func (x *FontMapBase) SetResolution(DpiVar float64) {
-
 	XPangoCairoFontMapSetResolution(x.GoPointer(), DpiVar)
-
 }
 
-var XPangoCairoFontMapCreateContext func(uintptr) uintptr
-var XPangoCairoFontMapGetFontType func(uintptr) cairo.FontType
-var XPangoCairoFontMapGetResolution func(uintptr) float64
-var XPangoCairoFontMapSetDefault func(uintptr)
-var XPangoCairoFontMapSetResolution func(uintptr, float64)
+var (
+	XPangoCairoFontMapCreateContext func(uintptr) uintptr
+	XPangoCairoFontMapGetFontType   func(uintptr) cairo.FontType
+	XPangoCairoFontMapGetResolution func(uintptr) float64
+	XPangoCairoFontMapSetDefault    func(uintptr)
+	XPangoCairoFontMapSetResolution func(uintptr, float64)
+)
 
 var xContextGetFontOptions func(uintptr) *cairo.FontOptions
 
@@ -171,7 +166,6 @@ var xContextGetFontOptions func(uintptr) *cairo.FontOptions
 // This function does not report options that are derived from
 // the target surface by [func@update_context].
 func ContextGetFontOptions(ContextVar *pango.Context) *cairo.FontOptions {
-
 	cret := xContextGetFontOptions(ContextVar.GoPointer())
 	return cret
 }
@@ -182,7 +176,6 @@ var xContextGetResolution func(uintptr) float64
 //
 // See [func@PangoCairo.context_set_resolution]
 func ContextGetResolution(ContextVar *pango.Context) float64 {
-
 	cret := xContextGetResolution(ContextVar.GoPointer())
 	return cret
 }
@@ -198,7 +191,6 @@ var xContextGetShapeRenderer func(uintptr, uintptr) uintptr
 // attributes of type %PANGO_ATTR_SHAPE as set by
 // [func@PangoCairo.context_set_shape_renderer], if any.
 func ContextGetShapeRenderer(ContextVar *pango.Context, DataVar uintptr) uintptr {
-
 	cret := xContextGetShapeRenderer(ContextVar.GoPointer(), DataVar)
 	return cret
 }
@@ -210,9 +202,7 @@ var xContextSetFontOptions func(uintptr, *cairo.FontOptions)
 // These options override any options that [func@update_context]
 // derives from the target surface.
 func ContextSetFontOptions(ContextVar *pango.Context, OptionsVar *cairo.FontOptions) {
-
 	xContextSetFontOptions(ContextVar.GoPointer(), OptionsVar)
-
 }
 
 var xContextSetResolution func(uintptr, float64)
@@ -223,9 +213,7 @@ var xContextSetResolution func(uintptr, float64)
 // and Cairo units. The default value is 96, meaning that a 10 point font will
 // be 13 units high. (10 * 96. / 72. = 13.3).
 func ContextSetResolution(ContextVar *pango.Context, DpiVar float64) {
-
 	xContextSetResolution(ContextVar.GoPointer(), DpiVar)
-
 }
 
 var xContextSetShapeRenderer func(uintptr, uintptr, uintptr, uintptr)
@@ -235,9 +223,7 @@ var xContextSetShapeRenderer func(uintptr, uintptr, uintptr, uintptr)
 //
 // See `PangoCairoShapeRendererFunc` for details.
 func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-
 	xContextSetShapeRenderer(ContextVar.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DnotifyVar))
-
 }
 
 var xCreateContext func(*cairo.Context) uintptr
@@ -301,9 +287,7 @@ var xErrorUnderlinePath func(*cairo.Context, float64, float64, float64, float64)
 // The width of the underline is rounded to an integer number of up/down
 // segments and the resulting rectangle is centered in the original rectangle.
 func ErrorUnderlinePath(CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xErrorUnderlinePath(CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xFontMapGetDefault func() uintptr
@@ -398,9 +382,7 @@ var xGlyphStringPath func(*cairo.Context, uintptr, *pango.GlyphString)
 // The origin of the glyphs (the left edge of the baseline)
 // will be at the current point of the cairo context.
 func GlyphStringPath(CrVar *cairo.Context, FontVar *pango.Font, GlyphsVar *pango.GlyphString) {
-
 	xGlyphStringPath(CrVar, FontVar.GoPointer(), GlyphsVar)
-
 }
 
 var xLayoutLinePath func(*cairo.Context, *pango.LayoutLine)
@@ -411,9 +393,7 @@ var xLayoutLinePath func(*cairo.Context, *pango.LayoutLine)
 // The origin of the glyphs (the left edge of the line) will be
 // at the current point of the cairo context.
 func LayoutLinePath(CrVar *cairo.Context, LineVar *pango.LayoutLine) {
-
 	xLayoutLinePath(CrVar, LineVar)
-
 }
 
 var xLayoutPath func(*cairo.Context, uintptr)
@@ -424,9 +404,7 @@ var xLayoutPath func(*cairo.Context, uintptr)
 // The top-left corner of the `PangoLayout` will be at the
 // current point of the cairo context.
 func LayoutPath(CrVar *cairo.Context, LayoutVar *pango.Layout) {
-
 	xLayoutPath(CrVar, LayoutVar.GoPointer())
-
 }
 
 var xShowErrorUnderline func(*cairo.Context, float64, float64, float64, float64)
@@ -439,9 +417,7 @@ var xShowErrorUnderline func(*cairo.Context, float64, float64, float64, float64)
 // number of up/down segments and the resulting rectangle is centered in the
 // original rectangle.
 func ShowErrorUnderline(CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xShowErrorUnderline(CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xShowGlyphItem func(*cairo.Context, string, *pango.GlyphItem)
@@ -458,9 +434,7 @@ var xShowGlyphItem func(*cairo.Context, string, *pango.GlyphItem)
 // Note that @text is the start of the text for layout, which is then
 // indexed by `glyph_item-&gt;item-&gt;offset`.
 func ShowGlyphItem(CrVar *cairo.Context, TextVar string, GlyphItemVar *pango.GlyphItem) {
-
 	xShowGlyphItem(CrVar, TextVar, GlyphItemVar)
-
 }
 
 var xShowGlyphString func(*cairo.Context, uintptr, *pango.GlyphString)
@@ -470,9 +444,7 @@ var xShowGlyphString func(*cairo.Context, uintptr, *pango.GlyphString)
 // The origin of the glyphs (the left edge of the baseline) will
 // be drawn at the current point of the cairo context.
 func ShowGlyphString(CrVar *cairo.Context, FontVar *pango.Font, GlyphsVar *pango.GlyphString) {
-
 	xShowGlyphString(CrVar, FontVar.GoPointer(), GlyphsVar)
-
 }
 
 var xShowLayout func(*cairo.Context, uintptr)
@@ -482,9 +454,7 @@ var xShowLayout func(*cairo.Context, uintptr)
 // The top-left corner of the `PangoLayout` will be drawn
 // at the current point of the cairo context.
 func ShowLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
-
 	xShowLayout(CrVar, LayoutVar.GoPointer())
-
 }
 
 var xShowLayoutLine func(*cairo.Context, *pango.LayoutLine)
@@ -494,9 +464,7 @@ var xShowLayoutLine func(*cairo.Context, *pango.LayoutLine)
 // The origin of the glyphs (the left edge of the line) will
 // be drawn at the current point of the cairo context.
 func ShowLayoutLine(CrVar *cairo.Context, LineVar *pango.LayoutLine) {
-
 	xShowLayoutLine(CrVar, LineVar)
-
 }
 
 var xUpdateContext func(*cairo.Context, uintptr)
@@ -508,9 +476,7 @@ var xUpdateContext func(*cairo.Context, uintptr)
 // If any layouts have been created for the context, it's necessary
 // to call [method@Pango.Layout.context_changed] on those layouts.
 func UpdateContext(CrVar *cairo.Context, ContextVar *pango.Context) {
-
 	xUpdateContext(CrVar, ContextVar.GoPointer())
-
 }
 
 var xUpdateLayout func(*cairo.Context, uintptr)
@@ -519,9 +485,7 @@ var xUpdateLayout func(*cairo.Context, uintptr)
 // [func@create_layout] to match the current transformation and target
 // surface of a Cairo context.
 func UpdateLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
-
 	xUpdateLayout(CrVar, LayoutVar.GoPointer())
-
 }
 
 func init() {
@@ -570,5 +534,4 @@ func init() {
 	core.PuregoSafeRegister(&XPangoCairoFontMapGetResolution, libs, "pango_cairo_font_map_get_resolution")
 	core.PuregoSafeRegister(&XPangoCairoFontMapSetDefault, libs, "pango_cairo_font_map_set_default")
 	core.PuregoSafeRegister(&XPangoCairoFontMapSetResolution, libs, "pango_cairo_font_map_set_resolution")
-
 }

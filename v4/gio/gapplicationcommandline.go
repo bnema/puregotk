@@ -378,9 +378,7 @@ var xApplicationCommandLineDone func(uintptr)
 // object is disposed — so you can omit the call in non-garbage collected
 // languages.
 func (x *ApplicationCommandLine) Done() {
-
 	xApplicationCommandLineDone(x.GoPointer())
-
 }
 
 var xApplicationCommandLineGetArguments func(uintptr, *int32) []string
@@ -397,7 +395,6 @@ var xApplicationCommandLineGetArguments func(uintptr, *int32) []string
 // The return value is %NULL-terminated and should be freed using
 // g_strfreev().
 func (x *ApplicationCommandLine) GetArguments(ArgcVar *int32) []string {
-
 	cret := xApplicationCommandLineGetArguments(x.GoPointer(), ArgcVar)
 	return cret
 }
@@ -413,7 +410,6 @@ var xApplicationCommandLineGetCwd func(uintptr) string
 // The return value should not be modified or freed and is valid for as
 // long as @cmdline exists.
 func (x *ApplicationCommandLine) GetCwd() string {
-
 	cret := xApplicationCommandLineGetCwd(x.GoPointer())
 	return cret
 }
@@ -436,7 +432,6 @@ var xApplicationCommandLineGetEnviron func(uintptr) []string
 // See g_application_command_line_getenv() if you are only interested
 // in the value of a single environment variable.
 func (x *ApplicationCommandLine) GetEnviron() []string {
-
 	cret := xApplicationCommandLineGetEnviron(x.GoPointer())
 	return cret
 }
@@ -446,7 +441,6 @@ var xApplicationCommandLineGetExitStatus func(uintptr) int32
 // Gets the exit status of @cmdline.  See
 // g_application_command_line_set_exit_status() for more information.
 func (x *ApplicationCommandLine) GetExitStatus() int32 {
-
 	cret := xApplicationCommandLineGetExitStatus(x.GoPointer())
 	return cret
 }
@@ -455,7 +449,6 @@ var xApplicationCommandLineGetIsRemote func(uintptr) bool
 
 // Determines if @cmdline represents a remote invocation.
 func (x *ApplicationCommandLine) GetIsRemote() bool {
-
 	cret := xApplicationCommandLineGetIsRemote(x.GoPointer())
 	return cret
 }
@@ -475,7 +468,6 @@ var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
 // The data has been passed via an untrusted external process, so the types of
 // all values must be checked before being used.
 func (x *ApplicationCommandLine) GetOptionsDict() *glib.VariantDict {
-
 	cret := xApplicationCommandLineGetOptionsDict(x.GoPointer())
 	return cret
 }
@@ -494,7 +486,6 @@ var xApplicationCommandLineGetPlatformData func(uintptr) *glib.Variant
 //
 // For local invocation, it will be %NULL.
 func (x *ApplicationCommandLine) GetPlatformData() *glib.Variant {
-
 	cret := xApplicationCommandLineGetPlatformData(x.GoPointer())
 	return cret
 }
@@ -538,7 +529,6 @@ var xApplicationCommandLineGetenv func(uintptr, string) string
 // The return value should not be modified or freed and is valid for as
 // long as @cmdline exists.
 func (x *ApplicationCommandLine) Getenv(NameVar string) string {
-
 	cret := xApplicationCommandLineGetenv(x.GoPointer(), NameVar)
 	return cret
 }
@@ -552,9 +542,7 @@ var xApplicationCommandLinePrint func(uintptr, string, ...interface{})
 // g_print().  If @cmdline is remote then this is equivalent to calling
 // g_print() in the invoking process.
 func (x *ApplicationCommandLine) Print(FormatVar string, varArgs ...interface{}) {
-
 	xApplicationCommandLinePrint(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xApplicationCommandLinePrintLiteral func(uintptr, string)
@@ -565,9 +553,7 @@ var xApplicationCommandLinePrintLiteral func(uintptr, string)
 // format string. Use this function if @message contains text you don't have
 // control over, that could include `printf()` escape sequences.
 func (x *ApplicationCommandLine) PrintLiteral(MessageVar string) {
-
 	xApplicationCommandLinePrintLiteral(x.GoPointer(), MessageVar)
-
 }
 
 var xApplicationCommandLinePrinterr func(uintptr, string, ...interface{})
@@ -579,9 +565,7 @@ var xApplicationCommandLinePrinterr func(uintptr, string, ...interface{})
 // g_printerr().  If @cmdline is remote then this is equivalent to
 // calling g_printerr() in the invoking process.
 func (x *ApplicationCommandLine) Printerr(FormatVar string, varArgs ...interface{}) {
-
 	xApplicationCommandLinePrinterr(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xApplicationCommandLinePrinterrLiteral func(uintptr, string)
@@ -592,9 +576,7 @@ var xApplicationCommandLinePrinterrLiteral func(uintptr, string)
 // a `printf()`-style format string. Use this function if @message contains text
 // you don't have control over, that could include `printf()` escape sequences.
 func (x *ApplicationCommandLine) PrinterrLiteral(MessageVar string) {
-
 	xApplicationCommandLinePrinterrLiteral(x.GoPointer(), MessageVar)
-
 }
 
 var xApplicationCommandLineSetExitStatus func(uintptr, int32)
@@ -624,9 +606,7 @@ var xApplicationCommandLineSetExitStatus func(uintptr, int32)
 // This method is a no-op if g_application_command_line_done() has
 // been called.
 func (x *ApplicationCommandLine) SetExitStatus(ExitStatusVar int32) {
-
 	xApplicationCommandLineSetExitStatus(x.GoPointer(), ExitStatusVar)
-
 }
 
 func (c *ApplicationCommandLine) GoPointer() uintptr {
@@ -706,5 +686,4 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationCommandLinePrinterr, libs, "g_application_command_line_printerr")
 	core.PuregoSafeRegister(&xApplicationCommandLinePrinterrLiteral, libs, "g_application_command_line_printerr_literal")
 	core.PuregoSafeRegister(&xApplicationCommandLineSetExitStatus, libs, "g_application_command_line_set_exit_status")
-
 }

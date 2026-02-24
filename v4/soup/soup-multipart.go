@@ -46,7 +46,6 @@ var xNewMultipart func(string) *Multipart
 //
 // See also: [ctor@Message.new_from_multipart].
 func NewMultipart(MimeTypeVar string) *Multipart {
-
 	cret := xNewMultipart(MimeTypeVar)
 	return cret
 }
@@ -55,7 +54,6 @@ var xNewMultipartFromMessage func(*MessageHeaders, *glib.Bytes) *Multipart
 
 // Parses @headers and @body to form a new #SoupMultipart
 func NewMultipartFromMessage(HeadersVar *MessageHeaders, BodyVar *glib.Bytes) *Multipart {
-
 	cret := xNewMultipartFromMessage(HeadersVar, BodyVar)
 	return cret
 }
@@ -66,9 +64,7 @@ var xMultipartAppendFormFile func(uintptr, string, string, string, *glib.Bytes)
 //
 // Uses "Content-Disposition: form-data", as per the HTML forms specification.
 func (x *Multipart) AppendFormFile(ControlNameVar string, FilenameVar string, ContentTypeVar string, BodyVar *glib.Bytes) {
-
 	xMultipartAppendFormFile(x.GoPointer(), ControlNameVar, FilenameVar, ContentTypeVar, BodyVar)
-
 }
 
 var xMultipartAppendFormString func(uintptr, string, string)
@@ -77,9 +73,7 @@ var xMultipartAppendFormString func(uintptr, string, string)
 //
 // Uses "Content-Disposition: form-data", as per the HTML forms specification.
 func (x *Multipart) AppendFormString(ControlNameVar string, DataVar string) {
-
 	xMultipartAppendFormString(x.GoPointer(), ControlNameVar, DataVar)
-
 }
 
 var xMultipartAppendPart func(uintptr, *MessageHeaders, *glib.Bytes)
@@ -90,25 +84,20 @@ var xMultipartAppendPart func(uintptr, *MessageHeaders, *glib.Bytes)
 // you should free your copies if you are not using them for anything
 // else.)
 func (x *Multipart) AppendPart(HeadersVar *MessageHeaders, BodyVar *glib.Bytes) {
-
 	xMultipartAppendPart(x.GoPointer(), HeadersVar, BodyVar)
-
 }
 
 var xMultipartFree func(uintptr)
 
 // Frees @multipart.
 func (x *Multipart) Free() {
-
 	xMultipartFree(x.GoPointer())
-
 }
 
 var xMultipartGetLength func(uintptr) int32
 
 // Gets the number of body parts in @multipart.
 func (x *Multipart) GetLength() int32 {
-
 	cret := xMultipartGetLength(x.GoPointer())
 	return cret
 }
@@ -117,7 +106,6 @@ var xMultipartGetPart func(uintptr, int32, **MessageHeaders, **glib.Bytes) bool
 
 // Gets the indicated body part from @multipart.
 func (x *Multipart) GetPart(PartVar int32, HeadersVar **MessageHeaders, BodyVar **glib.Bytes) bool {
-
 	cret := xMultipartGetPart(x.GoPointer(), PartVar, HeadersVar, BodyVar)
 	return cret
 }
@@ -126,9 +114,7 @@ var xMultipartToMessage func(uintptr, *MessageHeaders, **glib.Bytes)
 
 // Serializes @multipart to @dest_headers and @dest_body.
 func (x *Multipart) ToMessage(DestHeadersVar *MessageHeaders, DestBodyVar **glib.Bytes) {
-
 	xMultipartToMessage(x.GoPointer(), DestHeadersVar, DestBodyVar)
-
 }
 
 func init() {
@@ -155,5 +141,4 @@ func init() {
 	core.PuregoSafeRegister(&xMultipartGetLength, libs, "soup_multipart_get_length")
 	core.PuregoSafeRegister(&xMultipartGetPart, libs, "soup_multipart_get_part")
 	core.PuregoSafeRegister(&xMultipartToMessage, libs, "soup_multipart_to_message")
-
 }

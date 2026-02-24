@@ -43,7 +43,6 @@ var xNewShaderArgsBuilder func(uintptr, *glib.Bytes) *ShaderArgsBuilder
 // Allocates a builder that can be used to construct a new uniform data
 // chunk.
 func NewShaderArgsBuilder(ShaderVar *GLShader, InitialValuesVar *glib.Bytes) *ShaderArgsBuilder {
-
 	cret := xNewShaderArgsBuilder(ShaderVar.GoPointer(), InitialValuesVar)
 	return cret
 }
@@ -56,7 +55,6 @@ var xShaderArgsBuilderFreeToArgs func(uintptr) *glib.Bytes
 // Any uniforms of the shader that have not been explicitly set
 // on the @builder are zero-initialized.
 func (x *ShaderArgsBuilder) FreeToArgs() *glib.Bytes {
-
 	cret := xShaderArgsBuilderFreeToArgs(x.GoPointer())
 	return cret
 }
@@ -65,7 +63,6 @@ var xShaderArgsBuilderRef func(uintptr) *ShaderArgsBuilder
 
 // Increases the reference count of a `GskShaderArgsBuilder` by one.
 func (x *ShaderArgsBuilder) Ref() *ShaderArgsBuilder {
-
 	cret := xShaderArgsBuilderRef(x.GoPointer())
 	return cret
 }
@@ -76,9 +73,7 @@ var xShaderArgsBuilderSetBool func(uintptr, int32, bool)
 //
 // The uniform must be of bool type.
 func (x *ShaderArgsBuilder) SetBool(IdxVar int32, ValueVar bool) {
-
 	xShaderArgsBuilderSetBool(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetFloat func(uintptr, int32, float32)
@@ -87,9 +82,7 @@ var xShaderArgsBuilderSetFloat func(uintptr, int32, float32)
 //
 // The uniform must be of float type.
 func (x *ShaderArgsBuilder) SetFloat(IdxVar int32, ValueVar float32) {
-
 	xShaderArgsBuilderSetFloat(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetInt func(uintptr, int32, int32)
@@ -98,9 +91,7 @@ var xShaderArgsBuilderSetInt func(uintptr, int32, int32)
 //
 // The uniform must be of int type.
 func (x *ShaderArgsBuilder) SetInt(IdxVar int32, ValueVar int32) {
-
 	xShaderArgsBuilderSetInt(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetUint func(uintptr, int32, uint32)
@@ -109,9 +100,7 @@ var xShaderArgsBuilderSetUint func(uintptr, int32, uint32)
 //
 // The uniform must be of uint type.
 func (x *ShaderArgsBuilder) SetUint(IdxVar int32, ValueVar uint32) {
-
 	xShaderArgsBuilderSetUint(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetVec2 func(uintptr, int32, *graphene.Vec2)
@@ -120,9 +109,7 @@ var xShaderArgsBuilderSetVec2 func(uintptr, int32, *graphene.Vec2)
 //
 // The uniform must be of vec2 type.
 func (x *ShaderArgsBuilder) SetVec2(IdxVar int32, ValueVar *graphene.Vec2) {
-
 	xShaderArgsBuilderSetVec2(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetVec3 func(uintptr, int32, *graphene.Vec3)
@@ -131,9 +118,7 @@ var xShaderArgsBuilderSetVec3 func(uintptr, int32, *graphene.Vec3)
 //
 // The uniform must be of vec3 type.
 func (x *ShaderArgsBuilder) SetVec3(IdxVar int32, ValueVar *graphene.Vec3) {
-
 	xShaderArgsBuilderSetVec3(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderSetVec4 func(uintptr, int32, *graphene.Vec4)
@@ -142,9 +127,7 @@ var xShaderArgsBuilderSetVec4 func(uintptr, int32, *graphene.Vec4)
 //
 // The uniform must be of vec4 type.
 func (x *ShaderArgsBuilder) SetVec4(IdxVar int32, ValueVar *graphene.Vec4) {
-
 	xShaderArgsBuilderSetVec4(x.GoPointer(), IdxVar, ValueVar)
-
 }
 
 var xShaderArgsBuilderToArgs func(uintptr) *glib.Bytes
@@ -161,7 +144,6 @@ var xShaderArgsBuilderToArgs func(uintptr) *glib.Bytes
 // This function is intended primarily for bindings. C code should use
 // [method@Gsk.ShaderArgsBuilder.free_to_args].
 func (x *ShaderArgsBuilder) ToArgs() *glib.Bytes {
-
 	cret := xShaderArgsBuilderToArgs(x.GoPointer())
 	return cret
 }
@@ -172,9 +154,7 @@ var xShaderArgsBuilderUnref func(uintptr)
 //
 // If the resulting reference count is zero, frees the builder.
 func (x *ShaderArgsBuilder) Unref() {
-
 	xShaderArgsBuilderUnref(x.GoPointer())
-
 }
 
 // Implements a fragment shader using GLSL.
@@ -363,7 +343,6 @@ func (x *GLShader) Compile(RendererVar *Renderer) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xGLShaderFindUniformByName func(uintptr, string) int32
@@ -371,7 +350,6 @@ var xGLShaderFindUniformByName func(uintptr, string) int32
 // Looks for a uniform by the name @name, and returns the index
 // of the uniform, or -1 if it was not found.
 func (x *GLShader) FindUniformByName(NameVar string) int32 {
-
 	cret := xGLShaderFindUniformByName(x.GoPointer(), NameVar)
 	return cret
 }
@@ -388,7 +366,6 @@ var xGLShaderFormatArgs func(uintptr, ...interface{}) *glib.Bytes
 // Any uniforms of the shader that are not included in the argument list
 // are zero-initialized.
 func (x *GLShader) FormatArgs(varArgs ...interface{}) *glib.Bytes {
-
 	cret := xGLShaderFormatArgs(x.GoPointer(), varArgs...)
 	return cret
 }
@@ -407,7 +384,6 @@ var xGLShaderFormatArgsVa func(uintptr, []interface{}) *glib.Bytes
 // Any uniforms of the shader that are not included in the argument list
 // are zero-initialized.
 func (x *GLShader) FormatArgsVa(UniformsVar []interface{}) *glib.Bytes {
-
 	cret := xGLShaderFormatArgsVa(x.GoPointer(), UniformsVar)
 	return cret
 }
@@ -418,7 +394,6 @@ var xGLShaderGetArgBool func(uintptr, *glib.Bytes, int32) bool
 //
 // The uniform must be of bool type.
 func (x *GLShader) GetArgBool(ArgsVar *glib.Bytes, IdxVar int32) bool {
-
 	cret := xGLShaderGetArgBool(x.GoPointer(), ArgsVar, IdxVar)
 	return cret
 }
@@ -429,7 +404,6 @@ var xGLShaderGetArgFloat func(uintptr, *glib.Bytes, int32) float32
 //
 // The uniform must be of float type.
 func (x *GLShader) GetArgFloat(ArgsVar *glib.Bytes, IdxVar int32) float32 {
-
 	cret := xGLShaderGetArgFloat(x.GoPointer(), ArgsVar, IdxVar)
 	return cret
 }
@@ -440,7 +414,6 @@ var xGLShaderGetArgInt func(uintptr, *glib.Bytes, int32) int32
 //
 // The uniform must be of int type.
 func (x *GLShader) GetArgInt(ArgsVar *glib.Bytes, IdxVar int32) int32 {
-
 	cret := xGLShaderGetArgInt(x.GoPointer(), ArgsVar, IdxVar)
 	return cret
 }
@@ -451,7 +424,6 @@ var xGLShaderGetArgUint func(uintptr, *glib.Bytes, int32) uint32
 //
 // The uniform must be of uint type.
 func (x *GLShader) GetArgUint(ArgsVar *glib.Bytes, IdxVar int32) uint32 {
-
 	cret := xGLShaderGetArgUint(x.GoPointer(), ArgsVar, IdxVar)
 	return cret
 }
@@ -462,9 +434,7 @@ var xGLShaderGetArgVec2 func(uintptr, *glib.Bytes, int32, *graphene.Vec2)
 //
 // The uniform must be of vec2 type.
 func (x *GLShader) GetArgVec2(ArgsVar *glib.Bytes, IdxVar int32, OutValueVar *graphene.Vec2) {
-
 	xGLShaderGetArgVec2(x.GoPointer(), ArgsVar, IdxVar, OutValueVar)
-
 }
 
 var xGLShaderGetArgVec3 func(uintptr, *glib.Bytes, int32, *graphene.Vec3)
@@ -473,9 +443,7 @@ var xGLShaderGetArgVec3 func(uintptr, *glib.Bytes, int32, *graphene.Vec3)
 //
 // The uniform must be of vec3 type.
 func (x *GLShader) GetArgVec3(ArgsVar *glib.Bytes, IdxVar int32, OutValueVar *graphene.Vec3) {
-
 	xGLShaderGetArgVec3(x.GoPointer(), ArgsVar, IdxVar, OutValueVar)
-
 }
 
 var xGLShaderGetArgVec4 func(uintptr, *glib.Bytes, int32, *graphene.Vec4)
@@ -484,16 +452,13 @@ var xGLShaderGetArgVec4 func(uintptr, *glib.Bytes, int32, *graphene.Vec4)
 //
 // The uniform must be of vec4 type.
 func (x *GLShader) GetArgVec4(ArgsVar *glib.Bytes, IdxVar int32, OutValueVar *graphene.Vec4) {
-
 	xGLShaderGetArgVec4(x.GoPointer(), ArgsVar, IdxVar, OutValueVar)
-
 }
 
 var xGLShaderGetArgsSize func(uintptr) uint
 
 // Get the size of the data block used to specify arguments for this shader.
 func (x *GLShader) GetArgsSize() uint {
-
 	cret := xGLShaderGetArgsSize(x.GoPointer())
 	return cret
 }
@@ -506,7 +471,6 @@ var xGLShaderGetNTextures func(uintptr) int32
 // in your usecase. It is determined by looking at the highest
 // u_textureN value that the shader defines.
 func (x *GLShader) GetNTextures() int32 {
-
 	cret := xGLShaderGetNTextures(x.GoPointer())
 	return cret
 }
@@ -515,7 +479,6 @@ var xGLShaderGetNUniforms func(uintptr) int32
 
 // Get the number of declared uniforms for this shader.
 func (x *GLShader) GetNUniforms() int32 {
-
 	cret := xGLShaderGetNUniforms(x.GoPointer())
 	return cret
 }
@@ -525,7 +488,6 @@ var xGLShaderGetResource func(uintptr) string
 // Gets the resource path for the GLSL sourcecode being used
 // to render this shader.
 func (x *GLShader) GetResource() string {
-
 	cret := xGLShaderGetResource(x.GoPointer())
 	return cret
 }
@@ -534,7 +496,6 @@ var xGLShaderGetSource func(uintptr) *glib.Bytes
 
 // Gets the GLSL sourcecode being used to render this shader.
 func (x *GLShader) GetSource() *glib.Bytes {
-
 	cret := xGLShaderGetSource(x.GoPointer())
 	return cret
 }
@@ -543,7 +504,6 @@ var xGLShaderGetUniformName func(uintptr, int32) string
 
 // Get the name of the declared uniform for this shader at index @idx.
 func (x *GLShader) GetUniformName(IdxVar int32) string {
-
 	cret := xGLShaderGetUniformName(x.GoPointer(), IdxVar)
 	return cret
 }
@@ -552,7 +512,6 @@ var xGLShaderGetUniformOffset func(uintptr, int32) int32
 
 // Get the offset into the data block where data for this uniforms is stored.
 func (x *GLShader) GetUniformOffset(IdxVar int32) int32 {
-
 	cret := xGLShaderGetUniformOffset(x.GoPointer(), IdxVar)
 	return cret
 }
@@ -561,7 +520,6 @@ var xGLShaderGetUniformType func(uintptr, int32) GLUniformType
 
 // Get the type of the declared uniform for this shader at index @idx.
 func (x *GLShader) GetUniformType(IdxVar int32) GLUniformType {
-
 	cret := xGLShaderGetUniformType(x.GoPointer(), IdxVar)
 	return cret
 }
@@ -669,5 +627,4 @@ func init() {
 	core.PuregoSafeRegister(&xGLShaderGetUniformName, libs, "gsk_gl_shader_get_uniform_name")
 	core.PuregoSafeRegister(&xGLShaderGetUniformOffset, libs, "gsk_gl_shader_get_uniform_offset")
 	core.PuregoSafeRegister(&xGLShaderGetUniformType, libs, "gsk_gl_shader_get_uniform_type")
-
 }

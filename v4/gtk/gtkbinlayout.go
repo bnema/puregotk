@@ -84,5 +84,4 @@ func init() {
 	core.PuregoSafeRegister(&xBinLayoutGLibType, libs, "gtk_bin_layout_get_type")
 
 	core.PuregoSafeRegister(&xNewBinLayout, libs, "gtk_bin_layout_new")
-
 }

@@ -222,7 +222,6 @@ func (x *ListModelBase) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *ListModelBase) GetItem(PositionVar uint32) uintptr {
-
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -236,7 +235,6 @@ func (x *ListModelBase) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ListModelBase) GetItemType() types.GType {
-
 	cret := XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -247,7 +245,6 @@ func (x *ListModelBase) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ListModelBase) GetNItems() uint32 {
-
 	cret := XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -298,16 +295,16 @@ func (x *ListModelBase) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ListModelBase) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
-var XGListModelGetItem func(uintptr, uint32) uintptr
-var XGListModelGetItemType func(uintptr) types.GType
-var XGListModelGetNItems func(uintptr) uint32
-var XGListModelGetObject func(uintptr, uint32) uintptr
-var XGListModelItemsChanged func(uintptr, uint32, uint32, uint32)
+var (
+	XGListModelGetItem      func(uintptr, uint32) uintptr
+	XGListModelGetItemType  func(uintptr) types.GType
+	XGListModelGetNItems    func(uintptr) uint32
+	XGListModelGetObject    func(uintptr, uint32) uintptr
+	XGListModelItemsChanged func(uintptr, uint32, uint32, uint32)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -328,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&XGListModelGetNItems, libs, "g_list_model_get_n_items")
 	core.PuregoSafeRegister(&XGListModelGetObject, libs, "g_list_model_get_object")
 	core.PuregoSafeRegister(&XGListModelItemsChanged, libs, "g_list_model_items_changed")
-
 }

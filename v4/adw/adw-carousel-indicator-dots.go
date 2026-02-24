@@ -96,9 +96,7 @@ var xCarouselIndicatorDotsSetCarousel func(uintptr, uintptr)
 
 // Sets the displayed carousel.
 func (x *CarouselIndicatorDots) SetCarousel(CarouselVar *Carousel) {
-
 	xCarouselIndicatorDotsSetCarousel(x.GoPointer(), CarouselVar.GoPointer())
-
 }
 
 func (c *CarouselIndicatorDots) GoPointer() uintptr {
@@ -122,9 +120,7 @@ func (c *CarouselIndicatorDots) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *CarouselIndicatorDots) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -145,7 +141,6 @@ func (x *CarouselIndicatorDots) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *CarouselIndicatorDots) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -170,7 +165,6 @@ func (x *CarouselIndicatorDots) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *CarouselIndicatorDots) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -209,30 +203,23 @@ func (x *CarouselIndicatorDots) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *CarouselIndicatorDots) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *CarouselIndicatorDots) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *CarouselIndicatorDots) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *CarouselIndicatorDots) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -245,9 +232,7 @@ func (x *CarouselIndicatorDots) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *CarouselIndicatorDots) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -255,9 +240,7 @@ func (x *CarouselIndicatorDots) SetAccessibleParent(ParentVar gtk.Accessible, Ne
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *CarouselIndicatorDots) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -266,9 +249,7 @@ func (x *CarouselIndicatorDots) UpdateNextAccessibleSibling(NewSiblingVar gtk.Ac
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *CarouselIndicatorDots) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -290,9 +271,7 @@ func (x *CarouselIndicatorDots) UpdatePlatformState(StateVar gtk.AccessiblePlatf
 //
 // ```
 func (x *CarouselIndicatorDots) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -302,9 +281,7 @@ func (x *CarouselIndicatorDots) UpdateProperty(FirstPropertyVar gtk.AccessiblePr
 //
 // This function is meant to be used by language bindings.
 func (x *CarouselIndicatorDots) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -326,9 +303,7 @@ func (x *CarouselIndicatorDots) UpdatePropertyValue(NPropertiesVar int32, Proper
 //
 // ```
 func (x *CarouselIndicatorDots) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -338,9 +313,7 @@ func (x *CarouselIndicatorDots) UpdateRelation(FirstRelationVar gtk.AccessibleRe
 //
 // This function is meant to be used by language bindings.
 func (x *CarouselIndicatorDots) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -363,9 +336,7 @@ func (x *CarouselIndicatorDots) UpdateRelationValue(NRelationsVar int32, Relatio
 //
 // ```
 func (x *CarouselIndicatorDots) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -375,9 +346,7 @@ func (x *CarouselIndicatorDots) UpdateState(FirstStateVar gtk.AccessibleState, v
 //
 // This function is meant to be used by language bindings.
 func (x *CarouselIndicatorDots) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -385,23 +354,19 @@ func (x *CarouselIndicatorDots) UpdateStateValue(NStatesVar int32, StatesVar []g
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CarouselIndicatorDots) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *CarouselIndicatorDots) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *CarouselIndicatorDots) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -422,5 +387,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xCarouselIndicatorDotsGetCarousel, libs, "adw_carousel_indicator_dots_get_carousel")
 	core.PuregoSafeRegister(&xCarouselIndicatorDotsSetCarousel, libs, "adw_carousel_indicator_dots_set_carousel")
-
 }

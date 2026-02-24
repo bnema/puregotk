@@ -223,7 +223,6 @@ func (x *SocketConnection) Connect(AddressVar *SocketAddress, CancellableVar *Ca
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConnectionConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -239,9 +238,7 @@ var xSocketConnectionConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 //
 // Use g_socket_connection_connect_finish() to retrieve the result.
 func (x *SocketConnection) ConnectAsync(AddressVar *SocketAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSocketConnectionConnectFinish func(uintptr, uintptr, **glib.Error) bool
@@ -255,7 +252,6 @@ func (x *SocketConnection) ConnectFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConnectionGetLocalAddress func(uintptr) uintptr
@@ -276,7 +272,6 @@ func (x *SocketConnection) GetLocalAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketConnectionGetRemoteAddress func(uintptr) uintptr
@@ -304,7 +299,6 @@ func (x *SocketConnection) GetRemoteAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketConnectionGetSocket func(uintptr) uintptr
@@ -331,7 +325,6 @@ var xSocketConnectionIsConnected func(uintptr) bool
 // Checks if @connection is connected. This is equivalent to calling
 // g_socket_is_connected() on @connection's underlying #GSocket.
 func (x *SocketConnection) IsConnected() bool {
-
 	cret := xSocketConnectionIsConnected(x.GoPointer())
 	return cret
 }
@@ -354,7 +347,6 @@ var xSocketConnectionFactoryLookupType func(SocketFamily, SocketType, int32) typ
 //
 // If no type is registered, the #GSocketConnection base type is returned.
 func SocketConnectionFactoryLookupType(FamilyVar SocketFamily, TypeVar SocketType, ProtocolIdVar int32) types.GType {
-
 	cret := xSocketConnectionFactoryLookupType(FamilyVar, TypeVar, ProtocolIdVar)
 	return cret
 }
@@ -366,9 +358,7 @@ var xSocketConnectionFactoryRegisterType func(types.GType, SocketFamily, SocketT
 //
 // If no type is registered, the #GSocketConnection base type is returned.
 func SocketConnectionFactoryRegisterType(GTypeVar types.GType, FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar int32) {
-
 	xSocketConnectionFactoryRegisterType(GTypeVar, FamilyVar, TypeVar, ProtocolVar)
-
 }
 
 func init() {
@@ -395,5 +385,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSocketConnectionFactoryLookupType, libs, "g_socket_connection_factory_lookup_type")
 	core.PuregoSafeRegister(&xSocketConnectionFactoryRegisterType, libs, "g_socket_connection_factory_register_type")
-
 }

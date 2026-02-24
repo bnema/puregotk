@@ -85,5 +85,4 @@ func init() {
 	core.PuregoSafeRegister(&xVulkanRendererGLibType, libs, "gsk_vulkan_renderer_get_type")
 
 	core.PuregoSafeRegister(&xNewVulkanRenderer, libs, "gsk_vulkan_renderer_new")
-
 }

@@ -72,7 +72,6 @@ var xNewPopupLayout func(*Rectangle, Gravity, Gravity) *PopupLayout
 // [method@Gdk.PopupLayout.set_offset], which is equivalent to offsetting the
 // position of surface.
 func NewPopupLayout(AnchorRectVar *Rectangle, RectAnchorVar Gravity, SurfaceAnchorVar Gravity) *PopupLayout {
-
 	cret := xNewPopupLayout(AnchorRectVar, RectAnchorVar, SurfaceAnchorVar)
 	return cret
 }
@@ -81,7 +80,6 @@ var xPopupLayoutCopy func(uintptr) *PopupLayout
 
 // Makes a copy of @layout.
 func (x *PopupLayout) Copy() *PopupLayout {
-
 	cret := xPopupLayoutCopy(x.GoPointer())
 	return cret
 }
@@ -90,7 +88,6 @@ var xPopupLayoutEqual func(uintptr, *PopupLayout) bool
 
 // Check whether @layout and @other has identical layout properties.
 func (x *PopupLayout) Equal(OtherVar *PopupLayout) bool {
-
 	cret := xPopupLayoutEqual(x.GoPointer(), OtherVar)
 	return cret
 }
@@ -99,7 +96,6 @@ var xPopupLayoutGetAnchorHints func(uintptr) AnchorHints
 
 // Get the anchor hints.
 func (x *PopupLayout) GetAnchorHints() AnchorHints {
-
 	cret := xPopupLayoutGetAnchorHints(x.GoPointer())
 	return cret
 }
@@ -108,7 +104,6 @@ var xPopupLayoutGetAnchorRect func(uintptr) *Rectangle
 
 // Get the anchor rectangle.
 func (x *PopupLayout) GetAnchorRect() *Rectangle {
-
 	cret := xPopupLayoutGetAnchorRect(x.GoPointer())
 	return cret
 }
@@ -117,16 +112,13 @@ var xPopupLayoutGetOffset func(uintptr, *int32, *int32)
 
 // Retrieves the offset for the anchor rectangle.
 func (x *PopupLayout) GetOffset(DxVar *int32, DyVar *int32) {
-
 	xPopupLayoutGetOffset(x.GoPointer(), DxVar, DyVar)
-
 }
 
 var xPopupLayoutGetRectAnchor func(uintptr) Gravity
 
 // Returns the anchor position on the anchor rectangle.
 func (x *PopupLayout) GetRectAnchor() Gravity {
-
 	cret := xPopupLayoutGetRectAnchor(x.GoPointer())
 	return cret
 }
@@ -135,16 +127,13 @@ var xPopupLayoutGetShadowWidth func(uintptr, *int32, *int32, *int32, *int32)
 
 // Obtains the shadow widths of this layout.
 func (x *PopupLayout) GetShadowWidth(LeftVar *int32, RightVar *int32, TopVar *int32, BottomVar *int32) {
-
 	xPopupLayoutGetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
-
 }
 
 var xPopupLayoutGetSurfaceAnchor func(uintptr) Gravity
 
 // Returns the anchor position on the popup surface.
 func (x *PopupLayout) GetSurfaceAnchor() Gravity {
-
 	cret := xPopupLayoutGetSurfaceAnchor(x.GoPointer())
 	return cret
 }
@@ -153,7 +142,6 @@ var xPopupLayoutRef func(uintptr) *PopupLayout
 
 // Increases the reference count of @value.
 func (x *PopupLayout) Ref() *PopupLayout {
-
 	cret := xPopupLayoutRef(x.GoPointer())
 	return cret
 }
@@ -168,36 +156,28 @@ var xPopupLayoutSetAnchorHints func(uintptr, AnchorHints)
 // `GDK_GRAVITY_NORTH_EAST` and vice versa if @surface extends
 // beyond the left or right edges of the monitor.
 func (x *PopupLayout) SetAnchorHints(AnchorHintsVar AnchorHints) {
-
 	xPopupLayoutSetAnchorHints(x.GoPointer(), AnchorHintsVar)
-
 }
 
 var xPopupLayoutSetAnchorRect func(uintptr, *Rectangle)
 
 // Set the anchor rectangle.
 func (x *PopupLayout) SetAnchorRect(AnchorRectVar *Rectangle) {
-
 	xPopupLayoutSetAnchorRect(x.GoPointer(), AnchorRectVar)
-
 }
 
 var xPopupLayoutSetOffset func(uintptr, int32, int32)
 
 // Offset the position of the anchor rectangle with the given delta.
 func (x *PopupLayout) SetOffset(DxVar int32, DyVar int32) {
-
 	xPopupLayoutSetOffset(x.GoPointer(), DxVar, DyVar)
-
 }
 
 var xPopupLayoutSetRectAnchor func(uintptr, Gravity)
 
 // Set the anchor on the anchor rectangle.
 func (x *PopupLayout) SetRectAnchor(AnchorVar Gravity) {
-
 	xPopupLayoutSetRectAnchor(x.GoPointer(), AnchorVar)
-
 }
 
 var xPopupLayoutSetShadowWidth func(uintptr, int32, int32, int32, int32)
@@ -208,27 +188,21 @@ var xPopupLayoutSetShadowWidth func(uintptr, int32, int32, int32, int32)
 // surface size that would consist of the shadow margin
 // surrounding the window, would there be any.
 func (x *PopupLayout) SetShadowWidth(LeftVar int32, RightVar int32, TopVar int32, BottomVar int32) {
-
 	xPopupLayoutSetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
-
 }
 
 var xPopupLayoutSetSurfaceAnchor func(uintptr, Gravity)
 
 // Set the anchor on the popup surface.
 func (x *PopupLayout) SetSurfaceAnchor(AnchorVar Gravity) {
-
 	xPopupLayoutSetSurfaceAnchor(x.GoPointer(), AnchorVar)
-
 }
 
 var xPopupLayoutUnref func(uintptr)
 
 // Decreases the reference count of @value.
 func (x *PopupLayout) Unref() {
-
 	xPopupLayoutUnref(x.GoPointer())
-
 }
 
 // Positioning hints for aligning a surface relative to a rectangle.
@@ -310,5 +284,4 @@ func init() {
 	core.PuregoSafeRegister(&xPopupLayoutSetShadowWidth, libs, "gdk_popup_layout_set_shadow_width")
 	core.PuregoSafeRegister(&xPopupLayoutSetSurfaceAnchor, libs, "gdk_popup_layout_set_surface_anchor")
 	core.PuregoSafeRegister(&xPopupLayoutUnref, libs, "gdk_popup_layout_unref")
-
 }

@@ -24,7 +24,6 @@ var xDmabufErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gdk.DmabufTexture] errors.
 func DmabufErrorQuark() glib.Quark {
-
 	cret := xDmabufErrorQuark()
 	return cret
 }
@@ -73,9 +72,7 @@ func (c *DmabufTexture) SetGoPointer(ptr uintptr) {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *DmabufTexture) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -103,7 +100,6 @@ func (x *DmabufTexture) GetCurrentImage() *PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *DmabufTexture) GetFlags() PaintableFlags {
-
 	cret := XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -126,7 +122,6 @@ func (x *DmabufTexture) GetFlags() PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *DmabufTexture) GetIntrinsicAspectRatio() float64 {
-
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -142,7 +137,6 @@ func (x *DmabufTexture) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *DmabufTexture) GetIntrinsicHeight() int32 {
-
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -158,7 +152,6 @@ func (x *DmabufTexture) GetIntrinsicHeight() int32 {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *DmabufTexture) GetIntrinsicWidth() int32 {
-
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -174,9 +167,7 @@ func (x *DmabufTexture) GetIntrinsicWidth() int32 {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *DmabufTexture) InvalidateContents() {
-
 	XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -190,9 +181,7 @@ func (x *DmabufTexture) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *DmabufTexture) InvalidateSize() {
-
 	XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -201,21 +190,17 @@ func (x *DmabufTexture) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *DmabufTexture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar float64) {
-
 	XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 // Checks if two icons are equal.
 func (x *DmabufTexture) Equal(Icon2Var gio.Icon) bool {
-
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *DmabufTexture) Hash() uint32 {
-
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -226,7 +211,6 @@ func (x *DmabufTexture) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *DmabufTexture) Serialize() *glib.Variant {
-
 	cret := gio.XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -248,7 +232,6 @@ func (x *DmabufTexture) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *DmabufTexture) ToString() string {
-
 	cret := gio.XGIconToString(x.GoPointer())
 	return cret
 }
@@ -270,16 +253,13 @@ func (x *DmabufTexture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *DmabufTexture) LoadAsync(SizeVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -298,7 +278,6 @@ func (x *DmabufTexture) LoadFinish(ResVar gio.AsyncResult, TypeVar *string) (*gi
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -316,5 +295,4 @@ func init() {
 	core.PuregoSafeRegister(&xDmabufErrorQuark, libs, "gdk_dmabuf_error_quark")
 
 	core.PuregoSafeRegister(&xDmabufTextureGLibType, libs, "gdk_dmabuf_texture_get_type")
-
 }

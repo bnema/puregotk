@@ -118,7 +118,6 @@ var xEventControllerScrollGetFlags func(uintptr) EventControllerScrollFlags
 
 // Gets the flags conditioning the scroll controller behavior.
 func (x *EventControllerScroll) GetFlags() EventControllerScrollFlags {
-
 	cret := xEventControllerScrollGetFlags(x.GoPointer())
 	return cret
 }
@@ -131,7 +130,6 @@ var xEventControllerScrollGetUnit func(uintptr) gdk.ScrollUnit
 // Always returns %GDK_SCROLL_UNIT_WHEEL if the
 // %GTK_EVENT_CONTROLLER_SCROLL_DISCRETE flag is set.
 func (x *EventControllerScroll) GetUnit() gdk.ScrollUnit {
-
 	cret := xEventControllerScrollGetUnit(x.GoPointer())
 	return cret
 }
@@ -140,9 +138,7 @@ var xEventControllerScrollSetFlags func(uintptr, EventControllerScrollFlags)
 
 // Sets the flags conditioning scroll controller behavior.
 func (x *EventControllerScroll) SetFlags(FlagsVar EventControllerScrollFlags) {
-
 	xEventControllerScrollSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 func (c *EventControllerScroll) GoPointer() uintptr {
@@ -174,7 +170,6 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 		cbFn := *cb
 
 		cbFn(fa, VelXVarp, VelYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -198,7 +193,6 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 		cbFn := *cb
 
 		return cbFn(fa, DxVarp, DyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -220,7 +214,6 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -242,7 +235,6 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -270,5 +262,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerScrollGetFlags, libs, "gtk_event_controller_scroll_get_flags")
 	core.PuregoSafeRegister(&xEventControllerScrollGetUnit, libs, "gtk_event_controller_scroll_get_unit")
 	core.PuregoSafeRegister(&xEventControllerScrollSetFlags, libs, "gtk_event_controller_scroll_set_flags")
-
 }

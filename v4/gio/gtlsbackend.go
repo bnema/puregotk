@@ -316,14 +316,12 @@ func (x *TlsBackendBase) SetGoPointer(ptr uintptr) {
 
 // Gets the #GType of @backend's #GTlsCertificate implementation.
 func (x *TlsBackendBase) GetCertificateType() types.GType {
-
 	cret := XGTlsBackendGetCertificateType(x.GoPointer())
 	return cret
 }
 
 // Gets the #GType of @backend's #GTlsClientConnection implementation.
 func (x *TlsBackendBase) GetClientConnectionType() types.GType {
-
 	cret := XGTlsBackendGetClientConnectionType(x.GoPointer())
 	return cret
 }
@@ -344,28 +342,24 @@ func (x *TlsBackendBase) GetDefaultDatabase() *TlsDatabase {
 
 // Gets the #GType of @backend’s #GDtlsClientConnection implementation.
 func (x *TlsBackendBase) GetDtlsClientConnectionType() types.GType {
-
 	cret := XGTlsBackendGetDtlsClientConnectionType(x.GoPointer())
 	return cret
 }
 
 // Gets the #GType of @backend’s #GDtlsServerConnection implementation.
 func (x *TlsBackendBase) GetDtlsServerConnectionType() types.GType {
-
 	cret := XGTlsBackendGetDtlsServerConnectionType(x.GoPointer())
 	return cret
 }
 
 // Gets the #GType of @backend's #GTlsFileDatabase implementation.
 func (x *TlsBackendBase) GetFileDatabaseType() types.GType {
-
 	cret := XGTlsBackendGetFileDatabaseType(x.GoPointer())
 	return cret
 }
 
 // Gets the #GType of @backend's #GTlsServerConnection implementation.
 func (x *TlsBackendBase) GetServerConnectionType() types.GType {
-
 	cret := XGTlsBackendGetServerConnectionType(x.GoPointer())
 	return cret
 }
@@ -379,15 +373,12 @@ func (x *TlsBackendBase) GetServerConnectionType() types.GType {
 // Setting a %NULL default database will reset to using the system default
 // database as if g_tls_backend_set_default_database() had never been called.
 func (x *TlsBackendBase) SetDefaultDatabase(DatabaseVar *TlsDatabase) {
-
 	XGTlsBackendSetDefaultDatabase(x.GoPointer(), DatabaseVar.GoPointer())
-
 }
 
 // Checks if DTLS is supported. DTLS support may not be available even if TLS
 // support is available, and vice-versa.
 func (x *TlsBackendBase) SupportsDtls() bool {
-
 	cret := XGTlsBackendSupportsDtls(x.GoPointer())
 	return cret
 }
@@ -395,21 +386,22 @@ func (x *TlsBackendBase) SupportsDtls() bool {
 // Checks if TLS is supported; if this returns %FALSE for the default
 // #GTlsBackend, it means no "real" TLS backend is available.
 func (x *TlsBackendBase) SupportsTls() bool {
-
 	cret := XGTlsBackendSupportsTls(x.GoPointer())
 	return cret
 }
 
-var XGTlsBackendGetCertificateType func(uintptr) types.GType
-var XGTlsBackendGetClientConnectionType func(uintptr) types.GType
-var XGTlsBackendGetDefaultDatabase func(uintptr) uintptr
-var XGTlsBackendGetDtlsClientConnectionType func(uintptr) types.GType
-var XGTlsBackendGetDtlsServerConnectionType func(uintptr) types.GType
-var XGTlsBackendGetFileDatabaseType func(uintptr) types.GType
-var XGTlsBackendGetServerConnectionType func(uintptr) types.GType
-var XGTlsBackendSetDefaultDatabase func(uintptr, uintptr)
-var XGTlsBackendSupportsDtls func(uintptr) bool
-var XGTlsBackendSupportsTls func(uintptr) bool
+var (
+	XGTlsBackendGetCertificateType          func(uintptr) types.GType
+	XGTlsBackendGetClientConnectionType     func(uintptr) types.GType
+	XGTlsBackendGetDefaultDatabase          func(uintptr) uintptr
+	XGTlsBackendGetDtlsClientConnectionType func(uintptr) types.GType
+	XGTlsBackendGetDtlsServerConnectionType func(uintptr) types.GType
+	XGTlsBackendGetFileDatabaseType         func(uintptr) types.GType
+	XGTlsBackendGetServerConnectionType     func(uintptr) types.GType
+	XGTlsBackendSetDefaultDatabase          func(uintptr, uintptr)
+	XGTlsBackendSupportsDtls                func(uintptr) bool
+	XGTlsBackendSupportsTls                 func(uintptr) bool
+)
 
 const (
 	// Extension point for TLS functionality via #GTlsBackend.
@@ -460,5 +452,4 @@ func init() {
 	core.PuregoSafeRegister(&XGTlsBackendSetDefaultDatabase, libs, "g_tls_backend_set_default_database")
 	core.PuregoSafeRegister(&XGTlsBackendSupportsDtls, libs, "g_tls_backend_supports_dtls")
 	core.PuregoSafeRegister(&XGTlsBackendSupportsTls, libs, "g_tls_backend_supports_tls")
-
 }

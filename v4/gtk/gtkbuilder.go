@@ -79,7 +79,6 @@ var xBuilderErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gtk.Builder] errors.
 func BuilderErrorQuark() glib.Quark {
-
 	cret := xBuilderErrorQuark()
 	return cret
 }
@@ -589,7 +588,6 @@ func (x *Builder) AddFromFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderAddFromResource func(uintptr, string, **glib.Error) bool
@@ -617,7 +615,6 @@ func (x *Builder) AddFromResource(ResourcePathVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderAddFromString func(uintptr, string, int, **glib.Error) bool
@@ -645,7 +642,6 @@ func (x *Builder) AddFromString(BufferVar string, LengthVar int) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderAddObjectsFromFile func(uintptr, string, []string, **glib.Error) bool
@@ -669,7 +665,6 @@ func (x *Builder) AddObjectsFromFile(FilenameVar string, ObjectIdsVar []string) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderAddObjectsFromResource func(uintptr, string, []string, **glib.Error) bool
@@ -693,7 +688,6 @@ func (x *Builder) AddObjectsFromResource(ResourcePathVar string, ObjectIdsVar []
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderAddObjectsFromString func(uintptr, string, int, []string, **glib.Error) bool
@@ -716,7 +710,6 @@ func (x *Builder) AddObjectsFromString(BufferVar string, LengthVar int, ObjectId
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderCreateClosure func(uintptr, string, BuilderClosureFlags, uintptr, **glib.Error) *gobject.Closure
@@ -736,7 +729,6 @@ func (x *Builder) CreateClosure(FunctionNameVar string, FlagsVar BuilderClosureF
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderExposeObject func(uintptr, string, uintptr)
@@ -749,9 +741,7 @@ var xBuilderExposeObject func(uintptr, string, uintptr)
 // names. `gtk_builder_get_object()` may be used to determine
 // if an object has already been added with @name.
 func (x *Builder) ExposeObject(NameVar string, ObjectVar *gobject.Object) {
-
 	xBuilderExposeObject(x.GoPointer(), NameVar, ObjectVar.GoPointer())
-
 }
 
 var xBuilderExtendWithTemplate func(uintptr, uintptr, types.GType, string, int, **glib.Error) bool
@@ -769,7 +759,6 @@ func (x *Builder) ExtendWithTemplate(ObjectVar *gobject.Object, TemplateTypeVar 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderGetCurrentObject func(uintptr) uintptr
@@ -816,7 +805,6 @@ var xBuilderGetObjects func(uintptr) *glib.SList
 // Note that this function does not increment the reference
 // counts of the returned objects.
 func (x *Builder) GetObjects() *glib.SList {
-
 	cret := xBuilderGetObjects(x.GoPointer())
 	return cret
 }
@@ -842,7 +830,6 @@ var xBuilderGetTranslationDomain func(uintptr) string
 
 // Gets the translation domain of @builder.
 func (x *Builder) GetTranslationDomain() string {
-
 	cret := xBuilderGetTranslationDomain(x.GoPointer())
 	return cret
 }
@@ -855,7 +842,6 @@ var xBuilderGetTypeFromName func(uintptr, string) types.GType
 // for that purpose. This is mainly used when implementing
 // the `GtkBuildable` interface on a type.
 func (x *Builder) GetTypeFromName(TypeNameVar string) types.GType {
-
 	cret := xBuilderGetTypeFromName(x.GoPointer(), TypeNameVar)
 	return cret
 }
@@ -872,9 +858,7 @@ var xBuilderSetCurrentObject func(uintptr, uintptr)
 // object to the widget the template is inited for. For functions like
 // [ctor@Gtk.Builder.new_from_resource], the current object will be %NULL.
 func (x *Builder) SetCurrentObject(CurrentObjectVar *gobject.Object) {
-
 	xBuilderSetCurrentObject(x.GoPointer(), CurrentObjectVar.GoPointer())
-
 }
 
 var xBuilderSetScope func(uintptr, uintptr)
@@ -883,18 +867,14 @@ var xBuilderSetScope func(uintptr, uintptr)
 //
 // If @scope is %NULL, a new [class@Gtk.BuilderCScope] will be created.
 func (x *Builder) SetScope(ScopeVar BuilderScope) {
-
 	xBuilderSetScope(x.GoPointer(), ScopeVar.GoPointer())
-
 }
 
 var xBuilderSetTranslationDomain func(uintptr, string)
 
 // Sets the translation domain of @builder.
 func (x *Builder) SetTranslationDomain(DomainVar string) {
-
 	xBuilderSetTranslationDomain(x.GoPointer(), DomainVar)
-
 }
 
 var xBuilderValueFromString func(uintptr, uintptr, string, *gobject.Value, **glib.Error) bool
@@ -918,7 +898,6 @@ func (x *Builder) ValueFromString(PspecVar *gobject.ParamSpec, StringVar string,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBuilderValueFromStringType func(uintptr, types.GType, string, *gobject.Value, **glib.Error) bool
@@ -941,7 +920,6 @@ func (x *Builder) ValueFromStringType(TypeVar types.GType, StringVar string, Val
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *Builder) GoPointer() uintptr {
@@ -1023,5 +1001,4 @@ func init() {
 	core.PuregoSafeRegister(&xBuilderSetTranslationDomain, libs, "gtk_builder_set_translation_domain")
 	core.PuregoSafeRegister(&xBuilderValueFromString, libs, "gtk_builder_value_from_string")
 	core.PuregoSafeRegister(&xBuilderValueFromStringType, libs, "gtk_builder_value_from_string_type")
-
 }

@@ -129,5 +129,4 @@ func init() {
 	core.PuregoSafeRegister(&xNglRendererGLibType, libs, "gsk_ngl_renderer_get_type")
 
 	core.PuregoSafeRegister(&xNewNglRenderer, libs, "gsk_ngl_renderer_new")
-
 }

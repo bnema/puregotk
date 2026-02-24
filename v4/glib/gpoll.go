@@ -56,7 +56,6 @@ var xPoll func(*PollFD, uint32, int32) int32
 // Windows, the easiest solution is to construct all of your
 // #GPollFDs with g_io_channel_win32_make_pollfd().
 func Poll(FdsVar *PollFD, NfdsVar uint32, TimeoutVar int32) int32 {
-
 	cret := xPoll(FdsVar, NfdsVar, TimeoutVar)
 	return cret
 }
@@ -76,5 +75,4 @@ func init() {
 	core.PuregoSafeRegister(&xPoll, libs, "g_poll")
 
 	core.PuregoSafeRegister(&xPollFDGLibType, libs, "g_pollfd_get_type")
-
 }

@@ -15,9 +15,7 @@ var xRenderActivity func(uintptr, *cairo.Context, float64, float64, float64, flo
 // The state %GTK_STATE_FLAG_CHECKED determines whether there is
 // activity going on.
 func RenderActivity(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderActivity(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderArrow func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -28,9 +26,7 @@ var xRenderArrow func(uintptr, *cairo.Context, float64, float64, float64, float6
 //
 // ![](arrows.png)
 func RenderArrow(ContextVar *StyleContext, CrVar *cairo.Context, AngleVar float64, XVar float64, YVar float64, SizeVar float64) {
-
 	xRenderArrow(ContextVar.GoPointer(), CrVar, AngleVar, XVar, YVar, SizeVar)
-
 }
 
 var xRenderBackground func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -42,9 +38,7 @@ var xRenderBackground func(uintptr, *cairo.Context, float64, float64, float64, f
 //
 // ![](background.png)
 func RenderBackground(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderBackground(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderCheck func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -59,9 +53,7 @@ var xRenderCheck func(uintptr, *cairo.Context, float64, float64, float64, float6
 //
 // ![](checks.png)
 func RenderCheck(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderCheck(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderExpander func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -74,9 +66,7 @@ var xRenderExpander func(uintptr, *cairo.Context, float64, float64, float64, flo
 //
 // ![](expanders.png)
 func RenderExpander(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderExpander(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderFocus func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -87,9 +77,7 @@ var xRenderFocus func(uintptr, *cairo.Context, float64, float64, float64, float6
 //
 // ![](focus.png)
 func RenderFocus(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderFocus(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderFrame func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -101,9 +89,7 @@ var xRenderFrame func(uintptr, *cairo.Context, float64, float64, float64, float6
 //
 // ![](frames.png)
 func RenderFrame(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderFrame(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderHandle func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -115,9 +101,7 @@ var xRenderHandle func(uintptr, *cairo.Context, float64, float64, float64, float
 //
 // ![](handles.png)
 func RenderHandle(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderHandle(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRenderIcon func(uintptr, *cairo.Context, uintptr, float64, float64)
@@ -128,27 +112,21 @@ var xRenderIcon func(uintptr, *cairo.Context, uintptr, float64, float64)
 // regardless of scaling factors, which may not be appropriate when
 // drawing on displays with high pixel densities.
 func RenderIcon(ContextVar *StyleContext, CrVar *cairo.Context, TextureVar *gdk.Texture, XVar float64, YVar float64) {
-
 	xRenderIcon(ContextVar.GoPointer(), CrVar, TextureVar.GoPointer(), XVar, YVar)
-
 }
 
 var xRenderLayout func(uintptr, *cairo.Context, float64, float64, uintptr)
 
 // Renders @layout on the coordinates @x, @y
 func RenderLayout(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, LayoutVar *pango.Layout) {
-
 	xRenderLayout(ContextVar.GoPointer(), CrVar, XVar, YVar, LayoutVar.GoPointer())
-
 }
 
 var xRenderLine func(uintptr, *cairo.Context, float64, float64, float64, float64)
 
 // Renders a line from (x0, y0) to (x1, y1).
 func RenderLine(ContextVar *StyleContext, CrVar *cairo.Context, X0Var float64, Y0Var float64, X1Var float64, Y1Var float64) {
-
 	xRenderLine(ContextVar.GoPointer(), CrVar, X0Var, Y0Var, X1Var, Y1Var)
-
 }
 
 var xRenderOption func(uintptr, *cairo.Context, float64, float64, float64, float64)
@@ -161,9 +139,7 @@ var xRenderOption func(uintptr, *cairo.Context, float64, float64, float64, float
 //
 // ![](options.png)
 func RenderOption(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xRenderOption(ContextVar.GoPointer(), CrVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 func init() {
@@ -190,5 +166,4 @@ func init() {
 	core.PuregoSafeRegister(&xRenderLayout, libs, "gtk_render_layout")
 	core.PuregoSafeRegister(&xRenderLine, libs, "gtk_render_line")
 	core.PuregoSafeRegister(&xRenderOption, libs, "gtk_render_option")
-
 }

@@ -21,7 +21,6 @@ var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) *cairo.R
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
 func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int32, YOriginVar int32, IndexRangesVar int32, NRangesVar int32) *cairo.Region {
-
 	cret := xPangoLayoutGetClipRegion(LayoutVar.GoPointer(), XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
 	return cret
 }
@@ -44,7 +43,6 @@ var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32,
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
 func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int32, YOriginVar int32, IndexRangesVar []int32, NRangesVar int32) *cairo.Region {
-
 	cret := xPangoLayoutLineGetClipRegion(LineVar, XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
 	return cret
 }
@@ -63,5 +61,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPangoLayoutGetClipRegion, libs, "gdk_pango_layout_get_clip_region")
 	core.PuregoSafeRegister(&xPangoLayoutLineGetClipRegion, libs, "gdk_pango_layout_line_get_clip_region")
-
 }

@@ -52,7 +52,6 @@ var xAuthNegotiateSupported func() bool
 // still be added to a [class@Session], but libsoup will never attempt to
 // actually use this auth type.
 func AuthNegotiateSupported() bool {
-
 	cret := xAuthNegotiateSupported()
 	return cret
 }
@@ -72,5 +71,4 @@ func init() {
 	core.PuregoSafeRegister(&xAuthNegotiateGLibType, libs, "soup_auth_negotiate_get_type")
 
 	core.PuregoSafeRegister(&xAuthNegotiateSupported, libs, "soup_auth_negotiate_supported")
-
 }

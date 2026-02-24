@@ -151,7 +151,6 @@ var xUnixSocketAddressGetAddressType func(uintptr) UnixSocketAddressType
 
 // Gets @address's type.
 func (x *UnixSocketAddress) GetAddressType() UnixSocketAddressType {
-
 	cret := xUnixSocketAddressGetAddressType(x.GoPointer())
 	return cret
 }
@@ -160,7 +159,6 @@ var xUnixSocketAddressGetIsAbstract func(uintptr) bool
 
 // Tests if @address is abstract.
 func (x *UnixSocketAddress) GetIsAbstract() bool {
-
 	cret := xUnixSocketAddressGetIsAbstract(x.GoPointer())
 	return cret
 }
@@ -174,7 +172,6 @@ var xUnixSocketAddressGetPath func(uintptr) string
 // g_unix_socket_address_get_path_len() to get the true length
 // of this string.
 func (x *UnixSocketAddress) GetPath() string {
-
 	cret := xUnixSocketAddressGetPath(x.GoPointer())
 	return cret
 }
@@ -185,7 +182,6 @@ var xUnixSocketAddressGetPathLen func(uintptr) uint
 //
 // For details, see g_unix_socket_address_get_path().
 func (x *UnixSocketAddress) GetPathLen() uint {
-
 	cret := xUnixSocketAddressGetPathLen(x.GoPointer())
 	return cret
 }
@@ -298,7 +294,6 @@ func (x *UnixSocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *UnixSocketAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
@@ -307,7 +302,6 @@ var xUnixSocketAddressAbstractNamesSupported func() bool
 
 // Checks if abstract UNIX domain socket names are supported.
 func UnixSocketAddressAbstractNamesSupported() bool {
-
 	cret := xUnixSocketAddressAbstractNamesSupported()
 	return cret
 }
@@ -336,5 +330,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixSocketAddressGetPathLen, libs, "g_unix_socket_address_get_path_len")
 
 	core.PuregoSafeRegister(&xUnixSocketAddressAbstractNamesSupported, libs, "g_unix_socket_address_abstract_names_supported")
-
 }

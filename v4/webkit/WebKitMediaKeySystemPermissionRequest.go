@@ -25,7 +25,6 @@ var xMediaKeySystemPermissionGetName func(uintptr) string
 
 // Get the key system for which access permission is being requested.
 func MediaKeySystemPermissionGetName(RequestVar *MediaKeySystemPermissionRequest) string {
-
 	cret := xMediaKeySystemPermissionGetName(RequestVar.GoPointer())
 	return cret
 }
@@ -70,16 +69,12 @@ func (c *MediaKeySystemPermissionRequest) SetGoPointer(ptr uintptr) {
 
 // Allow the action which triggered this request.
 func (x *MediaKeySystemPermissionRequest) Allow() {
-
 	XWebkitPermissionRequestAllow(x.GoPointer())
-
 }
 
 // Deny the action which triggered this request.
 func (x *MediaKeySystemPermissionRequest) Deny() {
-
 	XWebkitPermissionRequestDeny(x.GoPointer())
-
 }
 
 func init() {

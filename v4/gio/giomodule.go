@@ -39,18 +39,14 @@ var xIOModuleScopeBlock func(uintptr, string)
 // this scope is used with g_io_modules_scan_all_in_directory_with_scope()
 // or g_io_modules_load_all_in_directory_with_scope().
 func (x *IOModuleScope) Block(BasenameVar string) {
-
 	xIOModuleScopeBlock(x.GoPointer(), BasenameVar)
-
 }
 
 var xIOModuleScopeFree func(uintptr)
 
 // Free a module scope.
 func (x *IOModuleScope) Free() {
-
 	xIOModuleScopeFree(x.GoPointer())
-
 }
 
 var xIoExtensionPointImplement func(string, types.GType, string, int32) *IOExtension
@@ -61,7 +57,6 @@ var xIoExtensionPointImplement func(string, types.GType, string, int32) *IOExten
 // If @type has already been registered as an extension for this
 // extension point, the existing #GIOExtension object is returned.
 func IoExtensionPointImplement(ExtensionPointNameVar string, TypeVar types.GType, ExtensionNameVar string, PriorityVar int32) *IOExtension {
-
 	cret := xIoExtensionPointImplement(ExtensionPointNameVar, TypeVar, ExtensionNameVar, PriorityVar)
 	return cret
 }
@@ -70,7 +65,6 @@ var xIoExtensionPointLookup func(string) *IOExtensionPoint
 
 // Looks up an existing extension point.
 func IoExtensionPointLookup(NameVar string) *IOExtensionPoint {
-
 	cret := xIoExtensionPointLookup(NameVar)
 	return cret
 }
@@ -79,7 +73,6 @@ var xIoExtensionPointRegister func(string) *IOExtensionPoint
 
 // Registers an extension point.
 func IoExtensionPointRegister(NameVar string) *IOExtensionPoint {
-
 	cret := xIoExtensionPointRegister(NameVar)
 	return cret
 }
@@ -92,7 +85,6 @@ var xIoModulesLoadAllInDirectory func(string) *glib.List
 // all gtypes) then you can use g_io_modules_scan_all_in_directory()
 // which allows delayed/lazy loading of modules.
 func IoModulesLoadAllInDirectory(DirnameVar string) *glib.List {
-
 	cret := xIoModulesLoadAllInDirectory(DirnameVar)
 	return cret
 }
@@ -105,7 +97,6 @@ var xIoModulesLoadAllInDirectoryWithScope func(string, *IOModuleScope) *glib.Lis
 // all gtypes) then you can use g_io_modules_scan_all_in_directory()
 // which allows delayed/lazy loading of modules.
 func IoModulesLoadAllInDirectoryWithScope(DirnameVar string, ScopeVar *IOModuleScope) *glib.List {
-
 	cret := xIoModulesLoadAllInDirectoryWithScope(DirnameVar, ScopeVar)
 	return cret
 }
@@ -124,9 +115,7 @@ var xIoModulesScanAllInDirectory func(string)
 // If you need to guarantee that all types are loaded in all the modules,
 // use g_io_modules_load_all_in_directory().
 func IoModulesScanAllInDirectory(DirnameVar string) {
-
 	xIoModulesScanAllInDirectory(DirnameVar)
-
 }
 
 var xIoModulesScanAllInDirectoryWithScope func(string, *IOModuleScope)
@@ -143,9 +132,7 @@ var xIoModulesScanAllInDirectoryWithScope func(string, *IOModuleScope)
 // If you need to guarantee that all types are loaded in all the modules,
 // use g_io_modules_load_all_in_directory().
 func IoModulesScanAllInDirectoryWithScope(DirnameVar string, ScopeVar *IOModuleScope) {
-
 	xIoModulesScanAllInDirectoryWithScope(DirnameVar, ScopeVar)
-
 }
 
 // Provides an interface and default functions for loading and unloading
@@ -200,9 +187,7 @@ var xIOModuleLoad func(uintptr)
 // statically. The old symbol names continue to be supported, but cannot be used
 // for static builds.
 func (x *IOModule) Load() {
-
 	xIOModuleLoad(x.GoPointer())
-
 }
 
 var xIOModuleUnload func(uintptr)
@@ -220,9 +205,7 @@ var xIOModuleUnload func(uintptr)
 // statically. The old symbol names continue to be supported, but cannot be used
 // for static builds.
 func (x *IOModule) Unload() {
-
 	xIOModuleUnload(x.GoPointer())
-
 }
 
 func (c *IOModule) GoPointer() uintptr {
@@ -240,36 +223,28 @@ func (c *IOModule) SetGoPointer(ptr uintptr) {
 // #GTypePluginClass of @plugin. There should be no need to use this
 // function outside of the GObject type system itself.
 func (x *IOModule) CompleteInterfaceInfo(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *gobject.InterfaceInfo) {
-
 	gobject.XGTypePluginCompleteInterfaceInfo(x.GoPointer(), InstanceTypeVar, InterfaceTypeVar, InfoVar)
-
 }
 
 // Calls the @complete_type_info function from the #GTypePluginClass of @plugin.
 // There should be no need to use this function outside of the GObject
 // type system itself.
 func (x *IOModule) CompleteTypeInfo(GTypeVar types.GType, InfoVar *gobject.TypeInfo, ValueTableVar *gobject.TypeValueTable) {
-
 	gobject.XGTypePluginCompleteTypeInfo(x.GoPointer(), GTypeVar, InfoVar, ValueTableVar)
-
 }
 
 // Calls the @unuse_plugin function from the #GTypePluginClass of
 // @plugin.  There should be no need to use this function outside of
 // the GObject type system itself.
 func (x *IOModule) Unuse() {
-
 	gobject.XGTypePluginUnuse(x.GoPointer())
-
 }
 
 // Calls the @use_plugin function from the #GTypePluginClass of
 // @plugin.  There should be no need to use this function outside of
 // the GObject type system itself.
 func (x *IOModule) Use() {
-
 	gobject.XGTypePluginUse(x.GoPointer())
-
 }
 
 var xIOModuleQuery func() []string
@@ -306,7 +281,6 @@ var xIOModuleQuery func() []string
 // statically. The old symbol names continue to be supported, but cannot be used
 // for static builds.
 func IOModuleQuery() []string {
-
 	cret := xIOModuleQuery()
 	return cret
 }
@@ -342,5 +316,4 @@ func init() {
 	core.PuregoSafeRegister(&xIOModuleUnload, libs, "g_io_module_unload")
 
 	core.PuregoSafeRegister(&xIOModuleQuery, libs, "g_io_module_query")
-
 }

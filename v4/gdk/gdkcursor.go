@@ -201,7 +201,6 @@ var xCursorGetHotspotX func(uintptr) int32
 // will only return the hotspot position for cursors created with
 // [ctor@Gdk.Cursor.new_from_texture].
 func (x *Cursor) GetHotspotX() int32 {
-
 	cret := xCursorGetHotspotX(x.GoPointer())
 	return cret
 }
@@ -216,7 +215,6 @@ var xCursorGetHotspotY func(uintptr) int32
 // will only return the hotspot position for cursors created with
 // [ctor@Gdk.Cursor.new_from_texture].
 func (x *Cursor) GetHotspotY() int32 {
-
 	cret := xCursorGetHotspotY(x.GoPointer())
 	return cret
 }
@@ -227,7 +225,6 @@ var xCursorGetName func(uintptr) string
 //
 // If the cursor is not a named cursor, %NULL will be returned.
 func (x *Cursor) GetName() string {
-
 	cret := xCursorGetName(x.GoPointer())
 	return cret
 }
@@ -340,5 +337,4 @@ func init() {
 	core.PuregoSafeRegister(&xCursorGetHotspotY, libs, "gdk_cursor_get_hotspot_y")
 	core.PuregoSafeRegister(&xCursorGetName, libs, "gdk_cursor_get_name")
 	core.PuregoSafeRegister(&xCursorGetTexture, libs, "gdk_cursor_get_texture")
-
 }

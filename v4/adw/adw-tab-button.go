@@ -109,9 +109,7 @@ var xTabButtonSetView func(uintptr, uintptr)
 
 // Sets the tab view to display.
 func (x *TabButton) SetView(ViewVar *TabView) {
-
 	xTabButtonSetView(x.GoPointer(), ViewVar.GoPointer())
-
 }
 
 func (c *TabButton) GoPointer() uintptr {
@@ -141,7 +139,6 @@ func (x *TabButton) ConnectActivate(cb *func(TabButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -161,7 +158,6 @@ func (x *TabButton) ConnectClicked(cb *func(TabButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -178,9 +174,7 @@ func (x *TabButton) ConnectClicked(cb *func(TabButton)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TabButton) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -201,7 +195,6 @@ func (x *TabButton) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TabButton) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -226,7 +219,6 @@ func (x *TabButton) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TabButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -265,30 +257,23 @@ func (x *TabButton) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TabButton) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TabButton) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TabButton) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TabButton) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -301,9 +286,7 @@ func (x *TabButton) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TabButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -311,9 +294,7 @@ func (x *TabButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TabButton) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -322,9 +303,7 @@ func (x *TabButton) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TabButton) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -346,9 +325,7 @@ func (x *TabButton) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *TabButton) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -358,9 +335,7 @@ func (x *TabButton) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 //
 // This function is meant to be used by language bindings.
 func (x *TabButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -382,9 +357,7 @@ func (x *TabButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gt
 //
 // ```
 func (x *TabButton) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -394,9 +367,7 @@ func (x *TabButton) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 //
 // This function is meant to be used by language bindings.
 func (x *TabButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -419,9 +390,7 @@ func (x *TabButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.
 //
 // ```
 func (x *TabButton) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -431,21 +400,17 @@ func (x *TabButton) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *TabButton) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *TabButton) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *TabButton) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -464,9 +429,7 @@ func (x *TabButton) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *TabButton) SetActionName(ActionNameVar string) {
-
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -479,9 +442,7 @@ func (x *TabButton) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *TabButton) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -503,9 +464,7 @@ func (x *TabButton) SetActionTarget(FormatStringVar string, varArgs ...interface
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *TabButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -514,9 +473,7 @@ func (x *TabButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *TabButton) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -524,7 +481,6 @@ func (x *TabButton) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TabButton) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -547,5 +503,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTabButtonGetView, libs, "adw_tab_button_get_view")
 	core.PuregoSafeRegister(&xTabButtonSetView, libs, "adw_tab_button_set_view")
-
 }

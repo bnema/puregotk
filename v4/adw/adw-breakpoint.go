@@ -43,7 +43,6 @@ var xNewBreakpointConditionAnd func(*BreakpointCondition, *BreakpointCondition) 
 // Creates a condition that triggers when @condition_1 and @condition_2 are both
 // true.
 func NewBreakpointConditionAnd(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
-
 	cret := xNewBreakpointConditionAnd(Condition1Var, Condition2Var)
 	return cret
 }
@@ -52,7 +51,6 @@ var xNewBreakpointConditionLength func(BreakpointConditionLengthType, float64, L
 
 // Creates a condition that triggers on length changes.
 func NewBreakpointConditionLength(TypeVar BreakpointConditionLengthType, ValueVar float64, UnitVar LengthUnit) *BreakpointCondition {
-
 	cret := xNewBreakpointConditionLength(TypeVar, ValueVar, UnitVar)
 	return cret
 }
@@ -62,7 +60,6 @@ var xNewBreakpointConditionOr func(*BreakpointCondition, *BreakpointCondition) *
 // Creates a condition that triggers when either @condition_1 or @condition_2 is
 // true.
 func NewBreakpointConditionOr(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
-
 	cret := xNewBreakpointConditionOr(Condition1Var, Condition2Var)
 	return cret
 }
@@ -73,7 +70,6 @@ var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int32, int32
 //
 // The ratio is represented as @width divided by @height.
 func NewBreakpointConditionRatio(TypeVar BreakpointConditionRatioType, WidthVar int32, HeightVar int32) *BreakpointCondition {
-
 	cret := xNewBreakpointConditionRatio(TypeVar, WidthVar, HeightVar)
 	return cret
 }
@@ -82,7 +78,6 @@ var xBreakpointConditionCopy func(uintptr) *BreakpointCondition
 
 // Copies @self.
 func (x *BreakpointCondition) Copy() *BreakpointCondition {
-
 	cret := xBreakpointConditionCopy(x.GoPointer())
 	return cret
 }
@@ -91,9 +86,7 @@ var xBreakpointConditionFree func(uintptr)
 
 // Frees @self.
 func (x *BreakpointCondition) Free() {
-
 	xBreakpointConditionFree(x.GoPointer())
-
 }
 
 var xBreakpointConditionToString func(uintptr) string
@@ -102,7 +95,6 @@ var xBreakpointConditionToString func(uintptr) string
 //
 // The returned string can be parsed by [func@BreakpointCondition.parse].
 func (x *BreakpointCondition) ToString() string {
-
 	cret := xBreakpointConditionToString(x.GoPointer())
 	return cret
 }
@@ -217,7 +209,6 @@ var xBreakpointConditionParse func(string) *BreakpointCondition
 //
 // If parentheses are omitted, the first operator takes priority.
 func BreakpointConditionParse(StrVar string) *BreakpointCondition {
-
 	cret := xBreakpointConditionParse(StrVar)
 	return cret
 }
@@ -348,9 +339,7 @@ var xBreakpointAddSetter func(uintptr, uintptr, string, *gobject.Value)
 //
 // ```
 func (x *Breakpoint) AddSetter(ObjectVar *gobject.Object, PropertyVar string, ValueVar *gobject.Value) {
-
 	xBreakpointAddSetter(x.GoPointer(), ObjectVar.GoPointer(), PropertyVar, ValueVar)
-
 }
 
 var xBreakpointAddSetters func(uintptr, uintptr, string, ...interface{})
@@ -371,9 +360,7 @@ var xBreakpointAddSetters func(uintptr, uintptr, string, ...interface{})
 //
 // ```
 func (x *Breakpoint) AddSetters(FirstObjectVar *gobject.Object, FirstPropertyVar string, varArgs ...interface{}) {
-
 	xBreakpointAddSetters(x.GoPointer(), FirstObjectVar.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 var xBreakpointAddSettersValist func(uintptr, uintptr, string, []interface{})
@@ -382,9 +369,7 @@ var xBreakpointAddSettersValist func(uintptr, uintptr, string, []interface{})
 //
 // See [method@Breakpoint.add_setters].
 func (x *Breakpoint) AddSettersValist(FirstObjectVar *gobject.Object, FirstPropertyVar string, ArgsVar []interface{}) {
-
 	xBreakpointAddSettersValist(x.GoPointer(), FirstObjectVar.GoPointer(), FirstPropertyVar, ArgsVar)
-
 }
 
 var xBreakpointAddSettersv func(uintptr, int32, uintptr, []string, uintptr)
@@ -397,16 +382,13 @@ var xBreakpointAddSettersv func(uintptr, int32, uintptr, []string, uintptr)
 //
 // This function is meant to be used by language bindings.
 func (x *Breakpoint) AddSettersv(NSettersVar int32, ObjectsVar uintptr, NamesVar []string, ValuesVar uintptr) {
-
 	xBreakpointAddSettersv(x.GoPointer(), NSettersVar, ObjectsVar, NamesVar, ValuesVar)
-
 }
 
 var xBreakpointGetCondition func(uintptr) *BreakpointCondition
 
 // Gets the condition for @self.
 func (x *Breakpoint) GetCondition() *BreakpointCondition {
-
 	cret := xBreakpointGetCondition(x.GoPointer())
 	return cret
 }
@@ -415,9 +397,7 @@ var xBreakpointSetCondition func(uintptr, *BreakpointCondition)
 
 // Sets the condition for @self.
 func (x *Breakpoint) SetCondition(ConditionVar *BreakpointCondition) {
-
 	xBreakpointSetCondition(x.GoPointer(), ConditionVar)
-
 }
 
 func (c *Breakpoint) GoPointer() uintptr {
@@ -463,7 +443,6 @@ func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -485,7 +464,6 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -497,7 +475,6 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Breakpoint) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -541,5 +518,4 @@ func init() {
 	core.PuregoSafeRegister(&xBreakpointAddSettersv, libs, "adw_breakpoint_add_settersv")
 	core.PuregoSafeRegister(&xBreakpointGetCondition, libs, "adw_breakpoint_get_condition")
 	core.PuregoSafeRegister(&xBreakpointSetCondition, libs, "adw_breakpoint_set_condition")
-
 }

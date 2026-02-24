@@ -31,7 +31,6 @@ var xGetMajorVersion func() uint32
 // macro, which represents the major version of the JavaScriptCore headers you
 // have included when compiling your code.
 func GetMajorVersion() uint32 {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -46,7 +45,6 @@ var xGetMicroVersion func() uint32
 // macro, which represents the micro version of the JavaScriptCore headers you
 // have included when compiling your code.
 func GetMicroVersion() uint32 {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -61,7 +59,6 @@ var xGetMinorVersion func() uint32
 // macro, which represents the minor version of the JavaScriptCore headers you
 // have included when compiling your code.
 func GetMinorVersion() uint32 {
-
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -81,5 +78,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "jsc_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "jsc_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "jsc_get_minor_version")
-
 }

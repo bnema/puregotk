@@ -11,7 +11,6 @@ import (
 var xPixbufErrorQuark func() glib.Quark
 
 func PixbufErrorQuark() glib.Quark {
-
 	cret := xPixbufErrorQuark()
 	return cret
 }
@@ -104,5 +103,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewPixbufNonAnim, libs, "gdk_pixbuf_non_anim_new")
 
 	core.PuregoSafeRegister(&xPixbufSimpleAnimIterGLibType, libs, "gdk_pixbuf_simple_anim_iter_get_type")
-
 }

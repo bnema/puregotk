@@ -72,5 +72,4 @@ func init() {
 	core.PuregoSafeRegister(&xSimplePermissionGLibType, libs, "g_simple_permission_get_type")
 
 	core.PuregoSafeRegister(&xNewSimplePermission, libs, "g_simple_permission_new")
-
 }

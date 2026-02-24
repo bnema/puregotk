@@ -228,7 +228,6 @@ func (c *ConverterInputStream) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *ConverterInputStream) CanPoll() bool {
-
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -245,7 +244,6 @@ func (x *ConverterInputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
 	return cret
 }
@@ -262,7 +260,6 @@ func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.S
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) IsReadable() bool {
-
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
 	return cret
 }
@@ -289,7 +286,6 @@ func (x *ConverterInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -309,5 +305,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewConverterInputStream, libs, "g_converter_input_stream_new")
 
 	core.PuregoSafeRegister(&xConverterInputStreamGetConverter, libs, "g_converter_input_stream_get_converter")
-
 }

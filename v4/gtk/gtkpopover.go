@@ -218,7 +218,6 @@ var xPopoverGetAutohide func(uintptr) bool
 // See [method@Gtk.Popover.set_autohide] for the
 // implications of this.
 func (x *Popover) GetAutohide() bool {
-
 	cret := xPopoverGetAutohide(x.GoPointer())
 	return cret
 }
@@ -227,7 +226,6 @@ var xPopoverGetCascadePopdown func(uintptr) bool
 
 // Returns whether the popover will close after a modal child is closed.
 func (x *Popover) GetCascadePopdown() bool {
-
 	cret := xPopoverGetCascadePopdown(x.GoPointer())
 	return cret
 }
@@ -254,7 +252,6 @@ var xPopoverGetHasArrow func(uintptr) bool
 // Gets whether this popover is showing an arrow
 // pointing at the widget that it is relative to.
 func (x *Popover) GetHasArrow() bool {
-
 	cret := xPopoverGetHasArrow(x.GoPointer())
 	return cret
 }
@@ -263,7 +260,6 @@ var xPopoverGetMnemonicsVisible func(uintptr) bool
 
 // Gets whether mnemonics are visible.
 func (x *Popover) GetMnemonicsVisible() bool {
-
 	cret := xPopoverGetMnemonicsVisible(x.GoPointer())
 	return cret
 }
@@ -272,9 +268,7 @@ var xPopoverGetOffset func(uintptr, *int32, *int32)
 
 // Gets the offset previous set with [method@Gtk.Popover.set_offset].
 func (x *Popover) GetOffset(XOffsetVar *int32, YOffsetVar *int32) {
-
 	xPopoverGetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
-
 }
 
 var xPopoverGetPointingTo func(uintptr, *gdk.Rectangle) bool
@@ -286,7 +280,6 @@ var xPopoverGetPointingTo func(uintptr, *gdk.Rectangle) bool
 // it will return %FALSE and fill in @rect with the parent
 // widget coordinates.
 func (x *Popover) GetPointingTo(RectVar *gdk.Rectangle) bool {
-
 	cret := xPopoverGetPointingTo(x.GoPointer(), RectVar)
 	return cret
 }
@@ -295,7 +288,6 @@ var xPopoverGetPosition func(uintptr) PositionType
 
 // Returns the preferred position of @popover.
 func (x *Popover) GetPosition() PositionType {
-
 	cret := xPopoverGetPosition(x.GoPointer())
 	return cret
 }
@@ -307,18 +299,14 @@ var xPopoverPopdown func(uintptr)
 // This may have the side-effect of closing a parent popover
 // as well. See [property@Gtk.Popover:cascade-popdown].
 func (x *Popover) Popdown() {
-
 	xPopoverPopdown(x.GoPointer())
-
 }
 
 var xPopoverPopup func(uintptr)
 
 // Pops @popover up.
 func (x *Popover) Popup() {
-
 	xPopoverPopup(x.GoPointer())
-
 }
 
 var xPopoverPresent func(uintptr)
@@ -331,9 +319,7 @@ var xPopoverPresent func(uintptr)
 //
 // To make a popover appear on screen, use [method@Gtk.Popover.popup].
 func (x *Popover) Present() {
-
 	xPopoverPresent(x.GoPointer())
-
 }
 
 var xPopoverSetAutohide func(uintptr, bool)
@@ -348,9 +334,7 @@ var xPopoverSetAutohide func(uintptr, bool)
 // autohide value different from the current one, will cause the
 // popup to be hidden.
 func (x *Popover) SetAutohide(AutohideVar bool) {
-
 	xPopoverSetAutohide(x.GoPointer(), AutohideVar)
-
 }
 
 var xPopoverSetCascadePopdown func(uintptr, bool)
@@ -360,18 +344,14 @@ var xPopoverSetCascadePopdown func(uintptr, bool)
 //
 // If %FALSE, @popover will stay visible.
 func (x *Popover) SetCascadePopdown(CascadePopdownVar bool) {
-
 	xPopoverSetCascadePopdown(x.GoPointer(), CascadePopdownVar)
-
 }
 
 var xPopoverSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @popover.
 func (x *Popover) SetChild(ChildVar *Widget) {
-
 	xPopoverSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xPopoverSetDefaultWidget func(uintptr, uintptr)
@@ -382,9 +362,7 @@ var xPopoverSetDefaultWidget func(uintptr, uintptr)
 // presses Enter in a dialog (for example). This function sets or
 // unsets the default widget for a `GtkPopover`.
 func (x *Popover) SetDefaultWidget(WidgetVar *Widget) {
-
 	xPopoverSetDefaultWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xPopoverSetHasArrow func(uintptr, bool)
@@ -392,18 +370,14 @@ var xPopoverSetHasArrow func(uintptr, bool)
 // Sets whether this popover should draw an arrow
 // pointing at the widget it is relative to.
 func (x *Popover) SetHasArrow(HasArrowVar bool) {
-
 	xPopoverSetHasArrow(x.GoPointer(), HasArrowVar)
-
 }
 
 var xPopoverSetMnemonicsVisible func(uintptr, bool)
 
 // Sets whether mnemonics should be visible.
 func (x *Popover) SetMnemonicsVisible(MnemonicsVisibleVar bool) {
-
 	xPopoverSetMnemonicsVisible(x.GoPointer(), MnemonicsVisibleVar)
-
 }
 
 var xPopoverSetOffset func(uintptr, int32, int32)
@@ -414,9 +388,7 @@ var xPopoverSetOffset func(uintptr, int32, int32)
 // These values are used when preparing the [struct@Gdk.PopupLayout]
 // for positioning the popover.
 func (x *Popover) SetOffset(XOffsetVar int32, YOffsetVar int32) {
-
 	xPopoverSetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
-
 }
 
 var xPopoverSetPointingTo func(uintptr, *gdk.Rectangle)
@@ -425,9 +397,7 @@ var xPopoverSetPointingTo func(uintptr, *gdk.Rectangle)
 //
 // This is in the coordinate space of the @popover parent.
 func (x *Popover) SetPointingTo(RectVar *gdk.Rectangle) {
-
 	xPopoverSetPointingTo(x.GoPointer(), RectVar)
-
 }
 
 var xPopoverSetPosition func(uintptr, PositionType)
@@ -441,9 +411,7 @@ var xPopoverSetPosition func(uintptr, PositionType)
 // on lack of space (eg. if close to the window edges), the
 // `GtkPopover` may choose to appear on the opposite side.
 func (x *Popover) SetPosition(PositionVar PositionType) {
-
 	xPopoverSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 func (c *Popover) GoPointer() uintptr {
@@ -563,7 +531,6 @@ func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -583,7 +550,6 @@ func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -600,9 +566,7 @@ func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Popover) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -623,7 +587,6 @@ func (x *Popover) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Popover) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -648,7 +611,6 @@ func (x *Popover) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Popover) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -687,30 +649,23 @@ func (x *Popover) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Popover) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Popover) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Popover) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Popover) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -723,9 +678,7 @@ func (x *Popover) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Popover) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -733,9 +686,7 @@ func (x *Popover) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Popover) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -744,9 +695,7 @@ func (x *Popover) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Popover) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -768,9 +717,7 @@ func (x *Popover) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Popover) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -780,9 +727,7 @@ func (x *Popover) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *Popover) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -804,9 +749,7 @@ func (x *Popover) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acce
 //
 // ```
 func (x *Popover) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -816,9 +759,7 @@ func (x *Popover) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *Popover) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -841,9 +782,7 @@ func (x *Popover) UpdateRelationValue(NRelationsVar int32, RelationsVar []Access
 //
 // ```
 func (x *Popover) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -853,9 +792,7 @@ func (x *Popover) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 //
 // This function is meant to be used by language bindings.
 func (x *Popover) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -863,7 +800,6 @@ func (x *Popover) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Popover) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -903,27 +839,21 @@ func (x *Popover) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *Popover) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Popover) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Popover) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 func init() {
@@ -962,5 +892,4 @@ func init() {
 	core.PuregoSafeRegister(&xPopoverSetOffset, libs, "gtk_popover_set_offset")
 	core.PuregoSafeRegister(&xPopoverSetPointingTo, libs, "gtk_popover_set_pointing_to")
 	core.PuregoSafeRegister(&xPopoverSetPosition, libs, "gtk_popover_set_position")
-
 }

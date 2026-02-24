@@ -39,7 +39,6 @@ var xNewSecurityOrigin func(string, string, uint16) *SecurityOrigin
 // Create a new security origin from the provided protocol, host and
 // port.
 func NewSecurityOrigin(ProtocolVar string, HostVar string, PortVar uint16) *SecurityOrigin {
-
 	cret := xNewSecurityOrigin(ProtocolVar, HostVar, PortVar)
 	return cret
 }
@@ -52,7 +51,6 @@ var xNewSecurityOriginForUri func(string) *SecurityOrigin
 // @uri other than protocol, host, and port do not affect the created
 // #WebKitSecurityOrigin.
 func NewSecurityOriginForUri(UriVar string) *SecurityOrigin {
-
 	cret := xNewSecurityOriginForUri(UriVar)
 	return cret
 }
@@ -64,7 +62,6 @@ var xSecurityOriginGetHost func(uintptr) string
 // It is reasonable for this to be %NULL
 // if its protocol does not require a host component.
 func (x *SecurityOrigin) GetHost() string {
-
 	cret := xSecurityOriginGetHost(x.GoPointer())
 	return cret
 }
@@ -79,7 +76,6 @@ var xSecurityOriginGetPort func(uintptr) uint16
 // http://example.com:80, and this function will return 0 for a
 // #WebKitSecurityOrigin constructed from either URI.
 func (x *SecurityOrigin) GetPort() uint16 {
-
 	cret := xSecurityOriginGetPort(x.GoPointer())
 	return cret
 }
@@ -88,7 +84,6 @@ var xSecurityOriginGetProtocol func(uintptr) string
 
 // Gets the protocol of @origin.
 func (x *SecurityOrigin) GetProtocol() string {
-
 	cret := xSecurityOriginGetProtocol(x.GoPointer())
 	return cret
 }
@@ -99,7 +94,6 @@ var xSecurityOriginRef func(uintptr) *SecurityOrigin
 //
 // This function is MT-safe and may be called from any thread.
 func (x *SecurityOrigin) Ref() *SecurityOrigin {
-
 	cret := xSecurityOriginRef(x.GoPointer())
 	return cret
 }
@@ -112,7 +106,6 @@ var xSecurityOriginToString func(uintptr) string
 // is a valid URI with only protocol, host, and port components, or
 // %NULL.
 func (x *SecurityOrigin) ToString() string {
-
 	cret := xSecurityOriginToString(x.GoPointer())
 	return cret
 }
@@ -125,9 +118,7 @@ var xSecurityOriginUnref func(uintptr)
 // #WebKitSecurityOrigin is released. This function is MT-safe and may be
 // called from any thread.
 func (x *SecurityOrigin) Unref() {
-
 	xSecurityOriginUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -153,5 +144,4 @@ func init() {
 	core.PuregoSafeRegister(&xSecurityOriginRef, libs, "webkit_security_origin_ref")
 	core.PuregoSafeRegister(&xSecurityOriginToString, libs, "webkit_security_origin_to_string")
 	core.PuregoSafeRegister(&xSecurityOriginUnref, libs, "webkit_security_origin_unref")
-
 }

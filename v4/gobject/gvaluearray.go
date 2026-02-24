@@ -64,7 +64,6 @@ var xNewValueArray func(uint32) *ValueArray
 // for @n_prealloced elements. New arrays always contain 0 elements,
 // regardless of the value of @n_prealloced.
 func NewValueArray(NPreallocedVar uint32) *ValueArray {
-
 	cret := xNewValueArray(NPreallocedVar)
 	return cret
 }
@@ -74,7 +73,6 @@ var xValueArrayAppend func(uintptr, *Value) *ValueArray
 // Insert a copy of @value as last element of @value_array. If @value is
 // %NULL, an uninitialized value is appended.
 func (x *ValueArray) Append(ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayAppend(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -84,7 +82,6 @@ var xValueArrayCopy func(uintptr) *ValueArray
 // Construct an exact copy of a #GValueArray by duplicating all its
 // contents.
 func (x *ValueArray) Copy() *ValueArray {
-
 	cret := xValueArrayCopy(x.GoPointer())
 	return cret
 }
@@ -93,16 +90,13 @@ var xValueArrayFree func(uintptr)
 
 // Free a #GValueArray including its contents.
 func (x *ValueArray) Free() {
-
 	xValueArrayFree(x.GoPointer())
-
 }
 
 var xValueArrayGetNth func(uintptr, uint32) *Value
 
 // Return a pointer to the value at @index_ contained in @value_array.
 func (x *ValueArray) GetNth(IndexVar uint32) *Value {
-
 	cret := xValueArrayGetNth(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -112,7 +106,6 @@ var xValueArrayInsert func(uintptr, uint32, *Value) *ValueArray
 // Insert a copy of @value at specified position into @value_array. If @value
 // is %NULL, an uninitialized value is inserted.
 func (x *ValueArray) Insert(IndexVar uint32, ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayInsert(x.GoPointer(), IndexVar, ValueVar)
 	return cret
 }
@@ -122,7 +115,6 @@ var xValueArrayPrepend func(uintptr, *Value) *ValueArray
 // Insert a copy of @value as first element of @value_array. If @value is
 // %NULL, an uninitialized value is prepended.
 func (x *ValueArray) Prepend(ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayPrepend(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -131,7 +123,6 @@ var xValueArrayRemove func(uintptr, uint32) *ValueArray
 
 // Remove the value at position @index_ from @value_array.
 func (x *ValueArray) Remove(IndexVar uint32) *ValueArray {
-
 	cret := xValueArrayRemove(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -144,7 +135,6 @@ var xValueArraySort func(uintptr, uintptr) *ValueArray
 // The current implementation uses the same sorting algorithm as standard
 // C qsort() function.
 func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
-
 	cret := xValueArraySort(x.GoPointer(), glib.NewCallback(CompareFuncVar))
 	return cret
 }
@@ -157,7 +147,6 @@ var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
 // The current implementation uses the same sorting algorithm as standard
 // C qsort() function.
 func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) *ValueArray {
-
 	cret := xValueArraySortWithData(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 	return cret
 }
@@ -187,5 +176,4 @@ func init() {
 	core.PuregoSafeRegister(&xValueArrayRemove, libs, "g_value_array_remove")
 	core.PuregoSafeRegister(&xValueArraySort, libs, "g_value_array_sort")
 	core.PuregoSafeRegister(&xValueArraySortWithData, libs, "g_value_array_sort_with_data")
-
 }

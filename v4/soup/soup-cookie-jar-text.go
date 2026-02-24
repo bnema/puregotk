@@ -106,5 +106,4 @@ func init() {
 	core.PuregoSafeRegister(&xCookieJarTextGLibType, libs, "soup_cookie_jar_text_get_type")
 
 	core.PuregoSafeRegister(&xNewCookieJarText, libs, "soup_cookie_jar_text_new")
-
 }

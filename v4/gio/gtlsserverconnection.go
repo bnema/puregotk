@@ -73,7 +73,6 @@ func TlsServerConnectionNew(BaseIoStreamVar *IOStream, CertificateVar *TlsCertif
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -91,5 +90,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsServerConnectionNew, libs, "g_tls_server_connection_new")
 
 	core.PuregoSafeRegister(&xTlsServerConnectionGLibType, libs, "g_tls_server_connection_get_type")
-
 }

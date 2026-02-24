@@ -44,7 +44,6 @@ var xNewGeolocationPosition func(float64, float64, float64) *GeolocationPosition
 
 // Create a new #WebKitGeolocationPosition.
 func NewGeolocationPosition(LatitudeVar float64, LongitudeVar float64, AccuracyVar float64) *GeolocationPosition {
-
 	cret := xNewGeolocationPosition(LatitudeVar, LongitudeVar, AccuracyVar)
 	return cret
 }
@@ -53,7 +52,6 @@ var xGeolocationPositionCopy func(uintptr) *GeolocationPosition
 
 // Make a copy of the #WebKitGeolocationPosition.
 func (x *GeolocationPosition) Copy() *GeolocationPosition {
-
 	cret := xGeolocationPositionCopy(x.GoPointer())
 	return cret
 }
@@ -62,27 +60,21 @@ var xGeolocationPositionFree func(uintptr)
 
 // Free the #WebKitGeolocationPosition
 func (x *GeolocationPosition) Free() {
-
 	xGeolocationPositionFree(x.GoPointer())
-
 }
 
 var xGeolocationPositionSetAltitude func(uintptr, float64)
 
 // Set the @position altitude.
 func (x *GeolocationPosition) SetAltitude(AltitudeVar float64) {
-
 	xGeolocationPositionSetAltitude(x.GoPointer(), AltitudeVar)
-
 }
 
 var xGeolocationPositionSetAltitudeAccuracy func(uintptr, float64)
 
 // Set the accuracy of @position altitude.
 func (x *GeolocationPosition) SetAltitudeAccuracy(AltitudeAccuracyVar float64) {
-
 	xGeolocationPositionSetAltitudeAccuracy(x.GoPointer(), AltitudeAccuracyVar)
-
 }
 
 var xGeolocationPositionSetHeading func(uintptr, float64)
@@ -92,18 +84,14 @@ var xGeolocationPositionSetHeading func(uintptr, float64)
 // Set the @position heading, as a positive angle between the direction of movement and the North
 // direction, in clockwise direction.
 func (x *GeolocationPosition) SetHeading(HeadingVar float64) {
-
 	xGeolocationPositionSetHeading(x.GoPointer(), HeadingVar)
-
 }
 
 var xGeolocationPositionSetSpeed func(uintptr, float64)
 
 // Set the @position speed.
 func (x *GeolocationPosition) SetSpeed(SpeedVar float64) {
-
 	xGeolocationPositionSetSpeed(x.GoPointer(), SpeedVar)
-
 }
 
 var xGeolocationPositionSetTimestamp func(uintptr, uint64)
@@ -112,9 +100,7 @@ var xGeolocationPositionSetTimestamp func(uintptr, uint64)
 //
 // By default it's the time when the @position was created.
 func (x *GeolocationPosition) SetTimestamp(TimestampVar uint64) {
-
 	xGeolocationPositionSetTimestamp(x.GoPointer(), TimestampVar)
-
 }
 
 // Geolocation manager.
@@ -145,16 +131,13 @@ var xGeolocationManagerFailed func(uintptr, string)
 
 // Notify @manager that determining the position failed.
 func (x *GeolocationManager) Failed(ErrorMessageVar string) {
-
 	xGeolocationManagerFailed(x.GoPointer(), ErrorMessageVar)
-
 }
 
 var xGeolocationManagerGetEnableHighAccuracy func(uintptr) bool
 
 // Get whether high accuracy is enabled.
 func (x *GeolocationManager) GetEnableHighAccuracy() bool {
-
 	cret := xGeolocationManagerGetEnableHighAccuracy(x.GoPointer())
 	return cret
 }
@@ -163,9 +146,7 @@ var xGeolocationManagerUpdatePosition func(uintptr, *GeolocationPosition)
 
 // Notify @manager that position has been updated to @position.
 func (x *GeolocationManager) UpdatePosition(PositionVar *GeolocationPosition) {
-
 	xGeolocationManagerUpdatePosition(x.GoPointer(), PositionVar)
-
 }
 
 func (c *GeolocationManager) GoPointer() uintptr {
@@ -209,7 +190,6 @@ func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uin
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -230,7 +210,6 @@ func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

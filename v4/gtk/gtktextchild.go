@@ -191,7 +191,6 @@ var xTextChildAnchorGetDeleted func(uintptr) bool
 // function — otherwise all deleted child anchors will also
 // be finalized.
 func (x *TextChildAnchor) GetDeleted() bool {
-
 	cret := xTextChildAnchorGetDeleted(x.GoPointer())
 	return cret
 }
@@ -202,7 +201,6 @@ var xTextChildAnchorGetWidgets func(uintptr, *uint32) uintptr
 //
 // The order in which the widgets are returned is not defined.
 func (x *TextChildAnchor) GetWidgets(OutLenVar *uint32) uintptr {
-
 	cret := xTextChildAnchorGetWidgets(x.GoPointer(), OutLenVar)
 	return cret
 }
@@ -237,5 +235,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTextChildAnchorGetDeleted, libs, "gtk_text_child_anchor_get_deleted")
 	core.PuregoSafeRegister(&xTextChildAnchorGetWidgets, libs, "gtk_text_child_anchor_get_widgets")
-
 }

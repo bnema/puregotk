@@ -185,7 +185,6 @@ func (x *SocketAddressEnumerator) Next(CancellableVar *Cancellable) (*SocketAddr
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketAddressEnumeratorNextAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -196,9 +195,7 @@ var xSocketAddressEnumeratorNextAsync func(uintptr, uintptr, uintptr, uintptr)
 //
 // It is an error to call this multiple times before the previous callback has finished.
 func (x *SocketAddressEnumerator) NextAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSocketAddressEnumeratorNextAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSocketAddressEnumeratorNextFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -222,7 +219,6 @@ func (x *SocketAddressEnumerator) NextFinish(ResultVar AsyncResult) (*SocketAddr
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *SocketAddressEnumerator) GoPointer() uintptr {
@@ -253,5 +249,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNext, libs, "g_socket_address_enumerator_next")
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextAsync, libs, "g_socket_address_enumerator_next_async")
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextFinish, libs, "g_socket_address_enumerator_next_finish")
-
 }

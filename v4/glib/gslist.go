@@ -29,9 +29,7 @@ var xClearSlist func(**SList, uintptr)
 //
 // @slist_ptr must be a valid pointer. If @slist_ptr points to a null #GSList, this does nothing.
 func ClearSlist(SlistPtrVar **SList, DestroyVar *DestroyNotify) {
-
 	xClearSlist(SlistPtrVar, NewCallbackNullable(DestroyVar))
-
 }
 
 func init() {
@@ -47,5 +45,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xClearSlist, libs, "g_clear_slist")
-
 }

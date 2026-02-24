@@ -111,7 +111,6 @@ var xNetworkAddressGetHostname func(uintptr) string
 // Gets @addr's hostname. This might be either UTF-8 or ASCII-encoded,
 // depending on what @addr was created with.
 func (x *NetworkAddress) GetHostname() string {
-
 	cret := xNetworkAddressGetHostname(x.GoPointer())
 	return cret
 }
@@ -120,7 +119,6 @@ var xNetworkAddressGetPort func(uintptr) uint16
 
 // Gets @addr's port number
 func (x *NetworkAddress) GetPort() uint16 {
-
 	cret := xNetworkAddressGetPort(x.GoPointer())
 	return cret
 }
@@ -129,7 +127,6 @@ var xNetworkAddressGetScheme func(uintptr) string
 
 // Gets @addr's scheme
 func (x *NetworkAddress) GetScheme() string {
-
 	cret := xNetworkAddressGetScheme(x.GoPointer())
 	return cret
 }
@@ -238,7 +235,6 @@ func (x *NetworkAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *NetworkAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
@@ -281,7 +277,6 @@ func NetworkAddressParse(HostAndPortVar string, DefaultPortVar uint16) (*Network
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNetworkAddressParseUri func(string, uint16, **glib.Error) uintptr
@@ -307,7 +302,6 @@ func NetworkAddressParseUri(UriVar string, DefaultPortVar uint16) (*NetworkAddre
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -333,5 +327,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xNetworkAddressParse, libs, "g_network_address_parse")
 	core.PuregoSafeRegister(&xNetworkAddressParseUri, libs, "g_network_address_parse_uri")
-
 }

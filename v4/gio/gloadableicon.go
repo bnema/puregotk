@@ -171,16 +171,13 @@ func (x *LoadableIconBase) Load(SizeVar int32, TypeVar *string, CancellableVar *
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *LoadableIconBase) LoadAsync(SizeVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -199,12 +196,13 @@ func (x *LoadableIconBase) LoadFinish(ResVar AsyncResult, TypeVar *string) (*Inp
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var XGLoadableIconLoad func(uintptr, int32, *string, uintptr, **glib.Error) uintptr
-var XGLoadableIconLoadAsync func(uintptr, int32, uintptr, uintptr, uintptr)
-var XGLoadableIconLoadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
+var (
+	XGLoadableIconLoad       func(uintptr, int32, *string, uintptr, **glib.Error) uintptr
+	XGLoadableIconLoadAsync  func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGLoadableIconLoadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -223,5 +221,4 @@ func init() {
 	core.PuregoSafeRegister(&XGLoadableIconLoad, libs, "g_loadable_icon_load")
 	core.PuregoSafeRegister(&XGLoadableIconLoadAsync, libs, "g_loadable_icon_load_async")
 	core.PuregoSafeRegister(&XGLoadableIconLoadFinish, libs, "g_loadable_icon_load_finish")
-
 }

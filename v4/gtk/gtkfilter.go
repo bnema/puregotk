@@ -392,9 +392,7 @@ var xFilterChanged func(uintptr, FilterChange)
 // This function is intended for implementers of `GtkFilter`
 // subclasses and should not be called from other functions.
 func (x *Filter) Changed(ChangeVar FilterChange) {
-
 	xFilterChanged(x.GoPointer(), ChangeVar)
-
 }
 
 var xFilterGetStrictness func(uintptr) FilterMatch
@@ -409,7 +407,6 @@ var xFilterGetStrictness func(uintptr) FilterMatch
 // This function is meant purely for optimization purposes. Filters can
 // choose to omit implementing it, but `GtkFilterListModel` uses it.
 func (x *Filter) GetStrictness() FilterMatch {
-
 	cret := xFilterGetStrictness(x.GoPointer())
 	return cret
 }
@@ -418,7 +415,6 @@ var xFilterMatch func(uintptr, uintptr) bool
 
 // Checks if the given @item is matched by the filter or not.
 func (x *Filter) Match(ItemVar *gobject.Object) bool {
-
 	cret := xFilterMatch(x.GoPointer(), ItemVar.GoPointer())
 	return cret
 }
@@ -456,7 +452,6 @@ func (x *Filter) ConnectChanged(cb *func(Filter, FilterChange)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ChangeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -484,5 +479,4 @@ func init() {
 	core.PuregoSafeRegister(&xFilterChanged, libs, "gtk_filter_changed")
 	core.PuregoSafeRegister(&xFilterGetStrictness, libs, "gtk_filter_get_strictness")
 	core.PuregoSafeRegister(&xFilterMatch, libs, "gtk_filter_match")
-
 }

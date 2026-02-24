@@ -34,7 +34,6 @@ var xOptionMenuItemCopy func(uintptr) *OptionMenuItem
 
 // Make a copy of the #WebKitOptionMenuItem.
 func (x *OptionMenuItem) Copy() *OptionMenuItem {
-
 	cret := xOptionMenuItemCopy(x.GoPointer())
 	return cret
 }
@@ -43,16 +42,13 @@ var xOptionMenuItemFree func(uintptr)
 
 // Free the #WebKitOptionMenuItem.
 func (x *OptionMenuItem) Free() {
-
 	xOptionMenuItemFree(x.GoPointer())
-
 }
 
 var xOptionMenuItemGetLabel func(uintptr) string
 
 // Get the label of a #WebKitOptionMenuItem.
 func (x *OptionMenuItem) GetLabel() string {
-
 	cret := xOptionMenuItemGetLabel(x.GoPointer())
 	return cret
 }
@@ -61,7 +57,6 @@ var xOptionMenuItemGetTooltip func(uintptr) string
 
 // Get the tooltip of a #WebKitOptionMenuItem.
 func (x *OptionMenuItem) GetTooltip() string {
-
 	cret := xOptionMenuItemGetTooltip(x.GoPointer())
 	return cret
 }
@@ -70,7 +65,6 @@ var xOptionMenuItemIsEnabled func(uintptr) bool
 
 // Whether a #WebKitOptionMenuItem is enabled.
 func (x *OptionMenuItem) IsEnabled() bool {
-
 	cret := xOptionMenuItemIsEnabled(x.GoPointer())
 	return cret
 }
@@ -79,7 +73,6 @@ var xOptionMenuItemIsGroupChild func(uintptr) bool
 
 // Whether a #WebKitOptionMenuItem is a group child.
 func (x *OptionMenuItem) IsGroupChild() bool {
-
 	cret := xOptionMenuItemIsGroupChild(x.GoPointer())
 	return cret
 }
@@ -88,7 +81,6 @@ var xOptionMenuItemIsGroupLabel func(uintptr) bool
 
 // Whether a #WebKitOptionMenuItem is a group label.
 func (x *OptionMenuItem) IsGroupLabel() bool {
-
 	cret := xOptionMenuItemIsGroupLabel(x.GoPointer())
 	return cret
 }
@@ -97,7 +89,6 @@ var xOptionMenuItemIsSelected func(uintptr) bool
 
 // Whether a #WebKitOptionMenuItem is the currently selected one.
 func (x *OptionMenuItem) IsSelected() bool {
-
 	cret := xOptionMenuItemIsSelected(x.GoPointer())
 	return cret
 }
@@ -124,5 +115,4 @@ func init() {
 	core.PuregoSafeRegister(&xOptionMenuItemIsGroupChild, libs, "webkit_option_menu_item_is_group_child")
 	core.PuregoSafeRegister(&xOptionMenuItemIsGroupLabel, libs, "webkit_option_menu_item_is_group_label")
 	core.PuregoSafeRegister(&xOptionMenuItemIsSelected, libs, "webkit_option_menu_item_is_selected")
-
 }

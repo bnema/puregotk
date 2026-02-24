@@ -13,7 +13,6 @@ var xGlErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gdk.GLContext] errors.
 func GlErrorQuark() glib.Quark {
-
 	cret := xGlErrorQuark()
 	return cret
 }
@@ -86,7 +85,6 @@ var xGLContextGetAllowedApis func(uintptr) GLAPI
 
 // Gets the allowed APIs set via gdk_gl_context_set_allowed_apis().
 func (x *GLContext) GetAllowedApis() GLAPI {
-
 	cret := xGLContextGetAllowedApis(x.GoPointer())
 	return cret
 }
@@ -97,7 +95,6 @@ var xGLContextGetApi func(uintptr) GLAPI
 //
 // If the renderer has not been realized yet, 0 is returned.
 func (x *GLContext) GetApi() GLAPI {
-
 	cret := xGLContextGetApi(x.GoPointer())
 	return cret
 }
@@ -108,7 +105,6 @@ var xGLContextGetDebugEnabled func(uintptr) bool
 //
 // See [method@Gdk.GLContext.set_debug_enabled].
 func (x *GLContext) GetDebugEnabled() bool {
-
 	cret := xGLContextGetDebugEnabled(x.GoPointer())
 	return cret
 }
@@ -136,7 +132,6 @@ var xGLContextGetForwardCompatible func(uintptr) bool
 //
 // See [method@Gdk.GLContext.set_forward_compatible].
 func (x *GLContext) GetForwardCompatible() bool {
-
 	cret := xGLContextGetForwardCompatible(x.GoPointer())
 	return cret
 }
@@ -150,9 +145,7 @@ var xGLContextGetRequiredVersion func(uintptr, *int32, *int32)
 //
 // See [method@Gdk.GLContext.set_required_version].
 func (x *GLContext) GetRequiredVersion(MajorVar *int32, MinorVar *int32) {
-
 	xGLContextGetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
-
 }
 
 var xGLContextGetSharedContext func(uintptr) uintptr
@@ -196,7 +189,6 @@ var xGLContextGetUseEs func(uintptr) bool
 
 // Checks whether the @context is using an OpenGL or OpenGL ES profile.
 func (x *GLContext) GetUseEs() bool {
-
 	cret := xGLContextGetUseEs(x.GoPointer())
 	return cret
 }
@@ -207,9 +199,7 @@ var xGLContextGetVersion func(uintptr, *int32, *int32)
 //
 // The @context must be realized prior to calling this function.
 func (x *GLContext) GetVersion(MajorVar *int32, MinorVar *int32) {
-
 	xGLContextGetVersion(x.GoPointer(), MajorVar, MinorVar)
-
 }
 
 var xGLContextIsLegacy func(uintptr) bool
@@ -231,7 +221,6 @@ var xGLContextIsLegacy func(uintptr) bool
 // of OpenGL API to use, or whether to do extension discovery, or what
 // kind of shader programs to load.
 func (x *GLContext) IsLegacy() bool {
-
 	cret := xGLContextIsLegacy(x.GoPointer())
 	return cret
 }
@@ -251,7 +240,6 @@ var xGLContextIsShared func(uintptr, uintptr) bool
 // Both contexts must be realized for this check to succeed. If either one
 // is not, this function will return %FALSE.
 func (x *GLContext) IsShared(OtherVar *GLContext) bool {
-
 	cret := xGLContextIsShared(x.GoPointer(), OtherVar.GoPointer())
 	return cret
 }
@@ -260,9 +248,7 @@ var xGLContextMakeCurrent func(uintptr)
 
 // Makes the @context the current one.
 func (x *GLContext) MakeCurrent() {
-
 	xGLContextMakeCurrent(x.GoPointer())
-
 }
 
 var xGLContextRealize func(uintptr) bool
@@ -278,7 +264,6 @@ func (x *GLContext) Realize() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xGLContextSetAllowedApis func(uintptr, GLAPI)
@@ -291,9 +276,7 @@ var xGLContextSetAllowedApis func(uintptr, GLAPI)
 //
 // By default, all APIs are allowed.
 func (x *GLContext) SetAllowedApis(ApisVar GLAPI) {
-
 	xGLContextSetAllowedApis(x.GoPointer(), ApisVar)
-
 }
 
 var xGLContextSetDebugEnabled func(uintptr, bool)
@@ -306,9 +289,7 @@ var xGLContextSetDebugEnabled func(uintptr, bool)
 // The `GdkGLContext` must not be realized or made current prior to
 // calling this function.
 func (x *GLContext) SetDebugEnabled(EnabledVar bool) {
-
 	xGLContextSetDebugEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 var xGLContextSetForwardCompatible func(uintptr, bool)
@@ -323,9 +304,7 @@ var xGLContextSetForwardCompatible func(uintptr, bool)
 // The `GdkGLContext` must not be realized or made current prior to calling
 // this function.
 func (x *GLContext) SetForwardCompatible(CompatibleVar bool) {
-
 	xGLContextSetForwardCompatible(x.GoPointer(), CompatibleVar)
-
 }
 
 var xGLContextSetRequiredVersion func(uintptr, int32, int32)
@@ -340,9 +319,7 @@ var xGLContextSetRequiredVersion func(uintptr, int32, int32)
 // The @context must not be realized or made current prior to calling
 // this function.
 func (x *GLContext) SetRequiredVersion(MajorVar int32, MinorVar int32) {
-
 	xGLContextSetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
-
 }
 
 var xGLContextSetUseEs func(uintptr, int32)
@@ -361,9 +338,7 @@ var xGLContextSetUseEs func(uintptr, int32)
 // after calling [method@Gdk.GLContext.realize] to decide whether to use
 // the OpenGL or OpenGL ES API, extensions, or shaders.
 func (x *GLContext) SetUseEs(UseEsVar int32) {
-
 	xGLContextSetUseEs(x.GoPointer(), UseEsVar)
-
 }
 
 func (c *GLContext) GoPointer() uintptr {
@@ -384,9 +359,7 @@ var xGLContextClearCurrent func()
 // Any OpenGL call after this function returns will be ignored
 // until [method@Gdk.GLContext.make_current] is called.
 func GLContextClearCurrent() {
-
 	xGLContextClearCurrent()
-
 }
 
 var xGLContextGetCurrent func() uintptr
@@ -444,5 +417,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGLContextClearCurrent, libs, "gdk_gl_context_clear_current")
 	core.PuregoSafeRegister(&xGLContextGetCurrent, libs, "gdk_gl_context_get_current")
-
 }

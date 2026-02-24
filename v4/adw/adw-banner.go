@@ -113,7 +113,6 @@ var xBannerGetButtonLabel func(uintptr) string
 
 // Gets the button label for @self.
 func (x *Banner) GetButtonLabel() string {
-
 	cret := xBannerGetButtonLabel(x.GoPointer())
 	return cret
 }
@@ -122,7 +121,6 @@ var xBannerGetButtonStyle func(uintptr) BannerButtonStyle
 
 // Gets the style class in use for the banner button.
 func (x *Banner) GetButtonStyle() BannerButtonStyle {
-
 	cret := xBannerGetButtonStyle(x.GoPointer())
 	return cret
 }
@@ -131,7 +129,6 @@ var xBannerGetRevealed func(uintptr) bool
 
 // Gets if a banner is revealed
 func (x *Banner) GetRevealed() bool {
-
 	cret := xBannerGetRevealed(x.GoPointer())
 	return cret
 }
@@ -140,7 +137,6 @@ var xBannerGetTitle func(uintptr) string
 
 // Gets the title for @self.
 func (x *Banner) GetTitle() string {
-
 	cret := xBannerGetTitle(x.GoPointer())
 	return cret
 }
@@ -149,7 +145,6 @@ var xBannerGetUseMarkup func(uintptr) bool
 
 // Gets whether to use Pango markup for the banner title.
 func (x *Banner) GetUseMarkup() bool {
-
 	cret := xBannerGetUseMarkup(x.GoPointer())
 	return cret
 }
@@ -163,9 +158,7 @@ var xBannerSetButtonLabel func(uintptr, string)
 // The button can be used with a `GAction`, or with the
 // [signal@Banner::button-clicked] signal.
 func (x *Banner) SetButtonLabel(LabelVar string) {
-
 	xBannerSetButtonLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xBannerSetButtonStyle func(uintptr, BannerButtonStyle)
@@ -182,18 +175,14 @@ var xBannerSetButtonStyle func(uintptr, BannerButtonStyle)
 //
 // &lt;/picture&gt;
 func (x *Banner) SetButtonStyle(StyleVar BannerButtonStyle) {
-
 	xBannerSetButtonStyle(x.GoPointer(), StyleVar)
-
 }
 
 var xBannerSetRevealed func(uintptr, bool)
 
 // Sets whether a banner should be revealed
 func (x *Banner) SetRevealed(RevealedVar bool) {
-
 	xBannerSetRevealed(x.GoPointer(), RevealedVar)
-
 }
 
 var xBannerSetTitle func(uintptr, string)
@@ -202,9 +191,7 @@ var xBannerSetTitle func(uintptr, string)
 //
 // See also: [property@Banner:use-markup].
 func (x *Banner) SetTitle(TitleVar string) {
-
 	xBannerSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xBannerSetUseMarkup func(uintptr, bool)
@@ -213,9 +200,7 @@ var xBannerSetUseMarkup func(uintptr, bool)
 //
 // See also [func@Pango.parse_markup].
 func (x *Banner) SetUseMarkup(UseMarkupVar bool) {
-
 	xBannerSetUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 func (c *Banner) GoPointer() uintptr {
@@ -330,7 +315,6 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -347,9 +331,7 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Banner) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -370,7 +352,6 @@ func (x *Banner) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Banner) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -395,7 +376,6 @@ func (x *Banner) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Banner) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -434,30 +414,23 @@ func (x *Banner) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Banner) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Banner) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Banner) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Banner) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -470,9 +443,7 @@ func (x *Banner) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Banner) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -480,9 +451,7 @@ func (x *Banner) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Banner) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -491,9 +460,7 @@ func (x *Banner) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Banner) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -515,9 +482,7 @@ func (x *Banner) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Banner) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -527,9 +492,7 @@ func (x *Banner) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Banner) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -551,9 +514,7 @@ func (x *Banner) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.A
 //
 // ```
 func (x *Banner) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -563,9 +524,7 @@ func (x *Banner) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Banner) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -588,9 +547,7 @@ func (x *Banner) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.Acc
 //
 // ```
 func (x *Banner) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -600,21 +557,17 @@ func (x *Banner) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *Banner) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *Banner) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *Banner) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -633,9 +586,7 @@ func (x *Banner) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *Banner) SetActionName(ActionNameVar string) {
-
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -648,9 +599,7 @@ func (x *Banner) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *Banner) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -672,9 +621,7 @@ func (x *Banner) SetActionTarget(FormatStringVar string, varArgs ...interface{})
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *Banner) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -683,9 +630,7 @@ func (x *Banner) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *Banner) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -693,7 +638,6 @@ func (x *Banner) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Banner) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -726,5 +670,4 @@ func init() {
 	core.PuregoSafeRegister(&xBannerSetRevealed, libs, "adw_banner_set_revealed")
 	core.PuregoSafeRegister(&xBannerSetTitle, libs, "adw_banner_set_title")
 	core.PuregoSafeRegister(&xBannerSetUseMarkup, libs, "adw_banner_set_use_markup")
-
 }

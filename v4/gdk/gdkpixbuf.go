@@ -64,5 +64,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPixbufGetFromSurface, libs, "gdk_pixbuf_get_from_surface")
 	core.PuregoSafeRegister(&xPixbufGetFromTexture, libs, "gdk_pixbuf_get_from_texture")
-
 }

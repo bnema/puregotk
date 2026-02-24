@@ -181,7 +181,6 @@ func (x *ProxyResolverBase) SetGoPointer(ptr uintptr) {
 // internally; g_proxy_resolver_get_default() will only return a proxy
 // resolver that returns %TRUE for this method.)
 func (x *ProxyResolverBase) IsSupported() bool {
-
 	cret := XGProxyResolverIsSupported(x.GoPointer())
 	return cret
 }
@@ -209,15 +208,12 @@ func (x *ProxyResolverBase) Lookup(UriVar string, CancellableVar *Cancellable) (
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronous lookup of proxy. See g_proxy_resolver_lookup() for more
 // details.
 func (x *ProxyResolverBase) LookupAsync(UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Call this function to obtain the array of proxy URIs when
@@ -231,13 +227,14 @@ func (x *ProxyResolverBase) LookupFinish(ResultVar AsyncResult) ([]string, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGProxyResolverIsSupported func(uintptr) bool
-var XGProxyResolverLookup func(uintptr, string, uintptr, **glib.Error) []string
-var XGProxyResolverLookupAsync func(uintptr, string, uintptr, uintptr, uintptr)
-var XGProxyResolverLookupFinish func(uintptr, uintptr, **glib.Error) []string
+var (
+	XGProxyResolverIsSupported  func(uintptr) bool
+	XGProxyResolverLookup       func(uintptr, string, uintptr, **glib.Error) []string
+	XGProxyResolverLookupAsync  func(uintptr, string, uintptr, uintptr, uintptr)
+	XGProxyResolverLookupFinish func(uintptr, uintptr, **glib.Error) []string
+)
 
 const (
 	// Extension point for proxy resolving functionality.
@@ -282,5 +279,4 @@ func init() {
 	core.PuregoSafeRegister(&XGProxyResolverLookup, libs, "g_proxy_resolver_lookup")
 	core.PuregoSafeRegister(&XGProxyResolverLookupAsync, libs, "g_proxy_resolver_lookup_async")
 	core.PuregoSafeRegister(&XGProxyResolverLookupFinish, libs, "g_proxy_resolver_lookup_finish")
-
 }

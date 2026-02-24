@@ -42,7 +42,6 @@ var xQuaternionAlloc func() *Quaternion
 //
 // The contents of the returned value are undefined.
 func QuaternionAlloc() *Quaternion {
-
 	cret := xQuaternionAlloc()
 	return cret
 }
@@ -51,16 +50,13 @@ var xQuaternionAdd func(uintptr, *Quaternion, *Quaternion)
 
 // Adds two #graphene_quaternion_t @a and @b.
 func (x *Quaternion) Add(BVar *Quaternion, ResVar *Quaternion) {
-
 	xQuaternionAdd(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xQuaternionDot func(uintptr, *Quaternion) float32
 
 // Computes the dot product of two #graphene_quaternion_t.
 func (x *Quaternion) Dot(BVar *Quaternion) float32 {
-
 	cret := xQuaternionDot(x.GoPointer(), BVar)
 	return cret
 }
@@ -69,7 +65,6 @@ var xQuaternionEqual func(uintptr, *Quaternion) bool
 
 // Checks whether the given quaternions are equal.
 func (x *Quaternion) Equal(BVar *Quaternion) bool {
-
 	cret := xQuaternionEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -78,16 +73,13 @@ var xQuaternionFree func(uintptr)
 
 // Releases the resources allocated by graphene_quaternion_alloc().
 func (x *Quaternion) Free() {
-
 	xQuaternionFree(x.GoPointer())
-
 }
 
 var xQuaternionInit func(uintptr, float32, float32, float32, float32) *Quaternion
 
 // Initializes a #graphene_quaternion_t using the given four values.
 func (x *Quaternion) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Quaternion {
-
 	cret := xQuaternionInit(x.GoPointer(), XVar, YVar, ZVar, WVar)
 	return cret
 }
@@ -97,7 +89,6 @@ var xQuaternionInitFromAngleVec3 func(uintptr, float32, *Vec3) *Quaternion
 // Initializes a #graphene_quaternion_t using an @angle on a
 // specific @axis.
 func (x *Quaternion) InitFromAngleVec3(AngleVar float32, AxisVar *Vec3) *Quaternion {
-
 	cret := xQuaternionInitFromAngleVec3(x.GoPointer(), AngleVar, AxisVar)
 	return cret
 }
@@ -110,7 +101,6 @@ var xQuaternionInitFromAngles func(uintptr, float32, float32, float32) *Quaterni
 //
 // See also: graphene_quaternion_init_from_euler()
 func (x *Quaternion) InitFromAngles(DegXVar float32, DegYVar float32, DegZVar float32) *Quaternion {
-
 	cret := xQuaternionInitFromAngles(x.GoPointer(), DegXVar, DegYVar, DegZVar)
 	return cret
 }
@@ -119,7 +109,6 @@ var xQuaternionInitFromEuler func(uintptr, *Euler) *Quaternion
 
 // Initializes a #graphene_quaternion_t using the given #graphene_euler_t.
 func (x *Quaternion) InitFromEuler(EVar *Euler) *Quaternion {
-
 	cret := xQuaternionInitFromEuler(x.GoPointer(), EVar)
 	return cret
 }
@@ -129,7 +118,6 @@ var xQuaternionInitFromMatrix func(uintptr, *Matrix) *Quaternion
 // Initializes a #graphene_quaternion_t using the rotation components
 // of a transformation matrix.
 func (x *Quaternion) InitFromMatrix(MVar *Matrix) *Quaternion {
-
 	cret := xQuaternionInitFromMatrix(x.GoPointer(), MVar)
 	return cret
 }
@@ -138,7 +126,6 @@ var xQuaternionInitFromQuaternion func(uintptr, *Quaternion) *Quaternion
 
 // Initializes a #graphene_quaternion_t with the values from @src.
 func (x *Quaternion) InitFromQuaternion(SrcVar *Quaternion) *Quaternion {
-
 	cret := xQuaternionInitFromQuaternion(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -151,7 +138,6 @@ var xQuaternionInitFromRadians func(uintptr, float32, float32, float32) *Quatern
 //
 // See also: graphene_quaternion_init_from_euler()
 func (x *Quaternion) InitFromRadians(RadXVar float32, RadYVar float32, RadZVar float32) *Quaternion {
-
 	cret := xQuaternionInitFromRadians(x.GoPointer(), RadXVar, RadYVar, RadZVar)
 	return cret
 }
@@ -160,7 +146,6 @@ var xQuaternionInitFromVec4 func(uintptr, *Vec4) *Quaternion
 
 // Initializes a #graphene_quaternion_t with the values from @src.
 func (x *Quaternion) InitFromVec4(SrcVar *Vec4) *Quaternion {
-
 	cret := xQuaternionInitFromVec4(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -170,7 +155,6 @@ var xQuaternionInitIdentity func(uintptr) *Quaternion
 // Initializes a #graphene_quaternion_t using the identity
 // transformation.
 func (x *Quaternion) InitIdentity() *Quaternion {
-
 	cret := xQuaternionInitIdentity(x.GoPointer())
 	return cret
 }
@@ -180,27 +164,21 @@ var xQuaternionInvert func(uintptr, *Quaternion)
 // Inverts a #graphene_quaternion_t, and returns the conjugate
 // quaternion of @q.
 func (x *Quaternion) Invert(ResVar *Quaternion) {
-
 	xQuaternionInvert(x.GoPointer(), ResVar)
-
 }
 
 var xQuaternionMultiply func(uintptr, *Quaternion, *Quaternion)
 
 // Multiplies two #graphene_quaternion_t @a and @b.
 func (x *Quaternion) Multiply(BVar *Quaternion, ResVar *Quaternion) {
-
 	xQuaternionMultiply(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xQuaternionNormalize func(uintptr, *Quaternion)
 
 // Normalizes a #graphene_quaternion_t.
 func (x *Quaternion) Normalize(ResVar *Quaternion) {
-
 	xQuaternionNormalize(x.GoPointer(), ResVar)
-
 }
 
 var xQuaternionScale func(uintptr, float32, *Quaternion)
@@ -208,9 +186,7 @@ var xQuaternionScale func(uintptr, float32, *Quaternion)
 // Scales all the elements of a #graphene_quaternion_t @q using
 // the given scalar factor.
 func (x *Quaternion) Scale(FactorVar float32, ResVar *Quaternion) {
-
 	xQuaternionScale(x.GoPointer(), FactorVar, ResVar)
-
 }
 
 var xQuaternionSlerp func(uintptr, *Quaternion, float32, *Quaternion)
@@ -219,18 +195,14 @@ var xQuaternionSlerp func(uintptr, *Quaternion, float32, *Quaternion)
 // linear interpolation, or [SLERP](http://en.wikipedia.org/wiki/Slerp),
 // using the given interpolation @factor.
 func (x *Quaternion) Slerp(BVar *Quaternion, FactorVar float32, ResVar *Quaternion) {
-
 	xQuaternionSlerp(x.GoPointer(), BVar, FactorVar, ResVar)
-
 }
 
 var xQuaternionToAngleVec3 func(uintptr, *float32, *Vec3)
 
 // Converts a quaternion into an @angle, @axis pair.
 func (x *Quaternion) ToAngleVec3(AngleVar *float32, AxisVar *Vec3) {
-
 	xQuaternionToAngleVec3(x.GoPointer(), AngleVar, AxisVar)
-
 }
 
 var xQuaternionToAngles func(uintptr, *float32, *float32, *float32)
@@ -239,9 +211,7 @@ var xQuaternionToAngles func(uintptr, *float32, *float32, *float32)
 // on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
 // on each axis.
 func (x *Quaternion) ToAngles(DegXVar *float32, DegYVar *float32, DegZVar *float32) {
-
 	xQuaternionToAngles(x.GoPointer(), DegXVar, DegYVar, DegZVar)
-
 }
 
 var xQuaternionToMatrix func(uintptr, *Matrix)
@@ -249,9 +219,7 @@ var xQuaternionToMatrix func(uintptr, *Matrix)
 // Converts a quaternion into a transformation matrix expressing
 // the rotation defined by the #graphene_quaternion_t.
 func (x *Quaternion) ToMatrix(MVar *Matrix) {
-
 	xQuaternionToMatrix(x.GoPointer(), MVar)
-
 }
 
 var xQuaternionToRadians func(uintptr, *float32, *float32, *float32)
@@ -260,9 +228,7 @@ var xQuaternionToRadians func(uintptr, *float32, *float32, *float32)
 // on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
 // on each axis.
 func (x *Quaternion) ToRadians(RadXVar *float32, RadYVar *float32, RadZVar *float32) {
-
 	xQuaternionToRadians(x.GoPointer(), RadXVar, RadYVar, RadZVar)
-
 }
 
 var xQuaternionToVec4 func(uintptr, *Vec4)
@@ -270,9 +236,7 @@ var xQuaternionToVec4 func(uintptr, *Vec4)
 // Copies the components of a #graphene_quaternion_t into a
 // #graphene_vec4_t.
 func (x *Quaternion) ToVec4(ResVar *Vec4) {
-
 	xQuaternionToVec4(x.GoPointer(), ResVar)
-
 }
 
 func init() {
@@ -314,5 +278,4 @@ func init() {
 	core.PuregoSafeRegister(&xQuaternionToMatrix, libs, "graphene_quaternion_to_matrix")
 	core.PuregoSafeRegister(&xQuaternionToRadians, libs, "graphene_quaternion_to_radians")
 	core.PuregoSafeRegister(&xQuaternionToVec4, libs, "graphene_quaternion_to_vec4")
-
 }

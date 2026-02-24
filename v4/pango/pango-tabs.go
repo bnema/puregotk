@@ -36,7 +36,6 @@ var xNewTabArray func(int32, bool) *TabArray
 // Tab stops are specified in pixel units if @positions_in_pixels is %TRUE,
 // otherwise in Pango units. All stops are initially at position 0.
 func NewTabArray(InitialSizeVar int32, PositionsInPixelsVar bool) *TabArray {
-
 	cret := xNewTabArray(InitialSizeVar, PositionsInPixelsVar)
 	return cret
 }
@@ -48,7 +47,6 @@ var xNewTabArrayWithPositions func(int32, bool, TabAlign, int32, ...interface{})
 //
 // You **must** provide an alignment and position for @size tab stops.
 func NewTabArrayWithPositions(SizeVar int32, PositionsInPixelsVar bool, FirstAlignmentVar TabAlign, FirstPositionVar int32, varArgs ...interface{}) *TabArray {
-
 	cret := xNewTabArrayWithPositions(SizeVar, PositionsInPixelsVar, FirstAlignmentVar, FirstPositionVar, varArgs...)
 	return cret
 }
@@ -57,7 +55,6 @@ var xTabArrayCopy func(uintptr) *TabArray
 
 // Copies a `PangoTabArray`.
 func (x *TabArray) Copy() *TabArray {
-
 	cret := xTabArrayCopy(x.GoPointer())
 	return cret
 }
@@ -66,9 +63,7 @@ var xTabArrayFree func(uintptr)
 
 // Frees a tab array and associated resources.
 func (x *TabArray) Free() {
-
 	xTabArrayFree(x.GoPointer())
-
 }
 
 var xTabArrayGetDecimalPoint func(uintptr, int32) uint32
@@ -82,7 +77,6 @@ var xTabArrayGetDecimalPoint func(uintptr, int32) uint32
 // The default value of 0 means that Pango will use the
 // decimal point according to the current locale.
 func (x *TabArray) GetDecimalPoint(TabIndexVar int32) uint32 {
-
 	cret := xTabArrayGetDecimalPoint(x.GoPointer(), TabIndexVar)
 	return cret
 }
@@ -92,7 +86,6 @@ var xTabArrayGetPositionsInPixels func(uintptr) bool
 // Returns %TRUE if the tab positions are in pixels,
 // %FALSE if they are in Pango units.
 func (x *TabArray) GetPositionsInPixels() bool {
-
 	cret := xTabArrayGetPositionsInPixels(x.GoPointer())
 	return cret
 }
@@ -101,7 +94,6 @@ var xTabArrayGetSize func(uintptr) int32
 
 // Gets the number of tab stops in @tab_array.
 func (x *TabArray) GetSize() int32 {
-
 	cret := xTabArrayGetSize(x.GoPointer())
 	return cret
 }
@@ -110,9 +102,7 @@ var xTabArrayGetTab func(uintptr, int32, *TabAlign, *int32)
 
 // Gets the alignment and position of a tab stop.
 func (x *TabArray) GetTab(TabIndexVar int32, AlignmentVar *TabAlign, LocationVar *int32) {
-
 	xTabArrayGetTab(x.GoPointer(), TabIndexVar, AlignmentVar, LocationVar)
-
 }
 
 var xTabArrayGetTabs func(uintptr, **TabAlign, *[]int32)
@@ -123,9 +113,7 @@ var xTabArrayGetTabs func(uintptr, **TabAlign, *[]int32)
 // The arrays are of length [method@Pango.TabArray.get_size].
 // You must free the returned array.
 func (x *TabArray) GetTabs(AlignmentsVar **TabAlign, LocationsVar *[]int32) {
-
 	xTabArrayGetTabs(x.GoPointer(), AlignmentsVar, LocationsVar)
-
 }
 
 var xTabArrayResize func(uintptr, int32)
@@ -135,9 +123,7 @@ var xTabArrayResize func(uintptr, int32)
 // You must subsequently initialize any tabs
 // that were added as a result of growing the array.
 func (x *TabArray) Resize(NewSizeVar int32) {
-
 	xTabArrayResize(x.GoPointer(), NewSizeVar)
-
 }
 
 var xTabArraySetDecimalPoint func(uintptr, int32, uint32)
@@ -151,9 +137,7 @@ var xTabArraySetDecimalPoint func(uintptr, int32, uint32)
 // By default, Pango uses the decimal point according
 // to the current locale.
 func (x *TabArray) SetDecimalPoint(TabIndexVar int32, DecimalPointVar uint32) {
-
 	xTabArraySetDecimalPoint(x.GoPointer(), TabIndexVar, DecimalPointVar)
-
 }
 
 var xTabArraySetPositionsInPixels func(uintptr, bool)
@@ -161,27 +145,21 @@ var xTabArraySetPositionsInPixels func(uintptr, bool)
 // Sets whether positions in this array are specified in
 // pixels.
 func (x *TabArray) SetPositionsInPixels(PositionsInPixelsVar bool) {
-
 	xTabArraySetPositionsInPixels(x.GoPointer(), PositionsInPixelsVar)
-
 }
 
 var xTabArraySetTab func(uintptr, int32, TabAlign, int32)
 
 // Sets the alignment and location of a tab stop.
 func (x *TabArray) SetTab(TabIndexVar int32, AlignmentVar TabAlign, LocationVar int32) {
-
 	xTabArraySetTab(x.GoPointer(), TabIndexVar, AlignmentVar, LocationVar)
-
 }
 
 var xTabArraySort func(uintptr)
 
 // Utility function to ensure that the tab stops are in increasing order.
 func (x *TabArray) Sort() {
-
 	xTabArraySort(x.GoPointer())
-
 }
 
 var xTabArrayToString func(uintptr) string
@@ -205,7 +183,6 @@ var xTabArrayToString func(uintptr) string
 //
 //	100px 200px center:300px right:400px
 func (x *TabArray) ToString() string {
-
 	cret := xTabArrayToString(x.GoPointer())
 	return cret
 }
@@ -243,7 +220,6 @@ var xTabArrayFromString func(string) *TabArray
 // This is the counterpart to [method@Pango.TabArray.to_string].
 // See that functions for details about the format.
 func TabArrayFromString(TextVar string) *TabArray {
-
 	cret := xTabArrayFromString(TextVar)
 	return cret
 }
@@ -282,5 +258,4 @@ func init() {
 	core.PuregoSafeRegister(&xTabArraySetTab, libs, "pango_tab_array_set_tab")
 	core.PuregoSafeRegister(&xTabArraySort, libs, "pango_tab_array_sort")
 	core.PuregoSafeRegister(&xTabArrayToString, libs, "pango_tab_array_to_string")
-
 }

@@ -203,7 +203,6 @@ var xNavigationSplitViewGetCollapsed func(uintptr) bool
 
 // Gets whether @self is collapsed.
 func (x *NavigationSplitView) GetCollapsed() bool {
-
 	cret := xNavigationSplitViewGetCollapsed(x.GoPointer())
 	return cret
 }
@@ -229,7 +228,6 @@ var xNavigationSplitViewGetMaxSidebarWidth func(uintptr) float64
 
 // Gets the maximum sidebar width for @self.
 func (x *NavigationSplitView) GetMaxSidebarWidth() float64 {
-
 	cret := xNavigationSplitViewGetMaxSidebarWidth(x.GoPointer())
 	return cret
 }
@@ -238,7 +236,6 @@ var xNavigationSplitViewGetMinSidebarWidth func(uintptr) float64
 
 // Gets the minimum sidebar width for @self.
 func (x *NavigationSplitView) GetMinSidebarWidth() float64 {
-
 	cret := xNavigationSplitViewGetMinSidebarWidth(x.GoPointer())
 	return cret
 }
@@ -247,7 +244,6 @@ var xNavigationSplitViewGetShowContent func(uintptr) bool
 
 // Gets which page is visible when @self is collapsed.
 func (x *NavigationSplitView) GetShowContent() bool {
-
 	cret := xNavigationSplitViewGetShowContent(x.GoPointer())
 	return cret
 }
@@ -273,7 +269,6 @@ var xNavigationSplitViewGetSidebarPosition func(uintptr) gtk.PackType
 
 // Gets the sidebar position for @self.
 func (x *NavigationSplitView) GetSidebarPosition() gtk.PackType {
-
 	cret := xNavigationSplitViewGetSidebarPosition(x.GoPointer())
 	return cret
 }
@@ -282,7 +277,6 @@ var xNavigationSplitViewGetSidebarWidthFraction func(uintptr) float64
 
 // Gets the preferred sidebar width fraction for @self.
 func (x *NavigationSplitView) GetSidebarWidthFraction() float64 {
-
 	cret := xNavigationSplitViewGetSidebarWidthFraction(x.GoPointer())
 	return cret
 }
@@ -291,7 +285,6 @@ var xNavigationSplitViewGetSidebarWidthUnit func(uintptr) LengthUnit
 
 // Gets the length unit for minimum and maximum sidebar widths.
 func (x *NavigationSplitView) GetSidebarWidthUnit() LengthUnit {
-
 	cret := xNavigationSplitViewGetSidebarWidthUnit(x.GoPointer())
 	return cret
 }
@@ -306,18 +299,14 @@ var xNavigationSplitViewSetCollapsed func(uintptr, bool)
 // The [property@NavigationSplitView:show-content] controls which child is
 // visible while collapsed.
 func (x *NavigationSplitView) SetCollapsed(CollapsedVar bool) {
-
 	xNavigationSplitViewSetCollapsed(x.GoPointer(), CollapsedVar)
-
 }
 
 var xNavigationSplitViewSetContent func(uintptr, uintptr)
 
 // Sets the content widget for @self.
 func (x *NavigationSplitView) SetContent(ContentVar *NavigationPage) {
-
 	xNavigationSplitViewSetContent(x.GoPointer(), ContentVar.GoPointer())
-
 }
 
 var xNavigationSplitViewSetMaxSidebarWidth func(uintptr, float64)
@@ -330,9 +319,7 @@ var xNavigationSplitViewSetMaxSidebarWidth func(uintptr, float64)
 // The sidebar widget can still be allocated with larger width if its own
 // minimum width exceeds it.
 func (x *NavigationSplitView) SetMaxSidebarWidth(WidthVar float64) {
-
 	xNavigationSplitViewSetMaxSidebarWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xNavigationSplitViewSetMinSidebarWidth func(uintptr, float64)
@@ -345,9 +332,7 @@ var xNavigationSplitViewSetMinSidebarWidth func(uintptr, float64)
 // The sidebar widget can still be allocated with larger width if its own
 // minimum width exceeds it.
 func (x *NavigationSplitView) SetMinSidebarWidth(WidthVar float64) {
-
 	xNavigationSplitViewSetMinSidebarWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xNavigationSplitViewSetShowContent func(uintptr, bool)
@@ -360,18 +345,14 @@ var xNavigationSplitViewSetShowContent func(uintptr, bool)
 //
 // If the split view is already collapsed, the visible page changes immediately.
 func (x *NavigationSplitView) SetShowContent(ShowContentVar bool) {
-
 	xNavigationSplitViewSetShowContent(x.GoPointer(), ShowContentVar)
-
 }
 
 var xNavigationSplitViewSetSidebar func(uintptr, uintptr)
 
 // Sets the sidebar widget for @self.
 func (x *NavigationSplitView) SetSidebar(SidebarVar *NavigationPage) {
-
 	xNavigationSplitViewSetSidebar(x.GoPointer(), SidebarVar.GoPointer())
-
 }
 
 var xNavigationSplitViewSetSidebarPosition func(uintptr, gtk.PackType)
@@ -384,9 +365,7 @@ var xNavigationSplitViewSetSidebarPosition func(uintptr, gtk.PackType)
 // If set to `GTK_PACK_END`, the sidebar is displayed after the content,
 // and the content will be the root page.
 func (x *NavigationSplitView) SetSidebarPosition(PositionVar gtk.PackType) {
-
 	xNavigationSplitViewSetSidebarPosition(x.GoPointer(), PositionVar)
-
 }
 
 var xNavigationSplitViewSetSidebarWidthFraction func(uintptr, float64)
@@ -400,9 +379,7 @@ var xNavigationSplitViewSetSidebarWidthFraction func(uintptr, float64)
 // The sidebar widget can be allocated with larger width if its own minimum
 // width exceeds the preferred width.
 func (x *NavigationSplitView) SetSidebarWidthFraction(FractionVar float64) {
-
 	xNavigationSplitViewSetSidebarWidthFraction(x.GoPointer(), FractionVar)
-
 }
 
 var xNavigationSplitViewSetSidebarWidthUnit func(uintptr, LengthUnit)
@@ -412,9 +389,7 @@ var xNavigationSplitViewSetSidebarWidthUnit func(uintptr, LengthUnit)
 // See [property@NavigationSplitView:min-sidebar-width] and
 // [property@NavigationSplitView:max-sidebar-width].
 func (x *NavigationSplitView) SetSidebarWidthUnit(UnitVar LengthUnit) {
-
 	xNavigationSplitViewSetSidebarWidthUnit(x.GoPointer(), UnitVar)
-
 }
 
 func (c *NavigationSplitView) GoPointer() uintptr {
@@ -587,9 +562,7 @@ func (x *NavigationSplitView) GetPropertySidebarWidthFraction() float64 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *NavigationSplitView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -610,7 +583,6 @@ func (x *NavigationSplitView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *NavigationSplitView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -635,7 +607,6 @@ func (x *NavigationSplitView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *NavigationSplitView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -674,30 +645,23 @@ func (x *NavigationSplitView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *NavigationSplitView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *NavigationSplitView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *NavigationSplitView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *NavigationSplitView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -710,9 +674,7 @@ func (x *NavigationSplitView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *NavigationSplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -720,9 +682,7 @@ func (x *NavigationSplitView) SetAccessibleParent(ParentVar gtk.Accessible, Next
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationSplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -731,9 +691,7 @@ func (x *NavigationSplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Acce
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *NavigationSplitView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -755,9 +713,7 @@ func (x *NavigationSplitView) UpdatePlatformState(StateVar gtk.AccessiblePlatfor
 //
 // ```
 func (x *NavigationSplitView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -767,9 +723,7 @@ func (x *NavigationSplitView) UpdateProperty(FirstPropertyVar gtk.AccessibleProp
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationSplitView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -791,9 +745,7 @@ func (x *NavigationSplitView) UpdatePropertyValue(NPropertiesVar int32, Properti
 //
 // ```
 func (x *NavigationSplitView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -803,9 +755,7 @@ func (x *NavigationSplitView) UpdateRelation(FirstRelationVar gtk.AccessibleRela
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationSplitView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -828,9 +778,7 @@ func (x *NavigationSplitView) UpdateRelationValue(NRelationsVar int32, Relations
 //
 // ```
 func (x *NavigationSplitView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -840,9 +788,7 @@ func (x *NavigationSplitView) UpdateState(FirstStateVar gtk.AccessibleState, var
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationSplitView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -850,7 +796,6 @@ func (x *NavigationSplitView) UpdateStateValue(NStatesVar int32, StatesVar []gtk
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationSplitView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -889,5 +834,4 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarPosition, libs, "adw_navigation_split_view_set_sidebar_position")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthFraction, libs, "adw_navigation_split_view_set_sidebar_width_fraction")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthUnit, libs, "adw_navigation_split_view_set_sidebar_width_unit")
-
 }

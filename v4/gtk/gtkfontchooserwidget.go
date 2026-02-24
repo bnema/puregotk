@@ -81,9 +81,7 @@ func (c *FontChooserWidget) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FontChooserWidget) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -104,7 +102,6 @@ func (x *FontChooserWidget) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FontChooserWidget) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -129,7 +126,6 @@ func (x *FontChooserWidget) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FontChooserWidget) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -168,30 +164,23 @@ func (x *FontChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FontChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FontChooserWidget) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FontChooserWidget) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FontChooserWidget) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -204,9 +193,7 @@ func (x *FontChooserWidget) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FontChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -214,9 +201,7 @@ func (x *FontChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FontChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -225,9 +210,7 @@ func (x *FontChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FontChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -249,9 +232,7 @@ func (x *FontChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState
 //
 // ```
 func (x *FontChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -261,9 +242,7 @@ func (x *FontChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserWidget) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -285,9 +264,7 @@ func (x *FontChooserWidget) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *FontChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -297,9 +274,7 @@ func (x *FontChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserWidget) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -322,9 +297,7 @@ func (x *FontChooserWidget) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *FontChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -334,9 +307,7 @@ func (x *FontChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserWidget) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -344,7 +315,6 @@ func (x *FontChooserWidget) UpdateStateValue(NStatesVar int32, StatesVar []Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FontChooserWidget) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -360,7 +330,6 @@ func (x *FontChooserWidget) GetBuildableId() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserWidget) GetFont() string {
-
 	cret := XGtkFontChooserGetFont(x.GoPointer())
 	return cret
 }
@@ -376,7 +345,6 @@ func (x *FontChooserWidget) GetFont() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserWidget) GetFontDesc() *pango.FontDescription {
-
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
 	return cret
 }
@@ -424,7 +392,6 @@ func (x *FontChooserWidget) GetFontFamily() *pango.FontFamily {
 // [CSS font-feature-settings property](https://www.w3.org/TR/css-fonts-4/#font-rend-desc).
 // It can be passed to [func@Pango.AttrFontFeatures.new].
 func (x *FontChooserWidget) GetFontFeatures() string {
-
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
 	return cret
 }
@@ -446,35 +413,30 @@ func (x *FontChooserWidget) GetFontMap() *pango.FontMap {
 
 // The selected font size.
 func (x *FontChooserWidget) GetFontSize() int32 {
-
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
 	return cret
 }
 
 // Gets the language that is used for font features.
 func (x *FontChooserWidget) GetLanguage() string {
-
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
 	return cret
 }
 
 // Returns the current level of granularity for selecting fonts.
 func (x *FontChooserWidget) GetLevel() FontChooserLevel {
-
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
 	return cret
 }
 
 // Gets the text displayed in the preview area.
 func (x *FontChooserWidget) GetPreviewText() string {
-
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
 	return cret
 }
 
 // Returns whether the preview entry is shown or not.
 func (x *FontChooserWidget) GetShowPreviewEntry() bool {
-
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
 	return cret
 }
@@ -482,23 +444,17 @@ func (x *FontChooserWidget) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontChooserWidget) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 // Sets the currently-selected font.
 func (x *FontChooserWidget) SetFont(FontnameVar string) {
-
 	XGtkFontChooserSetFont(x.GoPointer(), FontnameVar)
-
 }
 
 // Sets the currently-selected font from @font_desc.
 func (x *FontChooserWidget) SetFontDesc(FontDescVar *pango.FontDescription) {
-
 	XGtkFontChooserSetFontDesc(x.GoPointer(), FontDescVar)
-
 }
 
 // Sets a custom font map to use for this font chooser widget.
@@ -527,39 +483,29 @@ func (x *FontChooserWidget) SetFontDesc(FontDescVar *pango.FontDescription) {
 // pango_context_set_font_map (context, fontmap);
 // ```
 func (x *FontChooserWidget) SetFontMap(FontmapVar *pango.FontMap) {
-
 	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
-
 }
 
 // Sets the language to use for font features.
 func (x *FontChooserWidget) SetLanguage(LanguageVar string) {
-
 	XGtkFontChooserSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 // Sets the desired level of granularity for selecting fonts.
 func (x *FontChooserWidget) SetLevel(LevelVar FontChooserLevel) {
-
 	XGtkFontChooserSetLevel(x.GoPointer(), LevelVar)
-
 }
 
 // Sets the text displayed in the preview area.
 //
 // The @text is used to show how the selected font looks.
 func (x *FontChooserWidget) SetPreviewText(TextVar string) {
-
 	XGtkFontChooserSetPreviewText(x.GoPointer(), TextVar)
-
 }
 
 // Shows or hides the editable preview entry.
 func (x *FontChooserWidget) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
-
 	XGtkFontChooserSetShowPreviewEntry(x.GoPointer(), ShowPreviewEntryVar)
-
 }
 
 func init() {
@@ -577,5 +523,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontChooserWidgetGLibType, libs, "gtk_font_chooser_widget_get_type")
 
 	core.PuregoSafeRegister(&xNewFontChooserWidget, libs, "gtk_font_chooser_widget_new")
-
 }

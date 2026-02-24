@@ -148,7 +148,6 @@ func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, u
 		cbFn := *cb
 
 		cbFn(fa, PathStringVarp, NewIterVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -170,5 +169,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererComboGLibType, libs, "gtk_cell_renderer_combo_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererCombo, libs, "gtk_cell_renderer_combo_new")
-
 }

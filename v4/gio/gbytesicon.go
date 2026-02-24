@@ -50,7 +50,6 @@ var xBytesIconGetBytes func(uintptr) *glib.Bytes
 
 // Gets the #GBytes associated with the given @icon.
 func (x *BytesIcon) GetBytes() *glib.Bytes {
-
 	cret := xBytesIconGetBytes(x.GoPointer())
 	return cret
 }
@@ -85,14 +84,12 @@ func (x *BytesIcon) GetPropertyBytes() uintptr {
 
 // Checks if two icons are equal.
 func (x *BytesIcon) Equal(Icon2Var Icon) bool {
-
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *BytesIcon) Hash() uint32 {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -103,7 +100,6 @@ func (x *BytesIcon) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *BytesIcon) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -125,7 +121,6 @@ func (x *BytesIcon) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *BytesIcon) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
@@ -147,16 +142,13 @@ func (x *BytesIcon) Load(SizeVar int32, TypeVar *string, CancellableVar *Cancell
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *BytesIcon) LoadAsync(SizeVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -175,7 +167,6 @@ func (x *BytesIcon) LoadFinish(ResVar AsyncResult, TypeVar *string) (*InputStrea
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -195,5 +186,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewBytesIcon, libs, "g_bytes_icon_new")
 
 	core.PuregoSafeRegister(&xBytesIconGetBytes, libs, "g_bytes_icon_get_bytes")
-
 }

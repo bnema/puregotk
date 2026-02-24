@@ -211,7 +211,6 @@ var xFileChooserNativeGetAcceptLabel func(uintptr) string
 
 // Retrieves the custom label text for the accept button.
 func (x *FileChooserNative) GetAcceptLabel() string {
-
 	cret := xFileChooserNativeGetAcceptLabel(x.GoPointer())
 	return cret
 }
@@ -220,7 +219,6 @@ var xFileChooserNativeGetCancelLabel func(uintptr) string
 
 // Retrieves the custom label text for the cancel button.
 func (x *FileChooserNative) GetCancelLabel() string {
-
 	cret := xFileChooserNativeGetCancelLabel(x.GoPointer())
 	return cret
 }
@@ -236,9 +234,7 @@ var xFileChooserNativeSetAcceptLabel func(uintptr, string)
 //
 // Pressing Alt and that key should activate the button.
 func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar string) {
-
 	xFileChooserNativeSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
-
 }
 
 var xFileChooserNativeSetCancelLabel func(uintptr, string)
@@ -252,9 +248,7 @@ var xFileChooserNativeSetCancelLabel func(uintptr, string)
 //
 // Pressing Alt and that key should activate the button.
 func (x *FileChooserNative) SetCancelLabel(CancelLabelVar string) {
-
 	xFileChooserNativeSetCancelLabel(x.GoPointer(), CancelLabelVar)
-
 }
 
 func (c *FileChooserNative) GoPointer() uintptr {
@@ -315,9 +309,7 @@ func (x *FileChooserNative) GetPropertyCancelLabel() string {
 // [signal@Gtk.Dialog::response] signal handler using
 // [method@Gtk.FileChooser.get_choice].
 func (x *FileChooserNative) AddChoice(IdVar string, LabelVar string, OptionsVar []string, OptionLabelsVar []string) {
-
 	XGtkFileChooserAddChoice(x.GoPointer(), IdVar, LabelVar, OptionsVar, OptionLabelsVar)
-
 }
 
 // Adds @filter to the list of filters that the user can select between.
@@ -328,9 +320,7 @@ func (x *FileChooserNative) AddChoice(IdVar string, LabelVar string, OptionsVar 
 // Note that the @chooser takes ownership of the filter if it is floating,
 // so you have to ref and sink it if you want to keep a reference.
 func (x *FileChooserNative) AddFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserAddFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Adds a folder to be displayed with the shortcut folders
@@ -343,26 +333,22 @@ func (x *FileChooserNative) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets the type of operation that the file chooser is performing.
 func (x *FileChooserNative) GetAction() FileChooserAction {
-
 	cret := XGtkFileChooserGetAction(x.GoPointer())
 	return cret
 }
 
 // Gets the currently selected option in the 'choice' with the given ID.
 func (x *FileChooserNative) GetChoice(IdVar string) string {
-
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
 	return cret
 }
 
 // Gets whether file chooser will offer to create new folders.
 func (x *FileChooserNative) GetCreateFolders() bool {
-
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
 	return cret
 }
@@ -386,7 +372,6 @@ func (x *FileChooserNative) GetCurrentFolder() *gio.FileBase {
 // This is meant to be used in save dialogs, to get the currently typed
 // filename when the file itself does not exist yet.
 func (x *FileChooserNative) GetCurrentName() string {
-
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
 	return cret
 }
@@ -465,7 +450,6 @@ func (x *FileChooserNative) GetFilters() *gio.ListModelBase {
 // Gets whether multiple files can be selected in the file
 // chooser.
 func (x *FileChooserNative) GetSelectMultiple() bool {
-
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
 	return cret
 }
@@ -489,16 +473,12 @@ func (x *FileChooserNative) GetShortcutFolders() *gio.ListModelBase {
 
 // Removes a 'choice' that has been added with gtk_file_chooser_add_choice().
 func (x *FileChooserNative) RemoveChoice(IdVar string) {
-
 	XGtkFileChooserRemoveChoice(x.GoPointer(), IdVar)
-
 }
 
 // Removes @filter from the list of filters that the user can select between.
 func (x *FileChooserNative) RemoveFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserRemoveFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Removes a folder from the shortcut folders in a file chooser.
@@ -510,7 +490,6 @@ func (x *FileChooserNative) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the type of operation that the chooser is performing.
@@ -521,9 +500,7 @@ func (x *FileChooserNative) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 // if the action is %GTK_FILE_CHOOSER_ACTION_SAVE but not if the
 // action is %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserNative) SetAction(ActionVar FileChooserAction) {
-
 	XGtkFileChooserSetAction(x.GoPointer(), ActionVar)
-
 }
 
 // Selects an option in a 'choice' that has been added with
@@ -531,9 +508,7 @@ func (x *FileChooserNative) SetAction(ActionVar FileChooserAction) {
 //
 // For a boolean choice, the possible options are "true" and "false".
 func (x *FileChooserNative) SetChoice(IdVar string, OptionVar string) {
-
 	XGtkFileChooserSetChoice(x.GoPointer(), IdVar, OptionVar)
-
 }
 
 // Sets whether file chooser will offer to create new folders.
@@ -541,9 +516,7 @@ func (x *FileChooserNative) SetChoice(IdVar string, OptionVar string) {
 // This is only relevant if the action is not set to be
 // %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserNative) SetCreateFolders(CreateFoldersVar bool) {
-
 	XGtkFileChooserSetCreateFolders(x.GoPointer(), CreateFoldersVar)
-
 }
 
 // Sets the current folder for @chooser from a `GFile`.
@@ -555,7 +528,6 @@ func (x *FileChooserNative) SetCurrentFolder(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current name in the file selector, as if entered
@@ -572,9 +544,7 @@ func (x *FileChooserNative) SetCurrentFolder(FileVar gio.File) (bool, error) {
 // Please see the documentation for those functions for an example
 // of using [method@Gtk.FileChooser.set_current_name] as well.
 func (x *FileChooserNative) SetCurrentName(NameVar string) {
-
 	XGtkFileChooserSetCurrentName(x.GoPointer(), NameVar)
-
 }
 
 // Sets @file as the current filename for the file chooser.
@@ -630,7 +600,6 @@ func (x *FileChooserNative) SetFile(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current filter.
@@ -643,9 +612,7 @@ func (x *FileChooserNative) SetFile(FileVar gio.File) (bool, error) {
 // empty is useful if you want to restrict the displayed
 // set of files without letting the user change it.
 func (x *FileChooserNative) SetFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserSetFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Sets whether multiple files can be selected in the file chooser.
@@ -654,9 +621,7 @@ func (x *FileChooserNative) SetFilter(FilterVar *FileFilter) {
 // %GTK_FILE_CHOOSER_ACTION_OPEN or
 // %GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 func (x *FileChooserNative) SetSelectMultiple(SelectMultipleVar bool) {
-
 	XGtkFileChooserSetSelectMultiple(x.GoPointer(), SelectMultipleVar)
-
 }
 
 func init() {
@@ -679,5 +644,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileChooserNativeGetCancelLabel, libs, "gtk_file_chooser_native_get_cancel_label")
 	core.PuregoSafeRegister(&xFileChooserNativeSetAcceptLabel, libs, "gtk_file_chooser_native_set_accept_label")
 	core.PuregoSafeRegister(&xFileChooserNativeSetCancelLabel, libs, "gtk_file_chooser_native_set_cancel_label")
-
 }

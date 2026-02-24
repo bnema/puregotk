@@ -116,7 +116,6 @@ var xNewMainContext func() *MainContext
 
 // Creates a new [struct@GLib.MainContext] structure.
 func NewMainContext() *MainContext {
-
 	cret := xNewMainContext()
 	return cret
 }
@@ -125,7 +124,6 @@ var xNewMainContextWithFlags func(MainContextFlags) *MainContext
 
 // Creates a new [struct@GLib.MainContext] structure.
 func NewMainContextWithFlags(FlagsVar MainContextFlags) *MainContext {
-
 	cret := xNewMainContextWithFlags(FlagsVar)
 	return cret
 }
@@ -148,7 +146,6 @@ var xMainContextAcquire func(uintptr) bool
 // Since 2.76 @context can be `NULL` to use the global-default
 // main context.
 func (x *MainContext) Acquire() bool {
-
 	cret := xMainContextAcquire(x.GoPointer())
 	return cret
 }
@@ -161,9 +158,7 @@ var xMainContextAddPoll func(uintptr, *PollFD, int32)
 // This will very seldom be used directly. Instead
 // a typical event source will use `g_source_add_unix_fd()` instead.
 func (x *MainContext) AddPoll(FdVar *PollFD, PriorityVar int32) {
-
 	xMainContextAddPoll(x.GoPointer(), FdVar, PriorityVar)
-
 }
 
 var xMainContextCheck func(uintptr, int32, []PollFD, int32) bool
@@ -181,7 +176,6 @@ var xMainContextCheck func(uintptr, int32, []PollFD, int32) bool
 // Since 2.76 @context can be `NULL` to use the global-default
 // main context.
 func (x *MainContext) Check(MaxPriorityVar int32, FdsVar []PollFD, NFdsVar int32) bool {
-
 	cret := xMainContextCheck(x.GoPointer(), MaxPriorityVar, FdsVar, NFdsVar)
 	return cret
 }
@@ -196,9 +190,7 @@ var xMainContextDispatch func(uintptr)
 // Since 2.76 @context can be `NULL` to use the global-default
 // main context.
 func (x *MainContext) Dispatch() {
-
 	xMainContextDispatch(x.GoPointer())
-
 }
 
 var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) *Source
@@ -208,7 +200,6 @@ var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) *
 // If multiple sources exist with the same source function and user data,
 // the first one found will be returned.
 func (x *MainContext) FindSourceByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) *Source {
-
 	cret := xMainContextFindSourceByFuncsUserData(x.GoPointer(), FuncsVar, UserDataVar)
 	return cret
 }
@@ -228,7 +219,6 @@ var xMainContextFindSourceById func(uintptr, uint32) *Source
 // been reissued, leading to the operation being performed against the
 // wrong source.
 func (x *MainContext) FindSourceById(SourceIdVar uint32) *Source {
-
 	cret := xMainContextFindSourceById(x.GoPointer(), SourceIdVar)
 	return cret
 }
@@ -240,7 +230,6 @@ var xMainContextFindSourceByUserData func(uintptr, uintptr) *Source
 // If multiple sources exist with the same user data, the first
 // one found will be returned.
 func (x *MainContext) FindSourceByUserData(UserDataVar uintptr) *Source {
-
 	cret := xMainContextFindSourceByUserData(x.GoPointer(), UserDataVar)
 	return cret
 }
@@ -249,7 +238,6 @@ var xMainContextGetPollFunc func(uintptr) uintptr
 
 // Gets the poll function set by [method@GLib.MainContext.set_poll_func].
 func (x *MainContext) GetPollFunc() uintptr {
-
 	cret := xMainContextGetPollFunc(x.GoPointer())
 	return cret
 }
@@ -278,9 +266,7 @@ var xMainContextInvoke func(uintptr, uintptr, uintptr)
 // [const@GLib.SOURCE_REMOVE].  If it returns [const@GLib.SOURCE_CONTINUE], it
 // will be continuously run in a loop (and may prevent this call from returning).
 func (x *MainContext) Invoke(FunctionVar *SourceFunc, DataVar uintptr) {
-
 	xMainContextInvoke(x.GoPointer(), NewCallback(FunctionVar), DataVar)
-
 }
 
 var xMainContextInvokeFull func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -296,9 +282,7 @@ var xMainContextInvokeFull func(uintptr, int32, uintptr, uintptr, uintptr)
 // The @notify function should not assume that it is called from any particular
 // thread or with any particular context acquired.
 func (x *MainContext) InvokeFull(PriorityVar int32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
-
 	xMainContextInvokeFull(x.GoPointer(), PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
-
 }
 
 var xMainContextIsOwner func(uintptr) bool
@@ -310,7 +294,6 @@ var xMainContextIsOwner func(uintptr) bool
 // know before waiting on another thread that may be
 // blocking to get ownership of @context.
 func (x *MainContext) IsOwner() bool {
-
 	cret := xMainContextIsOwner(x.GoPointer())
 	return cret
 }
@@ -331,7 +314,6 @@ var xMainContextIteration func(uintptr, bool) bool
 // [method@GLib.MainContext.iteration] to return false, since the wait may
 // be interrupted for other reasons than an event source becoming ready.
 func (x *MainContext) Iteration(MayBlockVar bool) bool {
-
 	cret := xMainContextIteration(x.GoPointer(), MayBlockVar)
 	return cret
 }
@@ -340,7 +322,6 @@ var xMainContextPending func(uintptr) bool
 
 // Checks if any sources have pending events for the given context.
 func (x *MainContext) Pending() bool {
-
 	cret := xMainContextPending(x.GoPointer())
 	return cret
 }
@@ -350,9 +331,7 @@ var xMainContextPopThreadDefault func(uintptr)
 // Pops @context off the thread-default context stack (verifying that
 // it was on the top of the stack).
 func (x *MainContext) PopThreadDefault() {
-
 	xMainContextPopThreadDefault(x.GoPointer())
-
 }
 
 var xMainContextPrepare func(uintptr, *int32) bool
@@ -365,7 +344,6 @@ var xMainContextPrepare func(uintptr, *int32) bool
 // You must have successfully acquired the context with
 // [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Prepare(PriorityVar *int32) bool {
-
 	cret := xMainContextPrepare(x.GoPointer(), PriorityVar)
 	return cret
 }
@@ -412,9 +390,7 @@ var xMainContextPushThreadDefault func(uintptr)
 // handle being used from a thread with a thread-default context. For example,
 // see `g_file_supports_thread_contexts()`.
 func (x *MainContext) PushThreadDefault() {
-
 	xMainContextPushThreadDefault(x.GoPointer())
-
 }
 
 var xMainContextPusherNew func(uintptr) *MainContextPusher
@@ -460,7 +436,6 @@ var xMainContextPusherNew func(uintptr) *MainContextPusher
 //
 // ]|
 func (x *MainContext) PusherNew() *MainContextPusher {
-
 	cret := xMainContextPusherNew(x.GoPointer())
 	return cret
 }
@@ -477,7 +452,6 @@ var xMainContextQuery func(uintptr, int32, *int32, *[]PollFD, int32) int32
 // You must have successfully acquired the context with
 // [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Query(MaxPriorityVar int32, TimeoutVar *int32, FdsVar *[]PollFD, NFdsVar int32) int32 {
-
 	cret := xMainContextQuery(x.GoPointer(), MaxPriorityVar, TimeoutVar, FdsVar, NFdsVar)
 	return cret
 }
@@ -486,7 +460,6 @@ var xMainContextRef func(uintptr) *MainContext
 
 // Increases the reference count on a [struct@GLib.MainContext] object by one.
 func (x *MainContext) Ref() *MainContext {
-
 	cret := xMainContextRef(x.GoPointer())
 	return cret
 }
@@ -503,9 +476,7 @@ var xMainContextRelease func(uintptr)
 // You must have successfully acquired the context with
 // [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Release() {
-
 	xMainContextRelease(x.GoPointer())
-
 }
 
 var xMainContextRemovePoll func(uintptr, *PollFD)
@@ -513,9 +484,7 @@ var xMainContextRemovePoll func(uintptr, *PollFD)
 // Removes file descriptor from the set of file descriptors to be
 // polled for a particular context.
 func (x *MainContext) RemovePoll(FdVar *PollFD) {
-
 	xMainContextRemovePoll(x.GoPointer(), FdVar)
-
 }
 
 var xMainContextSetPollFunc func(uintptr, uintptr)
@@ -529,9 +498,7 @@ var xMainContextSetPollFunc func(uintptr, uintptr)
 // This function could possibly be used to integrate the GLib event
 // loop with an external event loop.
 func (x *MainContext) SetPollFunc(FuncVar *PollFunc) {
-
 	xMainContextSetPollFunc(x.GoPointer(), NewCallback(FuncVar))
-
 }
 
 var xMainContextUnref func(uintptr)
@@ -540,9 +507,7 @@ var xMainContextUnref func(uintptr)
 // If
 // the result is zero, free the context and free all associated memory.
 func (x *MainContext) Unref() {
-
 	xMainContextUnref(x.GoPointer())
-
 }
 
 var xMainContextWait func(uintptr, *Cond, *Mutex) bool
@@ -555,7 +520,6 @@ var xMainContextWait func(uintptr, *Cond, *Mutex) bool
 // that owner releases ownership or until @cond is signaled, then
 // try again (once) to become the owner.
 func (x *MainContext) Wait(CondVar *Cond, MutexVar *Mutex) bool {
-
 	cret := xMainContextWait(x.GoPointer(), CondVar, MutexVar)
 	return cret
 }
@@ -598,9 +562,7 @@ var xMainContextWakeup func(uintptr)
 //
 // ```
 func (x *MainContext) Wakeup() {
-
 	xMainContextWakeup(x.GoPointer())
-
 }
 
 // The `GMainLoop` struct is an opaque data type
@@ -623,7 +585,6 @@ var xNewMainLoop func(*MainContext, bool) *MainLoop
 
 // Creates a new [struct@GLib.MainLoop] structure.
 func NewMainLoop(ContextVar *MainContext, IsRunningVar bool) *MainLoop {
-
 	cret := xNewMainLoop(ContextVar, IsRunningVar)
 	return cret
 }
@@ -632,7 +593,6 @@ var xMainLoopGetContext func(uintptr) *MainContext
 
 // Returns the [struct@GLib.MainContext] of @loop.
 func (x *MainLoop) GetContext() *MainContext {
-
 	cret := xMainLoopGetContext(x.GoPointer())
 	return cret
 }
@@ -642,7 +602,6 @@ var xMainLoopIsRunning func(uintptr) bool
 // Checks to see if the main loop is currently being run via
 // [method@GLib.MainLoop.run].
 func (x *MainLoop) IsRunning() bool {
-
 	cret := xMainLoopIsRunning(x.GoPointer())
 	return cret
 }
@@ -655,16 +614,13 @@ var xMainLoopQuit func(uintptr)
 // Note that sources that have already been dispatched when
 // [method@GLib.MainLoop.quit] is called will still be executed.
 func (x *MainLoop) Quit() {
-
 	xMainLoopQuit(x.GoPointer())
-
 }
 
 var xMainLoopRef func(uintptr) *MainLoop
 
 // Increases the reference count on a [struct@GLib.MainLoop] object by one.
 func (x *MainLoop) Ref() *MainLoop {
-
 	cret := xMainLoopRef(x.GoPointer())
 	return cret
 }
@@ -677,9 +633,7 @@ var xMainLoopRun func(uintptr)
 // it will process events from the loop, otherwise it will
 // simply wait.
 func (x *MainLoop) Run() {
-
 	xMainLoopRun(x.GoPointer())
-
 }
 
 var xMainLoopUnref func(uintptr)
@@ -688,9 +642,7 @@ var xMainLoopUnref func(uintptr)
 //
 // If the result is zero, the loop and all associated memory are freed.
 func (x *MainLoop) Unref() {
-
 	xMainLoopUnref(x.GoPointer())
-
 }
 
 // The `GSource` struct is an opaque data type
@@ -748,7 +700,6 @@ var xNewSource func(*SourceFuncs, uint32) *Source
 // and must be added to one with [method@GLib.Source.attach] before it will be
 // executed.
 func NewSource(SourceFuncsVar *SourceFuncs, StructSizeVar uint32) *Source {
-
 	cret := xNewSource(SourceFuncsVar, StructSizeVar)
 	return cret
 }
@@ -775,9 +726,7 @@ var xSourceAddChildSource func(uintptr, *Source)
 // This API is only intended to be used by implementations of [struct@GLib.Source].
 // Do not call this API on a [struct@GLib.Source] that you did not create.
 func (x *Source) AddChildSource(ChildSourceVar *Source) {
-
 	xSourceAddChildSource(x.GoPointer(), ChildSourceVar)
-
 }
 
 var xSourceAddPoll func(uintptr, *PollFD)
@@ -797,9 +746,7 @@ var xSourceAddPoll func(uintptr, *PollFD)
 // main loop iteration.  Newly-written event sources should try to use
 // `g_source_add_unix_fd()` instead of this API.
 func (x *Source) AddPoll(FdVar *PollFD) {
-
 	xSourceAddPoll(x.GoPointer(), FdVar)
-
 }
 
 var xSourceAddUnixFd func(uintptr, int32, IOCondition) uintptr
@@ -818,7 +765,6 @@ var xSourceAddUnixFd func(uintptr, int32, IOCondition) uintptr
 //
 // As the name suggests, this function is not available on Windows.
 func (x *Source) AddUnixFd(FdVar int32, EventsVar IOCondition) uintptr {
-
 	cret := xSourceAddUnixFd(x.GoPointer(), FdVar, EventsVar)
 	return cret
 }
@@ -833,7 +779,6 @@ var xSourceAttach func(uintptr, *MainContext) uint32
 // This function is safe to call from any thread, regardless of which thread
 // the @context is running in.
 func (x *Source) Attach(ContextVar *MainContext) uint32 {
-
 	cret := xSourceAttach(x.GoPointer(), ContextVar)
 	return cret
 }
@@ -858,9 +803,7 @@ var xSourceDestroy func(uintptr)
 // [method@GLib.Source.set_callback]. This can mean, that the data’s
 // [callback@GLib.DestroyNotify] gets called right away.
 func (x *Source) Destroy() {
-
 	xSourceDestroy(x.GoPointer())
-
 }
 
 var xSourceDupContext func(uintptr) *MainContext
@@ -872,7 +815,6 @@ var xSourceDupContext func(uintptr) *MainContext
 // always call this function on the source returned from
 // [func@GLib.main_current_source].
 func (x *Source) DupContext() *MainContext {
-
 	cret := xSourceDupContext(x.GoPointer())
 	return cret
 }
@@ -883,7 +825,6 @@ var xSourceGetCanRecurse func(uintptr) bool
 //
 // See [method@GLib.Source.set_can_recurse].
 func (x *Source) GetCanRecurse() bool {
-
 	cret := xSourceGetCanRecurse(x.GoPointer())
 	return cret
 }
@@ -903,7 +844,6 @@ var xSourceGetContext func(uintptr) *MainContext
 // a different thread, then this function is not safe to call and
 // [method@GLib.Source.dup_context] should be used instead.
 func (x *Source) GetContext() *MainContext {
-
 	cret := xSourceGetContext(x.GoPointer())
 	return cret
 }
@@ -913,9 +853,7 @@ var xSourceGetCurrentTime func(uintptr, *TimeVal)
 // This function ignores @source and is otherwise the same as
 // [func@GLib.get_current_time].
 func (x *Source) GetCurrentTime(TimevalVar *TimeVal) {
-
 	xSourceGetCurrentTime(x.GoPointer(), TimevalVar)
-
 }
 
 var xSourceGetId func(uintptr) uint32
@@ -933,7 +871,6 @@ var xSourceGetId func(uintptr) uint32
 // undefined behavior. The ID returned is unique within the
 // [struct@GLib.MainContext] instance passed to [method@GLib.Source.attach].
 func (x *Source) GetId() uint32 {
-
 	cret := xSourceGetId(x.GoPointer())
 	return cret
 }
@@ -945,7 +882,6 @@ var xSourceGetName func(uintptr) string
 // The
 // name may be `NULL` if it has never been set with [method@GLib.Source.set_name].
 func (x *Source) GetName() string {
-
 	cret := xSourceGetName(x.GoPointer())
 	return cret
 }
@@ -954,7 +890,6 @@ var xSourceGetPriority func(uintptr) int32
 
 // Gets the priority of a source.
 func (x *Source) GetPriority() int32 {
-
 	cret := xSourceGetPriority(x.GoPointer())
 	return cret
 }
@@ -967,7 +902,6 @@ var xSourceGetReadyTime func(uintptr) int64
 // Any time before or equal to the current monotonic time (including zero)
 // is an indication that the source will fire immediately.
 func (x *Source) GetReadyTime() int64 {
-
 	cret := xSourceGetReadyTime(x.GoPointer())
 	return cret
 }
@@ -984,7 +918,6 @@ var xSourceGetTime func(uintptr) int64
 // The time here is the system monotonic time, if available, or some
 // other reasonable alternative otherwise.  See [func@GLib.get_monotonic_time].
 func (x *Source) GetTime() int64 {
-
 	cret := xSourceGetTime(x.GoPointer())
 	return cret
 }
@@ -1077,7 +1010,6 @@ var xSourceIsDestroyed func(uintptr) bool
 // returns. However, once a source is destroyed it cannot be un-destroyed, so
 // this function can be used for opportunistic checks from any thread.
 func (x *Source) IsDestroyed() bool {
-
 	cret := xSourceIsDestroyed(x.GoPointer())
 	return cret
 }
@@ -1096,9 +1028,7 @@ var xSourceModifyUnixFd func(uintptr, uintptr, IOCondition)
 //
 // As the name suggests, this function is not available on Windows.
 func (x *Source) ModifyUnixFd(TagVar uintptr, NewEventsVar IOCondition) {
-
 	xSourceModifyUnixFd(x.GoPointer(), TagVar, NewEventsVar)
-
 }
 
 var xSourceQueryUnixFd func(uintptr, uintptr) IOCondition
@@ -1114,7 +1044,6 @@ var xSourceQueryUnixFd func(uintptr, uintptr) IOCondition
 //
 // As the name suggests, this function is not available on Windows.
 func (x *Source) QueryUnixFd(TagVar uintptr) IOCondition {
-
 	cret := xSourceQueryUnixFd(x.GoPointer(), TagVar)
 	return cret
 }
@@ -1123,7 +1052,6 @@ var xSourceRef func(uintptr) *Source
 
 // Increases the reference count on a source by one.
 func (x *Source) Ref() *Source {
-
 	cret := xSourceRef(x.GoPointer())
 	return cret
 }
@@ -1135,9 +1063,7 @@ var xSourceRemoveChildSource func(uintptr, *Source)
 // This API is only intended to be used by implementations of [struct@GLib.Source].
 // Do not call this API on a [struct@GLib.Source] that you did not create.
 func (x *Source) RemoveChildSource(ChildSourceVar *Source) {
-
 	xSourceRemoveChildSource(x.GoPointer(), ChildSourceVar)
-
 }
 
 var xSourceRemovePoll func(uintptr, *PollFD)
@@ -1148,9 +1074,7 @@ var xSourceRemovePoll func(uintptr, *PollFD)
 // This API is only intended to be used by implementations of [struct@GLib.Source].
 // Do not call this API on a [struct@GLib.Source] that you did not create.
 func (x *Source) RemovePoll(FdVar *PollFD) {
-
 	xSourceRemovePoll(x.GoPointer(), FdVar)
-
 }
 
 var xSourceRemoveUnixFd func(uintptr, uintptr)
@@ -1166,9 +1090,7 @@ var xSourceRemoveUnixFd func(uintptr, uintptr)
 //
 // As the name suggests, this function is not available on Windows.
 func (x *Source) RemoveUnixFd(TagVar uintptr) {
-
 	xSourceRemoveUnixFd(x.GoPointer(), TagVar)
-
 }
 
 var xSourceSetCallback func(uintptr, uintptr, uintptr, uintptr)
@@ -1195,9 +1117,7 @@ var xSourceSetCallback func(uintptr, uintptr, uintptr, uintptr)
 // Note that [method@GLib.Source.destroy] for a currently attached source has the effect
 // of also unsetting the callback.
 func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
-
 	xSourceSetCallback(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallbackNullable(NotifyVar))
-
 }
 
 var xSourceSetCallbackIndirect func(uintptr, uintptr, *SourceCallbackFuncs)
@@ -1215,9 +1135,7 @@ var xSourceSetCallbackIndirect func(uintptr, uintptr, *SourceCallbackFuncs)
 // been attached to a context. The changes will take effect for the next time
 // the source is dispatched after this call returns.
 func (x *Source) SetCallbackIndirect(CallbackDataVar uintptr, CallbackFuncsVar *SourceCallbackFuncs) {
-
 	xSourceSetCallbackIndirect(x.GoPointer(), CallbackDataVar, CallbackFuncsVar)
-
 }
 
 var xSourceSetCanRecurse func(uintptr, bool)
@@ -1228,9 +1146,7 @@ var xSourceSetCanRecurse func(uintptr, bool)
 // source will be processed normally. Otherwise, all processing of this
 // source is blocked until the dispatch function returns.
 func (x *Source) SetCanRecurse(CanRecurseVar bool) {
-
 	xSourceSetCanRecurse(x.GoPointer(), CanRecurseVar)
-
 }
 
 var xSourceSetDisposeFunction func(uintptr, uintptr)
@@ -1256,9 +1172,7 @@ var xSourceSetDisposeFunction func(uintptr, uintptr)
 //
 // This should only ever be called from [struct@GLib.Source] implementations.
 func (x *Source) SetDisposeFunction(DisposeVar *SourceDisposeFunc) {
-
 	xSourceSetDisposeFunction(x.GoPointer(), NewCallback(DisposeVar))
-
 }
 
 var xSourceSetFuncs func(uintptr, *SourceFuncs)
@@ -1268,9 +1182,7 @@ var xSourceSetFuncs func(uintptr, *SourceFuncs)
 // These can be used to override the default implementations for the type
 // of @source.
 func (x *Source) SetFuncs(FuncsVar *SourceFuncs) {
-
 	xSourceSetFuncs(x.GoPointer(), FuncsVar)
-
 }
 
 var xSourceSetName func(uintptr, string)
@@ -1296,9 +1208,7 @@ var xSourceSetName func(uintptr, string)
 //
 // Also see [method@GLib.Source.set_static_name].
 func (x *Source) SetName(NameVar string) {
-
 	xSourceSetName(x.GoPointer(), NameVar)
-
 }
 
 var xSourceSetPriority func(uintptr, int32)
@@ -1314,9 +1224,7 @@ var xSourceSetPriority func(uintptr, int32)
 // permitted to change the priority of a source once it has been added
 // as a child of another source.
 func (x *Source) SetPriority(PriorityVar int32) {
-
 	xSourceSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 var xSourceSetReadyTime func(uintptr, int64)
@@ -1346,9 +1254,7 @@ var xSourceSetReadyTime func(uintptr, int64)
 // This API is only intended to be used by implementations of [struct@GLib.Source].
 // Do not call this API on a [struct@GLib.Source] that you did not create.
 func (x *Source) SetReadyTime(ReadyTimeVar int64) {
-
 	xSourceSetReadyTime(x.GoPointer(), ReadyTimeVar)
-
 }
 
 var xSourceSetStaticName func(uintptr, string)
@@ -1357,9 +1263,7 @@ var xSourceSetStaticName func(uintptr, string)
 // duplicate the @name, and can only be used with
 // string literals.
 func (x *Source) SetStaticName(NameVar string) {
-
 	xSourceSetStaticName(x.GoPointer(), NameVar)
-
 }
 
 var xSourceUnref func(uintptr)
@@ -1369,9 +1273,7 @@ var xSourceUnref func(uintptr)
 // If the resulting reference count is zero the source and associated
 // memory will be destroyed.
 func (x *Source) Unref() {
-
 	xSourceUnref(x.GoPointer())
-
 }
 
 // The `GSourceCallbackFuncs` struct contains
@@ -1594,7 +1496,6 @@ var xChildWatchAdd func(Pid, uintptr, uintptr) uint32
 // using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uint32 {
-
 	cret := xChildWatchAdd(PidVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -1627,7 +1528,6 @@ var xChildWatchAddFull func(int32, Pid, uintptr, uintptr, uintptr) uint32
 // using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAddFull(PriorityVar int32, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xChildWatchAddFull(PriorityVar, PidVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
@@ -1675,7 +1575,6 @@ var xChildWatchSourceNew func(Pid) *Source
 // Calling [`waitpid()`](man:waitpid(2)) for specific processes other than @pid
 // remains a valid thing to do.
 func ChildWatchSourceNew(PidVar Pid) *Source {
-
 	cret := xChildWatchSourceNew(PidVar)
 	return cret
 }
@@ -1693,9 +1592,7 @@ var xClearHandleId func(uint32, uintptr)
 // A macro is also included that allows this function to be used without
 // pointer casts.
 func ClearHandleId(TagPtrVar uint32, ClearFuncVar *ClearHandleFunc) {
-
 	xClearHandleId(TagPtrVar, NewCallback(ClearFuncVar))
-
 }
 
 var xGetCurrentTime func(*TimeVal)
@@ -1707,9 +1604,7 @@ var xGetCurrentTime func(*TimeVal)
 //
 // You may find [func@GLib.get_real_time] to be more convenient.
 func GetCurrentTime(ResultVar *TimeVal) {
-
 	xGetCurrentTime(ResultVar)
-
 }
 
 var xGetMonotonicTime func() int64
@@ -1726,7 +1621,6 @@ var xGetMonotonicTime func() int64
 // [`poll()`](man:poll(2)) but it
 // may not always be possible to do this.
 func GetMonotonicTime() int64 {
-
 	cret := xGetMonotonicTime()
 	return cret
 }
@@ -1742,7 +1636,6 @@ var xGetRealTime func() int64
 // wall-clock time. [func@GLib.get_monotonic_time] is probably more useful for
 // measuring intervals.
 func GetRealTime() int64 {
-
 	cret := xGetRealTime()
 	return cret
 }
@@ -1766,7 +1659,6 @@ var xIdleAdd func(uintptr, uintptr) uint32
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-
 	cret := xIdleAdd(NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -1788,7 +1680,6 @@ var xIdleAddFull func(int32, uintptr, uintptr, uintptr) uint32
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
@@ -1806,7 +1697,6 @@ var xIdleAddOnce func(uintptr, uintptr) uint32
 //
 // This function otherwise behaves like [func@GLib.idle_add].
 func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-
 	cret := xIdleAddOnce(NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -1815,7 +1705,6 @@ var xIdleRemoveByData func(uintptr) bool
 
 // Removes the idle function with the given data.
 func IdleRemoveByData(DataVar uintptr) bool {
-
 	cret := xIdleRemoveByData(DataVar)
 	return cret
 }
@@ -1831,7 +1720,6 @@ var xIdleSourceNew func() *Source
 // compared to other sources which have a default priority of
 // [const@GLib.PRIORITY_DEFAULT].
 func IdleSourceNew() *Source {
-
 	cret := xIdleSourceNew()
 	return cret
 }
@@ -1845,7 +1733,6 @@ var xMainContextDefault func() *MainContext
 // specified, and corresponds to the ‘main’ main loop. See also
 // [func@GLib.MainContext.get_thread_default].
 func MainContextDefault() *MainContext {
-
 	cret := xMainContextDefault()
 	return cret
 }
@@ -1865,7 +1752,6 @@ var xMainContextGetThreadDefault func() *MainContext
 // If you need to hold a reference on the context, use
 // [func@GLib.MainContext.ref_thread_default] instead.
 func MainContextGetThreadDefault() *MainContext {
-
 	cret := xMainContextGetThreadDefault()
 	return cret
 }
@@ -1883,7 +1769,6 @@ var xMainContextRefThreadDefault func() *MainContext
 // [struct@GLib.MainContext] (with a ref added to it) rather than returning
 // `NULL`.
 func MainContextRefThreadDefault() *MainContext {
-
 	cret := xMainContextRefThreadDefault()
 	return cret
 }
@@ -1892,7 +1777,6 @@ var xMainCurrentSource func() *Source
 
 // Returns the currently firing source for this thread.
 func MainCurrentSource() *Source {
-
 	cret := xMainCurrentSource()
 	return cret
 }
@@ -2009,7 +1893,6 @@ var xMainDepth func() int32
 //     simply return to the main loop and then get called again when
 //     there is more work to do.
 func MainDepth() int32 {
-
 	cret := xMainDepth()
 	return cret
 }
@@ -2039,7 +1922,6 @@ var xSourceRemove func(uint32) bool
 // been reissued, leading to the operation being performed against the
 // wrong source.
 func SourceRemove(TagVar uint32) bool {
-
 	cret := xSourceRemove(TagVar)
 	return cret
 }
@@ -2052,7 +1934,6 @@ var xSourceRemoveByFuncsUserData func(*SourceFuncs, uintptr) bool
 // If multiple sources exist with the same source functions and user data, only
 // one will be destroyed.
 func SourceRemoveByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) bool {
-
 	cret := xSourceRemoveByFuncsUserData(FuncsVar, UserDataVar)
 	return cret
 }
@@ -2064,7 +1945,6 @@ var xSourceRemoveByUserData func(uintptr) bool
 //
 // If multiple sources exist with the same user data, only one will be destroyed.
 func SourceRemoveByUserData(UserDataVar uintptr) bool {
-
 	cret := xSourceRemoveByUserData(UserDataVar)
 	return cret
 }
@@ -2088,9 +1968,7 @@ var xSourceSetNameById func(uint32, string)
 // been reissued, leading to the operation being performed against the
 // wrong source.
 func SourceSetNameById(TagVar uint32, NameVar string) {
-
 	xSourceSetNameById(TagVar, NameVar)
-
 }
 
 var xTimeoutAdd func(uint32, uintptr, uintptr) uint32
@@ -2129,7 +2007,6 @@ var xTimeoutAdd func(uint32, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-
 	cret := xTimeoutAdd(IntervalVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -2165,7 +2042,6 @@ var xTimeoutAddFull func(int32, uint32, uintptr, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock time.
 // See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int32, IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
@@ -2180,7 +2056,6 @@ var xTimeoutAddOnce func(uint32, uintptr, uintptr) uint32
 //
 // This function otherwise behaves like [func@GLib.timeout_add].
 func TimeoutAddOnce(IntervalVar uint32, FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-
 	cret := xTimeoutAddOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -2211,7 +2086,6 @@ var xTimeoutAddSeconds func(uint32, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-
 	cret := xTimeoutAddSeconds(IntervalVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -2259,7 +2133,6 @@ var xTimeoutAddSecondsFull func(int32, uint32, uintptr, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int32, IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
@@ -2269,7 +2142,6 @@ var xTimeoutAddSecondsOnce func(uint32, uintptr, uintptr) uint32
 // This function behaves like [func@GLib.timeout_add_once] but with a range in
 // seconds.
 func TimeoutAddSecondsOnce(IntervalVar uint32, FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-
 	cret := xTimeoutAddSecondsOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
@@ -2285,7 +2157,6 @@ var xTimeoutSourceNew func(uint32) *Source
 // The interval given is in terms of monotonic time, not wall clock
 // time.  See [func@GLib.get_monotonic_time].
 func TimeoutSourceNew(IntervalVar uint32) *Source {
-
 	cret := xTimeoutSourceNew(IntervalVar)
 	return cret
 }
@@ -2304,7 +2175,6 @@ var xTimeoutSourceNewSeconds func(uint32) *Source
 // The interval given is in terms of monotonic time, not wall clock time.
 // See [func@GLib.get_monotonic_time].
 func TimeoutSourceNewSeconds(IntervalVar uint32) *Source {
-
 	cret := xTimeoutSourceNewSeconds(IntervalVar)
 	return cret
 }
@@ -2428,5 +2298,4 @@ func init() {
 	core.PuregoSafeRegister(&xSourceSetReadyTime, libs, "g_source_set_ready_time")
 	core.PuregoSafeRegister(&xSourceSetStaticName, libs, "g_source_set_static_name")
 	core.PuregoSafeRegister(&xSourceUnref, libs, "g_source_unref")
-
 }

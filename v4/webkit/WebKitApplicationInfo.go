@@ -29,7 +29,6 @@ var xNewApplicationInfo func() *ApplicationInfo
 
 // Creates a new #WebKitApplicationInfo
 func NewApplicationInfo() *ApplicationInfo {
-
 	cret := xNewApplicationInfo()
 	return cret
 }
@@ -41,7 +40,6 @@ var xApplicationInfoGetName func(uintptr) string
 // If webkit_application_info_set_name() hasn't been
 // called with a valid name, this returns g_get_prgname().
 func (x *ApplicationInfo) GetName() string {
-
 	cret := xApplicationInfoGetName(x.GoPointer())
 	return cret
 }
@@ -50,9 +48,7 @@ var xApplicationInfoGetVersion func(uintptr, *uint64, *uint64, *uint64)
 
 // Get the application version previously set with webkit_application_info_set_version().
 func (x *ApplicationInfo) GetVersion(MajorVar *uint64, MinorVar *uint64, MicroVar *uint64) {
-
 	xApplicationInfoGetVersion(x.GoPointer(), MajorVar, MinorVar, MicroVar)
-
 }
 
 var xApplicationInfoRef func(uintptr) *ApplicationInfo
@@ -62,7 +58,6 @@ var xApplicationInfoRef func(uintptr) *ApplicationInfo
 // This
 // function is MT-safe and may be called from any thread.
 func (x *ApplicationInfo) Ref() *ApplicationInfo {
-
 	cret := xApplicationInfoRef(x.GoPointer())
 	return cret
 }
@@ -74,9 +69,7 @@ var xApplicationInfoSetName func(uintptr, string)
 // If not provided, or %NULL is passed,
 // g_get_prgname() will be used.
 func (x *ApplicationInfo) SetName(NameVar string) {
-
 	xApplicationInfoSetName(x.GoPointer(), NameVar)
-
 }
 
 var xApplicationInfoSetVersion func(uintptr, uint64, uint64, uint64)
@@ -88,9 +81,7 @@ var xApplicationInfoSetVersion func(uintptr, uint64, uint64, uint64)
 // 0 as both micro and minor to use only major number. Any other format must
 // be converted to major.minor.micro so that it can be used in version comparisons.
 func (x *ApplicationInfo) SetVersion(MajorVar uint64, MinorVar uint64, MicroVar uint64) {
-
 	xApplicationInfoSetVersion(x.GoPointer(), MajorVar, MinorVar, MicroVar)
-
 }
 
 var xApplicationInfoUnref func(uintptr)
@@ -102,9 +93,7 @@ var xApplicationInfoUnref func(uintptr)
 // released. This function is MT-safe and may be called from any
 // thread.
 func (x *ApplicationInfo) Unref() {
-
 	xApplicationInfoUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -129,5 +118,4 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationInfoSetName, libs, "webkit_application_info_set_name")
 	core.PuregoSafeRegister(&xApplicationInfoSetVersion, libs, "webkit_application_info_set_version")
 	core.PuregoSafeRegister(&xApplicationInfoUnref, libs, "webkit_application_info_unref")
-
 }

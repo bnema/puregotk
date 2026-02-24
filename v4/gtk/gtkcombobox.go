@@ -272,7 +272,6 @@ var xComboBoxGetActive func(uintptr) int32
 // `gtk_tree_path_get_indices (path)[0]`, where `path` is the
 // [struct@Gtk.TreePath] of the active item.
 func (x *ComboBox) GetActive() int32 {
-
 	cret := xComboBoxGetActive(x.GoPointer())
 	return cret
 }
@@ -293,7 +292,6 @@ var xComboBoxGetActiveId func(uintptr) string
 // not set, or if no row is active, or if the active row has a %NULL
 // ID value, then %NULL is returned.
 func (x *ComboBox) GetActiveId() string {
-
 	cret := xComboBoxGetActiveId(x.GoPointer())
 	return cret
 }
@@ -304,7 +302,6 @@ var xComboBoxGetActiveIter func(uintptr, *TreeIter) bool
 //
 // If no item is active, @iter is left unchanged.
 func (x *ComboBox) GetActiveIter(IterVar *TreeIter) bool {
-
 	cret := xComboBoxGetActiveIter(x.GoPointer(), IterVar)
 	return cret
 }
@@ -314,7 +311,6 @@ var xComboBoxGetButtonSensitivity func(uintptr) SensitivityType
 // Returns whether the combo box sets the dropdown button
 // sensitive or not when there are no items in the model.
 func (x *ComboBox) GetButtonSensitivity() SensitivityType {
-
 	cret := xComboBoxGetButtonSensitivity(x.GoPointer())
 	return cret
 }
@@ -341,7 +337,6 @@ var xComboBoxGetEntryTextColumn func(uintptr) int32
 // Returns the column which @combo_box is using to get the strings
 // from to display in the internal entry.
 func (x *ComboBox) GetEntryTextColumn() int32 {
-
 	cret := xComboBoxGetEntryTextColumn(x.GoPointer())
 	return cret
 }
@@ -350,7 +345,6 @@ var xComboBoxGetHasEntry func(uintptr) bool
 
 // Returns whether the combo box has an entry.
 func (x *ComboBox) GetHasEntry() bool {
-
 	cret := xComboBoxGetHasEntry(x.GoPointer())
 	return cret
 }
@@ -360,7 +354,6 @@ var xComboBoxGetIdColumn func(uintptr) int32
 // Returns the column which @combo_box is using to get string IDs
 // for values from.
 func (x *ComboBox) GetIdColumn() int32 {
-
 	cret := xComboBoxGetIdColumn(x.GoPointer())
 	return cret
 }
@@ -386,7 +379,6 @@ var xComboBoxGetPopupFixedWidth func(uintptr) bool
 
 // Gets whether the popup uses a fixed width.
 func (x *ComboBox) GetPopupFixedWidth() bool {
-
 	cret := xComboBoxGetPopupFixedWidth(x.GoPointer())
 	return cret
 }
@@ -395,7 +387,6 @@ var xComboBoxGetRowSeparatorFunc func(uintptr) uintptr
 
 // Returns the current row separator function.
 func (x *ComboBox) GetRowSeparatorFunc() uintptr {
-
 	cret := xComboBoxGetRowSeparatorFunc(x.GoPointer())
 	return cret
 }
@@ -407,9 +398,7 @@ var xComboBoxPopdown func(uintptr)
 // This function is mostly intended for use by accessibility technologies;
 // applications should have little use for it.
 func (x *ComboBox) Popdown() {
-
 	xComboBoxPopdown(x.GoPointer())
-
 }
 
 var xComboBoxPopup func(uintptr)
@@ -421,9 +410,7 @@ var xComboBoxPopup func(uintptr)
 //
 // Before calling this, @combo_box must be mapped, or nothing will happen.
 func (x *ComboBox) Popup() {
-
 	xComboBoxPopup(x.GoPointer())
-
 }
 
 var xComboBoxPopupForDevice func(uintptr, uintptr)
@@ -435,18 +422,14 @@ var xComboBoxPopupForDevice func(uintptr, uintptr)
 // in GTK 4. However, it is retained in case similar functionality is added
 // back later.
 func (x *ComboBox) PopupForDevice(DeviceVar *gdk.Device) {
-
 	xComboBoxPopupForDevice(x.GoPointer(), DeviceVar.GoPointer())
-
 }
 
 var xComboBoxSetActive func(uintptr, int32)
 
 // Sets the active item of @combo_box to be the item at @index.
 func (x *ComboBox) SetActive(IndexVar int32) {
-
 	xComboBoxSetActive(x.GoPointer(), IndexVar)
-
 }
 
 var xComboBoxSetActiveId func(uintptr, string) bool
@@ -461,7 +444,6 @@ var xComboBoxSetActiveId func(uintptr, string) bool
 // unset or if no row has the given ID then the function does nothing
 // and returns %FALSE.
 func (x *ComboBox) SetActiveId(ActiveIdVar string) bool {
-
 	cret := xComboBoxSetActiveId(x.GoPointer(), ActiveIdVar)
 	return cret
 }
@@ -472,9 +454,7 @@ var xComboBoxSetActiveIter func(uintptr, *TreeIter)
 //
 // If @iter is %NULL, the active item is unset.
 func (x *ComboBox) SetActiveIter(IterVar *TreeIter) {
-
 	xComboBoxSetActiveIter(x.GoPointer(), IterVar)
-
 }
 
 var xComboBoxSetButtonSensitivity func(uintptr, SensitivityType)
@@ -482,18 +462,14 @@ var xComboBoxSetButtonSensitivity func(uintptr, SensitivityType)
 // Sets whether the dropdown button of the combo box should update
 // its sensitivity depending on the model contents.
 func (x *ComboBox) SetButtonSensitivity(SensitivityVar SensitivityType) {
-
 	xComboBoxSetButtonSensitivity(x.GoPointer(), SensitivityVar)
-
 }
 
 var xComboBoxSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @combo_box.
 func (x *ComboBox) SetChild(ChildVar *Widget) {
-
 	xComboBoxSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xComboBoxSetEntryTextColumn func(uintptr, int32)
@@ -510,9 +486,7 @@ var xComboBoxSetEntryTextColumn func(uintptr, int32)
 // This is only relevant if @combo_box has been created with
 // [property@Gtk.ComboBox:has-entry] as %TRUE.
 func (x *ComboBox) SetEntryTextColumn(TextColumnVar int32) {
-
 	xComboBoxSetEntryTextColumn(x.GoPointer(), TextColumnVar)
-
 }
 
 var xComboBoxSetIdColumn func(uintptr, int32)
@@ -523,9 +497,7 @@ var xComboBoxSetIdColumn func(uintptr, int32)
 // The column @id_column in the model of @combo_box must be of type
 // %G_TYPE_STRING.
 func (x *ComboBox) SetIdColumn(IdColumnVar int32) {
-
 	xComboBoxSetIdColumn(x.GoPointer(), IdColumnVar)
-
 }
 
 var xComboBoxSetModel func(uintptr, uintptr)
@@ -539,9 +511,7 @@ var xComboBoxSetModel func(uintptr, uintptr)
 // call [method@Gtk.CellLayout.clear] yourself if you need to set up different
 // cell renderers for the new model.
 func (x *ComboBox) SetModel(ModelVar TreeModel) {
-
 	xComboBoxSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xComboBoxSetPopupFixedWidth func(uintptr, bool)
@@ -551,9 +521,7 @@ var xComboBoxSetPopupFixedWidth func(uintptr, bool)
 // If @fixed is %TRUE, the popup's width is set to match the
 // allocated width of the combo box.
 func (x *ComboBox) SetPopupFixedWidth(FixedVar bool) {
-
 	xComboBoxSetPopupFixedWidth(x.GoPointer(), FixedVar)
-
 }
 
 var xComboBoxSetRowSeparatorFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -564,9 +532,7 @@ var xComboBoxSetRowSeparatorFunc func(uintptr, uintptr, uintptr, uintptr)
 // If the row separator function is %NULL, no separators are drawn.
 // This is the default value.
 func (x *ComboBox) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xComboBoxSetRowSeparatorFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 func (c *ComboBox) GoPointer() uintptr {
@@ -746,7 +712,6 @@ func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -770,7 +735,6 @@ func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -823,7 +787,6 @@ func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uin
 		cbFn := *cb
 
 		return cbFn(fa, PathVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -845,7 +808,6 @@ func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ScrollTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -869,7 +831,6 @@ func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -893,7 +854,6 @@ func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -910,9 +870,7 @@ func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ComboBox) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -933,7 +891,6 @@ func (x *ComboBox) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ComboBox) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -958,7 +915,6 @@ func (x *ComboBox) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ComboBox) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -997,30 +953,23 @@ func (x *ComboBox) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ComboBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ComboBox) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ComboBox) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ComboBox) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1033,9 +982,7 @@ func (x *ComboBox) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ComboBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1043,9 +990,7 @@ func (x *ComboBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ComboBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1054,9 +999,7 @@ func (x *ComboBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ComboBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1078,9 +1021,7 @@ func (x *ComboBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ComboBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1090,9 +1031,7 @@ func (x *ComboBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ComboBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1114,9 +1053,7 @@ func (x *ComboBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acc
 //
 // ```
 func (x *ComboBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1126,9 +1063,7 @@ func (x *ComboBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ComboBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1151,9 +1086,7 @@ func (x *ComboBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acces
 //
 // ```
 func (x *ComboBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1163,9 +1096,7 @@ func (x *ComboBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *ComboBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1173,23 +1104,18 @@ func (x *ComboBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ComboBox) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Emits the `GtkCellEditable::editing-done` signal.
 func (x *ComboBox) EditingDone() {
-
 	XGtkCellEditableEditingDone(x.GoPointer())
-
 }
 
 // Emits the `GtkCellEditable::remove-widget` signal.
 func (x *ComboBox) RemoveWidget() {
-
 	XGtkCellEditableRemoveWidget(x.GoPointer())
-
 }
 
 // Begins editing on a @cell_editable.
@@ -1203,9 +1129,7 @@ func (x *ComboBox) RemoveWidget() {
 // Note that the @cell_editable is created on-demand for the current edit; its
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *ComboBox) StartEditing(EventVar *gdk.Event) {
-
 	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
-
 }
 
 // Adds an attribute mapping to the list in @cell_layout.
@@ -1216,25 +1140,19 @@ func (x *ComboBox) StartEditing(EventVar *gdk.Event) {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *ComboBox) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int32) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *ComboBox) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *ComboBox) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -1256,7 +1174,6 @@ func (x *ComboBox) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *ComboBox) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
 	return cret
 }
@@ -1267,9 +1184,7 @@ func (x *ComboBox) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *ComboBox) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -1278,9 +1193,7 @@ func (x *ComboBox) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *ComboBox) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -1288,9 +1201,7 @@ func (x *ComboBox) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *ComboBox) Reorder(CellVar *CellRenderer, PositionVar int32) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -1302,9 +1213,7 @@ func (x *ComboBox) Reorder(CellVar *CellRenderer, PositionVar int32) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *ComboBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -1315,9 +1224,7 @@ func (x *ComboBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *ComboBox) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 func init() {
@@ -1363,5 +1270,4 @@ func init() {
 	core.PuregoSafeRegister(&xComboBoxSetModel, libs, "gtk_combo_box_set_model")
 	core.PuregoSafeRegister(&xComboBoxSetPopupFixedWidth, libs, "gtk_combo_box_set_popup_fixed_width")
 	core.PuregoSafeRegister(&xComboBoxSetRowSeparatorFunc, libs, "gtk_combo_box_set_row_separator_func")
-
 }

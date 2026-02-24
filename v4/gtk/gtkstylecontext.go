@@ -244,9 +244,7 @@ var xStyleContextAddClass func(uintptr, string)
 // .search { ... }
 // ```
 func (x *StyleContext) AddClass(ClassNameVar string) {
-
 	xStyleContextAddClass(x.GoPointer(), ClassNameVar)
-
 }
 
 var xStyleContextAddProvider func(uintptr, uintptr, uint32)
@@ -262,27 +260,21 @@ var xStyleContextAddProvider func(uintptr, uintptr, uint32)
 // added through this function takes precedence over another added
 // through [func@Gtk.StyleContext.add_provider_for_display].
 func (x *StyleContext) AddProvider(ProviderVar StyleProvider, PriorityVar uint32) {
-
 	xStyleContextAddProvider(x.GoPointer(), ProviderVar.GoPointer(), PriorityVar)
-
 }
 
 var xStyleContextGetBorder func(uintptr, *Border)
 
 // Gets the border for a given state as a `GtkBorder`.
 func (x *StyleContext) GetBorder(BorderVar *Border) {
-
 	xStyleContextGetBorder(x.GoPointer(), BorderVar)
-
 }
 
 var xStyleContextGetColor func(uintptr, *gdk.RGBA)
 
 // Gets the foreground color for a given state.
 func (x *StyleContext) GetColor(ColorVar *gdk.RGBA) {
-
 	xStyleContextGetColor(x.GoPointer(), ColorVar)
-
 }
 
 var xStyleContextGetDisplay func(uintptr) uintptr
@@ -306,25 +298,20 @@ var xStyleContextGetMargin func(uintptr, *Border)
 
 // Gets the margin for a given state as a `GtkBorder`.
 func (x *StyleContext) GetMargin(MarginVar *Border) {
-
 	xStyleContextGetMargin(x.GoPointer(), MarginVar)
-
 }
 
 var xStyleContextGetPadding func(uintptr, *Border)
 
 // Gets the padding for a given state as a `GtkBorder`.
 func (x *StyleContext) GetPadding(PaddingVar *Border) {
-
 	xStyleContextGetPadding(x.GoPointer(), PaddingVar)
-
 }
 
 var xStyleContextGetScale func(uintptr) int32
 
 // Returns the scale used for assets.
 func (x *StyleContext) GetScale() int32 {
-
 	cret := xStyleContextGetScale(x.GoPointer())
 	return cret
 }
@@ -339,7 +326,6 @@ var xStyleContextGetState func(uintptr) StateFlags
 // If you need to retrieve the current state of a `GtkWidget`, use
 // [method@Gtk.Widget.get_state_flags].
 func (x *StyleContext) GetState() StateFlags {
-
 	cret := xStyleContextGetState(x.GoPointer())
 	return cret
 }
@@ -349,7 +335,6 @@ var xStyleContextHasClass func(uintptr, string) bool
 // Returns %TRUE if @context currently has defined the
 // given class name.
 func (x *StyleContext) HasClass(ClassNameVar string) bool {
-
 	cret := xStyleContextHasClass(x.GoPointer(), ClassNameVar)
 	return cret
 }
@@ -358,7 +343,6 @@ var xStyleContextLookupColor func(uintptr, string, *gdk.RGBA) bool
 
 // Looks up and resolves a color name in the @context color map.
 func (x *StyleContext) LookupColor(ColorNameVar string, ColorVar *gdk.RGBA) bool {
-
 	cret := xStyleContextLookupColor(x.GoPointer(), ColorNameVar, ColorVar)
 	return cret
 }
@@ -367,18 +351,14 @@ var xStyleContextRemoveClass func(uintptr, string)
 
 // Removes @class_name from @context.
 func (x *StyleContext) RemoveClass(ClassNameVar string) {
-
 	xStyleContextRemoveClass(x.GoPointer(), ClassNameVar)
-
 }
 
 var xStyleContextRemoveProvider func(uintptr, uintptr)
 
 // Removes @provider from the style providers list in @context.
 func (x *StyleContext) RemoveProvider(ProviderVar StyleProvider) {
-
 	xStyleContextRemoveProvider(x.GoPointer(), ProviderVar.GoPointer())
-
 }
 
 var xStyleContextRestore func(uintptr)
@@ -387,9 +367,7 @@ var xStyleContextRestore func(uintptr)
 //
 // See [method@Gtk.StyleContext.save].
 func (x *StyleContext) Restore() {
-
 	xStyleContextRestore(x.GoPointer())
-
 }
 
 var xStyleContextSave func(uintptr)
@@ -405,9 +383,7 @@ var xStyleContextSave func(uintptr)
 // The matching call to [method@Gtk.StyleContext.restore]
 // must be done before GTK returns to the main loop.
 func (x *StyleContext) Save() {
-
 	xStyleContextSave(x.GoPointer())
-
 }
 
 var xStyleContextSetDisplay func(uintptr, uintptr)
@@ -421,27 +397,21 @@ var xStyleContextSetDisplay func(uintptr, uintptr)
 // [method@Gtk.Widget.get_style_context], you do not need to
 // call this yourself.
 func (x *StyleContext) SetDisplay(DisplayVar *gdk.Display) {
-
 	xStyleContextSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 var xStyleContextSetScale func(uintptr, int32)
 
 // Sets the scale to use when getting image assets for the style.
 func (x *StyleContext) SetScale(ScaleVar int32) {
-
 	xStyleContextSetScale(x.GoPointer(), ScaleVar)
-
 }
 
 var xStyleContextSetState func(uintptr, StateFlags)
 
 // Sets the state to be used for style matching.
 func (x *StyleContext) SetState(FlagsVar StateFlags) {
-
 	xStyleContextSetState(x.GoPointer(), FlagsVar)
-
 }
 
 var xStyleContextToString func(uintptr, StyleContextPrintFlags) string
@@ -457,7 +427,6 @@ var xStyleContextToString func(uintptr, StyleContextPrintFlags) string
 // CSS implementation in GTK. There are no guarantees about
 // the format of the returned string, it may change.
 func (x *StyleContext) ToString(FlagsVar StyleContextPrintFlags) string {
-
 	cret := xStyleContextToString(x.GoPointer(), FlagsVar)
 	return cret
 }
@@ -485,18 +454,14 @@ var xStyleContextAddProviderForDisplay func(uintptr, uintptr, uint32)
 // added through [method@Gtk.StyleContext.add_provider] takes
 // precedence over another added through this function.
 func StyleContextAddProviderForDisplay(DisplayVar *gdk.Display, ProviderVar StyleProvider, PriorityVar uint32) {
-
 	xStyleContextAddProviderForDisplay(DisplayVar.GoPointer(), ProviderVar.GoPointer(), PriorityVar)
-
 }
 
 var xStyleContextRemoveProviderForDisplay func(uintptr, uintptr)
 
 // Removes @provider from the global style providers list in @display.
 func StyleContextRemoveProviderForDisplay(DisplayVar *gdk.Display, ProviderVar StyleProvider) {
-
 	xStyleContextRemoveProviderForDisplay(DisplayVar.GoPointer(), ProviderVar.GoPointer())
-
 }
 
 func init() {
@@ -537,5 +502,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xStyleContextAddProviderForDisplay, libs, "gtk_style_context_add_provider_for_display")
 	core.PuregoSafeRegister(&xStyleContextRemoveProviderForDisplay, libs, "gtk_style_context_remove_provider_for_display")
-
 }

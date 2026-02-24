@@ -199,7 +199,6 @@ func NewDBusObjectManagerClientFinish(ResVar AsyncResult) (*DBusObjectManagerCli
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewDBusObjectManagerClientForBusFinish func(uintptr, **glib.Error) uintptr
@@ -220,7 +219,6 @@ func NewDBusObjectManagerClientForBusFinish(ResVar AsyncResult) (*DBusObjectMana
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewDBusObjectManagerClientForBusSync func(BusType, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
@@ -246,7 +244,6 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
@@ -271,7 +268,6 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDBusObjectManagerClientGetConnection func(uintptr) uintptr
@@ -295,7 +291,6 @@ var xDBusObjectManagerClientGetFlags func(uintptr) DBusObjectManagerClientFlags
 
 // Gets the flags that @manager was constructed with.
 func (x *DBusObjectManagerClient) GetFlags() DBusObjectManagerClientFlags {
-
 	cret := xDBusObjectManagerClientGetFlags(x.GoPointer())
 	return cret
 }
@@ -305,7 +300,6 @@ var xDBusObjectManagerClientGetName func(uintptr) string
 // Gets the name that @manager is for, or %NULL if not a message bus
 // connection.
 func (x *DBusObjectManagerClient) GetName() string {
-
 	cret := xDBusObjectManagerClientGetName(x.GoPointer())
 	return cret
 }
@@ -317,7 +311,6 @@ var xDBusObjectManagerClientGetNameOwner func(uintptr) string
 // #GObject::notify signal to track changes to the
 // #GDBusObjectManagerClient:name-owner property.
 func (x *DBusObjectManagerClient) GetNameOwner() string {
-
 	cret := xDBusObjectManagerClientGetNameOwner(x.GoPointer())
 	return cret
 }
@@ -453,7 +446,6 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 		cbFn := *cb
 
 		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, ChangedPropertiesVarp, InvalidatedPropertiesVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -480,7 +472,6 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 		cbFn := *cb
 
 		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, SenderNameVarp, SignalNameVarp, ParametersVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -524,9 +515,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
 func (x *DBusObjectManagerClient) InitAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes asynchronous initialization and returns the result.
@@ -539,7 +528,6 @@ func (x *DBusObjectManagerClient) InitFinish(ResVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Finishes the async construction for the various g_async_initable_new
@@ -559,7 +547,6 @@ func (x *DBusObjectManagerClient) NewFinish(ResVar AsyncResult) (*gobject.Object
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Gets the interface proxy for @interface_name at @object_path, if
@@ -593,14 +580,12 @@ func (x *DBusObjectManagerClient) GetObject(ObjectPathVar string) *DBusObjectBas
 
 // Gets the object path that @manager is for.
 func (x *DBusObjectManagerClient) GetObjectPath() string {
-
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
 	return cret
 }
 
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerClient) GetObjects() *glib.List {
-
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
 	return cret
 }
@@ -651,7 +636,6 @@ func (x *DBusObjectManagerClient) Init(CancellableVar *Cancellable) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDBusObjectManagerClientNew func(uintptr, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -665,9 +649,7 @@ var xDBusObjectManagerClientNew func(uintptr, DBusObjectManagerClientFlags, stri
 // g_dbus_object_manager_client_new_finish() to get the result. See
 // g_dbus_object_manager_client_new_sync() for the synchronous version.
 func DBusObjectManagerClientNew(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDBusObjectManagerClientNewForBus func(BusType, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -682,9 +664,7 @@ var xDBusObjectManagerClientNewForBus func(BusType, DBusObjectManagerClientFlags
 // then call g_dbus_object_manager_client_new_for_bus_finish() to get the result. See
 // g_dbus_object_manager_client_new_for_bus_sync() for the synchronous version.
 func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 func init() {
@@ -713,5 +693,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDBusObjectManagerClientNew, libs, "g_dbus_object_manager_client_new")
 	core.PuregoSafeRegister(&xDBusObjectManagerClientNewForBus, libs, "g_dbus_object_manager_client_new_for_bus")
-
 }

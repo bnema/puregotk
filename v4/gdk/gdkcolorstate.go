@@ -12,7 +12,6 @@ var xColorStateGetOklab func() *ColorState
 //
 // This is a perceptually uniform color state.
 func ColorStateGetOklab() *ColorState {
-
 	cret := xColorStateGetOklab()
 	return cret
 }
@@ -24,7 +23,6 @@ var xColorStateGetOklch func() *ColorState
 // This is the polar variant of oklab, in which the hue is encoded as
 // a polar coordinate.
 func ColorStateGetOklch() *ColorState {
-
 	cret := xColorStateGetOklch()
 	return cret
 }
@@ -41,7 +39,6 @@ var xColorStateGetRec2100Linear func() *ColorState
 // See e.g. [the CSS HDR Module](https://drafts.csswg.org/css-color-hdr/#valdef-color-rec2100-linear)
 // for details about this colorstate.
 func ColorStateGetRec2100Linear() *ColorState {
-
 	cret := xColorStateGetRec2100Linear()
 	return cret
 }
@@ -58,7 +55,6 @@ var xColorStateGetRec2100Pq func() *ColorState
 // See e.g. [the CSS HDR Module](https://drafts.csswg.org/css-color-hdr/#valdef-color-rec2100-pq)
 // for details about this colorstate.
 func ColorStateGetRec2100Pq() *ColorState {
-
 	cret := xColorStateGetRec2100Pq()
 	return cret
 }
@@ -75,7 +71,6 @@ var xColorStateGetSrgb func() *ColorState
 // See e.g. [the CSS Color Module](https://www.w3.org/TR/css-color-4/#predefined-sRGB)
 // for details about this colorstate.
 func ColorStateGetSrgb() *ColorState {
-
 	cret := xColorStateGetSrgb()
 	return cret
 }
@@ -91,7 +86,6 @@ var xColorStateGetSrgbLinear func() *ColorState
 // See e.g. [the CSS Color Module](https://www.w3.org/TR/css-color-4/#predefined-sRGB-linear)
 // for details about this colorstate.
 func ColorStateGetSrgbLinear() *ColorState {
-
 	cret := xColorStateGetSrgbLinear()
 	return cret
 }
@@ -114,5 +108,4 @@ func init() {
 	core.PuregoSafeRegister(&xColorStateGetRec2100Pq, libs, "gdk_color_state_get_rec2100_pq")
 	core.PuregoSafeRegister(&xColorStateGetSrgb, libs, "gdk_color_state_get_srgb")
 	core.PuregoSafeRegister(&xColorStateGetSrgbLinear, libs, "gdk_color_state_get_srgb_linear")
-
 }

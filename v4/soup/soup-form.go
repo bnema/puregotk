@@ -24,7 +24,6 @@ var xFormDecode func(string) *glib.HashTable
 //
 // which is an urlencoded dataset as defined in the HTML 4.01 spec.
 func FormDecode(EncodedFormVar string) *glib.HashTable {
-
 	cret := xFormDecode(EncodedFormVar)
 	return cret
 }
@@ -51,7 +50,6 @@ var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes
 // need to decode it manually, using [ctor@Multipart.new_from_message]
 // and [method@Multipart.get_part].
 func FormDecodeMultipart(MultipartVar *Multipart, FileControlNameVar string, FilenameVar *string, ContentTypeVar *string, FileVar **glib.Bytes) *glib.HashTable {
-
 	cret := xFormDecodeMultipart(MultipartVar, FileControlNameVar, FilenameVar, ContentTypeVar, FileVar)
 	return cret
 }
@@ -70,7 +68,6 @@ var xFormEncode func(string, ...interface{}) string
 //
 // See also: [ctor@Message.new_from_encoded_form].
 func FormEncode(FirstFieldVar string, varArgs ...interface{}) string {
-
 	cret := xFormEncode(FirstFieldVar, varArgs...)
 	return cret
 }
@@ -86,7 +83,6 @@ var xFormEncodeDatalist func(**glib.Data) string
 //
 // See also: [ctor@Message.new_from_encoded_form].
 func FormEncodeDatalist(FormDataSetVar **glib.Data) string {
-
 	cret := xFormEncodeDatalist(FormDataSetVar)
 	return cret
 }
@@ -105,7 +101,6 @@ var xFormEncodeHash func(*glib.HashTable) string
 //
 // See also: [ctor@Message.new_from_encoded_form].
 func FormEncodeHash(FormDataSetVar *glib.HashTable) string {
-
 	cret := xFormEncodeHash(FormDataSetVar)
 	return cret
 }
@@ -119,7 +114,6 @@ var xFormEncodeValist func(string, []interface{}) string
 //
 // See also: [ctor@Message.new_from_encoded_form].
 func FormEncodeValist(FirstFieldVar string, ArgsVar []interface{}) string {
-
 	cret := xFormEncodeValist(FirstFieldVar, ArgsVar)
 	return cret
 }
@@ -142,5 +136,4 @@ func init() {
 	core.PuregoSafeRegister(&xFormEncodeDatalist, libs, "soup_form_encode_datalist")
 	core.PuregoSafeRegister(&xFormEncodeHash, libs, "soup_form_encode_hash")
 	core.PuregoSafeRegister(&xFormEncodeValist, libs, "soup_form_encode_valist")
-
 }

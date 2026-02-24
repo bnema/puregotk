@@ -85,5 +85,4 @@ func init() {
 	core.PuregoSafeRegister(&xVirtualMachineGLibType, libs, "jsc_virtual_machine_get_type")
 
 	core.PuregoSafeRegister(&xNewVirtualMachine, libs, "jsc_virtual_machine_new")
-
 }

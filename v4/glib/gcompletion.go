@@ -62,9 +62,7 @@ var xCompletionAddItems func(uintptr, *List)
 
 // Adds items to the #GCompletion.
 func (x *Completion) AddItems(ItemsVar *List) {
-
 	xCompletionAddItems(x.GoPointer(), ItemsVar)
-
 }
 
 var xCompletionClearItems func(uintptr)
@@ -73,9 +71,7 @@ var xCompletionClearItems func(uintptr)
 // memory was dynamically allocated, it should be freed after calling this
 // function.
 func (x *Completion) ClearItems() {
-
 	xCompletionClearItems(x.GoPointer())
-
 }
 
 var xCompletionComplete func(uintptr, string, string) *List
@@ -83,7 +79,6 @@ var xCompletionComplete func(uintptr, string, string) *List
 // Attempts to complete the string @prefix using the #GCompletion
 // target items.
 func (x *Completion) Complete(PrefixVar string, NewPrefixVar string) *List {
-
 	cret := xCompletionComplete(x.GoPointer(), PrefixVar, NewPrefixVar)
 	return cret
 }
@@ -98,7 +93,6 @@ var xCompletionCompleteUtf8 func(uintptr, string, string) *List
 // You should use this function instead of g_completion_complete() if your
 // items are UTF-8 strings.
 func (x *Completion) CompleteUtf8(PrefixVar string, NewPrefixVar string) *List {
-
 	cret := xCompletionCompleteUtf8(x.GoPointer(), PrefixVar, NewPrefixVar)
 	return cret
 }
@@ -109,9 +103,7 @@ var xCompletionFree func(uintptr)
 // the memory was dynamically allocated, it should be freed after calling this
 // function.
 func (x *Completion) Free() {
-
 	xCompletionFree(x.GoPointer())
-
 }
 
 var xCompletionRemoveItems func(uintptr, *List)
@@ -120,9 +112,7 @@ var xCompletionRemoveItems func(uintptr, *List)
 // was dynamically allocated, free @items with g_list_free_full() after calling
 // this function.
 func (x *Completion) RemoveItems(ItemsVar *List) {
-
 	xCompletionRemoveItems(x.GoPointer(), ItemsVar)
-
 }
 
 var xCompletionSetCompare func(uintptr, uintptr)
@@ -130,9 +120,7 @@ var xCompletionSetCompare func(uintptr, uintptr)
 // Sets the function to use for string comparisons. The default string
 // comparison function is strncmp().
 func (x *Completion) SetCompare(StrncmpFuncVar *CompletionStrncmpFunc) {
-
 	xCompletionSetCompare(x.GoPointer(), NewCallback(StrncmpFuncVar))
-
 }
 
 func init() {
@@ -154,5 +142,4 @@ func init() {
 	core.PuregoSafeRegister(&xCompletionFree, libs, "g_completion_free")
 	core.PuregoSafeRegister(&xCompletionRemoveItems, libs, "g_completion_remove_items")
 	core.PuregoSafeRegister(&xCompletionSetCompare, libs, "g_completion_set_compare")
-
 }

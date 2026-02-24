@@ -10,7 +10,6 @@ var xComponentTransferEqual func(uintptr, uintptr) bool
 
 // Compares two component transfers for equality.
 func ComponentTransferEqual(SelfVar uintptr, OtherVar uintptr) bool {
-
 	cret := xComponentTransferEqual(SelfVar, OtherVar)
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xComponentTransferEqual, libs, "gsk_component_transfer_equal")
-
 }

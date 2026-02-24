@@ -47,7 +47,6 @@ var xFrameTimingsGetComplete func(uintptr) bool
 // certain that no further values will become available and be
 // stored in the `GdkFrameTimings`.
 func (x *FrameTimings) GetComplete() bool {
-
 	cret := xFrameTimingsGetComplete(x.GoPointer())
 	return cret
 }
@@ -57,7 +56,6 @@ var xFrameTimingsGetFrameCounter func(uintptr) int64
 // Gets the frame counter value of the `GdkFrameClock` when
 // this frame was drawn.
 func (x *FrameTimings) GetFrameCounter() int64 {
-
 	cret := xFrameTimingsGetFrameCounter(x.GoPointer())
 	return cret
 }
@@ -69,7 +67,6 @@ var xFrameTimingsGetFrameTime func(uintptr) int64
 // This is the time value that is typically used to time
 // animations for the frame. See [method@Gdk.FrameClock.get_frame_time].
 func (x *FrameTimings) GetFrameTime() int64 {
-
 	cret := xFrameTimingsGetFrameTime(x.GoPointer())
 	return cret
 }
@@ -89,7 +86,6 @@ var xFrameTimingsGetPredictedPresentationTime func(uintptr) int64
 // over latency. For example, a movie player may want this information
 // for Audio/Video synchronization.
 func (x *FrameTimings) GetPredictedPresentationTime() int64 {
-
 	cret := xFrameTimingsGetPredictedPresentationTime(x.GoPointer())
 	return cret
 }
@@ -100,7 +96,6 @@ var xFrameTimingsGetPresentationTime func(uintptr) int64
 //
 // This is the time at which the frame became visible to the user.
 func (x *FrameTimings) GetPresentationTime() int64 {
-
 	cret := xFrameTimingsGetPresentationTime(x.GoPointer())
 	return cret
 }
@@ -113,7 +108,6 @@ var xFrameTimingsGetRefreshInterval func(uintptr) int64
 // Frame presentation usually happens during the “vertical
 // blanking interval”.
 func (x *FrameTimings) GetRefreshInterval() int64 {
-
 	cret := xFrameTimingsGetRefreshInterval(x.GoPointer())
 	return cret
 }
@@ -122,7 +116,6 @@ var xFrameTimingsRef func(uintptr) *FrameTimings
 
 // Increases the reference count of @timings.
 func (x *FrameTimings) Ref() *FrameTimings {
-
 	cret := xFrameTimingsRef(x.GoPointer())
 	return cret
 }
@@ -133,9 +126,7 @@ var xFrameTimingsUnref func(uintptr)
 //
 // If @timings is no longer referenced, it will be freed.
 func (x *FrameTimings) Unref() {
-
 	xFrameTimingsUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -160,5 +151,4 @@ func init() {
 	core.PuregoSafeRegister(&xFrameTimingsGetRefreshInterval, libs, "gdk_frame_timings_get_refresh_interval")
 	core.PuregoSafeRegister(&xFrameTimingsRef, libs, "gdk_frame_timings_ref")
 	core.PuregoSafeRegister(&xFrameTimingsUnref, libs, "gdk_frame_timings_unref")
-
 }

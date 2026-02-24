@@ -64,7 +64,6 @@ var xEventControllerFocusContainsFocus func(uintptr) bool
 
 // Returns %TRUE if focus is within @self or one of its children.
 func (x *EventControllerFocus) ContainsFocus() bool {
-
 	cret := xEventControllerFocusContainsFocus(x.GoPointer())
 	return cret
 }
@@ -73,7 +72,6 @@ var xEventControllerFocusIsFocus func(uintptr) bool
 
 // Returns %TRUE if focus is within @self, but not one of its children.
 func (x *EventControllerFocus) IsFocus() bool {
-
 	cret := xEventControllerFocusIsFocus(x.GoPointer())
 	return cret
 }
@@ -141,7 +139,6 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -169,7 +166,6 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -194,5 +190,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEventControllerFocusContainsFocus, libs, "gtk_event_controller_focus_contains_focus")
 	core.PuregoSafeRegister(&xEventControllerFocusIsFocus, libs, "gtk_event_controller_focus_is_focus")
-
 }

@@ -139,9 +139,7 @@ var xPrintOperationPrint func(uintptr)
 // through the File Chooser portal. This function will not work for physical
 // printers when running in a sandbox.
 func (x *PrintOperation) Print() {
-
 	xPrintOperationPrint(x.GoPointer())
-
 }
 
 var xPrintOperationRunDialog func(uintptr, uintptr) PrintOperationResponse
@@ -161,7 +159,6 @@ var xPrintOperationRunDialog func(uintptr, uintptr) PrintOperationResponse
 // webkit_print_operation_get_print_settings() and webkit_print_operation_get_page_setup()
 // after this method.
 func (x *PrintOperation) RunDialog(ParentVar *gtk.Window) PrintOperationResponse {
-
 	cret := xPrintOperationRunDialog(x.GoPointer(), ParentVar.GoPointer())
 	return cret
 }
@@ -173,9 +170,7 @@ var xPrintOperationSetPageSetup func(uintptr, uintptr)
 // Current page setup is used for the
 // initial values of the print dialog when webkit_print_operation_run_dialog() is called.
 func (x *PrintOperation) SetPageSetup(PageSetupVar *gtk.PageSetup) {
-
 	xPrintOperationSetPageSetup(x.GoPointer(), PageSetupVar.GoPointer())
-
 }
 
 var xPrintOperationSetPrintSettings func(uintptr, uintptr)
@@ -185,9 +180,7 @@ var xPrintOperationSetPrintSettings func(uintptr, uintptr)
 // Set the current print settings of @print_operation. Current print settings are used for
 // the initial values of the print dialog when webkit_print_operation_run_dialog() is called.
 func (x *PrintOperation) SetPrintSettings(PrintSettingsVar *gtk.PrintSettings) {
-
 	xPrintOperationSetPrintSettings(x.GoPointer(), PrintSettingsVar.GoPointer())
-
 }
 
 func (c *PrintOperation) GoPointer() uintptr {
@@ -216,7 +209,6 @@ func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32
 		cbFn := *cb
 
 		cbFn(fa, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -237,7 +229,6 @@ func (x *PrintOperation) ConnectFinished(cb *func(PrintOperation)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

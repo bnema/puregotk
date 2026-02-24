@@ -206,7 +206,6 @@ func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Applies @converter to the data in @bytes.
@@ -218,21 +217,20 @@ func (x *ConverterBase) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
 func (x *ConverterBase) Reset() {
-
 	XGConverterReset(x.GoPointer())
-
 }
 
-var XGConverterConvert func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
-var XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
-var XGConverterReset func(uintptr)
+var (
+	XGConverterConvert      func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
+	XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
+	XGConverterReset        func(uintptr)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -251,5 +249,4 @@ func init() {
 	core.PuregoSafeRegister(&XGConverterConvert, libs, "g_converter_convert")
 	core.PuregoSafeRegister(&XGConverterConvertBytes, libs, "g_converter_convert_bytes")
 	core.PuregoSafeRegister(&XGConverterReset, libs, "g_converter_reset")
-
 }

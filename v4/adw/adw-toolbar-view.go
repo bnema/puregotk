@@ -237,18 +237,14 @@ var xToolbarViewAddBottomBar func(uintptr, uintptr)
 
 // Adds a bottom bar to @self.
 func (x *ToolbarView) AddBottomBar(WidgetVar *gtk.Widget) {
-
 	xToolbarViewAddBottomBar(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xToolbarViewAddTopBar func(uintptr, uintptr)
 
 // Adds a top bar to @self.
 func (x *ToolbarView) AddTopBar(WidgetVar *gtk.Widget) {
-
 	xToolbarViewAddTopBar(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xToolbarViewGetBottomBarHeight func(uintptr) int32
@@ -260,7 +256,6 @@ var xToolbarViewGetBottomBarHeight func(uintptr) int32
 //
 // See [method@ToolbarView.get_top_bar_height].
 func (x *ToolbarView) GetBottomBarHeight() int32 {
-
 	cret := xToolbarViewGetBottomBarHeight(x.GoPointer())
 	return cret
 }
@@ -269,7 +264,6 @@ var xToolbarViewGetBottomBarStyle func(uintptr) ToolbarStyle
 
 // Gets appearance of the bottom bars for @self.
 func (x *ToolbarView) GetBottomBarStyle() ToolbarStyle {
-
 	cret := xToolbarViewGetBottomBarStyle(x.GoPointer())
 	return cret
 }
@@ -295,7 +289,6 @@ var xToolbarViewGetExtendContentToBottomEdge func(uintptr) bool
 
 // Gets whether the content widget can extend behind bottom bars.
 func (x *ToolbarView) GetExtendContentToBottomEdge() bool {
-
 	cret := xToolbarViewGetExtendContentToBottomEdge(x.GoPointer())
 	return cret
 }
@@ -304,7 +297,6 @@ var xToolbarViewGetExtendContentToTopEdge func(uintptr) bool
 
 // Gets whether the content widget can extend behind top bars.
 func (x *ToolbarView) GetExtendContentToTopEdge() bool {
-
 	cret := xToolbarViewGetExtendContentToTopEdge(x.GoPointer())
 	return cret
 }
@@ -313,7 +305,6 @@ var xToolbarViewGetRevealBottomBars func(uintptr) bool
 
 // Gets whether bottom bars are revealed for @self.
 func (x *ToolbarView) GetRevealBottomBars() bool {
-
 	cret := xToolbarViewGetRevealBottomBars(x.GoPointer())
 	return cret
 }
@@ -322,7 +313,6 @@ var xToolbarViewGetRevealTopBars func(uintptr) bool
 
 // Gets whether top bars are revealed for @self.
 func (x *ToolbarView) GetRevealTopBars() bool {
-
 	cret := xToolbarViewGetRevealTopBars(x.GoPointer())
 	return cret
 }
@@ -336,7 +326,6 @@ var xToolbarViewGetTopBarHeight func(uintptr) int32
 //
 // See [method@ToolbarView.get_bottom_bar_height].
 func (x *ToolbarView) GetTopBarHeight() int32 {
-
 	cret := xToolbarViewGetTopBarHeight(x.GoPointer())
 	return cret
 }
@@ -345,7 +334,6 @@ var xToolbarViewGetTopBarStyle func(uintptr) ToolbarStyle
 
 // Gets appearance of the top bars for @self.
 func (x *ToolbarView) GetTopBarStyle() ToolbarStyle {
-
 	cret := xToolbarViewGetTopBarStyle(x.GoPointer())
 	return cret
 }
@@ -354,9 +342,7 @@ var xToolbarViewRemove func(uintptr, uintptr)
 
 // Removes a child from @self.
 func (x *ToolbarView) Remove(WidgetVar *gtk.Widget) {
-
 	xToolbarViewRemove(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xToolbarViewSetBottomBarStyle func(uintptr, ToolbarStyle)
@@ -386,18 +372,14 @@ var xToolbarViewSetBottomBarStyle func(uintptr, ToolbarStyle)
 //
 // See also [method@ToolbarView.set_top_bar_style].
 func (x *ToolbarView) SetBottomBarStyle(StyleVar ToolbarStyle) {
-
 	xToolbarViewSetBottomBarStyle(x.GoPointer(), StyleVar)
-
 }
 
 var xToolbarViewSetContent func(uintptr, uintptr)
 
 // Sets the content widget for @self.
 func (x *ToolbarView) SetContent(ContentVar *gtk.Widget) {
-
 	xToolbarViewSetContent(x.GoPointer(), ContentVar.GoPointer())
-
 }
 
 var xToolbarViewSetExtendContentToBottomEdge func(uintptr, bool)
@@ -409,9 +391,7 @@ var xToolbarViewSetExtendContentToBottomEdge func(uintptr, bool)
 //
 // See [method@ToolbarView.set_extend_content_to_top_edge].
 func (x *ToolbarView) SetExtendContentToBottomEdge(ExtendVar bool) {
-
 	xToolbarViewSetExtendContentToBottomEdge(x.GoPointer(), ExtendVar)
-
 }
 
 var xToolbarViewSetExtendContentToTopEdge func(uintptr, bool)
@@ -423,9 +403,7 @@ var xToolbarViewSetExtendContentToTopEdge func(uintptr, bool)
 //
 // See [method@ToolbarView.set_extend_content_to_bottom_edge].
 func (x *ToolbarView) SetExtendContentToTopEdge(ExtendVar bool) {
-
 	xToolbarViewSetExtendContentToTopEdge(x.GoPointer(), ExtendVar)
-
 }
 
 var xToolbarViewSetRevealBottomBars func(uintptr, bool)
@@ -440,9 +418,7 @@ var xToolbarViewSetRevealBottomBars func(uintptr, bool)
 //
 // See [method@ToolbarView.set_reveal_top_bars].
 func (x *ToolbarView) SetRevealBottomBars(RevealVar bool) {
-
 	xToolbarViewSetRevealBottomBars(x.GoPointer(), RevealVar)
-
 }
 
 var xToolbarViewSetRevealTopBars func(uintptr, bool)
@@ -457,9 +433,7 @@ var xToolbarViewSetRevealTopBars func(uintptr, bool)
 //
 // See [method@ToolbarView.set_reveal_bottom_bars].
 func (x *ToolbarView) SetRevealTopBars(RevealVar bool) {
-
 	xToolbarViewSetRevealTopBars(x.GoPointer(), RevealVar)
-
 }
 
 var xToolbarViewSetTopBarStyle func(uintptr, ToolbarStyle)
@@ -489,9 +463,7 @@ var xToolbarViewSetTopBarStyle func(uintptr, ToolbarStyle)
 //
 // See also [method@ToolbarView.set_bottom_bar_style].
 func (x *ToolbarView) SetTopBarStyle(StyleVar ToolbarStyle) {
-
 	xToolbarViewSetTopBarStyle(x.GoPointer(), StyleVar)
-
 }
 
 func (c *ToolbarView) GoPointer() uintptr {
@@ -663,9 +635,7 @@ func (x *ToolbarView) GetPropertyTopBarHeight() int32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ToolbarView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -686,7 +656,6 @@ func (x *ToolbarView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ToolbarView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -711,7 +680,6 @@ func (x *ToolbarView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ToolbarView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -750,30 +718,23 @@ func (x *ToolbarView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ToolbarView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ToolbarView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ToolbarView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ToolbarView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -786,9 +747,7 @@ func (x *ToolbarView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ToolbarView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -796,9 +755,7 @@ func (x *ToolbarView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ToolbarView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -807,9 +764,7 @@ func (x *ToolbarView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ToolbarView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -831,9 +786,7 @@ func (x *ToolbarView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *ToolbarView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -843,9 +796,7 @@ func (x *ToolbarView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *ToolbarView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -867,9 +818,7 @@ func (x *ToolbarView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *ToolbarView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -879,9 +828,7 @@ func (x *ToolbarView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *ToolbarView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -904,9 +851,7 @@ func (x *ToolbarView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gt
 //
 // ```
 func (x *ToolbarView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -916,9 +861,7 @@ func (x *ToolbarView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *ToolbarView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -926,7 +869,6 @@ func (x *ToolbarView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessi
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ToolbarView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -968,5 +910,4 @@ func init() {
 	core.PuregoSafeRegister(&xToolbarViewSetRevealBottomBars, libs, "adw_toolbar_view_set_reveal_bottom_bars")
 	core.PuregoSafeRegister(&xToolbarViewSetRevealTopBars, libs, "adw_toolbar_view_set_reveal_top_bars")
 	core.PuregoSafeRegister(&xToolbarViewSetTopBarStyle, libs, "adw_toolbar_view_set_top_bar_style")
-
 }

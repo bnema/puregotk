@@ -76,7 +76,6 @@ var xLayoutGetName func(uintptr) string
 
 // Gets the name of the layout.
 func (x *Layout) GetName() string {
-
 	cret := xLayoutGetName(x.GoPointer())
 	return cret
 }
@@ -85,9 +84,7 @@ var xLayoutSetName func(uintptr, string)
 
 // Sets the name of the layout.
 func (x *Layout) SetName(NameVar string) {
-
 	xLayoutSetName(x.GoPointer(), NameVar)
-
 }
 
 func (c *Layout) GoPointer() uintptr {
@@ -123,7 +120,6 @@ func (x *Layout) GetPropertyName() string {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Layout) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -147,5 +143,4 @@ func init() {
 	core.PuregoSafeRegister(&xLayoutGetContent, libs, "adw_layout_get_content")
 	core.PuregoSafeRegister(&xLayoutGetName, libs, "adw_layout_get_name")
 	core.PuregoSafeRegister(&xLayoutSetName, libs, "adw_layout_set_name")
-
 }

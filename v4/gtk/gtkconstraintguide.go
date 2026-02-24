@@ -68,25 +68,20 @@ var xConstraintGuideGetMaxSize func(uintptr, *int32, *int32)
 
 // Gets the maximum size of @guide.
 func (x *ConstraintGuide) GetMaxSize(WidthVar *int32, HeightVar *int32) {
-
 	xConstraintGuideGetMaxSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideGetMinSize func(uintptr, *int32, *int32)
 
 // Gets the minimum size of @guide.
 func (x *ConstraintGuide) GetMinSize(WidthVar *int32, HeightVar *int32) {
-
 	xConstraintGuideGetMinSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideGetName func(uintptr) string
 
 // Retrieves the name set using gtk_constraint_guide_set_name().
 func (x *ConstraintGuide) GetName() string {
-
 	cret := xConstraintGuideGetName(x.GoPointer())
 	return cret
 }
@@ -95,16 +90,13 @@ var xConstraintGuideGetNatSize func(uintptr, *int32, *int32)
 
 // Gets the natural size of @guide.
 func (x *ConstraintGuide) GetNatSize(WidthVar *int32, HeightVar *int32) {
-
 	xConstraintGuideGetNatSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideGetStrength func(uintptr) ConstraintStrength
 
 // Retrieves the strength set using gtk_constraint_guide_set_strength().
 func (x *ConstraintGuide) GetStrength() ConstraintStrength {
-
 	cret := xConstraintGuideGetStrength(x.GoPointer())
 	return cret
 }
@@ -116,9 +108,7 @@ var xConstraintGuideSetMaxSize func(uintptr, int32, int32)
 // If @guide is attached to a `GtkConstraintLayout`,
 // the constraints will be updated to reflect the new size.
 func (x *ConstraintGuide) SetMaxSize(WidthVar int32, HeightVar int32) {
-
 	xConstraintGuideSetMaxSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideSetMinSize func(uintptr, int32, int32)
@@ -128,9 +118,7 @@ var xConstraintGuideSetMinSize func(uintptr, int32, int32)
 // If @guide is attached to a `GtkConstraintLayout`,
 // the constraints will be updated to reflect the new size.
 func (x *ConstraintGuide) SetMinSize(WidthVar int32, HeightVar int32) {
-
 	xConstraintGuideSetMinSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideSetName func(uintptr, string)
@@ -139,9 +127,7 @@ var xConstraintGuideSetName func(uintptr, string)
 //
 // The name is useful for debugging purposes.
 func (x *ConstraintGuide) SetName(NameVar string) {
-
 	xConstraintGuideSetName(x.GoPointer(), NameVar)
-
 }
 
 var xConstraintGuideSetNatSize func(uintptr, int32, int32)
@@ -151,9 +137,7 @@ var xConstraintGuideSetNatSize func(uintptr, int32, int32)
 // If @guide is attached to a `GtkConstraintLayout`,
 // the constraints will be updated to reflect the new size.
 func (x *ConstraintGuide) SetNatSize(WidthVar int32, HeightVar int32) {
-
 	xConstraintGuideSetNatSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xConstraintGuideSetStrength func(uintptr, ConstraintStrength)
@@ -161,9 +145,7 @@ var xConstraintGuideSetStrength func(uintptr, ConstraintStrength)
 // Sets the strength of the constraint on the natural size of the
 // given `GtkConstraintGuide`.
 func (x *ConstraintGuide) SetStrength(StrengthVar ConstraintStrength) {
-
 	xConstraintGuideSetStrength(x.GoPointer(), StrengthVar)
-
 }
 
 func (c *ConstraintGuide) GoPointer() uintptr {
@@ -322,5 +304,4 @@ func init() {
 	core.PuregoSafeRegister(&xConstraintGuideSetName, libs, "gtk_constraint_guide_set_name")
 	core.PuregoSafeRegister(&xConstraintGuideSetNatSize, libs, "gtk_constraint_guide_set_nat_size")
 	core.PuregoSafeRegister(&xConstraintGuideSetStrength, libs, "gtk_constraint_guide_set_strength")
-
 }

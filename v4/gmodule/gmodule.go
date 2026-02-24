@@ -41,7 +41,6 @@ var xModuleClose func(uintptr) bool
 
 // Closes a module.
 func (x *Module) Close() bool {
-
 	cret := xModuleClose(x.GoPointer())
 	return cret
 }
@@ -51,9 +50,7 @@ var xModuleMakeResident func(uintptr)
 // Ensures that a module will never be unloaded.
 // Any future g_module_close() calls on the module will be ignored.
 func (x *Module) MakeResident() {
-
 	xModuleMakeResident(x.GoPointer())
-
 }
 
 var xModuleName func(uintptr) string
@@ -62,7 +59,6 @@ var xModuleName func(uintptr) string
 //
 // If @module refers to the application itself, "main" is returned.
 func (x *Module) Name() string {
-
 	cret := xModuleName(x.GoPointer())
 	return cret
 }
@@ -72,7 +68,6 @@ var xModuleSymbol func(uintptr, string, *uintptr) bool
 // Gets a symbol pointer from a module, such as one exported
 // by %G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
 func (x *Module) Symbol(SymbolNameVar string, SymbolVar *uintptr) bool {
-
 	cret := xModuleSymbol(x.GoPointer(), SymbolNameVar, SymbolVar)
 	return cret
 }
@@ -123,7 +118,6 @@ var xModuleBuildPath func(string, string) string
 // `/lib/libmylibrary.so`. On a Windows system, using `\Windows` as the
 // directory it will return `\Windows\mylibrary.dll`.
 func ModuleBuildPath(DirectoryVar string, ModuleNameVar string) string {
-
 	cret := xModuleBuildPath(DirectoryVar, ModuleNameVar)
 	return cret
 }
@@ -132,7 +126,6 @@ var xNewModuleError func() string
 
 // Gets a string describing the last module error.
 func NewModuleError() string {
-
 	cret := xNewModuleError()
 	return cret
 }
@@ -141,7 +134,6 @@ var xModuleSupported func() bool
 
 // Checks if modules are supported on the current platform.
 func ModuleSupported() bool {
-
 	cret := xModuleSupported()
 	return cret
 }
@@ -166,5 +158,4 @@ func init() {
 	core.PuregoSafeRegister(&xModuleMakeResident, libs, "g_module_make_resident")
 	core.PuregoSafeRegister(&xModuleName, libs, "g_module_name")
 	core.PuregoSafeRegister(&xModuleSymbol, libs, "g_module_symbol")
-
 }

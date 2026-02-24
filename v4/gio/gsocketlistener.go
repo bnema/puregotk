@@ -285,7 +285,6 @@ func (x *SocketListener) Accept(SourceObjectVar **gobject.Object, CancellableVar
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -296,9 +295,7 @@ var xSocketListenerAcceptAsync func(uintptr, uintptr, uintptr, uintptr)
 // called. You can then call g_socket_listener_accept_finish()
 // to get the result of the operation.
 func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSocketListenerAcceptFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
@@ -319,7 +316,6 @@ func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **g
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptSocket func(uintptr, **gobject.Object, uintptr, **glib.Error) uintptr
@@ -353,7 +349,6 @@ func (x *SocketListener) AcceptSocket(SourceObjectVar **gobject.Object, Cancella
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptSocketAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -364,9 +359,7 @@ var xSocketListenerAcceptSocketAsync func(uintptr, uintptr, uintptr, uintptr)
 // called. You can then call g_socket_listener_accept_socket_finish()
 // to get the result of the operation.
 func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
@@ -387,7 +380,6 @@ func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectV
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, **SocketAddress, **glib.Error) bool
@@ -423,7 +415,6 @@ func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketTyp
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddAnyInetPort func(uintptr, uintptr, **glib.Error) uint16
@@ -454,7 +445,6 @@ func (x *SocketListener) AddAnyInetPort(SourceObjectVar *gobject.Object) (uint16
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddInetPort func(uintptr, uint16, uintptr, **glib.Error) bool
@@ -487,7 +477,6 @@ func (x *SocketListener) AddInetPort(PortVar uint16, SourceObjectVar *gobject.Ob
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddSocket func(uintptr, uintptr, uintptr, **glib.Error) bool
@@ -516,16 +505,13 @@ func (x *SocketListener) AddSocket(SocketVar *Socket, SourceObjectVar *gobject.O
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerClose func(uintptr)
 
 // Closes all the sockets in the listener.
 func (x *SocketListener) Close() {
-
 	xSocketListenerClose(x.GoPointer())
-
 }
 
 var xSocketListenerSetBacklog func(uintptr, int32)
@@ -536,9 +522,7 @@ var xSocketListenerSetBacklog func(uintptr, int32)
 //
 // See g_socket_set_listen_backlog() for details
 func (x *SocketListener) SetBacklog(ListenBacklogVar int32) {
-
 	xSocketListenerSetBacklog(x.GoPointer(), ListenBacklogVar)
-
 }
 
 func (c *SocketListener) GoPointer() uintptr {
@@ -585,7 +569,6 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 		cbFn := *cb
 
 		cbFn(fa, EventVarp, SocketVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -620,5 +603,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketListenerAddSocket, libs, "g_socket_listener_add_socket")
 	core.PuregoSafeRegister(&xSocketListenerClose, libs, "g_socket_listener_close")
 	core.PuregoSafeRegister(&xSocketListenerSetBacklog, libs, "g_socket_listener_set_backlog")
-
 }

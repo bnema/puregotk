@@ -82,5 +82,4 @@ func init() {
 	core.PuregoSafeRegister(&xPasswordEntryBufferGLibType, libs, "gtk_password_entry_buffer_get_type")
 
 	core.PuregoSafeRegister(&xNewPasswordEntryBuffer, libs, "gtk_password_entry_buffer_new")
-
 }

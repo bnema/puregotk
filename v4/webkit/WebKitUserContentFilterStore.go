@@ -79,9 +79,7 @@ var xUserContentFilterStoreFetchIdentifiers func(uintptr, uintptr, uintptr, uint
 // webkit_user_content_filter_store_fetch_identifiers_finish() to obtain the list of
 // filter identifiers.
 func (x *UserContentFilterStore) FetchIdentifiers(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUserContentFilterStoreFetchIdentifiers(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUserContentFilterStoreFetchIdentifiersFinish func(uintptr, uintptr) []string
@@ -91,7 +89,6 @@ var xUserContentFilterStoreFetchIdentifiersFinish func(uintptr, uintptr) []strin
 // Finishes an asynchronous fetch of the list of identifiers for the stored filters previously
 // started with webkit_user_content_filter_store_fetch_identifiers().
 func (x *UserContentFilterStore) FetchIdentifiersFinish(ResultVar gio.AsyncResult) []string {
-
 	cret := xUserContentFilterStoreFetchIdentifiersFinish(x.GoPointer(), ResultVar.GoPointer())
 	return cret
 }
@@ -100,7 +97,6 @@ var xUserContentFilterStoreGetPath func(uintptr) string
 
 // Gets the storage path for user content filters.
 func (x *UserContentFilterStore) GetPath() string {
-
 	cret := xUserContentFilterStoreGetPath(x.GoPointer())
 	return cret
 }
@@ -115,9 +111,7 @@ var xUserContentFilterStoreLoad func(uintptr, string, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be invoked, which then can use
 // webkit_user_content_filter_store_load_finish() to obtain the resulting filter.
 func (x *UserContentFilterStore) Load(IdentifierVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUserContentFilterStoreLoad(x.GoPointer(), IdentifierVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUserContentFilterStoreLoadFinish func(uintptr, uintptr, **glib.Error) *UserContentFilter
@@ -132,7 +126,6 @@ func (x *UserContentFilterStore) LoadFinish(ResultVar gio.AsyncResult) (*UserCon
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUserContentFilterStoreRemove func(uintptr, string, uintptr, uintptr, uintptr)
@@ -143,9 +136,7 @@ var xUserContentFilterStoreRemove func(uintptr, string, uintptr, uintptr, uintpt
 // webkit_user_content_filter_store_remove_finish() to check whether the removal was
 // successful.
 func (x *UserContentFilterStore) Remove(IdentifierVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUserContentFilterStoreRemove(x.GoPointer(), IdentifierVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUserContentFilterStoreRemoveFinish func(uintptr, uintptr, **glib.Error) bool
@@ -160,7 +151,6 @@ func (x *UserContentFilterStore) RemoveFinish(ResultVar gio.AsyncResult) (bool, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUserContentFilterStoreSave func(uintptr, string, *glib.Bytes, uintptr, uintptr, uintptr)
@@ -178,9 +168,7 @@ var xUserContentFilterStoreSave func(uintptr, string, *glib.Bytes, uintptr, uint
 // When the operation is finished, @callback will be invoked, which then can use
 // webkit_user_content_filter_store_save_finish() to obtain the resulting filter.
 func (x *UserContentFilterStore) Save(IdentifierVar string, SourceVar *glib.Bytes, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUserContentFilterStoreSave(x.GoPointer(), IdentifierVar, SourceVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUserContentFilterStoreSaveFinish func(uintptr, uintptr, **glib.Error) *UserContentFilter
@@ -195,7 +183,6 @@ func (x *UserContentFilterStore) SaveFinish(ResultVar gio.AsyncResult) (*UserCon
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUserContentFilterStoreSaveFromFile func(uintptr, string, uintptr, uintptr, uintptr, uintptr)
@@ -209,9 +196,7 @@ var xUserContentFilterStoreSaveFromFile func(uintptr, string, uintptr, uintptr, 
 // When the operation is finished, @callback will be invoked, which then can use
 // webkit_user_content_filter_store_save_finish() to obtain the resulting filter.
 func (x *UserContentFilterStore) SaveFromFile(IdentifierVar string, FileVar gio.File, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUserContentFilterStoreSaveFromFile(x.GoPointer(), IdentifierVar, FileVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUserContentFilterStoreSaveFromFileFinish func(uintptr, uintptr, **glib.Error) *UserContentFilter
@@ -226,7 +211,6 @@ func (x *UserContentFilterStore) SaveFromFileFinish(ResultVar gio.AsyncResult) (
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *UserContentFilterStore) GoPointer() uintptr {

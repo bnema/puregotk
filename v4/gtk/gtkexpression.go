@@ -42,7 +42,6 @@ var xExpressionWatchEvaluate func(uintptr, *gobject.Value) bool
 // This is equivalent to calling [method@Gtk.Expression.evaluate] with the
 // expression and this pointer originally used to create `watch`.
 func (x *ExpressionWatch) Evaluate(ValueVar *gobject.Value) bool {
-
 	cret := xExpressionWatchEvaluate(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -51,7 +50,6 @@ var xExpressionWatchRef func(uintptr) *ExpressionWatch
 
 // Acquires a reference on the given `GtkExpressionWatch`.
 func (x *ExpressionWatch) Ref() *ExpressionWatch {
-
 	cret := xExpressionWatchRef(x.GoPointer())
 	return cret
 }
@@ -63,9 +61,7 @@ var xExpressionWatchUnref func(uintptr)
 // If the reference was the last, the resources associated to `self` are
 // freed.
 func (x *ExpressionWatch) Unref() {
-
 	xExpressionWatchUnref(x.GoPointer())
-
 }
 
 var xExpressionWatchUnwatch func(uintptr)
@@ -75,9 +71,7 @@ var xExpressionWatchUnwatch func(uintptr)
 // See [method@Gtk.Expression.watch] for how the watch
 // was established.
 func (x *ExpressionWatch) Unwatch() {
-
 	xExpressionWatchUnwatch(x.GoPointer())
-
 }
 
 var xNewParamSpecExpression func(string, string, string, gobject.ParamFlags) uintptr
@@ -138,9 +132,7 @@ var xValueSetExpression func(*gobject.Value, uintptr)
 //
 // The `GValue` will acquire a reference to the `expression`.
 func ValueSetExpression(ValueVar *gobject.Value, ExpressionVar *Expression) {
-
 	xValueSetExpression(ValueVar, ExpressionVar.GoPointer())
-
 }
 
 var xValueTakeExpression func(*gobject.Value, uintptr)
@@ -149,9 +141,7 @@ var xValueTakeExpression func(*gobject.Value, uintptr)
 //
 // This function transfers the ownership of the `expression` to the `GValue`.
 func ValueTakeExpression(ValueVar *gobject.Value, ExpressionVar *Expression) {
-
 	xValueTakeExpression(ValueVar, ExpressionVar.GoPointer())
-
 }
 
 // A variant of `GtkClosureExpression` using a C closure.
@@ -304,7 +294,6 @@ var xConstantExpressionGetValue func(uintptr) *gobject.Value
 
 // Gets the value that a constant expression evaluates to.
 func (x *ConstantExpression) GetValue() *gobject.Value {
-
 	cret := xConstantExpressionGetValue(x.GoPointer())
 	return cret
 }
@@ -539,7 +528,6 @@ var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
 // Note that this function takes ownership of `self`. If you want
 // to keep it around, you should [method@Gtk.Expression.ref] it beforehand.
 func (x *Expression) Bind(TargetVar *gobject.Object, PropertyVar string, ThisVar *gobject.Object) *ExpressionWatch {
-
 	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVar.GoPointer())
 	return cret
 }
@@ -557,7 +545,6 @@ var xExpressionEvaluate func(uintptr, uintptr, *gobject.Value) bool
 // set to `NULL`. In that case `value` will remain empty and `FALSE`
 // will be returned.
 func (x *Expression) Evaluate(ThisVar *gobject.Object, ValueVar *gobject.Value) bool {
-
 	cret := xExpressionEvaluate(x.GoPointer(), ThisVar.GoPointer(), ValueVar)
 	return cret
 }
@@ -569,7 +556,6 @@ var xExpressionGetValueType func(uintptr) types.GType
 // This type is constant and will not change over the lifetime
 // of this expression.
 func (x *Expression) GetValueType() types.GType {
-
 	cret := xExpressionGetValueType(x.GoPointer())
 	return cret
 }
@@ -584,7 +570,6 @@ var xExpressionIsStatic func(uintptr) bool
 // That means a call to [method@Gtk.Expression.watch] is not necessary because
 // it will never trigger a notify.
 func (x *Expression) IsStatic() bool {
-
 	cret := xExpressionIsStatic(x.GoPointer())
 	return cret
 }
@@ -612,9 +597,7 @@ var xExpressionUnref func(uintptr)
 // If the reference was the last, the resources associated to the `self` are
 // freed.
 func (x *Expression) Unref() {
-
 	xExpressionUnref(x.GoPointer())
-
 }
 
 var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) *ExpressionWatch
@@ -628,7 +611,6 @@ var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) *Expressi
 // gets invoked, but it guarantees the opposite: When it did in fact change,
 // the @notify will be invoked.
 func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *ExpressionWatch {
-
 	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), glib.NewCallback(NotifyVar), UserDataVar, glib.NewCallback(UserDestroyVar))
 	return cret
 }
@@ -916,5 +898,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPropertyExpressionGetExpression, libs, "gtk_property_expression_get_expression")
 	core.PuregoSafeRegister(&xPropertyExpressionGetPspec, libs, "gtk_property_expression_get_pspec")
-
 }

@@ -53,7 +53,6 @@ var xListItemGetAccessibleDescription func(uintptr) string
 
 // Gets the accessible description of @self.
 func (x *ListItem) GetAccessibleDescription() string {
-
 	cret := xListItemGetAccessibleDescription(x.GoPointer())
 	return cret
 }
@@ -62,7 +61,6 @@ var xListItemGetAccessibleLabel func(uintptr) string
 
 // Gets the accessible label of @self.
 func (x *ListItem) GetAccessibleLabel() string {
-
 	cret := xListItemGetAccessibleLabel(x.GoPointer())
 	return cret
 }
@@ -72,7 +70,6 @@ var xListItemGetActivatable func(uintptr) bool
 // Checks if a listitem has been set to be activatable via
 // [method@Gtk.ListItem.set_activatable].
 func (x *ListItem) GetActivatable() bool {
-
 	cret := xListItemGetActivatable(x.GoPointer())
 	return cret
 }
@@ -100,7 +97,6 @@ var xListItemGetFocusable func(uintptr) bool
 // Checks if a listitem has been set to be focusable via
 // [method@Gtk.ListItem.set_focusable].
 func (x *ListItem) GetFocusable() bool {
-
 	cret := xListItemGetFocusable(x.GoPointer())
 	return cret
 }
@@ -130,7 +126,6 @@ var xListItemGetPosition func(uintptr) uint32
 //
 // If @self is unbound, `GTK_INVALID_LIST_POSITION` is returned.
 func (x *ListItem) GetPosition() uint32 {
-
 	cret := xListItemGetPosition(x.GoPointer())
 	return cret
 }
@@ -142,7 +137,6 @@ var xListItemGetSelectable func(uintptr) bool
 //
 // Do not confuse this function with [method@Gtk.ListItem.get_selected].
 func (x *ListItem) GetSelectable() bool {
-
 	cret := xListItemGetSelectable(x.GoPointer())
 	return cret
 }
@@ -154,7 +148,6 @@ var xListItemGetSelected func(uintptr) bool
 // The selected state is maintained by the list widget and its model
 // and cannot be set otherwise.
 func (x *ListItem) GetSelected() bool {
-
 	cret := xListItemGetSelected(x.GoPointer())
 	return cret
 }
@@ -165,9 +158,7 @@ var xListItemSetAccessibleDescription func(uintptr, string)
 //
 // The accessible description may be used by e.g. screen readers.
 func (x *ListItem) SetAccessibleDescription(DescriptionVar string) {
-
 	xListItemSetAccessibleDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xListItemSetAccessibleLabel func(uintptr, string)
@@ -176,9 +167,7 @@ var xListItemSetAccessibleLabel func(uintptr, string)
 //
 // The accessible label may be used by e.g. screen readers.
 func (x *ListItem) SetAccessibleLabel(LabelVar string) {
-
 	xListItemSetAccessibleLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xListItemSetActivatable func(uintptr, bool)
@@ -193,9 +182,7 @@ var xListItemSetActivatable func(uintptr, bool)
 //
 // By default, listitems are activatable.
 func (x *ListItem) SetActivatable(ActivatableVar bool) {
-
 	xListItemSetActivatable(x.GoPointer(), ActivatableVar)
-
 }
 
 var xListItemSetChild func(uintptr, uintptr)
@@ -206,9 +193,7 @@ var xListItemSetChild func(uintptr, uintptr)
 // setting up a listitem so that the widget can be reused when
 // binding it multiple times.
 func (x *ListItem) SetChild(ChildVar *Widget) {
-
 	xListItemSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xListItemSetFocusable func(uintptr, bool)
@@ -223,9 +208,7 @@ var xListItemSetFocusable func(uintptr, bool)
 //
 // By default, listitems are focusable.
 func (x *ListItem) SetFocusable(FocusableVar bool) {
-
 	xListItemSetFocusable(x.GoPointer(), FocusableVar)
-
 }
 
 var xListItemSetSelectable func(uintptr, bool)
@@ -243,9 +226,7 @@ var xListItemSetSelectable func(uintptr, bool)
 // By default, listitems are selectable. When rebinding them to
 // a new item, they will also be reset to be selectable by GTK.
 func (x *ListItem) SetSelectable(SelectableVar bool) {
-
 	xListItemSetSelectable(x.GoPointer(), SelectableVar)
-
 }
 
 func (c *ListItem) GoPointer() uintptr {
@@ -389,5 +370,4 @@ func init() {
 	core.PuregoSafeRegister(&xListItemSetChild, libs, "gtk_list_item_set_child")
 	core.PuregoSafeRegister(&xListItemSetFocusable, libs, "gtk_list_item_set_focusable")
 	core.PuregoSafeRegister(&xListItemSetSelectable, libs, "gtk_list_item_set_selectable")
-
 }

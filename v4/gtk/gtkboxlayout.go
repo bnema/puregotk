@@ -70,7 +70,6 @@ var xBoxLayoutGetBaselineChild func(uintptr) int32
 
 // Gets the value set by gtk_box_layout_set_baseline_child().
 func (x *BoxLayout) GetBaselineChild() int32 {
-
 	cret := xBoxLayoutGetBaselineChild(x.GoPointer())
 	return cret
 }
@@ -79,7 +78,6 @@ var xBoxLayoutGetBaselinePosition func(uintptr) BaselinePosition
 
 // Gets the value set by gtk_box_layout_set_baseline_position().
 func (x *BoxLayout) GetBaselinePosition() BaselinePosition {
-
 	cret := xBoxLayoutGetBaselinePosition(x.GoPointer())
 	return cret
 }
@@ -88,7 +86,6 @@ var xBoxLayoutGetHomogeneous func(uintptr) bool
 
 // Returns whether the layout is set to be homogeneous.
 func (x *BoxLayout) GetHomogeneous() bool {
-
 	cret := xBoxLayoutGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -97,7 +94,6 @@ var xBoxLayoutGetSpacing func(uintptr) uint32
 
 // Returns the space that @box_layout puts between children.
 func (x *BoxLayout) GetSpacing() uint32 {
-
 	cret := xBoxLayoutGetSpacing(x.GoPointer())
 	return cret
 }
@@ -107,9 +103,7 @@ var xBoxLayoutSetBaselineChild func(uintptr, int32)
 // Sets the index of the child that determines the baseline
 // in vertical layout.
 func (x *BoxLayout) SetBaselineChild(ChildVar int32) {
-
 	xBoxLayoutSetBaselineChild(x.GoPointer(), ChildVar)
-
 }
 
 var xBoxLayoutSetBaselinePosition func(uintptr, BaselinePosition)
@@ -122,9 +116,7 @@ var xBoxLayoutSetBaselinePosition func(uintptr, BaselinePosition)
 // given @position is used to allocate the baseline within the extra
 // space available.
 func (x *BoxLayout) SetBaselinePosition(PositionVar BaselinePosition) {
-
 	xBoxLayoutSetBaselinePosition(x.GoPointer(), PositionVar)
-
 }
 
 var xBoxLayoutSetHomogeneous func(uintptr, bool)
@@ -132,18 +124,14 @@ var xBoxLayoutSetHomogeneous func(uintptr, bool)
 // Sets whether the box layout will allocate the same
 // size to all children.
 func (x *BoxLayout) SetHomogeneous(HomogeneousVar bool) {
-
 	xBoxLayoutSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xBoxLayoutSetSpacing func(uintptr, uint32)
 
 // Sets how much spacing to put between children.
 func (x *BoxLayout) SetSpacing(SpacingVar uint32) {
-
 	xBoxLayoutSetSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 func (c *BoxLayout) GoPointer() uintptr {
@@ -222,16 +210,13 @@ func (x *BoxLayout) GetPropertySpacing() int32 {
 
 // Retrieves the orientation of the @orientable.
 func (x *BoxLayout) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *BoxLayout) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -258,5 +243,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoxLayoutSetBaselinePosition, libs, "gtk_box_layout_set_baseline_position")
 	core.PuregoSafeRegister(&xBoxLayoutSetHomogeneous, libs, "gtk_box_layout_set_homogeneous")
 	core.PuregoSafeRegister(&xBoxLayoutSetSpacing, libs, "gtk_box_layout_set_spacing")
-
 }

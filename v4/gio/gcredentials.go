@@ -98,7 +98,6 @@ var xCredentialsGetNative func(uintptr, CredentialsType) uintptr
 // logged) to use this method if there is no #GCredentials support for
 // the OS or if @native_type isn't supported by the OS.
 func (x *Credentials) GetNative(NativeTypeVar CredentialsType) uintptr {
-
 	cret := xCredentialsGetNative(x.GoPointer(), NativeTypeVar)
 	return cret
 }
@@ -119,7 +118,6 @@ func (x *Credentials) GetUnixPid() (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsGetUnixUser func(uintptr) uint
@@ -138,7 +136,6 @@ func (x *Credentials) GetUnixUser() (uint, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsIsSameUser func(uintptr, uintptr, **glib.Error) bool
@@ -155,7 +152,6 @@ func (x *Credentials) IsSameUser(OtherCredentialsVar *Credentials) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsSetNative func(uintptr, CredentialsType, uintptr)
@@ -167,9 +163,7 @@ var xCredentialsSetNative func(uintptr, CredentialsType, uintptr)
 // logged) to use this method if there is no #GCredentials support for
 // the OS or if @native_type isn't supported by the OS.
 func (x *Credentials) SetNative(NativeTypeVar CredentialsType, NativeVar uintptr) {
-
 	xCredentialsSetNative(x.GoPointer(), NativeTypeVar, NativeVar)
-
 }
 
 var xCredentialsSetUnixUser func(uintptr, uint, **glib.Error) bool
@@ -189,7 +183,6 @@ func (x *Credentials) SetUnixUser(UidVar uint) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsToString func(uintptr) string
@@ -198,7 +191,6 @@ var xCredentialsToString func(uintptr) string
 // that can be used in logging and debug messages. The format of the
 // returned string may change in future GLib release.
 func (x *Credentials) ToString() string {
-
 	cret := xCredentialsToString(x.GoPointer())
 	return cret
 }
@@ -237,5 +229,4 @@ func init() {
 	core.PuregoSafeRegister(&xCredentialsSetNative, libs, "g_credentials_set_native")
 	core.PuregoSafeRegister(&xCredentialsSetUnixUser, libs, "g_credentials_set_unix_user")
 	core.PuregoSafeRegister(&xCredentialsToString, libs, "g_credentials_to_string")
-
 }

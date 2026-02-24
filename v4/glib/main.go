@@ -9,7 +9,6 @@ import (
 var xBookmarkFileErrorQuark func() Quark
 
 func BookmarkFileErrorQuark() Quark {
-
 	cret := xBookmarkFileErrorQuark()
 	return cret
 }
@@ -17,7 +16,6 @@ func BookmarkFileErrorQuark() Quark {
 var xConvertErrorQuark func() Quark
 
 func ConvertErrorQuark() Quark {
-
 	cret := xConvertErrorQuark()
 	return cret
 }
@@ -25,7 +23,6 @@ func ConvertErrorQuark() Quark {
 var xFileErrorQuark func() Quark
 
 func FileErrorQuark() Quark {
-
 	cret := xFileErrorQuark()
 	return cret
 }
@@ -33,7 +30,6 @@ func FileErrorQuark() Quark {
 var xIoChannelErrorQuark func() Quark
 
 func IoChannelErrorQuark() Quark {
-
 	cret := xIoChannelErrorQuark()
 	return cret
 }
@@ -41,7 +37,6 @@ func IoChannelErrorQuark() Quark {
 var xKeyFileErrorQuark func() Quark
 
 func KeyFileErrorQuark() Quark {
-
 	cret := xKeyFileErrorQuark()
 	return cret
 }
@@ -49,7 +44,6 @@ func KeyFileErrorQuark() Quark {
 var xMarkupErrorQuark func() Quark
 
 func MarkupErrorQuark() Quark {
-
 	cret := xMarkupErrorQuark()
 	return cret
 }
@@ -57,7 +51,6 @@ func MarkupErrorQuark() Quark {
 var xNumberParserErrorQuark func() Quark
 
 func NumberParserErrorQuark() Quark {
-
 	cret := xNumberParserErrorQuark()
 	return cret
 }
@@ -65,7 +58,6 @@ func NumberParserErrorQuark() Quark {
 var xOptionErrorQuark func() Quark
 
 func OptionErrorQuark() Quark {
-
 	cret := xOptionErrorQuark()
 	return cret
 }
@@ -73,7 +65,6 @@ func OptionErrorQuark() Quark {
 var xRegexErrorQuark func() Quark
 
 func RegexErrorQuark() Quark {
-
 	cret := xRegexErrorQuark()
 	return cret
 }
@@ -81,7 +72,6 @@ func RegexErrorQuark() Quark {
 var xShellErrorQuark func() Quark
 
 func ShellErrorQuark() Quark {
-
 	cret := xShellErrorQuark()
 	return cret
 }
@@ -89,7 +79,6 @@ func ShellErrorQuark() Quark {
 var xSpawnErrorQuark func() Quark
 
 func SpawnErrorQuark() Quark {
-
 	cret := xSpawnErrorQuark()
 	return cret
 }
@@ -97,7 +86,6 @@ func SpawnErrorQuark() Quark {
 var xSpawnExitErrorQuark func() Quark
 
 func SpawnExitErrorQuark() Quark {
-
 	cret := xSpawnExitErrorQuark()
 	return cret
 }
@@ -105,7 +93,6 @@ func SpawnExitErrorQuark() Quark {
 var xThreadErrorQuark func() Quark
 
 func ThreadErrorQuark() Quark {
-
 	cret := xThreadErrorQuark()
 	return cret
 }
@@ -113,7 +100,6 @@ func ThreadErrorQuark() Quark {
 var xUnixErrorQuark func() Quark
 
 func UnixErrorQuark() Quark {
-
 	cret := xUnixErrorQuark()
 	return cret
 }
@@ -121,7 +107,6 @@ func UnixErrorQuark() Quark {
 var xUriErrorQuark func() Quark
 
 func UriErrorQuark() Quark {
-
 	cret := xUriErrorQuark()
 	return cret
 }
@@ -129,7 +114,6 @@ func UriErrorQuark() Quark {
 var xVariantParseErrorQuark func() Quark
 
 func VariantParseErrorQuark() Quark {
-
 	cret := xVariantParseErrorQuark()
 	return cret
 }
@@ -162,5 +146,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixErrorQuark, libs, "g_unix_error_quark")
 	core.PuregoSafeRegister(&xUriErrorQuark, libs, "g_uri_error_quark")
 	core.PuregoSafeRegister(&xVariantParseErrorQuark, libs, "g_variant_parse_error_quark")
-
 }

@@ -42,7 +42,6 @@ var xUserMessageErrorQuark func() glib.Quark
 
 // Gets the quark for the domain of user message errors.
 func UserMessageErrorQuark() glib.Quark {
-
 	cret := xUserMessageErrorQuark()
 	return cret
 }
@@ -126,7 +125,6 @@ var xUserMessageGetName func(uintptr) string
 
 // Get the @message name.
 func (x *UserMessage) GetName() string {
-
 	cret := xUserMessageGetName(x.GoPointer())
 	return cret
 }
@@ -135,7 +133,6 @@ var xUserMessageGetParameters func(uintptr) *glib.Variant
 
 // Get the @message parameters.
 func (x *UserMessage) GetParameters() *glib.Variant {
-
 	cret := xUserMessageGetParameters(x.GoPointer())
 	return cret
 }
@@ -148,9 +145,7 @@ var xUserMessageSendReply func(uintptr, uintptr)
 // You can only send a reply to a #WebKitUserMessage that has been
 // received.
 func (x *UserMessage) SendReply(ReplyVar *UserMessage) {
-
 	xUserMessageSendReply(x.GoPointer(), ReplyVar.GoPointer())
-
 }
 
 func (c *UserMessage) GoPointer() uintptr {

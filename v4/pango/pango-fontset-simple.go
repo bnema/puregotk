@@ -61,16 +61,13 @@ var xFontsetSimpleAppend func(uintptr, uintptr)
 //
 // The fontset takes ownership of @font.
 func (x *FontsetSimple) Append(FontVar *Font) {
-
 	xFontsetSimpleAppend(x.GoPointer(), FontVar.GoPointer())
-
 }
 
 var xFontsetSimpleSize func(uintptr) int32
 
 // Returns the number of fonts in the fontset.
 func (x *FontsetSimple) Size() int32 {
-
 	cret := xFontsetSimpleSize(x.GoPointer())
 	return cret
 }
@@ -104,5 +101,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xFontsetSimpleAppend, libs, "pango_fontset_simple_append")
 	core.PuregoSafeRegister(&xFontsetSimpleSize, libs, "pango_fontset_simple_size")
-
 }

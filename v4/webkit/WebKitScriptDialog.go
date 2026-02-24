@@ -34,9 +34,7 @@ var xScriptDialogClose func(uintptr)
 // that we are done with the script dialog. The dialog will be closed on destruction if this function
 // hasn't been called before.
 func (x *ScriptDialog) Close() {
-
 	xScriptDialogClose(x.GoPointer())
-
 }
 
 var xScriptDialogConfirmSetConfirmed func(uintptr, bool)
@@ -50,16 +48,13 @@ var xScriptDialogConfirmSetConfirmed func(uintptr, bool)
 // It's an error to use this method with a #WebKitScriptDialog that is not of type
 // %WEBKIT_SCRIPT_DIALOG_CONFIRM or %WEBKIT_SCRIPT_DIALOG_BEFORE_UNLOAD_CONFIRM
 func (x *ScriptDialog) ConfirmSetConfirmed(ConfirmedVar bool) {
-
 	xScriptDialogConfirmSetConfirmed(x.GoPointer(), ConfirmedVar)
-
 }
 
 var xScriptDialogGetDialogType func(uintptr) ScriptDialogType
 
 // Get the dialog type of a #WebKitScriptDialog.
 func (x *ScriptDialog) GetDialogType() ScriptDialogType {
-
 	cret := xScriptDialogGetDialogType(x.GoPointer())
 	return cret
 }
@@ -68,7 +63,6 @@ var xScriptDialogGetMessage func(uintptr) string
 
 // Get the message of a #WebKitScriptDialog.
 func (x *ScriptDialog) GetMessage() string {
-
 	cret := xScriptDialogGetMessage(x.GoPointer())
 	return cret
 }
@@ -80,7 +74,6 @@ var xScriptDialogPromptGetDefaultText func(uintptr) string
 // It's an error to use this method with a #WebKitScriptDialog that is not of type
 // %WEBKIT_SCRIPT_DIALOG_PROMPT.
 func (x *ScriptDialog) PromptGetDefaultText() string {
-
 	cret := xScriptDialogPromptGetDefaultText(x.GoPointer())
 	return cret
 }
@@ -96,9 +89,7 @@ var xScriptDialogPromptSetText func(uintptr, string)
 // It's an error to use this method with a #WebKitScriptDialog that is not of type
 // %WEBKIT_SCRIPT_DIALOG_PROMPT.
 func (x *ScriptDialog) PromptSetText(TextVar string) {
-
 	xScriptDialogPromptSetText(x.GoPointer(), TextVar)
-
 }
 
 var xScriptDialogRef func(uintptr) *ScriptDialog
@@ -108,7 +99,6 @@ var xScriptDialogRef func(uintptr) *ScriptDialog
 // This
 // function is MT-safe and may be called from any thread.
 func (x *ScriptDialog) Ref() *ScriptDialog {
-
 	cret := xScriptDialogRef(x.GoPointer())
 	return cret
 }
@@ -122,9 +112,7 @@ var xScriptDialogUnref func(uintptr)
 // released. This function is MT-safe and may be called from any
 // thread.
 func (x *ScriptDialog) Unref() {
-
 	xScriptDialogUnref(x.GoPointer())
-
 }
 
 // Enum values used for determining the type of #WebKitScriptDialog
@@ -176,5 +164,4 @@ func init() {
 	core.PuregoSafeRegister(&xScriptDialogPromptSetText, libs, "webkit_script_dialog_prompt_set_text")
 	core.PuregoSafeRegister(&xScriptDialogRef, libs, "webkit_script_dialog_ref")
 	core.PuregoSafeRegister(&xScriptDialogUnref, libs, "webkit_script_dialog_unref")
-
 }

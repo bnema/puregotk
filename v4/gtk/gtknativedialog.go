@@ -247,16 +247,13 @@ var xNativeDialogDestroy func(uintptr)
 // to destroying a `GtkWindow`) because there is no reference from the
 // windowing system to the `GtkNativeDialog`.
 func (x *NativeDialog) Destroy() {
-
 	xNativeDialogDestroy(x.GoPointer())
-
 }
 
 var xNativeDialogGetModal func(uintptr) bool
 
 // Returns whether the dialog is modal.
 func (x *NativeDialog) GetModal() bool {
-
 	cret := xNativeDialogGetModal(x.GoPointer())
 	return cret
 }
@@ -265,7 +262,6 @@ var xNativeDialogGetTitle func(uintptr) string
 
 // Gets the title of the `GtkNativeDialog`.
 func (x *NativeDialog) GetTitle() string {
-
 	cret := xNativeDialogGetTitle(x.GoPointer())
 	return cret
 }
@@ -291,7 +287,6 @@ var xNativeDialogGetVisible func(uintptr) bool
 
 // Determines whether the dialog is visible.
 func (x *NativeDialog) GetVisible() bool {
-
 	cret := xNativeDialogGetVisible(x.GoPointer())
 	return cret
 }
@@ -306,9 +301,7 @@ var xNativeDialogHide func(uintptr)
 //
 // If the dialog is not visible this does nothing.
 func (x *NativeDialog) Hide() {
-
 	xNativeDialogHide(x.GoPointer())
-
 }
 
 var xNativeDialogSetModal func(uintptr, bool)
@@ -321,18 +314,14 @@ var xNativeDialogSetModal func(uintptr, bool)
 // the dialog transient for the parent; most window managers will
 // then disallow lowering the dialog below the parent.
 func (x *NativeDialog) SetModal(ModalVar bool) {
-
 	xNativeDialogSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xNativeDialogSetTitle func(uintptr, string)
 
 // Sets the title of the `GtkNativeDialog.`
 func (x *NativeDialog) SetTitle(TitleVar string) {
-
 	xNativeDialogSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xNativeDialogSetTransientFor func(uintptr, uintptr)
@@ -345,9 +334,7 @@ var xNativeDialogSetTransientFor func(uintptr, uintptr)
 //
 // Passing %NULL for @parent unsets the current transient window.
 func (x *NativeDialog) SetTransientFor(ParentVar *Window) {
-
 	xNativeDialogSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
-
 }
 
 var xNativeDialogShow func(uintptr)
@@ -360,9 +347,7 @@ var xNativeDialogShow func(uintptr)
 //
 // Multiple calls while the dialog is visible will be ignored.
 func (x *NativeDialog) Show() {
-
 	xNativeDialogShow(x.GoPointer())
-
 }
 
 func (c *NativeDialog) GoPointer() uintptr {
@@ -445,7 +430,6 @@ func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ResponseIdVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -476,5 +460,4 @@ func init() {
 	core.PuregoSafeRegister(&xNativeDialogSetTitle, libs, "gtk_native_dialog_set_title")
 	core.PuregoSafeRegister(&xNativeDialogSetTransientFor, libs, "gtk_native_dialog_set_transient_for")
 	core.PuregoSafeRegister(&xNativeDialogShow, libs, "gtk_native_dialog_show")
-
 }

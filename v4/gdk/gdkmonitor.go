@@ -76,7 +76,6 @@ var xMonitorGetConnector func(uintptr) string
 // on software and hardware configuration, and should not be
 // relied on as stable identifiers of a specific monitor.
 func (x *Monitor) GetConnector() string {
-
 	cret := xMonitorGetConnector(x.GoPointer())
 	return cret
 }
@@ -87,7 +86,6 @@ var xMonitorGetDescription func(uintptr) string
 //
 // This can be used to identify a monitor in the UI.
 func (x *Monitor) GetDescription() string {
-
 	cret := xMonitorGetDescription(x.GoPointer())
 	return cret
 }
@@ -117,16 +115,13 @@ var xMonitorGetGeometry func(uintptr, *Rectangle)
 // The returned geometry is in  ”application pixels”, not in
 // ”device pixels” (see [method@Gdk.Monitor.get_scale]).
 func (x *Monitor) GetGeometry(GeometryVar *Rectangle) {
-
 	xMonitorGetGeometry(x.GoPointer(), GeometryVar)
-
 }
 
 var xMonitorGetHeightMm func(uintptr) int32
 
 // Gets the height in millimeters of the monitor.
 func (x *Monitor) GetHeightMm() int32 {
-
 	cret := xMonitorGetHeightMm(x.GoPointer())
 	return cret
 }
@@ -141,7 +136,6 @@ var xMonitorGetManufacturer func(uintptr) string
 // The PNP ID registry is located at
 // [https://uefi.org/pnp_id_list](https://uefi.org/pnp_id_list).
 func (x *Monitor) GetManufacturer() string {
-
 	cret := xMonitorGetManufacturer(x.GoPointer())
 	return cret
 }
@@ -150,7 +144,6 @@ var xMonitorGetModel func(uintptr) string
 
 // Gets the string identifying the monitor model, if available.
 func (x *Monitor) GetModel() string {
-
 	cret := xMonitorGetModel(x.GoPointer())
 	return cret
 }
@@ -162,7 +155,6 @@ var xMonitorGetRefreshRate func(uintptr) int32
 // The value is in milli-Hertz, so a refresh rate of 60Hz
 // is returned as 60000.
 func (x *Monitor) GetRefreshRate() int32 {
-
 	cret := xMonitorGetRefreshRate(x.GoPointer())
 	return cret
 }
@@ -176,7 +168,6 @@ var xMonitorGetScale func(uintptr) float64
 // particular monitor, but most of the time you’re drawing to a surface
 // where it is better to use [method@Gdk.Surface.get_scale] instead.
 func (x *Monitor) GetScale() float64 {
-
 	cret := xMonitorGetScale(x.GoPointer())
 	return cret
 }
@@ -193,7 +184,6 @@ var xMonitorGetScaleFactor func(uintptr) int32
 // particular monitor, but most of the time you’re drawing to a surface
 // where it is better to use [method@Gdk.Surface.get_scale_factor] instead.
 func (x *Monitor) GetScaleFactor() int32 {
-
 	cret := xMonitorGetScaleFactor(x.GoPointer())
 	return cret
 }
@@ -203,7 +193,6 @@ var xMonitorGetSubpixelLayout func(uintptr) SubpixelLayout
 // Gets information about the layout of red, green and blue
 // primaries for pixels.
 func (x *Monitor) GetSubpixelLayout() SubpixelLayout {
-
 	cret := xMonitorGetSubpixelLayout(x.GoPointer())
 	return cret
 }
@@ -212,7 +201,6 @@ var xMonitorGetWidthMm func(uintptr) int32
 
 // Gets the width in millimeters of the monitor.
 func (x *Monitor) GetWidthMm() int32 {
-
 	cret := xMonitorGetWidthMm(x.GoPointer())
 	return cret
 }
@@ -225,7 +213,6 @@ var xMonitorIsValid func(uintptr) bool
 // The @monitor becomes invalid when the physical monitor
 // is unplugged or removed.
 func (x *Monitor) IsValid() bool {
-
 	cret := xMonitorIsValid(x.GoPointer())
 	return cret
 }
@@ -345,7 +332,6 @@ func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -381,5 +367,4 @@ func init() {
 	core.PuregoSafeRegister(&xMonitorGetSubpixelLayout, libs, "gdk_monitor_get_subpixel_layout")
 	core.PuregoSafeRegister(&xMonitorGetWidthMm, libs, "gdk_monitor_get_width_mm")
 	core.PuregoSafeRegister(&xMonitorIsValid, libs, "gdk_monitor_is_valid")
-
 }

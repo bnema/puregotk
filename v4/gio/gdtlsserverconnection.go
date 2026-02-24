@@ -68,7 +68,6 @@ func DtlsServerConnectionNew(BaseSocketVar DatagramBased, CertificateVar *TlsCer
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -86,5 +85,4 @@ func init() {
 	core.PuregoSafeRegister(&xDtlsServerConnectionNew, libs, "g_dtls_server_connection_new")
 
 	core.PuregoSafeRegister(&xDtlsServerConnectionGLibType, libs, "g_dtls_server_connection_get_type")
-
 }

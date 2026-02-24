@@ -107,7 +107,6 @@ var xClampGetMaximumSize func(uintptr) int32
 
 // Gets the maximum size allocated to the child.
 func (x *Clamp) GetMaximumSize() int32 {
-
 	cret := xClampGetMaximumSize(x.GoPointer())
 	return cret
 }
@@ -116,7 +115,6 @@ var xClampGetTighteningThreshold func(uintptr) int32
 
 // Gets the size above which the child is clamped.
 func (x *Clamp) GetTighteningThreshold() int32 {
-
 	cret := xClampGetTighteningThreshold(x.GoPointer())
 	return cret
 }
@@ -125,7 +123,6 @@ var xClampGetUnit func(uintptr) LengthUnit
 
 // Gets the length unit for maximum size and tightening threshold.
 func (x *Clamp) GetUnit() LengthUnit {
-
 	cret := xClampGetUnit(x.GoPointer())
 	return cret
 }
@@ -134,9 +131,7 @@ var xClampSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *Clamp) SetChild(ChildVar *gtk.Widget) {
-
 	xClampSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xClampSetMaximumSize func(uintptr, int32)
@@ -145,9 +140,7 @@ var xClampSetMaximumSize func(uintptr, int32)
 //
 // It is the width if the clamp is horizontal, or the height if it is vertical.
 func (x *Clamp) SetMaximumSize(MaximumSizeVar int32) {
-
 	xClampSetMaximumSize(x.GoPointer(), MaximumSizeVar)
-
 }
 
 var xClampSetTighteningThreshold func(uintptr, int32)
@@ -167,9 +160,7 @@ var xClampSetTighteningThreshold func(uintptr, int32)
 // Effectively, tightening the grip on the child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
 func (x *Clamp) SetTighteningThreshold(TighteningThresholdVar int32) {
-
 	xClampSetTighteningThreshold(x.GoPointer(), TighteningThresholdVar)
-
 }
 
 var xClampSetUnit func(uintptr, LengthUnit)
@@ -178,9 +169,7 @@ var xClampSetUnit func(uintptr, LengthUnit)
 //
 // Allows the sizes to vary depending on the text scale factor.
 func (x *Clamp) SetUnit(UnitVar LengthUnit) {
-
 	xClampSetUnit(x.GoPointer(), UnitVar)
-
 }
 
 func (c *Clamp) GoPointer() uintptr {
@@ -268,9 +257,7 @@ func (x *Clamp) GetPropertyTighteningThreshold() int32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Clamp) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -291,7 +278,6 @@ func (x *Clamp) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Clamp) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -316,7 +302,6 @@ func (x *Clamp) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Clamp) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -355,30 +340,23 @@ func (x *Clamp) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Clamp) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Clamp) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Clamp) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Clamp) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -391,9 +369,7 @@ func (x *Clamp) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Clamp) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -401,9 +377,7 @@ func (x *Clamp) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Clamp) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -412,9 +386,7 @@ func (x *Clamp) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Clamp) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -436,9 +408,7 @@ func (x *Clamp) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Clamp) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -448,9 +418,7 @@ func (x *Clamp) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Clamp) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -472,9 +440,7 @@ func (x *Clamp) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.Ac
 //
 // ```
 func (x *Clamp) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -484,9 +450,7 @@ func (x *Clamp) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Clamp) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -509,9 +473,7 @@ func (x *Clamp) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.Acce
 //
 // ```
 func (x *Clamp) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -521,9 +483,7 @@ func (x *Clamp) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interf
 //
 // This function is meant to be used by language bindings.
 func (x *Clamp) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -531,23 +491,19 @@ func (x *Clamp) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Clamp) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Clamp) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Clamp) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -574,5 +530,4 @@ func init() {
 	core.PuregoSafeRegister(&xClampSetMaximumSize, libs, "adw_clamp_set_maximum_size")
 	core.PuregoSafeRegister(&xClampSetTighteningThreshold, libs, "adw_clamp_set_tightening_threshold")
 	core.PuregoSafeRegister(&xClampSetUnit, libs, "adw_clamp_set_unit")
-
 }

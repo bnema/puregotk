@@ -25,7 +25,6 @@ var xUserMediaPermissionIsForAudioDevice func(uintptr) bool
 
 // Check whether the permission request is for an audio device.
 func UserMediaPermissionIsForAudioDevice(RequestVar *UserMediaPermissionRequest) bool {
-
 	cret := xUserMediaPermissionIsForAudioDevice(RequestVar.GoPointer())
 	return cret
 }
@@ -34,7 +33,6 @@ var xUserMediaPermissionIsForDisplayDevice func(uintptr) bool
 
 // Check whether the permission request is for a display device.
 func UserMediaPermissionIsForDisplayDevice(RequestVar *UserMediaPermissionRequest) bool {
-
 	cret := xUserMediaPermissionIsForDisplayDevice(RequestVar.GoPointer())
 	return cret
 }
@@ -43,7 +41,6 @@ var xUserMediaPermissionIsForVideoDevice func(uintptr) bool
 
 // Check whether the permission request is for a video device.
 func UserMediaPermissionIsForVideoDevice(RequestVar *UserMediaPermissionRequest) bool {
-
 	cret := xUserMediaPermissionIsForVideoDevice(RequestVar.GoPointer())
 	return cret
 }
@@ -101,16 +98,12 @@ func (x *UserMediaPermissionRequest) GetPropertyIsForVideoDevice() bool {
 
 // Allow the action which triggered this request.
 func (x *UserMediaPermissionRequest) Allow() {
-
 	XWebkitPermissionRequestAllow(x.GoPointer())
-
 }
 
 // Deny the action which triggered this request.
 func (x *UserMediaPermissionRequest) Deny() {
-
 	XWebkitPermissionRequestDeny(x.GoPointer())
-
 }
 
 func init() {

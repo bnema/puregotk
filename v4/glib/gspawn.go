@@ -161,7 +161,6 @@ func SpawnAsync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithFds func(string, []string, []string, SpawnFlags, uintptr, uintptr, *Pid, int32, int32, int32, **Error) bool
@@ -178,7 +177,6 @@ func SpawnAsyncWithFds(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []s
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithPipes func(string, []string, []string, SpawnFlags, uintptr, uintptr, *Pid, *int32, *int32, *int32, **Error) bool
@@ -193,7 +191,6 @@ func SpawnAsyncWithPipes(WorkingDirectoryVar string, ArgvVar []string, EnvpVar [
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithPipesAndFds func(string, []string, []string, SpawnFlags, uintptr, uintptr, int32, int32, int32, []int32, []int32, uint, *Pid, *int32, *int32, *int32, **Error) bool
@@ -400,7 +397,6 @@ func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar string, ArgvVar []string, Env
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCheckExitStatus func(int32, **Error) bool
@@ -421,7 +417,6 @@ func SpawnCheckExitStatus(WaitStatusVar int32) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCheckWaitStatus func(int32, **Error) bool
@@ -473,7 +468,6 @@ func SpawnCheckWaitStatus(WaitStatusVar int32) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnClosePid func(Pid)
@@ -483,9 +477,7 @@ var xSpawnClosePid func(Pid)
 // is provided for this purpose. It should be used on all platforms, even
 // though it doesn't do anything under UNIX.
 func SpawnClosePid(PidVar Pid) {
-
 	xSpawnClosePid(PidVar)
-
 }
 
 var xSpawnCommandLineAsync func(string, **Error) bool
@@ -508,7 +500,6 @@ func SpawnCommandLineAsync(CommandLineVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCommandLineSync func(string, *[]byte, *[]byte, *int32, **Error) bool
@@ -550,7 +541,6 @@ func SpawnCommandLineSync(CommandLineVar string, StandardOutputVar *[]byte, Stan
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnSync func(string, []string, []string, SpawnFlags, uintptr, uintptr, *[]byte, *[]byte, *int32, **Error) bool
@@ -586,7 +576,6 @@ func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, F
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -611,5 +600,4 @@ func init() {
 	core.PuregoSafeRegister(&xSpawnCommandLineAsync, libs, "g_spawn_command_line_async")
 	core.PuregoSafeRegister(&xSpawnCommandLineSync, libs, "g_spawn_command_line_sync")
 	core.PuregoSafeRegister(&xSpawnSync, libs, "g_spawn_sync")
-
 }

@@ -93,9 +93,7 @@ var xAuthDomainBasicSetAuthCallback func(uintptr, uintptr, uintptr, uintptr)
 // [property@AuthDomainBasic:auth-data] properties, which can also be used to
 // set the callback at construct time.
 func (x *AuthDomainBasic) SetAuthCallback(CallbackVar *AuthDomainBasicAuthCallback, UserDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-
 	xAuthDomainBasicSetAuthCallback(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DnotifyVar))
-
 }
 
 func (c *AuthDomainBasic) GoPointer() uintptr {
@@ -143,5 +141,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewAuthDomainBasic, libs, "soup_auth_domain_basic_new")
 
 	core.PuregoSafeRegister(&xAuthDomainBasicSetAuthCallback, libs, "soup_auth_domain_basic_set_auth_callback")
-
 }

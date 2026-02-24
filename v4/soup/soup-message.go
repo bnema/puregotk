@@ -223,9 +223,7 @@ var xMessageAddFlags func(uintptr, MessageFlags)
 
 // Adds @flags to the set of @msg's flags.
 func (x *Message) AddFlags(FlagsVar MessageFlags) {
-
 	xMessageAddFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xMessageAddHeaderHandler func(uintptr, string, string, uintptr, uintptr) uint32
@@ -236,7 +234,6 @@ var xMessageAddHeaderHandler func(uintptr, string, string, uintptr, uintptr) uin
 // if @msg's incoming messages headers (that is, the `request_headers`) contain
 // a header named @header.
 func (x *Message) AddHeaderHandler(SignalVar string, HeaderVar string, CallbackVar *gobject.Callback, UserDataVar uintptr) uint32 {
-
 	cret := xMessageAddHeaderHandler(x.GoPointer(), SignalVar, HeaderVar, glib.NewCallback(CallbackVar), UserDataVar)
 	return cret
 }
@@ -251,7 +248,6 @@ var xMessageAddStatusCodeHandler func(uintptr, string, uint32, uintptr, uintptr)
 // @signal must be a signal that will be emitted after @msg's status
 // is set (this means it can't be a "wrote" signal).
 func (x *Message) AddStatusCodeHandler(SignalVar string, StatusCodeVar uint32, CallbackVar *gobject.Callback, UserDataVar uintptr) uint32 {
-
 	cret := xMessageAddStatusCodeHandler(x.GoPointer(), SignalVar, StatusCodeVar, glib.NewCallback(CallbackVar), UserDataVar)
 	return cret
 }
@@ -270,9 +266,7 @@ var xMessageDisableFeature func(uintptr, types.GType)
 // you cannot call this on a message that is being requeued after a
 // redirect or authentication.
 func (x *Message) DisableFeature(FeatureTypeVar types.GType) {
-
 	xMessageDisableFeature(x.GoPointer(), FeatureTypeVar)
-
 }
 
 var xMessageGetConnectionId func(uintptr) uint64
@@ -282,7 +276,6 @@ var xMessageGetConnectionId func(uintptr) uint64
 // This may be 0 if it was a cached resource or it has not gotten
 // a connection yet.
 func (x *Message) GetConnectionId() uint64 {
-
 	cret := xMessageGetConnectionId(x.GoPointer())
 	return cret
 }
@@ -291,7 +284,6 @@ var xMessageGetFirstParty func(uintptr) *glib.Uri
 
 // Gets @msg's first-party [struct@GLib.Uri].
 func (x *Message) GetFirstParty() *glib.Uri {
-
 	cret := xMessageGetFirstParty(x.GoPointer())
 	return cret
 }
@@ -300,7 +292,6 @@ var xMessageGetFlags func(uintptr) MessageFlags
 
 // Gets the flags on @msg.
 func (x *Message) GetFlags() MessageFlags {
-
 	cret := xMessageGetFlags(x.GoPointer())
 	return cret
 }
@@ -309,7 +300,6 @@ var xMessageGetForceHttp1 func(uintptr) bool
 
 // Returns whether HTTP/1 version is currently demanded for the @msg send.
 func (x *Message) GetForceHttp1() bool {
-
 	cret := xMessageGetForceHttp1(x.GoPointer())
 	return cret
 }
@@ -321,7 +311,6 @@ var xMessageGetHttpVersion func(uintptr) HTTPVersion
 // This is the minimum of the version from the request and the version from the
 // response.
 func (x *Message) GetHttpVersion() HTTPVersion {
-
 	cret := xMessageGetHttpVersion(x.GoPointer())
 	return cret
 }
@@ -330,7 +319,6 @@ var xMessageGetIsOptionsPing func(uintptr) bool
 
 // Gets whether @msg is intended to be used to send `OPTIONS *` to a server.
 func (x *Message) GetIsOptionsPing() bool {
-
 	cret := xMessageGetIsOptionsPing(x.GoPointer())
 	return cret
 }
@@ -341,7 +329,6 @@ var xMessageGetIsTopLevelNavigation func(uintptr) bool
 //
 // Used for same-site policy checks.
 func (x *Message) GetIsTopLevelNavigation() bool {
-
 	cret := xMessageGetIsTopLevelNavigation(x.GoPointer())
 	return cret
 }
@@ -350,7 +337,6 @@ var xMessageGetMethod func(uintptr) string
 
 // Returns the method of this message.
 func (x *Message) GetMethod() string {
-
 	cret := xMessageGetMethod(x.GoPointer())
 	return cret
 }
@@ -362,7 +348,6 @@ var xMessageGetMetrics func(uintptr) *MessageMetrics
 // If the flag %SOUP_MESSAGE_COLLECT_METRICS is not enabled for @msg this will
 // return %NULL.
 func (x *Message) GetMetrics() *MessageMetrics {
-
 	cret := xMessageGetMetrics(x.GoPointer())
 	return cret
 }
@@ -373,7 +358,6 @@ var xMessageGetPriority func(uintptr) MessagePriority
 //
 // If not set this value defaults to #SOUP_MESSAGE_PRIORITY_NORMAL.
 func (x *Message) GetPriority() MessagePriority {
-
 	cret := xMessageGetPriority(x.GoPointer())
 	return cret
 }
@@ -382,7 +366,6 @@ var xMessageGetReasonPhrase func(uintptr) string
 
 // Returns the reason phrase for the status of this message.
 func (x *Message) GetReasonPhrase() string {
-
 	cret := xMessageGetReasonPhrase(x.GoPointer())
 	return cret
 }
@@ -415,7 +398,6 @@ var xMessageGetRequestHeaders func(uintptr) *MessageHeaders
 
 // Returns the headers sent with the request.
 func (x *Message) GetRequestHeaders() *MessageHeaders {
-
 	cret := xMessageGetRequestHeaders(x.GoPointer())
 	return cret
 }
@@ -424,7 +406,6 @@ var xMessageGetResponseHeaders func(uintptr) *MessageHeaders
 
 // Returns the headers recieved with the response.
 func (x *Message) GetResponseHeaders() *MessageHeaders {
-
 	cret := xMessageGetResponseHeaders(x.GoPointer())
 	return cret
 }
@@ -433,7 +414,6 @@ var xMessageGetSiteForCookies func(uintptr) *glib.Uri
 
 // Gets @msg's site for cookies #GUri.
 func (x *Message) GetSiteForCookies() *glib.Uri {
-
 	cret := xMessageGetSiteForCookies(x.GoPointer())
 	return cret
 }
@@ -442,7 +422,6 @@ var xMessageGetStatus func(uintptr) Status
 
 // Returns the set status of this message.
 func (x *Message) GetStatus() Status {
-
 	cret := xMessageGetStatus(x.GoPointer())
 	return cret
 }
@@ -451,7 +430,6 @@ var xMessageGetTlsCiphersuiteName func(uintptr) string
 
 // Gets the name of the TLS ciphersuite negotiated for @msg's connection.
 func (x *Message) GetTlsCiphersuiteName() string {
-
 	cret := xMessageGetTlsCiphersuiteName(x.GoPointer())
 	return cret
 }
@@ -482,7 +460,6 @@ var xMessageGetTlsPeerCertificateErrors func(uintptr) gio.TlsCertificateFlags
 // Note that this is not set yet during the emission of
 // [signal@Message::accept-certificate] signal.
 func (x *Message) GetTlsPeerCertificateErrors() gio.TlsCertificateFlags {
-
 	cret := xMessageGetTlsPeerCertificateErrors(x.GoPointer())
 	return cret
 }
@@ -493,7 +470,6 @@ var xMessageGetTlsProtocolVersion func(uintptr) gio.TlsProtocolVersion
 //
 // If the message connection is not SSL, %G_TLS_PROTOCOL_VERSION_UNKNOWN is returned.
 func (x *Message) GetTlsProtocolVersion() gio.TlsProtocolVersion {
-
 	cret := xMessageGetTlsProtocolVersion(x.GoPointer())
 	return cret
 }
@@ -502,7 +478,6 @@ var xMessageGetUri func(uintptr) *glib.Uri
 
 // Gets @msg's URI.
 func (x *Message) GetUri() *glib.Uri {
-
 	cret := xMessageGetUri(x.GoPointer())
 	return cret
 }
@@ -514,7 +489,6 @@ var xMessageIsFeatureDisabled func(uintptr, types.GType) bool
 //
 // See [method@Message.disable_feature].
 func (x *Message) IsFeatureDisabled(FeatureTypeVar types.GType) bool {
-
 	cret := xMessageIsFeatureDisabled(x.GoPointer(), FeatureTypeVar)
 	return cret
 }
@@ -526,7 +500,6 @@ var xMessageIsKeepalive func(uintptr) bool
 //
 // The result is based on the HTTP version, Connection header, etc.
 func (x *Message) IsKeepalive() bool {
-
 	cret := xMessageIsKeepalive(x.GoPointer())
 	return cret
 }
@@ -535,7 +508,6 @@ var xMessageQueryFlags func(uintptr, MessageFlags) bool
 
 // Queries if @flags are present in the set of @msg's flags.
 func (x *Message) QueryFlags(FlagsVar MessageFlags) bool {
-
 	cret := xMessageQueryFlags(x.GoPointer(), FlagsVar)
 	return cret
 }
@@ -544,9 +516,7 @@ var xMessageRemoveFlags func(uintptr, MessageFlags)
 
 // Removes @flags from the set of @msg's flags.
 func (x *Message) RemoveFlags(FlagsVar MessageFlags) {
-
 	xMessageRemoveFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xMessageSetFirstParty func(uintptr, *glib.Uri)
@@ -556,18 +526,14 @@ var xMessageSetFirstParty func(uintptr, *glib.Uri)
 // For details of when and how this is used refer to the documentation for
 // [enum@CookieJarAcceptPolicy].
 func (x *Message) SetFirstParty(FirstPartyVar *glib.Uri) {
-
 	xMessageSetFirstParty(x.GoPointer(), FirstPartyVar)
-
 }
 
 var xMessageSetFlags func(uintptr, MessageFlags)
 
 // Sets the specified flags on @msg.
 func (x *Message) SetFlags(FlagsVar MessageFlags) {
-
 	xMessageSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xMessageSetForceHttp1 func(uintptr, bool)
@@ -577,9 +543,7 @@ var xMessageSetForceHttp1 func(uintptr, bool)
 //
 // Note the value is unset after the message send is finished.
 func (x *Message) SetForceHttp1(ValueVar bool) {
-
 	xMessageSetForceHttp1(x.GoPointer(), ValueVar)
-
 }
 
 var xMessageSetIsOptionsPing func(uintptr, bool)
@@ -589,9 +553,7 @@ var xMessageSetIsOptionsPing func(uintptr, bool)
 // When set to %TRUE, the path of [property@Message:uri] will be ignored and
 // [property@Message:method] set to %SOUP_METHOD_OPTIONS.
 func (x *Message) SetIsOptionsPing(IsOptionsPingVar bool) {
-
 	xMessageSetIsOptionsPing(x.GoPointer(), IsOptionsPingVar)
-
 }
 
 var xMessageSetIsTopLevelNavigation func(uintptr, bool)
@@ -601,18 +563,14 @@ var xMessageSetIsTopLevelNavigation func(uintptr, bool)
 // See the [same-site spec](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00)
 // for more information.
 func (x *Message) SetIsTopLevelNavigation(IsTopLevelNavigationVar bool) {
-
 	xMessageSetIsTopLevelNavigation(x.GoPointer(), IsTopLevelNavigationVar)
-
 }
 
 var xMessageSetMethod func(uintptr, string)
 
 // Set @msg's HTTP method to @method.
 func (x *Message) SetMethod(MethodVar string) {
-
 	xMessageSetMethod(x.GoPointer(), MethodVar)
-
 }
 
 var xMessageSetPriority func(uintptr, MessagePriority)
@@ -630,9 +588,7 @@ var xMessageSetPriority func(uintptr, MessagePriority)
 // because in the synchronous/blocking case, priority ends up being determined
 // semi-randomly by thread scheduling.
 func (x *Message) SetPriority(PriorityVar MessagePriority) {
-
 	xMessageSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 var xMessageSetRequestBody func(uintptr, string, uintptr, int)
@@ -644,9 +600,7 @@ var xMessageSetRequestBody func(uintptr, string, uintptr, int)
 // The request body needs to be set again in case @msg is restarted
 // (in case of redirection or authentication).
 func (x *Message) SetRequestBody(ContentTypeVar string, StreamVar *gio.InputStream, ContentLengthVar int) {
-
 	xMessageSetRequestBody(x.GoPointer(), ContentTypeVar, StreamVar.GoPointer(), ContentLengthVar)
-
 }
 
 var xMessageSetRequestBodyFromBytes func(uintptr, string, *glib.Bytes)
@@ -658,9 +612,7 @@ var xMessageSetRequestBodyFromBytes func(uintptr, string, *glib.Bytes)
 // The request body needs to be set again in case @msg is restarted
 // (in case of redirection or authentication).
 func (x *Message) SetRequestBodyFromBytes(ContentTypeVar string, BytesVar *glib.Bytes) {
-
 	xMessageSetRequestBodyFromBytes(x.GoPointer(), ContentTypeVar, BytesVar)
-
 }
 
 var xMessageSetSiteForCookies func(uintptr, *glib.Uri)
@@ -675,9 +627,7 @@ var xMessageSetSiteForCookies func(uintptr, *glib.Uri)
 // See the [same-site spec](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00)
 // for more information.
 func (x *Message) SetSiteForCookies(SiteForCookiesVar *glib.Uri) {
-
 	xMessageSetSiteForCookies(x.GoPointer(), SiteForCookiesVar)
-
 }
 
 var xMessageSetTlsClientCertificate func(uintptr, uintptr)
@@ -691,9 +641,7 @@ var xMessageSetTlsClientCertificate func(uintptr, uintptr)
 // Note that the [class@Gio.TlsCertificate] set by this function will be ignored if
 // [property@Session:tls-interaction] is not %NULL.
 func (x *Message) SetTlsClientCertificate(CertificateVar *gio.TlsCertificate) {
-
 	xMessageSetTlsClientCertificate(x.GoPointer(), CertificateVar.GoPointer())
-
 }
 
 var xMessageSetUri func(uintptr, *glib.Uri)
@@ -703,9 +651,7 @@ var xMessageSetUri func(uintptr, *glib.Uri)
 // If @msg has already been sent and you want to re-send it with the new URI,
 // you need to send it again.
 func (x *Message) SetUri(UriVar *glib.Uri) {
-
 	xMessageSetUri(x.GoPointer(), UriVar)
-
 }
 
 var xMessageTlsClientCertificatePasswordRequestComplete func(uintptr)
@@ -716,9 +662,7 @@ var xMessageTlsClientCertificatePasswordRequestComplete func(uintptr)
 // [signal@Message::request-certificate-password] signal, to notify @msg that
 // the [class@Gio.TlsPassword] has already been updated.
 func (x *Message) TlsClientCertificatePasswordRequestComplete() {
-
 	xMessageTlsClientCertificatePasswordRequestComplete(x.GoPointer())
-
 }
 
 func (c *Message) GoPointer() uintptr {
@@ -903,7 +847,6 @@ func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCer
 		cbFn := *cb
 
 		return cbFn(fa, TlsPeerCertificateVarp, TlsPeerErrorsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -936,7 +879,6 @@ func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uin
 		cbFn := *cb
 
 		return cbFn(fa, AuthVarp, RetryingVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -962,7 +904,6 @@ func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint
 		cbFn := *cb
 
 		cbFn(fa, TypeVarp, ParamsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -984,7 +925,6 @@ func (x *Message) ConnectFinished(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1004,7 +944,6 @@ func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1025,7 +964,6 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ChunkSizeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1058,7 +996,6 @@ func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1087,7 +1024,6 @@ func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1109,7 +1045,6 @@ func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1140,7 +1075,6 @@ func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, u
 		cbFn := *cb
 
 		cbFn(fa, EventVarp, ConnectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1170,7 +1104,6 @@ func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uin
 		cbFn := *cb
 
 		return cbFn(fa, TlsConnectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1201,7 +1134,6 @@ func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) b
 		cbFn := *cb
 
 		return cbFn(fa, TlsPasswordVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1226,7 +1158,6 @@ func (x *Message) ConnectRestarted(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1246,7 +1177,6 @@ func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1267,7 +1197,6 @@ func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1288,7 +1217,6 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ChunkSizeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1309,7 +1237,6 @@ func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1382,5 +1309,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageSetTlsClientCertificate, libs, "soup_message_set_tls_client_certificate")
 	core.PuregoSafeRegister(&xMessageSetUri, libs, "soup_message_set_uri")
 	core.PuregoSafeRegister(&xMessageTlsClientCertificatePasswordRequestComplete, libs, "soup_message_tls_client_certificate_password_request_complete")
-
 }

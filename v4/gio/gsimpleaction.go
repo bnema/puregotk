@@ -80,9 +80,7 @@ var xSimpleActionSetEnabled func(uintptr, bool)
 // This should only be called by the implementor of the action.  Users
 // of the action should not attempt to modify its enabled flag.
 func (x *SimpleAction) SetEnabled(EnabledVar bool) {
-
 	xSimpleActionSetEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 var xSimpleActionSetState func(uintptr, *glib.Variant)
@@ -98,9 +96,7 @@ var xSimpleActionSetState func(uintptr, *glib.Variant)
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *SimpleAction) SetState(ValueVar *glib.Variant) {
-
 	xSimpleActionSetState(x.GoPointer(), ValueVar)
-
 }
 
 var xSimpleActionSetStateHint func(uintptr, *glib.Variant)
@@ -110,9 +106,7 @@ var xSimpleActionSetStateHint func(uintptr, *glib.Variant)
 // See g_action_get_state_hint() for more information about
 // action state hints.
 func (x *SimpleAction) SetStateHint(StateHintVar *glib.Variant) {
-
 	xSimpleActionSetStateHint(x.GoPointer(), StateHintVar)
-
 }
 
 func (c *SimpleAction) GoPointer() uintptr {
@@ -238,7 +232,6 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ParameterVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -293,7 +286,6 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint3
 		cbFn := *cb
 
 		cbFn(fa, ValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -308,9 +300,7 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint3
 //
 // If the @parameter [type@GLib.Variant] is floating, it is consumed.
 func (x *SimpleAction) Activate(ParameterVar *glib.Variant) {
-
 	XGActionActivate(x.GoPointer(), ParameterVar)
-
 }
 
 // Request for the state of @action to be changed to @value.
@@ -324,9 +314,7 @@ func (x *SimpleAction) Activate(ParameterVar *glib.Variant) {
 //
 // If the @value [type@GLib.Variant] is floating, it is consumed.
 func (x *SimpleAction) ChangeState(ValueVar *glib.Variant) {
-
 	XGActionChangeState(x.GoPointer(), ValueVar)
-
 }
 
 // Checks if @action is currently enabled.
@@ -334,14 +322,12 @@ func (x *SimpleAction) ChangeState(ValueVar *glib.Variant) {
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *SimpleAction) GetEnabled() bool {
-
 	cret := XGActionGetEnabled(x.GoPointer())
 	return cret
 }
 
 // Queries the name of @action.
 func (x *SimpleAction) GetName() string {
-
 	cret := XGActionGetName(x.GoPointer())
 	return cret
 }
@@ -356,7 +342,6 @@ func (x *SimpleAction) GetName() string {
 // In the case that this function returns `NULL`, you must not give any
 // [type@GLib.Variant], but `NULL` instead.
 func (x *SimpleAction) GetParameterType() *glib.VariantType {
-
 	cret := XGActionGetParameterType(x.GoPointer())
 	return cret
 }
@@ -370,7 +355,6 @@ func (x *SimpleAction) GetParameterType() *glib.VariantType {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleAction) GetState() *glib.Variant {
-
 	cret := XGActionGetState(x.GoPointer())
 	return cret
 }
@@ -394,7 +378,6 @@ func (x *SimpleAction) GetState() *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleAction) GetStateHint() *glib.Variant {
-
 	cret := XGActionGetStateHint(x.GoPointer())
 	return cret
 }
@@ -412,7 +395,6 @@ func (x *SimpleAction) GetStateHint() *glib.Variant {
 // then this function will return `NULL`. In that case, [method@Gio.Action.get_state]
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *SimpleAction) GetStateType() *glib.VariantType {
-
 	cret := XGActionGetStateType(x.GoPointer())
 	return cret
 }
@@ -437,5 +419,4 @@ func init() {
 	core.PuregoSafeRegister(&xSimpleActionSetEnabled, libs, "g_simple_action_set_enabled")
 	core.PuregoSafeRegister(&xSimpleActionSetState, libs, "g_simple_action_set_state")
 	core.PuregoSafeRegister(&xSimpleActionSetStateHint, libs, "g_simple_action_set_state_hint")
-
 }

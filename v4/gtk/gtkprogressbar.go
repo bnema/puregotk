@@ -102,7 +102,6 @@ var xProgressBarGetEllipsize func(uintptr) pango.EllipsizeMode
 //
 // See [method@Gtk.ProgressBar.set_ellipsize].
 func (x *ProgressBar) GetEllipsize() pango.EllipsizeMode {
-
 	cret := xProgressBarGetEllipsize(x.GoPointer())
 	return cret
 }
@@ -111,7 +110,6 @@ var xProgressBarGetFraction func(uintptr) float64
 
 // Returns the current fraction of the task that’s been completed.
 func (x *ProgressBar) GetFraction() float64 {
-
 	cret := xProgressBarGetFraction(x.GoPointer())
 	return cret
 }
@@ -120,7 +118,6 @@ var xProgressBarGetInverted func(uintptr) bool
 
 // Returns whether the progress bar is inverted.
 func (x *ProgressBar) GetInverted() bool {
-
 	cret := xProgressBarGetInverted(x.GoPointer())
 	return cret
 }
@@ -131,7 +128,6 @@ var xProgressBarGetPulseStep func(uintptr) float64
 //
 // See [method@Gtk.ProgressBar.set_pulse_step].
 func (x *ProgressBar) GetPulseStep() float64 {
-
 	cret := xProgressBarGetPulseStep(x.GoPointer())
 	return cret
 }
@@ -142,7 +138,6 @@ var xProgressBarGetShowText func(uintptr) bool
 //
 // See [method@Gtk.ProgressBar.set_show_text].
 func (x *ProgressBar) GetShowText() bool {
-
 	cret := xProgressBarGetShowText(x.GoPointer())
 	return cret
 }
@@ -154,7 +149,6 @@ var xProgressBarGetText func(uintptr) string
 // The return value is a reference to the text, not a copy of it,
 // so will become invalid if you change the text in the progress bar.
 func (x *ProgressBar) GetText() string {
-
 	cret := xProgressBarGetText(x.GoPointer())
 	return cret
 }
@@ -168,9 +162,7 @@ var xProgressBarPulse func(uintptr)
 // causes the block to move by a little bit (the amount of movement
 // per pulse is determined by [method@Gtk.ProgressBar.set_pulse_step]).
 func (x *ProgressBar) Pulse() {
-
 	xProgressBarPulse(x.GoPointer())
-
 }
 
 var xProgressBarSetEllipsize func(uintptr, pango.EllipsizeMode)
@@ -180,9 +172,7 @@ var xProgressBarSetEllipsize func(uintptr, pango.EllipsizeMode)
 // The text is ellipsized if there is not enough space
 // to render the entire string.
 func (x *ProgressBar) SetEllipsize(ModeVar pango.EllipsizeMode) {
-
 	xProgressBarSetEllipsize(x.GoPointer(), ModeVar)
-
 }
 
 var xProgressBarSetFraction func(uintptr, float64)
@@ -192,9 +182,7 @@ var xProgressBarSetFraction func(uintptr, float64)
 //
 // The fraction should be between 0.0 and 1.0, inclusive.
 func (x *ProgressBar) SetFraction(FractionVar float64) {
-
 	xProgressBarSetFraction(x.GoPointer(), FractionVar)
-
 }
 
 var xProgressBarSetInverted func(uintptr, bool)
@@ -204,9 +192,7 @@ var xProgressBarSetInverted func(uintptr, bool)
 // Progress bars normally grow from top to bottom or left to right.
 // Inverted progress bars grow in the opposite direction.
 func (x *ProgressBar) SetInverted(InvertedVar bool) {
-
 	xProgressBarSetInverted(x.GoPointer(), InvertedVar)
-
 }
 
 var xProgressBarSetPulseStep func(uintptr, float64)
@@ -217,9 +203,7 @@ var xProgressBarSetPulseStep func(uintptr, float64)
 // The bouncing block is moved when [method@Gtk.ProgressBar.pulse]
 // is called.
 func (x *ProgressBar) SetPulseStep(FractionVar float64) {
-
 	xProgressBarSetPulseStep(x.GoPointer(), FractionVar)
-
 }
 
 var xProgressBarSetShowText func(uintptr, bool)
@@ -234,9 +218,7 @@ var xProgressBarSetShowText func(uintptr, bool)
 // text (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
 // to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
 func (x *ProgressBar) SetShowText(ShowTextVar bool) {
-
 	xProgressBarSetShowText(x.GoPointer(), ShowTextVar)
-
 }
 
 var xProgressBarSetText func(uintptr, string)
@@ -253,9 +235,7 @@ var xProgressBarSetText func(uintptr, string)
 // be styled and sized suitably for containing text, as long as
 // [property@Gtk.ProgressBar:show-text] is %TRUE.
 func (x *ProgressBar) SetText(TextVar string) {
-
 	xProgressBarSetText(x.GoPointer(), TextVar)
-
 }
 
 func (c *ProgressBar) GoPointer() uintptr {
@@ -382,9 +362,7 @@ func (x *ProgressBar) GetPropertyText() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ProgressBar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -405,7 +383,6 @@ func (x *ProgressBar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ProgressBar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -430,7 +407,6 @@ func (x *ProgressBar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ProgressBar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -469,30 +445,23 @@ func (x *ProgressBar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ProgressBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ProgressBar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ProgressBar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ProgressBar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -505,9 +474,7 @@ func (x *ProgressBar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ProgressBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -515,9 +482,7 @@ func (x *ProgressBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ProgressBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -526,9 +491,7 @@ func (x *ProgressBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ProgressBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -550,9 +513,7 @@ func (x *ProgressBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ProgressBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -562,9 +523,7 @@ func (x *ProgressBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *ProgressBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -586,9 +545,7 @@ func (x *ProgressBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *ProgressBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -598,9 +555,7 @@ func (x *ProgressBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *ProgressBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -623,9 +578,7 @@ func (x *ProgressBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []Ac
 //
 // ```
 func (x *ProgressBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -635,9 +588,7 @@ func (x *ProgressBar) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *ProgressBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -645,23 +596,19 @@ func (x *ProgressBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ProgressBar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ProgressBar) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ProgressBar) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -693,5 +640,4 @@ func init() {
 	core.PuregoSafeRegister(&xProgressBarSetPulseStep, libs, "gtk_progress_bar_set_pulse_step")
 	core.PuregoSafeRegister(&xProgressBarSetShowText, libs, "gtk_progress_bar_set_show_text")
 	core.PuregoSafeRegister(&xProgressBarSetText, libs, "gtk_progress_bar_set_text")
-
 }

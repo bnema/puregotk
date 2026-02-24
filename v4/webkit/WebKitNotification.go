@@ -46,25 +46,20 @@ var xNotificationClicked func(uintptr)
 // This will emit the
 // #WebKitNotification::clicked signal.
 func (x *Notification) Clicked() {
-
 	xNotificationClicked(x.GoPointer())
-
 }
 
 var xNotificationClose func(uintptr)
 
 // Closes the notification.
 func (x *Notification) Close() {
-
 	xNotificationClose(x.GoPointer())
-
 }
 
 var xNotificationGetBody func(uintptr) string
 
 // Obtains the body for the notification.
 func (x *Notification) GetBody() string {
-
 	cret := xNotificationGetBody(x.GoPointer())
 	return cret
 }
@@ -73,7 +68,6 @@ var xNotificationGetId func(uintptr) uint64
 
 // Obtains the unique id for the notification.
 func (x *Notification) GetId() uint64 {
-
 	cret := xNotificationGetId(x.GoPointer())
 	return cret
 }
@@ -82,7 +76,6 @@ var xNotificationGetTag func(uintptr) string
 
 // Obtains the tag identifier for the notification.
 func (x *Notification) GetTag() string {
-
 	cret := xNotificationGetTag(x.GoPointer())
 	return cret
 }
@@ -91,7 +84,6 @@ var xNotificationGetTitle func(uintptr) string
 
 // Obtains the title for the notification.
 func (x *Notification) GetTitle() string {
-
 	cret := xNotificationGetTitle(x.GoPointer())
 	return cret
 }
@@ -152,7 +144,6 @@ func (x *Notification) ConnectClicked(cb *func(Notification)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -175,7 +166,6 @@ func (x *Notification) ConnectClosed(cb *func(Notification)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

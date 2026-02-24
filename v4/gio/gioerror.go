@@ -30,7 +30,6 @@ var xIoErrorFromErrno func(int32) IOErrorEnum
 //
 // ]|
 func IoErrorFromErrno(ErrNoVar int32) IOErrorEnum {
-
 	cret := xIoErrorFromErrno(ErrNoVar)
 	return cret
 }
@@ -39,7 +38,6 @@ var xIoErrorFromFileError func(glib.FileError) IOErrorEnum
 
 // Converts #GFileError error codes into GIO error codes.
 func IoErrorFromFileError(FileErrorVar glib.FileError) IOErrorEnum {
-
 	cret := xIoErrorFromFileError(FileErrorVar)
 	return cret
 }
@@ -48,7 +46,6 @@ var xIoErrorQuark func() glib.Quark
 
 // Gets the GIO Error Quark.
 func IoErrorQuark() glib.Quark {
-
 	cret := xIoErrorQuark()
 	return cret
 }
@@ -68,5 +65,4 @@ func init() {
 	core.PuregoSafeRegister(&xIoErrorFromErrno, libs, "g_io_error_from_errno")
 	core.PuregoSafeRegister(&xIoErrorFromFileError, libs, "g_io_error_from_file_error")
 	core.PuregoSafeRegister(&xIoErrorQuark, libs, "g_io_error_quark")
-
 }

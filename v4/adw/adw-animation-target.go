@@ -239,5 +239,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGetObject, libs, "adw_property_animation_target_get_object")
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGetPspec, libs, "adw_property_animation_target_get_pspec")
-
 }

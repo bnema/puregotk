@@ -136,7 +136,6 @@ var xDropTargetGetActions func(uintptr) gdk.DragAction
 
 // Gets the actions that this drop target supports.
 func (x *DropTarget) GetActions() gdk.DragAction {
-
 	cret := xDropTargetGetActions(x.GoPointer())
 	return cret
 }
@@ -185,7 +184,6 @@ var xDropTargetGetFormats func(uintptr) *gdk.ContentFormats
 //
 // If the result is %NULL, all formats are expected to be supported.
 func (x *DropTarget) GetFormats() *gdk.ContentFormats {
-
 	cret := xDropTargetGetFormats(x.GoPointer())
 	return cret
 }
@@ -196,7 +194,6 @@ var xDropTargetGetGtypes func(uintptr, *uint) uintptr
 //
 // If no types have been set, `NULL` will be returned.
 func (x *DropTarget) GetGtypes(NTypesVar *uint) uintptr {
-
 	cret := xDropTargetGetGtypes(x.GoPointer(), NTypesVar)
 	return cret
 }
@@ -205,7 +202,6 @@ var xDropTargetGetPreload func(uintptr) bool
 
 // Gets whether data should be preloaded on hover.
 func (x *DropTarget) GetPreload() bool {
-
 	cret := xDropTargetGetPreload(x.GoPointer())
 	return cret
 }
@@ -214,7 +210,6 @@ var xDropTargetGetValue func(uintptr) *gobject.Value
 
 // Gets the current drop data, as a `GValue`.
 func (x *DropTarget) GetValue() *gobject.Value {
-
 	cret := xDropTargetGetValue(x.GoPointer())
 	return cret
 }
@@ -230,36 +225,28 @@ var xDropTargetReject func(uintptr)
 // on whether to accept a drag or not until after reading
 // the data.
 func (x *DropTarget) Reject() {
-
 	xDropTargetReject(x.GoPointer())
-
 }
 
 var xDropTargetSetActions func(uintptr, gdk.DragAction)
 
 // Sets the actions that this drop target supports.
 func (x *DropTarget) SetActions(ActionsVar gdk.DragAction) {
-
 	xDropTargetSetActions(x.GoPointer(), ActionsVar)
-
 }
 
 var xDropTargetSetGtypes func(uintptr, []types.GType, uint)
 
 // Sets the supported `GType`s for this drop target.
 func (x *DropTarget) SetGtypes(TypesVar []types.GType, NTypesVar uint) {
-
 	xDropTargetSetGtypes(x.GoPointer(), TypesVar, NTypesVar)
-
 }
 
 var xDropTargetSetPreload func(uintptr, bool)
 
 // Sets whether data should be preloaded on hover.
 func (x *DropTarget) SetPreload(PreloadVar bool) {
-
 	xDropTargetSetPreload(x.GoPointer(), PreloadVar)
-
 }
 
 func (c *DropTarget) GoPointer() uintptr {
@@ -385,7 +372,6 @@ func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, DropVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -413,7 +399,6 @@ func (x *DropTarget) ConnectDrop(cb *func(DropTarget, uintptr, float64, float64)
 		cbFn := *cb
 
 		return cbFn(fa, ValueVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -435,7 +420,6 @@ func (x *DropTarget) ConnectEnter(cb *func(DropTarget, float64, float64) gdk.Dra
 		cbFn := *cb
 
 		return cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -458,7 +442,6 @@ func (x *DropTarget) ConnectLeave(cb *func(DropTarget)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -478,7 +461,6 @@ func (x *DropTarget) ConnectMotion(cb *func(DropTarget, float64, float64) gdk.Dr
 		cbFn := *cb
 
 		return cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -512,5 +494,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropTargetSetActions, libs, "gtk_drop_target_set_actions")
 	core.PuregoSafeRegister(&xDropTargetSetGtypes, libs, "gtk_drop_target_set_gtypes")
 	core.PuregoSafeRegister(&xDropTargetSetPreload, libs, "gtk_drop_target_set_preload")
-
 }

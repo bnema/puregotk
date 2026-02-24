@@ -14,7 +14,6 @@ type Type = types.GType
 var xVariantGetGtype func() types.GType
 
 func VariantGetGtype() types.GType {
-
 	cret := xVariantGetGtype()
 	return cret
 }
@@ -32,5 +31,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xVariantGetGtype, libs, "g_variant_get_gtype")
-
 }

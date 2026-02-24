@@ -48,7 +48,6 @@ var xWebsiteDataAccessPermissionRequestGetCurrentDomain func(uintptr) string
 
 // Get the current domain being browsed.
 func (x *WebsiteDataAccessPermissionRequest) GetCurrentDomain() string {
-
 	cret := xWebsiteDataAccessPermissionRequestGetCurrentDomain(x.GoPointer())
 	return cret
 }
@@ -57,7 +56,6 @@ var xWebsiteDataAccessPermissionRequestGetRequestingDomain func(uintptr) string
 
 // Get the domain requesting permission to access its cookies while browsing the current domain.
 func (x *WebsiteDataAccessPermissionRequest) GetRequestingDomain() string {
-
 	cret := xWebsiteDataAccessPermissionRequestGetRequestingDomain(x.GoPointer())
 	return cret
 }
@@ -75,16 +73,12 @@ func (c *WebsiteDataAccessPermissionRequest) SetGoPointer(ptr uintptr) {
 
 // Allow the action which triggered this request.
 func (x *WebsiteDataAccessPermissionRequest) Allow() {
-
 	XWebkitPermissionRequestAllow(x.GoPointer())
-
 }
 
 // Deny the action which triggered this request.
 func (x *WebsiteDataAccessPermissionRequest) Deny() {
-
 	XWebkitPermissionRequestDeny(x.GoPointer())
-
 }
 
 func init() {

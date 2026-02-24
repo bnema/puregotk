@@ -55,7 +55,6 @@ var xGestureSingleGetButton func(uintptr) uint32
 //
 // If this is 0, the gesture reacts to any button press.
 func (x *GestureSingle) GetButton() uint32 {
-
 	cret := xGestureSingleGetButton(x.GoPointer())
 	return cret
 }
@@ -65,7 +64,6 @@ var xGestureSingleGetCurrentButton func(uintptr) uint32
 // Returns the button number currently interacting
 // with @gesture, or 0 if there is none.
 func (x *GestureSingle) GetCurrentButton() uint32 {
-
 	cret := xGestureSingleGetCurrentButton(x.GoPointer())
 	return cret
 }
@@ -77,7 +75,6 @@ var xGestureSingleGetCurrentSequence func(uintptr) *gdk.EventSequence
 // This is only meaningful if [method@Gtk.Gesture.is_active]
 // returns %TRUE.
 func (x *GestureSingle) GetCurrentSequence() *gdk.EventSequence {
-
 	cret := xGestureSingleGetCurrentSequence(x.GoPointer())
 	return cret
 }
@@ -88,7 +85,6 @@ var xGestureSingleGetExclusive func(uintptr) bool
 //
 // For more information, see [method@Gtk.GestureSingle.set_exclusive].
 func (x *GestureSingle) GetExclusive() bool {
-
 	cret := xGestureSingleGetExclusive(x.GoPointer())
 	return cret
 }
@@ -97,7 +93,6 @@ var xGestureSingleGetTouchOnly func(uintptr) bool
 
 // Returns %TRUE if the gesture is only triggered by touch events.
 func (x *GestureSingle) GetTouchOnly() bool {
-
 	cret := xGestureSingleGetTouchOnly(x.GoPointer())
 	return cret
 }
@@ -110,9 +105,7 @@ var xGestureSingleSetButton func(uintptr, uint32)
 // number will be ignored. Touch events implicitly match
 // with button 1.
 func (x *GestureSingle) SetButton(ButtonVar uint32) {
-
 	xGestureSingleSetButton(x.GoPointer(), ButtonVar)
-
 }
 
 var xGestureSingleSetExclusive func(uintptr, bool)
@@ -123,9 +116,7 @@ var xGestureSingleSetExclusive func(uintptr, bool)
 // touch events, so at any given time, there is only one sequence able
 // to interact with those.
 func (x *GestureSingle) SetExclusive(ExclusiveVar bool) {
-
 	xGestureSingleSetExclusive(x.GoPointer(), ExclusiveVar)
-
 }
 
 var xGestureSingleSetTouchOnly func(uintptr, bool)
@@ -136,9 +127,7 @@ var xGestureSingleSetTouchOnly func(uintptr, bool)
 // %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE or %GDK_TOUCH_END. If %FALSE,
 // mouse events will be handled too.
 func (x *GestureSingle) SetTouchOnly(TouchOnlyVar bool) {
-
 	xGestureSingleSetTouchOnly(x.GoPointer(), TouchOnlyVar)
-
 }
 
 func (c *GestureSingle) GoPointer() uintptr {
@@ -229,5 +218,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureSingleSetButton, libs, "gtk_gesture_single_set_button")
 	core.PuregoSafeRegister(&xGestureSingleSetExclusive, libs, "gtk_gesture_single_set_exclusive")
 	core.PuregoSafeRegister(&xGestureSingleSetTouchOnly, libs, "gtk_gesture_single_set_touch_only")
-
 }

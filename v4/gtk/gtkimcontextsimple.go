@@ -109,9 +109,7 @@ var xIMContextSimpleAddComposeFile func(uintptr, string)
 
 // Adds an additional table from the X11 compose file.
 func (x *IMContextSimple) AddComposeFile(ComposeFileVar string) {
-
 	xIMContextSimpleAddComposeFile(x.GoPointer(), ComposeFileVar)
-
 }
 
 var xIMContextSimpleAddTable func(uintptr, []uint16, int32, int32)
@@ -126,9 +124,7 @@ var xIMContextSimpleAddTable func(uintptr, []uint16, int32, int32)
 // numeric value of the key symbol fields. (Values beyond
 // the length of the sequence should be zero.)
 func (x *IMContextSimple) AddTable(DataVar []uint16, MaxSeqLenVar int32, NSeqsVar int32) {
-
 	xIMContextSimpleAddTable(x.GoPointer(), DataVar, MaxSeqLenVar, NSeqsVar)
-
 }
 
 func (c *IMContextSimple) GoPointer() uintptr {
@@ -160,5 +156,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIMContextSimpleAddComposeFile, libs, "gtk_im_context_simple_add_compose_file")
 	core.PuregoSafeRegister(&xIMContextSimpleAddTable, libs, "gtk_im_context_simple_add_table")
-
 }

@@ -57,9 +57,7 @@ var xMenuAppend func(uintptr, string, string)
 // @menu.  Combine g_menu_item_new() and g_menu_insert_item() for a more
 // flexible alternative.
 func (x *Menu) Append(LabelVar string, DetailedActionVar string) {
-
 	xMenuAppend(x.GoPointer(), LabelVar, DetailedActionVar)
-
 }
 
 var xMenuAppendItem func(uintptr, uintptr)
@@ -68,9 +66,7 @@ var xMenuAppendItem func(uintptr, uintptr)
 //
 // See g_menu_insert_item() for more information.
 func (x *Menu) AppendItem(ItemVar *MenuItem) {
-
 	xMenuAppendItem(x.GoPointer(), ItemVar.GoPointer())
-
 }
 
 var xMenuAppendSection func(uintptr, string, uintptr)
@@ -79,9 +75,7 @@ var xMenuAppendSection func(uintptr, string, uintptr)
 // @menu.  Combine g_menu_item_new_section() and g_menu_insert_item() for a
 // more flexible alternative.
 func (x *Menu) AppendSection(LabelVar string, SectionVar *MenuModel) {
-
 	xMenuAppendSection(x.GoPointer(), LabelVar, SectionVar.GoPointer())
-
 }
 
 var xMenuAppendSubmenu func(uintptr, string, uintptr)
@@ -90,9 +84,7 @@ var xMenuAppendSubmenu func(uintptr, string, uintptr)
 // @menu.  Combine g_menu_item_new_submenu() and g_menu_insert_item() for a
 // more flexible alternative.
 func (x *Menu) AppendSubmenu(LabelVar string, SubmenuVar *MenuModel) {
-
 	xMenuAppendSubmenu(x.GoPointer(), LabelVar, SubmenuVar.GoPointer())
-
 }
 
 var xMenuFreeze func(uintptr)
@@ -106,9 +98,7 @@ var xMenuFreeze func(uintptr)
 // This function causes g_menu_model_is_mutable() to begin returning
 // %FALSE, which has some positive performance implications.
 func (x *Menu) Freeze() {
-
 	xMenuFreeze(x.GoPointer())
-
 }
 
 var xMenuInsert func(uintptr, int32, string, string)
@@ -117,9 +107,7 @@ var xMenuInsert func(uintptr, int32, string, string)
 // Combine g_menu_item_new() and g_menu_insert_item() for a more flexible
 // alternative.
 func (x *Menu) Insert(PositionVar int32, LabelVar string, DetailedActionVar string) {
-
 	xMenuInsert(x.GoPointer(), PositionVar, LabelVar, DetailedActionVar)
-
 }
 
 var xMenuInsertItem func(uintptr, int32, uintptr)
@@ -142,9 +130,7 @@ var xMenuInsertItem func(uintptr, int32, uintptr)
 // g_menu_insert_submenu() as well as "prepend" and "append" variants of
 // each of these functions.
 func (x *Menu) InsertItem(PositionVar int32, ItemVar *MenuItem) {
-
 	xMenuInsertItem(x.GoPointer(), PositionVar, ItemVar.GoPointer())
-
 }
 
 var xMenuInsertSection func(uintptr, int32, string, uintptr)
@@ -153,9 +139,7 @@ var xMenuInsertSection func(uintptr, int32, string, uintptr)
 // Combine g_menu_item_new_section() and g_menu_insert_item() for a more
 // flexible alternative.
 func (x *Menu) InsertSection(PositionVar int32, LabelVar string, SectionVar *MenuModel) {
-
 	xMenuInsertSection(x.GoPointer(), PositionVar, LabelVar, SectionVar.GoPointer())
-
 }
 
 var xMenuInsertSubmenu func(uintptr, int32, string, uintptr)
@@ -164,9 +148,7 @@ var xMenuInsertSubmenu func(uintptr, int32, string, uintptr)
 // Combine g_menu_item_new_submenu() and g_menu_insert_item() for a more
 // flexible alternative.
 func (x *Menu) InsertSubmenu(PositionVar int32, LabelVar string, SubmenuVar *MenuModel) {
-
 	xMenuInsertSubmenu(x.GoPointer(), PositionVar, LabelVar, SubmenuVar.GoPointer())
-
 }
 
 var xMenuPrepend func(uintptr, string, string)
@@ -175,9 +157,7 @@ var xMenuPrepend func(uintptr, string, string)
 // of @menu.  Combine g_menu_item_new() and g_menu_insert_item() for a more
 // flexible alternative.
 func (x *Menu) Prepend(LabelVar string, DetailedActionVar string) {
-
 	xMenuPrepend(x.GoPointer(), LabelVar, DetailedActionVar)
-
 }
 
 var xMenuPrependItem func(uintptr, uintptr)
@@ -186,9 +166,7 @@ var xMenuPrependItem func(uintptr, uintptr)
 //
 // See g_menu_insert_item() for more information.
 func (x *Menu) PrependItem(ItemVar *MenuItem) {
-
 	xMenuPrependItem(x.GoPointer(), ItemVar.GoPointer())
-
 }
 
 var xMenuPrependSection func(uintptr, string, uintptr)
@@ -197,9 +175,7 @@ var xMenuPrependSection func(uintptr, string, uintptr)
 // of @menu.  Combine g_menu_item_new_section() and g_menu_insert_item() for
 // a more flexible alternative.
 func (x *Menu) PrependSection(LabelVar string, SectionVar *MenuModel) {
-
 	xMenuPrependSection(x.GoPointer(), LabelVar, SectionVar.GoPointer())
-
 }
 
 var xMenuPrependSubmenu func(uintptr, string, uintptr)
@@ -208,9 +184,7 @@ var xMenuPrependSubmenu func(uintptr, string, uintptr)
 // of @menu.  Combine g_menu_item_new_submenu() and g_menu_insert_item() for
 // a more flexible alternative.
 func (x *Menu) PrependSubmenu(LabelVar string, SubmenuVar *MenuModel) {
-
 	xMenuPrependSubmenu(x.GoPointer(), LabelVar, SubmenuVar.GoPointer())
-
 }
 
 var xMenuRemove func(uintptr, int32)
@@ -226,18 +200,14 @@ var xMenuRemove func(uintptr, int32)
 // to the menu simply by copying their links and attributes (ie:
 // identity of the item itself is not preserved).
 func (x *Menu) Remove(PositionVar int32) {
-
 	xMenuRemove(x.GoPointer(), PositionVar)
-
 }
 
 var xMenuRemoveAll func(uintptr)
 
 // Removes all items in the menu.
 func (x *Menu) RemoveAll() {
-
 	xMenuRemoveAll(x.GoPointer())
-
 }
 
 func (c *Menu) GoPointer() uintptr {
@@ -422,7 +392,6 @@ var xMenuItemGetAttribute func(uintptr, string, string, ...interface{}) bool
 // type, then the positional parameters are ignored and %FALSE is
 // returned.
 func (x *MenuItem) GetAttribute(AttributeVar string, FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xMenuItemGetAttribute(x.GoPointer(), AttributeVar, FormatStringVar, varArgs...)
 	return cret
 }
@@ -435,7 +404,6 @@ var xMenuItemGetAttributeValue func(uintptr, string, *glib.VariantType) *glib.Va
 // type, %NULL is returned.  %NULL is also returned if the attribute
 // simply does not exist.
 func (x *MenuItem) GetAttributeValue(AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-
 	cret := xMenuItemGetAttributeValue(x.GoPointer(), AttributeVar, ExpectedTypeVar)
 	return cret
 }
@@ -478,9 +446,7 @@ var xMenuItemSetActionAndTarget func(uintptr, string, string, ...interface{})
 // See also g_menu_item_set_action_and_target_value() for a
 // description of the semantics of the action and target attributes.
 func (x *MenuItem) SetActionAndTarget(ActionVar string, FormatStringVar string, varArgs ...interface{}) {
-
 	xMenuItemSetActionAndTarget(x.GoPointer(), ActionVar, FormatStringVar, varArgs...)
-
 }
 
 var xMenuItemSetActionAndTargetValue func(uintptr, string, *glib.Variant)
@@ -522,9 +488,7 @@ var xMenuItemSetActionAndTargetValue func(uintptr, string, *glib.Variant)
 // g_menu_item_set_detailed_action() for two equivalent calls that are
 // probably more convenient for most uses.
 func (x *MenuItem) SetActionAndTargetValue(ActionVar string, TargetValueVar *glib.Variant) {
-
 	xMenuItemSetActionAndTargetValue(x.GoPointer(), ActionVar, TargetValueVar)
-
 }
 
 var xMenuItemSetAttribute func(uintptr, string, string, ...interface{})
@@ -547,9 +511,7 @@ var xMenuItemSetAttribute func(uintptr, string, string, ...interface{})
 // See also g_menu_item_set_attribute_value() for an equivalent call
 // that directly accepts a #GVariant.
 func (x *MenuItem) SetAttribute(AttributeVar string, FormatStringVar string, varArgs ...interface{}) {
-
 	xMenuItemSetAttribute(x.GoPointer(), AttributeVar, FormatStringVar, varArgs...)
-
 }
 
 var xMenuItemSetAttributeValue func(uintptr, string, *glib.Variant)
@@ -574,9 +536,7 @@ var xMenuItemSetAttributeValue func(uintptr, string, *glib.Variant)
 // See also g_menu_item_set_attribute() for a more convenient way to do
 // the same.
 func (x *MenuItem) SetAttributeValue(AttributeVar string, ValueVar *glib.Variant) {
-
 	xMenuItemSetAttributeValue(x.GoPointer(), AttributeVar, ValueVar)
-
 }
 
 var xMenuItemSetDetailedAction func(uintptr, string)
@@ -593,9 +553,7 @@ var xMenuItemSetDetailedAction func(uintptr, string)
 // See also g_menu_item_set_action_and_target_value() for a description of
 // the semantics of the action and target attributes.
 func (x *MenuItem) SetDetailedAction(DetailedActionVar string) {
-
 	xMenuItemSetDetailedAction(x.GoPointer(), DetailedActionVar)
-
 }
 
 var xMenuItemSetIcon func(uintptr, uintptr)
@@ -613,9 +571,7 @@ var xMenuItemSetIcon func(uintptr, uintptr)
 //
 // If @icon is %NULL then the icon is unset.
 func (x *MenuItem) SetIcon(IconVar Icon) {
-
 	xMenuItemSetIcon(x.GoPointer(), IconVar.GoPointer())
-
 }
 
 var xMenuItemSetLabel func(uintptr, string)
@@ -625,9 +581,7 @@ var xMenuItemSetLabel func(uintptr, string)
 // If @label is non-%NULL it is used as the label for the menu item.  If
 // it is %NULL then the label attribute is unset.
 func (x *MenuItem) SetLabel(LabelVar string) {
-
 	xMenuItemSetLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xMenuItemSetLink func(uintptr, string, uintptr)
@@ -643,9 +597,7 @@ var xMenuItemSetLink func(uintptr, string, uintptr)
 // and '-'. Furthermore, the names must begin with a lowercase character,
 // must not end with a '-', and must not contain consecutive dashes.
 func (x *MenuItem) SetLink(LinkVar string, ModelVar *MenuModel) {
-
 	xMenuItemSetLink(x.GoPointer(), LinkVar, ModelVar.GoPointer())
-
 }
 
 var xMenuItemSetSection func(uintptr, uintptr)
@@ -658,9 +610,7 @@ var xMenuItemSetSection func(uintptr, uintptr)
 // for more information about what it means for a menu item to be a
 // section.
 func (x *MenuItem) SetSection(SectionVar *MenuModel) {
-
 	xMenuItemSetSection(x.GoPointer(), SectionVar.GoPointer())
-
 }
 
 var xMenuItemSetSubmenu func(uintptr, uintptr)
@@ -673,9 +623,7 @@ var xMenuItemSetSubmenu func(uintptr, uintptr)
 // The effect of having one menu appear as a submenu of another is
 // exactly as it sounds.
 func (x *MenuItem) SetSubmenu(SubmenuVar *MenuModel) {
-
 	xMenuItemSetSubmenu(x.GoPointer(), SubmenuVar.GoPointer())
-
 }
 
 func (c *MenuItem) GoPointer() uintptr {
@@ -741,5 +689,4 @@ func init() {
 	core.PuregoSafeRegister(&xMenuItemSetLink, libs, "g_menu_item_set_link")
 	core.PuregoSafeRegister(&xMenuItemSetSection, libs, "g_menu_item_set_section")
 	core.PuregoSafeRegister(&xMenuItemSetSubmenu, libs, "g_menu_item_set_submenu")
-
 }

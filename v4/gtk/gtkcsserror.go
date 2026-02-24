@@ -11,7 +11,6 @@ var xCssParserErrorQuark func() glib.Quark
 
 // Registers an error quark for CSS parsing errors.
 func CssParserErrorQuark() glib.Quark {
-
 	cret := xCssParserErrorQuark()
 	return cret
 }
@@ -20,7 +19,6 @@ var xCssParserWarningQuark func() glib.Quark
 
 // Registers an error quark for CSS parsing warnings.
 func CssParserWarningQuark() glib.Quark {
-
 	cret := xCssParserWarningQuark()
 	return cret
 }
@@ -39,5 +37,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xCssParserErrorQuark, libs, "gtk_css_parser_error_quark")
 	core.PuregoSafeRegister(&xCssParserWarningQuark, libs, "gtk_css_parser_warning_quark")
-
 }

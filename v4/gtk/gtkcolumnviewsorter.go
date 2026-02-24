@@ -81,7 +81,6 @@ var xColumnViewSorterGetNSortColumns func(uintptr) uint32
 // Use the [signal@Gtk.Sorter::changed] signal to get notified
 // when the number of sort columns changes.
 func (x *ColumnViewSorter) GetNSortColumns() uint32 {
-
 	cret := xColumnViewSorterGetNSortColumns(x.GoPointer())
 	return cret
 }
@@ -137,7 +136,6 @@ var xColumnViewSorterGetPrimarySortOrder func(uintptr) SortType
 // If there is no primary sort column, then this function returns
 // `GTK_SORT_ASCENDING`.
 func (x *ColumnViewSorter) GetPrimarySortOrder() SortType {
-
 	cret := xColumnViewSorterGetPrimarySortOrder(x.GoPointer())
 	return cret
 }
@@ -171,5 +169,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewSorterGetNthSortColumn, libs, "gtk_column_view_sorter_get_nth_sort_column")
 	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortColumn, libs, "gtk_column_view_sorter_get_primary_sort_column")
 	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortOrder, libs, "gtk_column_view_sorter_get_primary_sort_order")
-
 }

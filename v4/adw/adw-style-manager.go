@@ -81,7 +81,6 @@ var xStyleManagerGetAccentColor func(uintptr) AccentColor
 //
 // See also [property@StyleManager:accent-color-rgba].
 func (x *StyleManager) GetAccentColor() AccentColor {
-
 	cret := xStyleManagerGetAccentColor(x.GoPointer())
 	return cret
 }
@@ -95,7 +94,6 @@ var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
 //
 // This is a background color. The matching foreground color is white.
 func (x *StyleManager) GetAccentColorRgba() *gdk.RGBA {
-
 	cret := xStyleManagerGetAccentColorRgba(x.GoPointer())
 	return cret
 }
@@ -104,7 +102,6 @@ var xStyleManagerGetColorScheme func(uintptr) ColorScheme
 
 // Gets the requested application color scheme.
 func (x *StyleManager) GetColorScheme() ColorScheme {
-
 	cret := xStyleManagerGetColorScheme(x.GoPointer())
 	return cret
 }
@@ -116,7 +113,6 @@ var xStyleManagerGetDark func(uintptr) bool
 // This can be used to query the current appearance, as requested via
 // [property@StyleManager:color-scheme].
 func (x *StyleManager) GetDark() bool {
-
 	cret := xStyleManagerGetDark(x.GoPointer())
 	return cret
 }
@@ -150,7 +146,6 @@ var xStyleManagerGetDocumentFontName func(uintptr) string
 //
 // Use [func@Pango.FontDescription.from_string] to parse it.
 func (x *StyleManager) GetDocumentFontName() string {
-
 	cret := xStyleManagerGetDocumentFontName(x.GoPointer())
 	return cret
 }
@@ -161,7 +156,6 @@ var xStyleManagerGetHighContrast func(uintptr) bool
 //
 // This cannot be overridden by applications.
 func (x *StyleManager) GetHighContrast() bool {
-
 	cret := xStyleManagerGetHighContrast(x.GoPointer())
 	return cret
 }
@@ -175,7 +169,6 @@ var xStyleManagerGetMonospaceFontName func(uintptr) string
 //
 // Use [func@Pango.FontDescription.from_string] to parse it.
 func (x *StyleManager) GetMonospaceFontName() string {
-
 	cret := xStyleManagerGetMonospaceFontName(x.GoPointer())
 	return cret
 }
@@ -190,7 +183,6 @@ var xStyleManagerGetSystemSupportsAccentColors func(uintptr) bool
 //
 // See [property@StyleManager:accent-color].
 func (x *StyleManager) GetSystemSupportsAccentColors() bool {
-
 	cret := xStyleManagerGetSystemSupportsAccentColors(x.GoPointer())
 	return cret
 }
@@ -203,7 +195,6 @@ var xStyleManagerGetSystemSupportsColorSchemes func(uintptr) bool
 // preference. For example, applications might want to show a separate
 // appearance switcher if it's set to `FALSE`.
 func (x *StyleManager) GetSystemSupportsColorSchemes() bool {
-
 	cret := xStyleManagerGetSystemSupportsColorSchemes(x.GoPointer())
 	return cret
 }
@@ -242,9 +233,7 @@ var xStyleManagerSetColorScheme func(uintptr, ColorScheme)
 // used to check if the current environment provides a color scheme
 // preference.
 func (x *StyleManager) SetColorScheme(ColorSchemeVar ColorScheme) {
-
 	xStyleManagerSetColorScheme(x.GoPointer(), ColorSchemeVar)
-
 }
 
 func (c *StyleManager) GoPointer() uintptr {
@@ -420,5 +409,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xStyleManagerGetDefault, libs, "adw_style_manager_get_default")
 	core.PuregoSafeRegister(&xStyleManagerGetForDisplay, libs, "adw_style_manager_get_for_display")
-
 }

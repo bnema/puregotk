@@ -56,7 +56,6 @@ var xUriCopy func(*glib.Uri, URIComponent, ...interface{}) *glib.Uri
 //
 // Return a copy of @uri with the given components updated.
 func UriCopy(UriVar *glib.Uri, FirstComponentVar URIComponent, varArgs ...interface{}) *glib.Uri {
-
 	cret := xUriCopy(UriVar, FirstComponentVar, varArgs...)
 	return cret
 }
@@ -65,7 +64,6 @@ var xUriDecodeDataUri func(string, *string) *glib.Bytes
 
 // Decodes the given data URI and returns its contents and @content_type.
 func UriDecodeDataUri(UriVar string, ContentTypeVar *string) *glib.Bytes {
-
 	cret := xUriDecodeDataUri(UriVar, ContentTypeVar)
 	return cret
 }
@@ -74,7 +72,6 @@ var xUriEqual func(*glib.Uri, *glib.Uri) bool
 
 // Tests whether or not @uri1 and @uri2 are equal in all parts.
 func UriEqual(Uri1Var *glib.Uri, Uri2Var *glib.Uri) bool {
-
 	cret := xUriEqual(Uri1Var, Uri2Var)
 	return cret
 }
@@ -96,5 +93,4 @@ func init() {
 	core.PuregoSafeRegister(&xUriCopy, libs, "soup_uri_copy")
 	core.PuregoSafeRegister(&xUriDecodeDataUri, libs, "soup_uri_decode_data_uri")
 	core.PuregoSafeRegister(&xUriEqual, libs, "soup_uri_equal")
-
 }

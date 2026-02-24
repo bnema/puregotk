@@ -78,9 +78,7 @@ var xAppLaunchContextSetDesktop func(uintptr, int32)
 // it is up to the window manager to pick one, typically it will
 // be the current workspace.
 func (x *AppLaunchContext) SetDesktop(DesktopVar int32) {
-
 	xAppLaunchContextSetDesktop(x.GoPointer(), DesktopVar)
-
 }
 
 var xAppLaunchContextSetIcon func(uintptr, uintptr)
@@ -93,9 +91,7 @@ var xAppLaunchContextSetIcon func(uintptr, uintptr)
 //
 // See also [method@Gdk.AppLaunchContext.set_icon_name].
 func (x *AppLaunchContext) SetIcon(IconVar gio.Icon) {
-
 	xAppLaunchContextSetIcon(x.GoPointer(), IconVar.GoPointer())
-
 }
 
 var xAppLaunchContextSetIconName func(uintptr, string)
@@ -110,9 +106,7 @@ var xAppLaunchContextSetIconName func(uintptr, string)
 // the file that is passed to launched application or from the `GAppInfo`
 // for the launched application itself.
 func (x *AppLaunchContext) SetIconName(IconNameVar string) {
-
 	xAppLaunchContextSetIconName(x.GoPointer(), IconNameVar)
-
 }
 
 var xAppLaunchContextSetTimestamp func(uintptr, uint32)
@@ -127,9 +121,7 @@ var xAppLaunchContextSetTimestamp func(uintptr, uint32)
 // typing in another window. This is also known as 'focus stealing
 // prevention'.
 func (x *AppLaunchContext) SetTimestamp(TimestampVar uint32) {
-
 	xAppLaunchContextSetTimestamp(x.GoPointer(), TimestampVar)
-
 }
 
 func (c *AppLaunchContext) GoPointer() uintptr {
@@ -162,5 +154,4 @@ func init() {
 	core.PuregoSafeRegister(&xAppLaunchContextSetIcon, libs, "gdk_app_launch_context_set_icon")
 	core.PuregoSafeRegister(&xAppLaunchContextSetIconName, libs, "gdk_app_launch_context_set_icon_name")
 	core.PuregoSafeRegister(&xAppLaunchContextSetTimestamp, libs, "gdk_app_launch_context_set_timestamp")
-
 }

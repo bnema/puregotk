@@ -231,7 +231,6 @@ func NewPixbufLoaderWithMimeType(MimeTypeVar string) (*PixbufLoader, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufLoaderWithType func(string, **glib.Error) uintptr
@@ -265,7 +264,6 @@ func NewPixbufLoaderWithType(ImageTypeVar string) (*PixbufLoader, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xPixbufLoaderClose func(uintptr) bool
@@ -293,7 +291,6 @@ func (x *PixbufLoader) Close() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufLoaderGetAnimation func(uintptr) uintptr
@@ -325,7 +322,6 @@ var xPixbufLoaderGetFormat func(uintptr) *PixbufFormat
 // Obtains the available information about the format of the
 // currently loading image file.
 func (x *PixbufLoader) GetFormat() *PixbufFormat {
-
 	cret := xPixbufLoaderGetFormat(x.GoPointer())
 	return cret
 }
@@ -372,9 +368,7 @@ var xPixbufLoaderSetSize func(uintptr, int32, int32)
 // Attempts to set the desired image size  are ignored after the
 // emission of the ::size-prepared signal.
 func (x *PixbufLoader) SetSize(WidthVar int32, HeightVar int32) {
-
 	xPixbufLoaderSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xPixbufLoaderWrite func(uintptr, []byte, uint, **glib.Error) bool
@@ -388,7 +382,6 @@ func (x *PixbufLoader) Write(BufVar []byte, CountVar uint) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufLoaderWriteBytes func(uintptr, *glib.Bytes, **glib.Error) bool
@@ -402,7 +395,6 @@ func (x *PixbufLoader) WriteBytes(BufferVar *glib.Bytes) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *PixbufLoader) GoPointer() uintptr {
@@ -434,7 +426,6 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -461,7 +452,6 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, i
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, WidthVarp, HeightVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -485,7 +475,6 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -511,7 +500,6 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int32, int32))
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -543,5 +531,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufLoaderSetSize, libs, "gdk_pixbuf_loader_set_size")
 	core.PuregoSafeRegister(&xPixbufLoaderWrite, libs, "gdk_pixbuf_loader_write")
 	core.PuregoSafeRegister(&xPixbufLoaderWriteBytes, libs, "gdk_pixbuf_loader_write_bytes")
-
 }

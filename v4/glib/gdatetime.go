@@ -80,7 +80,6 @@ var xNewDateTime func(*TimeZone, int32, int32, int32, int32, int32, float64) *Da
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTime(TzVar *TimeZone, YearVar int32, MonthVar int32, DayVar int32, HourVar int32, MinuteVar int32, SecondsVar float64) *DateTime {
-
 	cret := xNewDateTime(TzVar, YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
 	return cret
 }
@@ -131,7 +130,6 @@ var xNewDateTimeFromIso8601 func(string, *TimeZone) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeFromIso8601(TextVar string, DefaultTzVar *TimeZone) *DateTime {
-
 	cret := xNewDateTimeFromIso8601(TextVar, DefaultTzVar)
 	return cret
 }
@@ -151,7 +149,6 @@ var xNewDateTimeFromTimevalLocal func(*TimeVal) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeFromTimevalLocal(TvVar *TimeVal) *DateTime {
-
 	cret := xNewDateTimeFromTimevalLocal(TvVar)
 	return cret
 }
@@ -169,7 +166,6 @@ var xNewDateTimeFromTimevalUtc func(*TimeVal) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeFromTimevalUtc(TvVar *TimeVal) *DateTime {
-
 	cret := xNewDateTimeFromTimevalUtc(TvVar)
 	return cret
 }
@@ -188,7 +184,6 @@ var xNewDateTimeFromUnixLocal func(int64) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeFromUnixLocal(TVar int64) *DateTime {
-
 	cret := xNewDateTimeFromUnixLocal(TVar)
 	return cret
 }
@@ -207,7 +202,6 @@ var xNewDateTimeFromUnixLocalUsec func(int64) *DateTime
 // You should release the return value by calling [method@GLib.DateTime.unref]
 // when you are done with it.
 func NewDateTimeFromUnixLocalUsec(UsecsVar int64) *DateTime {
-
 	cret := xNewDateTimeFromUnixLocalUsec(UsecsVar)
 	return cret
 }
@@ -225,7 +219,6 @@ var xNewDateTimeFromUnixUtc func(int64) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeFromUnixUtc(TVar int64) *DateTime {
-
 	cret := xNewDateTimeFromUnixUtc(TVar)
 	return cret
 }
@@ -243,7 +236,6 @@ var xNewDateTimeFromUnixUtcUsec func(int64) *DateTime
 // You should release the return value by calling [method@GLib.DateTime.unref]
 // when you are done with it.
 func NewDateTimeFromUnixUtcUsec(UsecsVar int64) *DateTime {
-
 	cret := xNewDateTimeFromUnixUtcUsec(UsecsVar)
 	return cret
 }
@@ -256,7 +248,6 @@ var xNewDateTimeLocal func(int32, int32, int32, int32, int32, float64) *DateTime
 // This call is equivalent to calling g_date_time_new() with the time
 // zone returned by g_time_zone_new_local().
 func NewDateTimeLocal(YearVar int32, MonthVar int32, DayVar int32, HourVar int32, MinuteVar int32, SecondsVar float64) *DateTime {
-
 	cret := xNewDateTimeLocal(YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
 	return cret
 }
@@ -273,7 +264,6 @@ var xNewDateTimeNow func(*TimeZone) *DateTime
 // You should release the return value by calling g_date_time_unref()
 // when you are done with it.
 func NewDateTimeNow(TzVar *TimeZone) *DateTime {
-
 	cret := xNewDateTimeNow(TzVar)
 	return cret
 }
@@ -286,7 +276,6 @@ var xNewDateTimeNowLocal func() *DateTime
 // This is equivalent to calling g_date_time_new_now() with the time
 // zone returned by g_time_zone_new_local().
 func NewDateTimeNowLocal() *DateTime {
-
 	cret := xNewDateTimeNowLocal()
 	return cret
 }
@@ -298,7 +287,6 @@ var xNewDateTimeNowUtc func() *DateTime
 // This is equivalent to calling g_date_time_new_now() with the time
 // zone returned by g_time_zone_new_utc().
 func NewDateTimeNowUtc() *DateTime {
-
 	cret := xNewDateTimeNowUtc()
 	return cret
 }
@@ -311,7 +299,6 @@ var xNewDateTimeUtc func(int32, int32, int32, int32, int32, float64) *DateTime
 // This call is equivalent to calling g_date_time_new() with the time
 // zone returned by g_time_zone_new_utc().
 func NewDateTimeUtc(YearVar int32, MonthVar int32, DayVar int32, HourVar int32, MinuteVar int32, SecondsVar float64) *DateTime {
-
 	cret := xNewDateTimeUtc(YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
 	return cret
 }
@@ -320,7 +307,6 @@ var xDateTimeAdd func(uintptr, TimeSpan) *DateTime
 
 // Creates a copy of @datetime and adds the specified timespan to the copy.
 func (x *DateTime) Add(TimespanVar TimeSpan) *DateTime {
-
 	cret := xDateTimeAdd(x.GoPointer(), TimespanVar)
 	return cret
 }
@@ -330,7 +316,6 @@ var xDateTimeAddDays func(uintptr, int32) *DateTime
 // Creates a copy of @datetime and adds the specified number of days to the
 // copy. Add negative values to subtract days.
 func (x *DateTime) AddDays(DaysVar int32) *DateTime {
-
 	cret := xDateTimeAddDays(x.GoPointer(), DaysVar)
 	return cret
 }
@@ -340,7 +325,6 @@ var xDateTimeAddFull func(uintptr, int32, int32, int32, int32, int32, float64) *
 // Creates a new #GDateTime adding the specified values to the current date and
 // time in @datetime. Add negative values to subtract.
 func (x *DateTime) AddFull(YearsVar int32, MonthsVar int32, DaysVar int32, HoursVar int32, MinutesVar int32, SecondsVar float64) *DateTime {
-
 	cret := xDateTimeAddFull(x.GoPointer(), YearsVar, MonthsVar, DaysVar, HoursVar, MinutesVar, SecondsVar)
 	return cret
 }
@@ -350,7 +334,6 @@ var xDateTimeAddHours func(uintptr, int32) *DateTime
 // Creates a copy of @datetime and adds the specified number of hours.
 // Add negative values to subtract hours.
 func (x *DateTime) AddHours(HoursVar int32) *DateTime {
-
 	cret := xDateTimeAddHours(x.GoPointer(), HoursVar)
 	return cret
 }
@@ -360,7 +343,6 @@ var xDateTimeAddMinutes func(uintptr, int32) *DateTime
 // Creates a copy of @datetime adding the specified number of minutes.
 // Add negative values to subtract minutes.
 func (x *DateTime) AddMinutes(MinutesVar int32) *DateTime {
-
 	cret := xDateTimeAddMinutes(x.GoPointer(), MinutesVar)
 	return cret
 }
@@ -375,7 +357,6 @@ var xDateTimeAddMonths func(uintptr, int32) *DateTime
 // 31st January 2018, the result would be 28th February 2018. In 2020 (a leap
 // year), the result would be 29th February.
 func (x *DateTime) AddMonths(MonthsVar int32) *DateTime {
-
 	cret := xDateTimeAddMonths(x.GoPointer(), MonthsVar)
 	return cret
 }
@@ -385,7 +366,6 @@ var xDateTimeAddSeconds func(uintptr, float64) *DateTime
 // Creates a copy of @datetime and adds the specified number of seconds.
 // Add negative values to subtract seconds.
 func (x *DateTime) AddSeconds(SecondsVar float64) *DateTime {
-
 	cret := xDateTimeAddSeconds(x.GoPointer(), SecondsVar)
 	return cret
 }
@@ -395,7 +375,6 @@ var xDateTimeAddWeeks func(uintptr, int32) *DateTime
 // Creates a copy of @datetime and adds the specified number of weeks to the
 // copy. Add negative values to subtract weeks.
 func (x *DateTime) AddWeeks(WeeksVar int32) *DateTime {
-
 	cret := xDateTimeAddWeeks(x.GoPointer(), WeeksVar)
 	return cret
 }
@@ -408,7 +387,6 @@ var xDateTimeAddYears func(uintptr, int32) *DateTime
 // As with g_date_time_add_months(), if the resulting date would be 29th
 // February on a non-leap year, the day will be clamped to 28th February.
 func (x *DateTime) AddYears(YearsVar int32) *DateTime {
-
 	cret := xDateTimeAddYears(x.GoPointer(), YearsVar)
 	return cret
 }
@@ -418,7 +396,6 @@ var xDateTimeCompare func(uintptr, uintptr) int32
 // A comparison function for #GDateTimes that is suitable
 // as a #GCompareFunc. Both #GDateTimes must be non-%NULL.
 func (x *DateTime) Compare(Dt2Var uintptr) int32 {
-
 	cret := xDateTimeCompare(x.GoPointer(), Dt2Var)
 	return cret
 }
@@ -429,7 +406,6 @@ var xDateTimeDifference func(uintptr, *DateTime) TimeSpan
 // #GTimeSpan that is returned is effectively @end - @begin (ie:
 // positive if the first parameter is larger).
 func (x *DateTime) Difference(BeginVar *DateTime) TimeSpan {
-
 	cret := xDateTimeDifference(x.GoPointer(), BeginVar)
 	return cret
 }
@@ -441,7 +417,6 @@ var xDateTimeEqual func(uintptr, uintptr) bool
 // Equal here means that they represent the same moment after converting
 // them to the same time zone.
 func (x *DateTime) Equal(Dt2Var uintptr) bool {
-
 	cret := xDateTimeEqual(x.GoPointer(), Dt2Var)
 	return cret
 }
@@ -573,7 +548,6 @@ var xDateTimeFormat func(uintptr, string) string
 //     specifier
 //   - `%EY`: the full alternative year representation
 func (x *DateTime) Format(FormatVar string) string {
-
 	cret := xDateTimeFormat(x.GoPointer(), FormatVar)
 	return cret
 }
@@ -586,7 +560,6 @@ var xDateTimeFormatIso8601 func(uintptr) string
 //
 // Since GLib 2.66, this will output to sub-second precision if needed.
 func (x *DateTime) FormatIso8601() string {
-
 	cret := xDateTimeFormatIso8601(x.GoPointer())
 	return cret
 }
@@ -596,7 +569,6 @@ var xDateTimeGetDayOfMonth func(uintptr) int32
 // Retrieves the day of the month represented by @datetime in the gregorian
 // calendar.
 func (x *DateTime) GetDayOfMonth() int32 {
-
 	cret := xDateTimeGetDayOfMonth(x.GoPointer())
 	return cret
 }
@@ -606,7 +578,6 @@ var xDateTimeGetDayOfWeek func(uintptr) int32
 // Retrieves the ISO 8601 day of the week on which @datetime falls (1 is
 // Monday, 2 is Tuesday... 7 is Sunday).
 func (x *DateTime) GetDayOfWeek() int32 {
-
 	cret := xDateTimeGetDayOfWeek(x.GoPointer())
 	return cret
 }
@@ -616,7 +587,6 @@ var xDateTimeGetDayOfYear func(uintptr) int32
 // Retrieves the day of the year represented by @datetime in the Gregorian
 // calendar.
 func (x *DateTime) GetDayOfYear() int32 {
-
 	cret := xDateTimeGetDayOfYear(x.GoPointer())
 	return cret
 }
@@ -625,7 +595,6 @@ var xDateTimeGetHour func(uintptr) int32
 
 // Retrieves the hour of the day represented by @datetime
 func (x *DateTime) GetHour() int32 {
-
 	cret := xDateTimeGetHour(x.GoPointer())
 	return cret
 }
@@ -634,7 +603,6 @@ var xDateTimeGetMicrosecond func(uintptr) int32
 
 // Retrieves the microsecond of the date represented by @datetime
 func (x *DateTime) GetMicrosecond() int32 {
-
 	cret := xDateTimeGetMicrosecond(x.GoPointer())
 	return cret
 }
@@ -643,7 +611,6 @@ var xDateTimeGetMinute func(uintptr) int32
 
 // Retrieves the minute of the hour represented by @datetime
 func (x *DateTime) GetMinute() int32 {
-
 	cret := xDateTimeGetMinute(x.GoPointer())
 	return cret
 }
@@ -653,7 +620,6 @@ var xDateTimeGetMonth func(uintptr) int32
 // Retrieves the month of the year represented by @datetime in the Gregorian
 // calendar.
 func (x *DateTime) GetMonth() int32 {
-
 	cret := xDateTimeGetMonth(x.GoPointer())
 	return cret
 }
@@ -662,7 +628,6 @@ var xDateTimeGetSecond func(uintptr) int32
 
 // Retrieves the second of the minute represented by @datetime
 func (x *DateTime) GetSecond() int32 {
-
 	cret := xDateTimeGetSecond(x.GoPointer())
 	return cret
 }
@@ -672,7 +637,6 @@ var xDateTimeGetSeconds func(uintptr) float64
 // Retrieves the number of seconds since the start of the last minute,
 // including the fractional part.
 func (x *DateTime) GetSeconds() float64 {
-
 	cret := xDateTimeGetSeconds(x.GoPointer())
 	return cret
 }
@@ -681,7 +645,6 @@ var xDateTimeGetTimezone func(uintptr) *TimeZone
 
 // Get the time zone for this @datetime.
 func (x *DateTime) GetTimezone() *TimeZone {
-
 	cret := xDateTimeGetTimezone(x.GoPointer())
 	return cret
 }
@@ -695,7 +658,6 @@ var xDateTimeGetTimezoneAbbreviation func(uintptr) string
 // months and "EDT" during the summer months when daylight savings
 // time is in effect.
 func (x *DateTime) GetTimezoneAbbreviation() string {
-
 	cret := xDateTimeGetTimezoneAbbreviation(x.GoPointer())
 	return cret
 }
@@ -711,7 +673,6 @@ var xDateTimeGetUtcOffset func(uintptr) TimeSpan
 //
 // If @datetime represents UTC time, then the offset is always zero.
 func (x *DateTime) GetUtcOffset() TimeSpan {
-
 	cret := xDateTimeGetUtcOffset(x.GoPointer())
 	return cret
 }
@@ -750,7 +711,6 @@ var xDateTimeGetWeekNumberingYear func(uintptr) int32
 // Note that January 1 0001 in the proleptic Gregorian calendar is a
 // Monday, so this function never returns 0.
 func (x *DateTime) GetWeekNumberingYear() int32 {
-
 	cret := xDateTimeGetWeekNumberingYear(x.GoPointer())
 	return cret
 }
@@ -773,7 +733,6 @@ var xDateTimeGetWeekOfYear func(uintptr) int32
 // considered as being part of the first ISO 8601 week of the next year
 // if 4 or more days of that week are contained within the new year.
 func (x *DateTime) GetWeekOfYear() int32 {
-
 	cret := xDateTimeGetWeekOfYear(x.GoPointer())
 	return cret
 }
@@ -782,7 +741,6 @@ var xDateTimeGetYear func(uintptr) int32
 
 // Retrieves the year represented by @datetime in the Gregorian calendar.
 func (x *DateTime) GetYear() int32 {
-
 	cret := xDateTimeGetYear(x.GoPointer())
 	return cret
 }
@@ -791,16 +749,13 @@ var xDateTimeGetYmd func(uintptr, *int32, *int32, *int32)
 
 // Retrieves the Gregorian day, month, and year of a given #GDateTime.
 func (x *DateTime) GetYmd(YearVar *int32, MonthVar *int32, DayVar *int32) {
-
 	xDateTimeGetYmd(x.GoPointer(), YearVar, MonthVar, DayVar)
-
 }
 
 var xDateTimeHash func(uintptr) uint32
 
 // Hashes @datetime into a #guint, suitable for use within #GHashTable.
 func (x *DateTime) Hash() uint32 {
-
 	cret := xDateTimeHash(x.GoPointer())
 	return cret
 }
@@ -810,7 +765,6 @@ var xDateTimeIsDaylightSavings func(uintptr) bool
 // Determines if daylight savings time is in effect at the time and in
 // the time zone of @datetime.
 func (x *DateTime) IsDaylightSavings() bool {
-
 	cret := xDateTimeIsDaylightSavings(x.GoPointer())
 	return cret
 }
@@ -819,7 +773,6 @@ var xDateTimeRef func(uintptr) *DateTime
 
 // Atomically increments the reference count of @datetime by one.
 func (x *DateTime) Ref() *DateTime {
-
 	cret := xDateTimeRef(x.GoPointer())
 	return cret
 }
@@ -832,7 +785,6 @@ var xDateTimeToLocal func(uintptr) *DateTime
 // This call is equivalent to calling g_date_time_to_timezone() with the
 // time zone returned by g_time_zone_new_local().
 func (x *DateTime) ToLocal() *DateTime {
-
 	cret := xDateTimeToLocal(x.GoPointer())
 	return cret
 }
@@ -853,7 +805,6 @@ var xDateTimeToTimeval func(uintptr, *TimeVal) bool
 //
 // On systems where 'long' is 64bit, this function never fails.
 func (x *DateTime) ToTimeval(TvVar *TimeVal) bool {
-
 	cret := xDateTimeToTimeval(x.GoPointer(), TvVar)
 	return cret
 }
@@ -867,7 +818,6 @@ var xDateTimeToTimezone func(uintptr, *TimeZone) *DateTime
 // example, converting 0001-01-01 00:00:00 UTC to a time zone west of
 // Greenwich will fail (due to the year 0 being out of range).
 func (x *DateTime) ToTimezone(TzVar *TimeZone) *DateTime {
-
 	cret := xDateTimeToTimezone(x.GoPointer(), TzVar)
 	return cret
 }
@@ -880,7 +830,6 @@ var xDateTimeToUnix func(uintptr) int64
 // Unix time is the number of seconds that have elapsed since 1970-01-01
 // 00:00:00 UTC, regardless of the time zone associated with @datetime.
 func (x *DateTime) ToUnix() int64 {
-
 	cret := xDateTimeToUnix(x.GoPointer())
 	return cret
 }
@@ -892,7 +841,6 @@ var xDateTimeToUnixUsec func(uintptr) int64
 // Unix time is the number of microseconds that have elapsed since 1970-01-01
 // 00:00:00 UTC, regardless of the time zone associated with @datetime.
 func (x *DateTime) ToUnixUsec() int64 {
-
 	cret := xDateTimeToUnixUsec(x.GoPointer())
 	return cret
 }
@@ -905,7 +853,6 @@ var xDateTimeToUtc func(uintptr) *DateTime
 // This call is equivalent to calling g_date_time_to_timezone() with the
 // time zone returned by g_time_zone_new_utc().
 func (x *DateTime) ToUtc() *DateTime {
-
 	cret := xDateTimeToUtc(x.GoPointer())
 	return cret
 }
@@ -917,9 +864,7 @@ var xDateTimeUnref func(uintptr)
 // When the reference count reaches zero, the resources allocated by
 // @datetime are freed
 func (x *DateTime) Unref() {
-
 	xDateTimeUnref(x.GoPointer())
-
 }
 
 // A value representing an interval of time, in microseconds.
@@ -1006,5 +951,4 @@ func init() {
 	core.PuregoSafeRegister(&xDateTimeToUnixUsec, libs, "g_date_time_to_unix_usec")
 	core.PuregoSafeRegister(&xDateTimeToUtc, libs, "g_date_time_to_utc")
 	core.PuregoSafeRegister(&xDateTimeUnref, libs, "g_date_time_unref")
-
 }

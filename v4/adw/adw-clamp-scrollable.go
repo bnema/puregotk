@@ -85,7 +85,6 @@ var xClampScrollableGetMaximumSize func(uintptr) int32
 
 // Gets the maximum size allocated to the child.
 func (x *ClampScrollable) GetMaximumSize() int32 {
-
 	cret := xClampScrollableGetMaximumSize(x.GoPointer())
 	return cret
 }
@@ -94,7 +93,6 @@ var xClampScrollableGetTighteningThreshold func(uintptr) int32
 
 // Gets the size above which the child is clamped.
 func (x *ClampScrollable) GetTighteningThreshold() int32 {
-
 	cret := xClampScrollableGetTighteningThreshold(x.GoPointer())
 	return cret
 }
@@ -103,7 +101,6 @@ var xClampScrollableGetUnit func(uintptr) LengthUnit
 
 // Gets the length unit for maximum size and tightening threshold.
 func (x *ClampScrollable) GetUnit() LengthUnit {
-
 	cret := xClampScrollableGetUnit(x.GoPointer())
 	return cret
 }
@@ -112,9 +109,7 @@ var xClampScrollableSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *ClampScrollable) SetChild(ChildVar *gtk.Widget) {
-
 	xClampScrollableSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xClampScrollableSetMaximumSize func(uintptr, int32)
@@ -123,9 +118,7 @@ var xClampScrollableSetMaximumSize func(uintptr, int32)
 //
 // It is the width if the clamp is horizontal, or the height if it is vertical.
 func (x *ClampScrollable) SetMaximumSize(MaximumSizeVar int32) {
-
 	xClampScrollableSetMaximumSize(x.GoPointer(), MaximumSizeVar)
-
 }
 
 var xClampScrollableSetTighteningThreshold func(uintptr, int32)
@@ -145,9 +138,7 @@ var xClampScrollableSetTighteningThreshold func(uintptr, int32)
 // Effectively, tightening the grip on the child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
 func (x *ClampScrollable) SetTighteningThreshold(TighteningThresholdVar int32) {
-
 	xClampScrollableSetTighteningThreshold(x.GoPointer(), TighteningThresholdVar)
-
 }
 
 var xClampScrollableSetUnit func(uintptr, LengthUnit)
@@ -156,9 +147,7 @@ var xClampScrollableSetUnit func(uintptr, LengthUnit)
 //
 // Allows the sizes to vary depending on the text scale factor.
 func (x *ClampScrollable) SetUnit(UnitVar LengthUnit) {
-
 	xClampScrollableSetUnit(x.GoPointer(), UnitVar)
-
 }
 
 func (c *ClampScrollable) GoPointer() uintptr {
@@ -246,9 +235,7 @@ func (x *ClampScrollable) GetPropertyTighteningThreshold() int32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ClampScrollable) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -269,7 +256,6 @@ func (x *ClampScrollable) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ClampScrollable) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -294,7 +280,6 @@ func (x *ClampScrollable) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ClampScrollable) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -333,30 +318,23 @@ func (x *ClampScrollable) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ClampScrollable) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ClampScrollable) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ClampScrollable) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ClampScrollable) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -369,9 +347,7 @@ func (x *ClampScrollable) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ClampScrollable) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -379,9 +355,7 @@ func (x *ClampScrollable) SetAccessibleParent(ParentVar gtk.Accessible, NextSibl
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ClampScrollable) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -390,9 +364,7 @@ func (x *ClampScrollable) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessib
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ClampScrollable) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -414,9 +386,7 @@ func (x *ClampScrollable) UpdatePlatformState(StateVar gtk.AccessiblePlatformSta
 //
 // ```
 func (x *ClampScrollable) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -426,9 +396,7 @@ func (x *ClampScrollable) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty
 //
 // This function is meant to be used by language bindings.
 func (x *ClampScrollable) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -450,9 +418,7 @@ func (x *ClampScrollable) UpdatePropertyValue(NPropertiesVar int32, PropertiesVa
 //
 // ```
 func (x *ClampScrollable) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -462,9 +428,7 @@ func (x *ClampScrollable) UpdateRelation(FirstRelationVar gtk.AccessibleRelation
 //
 // This function is meant to be used by language bindings.
 func (x *ClampScrollable) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -487,9 +451,7 @@ func (x *ClampScrollable) UpdateRelationValue(NRelationsVar int32, RelationsVar 
 //
 // ```
 func (x *ClampScrollable) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -499,9 +461,7 @@ func (x *ClampScrollable) UpdateState(FirstStateVar gtk.AccessibleState, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *ClampScrollable) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -509,23 +469,19 @@ func (x *ClampScrollable) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Acc
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ClampScrollable) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ClampScrollable) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ClampScrollable) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 // Returns the size of a non-scrolling border around the
@@ -535,7 +491,6 @@ func (x *ClampScrollable) SetOrientation(OrientationVar gtk.Orientation) {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *ClampScrollable) GetBorder(BorderVar *gtk.Border) bool {
-
 	cret := gtk.XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -557,7 +512,6 @@ func (x *ClampScrollable) GetHadjustment() *gtk.Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *ClampScrollable) GetHscrollPolicy() gtk.ScrollablePolicy {
-
 	cret := gtk.XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -579,16 +533,13 @@ func (x *ClampScrollable) GetVadjustment() *gtk.Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *ClampScrollable) GetVscrollPolicy() gtk.ScrollablePolicy {
-
 	cret := gtk.XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ClampScrollable) SetHadjustment(HadjustmentVar *gtk.Adjustment) {
-
 	gtk.XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -596,16 +547,12 @@ func (x *ClampScrollable) SetHadjustment(HadjustmentVar *gtk.Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *ClampScrollable) SetHscrollPolicy(PolicyVar gtk.ScrollablePolicy) {
-
 	gtk.XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ClampScrollable) SetVadjustment(VadjustmentVar *gtk.Adjustment) {
-
 	gtk.XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -613,9 +560,7 @@ func (x *ClampScrollable) SetVadjustment(VadjustmentVar *gtk.Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *ClampScrollable) SetVscrollPolicy(PolicyVar gtk.ScrollablePolicy) {
-
 	gtk.XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
@@ -642,5 +587,4 @@ func init() {
 	core.PuregoSafeRegister(&xClampScrollableSetMaximumSize, libs, "adw_clamp_scrollable_set_maximum_size")
 	core.PuregoSafeRegister(&xClampScrollableSetTighteningThreshold, libs, "adw_clamp_scrollable_set_tightening_threshold")
 	core.PuregoSafeRegister(&xClampScrollableSetUnit, libs, "adw_clamp_scrollable_set_unit")
-
 }

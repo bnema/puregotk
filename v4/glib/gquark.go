@@ -45,7 +45,6 @@ var xInternStaticString func(string) string
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func InternStaticString(StringVar string) string {
-
 	cret := xInternStaticString(StringVar)
 	return cret
 }
@@ -60,7 +59,6 @@ var xInternString func(string) string
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func InternString(StringVar string) string {
-
 	cret := xInternString(StringVar)
 	return cret
 }
@@ -84,7 +82,6 @@ var xQuarkFromStaticString func(string) Quark
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func QuarkFromStaticString(StringVar string) Quark {
-
 	cret := xQuarkFromStaticString(StringVar)
 	return cret
 }
@@ -99,7 +96,6 @@ var xQuarkFromString func(string) Quark
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func QuarkFromString(StringVar string) Quark {
-
 	cret := xQuarkFromString(StringVar)
 	return cret
 }
@@ -108,7 +104,6 @@ var xQuarkToString func(Quark) string
 
 // Gets the string associated with the given #GQuark.
 func QuarkToString(QuarkVar Quark) string {
-
 	cret := xQuarkToString(QuarkVar)
 	return cret
 }
@@ -124,7 +119,6 @@ var xQuarkTryString func(string) Quark
 // This function must not be used before library constructors have finished
 // running.
 func QuarkTryString(StringVar string) Quark {
-
 	cret := xQuarkTryString(StringVar)
 	return cret
 }
@@ -147,5 +141,4 @@ func init() {
 	core.PuregoSafeRegister(&xQuarkFromString, libs, "g_quark_from_string")
 	core.PuregoSafeRegister(&xQuarkToString, libs, "g_quark_to_string")
 	core.PuregoSafeRegister(&xQuarkTryString, libs, "g_quark_try_string")
-
 }

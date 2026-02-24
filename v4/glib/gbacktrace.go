@@ -59,9 +59,7 @@ var xOnErrorQuery func(string)
 // variable (see [Running GLib Applications](running.html)) and
 // calling g_on_error_stack_trace() instead.
 func OnErrorQuery(PrgNameVar string) {
-
 	xOnErrorQuery(PrgNameVar)
-
 }
 
 var xOnErrorStackTrace func(string)
@@ -80,9 +78,7 @@ var xOnErrorStackTrace func(string)
 // variable is set, a debugger will be invoked to attach and
 // handle that exception (see [Running GLib Applications](running.html)).
 func OnErrorStackTrace(PrgNameVar string) {
-
 	xOnErrorStackTrace(PrgNameVar)
-
 }
 
 func init() {
@@ -99,5 +95,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xOnErrorQuery, libs, "g_on_error_query")
 	core.PuregoSafeRegister(&xOnErrorStackTrace, libs, "g_on_error_stack_trace")
-
 }

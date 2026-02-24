@@ -117,7 +117,6 @@ func (x *NativeSocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *NativeSocketAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
@@ -137,5 +136,4 @@ func init() {
 	core.PuregoSafeRegister(&xNativeSocketAddressGLibType, libs, "g_native_socket_address_get_type")
 
 	core.PuregoSafeRegister(&xNewNativeSocketAddress, libs, "g_native_socket_address_new")
-
 }

@@ -254,9 +254,7 @@ func (x *AsyncInitableBase) SetGoPointer(ptr uintptr) {
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
 func (x *AsyncInitableBase) InitAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes asynchronous initialization and returns the result.
@@ -269,7 +267,6 @@ func (x *AsyncInitableBase) InitFinish(ResVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Finishes the async construction for the various g_async_initable_new
@@ -289,12 +286,13 @@ func (x *AsyncInitableBase) NewFinish(ResVar AsyncResult) (*gobject.Object, erro
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var XGAsyncInitableInitAsync func(uintptr, int32, uintptr, uintptr, uintptr)
-var XGAsyncInitableInitFinish func(uintptr, uintptr, **glib.Error) bool
-var XGAsyncInitableNewFinish func(uintptr, uintptr, **glib.Error) uintptr
+var (
+	XGAsyncInitableInitAsync  func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGAsyncInitableInitFinish func(uintptr, uintptr, **glib.Error) bool
+	XGAsyncInitableNewFinish  func(uintptr, uintptr, **glib.Error) uintptr
+)
 
 var xAsyncInitableNewvAsync func(types.GType, uint32, *gobject.Parameter, int32, uintptr, uintptr, uintptr)
 
@@ -305,9 +303,7 @@ var xAsyncInitableNewvAsync func(types.GType, uint32, *gobject.Parameter, int32,
 // then call g_async_initable_new_finish() to get the new object and check
 // for any errors.
 func AsyncInitableNewvAsync(ObjectTypeVar types.GType, NParametersVar uint32, ParametersVar *gobject.Parameter, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xAsyncInitableNewvAsync(ObjectTypeVar, NParametersVar, ParametersVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 func init() {
@@ -329,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&XGAsyncInitableInitAsync, libs, "g_async_initable_init_async")
 	core.PuregoSafeRegister(&XGAsyncInitableInitFinish, libs, "g_async_initable_init_finish")
 	core.PuregoSafeRegister(&XGAsyncInitableNewFinish, libs, "g_async_initable_new_finish")
-
 }

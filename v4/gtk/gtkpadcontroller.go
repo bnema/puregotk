@@ -171,9 +171,7 @@ var xPadControllerSetAction func(uintptr, PadActionType, int32, int32, string, s
 // rules apply. Some windowing systems may be able to use those for user
 // feedback.
 func (x *PadController) SetAction(TypeVar PadActionType, IndexVar int32, ModeVar int32, LabelVar string, ActionNameVar string) {
-
 	xPadControllerSetAction(x.GoPointer(), TypeVar, IndexVar, ModeVar, LabelVar, ActionNameVar)
-
 }
 
 var xPadControllerSetActionEntries func(uintptr, []PadActionEntry, int32)
@@ -183,9 +181,7 @@ var xPadControllerSetActionEntries func(uintptr, []PadActionEntry, int32)
 //
 // See [struct@Gtk.PadActionEntry] and [method@Gtk.PadController.set_action].
 func (x *PadController) SetActionEntries(EntriesVar []PadActionEntry, NEntriesVar int32) {
-
 	xPadControllerSetActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
-
 }
 
 func (c *PadController) GoPointer() uintptr {
@@ -219,5 +215,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPadControllerSetAction, libs, "gtk_pad_controller_set_action")
 	core.PuregoSafeRegister(&xPadControllerSetActionEntries, libs, "gtk_pad_controller_set_action_entries")
-
 }

@@ -283,9 +283,7 @@ var xAlertDialogAddResponse func(uintptr, string, string)
 // [method@AlertDialog.set_response_appearance] can be used to customize the
 // responses further.
 func (x *AlertDialog) AddResponse(IdVar string, LabelVar string) {
-
 	xAlertDialogAddResponse(x.GoPointer(), IdVar, LabelVar)
-
 }
 
 var xAlertDialogAddResponses func(uintptr, string, ...interface{})
@@ -308,9 +306,7 @@ var xAlertDialogAddResponses func(uintptr, string, ...interface{})
 //
 // ```
 func (x *AlertDialog) AddResponses(FirstIdVar string, varArgs ...interface{}) {
-
 	xAlertDialogAddResponses(x.GoPointer(), FirstIdVar, varArgs...)
-
 }
 
 var xAlertDialogChoose func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -320,16 +316,13 @@ var xAlertDialogChoose func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // If the window is an [class@Window] or [class@ApplicationWindow], the dialog
 // will be shown within it. Otherwise, it will be a separate window.
 func (x *AlertDialog) Choose(ParentVar *gtk.Widget, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xAlertDialogChooseFinish func(uintptr, uintptr) string
 
 // Finishes the [method@AlertDialog.choose] call and returns the response ID.
 func (x *AlertDialog) ChooseFinish(ResultVar gio.AsyncResult) string {
-
 	cret := xAlertDialogChooseFinish(x.GoPointer(), ResultVar.GoPointer())
 	return cret
 }
@@ -340,9 +333,7 @@ var xAlertDialogFormatBody func(uintptr, string, ...interface{})
 //
 // See [property@AlertDialog:body].
 func (x *AlertDialog) FormatBody(FormatVar string, varArgs ...interface{}) {
-
 	xAlertDialogFormatBody(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xAlertDialogFormatBodyMarkup func(uintptr, string, ...interface{})
@@ -357,9 +348,7 @@ var xAlertDialogFormatBodyMarkup func(uintptr, string, ...interface{})
 //
 // See [property@AlertDialog:body].
 func (x *AlertDialog) FormatBodyMarkup(FormatVar string, varArgs ...interface{}) {
-
 	xAlertDialogFormatBodyMarkup(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xAlertDialogFormatHeading func(uintptr, string, ...interface{})
@@ -368,9 +357,7 @@ var xAlertDialogFormatHeading func(uintptr, string, ...interface{})
 //
 // See [property@AlertDialog:heading].
 func (x *AlertDialog) FormatHeading(FormatVar string, varArgs ...interface{}) {
-
 	xAlertDialogFormatHeading(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xAlertDialogFormatHeadingMarkup func(uintptr, string, ...interface{})
@@ -385,16 +372,13 @@ var xAlertDialogFormatHeadingMarkup func(uintptr, string, ...interface{})
 //
 // See [property@AlertDialog:heading].
 func (x *AlertDialog) FormatHeadingMarkup(FormatVar string, varArgs ...interface{}) {
-
 	xAlertDialogFormatHeadingMarkup(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xAlertDialogGetBody func(uintptr) string
 
 // Gets the body text of @self.
 func (x *AlertDialog) GetBody() string {
-
 	cret := xAlertDialogGetBody(x.GoPointer())
 	return cret
 }
@@ -403,7 +387,6 @@ var xAlertDialogGetBodyUseMarkup func(uintptr) bool
 
 // Gets whether the body text of @self includes Pango markup.
 func (x *AlertDialog) GetBodyUseMarkup() bool {
-
 	cret := xAlertDialogGetBodyUseMarkup(x.GoPointer())
 	return cret
 }
@@ -412,7 +395,6 @@ var xAlertDialogGetCloseResponse func(uintptr) string
 
 // Gets the ID of the close response of @self.
 func (x *AlertDialog) GetCloseResponse() string {
-
 	cret := xAlertDialogGetCloseResponse(x.GoPointer())
 	return cret
 }
@@ -421,7 +403,6 @@ var xAlertDialogGetDefaultResponse func(uintptr) string
 
 // Gets the ID of the default response of @self.
 func (x *AlertDialog) GetDefaultResponse() string {
-
 	cret := xAlertDialogGetDefaultResponse(x.GoPointer())
 	return cret
 }
@@ -447,7 +428,6 @@ var xAlertDialogGetHeading func(uintptr) string
 
 // Gets the heading of @self.
 func (x *AlertDialog) GetHeading() string {
-
 	cret := xAlertDialogGetHeading(x.GoPointer())
 	return cret
 }
@@ -456,7 +436,6 @@ var xAlertDialogGetHeadingUseMarkup func(uintptr) bool
 
 // Gets whether the heading of @self includes Pango markup.
 func (x *AlertDialog) GetHeadingUseMarkup() bool {
-
 	cret := xAlertDialogGetHeadingUseMarkup(x.GoPointer())
 	return cret
 }
@@ -465,7 +444,6 @@ var xAlertDialogGetPreferWideLayout func(uintptr) bool
 
 // Gets whether @self prefers wide layout.
 func (x *AlertDialog) GetPreferWideLayout() bool {
-
 	cret := xAlertDialogGetPreferWideLayout(x.GoPointer())
 	return cret
 }
@@ -476,7 +454,6 @@ var xAlertDialogGetResponseAppearance func(uintptr, string) ResponseAppearance
 //
 // See [method@AlertDialog.set_response_appearance].
 func (x *AlertDialog) GetResponseAppearance(ResponseVar string) ResponseAppearance {
-
 	cret := xAlertDialogGetResponseAppearance(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -487,7 +464,6 @@ var xAlertDialogGetResponseEnabled func(uintptr, string) bool
 //
 // See [method@AlertDialog.set_response_enabled].
 func (x *AlertDialog) GetResponseEnabled(ResponseVar string) bool {
-
 	cret := xAlertDialogGetResponseEnabled(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -498,7 +474,6 @@ var xAlertDialogGetResponseLabel func(uintptr, string) string
 //
 // See [method@AlertDialog.set_response_label].
 func (x *AlertDialog) GetResponseLabel(ResponseVar string) string {
-
 	cret := xAlertDialogGetResponseLabel(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -507,7 +482,6 @@ var xAlertDialogHasResponse func(uintptr, string) bool
 
 // Gets whether @self has a response with the ID @response.
 func (x *AlertDialog) HasResponse(ResponseVar string) bool {
-
 	cret := xAlertDialogHasResponse(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -516,18 +490,14 @@ var xAlertDialogRemoveResponse func(uintptr, string)
 
 // Removes a response from @self.
 func (x *AlertDialog) RemoveResponse(IdVar string) {
-
 	xAlertDialogRemoveResponse(x.GoPointer(), IdVar)
-
 }
 
 var xAlertDialogSetBody func(uintptr, string)
 
 // Sets the body text of @self.
 func (x *AlertDialog) SetBody(BodyVar string) {
-
 	xAlertDialogSetBody(x.GoPointer(), BodyVar)
-
 }
 
 var xAlertDialogSetBodyUseMarkup func(uintptr, bool)
@@ -536,9 +506,7 @@ var xAlertDialogSetBodyUseMarkup func(uintptr, bool)
 //
 // See [func@Pango.parse_markup].
 func (x *AlertDialog) SetBodyUseMarkup(UseMarkupVar bool) {
-
 	xAlertDialogSetBodyUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 var xAlertDialogSetCloseResponse func(uintptr, string)
@@ -552,9 +520,7 @@ var xAlertDialogSetCloseResponse func(uintptr, string)
 //
 // The default close response is `close`.
 func (x *AlertDialog) SetCloseResponse(ResponseVar string) {
-
 	xAlertDialogSetCloseResponse(x.GoPointer(), ResponseVar)
-
 }
 
 var xAlertDialogSetDefaultResponse func(uintptr, string)
@@ -569,9 +535,7 @@ var xAlertDialogSetDefaultResponse func(uintptr, string)
 //
 // See [property@Dialog:default-widget].
 func (x *AlertDialog) SetDefaultResponse(ResponseVar string) {
-
 	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
-
 }
 
 var xAlertDialogSetExtraChild func(uintptr, uintptr)
@@ -580,18 +544,14 @@ var xAlertDialogSetExtraChild func(uintptr, uintptr)
 //
 // The child widget is displayed below the heading and body.
 func (x *AlertDialog) SetExtraChild(ChildVar *gtk.Widget) {
-
 	xAlertDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xAlertDialogSetHeading func(uintptr, string)
 
 // Sets the heading of @self.
 func (x *AlertDialog) SetHeading(HeadingVar string) {
-
 	xAlertDialogSetHeading(x.GoPointer(), HeadingVar)
-
 }
 
 var xAlertDialogSetHeadingUseMarkup func(uintptr, bool)
@@ -600,9 +560,7 @@ var xAlertDialogSetHeadingUseMarkup func(uintptr, bool)
 //
 // See [func@Pango.parse_markup].
 func (x *AlertDialog) SetHeadingUseMarkup(UseMarkupVar bool) {
-
 	xAlertDialogSetHeadingUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 var xAlertDialogSetPreferWideLayout func(uintptr, bool)
@@ -612,9 +570,7 @@ var xAlertDialogSetPreferWideLayout func(uintptr, bool)
 // Prefer horizontal button layout when possible, and wider dialog width
 // otherwise.
 func (x *AlertDialog) SetPreferWideLayout(PreferWideLayoutVar bool) {
-
 	xAlertDialogSetPreferWideLayout(x.GoPointer(), PreferWideLayoutVar)
-
 }
 
 var xAlertDialogSetResponseAppearance func(uintptr, string, ResponseAppearance)
@@ -639,9 +595,7 @@ var xAlertDialogSetResponseAppearance func(uintptr, string, ResponseAppearance)
 //
 // Negative responses like Cancel or Close should use the default appearance.
 func (x *AlertDialog) SetResponseAppearance(ResponseVar string, AppearanceVar ResponseAppearance) {
-
 	xAlertDialogSetResponseAppearance(x.GoPointer(), ResponseVar, AppearanceVar)
-
 }
 
 var xAlertDialogSetResponseEnabled func(uintptr, string, bool)
@@ -657,9 +611,7 @@ var xAlertDialogSetResponseEnabled func(uintptr, string, bool)
 //
 // Responses are enabled by default.
 func (x *AlertDialog) SetResponseEnabled(ResponseVar string, EnabledVar bool) {
-
 	xAlertDialogSetResponseEnabled(x.GoPointer(), ResponseVar, EnabledVar)
-
 }
 
 var xAlertDialogSetResponseLabel func(uintptr, string, string)
@@ -669,9 +621,7 @@ var xAlertDialogSetResponseLabel func(uintptr, string, string)
 // Labels are displayed on the dialog buttons. An embedded underline in @label
 // indicates a mnemonic.
 func (x *AlertDialog) SetResponseLabel(ResponseVar string, LabelVar string) {
-
 	xAlertDialogSetResponseLabel(x.GoPointer(), ResponseVar, LabelVar)
-
 }
 
 func (c *AlertDialog) GoPointer() uintptr {
@@ -868,7 +818,6 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ResponseVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -885,9 +834,7 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AlertDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -908,7 +855,6 @@ func (x *AlertDialog) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AlertDialog) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -933,7 +879,6 @@ func (x *AlertDialog) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AlertDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -972,30 +917,23 @@ func (x *AlertDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AlertDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AlertDialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AlertDialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AlertDialog) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1008,9 +946,7 @@ func (x *AlertDialog) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AlertDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1018,9 +954,7 @@ func (x *AlertDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AlertDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1029,9 +963,7 @@ func (x *AlertDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AlertDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1053,9 +985,7 @@ func (x *AlertDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *AlertDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1065,9 +995,7 @@ func (x *AlertDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *AlertDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1089,9 +1017,7 @@ func (x *AlertDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *AlertDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1101,9 +1027,7 @@ func (x *AlertDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *AlertDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1126,9 +1050,7 @@ func (x *AlertDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gt
 //
 // ```
 func (x *AlertDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1138,9 +1060,7 @@ func (x *AlertDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *AlertDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1148,7 +1068,6 @@ func (x *AlertDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessi
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AlertDialog) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1203,5 +1122,4 @@ func init() {
 	core.PuregoSafeRegister(&xAlertDialogSetResponseAppearance, libs, "adw_alert_dialog_set_response_appearance")
 	core.PuregoSafeRegister(&xAlertDialogSetResponseEnabled, libs, "adw_alert_dialog_set_response_enabled")
 	core.PuregoSafeRegister(&xAlertDialogSetResponseLabel, libs, "adw_alert_dialog_set_response_label")
-
 }

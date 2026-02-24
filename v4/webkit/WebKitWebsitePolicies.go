@@ -100,7 +100,6 @@ var xWebsitePoliciesGetAutoplayPolicy func(uintptr) AutoplayPolicy
 
 // Get the #WebKitWebsitePolicies:autoplay property.
 func (x *WebsitePolicies) GetAutoplayPolicy() AutoplayPolicy {
-
 	cret := xWebsitePoliciesGetAutoplayPolicy(x.GoPointer())
 	return cret
 }

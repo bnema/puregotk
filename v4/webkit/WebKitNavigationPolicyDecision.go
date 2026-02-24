@@ -46,7 +46,6 @@ var xNavigationPolicyDecisionGetNavigationAction func(uintptr) *NavigationAction
 
 // Gets the value of the #WebKitNavigationPolicyDecision:navigation-action property.
 func (x *NavigationPolicyDecision) GetNavigationAction() *NavigationAction {
-
 	cret := xNavigationPolicyDecisionGetNavigationAction(x.GoPointer())
 	return cret
 }

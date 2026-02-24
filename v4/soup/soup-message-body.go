@@ -49,7 +49,6 @@ var xNewMessageBody func() *MessageBody
 // [class@Message] uses this internally; you
 // will not normally need to call it yourself.
 func NewMessageBody() *MessageBody {
-
 	cret := xNewMessageBody()
 	return cret
 }
@@ -58,18 +57,14 @@ var xMessageBodyAppend func(uintptr, MemoryUse, []byte, uint)
 
 // Appends @length bytes from @data to @body according to @use.
 func (x *MessageBody) Append(UseVar MemoryUse, DataVar []byte, LengthVar uint) {
-
 	xMessageBodyAppend(x.GoPointer(), UseVar, DataVar, LengthVar)
-
 }
 
 var xMessageBodyAppendBytes func(uintptr, *glib.Bytes)
 
 // Appends the data from @buffer to @body.
 func (x *MessageBody) AppendBytes(BufferVar *glib.Bytes) {
-
 	xMessageBodyAppendBytes(x.GoPointer(), BufferVar)
-
 }
 
 var xMessageBodyAppendTake func(uintptr, []byte, uint)
@@ -80,9 +75,7 @@ var xMessageBodyAppendTake func(uintptr, []byte, uint)
 // with %SOUP_MEMORY_TAKE as second argument; it exists mainly for
 // convenience and simplifying language bindings.
 func (x *MessageBody) AppendTake(DataVar []byte, LengthVar uint) {
-
 	xMessageBodyAppendTake(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 var xMessageBodyComplete func(uintptr)
@@ -91,9 +84,7 @@ var xMessageBodyComplete func(uintptr)
 //
 // Call this when using chunked encoding after you have appended the last chunk.
 func (x *MessageBody) Complete() {
-
 	xMessageBodyComplete(x.GoPointer())
-
 }
 
 var xMessageBodyFlatten func(uintptr) *glib.Bytes
@@ -104,7 +95,6 @@ var xMessageBodyFlatten func(uintptr) *glib.Bytes
 // Adds an additional `\0` byte not counted by @body's
 // length field.
 func (x *MessageBody) Flatten() *glib.Bytes {
-
 	cret := xMessageBodyFlatten(x.GoPointer())
 	return cret
 }
@@ -115,7 +105,6 @@ var xMessageBodyGetAccumulate func(uintptr) bool
 //
 // See [method@MessageBody.set_accumulate. for details.
 func (x *MessageBody) GetAccumulate() bool {
-
 	cret := xMessageBodyGetAccumulate(x.GoPointer())
 	return cret
 }
@@ -139,7 +128,6 @@ var xMessageBodyGetChunk func(uintptr, int64) *glib.Bytes
 // @body may still potentially have more data, but that data is not
 // currently available).
 func (x *MessageBody) GetChunk(OffsetVar int64) *glib.Bytes {
-
 	cret := xMessageBodyGetChunk(x.GoPointer(), OffsetVar)
 	return cret
 }
@@ -156,16 +144,13 @@ var xMessageBodyGotChunk func(uintptr, *glib.Bytes)
 // This is a low-level method which you should not normally need to
 // use.
 func (x *MessageBody) GotChunk(ChunkVar *glib.Bytes) {
-
 	xMessageBodyGotChunk(x.GoPointer(), ChunkVar)
-
 }
 
 var xMessageBodyRef func(uintptr) *MessageBody
 
 // Atomically increments the reference count of @body by one.
 func (x *MessageBody) Ref() *MessageBody {
-
 	cret := xMessageBodyRef(x.GoPointer())
 	return cret
 }
@@ -186,18 +171,14 @@ var xMessageBodySetAccumulate func(uintptr, bool)
 // be kept around in case the request needs to be sent a second time
 // due to redirection or authentication.
 func (x *MessageBody) SetAccumulate(AccumulateVar bool) {
-
 	xMessageBodySetAccumulate(x.GoPointer(), AccumulateVar)
-
 }
 
 var xMessageBodyTruncate func(uintptr)
 
 // Deletes all of the data in @body.
 func (x *MessageBody) Truncate() {
-
 	xMessageBodyTruncate(x.GoPointer())
-
 }
 
 var xMessageBodyUnref func(uintptr)
@@ -207,9 +188,7 @@ var xMessageBodyUnref func(uintptr)
 // When the reference count reaches zero, the resources allocated by
 // @body are freed
 func (x *MessageBody) Unref() {
-
 	xMessageBodyUnref(x.GoPointer())
-
 }
 
 var xMessageBodyWroteChunk func(uintptr, *glib.Bytes)
@@ -224,9 +203,7 @@ var xMessageBodyWroteChunk func(uintptr, *glib.Bytes)
 // there are further restrictions on its proper use which are not
 // documented here.
 func (x *MessageBody) WroteChunk(ChunkVar *glib.Bytes) {
-
 	xMessageBodyWroteChunk(x.GoPointer(), ChunkVar)
-
 }
 
 // The lifetime of the memory being passed.
@@ -284,5 +261,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageBodyTruncate, libs, "soup_message_body_truncate")
 	core.PuregoSafeRegister(&xMessageBodyUnref, libs, "soup_message_body_unref")
 	core.PuregoSafeRegister(&xMessageBodyWroteChunk, libs, "soup_message_body_wrote_chunk")
-
 }

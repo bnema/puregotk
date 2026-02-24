@@ -132,14 +132,12 @@ func (x *DBusObjectProxy) GetInterface(InterfaceNameVar string) *DBusInterfaceBa
 
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectProxy) GetInterfaces() *glib.List {
-
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
 	return cret
 }
 
 // Gets the object path for @object.
 func (x *DBusObjectProxy) GetObjectPath() string {
-
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
 	return cret
 }
@@ -161,5 +159,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewDBusObjectProxy, libs, "g_dbus_object_proxy_new")
 
 	core.PuregoSafeRegister(&xDBusObjectProxyGetConnection, libs, "g_dbus_object_proxy_get_connection")
-
 }

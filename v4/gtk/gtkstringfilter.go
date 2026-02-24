@@ -112,7 +112,6 @@ var xStringFilterGetIgnoreCase func(uintptr) bool
 
 // Returns whether the filter ignores case differences.
 func (x *StringFilter) GetIgnoreCase() bool {
-
 	cret := xStringFilterGetIgnoreCase(x.GoPointer())
 	return cret
 }
@@ -121,7 +120,6 @@ var xStringFilterGetMatchMode func(uintptr) StringFilterMatchMode
 
 // Returns the match mode that the filter is using.
 func (x *StringFilter) GetMatchMode() StringFilterMatchMode {
-
 	cret := xStringFilterGetMatchMode(x.GoPointer())
 	return cret
 }
@@ -130,7 +128,6 @@ var xStringFilterGetSearch func(uintptr) string
 
 // Gets the search term.
 func (x *StringFilter) GetSearch() string {
-
 	cret := xStringFilterGetSearch(x.GoPointer())
 	return cret
 }
@@ -142,36 +139,28 @@ var xStringFilterSetExpression func(uintptr, uintptr)
 //
 // The expression must have a value type of `G_TYPE_STRING`.
 func (x *StringFilter) SetExpression(ExpressionVar *Expression) {
-
 	xStringFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
-
 }
 
 var xStringFilterSetIgnoreCase func(uintptr, bool)
 
 // Sets whether the filter ignores case differences.
 func (x *StringFilter) SetIgnoreCase(IgnoreCaseVar bool) {
-
 	xStringFilterSetIgnoreCase(x.GoPointer(), IgnoreCaseVar)
-
 }
 
 var xStringFilterSetMatchMode func(uintptr, StringFilterMatchMode)
 
 // Sets the match mode for the filter.
 func (x *StringFilter) SetMatchMode(ModeVar StringFilterMatchMode) {
-
 	xStringFilterSetMatchMode(x.GoPointer(), ModeVar)
-
 }
 
 var xStringFilterSetSearch func(uintptr, string)
 
 // Sets the string to search for.
 func (x *StringFilter) SetSearch(SearchVar string) {
-
 	xStringFilterSetSearch(x.GoPointer(), SearchVar)
-
 }
 
 func (c *StringFilter) GoPointer() uintptr {
@@ -245,5 +234,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringFilterSetIgnoreCase, libs, "gtk_string_filter_set_ignore_case")
 	core.PuregoSafeRegister(&xStringFilterSetMatchMode, libs, "gtk_string_filter_set_match_mode")
 	core.PuregoSafeRegister(&xStringFilterSetSearch, libs, "gtk_string_filter_set_search")
-
 }

@@ -44,9 +44,7 @@ var xDatalistClear func(**Data)
 // The data elements' destroy functions are called
 // if they have been set.
 func DatalistClear(DatalistVar **Data) {
-
 	xDatalistClear(DatalistVar)
-
 }
 
 var xDatalistForeach func(**Data, uintptr, uintptr)
@@ -62,9 +60,7 @@ var xDatalistForeach func(**Data, uintptr, uintptr)
 // reflect changes made during the g_datalist_foreach() call, other
 // than skipping over elements that are removed.
 func DatalistForeach(DatalistVar **Data, FuncVar *DataForeachFunc, UserDataVar uintptr) {
-
 	xDatalistForeach(DatalistVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xDatalistGetData func(**Data, string) uintptr
@@ -72,7 +68,6 @@ var xDatalistGetData func(**Data, string) uintptr
 // Gets a data element, using its string identifier. This is slower than
 // g_datalist_id_get_data() because it compares strings.
 func DatalistGetData(DatalistVar **Data, KeyVar string) uintptr {
-
 	cret := xDatalistGetData(DatalistVar, KeyVar)
 	return cret
 }
@@ -82,7 +77,6 @@ var xDatalistGetFlags func(**Data) uint32
 // Gets flags values packed in together with the datalist.
 // See g_datalist_set_flags().
 func DatalistGetFlags(DatalistVar **Data) uint32 {
-
 	cret := xDatalistGetFlags(DatalistVar)
 	return cret
 }
@@ -103,7 +97,6 @@ var xDatalistIdDupData func(**Data, Quark, uintptr, uintptr) uintptr
 // This function can be useful to avoid races when multiple
 // threads are using the same datalist and the same key.
 func DatalistIdDupData(DatalistVar **Data, KeyIdVar Quark, DupFuncVar *DuplicateFunc, UserDataVar uintptr) uintptr {
-
 	cret := xDatalistIdDupData(DatalistVar, KeyIdVar, NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
@@ -112,7 +105,6 @@ var xDatalistIdGetData func(**Data, Quark) uintptr
 
 // Retrieves the data element corresponding to @key_id.
 func DatalistIdGetData(DatalistVar **Data, KeyIdVar Quark) uintptr {
-
 	cret := xDatalistIdGetData(DatalistVar, KeyIdVar)
 	return cret
 }
@@ -127,9 +119,7 @@ var xDatalistIdRemoveMultiple func(**Data, []Quark, uint)
 // Before 2.80, @n_keys had to be not larger than 16.
 // Since 2.84, performance is improved for larger number of keys.
 func DatalistIdRemoveMultiple(DatalistVar **Data, KeysVar []Quark, NKeysVar uint) {
-
 	xDatalistIdRemoveMultiple(DatalistVar, KeysVar, NKeysVar)
-
 }
 
 var xDatalistIdRemoveNoNotify func(**Data, Quark) uintptr
@@ -137,7 +127,6 @@ var xDatalistIdRemoveNoNotify func(**Data, Quark) uintptr
 // Removes an element, without calling its destroy notification
 // function.
 func DatalistIdRemoveNoNotify(DatalistVar **Data, KeyIdVar Quark) uintptr {
-
 	cret := xDatalistIdRemoveNoNotify(DatalistVar, KeyIdVar)
 	return cret
 }
@@ -158,7 +147,6 @@ var xDatalistIdReplaceData func(**Data, Quark, uintptr, uintptr, uintptr, *Destr
 // or may not include using @old_destroy as sometimes replacement
 // should not destroy the object in the normal way.
 func DatalistIdReplaceData(DatalistVar **Data, KeyIdVar Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *DestroyNotify, OldDestroyVar *DestroyNotify) bool {
-
 	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
@@ -170,9 +158,7 @@ var xDatalistIdSetDataFull func(**Data, Quark, uintptr, uintptr)
 // Any previous data with the same key is removed, and its destroy
 // function is called.
 func DatalistIdSetDataFull(DatalistVar **Data, KeyIdVar Quark, DataVar uintptr, DestroyFuncVar *DestroyNotify) {
-
 	xDatalistIdSetDataFull(DatalistVar, KeyIdVar, DataVar, NewCallbackNullable(DestroyFuncVar))
-
 }
 
 var xDatalistInit func(**Data)
@@ -180,9 +166,7 @@ var xDatalistInit func(**Data)
 // Resets the datalist to %NULL. It does not free any memory or call
 // any destroy functions.
 func DatalistInit(DatalistVar **Data) {
-
 	xDatalistInit(DatalistVar)
-
 }
 
 var xDatalistSetFlags func(**Data, uint32)
@@ -194,18 +178,14 @@ var xDatalistSetFlags func(**Data, uint32)
 // is very tight. (It is used in the base #GObject type, for
 // example.)
 func DatalistSetFlags(DatalistVar **Data, FlagsVar uint32) {
-
 	xDatalistSetFlags(DatalistVar, FlagsVar)
-
 }
 
 var xDatalistUnsetFlags func(**Data, uint32)
 
 // Turns off flag values for a data list. See g_datalist_unset_flags()
 func DatalistUnsetFlags(DatalistVar **Data, FlagsVar uint32) {
-
 	xDatalistUnsetFlags(DatalistVar, FlagsVar)
-
 }
 
 var xDatasetDestroy func(uintptr)
@@ -213,9 +193,7 @@ var xDatasetDestroy func(uintptr)
 // Destroys the dataset, freeing all memory allocated, and calling any
 // destroy functions set for data elements.
 func DatasetDestroy(DatasetLocationVar uintptr) {
-
 	xDatasetDestroy(DatasetLocationVar)
-
 }
 
 var xDatasetForeach func(uintptr, uintptr, uintptr)
@@ -229,16 +207,13 @@ var xDatasetForeach func(uintptr, uintptr, uintptr)
 // reflect changes made during the g_dataset_foreach() call, other
 // than skipping over elements that are removed.
 func DatasetForeach(DatasetLocationVar uintptr, FuncVar *DataForeachFunc, UserDataVar uintptr) {
-
 	xDatasetForeach(DatasetLocationVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xDatasetIdGetData func(uintptr, Quark) uintptr
 
 // Gets the data element corresponding to a #GQuark.
 func DatasetIdGetData(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
-
 	cret := xDatasetIdGetData(DatasetLocationVar, KeyIdVar)
 	return cret
 }
@@ -248,7 +223,6 @@ var xDatasetIdRemoveNoNotify func(uintptr, Quark) uintptr
 // Removes an element, without calling its destroy notification
 // function.
 func DatasetIdRemoveNoNotify(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
-
 	cret := xDatasetIdRemoveNoNotify(DatasetLocationVar, KeyIdVar)
 	return cret
 }
@@ -260,9 +234,7 @@ var xDatasetIdSetDataFull func(uintptr, Quark, uintptr, uintptr)
 // previous data with the same key is removed, and its destroy function
 // is called.
 func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar uintptr, DestroyFuncVar *DestroyNotify) {
-
 	xDatasetIdSetDataFull(DatasetLocationVar, KeyIdVar, DataVar, NewCallback(DestroyFuncVar))
-
 }
 
 func init() {
@@ -295,5 +267,4 @@ func init() {
 	core.PuregoSafeRegister(&xDatasetIdGetData, libs, "g_dataset_id_get_data")
 	core.PuregoSafeRegister(&xDatasetIdRemoveNoNotify, libs, "g_dataset_id_remove_no_notify")
 	core.PuregoSafeRegister(&xDatasetIdSetDataFull, libs, "g_dataset_id_set_data_full")
-
 }

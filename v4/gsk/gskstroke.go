@@ -10,7 +10,6 @@ var xStrokeEqual func(uintptr, uintptr) bool
 
 // Checks if two strokes are identical.
 func StrokeEqual(Stroke1Var uintptr, Stroke2Var uintptr) bool {
-
 	cret := xStrokeEqual(Stroke1Var, Stroke2Var)
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xStrokeEqual, libs, "gsk_stroke_equal")
-
 }

@@ -75,5 +75,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusMenuModelGLibType, libs, "g_dbus_menu_model_get_type")
 
 	core.PuregoSafeRegister(&xDBusMenuModelGet, libs, "g_dbus_menu_model_get")
-
 }

@@ -79,16 +79,13 @@ var xCarouselAppend func(uintptr, uintptr)
 
 // Appends @child to @self.
 func (x *Carousel) Append(ChildVar *gtk.Widget) {
-
 	xCarouselAppend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xCarouselGetAllowLongSwipes func(uintptr) bool
 
 // Gets whether to allow swiping for more than one page at a time.
 func (x *Carousel) GetAllowLongSwipes() bool {
-
 	cret := xCarouselGetAllowLongSwipes(x.GoPointer())
 	return cret
 }
@@ -97,7 +94,6 @@ var xCarouselGetAllowMouseDrag func(uintptr) bool
 
 // Sets whether @self can be dragged with mouse pointer.
 func (x *Carousel) GetAllowMouseDrag() bool {
-
 	cret := xCarouselGetAllowMouseDrag(x.GoPointer())
 	return cret
 }
@@ -106,7 +102,6 @@ var xCarouselGetAllowScrollWheel func(uintptr) bool
 
 // Gets whether @self will respond to scroll wheel events.
 func (x *Carousel) GetAllowScrollWheel() bool {
-
 	cret := xCarouselGetAllowScrollWheel(x.GoPointer())
 	return cret
 }
@@ -115,7 +110,6 @@ var xCarouselGetInteractive func(uintptr) bool
 
 // Gets whether @self can be navigated.
 func (x *Carousel) GetInteractive() bool {
-
 	cret := xCarouselGetInteractive(x.GoPointer())
 	return cret
 }
@@ -124,7 +118,6 @@ var xCarouselGetNPages func(uintptr) uint32
 
 // Gets the number of pages in @self.
 func (x *Carousel) GetNPages() uint32 {
-
 	cret := xCarouselGetNPages(x.GoPointer())
 	return cret
 }
@@ -152,7 +145,6 @@ var xCarouselGetPosition func(uintptr) float64
 //
 // 1 matches 1 page. Use [method@Carousel.scroll_to] for changing it.
 func (x *Carousel) GetPosition() float64 {
-
 	cret := xCarouselGetPosition(x.GoPointer())
 	return cret
 }
@@ -161,7 +153,6 @@ var xCarouselGetRevealDuration func(uintptr) uint32
 
 // Gets the page reveal duration, in milliseconds.
 func (x *Carousel) GetRevealDuration() uint32 {
-
 	cret := xCarouselGetRevealDuration(x.GoPointer())
 	return cret
 }
@@ -170,7 +161,6 @@ var xCarouselGetScrollParams func(uintptr) *SpringParams
 
 // Gets the scroll animation spring parameters for @self.
 func (x *Carousel) GetScrollParams() *SpringParams {
-
 	cret := xCarouselGetScrollParams(x.GoPointer())
 	return cret
 }
@@ -179,7 +169,6 @@ var xCarouselGetSpacing func(uintptr) uint32
 
 // Gets spacing between pages in pixels.
 func (x *Carousel) GetSpacing() uint32 {
-
 	cret := xCarouselGetSpacing(x.GoPointer())
 	return cret
 }
@@ -191,27 +180,21 @@ var xCarouselInsert func(uintptr, uintptr, int32)
 // If position is -1, or larger than the number of pages,
 // @child will be appended to the end.
 func (x *Carousel) Insert(ChildVar *gtk.Widget, PositionVar int32) {
-
 	xCarouselInsert(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
-
 }
 
 var xCarouselPrepend func(uintptr, uintptr)
 
 // Prepends @child to @self.
 func (x *Carousel) Prepend(ChildVar *gtk.Widget) {
-
 	xCarouselPrepend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xCarouselRemove func(uintptr, uintptr)
 
 // Removes @child from @self.
 func (x *Carousel) Remove(ChildVar *gtk.Widget) {
-
 	xCarouselRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xCarouselReorder func(uintptr, uintptr, int32)
@@ -221,9 +204,7 @@ var xCarouselReorder func(uintptr, uintptr, int32)
 // If position is -1, or larger than the number of pages, @child will be moved
 // at the end.
 func (x *Carousel) Reorder(ChildVar *gtk.Widget, PositionVar int32) {
-
 	xCarouselReorder(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
-
 }
 
 var xCarouselScrollTo func(uintptr, uintptr, bool)
@@ -232,9 +213,7 @@ var xCarouselScrollTo func(uintptr, uintptr, bool)
 //
 // If @animate is `TRUE`, the transition will be animated.
 func (x *Carousel) ScrollTo(WidgetVar *gtk.Widget, AnimateVar bool) {
-
 	xCarouselScrollTo(x.GoPointer(), WidgetVar.GoPointer(), AnimateVar)
-
 }
 
 var xCarouselSetAllowLongSwipes func(uintptr, bool)
@@ -244,9 +223,7 @@ var xCarouselSetAllowLongSwipes func(uintptr, bool)
 // If @allow_long_swipes is `FALSE`, each swipe can only move to the adjacent
 // pages.
 func (x *Carousel) SetAllowLongSwipes(AllowLongSwipesVar bool) {
-
 	xCarouselSetAllowLongSwipes(x.GoPointer(), AllowLongSwipesVar)
-
 }
 
 var xCarouselSetAllowMouseDrag func(uintptr, bool)
@@ -255,9 +232,7 @@ var xCarouselSetAllowMouseDrag func(uintptr, bool)
 //
 // If @allow_mouse_drag is `FALSE`, dragging is only available on touch.
 func (x *Carousel) SetAllowMouseDrag(AllowMouseDragVar bool) {
-
 	xCarouselSetAllowMouseDrag(x.GoPointer(), AllowMouseDragVar)
-
 }
 
 var xCarouselSetAllowScrollWheel func(uintptr, bool)
@@ -266,9 +241,7 @@ var xCarouselSetAllowScrollWheel func(uintptr, bool)
 //
 // If @allow_scroll_wheel is `FALSE`, wheel events will be ignored.
 func (x *Carousel) SetAllowScrollWheel(AllowScrollWheelVar bool) {
-
 	xCarouselSetAllowScrollWheel(x.GoPointer(), AllowScrollWheelVar)
-
 }
 
 var xCarouselSetInteractive func(uintptr, bool)
@@ -278,9 +251,7 @@ var xCarouselSetInteractive func(uintptr, bool)
 // This can be used to temporarily disable the carousel to only allow navigating
 // it in a certain state.
 func (x *Carousel) SetInteractive(InteractiveVar bool) {
-
 	xCarouselSetInteractive(x.GoPointer(), InteractiveVar)
-
 }
 
 var xCarouselSetRevealDuration func(uintptr, uint32)
@@ -289,9 +260,7 @@ var xCarouselSetRevealDuration func(uintptr, uint32)
 //
 // Reveal duration is used when animating adding or removing pages.
 func (x *Carousel) SetRevealDuration(RevealDurationVar uint32) {
-
 	xCarouselSetRevealDuration(x.GoPointer(), RevealDurationVar)
-
 }
 
 var xCarouselSetScrollParams func(uintptr, *SpringParams)
@@ -304,18 +273,14 @@ var xCarouselSetScrollParams func(uintptr, *SpringParams)
 // adw_spring_params_new (1, 0.5, 500)
 // ```
 func (x *Carousel) SetScrollParams(ParamsVar *SpringParams) {
-
 	xCarouselSetScrollParams(x.GoPointer(), ParamsVar)
-
 }
 
 var xCarouselSetSpacing func(uintptr, uint32)
 
 // Sets spacing between pages in pixels.
 func (x *Carousel) SetSpacing(SpacingVar uint32) {
-
 	xCarouselSetSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 func (c *Carousel) GoPointer() uintptr {
@@ -520,7 +485,6 @@ func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, IndexVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -529,7 +493,6 @@ func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint32)) uint32 {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *Carousel) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -538,14 +501,12 @@ func (x *Carousel) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *Carousel) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *Carousel) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -555,7 +516,6 @@ func (x *Carousel) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *Carousel) GetSnapPoints(NSnapPointsVar *int32) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -570,9 +530,7 @@ func (x *Carousel) GetSnapPoints(NSnapPointsVar *int32) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *Carousel) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -585,9 +543,7 @@ func (x *Carousel) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDr
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Carousel) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -608,7 +564,6 @@ func (x *Carousel) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Carousel) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -633,7 +588,6 @@ func (x *Carousel) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Carousel) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -672,30 +626,23 @@ func (x *Carousel) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Carousel) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Carousel) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Carousel) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Carousel) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -708,9 +655,7 @@ func (x *Carousel) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Carousel) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -718,9 +663,7 @@ func (x *Carousel) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Carousel) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -729,9 +672,7 @@ func (x *Carousel) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Carousel) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -753,9 +694,7 @@ func (x *Carousel) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Carousel) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -765,9 +704,7 @@ func (x *Carousel) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *Carousel) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -789,9 +726,7 @@ func (x *Carousel) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk
 //
 // ```
 func (x *Carousel) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -801,9 +736,7 @@ func (x *Carousel) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *Carousel) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -826,9 +759,7 @@ func (x *Carousel) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.A
 //
 // ```
 func (x *Carousel) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -838,9 +769,7 @@ func (x *Carousel) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *Carousel) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -848,23 +777,19 @@ func (x *Carousel) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessible
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Carousel) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Carousel) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Carousel) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -906,5 +831,4 @@ func init() {
 	core.PuregoSafeRegister(&xCarouselSetRevealDuration, libs, "adw_carousel_set_reveal_duration")
 	core.PuregoSafeRegister(&xCarouselSetScrollParams, libs, "adw_carousel_set_scroll_params")
 	core.PuregoSafeRegister(&xCarouselSetSpacing, libs, "adw_carousel_set_spacing")
-
 }

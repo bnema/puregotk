@@ -63,7 +63,6 @@ var xEventControllerKeyForward func(uintptr, uintptr) bool
 // [signal@Gtk.EventControllerKey::key-released]
 // or [signal@Gtk.EventControllerKey::modifiers] signals.
 func (x *EventControllerKey) Forward(WidgetVar *Widget) bool {
-
 	cret := xEventControllerKeyForward(x.GoPointer(), WidgetVar.GoPointer())
 	return cret
 }
@@ -74,7 +73,6 @@ var xEventControllerKeyGetGroup func(uintptr) uint32
 //
 // See [method@Gdk.KeyEvent.get_layout].
 func (x *EventControllerKey) GetGroup() uint32 {
-
 	cret := xEventControllerKeyGetGroup(x.GoPointer())
 	return cret
 }
@@ -100,9 +98,7 @@ var xEventControllerKeySetImContext func(uintptr, uintptr)
 
 // Sets the input method context of the key @controller.
 func (x *EventControllerKey) SetImContext(ImContextVar *IMContext) {
-
 	xEventControllerKeySetImContext(x.GoPointer(), ImContextVar.GoPointer())
-
 }
 
 func (c *EventControllerKey) GoPointer() uintptr {
@@ -133,7 +129,6 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -153,7 +148,6 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 		cbFn := *cb
 
 		return cbFn(fa, KeyvalVarp, KeycodeVarp, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -173,7 +167,6 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 		cbFn := *cb
 
 		cbFn(fa, KeyvalVarp, KeycodeVarp, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -193,7 +186,6 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 		cbFn := *cb
 
 		return cbFn(fa, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -220,5 +212,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerKeyGetGroup, libs, "gtk_event_controller_key_get_group")
 	core.PuregoSafeRegister(&xEventControllerKeyGetImContext, libs, "gtk_event_controller_key_get_im_context")
 	core.PuregoSafeRegister(&xEventControllerKeySetImContext, libs, "gtk_event_controller_key_set_im_context")
-
 }

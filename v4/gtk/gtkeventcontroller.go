@@ -94,7 +94,6 @@ var xEventControllerGetCurrentEventState func(uintptr) gdk.ModifierType
 //
 // At other times, 0 is returned.
 func (x *EventController) GetCurrentEventState() gdk.ModifierType {
-
 	cret := xEventControllerGetCurrentEventState(x.GoPointer())
 	return cret
 }
@@ -106,7 +105,6 @@ var xEventControllerGetCurrentEventTime func(uintptr) uint32
 //
 // At other times, 0 is returned.
 func (x *EventController) GetCurrentEventTime() uint32 {
-
 	cret := xEventControllerGetCurrentEventTime(x.GoPointer())
 	return cret
 }
@@ -115,7 +113,6 @@ var xEventControllerGetName func(uintptr) string
 
 // Gets the name of @controller.
 func (x *EventController) GetName() string {
-
 	cret := xEventControllerGetName(x.GoPointer())
 	return cret
 }
@@ -124,7 +121,6 @@ var xEventControllerGetPropagationLimit func(uintptr) PropagationLimit
 
 // Gets the propagation limit of the event controller.
 func (x *EventController) GetPropagationLimit() PropagationLimit {
-
 	cret := xEventControllerGetPropagationLimit(x.GoPointer())
 	return cret
 }
@@ -133,7 +129,6 @@ var xEventControllerGetPropagationPhase func(uintptr) PropagationPhase
 
 // Gets the propagation phase at which @controller handles events.
 func (x *EventController) GetPropagationPhase() PropagationPhase {
-
 	cret := xEventControllerGetPropagationPhase(x.GoPointer())
 	return cret
 }
@@ -159,18 +154,14 @@ var xEventControllerReset func(uintptr)
 
 // Resets the @controller to a clean state.
 func (x *EventController) Reset() {
-
 	xEventControllerReset(x.GoPointer())
-
 }
 
 var xEventControllerSetName func(uintptr, string)
 
 // Sets a name on the controller that can be used for debugging.
 func (x *EventController) SetName(NameVar string) {
-
 	xEventControllerSetName(x.GoPointer(), NameVar)
-
 }
 
 var xEventControllerSetPropagationLimit func(uintptr, PropagationLimit)
@@ -181,9 +172,7 @@ var xEventControllerSetPropagationLimit func(uintptr, PropagationLimit)
 // won't handle events that are targeted at widgets on a different
 // surface, such as popovers.
 func (x *EventController) SetPropagationLimit(LimitVar PropagationLimit) {
-
 	xEventControllerSetPropagationLimit(x.GoPointer(), LimitVar)
-
 }
 
 var xEventControllerSetPropagationPhase func(uintptr, PropagationPhase)
@@ -193,18 +182,14 @@ var xEventControllerSetPropagationPhase func(uintptr, PropagationPhase)
 // If @phase is %GTK_PHASE_NONE, no automatic event handling will be
 // performed, but other additional gesture maintenance will.
 func (x *EventController) SetPropagationPhase(PhaseVar PropagationPhase) {
-
 	xEventControllerSetPropagationPhase(x.GoPointer(), PhaseVar)
-
 }
 
 var xEventControllerSetStaticName func(uintptr, string)
 
 // Sets a name on the controller that can be used for debugging.
 func (x *EventController) SetStaticName(NameVar string) {
-
 	xEventControllerSetStaticName(x.GoPointer(), NameVar)
-
 }
 
 func (c *EventController) GoPointer() uintptr {
@@ -262,5 +247,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerSetPropagationLimit, libs, "gtk_event_controller_set_propagation_limit")
 	core.PuregoSafeRegister(&xEventControllerSetPropagationPhase, libs, "gtk_event_controller_set_propagation_phase")
 	core.PuregoSafeRegister(&xEventControllerSetStaticName, libs, "gtk_event_controller_set_static_name")
-
 }

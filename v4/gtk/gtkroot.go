@@ -106,14 +106,14 @@ func (x *RootBase) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *RootBase) SetFocus(FocusVar *Widget) {
-
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
-var XGtkRootGetDisplay func(uintptr) uintptr
-var XGtkRootGetFocus func(uintptr) uintptr
-var XGtkRootSetFocus func(uintptr, uintptr)
+var (
+	XGtkRootGetDisplay func(uintptr) uintptr
+	XGtkRootGetFocus   func(uintptr) uintptr
+	XGtkRootSetFocus   func(uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -132,5 +132,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkRootGetDisplay, libs, "gtk_root_get_display")
 	core.PuregoSafeRegister(&XGtkRootGetFocus, libs, "gtk_root_get_focus")
 	core.PuregoSafeRegister(&XGtkRootSetFocus, libs, "gtk_root_set_focus")
-
 }

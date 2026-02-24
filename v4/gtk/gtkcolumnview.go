@@ -125,9 +125,7 @@ var xColumnViewAppendColumn func(uintptr, uintptr)
 
 // Appends the @column to the end of the columns in @self.
 func (x *ColumnView) AppendColumn(ColumnVar *ColumnViewColumn) {
-
 	xColumnViewAppendColumn(x.GoPointer(), ColumnVar.GoPointer())
-
 }
 
 var xColumnViewGetColumns func(uintptr) uintptr
@@ -155,7 +153,6 @@ var xColumnViewGetEnableRubberband func(uintptr) bool
 
 // Returns whether rows can be selected by dragging with the mouse.
 func (x *ColumnView) GetEnableRubberband() bool {
-
 	cret := xColumnViewGetEnableRubberband(x.GoPointer())
 	return cret
 }
@@ -198,7 +195,6 @@ var xColumnViewGetReorderable func(uintptr) bool
 
 // Returns whether columns are reorderable.
 func (x *ColumnView) GetReorderable() bool {
-
 	cret := xColumnViewGetReorderable(x.GoPointer())
 	return cret
 }
@@ -224,7 +220,6 @@ var xColumnViewGetShowColumnSeparators func(uintptr) bool
 
 // Returns whether the list should show separators between columns.
 func (x *ColumnView) GetShowColumnSeparators() bool {
-
 	cret := xColumnViewGetShowColumnSeparators(x.GoPointer())
 	return cret
 }
@@ -233,7 +228,6 @@ var xColumnViewGetShowRowSeparators func(uintptr) bool
 
 // Returns whether the list should show separators between rows.
 func (x *ColumnView) GetShowRowSeparators() bool {
-
 	cret := xColumnViewGetShowRowSeparators(x.GoPointer())
 	return cret
 }
@@ -243,7 +237,6 @@ var xColumnViewGetSingleClickActivate func(uintptr) bool
 // Returns whether rows will be activated on single click and
 // selected on hover.
 func (x *ColumnView) GetSingleClickActivate() bool {
-
 	cret := xColumnViewGetSingleClickActivate(x.GoPointer())
 	return cret
 }
@@ -287,7 +280,6 @@ var xColumnViewGetTabBehavior func(uintptr) ListTabBehavior
 
 // Gets the behavior set for the &lt;kbd&gt;Tab&lt;/kbd&gt; key.
 func (x *ColumnView) GetTabBehavior() ListTabBehavior {
-
 	cret := xColumnViewGetTabBehavior(x.GoPointer())
 	return cret
 }
@@ -298,18 +290,14 @@ var xColumnViewInsertColumn func(uintptr, uint32, uintptr)
 //
 // If @column is already a column of @self, it will be repositioned.
 func (x *ColumnView) InsertColumn(PositionVar uint32, ColumnVar *ColumnViewColumn) {
-
 	xColumnViewInsertColumn(x.GoPointer(), PositionVar, ColumnVar.GoPointer())
-
 }
 
 var xColumnViewRemoveColumn func(uintptr, uintptr)
 
 // Removes the @column from the list of columns of @self.
 func (x *ColumnView) RemoveColumn(ColumnVar *ColumnViewColumn) {
-
 	xColumnViewRemoveColumn(x.GoPointer(), ColumnVar.GoPointer())
-
 }
 
 var xColumnViewScrollTo func(uintptr, uint32, uintptr, ListScrollFlags, *ScrollInfo)
@@ -320,18 +308,14 @@ var xColumnViewScrollTo func(uintptr, uint32, uintptr, ListScrollFlags, *ScrollI
 // This function works no matter if the columnview is shown or focused.
 // If it isn't, then the changes will take effect once that happens.
 func (x *ColumnView) ScrollTo(PosVar uint32, ColumnVar *ColumnViewColumn, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
-
 	xColumnViewScrollTo(x.GoPointer(), PosVar, ColumnVar.GoPointer(), FlagsVar, ScrollVar)
-
 }
 
 var xColumnViewSetEnableRubberband func(uintptr, bool)
 
 // Sets whether selections can be changed by dragging with the mouse.
 func (x *ColumnView) SetEnableRubberband(EnableRubberbandVar bool) {
-
 	xColumnViewSetEnableRubberband(x.GoPointer(), EnableRubberbandVar)
-
 }
 
 var xColumnViewSetHeaderFactory func(uintptr, uintptr)
@@ -342,9 +326,7 @@ var xColumnViewSetHeaderFactory func(uintptr, uintptr)
 // If this factory is set to `NULL`, the list will not show
 // section headers.
 func (x *ColumnView) SetHeaderFactory(FactoryVar *ListItemFactory) {
-
 	xColumnViewSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xColumnViewSetModel func(uintptr, uintptr)
@@ -353,18 +335,14 @@ var xColumnViewSetModel func(uintptr, uintptr)
 //
 // This must be a [iface@Gtk.SelectionModel].
 func (x *ColumnView) SetModel(ModelVar SelectionModel) {
-
 	xColumnViewSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xColumnViewSetReorderable func(uintptr, bool)
 
 // Sets whether columns should be reorderable by dragging.
 func (x *ColumnView) SetReorderable(ReorderableVar bool) {
-
 	xColumnViewSetReorderable(x.GoPointer(), ReorderableVar)
-
 }
 
 var xColumnViewSetRowFactory func(uintptr, uintptr)
@@ -380,27 +358,21 @@ var xColumnViewSetRowFactory func(uintptr, uintptr)
 // cells. For that see [method@GtkColumnViewColumn.set_factory] and
 // [class@GtkColumnViewCell].
 func (x *ColumnView) SetRowFactory(FactoryVar *ListItemFactory) {
-
 	xColumnViewSetRowFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xColumnViewSetShowColumnSeparators func(uintptr, bool)
 
 // Sets whether the list should show separators between columns.
 func (x *ColumnView) SetShowColumnSeparators(ShowColumnSeparatorsVar bool) {
-
 	xColumnViewSetShowColumnSeparators(x.GoPointer(), ShowColumnSeparatorsVar)
-
 }
 
 var xColumnViewSetShowRowSeparators func(uintptr, bool)
 
 // Sets whether the list should show separators between rows.
 func (x *ColumnView) SetShowRowSeparators(ShowRowSeparatorsVar bool) {
-
 	xColumnViewSetShowRowSeparators(x.GoPointer(), ShowRowSeparatorsVar)
-
 }
 
 var xColumnViewSetSingleClickActivate func(uintptr, bool)
@@ -408,9 +380,7 @@ var xColumnViewSetSingleClickActivate func(uintptr, bool)
 // Sets whether rows should be activated on single click and
 // selected on hover.
 func (x *ColumnView) SetSingleClickActivate(SingleClickActivateVar bool) {
-
 	xColumnViewSetSingleClickActivate(x.GoPointer(), SingleClickActivateVar)
-
 }
 
 var xColumnViewSetTabBehavior func(uintptr, ListTabBehavior)
@@ -421,9 +391,7 @@ var xColumnViewSetTabBehavior func(uintptr, ListTabBehavior)
 // &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys move the
 // focus in the columnview.
 func (x *ColumnView) SetTabBehavior(TabBehaviorVar ListTabBehavior) {
-
 	xColumnViewSetTabBehavior(x.GoPointer(), TabBehaviorVar)
-
 }
 
 var xColumnViewSortByColumn func(uintptr, uintptr, SortType)
@@ -441,9 +409,7 @@ var xColumnViewSortByColumn func(uintptr, uintptr, SortType)
 //
 // If @column is unset, the view will be unsorted.
 func (x *ColumnView) SortByColumn(ColumnVar *ColumnViewColumn, DirectionVar SortType) {
-
 	xColumnViewSortByColumn(x.GoPointer(), ColumnVar.GoPointer(), DirectionVar)
-
 }
 
 func (c *ColumnView) GoPointer() uintptr {
@@ -560,7 +526,6 @@ func (x *ColumnView) ConnectActivate(cb *func(ColumnView, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -577,9 +542,7 @@ func (x *ColumnView) ConnectActivate(cb *func(ColumnView, uint32)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ColumnView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -600,7 +563,6 @@ func (x *ColumnView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ColumnView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -625,7 +587,6 @@ func (x *ColumnView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ColumnView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -664,30 +625,23 @@ func (x *ColumnView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ColumnView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ColumnView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ColumnView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ColumnView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -700,9 +654,7 @@ func (x *ColumnView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ColumnView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -710,9 +662,7 @@ func (x *ColumnView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ColumnView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -721,9 +671,7 @@ func (x *ColumnView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ColumnView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -745,9 +693,7 @@ func (x *ColumnView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ColumnView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -757,9 +703,7 @@ func (x *ColumnView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *ColumnView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -781,9 +725,7 @@ func (x *ColumnView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []A
 //
 // ```
 func (x *ColumnView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -793,9 +735,7 @@ func (x *ColumnView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *ColumnView) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -818,9 +758,7 @@ func (x *ColumnView) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acc
 //
 // ```
 func (x *ColumnView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -830,9 +768,7 @@ func (x *ColumnView) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *ColumnView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -840,7 +776,6 @@ func (x *ColumnView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleSt
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ColumnView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -852,7 +787,6 @@ func (x *ColumnView) GetBuildableId() string {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *ColumnView) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -874,7 +808,6 @@ func (x *ColumnView) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *ColumnView) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -896,16 +829,13 @@ func (x *ColumnView) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *ColumnView) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ColumnView) SetHadjustment(HadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -913,16 +843,12 @@ func (x *ColumnView) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *ColumnView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ColumnView) SetVadjustment(VadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -930,9 +856,7 @@ func (x *ColumnView) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *ColumnView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
@@ -976,5 +900,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewSetSingleClickActivate, libs, "gtk_column_view_set_single_click_activate")
 	core.PuregoSafeRegister(&xColumnViewSetTabBehavior, libs, "gtk_column_view_set_tab_behavior")
 	core.PuregoSafeRegister(&xColumnViewSortByColumn, libs, "gtk_column_view_sort_by_column")
-
 }

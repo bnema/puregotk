@@ -39,16 +39,13 @@ var xPermissionStateQueryFinish func(uintptr, PermissionState)
 // Notify the web-engine of the selected permission state for the given query. This function should
 // only be called as a response to the `WebKitWebView::query-permission-state` signal.
 func (x *PermissionStateQuery) Finish(StateVar PermissionState) {
-
 	xPermissionStateQueryFinish(x.GoPointer(), StateVar)
-
 }
 
 var xPermissionStateQueryGetName func(uintptr) string
 
 // Get the permission name for which access is being queried.
 func (x *PermissionStateQuery) GetName() string {
-
 	cret := xPermissionStateQueryGetName(x.GoPointer())
 	return cret
 }
@@ -57,7 +54,6 @@ var xPermissionStateQueryGetSecurityOrigin func(uintptr) *SecurityOrigin
 
 // Get the permission origin for which access is being queried.
 func (x *PermissionStateQuery) GetSecurityOrigin() *SecurityOrigin {
-
 	cret := xPermissionStateQueryGetSecurityOrigin(x.GoPointer())
 	return cret
 }
@@ -68,7 +64,6 @@ var xPermissionStateQueryRef func(uintptr) *PermissionStateQuery
 //
 // This function is MT-safe and may be called from any thread.
 func (x *PermissionStateQuery) Ref() *PermissionStateQuery {
-
 	cret := xPermissionStateQueryRef(x.GoPointer())
 	return cret
 }
@@ -80,9 +75,7 @@ var xPermissionStateQueryUnref func(uintptr)
 // If the reference count drops to 0, all memory allocated by #WebKitPermissionStateQuery is
 // released. This function is MT-safe and may be called from any thread.
 func (x *PermissionStateQuery) Unref() {
-
 	xPermissionStateQueryUnref(x.GoPointer())
-
 }
 
 // Enum values representing query permission results.
@@ -125,5 +118,4 @@ func init() {
 	core.PuregoSafeRegister(&xPermissionStateQueryGetSecurityOrigin, libs, "webkit_permission_state_query_get_security_origin")
 	core.PuregoSafeRegister(&xPermissionStateQueryRef, libs, "webkit_permission_state_query_ref")
 	core.PuregoSafeRegister(&xPermissionStateQueryUnref, libs, "webkit_permission_state_query_unref")
-
 }

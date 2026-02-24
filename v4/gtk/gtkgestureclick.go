@@ -84,7 +84,6 @@ func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int32, float64, flo
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -109,7 +108,6 @@ func (x *GestureClick) ConnectReleased(cb *func(GestureClick, int32, float64, fl
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -129,7 +127,6 @@ func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -154,7 +151,6 @@ func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, fl
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, ButtonVarp, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -176,5 +172,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureClickGLibType, libs, "gtk_gesture_click_get_type")
 
 	core.PuregoSafeRegister(&xNewGestureClick, libs, "gtk_gesture_click_new")
-
 }

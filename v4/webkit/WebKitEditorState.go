@@ -75,7 +75,6 @@ var xEditorStateGetTypingAttributes func(uintptr) uint32
 // typing attributes are considered active only when they are
 // present throughout the selection.
 func (x *EditorState) GetTypingAttributes() uint32 {
-
 	cret := xEditorStateGetTypingAttributes(x.GoPointer())
 	return cret
 }
@@ -84,7 +83,6 @@ var xEditorStateIsCopyAvailable func(uintptr) bool
 
 // Gets whether a copy command can be issued.
 func (x *EditorState) IsCopyAvailable() bool {
-
 	cret := xEditorStateIsCopyAvailable(x.GoPointer())
 	return cret
 }
@@ -93,7 +91,6 @@ var xEditorStateIsCutAvailable func(uintptr) bool
 
 // Gets whether a cut command can be issued.
 func (x *EditorState) IsCutAvailable() bool {
-
 	cret := xEditorStateIsCutAvailable(x.GoPointer())
 	return cret
 }
@@ -102,7 +99,6 @@ var xEditorStateIsPasteAvailable func(uintptr) bool
 
 // Gets whether a paste command can be issued.
 func (x *EditorState) IsPasteAvailable() bool {
-
 	cret := xEditorStateIsPasteAvailable(x.GoPointer())
 	return cret
 }
@@ -111,7 +107,6 @@ var xEditorStateIsRedoAvailable func(uintptr) bool
 
 // Gets whether a redo command can be issued.
 func (x *EditorState) IsRedoAvailable() bool {
-
 	cret := xEditorStateIsRedoAvailable(x.GoPointer())
 	return cret
 }
@@ -120,7 +115,6 @@ var xEditorStateIsUndoAvailable func(uintptr) bool
 
 // Gets whether an undo command can be issued.
 func (x *EditorState) IsUndoAvailable() bool {
-
 	cret := xEditorStateIsUndoAvailable(x.GoPointer())
 	return cret
 }
@@ -158,7 +152,6 @@ func (x *EditorState) ConnectChanged(cb *func(EditorState)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

@@ -39,7 +39,6 @@ var xNewBorder func() *Border
 
 // Allocates a new `GtkBorder` struct and initializes its elements to zero.
 func NewBorder() *Border {
-
 	cret := xNewBorder()
 	return cret
 }
@@ -48,7 +47,6 @@ var xBorderCopy func(uintptr) *Border
 
 // Copies a `GtkBorder`.
 func (x *Border) Copy() *Border {
-
 	cret := xBorderCopy(x.GoPointer())
 	return cret
 }
@@ -57,9 +55,7 @@ var xBorderFree func(uintptr)
 
 // Frees a `GtkBorder`.
 func (x *Border) Free() {
-
 	xBorderFree(x.GoPointer())
-
 }
 
 func init() {
@@ -80,5 +76,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xBorderCopy, libs, "gtk_border_copy")
 	core.PuregoSafeRegister(&xBorderFree, libs, "gtk_border_free")
-
 }

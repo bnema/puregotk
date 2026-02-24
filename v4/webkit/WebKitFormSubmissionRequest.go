@@ -56,7 +56,6 @@ var xFormSubmissionRequestListTextFields func(uintptr, *[]string, *[]string) boo
 // If this function returns %FALSE, then both @field_names and
 // @field_values will be empty.
 func (x *FormSubmissionRequest) ListTextFields(FieldNamesVar *[]string, FieldValuesVar *[]string) bool {
-
 	cret := xFormSubmissionRequestListTextFields(x.GoPointer(), FieldNamesVar, FieldValuesVar)
 	return cret
 }
@@ -65,9 +64,7 @@ var xFormSubmissionRequestSubmit func(uintptr)
 
 // Continue the form submission.
 func (x *FormSubmissionRequest) Submit() {
-
 	xFormSubmissionRequestSubmit(x.GoPointer())
-
 }
 
 func (c *FormSubmissionRequest) GoPointer() uintptr {

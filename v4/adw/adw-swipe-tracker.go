@@ -70,7 +70,6 @@ var xSwipeTrackerGetAllowLongSwipes func(uintptr) bool
 
 // Gets whether to allow swiping for more than one snap point at a time.
 func (x *SwipeTracker) GetAllowLongSwipes() bool {
-
 	cret := xSwipeTrackerGetAllowLongSwipes(x.GoPointer())
 	return cret
 }
@@ -79,7 +78,6 @@ var xSwipeTrackerGetAllowMouseDrag func(uintptr) bool
 
 // Gets whether @self can be dragged with mouse pointer.
 func (x *SwipeTracker) GetAllowMouseDrag() bool {
-
 	cret := xSwipeTrackerGetAllowMouseDrag(x.GoPointer())
 	return cret
 }
@@ -88,7 +86,6 @@ var xSwipeTrackerGetAllowWindowHandle func(uintptr) bool
 
 // Gets whether to allow touchscreen swiping from `GtkWindowHandle`.
 func (x *SwipeTracker) GetAllowWindowHandle() bool {
-
 	cret := xSwipeTrackerGetAllowWindowHandle(x.GoPointer())
 	return cret
 }
@@ -97,7 +94,6 @@ var xSwipeTrackerGetEnabled func(uintptr) bool
 
 // Gets whether @self is enabled.
 func (x *SwipeTracker) GetEnabled() bool {
-
 	cret := xSwipeTrackerGetEnabled(x.GoPointer())
 	return cret
 }
@@ -106,7 +102,6 @@ var xSwipeTrackerGetLowerOvershoot func(uintptr) bool
 
 // Gets whether to allow swiping past the first available snap point.
 func (x *SwipeTracker) GetLowerOvershoot() bool {
-
 	cret := xSwipeTrackerGetLowerOvershoot(x.GoPointer())
 	return cret
 }
@@ -115,7 +110,6 @@ var xSwipeTrackerGetReversed func(uintptr) bool
 
 // Gets whether @self is reversing the swipe direction.
 func (x *SwipeTracker) GetReversed() bool {
-
 	cret := xSwipeTrackerGetReversed(x.GoPointer())
 	return cret
 }
@@ -141,7 +135,6 @@ var xSwipeTrackerGetUpperOvershoot func(uintptr) bool
 
 // Gets whether to allow swiping past the last available snap point.
 func (x *SwipeTracker) GetUpperOvershoot() bool {
-
 	cret := xSwipeTrackerGetUpperOvershoot(x.GoPointer())
 	return cret
 }
@@ -153,18 +146,14 @@ var xSwipeTrackerSetAllowLongSwipes func(uintptr, bool)
 // If the value is `FALSE`, each swipe can only move to the adjacent snap
 // points.
 func (x *SwipeTracker) SetAllowLongSwipes(AllowLongSwipesVar bool) {
-
 	xSwipeTrackerSetAllowLongSwipes(x.GoPointer(), AllowLongSwipesVar)
-
 }
 
 var xSwipeTrackerSetAllowMouseDrag func(uintptr, bool)
 
 // Sets whether @self can be dragged with mouse pointer.
 func (x *SwipeTracker) SetAllowMouseDrag(AllowMouseDragVar bool) {
-
 	xSwipeTrackerSetAllowMouseDrag(x.GoPointer(), AllowMouseDragVar)
-
 }
 
 var xSwipeTrackerSetAllowWindowHandle func(uintptr, bool)
@@ -173,9 +162,7 @@ var xSwipeTrackerSetAllowWindowHandle func(uintptr, bool)
 //
 // Setting it to `TRUE` will make dragging the window impossible.
 func (x *SwipeTracker) SetAllowWindowHandle(AllowWindowHandleVar bool) {
-
 	xSwipeTrackerSetAllowWindowHandle(x.GoPointer(), AllowWindowHandleVar)
-
 }
 
 var xSwipeTrackerSetEnabled func(uintptr, bool)
@@ -185,18 +172,14 @@ var xSwipeTrackerSetEnabled func(uintptr, bool)
 // When it's not enabled, no events will be processed. Usually widgets will want
 // to expose this via a property.
 func (x *SwipeTracker) SetEnabled(EnabledVar bool) {
-
 	xSwipeTrackerSetEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 var xSwipeTrackerSetLowerOvershoot func(uintptr, bool)
 
 // Sets whether to allow swiping past the first available snap point.
 func (x *SwipeTracker) SetLowerOvershoot(OvershootVar bool) {
-
 	xSwipeTrackerSetLowerOvershoot(x.GoPointer(), OvershootVar)
-
 }
 
 var xSwipeTrackerSetReversed func(uintptr, bool)
@@ -206,18 +189,14 @@ var xSwipeTrackerSetReversed func(uintptr, bool)
 // If the swipe tracker is horizontal, it can be used for supporting RTL text
 // direction.
 func (x *SwipeTracker) SetReversed(ReversedVar bool) {
-
 	xSwipeTrackerSetReversed(x.GoPointer(), ReversedVar)
-
 }
 
 var xSwipeTrackerSetUpperOvershoot func(uintptr, bool)
 
 // Sets whether to allow swiping past the last available snap point.
 func (x *SwipeTracker) SetUpperOvershoot(OvershootVar bool) {
-
 	xSwipeTrackerSetUpperOvershoot(x.GoPointer(), OvershootVar)
-
 }
 
 var xSwipeTrackerShiftPosition func(uintptr, float64)
@@ -227,9 +206,7 @@ var xSwipeTrackerShiftPosition func(uintptr, float64)
 // This can be used to adjust the current position if snap points move during
 // the gesture.
 func (x *SwipeTracker) ShiftPosition(DeltaVar float64) {
-
 	xSwipeTrackerShiftPosition(x.GoPointer(), DeltaVar)
-
 }
 
 func (c *SwipeTracker) GoPointer() uintptr {
@@ -398,7 +375,6 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -423,7 +399,6 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 		cbFn := *cb
 
 		cbFn(fa, VelocityVarp, ToVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -446,7 +421,6 @@ func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection
 		cbFn := *cb
 
 		cbFn(fa, DirectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -466,7 +440,6 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint3
 		cbFn := *cb
 
 		cbFn(fa, ProgressVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -475,16 +448,13 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint3
 
 // Retrieves the orientation of the @orientable.
 func (x *SwipeTracker) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *SwipeTracker) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -519,5 +489,4 @@ func init() {
 	core.PuregoSafeRegister(&xSwipeTrackerSetReversed, libs, "adw_swipe_tracker_set_reversed")
 	core.PuregoSafeRegister(&xSwipeTrackerSetUpperOvershoot, libs, "adw_swipe_tracker_set_upper_overshoot")
 	core.PuregoSafeRegister(&xSwipeTrackerShiftPosition, libs, "adw_swipe_tracker_shift_position")
-
 }

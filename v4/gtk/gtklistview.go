@@ -178,7 +178,6 @@ var xListViewGetEnableRubberband func(uintptr) bool
 
 // Returns whether rows can be selected by dragging with the mouse.
 func (x *ListView) GetEnableRubberband() bool {
-
 	cret := xListViewGetEnableRubberband(x.GoPointer())
 	return cret
 }
@@ -239,7 +238,6 @@ var xListViewGetShowSeparators func(uintptr) bool
 // Returns whether the listview should show separators
 // between rows.
 func (x *ListView) GetShowSeparators() bool {
-
 	cret := xListViewGetShowSeparators(x.GoPointer())
 	return cret
 }
@@ -249,7 +247,6 @@ var xListViewGetSingleClickActivate func(uintptr) bool
 // Returns whether rows will be activated on single click and
 // selected on hover.
 func (x *ListView) GetSingleClickActivate() bool {
-
 	cret := xListViewGetSingleClickActivate(x.GoPointer())
 	return cret
 }
@@ -258,7 +255,6 @@ var xListViewGetTabBehavior func(uintptr) ListTabBehavior
 
 // Gets the behavior set for the &lt;kbd&gt;Tab&lt;/kbd&gt; key.
 func (x *ListView) GetTabBehavior() ListTabBehavior {
-
 	cret := xListViewGetTabBehavior(x.GoPointer())
 	return cret
 }
@@ -271,27 +267,21 @@ var xListViewScrollTo func(uintptr, uint32, ListScrollFlags, *ScrollInfo)
 // This function works no matter if the listview is shown or focused.
 // If it isn't, then the changes will take effect once that happens.
 func (x *ListView) ScrollTo(PosVar uint32, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
-
 	xListViewScrollTo(x.GoPointer(), PosVar, FlagsVar, ScrollVar)
-
 }
 
 var xListViewSetEnableRubberband func(uintptr, bool)
 
 // Sets whether selections can be changed by dragging with the mouse.
 func (x *ListView) SetEnableRubberband(EnableRubberbandVar bool) {
-
 	xListViewSetEnableRubberband(x.GoPointer(), EnableRubberbandVar)
-
 }
 
 var xListViewSetFactory func(uintptr, uintptr)
 
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *ListView) SetFactory(FactoryVar *ListItemFactory) {
-
 	xListViewSetFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xListViewSetHeaderFactory func(uintptr, uintptr)
@@ -302,9 +292,7 @@ var xListViewSetHeaderFactory func(uintptr, uintptr)
 // If this factory is set to `NULL`, the list will not show
 // section headers.
 func (x *ListView) SetHeaderFactory(FactoryVar *ListItemFactory) {
-
 	xListViewSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xListViewSetModel func(uintptr, uintptr)
@@ -313,9 +301,7 @@ var xListViewSetModel func(uintptr, uintptr)
 //
 // This must be a [iface@Gtk.SelectionModel] to use.
 func (x *ListView) SetModel(ModelVar SelectionModel) {
-
 	xListViewSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xListViewSetShowSeparators func(uintptr, bool)
@@ -323,9 +309,7 @@ var xListViewSetShowSeparators func(uintptr, bool)
 // Sets whether the listview should show separators
 // between rows.
 func (x *ListView) SetShowSeparators(ShowSeparatorsVar bool) {
-
 	xListViewSetShowSeparators(x.GoPointer(), ShowSeparatorsVar)
-
 }
 
 var xListViewSetSingleClickActivate func(uintptr, bool)
@@ -333,9 +317,7 @@ var xListViewSetSingleClickActivate func(uintptr, bool)
 // Sets whether rows should be activated on single click and
 // selected on hover.
 func (x *ListView) SetSingleClickActivate(SingleClickActivateVar bool) {
-
 	xListViewSetSingleClickActivate(x.GoPointer(), SingleClickActivateVar)
-
 }
 
 var xListViewSetTabBehavior func(uintptr, ListTabBehavior)
@@ -346,9 +328,7 @@ var xListViewSetTabBehavior func(uintptr, ListTabBehavior)
 // &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys move the
 // focus in the listview.
 func (x *ListView) SetTabBehavior(TabBehaviorVar ListTabBehavior) {
-
 	xListViewSetTabBehavior(x.GoPointer(), TabBehaviorVar)
-
 }
 
 func (c *ListView) GoPointer() uintptr {
@@ -433,7 +413,6 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -450,9 +429,7 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint32)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ListView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -473,7 +450,6 @@ func (x *ListView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ListView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -498,7 +474,6 @@ func (x *ListView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ListView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -537,30 +512,23 @@ func (x *ListView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ListView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ListView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ListView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ListView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -573,9 +541,7 @@ func (x *ListView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ListView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -583,9 +549,7 @@ func (x *ListView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ListView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -594,9 +558,7 @@ func (x *ListView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ListView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -618,9 +580,7 @@ func (x *ListView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ListView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -630,9 +590,7 @@ func (x *ListView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ListView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -654,9 +612,7 @@ func (x *ListView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acc
 //
 // ```
 func (x *ListView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -666,9 +622,7 @@ func (x *ListView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *ListView) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -691,9 +645,7 @@ func (x *ListView) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acces
 //
 // ```
 func (x *ListView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -703,9 +655,7 @@ func (x *ListView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *ListView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -713,23 +663,19 @@ func (x *ListView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ListView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ListView) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ListView) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 // Returns the size of a non-scrolling border around the
@@ -739,7 +685,6 @@ func (x *ListView) SetOrientation(OrientationVar Orientation) {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *ListView) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -761,7 +706,6 @@ func (x *ListView) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *ListView) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -783,16 +727,13 @@ func (x *ListView) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *ListView) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ListView) SetHadjustment(HadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -800,16 +741,12 @@ func (x *ListView) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *ListView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ListView) SetVadjustment(VadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -817,9 +754,7 @@ func (x *ListView) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *ListView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
@@ -853,5 +788,4 @@ func init() {
 	core.PuregoSafeRegister(&xListViewSetShowSeparators, libs, "gtk_list_view_set_show_separators")
 	core.PuregoSafeRegister(&xListViewSetSingleClickActivate, libs, "gtk_list_view_set_single_click_activate")
 	core.PuregoSafeRegister(&xListViewSetTabBehavior, libs, "gtk_list_view_set_tab_behavior")
-
 }

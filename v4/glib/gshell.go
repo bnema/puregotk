@@ -47,7 +47,6 @@ func ShellParseArgv(CommandLineVar string, ArgcpVar *int32, ArgvpVar *[]string) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xShellQuote func(string) string
@@ -63,7 +62,6 @@ var xShellQuote func(string) string
 // The quoting style used is undefined (single or double quotes may be
 // used).
 func ShellQuote(UnquotedStringVar string) string {
-
 	cret := xShellQuote(UnquotedStringVar)
 	return cret
 }
@@ -105,7 +103,6 @@ func ShellUnquote(QuotedStringVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -123,5 +120,4 @@ func init() {
 	core.PuregoSafeRegister(&xShellParseArgv, libs, "g_shell_parse_argv")
 	core.PuregoSafeRegister(&xShellQuote, libs, "g_shell_quote")
 	core.PuregoSafeRegister(&xShellUnquote, libs, "g_shell_unquote")
-
 }

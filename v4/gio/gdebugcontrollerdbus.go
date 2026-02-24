@@ -208,7 +208,6 @@ func NewDebugControllerDBus(ConnectionVar *DBusConnection, CancellableVar *Cance
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDebugControllerDBusStop func(uintptr)
@@ -230,9 +229,7 @@ var xDebugControllerDBusStop func(uintptr)
 // Calling this method from within a #GDebugControllerDBus::authorize signal
 // handler will cause a deadlock and must not be done.
 func (x *DebugControllerDBus) Stop() {
-
 	xDebugControllerDBusStop(x.GoPointer())
-
 }
 
 func (c *DebugControllerDBus) GoPointer() uintptr {
@@ -275,7 +272,6 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 		cbFn := *cb
 
 		return cbFn(fa, InvocationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -284,16 +280,13 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 
 // Get the value of #GDebugController:debug-enabled.
 func (x *DebugControllerDBus) GetDebugEnabled() bool {
-
 	cret := XGDebugControllerGetDebugEnabled(x.GoPointer())
 	return cret
 }
 
 // Set the value of #GDebugController:debug-enabled.
 func (x *DebugControllerDBus) SetDebugEnabled(DebugEnabledVar bool) {
-
 	XGDebugControllerSetDebugEnabled(x.GoPointer(), DebugEnabledVar)
-
 }
 
 // Initializes the object implementing the interface.
@@ -342,7 +335,6 @@ func (x *DebugControllerDBus) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -362,5 +354,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewDebugControllerDBus, libs, "g_debug_controller_dbus_new")
 
 	core.PuregoSafeRegister(&xDebugControllerDBusStop, libs, "g_debug_controller_dbus_stop")
-
 }

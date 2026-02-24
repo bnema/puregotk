@@ -101,7 +101,6 @@ var xCoverageGet func(uintptr, int32) CoverageLevel
 
 // Determine whether a particular index is covered by @coverage.
 func (x *Coverage) Get(IndexVar int32) CoverageLevel {
-
 	cret := xCoverageGet(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -112,9 +111,7 @@ var xCoverageMax func(uintptr, uintptr)
 // value of the current coverage for the index and the coverage for
 // the corresponding index in @other.
 func (x *Coverage) Max(OtherVar *Coverage) {
-
 	xCoverageMax(x.GoPointer(), OtherVar.GoPointer())
-
 }
 
 var xCoverageRef func(uintptr) uintptr
@@ -137,18 +134,14 @@ var xCoverageSet func(uintptr, int32, CoverageLevel)
 
 // Modify a particular index within @coverage
 func (x *Coverage) Set(IndexVar int32, LevelVar CoverageLevel) {
-
 	xCoverageSet(x.GoPointer(), IndexVar, LevelVar)
-
 }
 
 var xCoverageToBytes func(uintptr, *[]byte, *int32)
 
 // Convert a `PangoCoverage` structure into a flat binary format.
 func (x *Coverage) ToBytes(BytesVar *[]byte, NBytesVar *int32) {
-
 	xCoverageToBytes(x.GoPointer(), BytesVar, NBytesVar)
-
 }
 
 var xCoverageUnref func(uintptr)
@@ -157,9 +150,7 @@ var xCoverageUnref func(uintptr)
 //
 // If the result is zero, free the coverage and all associated memory.
 func (x *Coverage) Unref() {
-
 	xCoverageUnref(x.GoPointer())
-
 }
 
 func (c *Coverage) GoPointer() uintptr {
@@ -217,5 +208,4 @@ func init() {
 	core.PuregoSafeRegister(&xCoverageUnref, libs, "pango_coverage_unref")
 
 	core.PuregoSafeRegister(&xCoverageFromBytes, libs, "pango_coverage_from_bytes")
-
 }

@@ -119,7 +119,6 @@ var xContextCheckSyntax func(uintptr, string, int, CheckSyntaxMode, string, uint
 // In case of errors @exception will be set to a new #JSCException with the details. You can pass %NULL to
 // @exception to ignore the error details.
 func (x *Context) CheckSyntax(CodeVar string, LengthVar int, ModeVar CheckSyntaxMode, UriVar string, LineNumberVar uint32, ExceptionVar **Exception) CheckSyntaxResult {
-
 	cret := xContextCheckSyntax(x.GoPointer(), CodeVar, LengthVar, ModeVar, UriVar, LineNumberVar, ExceptionVar)
 	return cret
 }
@@ -128,9 +127,7 @@ var xContextClearException func(uintptr)
 
 // Clear the uncaught exception in @context if any.
 func (x *Context) ClearException() {
-
 	xContextClearException(x.GoPointer())
-
 }
 
 var xContextEvaluate func(uintptr, string, int) uintptr
@@ -258,9 +255,7 @@ var xContextPopExceptionHandler func(uintptr)
 // Remove the last #JSCExceptionHandler previously pushed to @context with
 // jsc_context_push_exception_handler().
 func (x *Context) PopExceptionHandler() {
-
 	xContextPopExceptionHandler(x.GoPointer())
-
 }
 
 var xContextPushExceptionHandler func(uintptr, uintptr, uintptr, uintptr)
@@ -274,9 +269,7 @@ var xContextPushExceptionHandler func(uintptr, uintptr, uintptr, uintptr)
 // jsc_context_pop_exception_handler() to remove it and set the previous one. When @handler
 // is removed from the context, @destroy_notify i called with @user_data as parameter.
 func (x *Context) PushExceptionHandler(HandlerVar *ExceptionHandler, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
 	xContextPushExceptionHandler(x.GoPointer(), glib.NewCallback(HandlerVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
-
 }
 
 var xContextRegisterClass func(uintptr, string, uintptr, *ClassVTable, uintptr) uintptr
@@ -305,9 +298,7 @@ var xContextSetValue func(uintptr, string, uintptr)
 
 // Set a property of @context global object with @name and @value.
 func (x *Context) SetValue(NameVar string, ValueVar *Value) {
-
 	xContextSetValue(x.GoPointer(), NameVar, ValueVar.GoPointer())
-
 }
 
 var xContextThrow func(uintptr, string)
@@ -315,18 +306,14 @@ var xContextThrow func(uintptr, string)
 // Throw an exception to @context using the given error message. The created #JSCException
 // can be retrieved with jsc_context_get_exception().
 func (x *Context) Throw(ErrorMessageVar string) {
-
 	xContextThrow(x.GoPointer(), ErrorMessageVar)
-
 }
 
 var xContextThrowException func(uintptr, uintptr)
 
 // Throw @exception to @context.
 func (x *Context) ThrowException(ExceptionVar *Exception) {
-
 	xContextThrowException(x.GoPointer(), ExceptionVar.GoPointer())
-
 }
 
 var xContextThrowPrintf func(uintptr, string, ...interface{})
@@ -334,9 +321,7 @@ var xContextThrowPrintf func(uintptr, string, ...interface{})
 // Throw an exception to @context using the given formatted string as error message.
 // The created #JSCException can be retrieved with jsc_context_get_exception().
 func (x *Context) ThrowPrintf(FormatVar string, varArgs ...interface{}) {
-
 	xContextThrowPrintf(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xContextThrowWithName func(uintptr, string, string)
@@ -344,9 +329,7 @@ var xContextThrowWithName func(uintptr, string, string)
 // Throw an exception to @context using the given error name and message. The created #JSCException
 // can be retrieved with jsc_context_get_exception().
 func (x *Context) ThrowWithName(ErrorNameVar string, ErrorMessageVar string) {
-
 	xContextThrowWithName(x.GoPointer(), ErrorNameVar, ErrorMessageVar)
-
 }
 
 var xContextThrowWithNamePrintf func(uintptr, string, string, ...interface{})
@@ -354,9 +337,7 @@ var xContextThrowWithNamePrintf func(uintptr, string, string, ...interface{})
 // Throw an exception to @context using the given error name and the formatted string as error message.
 // The created #JSCException can be retrieved with jsc_context_get_exception().
 func (x *Context) ThrowWithNamePrintf(ErrorNameVar string, FormatVar string, varArgs ...interface{}) {
-
 	xContextThrowWithNamePrintf(x.GoPointer(), ErrorNameVar, FormatVar, varArgs...)
-
 }
 
 func (c *Context) GoPointer() uintptr {
@@ -425,5 +406,4 @@ func init() {
 	core.PuregoSafeRegister(&xContextThrowWithNamePrintf, libs, "jsc_context_throw_with_name_printf")
 
 	core.PuregoSafeRegister(&xContextGetCurrent, libs, "jsc_context_get_current")
-
 }

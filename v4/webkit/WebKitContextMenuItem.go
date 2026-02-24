@@ -172,7 +172,6 @@ var xContextMenuItemGetStockAction func(uintptr) ContextMenuAction
 // returned. If the #WebKitContextMenuItem is a separator %WEBKIT_CONTEXT_MENU_ACTION_NO_ACTION
 // will be returned.
 func (x *ContextMenuItem) GetStockAction() ContextMenuAction {
-
 	cret := xContextMenuItemGetStockAction(x.GoPointer())
 	return cret
 }
@@ -198,7 +197,6 @@ var xContextMenuItemIsSeparator func(uintptr) bool
 
 // Checks whether @item is a separator.
 func (x *ContextMenuItem) IsSeparator() bool {
-
 	cret := xContextMenuItemIsSeparator(x.GoPointer())
 	return cret
 }
@@ -210,9 +208,7 @@ var xContextMenuItemSetSubmenu func(uintptr, uintptr)
 // If @submenu is %NULL the current
 // submenu of @item is removed.
 func (x *ContextMenuItem) SetSubmenu(SubmenuVar *ContextMenu) {
-
 	xContextMenuItemSetSubmenu(x.GoPointer(), SubmenuVar.GoPointer())
-
 }
 
 func (c *ContextMenuItem) GoPointer() uintptr {

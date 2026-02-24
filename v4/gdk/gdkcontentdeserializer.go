@@ -24,9 +24,7 @@ var xContentDeserializeAsync func(uintptr, string, types.GType, int32, uintptr, 
 // The default I/O priority is `G_PRIORITY_DEFAULT` (i.e. 0), and lower numbers
 // indicate a higher priority.
 func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, TypeVar types.GType, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xContentDeserializeFinish func(uintptr, *gobject.Value, **glib.Error) bool
@@ -40,7 +38,6 @@ func ContentDeserializeFinish(ResultVar gio.AsyncResult, ValueVar *gobject.Value
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uintptr)
@@ -51,9 +48,7 @@ var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uin
 // use the last registered deserializer for a given mime type,
 // so applications can override the built-in deserializers.
 func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, DeserializeVar *ContentDeserializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
 	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallback(NotifyVar))
-
 }
 
 // Deserializes content received via inter-application data transfers.
@@ -105,7 +100,6 @@ var xContentDeserializerGetGtype func(uintptr) types.GType
 
 // Gets the `GType` to create an instance of.
 func (x *ContentDeserializer) GetGtype() types.GType {
-
 	cret := xContentDeserializerGetGtype(x.GoPointer())
 	return cret
 }
@@ -133,7 +127,6 @@ var xContentDeserializerGetMimeType func(uintptr) string
 
 // Gets the mime type to deserialize from.
 func (x *ContentDeserializer) GetMimeType() string {
-
 	cret := xContentDeserializerGetMimeType(x.GoPointer())
 	return cret
 }
@@ -144,7 +137,6 @@ var xContentDeserializerGetPriority func(uintptr) int32
 //
 // This is the priority that was passed to [func@Gdk.content_deserialize_async].
 func (x *ContentDeserializer) GetPriority() int32 {
-
 	cret := xContentDeserializerGetPriority(x.GoPointer())
 	return cret
 }
@@ -155,7 +147,6 @@ var xContentDeserializerGetTaskData func(uintptr) uintptr
 //
 // See [method@Gdk.ContentDeserializer.set_task_data].
 func (x *ContentDeserializer) GetTaskData() uintptr {
-
 	cret := xContentDeserializerGetTaskData(x.GoPointer())
 	return cret
 }
@@ -164,7 +155,6 @@ var xContentDeserializerGetUserData func(uintptr) uintptr
 
 // Gets the user data that was passed when the deserializer was registered.
 func (x *ContentDeserializer) GetUserData() uintptr {
-
 	cret := xContentDeserializerGetUserData(x.GoPointer())
 	return cret
 }
@@ -173,7 +163,6 @@ var xContentDeserializerGetValue func(uintptr) *gobject.Value
 
 // Gets the `GValue` to store the deserialized object in.
 func (x *ContentDeserializer) GetValue() *gobject.Value {
-
 	cret := xContentDeserializerGetValue(x.GoPointer())
 	return cret
 }
@@ -184,27 +173,21 @@ var xContentDeserializerReturnError func(uintptr, *glib.Error)
 //
 // This function consumes @error.
 func (x *ContentDeserializer) ReturnError(ErrorVar *glib.Error) {
-
 	xContentDeserializerReturnError(x.GoPointer(), ErrorVar)
-
 }
 
 var xContentDeserializerReturnSuccess func(uintptr)
 
 // Indicate that the deserialization has been successfully completed.
 func (x *ContentDeserializer) ReturnSuccess() {
-
 	xContentDeserializerReturnSuccess(x.GoPointer())
-
 }
 
 var xContentDeserializerSetTaskData func(uintptr, uintptr, uintptr)
 
 // Associate data with the current deserialization operation.
 func (x *ContentDeserializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
 	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallback(NotifyVar))
-
 }
 
 func (c *ContentDeserializer) GoPointer() uintptr {
@@ -235,7 +218,6 @@ func (x *ContentDeserializer) GetSourceObject() *gobject.Object {
 // Checks if @res has the given @source_tag (generally a function
 // pointer indicating the function @res was created by).
 func (x *ContentDeserializer) IsTagged(SourceTagVar uintptr) bool {
-
 	cret := gio.XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
 	return cret
 }
@@ -258,7 +240,6 @@ func (x *ContentDeserializer) LegacyPropagateError() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -290,5 +271,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentDeserializerReturnError, libs, "gdk_content_deserializer_return_error")
 	core.PuregoSafeRegister(&xContentDeserializerReturnSuccess, libs, "gdk_content_deserializer_return_success")
 	core.PuregoSafeRegister(&xContentDeserializerSetTaskData, libs, "gdk_content_deserializer_set_task_data")
-
 }

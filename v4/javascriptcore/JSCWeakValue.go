@@ -97,7 +97,6 @@ func (x *WeakValue) ConnectCleared(cb *func(WeakValue)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -121,5 +120,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewWeakValue, libs, "jsc_weak_value_new")
 
 	core.PuregoSafeRegister(&xWeakValueGetValue, libs, "jsc_weak_value_get_value")
-
 }

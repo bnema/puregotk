@@ -218,7 +218,6 @@ var xNewVariantType func(string) *VariantType
 // It is a programmer error to call this function with an invalid type
 // string.  Use [func@GLib.VariantType.string_is_valid] if you are unsure.
 func NewVariantType(TypeStringVar string) *VariantType {
-
 	cret := xNewVariantType(TypeStringVar)
 	return cret
 }
@@ -230,7 +229,6 @@ var xNewVariantTypeArray func(*VariantType) *VariantType
 //
 // It is appropriate to call [method@GLib.VariantType.first] on the return value.
 func NewVariantTypeArray(ElementVar *VariantType) *VariantType {
-
 	cret := xNewVariantTypeArray(ElementVar)
 	return cret
 }
@@ -242,7 +240,6 @@ var xNewVariantTypeDictEntry func(*VariantType, *VariantType) *VariantType
 //
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeDictEntry(KeyVar *VariantType, ValueVar *VariantType) *VariantType {
-
 	cret := xNewVariantTypeDictEntry(KeyVar, ValueVar)
 	return cret
 }
@@ -254,7 +251,6 @@ var xNewVariantTypeMaybe func(*VariantType) *VariantType
 //
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeMaybe(ElementVar *VariantType) *VariantType {
-
 	cret := xNewVariantTypeMaybe(ElementVar)
 	return cret
 }
@@ -268,7 +264,6 @@ var xNewVariantTypeTuple func(uintptr, int32) *VariantType
 //
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeTuple(ItemsVar uintptr, LengthVar int32) *VariantType {
-
 	cret := xNewVariantTypeTuple(ItemsVar, LengthVar)
 	return cret
 }
@@ -280,7 +275,6 @@ var xVariantTypeCopy func(uintptr) *VariantType
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 // @type may not be `NULL`.
 func (x *VariantType) Copy() *VariantType {
-
 	cret := xVariantTypeCopy(x.GoPointer())
 	return cret
 }
@@ -292,7 +286,6 @@ var xVariantTypeDupString func(uintptr) string
 // The returned string is nul-terminated.  It is appropriate to call
 // [func@GLib.free] on the return value.
 func (x *VariantType) DupString() string {
-
 	cret := xVariantTypeDupString(x.GoPointer())
 	return cret
 }
@@ -303,7 +296,6 @@ var xVariantTypeElement func(uintptr) *VariantType
 //
 // This function may only be used with array or ‘maybe’ types.
 func (x *VariantType) Element() *VariantType {
-
 	cret := xVariantTypeElement(x.GoPointer())
 	return cret
 }
@@ -321,7 +313,6 @@ var xVariantTypeEqual func(uintptr, uintptr) bool
 // allow use with [type@GLib.HashTable] without function pointer casting.  For
 // both arguments, a valid [type@GLib.VariantType] must be provided.
 func (x *VariantType) Equal(Type2Var uintptr) bool {
-
 	cret := xVariantTypeEqual(x.GoPointer(), Type2Var)
 	return cret
 }
@@ -343,7 +334,6 @@ var xVariantTypeFirst func(uintptr) *VariantType
 // This call, together with [method@GLib.VariantType.next] provides an iterator
 // interface over tuple and dictionary entry types.
 func (x *VariantType) First() *VariantType {
-
 	cret := xVariantTypeFirst(x.GoPointer())
 	return cret
 }
@@ -358,9 +348,7 @@ var xVariantTypeFree func(uintptr)
 //
 // Since 2.24
 func (x *VariantType) Free() {
-
 	xVariantTypeFree(x.GoPointer())
-
 }
 
 var xVariantTypeGetStringLength func(uintptr) uint
@@ -370,7 +358,6 @@ var xVariantTypeGetStringLength func(uintptr) uint
 // This function must be used to determine the valid extent of
 // the memory region returned by [method@GLib.VariantType.peek_string].
 func (x *VariantType) GetStringLength() uint {
-
 	cret := xVariantTypeGetStringLength(x.GoPointer())
 	return cret
 }
@@ -383,7 +370,6 @@ var xVariantTypeHash func(uintptr) uint32
 // [type@GLib.HashTable] without function pointer casting.  A valid
 // [type@GLib.VariantType] must be provided.
 func (x *VariantType) Hash() uint32 {
-
 	cret := xVariantTypeHash(x.GoPointer())
 	return cret
 }
@@ -398,7 +384,6 @@ var xVariantTypeIsArray func(uintptr) bool
 // definite subtype is an array type — `G_VARIANT_TYPE_ARRAY`, for
 // example.
 func (x *VariantType) IsArray() bool {
-
 	cret := xVariantTypeIsArray(x.GoPointer())
 	return cret
 }
@@ -415,7 +400,6 @@ var xVariantTypeIsBasic func(uintptr) bool
 // This function returns `FALSE` for all indefinite types except
 // `G_VARIANT_TYPE_BASIC`.
 func (x *VariantType) IsBasic() bool {
-
 	cret := xVariantTypeIsBasic(x.GoPointer())
 	return cret
 }
@@ -431,7 +415,6 @@ var xVariantTypeIsContainer func(uintptr) bool
 // definite subtype is a container — `G_VARIANT_TYPE_ARRAY`, for
 // example.
 func (x *VariantType) IsContainer() bool {
-
 	cret := xVariantTypeIsContainer(x.GoPointer())
 	return cret
 }
@@ -449,7 +432,6 @@ var xVariantTypeIsDefinite func(uintptr) bool
 // indefinite type like `G_VARIANT_TYPE_ARRAY`, however, will result in
 // `FALSE` being returned.
 func (x *VariantType) IsDefinite() bool {
-
 	cret := xVariantTypeIsDefinite(x.GoPointer())
 	return cret
 }
@@ -464,7 +446,6 @@ var xVariantTypeIsDictEntry func(uintptr) bool
 // definite subtype is a dictionary entry type —
 // `G_VARIANT_TYPE_DICT_ENTRY`, for example.
 func (x *VariantType) IsDictEntry() bool {
-
 	cret := xVariantTypeIsDictEntry(x.GoPointer())
 	return cret
 }
@@ -479,7 +460,6 @@ var xVariantTypeIsMaybe func(uintptr) bool
 // definite subtype is a ‘maybe’ type — `G_VARIANT_TYPE_MAYBE`, for
 // example.
 func (x *VariantType) IsMaybe() bool {
-
 	cret := xVariantTypeIsMaybe(x.GoPointer())
 	return cret
 }
@@ -492,7 +472,6 @@ var xVariantTypeIsSubtypeOf func(uintptr, *VariantType) bool
 // types are considered to be subtypes of themselves.  Aside from that,
 // only indefinite types can have subtypes.
 func (x *VariantType) IsSubtypeOf(SupertypeVar *VariantType) bool {
-
 	cret := xVariantTypeIsSubtypeOf(x.GoPointer(), SupertypeVar)
 	return cret
 }
@@ -508,7 +487,6 @@ var xVariantTypeIsTuple func(uintptr) bool
 // definite subtype is a tuple type — `G_VARIANT_TYPE_TUPLE`, for
 // example.
 func (x *VariantType) IsTuple() bool {
-
 	cret := xVariantTypeIsTuple(x.GoPointer())
 	return cret
 }
@@ -517,7 +495,6 @@ var xVariantTypeIsVariant func(uintptr) bool
 
 // Determines if the given @type is the variant type.
 func (x *VariantType) IsVariant() bool {
-
 	cret := xVariantTypeIsVariant(x.GoPointer())
 	return cret
 }
@@ -530,7 +507,6 @@ var xVariantTypeKey func(uintptr) *VariantType
 // than the additional restriction, this call is equivalent to
 // [method@GLib.VariantType.first].
 func (x *VariantType) Key() *VariantType {
-
 	cret := xVariantTypeKey(x.GoPointer())
 	return cret
 }
@@ -547,7 +523,6 @@ var xVariantTypeNItems func(uintptr) uint
 // In the case of a dictionary entry type, this function will always
 // return `2`.
 func (x *VariantType) NItems() uint {
-
 	cret := xVariantTypeNItems(x.GoPointer())
 	return cret
 }
@@ -566,7 +541,6 @@ var xVariantTypeNext func(uintptr) *VariantType
 //
 // For tuples, `NULL` is returned when @type is the last item in the tuple.
 func (x *VariantType) Next() *VariantType {
-
 	cret := xVariantTypeNext(x.GoPointer())
 	return cret
 }
@@ -580,7 +554,6 @@ var xVariantTypePeekString func(uintptr) string
 //
 // To get a nul-terminated string, see [method@GLib.VariantType.dup_string].
 func (x *VariantType) PeekString() string {
-
 	cret := xVariantTypePeekString(x.GoPointer())
 	return cret
 }
@@ -591,7 +564,6 @@ var xVariantTypeValue func(uintptr) *VariantType
 //
 // This function may only be used with a dictionary entry type.
 func (x *VariantType) Value() *VariantType {
-
 	cret := xVariantTypeValue(x.GoPointer())
 	return cret
 }
@@ -599,7 +571,6 @@ func (x *VariantType) Value() *VariantType {
 var xVariantTypeChecked func(string) *VariantType
 
 func VariantTypeChecked(TypeStringVar string) *VariantType {
-
 	cret := xVariantTypeChecked(TypeStringVar)
 	return cret
 }
@@ -607,7 +578,6 @@ func VariantTypeChecked(TypeStringVar string) *VariantType {
 var xVariantTypeStringGetDepth func(string) uint
 
 func VariantTypeStringGetDepth(TypeStringVar string) uint {
-
 	cret := xVariantTypeStringGetDepth(TypeStringVar)
 	return cret
 }
@@ -620,7 +590,6 @@ var xVariantTypeStringIsValid func(string) bool
 // This call is equivalent to calling [func@GLib.VariantType.string_scan] and
 // confirming that the following character is a nul terminator.
 func VariantTypeStringIsValid(TypeStringVar string) bool {
-
 	cret := xVariantTypeStringIsValid(TypeStringVar)
 	return cret
 }
@@ -642,7 +611,6 @@ var xVariantTypeStringScan func(string, string, *string) bool
 // For the simple case of checking if a string is a valid type string,
 // see [func@GLib.VariantType.string_is_valid].
 func VariantTypeStringScan(StringVar string, LimitVar string, EndptrVar *string) bool {
-
 	cret := xVariantTypeStringScan(StringVar, LimitVar, EndptrVar)
 	return cret
 }
@@ -694,5 +662,4 @@ func init() {
 	core.PuregoSafeRegister(&xVariantTypeNext, libs, "g_variant_type_next")
 	core.PuregoSafeRegister(&xVariantTypePeekString, libs, "g_variant_type_peek_string")
 	core.PuregoSafeRegister(&xVariantTypeValue, libs, "g_variant_type_value")
-
 }

@@ -30,7 +30,6 @@ var xNavigationActionCopy func(uintptr) *NavigationAction
 
 // Make a copy of @navigation.
 func (x *NavigationAction) Copy() *NavigationAction {
-
 	cret := xNavigationActionCopy(x.GoPointer())
 	return cret
 }
@@ -39,9 +38,7 @@ var xNavigationActionFree func(uintptr)
 
 // Free the #WebKitNavigationAction
 func (x *NavigationAction) Free() {
-
 	xNavigationActionFree(x.GoPointer())
-
 }
 
 var xNavigationActionGetFrameName func(uintptr) string
@@ -50,7 +47,6 @@ var xNavigationActionGetFrameName func(uintptr) string
 // link with a target attribute equal to "_blank", this will return the value of that attribute.
 // In all other cases this function will return %NULL.
 func (x *NavigationAction) GetFrameName() string {
-
 	cret := xNavigationActionGetFrameName(x.GoPointer())
 	return cret
 }
@@ -62,7 +58,6 @@ var xNavigationActionGetModifiers func(uintptr) uint32
 // Return a bitmask of #GdkModifierType values describing the modifier keys that were in effect
 // when the navigation was requested
 func (x *NavigationAction) GetModifiers() uint32 {
-
 	cret := xNavigationActionGetModifiers(x.GoPointer())
 	return cret
 }
@@ -74,7 +69,6 @@ var xNavigationActionGetMouseButton func(uintptr) uint32
 // Return the number of the mouse button that triggered the navigation, or 0 if
 // the navigation was not started by a mouse event.
 func (x *NavigationAction) GetMouseButton() uint32 {
-
 	cret := xNavigationActionGetMouseButton(x.GoPointer())
 	return cret
 }
@@ -83,7 +77,6 @@ var xNavigationActionGetNavigationType func(uintptr) NavigationType
 
 // Return the type of action that triggered the navigation.
 func (x *NavigationAction) GetNavigationType() NavigationType {
-
 	cret := xNavigationActionGetNavigationType(x.GoPointer())
 	return cret
 }
@@ -115,7 +108,6 @@ var xNavigationActionIsRedirect func(uintptr) bool
 
 // Returns whether the @navigation was redirected.
 func (x *NavigationAction) IsRedirect() bool {
-
 	cret := xNavigationActionIsRedirect(x.GoPointer())
 	return cret
 }
@@ -124,7 +116,6 @@ var xNavigationActionIsUserGesture func(uintptr) bool
 
 // Return whether the navigation was triggered by a user gesture like a mouse click.
 func (x *NavigationAction) IsUserGesture() bool {
-
 	cret := xNavigationActionIsUserGesture(x.GoPointer())
 	return cret
 }
@@ -179,5 +170,4 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationActionGetRequest, libs, "webkit_navigation_action_get_request")
 	core.PuregoSafeRegister(&xNavigationActionIsRedirect, libs, "webkit_navigation_action_is_redirect")
 	core.PuregoSafeRegister(&xNavigationActionIsUserGesture, libs, "webkit_navigation_action_is_user_gesture")
-
 }

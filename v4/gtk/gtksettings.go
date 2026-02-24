@@ -60,9 +60,7 @@ var xSettingsResetProperty func(uintptr, string)
 // After this call, the setting will again follow the session-wide
 // value for this setting.
 func (x *Settings) ResetProperty(NameVar string) {
-
 	xSettingsResetProperty(x.GoPointer(), NameVar)
-
 }
 
 func (c *Settings) GoPointer() uintptr {
@@ -1340,5 +1338,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSettingsGetDefault, libs, "gtk_settings_get_default")
 	core.PuregoSafeRegister(&xSettingsGetForDisplay, libs, "gtk_settings_get_for_display")
-
 }

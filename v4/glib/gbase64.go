@@ -12,7 +12,6 @@ var xBase64Decode func(string, *uint) uintptr
 // that the returned binary data is not necessarily zero-terminated,
 // so it should not be used as a character string.
 func Base64Decode(TextVar string, OutLenVar *uint) uintptr {
-
 	cret := xBase64Decode(TextVar, OutLenVar)
 	return cret
 }
@@ -22,7 +21,6 @@ var xBase64DecodeInplace func([]byte, uint) byte
 // Decode a sequence of Base-64 encoded text into binary data
 // by overwriting the input data.
 func Base64DecodeInplace(TextVar []byte, OutLenVar uint) byte {
-
 	cret := xBase64DecodeInplace(TextVar, OutLenVar)
 	return cret
 }
@@ -38,7 +36,6 @@ var xBase64DecodeStep func([]byte, uint, *[]byte, int32, uint32) uint
 // at least: (@len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
 // state).
 func Base64DecodeStep(InVar []byte, LenVar uint, OutVar *[]byte, StateVar int32, SaveVar uint32) uint {
-
 	cret := xBase64DecodeStep(InVar, LenVar, OutVar, StateVar, SaveVar)
 	return cret
 }
@@ -48,7 +45,6 @@ var xBase64Encode func([]byte, uint) string
 // Encode a sequence of binary data into its Base-64 stringified
 // representation.
 func Base64Encode(DataVar []byte, LenVar uint) string {
-
 	cret := xBase64Encode(DataVar, LenVar)
 	return cret
 }
@@ -63,7 +59,6 @@ var xBase64EncodeClose func(bool, *[]byte, int32, int32) uint
 //
 // The @out array will not be automatically nul-terminated.
 func Base64EncodeClose(BreakLinesVar bool, OutVar *[]byte, StateVar int32, SaveVar int32) uint {
-
 	cret := xBase64EncodeClose(BreakLinesVar, OutVar, StateVar, SaveVar)
 	return cret
 }
@@ -90,7 +85,6 @@ var xBase64EncodeStep func([]byte, uint, bool, *[]byte, int32, int32) uint
 // `CR LF` sequences, so the result cannot be passed directly to SMTP
 // or certain other protocols.
 func Base64EncodeStep(InVar []byte, LenVar uint, BreakLinesVar bool, OutVar *[]byte, StateVar int32, SaveVar int32) uint {
-
 	cret := xBase64EncodeStep(InVar, LenVar, BreakLinesVar, OutVar, StateVar, SaveVar)
 	return cret
 }
@@ -113,5 +107,4 @@ func init() {
 	core.PuregoSafeRegister(&xBase64Encode, libs, "g_base64_encode")
 	core.PuregoSafeRegister(&xBase64EncodeClose, libs, "g_base64_encode_close")
 	core.PuregoSafeRegister(&xBase64EncodeStep, libs, "g_base64_encode_step")
-
 }

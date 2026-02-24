@@ -14,7 +14,6 @@ var xGetEnableAnimations func(uintptr) bool
 // This should be used when implementing an animated widget to know whether to
 // animate it or not.
 func GetEnableAnimations(WidgetVar *gtk.Widget) bool {
-
 	cret := xGetEnableAnimations(WidgetVar.GoPointer())
 	return cret
 }
@@ -23,7 +22,6 @@ var xLerp func(float64, float64, float64) float64
 
 // Computes the linear interpolation between @a and @b for @t.
 func Lerp(AVar float64, BVar float64, TVar float64) float64 {
-
 	cret := xLerp(AVar, BVar, TVar)
 	return cret
 }
@@ -42,5 +40,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGetEnableAnimations, libs, "adw_get_enable_animations")
 	core.PuregoSafeRegister(&xLerp, libs, "adw_lerp")
-
 }

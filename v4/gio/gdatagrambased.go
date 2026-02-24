@@ -282,7 +282,6 @@ func (x *DatagramBasedBase) SetGoPointer(ptr uintptr) {
 //
 // This call never blocks.
 func (x *DatagramBasedBase) ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition {
-
 	cret := XGDatagramBasedConditionCheck(x.GoPointer(), ConditionVar)
 	return cret
 }
@@ -301,7 +300,6 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Creates a #GSource that can be attached to a #GMainContext to monitor for
@@ -319,7 +317,6 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 // change). You can check for this in the callback using
 // g_cancellable_is_cancelled().
 func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
-
 	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
 	return cret
 }
@@ -382,7 +379,6 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Send one or more data messages from @datagram_based in one go.
@@ -434,14 +430,15 @@ func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessage
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGDatagramBasedConditionCheck func(uintptr, glib.IOCondition) glib.IOCondition
-var XGDatagramBasedConditionWait func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
-var XGDatagramBasedCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
-var XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
-var XGDatagramBasedSendMessages func(uintptr, []OutputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
+var (
+	XGDatagramBasedConditionCheck  func(uintptr, glib.IOCondition) glib.IOCondition
+	XGDatagramBasedConditionWait   func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
+	XGDatagramBasedCreateSource    func(uintptr, glib.IOCondition, uintptr) *glib.Source
+	XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
+	XGDatagramBasedSendMessages    func(uintptr, []OutputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -462,5 +459,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDatagramBasedCreateSource, libs, "g_datagram_based_create_source")
 	core.PuregoSafeRegister(&XGDatagramBasedReceiveMessages, libs, "g_datagram_based_receive_messages")
 	core.PuregoSafeRegister(&XGDatagramBasedSendMessages, libs, "g_datagram_based_send_messages")
-
 }

@@ -49,9 +49,7 @@ var xCacheDestroy func(uintptr)
 // Note that it does not destroy the keys and values which were
 // contained in the #GCache.
 func (x *Cache) Destroy() {
-
 	xCacheDestroy(x.GoPointer())
-
 }
 
 var xCacheInsert func(uintptr, uintptr) uintptr
@@ -65,7 +63,6 @@ var xCacheInsert func(uintptr, uintptr) uintptr
 // duplicated by calling @key_dup_func and the duplicated key and value
 // are inserted into the #GCache.
 func (x *Cache) Insert(KeyVar uintptr) uintptr {
-
 	cret := xCacheInsert(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -79,9 +76,7 @@ var xCacheKeyForeach func(uintptr, uintptr, uintptr)
 // from the order in which g_hash_table_foreach() passes key-value
 // pairs to its callback function !
 func (x *Cache) KeyForeach(FuncVar *HFunc, UserDataVar uintptr) {
-
 	xCacheKeyForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xCacheRemove func(uintptr, uintptr)
@@ -90,18 +85,14 @@ var xCacheRemove func(uintptr, uintptr)
 // then the value and its corresponding key are destroyed, using the
 // @value_destroy_func and @key_destroy_func passed to g_cache_new().
 func (x *Cache) Remove(ValueVar uintptr) {
-
 	xCacheRemove(x.GoPointer(), ValueVar)
-
 }
 
 var xCacheValueForeach func(uintptr, uintptr, uintptr)
 
 // Calls the given function for each of the values in the #GCache.
 func (x *Cache) ValueForeach(FuncVar *HFunc, UserDataVar uintptr) {
-
 	xCacheValueForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
-
 }
 
 func init() {
@@ -121,5 +112,4 @@ func init() {
 	core.PuregoSafeRegister(&xCacheKeyForeach, libs, "g_cache_key_foreach")
 	core.PuregoSafeRegister(&xCacheRemove, libs, "g_cache_remove")
 	core.PuregoSafeRegister(&xCacheValueForeach, libs, "g_cache_value_foreach")
-
 }

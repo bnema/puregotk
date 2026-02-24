@@ -200,9 +200,7 @@ var xCellAreaContextAllocate func(uintptr, int32, int32)
 // rows. This is generally the case for `GtkTreeView` when
 // `GtkTreeView:fixed-height-mode` is enabled.
 func (x *CellAreaContext) Allocate(WidthVar int32, HeightVar int32) {
-
 	xCellAreaContextAllocate(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xCellAreaContextGetAllocation func(uintptr, *int32, *int32)
@@ -213,9 +211,7 @@ var xCellAreaContextGetAllocation func(uintptr, *int32, *int32)
 // context was recently reset with gtk_cell_area_context_reset(),
 // the returned value will be -1.
 func (x *CellAreaContext) GetAllocation(WidthVar *int32, HeightVar *int32) {
-
 	xCellAreaContextGetAllocation(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xCellAreaContextGetArea func(uintptr) uintptr
@@ -252,9 +248,7 @@ var xCellAreaContextGetPreferredHeight func(uintptr, *int32, *int32)
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are 0.
 func (x *CellAreaContext) GetPreferredHeight(MinimumHeightVar *int32, NaturalHeightVar *int32) {
-
 	xCellAreaContextGetPreferredHeight(x.GoPointer(), MinimumHeightVar, NaturalHeightVar)
-
 }
 
 var xCellAreaContextGetPreferredHeightForWidth func(uintptr, int32, *int32, *int32)
@@ -265,9 +259,7 @@ var xCellAreaContextGetPreferredHeightForWidth func(uintptr, int32, *int32, *int
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are -1.
 func (x *CellAreaContext) GetPreferredHeightForWidth(WidthVar int32, MinimumHeightVar *int32, NaturalHeightVar *int32) {
-
 	xCellAreaContextGetPreferredHeightForWidth(x.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
-
 }
 
 var xCellAreaContextGetPreferredWidth func(uintptr, *int32, *int32)
@@ -278,9 +270,7 @@ var xCellAreaContextGetPreferredWidth func(uintptr, *int32, *int32)
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are 0.
 func (x *CellAreaContext) GetPreferredWidth(MinimumWidthVar *int32, NaturalWidthVar *int32) {
-
 	xCellAreaContextGetPreferredWidth(x.GoPointer(), MinimumWidthVar, NaturalWidthVar)
-
 }
 
 var xCellAreaContextGetPreferredWidthForHeight func(uintptr, int32, *int32, *int32)
@@ -291,9 +281,7 @@ var xCellAreaContextGetPreferredWidthForHeight func(uintptr, int32, *int32, *int
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are -1.
 func (x *CellAreaContext) GetPreferredWidthForHeight(HeightVar int32, MinimumWidthVar *int32, NaturalWidthVar *int32) {
-
 	xCellAreaContextGetPreferredWidthForHeight(x.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
-
 }
 
 var xCellAreaContextPushPreferredHeight func(uintptr, int32, int32)
@@ -306,9 +294,7 @@ var xCellAreaContextPushPreferredHeight func(uintptr, int32, int32)
 // progressively push the requested height over a series of
 // gtk_cell_area_get_preferred_height() requests.
 func (x *CellAreaContext) PushPreferredHeight(MinimumHeightVar int32, NaturalHeightVar int32) {
-
 	xCellAreaContextPushPreferredHeight(x.GoPointer(), MinimumHeightVar, NaturalHeightVar)
-
 }
 
 var xCellAreaContextPushPreferredWidth func(uintptr, int32, int32)
@@ -321,9 +307,7 @@ var xCellAreaContextPushPreferredWidth func(uintptr, int32, int32)
 // progressively push the requested width over a series of
 // gtk_cell_area_get_preferred_width() requests.
 func (x *CellAreaContext) PushPreferredWidth(MinimumWidthVar int32, NaturalWidthVar int32) {
-
 	xCellAreaContextPushPreferredWidth(x.GoPointer(), MinimumWidthVar, NaturalWidthVar)
-
 }
 
 var xCellAreaContextReset func(uintptr)
@@ -351,9 +335,7 @@ var xCellAreaContextReset func(uintptr)
 // of all the displayed row heights using
 // gtk_cell_area_get_preferred_height_for_width().
 func (x *CellAreaContext) Reset() {
-
 	xCellAreaContextReset(x.GoPointer())
-
 }
 
 func (c *CellAreaContext) GoPointer() uintptr {
@@ -431,5 +413,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellAreaContextPushPreferredHeight, libs, "gtk_cell_area_context_push_preferred_height")
 	core.PuregoSafeRegister(&xCellAreaContextPushPreferredWidth, libs, "gtk_cell_area_context_push_preferred_width")
 	core.PuregoSafeRegister(&xCellAreaContextReset, libs, "gtk_cell_area_context_reset")
-
 }

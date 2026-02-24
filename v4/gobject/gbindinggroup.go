@@ -56,9 +56,7 @@ var xBindingGroupBind func(uintptr, string, uintptr, string, BindingFlags)
 //
 // See g_object_bind_property() for more information.
 func (x *BindingGroup) Bind(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags) {
-
 	xBindingGroupBind(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar)
-
 }
 
 var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, uintptr, uintptr, uintptr, uintptr)
@@ -70,9 +68,7 @@ var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, u
 //
 // See g_object_bind_property_full() for more information.
 func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, UserDataDestroyVar *glib.DestroyNotify) {
-
 	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallback(UserDataDestroyVar))
-
 }
 
 var xBindingGroupBindWithClosures func(uintptr, string, uintptr, string, BindingFlags, *Closure, *Closure)
@@ -88,9 +84,7 @@ var xBindingGroupBindWithClosures func(uintptr, string, uintptr, string, Binding
 //
 // See g_object_bind_property_with_closures() for more information.
 func (x *BindingGroup) BindWithClosures(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *Closure, TransformFromVar *Closure) {
-
 	xBindingGroupBindWithClosures(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVar, TransformFromVar)
-
 }
 
 var xBindingGroupDupSource func(uintptr) uintptr
@@ -118,9 +112,7 @@ var xBindingGroupSetSource func(uintptr, uintptr)
 //
 // Note that all properties that have been bound must exist on @source.
 func (x *BindingGroup) SetSource(SourceVar *Object) {
-
 	xBindingGroupSetSource(x.GoPointer(), SourceVar.GoPointer())
-
 }
 
 func (c *BindingGroup) GoPointer() uintptr {
@@ -155,5 +147,4 @@ func init() {
 	core.PuregoSafeRegister(&xBindingGroupBindWithClosures, libs, "g_binding_group_bind_with_closures")
 	core.PuregoSafeRegister(&xBindingGroupDupSource, libs, "g_binding_group_dup_source")
 	core.PuregoSafeRegister(&xBindingGroupSetSource, libs, "g_binding_group_set_source")
-
 }

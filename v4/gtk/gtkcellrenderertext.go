@@ -106,9 +106,7 @@ var xCellRendererTextSetFixedHeightFromFont func(uintptr, int32)
 // displayed).  If @number_of_rows is -1, then the fixed height is unset, and
 // the height is determined by the properties again.
 func (x *CellRendererText) SetFixedHeightFromFont(NumberOfRowsVar int32) {
-
 	xCellRendererTextSetFixedHeightFromFont(x.GoPointer(), NumberOfRowsVar)
-
 }
 
 func (c *CellRendererText) GoPointer() uintptr {
@@ -738,7 +736,6 @@ func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, stri
 		cbFn := *cb
 
 		cbFn(fa, PathVarp, NewTextVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -762,5 +759,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewCellRendererText, libs, "gtk_cell_renderer_text_new")
 
 	core.PuregoSafeRegister(&xCellRendererTextSetFixedHeightFromFont, libs, "gtk_cell_renderer_text_set_fixed_height_from_font")
-
 }

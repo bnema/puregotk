@@ -86,7 +86,6 @@ var xNewGlyphString func() *GlyphString
 
 // Create a new `PangoGlyphString`.
 func NewGlyphString() *GlyphString {
-
 	cret := xNewGlyphString()
 	return cret
 }
@@ -95,7 +94,6 @@ var xGlyphStringCopy func(uintptr) *GlyphString
 
 // Copy a glyph string and associated storage.
 func (x *GlyphString) Copy() *GlyphString {
-
 	cret := xGlyphStringCopy(x.GoPointer())
 	return cret
 }
@@ -111,9 +109,7 @@ var xGlyphStringExtents func(uintptr, uintptr, *Rectangle, *Rectangle)
 //
 // ![](rects1.png) ![](rects2.png)
 func (x *GlyphString) Extents(FontVar *Font, InkRectVar *Rectangle, LogicalRectVar *Rectangle) {
-
 	xGlyphStringExtents(x.GoPointer(), FontVar.GoPointer(), InkRectVar, LogicalRectVar)
-
 }
 
 var xGlyphStringExtentsRange func(uintptr, int32, int32, uintptr, *Rectangle, *Rectangle)
@@ -124,18 +120,14 @@ var xGlyphStringExtentsRange func(uintptr, int32, int32, uintptr, *Rectangle, *R
 // (the origin of their coordinate system is at the start of the range,
 // not at the start of the entire glyph string).
 func (x *GlyphString) ExtentsRange(StartVar int32, EndVar int32, FontVar *Font, InkRectVar *Rectangle, LogicalRectVar *Rectangle) {
-
 	xGlyphStringExtentsRange(x.GoPointer(), StartVar, EndVar, FontVar.GoPointer(), InkRectVar, LogicalRectVar)
-
 }
 
 var xGlyphStringFree func(uintptr)
 
 // Free a glyph string and associated storage.
 func (x *GlyphString) Free() {
-
 	xGlyphStringFree(x.GoPointer())
-
 }
 
 var xGlyphStringGetLogicalWidths func(uintptr, string, int32, int32, *[]int32)
@@ -148,9 +140,7 @@ var xGlyphStringGetLogicalWidths func(uintptr, string, int32, int32, *[]int32)
 //
 // See also [method@Pango.GlyphItem.get_logical_widths].
 func (x *GlyphString) GetLogicalWidths(TextVar string, LengthVar int32, EmbeddingLevelVar int32, LogicalWidthsVar *[]int32) {
-
 	xGlyphStringGetLogicalWidths(x.GoPointer(), TextVar, LengthVar, EmbeddingLevelVar, LogicalWidthsVar)
-
 }
 
 var xGlyphStringGetWidth func(uintptr) int32
@@ -162,7 +152,6 @@ var xGlyphStringGetWidth func(uintptr) int32
 // is in fact only a convenience function that computes the sum of
 // @geometry.width for each glyph in the @glyphs.
 func (x *GlyphString) GetWidth() int32 {
-
 	cret := xGlyphStringGetWidth(x.GoPointer())
 	return cret
 }
@@ -183,9 +172,7 @@ var xGlyphStringIndexToX func(uintptr, string, int32, *Analysis, int32, bool, *i
 //
 // &lt;/picture&gt;
 func (x *GlyphString) IndexToX(TextVar string, LengthVar int32, AnalysisVar *Analysis, IndexVar int32, TrailingVar bool, XPosVar *int32) {
-
 	xGlyphStringIndexToX(x.GoPointer(), TextVar, LengthVar, AnalysisVar, IndexVar, TrailingVar, XPosVar)
-
 }
 
 var xGlyphStringIndexToXFull func(uintptr, string, int32, *Analysis, *LogAttr, int32, bool, *int32)
@@ -197,18 +184,14 @@ var xGlyphStringIndexToXFull func(uintptr, string, int32, *Analysis, *LogAttr, i
 // in it can be used to disambiguate positioning inside some complex
 // clusters.
 func (x *GlyphString) IndexToXFull(TextVar string, LengthVar int32, AnalysisVar *Analysis, AttrsVar *LogAttr, IndexVar int32, TrailingVar bool, XPosVar *int32) {
-
 	xGlyphStringIndexToXFull(x.GoPointer(), TextVar, LengthVar, AnalysisVar, AttrsVar, IndexVar, TrailingVar, XPosVar)
-
 }
 
 var xGlyphStringSetSize func(uintptr, int32)
 
 // Resize a glyph string to the given length.
 func (x *GlyphString) SetSize(NewLenVar int32) {
-
 	xGlyphStringSetSize(x.GoPointer(), NewLenVar)
-
 }
 
 var xGlyphStringXToIndex func(uintptr, string, int32, *Analysis, int32, *int32, *int32)
@@ -221,9 +204,7 @@ var xGlyphStringXToIndex func(uintptr, string, int32, *Analysis, int32, *int32, 
 // cursor position; the caller must combine the result with the logical
 // attributes for the text to compute the valid cursor position.
 func (x *GlyphString) XToIndex(TextVar string, LengthVar int32, AnalysisVar *Analysis, XPosVar int32, IndexVar *int32, TrailingVar *int32) {
-
 	xGlyphStringXToIndex(x.GoPointer(), TextVar, LengthVar, AnalysisVar, XPosVar, IndexVar, TrailingVar)
-
 }
 
 // A `PangoGlyphVisAttr` structure communicates information between
@@ -302,9 +283,7 @@ var xShape func(string, int32, *Analysis, *GlyphString)
 // so you need to subtract the item offset from their indices before
 // calling [func@Pango.shape].
 func Shape(TextVar string, LengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
-
 	xShape(TextVar, LengthVar, AnalysisVar, GlyphsVar)
-
 }
 
 var xShapeFull func(string, int32, string, int32, *Analysis, *GlyphString)
@@ -331,9 +310,7 @@ var xShapeFull func(string, int32, string, int32, *Analysis, *GlyphString)
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_full].
 func ShapeFull(ItemTextVar string, ItemLengthVar int32, ParagraphTextVar string, ParagraphLengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
-
 	xShapeFull(ItemTextVar, ItemLengthVar, ParagraphTextVar, ParagraphLengthVar, AnalysisVar, GlyphsVar)
-
 }
 
 var xShapeItem func(*Item, string, int32, *LogAttr, *GlyphString, ShapeFlags)
@@ -352,9 +329,7 @@ var xShapeItem func(*Item, string, int32, *LogAttr, *GlyphString, ShapeFlags)
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_with_flags].
 func ShapeItem(ItemVar *Item, ParagraphTextVar string, ParagraphLengthVar int32, LogAttrsVar *LogAttr, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
-
 	xShapeItem(ItemVar, ParagraphTextVar, ParagraphLengthVar, LogAttrsVar, GlyphsVar, FlagsVar)
-
 }
 
 var xShapeWithFlags func(string, int32, string, int32, *Analysis, *GlyphString, ShapeFlags)
@@ -378,9 +353,7 @@ var xShapeWithFlags func(string, int32, string, int32, *Analysis, *GlyphString, 
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_with_flags].
 func ShapeWithFlags(ItemTextVar string, ItemLengthVar int32, ParagraphTextVar string, ParagraphLengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
-
 	xShapeWithFlags(ItemTextVar, ItemLengthVar, ParagraphTextVar, ParagraphLengthVar, AnalysisVar, GlyphsVar, FlagsVar)
-
 }
 
 func init() {
@@ -416,5 +389,4 @@ func init() {
 	core.PuregoSafeRegister(&xGlyphStringIndexToXFull, libs, "pango_glyph_string_index_to_x_full")
 	core.PuregoSafeRegister(&xGlyphStringSetSize, libs, "pango_glyph_string_set_size")
 	core.PuregoSafeRegister(&xGlyphStringXToIndex, libs, "pango_glyph_string_x_to_index")
-
 }

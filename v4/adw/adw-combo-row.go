@@ -119,7 +119,6 @@ var xComboRowGetEnableSearch func(uintptr) bool
 //
 // Search requires [property@ComboRow:expression] to be set.
 func (x *ComboRow) GetEnableSearch() bool {
-
 	cret := xComboRowGetEnableSearch(x.GoPointer())
 	return cret
 }
@@ -213,7 +212,6 @@ var xComboRowGetSearchMatchMode func(uintptr) gtk.StringFilterMatchMode
 
 // Returns the match mode that the search filter is using.
 func (x *ComboRow) GetSearchMatchMode() gtk.StringFilterMatchMode {
-
 	cret := xComboRowGetSearchMatchMode(x.GoPointer())
 	return cret
 }
@@ -222,7 +220,6 @@ var xComboRowGetSelected func(uintptr) uint32
 
 // Gets the position of the selected item.
 func (x *ComboRow) GetSelected() uint32 {
-
 	cret := xComboRowGetSelected(x.GoPointer())
 	return cret
 }
@@ -248,7 +245,6 @@ var xComboRowGetUseSubtitle func(uintptr) bool
 
 // Gets whether to use the current value as the subtitle.
 func (x *ComboRow) GetUseSubtitle() bool {
-
 	cret := xComboRowGetUseSubtitle(x.GoPointer())
 	return cret
 }
@@ -262,9 +258,7 @@ var xComboRowSetEnableSearch func(uintptr, bool)
 //
 // Search requires [property@ComboRow:expression] to be set.
 func (x *ComboRow) SetEnableSearch(EnableSearchVar bool) {
-
 	xComboRowSetEnableSearch(x.GoPointer(), EnableSearchVar)
-
 }
 
 var xComboRowSetExpression func(uintptr, uintptr)
@@ -277,9 +271,7 @@ var xComboRowSetExpression func(uintptr, uintptr)
 // [property@ComboRow:factory] is not set, or when
 // [property@ComboRow:use-subtitle] is set to `TRUE`.
 func (x *ComboRow) SetExpression(ExpressionVar *gtk.Expression) {
-
 	xComboRowSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
-
 }
 
 var xComboRowSetFactory func(uintptr, uintptr)
@@ -289,18 +281,14 @@ var xComboRowSetFactory func(uintptr, uintptr)
 // This factory is always used for the item in the row. It is also used for
 // items in the popup unless [property@ComboRow:list-factory] is set.
 func (x *ComboRow) SetFactory(FactoryVar *gtk.ListItemFactory) {
-
 	xComboRowSetFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xComboRowSetHeaderFactory func(uintptr, uintptr)
 
 // Sets the factory to use for creating header widgets for the popup.
 func (x *ComboRow) SetHeaderFactory(FactoryVar *gtk.ListItemFactory) {
-
 	xComboRowSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xComboRowSetListFactory func(uintptr, uintptr)
@@ -309,36 +297,28 @@ var xComboRowSetListFactory func(uintptr, uintptr)
 //
 // If this is not set, [property@ComboRow:factory] is used.
 func (x *ComboRow) SetListFactory(FactoryVar *gtk.ListItemFactory) {
-
 	xComboRowSetListFactory(x.GoPointer(), FactoryVar.GoPointer())
-
 }
 
 var xComboRowSetModel func(uintptr, uintptr)
 
 // Sets the model that provides the displayed items.
 func (x *ComboRow) SetModel(ModelVar gio.ListModel) {
-
 	xComboRowSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xComboRowSetSearchMatchMode func(uintptr, gtk.StringFilterMatchMode)
 
 // Sets the match mode for the search filter.
 func (x *ComboRow) SetSearchMatchMode(SearchMatchModeVar gtk.StringFilterMatchMode) {
-
 	xComboRowSetSearchMatchMode(x.GoPointer(), SearchMatchModeVar)
-
 }
 
 var xComboRowSetSelected func(uintptr, uint32)
 
 // Selects the item at the given position.
 func (x *ComboRow) SetSelected(PositionVar uint32) {
-
 	xComboRowSetSelected(x.GoPointer(), PositionVar)
-
 }
 
 var xComboRowSetUseSubtitle func(uintptr, bool)
@@ -353,9 +333,7 @@ var xComboRowSetUseSubtitle func(uintptr, bool)
 // The subtitle is interpreted as Pango markup if
 // [property@PreferencesRow:use-markup] is set to `TRUE`.
 func (x *ComboRow) SetUseSubtitle(UseSubtitleVar bool) {
-
 	xComboRowSetUseSubtitle(x.GoPointer(), UseSubtitleVar)
-
 }
 
 func (c *ComboRow) GoPointer() uintptr {
@@ -462,9 +440,7 @@ func (x *ComboRow) GetPropertyUseSubtitle() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ComboRow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -485,7 +461,6 @@ func (x *ComboRow) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ComboRow) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -510,7 +485,6 @@ func (x *ComboRow) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ComboRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -549,30 +523,23 @@ func (x *ComboRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ComboRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ComboRow) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ComboRow) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ComboRow) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -585,9 +552,7 @@ func (x *ComboRow) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ComboRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -595,9 +560,7 @@ func (x *ComboRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ComboRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -606,9 +569,7 @@ func (x *ComboRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ComboRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -630,9 +591,7 @@ func (x *ComboRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *ComboRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -642,9 +601,7 @@ func (x *ComboRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *ComboRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -666,9 +623,7 @@ func (x *ComboRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk
 //
 // ```
 func (x *ComboRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -678,9 +633,7 @@ func (x *ComboRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *ComboRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -703,9 +656,7 @@ func (x *ComboRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.A
 //
 // ```
 func (x *ComboRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -715,21 +666,17 @@ func (x *ComboRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *ComboRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *ComboRow) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *ComboRow) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -748,9 +695,7 @@ func (x *ComboRow) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *ComboRow) SetActionName(ActionNameVar string) {
-
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -763,9 +708,7 @@ func (x *ComboRow) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *ComboRow) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -787,9 +730,7 @@ func (x *ComboRow) SetActionTarget(FormatStringVar string, varArgs ...interface{
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *ComboRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -798,9 +739,7 @@ func (x *ComboRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *ComboRow) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -808,7 +747,6 @@ func (x *ComboRow) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ComboRow) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -848,5 +786,4 @@ func init() {
 	core.PuregoSafeRegister(&xComboRowSetSearchMatchMode, libs, "adw_combo_row_set_search_match_mode")
 	core.PuregoSafeRegister(&xComboRowSetSelected, libs, "adw_combo_row_set_selected")
 	core.PuregoSafeRegister(&xComboRowSetUseSubtitle, libs, "adw_combo_row_set_use_subtitle")
-
 }

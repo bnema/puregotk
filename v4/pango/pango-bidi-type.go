@@ -78,7 +78,6 @@ var xBidiTypeForUnichar func(uint32) BidiType
 //
 // A simplified version of this function is available as [func@unichar_direction].
 func BidiTypeForUnichar(ChVar uint32) BidiType {
-
 	cret := xBidiTypeForUnichar(ChVar)
 	return cret
 }
@@ -88,7 +87,6 @@ var xFindBaseDir func(string, int32) Direction
 // Searches a string the first character that has a strong
 // direction, according to the Unicode bidirectional algorithm.
 func FindBaseDir(TextVar string, LengthVar int32) Direction {
-
 	cret := xFindBaseDir(TextVar, LengthVar)
 	return cret
 }
@@ -99,7 +97,6 @@ var xGetMirrorChar func(uint32, *uint32) bool
 //
 // Mirror characters are determined by the Unicode mirrored property.
 func GetMirrorChar(ChVar uint32, MirroredChVar *uint32) bool {
-
 	cret := xGetMirrorChar(ChVar, MirroredChVar)
 	return cret
 }
@@ -116,7 +113,6 @@ var xUnicharDirection func(uint32) Direction
 // bidirectional type of a character is needed, [func@Pango.BidiType.for_unichar]
 // can be used instead.
 func UnicharDirection(ChVar uint32) Direction {
-
 	cret := xUnicharDirection(ChVar)
 	return cret
 }
@@ -139,5 +135,4 @@ func init() {
 	core.PuregoSafeRegister(&xFindBaseDir, libs, "pango_find_base_dir")
 	core.PuregoSafeRegister(&xGetMirrorChar, libs, "pango_get_mirror_char")
 	core.PuregoSafeRegister(&xUnicharDirection, libs, "pango_unichar_direction")
-
 }

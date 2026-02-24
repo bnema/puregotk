@@ -39,9 +39,7 @@ var xStaticResourceFini func(uintptr)
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) Fini() {
-
 	xStaticResourceFini(x.GoPointer())
-
 }
 
 var xStaticResourceGetResource func(uintptr) *Resource
@@ -53,7 +51,6 @@ var xStaticResourceGetResource func(uintptr) *Resource
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) GetResource() *Resource {
-
 	cret := xStaticResourceGetResource(x.GoPointer())
 	return cret
 }
@@ -67,16 +64,13 @@ var xStaticResourceInit func(uintptr)
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) Init() {
-
 	xStaticResourceInit(x.GoPointer())
-
 }
 
 var xResourceErrorQuark func() glib.Quark
 
 // Gets the [struct@Gio.Resource] Error Quark.
 func ResourceErrorQuark() glib.Quark {
-
 	cret := xResourceErrorQuark()
 	return cret
 }
@@ -101,7 +95,6 @@ func ResourceLoad(FilenameVar string) (*Resource, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesEnumerateChildren func(string, ResourceLookupFlags, **glib.Error) []string
@@ -121,7 +114,6 @@ func ResourcesEnumerateChildren(PathVar string, LookupFlagsVar ResourceLookupFla
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesGetInfo func(string, ResourceLookupFlags, *uint, *uint32, **glib.Error) bool
@@ -138,7 +130,6 @@ func ResourcesGetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, SizeVa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesHasChildren func(string) bool
@@ -146,7 +137,6 @@ var xResourcesHasChildren func(string) bool
 // Returns whether the specified @path in the set of
 // globally registered resources has children.
 func ResourcesHasChildren(PathVar string) bool {
-
 	cret := xResourcesHasChildren(PathVar)
 	return cret
 }
@@ -175,7 +165,6 @@ func ResourcesLookupData(PathVar string, LookupFlagsVar ResourceLookupFlags) (*g
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesOpenStream func(string, ResourceLookupFlags, **glib.Error) uintptr
@@ -200,7 +189,6 @@ func ResourcesOpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags) (*I
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xResourcesRegister func(*Resource)
@@ -211,18 +199,14 @@ var xResourcesRegister func(*Resource)
 // with the global resource lookup functions like
 // [func@Gio.resources_lookup_data].
 func ResourcesRegister(ResourceVar *Resource) {
-
 	xResourcesRegister(ResourceVar)
-
 }
 
 var xResourcesUnregister func(*Resource)
 
 // Unregisters the resource from the process-global set of resources.
 func ResourcesUnregister(ResourceVar *Resource) {
-
 	xResourcesUnregister(ResourceVar)
-
 }
 
 func init() {
@@ -250,5 +234,4 @@ func init() {
 	core.PuregoSafeRegister(&xStaticResourceFini, libs, "g_static_resource_fini")
 	core.PuregoSafeRegister(&xStaticResourceGetResource, libs, "g_static_resource_get_resource")
 	core.PuregoSafeRegister(&xStaticResourceInit, libs, "g_static_resource_init")
-
 }

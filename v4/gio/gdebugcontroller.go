@@ -68,16 +68,13 @@ func (x *DebugControllerBase) SetGoPointer(ptr uintptr) {
 
 // Get the value of #GDebugController:debug-enabled.
 func (x *DebugControllerBase) GetDebugEnabled() bool {
-
 	cret := XGDebugControllerGetDebugEnabled(x.GoPointer())
 	return cret
 }
 
 // Set the value of #GDebugController:debug-enabled.
 func (x *DebugControllerBase) SetDebugEnabled(DebugEnabledVar bool) {
-
 	XGDebugControllerSetDebugEnabled(x.GoPointer(), DebugEnabledVar)
-
 }
 
 // SetPropertyDebugEnabled sets the "debug-enabled" property.
@@ -103,8 +100,10 @@ func (x *DebugControllerBase) GetPropertyDebugEnabled() bool {
 	return v.GetBoolean()
 }
 
-var XGDebugControllerGetDebugEnabled func(uintptr) bool
-var XGDebugControllerSetDebugEnabled func(uintptr, bool)
+var (
+	XGDebugControllerGetDebugEnabled func(uintptr) bool
+	XGDebugControllerSetDebugEnabled func(uintptr, bool)
+)
 
 const (
 	// Extension point for debug control functionality.
@@ -128,5 +127,4 @@ func init() {
 
 	core.PuregoSafeRegister(&XGDebugControllerGetDebugEnabled, libs, "g_debug_controller_get_debug_enabled")
 	core.PuregoSafeRegister(&XGDebugControllerSetDebugEnabled, libs, "g_debug_controller_set_debug_enabled")
-
 }

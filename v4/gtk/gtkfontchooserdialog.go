@@ -90,9 +90,7 @@ func (c *FontChooserDialog) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FontChooserDialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -113,7 +111,6 @@ func (x *FontChooserDialog) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FontChooserDialog) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -138,7 +135,6 @@ func (x *FontChooserDialog) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FontChooserDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -177,30 +173,23 @@ func (x *FontChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FontChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FontChooserDialog) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FontChooserDialog) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FontChooserDialog) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -213,9 +202,7 @@ func (x *FontChooserDialog) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FontChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -223,9 +210,7 @@ func (x *FontChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FontChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -234,9 +219,7 @@ func (x *FontChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FontChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -258,9 +241,7 @@ func (x *FontChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState
 //
 // ```
 func (x *FontChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -270,9 +251,7 @@ func (x *FontChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -294,9 +273,7 @@ func (x *FontChooserDialog) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *FontChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -306,9 +283,7 @@ func (x *FontChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -331,9 +306,7 @@ func (x *FontChooserDialog) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *FontChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -343,9 +316,7 @@ func (x *FontChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *FontChooserDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -353,7 +324,6 @@ func (x *FontChooserDialog) UpdateStateValue(NStatesVar int32, StatesVar []Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FontChooserDialog) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -369,7 +339,6 @@ func (x *FontChooserDialog) GetBuildableId() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserDialog) GetFont() string {
-
 	cret := XGtkFontChooserGetFont(x.GoPointer())
 	return cret
 }
@@ -385,7 +354,6 @@ func (x *FontChooserDialog) GetFont() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserDialog) GetFontDesc() *pango.FontDescription {
-
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
 	return cret
 }
@@ -433,7 +401,6 @@ func (x *FontChooserDialog) GetFontFamily() *pango.FontFamily {
 // [CSS font-feature-settings property](https://www.w3.org/TR/css-fonts-4/#font-rend-desc).
 // It can be passed to [func@Pango.AttrFontFeatures.new].
 func (x *FontChooserDialog) GetFontFeatures() string {
-
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
 	return cret
 }
@@ -455,35 +422,30 @@ func (x *FontChooserDialog) GetFontMap() *pango.FontMap {
 
 // The selected font size.
 func (x *FontChooserDialog) GetFontSize() int32 {
-
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
 	return cret
 }
 
 // Gets the language that is used for font features.
 func (x *FontChooserDialog) GetLanguage() string {
-
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
 	return cret
 }
 
 // Returns the current level of granularity for selecting fonts.
 func (x *FontChooserDialog) GetLevel() FontChooserLevel {
-
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
 	return cret
 }
 
 // Gets the text displayed in the preview area.
 func (x *FontChooserDialog) GetPreviewText() string {
-
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
 	return cret
 }
 
 // Returns whether the preview entry is shown or not.
 func (x *FontChooserDialog) GetShowPreviewEntry() bool {
-
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
 	return cret
 }
@@ -491,23 +453,17 @@ func (x *FontChooserDialog) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontChooserDialog) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 // Sets the currently-selected font.
 func (x *FontChooserDialog) SetFont(FontnameVar string) {
-
 	XGtkFontChooserSetFont(x.GoPointer(), FontnameVar)
-
 }
 
 // Sets the currently-selected font from @font_desc.
 func (x *FontChooserDialog) SetFontDesc(FontDescVar *pango.FontDescription) {
-
 	XGtkFontChooserSetFontDesc(x.GoPointer(), FontDescVar)
-
 }
 
 // Sets a custom font map to use for this font chooser widget.
@@ -536,39 +492,29 @@ func (x *FontChooserDialog) SetFontDesc(FontDescVar *pango.FontDescription) {
 // pango_context_set_font_map (context, fontmap);
 // ```
 func (x *FontChooserDialog) SetFontMap(FontmapVar *pango.FontMap) {
-
 	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
-
 }
 
 // Sets the language to use for font features.
 func (x *FontChooserDialog) SetLanguage(LanguageVar string) {
-
 	XGtkFontChooserSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 // Sets the desired level of granularity for selecting fonts.
 func (x *FontChooserDialog) SetLevel(LevelVar FontChooserLevel) {
-
 	XGtkFontChooserSetLevel(x.GoPointer(), LevelVar)
-
 }
 
 // Sets the text displayed in the preview area.
 //
 // The @text is used to show how the selected font looks.
 func (x *FontChooserDialog) SetPreviewText(TextVar string) {
-
 	XGtkFontChooserSetPreviewText(x.GoPointer(), TextVar)
-
 }
 
 // Shows or hides the editable preview entry.
 func (x *FontChooserDialog) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
-
 	XGtkFontChooserSetShowPreviewEntry(x.GoPointer(), ShowPreviewEntryVar)
-
 }
 
 // Returns the renderer that is used for this `GtkNative`.
@@ -606,27 +552,21 @@ func (x *FontChooserDialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *FontChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *FontChooserDialog) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *FontChooserDialog) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -673,9 +613,7 @@ func (x *FontChooserDialog) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *FontChooserDialog) SetFocus(FocusVar *Widget) {
-
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -693,5 +631,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontChooserDialogGLibType, libs, "gtk_font_chooser_dialog_get_type")
 
 	core.PuregoSafeRegister(&xNewFontChooserDialog, libs, "gtk_font_chooser_dialog_new")
-
 }

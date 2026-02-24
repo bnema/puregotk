@@ -129,7 +129,6 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 		cbFn := *cb
 
 		cbFn(fa, PathStringVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -149,7 +148,6 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 		cbFn := *cb
 
 		cbFn(fa, PathStringVarp, AccelKeyVarp, AccelModsVarp, HardwareKeycodeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -173,5 +171,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererAccelGLibType, libs, "gtk_cell_renderer_accel_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererAccel, libs, "gtk_cell_renderer_accel_new")
-
 }

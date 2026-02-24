@@ -47,9 +47,7 @@ var xDropFinish func(uintptr, DragAction)
 // The @action must be a single action selected from the actions
 // available via [method@Gdk.Drop.get_actions].
 func (x *Drop) Finish(ActionVar DragAction) {
-
 	xDropFinish(x.GoPointer(), ActionVar)
-
 }
 
 var xDropGetActions func(uintptr) DragAction
@@ -69,7 +67,6 @@ var xDropGetActions func(uintptr) DragAction
 // [method@Gdk.Drop.status] or [method@Gdk.Drop.finish]. The source
 // side will not change this value anymore once a drop has started.
 func (x *Drop) GetActions() DragAction {
-
 	cret := xDropGetActions(x.GoPointer())
 	return cret
 }
@@ -133,7 +130,6 @@ var xDropGetFormats func(uintptr) *ContentFormats
 // Returns the `GdkContentFormats` that the drop offers the data
 // to be read in.
 func (x *Drop) GetFormats() *ContentFormats {
-
 	cret := xDropGetFormats(x.GoPointer())
 	return cret
 }
@@ -160,9 +156,7 @@ var xDropReadAsync func(uintptr, []string, int32, uintptr, uintptr, uintptr)
 // Asynchronously read the dropped data from a `GdkDrop`
 // in a format that complies with one of the mime types.
 func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDropReadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
@@ -190,7 +184,6 @@ func (x *Drop) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string) (*g
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDropReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uintptr)
@@ -202,9 +195,7 @@ var xDropReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uint
 // `GType`, the value will be copied directly. Otherwise, GDK will
 // try to use [func@Gdk.content_deserialize_async] to convert the data.
 func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDropReadValueFinish func(uintptr, uintptr, **glib.Error) *gobject.Value
@@ -220,7 +211,6 @@ func (x *Drop) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDropStatus func(uintptr, DragAction, DragAction)
@@ -239,9 +229,7 @@ var xDropStatus func(uintptr, DragAction, DragAction)
 // not yet know the exact actions it supports, it should set any possible
 // actions first and then later call this function again.
 func (x *Drop) Status(ActionsVar DragAction, PreferredVar DragAction) {
-
 	xDropStatus(x.GoPointer(), ActionsVar, PreferredVar)
-
 }
 
 func (c *Drop) GoPointer() uintptr {
@@ -298,5 +286,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropReadValueAsync, libs, "gdk_drop_read_value_async")
 	core.PuregoSafeRegister(&xDropReadValueFinish, libs, "gdk_drop_read_value_finish")
 	core.PuregoSafeRegister(&xDropStatus, libs, "gdk_drop_status")
-
 }

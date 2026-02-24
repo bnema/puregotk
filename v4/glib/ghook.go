@@ -64,7 +64,6 @@ var xHookCompareIds func(uintptr, *Hook) int32
 // Compares the ids of two #GHook elements, returning a negative value
 // if the second id is greater than the first.
 func (x *Hook) CompareIds(SiblingVar *Hook) int32 {
-
 	cret := xHookCompareIds(x.GoPointer(), SiblingVar)
 	return cret
 }
@@ -96,9 +95,7 @@ var xHookListClear func(uintptr)
 
 // Removes all the #GHook elements from a #GHookList.
 func (x *HookList) Clear() {
-
 	xHookListClear(x.GoPointer())
-
 }
 
 var xHookListInit func(uintptr, uint32)
@@ -106,18 +103,14 @@ var xHookListInit func(uintptr, uint32)
 // Initializes a #GHookList.
 // This must be called before the #GHookList is used.
 func (x *HookList) Init(HookSizeVar uint32) {
-
 	xHookListInit(x.GoPointer(), HookSizeVar)
-
 }
 
 var xHookListInvoke func(uintptr, bool)
 
 // Calls all of the #GHook functions in a #GHookList.
 func (x *HookList) Invoke(MayRecurseVar bool) {
-
 	xHookListInvoke(x.GoPointer(), MayRecurseVar)
-
 }
 
 var xHookListInvokeCheck func(uintptr, bool)
@@ -125,18 +118,14 @@ var xHookListInvokeCheck func(uintptr, bool)
 // Calls all of the #GHook functions in a #GHookList.
 // Any function which returns %FALSE is removed from the #GHookList.
 func (x *HookList) InvokeCheck(MayRecurseVar bool) {
-
 	xHookListInvokeCheck(x.GoPointer(), MayRecurseVar)
-
 }
 
 var xHookListMarshal func(uintptr, bool, uintptr, uintptr)
 
 // Calls a function on each valid #GHook.
 func (x *HookList) Marshal(MayRecurseVar bool, MarshallerVar *HookMarshaller, MarshalDataVar uintptr) {
-
 	xHookListMarshal(x.GoPointer(), MayRecurseVar, NewCallback(MarshallerVar), MarshalDataVar)
-
 }
 
 var xHookListMarshalCheck func(uintptr, bool, uintptr, uintptr)
@@ -144,9 +133,7 @@ var xHookListMarshalCheck func(uintptr, bool, uintptr, uintptr)
 // Calls a function on each valid #GHook and destroys it if the
 // function returns %FALSE.
 func (x *HookList) MarshalCheck(MayRecurseVar bool, MarshallerVar *HookCheckMarshaller, MarshalDataVar uintptr) {
-
 	xHookListMarshalCheck(x.GoPointer(), MayRecurseVar, NewCallback(MarshallerVar), MarshalDataVar)
-
 }
 
 const (
@@ -175,7 +162,6 @@ var xHookDestroy func(*HookList, uint32) bool
 
 // Destroys a #GHook, given its ID.
 func HookDestroy(HookListVar *HookList, HookIdVar uint32) bool {
-
 	cret := xHookDestroy(HookListVar, HookIdVar)
 	return cret
 }
@@ -185,9 +171,7 @@ var xHookDestroyLink func(*HookList, *Hook)
 // Removes one #GHook from a #GHookList, marking it
 // inactive and calling g_hook_unref() on it.
 func HookDestroyLink(HookListVar *HookList, HookVar *Hook) {
-
 	xHookDestroyLink(HookListVar, HookVar)
-
 }
 
 var xHookFree func(*HookList, *Hook)
@@ -195,36 +179,28 @@ var xHookFree func(*HookList, *Hook)
 // Calls the #GHookList @finalize_hook function if it exists,
 // and frees the memory allocated for the #GHook.
 func HookFree(HookListVar *HookList, HookVar *Hook) {
-
 	xHookFree(HookListVar, HookVar)
-
 }
 
 var xHookInsertBefore func(*HookList, *Hook, *Hook)
 
 // Inserts a #GHook into a #GHookList, before a given #GHook.
 func HookInsertBefore(HookListVar *HookList, SiblingVar *Hook, HookVar *Hook) {
-
 	xHookInsertBefore(HookListVar, SiblingVar, HookVar)
-
 }
 
 var xHookInsertSorted func(*HookList, *Hook, uintptr)
 
 // Inserts a #GHook into a #GHookList, sorted by the given function.
 func HookInsertSorted(HookListVar *HookList, HookVar *Hook, FuncVar *HookCompareFunc) {
-
 	xHookInsertSorted(HookListVar, HookVar, NewCallback(FuncVar))
-
 }
 
 var xHookPrepend func(*HookList, *Hook)
 
 // Prepends a #GHook on the start of a #GHookList.
 func HookPrepend(HookListVar *HookList, HookVar *Hook) {
-
 	xHookPrepend(HookListVar, HookVar)
-
 }
 
 var xHookUnref func(*HookList, *Hook)
@@ -233,9 +209,7 @@ var xHookUnref func(*HookList, *Hook)
 // If the reference count falls to 0, the #GHook is removed
 // from the #GHookList and g_hook_free() is called to free it.
 func HookUnref(HookListVar *HookList, HookVar *Hook) {
-
 	xHookUnref(HookListVar, HookVar)
-
 }
 
 func init() {
@@ -266,5 +240,4 @@ func init() {
 	core.PuregoSafeRegister(&xHookListInvokeCheck, libs, "g_hook_list_invoke_check")
 	core.PuregoSafeRegister(&xHookListMarshal, libs, "g_hook_list_marshal")
 	core.PuregoSafeRegister(&xHookListMarshalCheck, libs, "g_hook_list_marshal_check")
-
 }

@@ -21,7 +21,6 @@ var xLanguageFromString func(string) *Language
 // Use [func@Pango.Language.get_default] if you want to get the
 // `PangoLanguage` for the current locale of the process.
 func LanguageFromString(LanguageVar string) *Language {
-
 	cret := xLanguageFromString(LanguageVar)
 	return cret
 }
@@ -60,7 +59,6 @@ var xLanguageGetDefault func() *Language
 // use per-thread locales with uselocale(). In that case, you should
 // just call pango_language_from_string() yourself.
 func LanguageGetDefault() *Language {
-
 	cret := xLanguageGetDefault()
 	return cret
 }
@@ -79,7 +77,6 @@ var xLanguageGetPreferred func() uintptr
 // you should first try the default language, followed by the
 // languages returned by this function.
 func LanguageGetPreferred() uintptr {
-
 	cret := xLanguageGetPreferred()
 	return cret
 }
@@ -99,5 +96,4 @@ func init() {
 	core.PuregoSafeRegister(&xLanguageFromString, libs, "pango_language_from_string")
 	core.PuregoSafeRegister(&xLanguageGetDefault, libs, "pango_language_get_default")
 	core.PuregoSafeRegister(&xLanguageGetPreferred, libs, "pango_language_get_preferred")
-
 }

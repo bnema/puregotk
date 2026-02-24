@@ -216,7 +216,6 @@ var xMountOperationIsShowing func(uintptr) bool
 // Returns whether the `GtkMountOperation` is currently displaying
 // a window.
 func (x *MountOperation) IsShowing() bool {
-
 	cret := xMountOperationIsShowing(x.GoPointer())
 	return cret
 }
@@ -225,9 +224,7 @@ var xMountOperationSetDisplay func(uintptr, uintptr)
 
 // Sets the display to show windows of the `GtkMountOperation` on.
 func (x *MountOperation) SetDisplay(DisplayVar *gdk.Display) {
-
 	xMountOperationSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 var xMountOperationSetParent func(uintptr, uintptr)
@@ -235,9 +232,7 @@ var xMountOperationSetParent func(uintptr, uintptr)
 // Sets the transient parent for windows shown by the
 // `GtkMountOperation`.
 func (x *MountOperation) SetParent(ParentVar *Window) {
-
 	xMountOperationSetParent(x.GoPointer(), ParentVar.GoPointer())
-
 }
 
 func (c *MountOperation) GoPointer() uintptr {
@@ -280,5 +275,4 @@ func init() {
 	core.PuregoSafeRegister(&xMountOperationIsShowing, libs, "gtk_mount_operation_is_showing")
 	core.PuregoSafeRegister(&xMountOperationSetDisplay, libs, "gtk_mount_operation_set_display")
 	core.PuregoSafeRegister(&xMountOperationSetParent, libs, "gtk_mount_operation_set_parent")
-
 }

@@ -83,9 +83,7 @@ var xPreferencesDialogAdd func(uintptr, uintptr)
 
 // Adds a preferences page to @self.
 func (x *PreferencesDialog) Add(PageVar *PreferencesPage) {
-
 	xPreferencesDialogAdd(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesDialogAddToast func(uintptr, uintptr)
@@ -94,16 +92,13 @@ var xPreferencesDialogAddToast func(uintptr, uintptr)
 //
 // See [method@ToastOverlay.add_toast].
 func (x *PreferencesDialog) AddToast(ToastVar *Toast) {
-
 	xPreferencesDialogAddToast(x.GoPointer(), ToastVar.GoPointer())
-
 }
 
 var xPreferencesDialogGetSearchEnabled func(uintptr) bool
 
 // Gets whether search is enabled for @self.
 func (x *PreferencesDialog) GetSearchEnabled() bool {
-
 	cret := xPreferencesDialogGetSearchEnabled(x.GoPointer())
 	return cret
 }
@@ -129,7 +124,6 @@ var xPreferencesDialogGetVisiblePageName func(uintptr) string
 
 // Gets the name of currently visible page of @self.
 func (x *PreferencesDialog) GetVisiblePageName() string {
-
 	cret := xPreferencesDialogGetVisiblePageName(x.GoPointer())
 	return cret
 }
@@ -138,7 +132,6 @@ var xPreferencesDialogPopSubpage func(uintptr) bool
 
 // Pop the visible page from the subpage stack of @self.
 func (x *PreferencesDialog) PopSubpage() bool {
-
 	cret := xPreferencesDialogPopSubpage(x.GoPointer())
 	return cret
 }
@@ -149,36 +142,28 @@ var xPreferencesDialogPushSubpage func(uintptr, uintptr)
 //
 // The page will be automatically removed when popped.
 func (x *PreferencesDialog) PushSubpage(PageVar *NavigationPage) {
-
 	xPreferencesDialogPushSubpage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesDialogRemove func(uintptr, uintptr)
 
 // Removes a page from @self.
 func (x *PreferencesDialog) Remove(PageVar *PreferencesPage) {
-
 	xPreferencesDialogRemove(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesDialogSetSearchEnabled func(uintptr, bool)
 
 // Sets whether search is enabled for @self.
 func (x *PreferencesDialog) SetSearchEnabled(SearchEnabledVar bool) {
-
 	xPreferencesDialogSetSearchEnabled(x.GoPointer(), SearchEnabledVar)
-
 }
 
 var xPreferencesDialogSetVisiblePage func(uintptr, uintptr)
 
 // Makes @page the visible page of @self.
 func (x *PreferencesDialog) SetVisiblePage(PageVar *PreferencesPage) {
-
 	xPreferencesDialogSetVisiblePage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesDialogSetVisiblePageName func(uintptr, string)
@@ -187,9 +172,7 @@ var xPreferencesDialogSetVisiblePageName func(uintptr, string)
 //
 // See [property@PreferencesDialog:visible-page].
 func (x *PreferencesDialog) SetVisiblePageName(NameVar string) {
-
 	xPreferencesDialogSetVisiblePageName(x.GoPointer(), NameVar)
-
 }
 
 func (c *PreferencesDialog) GoPointer() uintptr {
@@ -251,9 +234,7 @@ func (x *PreferencesDialog) GetPropertyVisiblePageName() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *PreferencesDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -274,7 +255,6 @@ func (x *PreferencesDialog) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *PreferencesDialog) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -299,7 +279,6 @@ func (x *PreferencesDialog) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *PreferencesDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -338,30 +317,23 @@ func (x *PreferencesDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *PreferencesDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *PreferencesDialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *PreferencesDialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *PreferencesDialog) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -374,9 +346,7 @@ func (x *PreferencesDialog) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *PreferencesDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -384,9 +354,7 @@ func (x *PreferencesDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *PreferencesDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -395,9 +363,7 @@ func (x *PreferencesDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Access
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *PreferencesDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -419,9 +385,7 @@ func (x *PreferencesDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformS
 //
 // ```
 func (x *PreferencesDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -431,9 +395,7 @@ func (x *PreferencesDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProper
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -455,9 +417,7 @@ func (x *PreferencesDialog) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *PreferencesDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -467,9 +427,7 @@ func (x *PreferencesDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelati
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -492,9 +450,7 @@ func (x *PreferencesDialog) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *PreferencesDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -504,9 +460,7 @@ func (x *PreferencesDialog) UpdateState(FirstStateVar gtk.AccessibleState, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -514,7 +468,6 @@ func (x *PreferencesDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.A
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *PreferencesDialog) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -546,5 +499,4 @@ func init() {
 	core.PuregoSafeRegister(&xPreferencesDialogSetSearchEnabled, libs, "adw_preferences_dialog_set_search_enabled")
 	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePage, libs, "adw_preferences_dialog_set_visible_page")
 	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePageName, libs, "adw_preferences_dialog_set_visible_page_name")
-
 }

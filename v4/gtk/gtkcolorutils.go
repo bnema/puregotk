@@ -13,9 +13,7 @@ var xHsvToRgb func(float32, float32, float32, *float32, *float32, *float32)
 // Input values must be in the [0.0, 1.0] range;
 // output values will be in the same range.
 func HsvToRgb(HVar float32, SVar float32, VVar float32, RVar *float32, GVar *float32, BVar *float32) {
-
 	xHsvToRgb(HVar, SVar, VVar, RVar, GVar, BVar)
-
 }
 
 var xRgbToHsv func(float32, float32, float32, *float32, *float32, *float32)
@@ -25,9 +23,7 @@ var xRgbToHsv func(float32, float32, float32, *float32, *float32, *float32)
 // Input values must be in the [0.0, 1.0] range;
 // output values will be in the same range.
 func RgbToHsv(RVar float32, GVar float32, BVar float32, HVar *float32, SVar *float32, VVar *float32) {
-
 	xRgbToHsv(RVar, GVar, BVar, HVar, SVar, VVar)
-
 }
 
 func init() {
@@ -44,5 +40,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xHsvToRgb, libs, "gtk_hsv_to_rgb")
 	core.PuregoSafeRegister(&xRgbToHsv, libs, "gtk_rgb_to_hsv")
-
 }

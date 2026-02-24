@@ -105,7 +105,6 @@ var xSearchEntryGetInputHints func(uintptr) InputHints
 
 // Gets the input purpose for @entry.
 func (x *SearchEntry) GetInputHints() InputHints {
-
 	cret := xSearchEntryGetInputHints(x.GoPointer())
 	return cret
 }
@@ -114,7 +113,6 @@ var xSearchEntryGetInputPurpose func(uintptr) InputPurpose
 
 // Gets the input purpose of @entry.
 func (x *SearchEntry) GetInputPurpose() InputPurpose {
-
 	cret := xSearchEntryGetInputPurpose(x.GoPointer())
 	return cret
 }
@@ -140,7 +138,6 @@ var xSearchEntryGetPlaceholderText func(uintptr) string
 
 // Gets the placeholder text associated with @entry.
 func (x *SearchEntry) GetPlaceholderText() string {
-
 	cret := xSearchEntryGetPlaceholderText(x.GoPointer())
 	return cret
 }
@@ -150,7 +147,6 @@ var xSearchEntryGetSearchDelay func(uintptr) uint32
 // Get the delay to be used between the last keypress and the
 // [signal@Gtk.SearchEntry::search-changed] signal being emitted.
 func (x *SearchEntry) GetSearchDelay() uint32 {
-
 	cret := xSearchEntryGetSearchDelay(x.GoPointer())
 	return cret
 }
@@ -159,18 +155,14 @@ var xSearchEntrySetInputHints func(uintptr, InputHints)
 
 // Sets the input hints for @entry.
 func (x *SearchEntry) SetInputHints(HintsVar InputHints) {
-
 	xSearchEntrySetInputHints(x.GoPointer(), HintsVar)
-
 }
 
 var xSearchEntrySetInputPurpose func(uintptr, InputPurpose)
 
 // Sets the input purpose of @entry.
 func (x *SearchEntry) SetInputPurpose(PurposeVar InputPurpose) {
-
 	xSearchEntrySetInputPurpose(x.GoPointer(), PurposeVar)
-
 }
 
 var xSearchEntrySetKeyCaptureWidget func(uintptr, uintptr)
@@ -193,18 +185,14 @@ var xSearchEntrySetKeyCaptureWidget func(uintptr, uintptr)
 // capture and forward the events yourself with
 // [method@Gtk.EventControllerKey.forward].
 func (x *SearchEntry) SetKeyCaptureWidget(WidgetVar *Widget) {
-
 	xSearchEntrySetKeyCaptureWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xSearchEntrySetPlaceholderText func(uintptr, string)
 
 // Sets the placeholder text associated with @entry.
 func (x *SearchEntry) SetPlaceholderText(TextVar string) {
-
 	xSearchEntrySetPlaceholderText(x.GoPointer(), TextVar)
-
 }
 
 var xSearchEntrySetSearchDelay func(uintptr, uint32)
@@ -212,9 +200,7 @@ var xSearchEntrySetSearchDelay func(uintptr, uint32)
 // Set the delay to be used between the last keypress and the
 // [signal@Gtk.SearchEntry::search-changed] signal being emitted.
 func (x *SearchEntry) SetSearchDelay(DelayVar uint32) {
-
 	xSearchEntrySetSearchDelay(x.GoPointer(), DelayVar)
-
 }
 
 func (c *SearchEntry) GoPointer() uintptr {
@@ -298,7 +284,6 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -326,7 +311,6 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -355,7 +339,6 @@ func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -377,7 +360,6 @@ func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -397,7 +379,6 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -424,7 +405,6 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -441,9 +421,7 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *SearchEntry) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -464,7 +442,6 @@ func (x *SearchEntry) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *SearchEntry) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -489,7 +466,6 @@ func (x *SearchEntry) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *SearchEntry) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -528,30 +504,23 @@ func (x *SearchEntry) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *SearchEntry) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *SearchEntry) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *SearchEntry) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *SearchEntry) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -564,9 +533,7 @@ func (x *SearchEntry) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *SearchEntry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -574,9 +541,7 @@ func (x *SearchEntry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *SearchEntry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -585,9 +550,7 @@ func (x *SearchEntry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *SearchEntry) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -609,9 +572,7 @@ func (x *SearchEntry) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *SearchEntry) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -621,9 +582,7 @@ func (x *SearchEntry) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *SearchEntry) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -645,9 +604,7 @@ func (x *SearchEntry) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *SearchEntry) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -657,9 +614,7 @@ func (x *SearchEntry) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *SearchEntry) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -682,9 +637,7 @@ func (x *SearchEntry) UpdateRelationValue(NRelationsVar int32, RelationsVar []Ac
 //
 // ```
 func (x *SearchEntry) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -694,9 +647,7 @@ func (x *SearchEntry) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *SearchEntry) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -704,7 +655,6 @@ func (x *SearchEntry) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SearchEntry) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -746,7 +696,6 @@ func (x *SearchEntry) GetBuildableId() string {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *SearchEntry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -755,9 +704,7 @@ func (x *SearchEntry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlat
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *SearchEntry) DeleteSelection() {
-
 	XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -769,9 +716,7 @@ func (x *SearchEntry) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *SearchEntry) DeleteText(StartPosVar int32, EndPosVar int32) {
-
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -779,14 +724,11 @@ func (x *SearchEntry) DeleteText(StartPosVar int32, EndPosVar int32) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *SearchEntry) FinishDelegate() {
-
 	XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Gets the alignment of the editable.
 func (x *SearchEntry) GetAlignment() float32 {
-
 	cret := XGtkEditableGetAlignment(x.GoPointer())
 	return cret
 }
@@ -800,7 +742,6 @@ func (x *SearchEntry) GetAlignment() float32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SearchEntry) GetChars(StartPosVar int32, EndPosVar int32) string {
-
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -825,21 +766,18 @@ func (x *SearchEntry) GetDelegate() *EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *SearchEntry) GetEditable() bool {
-
 	cret := XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *SearchEntry) GetEnableUndo() bool {
-
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *SearchEntry) GetMaxWidthChars() int32 {
-
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -849,7 +787,6 @@ func (x *SearchEntry) GetMaxWidthChars() int32 {
 //
 // Note that this position is in characters, not in bytes.
 func (x *SearchEntry) GetPosition() int32 {
-
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -862,7 +799,6 @@ func (x *SearchEntry) GetPosition() int32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SearchEntry) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
-
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -871,7 +807,6 @@ func (x *SearchEntry) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) b
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *SearchEntry) GetText() string {
-
 	cret := XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -879,7 +814,6 @@ func (x *SearchEntry) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *SearchEntry) GetWidthChars() int32 {
-
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -892,9 +826,7 @@ func (x *SearchEntry) GetWidthChars() int32 {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *SearchEntry) InitDelegate() {
-
 	XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -904,9 +836,7 @@ func (x *SearchEntry) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *SearchEntry) InsertText(TextVar string, LengthVar int32, PositionVar int32) {
-
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -918,9 +848,7 @@ func (x *SearchEntry) InsertText(TextVar string, LengthVar int32, PositionVar in
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SearchEntry) SelectRegion(StartPosVar int32, EndPosVar int32) {
-
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Sets the alignment for the contents of the editable.
@@ -928,16 +856,12 @@ func (x *SearchEntry) SelectRegion(StartPosVar int32, EndPosVar int32) {
 // This controls the horizontal positioning of the contents when
 // the displayed text is shorter than the width of the editable.
 func (x *SearchEntry) SetAlignment(XalignVar float32) {
-
 	XGtkEditableSetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *SearchEntry) SetEditable(IsEditableVar bool) {
-
 	XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -947,16 +871,12 @@ func (x *SearchEntry) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *SearchEntry) SetEnableUndo(EnableUndoVar bool) {
-
 	XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *SearchEntry) SetMaxWidthChars(NCharsVar int32) {
-
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -967,18 +887,14 @@ func (x *SearchEntry) SetMaxWidthChars(NCharsVar int32) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *SearchEntry) SetPosition(PositionVar int32) {
-
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *SearchEntry) SetText(TextVar string) {
-
 	XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -988,9 +904,7 @@ func (x *SearchEntry) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *SearchEntry) SetWidthChars(NCharsVar int32) {
-
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 func init() {
@@ -1019,5 +933,4 @@ func init() {
 	core.PuregoSafeRegister(&xSearchEntrySetKeyCaptureWidget, libs, "gtk_search_entry_set_key_capture_widget")
 	core.PuregoSafeRegister(&xSearchEntrySetPlaceholderText, libs, "gtk_search_entry_set_placeholder_text")
 	core.PuregoSafeRegister(&xSearchEntrySetSearchDelay, libs, "gtk_search_entry_set_search_delay")
-
 }

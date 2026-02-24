@@ -30,7 +30,6 @@ var xNewWebViewSessionState func(*glib.Bytes) *WebViewSessionState
 
 // Creates a new #WebKitWebViewSessionState from serialized data.
 func NewWebViewSessionState(DataVar *glib.Bytes) *WebViewSessionState {
-
 	cret := xNewWebViewSessionState(DataVar)
 	return cret
 }
@@ -42,7 +41,6 @@ var xWebViewSessionStateRef func(uintptr) *WebViewSessionState
 // This
 // function is MT-safe and may be called from any thread.
 func (x *WebViewSessionState) Ref() *WebViewSessionState {
-
 	cret := xWebViewSessionStateRef(x.GoPointer())
 	return cret
 }
@@ -51,7 +49,6 @@ var xWebViewSessionStateSerialize func(uintptr) *glib.Bytes
 
 // Serializes a #WebKitWebViewSessionState.
 func (x *WebViewSessionState) Serialize() *glib.Bytes {
-
 	cret := xWebViewSessionStateSerialize(x.GoPointer())
 	return cret
 }
@@ -64,9 +61,7 @@ var xWebViewSessionStateUnref func(uintptr)
 // reference count drops to 0, all memory allocated by the #WebKitWebViewSessionState is
 // released. This function is MT-safe and may be called from any thread.
 func (x *WebViewSessionState) Unref() {
-
 	xWebViewSessionStateUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -88,5 +83,4 @@ func init() {
 	core.PuregoSafeRegister(&xWebViewSessionStateRef, libs, "webkit_web_view_session_state_ref")
 	core.PuregoSafeRegister(&xWebViewSessionStateSerialize, libs, "webkit_web_view_session_state_serialize")
 	core.PuregoSafeRegister(&xWebViewSessionStateUnref, libs, "webkit_web_view_session_state_unref")
-
 }

@@ -92,7 +92,6 @@ var xStringSorterGetCollation func(uintptr) Collation
 
 // Gets which collation method the sorter uses.
 func (x *StringSorter) GetCollation() Collation {
-
 	cret := xStringSorterGetCollation(x.GoPointer())
 	return cret
 }
@@ -118,7 +117,6 @@ var xStringSorterGetIgnoreCase func(uintptr) bool
 
 // Gets whether the sorter ignores case differences.
 func (x *StringSorter) GetIgnoreCase() bool {
-
 	cret := xStringSorterGetIgnoreCase(x.GoPointer())
 	return cret
 }
@@ -127,9 +125,7 @@ var xStringSorterSetCollation func(uintptr, Collation)
 
 // Sets the collation method to use for sorting.
 func (x *StringSorter) SetCollation(CollationVar Collation) {
-
 	xStringSorterSetCollation(x.GoPointer(), CollationVar)
-
 }
 
 var xStringSorterSetExpression func(uintptr, uintptr)
@@ -138,18 +134,14 @@ var xStringSorterSetExpression func(uintptr, uintptr)
 //
 // The expression must have the type %G_TYPE_STRING.
 func (x *StringSorter) SetExpression(ExpressionVar *Expression) {
-
 	xStringSorterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
-
 }
 
 var xStringSorterSetIgnoreCase func(uintptr, bool)
 
 // Sets whether the sorter will ignore case differences.
 func (x *StringSorter) SetIgnoreCase(IgnoreCaseVar bool) {
-
 	xStringSorterSetIgnoreCase(x.GoPointer(), IgnoreCaseVar)
-
 }
 
 func (c *StringSorter) GoPointer() uintptr {
@@ -204,5 +196,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringSorterSetCollation, libs, "gtk_string_sorter_set_collation")
 	core.PuregoSafeRegister(&xStringSorterSetExpression, libs, "gtk_string_sorter_set_expression")
 	core.PuregoSafeRegister(&xStringSorterSetIgnoreCase, libs, "gtk_string_sorter_set_ignore_case")
-
 }

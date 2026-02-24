@@ -273,9 +273,7 @@ func (x *ActionMapBase) SetGoPointer(ptr uintptr) {
 //
 // The action map takes its own reference on @action.
 func (x *ActionMapBase) AddAction(ActionVar Action) {
-
 	XGActionMapAddAction(x.GoPointer(), ActionVar.GoPointer())
-
 }
 
 // A convenience function for creating multiple [class@Gio.SimpleAction]
@@ -322,9 +320,7 @@ func (x *ActionMapBase) AddAction(ActionVar Action) {
 //
 // ```
 func (x *ActionMapBase) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
-
 	XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
-
 }
 
 // Looks up the action with the name @action_name in @action_map.
@@ -348,9 +344,7 @@ func (x *ActionMapBase) LookupAction(ActionNameVar string) *ActionBase {
 //
 // If no action of this name is in the map then nothing happens.
 func (x *ActionMapBase) RemoveAction(ActionNameVar string) {
-
 	XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
-
 }
 
 // Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
@@ -379,16 +373,16 @@ func (x *ActionMapBase) RemoveAction(ActionNameVar string) {
 //
 // ```
 func (x *ActionMapBase) RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int32) {
-
 	XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
-
 }
 
-var XGActionMapAddAction func(uintptr, uintptr)
-var XGActionMapAddActionEntries func(uintptr, []ActionEntry, int32, uintptr)
-var XGActionMapLookupAction func(uintptr, string) uintptr
-var XGActionMapRemoveAction func(uintptr, string)
-var XGActionMapRemoveActionEntries func(uintptr, []ActionEntry, int32)
+var (
+	XGActionMapAddAction           func(uintptr, uintptr)
+	XGActionMapAddActionEntries    func(uintptr, []ActionEntry, int32, uintptr)
+	XGActionMapLookupAction        func(uintptr, string) uintptr
+	XGActionMapRemoveAction        func(uintptr, string)
+	XGActionMapRemoveActionEntries func(uintptr, []ActionEntry, int32)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -409,5 +403,4 @@ func init() {
 	core.PuregoSafeRegister(&XGActionMapLookupAction, libs, "g_action_map_lookup_action")
 	core.PuregoSafeRegister(&XGActionMapRemoveAction, libs, "g_action_map_remove_action")
 	core.PuregoSafeRegister(&XGActionMapRemoveActionEntries, libs, "g_action_map_remove_action_entries")
-
 }

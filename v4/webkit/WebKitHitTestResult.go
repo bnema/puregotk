@@ -89,7 +89,6 @@ var xHitTestResultContextIsEditable func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_EDITABLE flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsEditable() bool {
-
 	cret := xHitTestResultContextIsEditable(x.GoPointer())
 	return cret
 }
@@ -99,7 +98,6 @@ var xHitTestResultContextIsImage func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_IMAGE flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsImage() bool {
-
 	cret := xHitTestResultContextIsImage(x.GoPointer())
 	return cret
 }
@@ -109,7 +107,6 @@ var xHitTestResultContextIsLink func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsLink() bool {
-
 	cret := xHitTestResultContextIsLink(x.GoPointer())
 	return cret
 }
@@ -119,7 +116,6 @@ var xHitTestResultContextIsMedia func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_MEDIA flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsMedia() bool {
-
 	cret := xHitTestResultContextIsMedia(x.GoPointer())
 	return cret
 }
@@ -129,7 +125,6 @@ var xHitTestResultContextIsScrollbar func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_SCROLLBAR flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsScrollbar() bool {
-
 	cret := xHitTestResultContextIsScrollbar(x.GoPointer())
 	return cret
 }
@@ -139,7 +134,6 @@ var xHitTestResultContextIsSelection func(uintptr) bool
 // Gets whether %WEBKIT_HIT_TEST_RESULT_CONTEXT_SELECTION flag is present in
 // #WebKitHitTestResult:context.
 func (x *HitTestResult) ContextIsSelection() bool {
-
 	cret := xHitTestResultContextIsSelection(x.GoPointer())
 	return cret
 }
@@ -148,7 +142,6 @@ var xHitTestResultGetContext func(uintptr) uint32
 
 // Gets the value of the #WebKitHitTestResult:context property.
 func (x *HitTestResult) GetContext() uint32 {
-
 	cret := xHitTestResultGetContext(x.GoPointer())
 	return cret
 }
@@ -157,7 +150,6 @@ var xHitTestResultGetImageUri func(uintptr) string
 
 // Gets the value of the #WebKitHitTestResult:image-uri property.
 func (x *HitTestResult) GetImageUri() string {
-
 	cret := xHitTestResultGetImageUri(x.GoPointer())
 	return cret
 }
@@ -166,7 +158,6 @@ var xHitTestResultGetLinkLabel func(uintptr) string
 
 // Gets the value of the #WebKitHitTestResult:link-label property.
 func (x *HitTestResult) GetLinkLabel() string {
-
 	cret := xHitTestResultGetLinkLabel(x.GoPointer())
 	return cret
 }
@@ -175,7 +166,6 @@ var xHitTestResultGetLinkTitle func(uintptr) string
 
 // Gets the value of the #WebKitHitTestResult:link-title property.
 func (x *HitTestResult) GetLinkTitle() string {
-
 	cret := xHitTestResultGetLinkTitle(x.GoPointer())
 	return cret
 }
@@ -184,7 +174,6 @@ var xHitTestResultGetLinkUri func(uintptr) string
 
 // Gets the value of the #WebKitHitTestResult:link-uri property.
 func (x *HitTestResult) GetLinkUri() string {
-
 	cret := xHitTestResultGetLinkUri(x.GoPointer())
 	return cret
 }
@@ -193,7 +182,6 @@ var xHitTestResultGetMediaUri func(uintptr) string
 
 // Gets the value of the #WebKitHitTestResult:media-uri property.
 func (x *HitTestResult) GetMediaUri() string {
-
 	cret := xHitTestResultGetMediaUri(x.GoPointer())
 	return cret
 }

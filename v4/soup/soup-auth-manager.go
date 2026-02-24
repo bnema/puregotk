@@ -59,9 +59,7 @@ var xAuthManagerClearCachedCredentials func(uintptr)
 
 // Clear all credentials cached by @manager.
 func (x *AuthManager) ClearCachedCredentials() {
-
 	xAuthManagerClearCachedCredentials(x.GoPointer())
-
 }
 
 var xAuthManagerUseAuth func(uintptr, *glib.Uri, uintptr)
@@ -77,9 +75,7 @@ var xAuthManagerUseAuth func(uintptr, *glib.Uri, uintptr)
 // Authorization header does not depend on any additional information
 // from the server. (Eg, Basic or NTLM, but not Digest.)
 func (x *AuthManager) UseAuth(UriVar *glib.Uri, AuthVar *Auth) {
-
 	xAuthManagerUseAuth(x.GoPointer(), UriVar, AuthVar.GoPointer())
-
 }
 
 func (c *AuthManager) GoPointer() uintptr {
@@ -109,5 +105,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xAuthManagerClearCachedCredentials, libs, "soup_auth_manager_clear_cached_credentials")
 	core.PuregoSafeRegister(&xAuthManagerUseAuth, libs, "soup_auth_manager_use_auth")
-
 }

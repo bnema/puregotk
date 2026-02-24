@@ -36,7 +36,6 @@ var xDialogErrorQuark func() glib.Quark
 // Registers an error quark for an operation that requires a dialog if
 // necessary.
 func DialogErrorQuark() glib.Quark {
-
 	cret := xDialogErrorQuark()
 	return cret
 }
@@ -56,5 +55,4 @@ func init() {
 	core.PuregoSafeRegister(&xDialogErrorGLibType, libs, "gtk_dialog_error_get_type")
 
 	core.PuregoSafeRegister(&xDialogErrorQuark, libs, "gtk_dialog_error_quark")
-
 }

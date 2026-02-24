@@ -98,5 +98,4 @@ func init() {
 	core.PuregoSafeRegister(&xCustomLayoutGLibType, libs, "gtk_custom_layout_get_type")
 
 	core.PuregoSafeRegister(&xNewCustomLayout, libs, "gtk_custom_layout_new")
-
 }

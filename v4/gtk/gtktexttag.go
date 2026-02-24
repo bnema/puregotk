@@ -89,16 +89,13 @@ var xTextTagChanged func(uintptr, bool)
 // The signal is already emitted when setting a `GtkTextTag` property.
 // This function is useful for a `GtkTextTag` subclass.
 func (x *TextTag) Changed(SizeChangedVar bool) {
-
 	xTextTagChanged(x.GoPointer(), SizeChangedVar)
-
 }
 
 var xTextTagGetPriority func(uintptr) int32
 
 // Get the tag priority.
 func (x *TextTag) GetPriority() int32 {
-
 	cret := xTextTagGetPriority(x.GoPointer())
 	return cret
 }
@@ -120,9 +117,7 @@ var xTextTagSetPriority func(uintptr, int32)
 // to the table, or created with [method@Gtk.TextBuffer.create_tag],
 // which adds the tag to the buffer’s table automatically.
 func (x *TextTag) SetPriority(PriorityVar int32) {
-
 	xTextTagSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 func (c *TextTag) GoPointer() uintptr {
@@ -1566,5 +1561,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextTagChanged, libs, "gtk_text_tag_changed")
 	core.PuregoSafeRegister(&xTextTagGetPriority, libs, "gtk_text_tag_get_priority")
 	core.PuregoSafeRegister(&xTextTagSetPriority, libs, "gtk_text_tag_set_priority")
-
 }

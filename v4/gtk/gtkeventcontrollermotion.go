@@ -64,7 +64,6 @@ var xEventControllerMotionContainsPointer func(uintptr) bool
 
 // Returns if a pointer is within @self or one of its children.
 func (x *EventControllerMotion) ContainsPointer() bool {
-
 	cret := xEventControllerMotionContainsPointer(x.GoPointer())
 	return cret
 }
@@ -73,7 +72,6 @@ var xEventControllerMotionIsPointer func(uintptr) bool
 
 // Returns if a pointer is within @self, but not one of its children.
 func (x *EventControllerMotion) IsPointer() bool {
-
 	cret := xEventControllerMotionIsPointer(x.GoPointer())
 	return cret
 }
@@ -131,7 +129,6 @@ func (x *EventControllerMotion) ConnectEnter(cb *func(EventControllerMotion, flo
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -151,7 +148,6 @@ func (x *EventControllerMotion) ConnectLeave(cb *func(EventControllerMotion)) ui
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -171,7 +167,6 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -196,5 +191,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEventControllerMotionContainsPointer, libs, "gtk_event_controller_motion_contains_pointer")
 	core.PuregoSafeRegister(&xEventControllerMotionIsPointer, libs, "gtk_event_controller_motion_is_pointer")
-
 }

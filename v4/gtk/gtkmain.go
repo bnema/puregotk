@@ -24,9 +24,7 @@ var xDisablePortals func()
 //
 // This should only be used in portal implementations, apps must not call it.
 func DisablePortals() {
-
 	xDisablePortals()
-
 }
 
 var xDisableSetlocale func()
@@ -39,9 +37,7 @@ var xDisableSetlocale func()
 //
 // Most programs should not need to call this function.
 func DisableSetlocale() {
-
 	xDisableSetlocale()
-
 }
 
 var xGetDefaultLanguage func() *pango.Language
@@ -59,7 +55,6 @@ var xGetDefaultLanguage func() *pango.Language
 // This function is equivalent to [func@Pango.Language.get_default].
 // See that function for details.
 func GetDefaultLanguage() *pango.Language {
-
 	cret := xGetDefaultLanguage()
 	return cret
 }
@@ -95,7 +90,6 @@ var xGetLocaleDirection func() TextDirection
 //
 // ```
 func GetLocaleDirection() TextDirection {
-
 	cret := xGetLocaleDirection()
 	return cret
 }
@@ -125,9 +119,7 @@ var xInit func()
 // the handler after gtk_init(), but notice that other libraries (e.g.
 // libdbus or gvfs) might do similar things.
 func Init() {
-
 	xInit()
-
 }
 
 var xInitCheck func() bool
@@ -142,7 +134,6 @@ var xInitCheck func() bool
 // communication with the user - for example a curses or command line
 // interface.
 func InitCheck() bool {
-
 	cret := xInitCheck()
 	return cret
 }
@@ -153,7 +144,6 @@ var xIsInitialized func() bool
 //
 // See [func@Gtk.init].
 func IsInitialized() bool {
-
 	cret := xIsInitialized()
 	return cret
 }
@@ -177,5 +167,4 @@ func init() {
 	core.PuregoSafeRegister(&xInit, libs, "gtk_init")
 	core.PuregoSafeRegister(&xInitCheck, libs, "gtk_init_check")
 	core.PuregoSafeRegister(&xIsInitialized, libs, "gtk_is_initialized")
-
 }

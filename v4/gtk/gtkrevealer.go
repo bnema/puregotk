@@ -120,7 +120,6 @@ var xRevealerGetChildRevealed func(uintptr) bool
 // In other words, this returns whether the transition
 // to the revealed state is completed.
 func (x *Revealer) GetChildRevealed() bool {
-
 	cret := xRevealerGetChildRevealed(x.GoPointer())
 	return cret
 }
@@ -134,7 +133,6 @@ var xRevealerGetRevealChild func(uintptr) bool
 // the child is fully revealed (ie the transition is completed),
 // use [method@Gtk.Revealer.get_child_revealed].
 func (x *Revealer) GetRevealChild() bool {
-
 	cret := xRevealerGetRevealChild(x.GoPointer())
 	return cret
 }
@@ -144,7 +142,6 @@ var xRevealerGetTransitionDuration func(uintptr) uint32
 // Returns the amount of time (in milliseconds) that
 // transitions will take.
 func (x *Revealer) GetTransitionDuration() uint32 {
-
 	cret := xRevealerGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -154,7 +151,6 @@ var xRevealerGetTransitionType func(uintptr) RevealerTransitionType
 // Gets the type of animation that will be used
 // for transitions in @revealer.
 func (x *Revealer) GetTransitionType() RevealerTransitionType {
-
 	cret := xRevealerGetTransitionType(x.GoPointer())
 	return cret
 }
@@ -163,9 +159,7 @@ var xRevealerSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @revealer.
 func (x *Revealer) SetChild(ChildVar *Widget) {
-
 	xRevealerSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xRevealerSetRevealChild func(uintptr, bool)
@@ -175,18 +169,14 @@ var xRevealerSetRevealChild func(uintptr, bool)
 // The transition will be animated with the current
 // transition type of @revealer.
 func (x *Revealer) SetRevealChild(RevealChildVar bool) {
-
 	xRevealerSetRevealChild(x.GoPointer(), RevealChildVar)
-
 }
 
 var xRevealerSetTransitionDuration func(uintptr, uint32)
 
 // Sets the duration that transitions will take.
 func (x *Revealer) SetTransitionDuration(DurationVar uint32) {
-
 	xRevealerSetTransitionDuration(x.GoPointer(), DurationVar)
-
 }
 
 var xRevealerSetTransitionType func(uintptr, RevealerTransitionType)
@@ -196,9 +186,7 @@ var xRevealerSetTransitionType func(uintptr, RevealerTransitionType)
 //
 // Available types include various kinds of fades and slides.
 func (x *Revealer) SetTransitionType(TransitionVar RevealerTransitionType) {
-
 	xRevealerSetTransitionType(x.GoPointer(), TransitionVar)
-
 }
 
 func (c *Revealer) GoPointer() uintptr {
@@ -264,9 +252,7 @@ func (x *Revealer) GetPropertyTransitionDuration() uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Revealer) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -287,7 +273,6 @@ func (x *Revealer) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Revealer) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -312,7 +297,6 @@ func (x *Revealer) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Revealer) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -351,30 +335,23 @@ func (x *Revealer) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Revealer) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Revealer) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Revealer) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Revealer) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -387,9 +364,7 @@ func (x *Revealer) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Revealer) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -397,9 +372,7 @@ func (x *Revealer) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Revealer) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -408,9 +381,7 @@ func (x *Revealer) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Revealer) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -432,9 +403,7 @@ func (x *Revealer) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Revealer) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -444,9 +413,7 @@ func (x *Revealer) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Revealer) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -468,9 +435,7 @@ func (x *Revealer) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acc
 //
 // ```
 func (x *Revealer) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -480,9 +445,7 @@ func (x *Revealer) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Revealer) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -505,9 +468,7 @@ func (x *Revealer) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acces
 //
 // ```
 func (x *Revealer) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -517,9 +478,7 @@ func (x *Revealer) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *Revealer) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -527,7 +486,6 @@ func (x *Revealer) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Revealer) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -559,5 +517,4 @@ func init() {
 	core.PuregoSafeRegister(&xRevealerSetRevealChild, libs, "gtk_revealer_set_reveal_child")
 	core.PuregoSafeRegister(&xRevealerSetTransitionDuration, libs, "gtk_revealer_set_transition_duration")
 	core.PuregoSafeRegister(&xRevealerSetTransitionType, libs, "gtk_revealer_set_transition_type")
-
 }

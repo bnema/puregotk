@@ -54,9 +54,7 @@ var xDownloadCancel func(uintptr)
 // #WebKitDownload::failed is emitted with
 // %WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER error.
 func (x *Download) Cancel() {
-
 	xDownloadCancel(x.GoPointer())
-
 }
 
 var xDownloadGetAllowOverwrite func(uintptr) bool
@@ -67,7 +65,6 @@ var xDownloadGetAllowOverwrite func(uintptr) bool
 // which determines whether the download will overwrite an existing file on
 // disk, or if it will fail if the destination already exists.
 func (x *Download) GetAllowOverwrite() bool {
-
 	cret := xDownloadGetAllowOverwrite(x.GoPointer())
 	return cret
 }
@@ -79,7 +76,6 @@ var xDownloadGetDestination func(uintptr) string
 // You can connect to #WebKitDownload::created-destination to make
 // sure this method returns a valid destination.
 func (x *Download) GetDestination() string {
-
 	cret := xDownloadGetDestination(x.GoPointer())
 	return cret
 }
@@ -91,7 +87,6 @@ var xDownloadGetElapsedTime func(uintptr) float64
 // If the download finished, had an error or was cancelled this is
 // the time between its start and the event.
 func (x *Download) GetElapsedTime() float64 {
-
 	cret := xDownloadGetElapsedTime(x.GoPointer())
 	return cret
 }
@@ -103,7 +98,6 @@ var xDownloadGetEstimatedProgress func(uintptr) float64
 // You can monitor the estimated progress of the download operation by
 // connecting to the notify::estimated-progress signal of @download.
 func (x *Download) GetEstimatedProgress() float64 {
-
 	cret := xDownloadGetEstimatedProgress(x.GoPointer())
 	return cret
 }
@@ -115,7 +109,6 @@ var xDownloadGetReceivedDataLength func(uintptr) uint64
 // Gets the length of the data already downloaded for @download
 // in bytes.
 func (x *Download) GetReceivedDataLength() uint64 {
-
 	cret := xDownloadGetReceivedDataLength(x.GoPointer())
 	return cret
 }
@@ -185,9 +178,7 @@ var xDownloadSetAllowOverwrite func(uintptr, bool)
 // the download may overwrite an existing file on disk, or if it will fail if
 // the destination already exists.
 func (x *Download) SetAllowOverwrite(AllowedVar bool) {
-
 	xDownloadSetAllowOverwrite(x.GoPointer(), AllowedVar)
-
 }
 
 var xDownloadSetDestination func(uintptr, string)
@@ -208,9 +199,7 @@ var xDownloadSetDestination func(uintptr, string)
 // the file will be saved with the filename suggested by the server in
 // %G_USER_DIRECTORY_DOWNLOAD directory.
 func (x *Download) SetDestination(DestinationVar string) {
-
 	xDownloadSetDestination(x.GoPointer(), DestinationVar)
-
 }
 
 func (c *Download) GoPointer() uintptr {
@@ -281,7 +270,6 @@ func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 
 		cbFn := *cb
 
 		cbFn(fa, DestinationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -311,7 +299,6 @@ func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uin
 		cbFn := *cb
 
 		return cbFn(fa, SuggestedFilenameVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -336,7 +323,6 @@ func (x *Download) ConnectFailed(cb *func(Download, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -357,7 +343,6 @@ func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -379,7 +364,6 @@ func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, DataLengthVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

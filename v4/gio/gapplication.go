@@ -680,9 +680,7 @@ var xApplicationActivate func(uintptr)
 //
 // The application must be registered before calling this function.
 func (x *Application) Activate() {
-
 	xApplicationActivate(x.GoPointer())
-
 }
 
 var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib.OptionArg, string, string)
@@ -701,9 +699,7 @@ var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib
 //
 // See #GOptionEntry for more documentation of the arguments.
 func (x *Application) AddMainOption(LongNameVar string, ShortNameVar byte, FlagsVar glib.OptionFlags, ArgVar glib.OptionArg, DescriptionVar string, ArgDescriptionVar string) {
-
 	xApplicationAddMainOption(x.GoPointer(), LongNameVar, ShortNameVar, FlagsVar, ArgVar, DescriptionVar, ArgDescriptionVar)
-
 }
 
 var xApplicationAddMainOptionEntries func(uintptr, []glib.OptionEntry)
@@ -765,9 +761,7 @@ var xApplicationAddMainOptionEntries func(uintptr, []glib.OptionEntry)
 // - for %G_OPTION_ARG_STRING_ARRAY, use `^a&amp;s`
 // - for %G_OPTION_ARG_FILENAME_ARRAY, use `^a&amp;ay`
 func (x *Application) AddMainOptionEntries(EntriesVar []glib.OptionEntry) {
-
 	xApplicationAddMainOptionEntries(x.GoPointer(), EntriesVar)
-
 }
 
 var xApplicationAddOptionGroup func(uintptr, *glib.OptionGroup)
@@ -798,9 +792,7 @@ var xApplicationAddOptionGroup func(uintptr, *glib.OptionGroup)
 // new functionality whereby unrecognized options are rejected even if
 // %G_APPLICATION_HANDLES_COMMAND_LINE was given.
 func (x *Application) AddOptionGroup(GroupVar *glib.OptionGroup) {
-
 	xApplicationAddOptionGroup(x.GoPointer(), GroupVar)
-
 }
 
 var xApplicationBindBusyProperty func(uintptr, uintptr, string)
@@ -812,16 +804,13 @@ var xApplicationBindBusyProperty func(uintptr, uintptr, string)
 // not to @object. Instead, the binding is destroyed when @object is
 // finalized.
 func (x *Application) BindBusyProperty(ObjectVar *gobject.Object, PropertyVar string) {
-
 	xApplicationBindBusyProperty(x.GoPointer(), ObjectVar.GoPointer(), PropertyVar)
-
 }
 
 var xApplicationGetApplicationId func(uintptr) string
 
 // Gets the unique identifier for @application.
 func (x *Application) GetApplicationId() string {
-
 	cret := xApplicationGetApplicationId(x.GoPointer())
 	return cret
 }
@@ -872,7 +861,6 @@ var xApplicationGetDbusObjectPath func(uintptr) string
 // This function must not be called before the application has been
 // registered.  See g_application_get_is_registered().
 func (x *Application) GetDbusObjectPath() string {
-
 	cret := xApplicationGetDbusObjectPath(x.GoPointer())
 	return cret
 }
@@ -883,7 +871,6 @@ var xApplicationGetFlags func(uintptr) ApplicationFlags
 //
 // See #GApplicationFlags.
 func (x *Application) GetFlags() ApplicationFlags {
-
 	cret := xApplicationGetFlags(x.GoPointer())
 	return cret
 }
@@ -895,7 +882,6 @@ var xApplicationGetInactivityTimeout func(uintptr) uint32
 // This is the amount of time (in milliseconds) after the last call to
 // g_application_release() before the application stops running.
 func (x *Application) GetInactivityTimeout() uint32 {
-
 	cret := xApplicationGetInactivityTimeout(x.GoPointer())
 	return cret
 }
@@ -905,7 +891,6 @@ var xApplicationGetIsBusy func(uintptr) bool
 // Gets the application's current busy state, as set through
 // g_application_mark_busy() or g_application_bind_busy_property().
 func (x *Application) GetIsBusy() bool {
-
 	cret := xApplicationGetIsBusy(x.GoPointer())
 	return cret
 }
@@ -917,7 +902,6 @@ var xApplicationGetIsRegistered func(uintptr) bool
 // An application is registered if g_application_register() has been
 // successfully called.
 func (x *Application) GetIsRegistered() bool {
-
 	cret := xApplicationGetIsRegistered(x.GoPointer())
 	return cret
 }
@@ -935,7 +919,6 @@ var xApplicationGetIsRemote func(uintptr) bool
 // g_application_register() has been called.  See
 // g_application_get_is_registered().
 func (x *Application) GetIsRemote() bool {
-
 	cret := xApplicationGetIsRemote(x.GoPointer())
 	return cret
 }
@@ -946,7 +929,6 @@ var xApplicationGetResourceBasePath func(uintptr) string
 //
 // See g_application_set_resource_base_path() for more information.
 func (x *Application) GetResourceBasePath() string {
-
 	cret := xApplicationGetResourceBasePath(x.GoPointer())
 	return cret
 }
@@ -955,7 +937,6 @@ var xApplicationGetVersion func(uintptr) string
 
 // Gets the version of @application.
 func (x *Application) GetVersion() string {
-
 	cret := xApplicationGetVersion(x.GoPointer())
 	return cret
 }
@@ -970,9 +951,7 @@ var xApplicationHold func(uintptr)
 //
 // To cancel the hold, call g_application_release().
 func (x *Application) Hold() {
-
 	xApplicationHold(x.GoPointer())
-
 }
 
 var xApplicationMarkBusy func(uintptr)
@@ -990,9 +969,7 @@ var xApplicationMarkBusy func(uintptr)
 //
 // The application must be registered before calling this function.
 func (x *Application) MarkBusy() {
-
 	xApplicationMarkBusy(x.GoPointer())
-
 }
 
 var xApplicationOpen func(uintptr, uintptr, int32, string)
@@ -1012,9 +989,7 @@ var xApplicationOpen func(uintptr, uintptr, int32, string)
 // The application must be registered before calling this function
 // and it must have the %G_APPLICATION_HANDLES_OPEN flag set.
 func (x *Application) Open(FilesVar uintptr, NFilesVar int32, HintVar string) {
-
 	xApplicationOpen(x.GoPointer(), FilesVar, NFilesVar, HintVar)
-
 }
 
 var xApplicationQuit func(uintptr)
@@ -1033,9 +1008,7 @@ var xApplicationQuit func(uintptr)
 // The result of calling g_application_run() again after it returns is
 // unspecified.
 func (x *Application) Quit() {
-
 	xApplicationQuit(x.GoPointer())
-
 }
 
 var xApplicationRegister func(uintptr, uintptr, **glib.Error) bool
@@ -1078,7 +1051,6 @@ func (x *Application) Register(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xApplicationRelease func(uintptr)
@@ -1090,9 +1062,7 @@ var xApplicationRelease func(uintptr)
 // Never call this function except to cancel the effect of a previous
 // call to g_application_hold().
 func (x *Application) Release() {
-
 	xApplicationRelease(x.GoPointer())
-
 }
 
 var xApplicationRun func(uintptr, int32, []string) int32
@@ -1173,7 +1143,6 @@ var xApplicationRun func(uintptr, int32, []string) int32
 // control over when processes invoked via the commandline will exit and
 // what their exit status will be.
 func (x *Application) Run(ArgcVar int32, ArgvVar []string) int32 {
-
 	cret := xApplicationRun(x.GoPointer(), ArgcVar, ArgvVar)
 	return cret
 }
@@ -1210,9 +1179,7 @@ var xApplicationSendNotification func(uintptr, string, uintptr)
 // It is an error to call this function if @application has no
 // application ID.
 func (x *Application) SendNotification(IdVar string, NotificationVar *Notification) {
-
 	xApplicationSendNotification(x.GoPointer(), IdVar, NotificationVar.GoPointer())
-
 }
 
 var xApplicationSetActionGroup func(uintptr, uintptr)
@@ -1220,9 +1187,7 @@ var xApplicationSetActionGroup func(uintptr, uintptr)
 // This used to be how actions were associated with a #GApplication.
 // Now there is #GActionMap for that.
 func (x *Application) SetActionGroup(ActionGroupVar ActionGroup) {
-
 	xApplicationSetActionGroup(x.GoPointer(), ActionGroupVar.GoPointer())
-
 }
 
 var xApplicationSetApplicationId func(uintptr, string)
@@ -1235,9 +1200,7 @@ var xApplicationSetApplicationId func(uintptr, string)
 // If non-%NULL, the application id must be valid.  See
 // g_application_id_is_valid().
 func (x *Application) SetApplicationId(ApplicationIdVar string) {
-
 	xApplicationSetApplicationId(x.GoPointer(), ApplicationIdVar)
-
 }
 
 var xApplicationSetDefault func(uintptr)
@@ -1249,9 +1212,7 @@ var xApplicationSetDefault func(uintptr)
 // @application is destroyed then the default application will revert
 // back to %NULL.
 func (x *Application) SetDefault() {
-
 	xApplicationSetDefault(x.GoPointer())
-
 }
 
 var xApplicationSetFlags func(uintptr, ApplicationFlags)
@@ -1263,9 +1224,7 @@ var xApplicationSetFlags func(uintptr, ApplicationFlags)
 //
 // See #GApplicationFlags.
 func (x *Application) SetFlags(FlagsVar ApplicationFlags) {
-
 	xApplicationSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xApplicationSetInactivityTimeout func(uintptr, uint32)
@@ -1279,9 +1238,7 @@ var xApplicationSetInactivityTimeout func(uintptr, uint32)
 // used for next time g_application_release() drops the use count to
 // zero.  Any timeouts currently in progress are not impacted.
 func (x *Application) SetInactivityTimeout(InactivityTimeoutVar uint32) {
-
 	xApplicationSetInactivityTimeout(x.GoPointer(), InactivityTimeoutVar)
-
 }
 
 var xApplicationSetOptionContextDescription func(uintptr, string)
@@ -1290,9 +1247,7 @@ var xApplicationSetOptionContextDescription func(uintptr, string)
 //
 // See g_option_context_set_description() for more information.
 func (x *Application) SetOptionContextDescription(DescriptionVar string) {
-
 	xApplicationSetOptionContextDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xApplicationSetOptionContextParameterString func(uintptr, string)
@@ -1304,9 +1259,7 @@ var xApplicationSetOptionContextParameterString func(uintptr, string)
 //
 // See g_option_context_new() for more information about @parameter_string.
 func (x *Application) SetOptionContextParameterString(ParameterStringVar string) {
-
 	xApplicationSetOptionContextParameterString(x.GoPointer(), ParameterStringVar)
-
 }
 
 var xApplicationSetOptionContextSummary func(uintptr, string)
@@ -1315,9 +1268,7 @@ var xApplicationSetOptionContextSummary func(uintptr, string)
 //
 // See g_option_context_set_summary() for more information.
 func (x *Application) SetOptionContextSummary(SummaryVar string) {
-
 	xApplicationSetOptionContextSummary(x.GoPointer(), SummaryVar)
-
 }
 
 var xApplicationSetResourceBasePath func(uintptr, string)
@@ -1356,9 +1307,7 @@ var xApplicationSetResourceBasePath func(uintptr, string)
 // can call this function in the #GApplicationClass.startup virtual function,
 // before chaining up to the parent implementation.
 func (x *Application) SetResourceBasePath(ResourcePathVar string) {
-
 	xApplicationSetResourceBasePath(x.GoPointer(), ResourcePathVar)
-
 }
 
 var xApplicationSetVersion func(uintptr, string)
@@ -1369,9 +1318,7 @@ var xApplicationSetVersion func(uintptr, string)
 // The application version can only be modified if @application has not yet
 // been registered.
 func (x *Application) SetVersion(VersionVar string) {
-
 	xApplicationSetVersion(x.GoPointer(), VersionVar)
-
 }
 
 var xApplicationUnbindBusyProperty func(uintptr, uintptr, string)
@@ -1380,9 +1327,7 @@ var xApplicationUnbindBusyProperty func(uintptr, uintptr, string)
 // @application that was previously created with
 // g_application_bind_busy_property().
 func (x *Application) UnbindBusyProperty(ObjectVar *gobject.Object, PropertyVar string) {
-
 	xApplicationUnbindBusyProperty(x.GoPointer(), ObjectVar.GoPointer(), PropertyVar)
-
 }
 
 var xApplicationUnmarkBusy func(uintptr)
@@ -1395,9 +1340,7 @@ var xApplicationUnmarkBusy func(uintptr)
 // This function must only be called to cancel the effect of a previous
 // call to g_application_mark_busy().
 func (x *Application) UnmarkBusy() {
-
 	xApplicationUnmarkBusy(x.GoPointer())
-
 }
 
 var xApplicationWithdrawNotification func(uintptr, string)
@@ -1416,9 +1359,7 @@ var xApplicationWithdrawNotification func(uintptr, string)
 // of the buttons in a notification or triggers its default action, so
 // there is no need to explicitly withdraw the notification in that case.
 func (x *Application) WithdrawNotification(IdVar string) {
-
 	xApplicationWithdrawNotification(x.GoPointer(), IdVar)
-
 }
 
 func (c *Application) GoPointer() uintptr {
@@ -1539,7 +1480,6 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1561,7 +1501,6 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int32) u
 		cbFn := *cb
 
 		return cbFn(fa, CommandLineVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1621,7 +1560,6 @@ func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) i
 		cbFn := *cb
 
 		return cbFn(fa, OptionsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1645,7 +1583,6 @@ func (x *Application) ConnectNameLost(cb *func(Application) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1666,7 +1603,6 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int32, string))
 		cbFn := *cb
 
 		cbFn(fa, FilesVarp, NFilesVarp, HintVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1687,7 +1623,6 @@ func (x *Application) ConnectShutdown(cb *func(Application)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1708,7 +1643,6 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1719,36 +1653,28 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionAdded(ActionNameVar string) {
-
 	XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
-
 	XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionRemoved(ActionNameVar string) {
-
 	XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
-
 	XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
-
 }
 
 // Activate the named action within @action_group.
@@ -1785,9 +1711,7 @@ func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Va
 // exit (0);
 // ```
 func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
-
 	XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
-
 }
 
 // Request for the state of the named action within @action_group to be
@@ -1802,9 +1726,7 @@ func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Va
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
-
 	XGActionGroupChangeActionState(x.GoPointer(), ActionNameVar, ValueVar)
-
 }
 
 // Checks if the named action within @action_group is currently enabled.
@@ -1812,7 +1734,6 @@ func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Var
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *Application) GetActionEnabled(ActionNameVar string) bool {
-
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -1831,7 +1752,6 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different parameter type.
 func (x *Application) GetActionParameterType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -1845,7 +1765,6 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -1869,7 +1788,6 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -1891,14 +1809,12 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different state type.
 func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
 	return cret
 }
 
 // Checks if the named action exists within @action_group.
 func (x *Application) HasAction(ActionNameVar string) bool {
-
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -1908,7 +1824,6 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 // The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *Application) ListActions() []string {
-
 	cret := XGActionGroupListActions(x.GoPointer())
 	return cret
 }
@@ -1941,7 +1856,6 @@ func (x *Application) ListActions() []string {
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
-
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
 }
@@ -1953,9 +1867,7 @@ func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, Parame
 //
 // The action map takes its own reference on @action.
 func (x *Application) AddAction(ActionVar Action) {
-
 	XGActionMapAddAction(x.GoPointer(), ActionVar.GoPointer())
-
 }
 
 // A convenience function for creating multiple [class@Gio.SimpleAction]
@@ -2002,9 +1914,7 @@ func (x *Application) AddAction(ActionVar Action) {
 //
 // ```
 func (x *Application) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
-
 	XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
-
 }
 
 // Looks up the action with the name @action_name in @action_map.
@@ -2028,9 +1938,7 @@ func (x *Application) LookupAction(ActionNameVar string) *ActionBase {
 //
 // If no action of this name is in the map then nothing happens.
 func (x *Application) RemoveAction(ActionNameVar string) {
-
 	XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
-
 }
 
 // Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
@@ -2059,9 +1967,7 @@ func (x *Application) RemoveAction(ActionNameVar string) {
 //
 // ```
 func (x *Application) RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int32) {
-
 	XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
-
 }
 
 var xApplicationGetDefault func() uintptr
@@ -2135,7 +2041,6 @@ var xApplicationIdIsValid func(string) bool
 // For example, if the owner of 7-zip.org used an application identifier for an
 // archiving application, it might be named `org._7_zip.Archiver`.
 func ApplicationIdIsValid(ApplicationIdVar string) bool {
-
 	cret := xApplicationIdIsValid(ApplicationIdVar)
 	return cret
 }
@@ -2195,5 +2100,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xApplicationGetDefault, libs, "g_application_get_default")
 	core.PuregoSafeRegister(&xApplicationIdIsValid, libs, "g_application_id_is_valid")
-
 }

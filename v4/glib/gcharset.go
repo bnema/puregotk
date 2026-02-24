@@ -30,7 +30,6 @@ var xGetCharset func(*string) bool
 // The string returned in @charset is not allocated, and should not be
 // freed.
 func GetCharset(CharsetVar *string) bool {
-
 	cret := xGetCharset(CharsetVar)
 	return cret
 }
@@ -39,7 +38,6 @@ var xGetCodeset func() string
 
 // Gets the character set for the current locale.
 func GetCodeset() string {
-
 	cret := xGetCodeset()
 	return cret
 }
@@ -64,7 +62,6 @@ var xGetConsoleCharset func(*string) bool
 // The string returned in @charset is not allocated, and should not be
 // freed.
 func GetConsoleCharset(CharsetVar *string) bool {
-
 	cret := xGetConsoleCharset(CharsetVar)
 	return cret
 }
@@ -83,7 +80,6 @@ var xGetLanguageNames func() []string
 // `LC_MESSAGES` and `LANG` to find the list of locales specified by the
 // user.
 func GetLanguageNames() []string {
-
 	cret := xGetLanguageNames()
 	return cret
 }
@@ -101,7 +97,6 @@ var xGetLanguageNamesWithCategory func(string) []string
 //
 // g_get_language_names() returns g_get_language_names_with_category("LC_MESSAGES").
 func GetLanguageNamesWithCategory(CategoryNameVar string) []string {
-
 	cret := xGetLanguageNamesWithCategory(CategoryNameVar)
 	return cret
 }
@@ -124,7 +119,6 @@ var xGetLocaleVariants func(string) []string
 // If you need the list of variants for the current locale,
 // use g_get_language_names().
 func GetLocaleVariants(LocaleVar string) []string {
-
 	cret := xGetLocaleVariants(LocaleVar)
 	return cret
 }
@@ -147,5 +141,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetLanguageNames, libs, "g_get_language_names")
 	core.PuregoSafeRegister(&xGetLanguageNamesWithCategory, libs, "g_get_language_names_with_category")
 	core.PuregoSafeRegister(&xGetLocaleVariants, libs, "g_get_locale_variants")
-
 }

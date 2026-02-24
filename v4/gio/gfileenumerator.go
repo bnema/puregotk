@@ -423,7 +423,6 @@ func (x *FileEnumerator) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileEnumeratorCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -435,9 +434,7 @@ var xFileEnumeratorCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned in
 // g_file_enumerator_close_finish().
 func (x *FileEnumerator) CloseAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileEnumeratorCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileEnumeratorCloseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -460,7 +457,6 @@ func (x *FileEnumerator) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileEnumeratorGetChild func(uintptr, uintptr) uintptr
@@ -514,7 +510,6 @@ var xFileEnumeratorHasPending func(uintptr) bool
 
 // Checks if the file enumerator has pending operations.
 func (x *FileEnumerator) HasPending() bool {
-
 	cret := xFileEnumeratorHasPending(x.GoPointer())
 	return cret
 }
@@ -523,7 +518,6 @@ var xFileEnumeratorIsClosed func(uintptr) bool
 
 // Checks if the file enumerator has been closed.
 func (x *FileEnumerator) IsClosed() bool {
-
 	cret := xFileEnumeratorIsClosed(x.GoPointer())
 	return cret
 }
@@ -579,7 +573,6 @@ func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar **File, Canc
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileEnumeratorNextFile func(uintptr, uintptr, **glib.Error) uintptr
@@ -610,7 +603,6 @@ func (x *FileEnumerator) NextFile(CancellableVar *Cancellable) (*FileInfo, error
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileEnumeratorNextFilesAsync func(uintptr, int32, int32, uintptr, uintptr, uintptr)
@@ -687,9 +679,7 @@ var xFileEnumeratorNextFilesAsync func(uintptr, int32, int32, uintptr, uintptr, 
 // be executed before an outstanding request with lower priority. Default
 // priority is %G_PRIORITY_DEFAULT.
 func (x *FileEnumerator) NextFilesAsync(NumFilesVar int32, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileEnumeratorNextFilesFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -703,16 +693,13 @@ func (x *FileEnumerator) NextFilesFinish(ResultVar AsyncResult) (*glib.List, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileEnumeratorSetPending func(uintptr, bool)
 
 // Sets the file enumerator as having pending operations.
 func (x *FileEnumerator) SetPending(PendingVar bool) {
-
 	xFileEnumeratorSetPending(x.GoPointer(), PendingVar)
-
 }
 
 func (c *FileEnumerator) GoPointer() uintptr {
@@ -752,5 +739,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileEnumeratorNextFilesAsync, libs, "g_file_enumerator_next_files_async")
 	core.PuregoSafeRegister(&xFileEnumeratorNextFilesFinish, libs, "g_file_enumerator_next_files_finish")
 	core.PuregoSafeRegister(&xFileEnumeratorSetPending, libs, "g_file_enumerator_set_pending")
-
 }

@@ -558,7 +558,6 @@ var xVfsGetSupportedUriSchemes func(uintptr) []string
 
 // Gets a list of URI schemes supported by @vfs.
 func (x *Vfs) GetSupportedUriSchemes() []string {
-
 	cret := xVfsGetSupportedUriSchemes(x.GoPointer())
 	return cret
 }
@@ -567,7 +566,6 @@ var xVfsIsActive func(uintptr) bool
 
 // Checks if the VFS is active.
 func (x *Vfs) IsActive() bool {
-
 	cret := xVfsIsActive(x.GoPointer())
 	return cret
 }
@@ -613,7 +611,6 @@ var xVfsRegisterUriScheme func(uintptr, string, uintptr, uintptr, uintptr, uintp
 // It's an error to call this function twice with the same scheme. To unregister
 // a custom URI scheme, use g_vfs_unregister_uri_scheme().
 func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc, UriDataVar uintptr, UriDestroyVar *glib.DestroyNotify, ParseNameFuncVar *VfsFileLookupFunc, ParseNameDataVar uintptr, ParseNameDestroyVar *glib.DestroyNotify) bool {
-
 	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallbackNullable(UriFuncVar), UriDataVar, glib.NewCallbackNullable(UriDestroyVar), glib.NewCallbackNullable(ParseNameFuncVar), ParseNameDataVar, glib.NewCallbackNullable(ParseNameDestroyVar))
 	return cret
 }
@@ -623,7 +620,6 @@ var xVfsUnregisterUriScheme func(uintptr, string) bool
 // Unregisters the URI handler for @scheme previously registered with
 // g_vfs_register_uri_scheme().
 func (x *Vfs) UnregisterUriScheme(SchemeVar string) bool {
-
 	cret := xVfsUnregisterUriScheme(x.GoPointer(), SchemeVar)
 	return cret
 }
@@ -697,5 +693,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xVfsGetDefault, libs, "g_vfs_get_default")
 	core.PuregoSafeRegister(&xVfsGetLocal, libs, "g_vfs_get_local")
-
 }

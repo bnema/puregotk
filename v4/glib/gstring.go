@@ -44,7 +44,6 @@ var xNewString func(string) *String
 
 // Creates a new #GString, initialized with the given string.
 func NewString(InitVar string) *String {
-
 	cret := xNewString(InitVar)
 	return cret
 }
@@ -59,7 +58,6 @@ var xNewStringLen func(string, int) *String
 // responsibility to ensure that @init has at least @len addressable
 // bytes.
 func NewStringLen(InitVar string, LenVar int) *String {
-
 	cret := xNewStringLen(InitVar, LenVar)
 	return cret
 }
@@ -72,7 +70,6 @@ var xNewStringTake func(string) *String
 // modified by the caller. The memory of @init has to be dynamically
 // allocated and will eventually be freed with g_free().
 func NewStringTake(InitVar string) *String {
-
 	cret := xNewStringTake(InitVar)
 	return cret
 }
@@ -84,7 +81,6 @@ var xStringSizedNew func(uint) *String
 // text to the string and don't want it to be reallocated
 // too often.
 func StringSizedNew(DflSizeVar uint) *String {
-
 	cret := xStringSizedNew(DflSizeVar)
 	return cret
 }
@@ -94,7 +90,6 @@ var xStringAppend func(uintptr, string) *String
 // Adds a string onto the end of a #GString, expanding
 // it if necessary.
 func (x *String) Append(ValVar string) *String {
-
 	cret := xStringAppend(x.GoPointer(), ValVar)
 	return cret
 }
@@ -104,7 +99,6 @@ var xStringAppendC func(uintptr, byte) *String
 // Adds a byte onto the end of a #GString, expanding
 // it if necessary.
 func (x *String) AppendC(CVar byte) *String {
-
 	cret := xStringAppendC(x.GoPointer(), CVar)
 	return cret
 }
@@ -121,7 +115,6 @@ var xStringAppendLen func(uintptr, string, int) *String
 // is considered to request the entire string length. This
 // makes g_string_append_len() equivalent to g_string_append().
 func (x *String) AppendLen(ValVar string, LenVar int) *String {
-
 	cret := xStringAppendLen(x.GoPointer(), ValVar, LenVar)
 	return cret
 }
@@ -132,9 +125,7 @@ var xStringAppendPrintf func(uintptr, string, ...interface{})
 // This function is similar to g_string_printf() except
 // that the text is appended to the #GString.
 func (x *String) AppendPrintf(FormatVar string, varArgs ...interface{}) {
-
 	xStringAppendPrintf(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xStringAppendUnichar func(uintptr, uint32) *String
@@ -142,7 +133,6 @@ var xStringAppendUnichar func(uintptr, uint32) *String
 // Converts a Unicode character into UTF-8, and appends it
 // to the string.
 func (x *String) AppendUnichar(WcVar uint32) *String {
-
 	cret := xStringAppendUnichar(x.GoPointer(), WcVar)
 	return cret
 }
@@ -152,7 +142,6 @@ var xStringAppendUriEscaped func(uintptr, string, string, bool) *String
 // Appends @unescaped to @string, escaping any characters that
 // are reserved in URIs using URI-style escape sequences.
 func (x *String) AppendUriEscaped(UnescapedVar string, ReservedCharsAllowedVar string, AllowUtf8Var bool) *String {
-
 	cret := xStringAppendUriEscaped(x.GoPointer(), UnescapedVar, ReservedCharsAllowedVar, AllowUtf8Var)
 	return cret
 }
@@ -164,16 +153,13 @@ var xStringAppendVprintf func(uintptr, string, []interface{})
 // except that the arguments to the format string are passed
 // as a va_list.
 func (x *String) AppendVprintf(FormatVar string, ArgsVar []interface{}) {
-
 	xStringAppendVprintf(x.GoPointer(), FormatVar, ArgsVar)
-
 }
 
 var xStringAsciiDown func(uintptr) *String
 
 // Converts all uppercase ASCII letters to lowercase ASCII letters.
 func (x *String) AsciiDown() *String {
-
 	cret := xStringAsciiDown(x.GoPointer())
 	return cret
 }
@@ -182,7 +168,6 @@ var xStringAsciiUp func(uintptr) *String
 
 // Converts all lowercase ASCII letters to uppercase ASCII letters.
 func (x *String) AsciiUp() *String {
-
 	cret := xStringAsciiUp(x.GoPointer())
 	return cret
 }
@@ -194,7 +179,6 @@ var xStringAssign func(uintptr, string) *String
 // the standard strcpy() function, except that you do not
 // have to worry about having enough space to copy the string.
 func (x *String) Assign(RvalVar string) *String {
-
 	cret := xStringAssign(x.GoPointer(), RvalVar)
 	return cret
 }
@@ -206,7 +190,6 @@ var xStringCopy func(uintptr) *String
 // This will preserve the allocation length of the [struct@GLib.String] in the
 // copy.
 func (x *String) Copy() *String {
-
 	cret := xStringCopy(x.GoPointer())
 	return cret
 }
@@ -215,7 +198,6 @@ var xStringDown func(uintptr) *String
 
 // Converts a #GString to lowercase.
 func (x *String) Down() *String {
-
 	cret := xStringDown(x.GoPointer())
 	return cret
 }
@@ -225,7 +207,6 @@ var xStringEqual func(uintptr, *String) bool
 // Compares two strings for equality, returning %TRUE if they are equal.
 // For use with #GHashTable.
 func (x *String) Equal(V2Var *String) bool {
-
 	cret := xStringEqual(x.GoPointer(), V2Var)
 	return cret
 }
@@ -235,7 +216,6 @@ var xStringErase func(uintptr, int, int) *String
 // Removes @len bytes from a #GString, starting at position @pos.
 // The rest of the #GString is shifted down to fill the gap.
 func (x *String) Erase(PosVar int, LenVar int) *String {
-
 	cret := xStringErase(x.GoPointer(), PosVar, LenVar)
 	return cret
 }
@@ -250,7 +230,6 @@ var xStringFree func(uintptr, bool) string
 // Instead of passing %FALSE to this function, consider using
 // g_string_free_and_steal().
 func (x *String) Free(FreeSegmentVar bool) string {
-
 	cret := xStringFree(x.GoPointer(), FreeSegmentVar)
 	return cret
 }
@@ -262,7 +241,6 @@ var xStringFreeAndSteal func(uintptr) string
 // The caller gains ownership of the buffer and
 // must free it after use with g_free().
 func (x *String) FreeAndSteal() string {
-
 	cret := xStringFreeAndSteal(x.GoPointer())
 	return cret
 }
@@ -278,7 +256,6 @@ var xStringFreeToBytes func(uintptr) *Bytes
 // #GBytes does not include this extra nul; i.e. it has length exactly
 // equal to the "len" member.
 func (x *String) FreeToBytes() *Bytes {
-
 	cret := xStringFreeToBytes(x.GoPointer())
 	return cret
 }
@@ -287,7 +264,6 @@ var xStringHash func(uintptr) uint32
 
 // Creates a hash code for @str; for use with #GHashTable.
 func (x *String) Hash() uint32 {
-
 	cret := xStringHash(x.GoPointer())
 	return cret
 }
@@ -297,7 +273,6 @@ var xStringInsert func(uintptr, int, string) *String
 // Inserts a copy of a string into a #GString,
 // expanding it if necessary.
 func (x *String) Insert(PosVar int, ValVar string) *String {
-
 	cret := xStringInsert(x.GoPointer(), PosVar, ValVar)
 	return cret
 }
@@ -306,7 +281,6 @@ var xStringInsertC func(uintptr, int, byte) *String
 
 // Inserts a byte into a #GString, expanding it if necessary.
 func (x *String) InsertC(PosVar int, CVar byte) *String {
-
 	cret := xStringInsertC(x.GoPointer(), PosVar, CVar)
 	return cret
 }
@@ -324,7 +298,6 @@ var xStringInsertLen func(uintptr, int, string, int) *String
 //
 // If @pos is -1, bytes are inserted at the end of the string.
 func (x *String) InsertLen(PosVar int, ValVar string, LenVar int) *String {
-
 	cret := xStringInsertLen(x.GoPointer(), PosVar, ValVar, LenVar)
 	return cret
 }
@@ -334,7 +307,6 @@ var xStringInsertUnichar func(uintptr, int, uint32) *String
 // Converts a Unicode character into UTF-8, and insert it
 // into the string at the given position.
 func (x *String) InsertUnichar(PosVar int, WcVar uint32) *String {
-
 	cret := xStringInsertUnichar(x.GoPointer(), PosVar, WcVar)
 	return cret
 }
@@ -343,7 +315,6 @@ var xStringOverwrite func(uintptr, uint, string) *String
 
 // Overwrites part of a string, lengthening it if necessary.
 func (x *String) Overwrite(PosVar uint, ValVar string) *String {
-
 	cret := xStringOverwrite(x.GoPointer(), PosVar, ValVar)
 	return cret
 }
@@ -353,7 +324,6 @@ var xStringOverwriteLen func(uintptr, uint, string, int) *String
 // Overwrites part of a string, lengthening it if necessary.
 // This function will work with embedded nuls.
 func (x *String) OverwriteLen(PosVar uint, ValVar string, LenVar int) *String {
-
 	cret := xStringOverwriteLen(x.GoPointer(), PosVar, ValVar, LenVar)
 	return cret
 }
@@ -363,7 +333,6 @@ var xStringPrepend func(uintptr, string) *String
 // Adds a string on to the start of a #GString,
 // expanding it if necessary.
 func (x *String) Prepend(ValVar string) *String {
-
 	cret := xStringPrepend(x.GoPointer(), ValVar)
 	return cret
 }
@@ -373,7 +342,6 @@ var xStringPrependC func(uintptr, byte) *String
 // Adds a byte onto the start of a #GString,
 // expanding it if necessary.
 func (x *String) PrependC(CVar byte) *String {
-
 	cret := xStringPrependC(x.GoPointer(), CVar)
 	return cret
 }
@@ -390,7 +358,6 @@ var xStringPrependLen func(uintptr, string, int) *String
 // is considered to request the entire string length. This
 // makes g_string_prepend_len() equivalent to g_string_prepend().
 func (x *String) PrependLen(ValVar string, LenVar int) *String {
-
 	cret := xStringPrependLen(x.GoPointer(), ValVar, LenVar)
 	return cret
 }
@@ -400,7 +367,6 @@ var xStringPrependUnichar func(uintptr, uint32) *String
 // Converts a Unicode character into UTF-8, and prepends it
 // to the string.
 func (x *String) PrependUnichar(WcVar uint32) *String {
-
 	cret := xStringPrependUnichar(x.GoPointer(), WcVar)
 	return cret
 }
@@ -413,9 +379,7 @@ var xStringPrintf func(uintptr, string, ...interface{})
 // to contain the results. The previous contents of the
 // #GString are destroyed.
 func (x *String) Printf(FormatVar string, varArgs ...interface{}) {
-
 	xStringPrintf(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xStringReplace func(uintptr, string, string, uint32) uint32
@@ -430,7 +394,6 @@ var xStringReplace func(uintptr, string, string, uint32) uint32
 // (beginning of string, end of string and between characters). This did
 // not work correctly in earlier versions.
 func (x *String) Replace(FindVar string, ReplaceVar string, LimitVar uint32) uint32 {
-
 	cret := xStringReplace(x.GoPointer(), FindVar, ReplaceVar, LimitVar)
 	return cret
 }
@@ -443,7 +406,6 @@ var xStringSetSize func(uintptr, uint) *String
 // of the newly added area are undefined. (However, as
 // always, string-&gt;str[string-&gt;len] will be a nul byte.)
 func (x *String) SetSize(LenVar uint) *String {
-
 	cret := xStringSetSize(x.GoPointer(), LenVar)
 	return cret
 }
@@ -452,7 +414,6 @@ var xStringTruncate func(uintptr, uint) *String
 
 // Cuts off the end of the GString, leaving the first @len bytes.
 func (x *String) Truncate(LenVar uint) *String {
-
 	cret := xStringTruncate(x.GoPointer(), LenVar)
 	return cret
 }
@@ -461,7 +422,6 @@ var xStringUp func(uintptr) *String
 
 // Converts a #GString to uppercase.
 func (x *String) Up() *String {
-
 	cret := xStringUp(x.GoPointer())
 	return cret
 }
@@ -472,9 +432,7 @@ var xStringVprintf func(uintptr, string, []interface{})
 // This function is similar to g_string_printf() except that
 // the arguments to the format string are passed as a va_list.
 func (x *String) Vprintf(FormatVar string, ArgsVar []interface{}) {
-
 	xStringVprintf(x.GoPointer(), FormatVar, ArgsVar)
-
 }
 
 func init() {
@@ -530,5 +488,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringTruncate, libs, "g_string_truncate")
 	core.PuregoSafeRegister(&xStringUp, libs, "g_string_up")
 	core.PuregoSafeRegister(&xStringVprintf, libs, "g_string_vprintf")
-
 }

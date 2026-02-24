@@ -81,7 +81,6 @@ var xNumericSorterGetSortOrder func(uintptr) SortType
 
 // Gets whether this sorter will sort smaller numbers first.
 func (x *NumericSorter) GetSortOrder() SortType {
-
 	cret := xNumericSorterGetSortOrder(x.GoPointer())
 	return cret
 }
@@ -96,18 +95,14 @@ var xNumericSorterSetExpression func(uintptr, uintptr)
 // The expression must have a return type that can be compared
 // numerically, such as %G_TYPE_INT or %G_TYPE_DOUBLE.
 func (x *NumericSorter) SetExpression(ExpressionVar *Expression) {
-
 	xNumericSorterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
-
 }
 
 var xNumericSorterSetSortOrder func(uintptr, SortType)
 
 // Sets whether to sort smaller numbers before larger ones.
 func (x *NumericSorter) SetSortOrder(SortOrderVar SortType) {
-
 	xNumericSorterSetSortOrder(x.GoPointer(), SortOrderVar)
-
 }
 
 func (c *NumericSorter) GoPointer() uintptr {
@@ -141,5 +136,4 @@ func init() {
 	core.PuregoSafeRegister(&xNumericSorterGetSortOrder, libs, "gtk_numeric_sorter_get_sort_order")
 	core.PuregoSafeRegister(&xNumericSorterSetExpression, libs, "gtk_numeric_sorter_set_expression")
 	core.PuregoSafeRegister(&xNumericSorterSetSortOrder, libs, "gtk_numeric_sorter_set_sort_order")
-
 }

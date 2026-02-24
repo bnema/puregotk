@@ -190,7 +190,6 @@ var xExpanderGetExpanded func(uintptr) bool
 //
 // Returns %TRUE if the child widget is revealed.
 func (x *Expander) GetExpanded() bool {
-
 	cret := xExpanderGetExpanded(x.GoPointer())
 	return cret
 }
@@ -205,7 +204,6 @@ var xExpanderGetLabel func(uintptr) string
 // case if you create an empty button with gtk_button_new() to use as a
 // container.
 func (x *Expander) GetLabel() string {
-
 	cret := xExpanderGetLabel(x.GoPointer())
 	return cret
 }
@@ -232,7 +230,6 @@ var xExpanderGetResizeToplevel func(uintptr) bool
 // Returns whether the expander will resize the toplevel widget
 // containing the expander upon resizing and collapsing.
 func (x *Expander) GetResizeToplevel() bool {
-
 	cret := xExpanderGetResizeToplevel(x.GoPointer())
 	return cret
 }
@@ -241,7 +238,6 @@ var xExpanderGetUseMarkup func(uintptr) bool
 
 // Returns whether the label’s text is interpreted as Pango markup.
 func (x *Expander) GetUseMarkup() bool {
-
 	cret := xExpanderGetUseMarkup(x.GoPointer())
 	return cret
 }
@@ -250,7 +246,6 @@ var xExpanderGetUseUnderline func(uintptr) bool
 
 // Returns whether an underline in the text indicates a mnemonic.
 func (x *Expander) GetUseUnderline() bool {
-
 	cret := xExpanderGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -259,9 +254,7 @@ var xExpanderSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @expander.
 func (x *Expander) SetChild(ChildVar *Widget) {
-
 	xExpanderSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xExpanderSetExpanded func(uintptr, bool)
@@ -271,9 +264,7 @@ var xExpanderSetExpanded func(uintptr, bool)
 // Set to %TRUE, if you want the child widget to be revealed,
 // and %FALSE if you want the child widget to be hidden.
 func (x *Expander) SetExpanded(ExpandedVar bool) {
-
 	xExpanderSetExpanded(x.GoPointer(), ExpandedVar)
-
 }
 
 var xExpanderSetLabel func(uintptr, string)
@@ -282,9 +273,7 @@ var xExpanderSetLabel func(uintptr, string)
 //
 // This will also clear any previously set labels.
 func (x *Expander) SetLabel(LabelVar string) {
-
 	xExpanderSetLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xExpanderSetLabelWidget func(uintptr, uintptr)
@@ -294,9 +283,7 @@ var xExpanderSetLabelWidget func(uintptr, uintptr)
 // This is the widget that will appear embedded alongside
 // the expander arrow.
 func (x *Expander) SetLabelWidget(LabelWidgetVar *Widget) {
-
 	xExpanderSetLabelWidget(x.GoPointer(), LabelWidgetVar.GoPointer())
-
 }
 
 var xExpanderSetResizeToplevel func(uintptr, bool)
@@ -304,27 +291,21 @@ var xExpanderSetResizeToplevel func(uintptr, bool)
 // Sets whether the expander will resize the toplevel widget
 // containing the expander upon resizing and collapsing.
 func (x *Expander) SetResizeToplevel(ResizeToplevelVar bool) {
-
 	xExpanderSetResizeToplevel(x.GoPointer(), ResizeToplevelVar)
-
 }
 
 var xExpanderSetUseMarkup func(uintptr, bool)
 
 // Sets whether the text of the label contains Pango markup.
 func (x *Expander) SetUseMarkup(UseMarkupVar bool) {
-
 	xExpanderSetUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 var xExpanderSetUseUnderline func(uintptr, bool)
 
 // If true, an underline in the text indicates a mnemonic.
 func (x *Expander) SetUseUnderline(UseUnderlineVar bool) {
-
 	xExpanderSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 func (c *Expander) GoPointer() uintptr {
@@ -438,7 +419,6 @@ func (x *Expander) ConnectActivate(cb *func(Expander)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -455,9 +435,7 @@ func (x *Expander) ConnectActivate(cb *func(Expander)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Expander) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -478,7 +456,6 @@ func (x *Expander) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Expander) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -503,7 +480,6 @@ func (x *Expander) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Expander) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -542,30 +518,23 @@ func (x *Expander) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Expander) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Expander) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Expander) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Expander) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -578,9 +547,7 @@ func (x *Expander) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Expander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -588,9 +555,7 @@ func (x *Expander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Expander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -599,9 +564,7 @@ func (x *Expander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Expander) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -623,9 +586,7 @@ func (x *Expander) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Expander) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -635,9 +596,7 @@ func (x *Expander) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Expander) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -659,9 +618,7 @@ func (x *Expander) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acc
 //
 // ```
 func (x *Expander) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -671,9 +628,7 @@ func (x *Expander) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Expander) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -696,9 +651,7 @@ func (x *Expander) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acces
 //
 // ```
 func (x *Expander) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -708,9 +661,7 @@ func (x *Expander) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *Expander) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -718,7 +669,6 @@ func (x *Expander) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Expander) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -754,5 +704,4 @@ func init() {
 	core.PuregoSafeRegister(&xExpanderSetResizeToplevel, libs, "gtk_expander_set_resize_toplevel")
 	core.PuregoSafeRegister(&xExpanderSetUseMarkup, libs, "gtk_expander_set_use_markup")
 	core.PuregoSafeRegister(&xExpanderSetUseUnderline, libs, "gtk_expander_set_use_underline")
-
 }

@@ -90,7 +90,6 @@ var xShortcutsItemGetAccelerator func(uintptr) string
 
 // Gets the accelerator of @self.
 func (x *ShortcutsItem) GetAccelerator() string {
-
 	cret := xShortcutsItemGetAccelerator(x.GoPointer())
 	return cret
 }
@@ -99,7 +98,6 @@ var xShortcutsItemGetActionName func(uintptr) string
 
 // Gets the action name to get the accelerator from.
 func (x *ShortcutsItem) GetActionName() string {
-
 	cret := xShortcutsItemGetActionName(x.GoPointer())
 	return cret
 }
@@ -108,7 +106,6 @@ var xShortcutsItemGetDirection func(uintptr) gtk.TextDirection
 
 // Gets the direction of @self.
 func (x *ShortcutsItem) GetDirection() gtk.TextDirection {
-
 	cret := xShortcutsItemGetDirection(x.GoPointer())
 	return cret
 }
@@ -117,7 +114,6 @@ var xShortcutsItemGetSubtitle func(uintptr) string
 
 // Gets the subtitle of @self.
 func (x *ShortcutsItem) GetSubtitle() string {
-
 	cret := xShortcutsItemGetSubtitle(x.GoPointer())
 	return cret
 }
@@ -126,7 +122,6 @@ var xShortcutsItemGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *ShortcutsItem) GetTitle() string {
-
 	cret := xShortcutsItemGetTitle(x.GoPointer())
 	return cret
 }
@@ -137,18 +132,14 @@ var xShortcutsItemSetAccelerator func(uintptr, string)
 //
 // @accelerator must be in the format [class@ShortcutLabel] accepts.
 func (x *ShortcutsItem) SetAccelerator(AcceleratorVar string) {
-
 	xShortcutsItemSetAccelerator(x.GoPointer(), AcceleratorVar)
-
 }
 
 var xShortcutsItemSetActionName func(uintptr, string)
 
 // Sets the action name to get the accelerator from.
 func (x *ShortcutsItem) SetActionName(ActionNameVar string) {
-
 	xShortcutsItemSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 var xShortcutsItemSetDirection func(uintptr, gtk.TextDirection)
@@ -158,27 +149,21 @@ var xShortcutsItemSetDirection func(uintptr, gtk.TextDirection)
 // If set to [enum@Gtk.TextDirection.LTR] or [enum@Gtk.TextDirection.RTL], the
 // shortcut will only be displayed for this direction.
 func (x *ShortcutsItem) SetDirection(DirectionVar gtk.TextDirection) {
-
 	xShortcutsItemSetDirection(x.GoPointer(), DirectionVar)
-
 }
 
 var xShortcutsItemSetSubtitle func(uintptr, string)
 
 // Sets the subtitle of @self.
 func (x *ShortcutsItem) SetSubtitle(SubtitleVar string) {
-
 	xShortcutsItemSetSubtitle(x.GoPointer(), SubtitleVar)
-
 }
 
 var xShortcutsItemSetTitle func(uintptr, string)
 
 // Sets the title of @self.
 func (x *ShortcutsItem) SetTitle(TitleVar string) {
-
 	xShortcutsItemSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *ShortcutsItem) GoPointer() uintptr {
@@ -291,5 +276,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutsItemSetDirection, libs, "adw_shortcuts_item_set_direction")
 	core.PuregoSafeRegister(&xShortcutsItemSetSubtitle, libs, "adw_shortcuts_item_set_subtitle")
 	core.PuregoSafeRegister(&xShortcutsItemSetTitle, libs, "adw_shortcuts_item_set_title")
-
 }

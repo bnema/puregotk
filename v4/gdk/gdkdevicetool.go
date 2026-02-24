@@ -59,7 +59,6 @@ var xDeviceToolGetAxes func(uintptr) AxisFlags
 
 // Gets the axes of the tool.
 func (x *DeviceTool) GetAxes() AxisFlags {
-
 	cret := xDeviceToolGetAxes(x.GoPointer())
 	return cret
 }
@@ -78,7 +77,6 @@ var xDeviceToolGetHardwareId func(uintptr) uint64
 // as a tablet may support multiple devices with the same
 // `GdkDeviceToolType`, but different hardware identifiers.
 func (x *DeviceTool) GetHardwareId() uint64 {
-
 	cret := xDeviceToolGetHardwareId(x.GoPointer())
 	return cret
 }
@@ -90,7 +88,6 @@ var xDeviceToolGetSerial func(uintptr) uint64
 // This value can be used to identify a physical tool
 // (eg. a tablet pen) across program executions.
 func (x *DeviceTool) GetSerial() uint64 {
-
 	cret := xDeviceToolGetSerial(x.GoPointer())
 	return cret
 }
@@ -99,7 +96,6 @@ var xDeviceToolGetToolType func(uintptr) DeviceToolType
 
 // Gets the `GdkDeviceToolType` of the tool.
 func (x *DeviceTool) GetToolType() DeviceToolType {
-
 	cret := xDeviceToolGetToolType(x.GoPointer())
 	return cret
 }
@@ -169,5 +165,4 @@ func init() {
 	core.PuregoSafeRegister(&xDeviceToolGetHardwareId, libs, "gdk_device_tool_get_hardware_id")
 	core.PuregoSafeRegister(&xDeviceToolGetSerial, libs, "gdk_device_tool_get_serial")
 	core.PuregoSafeRegister(&xDeviceToolGetToolType, libs, "gdk_device_tool_get_tool_type")
-
 }

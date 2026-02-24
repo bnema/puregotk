@@ -65,7 +65,6 @@ var xGestureRotateGetAngleDelta func(uintptr) float64
 // in radians since the gesture was first recognized. If @gesture is
 // not active, 0 is returned.
 func (x *GestureRotate) GetAngleDelta() float64 {
-
 	cret := xGestureRotateGetAngleDelta(x.GoPointer())
 	return cret
 }
@@ -94,7 +93,6 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 		cbFn := *cb
 
 		cbFn(fa, AngleVarp, AngleDeltaVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -118,5 +116,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureRotate, libs, "gtk_gesture_rotate_new")
 
 	core.PuregoSafeRegister(&xGestureRotateGetAngleDelta, libs, "gtk_gesture_rotate_get_angle_delta")
-
 }

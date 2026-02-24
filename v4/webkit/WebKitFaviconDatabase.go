@@ -47,7 +47,6 @@ var xFaviconDatabaseErrorQuark func() glib.Quark
 
 // Gets the quark for the domain of favicon database errors.
 func FaviconDatabaseErrorQuark() glib.Quark {
-
 	cret := xFaviconDatabaseErrorQuark()
 	return cret
 }
@@ -83,9 +82,7 @@ var xFaviconDatabaseClear func(uintptr)
 
 // Clears all icons from the database.
 func (x *FaviconDatabase) Clear() {
-
 	xFaviconDatabaseClear(x.GoPointer())
-
 }
 
 var xFaviconDatabaseGetFavicon func(uintptr, string, uintptr, uintptr, uintptr)
@@ -100,9 +97,7 @@ var xFaviconDatabaseGetFavicon func(uintptr, string, uintptr, uintptr, uintptr)
 // be invoked. You can then call webkit_favicon_database_get_favicon_finish()
 // to get the result of the operation.
 func (x *FaviconDatabase) GetFavicon(PageUriVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFaviconDatabaseGetFavicon(x.GoPointer(), PageUriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFaviconDatabaseGetFaviconFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -123,14 +118,12 @@ func (x *FaviconDatabase) GetFaviconFinish(ResultVar gio.AsyncResult) (*gdk.Text
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFaviconDatabaseGetFaviconUri func(uintptr, string) string
 
 // Obtains the URI of the favicon for the given @page_uri.
 func (x *FaviconDatabase) GetFaviconUri(PageUriVar string) string {
-
 	cret := xFaviconDatabaseGetFaviconUri(x.GoPointer(), PageUriVar)
 	return cret
 }
@@ -164,7 +157,6 @@ func (x *FaviconDatabase) ConnectFaviconChanged(cb *func(FaviconDatabase, string
 		cbFn := *cb
 
 		cbFn(fa, PageUriVarp, FaviconUriVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

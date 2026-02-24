@@ -194,16 +194,13 @@ func (x *CellRendererProgress) GetPropertyValue() int32 {
 
 // Retrieves the orientation of the @orientable.
 func (x *CellRendererProgress) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *CellRendererProgress) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
@@ -221,5 +218,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererProgressGLibType, libs, "gtk_cell_renderer_progress_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererProgress, libs, "gtk_cell_renderer_progress_new")
-
 }

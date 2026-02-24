@@ -88,7 +88,6 @@ var xSortListModelGetIncremental func(uintptr) bool
 //
 // See [method@Gtk.SortListModel.set_incremental].
 func (x *SortListModel) GetIncremental() bool {
-
 	cret := xSortListModelGetIncremental(x.GoPointer())
 	return cret
 }
@@ -130,7 +129,6 @@ var xSortListModelGetPending func(uintptr) uint32
 // [property@Gtk.SortListModel:incremental] is %FALSE - this
 // function returns 0.
 func (x *SortListModel) GetPending() uint32 {
-
 	cret := xSortListModelGetPending(x.GoPointer())
 	return cret
 }
@@ -189,9 +187,7 @@ var xSortListModelSetIncremental func(uintptr, bool)
 // See [method@Gtk.SortListModel.get_pending] for progress information
 // about an ongoing incremental sorting operation.
 func (x *SortListModel) SetIncremental(IncrementalVar bool) {
-
 	xSortListModelSetIncremental(x.GoPointer(), IncrementalVar)
-
 }
 
 var xSortListModelSetModel func(uintptr, uintptr)
@@ -200,27 +196,21 @@ var xSortListModelSetModel func(uintptr, uintptr)
 //
 // The @model's item type must conform to the item type of @self.
 func (x *SortListModel) SetModel(ModelVar gio.ListModel) {
-
 	xSortListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xSortListModelSetSectionSorter func(uintptr, uintptr)
 
 // Sets a new section sorter on @self.
 func (x *SortListModel) SetSectionSorter(SorterVar *Sorter) {
-
 	xSortListModelSetSectionSorter(x.GoPointer(), SorterVar.GoPointer())
-
 }
 
 var xSortListModelSetSorter func(uintptr, uintptr)
 
 // Sets a new sorter on @self.
 func (x *SortListModel) SetSorter(SorterVar *Sorter) {
-
 	xSortListModelSetSorter(x.GoPointer(), SorterVar.GoPointer())
-
 }
 
 func (c *SortListModel) GoPointer() uintptr {
@@ -277,7 +267,6 @@ func (x *SortListModel) GetPropertyPending() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *SortListModel) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -291,7 +280,6 @@ func (x *SortListModel) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SortListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -302,7 +290,6 @@ func (x *SortListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SortListModel) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -353,9 +340,7 @@ func (x *SortListModel) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SortListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -364,9 +349,7 @@ func (x *SortListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, Adde
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SortListModel) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -385,9 +368,7 @@ func (x *SortListModel) GetSection(PositionVar uint32, OutStartVar *uint32, OutE
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SortListModel) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
@@ -415,5 +396,4 @@ func init() {
 	core.PuregoSafeRegister(&xSortListModelSetModel, libs, "gtk_sort_list_model_set_model")
 	core.PuregoSafeRegister(&xSortListModelSetSectionSorter, libs, "gtk_sort_list_model_set_section_sorter")
 	core.PuregoSafeRegister(&xSortListModelSetSorter, libs, "gtk_sort_list_model_set_sorter")
-
 }

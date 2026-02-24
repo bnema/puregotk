@@ -143,7 +143,6 @@ func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) ui
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -174,7 +173,6 @@ func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -201,7 +199,6 @@ func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -233,7 +230,6 @@ func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, str
 		cbFn := *cb
 
 		cbFn(fa, PathVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -260,7 +256,6 @@ func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidg
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -288,7 +283,6 @@ func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidge
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -314,7 +308,6 @@ func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) u
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -347,7 +340,6 @@ func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int
 		cbFn := *cb
 
 		cbFn(fa, BookmarkIndexVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -373,7 +365,6 @@ func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) u
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -399,7 +390,6 @@ func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) u
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -425,7 +415,6 @@ func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -452,7 +441,6 @@ func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint32 
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -469,9 +457,7 @@ func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint32 
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FileChooserWidget) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -492,7 +478,6 @@ func (x *FileChooserWidget) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FileChooserWidget) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -517,7 +502,6 @@ func (x *FileChooserWidget) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FileChooserWidget) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -556,30 +540,23 @@ func (x *FileChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FileChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FileChooserWidget) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FileChooserWidget) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FileChooserWidget) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -592,9 +569,7 @@ func (x *FileChooserWidget) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FileChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -602,9 +577,7 @@ func (x *FileChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FileChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -613,9 +586,7 @@ func (x *FileChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FileChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -637,9 +608,7 @@ func (x *FileChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState
 //
 // ```
 func (x *FileChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -649,9 +618,7 @@ func (x *FileChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserWidget) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -673,9 +640,7 @@ func (x *FileChooserWidget) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *FileChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -685,9 +650,7 @@ func (x *FileChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserWidget) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -710,9 +673,7 @@ func (x *FileChooserWidget) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *FileChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -722,9 +683,7 @@ func (x *FileChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *FileChooserWidget) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -732,7 +691,6 @@ func (x *FileChooserWidget) UpdateStateValue(NStatesVar int32, StatesVar []Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FileChooserWidget) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -746,9 +704,7 @@ func (x *FileChooserWidget) GetBuildableId() string {
 // [signal@Gtk.Dialog::response] signal handler using
 // [method@Gtk.FileChooser.get_choice].
 func (x *FileChooserWidget) AddChoice(IdVar string, LabelVar string, OptionsVar []string, OptionLabelsVar []string) {
-
 	XGtkFileChooserAddChoice(x.GoPointer(), IdVar, LabelVar, OptionsVar, OptionLabelsVar)
-
 }
 
 // Adds @filter to the list of filters that the user can select between.
@@ -759,9 +715,7 @@ func (x *FileChooserWidget) AddChoice(IdVar string, LabelVar string, OptionsVar 
 // Note that the @chooser takes ownership of the filter if it is floating,
 // so you have to ref and sink it if you want to keep a reference.
 func (x *FileChooserWidget) AddFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserAddFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Adds a folder to be displayed with the shortcut folders
@@ -774,26 +728,22 @@ func (x *FileChooserWidget) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets the type of operation that the file chooser is performing.
 func (x *FileChooserWidget) GetAction() FileChooserAction {
-
 	cret := XGtkFileChooserGetAction(x.GoPointer())
 	return cret
 }
 
 // Gets the currently selected option in the 'choice' with the given ID.
 func (x *FileChooserWidget) GetChoice(IdVar string) string {
-
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
 	return cret
 }
 
 // Gets whether file chooser will offer to create new folders.
 func (x *FileChooserWidget) GetCreateFolders() bool {
-
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
 	return cret
 }
@@ -817,7 +767,6 @@ func (x *FileChooserWidget) GetCurrentFolder() *gio.FileBase {
 // This is meant to be used in save dialogs, to get the currently typed
 // filename when the file itself does not exist yet.
 func (x *FileChooserWidget) GetCurrentName() string {
-
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
 	return cret
 }
@@ -896,7 +845,6 @@ func (x *FileChooserWidget) GetFilters() *gio.ListModelBase {
 // Gets whether multiple files can be selected in the file
 // chooser.
 func (x *FileChooserWidget) GetSelectMultiple() bool {
-
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
 	return cret
 }
@@ -920,16 +868,12 @@ func (x *FileChooserWidget) GetShortcutFolders() *gio.ListModelBase {
 
 // Removes a 'choice' that has been added with gtk_file_chooser_add_choice().
 func (x *FileChooserWidget) RemoveChoice(IdVar string) {
-
 	XGtkFileChooserRemoveChoice(x.GoPointer(), IdVar)
-
 }
 
 // Removes @filter from the list of filters that the user can select between.
 func (x *FileChooserWidget) RemoveFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserRemoveFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Removes a folder from the shortcut folders in a file chooser.
@@ -941,7 +885,6 @@ func (x *FileChooserWidget) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the type of operation that the chooser is performing.
@@ -952,9 +895,7 @@ func (x *FileChooserWidget) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 // if the action is %GTK_FILE_CHOOSER_ACTION_SAVE but not if the
 // action is %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserWidget) SetAction(ActionVar FileChooserAction) {
-
 	XGtkFileChooserSetAction(x.GoPointer(), ActionVar)
-
 }
 
 // Selects an option in a 'choice' that has been added with
@@ -962,9 +903,7 @@ func (x *FileChooserWidget) SetAction(ActionVar FileChooserAction) {
 //
 // For a boolean choice, the possible options are "true" and "false".
 func (x *FileChooserWidget) SetChoice(IdVar string, OptionVar string) {
-
 	XGtkFileChooserSetChoice(x.GoPointer(), IdVar, OptionVar)
-
 }
 
 // Sets whether file chooser will offer to create new folders.
@@ -972,9 +911,7 @@ func (x *FileChooserWidget) SetChoice(IdVar string, OptionVar string) {
 // This is only relevant if the action is not set to be
 // %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserWidget) SetCreateFolders(CreateFoldersVar bool) {
-
 	XGtkFileChooserSetCreateFolders(x.GoPointer(), CreateFoldersVar)
-
 }
 
 // Sets the current folder for @chooser from a `GFile`.
@@ -986,7 +923,6 @@ func (x *FileChooserWidget) SetCurrentFolder(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current name in the file selector, as if entered
@@ -1003,9 +939,7 @@ func (x *FileChooserWidget) SetCurrentFolder(FileVar gio.File) (bool, error) {
 // Please see the documentation for those functions for an example
 // of using [method@Gtk.FileChooser.set_current_name] as well.
 func (x *FileChooserWidget) SetCurrentName(NameVar string) {
-
 	XGtkFileChooserSetCurrentName(x.GoPointer(), NameVar)
-
 }
 
 // Sets @file as the current filename for the file chooser.
@@ -1061,7 +995,6 @@ func (x *FileChooserWidget) SetFile(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current filter.
@@ -1074,9 +1007,7 @@ func (x *FileChooserWidget) SetFile(FileVar gio.File) (bool, error) {
 // empty is useful if you want to restrict the displayed
 // set of files without letting the user change it.
 func (x *FileChooserWidget) SetFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserSetFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Sets whether multiple files can be selected in the file chooser.
@@ -1085,9 +1016,7 @@ func (x *FileChooserWidget) SetFilter(FilterVar *FileFilter) {
 // %GTK_FILE_CHOOSER_ACTION_OPEN or
 // %GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 func (x *FileChooserWidget) SetSelectMultiple(SelectMultipleVar bool) {
-
 	XGtkFileChooserSetSelectMultiple(x.GoPointer(), SelectMultipleVar)
-
 }
 
 func init() {
@@ -1105,5 +1034,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileChooserWidgetGLibType, libs, "gtk_file_chooser_widget_get_type")
 
 	core.PuregoSafeRegister(&xNewFileChooserWidget, libs, "gtk_file_chooser_widget_new")
-
 }

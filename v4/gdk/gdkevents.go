@@ -330,7 +330,6 @@ var xEventsGetAngle func(uintptr, uintptr, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func EventsGetAngle(Event1Var *Event, Event2Var *Event, AngleVar *float64) bool {
-
 	cret := xEventsGetAngle(Event1Var.GoPointer(), Event2Var.GoPointer(), AngleVar)
 	return cret
 }
@@ -342,7 +341,6 @@ var xEventsGetCenter func(uintptr, uintptr, *float64, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func EventsGetCenter(Event1Var *Event, Event2Var *Event, XVar *float64, YVar *float64) bool {
-
 	cret := xEventsGetCenter(Event1Var.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -354,7 +352,6 @@ var xEventsGetDistance func(uintptr, uintptr, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func EventsGetDistance(Event1Var *Event, Event2Var *Event, DistanceVar *float64) bool {
-
 	cret := xEventsGetDistance(Event1Var.GoPointer(), Event2Var.GoPointer(), DistanceVar)
 	return cret
 }
@@ -380,7 +377,6 @@ var xButtonEventGetButton func(uintptr) uint32
 
 // Extract the button number from a button event.
 func (x *ButtonEvent) GetButton() uint32 {
-
 	cret := xButtonEventGetButton(x.GoPointer())
 	return cret
 }
@@ -417,7 +413,6 @@ var xCrossingEventGetDetail func(uintptr) NotifyType
 
 // Extracts the notify detail from a crossing event.
 func (x *CrossingEvent) GetDetail() NotifyType {
-
 	cret := xCrossingEventGetDetail(x.GoPointer())
 	return cret
 }
@@ -426,7 +421,6 @@ var xCrossingEventGetFocus func(uintptr) bool
 
 // Checks if the @event surface is the focus surface.
 func (x *CrossingEvent) GetFocus() bool {
-
 	cret := xCrossingEventGetFocus(x.GoPointer())
 	return cret
 }
@@ -435,7 +429,6 @@ var xCrossingEventGetMode func(uintptr) CrossingMode
 
 // Extracts the crossing mode from a crossing event.
 func (x *CrossingEvent) GetMode() CrossingMode {
-
 	cret := xCrossingEventGetMode(x.GoPointer())
 	return cret
 }
@@ -558,7 +551,6 @@ var xEventGetAngle func(uintptr, uintptr, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func (x *Event) GetAngle(Event2Var *Event, AngleVar *float64) bool {
-
 	cret := xEventGetAngle(x.GoPointer(), Event2Var.GoPointer(), AngleVar)
 	return cret
 }
@@ -570,7 +562,6 @@ var xEventGetCenter func(uintptr, uintptr, *float64, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func (x *Event) GetCenter(Event2Var *Event, XVar *float64, YVar *float64) bool {
-
 	cret := xEventGetCenter(x.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -582,7 +573,6 @@ var xEventGetDistance func(uintptr, uintptr, *float64) bool
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
 func (x *Event) GetDistance(Event2Var *Event, DistanceVar *float64) bool {
-
 	cret := xEventGetDistance(x.GoPointer(), Event2Var.GoPointer(), DistanceVar)
 	return cret
 }
@@ -594,7 +584,6 @@ var xEventGetAxes func(uintptr, *[]float64, *uint32) bool
 // To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
 // on the device tool returned by [method@Gdk.Event.get_device_tool].
 func (x *Event) GetAxes(AxesVar *[]float64, NAxesVar *uint32) bool {
-
 	cret := xEventGetAxes(x.GoPointer(), AxesVar, NAxesVar)
 	return cret
 }
@@ -607,7 +596,6 @@ var xEventGetAxis func(uintptr, AxisUse, *float64) bool
 // To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
 // on the device tool returned by [method@Gdk.Event.get_device_tool].
 func (x *Event) GetAxis(AxisUseVar AxisUse, ValueVar *float64) bool {
-
 	cret := xEventGetAxis(x.GoPointer(), AxisUseVar, ValueVar)
 	return cret
 }
@@ -679,7 +667,6 @@ var xEventGetEventSequence func(uintptr) *EventSequence
 // Related touch events are connected in a sequence. Other
 // events typically don't have event sequence information.
 func (x *Event) GetEventSequence() *EventSequence {
-
 	cret := xEventGetEventSequence(x.GoPointer())
 	return cret
 }
@@ -688,7 +675,6 @@ var xEventGetEventType func(uintptr) EventType
 
 // Retrieves the type of the event.
 func (x *Event) GetEventType() EventType {
-
 	cret := xEventGetEventType(x.GoPointer())
 	return cret
 }
@@ -705,7 +691,6 @@ var xEventGetHistory func(uintptr, *uint32) uintptr
 // events do it only if one of the mouse buttons is down, or the device
 // has a tool.
 func (x *Event) GetHistory(OutNCoordsVar *uint32) uintptr {
-
 	cret := xEventGetHistory(x.GoPointer(), OutNCoordsVar)
 	return cret
 }
@@ -714,7 +699,6 @@ var xEventGetModifierState func(uintptr) ModifierType
 
 // Returns the modifier state field of an event.
 func (x *Event) GetModifierState() ModifierType {
-
 	cret := xEventGetModifierState(x.GoPointer())
 	return cret
 }
@@ -725,7 +709,6 @@ var xEventGetPointerEmulated func(uintptr) bool
 //
 // Emulated pointer events typically originate from a touch events.
 func (x *Event) GetPointerEmulated() bool {
-
 	cret := xEventGetPointerEmulated(x.GoPointer())
 	return cret
 }
@@ -736,7 +719,6 @@ var xEventGetPosition func(uintptr, *float64, *float64) bool
 //
 // This position is in [surface coordinates](coordinates.html).
 func (x *Event) GetPosition(XVar *float64, YVar *float64) bool {
-
 	cret := xEventGetPosition(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -782,7 +764,6 @@ var xEventGetTime func(uintptr) uint32
 // Not all events have timestamps. In that case, this function
 // returns %GDK_CURRENT_TIME.
 func (x *Event) GetTime() uint32 {
-
 	cret := xEventGetTime(x.GoPointer())
 	return cret
 }
@@ -817,7 +798,6 @@ var xEventTriggersContextMenu func(uintptr) bool
 // event-&gt;button == GDK_BUTTON_SECONDARY
 // ```
 func (x *Event) TriggersContextMenu() bool {
-
 	cret := xEventTriggersContextMenu(x.GoPointer())
 	return cret
 }
@@ -828,9 +808,7 @@ var xEventUnref func(uintptr)
 //
 // If the last reference is dropped, the structure is freed.
 func (x *Event) Unref() {
-
 	xEventUnref(x.GoPointer())
-
 }
 
 func (c *Event) GoPointer() uintptr {
@@ -866,7 +844,6 @@ var xFocusEventGetIn func(uintptr) bool
 // Extracts whether this event is about focus entering or
 // leaving the surface.
 func (x *FocusEvent) GetIn() bool {
-
 	cret := xFocusEventGetIn(x.GoPointer())
 	return cret
 }
@@ -920,7 +897,6 @@ var xGrabBrokenEventGetImplicit func(uintptr) bool
 
 // Checks whether the grab broken event is for an implicit grab.
 func (x *GrabBrokenEvent) GetImplicit() bool {
-
 	cret := xGrabBrokenEventGetImplicit(x.GoPointer())
 	return cret
 }
@@ -957,7 +933,6 @@ var xKeyEventGetConsumedModifiers func(uintptr) ModifierType
 
 // Extracts the consumed modifiers from a key event.
 func (x *KeyEvent) GetConsumedModifiers() ModifierType {
-
 	cret := xKeyEventGetConsumedModifiers(x.GoPointer())
 	return cret
 }
@@ -966,7 +941,6 @@ var xKeyEventGetKeycode func(uintptr) uint32
 
 // Extracts the keycode from a key event.
 func (x *KeyEvent) GetKeycode() uint32 {
-
 	cret := xKeyEventGetKeycode(x.GoPointer())
 	return cret
 }
@@ -975,7 +949,6 @@ var xKeyEventGetKeyval func(uintptr) uint32
 
 // Extracts the keyval from a key event.
 func (x *KeyEvent) GetKeyval() uint32 {
-
 	cret := xKeyEventGetKeyval(x.GoPointer())
 	return cret
 }
@@ -984,7 +957,6 @@ var xKeyEventGetLayout func(uintptr) uint32
 
 // Extracts the layout from a key event.
 func (x *KeyEvent) GetLayout() uint32 {
-
 	cret := xKeyEventGetLayout(x.GoPointer())
 	return cret
 }
@@ -993,7 +965,6 @@ var xKeyEventGetLevel func(uintptr) uint32
 
 // Extracts the shift level from a key event.
 func (x *KeyEvent) GetLevel() uint32 {
-
 	cret := xKeyEventGetLevel(x.GoPointer())
 	return cret
 }
@@ -1005,7 +976,6 @@ var xKeyEventGetMatch func(uintptr, *uint32, *ModifierType) bool
 //
 // See [method@Gdk.KeyEvent.matches].
 func (x *KeyEvent) GetMatch(KeyvalVar *uint32, ModifiersVar *ModifierType) bool {
-
 	cret := xKeyEventGetMatch(x.GoPointer(), KeyvalVar, ModifiersVar)
 	return cret
 }
@@ -1014,7 +984,6 @@ var xKeyEventIsModifier func(uintptr) bool
 
 // Extracts whether the key event is for a modifier key.
 func (x *KeyEvent) IsModifier() bool {
-
 	cret := xKeyEventIsModifier(x.GoPointer())
 	return cret
 }
@@ -1030,7 +999,6 @@ var xKeyEventMatches func(uintptr, uint32, ModifierType) KeyMatch
 //
 // Note that we ignore Caps Lock for matching.
 func (x *KeyEvent) Matches(KeyvalVar uint32, ModifiersVar ModifierType) KeyMatch {
-
 	cret := xKeyEventMatches(x.GoPointer(), KeyvalVar, ModifiersVar)
 	return cret
 }
@@ -1095,9 +1063,7 @@ var xPadEventGetAxisValue func(uintptr, *uint32, *float64)
 
 // Extracts the information from a pad strip or ring event.
 func (x *PadEvent) GetAxisValue(IndexVar *uint32, ValueVar *float64) {
-
 	xPadEventGetAxisValue(x.GoPointer(), IndexVar, ValueVar)
-
 }
 
 var xPadEventGetButton func(uintptr) uint32
@@ -1105,7 +1071,6 @@ var xPadEventGetButton func(uintptr) uint32
 // Extracts information about the pressed button from
 // a pad event.
 func (x *PadEvent) GetButton() uint32 {
-
 	cret := xPadEventGetButton(x.GoPointer())
 	return cret
 }
@@ -1114,9 +1079,7 @@ var xPadEventGetGroupMode func(uintptr, *uint32, *uint32)
 
 // Extracts group and mode information from a pad event.
 func (x *PadEvent) GetGroupMode(GroupVar *uint32, ModeVar *uint32) {
-
 	xPadEventGetGroupMode(x.GoPointer(), GroupVar, ModeVar)
-
 }
 
 func (c *PadEvent) GoPointer() uintptr {
@@ -1185,16 +1148,13 @@ var xScrollEventGetDeltas func(uintptr, *float64, *float64)
 // For the representation unit of these deltas, see
 // [method@Gdk.ScrollEvent.get_unit].
 func (x *ScrollEvent) GetDeltas(DeltaXVar *float64, DeltaYVar *float64) {
-
 	xScrollEventGetDeltas(x.GoPointer(), DeltaXVar, DeltaYVar)
-
 }
 
 var xScrollEventGetDirection func(uintptr) ScrollDirection
 
 // Extracts the direction of a scroll event.
 func (x *ScrollEvent) GetDirection() ScrollDirection {
-
 	cret := xScrollEventGetDirection(x.GoPointer())
 	return cret
 }
@@ -1206,7 +1166,6 @@ var xScrollEventGetUnit func(uintptr) ScrollUnit
 // The unit will always be %GDK_SCROLL_UNIT_WHEEL if the scroll direction is not
 // %GDK_SCROLL_SMOOTH.
 func (x *ScrollEvent) GetUnit() ScrollUnit {
-
 	cret := xScrollEventGetUnit(x.GoPointer())
 	return cret
 }
@@ -1223,7 +1182,6 @@ var xScrollEventIsStop func(uintptr) bool
 //
 // Stop scroll events always have a delta of 0/0.
 func (x *ScrollEvent) IsStop() bool {
-
 	cret := xScrollEventIsStop(x.GoPointer())
 	return cret
 }
@@ -1242,7 +1200,6 @@ func (c *ScrollEvent) SetGoPointer(ptr uintptr) {
 var xScrollEventGetRelativeDirection func(uintptr) ScrollRelativeDirection
 
 func ScrollEventGetRelativeDirection(EventVar *Event) ScrollRelativeDirection {
-
 	cret := xScrollEventGetRelativeDirection(EventVar.GoPointer())
 	return cret
 }
@@ -1268,7 +1225,6 @@ var xTouchEventGetEmulatingPointer func(uintptr) bool
 
 // Extracts whether a touch event is emulating a pointer event.
 func (x *TouchEvent) GetEmulatingPointer() bool {
-
 	cret := xTouchEventGetEmulatingPointer(x.GoPointer())
 	return cret
 }
@@ -1310,16 +1266,13 @@ var xTouchpadEventGetDeltas func(uintptr, *float64, *float64)
 
 // Extracts delta information from a touchpad event.
 func (x *TouchpadEvent) GetDeltas(DxVar *float64, DyVar *float64) {
-
 	xTouchpadEventGetDeltas(x.GoPointer(), DxVar, DyVar)
-
 }
 
 var xTouchpadEventGetGesturePhase func(uintptr) TouchpadGesturePhase
 
 // Extracts the touchpad gesture phase from a touchpad event.
 func (x *TouchpadEvent) GetGesturePhase() TouchpadGesturePhase {
-
 	cret := xTouchpadEventGetGesturePhase(x.GoPointer())
 	return cret
 }
@@ -1328,7 +1281,6 @@ var xTouchpadEventGetNFingers func(uintptr) uint32
 
 // Extracts the number of fingers from a touchpad event.
 func (x *TouchpadEvent) GetNFingers() uint32 {
-
 	cret := xTouchpadEventGetNFingers(x.GoPointer())
 	return cret
 }
@@ -1337,7 +1289,6 @@ var xTouchpadEventGetPinchAngleDelta func(uintptr) float64
 
 // Extracts the angle delta from a touchpad pinch event.
 func (x *TouchpadEvent) GetPinchAngleDelta() float64 {
-
 	cret := xTouchpadEventGetPinchAngleDelta(x.GoPointer())
 	return cret
 }
@@ -1346,7 +1297,6 @@ var xTouchpadEventGetPinchScale func(uintptr) float64
 
 // Extracts the scale from a touchpad pinch event.
 func (x *TouchpadEvent) GetPinchScale() float64 {
-
 	cret := xTouchpadEventGetPinchScale(x.GoPointer())
 	return cret
 }
@@ -1483,5 +1433,4 @@ func init() {
 	core.PuregoSafeRegister(&xTouchpadEventGetNFingers, libs, "gdk_touchpad_event_get_n_fingers")
 	core.PuregoSafeRegister(&xTouchpadEventGetPinchAngleDelta, libs, "gdk_touchpad_event_get_pinch_angle_delta")
 	core.PuregoSafeRegister(&xTouchpadEventGetPinchScale, libs, "gdk_touchpad_event_get_pinch_scale")
-
 }

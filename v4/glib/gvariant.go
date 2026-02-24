@@ -301,7 +301,6 @@ var xNewVariant func(string, ...interface{}) *Variant
 //
 // ]|
 func NewVariant(FormatStringVar string, varArgs ...interface{}) *Variant {
-
 	cret := xNewVariant(FormatStringVar, varArgs...)
 	return cret
 }
@@ -324,7 +323,6 @@ var xNewVariantArray func(*VariantType, uintptr, uint) *Variant
 // If the @children are floating references (see g_variant_ref_sink()), the
 // new instance takes ownership of them as if via g_variant_ref_sink().
 func NewVariantArray(ChildTypeVar *VariantType, ChildrenVar uintptr, NChildrenVar uint) *Variant {
-
 	cret := xNewVariantArray(ChildTypeVar, ChildrenVar, NChildrenVar)
 	return cret
 }
@@ -333,7 +331,6 @@ var xNewVariantBoolean func(bool) *Variant
 
 // Creates a new boolean #GVariant instance -- either %TRUE or %FALSE.
 func NewVariantBoolean(ValueVar bool) *Variant {
-
 	cret := xNewVariantBoolean(ValueVar)
 	return cret
 }
@@ -342,7 +339,6 @@ var xNewVariantByte func(byte) *Variant
 
 // Creates a new byte #GVariant instance.
 func NewVariantByte(ValueVar byte) *Variant {
-
 	cret := xNewVariantByte(ValueVar)
 	return cret
 }
@@ -356,7 +352,6 @@ var xNewVariantBytestring func([]byte) *Variant
 // The nul terminator character at the end of the string is stored in
 // the array.
 func NewVariantBytestring(StringVar []byte) *Variant {
-
 	cret := xNewVariantBytestring(StringVar)
 	return cret
 }
@@ -368,7 +363,6 @@ var xNewVariantBytestringArray func([]string, int) *Variant
 //
 // If @length is -1 then @strv is %NULL-terminated.
 func NewVariantBytestringArray(StrvVar []string, LengthVar int) *Variant {
-
 	cret := xNewVariantBytestringArray(StrvVar, LengthVar)
 	return cret
 }
@@ -381,7 +375,6 @@ var xNewVariantDictEntry func(*Variant, *Variant) *Variant
 // If the @key or @value are floating references (see g_variant_ref_sink()),
 // the new instance takes ownership of them as if via g_variant_ref_sink().
 func NewVariantDictEntry(KeyVar *Variant, ValueVar *Variant) *Variant {
-
 	cret := xNewVariantDictEntry(KeyVar, ValueVar)
 	return cret
 }
@@ -390,7 +383,6 @@ var xNewVariantDouble func(float64) *Variant
 
 // Creates a new double #GVariant instance.
 func NewVariantDouble(ValueVar float64) *Variant {
-
 	cret := xNewVariantDouble(ValueVar)
 	return cret
 }
@@ -411,7 +403,6 @@ var xNewVariantFixedArray func(*VariantType, uintptr, uint, uint) *Variant
 //
 // @n_elements must be the length of the @elements array.
 func NewVariantFixedArray(ElementTypeVar *VariantType, ElementsVar uintptr, NElementsVar uint, ElementSizeVar uint) *Variant {
-
 	cret := xNewVariantFixedArray(ElementTypeVar, ElementsVar, NElementsVar, ElementSizeVar)
 	return cret
 }
@@ -428,7 +419,6 @@ var xNewVariantFromBytes func(*VariantType, *Bytes, bool) *Variant
 // Otherwise this function will internally create a copy of the memory (since
 // GLib 2.60) or (in older versions) fail and exit the process.
 func NewVariantFromBytes(TypeVar *VariantType, BytesVar *Bytes, TrustedVar bool) *Variant {
-
 	cret := xNewVariantFromBytes(TypeVar, BytesVar, TrustedVar)
 	return cret
 }
@@ -465,7 +455,6 @@ var xNewVariantFromData func(*VariantType, []byte, uint, bool, uintptr, uintptr)
 // the memory (since GLib 2.60) or (in older versions) fail and exit the
 // process.
 func NewVariantFromData(TypeVar *VariantType, DataVar []byte, SizeVar uint, TrustedVar bool, NotifyVar *DestroyNotify, UserDataVar uintptr) *Variant {
-
 	cret := xNewVariantFromData(TypeVar, DataVar, SizeVar, TrustedVar, NewCallback(NotifyVar), UserDataVar)
 	return cret
 }
@@ -478,7 +467,6 @@ var xNewVariantHandle func(int32) *Variant
 // that are sent alongside a D-Bus message.  If you're not interacting
 // with D-Bus, you probably don't need them.
 func NewVariantHandle(ValueVar int32) *Variant {
-
 	cret := xNewVariantHandle(ValueVar)
 	return cret
 }
@@ -487,7 +475,6 @@ var xNewVariantInt16 func(int16) *Variant
 
 // Creates a new int16 #GVariant instance.
 func NewVariantInt16(ValueVar int16) *Variant {
-
 	cret := xNewVariantInt16(ValueVar)
 	return cret
 }
@@ -496,7 +483,6 @@ var xNewVariantInt32 func(int32) *Variant
 
 // Creates a new int32 #GVariant instance.
 func NewVariantInt32(ValueVar int32) *Variant {
-
 	cret := xNewVariantInt32(ValueVar)
 	return cret
 }
@@ -505,7 +491,6 @@ var xNewVariantInt64 func(int64) *Variant
 
 // Creates a new int64 #GVariant instance.
 func NewVariantInt64(ValueVar int64) *Variant {
-
 	cret := xNewVariantInt64(ValueVar)
 	return cret
 }
@@ -523,7 +508,6 @@ var xNewVariantMaybe func(*VariantType, *Variant) *Variant
 // If @child is a floating reference (see g_variant_ref_sink()), the new
 // instance takes ownership of @child.
 func NewVariantMaybe(ChildTypeVar *VariantType, ChildVar *Variant) *Variant {
-
 	cret := xNewVariantMaybe(ChildTypeVar, ChildVar)
 	return cret
 }
@@ -534,7 +518,6 @@ var xNewVariantObjectPath func(string) *Variant
 // @object_path must be a valid D-Bus object path.  Use
 // g_variant_is_object_path() if you're not sure.
 func NewVariantObjectPath(ObjectPathVar string) *Variant {
-
 	cret := xNewVariantObjectPath(ObjectPathVar)
 	return cret
 }
@@ -549,7 +532,6 @@ var xNewVariantObjv func([]string, int) *Variant
 //
 // If @length is -1 then @strv is %NULL-terminated.
 func NewVariantObjv(StrvVar []string, LengthVar int) *Variant {
-
 	cret := xNewVariantObjv(StrvVar, LengthVar)
 	return cret
 }
@@ -591,7 +573,6 @@ var xNewVariantParsed func(string, ...interface{}) *Variant
 // be anything along the lines of "%*", "%?", "\%r", or anything starting
 // with "%@".
 func NewVariantParsed(FormatVar string, varArgs ...interface{}) *Variant {
-
 	cret := xNewVariantParsed(FormatVar, varArgs...)
 	return cret
 }
@@ -620,7 +601,6 @@ var xNewVariantParsedVa func(string, []interface{}) *Variant
 // result.  This can also be done by adding the result to a container,
 // or by passing it to another g_variant_new() call.
 func NewVariantParsedVa(FormatVar string, AppVar []interface{}) *Variant {
-
 	cret := xNewVariantParsedVa(FormatVar, AppVar)
 	return cret
 }
@@ -633,7 +613,6 @@ var xNewVariantPrintf func(string, ...interface{}) *Variant
 // g_variant_new_string() but it saves a temporary variable and an
 // unnecessary copy.
 func NewVariantPrintf(FormatStringVar string, varArgs ...interface{}) *Variant {
-
 	cret := xNewVariantPrintf(FormatStringVar, varArgs...)
 	return cret
 }
@@ -644,7 +623,6 @@ var xNewVariantSignature func(string) *Variant
 // @string.  @string must be a valid D-Bus type signature.  Use
 // g_variant_is_signature() if you're not sure.
 func NewVariantSignature(SignatureVar string) *Variant {
-
 	cret := xNewVariantSignature(SignatureVar)
 	return cret
 }
@@ -657,7 +635,6 @@ var xNewVariantString func(string) *Variant
 // potentially-%NULL strings, use g_variant_new() with `ms` as the
 // [format string](gvariant-format-strings.html#maybe-types).
 func NewVariantString(StringVar string) *Variant {
-
 	cret := xNewVariantString(StringVar)
 	return cret
 }
@@ -669,7 +646,6 @@ var xNewVariantStrv func([]string, int) *Variant
 //
 // If @length is -1 then @strv is %NULL-terminated.
 func NewVariantStrv(StrvVar []string, LengthVar int) *Variant {
-
 	cret := xNewVariantStrv(StrvVar, LengthVar)
 	return cret
 }
@@ -689,7 +665,6 @@ var xNewVariantTakeString func(string) *Variant
 // it to this function.  It is even possible that @string is immediately
 // freed.
 func NewVariantTakeString(StringVar string) *Variant {
-
 	cret := xNewVariantTakeString(StringVar)
 	return cret
 }
@@ -705,7 +680,6 @@ var xNewVariantTuple func(uintptr, uint) *Variant
 // If the @children are floating references (see g_variant_ref_sink()), the
 // new instance takes ownership of them as if via g_variant_ref_sink().
 func NewVariantTuple(ChildrenVar uintptr, NChildrenVar uint) *Variant {
-
 	cret := xNewVariantTuple(ChildrenVar, NChildrenVar)
 	return cret
 }
@@ -714,7 +688,6 @@ var xNewVariantUint16 func(uint16) *Variant
 
 // Creates a new uint16 #GVariant instance.
 func NewVariantUint16(ValueVar uint16) *Variant {
-
 	cret := xNewVariantUint16(ValueVar)
 	return cret
 }
@@ -723,7 +696,6 @@ var xNewVariantUint32 func(uint32) *Variant
 
 // Creates a new uint32 #GVariant instance.
 func NewVariantUint32(ValueVar uint32) *Variant {
-
 	cret := xNewVariantUint32(ValueVar)
 	return cret
 }
@@ -732,7 +704,6 @@ var xNewVariantUint64 func(uint64) *Variant
 
 // Creates a new uint64 #GVariant instance.
 func NewVariantUint64(ValueVar uint64) *Variant {
-
 	cret := xNewVariantUint64(ValueVar)
 	return cret
 }
@@ -776,7 +747,6 @@ var xNewVariantVa func(string, string, []interface{}) *Variant
 // result.  This can also be done by adding the result to a container,
 // or by passing it to another g_variant_new() call.
 func NewVariantVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) *Variant {
-
 	cret := xNewVariantVa(FormatStringVar, EndptrVar, AppVar)
 	return cret
 }
@@ -789,7 +759,6 @@ var xNewVariantVariant func(*Variant) *Variant
 // If @child is a floating reference (see g_variant_ref_sink()), the new
 // instance takes ownership of @child.
 func NewVariantVariant(ValueVar *Variant) *Variant {
-
 	cret := xNewVariantVariant(ValueVar)
 	return cret
 }
@@ -814,7 +783,6 @@ var xVariantByteswap func(uintptr) *Variant
 // The returned value is always in normal form and is marked as trusted.
 // A full, not floating, reference is returned.
 func (x *Variant) Byteswap() *Variant {
-
 	cret := xVariantByteswap(x.GoPointer())
 	return cret
 }
@@ -836,7 +804,6 @@ var xVariantCheckFormatString func(uintptr, string, bool) bool
 // varargs accessors to #GVariant values of uncertain values (eg:
 // g_variant_lookup() or g_menu_model_get_item_attribute()).
 func (x *Variant) CheckFormatString(FormatStringVar string, CopyOnlyVar bool) bool {
-
 	cret := xVariantCheckFormatString(x.GoPointer(), FormatStringVar, CopyOnlyVar)
 	return cret
 }
@@ -845,7 +812,6 @@ var xVariantClassify func(uintptr) VariantClass
 
 // Classifies @value according to its top-level type.
 func (x *Variant) Classify() VariantClass {
-
 	cret := xVariantClassify(x.GoPointer())
 	return cret
 }
@@ -872,7 +838,6 @@ var xVariantCompare func(uintptr, uintptr) int32
 // If you only require an equality comparison, g_variant_equal() is more
 // general.
 func (x *Variant) Compare(TwoVar uintptr) int32 {
-
 	cret := xVariantCompare(x.GoPointer(), TwoVar)
 	return cret
 }
@@ -884,7 +849,6 @@ var xVariantDupBytestring func(uintptr, *uint) uintptr
 //
 // The return value must be freed using g_free().
 func (x *Variant) DupBytestring(LengthVar *uint) uintptr {
-
 	cret := xVariantDupBytestring(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -902,7 +866,6 @@ var xVariantDupBytestringArray func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) DupBytestringArray(LengthVar *uint) []string {
-
 	cret := xVariantDupBytestringArray(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -920,7 +883,6 @@ var xVariantDupObjv func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) DupObjv(LengthVar *uint) []string {
-
 	cret := xVariantDupObjv(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -934,7 +896,6 @@ var xVariantDupString func(uintptr, *uint) string
 //
 // The return value must be freed using g_free().
 func (x *Variant) DupString(LengthVar *uint) string {
-
 	cret := xVariantDupString(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -952,7 +913,6 @@ var xVariantDupStrv func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) DupStrv(LengthVar *uint) []string {
-
 	cret := xVariantDupStrv(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -964,7 +924,6 @@ var xVariantEqual func(uintptr, uintptr) bool
 // The types of @one and @two are #gconstpointer only to allow use of
 // this function with #GHashTable.  They must each be a #GVariant.
 func (x *Variant) Equal(TwoVar uintptr) bool {
-
 	cret := xVariantEqual(x.GoPointer(), TwoVar)
 	return cret
 }
@@ -988,9 +947,7 @@ var xVariantGet func(uintptr, string, ...interface{})
 // see the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) Get(FormatStringVar string, varArgs ...interface{}) {
-
 	xVariantGet(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 var xVariantGetBoolean func(uintptr) bool
@@ -1000,7 +957,6 @@ var xVariantGetBoolean func(uintptr) bool
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_BOOLEAN.
 func (x *Variant) GetBoolean() bool {
-
 	cret := xVariantGetBoolean(x.GoPointer())
 	return cret
 }
@@ -1012,7 +968,6 @@ var xVariantGetByte func(uintptr) byte
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_BYTE.
 func (x *Variant) GetByte() byte {
-
 	cret := xVariantGetByte(x.GoPointer())
 	return cret
 }
@@ -1038,7 +993,6 @@ var xVariantGetBytestring func(uintptr) uintptr
 //
 // The return value remains valid as long as @value exists.
 func (x *Variant) GetBytestring() uintptr {
-
 	cret := xVariantGetBytestring(x.GoPointer())
 	return cret
 }
@@ -1056,7 +1010,6 @@ var xVariantGetBytestringArray func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) GetBytestringArray(LengthVar *uint) []string {
-
 	cret := xVariantGetBytestringArray(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -1073,9 +1026,7 @@ var xVariantGetChild func(uintptr, uint, string, ...interface{})
 // see the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) GetChild(IndexVar uint, FormatStringVar string, varArgs ...interface{}) {
-
 	xVariantGetChild(x.GoPointer(), IndexVar, FormatStringVar, varArgs...)
-
 }
 
 var xVariantGetChildValue func(uintptr, uint) *Variant
@@ -1104,7 +1055,6 @@ var xVariantGetChildValue func(uintptr, uint) *Variant
 //
 // This function is O(1).
 func (x *Variant) GetChildValue(IndexVar uint) *Variant {
-
 	cret := xVariantGetChildValue(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -1137,7 +1087,6 @@ var xVariantGetData func(uintptr) uintptr
 // explicitly (by storing the type and/or endianness in addition to the
 // serialized data).
 func (x *Variant) GetData() uintptr {
-
 	cret := xVariantGetData(x.GoPointer())
 	return cret
 }
@@ -1149,7 +1098,6 @@ var xVariantGetDataAsBytes func(uintptr) *Bytes
 // g_variant_get_data(), except that the returned #GBytes holds
 // a reference to the variant data.
 func (x *Variant) GetDataAsBytes() *Bytes {
-
 	cret := xVariantGetDataAsBytes(x.GoPointer())
 	return cret
 }
@@ -1161,7 +1109,6 @@ var xVariantGetDouble func(uintptr) float64
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_DOUBLE.
 func (x *Variant) GetDouble() float64 {
-
 	cret := xVariantGetDouble(x.GoPointer())
 	return cret
 }
@@ -1195,7 +1142,6 @@ var xVariantGetFixedArray func(uintptr, *uint, uint) uintptr
 // @n_elements, which must be non-%NULL, is set equal to the number of
 // items in the array.
 func (x *Variant) GetFixedArray(NElementsVar *uint, ElementSizeVar uint) uintptr {
-
 	cret := xVariantGetFixedArray(x.GoPointer(), NElementsVar, ElementSizeVar)
 	return cret
 }
@@ -1211,7 +1157,6 @@ var xVariantGetHandle func(uintptr) int32
 // that are sent alongside a D-Bus message.  If you're not interacting
 // with D-Bus, you probably don't need them.
 func (x *Variant) GetHandle() int32 {
-
 	cret := xVariantGetHandle(x.GoPointer())
 	return cret
 }
@@ -1223,7 +1168,6 @@ var xVariantGetInt16 func(uintptr) int16
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_INT16.
 func (x *Variant) GetInt16() int16 {
-
 	cret := xVariantGetInt16(x.GoPointer())
 	return cret
 }
@@ -1235,7 +1179,6 @@ var xVariantGetInt32 func(uintptr) int32
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_INT32.
 func (x *Variant) GetInt32() int32 {
-
 	cret := xVariantGetInt32(x.GoPointer())
 	return cret
 }
@@ -1247,7 +1190,6 @@ var xVariantGetInt64 func(uintptr) int64
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_INT64.
 func (x *Variant) GetInt64() int64 {
-
 	cret := xVariantGetInt64(x.GoPointer())
 	return cret
 }
@@ -1257,7 +1199,6 @@ var xVariantGetMaybe func(uintptr) *Variant
 // Given a maybe-typed #GVariant instance, extract its value.  If the
 // value is Nothing, then this function returns %NULL.
 func (x *Variant) GetMaybe() *Variant {
-
 	cret := xVariantGetMaybe(x.GoPointer())
 	return cret
 }
@@ -1290,7 +1231,6 @@ var xVariantGetNormalForm func(uintptr) *Variant
 // value from this function to guarantee ownership of a single non-floating
 // reference to it.
 func (x *Variant) GetNormalForm() *Variant {
-
 	cret := xVariantGetNormalForm(x.GoPointer())
 	return cret
 }
@@ -1308,7 +1248,6 @@ var xVariantGetObjv func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) GetObjv(LengthVar *uint) []string {
-
 	cret := xVariantGetObjv(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -1327,7 +1266,6 @@ var xVariantGetSize func(uintptr) uint
 // operation which is approximately O(n) in the number of values
 // involved.
 func (x *Variant) GetSize() uint {
-
 	cret := xVariantGetSize(x.GoPointer())
 	return cret
 }
@@ -1353,7 +1291,6 @@ var xVariantGetString func(uintptr, *uint) string
 //
 // The return value remains valid as long as @value exists.
 func (x *Variant) GetString(LengthVar *uint) string {
-
 	cret := xVariantGetString(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -1371,7 +1308,6 @@ var xVariantGetStrv func(uintptr, *uint) []string
 // For an empty array, @length will be set to 0 and a pointer to a
 // %NULL pointer will be returned.
 func (x *Variant) GetStrv(LengthVar *uint) []string {
-
 	cret := xVariantGetStrv(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -1383,7 +1319,6 @@ var xVariantGetType func(uintptr) *VariantType
 // The return value is valid for the lifetime of @value and must not
 // be freed.
 func (x *Variant) GetType() *VariantType {
-
 	cret := xVariantGetType(x.GoPointer())
 	return cret
 }
@@ -1394,7 +1329,6 @@ var xVariantGetTypeString func(uintptr) string
 // g_variant_type_peek_string(), this string is nul-terminated.  This
 // string belongs to #GVariant and must not be freed.
 func (x *Variant) GetTypeString() string {
-
 	cret := xVariantGetTypeString(x.GoPointer())
 	return cret
 }
@@ -1406,7 +1340,6 @@ var xVariantGetUint16 func(uintptr) uint16
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_UINT16.
 func (x *Variant) GetUint16() uint16 {
-
 	cret := xVariantGetUint16(x.GoPointer())
 	return cret
 }
@@ -1418,7 +1351,6 @@ var xVariantGetUint32 func(uintptr) uint32
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_UINT32.
 func (x *Variant) GetUint32() uint32 {
-
 	cret := xVariantGetUint32(x.GoPointer())
 	return cret
 }
@@ -1430,7 +1362,6 @@ var xVariantGetUint64 func(uintptr) uint64
 // It is an error to call this function with a @value of any type
 // other than %G_VARIANT_TYPE_UINT64.
 func (x *Variant) GetUint64() uint64 {
-
 	cret := xVariantGetUint64(x.GoPointer())
 	return cret
 }
@@ -1462,9 +1393,7 @@ var xVariantGetVa func(uintptr, string, string, []interface{})
 // see the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) GetVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) {
-
 	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVar, AppVar)
-
 }
 
 var xVariantGetVariant func(uintptr) *Variant
@@ -1472,7 +1401,6 @@ var xVariantGetVariant func(uintptr) *Variant
 // Unboxes @value.  The result is the #GVariant instance that was
 // contained in @value.
 func (x *Variant) GetVariant() *Variant {
-
 	cret := xVariantGetVariant(x.GoPointer())
 	return cret
 }
@@ -1489,7 +1417,6 @@ var xVariantHash func(uintptr) uint32
 // The type of @value is #gconstpointer only to allow use of this
 // function with #GHashTable.  @value must be a #GVariant.
 func (x *Variant) Hash() uint32 {
-
 	cret := xVariantHash(x.GoPointer())
 	return cret
 }
@@ -1498,7 +1425,6 @@ var xVariantIsContainer func(uintptr) bool
 
 // Checks if @value is a container.
 func (x *Variant) IsContainer() bool {
-
 	cret := xVariantIsContainer(x.GoPointer())
 	return cret
 }
@@ -1515,7 +1441,6 @@ var xVariantIsFloating func(uintptr) bool
 // See g_variant_ref_sink() for more information about floating reference
 // counts.
 func (x *Variant) IsFloating() bool {
-
 	cret := xVariantIsFloating(x.GoPointer())
 	return cret
 }
@@ -1536,7 +1461,6 @@ var xVariantIsNormalForm func(uintptr) bool
 // There may be implementation specific restrictions on deeply nested values.
 // GVariant is guaranteed to handle nesting up to at least 64 levels.
 func (x *Variant) IsNormalForm() bool {
-
 	cret := xVariantIsNormalForm(x.GoPointer())
 	return cret
 }
@@ -1545,7 +1469,6 @@ var xVariantIsOfType func(uintptr, *VariantType) bool
 
 // Checks if a value has a type matching the provided type.
 func (x *Variant) IsOfType(TypeVar *VariantType) bool {
-
 	cret := xVariantIsOfType(x.GoPointer(), TypeVar)
 	return cret
 }
@@ -1561,7 +1484,6 @@ var xVariantIterNew func(uintptr) *VariantIter
 // A reference is taken to @value and will be released only when
 // g_variant_iter_free() is called.
 func (x *Variant) IterNew() *VariantIter {
-
 	cret := xVariantIterNew(x.GoPointer())
 	return cret
 }
@@ -1583,7 +1505,6 @@ var xVariantLookup func(uintptr, string, string, ...interface{}) bool
 // This function is currently implemented with a linear scan.  If you
 // plan to do many lookups then #GVariantDict may be more efficient.
 func (x *Variant) Lookup(KeyVar string, FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xVariantLookup(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
 	return cret
 }
@@ -1612,7 +1533,6 @@ var xVariantLookupValue func(uintptr, string, *VariantType) *Variant
 // This function is currently implemented with a linear scan.  If you
 // plan to do many lookups then #GVariantDict may be more efficient.
 func (x *Variant) LookupValue(KeyVar string, ExpectedTypeVar *VariantType) *Variant {
-
 	cret := xVariantLookupValue(x.GoPointer(), KeyVar, ExpectedTypeVar)
 	return cret
 }
@@ -1631,7 +1551,6 @@ var xVariantNChildren func(uintptr) uint
 //
 // This function is O(1).
 func (x *Variant) NChildren() uint {
-
 	cret := xVariantNChildren(x.GoPointer())
 	return cret
 }
@@ -1645,7 +1564,6 @@ var xVariantPrint func(uintptr, bool) string
 // If @type_annotate is %TRUE, then type information is included in
 // the output.
 func (x *Variant) Print(TypeAnnotateVar bool) string {
-
 	cret := xVariantPrint(x.GoPointer(), TypeAnnotateVar)
 	return cret
 }
@@ -1657,7 +1575,6 @@ var xVariantPrintString func(uintptr, *String, bool) *String
 // If @string is non-%NULL then it is appended to and returned.  Else,
 // a new empty #GString is allocated and it is returned.
 func (x *Variant) PrintString(StringVar *String, TypeAnnotateVar bool) *String {
-
 	cret := xVariantPrintString(x.GoPointer(), StringVar, TypeAnnotateVar)
 	return cret
 }
@@ -1666,7 +1583,6 @@ var xVariantRef func(uintptr) *Variant
 
 // Increases the reference count of @value.
 func (x *Variant) Ref() *Variant {
-
 	cret := xVariantRef(x.GoPointer())
 	return cret
 }
@@ -1696,7 +1612,6 @@ var xVariantRefSink func(uintptr) *Variant
 // maintaining normal refcounting semantics in situations where values
 // are not floating.
 func (x *Variant) RefSink() *Variant {
-
 	cret := xVariantRefSink(x.GoPointer())
 	return cret
 }
@@ -1716,9 +1631,7 @@ var xVariantStore func(uintptr, uintptr)
 //
 // This function is approximately O(n) in the size of @data.
 func (x *Variant) Store(DataVar uintptr) {
-
 	xVariantStore(x.GoPointer(), DataVar)
-
 }
 
 var xVariantTakeRef func(uintptr) *Variant
@@ -1756,7 +1669,6 @@ var xVariantTakeRef func(uintptr) *Variant
 // an additional reference on top of that one is added.  It is best to
 // avoid this situation.
 func (x *Variant) TakeRef() *Variant {
-
 	cret := xVariantTakeRef(x.GoPointer())
 	return cret
 }
@@ -1766,9 +1678,7 @@ var xVariantUnref func(uintptr)
 // Decreases the reference count of @value.  When its reference count
 // drops to 0, the memory used by the variant is freed.
 func (x *Variant) Unref() {
-
 	xVariantUnref(x.GoPointer())
-
 }
 
 // A utility type for constructing container-type #GVariant instances.
@@ -1804,7 +1714,6 @@ var xNewVariantBuilder func(*VariantType) *VariantBuilder
 // the stack of the calling function and initialise it with
 // g_variant_builder_init_static().
 func NewVariantBuilder(TypeVar *VariantType) *VariantBuilder {
-
 	cret := xNewVariantBuilder(TypeVar)
 	return cret
 }
@@ -1844,9 +1753,7 @@ var xVariantBuilderAdd func(uintptr, string, ...interface{})
 //
 // ]|
 func (x *VariantBuilder) Add(FormatStringVar string, varArgs ...interface{}) {
-
 	xVariantBuilderAdd(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 var xVariantBuilderAddParsed func(uintptr, string, ...interface{})
@@ -1880,9 +1787,7 @@ var xVariantBuilderAddParsed func(uintptr, string, ...interface{})
 //
 // ]|
 func (x *VariantBuilder) AddParsed(FormatVar string, varArgs ...interface{}) {
-
 	xVariantBuilderAddParsed(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xVariantBuilderAddValue func(uintptr, *Variant)
@@ -1898,9 +1803,7 @@ var xVariantBuilderAddValue func(uintptr, *Variant)
 // If @value is a floating reference (see g_variant_ref_sink()),
 // the @builder instance takes ownership of @value.
 func (x *VariantBuilder) AddValue(ValueVar *Variant) {
-
 	xVariantBuilderAddValue(x.GoPointer(), ValueVar)
-
 }
 
 var xVariantBuilderClear func(uintptr)
@@ -1920,9 +1823,7 @@ var xVariantBuilderClear func(uintptr)
 // #GVariantBuilder or one that is set to all-zeros but it is not valid
 // to call this function on uninitialised memory.
 func (x *VariantBuilder) Clear() {
-
 	xVariantBuilderClear(x.GoPointer())
-
 }
 
 var xVariantBuilderClose func(uintptr)
@@ -1934,9 +1835,7 @@ var xVariantBuilderClose func(uintptr)
 // inconsistent value to be constructed (ie: too few values added to the
 // subcontainer).
 func (x *VariantBuilder) Close() {
-
 	xVariantBuilderClose(x.GoPointer())
-
 }
 
 var xVariantBuilderEnd func(uintptr) *Variant
@@ -1959,7 +1858,6 @@ var xVariantBuilderEnd func(uintptr) *Variant
 // have been added; in this case it is impossible to infer the type of
 // the empty array.
 func (x *VariantBuilder) End() *Variant {
-
 	cret := xVariantBuilderEnd(x.GoPointer())
 	return cret
 }
@@ -2000,9 +1898,7 @@ var xVariantBuilderInit func(uintptr, *VariantType)
 // reference counting; you should use g_variant_builder_new() instead of
 // this function.
 func (x *VariantBuilder) Init(TypeVar *VariantType) {
-
 	xVariantBuilderInit(x.GoPointer(), TypeVar)
-
 }
 
 var xVariantBuilderInitStatic func(uintptr, *VariantType)
@@ -2014,9 +1910,7 @@ var xVariantBuilderInitStatic func(uintptr, *VariantType)
 // lifetime of @builder. This is always true of type constants like
 // `G_VARIANT_TYPE_*` or `G_VARIANT_TYPE ("(ii)")`.
 func (x *VariantBuilder) InitStatic(TypeVar *VariantType) {
-
 	xVariantBuilderInitStatic(x.GoPointer(), TypeVar)
-
 }
 
 var xVariantBuilderOpen func(uintptr, *VariantType)
@@ -2059,9 +1953,7 @@ var xVariantBuilderOpen func(uintptr, *VariantType)
 // output = g_variant_builder_end (&amp;builder);
 // ]|
 func (x *VariantBuilder) Open(TypeVar *VariantType) {
-
 	xVariantBuilderOpen(x.GoPointer(), TypeVar)
-
 }
 
 var xVariantBuilderRef func(uintptr) *VariantBuilder
@@ -2071,7 +1963,6 @@ var xVariantBuilderRef func(uintptr) *VariantBuilder
 // Don't call this on stack-allocated #GVariantBuilder instances or bad
 // things will happen.
 func (x *VariantBuilder) Ref() *VariantBuilder {
-
 	cret := xVariantBuilderRef(x.GoPointer())
 	return cret
 }
@@ -2086,9 +1977,7 @@ var xVariantBuilderUnref func(uintptr)
 // Don't call this on stack-allocated #GVariantBuilder instances or bad
 // things will happen.
 func (x *VariantBuilder) Unref() {
-
 	xVariantBuilderUnref(x.GoPointer())
-
 }
 
 // #GVariantDict is a mutable interface to #GVariant dictionaries.
@@ -2211,7 +2100,6 @@ var xNewVariantDict func(*Variant) *VariantDict
 // g_variant_dict_init().  This is particularly useful when you are
 // using #GVariantDict to construct a #GVariant.
 func NewVariantDict(FromAsvVar *Variant) *VariantDict {
-
 	cret := xNewVariantDict(FromAsvVar)
 	return cret
 }
@@ -2233,16 +2121,13 @@ var xVariantDictClear func(uintptr)
 // to g_variant_dict_clear() but it is not valid to call this function
 // on uninitialised memory.
 func (x *VariantDict) Clear() {
-
 	xVariantDictClear(x.GoPointer())
-
 }
 
 var xVariantDictContains func(uintptr, string) bool
 
 // Checks if @key exists in @dict.
 func (x *VariantDict) Contains(KeyVar string) bool {
-
 	cret := xVariantDictContains(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -2257,7 +2142,6 @@ var xVariantDictEnd func(uintptr) *Variant
 // #GVariantDict) or by reinitialising it with g_variant_dict_init() (in
 // the case of stack-allocated).
 func (x *VariantDict) End() *Variant {
-
 	cret := xVariantDictEnd(x.GoPointer())
 	return cret
 }
@@ -2281,9 +2165,7 @@ var xVariantDictInit func(uintptr, *Variant)
 // reference may try to use reference counting; you should use
 // g_variant_dict_new() instead of this function.
 func (x *VariantDict) Init(FromAsvVar *Variant) {
-
 	xVariantDictInit(x.GoPointer(), FromAsvVar)
-
 }
 
 var xVariantDictInsert func(uintptr, string, string, ...interface{})
@@ -2293,9 +2175,7 @@ var xVariantDictInsert func(uintptr, string, string, ...interface{})
 // This call is a convenience wrapper that is exactly equivalent to
 // calling g_variant_new() followed by g_variant_dict_insert_value().
 func (x *VariantDict) Insert(KeyVar string, FormatStringVar string, varArgs ...interface{}) {
-
 	xVariantDictInsert(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
-
 }
 
 var xVariantDictInsertValue func(uintptr, string, *Variant)
@@ -2304,9 +2184,7 @@ var xVariantDictInsertValue func(uintptr, string, *Variant)
 //
 // @value is consumed if it is floating.
 func (x *VariantDict) InsertValue(KeyVar string, ValueVar *Variant) {
-
 	xVariantDictInsertValue(x.GoPointer(), KeyVar, ValueVar)
-
 }
 
 var xVariantDictLookup func(uintptr, string, string, ...interface{}) bool
@@ -2323,7 +2201,6 @@ var xVariantDictLookup func(uintptr, string, string, ...interface{}) bool
 // values and also determines if the values are copied or borrowed, see the
 // section on [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantDict) Lookup(KeyVar string, FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xVariantDictLookup(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
 	return cret
 }
@@ -2342,7 +2219,6 @@ var xVariantDictLookupValue func(uintptr, string, *VariantType) *Variant
 // returned.  If @expected_type was specified then any non-%NULL return
 // value will have this type.
 func (x *VariantDict) LookupValue(KeyVar string, ExpectedTypeVar *VariantType) *Variant {
-
 	cret := xVariantDictLookupValue(x.GoPointer(), KeyVar, ExpectedTypeVar)
 	return cret
 }
@@ -2354,7 +2230,6 @@ var xVariantDictRef func(uintptr) *VariantDict
 // Don't call this on stack-allocated #GVariantDict instances or bad
 // things will happen.
 func (x *VariantDict) Ref() *VariantDict {
-
 	cret := xVariantDictRef(x.GoPointer())
 	return cret
 }
@@ -2363,7 +2238,6 @@ var xVariantDictRemove func(uintptr, string) bool
 
 // Removes a key and its associated value from a #GVariantDict.
 func (x *VariantDict) Remove(KeyVar string) bool {
-
 	cret := xVariantDictRemove(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -2378,9 +2252,7 @@ var xVariantDictUnref func(uintptr)
 // Don't call this on stack-allocated #GVariantDict instances or bad
 // things will happen.
 func (x *VariantDict) Unref() {
-
 	xVariantDictUnref(x.GoPointer())
-
 }
 
 // #GVariantIter is an opaque data structure and can only be accessed
@@ -2408,7 +2280,6 @@ var xVariantIterCopy func(uintptr) *VariantIter
 // A reference is taken to the container that @iter is iterating over
 // and will be related only when g_variant_iter_free() is called.
 func (x *VariantIter) Copy() *VariantIter {
-
 	cret := xVariantIterCopy(x.GoPointer())
 	return cret
 }
@@ -2419,9 +2290,7 @@ var xVariantIterFree func(uintptr)
 // iterators that were returned by g_variant_iter_new() or
 // g_variant_iter_copy().
 func (x *VariantIter) Free() {
-
 	xVariantIterFree(x.GoPointer())
-
 }
 
 var xVariantIterInit func(uintptr, *Variant) uint
@@ -2433,7 +2302,6 @@ var xVariantIterInit func(uintptr, *Variant) uint
 // The iterator remains valid for as long as @value exists, and need not
 // be freed in any way.
 func (x *VariantIter) Init(ValueVar *Variant) uint {
-
 	cret := xVariantIterInit(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -2505,7 +2373,6 @@ var xVariantIterLoop func(uintptr, string, ...interface{}) bool
 // See the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantIter) Loop(FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xVariantIterLoop(x.GoPointer(), FormatStringVar, varArgs...)
 	return cret
 }
@@ -2518,7 +2385,6 @@ var xVariantIterNChildren func(uintptr) uint
 //
 // This function might be useful for preallocation of arrays.
 func (x *VariantIter) NChildren() uint {
-
 	cret := xVariantIterNChildren(x.GoPointer())
 	return cret
 }
@@ -2569,7 +2435,6 @@ var xVariantIterNext func(uintptr, string, ...interface{}) bool
 // See the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantIter) Next(FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xVariantIterNext(x.GoPointer(), FormatStringVar, varArgs...)
 	return cret
 }
@@ -2606,7 +2471,6 @@ var xVariantIterNextValue func(uintptr) *Variant
 //
 // ]|
 func (x *VariantIter) NextValue() *Variant {
-
 	cret := xVariantIterNextValue(x.GoPointer())
 	return cret
 }
@@ -2712,7 +2576,6 @@ var xVariantIsObjectPath func(string) bool
 // must contain only the characters `[A-Z][a-z][0-9]_`.  No sequence
 // (including the one following the final `/` character) may be empty.
 func VariantIsObjectPath(StringVar string) bool {
-
 	cret := xVariantIsObjectPath(StringVar)
 	return cret
 }
@@ -2726,7 +2589,6 @@ var xVariantIsSignature func(string) bool
 // D-Bus type signatures consist of zero or more definite #GVariantType
 // strings in sequence.
 func VariantIsSignature(StringVar string) bool {
-
 	cret := xVariantIsSignature(StringVar)
 	return cret
 }
@@ -2777,7 +2639,6 @@ func VariantParse(TypeVar *VariantType, TextVar string, LimitVar string, EndptrV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xVariantParseErrorPrintContext func(*Error, string) string
@@ -2816,7 +2677,6 @@ var xVariantParseErrorPrintContext func(*Error, string) string
 // g_variant_parse() then you must add nul termination before using this
 // function.
 func VariantParseErrorPrintContext(ErrorVar *Error, SourceStrVar string) string {
-
 	cret := xVariantParseErrorPrintContext(ErrorVar, SourceStrVar)
 	return cret
 }
@@ -2966,5 +2826,4 @@ func init() {
 	core.PuregoSafeRegister(&xVariantIterNChildren, libs, "g_variant_iter_n_children")
 	core.PuregoSafeRegister(&xVariantIterNext, libs, "g_variant_iter_next")
 	core.PuregoSafeRegister(&xVariantIterNextValue, libs, "g_variant_iter_next_value")
-
 }

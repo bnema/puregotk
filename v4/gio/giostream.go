@@ -493,9 +493,7 @@ var xIOStreamClearPending func(uintptr)
 
 // Clears the pending flag on @stream.
 func (x *IOStream) ClearPending() {
-
 	xIOStreamClearPending(x.GoPointer())
-
 }
 
 var xIOStreamClose func(uintptr, uintptr, **glib.Error) bool
@@ -541,7 +539,6 @@ func (x *IOStream) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -557,9 +554,7 @@ var xIOStreamCloseAsync func(uintptr, int32, uintptr, uintptr, uintptr)
 // to implement asynchronicity, so they are optional for inheriting
 // classes. However, if you override one you must override all.
 func (x *IOStream) CloseAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xIOStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xIOStreamCloseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -573,7 +568,6 @@ func (x *IOStream) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamGetInputStream func(uintptr) uintptr
@@ -616,7 +610,6 @@ var xIOStreamHasPending func(uintptr) bool
 
 // Checks if a stream has pending actions.
 func (x *IOStream) HasPending() bool {
-
 	cret := xIOStreamHasPending(x.GoPointer())
 	return cret
 }
@@ -625,7 +618,6 @@ var xIOStreamIsClosed func(uintptr) bool
 
 // Checks if a stream is closed.
 func (x *IOStream) IsClosed() bool {
-
 	cret := xIOStreamIsClosed(x.GoPointer())
 	return cret
 }
@@ -643,7 +635,6 @@ func (x *IOStream) SetPending() (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamSpliceAsync func(uintptr, uintptr, IOStreamSpliceFlags, int32, uintptr, uintptr, uintptr)
@@ -656,9 +647,7 @@ var xIOStreamSpliceAsync func(uintptr, uintptr, IOStreamSpliceFlags, int32, uint
 // You can then call g_io_stream_splice_finish() to get the
 // result of the operation.
 func (x *IOStream) SpliceAsync(Stream2Var *IOStream, FlagsVar IOStreamSpliceFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xIOStreamSpliceAsync(x.GoPointer(), Stream2Var.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 func (c *IOStream) GoPointer() uintptr {
@@ -691,7 +680,6 @@ func IOStreamSpliceFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -720,5 +708,4 @@ func init() {
 	core.PuregoSafeRegister(&xIOStreamSpliceAsync, libs, "g_io_stream_splice_async")
 
 	core.PuregoSafeRegister(&xIOStreamSpliceFinish, libs, "g_io_stream_splice_finish")
-
 }

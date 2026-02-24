@@ -139,7 +139,6 @@ var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
 //   - `"standard::type,unix::*"`: matches the type key in the standard
 //     namespace and all keys in the unix namespace.
 func NewFileAttributeMatcher(AttributesVar string) *FileAttributeMatcher {
-
 	cret := xNewFileAttributeMatcher(AttributesVar)
 	return cret
 }
@@ -153,7 +152,6 @@ var xFileAttributeMatcherEnumerateNamespace func(uintptr, string) bool
 //
 // TODO: this is awkwardly worded.
 func (x *FileAttributeMatcher) EnumerateNamespace(NsVar string) bool {
-
 	cret := xFileAttributeMatcherEnumerateNamespace(x.GoPointer(), NsVar)
 	return cret
 }
@@ -162,7 +160,6 @@ var xFileAttributeMatcherEnumerateNext func(uintptr) string
 
 // Gets the next matched attribute from a #GFileAttributeMatcher.
 func (x *FileAttributeMatcher) EnumerateNext() string {
-
 	cret := xFileAttributeMatcherEnumerateNext(x.GoPointer())
 	return cret
 }
@@ -173,7 +170,6 @@ var xFileAttributeMatcherMatches func(uintptr, string) bool
 // the matcher was created with the "*" matching string, this function
 // will always return %TRUE.
 func (x *FileAttributeMatcher) Matches(AttributeVar string) bool {
-
 	cret := xFileAttributeMatcherMatches(x.GoPointer(), AttributeVar)
 	return cret
 }
@@ -183,7 +179,6 @@ var xFileAttributeMatcherMatchesOnly func(uintptr, string) bool
 // Checks if an attribute matcher only matches a given attribute. Always
 // returns %FALSE if "*" was used when creating the matcher.
 func (x *FileAttributeMatcher) MatchesOnly(AttributeVar string) bool {
-
 	cret := xFileAttributeMatcherMatchesOnly(x.GoPointer(), AttributeVar)
 	return cret
 }
@@ -192,7 +187,6 @@ var xFileAttributeMatcherRef func(uintptr) *FileAttributeMatcher
 
 // References a file attribute matcher.
 func (x *FileAttributeMatcher) Ref() *FileAttributeMatcher {
-
 	cret := xFileAttributeMatcherRef(x.GoPointer())
 	return cret
 }
@@ -208,7 +202,6 @@ var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttr
 // is a limitation of the current implementation, but may be fixed
 // in the future.
 func (x *FileAttributeMatcher) Subtract(SubtractVar *FileAttributeMatcher) *FileAttributeMatcher {
-
 	cret := xFileAttributeMatcherSubtract(x.GoPointer(), SubtractVar)
 	return cret
 }
@@ -220,7 +213,6 @@ var xFileAttributeMatcherToString func(uintptr) string
 // The output however, might not be identical, as the matcher may
 // decide to use a different order or omit needless parts.
 func (x *FileAttributeMatcher) ToString() string {
-
 	cret := xFileAttributeMatcherToString(x.GoPointer())
 	return cret
 }
@@ -230,9 +222,7 @@ var xFileAttributeMatcherUnref func(uintptr)
 // Unreferences @matcher. If the reference count falls below 1,
 // the @matcher is automatically freed.
 func (x *FileAttributeMatcher) Unref() {
-
 	xFileAttributeMatcherUnref(x.GoPointer())
-
 }
 
 // #GIOExtension is an opaque data structure and can only be accessed
@@ -252,7 +242,6 @@ var xIOExtensionGetName func(uintptr) string
 // Note that the same type may be registered as extension
 // for multiple extension points, under different names.
 func (x *IOExtension) GetName() string {
-
 	cret := xIOExtensionGetName(x.GoPointer())
 	return cret
 }
@@ -261,7 +250,6 @@ var xIOExtensionGetPriority func(uintptr) int32
 
 // Gets the priority with which @extension was registered.
 func (x *IOExtension) GetPriority() int32 {
-
 	cret := xIOExtensionGetPriority(x.GoPointer())
 	return cret
 }
@@ -270,7 +258,6 @@ var xIOExtensionGetType func(uintptr) types.GType
 
 // Gets the type associated with @extension.
 func (x *IOExtension) GetType() types.GType {
-
 	cret := xIOExtensionGetType(x.GoPointer())
 	return cret
 }
@@ -280,7 +267,6 @@ var xIOExtensionRefClass func(uintptr) *gobject.TypeClass
 // Gets a reference to the class for the type that is
 // associated with @extension.
 func (x *IOExtension) RefClass() *gobject.TypeClass {
-
 	cret := xIOExtensionRefClass(x.GoPointer())
 	return cret
 }
@@ -350,7 +336,6 @@ var xIOExtensionPointGetExtensionByName func(uintptr, string) *IOExtension
 
 // Finds a #GIOExtension for an extension point by name.
 func (x *IOExtensionPoint) GetExtensionByName(NameVar string) *IOExtension {
-
 	cret := xIOExtensionPointGetExtensionByName(x.GoPointer(), NameVar)
 	return cret
 }
@@ -360,7 +345,6 @@ var xIOExtensionPointGetExtensions func(uintptr) *glib.List
 // Gets a list of all extensions that implement this extension point.
 // The list is sorted by priority, beginning with the highest priority.
 func (x *IOExtensionPoint) GetExtensions() *glib.List {
-
 	cret := xIOExtensionPointGetExtensions(x.GoPointer())
 	return cret
 }
@@ -369,7 +353,6 @@ var xIOExtensionPointGetRequiredType func(uintptr) types.GType
 
 // Gets the required type for @extension_point.
 func (x *IOExtensionPoint) GetRequiredType() types.GType {
-
 	cret := xIOExtensionPointGetRequiredType(x.GoPointer())
 	return cret
 }
@@ -379,9 +362,7 @@ var xIOExtensionPointSetRequiredType func(uintptr, types.GType)
 // Sets the required type for @extension_point to @type.
 // All implementations must henceforth have this type.
 func (x *IOExtensionPoint) SetRequiredType(TypeVar types.GType) {
-
 	xIOExtensionPointSetRequiredType(x.GoPointer(), TypeVar)
-
 }
 
 // Opaque class for defining and scheduling IO jobs.
@@ -399,7 +380,6 @@ var xIOSchedulerJobSendToMainloop func(uintptr, uintptr, uintptr, uintptr) bool
 // that the job was started from, waiting for the result (and thus
 // blocking the I/O job).
 func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) bool {
-
 	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 	return cret
 }
@@ -416,9 +396,7 @@ var xIOSchedulerJobSendToMainloopAsync func(uintptr, uintptr, uintptr, uintptr)
 // @func is called, either by passing %NULL as @notify to
 // g_io_scheduler_push_job() or by using refcounting for @user_data.
 func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
 	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
-
 }
 
 type IOStreamAdapter struct {
@@ -729,7 +707,6 @@ func NewResourceFromData(DataVar *glib.Bytes) (*Resource, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceRegister func(uintptr)
@@ -740,18 +717,14 @@ var xResourceRegister func(uintptr)
 // with the global resource lookup functions like
 // [func@Gio.resources_lookup_data].
 func (x *Resource) Register() {
-
 	xResourceRegister(x.GoPointer())
-
 }
 
 var xResourceUnregister func(uintptr)
 
 // Unregisters the resource from the process-global set of resources.
 func (x *Resource) Unregister() {
-
 	xResourceUnregister(x.GoPointer())
-
 }
 
 var xResourceEnumerateChildren func(uintptr, string, ResourceLookupFlags, **glib.Error) []string
@@ -773,7 +746,6 @@ func (x *Resource) EnumerateChildren(PathVar string, LookupFlagsVar ResourceLook
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceGetInfo func(uintptr, string, ResourceLookupFlags, *uint, *uint32, **glib.Error) bool
@@ -793,7 +765,6 @@ func (x *Resource) GetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, S
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceHasChildren func(uintptr, string) bool
@@ -801,7 +772,6 @@ var xResourceHasChildren func(uintptr, string) bool
 // Returns whether the specified @path in the resource
 // has children.
 func (x *Resource) HasChildren(PathVar string) bool {
-
 	cret := xResourceHasChildren(x.GoPointer(), PathVar)
 	return cret
 }
@@ -834,7 +804,6 @@ func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceOpenStream func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
@@ -861,7 +830,6 @@ func (x *Resource) OpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xResourceRef func(uintptr) *Resource
@@ -870,7 +838,6 @@ var xResourceRef func(uintptr) *Resource
 //
 // This function is threadsafe and may be called from any thread.
 func (x *Resource) Ref() *Resource {
-
 	cret := xResourceRef(x.GoPointer())
 	return cret
 }
@@ -883,9 +850,7 @@ var xResourceUnref func(uintptr)
 // released. This function is threadsafe and may be called from any
 // thread.
 func (x *Resource) Unref() {
-
 	xResourceUnref(x.GoPointer())
-
 }
 
 // A single target host/port that a network service is running on.
@@ -925,7 +890,6 @@ var xNewSrvTarget func(string, uint16, uint16, uint16) *SrvTarget
 // You should not need to use this; normally #GSrvTargets are
 // created by #GResolver.
 func NewSrvTarget(HostnameVar string, PortVar uint16, PriorityVar uint16, WeightVar uint16) *SrvTarget {
-
 	cret := xNewSrvTarget(HostnameVar, PortVar, PriorityVar, WeightVar)
 	return cret
 }
@@ -934,7 +898,6 @@ var xSrvTargetCopy func(uintptr) *SrvTarget
 
 // Copies @target
 func (x *SrvTarget) Copy() *SrvTarget {
-
 	cret := xSrvTargetCopy(x.GoPointer())
 	return cret
 }
@@ -943,9 +906,7 @@ var xSrvTargetFree func(uintptr)
 
 // Frees @target
 func (x *SrvTarget) Free() {
-
 	xSrvTargetFree(x.GoPointer())
-
 }
 
 var xSrvTargetGetHostname func(uintptr) string
@@ -955,7 +916,6 @@ var xSrvTargetGetHostname func(uintptr) string
 // check if it contains encoded Unicode segments, and use
 // g_hostname_to_unicode() to convert it if it does.)
 func (x *SrvTarget) GetHostname() string {
-
 	cret := xSrvTargetGetHostname(x.GoPointer())
 	return cret
 }
@@ -964,7 +924,6 @@ var xSrvTargetGetPort func(uintptr) uint16
 
 // Gets @target's port
 func (x *SrvTarget) GetPort() uint16 {
-
 	cret := xSrvTargetGetPort(x.GoPointer())
 	return cret
 }
@@ -975,7 +934,6 @@ var xSrvTargetGetPriority func(uintptr) uint16
 // #GResolver already sorts the targets according to the algorithm in
 // RFC 2782.
 func (x *SrvTarget) GetPriority() uint16 {
-
 	cret := xSrvTargetGetPriority(x.GoPointer())
 	return cret
 }
@@ -986,7 +944,6 @@ var xSrvTargetGetWeight func(uintptr) uint16
 // #GResolver already sorts the targets according to the algorithm in
 // RFC 2782.
 func (x *SrvTarget) GetWeight() uint16 {
-
 	cret := xSrvTargetGetWeight(x.GoPointer())
 	return cret
 }
@@ -1053,5 +1010,4 @@ func init() {
 	core.PuregoSafeRegister(&xSrvTargetGetPort, libs, "g_srv_target_get_port")
 	core.PuregoSafeRegister(&xSrvTargetGetPriority, libs, "g_srv_target_get_priority")
 	core.PuregoSafeRegister(&xSrvTargetGetWeight, libs, "g_srv_target_get_weight")
-
 }

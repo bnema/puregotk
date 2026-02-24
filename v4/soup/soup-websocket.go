@@ -152,9 +152,7 @@ var xWebsocketClientPrepareHandshake func(uintptr, string, []string, []gobject.T
 // [method@Session.websocket_connect_async] to create a WebSocket connection, it
 // will call this for you.
 func WebsocketClientPrepareHandshake(MsgVar *Message, OriginVar string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass) {
-
 	xWebsocketClientPrepareHandshake(MsgVar.GoPointer(), OriginVar, ProtocolsVar, SupportedExtensionsVar)
-
 }
 
 var xWebsocketClientVerifyHandshake func(uintptr, []gobject.TypeClass, **glib.List, **glib.Error) bool
@@ -178,14 +176,12 @@ func WebsocketClientVerifyHandshake(MsgVar *Message, SupportedExtensionsVar []go
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsocketErrorQuark func() glib.Quark
 
 // Registers error quark for SoupWebsocket if needed.
 func WebsocketErrorQuark() glib.Quark {
-
 	cret := xWebsocketErrorQuark()
 	return cret
 }
@@ -217,7 +213,6 @@ func WebsocketServerCheckHandshake(MsgVar *ServerMessage, OriginVar string, Prot
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsocketServerProcessHandshake func(uintptr, string, []string, []gobject.TypeClass, **glib.List) bool
@@ -238,7 +233,6 @@ var xWebsocketServerProcessHandshake func(uintptr, string, []string, []gobject.T
 // [method@Server.add_websocket_handler] to handle accepting WebSocket
 // connections, it will call this for you.
 func WebsocketServerProcessHandshake(MsgVar *ServerMessage, ExpectedOriginVar string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass, AcceptedExtensionsVar **glib.List) bool {
-
 	cret := xWebsocketServerProcessHandshake(MsgVar.GoPointer(), ExpectedOriginVar, ProtocolsVar, SupportedExtensionsVar, AcceptedExtensionsVar)
 	return cret
 }
@@ -270,5 +264,4 @@ func init() {
 	core.PuregoSafeRegister(&xWebsocketErrorQuark, libs, "soup_websocket_error_quark")
 	core.PuregoSafeRegister(&xWebsocketServerCheckHandshake, libs, "soup_websocket_server_check_handshake")
 	core.PuregoSafeRegister(&xWebsocketServerProcessHandshake, libs, "soup_websocket_server_process_handshake")
-
 }

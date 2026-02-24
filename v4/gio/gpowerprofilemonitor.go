@@ -79,7 +79,6 @@ func (x *PowerProfileMonitorBase) SetGoPointer(ptr uintptr) {
 // #GPowerProfileMonitor::notify::power-saver-enabled signal to know when the profile has
 // changed.
 func (x *PowerProfileMonitorBase) GetPowerSaverEnabled() bool {
-
 	cret := XGPowerProfileMonitorGetPowerSaverEnabled(x.GoPointer())
 	return cret
 }
@@ -135,5 +134,4 @@ func init() {
 	core.PuregoSafeRegister(&xPowerProfileMonitorGLibType, libs, "g_power_profile_monitor_get_type")
 
 	core.PuregoSafeRegister(&XGPowerProfileMonitorGetPowerSaverEnabled, libs, "g_power_profile_monitor_get_power_saver_enabled")
-
 }

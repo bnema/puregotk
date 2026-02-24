@@ -329,9 +329,7 @@ func (x *PaintableBase) SetGoPointer(ptr uintptr) {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *PaintableBase) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -359,7 +357,6 @@ func (x *PaintableBase) GetCurrentImage() *PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *PaintableBase) GetFlags() PaintableFlags {
-
 	cret := XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -382,7 +379,6 @@ func (x *PaintableBase) GetFlags() PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *PaintableBase) GetIntrinsicAspectRatio() float64 {
-
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -398,7 +394,6 @@ func (x *PaintableBase) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *PaintableBase) GetIntrinsicHeight() int32 {
-
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -414,7 +409,6 @@ func (x *PaintableBase) GetIntrinsicHeight() int32 {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *PaintableBase) GetIntrinsicWidth() int32 {
-
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -430,9 +424,7 @@ func (x *PaintableBase) GetIntrinsicWidth() int32 {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *PaintableBase) InvalidateContents() {
-
 	XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -446,9 +438,7 @@ func (x *PaintableBase) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *PaintableBase) InvalidateSize() {
-
 	XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -457,20 +447,20 @@ func (x *PaintableBase) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *PaintableBase) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar float64) {
-
 	XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
-var XGdkPaintableComputeConcreteSize func(uintptr, float64, float64, float64, float64, *float64, *float64)
-var XGdkPaintableGetCurrentImage func(uintptr) uintptr
-var XGdkPaintableGetFlags func(uintptr) PaintableFlags
-var XGdkPaintableGetIntrinsicAspectRatio func(uintptr) float64
-var XGdkPaintableGetIntrinsicHeight func(uintptr) int32
-var XGdkPaintableGetIntrinsicWidth func(uintptr) int32
-var XGdkPaintableInvalidateContents func(uintptr)
-var XGdkPaintableInvalidateSize func(uintptr)
-var XGdkPaintableSnapshot func(uintptr, uintptr, float64, float64)
+var (
+	XGdkPaintableComputeConcreteSize     func(uintptr, float64, float64, float64, float64, *float64, *float64)
+	XGdkPaintableGetCurrentImage         func(uintptr) uintptr
+	XGdkPaintableGetFlags                func(uintptr) PaintableFlags
+	XGdkPaintableGetIntrinsicAspectRatio func(uintptr) float64
+	XGdkPaintableGetIntrinsicHeight      func(uintptr) int32
+	XGdkPaintableGetIntrinsicWidth       func(uintptr) int32
+	XGdkPaintableInvalidateContents      func(uintptr)
+	XGdkPaintableInvalidateSize          func(uintptr)
+	XGdkPaintableSnapshot                func(uintptr, uintptr, float64, float64)
+)
 
 // Flags about a paintable object.
 //
@@ -544,5 +534,4 @@ func init() {
 	core.PuregoSafeRegister(&XGdkPaintableInvalidateContents, libs, "gdk_paintable_invalidate_contents")
 	core.PuregoSafeRegister(&XGdkPaintableInvalidateSize, libs, "gdk_paintable_invalidate_size")
 	core.PuregoSafeRegister(&XGdkPaintableSnapshot, libs, "gdk_paintable_snapshot")
-
 }

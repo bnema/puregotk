@@ -53,7 +53,6 @@ var xEnumListItemGetName func(uintptr) string
 
 // Gets the enum value name.
 func (x *EnumListItem) GetName() string {
-
 	cret := xEnumListItemGetName(x.GoPointer())
 	return cret
 }
@@ -62,7 +61,6 @@ var xEnumListItemGetNick func(uintptr) string
 
 // Gets the enum value nick.
 func (x *EnumListItem) GetNick() string {
-
 	cret := xEnumListItemGetNick(x.GoPointer())
 	return cret
 }
@@ -71,7 +69,6 @@ var xEnumListItemGetValue func(uintptr) int32
 
 // Gets the enum value.
 func (x *EnumListItem) GetValue() int32 {
-
 	cret := xEnumListItemGetValue(x.GoPointer())
 	return cret
 }
@@ -152,7 +149,6 @@ var xEnumListModelFindPosition func(uintptr, int32) uint32
 //
 // If the value is not found, `GTK_INVALID_LIST_POSITION` is returned.
 func (x *EnumListModel) FindPosition(ValueVar int32) uint32 {
-
 	cret := xEnumListModelFindPosition(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -161,7 +157,6 @@ var xEnumListModelGetEnumType func(uintptr) types.GType
 
 // Gets the type of the enum represented by @self.
 func (x *EnumListModel) GetEnumType() types.GType {
-
 	cret := xEnumListModelGetEnumType(x.GoPointer())
 	return cret
 }
@@ -187,7 +182,6 @@ func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *EnumListModel) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -201,7 +195,6 @@ func (x *EnumListModel) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *EnumListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -212,7 +205,6 @@ func (x *EnumListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *EnumListModel) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -263,9 +255,7 @@ func (x *EnumListModel) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *EnumListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
@@ -292,5 +282,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEnumListModelFindPosition, libs, "adw_enum_list_model_find_position")
 	core.PuregoSafeRegister(&xEnumListModelGetEnumType, libs, "adw_enum_list_model_get_enum_type")
-
 }

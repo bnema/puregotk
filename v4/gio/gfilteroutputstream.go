@@ -138,7 +138,6 @@ var xFilterOutputStreamGetCloseBaseStream func(uintptr) bool
 // Returns whether the base stream will be closed when @stream is
 // closed.
 func (x *FilterOutputStream) GetCloseBaseStream() bool {
-
 	cret := xFilterOutputStreamGetCloseBaseStream(x.GoPointer())
 	return cret
 }
@@ -147,9 +146,7 @@ var xFilterOutputStreamSetCloseBaseStream func(uintptr, bool)
 
 // Sets whether the base stream will be closed when @stream is closed.
 func (x *FilterOutputStream) SetCloseBaseStream(CloseBaseVar bool) {
-
 	xFilterOutputStreamSetCloseBaseStream(x.GoPointer(), CloseBaseVar)
-
 }
 
 func (c *FilterOutputStream) GoPointer() uintptr {
@@ -197,5 +194,4 @@ func init() {
 	core.PuregoSafeRegister(&xFilterOutputStreamGetBaseStream, libs, "g_filter_output_stream_get_base_stream")
 	core.PuregoSafeRegister(&xFilterOutputStreamGetCloseBaseStream, libs, "g_filter_output_stream_get_close_base_stream")
 	core.PuregoSafeRegister(&xFilterOutputStreamSetCloseBaseStream, libs, "g_filter_output_stream_set_close_base_stream")
-
 }

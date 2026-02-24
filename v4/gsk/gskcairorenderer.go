@@ -87,5 +87,4 @@ func init() {
 	core.PuregoSafeRegister(&xCairoRendererGLibType, libs, "gsk_cairo_renderer_get_type")
 
 	core.PuregoSafeRegister(&xNewCairoRenderer, libs, "gsk_cairo_renderer_new")
-
 }

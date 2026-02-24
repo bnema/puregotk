@@ -226,7 +226,6 @@ var xScrolledWindowGetHasFrame func(uintptr) bool
 
 // Gets whether the scrolled window draws a frame.
 func (x *ScrolledWindow) GetHasFrame() bool {
-
 	cret := xScrolledWindowGetHasFrame(x.GoPointer())
 	return cret
 }
@@ -252,7 +251,6 @@ var xScrolledWindowGetKineticScrolling func(uintptr) bool
 
 // Returns the specified kinetic scrolling behavior.
 func (x *ScrolledWindow) GetKineticScrolling() bool {
-
 	cret := xScrolledWindowGetKineticScrolling(x.GoPointer())
 	return cret
 }
@@ -261,7 +259,6 @@ var xScrolledWindowGetMaxContentHeight func(uintptr) int32
 
 // Returns the maximum content height set.
 func (x *ScrolledWindow) GetMaxContentHeight() int32 {
-
 	cret := xScrolledWindowGetMaxContentHeight(x.GoPointer())
 	return cret
 }
@@ -270,7 +267,6 @@ var xScrolledWindowGetMaxContentWidth func(uintptr) int32
 
 // Returns the maximum content width set.
 func (x *ScrolledWindow) GetMaxContentWidth() int32 {
-
 	cret := xScrolledWindowGetMaxContentWidth(x.GoPointer())
 	return cret
 }
@@ -279,7 +275,6 @@ var xScrolledWindowGetMinContentHeight func(uintptr) int32
 
 // Gets the minimal content height of @scrolled_window.
 func (x *ScrolledWindow) GetMinContentHeight() int32 {
-
 	cret := xScrolledWindowGetMinContentHeight(x.GoPointer())
 	return cret
 }
@@ -288,7 +283,6 @@ var xScrolledWindowGetMinContentWidth func(uintptr) int32
 
 // Gets the minimum content width of @scrolled_window.
 func (x *ScrolledWindow) GetMinContentWidth() int32 {
-
 	cret := xScrolledWindowGetMinContentWidth(x.GoPointer())
 	return cret
 }
@@ -297,7 +291,6 @@ var xScrolledWindowGetOverlayScrolling func(uintptr) bool
 
 // Returns whether overlay scrolling is enabled for this scrolled window.
 func (x *ScrolledWindow) GetOverlayScrolling() bool {
-
 	cret := xScrolledWindowGetOverlayScrolling(x.GoPointer())
 	return cret
 }
@@ -306,7 +299,6 @@ var xScrolledWindowGetPlacement func(uintptr) CornerType
 
 // Gets the placement of the contents with respect to the scrollbars.
 func (x *ScrolledWindow) GetPlacement() CornerType {
-
 	cret := xScrolledWindowGetPlacement(x.GoPointer())
 	return cret
 }
@@ -318,9 +310,7 @@ var xScrolledWindowGetPolicy func(uintptr, *PolicyType, *PolicyType)
 //
 // See [method@Gtk.ScrolledWindow.set_policy].
 func (x *ScrolledWindow) GetPolicy(HscrollbarPolicyVar *PolicyType, VscrollbarPolicyVar *PolicyType) {
-
 	xScrolledWindowGetPolicy(x.GoPointer(), HscrollbarPolicyVar, VscrollbarPolicyVar)
-
 }
 
 var xScrolledWindowGetPropagateNaturalHeight func(uintptr) bool
@@ -328,7 +318,6 @@ var xScrolledWindowGetPropagateNaturalHeight func(uintptr) bool
 // Reports whether the natural height of the child will be calculated
 // and propagated through the scrolled window’s requested natural height.
 func (x *ScrolledWindow) GetPropagateNaturalHeight() bool {
-
 	cret := xScrolledWindowGetPropagateNaturalHeight(x.GoPointer())
 	return cret
 }
@@ -338,7 +327,6 @@ var xScrolledWindowGetPropagateNaturalWidth func(uintptr) bool
 // Reports whether the natural width of the child will be calculated
 // and propagated through the scrolled window’s requested natural width.
 func (x *ScrolledWindow) GetPropagateNaturalWidth() bool {
-
 	cret := xScrolledWindowGetPropagateNaturalWidth(x.GoPointer())
 	return cret
 }
@@ -388,27 +376,21 @@ var xScrolledWindowSetChild func(uintptr, uintptr)
 // the scrolled window will add @child to a [class@Gtk.Viewport] instance
 // and then add the viewport as its child widget.
 func (x *ScrolledWindow) SetChild(ChildVar *Widget) {
-
 	xScrolledWindowSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xScrolledWindowSetHadjustment func(uintptr, uintptr)
 
 // Sets the `GtkAdjustment` for the horizontal scrollbar.
 func (x *ScrolledWindow) SetHadjustment(HadjustmentVar *Adjustment) {
-
 	xScrolledWindowSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 var xScrolledWindowSetHasFrame func(uintptr, bool)
 
 // Changes the frame drawn around the contents of @scrolled_window.
 func (x *ScrolledWindow) SetHasFrame(HasFrameVar bool) {
-
 	xScrolledWindowSetHasFrame(x.GoPointer(), HasFrameVar)
-
 }
 
 var xScrolledWindowSetKineticScrolling func(uintptr, bool)
@@ -418,9 +400,7 @@ var xScrolledWindowSetKineticScrolling func(uintptr, bool)
 // Kinetic scrolling only applies to devices with source
 // %GDK_SOURCE_TOUCHSCREEN.
 func (x *ScrolledWindow) SetKineticScrolling(KineticScrollingVar bool) {
-
 	xScrolledWindowSetKineticScrolling(x.GoPointer(), KineticScrollingVar)
-
 }
 
 var xScrolledWindowSetMaxContentHeight func(uintptr, int32)
@@ -433,9 +413,7 @@ var xScrolledWindowSetMaxContentHeight func(uintptr, int32)
 // It is a programming error to set the maximum content height to a value
 // smaller than [property@Gtk.ScrolledWindow:min-content-height].
 func (x *ScrolledWindow) SetMaxContentHeight(HeightVar int32) {
-
 	xScrolledWindowSetMaxContentHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xScrolledWindowSetMaxContentWidth func(uintptr, int32)
@@ -448,9 +426,7 @@ var xScrolledWindowSetMaxContentWidth func(uintptr, int32)
 // It is a programming error to set the maximum content width to a
 // value smaller than [property@Gtk.ScrolledWindow:min-content-width].
 func (x *ScrolledWindow) SetMaxContentWidth(WidthVar int32) {
-
 	xScrolledWindowSetMaxContentWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xScrolledWindowSetMinContentHeight func(uintptr, int32)
@@ -463,9 +439,7 @@ var xScrolledWindowSetMinContentHeight func(uintptr, int32)
 // It is a programming error to set the minimum content height to a
 // value greater than [property@Gtk.ScrolledWindow:max-content-height].
 func (x *ScrolledWindow) SetMinContentHeight(HeightVar int32) {
-
 	xScrolledWindowSetMinContentHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xScrolledWindowSetMinContentWidth func(uintptr, int32)
@@ -478,18 +452,14 @@ var xScrolledWindowSetMinContentWidth func(uintptr, int32)
 // It is a programming error to set the minimum content width to a
 // value greater than [property@Gtk.ScrolledWindow:max-content-width].
 func (x *ScrolledWindow) SetMinContentWidth(WidthVar int32) {
-
 	xScrolledWindowSetMinContentWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xScrolledWindowSetOverlayScrolling func(uintptr, bool)
 
 // Enables or disables overlay scrolling for this scrolled window.
 func (x *ScrolledWindow) SetOverlayScrolling(OverlayScrollingVar bool) {
-
 	xScrolledWindowSetOverlayScrolling(x.GoPointer(), OverlayScrollingVar)
-
 }
 
 var xScrolledWindowSetPlacement func(uintptr, CornerType)
@@ -505,9 +475,7 @@ var xScrolledWindowSetPlacement func(uintptr, CornerType)
 // See also [method@Gtk.ScrolledWindow.get_placement] and
 // [method@Gtk.ScrolledWindow.unset_placement].
 func (x *ScrolledWindow) SetPlacement(WindowPlacementVar CornerType) {
-
 	xScrolledWindowSetPlacement(x.GoPointer(), WindowPlacementVar)
-
 }
 
 var xScrolledWindowSetPolicy func(uintptr, PolicyType, PolicyType)
@@ -521,9 +489,7 @@ var xScrolledWindowSetPolicy func(uintptr, PolicyType, PolicyType)
 // if needed (that is, if the slider part of the bar would be smaller
 // than the trough — the display is larger than the page size).
 func (x *ScrolledWindow) SetPolicy(HscrollbarPolicyVar PolicyType, VscrollbarPolicyVar PolicyType) {
-
 	xScrolledWindowSetPolicy(x.GoPointer(), HscrollbarPolicyVar, VscrollbarPolicyVar)
-
 }
 
 var xScrolledWindowSetPropagateNaturalHeight func(uintptr, bool)
@@ -531,9 +497,7 @@ var xScrolledWindowSetPropagateNaturalHeight func(uintptr, bool)
 // Sets whether the natural height of the child should be calculated
 // and propagated through the scrolled window’s requested natural height.
 func (x *ScrolledWindow) SetPropagateNaturalHeight(PropagateVar bool) {
-
 	xScrolledWindowSetPropagateNaturalHeight(x.GoPointer(), PropagateVar)
-
 }
 
 var xScrolledWindowSetPropagateNaturalWidth func(uintptr, bool)
@@ -541,18 +505,14 @@ var xScrolledWindowSetPropagateNaturalWidth func(uintptr, bool)
 // Sets whether the natural width of the child should be calculated
 // and propagated through the scrolled window’s requested natural width.
 func (x *ScrolledWindow) SetPropagateNaturalWidth(PropagateVar bool) {
-
 	xScrolledWindowSetPropagateNaturalWidth(x.GoPointer(), PropagateVar)
-
 }
 
 var xScrolledWindowSetVadjustment func(uintptr, uintptr)
 
 // Sets the `GtkAdjustment` for the vertical scrollbar.
 func (x *ScrolledWindow) SetVadjustment(VadjustmentVar *Adjustment) {
-
 	xScrolledWindowSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 var xScrolledWindowUnsetPlacement func(uintptr)
@@ -562,9 +522,7 @@ var xScrolledWindowUnsetPlacement func(uintptr)
 // If no window placement is set for a scrolled window,
 // it defaults to %GTK_CORNER_TOP_LEFT.
 func (x *ScrolledWindow) UnsetPlacement() {
-
 	xScrolledWindowUnsetPlacement(x.GoPointer())
-
 }
 
 func (c *ScrolledWindow) GoPointer() uintptr {
@@ -786,7 +744,6 @@ func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionTy
 		cbFn := *cb
 
 		cbFn(fa, PosVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -814,7 +771,6 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 		cbFn := *cb
 
 		cbFn(fa, PosVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -841,7 +797,6 @@ func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionT
 		cbFn := *cb
 
 		cbFn(fa, DirectionTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -866,7 +821,6 @@ func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType,
 		cbFn := *cb
 
 		return cbFn(fa, ScrollVarp, HorizontalVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -883,9 +837,7 @@ func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType,
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ScrolledWindow) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -906,7 +858,6 @@ func (x *ScrolledWindow) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ScrolledWindow) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -931,7 +882,6 @@ func (x *ScrolledWindow) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ScrolledWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -970,30 +920,23 @@ func (x *ScrolledWindow) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ScrolledWindow) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ScrolledWindow) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ScrolledWindow) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ScrolledWindow) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1006,9 +949,7 @@ func (x *ScrolledWindow) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ScrolledWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1016,9 +957,7 @@ func (x *ScrolledWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVa
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ScrolledWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1027,9 +966,7 @@ func (x *ScrolledWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ScrolledWindow) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1051,9 +988,7 @@ func (x *ScrolledWindow) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ScrolledWindow) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1063,9 +998,7 @@ func (x *ScrolledWindow) UpdateProperty(FirstPropertyVar AccessibleProperty, var
 //
 // This function is meant to be used by language bindings.
 func (x *ScrolledWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1087,9 +1020,7 @@ func (x *ScrolledWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar
 //
 // ```
 func (x *ScrolledWindow) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1099,9 +1030,7 @@ func (x *ScrolledWindow) UpdateRelation(FirstRelationVar AccessibleRelation, var
 //
 // This function is meant to be used by language bindings.
 func (x *ScrolledWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1124,9 +1053,7 @@ func (x *ScrolledWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar [
 //
 // ```
 func (x *ScrolledWindow) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1136,9 +1063,7 @@ func (x *ScrolledWindow) UpdateState(FirstStateVar AccessibleState, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *ScrolledWindow) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1146,7 +1071,6 @@ func (x *ScrolledWindow) UpdateStateValue(NStatesVar int32, StatesVar []Accessib
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ScrolledWindow) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1202,5 +1126,4 @@ func init() {
 	core.PuregoSafeRegister(&xScrolledWindowSetPropagateNaturalWidth, libs, "gtk_scrolled_window_set_propagate_natural_width")
 	core.PuregoSafeRegister(&xScrolledWindowSetVadjustment, libs, "gtk_scrolled_window_set_vadjustment")
 	core.PuregoSafeRegister(&xScrolledWindowUnsetPlacement, libs, "gtk_scrolled_window_unset_placement")
-
 }

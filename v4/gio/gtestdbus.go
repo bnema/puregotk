@@ -126,9 +126,7 @@ var xTestDBusAddServiceDir func(uintptr, string)
 // Add a path where dbus-daemon will look up .service files. This can't be
 // called after g_test_dbus_up().
 func (x *TestDBus) AddServiceDir(PathVar string) {
-
 	xTestDBusAddServiceDir(x.GoPointer(), PathVar)
-
 }
 
 var xTestDBusDown func(uintptr)
@@ -139,9 +137,7 @@ var xTestDBusDown func(uintptr)
 // to be destroyed. This is done to ensure that the next unit test won't get a
 // leaked singleton from this test.
 func (x *TestDBus) Down() {
-
 	xTestDBusDown(x.GoPointer())
-
 }
 
 var xTestDBusGetBusAddress func(uintptr) string
@@ -150,7 +146,6 @@ var xTestDBusGetBusAddress func(uintptr) string
 // been called yet, %NULL is returned. This can be used with
 // g_dbus_connection_new_for_address().
 func (x *TestDBus) GetBusAddress() string {
-
 	cret := xTestDBusGetBusAddress(x.GoPointer())
 	return cret
 }
@@ -159,7 +154,6 @@ var xTestDBusGetFlags func(uintptr) TestDBusFlags
 
 // Get the flags of the #GTestDBus object.
 func (x *TestDBus) GetFlags() TestDBusFlags {
-
 	cret := xTestDBusGetFlags(x.GoPointer())
 	return cret
 }
@@ -173,9 +167,7 @@ var xTestDBusStop func(uintptr)
 // tests wanting to verify behaviour after the session bus has been stopped
 // can use this function but should still call g_test_dbus_down() when done.
 func (x *TestDBus) Stop() {
-
 	xTestDBusStop(x.GoPointer())
-
 }
 
 var xTestDBusUp func(uintptr)
@@ -189,9 +181,7 @@ var xTestDBusUp func(uintptr)
 // If this function is called from unit test's main(), then g_test_dbus_down()
 // must be called after g_test_run().
 func (x *TestDBus) Up() {
-
 	xTestDBusUp(x.GoPointer())
-
 }
 
 func (c *TestDBus) GoPointer() uintptr {
@@ -214,9 +204,7 @@ var xTestDBusUnset func()
 // bus is running. It is not necessary to call this if unit test already calls
 // g_test_dbus_up() before acquiring the session bus.
 func TestDBusUnset() {
-
 	xTestDBusUnset()
-
 }
 
 func init() {
@@ -243,5 +231,4 @@ func init() {
 	core.PuregoSafeRegister(&xTestDBusUp, libs, "g_test_dbus_up")
 
 	core.PuregoSafeRegister(&xTestDBusUnset, libs, "g_test_dbus_unset")
-
 }

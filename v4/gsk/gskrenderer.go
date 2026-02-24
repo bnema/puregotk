@@ -94,7 +94,6 @@ var xRendererIsRealized func(uintptr) bool
 
 // Checks whether the renderer is realized or not.
 func (x *Renderer) IsRealized() bool {
-
 	cret := xRendererIsRealized(x.GoPointer())
 	return cret
 }
@@ -118,7 +117,6 @@ func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRendererRealizeForDisplay func(uintptr, uintptr, **glib.Error) bool
@@ -135,7 +133,6 @@ func (x *Renderer) RealizeForDisplay(DisplayVar *gdk.Display) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRendererRender func(uintptr, uintptr, *cairo.Region)
@@ -153,9 +150,7 @@ var xRendererRender func(uintptr, uintptr, *cairo.Region)
 // The renderer will acquire a reference on the `GskRenderNode` tree while
 // the rendering is in progress.
 func (x *Renderer) Render(RootVar *RenderNode, RegionVar *cairo.Region) {
-
 	xRendererRender(x.GoPointer(), RootVar.GoPointer(), RegionVar)
-
 }
 
 var xRendererRenderTexture func(uintptr, uintptr, *graphene.Rect) uintptr
@@ -185,9 +180,7 @@ var xRendererUnrealize func(uintptr)
 
 // Releases all the resources created by [method@Gsk.Renderer.realize].
 func (x *Renderer) Unrealize() {
-
 	xRendererUnrealize(x.GoPointer())
-
 }
 
 func (c *Renderer) GoPointer() uintptr {
@@ -232,5 +225,4 @@ func init() {
 	core.PuregoSafeRegister(&xRendererRender, libs, "gsk_renderer_render")
 	core.PuregoSafeRegister(&xRendererRenderTexture, libs, "gsk_renderer_render_texture")
 	core.PuregoSafeRegister(&xRendererUnrealize, libs, "gsk_renderer_unrealize")
-
 }

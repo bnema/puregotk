@@ -288,9 +288,7 @@ var xFontsetForeach func(uintptr, uintptr, uintptr)
 //
 // If @func returns %TRUE, that stops the iteration.
 func (x *Fontset) Foreach(FuncVar *FontsetForeachFunc, DataVar uintptr) {
-
 	xFontsetForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
-
 }
 
 var xFontsetGetFont func(uintptr, uint32) uintptr
@@ -314,7 +312,6 @@ var xFontsetGetMetrics func(uintptr) *FontMetrics
 
 // Get overall metric information for the fonts in the fontset.
 func (x *Fontset) GetMetrics() *FontMetrics {
-
 	cret := xFontsetGetMetrics(x.GoPointer())
 	return cret
 }
@@ -347,5 +344,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontsetForeach, libs, "pango_fontset_foreach")
 	core.PuregoSafeRegister(&xFontsetGetFont, libs, "pango_fontset_get_font")
 	core.PuregoSafeRegister(&xFontsetGetMetrics, libs, "pango_fontset_get_metrics")
-
 }

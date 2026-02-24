@@ -77,7 +77,6 @@ var xZlibCompressorGetOs func(uintptr) int32
 
 // Gets the [property@Gio.ZlibCompressor:os] property.
 func (x *ZlibCompressor) GetOs() int32 {
-
 	cret := xZlibCompressorGetOs(x.GoPointer())
 	return cret
 }
@@ -90,9 +89,7 @@ var xZlibCompressorSetFileInfo func(uintptr, uintptr)
 // progress; it may only be called immediately after creation of @compressor,
 // or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetFileInfo(FileInfoVar *FileInfo) {
-
 	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVar.GoPointer())
-
 }
 
 var xZlibCompressorSetOs func(uintptr, int32)
@@ -103,9 +100,7 @@ var xZlibCompressorSetOs func(uintptr, int32)
 // progress; it may only be called immediately after creation of @compressor,
 // or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetOs(OsVar int32) {
-
 	xZlibCompressorSetOs(x.GoPointer(), OsVar)
-
 }
 
 func (c *ZlibCompressor) GoPointer() uintptr {
@@ -267,7 +262,6 @@ func (x *ZlibCompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar [
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Applies @converter to the data in @bytes.
@@ -279,16 +273,13 @@ func (x *ZlibCompressor) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
 func (x *ZlibCompressor) Reset() {
-
 	XGConverterReset(x.GoPointer())
-
 }
 
 func init() {
@@ -311,5 +302,4 @@ func init() {
 	core.PuregoSafeRegister(&xZlibCompressorGetOs, libs, "g_zlib_compressor_get_os")
 	core.PuregoSafeRegister(&xZlibCompressorSetFileInfo, libs, "g_zlib_compressor_set_file_info")
 	core.PuregoSafeRegister(&xZlibCompressorSetOs, libs, "g_zlib_compressor_set_os")
-
 }

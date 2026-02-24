@@ -14,7 +14,6 @@ var xHeaderContains func(string, string) bool
 //
 // Note that this can't be used with lists that have qvalues.
 func HeaderContains(HeaderVar string, TokenVar string) bool {
-
 	cret := xHeaderContains(HeaderVar, TokenVar)
 	return cret
 }
@@ -23,18 +22,14 @@ var xHeaderFreeList func(*glib.SList)
 
 // Frees @list.
 func HeaderFreeList(ListVar *glib.SList) {
-
 	xHeaderFreeList(ListVar)
-
 }
 
 var xHeaderFreeParamList func(*glib.HashTable)
 
 // Frees @param_list.
 func HeaderFreeParamList(ParamListVar *glib.HashTable) {
-
 	xHeaderFreeParamList(ParamListVar)
-
 }
 
 var xHeaderGStringAppendParam func(*glib.String, string, string)
@@ -50,9 +45,7 @@ var xHeaderGStringAppendParam func(*glib.String, string, string)
 //
 // If @value is %NULL, this will just append @name to @string.
 func HeaderGStringAppendParam(StringVar *glib.String, NameVar string, ValueVar string) {
-
 	xHeaderGStringAppendParam(StringVar, NameVar, ValueVar)
-
 }
 
 var xHeaderGStringAppendParamQuoted func(*glib.String, string, string)
@@ -63,9 +56,7 @@ var xHeaderGStringAppendParamQuoted func(*glib.String, string, string)
 // If @value is (non-ASCII) UTF-8, this will instead use RFC 5987
 // encoding, just like [func@header_g_string_append_param].
 func HeaderGStringAppendParamQuoted(StringVar *glib.String, NameVar string, ValueVar string) {
-
 	xHeaderGStringAppendParamQuoted(StringVar, NameVar, ValueVar)
-
 }
 
 var xHeaderParseList func(string) *glib.SList
@@ -74,7 +65,6 @@ var xHeaderParseList func(string) *glib.SList
 //
 // "something" does not itself contain commas, except as part of quoted-strings.
 func HeaderParseList(HeaderVar string) *glib.SList {
-
 	cret := xHeaderParseList(HeaderVar)
 	return cret
 }
@@ -91,7 +81,6 @@ var xHeaderParseParamList func(string) *glib.HashTable
 // for giving UTF8-encoded filenames in the Content-Disposition
 // header).
 func HeaderParseParamList(HeaderVar string) *glib.HashTable {
-
 	cret := xHeaderParseParamList(HeaderVar)
 	return cret
 }
@@ -107,7 +96,6 @@ var xHeaderParseParamListStrict func(string) *glib.HashTable
 // RFC5987-encoded parameters, use
 // [func@header_parse_param_list] instead.
 func HeaderParseParamListStrict(HeaderVar string) *glib.HashTable {
-
 	cret := xHeaderParseParamListStrict(HeaderVar)
 	return cret
 }
@@ -122,7 +110,6 @@ var xHeaderParseQualityList func(string, **glib.SList) *glib.SList
 // items with qvalue 0. Either way, those items will be removed from
 // the main list.
 func HeaderParseQualityList(HeaderVar string, UnacceptableVar **glib.SList) *glib.SList {
-
 	cret := xHeaderParseQualityList(HeaderVar, UnacceptableVar)
 	return cret
 }
@@ -139,7 +126,6 @@ var xHeaderParseSemiParamList func(string) *glib.HashTable
 // for giving UTF8-encoded filenames in the Content-Disposition
 // header).
 func HeaderParseSemiParamList(HeaderVar string) *glib.HashTable {
-
 	cret := xHeaderParseSemiParamList(HeaderVar)
 	return cret
 }
@@ -155,7 +141,6 @@ var xHeaderParseSemiParamListStrict func(string) *glib.HashTable
 // RFC5987-encoded parameters, use
 // [func@header_parse_semi_param_list] instead.
 func HeaderParseSemiParamListStrict(HeaderVar string) *glib.HashTable {
-
 	cret := xHeaderParseSemiParamListStrict(HeaderVar)
 	return cret
 }
@@ -170,7 +155,6 @@ var xHeadersParse func(string, int32, *MessageHeaders) bool
 // This is a low-level method; normally you would use
 // [func@headers_parse_request] or [func@headers_parse_response].
 func HeadersParse(StrVar string, LenVar int32, DestVar *MessageHeaders) bool {
-
 	cret := xHeadersParse(StrVar, LenVar, DestVar)
 	return cret
 }
@@ -182,7 +166,6 @@ var xHeadersParseRequest func(string, int32, *MessageHeaders, *string, *string, 
 //
 // Beware that @req_headers may be modified even on failure.
 func HeadersParseRequest(StrVar string, LenVar int32, ReqHeadersVar *MessageHeaders, ReqMethodVar *string, ReqPathVar *string, VerVar *HTTPVersion) uint32 {
-
 	cret := xHeadersParseRequest(StrVar, LenVar, ReqHeadersVar, ReqMethodVar, ReqPathVar, VerVar)
 	return cret
 }
@@ -194,7 +177,6 @@ var xHeadersParseResponse func(string, int32, *MessageHeaders, *HTTPVersion, *ui
 //
 // Beware that @headers may be modified even on failure.
 func HeadersParseResponse(StrVar string, LenVar int32, HeadersVar *MessageHeaders, VerVar *HTTPVersion, StatusCodeVar *uint32, ReasonPhraseVar *string) bool {
-
 	cret := xHeadersParseResponse(StrVar, LenVar, HeadersVar, VerVar, StatusCodeVar, ReasonPhraseVar)
 	return cret
 }
@@ -206,7 +188,6 @@ var xHeadersParseStatusLine func(string, *HTTPVersion, *uint32, *string) bool
 //
 // @status_line must be terminated by either "\0" or "\r\n".
 func HeadersParseStatusLine(StatusLineVar string, VerVar *HTTPVersion, StatusCodeVar *uint32, ReasonPhraseVar *string) bool {
-
 	cret := xHeadersParseStatusLine(StatusLineVar, VerVar, StatusCodeVar, ReasonPhraseVar)
 	return cret
 }
@@ -238,5 +219,4 @@ func init() {
 	core.PuregoSafeRegister(&xHeadersParseRequest, libs, "soup_headers_parse_request")
 	core.PuregoSafeRegister(&xHeadersParseResponse, libs, "soup_headers_parse_response")
 	core.PuregoSafeRegister(&xHeadersParseStatusLine, libs, "soup_headers_parse_status_line")
-
 }

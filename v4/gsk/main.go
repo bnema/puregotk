@@ -62,7 +62,6 @@ var xComponentTransferNodeGetTransfer func(uintptr, uint32) *ComponentTransfer
 
 // Gets the component transfer for one of the components.
 func (x *ComponentTransferNode) GetTransfer(ComponentVar uint32) *ComponentTransfer {
-
 	cret := xComponentTransferNodeGetTransfer(x.GoPointer(), ComponentVar)
 	return cret
 }
@@ -96,5 +95,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xComponentTransferNodeGetChild, libs, "gsk_component_transfer_node_get_child")
 	core.PuregoSafeRegister(&xComponentTransferNodeGetTransfer, libs, "gsk_component_transfer_node_get_transfer")
-
 }

@@ -169,7 +169,6 @@ var xIMMulticontextGetContextId func(uintptr) string
 
 // Gets the id of the currently active delegate of the @context.
 func (x *IMMulticontext) GetContextId() string {
-
 	cret := xIMMulticontextGetContextId(x.GoPointer())
 	return cret
 }
@@ -185,9 +184,7 @@ var xIMMulticontextSetContextId func(uintptr, string)
 // IM module setting. See the [property@Gtk.Settings:gtk-im-module]
 // property.
 func (x *IMMulticontext) SetContextId(ContextIdVar string) {
-
 	xIMMulticontextSetContextId(x.GoPointer(), ContextIdVar)
-
 }
 
 func (c *IMMulticontext) GoPointer() uintptr {
@@ -219,5 +216,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIMMulticontextGetContextId, libs, "gtk_im_multicontext_get_context_id")
 	core.PuregoSafeRegister(&xIMMulticontextSetContextId, libs, "gtk_im_multicontext_set_context_id")
-
 }

@@ -82,9 +82,7 @@ var xSelectionFilterModelSetModel func(uintptr, uintptr)
 // are doing and have set up an appropriate filter to ensure that item
 // types match.
 func (x *SelectionFilterModel) SetModel(ModelVar SelectionModel) {
-
 	xSelectionFilterModelSetModel(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 func (c *SelectionFilterModel) GoPointer() uintptr {
@@ -116,7 +114,6 @@ func (x *SelectionFilterModel) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *SelectionFilterModel) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -130,7 +127,6 @@ func (x *SelectionFilterModel) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SelectionFilterModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -141,7 +137,6 @@ func (x *SelectionFilterModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SelectionFilterModel) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -192,9 +187,7 @@ func (x *SelectionFilterModel) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SelectionFilterModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
@@ -215,5 +208,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSelectionFilterModelGetModel, libs, "gtk_selection_filter_model_get_model")
 	core.PuregoSafeRegister(&xSelectionFilterModelSetModel, libs, "gtk_selection_filter_model_set_model")
-
 }

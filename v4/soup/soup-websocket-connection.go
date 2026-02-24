@@ -93,9 +93,7 @@ var xWebsocketConnectionClose func(uintptr, uint16, string)
 // (without code and data) is sent.
 // Note that the @data must be UTF-8 valid.
 func (x *WebsocketConnection) Close(CodeVar uint16, DataVar string) {
-
 	xWebsocketConnectionClose(x.GoPointer(), CodeVar, DataVar)
-
 }
 
 var xWebsocketConnectionGetCloseCode func(uintptr) uint16
@@ -107,7 +105,6 @@ var xWebsocketConnectionGetCloseCode func(uintptr) uint16
 // [enum@WebsocketCloseCode] enumeration, but may also be an application
 // defined close code.
 func (x *WebsocketConnection) GetCloseCode() uint16 {
-
 	cret := xWebsocketConnectionGetCloseCode(x.GoPointer())
 	return cret
 }
@@ -120,7 +117,6 @@ var xWebsocketConnectionGetCloseData func(uintptr) string
 // %SOUP_WEBSOCKET_STATE_CLOSED state. The data may be freed once
 // the main loop is run, so copy it if you need to keep it around.
 func (x *WebsocketConnection) GetCloseData() string {
-
 	cret := xWebsocketConnectionGetCloseData(x.GoPointer())
 	return cret
 }
@@ -129,7 +125,6 @@ var xWebsocketConnectionGetConnectionType func(uintptr) WebsocketConnectionType
 
 // Get the connection type (client/server) of the connection.
 func (x *WebsocketConnection) GetConnectionType() WebsocketConnectionType {
-
 	cret := xWebsocketConnectionGetConnectionType(x.GoPointer())
 	return cret
 }
@@ -138,7 +133,6 @@ var xWebsocketConnectionGetExtensions func(uintptr) *glib.List
 
 // Get the extensions chosen via negotiation with the peer.
 func (x *WebsocketConnection) GetExtensions() *glib.List {
-
 	cret := xWebsocketConnectionGetExtensions(x.GoPointer())
 	return cret
 }
@@ -164,7 +158,6 @@ var xWebsocketConnectionGetKeepaliveInterval func(uintptr) uint32
 
 // Gets the keepalive interval in seconds or 0 if disabled.
 func (x *WebsocketConnection) GetKeepaliveInterval() uint32 {
-
 	cret := xWebsocketConnectionGetKeepaliveInterval(x.GoPointer())
 	return cret
 }
@@ -173,7 +166,6 @@ var xWebsocketConnectionGetKeepalivePongTimeout func(uintptr) uint32
 
 // Gets the keepalive pong timeout in seconds or 0 if disabled.
 func (x *WebsocketConnection) GetKeepalivePongTimeout() uint32 {
-
 	cret := xWebsocketConnectionGetKeepalivePongTimeout(x.GoPointer())
 	return cret
 }
@@ -182,7 +174,6 @@ var xWebsocketConnectionGetMaxIncomingPayloadSize func(uintptr) uint64
 
 // Gets the maximum payload size allowed for incoming packets.
 func (x *WebsocketConnection) GetMaxIncomingPayloadSize() uint64 {
-
 	cret := xWebsocketConnectionGetMaxIncomingPayloadSize(x.GoPointer())
 	return cret
 }
@@ -191,7 +182,6 @@ var xWebsocketConnectionGetOrigin func(uintptr) string
 
 // Get the origin of the WebSocket.
 func (x *WebsocketConnection) GetOrigin() string {
-
 	cret := xWebsocketConnectionGetOrigin(x.GoPointer())
 	return cret
 }
@@ -200,7 +190,6 @@ var xWebsocketConnectionGetProtocol func(uintptr) string
 
 // Get the protocol chosen via negotiation with the peer.
 func (x *WebsocketConnection) GetProtocol() string {
-
 	cret := xWebsocketConnectionGetProtocol(x.GoPointer())
 	return cret
 }
@@ -209,7 +198,6 @@ var xWebsocketConnectionGetState func(uintptr) WebsocketState
 
 // Get the current state of the WebSocket.
 func (x *WebsocketConnection) GetState() WebsocketState {
-
 	cret := xWebsocketConnectionGetState(x.GoPointer())
 	return cret
 }
@@ -221,7 +209,6 @@ var xWebsocketConnectionGetUri func(uintptr) *glib.Uri
 // For servers this represents the address of the WebSocket, and
 // for clients it is the address connected to.
 func (x *WebsocketConnection) GetUri() *glib.Uri {
-
 	cret := xWebsocketConnectionGetUri(x.GoPointer())
 	return cret
 }
@@ -235,9 +222,7 @@ var xWebsocketConnectionSendBinary func(uintptr, []byte, uint)
 // The message is queued to be sent and will be sent when the main loop
 // is run.
 func (x *WebsocketConnection) SendBinary(DataVar []byte, LengthVar uint) {
-
 	xWebsocketConnectionSendBinary(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 var xWebsocketConnectionSendMessage func(uintptr, WebsocketDataType, *glib.Bytes)
@@ -248,9 +233,7 @@ var xWebsocketConnectionSendMessage func(uintptr, WebsocketDataType, *glib.Bytes
 // The message is queued to be sent and will be sent when the main loop
 // is run.
 func (x *WebsocketConnection) SendMessage(TypeVar WebsocketDataType, MessageVar *glib.Bytes) {
-
 	xWebsocketConnectionSendMessage(x.GoPointer(), TypeVar, MessageVar)
-
 }
 
 var xWebsocketConnectionSendText func(uintptr, string)
@@ -263,9 +246,7 @@ var xWebsocketConnectionSendText func(uintptr, string)
 // The message is queued to be sent and will be sent when the main loop
 // is run.
 func (x *WebsocketConnection) SendText(TextVar string) {
-
 	xWebsocketConnectionSendText(x.GoPointer(), TextVar)
-
 }
 
 var xWebsocketConnectionSetKeepaliveInterval func(uintptr, uint32)
@@ -275,9 +256,7 @@ var xWebsocketConnectionSetKeepaliveInterval func(uintptr, uint32)
 //
 // If set to 0 the keepalive message is disabled.
 func (x *WebsocketConnection) SetKeepaliveInterval(IntervalVar uint32) {
-
 	xWebsocketConnectionSetKeepaliveInterval(x.GoPointer(), IntervalVar)
-
 }
 
 var xWebsocketConnectionSetKeepalivePongTimeout func(uintptr, uint32)
@@ -287,9 +266,7 @@ var xWebsocketConnectionSetKeepalivePongTimeout func(uintptr, uint32)
 //
 // If set to 0 then the absence of pongs from keepalive pings is ignored.
 func (x *WebsocketConnection) SetKeepalivePongTimeout(PongTimeoutVar uint32) {
-
 	xWebsocketConnectionSetKeepalivePongTimeout(x.GoPointer(), PongTimeoutVar)
-
 }
 
 var xWebsocketConnectionSetMaxIncomingPayloadSize func(uintptr, uint64)
@@ -298,9 +275,7 @@ var xWebsocketConnectionSetMaxIncomingPayloadSize func(uintptr, uint64)
 //
 // It does not limit the outgoing packet size.
 func (x *WebsocketConnection) SetMaxIncomingPayloadSize(MaxIncomingPayloadSizeVar uint64) {
-
 	xWebsocketConnectionSetMaxIncomingPayloadSize(x.GoPointer(), MaxIncomingPayloadSizeVar)
-
 }
 
 func (c *WebsocketConnection) GoPointer() uintptr {
@@ -480,7 +455,6 @@ func (x *WebsocketConnection) ConnectClosed(cb *func(WebsocketConnection)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -500,7 +474,6 @@ func (x *WebsocketConnection) ConnectClosing(cb *func(WebsocketConnection)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -523,7 +496,6 @@ func (x *WebsocketConnection) ConnectError(cb *func(WebsocketConnection, uintptr
 		cbFn := *cb
 
 		cbFn(fa, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -547,7 +519,6 @@ func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int32
 		cbFn := *cb
 
 		cbFn(fa, TypeVarp, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -572,7 +543,6 @@ func (x *WebsocketConnection) ConnectPong(cb *func(WebsocketConnection, uintptr)
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -614,5 +584,4 @@ func init() {
 	core.PuregoSafeRegister(&xWebsocketConnectionSetKeepaliveInterval, libs, "soup_websocket_connection_set_keepalive_interval")
 	core.PuregoSafeRegister(&xWebsocketConnectionSetKeepalivePongTimeout, libs, "soup_websocket_connection_set_keepalive_pong_timeout")
 	core.PuregoSafeRegister(&xWebsocketConnectionSetMaxIncomingPayloadSize, libs, "soup_websocket_connection_set_max_incoming_payload_size")
-
 }

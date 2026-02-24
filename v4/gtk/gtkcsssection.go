@@ -37,7 +37,6 @@ var xNewCssSection func(uintptr, *CssLocation, *CssLocation) *CssSection
 // in the given `file` from the `start` location to the
 // `end` location.
 func NewCssSection(FileVar gio.File, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
-
 	cret := xNewCssSection(FileVar.GoPointer(), StartVar, EndVar)
 	return cret
 }
@@ -48,7 +47,6 @@ var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocatio
 // in the given `file` or the given `bytes` from the `start` location to the
 // `end` location.
 func NewCssSectionWithBytes(FileVar gio.File, BytesVar *glib.Bytes, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
-
 	cret := xNewCssSectionWithBytes(FileVar.GoPointer(), BytesVar, StartVar, EndVar)
 	return cret
 }
@@ -57,7 +55,6 @@ var xCssSectionGetBytes func(uintptr) *glib.Bytes
 
 // Gets the bytes that @section was parsed from.
 func (x *CssSection) GetBytes() *glib.Bytes {
-
 	cret := xCssSectionGetBytes(x.GoPointer())
 	return cret
 }
@@ -66,7 +63,6 @@ var xCssSectionGetEndLocation func(uintptr) *CssLocation
 
 // Returns the location in the CSS document where this section ends.
 func (x *CssSection) GetEndLocation() *CssLocation {
-
 	cret := xCssSectionGetEndLocation(x.GoPointer())
 	return cret
 }
@@ -102,7 +98,6 @@ var xCssSectionGetParent func(uintptr) *CssSection
 // `GTK_CSS_SECTION_IMPORT` if it was loaded with an `@import` rule from
 // a different file.
 func (x *CssSection) GetParent() *CssSection {
-
 	cret := xCssSectionGetParent(x.GoPointer())
 	return cret
 }
@@ -111,7 +106,6 @@ var xCssSectionGetStartLocation func(uintptr) *CssLocation
 
 // Returns the location in the CSS document where this section starts.
 func (x *CssSection) GetStartLocation() *CssLocation {
-
 	cret := xCssSectionGetStartLocation(x.GoPointer())
 	return cret
 }
@@ -123,16 +117,13 @@ var xCssSectionPrint func(uintptr, *glib.String)
 // This is a form like `gtk.css:32:1-23` to denote line 32, characters
 // 1 to 23 in the file `gtk.css`.
 func (x *CssSection) Print(StringVar *glib.String) {
-
 	xCssSectionPrint(x.GoPointer(), StringVar)
-
 }
 
 var xCssSectionRef func(uintptr) *CssSection
 
 // Increments the reference count on `section`.
 func (x *CssSection) Ref() *CssSection {
-
 	cret := xCssSectionRef(x.GoPointer())
 	return cret
 }
@@ -142,7 +133,6 @@ var xCssSectionToString func(uintptr) string
 // Prints the section into a human-readable text form using
 // [method@Gtk.CssSection.print].
 func (x *CssSection) ToString() string {
-
 	cret := xCssSectionToString(x.GoPointer())
 	return cret
 }
@@ -152,9 +142,7 @@ var xCssSectionUnref func(uintptr)
 // Decrements the reference count on `section`, freeing the
 // structure if the reference count reaches 0.
 func (x *CssSection) Unref() {
-
 	xCssSectionUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -183,5 +171,4 @@ func init() {
 	core.PuregoSafeRegister(&xCssSectionRef, libs, "gtk_css_section_ref")
 	core.PuregoSafeRegister(&xCssSectionToString, libs, "gtk_css_section_to_string")
 	core.PuregoSafeRegister(&xCssSectionUnref, libs, "gtk_css_section_unref")
-
 }

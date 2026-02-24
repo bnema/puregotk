@@ -10,7 +10,6 @@ import (
 var xGtypeGetType func() types.GType
 
 func GtypeGetType() types.GType {
-
 	cret := xGtypeGetType()
 	return cret
 }
@@ -20,7 +19,6 @@ var xPointerTypeRegisterStatic func(string) types.GType
 // Creates a new %G_TYPE_POINTER derived type id for a new
 // pointer type with name @name.
 func PointerTypeRegisterStatic(NameVar string) types.GType {
-
 	cret := xPointerTypeRegisterStatic(NameVar)
 	return cret
 }
@@ -32,7 +30,6 @@ var xStrdupValueContents func(*Value) string
 // contents for debugging output, the way in which the contents are
 // described may change between different GLib versions.
 func StrdupValueContents(ValueVar *Value) string {
-
 	cret := xStrdupValueContents(ValueVar)
 	return cret
 }
@@ -52,5 +49,4 @@ func init() {
 	core.PuregoSafeRegister(&xGtypeGetType, libs, "g_gtype_get_type")
 	core.PuregoSafeRegister(&xPointerTypeRegisterStatic, libs, "g_pointer_type_register_static")
 	core.PuregoSafeRegister(&xStrdupValueContents, libs, "g_strdup_value_contents")
-
 }

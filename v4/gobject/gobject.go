@@ -503,9 +503,7 @@ var xObjectClassInstallProperties func(uintptr, uint32, uintptr)
 //
 // ]|
 func (x *ObjectClass) InstallProperties(NPspecsVar uint32, PspecsVar uintptr) {
-
 	xObjectClassInstallProperties(x.GoPointer(), NPspecsVar, PspecsVar)
-
 }
 
 var xObjectClassInstallProperty func(uintptr, uint32, uintptr)
@@ -521,16 +519,13 @@ var xObjectClassInstallProperty func(uintptr, uint32, uintptr)
 // by installing a property with the same name. This can be useful at times,
 // e.g. to change the range of allowed values or the default value.
 func (x *ObjectClass) InstallProperty(PropertyIdVar uint32, PspecVar *ParamSpec) {
-
 	xObjectClassInstallProperty(x.GoPointer(), PropertyIdVar, PspecVar.GoPointer())
-
 }
 
 var xObjectClassListProperties func(uintptr, *uint32) uintptr
 
 // Get an array of #GParamSpec* for all properties of a class.
 func (x *ObjectClass) ListProperties(NPropertiesVar *uint32) uintptr {
-
 	cret := xObjectClassListProperties(x.GoPointer(), NPropertiesVar)
 	return cret
 }
@@ -554,9 +549,7 @@ var xObjectClassOverrideProperty func(uintptr, uint32, string)
 // need to get the overridden property, you can call
 // g_param_spec_get_redirect_target().
 func (x *ObjectClass) OverrideProperty(PropertyIdVar uint32, NameVar string) {
-
 	xObjectClassOverrideProperty(x.GoPointer(), PropertyIdVar, NameVar)
-
 }
 
 // OverrideConstructor sets the "constructor" callback function.
@@ -863,9 +856,7 @@ var xWeakRefClear func(uintptr)
 // You should only call this on a #GWeakRef that previously had
 // g_weak_ref_init() called on it.
 func (x *WeakRef) Clear() {
-
 	xWeakRefClear(x.GoPointer())
-
 }
 
 var xWeakRefGet func(uintptr) uintptr
@@ -904,9 +895,7 @@ var xWeakRefInit func(uintptr, uintptr)
 // #GWeakRef in static storage because it will already be
 // properly initialised.  Just use g_weak_ref_set() directly.
 func (x *WeakRef) Init(ObjectVar *Object) {
-
 	xWeakRefInit(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
 var xWeakRefSet func(uintptr, uintptr)
@@ -917,9 +906,7 @@ var xWeakRefSet func(uintptr, uintptr)
 // You must own a strong reference on @object while calling this
 // function.
 func (x *WeakRef) Set(ObjectVar *Object) {
-
 	xWeakRefSet(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
 var xCclosureNewObject func(uintptr, uintptr) *Closure
@@ -930,7 +917,6 @@ var xCclosureNewObject func(uintptr, uintptr) *Closure
 // associated with a #GObject, and want the callback to no longer run
 // after the object is is freed.
 func CclosureNewObject(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
-
 	cret := xCclosureNewObject(glib.NewCallback(CallbackFuncVar), ObjectVar.GoPointer())
 	return cret
 }
@@ -943,7 +929,6 @@ var xCclosureNewObjectSwap func(uintptr, uintptr) *Closure
 // associated with a #GObject, and want the callback to no longer run
 // after the object is is freed.
 func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
-
 	cret := xCclosureNewObjectSwap(glib.NewCallback(CallbackFuncVar), ObjectVar.GoPointer())
 	return cret
 }
@@ -961,9 +946,7 @@ var xClearObject func(uintptr)
 // A macro is also included that allows this function to be used without
 // pointer casts.
 func ClearObject(ObjectPtrVar **Object) {
-
 	xClearObject(*ConvertPtr(ObjectPtrVar))
-
 }
 
 var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFlags) uint32
@@ -985,7 +968,6 @@ var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFl
 // Refer to the [signals documentation](signals.html) for more
 // details.
 func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint32 {
-
 	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, glib.NewCallback(CHandlerVar), GobjectVar.GoPointer(), ConnectFlagsVar)
 	return cret
 }
@@ -1197,9 +1179,7 @@ var xObjectAddToggleRef func(uintptr, uintptr, uintptr)
 //
 // A g_object_add_toggle_ref() must be released with g_object_remove_toggle_ref().
 func (x *Object) AddToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
-
 	xObjectAddToggleRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
-
 }
 
 var xObjectAddWeakPointer func(uintptr, uintptr)
@@ -1214,9 +1194,7 @@ var xObjectAddWeakPointer func(uintptr, uintptr)
 // thread if the object's last g_object_unref() might happen in another
 // thread. Use #GWeakRef if thread-safety is required.
 func (x *Object) AddWeakPointer(WeakPointerLocationVar uintptr) {
-
 	xObjectAddWeakPointer(x.GoPointer(), WeakPointerLocationVar)
-
 }
 
 var xObjectBindProperty func(uintptr, string, uintptr, string, BindingFlags) uintptr
@@ -1384,9 +1362,7 @@ var xObjectDisconnect func(uintptr, string, ...interface{})
 // callback and data, or "any_signal::signal_name", which only
 // disconnects the signal named "signal_name".
 func (x *Object) Disconnect(SignalSpecVar string, varArgs ...interface{}) {
-
 	xObjectDisconnect(x.GoPointer(), SignalSpecVar, varArgs...)
-
 }
 
 var xObjectDupData func(uintptr, string, uintptr, uintptr) uintptr
@@ -1406,7 +1382,6 @@ var xObjectDupData func(uintptr, string, uintptr, uintptr) uintptr
 // threads are using object data on the same key on the same
 // object.
 func (x *Object) DupData(KeyVar string, DupFuncVar *glib.DuplicateFunc, UserDataVar uintptr) uintptr {
-
 	cret := xObjectDupData(x.GoPointer(), KeyVar, glib.NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
@@ -1428,7 +1403,6 @@ var xObjectDupQdata func(uintptr, glib.Quark, uintptr, uintptr) uintptr
 // threads are using object data on the same key on the same
 // object.
 func (x *Object) DupQdata(QuarkVar glib.Quark, DupFuncVar *glib.DuplicateFunc, UserDataVar uintptr) uintptr {
-
 	cret := xObjectDupQdata(x.GoPointer(), QuarkVar, glib.NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
@@ -1440,9 +1414,7 @@ var xObjectForceFloating func(uintptr)
 // required: all #GInitiallyUnowneds are created with a floating reference
 // which usually just needs to be sunken by calling g_object_ref_sink().
 func (x *Object) ForceFloating() {
-
 	xObjectForceFloating(x.GoPointer())
-
 }
 
 var xObjectFreezeNotify func(uintptr)
@@ -1457,9 +1429,7 @@ var xObjectFreezeNotify func(uintptr)
 // This is necessary for accessors that modify multiple properties to prevent
 // premature notification while the object is still being modified.
 func (x *Object) FreezeNotify() {
-
 	xObjectFreezeNotify(x.GoPointer())
-
 }
 
 var xObjectGet func(uintptr, string, ...interface{})
@@ -1493,16 +1463,13 @@ var xObjectGet func(uintptr, string, ...interface{})
 //
 // ]|
 func (x *Object) Get(FirstPropertyNameVar string, varArgs ...interface{}) {
-
 	xObjectGet(x.GoPointer(), FirstPropertyNameVar, varArgs...)
-
 }
 
 var xObjectGetData func(uintptr, string) uintptr
 
 // Gets a named field from the objects table of associations (see g_object_set_data()).
 func (x *Object) GetData(KeyVar string) uintptr {
-
 	cret := xObjectGetData(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1526,9 +1493,7 @@ var xObjectGetProperty func(uintptr, string, *Value)
 // Note that g_object_get_property() is really intended for language
 // bindings, g_object_get() is much more convenient for C programming.
 func (x *Object) GetProperty(PropertyNameVar string, ValueVar *Value) {
-
 	xObjectGetProperty(x.GoPointer(), PropertyNameVar, ValueVar)
-
 }
 
 var xObjectGetQdata func(uintptr, glib.Quark) uintptr
@@ -1536,7 +1501,6 @@ var xObjectGetQdata func(uintptr, glib.Quark) uintptr
 // This function gets back user data pointers stored via
 // g_object_set_qdata().
 func (x *Object) GetQdata(QuarkVar glib.Quark) uintptr {
-
 	cret := xObjectGetQdata(x.GoPointer(), QuarkVar)
 	return cret
 }
@@ -1551,9 +1515,7 @@ var xObjectGetValist func(uintptr, string, []interface{})
 //
 // See g_object_get().
 func (x *Object) GetValist(FirstPropertyNameVar string, VarArgsVar []interface{}) {
-
 	xObjectGetValist(x.GoPointer(), FirstPropertyNameVar, VarArgsVar)
-
 }
 
 var xObjectGetv func(uintptr, uint32, []string, []Value)
@@ -1563,16 +1525,13 @@ var xObjectGetv func(uintptr, uint32, []string, []Value)
 // Warnings will be emitted and undefined behaviour may result if invalid
 // properties are passed in.
 func (x *Object) Getv(NPropertiesVar uint32, NamesVar []string, ValuesVar []Value) {
-
 	xObjectGetv(x.GoPointer(), NPropertiesVar, NamesVar, ValuesVar)
-
 }
 
 var xObjectIsFloating func(uintptr) bool
 
 // Checks whether @object has a [floating][floating-ref] reference.
 func (x *Object) IsFloating() bool {
-
 	cret := xObjectIsFloating(x.GoPointer())
 	return cret
 }
@@ -1590,9 +1549,7 @@ var xObjectNotify func(uintptr, string)
 // and will be emitted (in reverse order) when g_object_thaw_notify() is
 // called.
 func (x *Object) Notify(PropertyNameVar string) {
-
 	xObjectNotify(x.GoPointer(), PropertyNameVar)
-
 }
 
 var xObjectNotifyByPspec func(uintptr, uintptr)
@@ -1639,9 +1596,7 @@ var xObjectNotifyByPspec func(uintptr, uintptr)
 //
 // ]|
 func (x *Object) NotifyByPspec(PspecVar *ParamSpec) {
-
 	xObjectNotifyByPspec(x.GoPointer(), PspecVar.GoPointer())
-
 }
 
 var xObjectRef func(uintptr) uintptr
@@ -1702,9 +1657,7 @@ var xObjectRemoveToggleRef func(uintptr, uintptr, uintptr)
 // might be a dangling pointer. If the object is destroyed on other threads,
 // you must take care of that yourself.
 func (x *Object) RemoveToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
-
 	xObjectRemoveToggleRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
-
 }
 
 var xObjectRemoveWeakPointer func(uintptr, uintptr)
@@ -1713,9 +1666,7 @@ var xObjectRemoveWeakPointer func(uintptr, uintptr)
 // using g_object_add_weak_pointer(). The @weak_pointer_location has
 // to match the one used with g_object_add_weak_pointer().
 func (x *Object) RemoveWeakPointer(WeakPointerLocationVar uintptr) {
-
 	xObjectRemoveWeakPointer(x.GoPointer(), WeakPointerLocationVar)
-
 }
 
 var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, *glib.DestroyNotify) bool
@@ -1737,7 +1688,6 @@ var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, *glib.De
 // See g_object_set_data() for guidance on using a small, bounded set of values
 // for @key.
 func (x *Object) ReplaceData(KeyVar string, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
-
 	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
@@ -1758,7 +1708,6 @@ var xObjectReplaceQdata func(uintptr, glib.Quark, uintptr, uintptr, uintptr, *gl
 // or may not include using @old_destroy as sometimes replacement
 // should not destroy the object in the normal way.
 func (x *Object) ReplaceQdata(QuarkVar glib.Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
-
 	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
@@ -1770,9 +1719,7 @@ var xObjectRunDispose func(uintptr)
 //
 // This function should only be called from object system implementations.
 func (x *Object) RunDispose() {
-
 	xObjectRunDispose(x.GoPointer())
-
 }
 
 var xObjectSet func(uintptr, string, ...interface{})
@@ -1788,9 +1735,7 @@ var xObjectSet func(uintptr, string, ...interface{})
 // reverse order) after all properties have been set. See
 // g_object_freeze_notify().
 func (x *Object) Set(FirstPropertyNameVar string, varArgs ...interface{}) {
-
 	xObjectSet(x.GoPointer(), FirstPropertyNameVar, varArgs...)
-
 }
 
 var xObjectSetData func(uintptr, string, uintptr)
@@ -1806,9 +1751,7 @@ var xObjectSetData func(uintptr, string, uintptr)
 // finalized) — so it is recommended to only use a small, bounded set of values
 // for @key in your program, to avoid the #GQuark storage growing unbounded.
 func (x *Object) SetData(KeyVar string, DataVar uintptr) {
-
 	xObjectSetData(x.GoPointer(), KeyVar, DataVar)
-
 }
 
 var xObjectSetDataFull func(uintptr, string, uintptr, uintptr)
@@ -1819,18 +1762,14 @@ var xObjectSetDataFull func(uintptr, string, uintptr, uintptr)
 //
 // Note that the @destroy callback is not called if @data is %NULL.
 func (x *Object) SetDataFull(KeyVar string, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xObjectSetDataFull(x.GoPointer(), KeyVar, DataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 var xObjectSetProperty func(uintptr, string, *Value)
 
 // Sets a property on an object.
 func (x *Object) SetProperty(PropertyNameVar string, ValueVar *Value) {
-
 	xObjectSetProperty(x.GoPointer(), PropertyNameVar, ValueVar)
-
 }
 
 var xObjectSetQdata func(uintptr, glib.Quark, uintptr)
@@ -1844,9 +1783,7 @@ var xObjectSetQdata func(uintptr, glib.Quark, uintptr)
 // the old pointer set, using #NULL as pointer essentially
 // removes the data stored.
 func (x *Object) SetQdata(QuarkVar glib.Quark, DataVar uintptr) {
-
 	xObjectSetQdata(x.GoPointer(), QuarkVar, DataVar)
-
 }
 
 var xObjectSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
@@ -1857,18 +1794,14 @@ var xObjectSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // the data is being overwritten by a call to g_object_set_qdata()
 // with the same @quark.
 func (x *Object) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xObjectSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 var xObjectSetValist func(uintptr, string, []interface{})
 
 // Sets properties on an object.
 func (x *Object) SetValist(FirstPropertyNameVar string, VarArgsVar []interface{}) {
-
 	xObjectSetValist(x.GoPointer(), FirstPropertyNameVar, VarArgsVar)
-
 }
 
 var xObjectSetv func(uintptr, uint32, []string, []Value)
@@ -1878,9 +1811,7 @@ var xObjectSetv func(uintptr, uint32, []string, []Value)
 // valid. Warnings will be emitted and undefined behaviour may result if invalid
 // properties are passed in.
 func (x *Object) Setv(NPropertiesVar uint32, NamesVar []string, ValuesVar []Value) {
-
 	xObjectSetv(x.GoPointer(), NPropertiesVar, NamesVar, ValuesVar)
-
 }
 
 var xObjectStealData func(uintptr, string) uintptr
@@ -1888,7 +1819,6 @@ var xObjectStealData func(uintptr, string) uintptr
 // Remove a specified datum from the object's data associations,
 // without invoking the association's destroy handler.
 func (x *Object) StealData(KeyVar string) uintptr {
-
 	cret := xObjectStealData(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1936,7 +1866,6 @@ var xObjectStealQdata func(uintptr, glib.Quark) uintptr
 // and thus the partial string list would have been freed upon
 // g_object_set_qdata_full().
 func (x *Object) StealQdata(QuarkVar glib.Quark) uintptr {
-
 	cret := xObjectStealQdata(x.GoPointer(), QuarkVar)
 	return cret
 }
@@ -2003,9 +1932,7 @@ var xObjectThawNotify func(uintptr)
 //
 // It is an error to call this function when the freeze count is zero.
 func (x *Object) ThawNotify() {
-
 	xObjectThawNotify(x.GoPointer())
-
 }
 
 var xObjectUnref func(uintptr)
@@ -2018,9 +1945,7 @@ var xObjectUnref func(uintptr)
 // pointer to %NULL rather than retain a dangling pointer to a potentially
 // invalid #GObject instance. Use g_clear_object() for this.
 func (x *Object) Unref() {
-
 	xObjectUnref(x.GoPointer())
-
 }
 
 var xObjectWatchClosure func(uintptr, *Closure)
@@ -2035,9 +1960,7 @@ var xObjectWatchClosure func(uintptr, *Closure)
 // @closure.  Usually, this function will be called on closures that
 // use this @object as closure data.
 func (x *Object) WatchClosure(ClosureVar *Closure) {
-
 	xObjectWatchClosure(x.GoPointer(), ClosureVar)
-
 }
 
 var xObjectWeakRef func(uintptr, uintptr, uintptr)
@@ -2053,18 +1976,14 @@ var xObjectWeakRef func(uintptr, uintptr, uintptr)
 // object's last g_object_unref() might happen in another thread.
 // Use #GWeakRef if thread-safety is required.
 func (x *Object) WeakRef(NotifyVar *WeakNotify, DataVar uintptr) {
-
 	xObjectWeakRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
-
 }
 
 var xObjectWeakUnref func(uintptr, uintptr, uintptr)
 
 // Removes a weak reference callback to an object.
 func (x *Object) WeakUnref(NotifyVar *WeakNotify, DataVar uintptr) {
-
 	xObjectWeakUnref(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
-
 }
 
 func (c *Object) GoPointer() uintptr {
@@ -2117,7 +2036,6 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, PspecVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -2127,7 +2045,6 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 var xObjectCompatControl func(uint, uintptr) uint
 
 func ObjectCompatControl(WhatVar uint, DataVar uintptr) uint {
-
 	cret := xObjectCompatControl(WhatVar, DataVar)
 	return cret
 }
@@ -2172,9 +2089,7 @@ var xObjectInterfaceInstallProperty func(*TypeInterface, uintptr)
 //
 // If @pspec is a floating reference, it will be consumed.
 func ObjectInterfaceInstallProperty(GIfaceVar *TypeInterface, PspecVar *ParamSpec) {
-
 	xObjectInterfaceInstallProperty(GIfaceVar, PspecVar.GoPointer())
-
 }
 
 var xObjectInterfaceListProperties func(*TypeInterface, *uint32) uintptr
@@ -2184,7 +2099,6 @@ var xObjectInterfaceListProperties func(*TypeInterface, *uint32) uintptr
 // g_type_default_interface_ref(), or, if you know the interface has
 // already been loaded, g_type_default_interface_peek().
 func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar *uint32) uintptr {
-
 	cret := xObjectInterfaceListProperties(GIfaceVar, NPropertiesPVar)
 	return cret
 }
@@ -2274,5 +2188,4 @@ func init() {
 	core.PuregoSafeRegister(&xObjectInterfaceFindProperty, libs, "g_object_interface_find_property")
 	core.PuregoSafeRegister(&xObjectInterfaceInstallProperty, libs, "g_object_interface_install_property")
 	core.PuregoSafeRegister(&xObjectInterfaceListProperties, libs, "g_object_interface_list_properties")
-
 }

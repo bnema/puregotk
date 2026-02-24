@@ -51,7 +51,6 @@ var xBlendNodeGetBlendMode func(uintptr) BlendMode
 
 // Retrieves the blend mode used by @node.
 func (x *BlendNode) GetBlendMode() BlendMode {
-
 	cret := xBlendNodeGetBlendMode(x.GoPointer())
 	return cret
 }
@@ -155,7 +154,6 @@ var xBlurNodeGetRadius func(uintptr) float32
 
 // Retrieves the blur radius of the @node.
 func (x *BlurNode) GetRadius() float32 {
-
 	cret := xBlurNodeGetRadius(x.GoPointer())
 	return cret
 }
@@ -211,7 +209,6 @@ var xBorderNodeGetColors func(uintptr) uintptr
 
 // Retrieves the colors of the border.
 func (x *BorderNode) GetColors() uintptr {
-
 	cret := xBorderNodeGetColors(x.GoPointer())
 	return cret
 }
@@ -220,7 +217,6 @@ var xBorderNodeGetOutline func(uintptr) *RoundedRect
 
 // Retrieves the outline of the border.
 func (x *BorderNode) GetOutline() *RoundedRect {
-
 	cret := xBorderNodeGetOutline(x.GoPointer())
 	return cret
 }
@@ -229,7 +225,6 @@ var xBorderNodeGetWidths func(uintptr) uintptr
 
 // Retrieves the stroke widths of the border.
 func (x *BorderNode) GetWidths() uintptr {
-
 	cret := xBorderNodeGetWidths(x.GoPointer())
 	return cret
 }
@@ -289,7 +284,6 @@ var xCairoNodeGetDrawContext func(uintptr) *cairo.Context
 // If no surface exists yet, a surface will be created optimized for
 // rendering to @renderer.
 func (x *CairoNode) GetDrawContext() *cairo.Context {
-
 	cret := xCairoNodeGetDrawContext(x.GoPointer())
 	return cret
 }
@@ -298,7 +292,6 @@ var xCairoNodeGetSurface func(uintptr) *cairo.Surface
 
 // Retrieves the Cairo surface used by the render node.
 func (x *CairoNode) GetSurface() *cairo.Surface {
-
 	cret := xCairoNodeGetSurface(x.GoPointer())
 	return cret
 }
@@ -369,7 +362,6 @@ var xClipNodeGetClip func(uintptr) *graphene.Rect
 
 // Retrieves the clip rectangle for @node.
 func (x *ClipNode) GetClip() *graphene.Rect {
-
 	cret := xClipNodeGetClip(x.GoPointer())
 	return cret
 }
@@ -447,7 +439,6 @@ var xColorMatrixNodeGetColorMatrix func(uintptr) *graphene.Matrix
 
 // Retrieves the color matrix used by the @node.
 func (x *ColorMatrixNode) GetColorMatrix() *graphene.Matrix {
-
 	cret := xColorMatrixNodeGetColorMatrix(x.GoPointer())
 	return cret
 }
@@ -456,7 +447,6 @@ var xColorMatrixNodeGetColorOffset func(uintptr) *graphene.Vec4
 
 // Retrieves the color offset used by the @node.
 func (x *ColorMatrixNode) GetColorOffset() *graphene.Vec4 {
-
 	cret := xColorMatrixNodeGetColorOffset(x.GoPointer())
 	return cret
 }
@@ -513,7 +503,6 @@ var xColorNodeGetColor func(uintptr) *gdk.RGBA
 // The value returned by this function will not be correct
 // if the render node was created for a non-sRGB color.
 func (x *ColorNode) GetColor() *gdk.RGBA {
-
 	cret := xColorNodeGetColor(x.GoPointer())
 	return cret
 }
@@ -575,7 +564,6 @@ var xConicGradientNodeGetAngle func(uintptr) float32
 //
 //	angle = 90 - gsk_conic_gradient_node_get_rotation()
 func (x *ConicGradientNode) GetAngle() float32 {
-
 	cret := xConicGradientNodeGetAngle(x.GoPointer())
 	return cret
 }
@@ -584,7 +572,6 @@ var xConicGradientNodeGetCenter func(uintptr) *graphene.Point
 
 // Retrieves the center pointer for the gradient.
 func (x *ConicGradientNode) GetCenter() *graphene.Point {
-
 	cret := xConicGradientNodeGetCenter(x.GoPointer())
 	return cret
 }
@@ -593,7 +580,6 @@ var xConicGradientNodeGetColorStops func(uintptr, *uint) uintptr
 
 // Retrieves the color stops in the gradient.
 func (x *ConicGradientNode) GetColorStops(NStopsVar *uint) uintptr {
-
 	cret := xConicGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
 	return cret
 }
@@ -602,7 +588,6 @@ var xConicGradientNodeGetNColorStops func(uintptr) uint
 
 // Retrieves the number of color stops in the gradient.
 func (x *ConicGradientNode) GetNColorStops() uint {
-
 	cret := xConicGradientNodeGetNColorStops(x.GoPointer())
 	return cret
 }
@@ -611,7 +596,6 @@ var xConicGradientNodeGetRotation func(uintptr) float32
 
 // Retrieves the rotation for the gradient in degrees.
 func (x *ConicGradientNode) GetRotation() float32 {
-
 	cret := xConicGradientNodeGetRotation(x.GoPointer())
 	return cret
 }
@@ -683,7 +667,6 @@ var xContainerNodeGetNChildren func(uintptr) uint32
 
 // Retrieves the number of direct children of @node.
 func (x *ContainerNode) GetNChildren() uint32 {
-
 	cret := xContainerNodeGetNChildren(x.GoPointer())
 	return cret
 }
@@ -753,7 +736,6 @@ var xCrossFadeNodeGetProgress func(uintptr) float32
 
 // Retrieves the progress value of the cross fade.
 func (x *CrossFadeNode) GetProgress() float32 {
-
 	cret := xCrossFadeNodeGetProgress(x.GoPointer())
 	return cret
 }
@@ -844,7 +826,6 @@ var xDebugNodeGetMessage func(uintptr) string
 
 // Gets the debug message that was set on this node
 func (x *DebugNode) GetMessage() string {
-
 	cret := xDebugNodeGetMessage(x.GoPointer())
 	return cret
 }
@@ -917,7 +898,6 @@ var xFillNodeGetFillRule func(uintptr) FillRule
 
 // Retrieves the fill rule used to determine how the path is filled.
 func (x *FillNode) GetFillRule() FillRule {
-
 	cret := xFillNodeGetFillRule(x.GoPointer())
 	return cret
 }
@@ -927,7 +907,6 @@ var xFillNodeGetPath func(uintptr) *Path
 // Retrieves the path used to describe the area filled with the contents of
 // the @node.
 func (x *FillNode) GetPath() *Path {
-
 	cret := xFillNodeGetPath(x.GoPointer())
 	return cret
 }
@@ -996,7 +975,6 @@ var xGLShaderNodeGetArgs func(uintptr) *glib.Bytes
 
 // Gets args for the node.
 func (x *GLShaderNode) GetArgs() *glib.Bytes {
-
 	cret := xGLShaderNodeGetArgs(x.GoPointer())
 	return cret
 }
@@ -1022,7 +1000,6 @@ var xGLShaderNodeGetNChildren func(uintptr) uint32
 
 // Returns the number of children
 func (x *GLShaderNode) GetNChildren() uint32 {
-
 	cret := xGLShaderNodeGetNChildren(x.GoPointer())
 	return cret
 }
@@ -1093,7 +1070,6 @@ var xInsetShadowNodeGetBlurRadius func(uintptr) float32
 
 // Retrieves the blur radius to apply to the shadow.
 func (x *InsetShadowNode) GetBlurRadius() float32 {
-
 	cret := xInsetShadowNodeGetBlurRadius(x.GoPointer())
 	return cret
 }
@@ -1105,7 +1081,6 @@ var xInsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 // The value returned by this function will not be correct
 // if the render node was created for a non-sRGB color.
 func (x *InsetShadowNode) GetColor() *gdk.RGBA {
-
 	cret := xInsetShadowNodeGetColor(x.GoPointer())
 	return cret
 }
@@ -1114,7 +1089,6 @@ var xInsetShadowNodeGetDx func(uintptr) float32
 
 // Retrieves the horizontal offset of the inset shadow.
 func (x *InsetShadowNode) GetDx() float32 {
-
 	cret := xInsetShadowNodeGetDx(x.GoPointer())
 	return cret
 }
@@ -1123,7 +1097,6 @@ var xInsetShadowNodeGetDy func(uintptr) float32
 
 // Retrieves the vertical offset of the inset shadow.
 func (x *InsetShadowNode) GetDy() float32 {
-
 	cret := xInsetShadowNodeGetDy(x.GoPointer())
 	return cret
 }
@@ -1132,7 +1105,6 @@ var xInsetShadowNodeGetOutline func(uintptr) *RoundedRect
 
 // Retrieves the outline rectangle of the inset shadow.
 func (x *InsetShadowNode) GetOutline() *RoundedRect {
-
 	cret := xInsetShadowNodeGetOutline(x.GoPointer())
 	return cret
 }
@@ -1141,7 +1113,6 @@ var xInsetShadowNodeGetSpread func(uintptr) float32
 
 // Retrieves how much the shadow spreads inwards.
 func (x *InsetShadowNode) GetSpread() float32 {
-
 	cret := xInsetShadowNodeGetSpread(x.GoPointer())
 	return cret
 }
@@ -1195,7 +1166,6 @@ var xLinearGradientNodeGetColorStops func(uintptr, *uint) uintptr
 
 // Retrieves the color stops in the gradient.
 func (x *LinearGradientNode) GetColorStops(NStopsVar *uint) uintptr {
-
 	cret := xLinearGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
 	return cret
 }
@@ -1204,7 +1174,6 @@ var xLinearGradientNodeGetEnd func(uintptr) *graphene.Point
 
 // Retrieves the final point of the linear gradient.
 func (x *LinearGradientNode) GetEnd() *graphene.Point {
-
 	cret := xLinearGradientNodeGetEnd(x.GoPointer())
 	return cret
 }
@@ -1213,7 +1182,6 @@ var xLinearGradientNodeGetNColorStops func(uintptr) uint
 
 // Retrieves the number of color stops in the gradient.
 func (x *LinearGradientNode) GetNColorStops() uint {
-
 	cret := xLinearGradientNodeGetNColorStops(x.GoPointer())
 	return cret
 }
@@ -1222,7 +1190,6 @@ var xLinearGradientNodeGetStart func(uintptr) *graphene.Point
 
 // Retrieves the initial point of the linear gradient.
 func (x *LinearGradientNode) GetStart() *graphene.Point {
-
 	cret := xLinearGradientNodeGetStart(x.GoPointer())
 	return cret
 }
@@ -1296,7 +1263,6 @@ var xMaskNodeGetMaskMode func(uintptr) MaskMode
 
 // Retrieves the mask mode used by @node.
 func (x *MaskNode) GetMaskMode() MaskMode {
-
 	cret := xMaskNodeGetMaskMode(x.GoPointer())
 	return cret
 }
@@ -1384,7 +1350,6 @@ var xOpacityNodeGetOpacity func(uintptr) float32
 
 // Gets the transparency factor for an opacity node.
 func (x *OpacityNode) GetOpacity() float32 {
-
 	cret := xOpacityNodeGetOpacity(x.GoPointer())
 	return cret
 }
@@ -1438,7 +1403,6 @@ var xOutsetShadowNodeGetBlurRadius func(uintptr) float32
 
 // Retrieves the blur radius of the shadow.
 func (x *OutsetShadowNode) GetBlurRadius() float32 {
-
 	cret := xOutsetShadowNodeGetBlurRadius(x.GoPointer())
 	return cret
 }
@@ -1450,7 +1414,6 @@ var xOutsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 // The value returned by this function will not be correct
 // if the render node was created for a non-sRGB color.
 func (x *OutsetShadowNode) GetColor() *gdk.RGBA {
-
 	cret := xOutsetShadowNodeGetColor(x.GoPointer())
 	return cret
 }
@@ -1459,7 +1422,6 @@ var xOutsetShadowNodeGetDx func(uintptr) float32
 
 // Retrieves the horizontal offset of the outset shadow.
 func (x *OutsetShadowNode) GetDx() float32 {
-
 	cret := xOutsetShadowNodeGetDx(x.GoPointer())
 	return cret
 }
@@ -1468,7 +1430,6 @@ var xOutsetShadowNodeGetDy func(uintptr) float32
 
 // Retrieves the vertical offset of the outset shadow.
 func (x *OutsetShadowNode) GetDy() float32 {
-
 	cret := xOutsetShadowNodeGetDy(x.GoPointer())
 	return cret
 }
@@ -1477,7 +1438,6 @@ var xOutsetShadowNodeGetOutline func(uintptr) *RoundedRect
 
 // Retrieves the outline rectangle of the outset shadow.
 func (x *OutsetShadowNode) GetOutline() *RoundedRect {
-
 	cret := xOutsetShadowNodeGetOutline(x.GoPointer())
 	return cret
 }
@@ -1486,7 +1446,6 @@ var xOutsetShadowNodeGetSpread func(uintptr) float32
 
 // Retrieves how much the shadow spreads outwards.
 func (x *OutsetShadowNode) GetSpread() float32 {
-
 	cret := xOutsetShadowNodeGetSpread(x.GoPointer())
 	return cret
 }
@@ -1543,7 +1502,6 @@ var xRadialGradientNodeGetCenter func(uintptr) *graphene.Point
 
 // Retrieves the center pointer for the gradient.
 func (x *RadialGradientNode) GetCenter() *graphene.Point {
-
 	cret := xRadialGradientNodeGetCenter(x.GoPointer())
 	return cret
 }
@@ -1552,7 +1510,6 @@ var xRadialGradientNodeGetColorStops func(uintptr, *uint) uintptr
 
 // Retrieves the color stops in the gradient.
 func (x *RadialGradientNode) GetColorStops(NStopsVar *uint) uintptr {
-
 	cret := xRadialGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
 	return cret
 }
@@ -1561,7 +1518,6 @@ var xRadialGradientNodeGetEnd func(uintptr) float32
 
 // Retrieves the end value for the gradient.
 func (x *RadialGradientNode) GetEnd() float32 {
-
 	cret := xRadialGradientNodeGetEnd(x.GoPointer())
 	return cret
 }
@@ -1570,7 +1526,6 @@ var xRadialGradientNodeGetHradius func(uintptr) float32
 
 // Retrieves the horizontal radius for the gradient.
 func (x *RadialGradientNode) GetHradius() float32 {
-
 	cret := xRadialGradientNodeGetHradius(x.GoPointer())
 	return cret
 }
@@ -1579,7 +1534,6 @@ var xRadialGradientNodeGetNColorStops func(uintptr) uint
 
 // Retrieves the number of color stops in the gradient.
 func (x *RadialGradientNode) GetNColorStops() uint {
-
 	cret := xRadialGradientNodeGetNColorStops(x.GoPointer())
 	return cret
 }
@@ -1588,7 +1542,6 @@ var xRadialGradientNodeGetStart func(uintptr) float32
 
 // Retrieves the start value for the gradient.
 func (x *RadialGradientNode) GetStart() float32 {
-
 	cret := xRadialGradientNodeGetStart(x.GoPointer())
 	return cret
 }
@@ -1597,7 +1550,6 @@ var xRadialGradientNodeGetVradius func(uintptr) float32
 
 // Retrieves the vertical radius for the gradient.
 func (x *RadialGradientNode) GetVradius() float32 {
-
 	cret := xRadialGradientNodeGetVradius(x.GoPointer())
 	return cret
 }
@@ -1668,7 +1620,6 @@ var xRepeatNodeGetChildBounds func(uintptr) *graphene.Rect
 
 // Retrieves the bounding rectangle of the child of @node.
 func (x *RepeatNode) GetChildBounds() *graphene.Rect {
-
 	cret := xRepeatNodeGetChildBounds(x.GoPointer())
 	return cret
 }
@@ -1833,7 +1784,6 @@ var xRoundedClipNodeGetClip func(uintptr) *RoundedRect
 
 // Retrieves the rounded rectangle used to clip the contents of the @node.
 func (x *RoundedClipNode) GetClip() *RoundedRect {
-
 	cret := xRoundedClipNodeGetClip(x.GoPointer())
 	return cret
 }
@@ -1904,7 +1854,6 @@ var xShadowNodeGetNShadows func(uintptr) uint
 
 // Retrieves the number of shadows in the @node.
 func (x *ShadowNode) GetNShadows() uint {
-
 	cret := xShadowNodeGetNShadows(x.GoPointer())
 	return cret
 }
@@ -1913,7 +1862,6 @@ var xShadowNodeGetShadow func(uintptr, uint) *Shadow
 
 // Retrieves the shadow data at the given index @i.
 func (x *ShadowNode) GetShadow(IVar uint) *Shadow {
-
 	cret := xShadowNodeGetShadow(x.GoPointer(), IVar)
 	return cret
 }
@@ -1989,7 +1937,6 @@ var xStrokeNodeGetPath func(uintptr) *Path
 // Retrieves the path that will be stroked with the contents of
 // the @node.
 func (x *StrokeNode) GetPath() *Path {
-
 	cret := xStrokeNodeGetPath(x.GoPointer())
 	return cret
 }
@@ -1998,7 +1945,6 @@ var xStrokeNodeGetStroke func(uintptr) *Stroke
 
 // Retrieves the stroke attributes used in this @node.
 func (x *StrokeNode) GetStroke() *Stroke {
-
 	cret := xStrokeNodeGetStroke(x.GoPointer())
 	return cret
 }
@@ -2084,7 +2030,6 @@ var xSubsurfaceNodeGetSubsurface func(uintptr) uintptr
 
 // Gets the subsurface that was set on this node
 func SubsurfaceNodeGetSubsurface(NodeVar *DebugNode) uintptr {
-
 	cret := xSubsurfaceNodeGetSubsurface(NodeVar.GoPointer())
 	return cret
 }
@@ -2132,7 +2077,6 @@ var xTextNodeGetColor func(uintptr) *gdk.RGBA
 // The value returned by this function will not be correct
 // if the render node was created for a non-sRGB color.
 func (x *TextNode) GetColor() *gdk.RGBA {
-
 	cret := xTextNodeGetColor(x.GoPointer())
 	return cret
 }
@@ -2158,7 +2102,6 @@ var xTextNodeGetGlyphs func(uintptr, *uint32) uintptr
 
 // Retrieves the glyph information in the @node.
 func (x *TextNode) GetGlyphs(NGlyphsVar *uint32) uintptr {
-
 	cret := xTextNodeGetGlyphs(x.GoPointer(), NGlyphsVar)
 	return cret
 }
@@ -2167,7 +2110,6 @@ var xTextNodeGetNumGlyphs func(uintptr) uint32
 
 // Retrieves the number of glyphs in the text node.
 func (x *TextNode) GetNumGlyphs() uint32 {
-
 	cret := xTextNodeGetNumGlyphs(x.GoPointer())
 	return cret
 }
@@ -2176,7 +2118,6 @@ var xTextNodeGetOffset func(uintptr) *graphene.Point
 
 // Retrieves the offset applied to the text.
 func (x *TextNode) GetOffset() *graphene.Point {
-
 	cret := xTextNodeGetOffset(x.GoPointer())
 	return cret
 }
@@ -2185,7 +2126,6 @@ var xTextNodeHasColorGlyphs func(uintptr) bool
 
 // Checks whether the text @node has color glyphs.
 func (x *TextNode) HasColorGlyphs() bool {
-
 	cret := xTextNodeHasColorGlyphs(x.GoPointer())
 	return cret
 }
@@ -2315,7 +2255,6 @@ var xTextureScaleNodeGetFilter func(uintptr) ScalingFilter
 
 // Retrieves the `GskScalingFilter` used when creating this `GskRenderNode`.
 func (x *TextureScaleNode) GetFilter() ScalingFilter {
-
 	cret := xTextureScaleNodeGetFilter(x.GoPointer())
 	return cret
 }
@@ -2403,7 +2342,6 @@ var xTransformNodeGetTransform func(uintptr) *Transform
 
 // Retrieves the `GskTransform` used by the @node.
 func (x *TransformNode) GetTransform() *Transform {
-
 	cret := xTransformNodeGetTransform(x.GoPointer())
 	return cret
 }
@@ -2665,5 +2603,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTransformNodeGetChild, libs, "gsk_transform_node_get_child")
 	core.PuregoSafeRegister(&xTransformNodeGetTransform, libs, "gsk_transform_node_get_transform")
-
 }

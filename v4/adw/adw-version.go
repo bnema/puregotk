@@ -29,7 +29,6 @@ var xGetMajorVersion func() uint32
 // which represents the major version of the libadwaita headers you have
 // included when compiling your code.
 func GetMajorVersion() uint32 {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -45,7 +44,6 @@ var xGetMicroVersion func() uint32
 // which represents the micro version of the libadwaita headers you have
 // included when compiling your code.
 func GetMicroVersion() uint32 {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -61,7 +59,6 @@ var xGetMinorVersion func() uint32
 // which represents the minor version of the libadwaita headers you have
 // included when compiling your code.
 func GetMinorVersion() uint32 {
-
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -81,5 +78,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "adw_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "adw_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "adw_get_minor_version")
-
 }

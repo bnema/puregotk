@@ -15,7 +15,6 @@ var xAcceleratorGetDefaultModMask func() gdk.ModifierType
 // for keyboard accelerators. This includes all keyboard modifiers except
 // for `GDK_LOCK_MASK`.
 func AcceleratorGetDefaultModMask() gdk.ModifierType {
-
 	cret := xAcceleratorGetDefaultModMask()
 	return cret
 }
@@ -25,7 +24,6 @@ var xAcceleratorGetLabel func(uint32, gdk.ModifierType) string
 // Converts an accelerator keyval and modifier mask into a string
 // which can be used to represent the accelerator to the user.
 func AcceleratorGetLabel(AcceleratorKeyVar uint32, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorGetLabel(AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -42,7 +40,6 @@ var xAcceleratorGetLabelWithKeycode func(uintptr, uint32, uint32, gdk.ModifierTy
 // components, applications should use [func@Gtk.accelerator_get_label]
 // instead.
 func AcceleratorGetLabelWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint32, KeycodeVar uint32, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorGetLabelWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
@@ -58,7 +55,6 @@ var xAcceleratorName func(uint32, gdk.ModifierType) string
 // If you need to display accelerators in the user interface,
 // see [func@Gtk.accelerator_get_label].
 func AcceleratorName(AcceleratorKeyVar uint32, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorName(AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -72,7 +68,6 @@ var xAcceleratorNameWithKeycode func(uintptr, uint32, uint32, gdk.ModifierType) 
 // This is only useful for system-level components, applications
 // should use [func@Gtk.accelerator_name] instead.
 func AcceleratorNameWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint32, KeycodeVar uint32, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorNameWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
@@ -103,7 +98,6 @@ var xAcceleratorParse func(string, *uint32, *gdk.ModifierType) bool
 // If the parse operation fails, @accelerator_key and @accelerator_mods will
 // be set to 0 (zero).
 func AcceleratorParse(AcceleratorVar string, AcceleratorKeyVar *uint32, AcceleratorModsVar *gdk.ModifierType) bool {
-
 	cret := xAcceleratorParse(AcceleratorVar, AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -125,7 +119,6 @@ var xAcceleratorParseWithKeycode func(string, uintptr, *uint32, *[]uint32, *gdk.
 // If the parse fails, @accelerator_key, @accelerator_mods and
 // @accelerator_codes will be set to 0 (zero).
 func AcceleratorParseWithKeycode(AcceleratorVar string, DisplayVar *gdk.Display, AcceleratorKeyVar *uint32, AcceleratorCodesVar *[]uint32, AcceleratorModsVar *gdk.ModifierType) bool {
-
 	cret := xAcceleratorParseWithKeycode(AcceleratorVar, DisplayVar.GoPointer(), AcceleratorKeyVar, AcceleratorCodesVar, AcceleratorModsVar)
 	return cret
 }
@@ -139,7 +132,6 @@ var xAcceleratorValid func(uint32, gdk.ModifierType) bool
 // and matches the “Ctrl+a” accelerator. But, you can't, for instance, use
 // the `GDK_KEY_Control_L` keyval as an accelerator.
 func AcceleratorValid(KeyvalVar uint32, ModifiersVar gdk.ModifierType) bool {
-
 	cret := xAcceleratorValid(KeyvalVar, ModifiersVar)
 	return cret
 }
@@ -164,5 +156,4 @@ func init() {
 	core.PuregoSafeRegister(&xAcceleratorParse, libs, "gtk_accelerator_parse")
 	core.PuregoSafeRegister(&xAcceleratorParseWithKeycode, libs, "gtk_accelerator_parse_with_keycode")
 	core.PuregoSafeRegister(&xAcceleratorValid, libs, "gtk_accelerator_valid")
-
 }

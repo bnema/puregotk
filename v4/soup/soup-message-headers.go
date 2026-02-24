@@ -37,7 +37,6 @@ var xNewMessageHeaders func(MessageHeadersType) *MessageHeaders
 // need to use this method if you are manually parsing or generating message
 // headers.)
 func NewMessageHeaders(TypeVar MessageHeadersType) *MessageHeaders {
-
 	cret := xNewMessageHeaders(TypeVar)
 	return cret
 }
@@ -53,27 +52,21 @@ var xMessageHeadersAppend func(uintptr, string, string)
 // The caller is expected to make sure that @name and @value are
 // syntactically correct.
 func (x *MessageHeaders) Append(NameVar string, ValueVar string) {
-
 	xMessageHeadersAppend(x.GoPointer(), NameVar, ValueVar)
-
 }
 
 var xMessageHeadersCleanConnectionHeaders func(uintptr)
 
 // Removes all the headers listed in the Connection header.
 func (x *MessageHeaders) CleanConnectionHeaders() {
-
 	xMessageHeadersCleanConnectionHeaders(x.GoPointer())
-
 }
 
 var xMessageHeadersClear func(uintptr)
 
 // Clears @hdrs.
 func (x *MessageHeaders) Clear() {
-
 	xMessageHeadersClear(x.GoPointer())
-
 }
 
 var xMessageHeadersForeach func(uintptr, uintptr, uintptr)
@@ -91,18 +84,14 @@ var xMessageHeadersForeach func(uintptr, uintptr, uintptr)
 //
 // You may not modify the headers from @func.
 func (x *MessageHeaders) Foreach(FuncVar *MessageHeadersForeachFunc, UserDataVar uintptr) {
-
 	xMessageHeadersForeach(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xMessageHeadersFreeRanges func(uintptr, *Range)
 
 // Frees the array of ranges returned from [method@MessageHeaders.get_ranges].
 func (x *MessageHeaders) FreeRanges(RangesVar *Range) {
-
 	xMessageHeadersFreeRanges(x.GoPointer(), RangesVar)
-
 }
 
 var xMessageHeadersGetContentDisposition func(uintptr, *string, **glib.HashTable) bool
@@ -125,7 +114,6 @@ var xMessageHeadersGetContentDisposition func(uintptr, *string, **glib.HashTable
 // this is handled automatically by [struct@Multipart] and the associated
 // form methods.
 func (x *MessageHeaders) GetContentDisposition(DispositionVar *string, ParamsVar **glib.HashTable) bool {
-
 	cret := xMessageHeadersGetContentDisposition(x.GoPointer(), DispositionVar, ParamsVar)
 	return cret
 }
@@ -137,7 +125,6 @@ var xMessageHeadersGetContentLength func(uintptr) int64
 // This will only be non-0 if [method@MessageHeaders.get_encoding] returns
 // %SOUP_ENCODING_CONTENT_LENGTH.
 func (x *MessageHeaders) GetContentLength() int64 {
-
 	cret := xMessageHeadersGetContentLength(x.GoPointer())
 	return cret
 }
@@ -148,7 +135,6 @@ var xMessageHeadersGetContentRange func(uintptr, *int64, *int64, *int64) bool
 // @end, and @total_length. If the total length field in the header
 // was specified as "*", then @total_length will be set to -1.
 func (x *MessageHeaders) GetContentRange(StartVar *int64, EndVar *int64, TotalLengthVar *int64) bool {
-
 	cret := xMessageHeadersGetContentRange(x.GoPointer(), StartVar, EndVar, TotalLengthVar)
 	return cret
 }
@@ -160,7 +146,6 @@ var xMessageHeadersGetContentType func(uintptr, **glib.HashTable) string
 //
 // @params can be %NULL if you are only interested in the content type itself.
 func (x *MessageHeaders) GetContentType(ParamsVar **glib.HashTable) string {
-
 	cret := xMessageHeadersGetContentType(x.GoPointer(), ParamsVar)
 	return cret
 }
@@ -173,7 +158,6 @@ var xMessageHeadersGetEncoding func(uintptr) Encoding
 // response may declare a Content-Length or Transfer-Encoding, but it will never
 // actually include a body.
 func (x *MessageHeaders) GetEncoding() Encoding {
-
 	cret := xMessageHeadersGetEncoding(x.GoPointer())
 	return cret
 }
@@ -185,7 +169,6 @@ var xMessageHeadersGetExpectations func(uintptr) Expectation
 // Currently this will either be %SOUP_EXPECTATION_CONTINUE or
 // %SOUP_EXPECTATION_UNRECOGNIZED.
 func (x *MessageHeaders) GetExpectations() Expectation {
-
 	cret := xMessageHeadersGetExpectations(x.GoPointer())
 	return cret
 }
@@ -194,7 +177,6 @@ var xMessageHeadersGetHeadersType func(uintptr) MessageHeadersType
 
 // Gets the type of headers.
 func (x *MessageHeaders) GetHeadersType() MessageHeadersType {
-
 	cret := xMessageHeadersGetHeadersType(x.GoPointer())
 	return cret
 }
@@ -215,7 +197,6 @@ var xMessageHeadersGetList func(uintptr, string) string
 // transformation is allowed, and so an upstream proxy could do the
 // same thing.
 func (x *MessageHeaders) GetList(NameVar string) string {
-
 	cret := xMessageHeadersGetList(x.GoPointer(), NameVar)
 	return cret
 }
@@ -233,7 +214,6 @@ var xMessageHeadersGetOne func(uintptr, string) string
 // whichever one makes libsoup most compatible with other HTTP
 // implementations.)
 func (x *MessageHeaders) GetOne(NameVar string) string {
-
 	cret := xMessageHeadersGetOne(x.GoPointer(), NameVar)
 	return cret
 }
@@ -269,7 +249,6 @@ var xMessageHeadersGetRanges func(uintptr, int64, *uintptr, *int32) bool
 // body available, and only want to generate the parts that were
 // actually requested by the client.
 func (x *MessageHeaders) GetRanges(TotalLengthVar int64, RangesVar *uintptr, LengthVar *int32) bool {
-
 	cret := xMessageHeadersGetRanges(x.GoPointer(), TotalLengthVar, RangesVar, LengthVar)
 	return cret
 }
@@ -282,7 +261,6 @@ var xMessageHeadersHeaderContains func(uintptr, string, string) bool
 // (If @name is present in @hdrs, then this is equivalent to calling
 // [func@header_contains] on its value.)
 func (x *MessageHeaders) HeaderContains(NameVar string, TokenVar string) bool {
-
 	cret := xMessageHeadersHeaderContains(x.GoPointer(), NameVar, TokenVar)
 	return cret
 }
@@ -292,7 +270,6 @@ var xMessageHeadersHeaderEquals func(uintptr, string, string) bool
 // Checks whether the header @name is present in @hdrs and is
 // (case-insensitively) equal to @value.
 func (x *MessageHeaders) HeaderEquals(NameVar string, ValueVar string) bool {
-
 	cret := xMessageHeadersHeaderEquals(x.GoPointer(), NameVar, ValueVar)
 	return cret
 }
@@ -301,7 +278,6 @@ var xMessageHeadersRef func(uintptr) *MessageHeaders
 
 // Atomically increments the reference count of @hdrs by one.
 func (x *MessageHeaders) Ref() *MessageHeaders {
-
 	cret := xMessageHeadersRef(x.GoPointer())
 	return cret
 }
@@ -312,9 +288,7 @@ var xMessageHeadersRemove func(uintptr, string)
 //
 // If there are multiple values for @name, they are all removed.
 func (x *MessageHeaders) Remove(NameVar string) {
-
 	xMessageHeadersRemove(x.GoPointer(), NameVar)
-
 }
 
 var xMessageHeadersReplace func(uintptr, string, string)
@@ -326,9 +300,7 @@ var xMessageHeadersReplace func(uintptr, string, string)
 // The caller is expected to make sure that @name and @value are
 // syntactically correct.
 func (x *MessageHeaders) Replace(NameVar string, ValueVar string) {
-
 	xMessageHeadersReplace(x.GoPointer(), NameVar, ValueVar)
-
 }
 
 var xMessageHeadersSetContentDisposition func(uintptr, string, *glib.HashTable)
@@ -339,9 +311,7 @@ var xMessageHeadersSetContentDisposition func(uintptr, string, *glib.HashTable)
 // See [method@MessageHeaders.get_content_disposition] for a discussion
 // of how Content-Disposition is used in HTTP.
 func (x *MessageHeaders) SetContentDisposition(DispositionVar string, ParamsVar *glib.HashTable) {
-
 	xMessageHeadersSetContentDisposition(x.GoPointer(), DispositionVar, ParamsVar)
-
 }
 
 var xMessageHeadersSetContentLength func(uintptr, int64)
@@ -358,9 +328,7 @@ var xMessageHeadersSetContentLength func(uintptr, int64)
 // correct content length into the response without needing to waste
 // memory by filling in a response body which won't actually be sent.
 func (x *MessageHeaders) SetContentLength(ContentLengthVar int64) {
-
 	xMessageHeadersSetContentLength(x.GoPointer(), ContentLengthVar)
-
 }
 
 var xMessageHeadersSetContentRange func(uintptr, int64, int64, int64)
@@ -374,9 +342,7 @@ var xMessageHeadersSetContentRange func(uintptr, int64, int64, int64)
 // not normally need to call this function youself. See
 // [method@MessageHeaders.get_ranges] for more details.
 func (x *MessageHeaders) SetContentRange(StartVar int64, EndVar int64, TotalLengthVar int64) {
-
 	xMessageHeadersSetContentRange(x.GoPointer(), StartVar, EndVar, TotalLengthVar)
-
 }
 
 var xMessageHeadersSetContentType func(uintptr, string, *glib.HashTable)
@@ -385,9 +351,7 @@ var xMessageHeadersSetContentType func(uintptr, string, *glib.HashTable)
 //
 // Accepts additional parameters specified in @params.
 func (x *MessageHeaders) SetContentType(ContentTypeVar string, ParamsVar *glib.HashTable) {
-
 	xMessageHeadersSetContentType(x.GoPointer(), ContentTypeVar, ParamsVar)
-
 }
 
 var xMessageHeadersSetEncoding func(uintptr, Encoding)
@@ -397,9 +361,7 @@ var xMessageHeadersSetEncoding func(uintptr, Encoding)
 // In particular, you should use this if you are going to send a request or
 // response in chunked encoding.
 func (x *MessageHeaders) SetEncoding(EncodingVar Encoding) {
-
 	xMessageHeadersSetEncoding(x.GoPointer(), EncodingVar)
-
 }
 
 var xMessageHeadersSetExpectations func(uintptr, Expectation)
@@ -415,9 +377,7 @@ var xMessageHeadersSetExpectations func(uintptr, Expectation)
 // saves you from having to transmit the large request body when the
 // server is just going to ignore it anyway.
 func (x *MessageHeaders) SetExpectations(ExpectationsVar Expectation) {
-
 	xMessageHeadersSetExpectations(x.GoPointer(), ExpectationsVar)
-
 }
 
 var xMessageHeadersSetRange func(uintptr, int64, int64)
@@ -429,9 +389,7 @@ var xMessageHeadersSetRange func(uintptr, int64, int64)
 // If you need to request multiple ranges, use
 // [method@MessageHeaders.set_ranges].
 func (x *MessageHeaders) SetRange(StartVar int64, EndVar int64) {
-
 	xMessageHeadersSetRange(x.GoPointer(), StartVar, EndVar)
-
 }
 
 var xMessageHeadersSetRanges func(uintptr, *Range, int32)
@@ -441,9 +399,7 @@ var xMessageHeadersSetRanges func(uintptr, *Range, int32)
 // If you only want to request a single range, you can use
 // [method@MessageHeaders.set_range].
 func (x *MessageHeaders) SetRanges(RangesVar *Range, LengthVar int32) {
-
 	xMessageHeadersSetRanges(x.GoPointer(), RangesVar, LengthVar)
-
 }
 
 var xMessageHeadersUnref func(uintptr)
@@ -453,9 +409,7 @@ var xMessageHeadersUnref func(uintptr)
 // When the reference count reaches zero, the resources allocated by
 // @hdrs are freed
 func (x *MessageHeaders) Unref() {
-
 	xMessageHeadersUnref(x.GoPointer())
-
 }
 
 // An opaque type used to iterate over a %SoupMessageHeaders
@@ -570,9 +524,7 @@ var xMessageHeadersIterInit func(*MessageHeadersIter, *MessageHeaders)
 
 // Initializes @iter for iterating @hdrs.
 func MessageHeadersIterInit(IterVar *MessageHeadersIter, HdrsVar *MessageHeaders) {
-
 	xMessageHeadersIterInit(IterVar, HdrsVar)
-
 }
 
 var xMessageHeadersIterNext func(*MessageHeadersIter, *string, *string) bool
@@ -584,7 +536,6 @@ var xMessageHeadersIterNext func(*MessageHeadersIter, *string, *string) bool
 // [method@MessageHeadersIter.next] will return %FALSE and @name and @value
 // will be unchanged.
 func MessageHeadersIterNext(IterVar *MessageHeadersIter, NameVar *string, ValueVar *string) bool {
-
 	cret := xMessageHeadersIterNext(IterVar, NameVar, ValueVar)
 	return cret
 }
@@ -643,5 +594,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageHeadersSetRange, libs, "soup_message_headers_set_range")
 	core.PuregoSafeRegister(&xMessageHeadersSetRanges, libs, "soup_message_headers_set_ranges")
 	core.PuregoSafeRegister(&xMessageHeadersUnref, libs, "soup_message_headers_unref")
-
 }

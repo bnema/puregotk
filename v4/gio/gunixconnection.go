@@ -92,7 +92,6 @@ func (x *UnixConnection) ReceiveCredentials(CancellableVar *Cancellable) (*Crede
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xUnixConnectionReceiveCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -105,9 +104,7 @@ var xUnixConnectionReceiveCredentialsAsync func(uintptr, uintptr, uintptr, uintp
 // When the operation is finished, @callback will be called. You can then call
 // g_unix_connection_receive_credentials_finish() to get the result of the operation.
 func (x *UnixConnection) ReceiveCredentialsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUnixConnectionReceiveCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUnixConnectionReceiveCredentialsFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -129,7 +126,6 @@ func (x *UnixConnection) ReceiveCredentialsFinish(ResultVar AsyncResult) (*Crede
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xUnixConnectionReceiveFd func(uintptr, uintptr, **glib.Error) int32
@@ -149,7 +145,6 @@ func (x *UnixConnection) ReceiveFd(CancellableVar *Cancellable) (int32, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendCredentials func(uintptr, uintptr, **glib.Error) bool
@@ -181,7 +176,6 @@ func (x *UnixConnection) SendCredentials(CancellableVar *Cancellable) (bool, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -194,9 +188,7 @@ var xUnixConnectionSendCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be called. You can then call
 // g_unix_connection_send_credentials_finish() to get the result of the operation.
 func (x *UnixConnection) SendCredentialsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xUnixConnectionSendCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xUnixConnectionSendCredentialsFinish func(uintptr, uintptr, **glib.Error) bool
@@ -211,7 +203,6 @@ func (x *UnixConnection) SendCredentialsFinish(ResultVar AsyncResult) (bool, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendFd func(uintptr, int32, uintptr, **glib.Error) bool
@@ -231,7 +222,6 @@ func (x *UnixConnection) SendFd(FdVar int32, CancellableVar *Cancellable) (bool,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *UnixConnection) GoPointer() uintptr {
@@ -267,5 +257,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsAsync, libs, "g_unix_connection_send_credentials_async")
 	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsFinish, libs, "g_unix_connection_send_credentials_finish")
 	core.PuregoSafeRegister(&xUnixConnectionSendFd, libs, "g_unix_connection_send_fd")
-
 }

@@ -177,14 +177,12 @@ func (x *ActionableBase) SetGoPointer(ptr uintptr) {
 
 // Gets the action name for @actionable.
 func (x *ActionableBase) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -203,9 +201,7 @@ func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *ActionableBase) SetActionName(ActionNameVar string) {
-
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -218,9 +214,7 @@ func (x *ActionableBase) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *ActionableBase) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -242,9 +236,7 @@ func (x *ActionableBase) SetActionTarget(FormatStringVar string, varArgs ...inte
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *ActionableBase) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -253,9 +245,7 @@ func (x *ActionableBase) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *ActionableBase) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // SetPropertyActionName sets the "action-name" property.
@@ -300,12 +290,14 @@ func (x *ActionableBase) GetPropertyActionTarget() uintptr {
 	return v.GetPointer()
 }
 
-var XGtkActionableGetActionName func(uintptr) string
-var XGtkActionableGetActionTargetValue func(uintptr) *glib.Variant
-var XGtkActionableSetActionName func(uintptr, string)
-var XGtkActionableSetActionTarget func(uintptr, string, ...interface{})
-var XGtkActionableSetActionTargetValue func(uintptr, *glib.Variant)
-var XGtkActionableSetDetailedActionName func(uintptr, string)
+var (
+	XGtkActionableGetActionName         func(uintptr) string
+	XGtkActionableGetActionTargetValue  func(uintptr) *glib.Variant
+	XGtkActionableSetActionName         func(uintptr, string)
+	XGtkActionableSetActionTarget       func(uintptr, string, ...interface{})
+	XGtkActionableSetActionTargetValue  func(uintptr, *glib.Variant)
+	XGtkActionableSetDetailedActionName func(uintptr, string)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -327,5 +319,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkActionableSetActionTarget, libs, "gtk_actionable_set_action_target")
 	core.PuregoSafeRegister(&XGtkActionableSetActionTargetValue, libs, "gtk_actionable_set_action_target_value")
 	core.PuregoSafeRegister(&XGtkActionableSetDetailedActionName, libs, "gtk_actionable_set_detailed_action_name")
-
 }

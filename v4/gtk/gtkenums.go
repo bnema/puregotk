@@ -2122,7 +2122,6 @@ var xOrderingFromCmpfunc func(int32) Ordering
 // Converts the result of a `GCompareFunc` like strcmp() to a
 // `GtkOrdering` value.
 func OrderingFromCmpfunc(CmpfuncResultVar int32) Ordering {
-
 	cret := xOrderingFromCmpfunc(CmpfuncResultVar)
 	return cret
 }
@@ -2274,5 +2273,4 @@ func init() {
 	core.PuregoSafeRegister(&xWrapModeGLibType, libs, "gtk_wrap_mode_get_type")
 
 	core.PuregoSafeRegister(&xOrderingFromCmpfunc, libs, "gtk_ordering_from_cmpfunc")
-
 }

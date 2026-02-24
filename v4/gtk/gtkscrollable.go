@@ -116,7 +116,6 @@ func (x *ScrollableBase) SetGoPointer(ptr uintptr) {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *ScrollableBase) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -138,7 +137,6 @@ func (x *ScrollableBase) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *ScrollableBase) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -160,16 +158,13 @@ func (x *ScrollableBase) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *ScrollableBase) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ScrollableBase) SetHadjustment(HadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -177,16 +172,12 @@ func (x *ScrollableBase) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *ScrollableBase) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ScrollableBase) SetVadjustment(VadjustmentVar *Adjustment) {
-
 	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
-
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -194,20 +185,20 @@ func (x *ScrollableBase) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *ScrollableBase) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
-var XGtkScrollableGetBorder func(uintptr, *Border) bool
-var XGtkScrollableGetHadjustment func(uintptr) uintptr
-var XGtkScrollableGetHscrollPolicy func(uintptr) ScrollablePolicy
-var XGtkScrollableGetVadjustment func(uintptr) uintptr
-var XGtkScrollableGetVscrollPolicy func(uintptr) ScrollablePolicy
-var XGtkScrollableSetHadjustment func(uintptr, uintptr)
-var XGtkScrollableSetHscrollPolicy func(uintptr, ScrollablePolicy)
-var XGtkScrollableSetVadjustment func(uintptr, uintptr)
-var XGtkScrollableSetVscrollPolicy func(uintptr, ScrollablePolicy)
+var (
+	XGtkScrollableGetBorder        func(uintptr, *Border) bool
+	XGtkScrollableGetHadjustment   func(uintptr) uintptr
+	XGtkScrollableGetHscrollPolicy func(uintptr) ScrollablePolicy
+	XGtkScrollableGetVadjustment   func(uintptr) uintptr
+	XGtkScrollableGetVscrollPolicy func(uintptr) ScrollablePolicy
+	XGtkScrollableSetHadjustment   func(uintptr, uintptr)
+	XGtkScrollableSetHscrollPolicy func(uintptr, ScrollablePolicy)
+	XGtkScrollableSetVadjustment   func(uintptr, uintptr)
+	XGtkScrollableSetVscrollPolicy func(uintptr, ScrollablePolicy)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -232,5 +223,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkScrollableSetHscrollPolicy, libs, "gtk_scrollable_set_hscroll_policy")
 	core.PuregoSafeRegister(&XGtkScrollableSetVadjustment, libs, "gtk_scrollable_set_vadjustment")
 	core.PuregoSafeRegister(&XGtkScrollableSetVscrollPolicy, libs, "gtk_scrollable_set_vscroll_policy")
-
 }

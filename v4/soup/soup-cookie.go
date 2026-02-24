@@ -62,7 +62,6 @@ var xCookieParse func(string, *glib.Uri) *Cookie
 // As of version 3.4.0 the default value of a cookie's same-site-policy
 // is %SOUP_SAME_SITE_POLICY_LAX.
 func CookieParse(HeaderVar string, OriginVar *glib.Uri) *Cookie {
-
 	cret := xCookieParse(HeaderVar, OriginVar)
 	return cret
 }
@@ -71,9 +70,7 @@ var xCookiesFree func(*glib.SList)
 
 // Frees @cookies.
 func CookiesFree(CookiesVar *glib.SList) {
-
 	xCookiesFree(CookiesVar)
-
 }
 
 var xCookiesFromRequest func(uintptr) *glib.SList
@@ -86,7 +83,6 @@ var xCookiesFromRequest func(uintptr) *glib.SList
 // can't generally pass a cookie returned from this method directly to
 // [func@cookies_to_response].)
 func CookiesFromRequest(MsgVar *Message) *glib.SList {
-
 	cret := xCookiesFromRequest(MsgVar.GoPointer())
 	return cret
 }
@@ -99,7 +95,6 @@ var xCookiesFromResponse func(uintptr) *glib.SList
 // Cookies that do not specify "path" or "domain" attributes will have their
 // values defaulted from @msg.
 func CookiesFromResponse(MsgVar *Message) *glib.SList {
-
 	cret := xCookiesFromResponse(MsgVar.GoPointer())
 	return cret
 }
@@ -109,7 +104,6 @@ var xCookiesToCookieHeader func(*glib.SList) string
 // Serializes a [struct@GLib.SList] of #SoupCookie into a string suitable for
 // setting as the value of the "Cookie" header.
 func CookiesToCookieHeader(CookiesVar *glib.SList) string {
-
 	cret := xCookiesToCookieHeader(CookiesVar)
 	return cret
 }
@@ -123,9 +117,7 @@ var xCookiesToRequest func(*glib.SList, uintptr)
 // to the cookies already present. Be careful that you do not append the same
 // cookies twice, eg, when requeuing a message.
 func CookiesToRequest(CookiesVar *glib.SList, MsgVar *Message) {
-
 	xCookiesToRequest(CookiesVar, MsgVar.GoPointer())
-
 }
 
 var xCookiesToResponse func(*glib.SList, uintptr)
@@ -136,9 +128,7 @@ var xCookiesToResponse func(*glib.SList, uintptr)
 // This is in addition to any other "Set-Cookie" headers
 // @msg may already have.
 func CookiesToResponse(CookiesVar *glib.SList, MsgVar *Message) {
-
 	xCookiesToResponse(CookiesVar, MsgVar.GoPointer())
-
 }
 
 func init() {
@@ -162,5 +152,4 @@ func init() {
 	core.PuregoSafeRegister(&xCookiesToCookieHeader, libs, "soup_cookies_to_cookie_header")
 	core.PuregoSafeRegister(&xCookiesToRequest, libs, "soup_cookies_to_request")
 	core.PuregoSafeRegister(&xCookiesToResponse, libs, "soup_cookies_to_response")
-
 }

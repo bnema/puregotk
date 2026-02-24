@@ -229,18 +229,14 @@ var xMessageDialogFormatSecondaryMarkup func(uintptr, string, ...interface{})
 // g_free (msg);
 // ```
 func (x *MessageDialog) FormatSecondaryMarkup(MessageFormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatSecondaryMarkup(x.GoPointer(), MessageFormatVar, varArgs...)
-
 }
 
 var xMessageDialogFormatSecondaryText func(uintptr, string, ...interface{})
 
 // Sets the secondary text of the message dialog.
 func (x *MessageDialog) FormatSecondaryText(MessageFormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatSecondaryText(x.GoPointer(), MessageFormatVar, varArgs...)
-
 }
 
 var xMessageDialogGetMessageArea func(uintptr) uintptr
@@ -269,9 +265,7 @@ var xMessageDialogSetMarkup func(uintptr, string)
 
 // Sets the text of the message dialog.
 func (x *MessageDialog) SetMarkup(StrVar string) {
-
 	xMessageDialogSetMarkup(x.GoPointer(), StrVar)
-
 }
 
 func (c *MessageDialog) GoPointer() uintptr {
@@ -375,9 +369,7 @@ func (x *MessageDialog) GetPropertyUseMarkup() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *MessageDialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -398,7 +390,6 @@ func (x *MessageDialog) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *MessageDialog) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -423,7 +414,6 @@ func (x *MessageDialog) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *MessageDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -462,30 +452,23 @@ func (x *MessageDialog) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *MessageDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *MessageDialog) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *MessageDialog) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *MessageDialog) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -498,9 +481,7 @@ func (x *MessageDialog) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *MessageDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -508,9 +489,7 @@ func (x *MessageDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -519,9 +498,7 @@ func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *MessageDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -543,9 +520,7 @@ func (x *MessageDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *MessageDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -555,9 +530,7 @@ func (x *MessageDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varA
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -579,9 +552,7 @@ func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar 
 //
 // ```
 func (x *MessageDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -591,9 +562,7 @@ func (x *MessageDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varA
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -616,9 +585,7 @@ func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []
 //
 // ```
 func (x *MessageDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -628,9 +595,7 @@ func (x *MessageDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -638,7 +603,6 @@ func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []Accessibl
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MessageDialog) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -678,27 +642,21 @@ func (x *MessageDialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *MessageDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MessageDialog) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MessageDialog) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -745,9 +703,7 @@ func (x *MessageDialog) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *MessageDialog) SetFocus(FocusVar *Widget) {
-
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -773,5 +729,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageDialogFormatSecondaryText, libs, "gtk_message_dialog_format_secondary_text")
 	core.PuregoSafeRegister(&xMessageDialogGetMessageArea, libs, "gtk_message_dialog_get_message_area")
 	core.PuregoSafeRegister(&xMessageDialogSetMarkup, libs, "gtk_message_dialog_set_markup")
-
 }

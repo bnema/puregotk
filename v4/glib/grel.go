@@ -61,7 +61,6 @@ var xRelationCount func(uintptr, uintptr, int32) int32
 // Returns the number of tuples in a #GRelation that have the given
 // value in the given field.
 func (x *Relation) Count(KeyVar uintptr, FieldVar int32) int32 {
-
 	cret := xRelationCount(x.GoPointer(), KeyVar, FieldVar)
 	return cret
 }
@@ -71,7 +70,6 @@ var xRelationDelete func(uintptr, uintptr, int32) int32
 // Deletes any records from a #GRelation that have the given key value
 // in the given field.
 func (x *Relation) Delete(KeyVar uintptr, FieldVar int32) int32 {
-
 	cret := xRelationDelete(x.GoPointer(), KeyVar, FieldVar)
 	return cret
 }
@@ -82,9 +80,7 @@ var xRelationDestroy func(uintptr)
 // does not free memory allocated for the tuple data, so you should
 // free that first if appropriate.
 func (x *Relation) Destroy() {
-
 	xRelationDestroy(x.GoPointer())
-
 }
 
 var xRelationExists func(uintptr, ...interface{}) bool
@@ -93,7 +89,6 @@ var xRelationExists func(uintptr, ...interface{}) bool
 // #GRelation. Note that the values are compared directly, so that, for
 // example, two copies of the same string will not match.
 func (x *Relation) Exists(varArgs ...interface{}) bool {
-
 	cret := xRelationExists(x.GoPointer(), varArgs...)
 	return cret
 }
@@ -103,18 +98,14 @@ var xRelationIndex func(uintptr, int32, uintptr, uintptr)
 // Creates an index on the given field. Note that this must be called
 // before any records are added to the #GRelation.
 func (x *Relation) Index(FieldVar int32, HashFuncVar *HashFunc, KeyEqualFuncVar *EqualFunc) {
-
 	xRelationIndex(x.GoPointer(), FieldVar, NewCallback(HashFuncVar), NewCallback(KeyEqualFuncVar))
-
 }
 
 var xRelationInsert func(uintptr, ...interface{})
 
 // Inserts a record into a #GRelation.
 func (x *Relation) Insert(varArgs ...interface{}) {
-
 	xRelationInsert(x.GoPointer(), varArgs...)
-
 }
 
 var xRelationPrint func(uintptr)
@@ -122,9 +113,7 @@ var xRelationPrint func(uintptr)
 // Outputs information about all records in a #GRelation, as well as
 // the indexes. It is for debugging.
 func (x *Relation) Print() {
-
 	xRelationPrint(x.GoPointer())
-
 }
 
 var xRelationSelect func(uintptr, uintptr, int32) *Tuples
@@ -133,7 +122,6 @@ var xRelationSelect func(uintptr, uintptr, int32) *Tuples
 // field. Use g_tuples_index() to access the returned records. The
 // returned records should be freed with g_tuples_destroy().
 func (x *Relation) Select(KeyVar uintptr, FieldVar int32) *Tuples {
-
 	cret := xRelationSelect(x.GoPointer(), KeyVar, FieldVar)
 	return cret
 }
@@ -159,9 +147,7 @@ var xTuplesDestroy func(uintptr)
 // finished with the records. The records are not removed from the
 // #GRelation.
 func (x *Tuples) Destroy() {
-
 	xTuplesDestroy(x.GoPointer())
-
 }
 
 var xTuplesIndex func(uintptr, int32, int32) uintptr
@@ -170,7 +156,6 @@ var xTuplesIndex func(uintptr, int32, int32) uintptr
 // returns the given field of the record at the given index. The
 // returned value should not be changed.
 func (x *Tuples) Index(IndexVar int32, FieldVar int32) uintptr {
-
 	cret := xTuplesIndex(x.GoPointer(), IndexVar, FieldVar)
 	return cret
 }
@@ -198,5 +183,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTuplesDestroy, libs, "g_tuples_destroy")
 	core.PuregoSafeRegister(&xTuplesIndex, libs, "g_tuples_index")
-
 }

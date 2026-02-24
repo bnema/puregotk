@@ -717,7 +717,6 @@ var xVolumeMonitorGetConnectedDrives func(uintptr) *glib.List
 // The returned list should be freed with g_list_free(), after
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetConnectedDrives() *glib.List {
-
 	cret := xVolumeMonitorGetConnectedDrives(x.GoPointer())
 	return cret
 }
@@ -745,7 +744,6 @@ var xVolumeMonitorGetMounts func(uintptr) *glib.List
 // The returned list should be freed with g_list_free(), after
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetMounts() *glib.List {
-
 	cret := xVolumeMonitorGetMounts(x.GoPointer())
 	return cret
 }
@@ -773,7 +771,6 @@ var xVolumeMonitorGetVolumes func(uintptr) *glib.List
 // The returned list should be freed with g_list_free(), after
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetVolumes() *glib.List {
-
 	cret := xVolumeMonitorGetVolumes(x.GoPointer())
 	return cret
 }
@@ -802,7 +799,6 @@ func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) ui
 		cbFn := *cb
 
 		cbFn(fa, DriveVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -822,7 +818,6 @@ func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) 
 		cbFn := *cb
 
 		cbFn(fa, DriveVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -842,7 +837,6 @@ func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr
 		cbFn := *cb
 
 		cbFn(fa, DriveVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -862,7 +856,6 @@ func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)
 		cbFn := *cb
 
 		cbFn(fa, DriveVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -882,7 +875,6 @@ func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr))
 		cbFn := *cb
 
 		cbFn(fa, DriveVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -902,7 +894,6 @@ func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint
 		cbFn := *cb
 
 		cbFn(fa, MountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -922,7 +913,6 @@ func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) ui
 		cbFn := *cb
 
 		cbFn(fa, MountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -945,7 +935,6 @@ func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr))
 		cbFn := *cb
 
 		cbFn(fa, MountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -965,7 +954,6 @@ func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) ui
 		cbFn := *cb
 
 		cbFn(fa, MountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -985,7 +973,6 @@ func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uin
 		cbFn := *cb
 
 		cbFn(fa, VolumeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1005,7 +992,6 @@ func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) u
 		cbFn := *cb
 
 		cbFn(fa, VolumeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1025,7 +1011,6 @@ func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) u
 		cbFn := *cb
 
 		cbFn(fa, VolumeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1113,5 +1098,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xVolumeMonitorAdoptOrphanMount, libs, "g_volume_monitor_adopt_orphan_mount")
 	core.PuregoSafeRegister(&xVolumeMonitorGet, libs, "g_volume_monitor_get")
-
 }

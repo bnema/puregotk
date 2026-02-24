@@ -279,7 +279,6 @@ var xSocketServiceIsActive func(uintptr) bool
 // a non-active service will let connecting clients queue
 // up until the service is started.
 func (x *SocketService) IsActive() bool {
-
 	cret := xSocketServiceIsActive(x.GoPointer())
 	return cret
 }
@@ -294,9 +293,7 @@ var xSocketServiceStart func(uintptr)
 // This call is thread-safe, so it may be called from a thread
 // handling an incoming client request.
 func (x *SocketService) Start() {
-
 	xSocketServiceStart(x.GoPointer())
-
 }
 
 var xSocketServiceStop func(uintptr)
@@ -317,9 +314,7 @@ var xSocketServiceStop func(uintptr)
 // the socket service will start accepting connections immediately
 // when a new socket is added.
 func (x *SocketService) Stop() {
-
 	xSocketServiceStop(x.GoPointer())
-
 }
 
 func (c *SocketService) GoPointer() uintptr {
@@ -369,7 +364,6 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr
 		cbFn := *cb
 
 		return cbFn(fa, ConnectionVarp, SourceObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -395,5 +389,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketServiceIsActive, libs, "g_socket_service_is_active")
 	core.PuregoSafeRegister(&xSocketServiceStart, libs, "g_socket_service_start")
 	core.PuregoSafeRegister(&xSocketServiceStop, libs, "g_socket_service_stop")
-
 }

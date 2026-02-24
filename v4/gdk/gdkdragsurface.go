@@ -49,7 +49,6 @@ func (x *DragSurfaceBase) SetGoPointer(ptr uintptr) {
 
 // Present @drag_surface.
 func (x *DragSurfaceBase) Present(WidthVar int32, HeightVar int32) bool {
-
 	cret := XGdkDragSurfacePresent(x.GoPointer(), WidthVar, HeightVar)
 	return cret
 }
@@ -71,5 +70,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSurfaceGLibType, libs, "gdk_drag_surface_get_type")
 
 	core.PuregoSafeRegister(&XGdkDragSurfacePresent, libs, "gdk_drag_surface_present")
-
 }

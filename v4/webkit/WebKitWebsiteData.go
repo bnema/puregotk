@@ -47,7 +47,6 @@ var xWebsiteDataGetName func(uintptr) string
 // a domain or host name. All local documents are grouped in the same #WebKitWebsiteData using
 // the name "Local files".
 func (x *WebsiteData) GetName() string {
-
 	cret := xWebsiteDataGetName(x.GoPointer())
 	return cret
 }
@@ -59,7 +58,6 @@ var xWebsiteDataGetSize func(uintptr, WebsiteDataTypes) uint64
 // Note that currently the data size is only known for %WEBKIT_WEBSITE_DATA_DISK_CACHE data type
 // so for all other types 0 will be returned.
 func (x *WebsiteData) GetSize(TypesVar WebsiteDataTypes) uint64 {
-
 	cret := xWebsiteDataGetSize(x.GoPointer(), TypesVar)
 	return cret
 }
@@ -71,7 +69,6 @@ var xWebsiteDataGetTypes func(uintptr) WebsiteDataTypes
 // These are the
 // types actually present, not the types queried with webkit_website_data_manager_fetch().
 func (x *WebsiteData) GetTypes() WebsiteDataTypes {
-
 	cret := xWebsiteDataGetTypes(x.GoPointer())
 	return cret
 }
@@ -82,7 +79,6 @@ var xWebsiteDataRef func(uintptr) *WebsiteData
 //
 // This function is MT-safe and may be called from any thread.
 func (x *WebsiteData) Ref() *WebsiteData {
-
 	cret := xWebsiteDataRef(x.GoPointer())
 	return cret
 }
@@ -95,9 +91,7 @@ var xWebsiteDataUnref func(uintptr)
 // #WebKitWebsiteData is released. This function is MT-safe and may be
 // called from any thread.
 func (x *WebsiteData) Unref() {
-
 	xWebsiteDataUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -119,5 +113,4 @@ func init() {
 	core.PuregoSafeRegister(&xWebsiteDataGetTypes, libs, "webkit_website_data_get_types")
 	core.PuregoSafeRegister(&xWebsiteDataRef, libs, "webkit_website_data_ref")
 	core.PuregoSafeRegister(&xWebsiteDataUnref, libs, "webkit_website_data_unref")
-
 }

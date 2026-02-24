@@ -70,16 +70,13 @@ var xShortcutsSectionAdd func(uintptr, uintptr)
 
 // Adds @item to @self.
 func (x *ShortcutsSection) Add(ItemVar *ShortcutsItem) {
-
 	xShortcutsSectionAdd(x.GoPointer(), ItemVar.GoPointer())
-
 }
 
 var xShortcutsSectionGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *ShortcutsSection) GetTitle() string {
-
 	cret := xShortcutsSectionGetTitle(x.GoPointer())
 	return cret
 }
@@ -88,9 +85,7 @@ var xShortcutsSectionSetTitle func(uintptr, string)
 
 // Sets the title of @self.
 func (x *ShortcutsSection) SetTitle(TitleVar string) {
-
 	xShortcutsSectionSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *ShortcutsSection) GoPointer() uintptr {
@@ -131,7 +126,6 @@ func (x *ShortcutsSection) GetPropertyTitle() string {
 //
 // See also: g_list_model_get_n_items()
 func (x *ShortcutsSection) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -145,7 +139,6 @@ func (x *ShortcutsSection) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ShortcutsSection) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -156,7 +149,6 @@ func (x *ShortcutsSection) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ShortcutsSection) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -207,9 +199,7 @@ func (x *ShortcutsSection) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ShortcutsSection) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -217,7 +207,6 @@ func (x *ShortcutsSection) ItemsChanged(PositionVar uint32, RemovedVar uint32, A
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutsSection) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -241,5 +230,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutsSectionAdd, libs, "adw_shortcuts_section_add")
 	core.PuregoSafeRegister(&xShortcutsSectionGetTitle, libs, "adw_shortcuts_section_get_title")
 	core.PuregoSafeRegister(&xShortcutsSectionSetTitle, libs, "adw_shortcuts_section_set_title")
-
 }

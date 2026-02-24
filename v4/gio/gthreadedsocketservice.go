@@ -273,7 +273,6 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintp
 		cbFn := *cb
 
 		return cbFn(fa, ConnectionVarp, SourceObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -295,5 +294,4 @@ func init() {
 	core.PuregoSafeRegister(&xThreadedSocketServiceGLibType, libs, "g_threaded_socket_service_get_type")
 
 	core.PuregoSafeRegister(&xNewThreadedSocketService, libs, "g_threaded_socket_service_new")
-
 }

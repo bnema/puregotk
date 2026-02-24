@@ -61,7 +61,6 @@ var xCellRendererToggleGetActivatable func(uintptr) bool
 // Returns whether the cell renderer is activatable. See
 // gtk_cell_renderer_toggle_set_activatable().
 func (x *CellRendererToggle) GetActivatable() bool {
-
 	cret := xCellRendererToggleGetActivatable(x.GoPointer())
 	return cret
 }
@@ -71,7 +70,6 @@ var xCellRendererToggleGetActive func(uintptr) bool
 // Returns whether the cell renderer is active. See
 // gtk_cell_renderer_toggle_set_active().
 func (x *CellRendererToggle) GetActive() bool {
-
 	cret := xCellRendererToggleGetActive(x.GoPointer())
 	return cret
 }
@@ -80,7 +78,6 @@ var xCellRendererToggleGetRadio func(uintptr) bool
 
 // Returns whether we’re rendering radio toggles rather than checkboxes.
 func (x *CellRendererToggle) GetRadio() bool {
-
 	cret := xCellRendererToggleGetRadio(x.GoPointer())
 	return cret
 }
@@ -89,18 +86,14 @@ var xCellRendererToggleSetActivatable func(uintptr, bool)
 
 // Makes the cell renderer activatable.
 func (x *CellRendererToggle) SetActivatable(SettingVar bool) {
-
 	xCellRendererToggleSetActivatable(x.GoPointer(), SettingVar)
-
 }
 
 var xCellRendererToggleSetActive func(uintptr, bool)
 
 // Activates or deactivates a cell renderer.
 func (x *CellRendererToggle) SetActive(SettingVar bool) {
-
 	xCellRendererToggleSetActive(x.GoPointer(), SettingVar)
-
 }
 
 var xCellRendererToggleSetRadio func(uintptr, bool)
@@ -113,9 +106,7 @@ var xCellRendererToggleSetRadio func(uintptr, bool)
 // up a per-row setting using `GtkTreeViewColumn` to associate model
 // columns with cell renderer properties).
 func (x *CellRendererToggle) SetRadio(RadioVar bool) {
-
 	xCellRendererToggleSetRadio(x.GoPointer(), RadioVar)
-
 }
 
 func (c *CellRendererToggle) GoPointer() uintptr {
@@ -206,7 +197,6 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 		cbFn := *cb
 
 		cbFn(fa, PathVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -235,5 +225,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererToggleSetActivatable, libs, "gtk_cell_renderer_toggle_set_activatable")
 	core.PuregoSafeRegister(&xCellRendererToggleSetActive, libs, "gtk_cell_renderer_toggle_set_active")
 	core.PuregoSafeRegister(&xCellRendererToggleSetRadio, libs, "gtk_cell_renderer_toggle_set_radio")
-
 }

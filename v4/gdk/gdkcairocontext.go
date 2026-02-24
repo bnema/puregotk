@@ -40,7 +40,6 @@ var xCairoContextCairoCreate func(uintptr) *cairo.Context
 // The returned context is guaranteed to be valid until
 // [method@Gdk.DrawContext.end_frame] is called.
 func (x *CairoContext) CairoCreate() *cairo.Context {
-
 	cret := xCairoContextCairoCreate(x.GoPointer())
 	return cret
 }
@@ -71,5 +70,4 @@ func init() {
 	core.PuregoSafeRegister(&xCairoContextGLibType, libs, "gdk_cairo_context_get_type")
 
 	core.PuregoSafeRegister(&xCairoContextCairoCreate, libs, "gdk_cairo_context_cairo_create")
-
 }

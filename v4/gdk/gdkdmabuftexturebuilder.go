@@ -142,14 +142,12 @@ func (x *DmabufTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uin
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDmabufTextureBuilderGetColorState func(uintptr) *ColorState
 
 // Gets the color state previously set via gdk_dmabuf_texture_builder_set_color_state().
 func (x *DmabufTextureBuilder) GetColorState() *ColorState {
-
 	cret := xDmabufTextureBuilderGetColorState(x.GoPointer())
 	return cret
 }
@@ -176,7 +174,6 @@ var xDmabufTextureBuilderGetFd func(uintptr, uint32) int32
 
 // Gets the file descriptor for a plane.
 func (x *DmabufTextureBuilder) GetFd(PlaneVar uint32) int32 {
-
 	cret := xDmabufTextureBuilderGetFd(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -188,7 +185,6 @@ var xDmabufTextureBuilderGetFourcc func(uintptr) uint32
 //
 // The format is specified as a fourcc code.
 func (x *DmabufTextureBuilder) GetFourcc() uint32 {
-
 	cret := xDmabufTextureBuilderGetFourcc(x.GoPointer())
 	return cret
 }
@@ -198,7 +194,6 @@ var xDmabufTextureBuilderGetHeight func(uintptr) uint32
 // Gets the height previously set via gdk_dmabuf_texture_builder_set_height() or
 // 0 if the height wasn't set.
 func (x *DmabufTextureBuilder) GetHeight() uint32 {
-
 	cret := xDmabufTextureBuilderGetHeight(x.GoPointer())
 	return cret
 }
@@ -207,7 +202,6 @@ var xDmabufTextureBuilderGetModifier func(uintptr) uint64
 
 // Gets the modifier value.
 func (x *DmabufTextureBuilder) GetModifier() uint64 {
-
 	cret := xDmabufTextureBuilderGetModifier(x.GoPointer())
 	return cret
 }
@@ -216,7 +210,6 @@ var xDmabufTextureBuilderGetNPlanes func(uintptr) uint32
 
 // Gets the number of planes.
 func (x *DmabufTextureBuilder) GetNPlanes() uint32 {
-
 	cret := xDmabufTextureBuilderGetNPlanes(x.GoPointer())
 	return cret
 }
@@ -225,7 +218,6 @@ var xDmabufTextureBuilderGetOffset func(uintptr, uint32) uint32
 
 // Gets the offset value for a plane.
 func (x *DmabufTextureBuilder) GetOffset(PlaneVar uint32) uint32 {
-
 	cret := xDmabufTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -234,7 +226,6 @@ var xDmabufTextureBuilderGetPremultiplied func(uintptr) bool
 
 // Whether the data is premultiplied.
 func (x *DmabufTextureBuilder) GetPremultiplied() bool {
-
 	cret := xDmabufTextureBuilderGetPremultiplied(x.GoPointer())
 	return cret
 }
@@ -243,7 +234,6 @@ var xDmabufTextureBuilderGetStride func(uintptr, uint32) uint32
 
 // Gets the stride value for a plane.
 func (x *DmabufTextureBuilder) GetStride(PlaneVar uint32) uint32 {
-
 	cret := xDmabufTextureBuilderGetStride(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -253,7 +243,6 @@ var xDmabufTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
 // Gets the region previously set via gdk_dmabuf_texture_builder_set_update_region() or
 // %NULL if none was set.
 func (x *DmabufTextureBuilder) GetUpdateRegion() *cairo.Region {
-
 	cret := xDmabufTextureBuilderGetUpdateRegion(x.GoPointer())
 	return cret
 }
@@ -281,7 +270,6 @@ var xDmabufTextureBuilderGetWidth func(uintptr) uint32
 // Gets the width previously set via gdk_dmabuf_texture_builder_set_width() or
 // 0 if the width wasn't set.
 func (x *DmabufTextureBuilder) GetWidth() uint32 {
-
 	cret := xDmabufTextureBuilderGetWidth(x.GoPointer())
 	return cret
 }
@@ -294,9 +282,7 @@ var xDmabufTextureBuilderSetColorState func(uintptr, *ColorState)
 // correct colorstate based on the format.
 // If you don't know what colorstates are, this is probably the right thing.
 func (x *DmabufTextureBuilder) SetColorState(ColorStateVar *ColorState) {
-
 	xDmabufTextureBuilderSetColorState(x.GoPointer(), ColorStateVar)
-
 }
 
 var xDmabufTextureBuilderSetDisplay func(uintptr, uintptr)
@@ -307,18 +293,14 @@ var xDmabufTextureBuilderSetDisplay func(uintptr, uintptr)
 // The display is used to determine the supported
 // dma-buf formats.
 func (x *DmabufTextureBuilder) SetDisplay(DisplayVar *Display) {
-
 	xDmabufTextureBuilderSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 var xDmabufTextureBuilderSetFd func(uintptr, uint32, int32)
 
 // Sets the file descriptor for a plane.
 func (x *DmabufTextureBuilder) SetFd(PlaneVar uint32, FdVar int32) {
-
 	xDmabufTextureBuilderSetFd(x.GoPointer(), PlaneVar, FdVar)
-
 }
 
 var xDmabufTextureBuilderSetFourcc func(uintptr, uint32)
@@ -329,9 +311,7 @@ var xDmabufTextureBuilderSetFourcc func(uintptr, uint32)
 //
 // The format must be set before calling [method@Gdk.DmabufTextureBuilder.build].
 func (x *DmabufTextureBuilder) SetFourcc(FourccVar uint32) {
-
 	xDmabufTextureBuilderSetFourcc(x.GoPointer(), FourccVar)
-
 }
 
 var xDmabufTextureBuilderSetHeight func(uintptr, uint32)
@@ -340,36 +320,28 @@ var xDmabufTextureBuilderSetHeight func(uintptr, uint32)
 //
 // The height must be set before calling [method@Gdk.DmabufTextureBuilder.build].
 func (x *DmabufTextureBuilder) SetHeight(HeightVar uint32) {
-
 	xDmabufTextureBuilderSetHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xDmabufTextureBuilderSetModifier func(uintptr, uint64)
 
 // Sets the modifier.
 func (x *DmabufTextureBuilder) SetModifier(ModifierVar uint64) {
-
 	xDmabufTextureBuilderSetModifier(x.GoPointer(), ModifierVar)
-
 }
 
 var xDmabufTextureBuilderSetNPlanes func(uintptr, uint32)
 
 // Sets the number of planes of the texture.
 func (x *DmabufTextureBuilder) SetNPlanes(NPlanesVar uint32) {
-
 	xDmabufTextureBuilderSetNPlanes(x.GoPointer(), NPlanesVar)
-
 }
 
 var xDmabufTextureBuilderSetOffset func(uintptr, uint32, uint32)
 
 // Sets the offset for a plane.
 func (x *DmabufTextureBuilder) SetOffset(PlaneVar uint32, OffsetVar uint32) {
-
 	xDmabufTextureBuilderSetOffset(x.GoPointer(), PlaneVar, OffsetVar)
-
 }
 
 var xDmabufTextureBuilderSetPremultiplied func(uintptr, bool)
@@ -379,9 +351,7 @@ var xDmabufTextureBuilderSetPremultiplied func(uintptr, bool)
 // Unless otherwise specified, all formats including alpha channels are assumed
 // to be premultiplied.
 func (x *DmabufTextureBuilder) SetPremultiplied(PremultipliedVar bool) {
-
 	xDmabufTextureBuilderSetPremultiplied(x.GoPointer(), PremultipliedVar)
-
 }
 
 var xDmabufTextureBuilderSetStride func(uintptr, uint32, uint32)
@@ -390,9 +360,7 @@ var xDmabufTextureBuilderSetStride func(uintptr, uint32, uint32)
 //
 // The stride must be set for all planes before calling [method@Gdk.DmabufTextureBuilder.build].
 func (x *DmabufTextureBuilder) SetStride(PlaneVar uint32, StrideVar uint32) {
-
 	xDmabufTextureBuilderSetStride(x.GoPointer(), PlaneVar, StrideVar)
-
 }
 
 var xDmabufTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
@@ -408,9 +376,7 @@ var xDmabufTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
 //
 // An example would be a screen recording where only the mouse pointer moves.
 func (x *DmabufTextureBuilder) SetUpdateRegion(RegionVar *cairo.Region) {
-
 	xDmabufTextureBuilderSetUpdateRegion(x.GoPointer(), RegionVar)
-
 }
 
 var xDmabufTextureBuilderSetUpdateTexture func(uintptr, uintptr)
@@ -418,9 +384,7 @@ var xDmabufTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 // Sets the texture to be updated by this texture. See
 // [method@Gdk.DmabufTextureBuilder.set_update_region] for an explanation.
 func (x *DmabufTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
-
 	xDmabufTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
-
 }
 
 var xDmabufTextureBuilderSetWidth func(uintptr, uint32)
@@ -429,9 +393,7 @@ var xDmabufTextureBuilderSetWidth func(uintptr, uint32)
 //
 // The width must be set before calling [method@Gdk.DmabufTextureBuilder.build].
 func (x *DmabufTextureBuilder) SetWidth(WidthVar uint32) {
-
 	xDmabufTextureBuilderSetWidth(x.GoPointer(), WidthVar)
-
 }
 
 func (c *DmabufTextureBuilder) GoPointer() uintptr {
@@ -634,5 +596,4 @@ func init() {
 	core.PuregoSafeRegister(&xDmabufTextureBuilderSetUpdateRegion, libs, "gdk_dmabuf_texture_builder_set_update_region")
 	core.PuregoSafeRegister(&xDmabufTextureBuilderSetUpdateTexture, libs, "gdk_dmabuf_texture_builder_set_update_texture")
 	core.PuregoSafeRegister(&xDmabufTextureBuilderSetWidth, libs, "gdk_dmabuf_texture_builder_set_width")
-
 }

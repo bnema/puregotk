@@ -295,7 +295,6 @@ func (x *FontMap) AddFontFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFontMapChanged func(uintptr)
@@ -308,9 +307,7 @@ var xFontMapChanged func(uintptr)
 // call this function if they have attached extra data to the
 // fontmap and such data is changed.
 func (x *FontMap) Changed() {
-
 	xFontMapChanged(x.GoPointer())
-
 }
 
 var xFontMapCreateContext func(uintptr) uintptr
@@ -369,7 +366,6 @@ var xFontMapGetSerial func(uintptr) uint32
 // This can be used to automatically detect changes to a `PangoFontMap`,
 // like in `PangoContext`.
 func (x *FontMap) GetSerial() uint32 {
-
 	cret := xFontMapGetSerial(x.GoPointer())
 	return cret
 }
@@ -383,9 +379,7 @@ var xFontMapListFamilies func(uintptr, *uintptr, *int32)
 // `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
 // for enumerating families.
 func (x *FontMap) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int32) {
-
 	xFontMapListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
-
 }
 
 var xFontMapLoadFont func(uintptr, uintptr, *FontDescription) uintptr
@@ -473,7 +467,6 @@ func (x *FontMap) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *FontMap) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -487,7 +480,6 @@ func (x *FontMap) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *FontMap) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -498,7 +490,6 @@ func (x *FontMap) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *FontMap) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -549,9 +540,7 @@ func (x *FontMap) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *FontMap) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
@@ -577,5 +566,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontMapLoadFont, libs, "pango_font_map_load_font")
 	core.PuregoSafeRegister(&xFontMapLoadFontset, libs, "pango_font_map_load_fontset")
 	core.PuregoSafeRegister(&xFontMapReloadFont, libs, "pango_font_map_reload_font")
-
 }

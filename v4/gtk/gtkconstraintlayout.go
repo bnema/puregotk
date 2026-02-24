@@ -36,7 +36,6 @@ var xConstraintVflParserErrorQuark func() glib.Quark
 
 // Registers an error quark for VFL error parsing.
 func ConstraintVflParserErrorQuark() glib.Quark {
-
 	cret := xConstraintVflParserErrorQuark()
 	return cret
 }
@@ -266,9 +265,7 @@ var xConstraintLayoutAddConstraint func(uintptr, uintptr)
 // The @layout acquires the ownership of @constraint after calling
 // this function.
 func (x *ConstraintLayout) AddConstraint(ConstraintVar *Constraint) {
-
 	xConstraintLayoutAddConstraint(x.GoPointer(), ConstraintVar.GoPointer())
-
 }
 
 var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint, int32, int32, **glib.Error, string, ...interface{}) *glib.List
@@ -279,7 +276,6 @@ var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint,
 // [method@Gtk.ConstraintLayout.add_constraints_from_descriptionv], using
 // variadic arguments to populate the view/target map.
 func (x *ConstraintLayout) AddConstraintsFromDescription(LinesVar []string, NLinesVar uint, HspacingVar int32, VspacingVar int32, ErrorVar **glib.Error, FirstViewVar string, varArgs ...interface{}) *glib.List {
-
 	cret := xConstraintLayoutAddConstraintsFromDescription(x.GoPointer(), LinesVar, NLinesVar, HspacingVar, VspacingVar, ErrorVar, FirstViewVar, varArgs...)
 	return cret
 }
@@ -375,7 +371,6 @@ func (x *ConstraintLayout) AddConstraintsFromDescriptionv(LinesVar []string, NLi
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xConstraintLayoutAddGuide func(uintptr, uintptr)
@@ -388,9 +383,7 @@ var xConstraintLayoutAddGuide func(uintptr, uintptr)
 // The `layout` acquires the ownership of `guide` after calling
 // this function.
 func (x *ConstraintLayout) AddGuide(GuideVar *ConstraintGuide) {
-
 	xConstraintLayoutAddGuide(x.GoPointer(), GuideVar.GoPointer())
-
 }
 
 var xConstraintLayoutObserveConstraints func(uintptr) uintptr
@@ -445,9 +438,7 @@ var xConstraintLayoutRemoveAllConstraints func(uintptr)
 
 // Removes all constraints from the layout manager.
 func (x *ConstraintLayout) RemoveAllConstraints() {
-
 	xConstraintLayoutRemoveAllConstraints(x.GoPointer())
-
 }
 
 var xConstraintLayoutRemoveConstraint func(uintptr, uintptr)
@@ -455,9 +446,7 @@ var xConstraintLayoutRemoveConstraint func(uintptr, uintptr)
 // Removes `constraint` from the layout manager,
 // so that it no longer influences the layout.
 func (x *ConstraintLayout) RemoveConstraint(ConstraintVar *Constraint) {
-
 	xConstraintLayoutRemoveConstraint(x.GoPointer(), ConstraintVar.GoPointer())
-
 }
 
 var xConstraintLayoutRemoveGuide func(uintptr, uintptr)
@@ -465,9 +454,7 @@ var xConstraintLayoutRemoveGuide func(uintptr, uintptr)
 // Removes `guide` from the layout manager,
 // so that it no longer influences the layout.
 func (x *ConstraintLayout) RemoveGuide(GuideVar *ConstraintGuide) {
-
 	xConstraintLayoutRemoveGuide(x.GoPointer(), GuideVar.GoPointer())
-
 }
 
 func (c *ConstraintLayout) GoPointer() uintptr {
@@ -486,7 +473,6 @@ func (c *ConstraintLayout) SetGoPointer(ptr uintptr) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ConstraintLayout) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -548,5 +534,4 @@ func init() {
 	core.PuregoSafeRegister(&xConstraintLayoutRemoveGuide, libs, "gtk_constraint_layout_remove_guide")
 
 	core.PuregoSafeRegister(&xConstraintLayoutChildGLibType, libs, "gtk_constraint_layout_child_get_type")
-
 }

@@ -83,9 +83,7 @@ var xAuthDomainDigestSetAuthCallback func(uintptr, uintptr, uintptr, uintptr)
 // [property@AuthDomainDigest:auth-data] properties, which can also be used to
 // set the callback at construct time.
 func (x *AuthDomainDigest) SetAuthCallback(CallbackVar *AuthDomainDigestAuthCallback, UserDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-
 	xAuthDomainDigestSetAuthCallback(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DnotifyVar))
-
 }
 
 func (c *AuthDomainDigest) GoPointer() uintptr {
@@ -134,7 +132,6 @@ var xAuthDomainDigestEncodePassword func(string, string, string) string
 // that the encoded password returned by this method is identical to
 // the encoded password stored in an Apache .htdigest file.)
 func AuthDomainDigestEncodePassword(UsernameVar string, RealmVar string, PasswordVar string) string {
-
 	cret := xAuthDomainDigestEncodePassword(UsernameVar, RealmVar, PasswordVar)
 	return cret
 }
@@ -158,5 +155,4 @@ func init() {
 	core.PuregoSafeRegister(&xAuthDomainDigestSetAuthCallback, libs, "soup_auth_domain_digest_set_auth_callback")
 
 	core.PuregoSafeRegister(&xAuthDomainDigestEncodePassword, libs, "soup_auth_domain_digest_encode_password")
-
 }

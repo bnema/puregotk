@@ -10,7 +10,6 @@ import (
 var xStrvGetType func() types.GType
 
 func StrvGetType() types.GType {
-
 	cret := xStrvGetType()
 	return cret
 }
@@ -18,7 +17,6 @@ func StrvGetType() types.GType {
 var xVariantGetGtype func() types.GType
 
 func VariantGetGtype() types.GType {
-
 	cret := xVariantGetGtype()
 	return cret
 }
@@ -37,5 +35,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xStrvGetType, libs, "g_strv_get_type")
 	core.PuregoSafeRegister(&xVariantGetGtype, libs, "g_variant_get_gtype")
-
 }

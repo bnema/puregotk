@@ -60,20 +60,19 @@ func (x *OrientableBase) SetGoPointer(ptr uintptr) {
 
 // Retrieves the orientation of the @orientable.
 func (x *OrientableBase) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *OrientableBase) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
-var XGtkOrientableGetOrientation func(uintptr) Orientation
-var XGtkOrientableSetOrientation func(uintptr, Orientation)
+var (
+	XGtkOrientableGetOrientation func(uintptr) Orientation
+	XGtkOrientableSetOrientation func(uintptr, Orientation)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -91,5 +90,4 @@ func init() {
 
 	core.PuregoSafeRegister(&XGtkOrientableGetOrientation, libs, "gtk_orientable_get_orientation")
 	core.PuregoSafeRegister(&XGtkOrientableSetOrientation, libs, "gtk_orientable_set_orientation")
-
 }

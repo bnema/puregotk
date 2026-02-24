@@ -36,7 +36,6 @@ var xDistributeNaturalAllocation func(int32, uint32, []RequestedSize) int32
 // `GtkRequestedSize` struct. If all sizes reach their natural size then
 // the remaining space is returned.
 func DistributeNaturalAllocation(ExtraSpaceVar int32, NRequestedSizesVar uint32, SizesVar []RequestedSize) int32 {
-
 	cret := xDistributeNaturalAllocation(ExtraSpaceVar, NRequestedSizesVar, SizesVar)
 	return cret
 }
@@ -54,5 +53,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xDistributeNaturalAllocation, libs, "gtk_distribute_natural_allocation")
-
 }

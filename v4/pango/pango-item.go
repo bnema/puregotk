@@ -69,7 +69,6 @@ var xNewItem func() *Item
 
 // Creates a new `PangoItem` structure initialized to default values.
 func NewItem() *Item {
-
 	cret := xNewItem()
 	return cret
 }
@@ -88,16 +87,13 @@ var xItemApplyAttrs func(uintptr, *AttrIterator)
 // in a loop over the items resulting from itemization, while passing
 // the iter to each call.
 func (x *Item) ApplyAttrs(IterVar *AttrIterator) {
-
 	xItemApplyAttrs(x.GoPointer(), IterVar)
-
 }
 
 var xItemCopy func(uintptr) *Item
 
 // Copy an existing `PangoItem` structure.
 func (x *Item) Copy() *Item {
-
 	cret := xItemCopy(x.GoPointer())
 	return cret
 }
@@ -106,9 +102,7 @@ var xItemFree func(uintptr)
 
 // Free a `PangoItem` and all associated memory.
 func (x *Item) Free() {
-
 	xItemFree(x.GoPointer())
-
 }
 
 var xItemGetCharOffset func(uintptr) int32
@@ -120,7 +114,6 @@ var xItemGetCharOffset func(uintptr) int32
 // machinery, then the character offset is not available. In
 // that case, this function returns -1.
 func (x *Item) GetCharOffset() int32 {
-
 	cret := xItemGetCharOffset(x.GoPointer())
 	return cret
 }
@@ -140,7 +133,6 @@ var xItemSplit func(uintptr, int32, int32) *Item
 // so `pango_item_split()` can't count the char length of the split items
 // itself.
 func (x *Item) Split(SplitIndexVar int32, SplitOffsetVar int32) *Item {
-
 	cret := xItemSplit(x.GoPointer(), SplitIndexVar, SplitOffsetVar)
 	return cret
 }
@@ -171,7 +163,6 @@ var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) *glib
 // @start_index + @length. (i.e. if itemizing in a loop, just keep passing
 // in the same @cached_iter).
 func Itemize(ContextVar *Context, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
-
 	cret := xItemize(ContextVar.GoPointer(), TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
 	return cret
 }
@@ -184,7 +175,6 @@ var xItemizeWithBaseDir func(uintptr, Direction, string, int32, int32, *AttrList
 // [func@itemize] gets the base direction from the `PangoContext`
 // (see [method@Pango.Context.set_base_dir]).
 func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
-
 	cret := xItemizeWithBaseDir(ContextVar.GoPointer(), BaseDirVar, TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
 	return cret
 }
@@ -201,7 +191,6 @@ var xReorderItems func(*glib.List) *glib.List
 //	It is not a particularly convenient interface, and the code
 //	is duplicated elsewhere in Pango for that reason.)
 func ReorderItems(ItemsVar *glib.List) *glib.List {
-
 	cret := xReorderItems(ItemsVar)
 	return cret
 }
@@ -231,5 +220,4 @@ func init() {
 	core.PuregoSafeRegister(&xItemFree, libs, "pango_item_free")
 	core.PuregoSafeRegister(&xItemGetCharOffset, libs, "pango_item_get_char_offset")
 	core.PuregoSafeRegister(&xItemSplit, libs, "pango_item_split")
-
 }

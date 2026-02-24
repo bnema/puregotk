@@ -238,7 +238,6 @@ func (x *Permission) Acquire(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPermissionAcquireAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -248,9 +247,7 @@ var xPermissionAcquireAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the first half of the asynchronous version of
 // g_permission_acquire().
 func (x *Permission) AcquireAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xPermissionAcquireAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xPermissionAcquireFinish func(uintptr, uintptr, **glib.Error) bool
@@ -268,7 +265,6 @@ func (x *Permission) AcquireFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPermissionGetAllowed func(uintptr) bool
@@ -277,7 +273,6 @@ var xPermissionGetAllowed func(uintptr) bool
 // the caller currently has permission to perform the action that
 // @permission represents the permission to perform.
 func (x *Permission) GetAllowed() bool {
-
 	cret := xPermissionGetAllowed(x.GoPointer())
 	return cret
 }
@@ -288,7 +283,6 @@ var xPermissionGetCanAcquire func(uintptr) bool
 // if it is generally possible to acquire the permission by calling
 // g_permission_acquire().
 func (x *Permission) GetCanAcquire() bool {
-
 	cret := xPermissionGetCanAcquire(x.GoPointer())
 	return cret
 }
@@ -299,7 +293,6 @@ var xPermissionGetCanRelease func(uintptr) bool
 // if it is generally possible to release the permission by calling
 // g_permission_release().
 func (x *Permission) GetCanRelease() bool {
-
 	cret := xPermissionGetCanRelease(x.GoPointer())
 	return cret
 }
@@ -312,9 +305,7 @@ var xPermissionImplUpdate func(uintptr, bool, bool, bool)
 //
 // GObject notify signals are generated, as appropriate.
 func (x *Permission) ImplUpdate(AllowedVar bool, CanAcquireVar bool, CanReleaseVar bool) {
-
 	xPermissionImplUpdate(x.GoPointer(), AllowedVar, CanAcquireVar, CanReleaseVar)
-
 }
 
 var xPermissionRelease func(uintptr, uintptr, **glib.Error) bool
@@ -342,7 +333,6 @@ func (x *Permission) Release(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPermissionReleaseAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -352,9 +342,7 @@ var xPermissionReleaseAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the first half of the asynchronous version of
 // g_permission_release().
 func (x *Permission) ReleaseAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xPermissionReleaseAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xPermissionReleaseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -372,7 +360,6 @@ func (x *Permission) ReleaseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *Permission) GoPointer() uintptr {
@@ -437,5 +424,4 @@ func init() {
 	core.PuregoSafeRegister(&xPermissionRelease, libs, "g_permission_release")
 	core.PuregoSafeRegister(&xPermissionReleaseAsync, libs, "g_permission_release_async")
 	core.PuregoSafeRegister(&xPermissionReleaseFinish, libs, "g_permission_release_finish")
-
 }

@@ -54,27 +54,21 @@ var xURISchemeRequestFinish func(uintptr, uintptr, int64, string)
 
 // Finish a #WebKitURISchemeRequest by setting the contents of the request and its mime type.
 func (x *URISchemeRequest) Finish(StreamVar *gio.InputStream, StreamLengthVar int64, ContentTypeVar string) {
-
 	xURISchemeRequestFinish(x.GoPointer(), StreamVar.GoPointer(), StreamLengthVar, ContentTypeVar)
-
 }
 
 var xURISchemeRequestFinishError func(uintptr, *glib.Error)
 
 // Finish a #WebKitURISchemeRequest with a #GError.
 func (x *URISchemeRequest) FinishError(ErrorVar *glib.Error) {
-
 	xURISchemeRequestFinishError(x.GoPointer(), ErrorVar)
-
 }
 
 var xURISchemeRequestFinishWithResponse func(uintptr, uintptr)
 
 // Finish a #WebKitURISchemeRequest by returning a #WebKitURISchemeResponse
 func (x *URISchemeRequest) FinishWithResponse(ResponseVar *URISchemeResponse) {
-
 	xURISchemeRequestFinishWithResponse(x.GoPointer(), ResponseVar.GoPointer())
-
 }
 
 var xURISchemeRequestGetHttpBody func(uintptr) uintptr
@@ -97,7 +91,6 @@ var xURISchemeRequestGetHttpHeaders func(uintptr) *soup.MessageHeaders
 
 // Get the #SoupMessageHeaders of the request.
 func (x *URISchemeRequest) GetHttpHeaders() *soup.MessageHeaders {
-
 	cret := xURISchemeRequestGetHttpHeaders(x.GoPointer())
 	return cret
 }
@@ -106,7 +99,6 @@ var xURISchemeRequestGetHttpMethod func(uintptr) string
 
 // Get the HTTP method of the @request.
 func (x *URISchemeRequest) GetHttpMethod() string {
-
 	cret := xURISchemeRequestGetHttpMethod(x.GoPointer())
 	return cret
 }
@@ -115,7 +107,6 @@ var xURISchemeRequestGetPath func(uintptr) string
 
 // Get the URI path of @request.
 func (x *URISchemeRequest) GetPath() string {
-
 	cret := xURISchemeRequestGetPath(x.GoPointer())
 	return cret
 }
@@ -124,7 +115,6 @@ var xURISchemeRequestGetScheme func(uintptr) string
 
 // Get the URI scheme of @request.
 func (x *URISchemeRequest) GetScheme() string {
-
 	cret := xURISchemeRequestGetScheme(x.GoPointer())
 	return cret
 }
@@ -133,7 +123,6 @@ var xURISchemeRequestGetUri func(uintptr) string
 
 // Get the URI of @request.
 func (x *URISchemeRequest) GetUri() string {
-
 	cret := xURISchemeRequestGetUri(x.GoPointer())
 	return cret
 }

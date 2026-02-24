@@ -69,7 +69,6 @@ var xGestureDragGetOffset func(uintptr, *float64, *float64) bool
 // fills in @x and @y with the coordinates of the current point,
 // as an offset to the starting drag point.
 func (x *GestureDrag) GetOffset(XVar *float64, YVar *float64) bool {
-
 	cret := xGestureDragGetOffset(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -82,7 +81,6 @@ var xGestureDragGetStartPoint func(uintptr, *float64, *float64) bool
 // and fills in @x and @y with the drag start coordinates,
 // in widget-relative coordinates.
 func (x *GestureDrag) GetStartPoint(XVar *float64, YVar *float64) bool {
-
 	cret := xGestureDragGetStartPoint(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -111,7 +109,6 @@ func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) 
 		cbFn := *cb
 
 		cbFn(fa, StartXVarp, StartYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -131,7 +128,6 @@ func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) ui
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -151,7 +147,6 @@ func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64))
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -176,5 +171,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGestureDragGetOffset, libs, "gtk_gesture_drag_get_offset")
 	core.PuregoSafeRegister(&xGestureDragGetStartPoint, libs, "gtk_gesture_drag_get_start_point")
-
 }

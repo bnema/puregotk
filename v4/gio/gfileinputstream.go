@@ -371,7 +371,6 @@ func (x *FileInputStream) QueryInfo(AttributesVar string, CancellableVar *Cancel
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileInputStreamQueryInfoAsync func(uintptr, string, int32, uintptr, uintptr, uintptr)
@@ -388,9 +387,7 @@ var xFileInputStreamQueryInfoAsync func(uintptr, string, int32, uintptr, uintptr
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be set
 func (x *FileInputStream) QueryInfoAsync(AttributesVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileInputStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileInputStreamQueryInfoFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -411,7 +408,6 @@ func (x *FileInputStream) QueryInfoFinish(ResultVar AsyncResult) (*FileInfo, err
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *FileInputStream) GoPointer() uintptr {
@@ -427,7 +423,6 @@ func (c *FileInputStream) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *FileInputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -435,7 +430,6 @@ func (x *FileInputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *FileInputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -462,12 +456,10 @@ func (x *FileInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancellab
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *FileInputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -489,7 +481,6 @@ func (x *FileInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -509,5 +500,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileInputStreamQueryInfo, libs, "g_file_input_stream_query_info")
 	core.PuregoSafeRegister(&xFileInputStreamQueryInfoAsync, libs, "g_file_input_stream_query_info_async")
 	core.PuregoSafeRegister(&xFileInputStreamQueryInfoFinish, libs, "g_file_input_stream_query_info_finish")
-
 }

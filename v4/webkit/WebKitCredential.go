@@ -31,7 +31,6 @@ var xNewCredential func(string, string, CredentialPersistence) *Credential
 
 // Create a new credential from the provided username, password and persistence mode.
 func NewCredential(UsernameVar string, PasswordVar string, PersistenceVar CredentialPersistence) *Credential {
-
 	cret := xNewCredential(UsernameVar, PasswordVar, PersistenceVar)
 	return cret
 }
@@ -42,7 +41,6 @@ var xNewCredentialForCertificate func(uintptr, CredentialPersistence) *Credentia
 //
 // Note that %WEBKIT_CREDENTIAL_PERSISTENCE_PERMANENT is not supported for certificate credentials.
 func NewCredentialForCertificate(CertificateVar *gio.TlsCertificate, PersistenceVar CredentialPersistence) *Credential {
-
 	cret := xNewCredentialForCertificate(CertificateVar.GoPointer(), PersistenceVar)
 	return cret
 }
@@ -53,7 +51,6 @@ var xNewCredentialForCertificatePin func(string, CredentialPersistence) *Credent
 //
 // Note that %WEBKIT_CREDENTIAL_PERSISTENCE_PERMANENT is not supported for certificate pin credentials.
 func NewCredentialForCertificatePin(PinVar string, PersistenceVar CredentialPersistence) *Credential {
-
 	cret := xNewCredentialForCertificatePin(PinVar, PersistenceVar)
 	return cret
 }
@@ -62,7 +59,6 @@ var xCredentialCopy func(uintptr) *Credential
 
 // Make a copy of the #WebKitCredential.
 func (x *Credential) Copy() *Credential {
-
 	cret := xCredentialCopy(x.GoPointer())
 	return cret
 }
@@ -71,9 +67,7 @@ var xCredentialFree func(uintptr)
 
 // Free the #WebKitCredential.
 func (x *Credential) Free() {
-
 	xCredentialFree(x.GoPointer())
-
 }
 
 var xCredentialGetCertificate func(uintptr) uintptr
@@ -97,7 +91,6 @@ var xCredentialGetPassword func(uintptr) string
 
 // Get the password currently held by this #WebKitCredential.
 func (x *Credential) GetPassword() string {
-
 	cret := xCredentialGetPassword(x.GoPointer())
 	return cret
 }
@@ -106,7 +99,6 @@ var xCredentialGetPersistence func(uintptr) CredentialPersistence
 
 // Get the persistence mode currently held by this #WebKitCredential.
 func (x *Credential) GetPersistence() CredentialPersistence {
-
 	cret := xCredentialGetPersistence(x.GoPointer())
 	return cret
 }
@@ -115,7 +107,6 @@ var xCredentialGetUsername func(uintptr) string
 
 // Get the username currently held by this #WebKitCredential.
 func (x *Credential) GetUsername() string {
-
 	cret := xCredentialGetUsername(x.GoPointer())
 	return cret
 }
@@ -124,7 +115,6 @@ var xCredentialHasPassword func(uintptr) bool
 
 // Determine whether this credential has a password stored.
 func (x *Credential) HasPassword() bool {
-
 	cret := xCredentialHasPassword(x.GoPointer())
 	return cret
 }
@@ -175,5 +165,4 @@ func init() {
 	core.PuregoSafeRegister(&xCredentialGetPersistence, libs, "webkit_credential_get_persistence")
 	core.PuregoSafeRegister(&xCredentialGetUsername, libs, "webkit_credential_get_username")
 	core.PuregoSafeRegister(&xCredentialHasPassword, libs, "webkit_credential_has_password")
-
 }

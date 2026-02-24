@@ -15,7 +15,6 @@ var xSpacedPrimesClosest func(uint32) uint32
 // The built-in array of primes ranges from 11 to 13845163 such that
 // each prime is approximately 1.5-2 times the previous prime.
 func SpacedPrimesClosest(NumVar uint32) uint32 {
-
 	cret := xSpacedPrimesClosest(NumVar)
 	return cret
 }
@@ -33,5 +32,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xSpacedPrimesClosest, libs, "g_spaced_primes_closest")
-
 }

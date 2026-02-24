@@ -43,7 +43,6 @@ var xCheckVersion func(uint32, uint32, uint32) bool
 // This is useful for compiling against older versions of libsoup, but using
 // features from newer versions.
 func CheckVersion(MajorVar uint32, MinorVar uint32, MicroVar uint32) bool {
-
 	cret := xCheckVersion(MajorVar, MinorVar, MicroVar)
 	return cret
 }
@@ -59,7 +58,6 @@ var xGetMajorVersion func() uint32
 // macro, which represents the major version of the libsoup headers you
 // have included when compiling your code.
 func GetMajorVersion() uint32 {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -75,7 +73,6 @@ var xGetMicroVersion func() uint32
 // macro, which represents the micro version of the libsoup headers you
 // have included when compiling your code.
 func GetMicroVersion() uint32 {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -91,7 +88,6 @@ var xGetMinorVersion func() uint32
 // macro, which represents the minor version of the libsoup headers you
 // have included when compiling your code.
 func GetMinorVersion() uint32 {
-
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -112,5 +108,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "soup_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "soup_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "soup_get_minor_version")
-
 }

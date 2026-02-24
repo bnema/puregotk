@@ -258,14 +258,15 @@ func (x *SocketConnectableBase) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *SocketConnectableBase) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
 
-var XGSocketConnectableEnumerate func(uintptr) uintptr
-var XGSocketConnectableProxyEnumerate func(uintptr) uintptr
-var XGSocketConnectableToString func(uintptr) string
+var (
+	XGSocketConnectableEnumerate      func(uintptr) uintptr
+	XGSocketConnectableProxyEnumerate func(uintptr) uintptr
+	XGSocketConnectableToString       func(uintptr) string
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -284,5 +285,4 @@ func init() {
 	core.PuregoSafeRegister(&XGSocketConnectableEnumerate, libs, "g_socket_connectable_enumerate")
 	core.PuregoSafeRegister(&XGSocketConnectableProxyEnumerate, libs, "g_socket_connectable_proxy_enumerate")
 	core.PuregoSafeRegister(&XGSocketConnectableToString, libs, "g_socket_connectable_to_string")
-
 }

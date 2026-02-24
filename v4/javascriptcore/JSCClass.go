@@ -371,9 +371,7 @@ var xClassAddMethod func(uintptr, string, uintptr, uintptr, uintptr, types.GType
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
 func (x *Class) AddMethod(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint32, varArgs ...interface{}) {
-
 	xClassAddMethod(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
-
 }
 
 var xClassAddMethodVariadic func(uintptr, string, uintptr, uintptr, uintptr, types.GType)
@@ -388,9 +386,7 @@ var xClassAddMethodVariadic func(uintptr, string, uintptr, uintptr, uintptr, typ
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
 func (x *Class) AddMethodVariadic(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType) {
-
 	xClassAddMethodVariadic(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
-
 }
 
 var xClassAddMethodv func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, []types.GType)
@@ -405,9 +401,7 @@ var xClassAddMethodv func(uintptr, string, uintptr, uintptr, uintptr, types.GTyp
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
 func (x *Class) AddMethodv(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint32, ParameterTypesVar []types.GType) {
-
 	xClassAddMethodv(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
-
 }
 
 var xClassAddProperty func(uintptr, string, types.GType, uintptr, uintptr, uintptr, uintptr)
@@ -423,16 +417,13 @@ var xClassAddProperty func(uintptr, string, types.GType, uintptr, uintptr, uintp
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
 func (x *Class) AddProperty(NameVar string, PropertyTypeVar types.GType, GetterVar *gobject.Callback, SetterVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
 	xClassAddProperty(x.GoPointer(), NameVar, PropertyTypeVar, glib.NewCallbackNullable(GetterVar), glib.NewCallbackNullable(SetterVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
-
 }
 
 var xClassGetName func(uintptr) string
 
 // Get the class name of @jsc_class
 func (x *Class) GetName() string {
-
 	cret := xClassGetName(x.GoPointer())
 	return cret
 }
@@ -505,5 +496,4 @@ func init() {
 	core.PuregoSafeRegister(&xClassAddProperty, libs, "jsc_class_add_property")
 	core.PuregoSafeRegister(&xClassGetName, libs, "jsc_class_get_name")
 	core.PuregoSafeRegister(&xClassGetParent, libs, "jsc_class_get_parent")
-
 }

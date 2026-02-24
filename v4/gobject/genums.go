@@ -106,16 +106,13 @@ var xEnumCompleteTypeInfo func(types.GType, *TypeInfo, []EnumValue)
 //
 // ]|
 func EnumCompleteTypeInfo(GEnumTypeVar types.GType, InfoVar *TypeInfo, ConstValuesVar []EnumValue) {
-
 	xEnumCompleteTypeInfo(GEnumTypeVar, InfoVar, ConstValuesVar)
-
 }
 
 var xEnumGetValue func(*EnumClass, int32) *EnumValue
 
 // Returns the #GEnumValue for a value.
 func EnumGetValue(EnumClassVar *EnumClass, ValueVar int32) *EnumValue {
-
 	cret := xEnumGetValue(EnumClassVar, ValueVar)
 	return cret
 }
@@ -124,7 +121,6 @@ var xEnumGetValueByName func(*EnumClass, string) *EnumValue
 
 // Looks up a #GEnumValue by name.
 func EnumGetValueByName(EnumClassVar *EnumClass, NameVar string) *EnumValue {
-
 	cret := xEnumGetValueByName(EnumClassVar, NameVar)
 	return cret
 }
@@ -133,7 +129,6 @@ var xEnumGetValueByNick func(*EnumClass, string) *EnumValue
 
 // Looks up a #GEnumValue by nickname.
 func EnumGetValueByNick(EnumClassVar *EnumClass, NickVar string) *EnumValue {
-
 	cret := xEnumGetValueByNick(EnumClassVar, NickVar)
 	return cret
 }
@@ -146,7 +141,6 @@ var xEnumRegisterStatic func(string, []EnumValue) types.GType
 // generate a my_enum_get_type() function from a usual C enumeration
 // definition  than to write one yourself using g_enum_register_static().
 func EnumRegisterStatic(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
-
 	cret := xEnumRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -158,7 +152,6 @@ var xEnumToString func(types.GType, int32) string
 // This is intended to be used for debugging purposes. The format of the output
 // may change in the future.
 func EnumToString(GEnumTypeVar types.GType, ValueVar int32) string {
-
 	cret := xEnumToString(GEnumTypeVar, ValueVar)
 	return cret
 }
@@ -169,16 +162,13 @@ var xFlagsCompleteTypeInfo func(types.GType, *TypeInfo, []FlagsValue)
 // function of a #GTypePlugin implementation, see the example for
 // g_enum_complete_type_info() above.
 func FlagsCompleteTypeInfo(GFlagsTypeVar types.GType, InfoVar *TypeInfo, ConstValuesVar []FlagsValue) {
-
 	xFlagsCompleteTypeInfo(GFlagsTypeVar, InfoVar, ConstValuesVar)
-
 }
 
 var xFlagsGetFirstValue func(*FlagsClass, uint32) *FlagsValue
 
 // Returns the first #GFlagsValue which is set in @value.
 func FlagsGetFirstValue(FlagsClassVar *FlagsClass, ValueVar uint32) *FlagsValue {
-
 	cret := xFlagsGetFirstValue(FlagsClassVar, ValueVar)
 	return cret
 }
@@ -187,7 +177,6 @@ var xFlagsGetValueByName func(*FlagsClass, string) *FlagsValue
 
 // Looks up a #GFlagsValue by name.
 func FlagsGetValueByName(FlagsClassVar *FlagsClass, NameVar string) *FlagsValue {
-
 	cret := xFlagsGetValueByName(FlagsClassVar, NameVar)
 	return cret
 }
@@ -196,7 +185,6 @@ var xFlagsGetValueByNick func(*FlagsClass, string) *FlagsValue
 
 // Looks up a #GFlagsValue by nickname.
 func FlagsGetValueByNick(FlagsClassVar *FlagsClass, NickVar string) *FlagsValue {
-
 	cret := xFlagsGetValueByNick(FlagsClassVar, NickVar)
 	return cret
 }
@@ -209,7 +197,6 @@ var xFlagsRegisterStatic func(string, []FlagsValue) types.GType
 // generate a my_flags_get_type() function from a usual C enumeration
 // definition than to write one yourself using g_flags_register_static().
 func FlagsRegisterStatic(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
-
 	cret := xFlagsRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -222,7 +209,6 @@ var xFlagsToString func(types.GType, uint32) string
 // This is intended to be used for debugging purposes. The format of the output
 // may change in the future.
 func FlagsToString(FlagsTypeVar types.GType, ValueVar uint32) string {
-
 	cret := xFlagsToString(FlagsTypeVar, ValueVar)
 	return cret
 }
@@ -251,5 +237,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlagsGetValueByNick, libs, "g_flags_get_value_by_nick")
 	core.PuregoSafeRegister(&xFlagsRegisterStatic, libs, "g_flags_register_static")
 	core.PuregoSafeRegister(&xFlagsToString, libs, "g_flags_to_string")
-
 }

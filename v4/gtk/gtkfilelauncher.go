@@ -70,7 +70,6 @@ var xFileLauncherGetAlwaysAsk func(uintptr) bool
 
 // Returns whether to ask the user which app to use.
 func (x *FileLauncher) GetAlwaysAsk() bool {
-
 	cret := xFileLauncherGetAlwaysAsk(x.GoPointer())
 	return cret
 }
@@ -96,7 +95,6 @@ var xFileLauncherGetWritable func(uintptr) bool
 
 // Returns whether to make the file writable for the handler.
 func (x *FileLauncher) GetWritable() bool {
-
 	cret := xFileLauncherGetWritable(x.GoPointer())
 	return cret
 }
@@ -107,9 +105,7 @@ var xFileLauncherLaunch func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // This may present an app chooser dialog to the user.
 func (x *FileLauncher) Launch(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileLauncherLaunch(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileLauncherLaunchFinish func(uintptr, uintptr, **glib.Error) bool
@@ -124,7 +120,6 @@ func (x *FileLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileLauncherOpenContainingFolder func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -134,9 +129,7 @@ var xFileLauncherOpenContainingFolder func(uintptr, uintptr, uintptr, uintptr, u
 // This is only supported for native files. It will fail if @file
 // is e.g. a http:// uri.
 func (x *FileLauncher) OpenContainingFolder(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileLauncherOpenContainingFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileLauncherOpenContainingFolderFinish func(uintptr, uintptr, **glib.Error) bool
@@ -151,7 +144,6 @@ func (x *FileLauncher) OpenContainingFolderFinish(ResultVar gio.AsyncResult) (bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileLauncherSetAlwaysAsk func(uintptr, bool)
@@ -161,27 +153,21 @@ var xFileLauncherSetAlwaysAsk func(uintptr, bool)
 // If false, the file might be opened with a default app
 // or the previous choice.
 func (x *FileLauncher) SetAlwaysAsk(AlwaysAskVar bool) {
-
 	xFileLauncherSetAlwaysAsk(x.GoPointer(), AlwaysAskVar)
-
 }
 
 var xFileLauncherSetFile func(uintptr, uintptr)
 
 // Sets the file that will be opened.
 func (x *FileLauncher) SetFile(FileVar gio.File) {
-
 	xFileLauncherSetFile(x.GoPointer(), FileVar.GoPointer())
-
 }
 
 var xFileLauncherSetWritable func(uintptr, bool)
 
 // Sets whether to make the file writable for the handler.
 func (x *FileLauncher) SetWritable(WritableVar bool) {
-
 	xFileLauncherSetWritable(x.GoPointer(), WritableVar)
-
 }
 
 func (c *FileLauncher) GoPointer() uintptr {
@@ -257,5 +243,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileLauncherSetAlwaysAsk, libs, "gtk_file_launcher_set_always_ask")
 	core.PuregoSafeRegister(&xFileLauncherSetFile, libs, "gtk_file_launcher_set_file")
 	core.PuregoSafeRegister(&xFileLauncherSetWritable, libs, "gtk_file_launcher_set_writable")
-
 }

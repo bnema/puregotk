@@ -58,7 +58,6 @@ var xNewTimeZone func(string) *TimeZone
 // If you need to check whether @identifier was loaded successfully, use
 // g_time_zone_new_identifier().
 func NewTimeZone(IdentifierVar string) *TimeZone {
-
 	cret := xNewTimeZone(IdentifierVar)
 	return cret
 }
@@ -131,7 +130,6 @@ var xNewTimeZoneIdentifier func(string) *TimeZone
 // You should release the return value by calling g_time_zone_unref()
 // when you are done with it.
 func NewTimeZoneIdentifier(IdentifierVar string) *TimeZone {
-
 	cret := xNewTimeZoneIdentifier(IdentifierVar)
 	return cret
 }
@@ -148,7 +146,6 @@ var xNewTimeZoneLocal func() *TimeZone
 // You should release the return value by calling g_time_zone_unref()
 // when you are done with it.
 func NewTimeZoneLocal() *TimeZone {
-
 	cret := xNewTimeZoneLocal()
 	return cret
 }
@@ -166,7 +163,6 @@ var xNewTimeZoneOffset func(int32) *TimeZone
 // backwards compatibility. To detect failures like this, use
 // g_time_zone_new_identifier() directly.
 func NewTimeZoneOffset(SecondsVar int32) *TimeZone {
-
 	cret := xNewTimeZoneOffset(SecondsVar)
 	return cret
 }
@@ -181,7 +177,6 @@ var xNewTimeZoneUtc func() *TimeZone
 // You should release the return value by calling g_time_zone_unref()
 // when you are done with it.
 func NewTimeZoneUtc() *TimeZone {
-
 	cret := xNewTimeZoneUtc()
 	return cret
 }
@@ -205,7 +200,6 @@ var xTimeZoneAdjustTime func(uintptr, TimeType, int64) int32
 // adjust @time_ to be 03:00 and return the interval containing the
 // adjusted time.
 func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar int64) int32 {
-
 	cret := xTimeZoneAdjustTime(x.GoPointer(), TypeVar, TimeVar)
 	return cret
 }
@@ -231,7 +225,6 @@ var xTimeZoneFindInterval func(uintptr, TimeType, int64) int32
 // forward to begin daylight savings time).  -1 is returned in that
 // case.
 func (x *TimeZone) FindInterval(TypeVar TimeType, TimeVar int64) int32 {
-
 	cret := xTimeZoneFindInterval(x.GoPointer(), TypeVar, TimeVar)
 	return cret
 }
@@ -245,7 +238,6 @@ var xTimeZoneGetAbbreviation func(uintptr, int32) string
 // months and "EDT" during the summer months when daylight savings time
 // is in effect.
 func (x *TimeZone) GetAbbreviation(IntervalVar int32) string {
-
 	cret := xTimeZoneGetAbbreviation(x.GoPointer(), IntervalVar)
 	return cret
 }
@@ -261,7 +253,6 @@ var xTimeZoneGetIdentifier func(uintptr) string
 // construction time: if provided as a time offset, that will be returned by
 // this function.
 func (x *TimeZone) GetIdentifier() string {
-
 	cret := xTimeZoneGetIdentifier(x.GoPointer())
 	return cret
 }
@@ -275,7 +266,6 @@ var xTimeZoneGetOffset func(uintptr, int32) int32
 // arrive at local time for @tz (ie: negative numbers for time zones
 // west of GMT, positive numbers for east).
 func (x *TimeZone) GetOffset(IntervalVar int32) int32 {
-
 	cret := xTimeZoneGetOffset(x.GoPointer(), IntervalVar)
 	return cret
 }
@@ -285,7 +275,6 @@ var xTimeZoneIsDst func(uintptr, int32) bool
 // Determines if daylight savings time is in effect during a particular
 // @interval of time in the time zone @tz.
 func (x *TimeZone) IsDst(IntervalVar int32) bool {
-
 	cret := xTimeZoneIsDst(x.GoPointer(), IntervalVar)
 	return cret
 }
@@ -294,7 +283,6 @@ var xTimeZoneRef func(uintptr) *TimeZone
 
 // Increases the reference count on @tz.
 func (x *TimeZone) Ref() *TimeZone {
-
 	cret := xTimeZoneRef(x.GoPointer())
 	return cret
 }
@@ -303,9 +291,7 @@ var xTimeZoneUnref func(uintptr)
 
 // Decreases the reference count on @tz.
 func (x *TimeZone) Unref() {
-
 	xTimeZoneUnref(x.GoPointer())
-
 }
 
 // Disambiguates a given time in two ways.
@@ -356,5 +342,4 @@ func init() {
 	core.PuregoSafeRegister(&xTimeZoneIsDst, libs, "g_time_zone_is_dst")
 	core.PuregoSafeRegister(&xTimeZoneRef, libs, "g_time_zone_ref")
 	core.PuregoSafeRegister(&xTimeZoneUnref, libs, "g_time_zone_unref")
-
 }

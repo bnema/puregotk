@@ -75,9 +75,7 @@ var xFontDialogChooseFace func(uintptr, uintptr, uintptr, uintptr, uintptr, uint
 //
 // A font face represents a font family and style, but no specific font size.
 func (x *FontDialog) ChooseFace(ParentVar *Window, InitialValueVar *pango.FontFace, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFontDialogChooseFace(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFontDialogChooseFaceFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -101,7 +99,6 @@ func (x *FontDialog) ChooseFaceFinish(ResultVar gio.AsyncResult) (*pango.FontFac
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFontDialogChooseFamily func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -110,9 +107,7 @@ var xFontDialogChooseFamily func(uintptr, uintptr, uintptr, uintptr, uintptr, ui
 //
 // The font chooser dialog will be set up for selecting a font family.
 func (x *FontDialog) ChooseFamily(ParentVar *Window, InitialValueVar *pango.FontFamily, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFontDialogChooseFamily(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFontDialogChooseFamilyFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -136,7 +131,6 @@ func (x *FontDialog) ChooseFamilyFinish(ResultVar gio.AsyncResult) (*pango.FontF
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFontDialogChooseFont func(uintptr, uintptr, *pango.FontDescription, uintptr, uintptr, uintptr)
@@ -148,9 +142,7 @@ var xFontDialogChooseFont func(uintptr, uintptr, *pango.FontDescription, uintptr
 // If you want to let the user select font features as well,
 // use [method@Gtk.FontDialog.choose_font_and_features] instead.
 func (x *FontDialog) ChooseFont(ParentVar *Window, InitialValueVar *pango.FontDescription, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFontDialogChooseFont(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFontDialogChooseFontAndFeatures func(uintptr, uintptr, *pango.FontDescription, uintptr, uintptr, uintptr)
@@ -163,9 +155,7 @@ var xFontDialogChooseFontAndFeatures func(uintptr, uintptr, *pango.FontDescripti
 // Font features affect how the font is rendered, for example
 // enabling glyph variants or ligatures.
 func (x *FontDialog) ChooseFontAndFeatures(ParentVar *Window, InitialValueVar *pango.FontDescription, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFontDialogChooseFontAndFeatures(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFontDialogChooseFontAndFeaturesFinish func(uintptr, uintptr, **pango.FontDescription, *string, **pango.Language, **glib.Error) bool
@@ -185,7 +175,6 @@ func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, Font
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFontDialogChooseFontFinish func(uintptr, uintptr, **glib.Error) *pango.FontDescription
@@ -202,7 +191,6 @@ func (x *FontDialog) ChooseFontFinish(ResultVar gio.AsyncResult) (*pango.FontDes
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFontDialogGetFilter func(uintptr) uintptr
@@ -245,7 +233,6 @@ var xFontDialogGetLanguage func(uintptr) *pango.Language
 
 // Returns the language for which font features are applied.
 func (x *FontDialog) GetLanguage() *pango.Language {
-
 	cret := xFontDialogGetLanguage(x.GoPointer())
 	return cret
 }
@@ -255,7 +242,6 @@ var xFontDialogGetModal func(uintptr) bool
 // Returns whether the font chooser dialog blocks interaction
 // with the parent window while it is presented.
 func (x *FontDialog) GetModal() bool {
-
 	cret := xFontDialogGetModal(x.GoPointer())
 	return cret
 }
@@ -264,7 +250,6 @@ var xFontDialogGetTitle func(uintptr) string
 
 // Returns the title that will be shown on the font chooser dialog.
 func (x *FontDialog) GetTitle() string {
-
 	cret := xFontDialogGetTitle(x.GoPointer())
 	return cret
 }
@@ -277,9 +262,7 @@ var xFontDialogSetFilter func(uintptr, uintptr)
 // The filter must be able to handle both `PangoFontFamily`
 // and `PangoFontFace` objects.
 func (x *FontDialog) SetFilter(FilterVar *Filter) {
-
 	xFontDialogSetFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 var xFontDialogSetFontMap func(uintptr, uintptr)
@@ -288,18 +271,14 @@ var xFontDialogSetFontMap func(uintptr, uintptr)
 //
 // If @fontmap is `NULL`, the default fontmap is used.
 func (x *FontDialog) SetFontMap(FontmapVar *pango.FontMap) {
-
 	xFontDialogSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
-
 }
 
 var xFontDialogSetLanguage func(uintptr, *pango.Language)
 
 // Sets the language for which font features are applied.
 func (x *FontDialog) SetLanguage(LanguageVar *pango.Language) {
-
 	xFontDialogSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 var xFontDialogSetModal func(uintptr, bool)
@@ -307,18 +286,14 @@ var xFontDialogSetModal func(uintptr, bool)
 // Sets whether the font chooser dialog blocks interaction
 // with the parent window while it is presented.
 func (x *FontDialog) SetModal(ModalVar bool) {
-
 	xFontDialogSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xFontDialogSetTitle func(uintptr, string)
 
 // Sets the title that will be shown on the font chooser dialog.
 func (x *FontDialog) SetTitle(TitleVar string) {
-
 	xFontDialogSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *FontDialog) GoPointer() uintptr {
@@ -419,5 +394,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontDialogSetLanguage, libs, "gtk_font_dialog_set_language")
 	core.PuregoSafeRegister(&xFontDialogSetModal, libs, "gtk_font_dialog_set_modal")
 	core.PuregoSafeRegister(&xFontDialogSetTitle, libs, "gtk_font_dialog_set_title")
-
 }

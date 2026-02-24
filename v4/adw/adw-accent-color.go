@@ -45,9 +45,7 @@ var xAccentColorToRgba func(AccentColor, *gdk.RGBA)
 //
 // The matching foreground color is white.
 func AccentColorToRgba(SelfVar AccentColor, RgbaVar *gdk.RGBA) {
-
 	xAccentColorToRgba(SelfVar, RgbaVar)
-
 }
 
 var xAccentColorToStandaloneRgba func(AccentColor, bool, *gdk.RGBA)
@@ -57,9 +55,7 @@ var xAccentColorToStandaloneRgba func(AccentColor, bool, *gdk.RGBA)
 // It will typically be darker for light background, and lighter for dark
 // background, ensuring contrast.
 func AccentColorToStandaloneRgba(SelfVar AccentColor, DarkVar bool, RgbaVar *gdk.RGBA) {
-
 	xAccentColorToStandaloneRgba(SelfVar, DarkVar, RgbaVar)
-
 }
 
 var xRgbaToStandalone func(*gdk.RGBA, bool, *gdk.RGBA)
@@ -69,9 +65,7 @@ var xRgbaToStandalone func(*gdk.RGBA, bool, *gdk.RGBA)
 // It will typically be darker for light background, and lighter for dark
 // background, ensuring contrast.
 func RgbaToStandalone(RgbaVar *gdk.RGBA, DarkVar bool, StandaloneRgbaVar *gdk.RGBA) {
-
 	xRgbaToStandalone(RgbaVar, DarkVar, StandaloneRgbaVar)
-
 }
 
 func init() {
@@ -91,5 +85,4 @@ func init() {
 	core.PuregoSafeRegister(&xAccentColorToRgba, libs, "adw_accent_color_to_rgba")
 	core.PuregoSafeRegister(&xAccentColorToStandaloneRgba, libs, "adw_accent_color_to_standalone_rgba")
 	core.PuregoSafeRegister(&xRgbaToStandalone, libs, "adw_rgba_to_standalone")
-
 }

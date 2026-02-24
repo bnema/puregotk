@@ -95,9 +95,7 @@ var xCssProviderLoadFromBytes func(uintptr, *glib.Bytes)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromBytes(DataVar *glib.Bytes) {
-
 	xCssProviderLoadFromBytes(x.GoPointer(), DataVar)
-
 }
 
 var xCssProviderLoadFromData func(uintptr, string, int)
@@ -106,9 +104,7 @@ var xCssProviderLoadFromData func(uintptr, string, int)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromData(DataVar string, LengthVar int) {
-
 	xCssProviderLoadFromData(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 var xCssProviderLoadFromFile func(uintptr, uintptr)
@@ -117,9 +113,7 @@ var xCssProviderLoadFromFile func(uintptr, uintptr)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromFile(FileVar gio.File) {
-
 	xCssProviderLoadFromFile(x.GoPointer(), FileVar.GoPointer())
-
 }
 
 var xCssProviderLoadFromPath func(uintptr, string)
@@ -128,9 +122,7 @@ var xCssProviderLoadFromPath func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromPath(PathVar string) {
-
 	xCssProviderLoadFromPath(x.GoPointer(), PathVar)
-
 }
 
 var xCssProviderLoadFromResource func(uintptr, string)
@@ -140,9 +132,7 @@ var xCssProviderLoadFromResource func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromResource(ResourcePathVar string) {
-
 	xCssProviderLoadFromResource(x.GoPointer(), ResourcePathVar)
-
 }
 
 var xCssProviderLoadFromString func(uintptr, string)
@@ -151,9 +141,7 @@ var xCssProviderLoadFromString func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromString(StringVar string) {
-
 	xCssProviderLoadFromString(x.GoPointer(), StringVar)
-
 }
 
 var xCssProviderLoadNamed func(uintptr, string, string)
@@ -164,9 +152,7 @@ var xCssProviderLoadNamed func(uintptr, string, string)
 // releases, but it is guaranteed that this function uses the same
 // mechanism to load the theme that GTK uses for loading its own theme.
 func (x *CssProvider) LoadNamed(NameVar string, VariantVar string) {
-
 	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVar)
-
 }
 
 var xCssProviderToString func(uintptr) string
@@ -179,7 +165,6 @@ var xCssProviderToString func(uintptr) string
 // [ctor@Gtk.CssProvider.new] will basically create a duplicate
 // of this @provider.
 func (x *CssProvider) ToString() string {
-
 	cret := xCssProviderToString(x.GoPointer())
 	return cret
 }
@@ -226,7 +211,6 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr
 		cbFn := *cb
 
 		cbFn(fa, SectionVarp, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -257,5 +241,4 @@ func init() {
 	core.PuregoSafeRegister(&xCssProviderLoadFromString, libs, "gtk_css_provider_load_from_string")
 	core.PuregoSafeRegister(&xCssProviderLoadNamed, libs, "gtk_css_provider_load_named")
 	core.PuregoSafeRegister(&xCssProviderToString, libs, "gtk_css_provider_to_string")
-
 }

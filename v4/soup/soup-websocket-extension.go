@@ -208,7 +208,6 @@ func (x *WebsocketExtension) Configure(ConnectionTypeVar WebsocketConnectionType
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsocketExtensionGetRequestParams func(uintptr) string
@@ -218,7 +217,6 @@ var xWebsocketExtensionGetRequestParams func(uintptr) string
 // If the extension doesn't include any parameter in the request, this function
 // returns %NULL.
 func (x *WebsocketExtension) GetRequestParams() string {
-
 	cret := xWebsocketExtensionGetRequestParams(x.GoPointer())
 	return cret
 }
@@ -230,7 +228,6 @@ var xWebsocketExtensionGetResponseParams func(uintptr) string
 // If the extension doesn't include any parameter in the response, this function
 // returns %NULL.
 func (x *WebsocketExtension) GetResponseParams() string {
-
 	cret := xWebsocketExtensionGetResponseParams(x.GoPointer())
 	return cret
 }
@@ -252,7 +249,6 @@ func (x *WebsocketExtension) ProcessIncomingMessage(HeaderVar byte, PayloadVar *
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsocketExtensionProcessOutgoingMessage func(uintptr, byte, *glib.Bytes, **glib.Error) *glib.Bytes
@@ -272,7 +268,6 @@ func (x *WebsocketExtension) ProcessOutgoingMessage(HeaderVar byte, PayloadVar *
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *WebsocketExtension) GoPointer() uintptr {
@@ -305,5 +300,4 @@ func init() {
 	core.PuregoSafeRegister(&xWebsocketExtensionGetResponseParams, libs, "soup_websocket_extension_get_response_params")
 	core.PuregoSafeRegister(&xWebsocketExtensionProcessIncomingMessage, libs, "soup_websocket_extension_process_incoming_message")
 	core.PuregoSafeRegister(&xWebsocketExtensionProcessOutgoingMessage, libs, "soup_websocket_extension_process_outgoing_message")
-
 }

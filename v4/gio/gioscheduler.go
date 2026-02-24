@@ -14,9 +14,7 @@ var xIoSchedulerCancelAllJobs func()
 // A job is cancellable if a #GCancellable was passed into
 // g_io_scheduler_push_job().
 func IoSchedulerCancelAllJobs() {
-
 	xIoSchedulerCancelAllJobs()
-
 }
 
 var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int32, uintptr)
@@ -30,9 +28,7 @@ var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int32, uintptr)
 // by calling g_cancellable_cancel() or by calling
 // g_io_scheduler_cancel_all_jobs().
 func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify, IoPriorityVar int32, CancellableVar *Cancellable) {
-
 	xIoSchedulerPushJob(glib.NewCallback(JobFuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar), IoPriorityVar, CancellableVar.GoPointer())
-
 }
 
 func init() {
@@ -49,5 +45,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIoSchedulerCancelAllJobs, libs, "g_io_scheduler_cancel_all_jobs")
 	core.PuregoSafeRegister(&xIoSchedulerPushJob, libs, "g_io_scheduler_push_job")
-
 }

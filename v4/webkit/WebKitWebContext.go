@@ -121,9 +121,7 @@ var xWebContextAddPathToSandbox func(uintptr, string, bool)
 //
 // See also webkit_web_context_set_sandbox_enabled()
 func (x *WebContext) AddPathToSandbox(PathVar string, ReadOnlyVar bool) {
-
 	xWebContextAddPathToSandbox(x.GoPointer(), PathVar, ReadOnlyVar)
-
 }
 
 var xWebContextGetCacheModel func(uintptr) CacheModel
@@ -134,7 +132,6 @@ var xWebContextGetCacheModel func(uintptr) CacheModel
 // value check the documentation of the function
 // webkit_web_context_set_cache_model().
 func (x *WebContext) GetCacheModel() CacheModel {
-
 	cret := xWebContextGetCacheModel(x.GoPointer())
 	return cret
 }
@@ -194,7 +191,6 @@ var xWebContextGetSpellCheckingEnabled func(uintptr) bool
 
 // Get whether spell checking feature is currently enabled.
 func (x *WebContext) GetSpellCheckingEnabled() bool {
-
 	cret := xWebContextGetSpellCheckingEnabled(x.GoPointer())
 	return cret
 }
@@ -209,7 +205,6 @@ var xWebContextGetSpellCheckingLanguages func(uintptr) []string
 // See webkit_web_context_set_spell_checking_languages() for more
 // details on the format of the languages in the list.
 func (x *WebContext) GetSpellCheckingLanguages() []string {
-
 	cret := xWebContextGetSpellCheckingLanguages(x.GoPointer())
 	return cret
 }
@@ -218,7 +213,6 @@ var xWebContextGetTimeZoneOverride func(uintptr) string
 
 // Get the #WebKitWebContext:time-zone-override property.
 func (x *WebContext) GetTimeZoneOverride() string {
-
 	cret := xWebContextGetTimeZoneOverride(x.GoPointer())
 	return cret
 }
@@ -242,9 +236,7 @@ var xWebContextInitializeNotificationPermissions func(uintptr, *glib.List, *glib
 // ensure that new web processes receive the most recent set of
 // permissions.
 func (x *WebContext) InitializeNotificationPermissions(AllowedOriginsVar *glib.List, DisallowedOriginsVar *glib.List) {
-
 	xWebContextInitializeNotificationPermissions(x.GoPointer(), AllowedOriginsVar, DisallowedOriginsVar)
-
 }
 
 var xWebContextIsAutomationAllowed func(uintptr) bool
@@ -253,7 +245,6 @@ var xWebContextIsAutomationAllowed func(uintptr) bool
 //
 // See also webkit_web_context_set_automation_allowed().
 func (x *WebContext) IsAutomationAllowed() bool {
-
 	cret := xWebContextIsAutomationAllowed(x.GoPointer())
 	return cret
 }
@@ -301,9 +292,7 @@ var xWebContextRegisterUriScheme func(uintptr, string, uintptr, uintptr, uintptr
 //
 // ```
 func (x *WebContext) RegisterUriScheme(SchemeVar string, CallbackVar *URISchemeRequestCallback, UserDataVar uintptr, UserDataDestroyFuncVar *glib.DestroyNotify) {
-
 	xWebContextRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(UserDataDestroyFuncVar))
-
 }
 
 var xWebContextSendMessageToAllExtensions func(uintptr, uintptr)
@@ -312,9 +301,7 @@ var xWebContextSendMessageToAllExtensions func(uintptr, uintptr)
 //
 // If @message is floating, it's consumed.
 func (x *WebContext) SendMessageToAllExtensions(MessageVar *UserMessage) {
-
 	xWebContextSendMessageToAllExtensions(x.GoPointer(), MessageVar.GoPointer())
-
 }
 
 var xWebContextSetAutomationAllowed func(uintptr, bool)
@@ -330,9 +317,7 @@ var xWebContextSetAutomationAllowed func(uintptr, bool)
 // Note that only one #WebKitWebContext can have automation enabled, so this will do nothing
 // if there's another #WebKitWebContext with automation already enabled.
 func (x *WebContext) SetAutomationAllowed(AllowedVar bool) {
-
 	xWebContextSetAutomationAllowed(x.GoPointer(), AllowedVar)
-
 }
 
 var xWebContextSetCacheModel func(uintptr, CacheModel)
@@ -358,9 +343,7 @@ var xWebContextSetCacheModel func(uintptr, CacheModel)
 // specifying %WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER. The default value is
 // %WEBKIT_CACHE_MODEL_WEB_BROWSER.
 func (x *WebContext) SetCacheModel(CacheModelVar CacheModel) {
-
 	xWebContextSetCacheModel(x.GoPointer(), CacheModelVar)
-
 }
 
 var xWebContextSetPreferredLanguages func(uintptr, []string)
@@ -376,18 +359,14 @@ var xWebContextSetPreferredLanguages func(uintptr, []string)
 //   - The first item in the list sets the default locale for JavaScript
 //     `Intl` functions.
 func (x *WebContext) SetPreferredLanguages(LanguagesVar []string) {
-
 	xWebContextSetPreferredLanguages(x.GoPointer(), LanguagesVar)
-
 }
 
 var xWebContextSetSpellCheckingEnabled func(uintptr, bool)
 
 // Enable or disable the spell checking feature.
 func (x *WebContext) SetSpellCheckingEnabled(EnabledVar bool) {
-
 	xWebContextSetSpellCheckingEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 var xWebContextSetSpellCheckingLanguages func(uintptr, []string)
@@ -404,9 +383,7 @@ var xWebContextSetSpellCheckingLanguages func(uintptr, []string)
 // least once in order to properly enable the spell checking feature
 // in WebKit.
 func (x *WebContext) SetSpellCheckingLanguages(LanguagesVar []string) {
-
 	xWebContextSetSpellCheckingLanguages(x.GoPointer(), LanguagesVar)
-
 }
 
 var xWebContextSetWebProcessExtensionsDirectory func(uintptr, string)
@@ -421,9 +398,7 @@ var xWebContextSetWebProcessExtensionsDirectory func(uintptr, string)
 // If your web process extension is installed to an unusual location,
 // then you may also need to call webkit_web_context_add_path_to_sandbox().
 func (x *WebContext) SetWebProcessExtensionsDirectory(DirectoryVar string) {
-
 	xWebContextSetWebProcessExtensionsDirectory(x.GoPointer(), DirectoryVar)
-
 }
 
 var xWebContextSetWebProcessExtensionsInitializationUserData func(uintptr, *glib.Variant)
@@ -437,9 +412,7 @@ var xWebContextSetWebProcessExtensionsInitializationUserData func(uintptr, *glib
 // #WebKitWebContext::initialize-web-process-extensions to call this method
 // before anything is loaded.
 func (x *WebContext) SetWebProcessExtensionsInitializationUserData(UserDataVar *glib.Variant) {
-
 	xWebContextSetWebProcessExtensionsInitializationUserData(x.GoPointer(), UserDataVar)
-
 }
 
 func (c *WebContext) GoPointer() uintptr {
@@ -508,7 +481,6 @@ func (x *WebContext) ConnectAutomationStarted(cb *func(WebContext, uintptr)) uin
 		cbFn := *cb
 
 		cbFn(fa, SessionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -535,7 +507,6 @@ func (x *WebContext) ConnectInitializeNotificationPermissions(cb *func(WebContex
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -558,7 +529,6 @@ func (x *WebContext) ConnectInitializeWebProcessExtensions(cb *func(WebContext))
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -583,7 +553,6 @@ func (x *WebContext) ConnectUserMessageReceived(cb *func(WebContext, uintptr) bo
 		cbFn := *cb
 
 		return cbFn(fa, MessageVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

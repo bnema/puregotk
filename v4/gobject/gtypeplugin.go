@@ -125,42 +125,36 @@ func (x *TypePluginBase) SetGoPointer(ptr uintptr) {
 // #GTypePluginClass of @plugin. There should be no need to use this
 // function outside of the GObject type system itself.
 func (x *TypePluginBase) CompleteInterfaceInfo(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *InterfaceInfo) {
-
 	XGTypePluginCompleteInterfaceInfo(x.GoPointer(), InstanceTypeVar, InterfaceTypeVar, InfoVar)
-
 }
 
 // Calls the @complete_type_info function from the #GTypePluginClass of @plugin.
 // There should be no need to use this function outside of the GObject
 // type system itself.
 func (x *TypePluginBase) CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, ValueTableVar *TypeValueTable) {
-
 	XGTypePluginCompleteTypeInfo(x.GoPointer(), GTypeVar, InfoVar, ValueTableVar)
-
 }
 
 // Calls the @unuse_plugin function from the #GTypePluginClass of
 // @plugin.  There should be no need to use this function outside of
 // the GObject type system itself.
 func (x *TypePluginBase) Unuse() {
-
 	XGTypePluginUnuse(x.GoPointer())
-
 }
 
 // Calls the @use_plugin function from the #GTypePluginClass of
 // @plugin.  There should be no need to use this function outside of
 // the GObject type system itself.
 func (x *TypePluginBase) Use() {
-
 	XGTypePluginUse(x.GoPointer())
-
 }
 
-var XGTypePluginCompleteInterfaceInfo func(uintptr, types.GType, types.GType, *InterfaceInfo)
-var XGTypePluginCompleteTypeInfo func(uintptr, types.GType, *TypeInfo, *TypeValueTable)
-var XGTypePluginUnuse func(uintptr)
-var XGTypePluginUse func(uintptr)
+var (
+	XGTypePluginCompleteInterfaceInfo func(uintptr, types.GType, types.GType, *InterfaceInfo)
+	XGTypePluginCompleteTypeInfo      func(uintptr, types.GType, *TypeInfo, *TypeValueTable)
+	XGTypePluginUnuse                 func(uintptr)
+	XGTypePluginUse                   func(uintptr)
+)
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
@@ -180,5 +174,4 @@ func init() {
 	core.PuregoSafeRegister(&XGTypePluginCompleteTypeInfo, libs, "g_type_plugin_complete_type_info")
 	core.PuregoSafeRegister(&XGTypePluginUnuse, libs, "g_type_plugin_unuse")
 	core.PuregoSafeRegister(&XGTypePluginUse, libs, "g_type_plugin_use")
-
 }

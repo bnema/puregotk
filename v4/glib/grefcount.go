@@ -51,7 +51,6 @@ var xAtomicRefCountCompare func(int32, int32) bool
 
 // Atomically compares the current value of @arc with @val.
 func AtomicRefCountCompare(ArcVar int32, ValVar int32) bool {
-
 	cret := xAtomicRefCountCompare(ArcVar, ValVar)
 	return cret
 }
@@ -64,7 +63,6 @@ var xAtomicRefCountDec func(int32) bool
 // is an undefined state and must be reinitialized with
 // g_atomic_ref_count_init() to be used again.
 func AtomicRefCountDec(ArcVar int32) bool {
-
 	cret := xAtomicRefCountDec(ArcVar)
 	return cret
 }
@@ -73,25 +71,20 @@ var xAtomicRefCountInc func(int32)
 
 // Atomically increases the reference count.
 func AtomicRefCountInc(ArcVar int32) {
-
 	xAtomicRefCountInc(ArcVar)
-
 }
 
 var xAtomicRefCountInit func(*int32)
 
 // Initializes a reference count variable to 1.
 func AtomicRefCountInit(ArcVar *int32) {
-
 	xAtomicRefCountInit(ArcVar)
-
 }
 
 var xRefCountCompare func(int32, int32) bool
 
 // Compares the current value of @rc with @val.
 func RefCountCompare(RcVar int32, ValVar int32) bool {
-
 	cret := xRefCountCompare(RcVar, ValVar)
 	return cret
 }
@@ -104,7 +97,6 @@ var xRefCountDec func(int32) bool
 // is an undefined state and must be reinitialized with
 // g_ref_count_init() to be used again.
 func RefCountDec(RcVar int32) bool {
-
 	cret := xRefCountDec(RcVar)
 	return cret
 }
@@ -113,18 +105,14 @@ var xRefCountInc func(int32)
 
 // Increases the reference count.
 func RefCountInc(RcVar int32) {
-
 	xRefCountInc(RcVar)
-
 }
 
 var xRefCountInit func(*int32)
 
 // Initializes a reference count variable to 1.
 func RefCountInit(RcVar *int32) {
-
 	xRefCountInit(RcVar)
-
 }
 
 func init() {
@@ -147,5 +135,4 @@ func init() {
 	core.PuregoSafeRegister(&xRefCountDec, libs, "g_ref_count_dec")
 	core.PuregoSafeRegister(&xRefCountInc, libs, "g_ref_count_inc")
 	core.PuregoSafeRegister(&xRefCountInit, libs, "g_ref_count_init")
-
 }

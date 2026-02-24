@@ -51,7 +51,6 @@ var xLanguageGetSampleString func(uintptr) string
 // pango_language_get_sample_string (pango_language_from_string ("xx"))
 // ```
 func (x *Language) GetSampleString() string {
-
 	cret := xLanguageGetSampleString(x.GoPointer())
 	return cret
 }
@@ -82,7 +81,6 @@ var xLanguageGetScripts func(uintptr, *int32) uintptr
 // returned values are from the `GUnicodeScript` enumeration, which
 // may have more values. Callers need to handle unknown values.
 func (x *Language) GetScripts(NumScriptsVar *int32) uintptr {
-
 	cret := xLanguageGetScripts(x.GoPointer(), NumScriptsVar)
 	return cret
 }
@@ -103,7 +101,6 @@ var xLanguageIncludesScript func(uintptr, Script) bool
 //
 // This function uses [method@Pango.Language.get_scripts] internally.
 func (x *Language) IncludesScript(ScriptVar Script) bool {
-
 	cret := xLanguageIncludesScript(x.GoPointer(), ScriptVar)
 	return cret
 }
@@ -117,7 +114,6 @@ var xLanguageMatches func(uintptr, string) bool
 // range is '*', the range is exactly the tag, or the range is a prefix
 // of the tag, and the character after it in the tag is '-'.
 func (x *Language) Matches(RangeListVar string) bool {
-
 	cret := xLanguageMatches(x.GoPointer(), RangeListVar)
 	return cret
 }
@@ -128,7 +124,6 @@ var xLanguageToString func(uintptr) string
 //
 // Returns (transfer none): a string representing the language tag
 func (x *Language) ToString() string {
-
 	cret := xLanguageToString(x.GoPointer())
 	return cret
 }
@@ -189,9 +184,7 @@ var xExtentsToPixels func(*Rectangle, *Rectangle)
 // touching-but-not-overlapping after rounding to device units, pass them in
 // as @nearest.
 func ExtentsToPixels(InclusiveVar *Rectangle, NearestVar *Rectangle) {
-
 	xExtentsToPixels(InclusiveVar, NearestVar)
-
 }
 
 var xUnitsFromDouble func(float64) int32
@@ -201,7 +194,6 @@ var xUnitsFromDouble func(float64) int32
 // The conversion is done by multiplying @d by %PANGO_SCALE and
 // rounding the result to nearest integer.
 func UnitsFromDouble(DVar float64) int32 {
-
 	cret := xUnitsFromDouble(DVar)
 	return cret
 }
@@ -212,7 +204,6 @@ var xUnitsToDouble func(int32) float64
 //
 // The conversion is done by dividing @i by %PANGO_SCALE.
 func UnitsToDouble(IVar int32) float64 {
-
 	cret := xUnitsToDouble(IVar)
 	return cret
 }
@@ -240,5 +231,4 @@ func init() {
 	core.PuregoSafeRegister(&xLanguageIncludesScript, libs, "pango_language_includes_script")
 	core.PuregoSafeRegister(&xLanguageMatches, libs, "pango_language_matches")
 	core.PuregoSafeRegister(&xLanguageToString, libs, "pango_language_to_string")
-
 }

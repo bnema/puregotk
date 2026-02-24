@@ -74,7 +74,6 @@ var xTimedAnimationGetAlternate func(uintptr) bool
 
 // Gets whether @self changes direction on every iteration.
 func (x *TimedAnimation) GetAlternate() bool {
-
 	cret := xTimedAnimationGetAlternate(x.GoPointer())
 	return cret
 }
@@ -83,7 +82,6 @@ var xTimedAnimationGetDuration func(uintptr) uint32
 
 // Gets the duration of @self.
 func (x *TimedAnimation) GetDuration() uint32 {
-
 	cret := xTimedAnimationGetDuration(x.GoPointer())
 	return cret
 }
@@ -92,7 +90,6 @@ var xTimedAnimationGetEasing func(uintptr) Easing
 
 // Gets the easing function @self uses.
 func (x *TimedAnimation) GetEasing() Easing {
-
 	cret := xTimedAnimationGetEasing(x.GoPointer())
 	return cret
 }
@@ -101,7 +98,6 @@ var xTimedAnimationGetRepeatCount func(uintptr) uint32
 
 // Gets the number of times @self will play.
 func (x *TimedAnimation) GetRepeatCount() uint32 {
-
 	cret := xTimedAnimationGetRepeatCount(x.GoPointer())
 	return cret
 }
@@ -110,7 +106,6 @@ var xTimedAnimationGetReverse func(uintptr) bool
 
 // Gets whether @self plays backwards.
 func (x *TimedAnimation) GetReverse() bool {
-
 	cret := xTimedAnimationGetReverse(x.GoPointer())
 	return cret
 }
@@ -119,7 +114,6 @@ var xTimedAnimationGetValueFrom func(uintptr) float64
 
 // Gets the value @self will animate from.
 func (x *TimedAnimation) GetValueFrom() float64 {
-
 	cret := xTimedAnimationGetValueFrom(x.GoPointer())
 	return cret
 }
@@ -128,7 +122,6 @@ var xTimedAnimationGetValueTo func(uintptr) float64
 
 // Gets the value @self will animate to.
 func (x *TimedAnimation) GetValueTo() float64 {
-
 	cret := xTimedAnimationGetValueTo(x.GoPointer())
 	return cret
 }
@@ -137,9 +130,7 @@ var xTimedAnimationSetAlternate func(uintptr, bool)
 
 // Sets whether @self changes direction on every iteration.
 func (x *TimedAnimation) SetAlternate(AlternateVar bool) {
-
 	xTimedAnimationSetAlternate(x.GoPointer(), AlternateVar)
-
 }
 
 var xTimedAnimationSetDuration func(uintptr, uint32)
@@ -148,9 +139,7 @@ var xTimedAnimationSetDuration func(uintptr, uint32)
 //
 // If the animation repeats more than once, sets the duration of one iteration.
 func (x *TimedAnimation) SetDuration(DurationVar uint32) {
-
 	xTimedAnimationSetDuration(x.GoPointer(), DurationVar)
-
 }
 
 var xTimedAnimationSetEasing func(uintptr, Easing)
@@ -159,9 +148,7 @@ var xTimedAnimationSetEasing func(uintptr, Easing)
 //
 // See [enum@Easing] for the description of specific easing functions.
 func (x *TimedAnimation) SetEasing(EasingVar Easing) {
-
 	xTimedAnimationSetEasing(x.GoPointer(), EasingVar)
-
 }
 
 var xTimedAnimationSetRepeatCount func(uintptr, uint32)
@@ -170,18 +157,14 @@ var xTimedAnimationSetRepeatCount func(uintptr, uint32)
 //
 // If set to 0, @self will repeat endlessly.
 func (x *TimedAnimation) SetRepeatCount(RepeatCountVar uint32) {
-
 	xTimedAnimationSetRepeatCount(x.GoPointer(), RepeatCountVar)
-
 }
 
 var xTimedAnimationSetReverse func(uintptr, bool)
 
 // Sets whether @self plays backwards.
 func (x *TimedAnimation) SetReverse(ReverseVar bool) {
-
 	xTimedAnimationSetReverse(x.GoPointer(), ReverseVar)
-
 }
 
 var xTimedAnimationSetValueFrom func(uintptr, float64)
@@ -194,9 +177,7 @@ var xTimedAnimationSetValueFrom func(uintptr, float64)
 // If [property@TimedAnimation:reverse] is `TRUE`, the animation will end at
 // this value instead.
 func (x *TimedAnimation) SetValueFrom(ValueVar float64) {
-
 	xTimedAnimationSetValueFrom(x.GoPointer(), ValueVar)
-
 }
 
 var xTimedAnimationSetValueTo func(uintptr, float64)
@@ -209,9 +190,7 @@ var xTimedAnimationSetValueTo func(uintptr, float64)
 // If [property@TimedAnimation:reverse] is `TRUE`, the animation will start
 // at this value instead.
 func (x *TimedAnimation) SetValueTo(ValueVar float64) {
-
 	xTimedAnimationSetValueTo(x.GoPointer(), ValueVar)
-
 }
 
 func (c *TimedAnimation) GoPointer() uintptr {
@@ -395,5 +374,4 @@ func init() {
 	core.PuregoSafeRegister(&xTimedAnimationSetReverse, libs, "adw_timed_animation_set_reverse")
 	core.PuregoSafeRegister(&xTimedAnimationSetValueFrom, libs, "adw_timed_animation_set_value_from")
 	core.PuregoSafeRegister(&xTimedAnimationSetValueTo, libs, "adw_timed_animation_set_value_to")
-
 }

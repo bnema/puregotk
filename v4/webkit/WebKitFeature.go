@@ -64,7 +64,6 @@ var xFeatureGetCategory func(uintptr) string
 // Applications which include user interface to toggle features may want
 // to use the category to group related features together.
 func (x *Feature) GetCategory() string {
-
 	cret := xFeatureGetCategory(x.GoPointer())
 	return cret
 }
@@ -78,7 +77,6 @@ var xFeatureGetDefaultValue func(uintptr) bool
 // whether a feature is actually enabled must be checked with
 // [method@Settings.get_feature_enabled].
 func (x *Feature) GetDefaultValue() bool {
-
 	cret := xFeatureGetDefaultValue(x.GoPointer())
 	return cret
 }
@@ -96,7 +94,6 @@ var xFeatureGetDetails func(uintptr) string
 // Note that some *features may not* have a detailed description, and @NULL
 // is returned in this case.
 func (x *Feature) GetDetails() string {
-
 	cret := xFeatureGetDetails(x.GoPointer())
 	return cret
 }
@@ -105,7 +102,6 @@ var xFeatureGetIdentifier func(uintptr) string
 
 // Gets a string that uniquely identifies the @feature.
 func (x *Feature) GetIdentifier() string {
-
 	cret := xFeatureGetIdentifier(x.GoPointer())
 	return cret
 }
@@ -120,7 +116,6 @@ var xFeatureGetName func(uintptr) string
 // Note that some *features may not* have a short name, and @NULL
 // is returned in this case.
 func (x *Feature) GetName() string {
-
 	cret := xFeatureGetName(x.GoPointer())
 	return cret
 }
@@ -129,7 +124,6 @@ var xFeatureGetStatus func(uintptr) FeatureStatus
 
 // Gets the status of the feature.
 func (x *Feature) GetStatus() FeatureStatus {
-
 	cret := xFeatureGetStatus(x.GoPointer())
 	return cret
 }
@@ -140,7 +134,6 @@ var xFeatureRef func(uintptr) *Feature
 //
 // This function is MT-safe and may be called from any thread.
 func (x *Feature) Ref() *Feature {
-
 	cret := xFeatureRef(x.GoPointer())
 	return cret
 }
@@ -153,9 +146,7 @@ var xFeatureUnref func(uintptr)
 // @feature are freed. This function is MT-safe and may be called from
 // any thread.
 func (x *Feature) Unref() {
-
 	xFeatureUnref(x.GoPointer())
-
 }
 
 // Contains a set of toggle-able web engine features.
@@ -195,7 +186,6 @@ var xFeatureListGet func(uintptr, uint) *Feature
 
 // Gets a feature given its index.
 func (x *FeatureList) Get(IndexVar uint) *Feature {
-
 	cret := xFeatureListGet(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -204,7 +194,6 @@ var xFeatureListGetLength func(uintptr) uint
 
 // Gets the number of elements in the feature list.
 func (x *FeatureList) GetLength() uint {
-
 	cret := xFeatureListGetLength(x.GoPointer())
 	return cret
 }
@@ -215,7 +204,6 @@ var xFeatureListRef func(uintptr) *FeatureList
 //
 // This function is MT-safe and may be called from any thread.
 func (x *FeatureList) Ref() *FeatureList {
-
 	cret := xFeatureListRef(x.GoPointer())
 	return cret
 }
@@ -228,9 +216,7 @@ var xFeatureListUnref func(uintptr)
 // @feature_list are freed. This function is MT-safe and may be called
 // from any thread.
 func (x *FeatureList) Unref() {
-
 	xFeatureListUnref(x.GoPointer())
-
 }
 
 // Describes the status of a [struct@WebKitFeature].
@@ -311,5 +297,4 @@ func init() {
 	core.PuregoSafeRegister(&xFeatureListGetLength, libs, "webkit_feature_list_get_length")
 	core.PuregoSafeRegister(&xFeatureListRef, libs, "webkit_feature_list_ref")
 	core.PuregoSafeRegister(&xFeatureListUnref, libs, "webkit_feature_list_unref")
-
 }

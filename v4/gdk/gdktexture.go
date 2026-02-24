@@ -48,7 +48,6 @@ var xTextureErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gdk.Texture] errors.
 func TextureErrorQuark() glib.Quark {
-
 	cret := xTextureErrorQuark()
 	return cret
 }
@@ -148,7 +147,6 @@ func NewTextureFromBytes(BytesVar *glib.Bytes) (*Texture, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTextureFromFile func(uintptr, **glib.Error) uintptr
@@ -184,7 +182,6 @@ func NewTextureFromFile(FileVar gio.File) (*Texture, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTextureFromFilename func(string, **glib.Error) uintptr
@@ -220,7 +217,6 @@ func NewTextureFromFilename(PathVar string) (*Texture, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTextureFromResource func(string) uintptr
@@ -280,16 +276,13 @@ var xTextureDownload func(uintptr, []byte, uint)
 // For more flexible download capabilities, see
 // [struct@Gdk.TextureDownloader].
 func (x *Texture) Download(DataVar []byte, StrideVar uint) {
-
 	xTextureDownload(x.GoPointer(), DataVar, StrideVar)
-
 }
 
 var xTextureGetColorState func(uintptr) *ColorState
 
 // Returns the color state associated with the texture.
 func (x *Texture) GetColorState() *ColorState {
-
 	cret := xTextureGetColorState(x.GoPointer())
 	return cret
 }
@@ -306,7 +299,6 @@ var xTextureGetFormat func(uintptr) MemoryFormat
 // of the texture and is useful to determine the best format for
 // downloading the texture.
 func (x *Texture) GetFormat() MemoryFormat {
-
 	cret := xTextureGetFormat(x.GoPointer())
 	return cret
 }
@@ -315,7 +307,6 @@ var xTextureGetHeight func(uintptr) int32
 
 // Returns the height of the @texture, in pixels.
 func (x *Texture) GetHeight() int32 {
-
 	cret := xTextureGetHeight(x.GoPointer())
 	return cret
 }
@@ -324,7 +315,6 @@ var xTextureGetWidth func(uintptr) int32
 
 // Returns the width of @texture, in pixels.
 func (x *Texture) GetWidth() int32 {
-
 	cret := xTextureGetWidth(x.GoPointer())
 	return cret
 }
@@ -339,7 +329,6 @@ var xTextureSaveToPng func(uintptr, string) bool
 // want to use [method@Gdk.Texture.save_to_png_bytes] or look into
 // the libglycin library.
 func (x *Texture) SaveToPng(FilenameVar string) bool {
-
 	cret := xTextureSaveToPng(x.GoPointer(), FilenameVar)
 	return cret
 }
@@ -361,7 +350,6 @@ var xTextureSaveToPngBytes func(uintptr) *glib.Bytes
 // might also want to consider [method@Gdk.Texture.save_to_tiff_bytes]
 // instead.
 func (x *Texture) SaveToPngBytes() *glib.Bytes {
-
 	cret := xTextureSaveToPngBytes(x.GoPointer())
 	return cret
 }
@@ -372,7 +360,6 @@ var xTextureSaveToTiff func(uintptr, string) bool
 //
 // GTK will attempt to store data without loss.
 func (x *Texture) SaveToTiff(FilenameVar string) bool {
-
 	cret := xTextureSaveToTiff(x.GoPointer(), FilenameVar)
 	return cret
 }
@@ -392,7 +379,6 @@ var xTextureSaveToTiffBytes func(uintptr) *glib.Bytes
 // smaller size and a more portable format, you might want to
 // use [method@Gdk.Texture.save_to_png_bytes].
 func (x *Texture) SaveToTiffBytes() *glib.Bytes {
-
 	cret := xTextureSaveToTiffBytes(x.GoPointer())
 	return cret
 }
@@ -470,9 +456,7 @@ func (x *Texture) GetPropertyWidth() int32 {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *Texture) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -500,7 +484,6 @@ func (x *Texture) GetCurrentImage() *PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *Texture) GetFlags() PaintableFlags {
-
 	cret := XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -523,7 +506,6 @@ func (x *Texture) GetFlags() PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *Texture) GetIntrinsicAspectRatio() float64 {
-
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -539,7 +521,6 @@ func (x *Texture) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *Texture) GetIntrinsicHeight() int32 {
-
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -555,7 +536,6 @@ func (x *Texture) GetIntrinsicHeight() int32 {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *Texture) GetIntrinsicWidth() int32 {
-
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -571,9 +551,7 @@ func (x *Texture) GetIntrinsicWidth() int32 {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *Texture) InvalidateContents() {
-
 	XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -587,9 +565,7 @@ func (x *Texture) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *Texture) InvalidateSize() {
-
 	XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -598,21 +574,17 @@ func (x *Texture) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *Texture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar float64) {
-
 	XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 // Checks if two icons are equal.
 func (x *Texture) Equal(Icon2Var gio.Icon) bool {
-
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *Texture) Hash() uint32 {
-
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -623,7 +595,6 @@ func (x *Texture) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Texture) Serialize() *glib.Variant {
-
 	cret := gio.XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -645,7 +616,6 @@ func (x *Texture) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *Texture) ToString() string {
-
 	cret := gio.XGIconToString(x.GoPointer())
 	return cret
 }
@@ -667,16 +637,13 @@ func (x *Texture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cance
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *Texture) LoadAsync(SizeVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -695,7 +662,6 @@ func (x *Texture) LoadFinish(ResVar gio.AsyncResult, TypeVar *string) (*gio.Inpu
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -731,5 +697,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextureSaveToPngBytes, libs, "gdk_texture_save_to_png_bytes")
 	core.PuregoSafeRegister(&xTextureSaveToTiff, libs, "gdk_texture_save_to_tiff")
 	core.PuregoSafeRegister(&xTextureSaveToTiffBytes, libs, "gdk_texture_save_to_tiff_bytes")
-
 }

@@ -82,7 +82,6 @@ var xMultipartInputStreamGetHeaders func(uintptr) *MessageHeaders
 // Note that if a part had no headers at all an empty [struct@MessageHeaders]
 // will be returned.
 func (x *MultipartInputStream) GetHeaders() *MessageHeaders {
-
 	cret := xMultipartInputStreamGetHeaders(x.GoPointer())
 	return cret
 }
@@ -118,7 +117,6 @@ func (x *MultipartInputStream) NextPart(CancellableVar *gio.Cancellable) (*gio.I
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xMultipartInputStreamNextPartAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -127,9 +125,7 @@ var xMultipartInputStreamNextPartAsync func(uintptr, int32, uintptr, uintptr, ui
 //
 // See [method@MultipartInputStream.next_part] for details on the workflow.
 func (x *MultipartInputStream) NextPartAsync(IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, DataVar uintptr) {
-
 	xMultipartInputStreamNextPartAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), DataVar)
-
 }
 
 var xMultipartInputStreamNextPartFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -150,7 +146,6 @@ func (x *MultipartInputStream) NextPartFinish(ResultVar gio.AsyncResult) (*gio.I
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *MultipartInputStream) GoPointer() uintptr {
@@ -172,7 +167,6 @@ func (c *MultipartInputStream) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *MultipartInputStream) CanPoll() bool {
-
 	cret := gio.XGPollableInputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -189,7 +183,6 @@ func (x *MultipartInputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *MultipartInputStream) CreateSource(CancellableVar *gio.Cancellable) *glib.Source {
-
 	cret := gio.XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
 	return cret
 }
@@ -206,7 +199,6 @@ func (x *MultipartInputStream) CreateSource(CancellableVar *gio.Cancellable) *gl
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *MultipartInputStream) IsReadable() bool {
-
 	cret := gio.XGPollableInputStreamIsReadable(x.GoPointer())
 	return cret
 }
@@ -233,7 +225,6 @@ func (x *MultipartInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -256,5 +247,4 @@ func init() {
 	core.PuregoSafeRegister(&xMultipartInputStreamNextPart, libs, "soup_multipart_input_stream_next_part")
 	core.PuregoSafeRegister(&xMultipartInputStreamNextPartAsync, libs, "soup_multipart_input_stream_next_part_async")
 	core.PuregoSafeRegister(&xMultipartInputStreamNextPartFinish, libs, "soup_multipart_input_stream_next_part_finish")
-
 }

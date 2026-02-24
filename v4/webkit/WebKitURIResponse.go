@@ -49,7 +49,6 @@ var xURIResponseGetContentLength func(uintptr) uint64
 //
 // It can be 0 if the server provided an incorrect or missing Content-Length.
 func (x *URIResponse) GetContentLength() uint64 {
-
 	cret := xURIResponseGetContentLength(x.GoPointer())
 	return cret
 }
@@ -58,7 +57,6 @@ var xURIResponseGetHttpHeaders func(uintptr) *soup.MessageHeaders
 
 // Get the HTTP headers of a #WebKitURIResponse as a #SoupMessageHeaders.
 func (x *URIResponse) GetHttpHeaders() *soup.MessageHeaders {
-
 	cret := xURIResponseGetHttpHeaders(x.GoPointer())
 	return cret
 }
@@ -67,7 +65,6 @@ var xURIResponseGetMimeType func(uintptr) string
 
 // Gets the MIME type of the response.
 func (x *URIResponse) GetMimeType() string {
-
 	cret := xURIResponseGetMimeType(x.GoPointer())
 	return cret
 }
@@ -81,7 +78,6 @@ var xURIResponseGetStatusCode func(uintptr) uint32
 // example %SOUP_STATUS_OK, though the server can respond with any
 // unsigned integer.
 func (x *URIResponse) GetStatusCode() uint32 {
-
 	cret := xURIResponseGetStatusCode(x.GoPointer())
 	return cret
 }
@@ -94,7 +90,6 @@ var xURIResponseGetSuggestedFilename func(uintptr) string
 // the 'Content-Disposition' HTTP header, or %NULL if it's not
 // present.
 func (x *URIResponse) GetSuggestedFilename() string {
-
 	cret := xURIResponseGetSuggestedFilename(x.GoPointer())
 	return cret
 }
@@ -103,7 +98,6 @@ var xURIResponseGetUri func(uintptr) string
 
 // Gets the URI which resulted in the response.
 func (x *URIResponse) GetUri() string {
-
 	cret := xURIResponseGetUri(x.GoPointer())
 	return cret
 }

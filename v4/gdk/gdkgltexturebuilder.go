@@ -95,7 +95,6 @@ var xGLTextureBuilderGetColorState func(uintptr) *ColorState
 
 // Gets the color state previously set via gdk_gl_texture_builder_set_color_state().
 func (x *GLTextureBuilder) GetColorState() *ColorState {
-
 	cret := xGLTextureBuilderGetColorState(x.GoPointer())
 	return cret
 }
@@ -122,7 +121,6 @@ var xGLTextureBuilderGetFormat func(uintptr) MemoryFormat
 
 // Gets the format previously set via gdk_gl_texture_builder_set_format().
 func (x *GLTextureBuilder) GetFormat() MemoryFormat {
-
 	cret := xGLTextureBuilderGetFormat(x.GoPointer())
 	return cret
 }
@@ -131,7 +129,6 @@ var xGLTextureBuilderGetHasMipmap func(uintptr) bool
 
 // Gets whether the texture has a mipmap.
 func (x *GLTextureBuilder) GetHasMipmap() bool {
-
 	cret := xGLTextureBuilderGetHasMipmap(x.GoPointer())
 	return cret
 }
@@ -141,7 +138,6 @@ var xGLTextureBuilderGetHeight func(uintptr) int32
 // Gets the height previously set via gdk_gl_texture_builder_set_height() or
 // 0 if the height wasn't set.
 func (x *GLTextureBuilder) GetHeight() int32 {
-
 	cret := xGLTextureBuilderGetHeight(x.GoPointer())
 	return cret
 }
@@ -151,7 +147,6 @@ var xGLTextureBuilderGetId func(uintptr) uint32
 // Gets the texture id previously set via gdk_gl_texture_builder_set_id() or
 // 0 if the id wasn't set.
 func (x *GLTextureBuilder) GetId() uint32 {
-
 	cret := xGLTextureBuilderGetId(x.GoPointer())
 	return cret
 }
@@ -160,7 +155,6 @@ var xGLTextureBuilderGetSync func(uintptr) uintptr
 
 // Gets the `GLsync` previously set via gdk_gl_texture_builder_set_sync().
 func (x *GLTextureBuilder) GetSync() uintptr {
-
 	cret := xGLTextureBuilderGetSync(x.GoPointer())
 	return cret
 }
@@ -170,7 +164,6 @@ var xGLTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
 // Gets the region previously set via gdk_gl_texture_builder_set_update_region() or
 // %NULL if none was set.
 func (x *GLTextureBuilder) GetUpdateRegion() *cairo.Region {
-
 	cret := xGLTextureBuilderGetUpdateRegion(x.GoPointer())
 	return cret
 }
@@ -198,7 +191,6 @@ var xGLTextureBuilderGetWidth func(uintptr) int32
 // Gets the width previously set via gdk_gl_texture_builder_set_width() or
 // 0 if the width wasn't set.
 func (x *GLTextureBuilder) GetWidth() int32 {
-
 	cret := xGLTextureBuilderGetWidth(x.GoPointer())
 	return cret
 }
@@ -210,9 +202,7 @@ var xGLTextureBuilderSetColorState func(uintptr, *ColorState)
 // By default, the sRGB colorstate is used. If you don't know what
 // colorstates are, this is probably the right thing.
 func (x *GLTextureBuilder) SetColorState(ColorStateVar *ColorState) {
-
 	xGLTextureBuilderSetColorState(x.GoPointer(), ColorStateVar)
-
 }
 
 var xGLTextureBuilderSetContext func(uintptr, uintptr)
@@ -222,9 +212,7 @@ var xGLTextureBuilderSetContext func(uintptr, uintptr)
 //
 // The context must be set before calling [method@Gdk.GLTextureBuilder.build].
 func (x *GLTextureBuilder) SetContext(ContextVar *GLContext) {
-
 	xGLTextureBuilderSetContext(x.GoPointer(), ContextVar.GoPointer())
-
 }
 
 var xGLTextureBuilderSetFormat func(uintptr, MemoryFormat)
@@ -246,9 +234,7 @@ var xGLTextureBuilderSetFormat func(uintptr, MemoryFormat)
 // Non-RGBA textures need to have swizzling parameters set up properly to be usable
 // in GSK's shaders.
 func (x *GLTextureBuilder) SetFormat(FormatVar MemoryFormat) {
-
 	xGLTextureBuilderSetFormat(x.GoPointer(), FormatVar)
-
 }
 
 var xGLTextureBuilderSetHasMipmap func(uintptr, bool)
@@ -258,9 +244,7 @@ var xGLTextureBuilderSetHasMipmap func(uintptr, bool)
 //
 // Typically, the `glGenerateMipmap` function is used to generate a mimap.
 func (x *GLTextureBuilder) SetHasMipmap(HasMipmapVar bool) {
-
 	xGLTextureBuilderSetHasMipmap(x.GoPointer(), HasMipmapVar)
-
 }
 
 var xGLTextureBuilderSetHeight func(uintptr, int32)
@@ -269,9 +253,7 @@ var xGLTextureBuilderSetHeight func(uintptr, int32)
 //
 // The height must be set before calling [method@Gdk.GLTextureBuilder.build].
 func (x *GLTextureBuilder) SetHeight(HeightVar int32) {
-
 	xGLTextureBuilderSetHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xGLTextureBuilderSetId func(uintptr, uint32)
@@ -282,9 +264,7 @@ var xGLTextureBuilderSetId func(uintptr, uint32)
 //
 // The id must be set before calling [method@Gdk.GLTextureBuilder.build].
 func (x *GLTextureBuilder) SetId(IdVar uint32) {
-
 	xGLTextureBuilderSetId(x.GoPointer(), IdVar)
-
 }
 
 var xGLTextureBuilderSetSync func(uintptr, uintptr)
@@ -298,9 +278,7 @@ var xGLTextureBuilderSetSync func(uintptr, uintptr)
 // The texture builder does not destroy it and it is the callers
 // responsibility to make sure it doesn't leak.
 func (x *GLTextureBuilder) SetSync(SyncVar uintptr) {
-
 	xGLTextureBuilderSetSync(x.GoPointer(), SyncVar)
-
 }
 
 var xGLTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
@@ -316,9 +294,7 @@ var xGLTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
 //
 // An example would be a screen recording where only the mouse pointer moves.
 func (x *GLTextureBuilder) SetUpdateRegion(RegionVar *cairo.Region) {
-
 	xGLTextureBuilderSetUpdateRegion(x.GoPointer(), RegionVar)
-
 }
 
 var xGLTextureBuilderSetUpdateTexture func(uintptr, uintptr)
@@ -326,9 +302,7 @@ var xGLTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 // Sets the texture to be updated by this texture. See
 // [method@Gdk.GLTextureBuilder.set_update_region] for an explanation.
 func (x *GLTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
-
 	xGLTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
-
 }
 
 var xGLTextureBuilderSetWidth func(uintptr, int32)
@@ -337,9 +311,7 @@ var xGLTextureBuilderSetWidth func(uintptr, int32)
 //
 // The width must be set before calling [method@Gdk.GLTextureBuilder.build].
 func (x *GLTextureBuilder) SetWidth(WidthVar int32) {
-
 	xGLTextureBuilderSetWidth(x.GoPointer(), WidthVar)
-
 }
 
 func (c *GLTextureBuilder) GoPointer() uintptr {
@@ -513,5 +485,4 @@ func init() {
 	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateRegion, libs, "gdk_gl_texture_builder_set_update_region")
 	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateTexture, libs, "gdk_gl_texture_builder_set_update_texture")
 	core.PuregoSafeRegister(&xGLTextureBuilderSetWidth, libs, "gdk_gl_texture_builder_set_width")
-
 }

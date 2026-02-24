@@ -38,7 +38,6 @@ var xDragActionIsUnique func(DragAction) bool
 // When @action is `GDK_ACTION_NONE` - ie no action was given, `TRUE`
 // is returned.
 func DragActionIsUnique(ActionVar DragAction) bool {
-
 	cret := xDragActionIsUnique(ActionVar)
 	return cret
 }
@@ -83,16 +82,13 @@ var xDragDropDone func(uintptr, bool)
 // call as effective, if this function is called multiple times,
 // all subsequent calls will be ignored.
 func (x *Drag) DropDone(SuccessVar bool) {
-
 	xDragDropDone(x.GoPointer(), SuccessVar)
-
 }
 
 var xDragGetActions func(uintptr) DragAction
 
 // Determines the bitmask of possible actions proposed by the source.
 func (x *Drag) GetActions() DragAction {
-
 	cret := xDragGetActions(x.GoPointer())
 	return cret
 }
@@ -175,7 +171,6 @@ var xDragGetFormats func(uintptr) *ContentFormats
 
 // Retrieves the formats supported by this `GdkDrag` object.
 func (x *Drag) GetFormats() *ContentFormats {
-
 	cret := xDragGetFormats(x.GoPointer())
 	return cret
 }
@@ -184,7 +179,6 @@ var xDragGetSelectedAction func(uintptr) DragAction
 
 // Determines the action chosen by the drag destination.
 func (x *Drag) GetSelectedAction() DragAction {
-
 	cret := xDragGetSelectedAction(x.GoPointer())
 	return cret
 }
@@ -213,9 +207,7 @@ var xDragSetHotspot func(uintptr, int32, int32)
 //
 // Initially, the hotspot is at the top left corner of the drag surface.
 func (x *Drag) SetHotspot(HotXVar int32, HotYVar int32) {
-
 	xDragSetHotspot(x.GoPointer(), HotXVar, HotYVar)
-
 }
 
 func (c *Drag) GoPointer() uintptr {
@@ -259,7 +251,6 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ReasonVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -281,7 +272,6 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -301,7 +291,6 @@ func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -367,5 +356,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSetHotspot, libs, "gdk_drag_set_hotspot")
 
 	core.PuregoSafeRegister(&xDragBegin, libs, "gdk_drag_begin")
-
 }

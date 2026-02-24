@@ -206,9 +206,7 @@ func (x *PropertyAction) GetPropertyStateType() uintptr {
 //
 // If the @parameter [type@GLib.Variant] is floating, it is consumed.
 func (x *PropertyAction) Activate(ParameterVar *glib.Variant) {
-
 	XGActionActivate(x.GoPointer(), ParameterVar)
-
 }
 
 // Request for the state of @action to be changed to @value.
@@ -222,9 +220,7 @@ func (x *PropertyAction) Activate(ParameterVar *glib.Variant) {
 //
 // If the @value [type@GLib.Variant] is floating, it is consumed.
 func (x *PropertyAction) ChangeState(ValueVar *glib.Variant) {
-
 	XGActionChangeState(x.GoPointer(), ValueVar)
-
 }
 
 // Checks if @action is currently enabled.
@@ -232,14 +228,12 @@ func (x *PropertyAction) ChangeState(ValueVar *glib.Variant) {
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *PropertyAction) GetEnabled() bool {
-
 	cret := XGActionGetEnabled(x.GoPointer())
 	return cret
 }
 
 // Queries the name of @action.
 func (x *PropertyAction) GetName() string {
-
 	cret := XGActionGetName(x.GoPointer())
 	return cret
 }
@@ -254,7 +248,6 @@ func (x *PropertyAction) GetName() string {
 // In the case that this function returns `NULL`, you must not give any
 // [type@GLib.Variant], but `NULL` instead.
 func (x *PropertyAction) GetParameterType() *glib.VariantType {
-
 	cret := XGActionGetParameterType(x.GoPointer())
 	return cret
 }
@@ -268,7 +261,6 @@ func (x *PropertyAction) GetParameterType() *glib.VariantType {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetState() *glib.Variant {
-
 	cret := XGActionGetState(x.GoPointer())
 	return cret
 }
@@ -292,7 +284,6 @@ func (x *PropertyAction) GetState() *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetStateHint() *glib.Variant {
-
 	cret := XGActionGetStateHint(x.GoPointer())
 	return cret
 }
@@ -310,7 +301,6 @@ func (x *PropertyAction) GetStateHint() *glib.Variant {
 // then this function will return `NULL`. In that case, [method@Gio.Action.get_state]
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *PropertyAction) GetStateType() *glib.VariantType {
-
 	cret := XGActionGetStateType(x.GoPointer())
 	return cret
 }
@@ -330,5 +320,4 @@ func init() {
 	core.PuregoSafeRegister(&xPropertyActionGLibType, libs, "g_property_action_get_type")
 
 	core.PuregoSafeRegister(&xNewPropertyAction, libs, "g_property_action_new")
-
 }

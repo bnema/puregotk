@@ -177,16 +177,13 @@ var xWindowGroupAddWindow func(uintptr, uintptr)
 
 // Adds a window to a `GtkWindowGroup`.
 func (x *WindowGroup) AddWindow(WindowVar *Window) {
-
 	xWindowGroupAddWindow(x.GoPointer(), WindowVar.GoPointer())
-
 }
 
 var xWindowGroupListWindows func(uintptr) *glib.List
 
 // Returns a list of the `GtkWindows` that belong to @window_group.
 func (x *WindowGroup) ListWindows() *glib.List {
-
 	cret := xWindowGroupListWindows(x.GoPointer())
 	return cret
 }
@@ -195,9 +192,7 @@ var xWindowGroupRemoveWindow func(uintptr, uintptr)
 
 // Removes a window from a `GtkWindowGroup`.
 func (x *WindowGroup) RemoveWindow(WindowVar *Window) {
-
 	xWindowGroupRemoveWindow(x.GoPointer(), WindowVar.GoPointer())
-
 }
 
 func (c *WindowGroup) GoPointer() uintptr {
@@ -230,5 +225,4 @@ func init() {
 	core.PuregoSafeRegister(&xWindowGroupAddWindow, libs, "gtk_window_group_add_window")
 	core.PuregoSafeRegister(&xWindowGroupListWindows, libs, "gtk_window_group_list_windows")
 	core.PuregoSafeRegister(&xWindowGroupRemoveWindow, libs, "gtk_window_group_remove_window")
-
 }

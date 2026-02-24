@@ -23,9 +23,7 @@ var xBitLock func(uintptr, int32)
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitLock(AddressVar uintptr, LockBitVar int32) {
-
 	xBitLock(AddressVar, LockBitVar)
-
 }
 
 var xBitLockAndGet func(uintptr, uint32, *int32)
@@ -36,9 +34,7 @@ var xBitLockAndGet func(uintptr, uint32, *int32)
 // @address (right after obtaining the lock). Thus the value returned in @out_val
 // always has the @lock_bit set.
 func BitLockAndGet(AddressVar uintptr, LockBitVar uint32, OutValVar *int32) {
-
 	xBitLockAndGet(AddressVar, LockBitVar, OutValVar)
-
 }
 
 var xBitTrylock func(uintptr, int32) bool
@@ -57,7 +53,6 @@ var xBitTrylock func(uintptr, int32) bool
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitTrylock(AddressVar uintptr, LockBitVar int32) bool {
-
 	cret := xBitTrylock(AddressVar, LockBitVar)
 	return cret
 }
@@ -73,9 +68,7 @@ var xBitUnlock func(uintptr, int32)
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitUnlock(AddressVar uintptr, LockBitVar int32) {
-
 	xBitUnlock(AddressVar, LockBitVar)
-
 }
 
 var xBitUnlockAndSet func(uintptr, uint32, int32, int32)
@@ -89,9 +82,7 @@ var xBitUnlockAndSet func(uintptr, uint32, int32, int32)
 // Note that the @lock_bit bit will always be unset regardless of
 // @val, @preserve_mask and the currently set value in @address.
 func BitUnlockAndSet(AddressVar uintptr, LockBitVar uint32, NewValVar int32, PreserveMaskVar int32) {
-
 	xBitUnlockAndSet(AddressVar, LockBitVar, NewValVar, PreserveMaskVar)
-
 }
 
 var xPointerBitLock func(uintptr, int32)
@@ -105,9 +96,7 @@ var xPointerBitLock func(uintptr, int32)
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitLock(AddressVar uintptr, LockBitVar int32) {
-
 	xPointerBitLock(AddressVar, LockBitVar)
-
 }
 
 var xPointerBitLockAndGet func(uintptr, uint32, *uintptr)
@@ -118,9 +107,7 @@ var xPointerBitLockAndGet func(uintptr, uint32, *uintptr)
 // For portability reasons, you may only lock on the bottom 32 bits of
 // the pointer.
 func PointerBitLockAndGet(AddressVar uintptr, LockBitVar uint32, OutPtrVar *uintptr) {
-
 	xPointerBitLockAndGet(AddressVar, LockBitVar, OutPtrVar)
-
 }
 
 var xPointerBitLockMaskPtr func(uintptr, uint32, bool, uintptr, uintptr) uintptr
@@ -128,7 +115,6 @@ var xPointerBitLockMaskPtr func(uintptr, uint32, bool, uintptr, uintptr) uintptr
 // This mangles @ptr as g_pointer_bit_lock() and g_pointer_bit_unlock()
 // do.
 func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint32, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
-
 	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
 	return cret
 }
@@ -144,7 +130,6 @@ var xPointerBitTrylock func(uintptr, int32) bool
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitTrylock(AddressVar uintptr, LockBitVar int32) bool {
-
 	cret := xPointerBitTrylock(AddressVar, LockBitVar)
 	return cret
 }
@@ -160,9 +145,7 @@ var xPointerBitUnlock func(uintptr, int32)
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitUnlock(AddressVar uintptr, LockBitVar int32) {
-
 	xPointerBitUnlock(AddressVar, LockBitVar)
-
 }
 
 var xPointerBitUnlockAndSet func(uintptr, uint32, uintptr, uintptr)
@@ -175,9 +158,7 @@ var xPointerBitUnlockAndSet func(uintptr, uint32, uintptr, uintptr)
 // words, @ptr must have @lock_bit unset. This also means, you usually can
 // only use this on the lowest bits.
 func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint32, PtrVar uintptr, PreserveMaskVar uintptr) {
-
 	xPointerBitUnlockAndSet(AddressVar, LockBitVar, PtrVar, PreserveMaskVar)
-
 }
 
 func init() {
@@ -203,5 +184,4 @@ func init() {
 	core.PuregoSafeRegister(&xPointerBitTrylock, libs, "g_pointer_bit_trylock")
 	core.PuregoSafeRegister(&xPointerBitUnlock, libs, "g_pointer_bit_unlock")
 	core.PuregoSafeRegister(&xPointerBitUnlockAndSet, libs, "g_pointer_bit_unlock_and_set")
-
 }

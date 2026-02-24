@@ -139,7 +139,6 @@ var xViewSwitcherTitleGetSubtitle func(uintptr) string
 
 // Gets the subtitle of @self.
 func (x *ViewSwitcherTitle) GetSubtitle() string {
-
 	cret := xViewSwitcherTitleGetSubtitle(x.GoPointer())
 	return cret
 }
@@ -148,7 +147,6 @@ var xViewSwitcherTitleGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *ViewSwitcherTitle) GetTitle() string {
-
 	cret := xViewSwitcherTitleGetTitle(x.GoPointer())
 	return cret
 }
@@ -160,7 +158,6 @@ var xViewSwitcherTitleGetTitleVisible func(uintptr) bool
 // If the title is visible, it means the view switcher is hidden an it may be
 // wanted to show an alternative switcher, e.g. a [class@ViewSwitcherBar].
 func (x *ViewSwitcherTitle) GetTitleVisible() bool {
-
 	cret := xViewSwitcherTitleGetTitleVisible(x.GoPointer())
 	return cret
 }
@@ -169,7 +166,6 @@ var xViewSwitcherTitleGetViewSwitcherEnabled func(uintptr) bool
 
 // Gets whether @self's view switcher is enabled.
 func (x *ViewSwitcherTitle) GetViewSwitcherEnabled() bool {
-
 	cret := xViewSwitcherTitleGetViewSwitcherEnabled(x.GoPointer())
 	return cret
 }
@@ -178,9 +174,7 @@ var xViewSwitcherTitleSetStack func(uintptr, uintptr)
 
 // Sets the stack controlled by @self.
 func (x *ViewSwitcherTitle) SetStack(StackVar *ViewStack) {
-
 	xViewSwitcherTitleSetStack(x.GoPointer(), StackVar.GoPointer())
-
 }
 
 var xViewSwitcherTitleSetSubtitle func(uintptr, string)
@@ -189,9 +183,7 @@ var xViewSwitcherTitleSetSubtitle func(uintptr, string)
 //
 // The subtitle should give the user additional details.
 func (x *ViewSwitcherTitle) SetSubtitle(SubtitleVar string) {
-
 	xViewSwitcherTitleSetSubtitle(x.GoPointer(), SubtitleVar)
-
 }
 
 var xViewSwitcherTitleSetTitle func(uintptr, string)
@@ -201,9 +193,7 @@ var xViewSwitcherTitleSetTitle func(uintptr, string)
 // The title typically identifies the current view or content item, and
 // generally does not use the application name.
 func (x *ViewSwitcherTitle) SetTitle(TitleVar string) {
-
 	xViewSwitcherTitleSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xViewSwitcherTitleSetViewSwitcherEnabled func(uintptr, bool)
@@ -217,9 +207,7 @@ var xViewSwitcherTitleSetViewSwitcherEnabled func(uintptr, bool)
 // This can be used e.g. to ensure the view switcher is hidden below a certain
 // window width, or any other constraint you find suitable.
 func (x *ViewSwitcherTitle) SetViewSwitcherEnabled(EnabledVar bool) {
-
 	xViewSwitcherTitleSetViewSwitcherEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 func (c *ViewSwitcherTitle) GoPointer() uintptr {
@@ -329,9 +317,7 @@ func (x *ViewSwitcherTitle) GetPropertyViewSwitcherEnabled() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ViewSwitcherTitle) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -352,7 +338,6 @@ func (x *ViewSwitcherTitle) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ViewSwitcherTitle) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -377,7 +362,6 @@ func (x *ViewSwitcherTitle) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ViewSwitcherTitle) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -416,30 +400,23 @@ func (x *ViewSwitcherTitle) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ViewSwitcherTitle) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ViewSwitcherTitle) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ViewSwitcherTitle) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ViewSwitcherTitle) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -452,9 +429,7 @@ func (x *ViewSwitcherTitle) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ViewSwitcherTitle) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -462,9 +437,7 @@ func (x *ViewSwitcherTitle) SetAccessibleParent(ParentVar gtk.Accessible, NextSi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ViewSwitcherTitle) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -473,9 +446,7 @@ func (x *ViewSwitcherTitle) UpdateNextAccessibleSibling(NewSiblingVar gtk.Access
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ViewSwitcherTitle) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -497,9 +468,7 @@ func (x *ViewSwitcherTitle) UpdatePlatformState(StateVar gtk.AccessiblePlatformS
 //
 // ```
 func (x *ViewSwitcherTitle) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -509,9 +478,7 @@ func (x *ViewSwitcherTitle) UpdateProperty(FirstPropertyVar gtk.AccessibleProper
 //
 // This function is meant to be used by language bindings.
 func (x *ViewSwitcherTitle) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -533,9 +500,7 @@ func (x *ViewSwitcherTitle) UpdatePropertyValue(NPropertiesVar int32, Properties
 //
 // ```
 func (x *ViewSwitcherTitle) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -545,9 +510,7 @@ func (x *ViewSwitcherTitle) UpdateRelation(FirstRelationVar gtk.AccessibleRelati
 //
 // This function is meant to be used by language bindings.
 func (x *ViewSwitcherTitle) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -570,9 +533,7 @@ func (x *ViewSwitcherTitle) UpdateRelationValue(NRelationsVar int32, RelationsVa
 //
 // ```
 func (x *ViewSwitcherTitle) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -582,9 +543,7 @@ func (x *ViewSwitcherTitle) UpdateState(FirstStateVar gtk.AccessibleState, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *ViewSwitcherTitle) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -592,7 +551,6 @@ func (x *ViewSwitcherTitle) UpdateStateValue(NStatesVar int32, StatesVar []gtk.A
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ViewSwitcherTitle) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -622,5 +580,4 @@ func init() {
 	core.PuregoSafeRegister(&xViewSwitcherTitleSetSubtitle, libs, "adw_view_switcher_title_set_subtitle")
 	core.PuregoSafeRegister(&xViewSwitcherTitleSetTitle, libs, "adw_view_switcher_title_set_title")
 	core.PuregoSafeRegister(&xViewSwitcherTitleSetViewSwitcherEnabled, libs, "adw_view_switcher_title_set_view_switcher_enabled")
-
 }

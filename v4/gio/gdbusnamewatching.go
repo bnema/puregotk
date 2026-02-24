@@ -29,9 +29,7 @@ var xBusUnwatchName func(uint32)
 // order to avoid memory leaks through callbacks queued on the #GMainContext
 // after it’s stopped being iterated.
 func BusUnwatchName(WatcherIdVar uint32) {
-
 	xBusUnwatchName(WatcherIdVar)
-
 }
 
 var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, uintptr, uintptr) uint32
@@ -66,7 +64,6 @@ var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, u
 // @name_appeared_handler and destroy them again (if any) in
 // @name_vanished_handler.
 func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
-
 	cret := xBusWatchName(BusTypeVar, NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
@@ -76,7 +73,6 @@ var xBusWatchNameOnConnection func(uintptr, string, BusNameWatcherFlags, uintptr
 // Like g_bus_watch_name() but takes a #GDBusConnection instead of a
 // #GBusType.
 func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
-
 	cret := xBusWatchNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
@@ -86,7 +82,6 @@ var xBusWatchNameOnConnectionWithClosures func(uintptr, string, BusNameWatcherFl
 // Version of g_bus_watch_name_on_connection() using closures instead of callbacks for
 // easier binding in other languages.
 func BusWatchNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint32 {
-
 	cret := xBusWatchNameOnConnectionWithClosures(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
 	return cret
 }
@@ -96,7 +91,6 @@ var xBusWatchNameWithClosures func(BusType, string, BusNameWatcherFlags, *gobjec
 // Version of g_bus_watch_name() using closures instead of callbacks for
 // easier binding in other languages.
 func BusWatchNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint32 {
-
 	cret := xBusWatchNameWithClosures(BusTypeVar, NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
 	return cret
 }
@@ -118,5 +112,4 @@ func init() {
 	core.PuregoSafeRegister(&xBusWatchNameOnConnection, libs, "g_bus_watch_name_on_connection")
 	core.PuregoSafeRegister(&xBusWatchNameOnConnectionWithClosures, libs, "g_bus_watch_name_on_connection_with_closures")
 	core.PuregoSafeRegister(&xBusWatchNameWithClosures, libs, "g_bus_watch_name_with_closures")
-
 }

@@ -67,7 +67,6 @@ var xFileDialogGetAcceptLabel func(uintptr) string
 
 // Retrieves the text used by the dialog on its accept button.
 func (x *FileDialog) GetAcceptLabel() string {
-
 	cret := xFileDialogGetAcceptLabel(x.GoPointer())
 	return cret
 }
@@ -148,7 +147,6 @@ var xFileDialogGetInitialName func(uintptr) string
 
 // Gets the filename that will be initially selected.
 func (x *FileDialog) GetInitialName() string {
-
 	cret := xFileDialogGetInitialName(x.GoPointer())
 	return cret
 }
@@ -158,7 +156,6 @@ var xFileDialogGetModal func(uintptr) bool
 // Returns whether the file chooser dialog blocks interaction
 // with the parent window while it is presented.
 func (x *FileDialog) GetModal() bool {
-
 	cret := xFileDialogGetModal(x.GoPointer())
 	return cret
 }
@@ -167,7 +164,6 @@ var xFileDialogGetTitle func(uintptr) string
 
 // Returns the title that will be shown on the file chooser dialog.
 func (x *FileDialog) GetTitle() string {
-
 	cret := xFileDialogGetTitle(x.GoPointer())
 	return cret
 }
@@ -180,9 +176,7 @@ var xFileDialogOpen func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogOpen(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogOpenFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -206,7 +200,6 @@ func (x *FileDialog) OpenFinish(ResultVar gio.AsyncResult) (*gio.FileBase, error
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogOpenMultiple func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -220,9 +213,7 @@ var xFileDialogOpenMultiple func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogOpenMultiple(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogOpenMultipleFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -246,7 +237,6 @@ func (x *FileDialog) OpenMultipleFinish(ResultVar gio.AsyncResult) (*gio.ListMod
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogOpenMultipleTextFiles func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -263,9 +253,7 @@ var xFileDialogOpenMultipleTextFiles func(uintptr, uintptr, uintptr, uintptr, ui
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogOpenMultipleTextFiles(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogOpenMultipleTextFilesFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
@@ -289,7 +277,6 @@ func (x *FileDialog) OpenMultipleTextFilesFinish(ResultVar gio.AsyncResult, Enco
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogOpenTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -302,9 +289,7 @@ var xFileDialogOpenTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogOpenTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogOpenTextFileFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
@@ -334,7 +319,6 @@ func (x *FileDialog) OpenTextFileFinish(ResultVar gio.AsyncResult, EncodingVar *
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogSave func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -345,9 +329,7 @@ var xFileDialogSave func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogSave(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogSaveFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -371,7 +353,6 @@ func (x *FileDialog) SaveFinish(ResultVar gio.AsyncResult) (*gio.FileBase, error
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogSaveTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -385,9 +366,7 @@ var xFileDialogSaveTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogSaveTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogSaveTextFileFinish func(uintptr, uintptr, *string, *string, **glib.Error) uintptr
@@ -420,7 +399,6 @@ func (x *FileDialog) SaveTextFileFinish(ResultVar gio.AsyncResult, EncodingVar *
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogSelectFolder func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -435,9 +413,7 @@ var xFileDialogSelectFolder func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogSelectFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogSelectFolderFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -461,7 +437,6 @@ func (x *FileDialog) SelectFolderFinish(ResultVar gio.AsyncResult) (*gio.FileBas
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogSelectMultipleFolders func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -476,9 +451,7 @@ var xFileDialogSelectMultipleFolders func(uintptr, uintptr, uintptr, uintptr, ui
 //
 // The @callback will be called when the dialog is closed.
 func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xFileDialogSelectMultipleFolders(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xFileDialogSelectMultipleFoldersFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -502,7 +475,6 @@ func (x *FileDialog) SelectMultipleFoldersFinish(ResultVar gio.AsyncResult) (*gi
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileDialogSetAcceptLabel func(uintptr, string)
@@ -513,9 +485,7 @@ var xFileDialogSetAcceptLabel func(uintptr, string)
 // fall back to a default label, depending on what API is used
 // to launch the file dialog.
 func (x *FileDialog) SetAcceptLabel(AcceptLabelVar string) {
-
 	xFileDialogSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
-
 }
 
 var xFileDialogSetDefaultFilter func(uintptr, uintptr)
@@ -527,9 +497,7 @@ var xFileDialogSetDefaultFilter func(uintptr, uintptr)
 // will be used as the default filter. If that list is empty, the dialog
 // will be unfiltered.
 func (x *FileDialog) SetDefaultFilter(FilterVar *FileFilter) {
-
 	xFileDialogSetDefaultFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 var xFileDialogSetFilters func(uintptr, uintptr)
@@ -537,9 +505,7 @@ var xFileDialogSetFilters func(uintptr, uintptr)
 // Sets the filters that will be offered to the user
 // in the file chooser dialog.
 func (x *FileDialog) SetFilters(FiltersVar gio.ListModel) {
-
 	xFileDialogSetFilters(x.GoPointer(), FiltersVar.GoPointer())
-
 }
 
 var xFileDialogSetInitialFile func(uintptr, uintptr)
@@ -552,9 +518,7 @@ var xFileDialogSetInitialFile func(uintptr, uintptr)
 // [method@Gtk.FileDialog.set_initial_name] with the
 // directory and name of @file, respectively.
 func (x *FileDialog) SetInitialFile(FileVar gio.File) {
-
 	xFileDialogSetInitialFile(x.GoPointer(), FileVar.GoPointer())
-
 }
 
 var xFileDialogSetInitialFolder func(uintptr, uintptr)
@@ -562,9 +526,7 @@ var xFileDialogSetInitialFolder func(uintptr, uintptr)
 // Sets the folder that will be set as the
 // initial folder in the file chooser dialog.
 func (x *FileDialog) SetInitialFolder(FolderVar gio.File) {
-
 	xFileDialogSetInitialFolder(x.GoPointer(), FolderVar.GoPointer())
-
 }
 
 var xFileDialogSetInitialName func(uintptr, string)
@@ -578,9 +540,7 @@ var xFileDialogSetInitialName func(uintptr, string)
 // via [property@Gtk.FileDialog:initial-folder], the dialog will
 // preselect it.
 func (x *FileDialog) SetInitialName(NameVar string) {
-
 	xFileDialogSetInitialName(x.GoPointer(), NameVar)
-
 }
 
 var xFileDialogSetModal func(uintptr, bool)
@@ -588,18 +548,14 @@ var xFileDialogSetModal func(uintptr, bool)
 // Sets whether the file chooser dialog blocks interaction
 // with the parent window while it is presented.
 func (x *FileDialog) SetModal(ModalVar bool) {
-
 	xFileDialogSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xFileDialogSetTitle func(uintptr, string)
 
 // Sets the title that will be shown on the file chooser dialog.
 func (x *FileDialog) SetTitle(TitleVar string) {
-
 	xFileDialogSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *FileDialog) GoPointer() uintptr {
@@ -733,5 +689,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileDialogSetInitialName, libs, "gtk_file_dialog_set_initial_name")
 	core.PuregoSafeRegister(&xFileDialogSetModal, libs, "gtk_file_dialog_set_modal")
 	core.PuregoSafeRegister(&xFileDialogSetTitle, libs, "gtk_file_dialog_set_title")
-
 }

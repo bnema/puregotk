@@ -298,9 +298,7 @@ var xLayoutManagerAllocate func(uintptr, uintptr, int32, int32, int32)
 // a @widget, and computes the position and sizes of the children of
 // the @widget using the layout management policy of @manager.
 func (x *LayoutManager) Allocate(WidgetVar *Widget, WidthVar int32, HeightVar int32, BaselineVar int32) {
-
 	xLayoutManagerAllocate(x.GoPointer(), WidgetVar.GoPointer(), WidthVar, HeightVar, BaselineVar)
-
 }
 
 var xLayoutManagerGetLayoutChild func(uintptr, uintptr) uintptr
@@ -331,7 +329,6 @@ var xLayoutManagerGetRequestMode func(uintptr) SizeRequestMode
 
 // Retrieves the request mode of @manager.
 func (x *LayoutManager) GetRequestMode() SizeRequestMode {
-
 	cret := xLayoutManagerGetRequestMode(x.GoPointer())
 	return cret
 }
@@ -360,9 +357,7 @@ var xLayoutManagerLayoutChanged func(uintptr)
 // This function should be called by subclasses of `GtkLayoutManager`
 // in response to changes to their layout management policies.
 func (x *LayoutManager) LayoutChanged() {
-
 	xLayoutManagerLayoutChanged(x.GoPointer())
-
 }
 
 var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int32, *int32, *int32, *int32, *int32)
@@ -373,9 +368,7 @@ var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int32, *int32, *in
 // See the [class@Gtk.Widget] documentation on layout management for
 // more details.
 func (x *LayoutManager) Measure(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int32, MinimumVar *int32, NaturalVar *int32, MinimumBaselineVar *int32, NaturalBaselineVar *int32) {
-
 	xLayoutManagerMeasure(x.GoPointer(), WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
-
 }
 
 func (c *LayoutManager) GoPointer() uintptr {
@@ -409,5 +402,4 @@ func init() {
 	core.PuregoSafeRegister(&xLayoutManagerGetWidget, libs, "gtk_layout_manager_get_widget")
 	core.PuregoSafeRegister(&xLayoutManagerLayoutChanged, libs, "gtk_layout_manager_layout_changed")
 	core.PuregoSafeRegister(&xLayoutManagerMeasure, libs, "gtk_layout_manager_measure")
-
 }

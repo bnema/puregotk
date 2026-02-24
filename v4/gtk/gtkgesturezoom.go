@@ -67,7 +67,6 @@ var xGestureZoomGetScaleDelta func(uintptr) float64
 // starting point is considered 1:1). If @gesture is not
 // active, 1 is returned.
 func (x *GestureZoom) GetScaleDelta() float64 {
-
 	cret := xGestureZoomGetScaleDelta(x.GoPointer())
 	return cret
 }
@@ -96,7 +95,6 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32
 		cbFn := *cb
 
 		cbFn(fa, ScaleVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -120,5 +118,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureZoom, libs, "gtk_gesture_zoom_new")
 
 	core.PuregoSafeRegister(&xGestureZoomGetScaleDelta, libs, "gtk_gesture_zoom_get_scale_delta")
-
 }

@@ -61,7 +61,6 @@ var xSeatGetCapabilities func(uintptr) SeatCapabilities
 
 // Returns the capabilities this `GdkSeat` currently has.
 func (x *Seat) GetCapabilities() SeatCapabilities {
-
 	cret := xSeatGetCapabilities(x.GoPointer())
 	return cret
 }
@@ -70,7 +69,6 @@ var xSeatGetDevices func(uintptr, SeatCapabilities) *glib.List
 
 // Returns the devices that match the given capabilities.
 func (x *Seat) GetDevices(CapabilitiesVar SeatCapabilities) *glib.List {
-
 	cret := xSeatGetDevices(x.GoPointer(), CapabilitiesVar)
 	return cret
 }
@@ -130,7 +128,6 @@ var xSeatGetTools func(uintptr) *glib.List
 
 // Returns all `GdkDeviceTools` that are known to the application.
 func (x *Seat) GetTools() *glib.List {
-
 	cret := xSeatGetTools(x.GoPointer())
 	return cret
 }
@@ -159,7 +156,6 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, DeviceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -179,7 +175,6 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, DeviceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -205,7 +200,6 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ToolVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -225,7 +219,6 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ToolVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -254,5 +247,4 @@ func init() {
 	core.PuregoSafeRegister(&xSeatGetKeyboard, libs, "gdk_seat_get_keyboard")
 	core.PuregoSafeRegister(&xSeatGetPointer, libs, "gdk_seat_get_pointer")
 	core.PuregoSafeRegister(&xSeatGetTools, libs, "gdk_seat_get_tools")
-
 }

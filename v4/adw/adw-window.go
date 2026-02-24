@@ -149,16 +149,13 @@ var xWindowAddBreakpoint func(uintptr, uintptr)
 
 // Adds @breakpoint to @self.
 func (x *Window) AddBreakpoint(BreakpointVar *Breakpoint) {
-
 	xWindowAddBreakpoint(x.GoPointer(), BreakpointVar.GoPointer())
-
 }
 
 var xWindowGetAdaptivePreview func(uintptr) bool
 
 // Gets whether adaptive preview for @self is currently open.
 func (x *Window) GetAdaptivePreview() bool {
-
 	cret := xWindowGetAdaptivePreview(x.GoPointer())
 	return cret
 }
@@ -246,9 +243,7 @@ var xWindowSetAdaptivePreview func(uintptr, bool)
 //
 // Most applications should not use this function.
 func (x *Window) SetAdaptivePreview(AdaptivePreviewVar bool) {
-
 	xWindowSetAdaptivePreview(x.GoPointer(), AdaptivePreviewVar)
-
 }
 
 var xWindowSetContent func(uintptr, uintptr)
@@ -257,9 +252,7 @@ var xWindowSetContent func(uintptr, uintptr)
 //
 // This method should always be used instead of [method@Gtk.Window.set_child].
 func (x *Window) SetContent(ContentVar *gtk.Widget) {
-
 	xWindowSetContent(x.GoPointer(), ContentVar.GoPointer())
-
 }
 
 func (c *Window) GoPointer() uintptr {
@@ -316,9 +309,7 @@ func (x *Window) GetPropertyAdaptivePreview() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Window) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -339,7 +330,6 @@ func (x *Window) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Window) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -364,7 +354,6 @@ func (x *Window) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Window) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -403,30 +392,23 @@ func (x *Window) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Window) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Window) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Window) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Window) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -439,9 +421,7 @@ func (x *Window) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Window) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -449,9 +429,7 @@ func (x *Window) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -460,9 +438,7 @@ func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Window) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -484,9 +460,7 @@ func (x *Window) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Window) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -496,9 +470,7 @@ func (x *Window) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -520,9 +492,7 @@ func (x *Window) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.A
 //
 // ```
 func (x *Window) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -532,9 +502,7 @@ func (x *Window) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -557,9 +525,7 @@ func (x *Window) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.Acc
 //
 // ```
 func (x *Window) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -569,9 +535,7 @@ func (x *Window) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -579,7 +543,6 @@ func (x *Window) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleSt
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Window) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -619,27 +582,21 @@ func (x *Window) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *Window) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Window) Realize() {
-
 	gtk.XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Window) Unrealize() {
-
 	gtk.XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -686,9 +643,7 @@ func (x *Window) GetFocus() *gtk.Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *Window) SetFocus(FocusVar *gtk.Widget) {
-
 	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -715,5 +670,4 @@ func init() {
 	core.PuregoSafeRegister(&xWindowGetVisibleDialog, libs, "adw_window_get_visible_dialog")
 	core.PuregoSafeRegister(&xWindowSetAdaptivePreview, libs, "adw_window_set_adaptive_preview")
 	core.PuregoSafeRegister(&xWindowSetContent, libs, "adw_window_set_content")
-
 }

@@ -96,7 +96,6 @@ var xSpringAnimationCalculateValue func(uintptr, uint32) float64
 //
 // See also [method@SpringAnimation.calculate_velocity].
 func (x *SpringAnimation) CalculateValue(TimeVar uint32) float64 {
-
 	cret := xSpringAnimationCalculateValue(x.GoPointer(), TimeVar)
 	return cret
 }
@@ -110,7 +109,6 @@ var xSpringAnimationCalculateVelocity func(uintptr, uint32) float64
 //
 // See also [method@SpringAnimation.calculate_value].
 func (x *SpringAnimation) CalculateVelocity(TimeVar uint32) float64 {
-
 	cret := xSpringAnimationCalculateVelocity(x.GoPointer(), TimeVar)
 	return cret
 }
@@ -119,7 +117,6 @@ var xSpringAnimationGetClamp func(uintptr) bool
 
 // Gets whether @self should be clamped.
 func (x *SpringAnimation) GetClamp() bool {
-
 	cret := xSpringAnimationGetClamp(x.GoPointer())
 	return cret
 }
@@ -128,7 +125,6 @@ var xSpringAnimationGetEpsilon func(uintptr) float64
 
 // Gets the precision of the spring.
 func (x *SpringAnimation) GetEpsilon() float64 {
-
 	cret := xSpringAnimationGetEpsilon(x.GoPointer())
 	return cret
 }
@@ -139,7 +135,6 @@ var xSpringAnimationGetEstimatedDuration func(uintptr) uint32
 //
 // Can be [const@DURATION_INFINITE] if the spring damping is set to 0.
 func (x *SpringAnimation) GetEstimatedDuration() uint32 {
-
 	cret := xSpringAnimationGetEstimatedDuration(x.GoPointer())
 	return cret
 }
@@ -148,7 +143,6 @@ var xSpringAnimationGetInitialVelocity func(uintptr) float64
 
 // Gets the initial velocity of @self.
 func (x *SpringAnimation) GetInitialVelocity() float64 {
-
 	cret := xSpringAnimationGetInitialVelocity(x.GoPointer())
 	return cret
 }
@@ -157,7 +151,6 @@ var xSpringAnimationGetSpringParams func(uintptr) *SpringParams
 
 // Gets the physical parameters of the spring of @self.
 func (x *SpringAnimation) GetSpringParams() *SpringParams {
-
 	cret := xSpringAnimationGetSpringParams(x.GoPointer())
 	return cret
 }
@@ -166,7 +159,6 @@ var xSpringAnimationGetValueFrom func(uintptr) float64
 
 // Gets the value @self will animate from.
 func (x *SpringAnimation) GetValueFrom() float64 {
-
 	cret := xSpringAnimationGetValueFrom(x.GoPointer())
 	return cret
 }
@@ -175,7 +167,6 @@ var xSpringAnimationGetValueTo func(uintptr) float64
 
 // Gets the value @self will animate to.
 func (x *SpringAnimation) GetValueTo() float64 {
-
 	cret := xSpringAnimationGetValueTo(x.GoPointer())
 	return cret
 }
@@ -184,7 +175,6 @@ var xSpringAnimationGetVelocity func(uintptr) float64
 
 // Gets the current velocity of @self.
 func (x *SpringAnimation) GetVelocity() float64 {
-
 	cret := xSpringAnimationGetVelocity(x.GoPointer())
 	return cret
 }
@@ -199,9 +189,7 @@ var xSpringAnimationSetClamp func(uintptr, bool)
 // It won't prevent overshooting [property@SpringAnimation:value-from] if a
 // relative negative [property@SpringAnimation:initial-velocity] is set.
 func (x *SpringAnimation) SetClamp(ClampVar bool) {
-
 	xSpringAnimationSetClamp(x.GoPointer(), ClampVar)
-
 }
 
 var xSpringAnimationSetEpsilon func(uintptr, float64)
@@ -219,9 +207,7 @@ var xSpringAnimationSetEpsilon func(uintptr, float64)
 //
 // The default value is 0.001.
 func (x *SpringAnimation) SetEpsilon(EpsilonVar float64) {
-
 	xSpringAnimationSetEpsilon(x.GoPointer(), EpsilonVar)
-
 }
 
 var xSpringAnimationSetInitialVelocity func(uintptr, float64)
@@ -230,18 +216,14 @@ var xSpringAnimationSetInitialVelocity func(uintptr, float64)
 //
 // Initial velocity affects only the animation curve, but not its duration.
 func (x *SpringAnimation) SetInitialVelocity(VelocityVar float64) {
-
 	xSpringAnimationSetInitialVelocity(x.GoPointer(), VelocityVar)
-
 }
 
 var xSpringAnimationSetSpringParams func(uintptr, *SpringParams)
 
 // Sets the physical parameters of the spring of @self.
 func (x *SpringAnimation) SetSpringParams(SpringParamsVar *SpringParams) {
-
 	xSpringAnimationSetSpringParams(x.GoPointer(), SpringParamsVar)
-
 }
 
 var xSpringAnimationSetValueFrom func(uintptr, float64)
@@ -251,9 +233,7 @@ var xSpringAnimationSetValueFrom func(uintptr, float64)
 // The animation will start at this value and end at
 // [property@SpringAnimation:value-to].
 func (x *SpringAnimation) SetValueFrom(ValueVar float64) {
-
 	xSpringAnimationSetValueFrom(x.GoPointer(), ValueVar)
-
 }
 
 var xSpringAnimationSetValueTo func(uintptr, float64)
@@ -263,9 +243,7 @@ var xSpringAnimationSetValueTo func(uintptr, float64)
 // The animation will start at [property@SpringAnimation:value-from] and end at
 // this value.
 func (x *SpringAnimation) SetValueTo(ValueVar float64) {
-
 	xSpringAnimationSetValueTo(x.GoPointer(), ValueVar)
-
 }
 
 func (c *SpringAnimation) GoPointer() uintptr {
@@ -481,5 +459,4 @@ func init() {
 	core.PuregoSafeRegister(&xSpringAnimationSetSpringParams, libs, "adw_spring_animation_set_spring_params")
 	core.PuregoSafeRegister(&xSpringAnimationSetValueFrom, libs, "adw_spring_animation_set_value_from")
 	core.PuregoSafeRegister(&xSpringAnimationSetValueTo, libs, "adw_spring_animation_set_value_to")
-
 }

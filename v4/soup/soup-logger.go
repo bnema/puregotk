@@ -164,7 +164,6 @@ var xLoggerGetMaxBodySize func(uintptr) int32
 
 // Get the maximum body size for @logger.
 func (x *Logger) GetMaxBodySize() int32 {
-
 	cret := xLoggerGetMaxBodySize(x.GoPointer())
 	return cret
 }
@@ -173,9 +172,7 @@ var xLoggerSetMaxBodySize func(uintptr, int32)
 
 // Sets the maximum body size for @logger (-1 means no limit).
 func (x *Logger) SetMaxBodySize(MaxBodySizeVar int32) {
-
 	xLoggerSetMaxBodySize(x.GoPointer(), MaxBodySizeVar)
-
 }
 
 var xLoggerSetPrinter func(uintptr, uintptr, uintptr, uintptr)
@@ -183,9 +180,7 @@ var xLoggerSetPrinter func(uintptr, uintptr, uintptr, uintptr)
 // Sets up an alternate log printing routine, if you don't want
 // the log to go to `stdout`.
 func (x *Logger) SetPrinter(PrinterVar *LoggerPrinter, PrinterDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xLoggerSetPrinter(x.GoPointer(), glib.NewCallback(PrinterVar), PrinterDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xLoggerSetRequestFilter func(uintptr, uintptr, uintptr, uintptr)
@@ -197,9 +192,7 @@ var xLoggerSetRequestFilter func(uintptr, uintptr, uintptr, uintptr)
 // set a request filter, @logger will just always log requests at the
 // level passed to [ctor@Logger.new].)
 func (x *Logger) SetRequestFilter(RequestFilterVar *LoggerFilter, FilterDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xLoggerSetRequestFilter(x.GoPointer(), glib.NewCallback(RequestFilterVar), FilterDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xLoggerSetResponseFilter func(uintptr, uintptr, uintptr, uintptr)
@@ -211,9 +204,7 @@ var xLoggerSetResponseFilter func(uintptr, uintptr, uintptr, uintptr)
 // set a response filter, @logger will just always log responses at
 // the level passed to [ctor@Logger.new].)
 func (x *Logger) SetResponseFilter(ResponseFilterVar *LoggerFilter, FilterDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xLoggerSetResponseFilter(x.GoPointer(), glib.NewCallback(ResponseFilterVar), FilterDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 func (c *Logger) GoPointer() uintptr {
@@ -271,5 +262,4 @@ func init() {
 	core.PuregoSafeRegister(&xLoggerSetPrinter, libs, "soup_logger_set_printer")
 	core.PuregoSafeRegister(&xLoggerSetRequestFilter, libs, "soup_logger_set_request_filter")
 	core.PuregoSafeRegister(&xLoggerSetResponseFilter, libs, "soup_logger_set_response_filter")
-
 }

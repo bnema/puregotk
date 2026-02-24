@@ -123,7 +123,6 @@ var xEasingEase func(Easing, float64) float64
 //
 // @value should generally be in the [0, 1] range.
 func EasingEase(SelfVar Easing, ValueVar float64) float64 {
-
 	cret := xEasingEase(SelfVar, ValueVar)
 	return cret
 }
@@ -143,5 +142,4 @@ func init() {
 	core.PuregoSafeRegister(&xEasingGLibType, libs, "adw_easing_get_type")
 
 	core.PuregoSafeRegister(&xEasingEase, libs, "adw_easing_ease")
-
 }

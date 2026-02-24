@@ -12,9 +12,7 @@ var xKeyvalConvertCase func(uint32, *uint32, *uint32)
 //
 // Examples of keyvals are `GDK_KEY_a`, `GDK_KEY_Enter`, `GDK_KEY_F1`, etc.
 func KeyvalConvertCase(SymbolVar uint32, LowerVar *uint32, UpperVar *uint32) {
-
 	xKeyvalConvertCase(SymbolVar, LowerVar, UpperVar)
-
 }
 
 var xKeyvalFromName func(string) uint32
@@ -25,7 +23,6 @@ var xKeyvalFromName func(string) uint32
 // `gdk/gdkkeysyms.h` header file
 // but without the leading “GDK_KEY_”.
 func KeyvalFromName(KeyvalNameVar string) uint32 {
-
 	cret := xKeyvalFromName(KeyvalNameVar)
 	return cret
 }
@@ -34,7 +31,6 @@ var xKeyvalIsLower func(uint32) bool
 
 // Returns true if the given key value is in lower case.
 func KeyvalIsLower(KeyvalVar uint32) bool {
-
 	cret := xKeyvalIsLower(KeyvalVar)
 	return cret
 }
@@ -43,7 +39,6 @@ var xKeyvalIsUpper func(uint32) bool
 
 // Returns true if the given key value is in upper case.
 func KeyvalIsUpper(KeyvalVar uint32) bool {
-
 	cret := xKeyvalIsUpper(KeyvalVar)
 	return cret
 }
@@ -56,7 +51,6 @@ var xKeyvalName func(uint32) string
 // `gdk/gdkkeysyms.h` header file
 // but without the leading “GDK_KEY_”.
 func KeyvalName(KeyvalVar uint32) string {
-
 	cret := xKeyvalName(KeyvalVar)
 	return cret
 }
@@ -65,7 +59,6 @@ var xKeyvalToLower func(uint32) uint32
 
 // Converts a key value to lower case, if applicable.
 func KeyvalToLower(KeyvalVar uint32) uint32 {
-
 	cret := xKeyvalToLower(KeyvalVar)
 	return cret
 }
@@ -79,7 +72,6 @@ var xKeyvalToUnicode func(uint32) uint32
 // into consideration, which might be expected for particular
 // keyvals, such as `GDK_KEY_KP_Decimal`.
 func KeyvalToUnicode(KeyvalVar uint32) uint32 {
-
 	cret := xKeyvalToUnicode(KeyvalVar)
 	return cret
 }
@@ -88,7 +80,6 @@ var xKeyvalToUpper func(uint32) uint32
 
 // Converts a key value to upper case, if applicable.
 func KeyvalToUpper(KeyvalVar uint32) uint32 {
-
 	cret := xKeyvalToUpper(KeyvalVar)
 	return cret
 }
@@ -97,7 +88,6 @@ var xUnicodeToKeyval func(uint32) uint32
 
 // Converts from a Unicode character to a key symbol.
 func UnicodeToKeyval(WcVar uint32) uint32 {
-
 	cret := xUnicodeToKeyval(WcVar)
 	return cret
 }
@@ -123,5 +113,4 @@ func init() {
 	core.PuregoSafeRegister(&xKeyvalToUnicode, libs, "gdk_keyval_to_unicode")
 	core.PuregoSafeRegister(&xKeyvalToUpper, libs, "gdk_keyval_to_upper")
 	core.PuregoSafeRegister(&xUnicodeToKeyval, libs, "gdk_unicode_to_keyval")
-
 }

@@ -238,7 +238,6 @@ var xFileMonitorCancel func(uintptr) bool
 
 // Cancels a file monitor.
 func (x *FileMonitor) Cancel() bool {
-
 	cret := xFileMonitorCancel(x.GoPointer())
 	return cret
 }
@@ -253,16 +252,13 @@ var xFileMonitorEmitEvent func(uintptr, uintptr, uintptr, FileMonitorEvent)
 // thread-default main context (see [method@GLib.MainContext.push_thread_default])
 // of the thread that the monitor was created in.
 func (x *FileMonitor) EmitEvent(ChildVar File, OtherFileVar File, EventTypeVar FileMonitorEvent) {
-
 	xFileMonitorEmitEvent(x.GoPointer(), ChildVar.GoPointer(), OtherFileVar.GoPointer(), EventTypeVar)
-
 }
 
 var xFileMonitorIsCancelled func(uintptr) bool
 
 // Returns whether the monitor is canceled.
 func (x *FileMonitor) IsCancelled() bool {
-
 	cret := xFileMonitorIsCancelled(x.GoPointer())
 	return cret
 }
@@ -272,9 +268,7 @@ var xFileMonitorSetRateLimit func(uintptr, int32)
 // Sets the rate limit to which the @monitor will report
 // consecutive change events to the same file.
 func (x *FileMonitor) SetRateLimit(LimitMsecsVar int32) {
-
 	xFileMonitorSetRateLimit(x.GoPointer(), LimitMsecsVar)
-
 }
 
 func (c *FileMonitor) GoPointer() uintptr {
@@ -353,7 +347,6 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 		cbFn := *cb
 
 		cbFn(fa, FileVarp, OtherFileVarp, EventTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -378,5 +371,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileMonitorEmitEvent, libs, "g_file_monitor_emit_event")
 	core.PuregoSafeRegister(&xFileMonitorIsCancelled, libs, "g_file_monitor_is_cancelled")
 	core.PuregoSafeRegister(&xFileMonitorSetRateLimit, libs, "g_file_monitor_set_rate_limit")
-
 }

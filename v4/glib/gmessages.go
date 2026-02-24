@@ -154,9 +154,7 @@ const (
 var xAssertWarning func(string, string, int32, string, string)
 
 func AssertWarning(LogDomainVar string, FileVar string, LineVar int32, PrettyFunctionVar string, ExpressionVar string) {
-
 	xAssertWarning(LogDomainVar, FileVar, LineVar, PrettyFunctionVar, ExpressionVar)
-
 }
 
 var xLog func(string, LogLevelFlags, string, ...interface{})
@@ -174,9 +172,7 @@ var xLog func(string, LogLevelFlags, string, ...interface{})
 // If [structured logging is enabled](logging.html#using-structured-logging) this will
 // output via the structured log writer function (see [func@GLib.log_set_writer_func]).
 func Log(LogDomainVar string, LogLevelVar LogLevelFlags, FormatVar string, varArgs ...interface{}) {
-
 	xLog(LogDomainVar, LogLevelVar, FormatVar, varArgs...)
-
 }
 
 var xLogDefaultHandler func(string, LogLevelFlags, string, uintptr)
@@ -213,9 +209,7 @@ var xLogDefaultHandler func(string, LogLevelFlags, string, uintptr)
 // This has no effect if structured logging is enabled; see
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogDefaultHandler(LogDomainVar string, LogLevelVar LogLevelFlags, MessageVar string, UnusedDataVar uintptr) {
-
 	xLogDefaultHandler(LogDomainVar, LogLevelVar, MessageVar, UnusedDataVar)
-
 }
 
 var xLogGetAlwaysFatal func() LogLevelFlags
@@ -252,7 +246,6 @@ var xLogGetAlwaysFatal func() LogLevelFlags
 //
 // ```
 func LogGetAlwaysFatal() LogLevelFlags {
-
 	cret := xLogGetAlwaysFatal()
 	return cret
 }
@@ -269,7 +262,6 @@ var xLogGetDebugEnabled func() bool
 // `DEBUG_INVOCATION`, nor [func@GLib.log_writer_default_set_debug_domains]; see
 // the docs for [func@GLib.log_set_debug_enabled].
 func LogGetDebugEnabled() bool {
-
 	cret := xLogGetDebugEnabled()
 	return cret
 }
@@ -281,9 +273,7 @@ var xLogRemoveHandler func(string, uint32)
 // This has no effect if structured logging is enabled; see
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogRemoveHandler(LogDomainVar string, HandlerIdVar uint32) {
-
 	xLogRemoveHandler(LogDomainVar, HandlerIdVar)
-
 }
 
 var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
@@ -306,7 +296,6 @@ var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
 // otherwise it is up to the writer function to determine which log messages
 // are fatal. See [Using Structured Logging](logging.html#using-structured-logging).
 func LogSetAlwaysFatal(FatalMaskVar LogLevelFlags) LogLevelFlags {
-
 	cret := xLogSetAlwaysFatal(FatalMaskVar)
 	return cret
 }
@@ -322,9 +311,7 @@ var xLogSetDebugEnabled func(bool)
 // Note that this should not be used from within library code to enable debug
 // output — it is intended for external use.
 func LogSetDebugEnabled(EnabledVar bool) {
-
 	xLogSetDebugEnabled(EnabledVar)
-
 }
 
 var xLogSetDefaultHandler func(uintptr, uintptr) uintptr
@@ -338,7 +325,6 @@ var xLogSetDefaultHandler func(uintptr, uintptr) uintptr
 // This has no effect if structured logging is enabled; see
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
-
 	cret := xLogSetDefaultHandler(NewCallback(LogFuncVar), UserDataVar)
 	return cret
 }
@@ -360,7 +346,6 @@ var xLogSetFatalMask func(string, LogLevelFlags) LogLevelFlags
 // [flags@GLib.LogLevelFlags.LEVEL_WARNING], [flags@GLib.LogLevelFlags.LEVEL_MESSAGE], [flags@GLib.LogLevelFlags.LEVEL_INFO] or
 // [flags@GLib.LogLevelFlags.LEVEL_DEBUG] as fatal except inside of test programs.
 func LogSetFatalMask(LogDomainVar string, FatalMaskVar LogLevelFlags) LogLevelFlags {
-
 	cret := xLogSetFatalMask(LogDomainVar, FatalMaskVar)
 	return cret
 }
@@ -411,7 +396,6 @@ var xLogSetHandler func(string, LogLevelFlags, uintptr, uintptr) uint32
 //
 // ```
 func LogSetHandler(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr) uint32 {
-
 	cret := xLogSetHandler(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar)
 	return cret
 }
@@ -426,7 +410,6 @@ var xLogSetHandlerFull func(string, LogLevelFlags, uintptr, uintptr, uintptr) ui
 // The `log_domain` parameter can be set to `NULL` or an empty string to use the default
 // application domain.
 func LogSetHandlerFull(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr, DestroyVar *DestroyNotify) uint32 {
-
 	cret := xLogSetHandlerFull(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar, NewCallback(DestroyVar))
 	return cret
 }
@@ -445,9 +428,7 @@ var xLogSetWriterFunc func(uintptr, uintptr, uintptr)
 //
 // There can only be one writer function. It is an error to set more than one.
 func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeVar *DestroyNotify) {
-
 	xLogSetWriterFunc(NewCallback(FuncVar), UserDataVar, NewCallback(UserDataFreeVar))
-
 }
 
 var xLogStructured func(string, LogLevelFlags, ...interface{})
@@ -546,9 +527,7 @@ var xLogStructured func(string, LogLevelFlags, ...interface{})
 // append a new-line character after the message, so you should not add one
 // manually to the format string.
 func LogStructured(LogDomainVar string, LogLevelVar LogLevelFlags, varArgs ...interface{}) {
-
 	xLogStructured(LogDomainVar, LogLevelVar, varArgs...)
-
 }
 
 var xLogStructuredArray func(LogLevelFlags, []LogField, uint)
@@ -565,17 +544,13 @@ var xLogStructuredArray func(LogLevelFlags, []LogField, uint)
 // This assumes that @log_level is already present in @fields (typically as the
 // `PRIORITY` field).
 func LogStructuredArray(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint) {
-
 	xLogStructuredArray(LogLevelVar, FieldsVar, NFieldsVar)
-
 }
 
 var xLogStructuredStandard func(string, LogLevelFlags, string, string, string, string, ...interface{})
 
 func LogStructuredStandard(LogDomainVar string, LogLevelVar LogLevelFlags, FileVar string, LineVar string, FuncVar string, MessageFormatVar string, varArgs ...interface{}) {
-
 	xLogStructuredStandard(LogDomainVar, LogLevelVar, FileVar, LineVar, FuncVar, MessageFormatVar, varArgs...)
-
 }
 
 var xLogVariant func(string, LogLevelFlags, *Variant)
@@ -596,9 +571,7 @@ var xLogVariant func(string, LogLevelFlags, *Variant)
 //
 // For more details on its usage and about the parameters, see [func@GLib.log_structured].
 func LogVariant(LogDomainVar string, LogLevelVar LogLevelFlags, FieldsVar *Variant) {
-
 	xLogVariant(LogDomainVar, LogLevelVar, FieldsVar)
-
 }
 
 var xLogWriterDefault func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOutput
@@ -626,7 +599,6 @@ var xLogWriterDefault func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOu
 // determine which messages are fatal. When using a custom writer function instead it is
 // up to the writer function to determine which log messages are fatal.
 func LogWriterDefault(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
-
 	cret := xLogWriterDefault(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
 	return cret
 }
@@ -638,9 +610,7 @@ var xLogWriterDefaultSetDebugDomains func(string)
 //
 // This function is thread-safe.
 func LogWriterDefaultSetDebugDomains(DomainsVar string) {
-
 	xLogWriterDefaultSetDebugDomains(DomainsVar)
-
 }
 
 var xLogWriterDefaultSetUseStderr func(bool)
@@ -661,9 +631,7 @@ var xLogWriterDefaultSetUseStderr func(bool)
 // called at the very start of a program, before creating any other threads
 // or creating objects that could create worker threads of their own.
 func LogWriterDefaultSetUseStderr(UseStderrVar bool) {
-
 	xLogWriterDefaultSetUseStderr(UseStderrVar)
-
 }
 
 var xLogWriterDefaultWouldDrop func(LogLevelFlags, string) bool
@@ -700,7 +668,6 @@ var xLogWriterDefaultWouldDrop func(LogLevelFlags, string) bool
 //
 // ```
 func LogWriterDefaultWouldDrop(LogLevelVar LogLevelFlags, LogDomainVar string) bool {
-
 	cret := xLogWriterDefaultWouldDrop(LogLevelVar, LogDomainVar)
 	return cret
 }
@@ -719,7 +686,6 @@ var xLogWriterFormatFields func(LogLevelFlags, []LogField, uint, bool) string
 // encoded in the character set of the current locale, which is not necessarily
 // UTF-8.
 func LogWriterFormatFields(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UseColorVar bool) string {
-
 	cret := xLogWriterFormatFields(LogLevelVar, FieldsVar, NFieldsVar, UseColorVar)
 	return cret
 }
@@ -736,7 +702,6 @@ var xLogWriterIsJournald func(int32) bool
 // is_journald = g_log_writer_is_journald (fileno (stderr));
 // ```
 func LogWriterIsJournald(OutputFdVar int32) bool {
-
 	cret := xLogWriterIsJournald(OutputFdVar)
 	return cret
 }
@@ -755,7 +720,6 @@ var xLogWriterJournald func(LogLevelFlags, []LogField, uint, uintptr) LogWriterO
 // If GLib has been compiled without systemd support, this function is still
 // defined, but will always return [enum@GLib.LogWriterOutput.UNHANDLED].
 func LogWriterJournald(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
-
 	cret := xLogWriterJournald(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
 	return cret
 }
@@ -780,7 +744,6 @@ var xLogWriterStandardStreams func(LogLevelFlags, []LogField, uint, uintptr) Log
 //
 // This is suitable for use as a [type@GLib.LogWriterFunc].
 func LogWriterStandardStreams(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
-
 	cret := xLogWriterStandardStreams(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
 	return cret
 }
@@ -792,7 +755,6 @@ var xLogWriterSupportsColor func(int32) bool
 //
 // If so, they can safely be used when formatting log messages.
 func LogWriterSupportsColor(OutputFdVar int32) bool {
-
 	cret := xLogWriterSupportsColor(OutputFdVar)
 	return cret
 }
@@ -812,7 +774,6 @@ var xLogWriterSyslog func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOut
 // If syslog is not supported, this function is still defined, but will always
 // return [enum@GLib.LogWriterOutput.UNHANDLED].
 func LogWriterSyslog(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
-
 	cret := xLogWriterSyslog(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
 	return cret
 }
@@ -835,9 +796,7 @@ var xLogv func(string, LogLevelFlags, string, []interface{})
 // The `log_domain` parameter can be set to `NULL` or an empty string to use the default
 // application domain.
 func Logv(LogDomainVar string, LogLevelVar LogLevelFlags, FormatVar string, ArgsVar []interface{}) {
-
 	xLogv(LogDomainVar, LogLevelVar, FormatVar, ArgsVar)
-
 }
 
 var xPrint func(string, ...interface{})
@@ -854,9 +813,7 @@ var xPrint func(string, ...interface{})
 // use [func@GLib.log], [func@GLib.log_structured], or the convenience macros
 // [func@GLib.message], [func@GLib.warning] and [func@GLib.error].
 func Print(FormatVar string, varArgs ...interface{}) {
-
 	xPrint(FormatVar, varArgs...)
-
 }
 
 var xPrinterr func(string, ...interface{})
@@ -871,9 +828,7 @@ var xPrinterr func(string, ...interface{})
 // Instead [func@GLib.log] or [func@GLib.log_structured] should be used, or the convenience
 // macros [func@GLib.message], [func@GLib.warning] and [func@GLib.error].
 func Printerr(FormatVar string, varArgs ...interface{}) {
-
 	xPrinterr(FormatVar, varArgs...)
-
 }
 
 var xPrintfStringUpperBound func(string, []interface{}) uint
@@ -889,7 +844,6 @@ var xPrintfStringUpperBound func(string, []interface{}) uint
 // return cases if necessary. It is recommended to not use `%lc` or `%ls`
 // placeholders in any case, as their behaviour is locale-dependent.
 func PrintfStringUpperBound(FormatVar string, ArgsVar []interface{}) uint {
-
 	cret := xPrintfStringUpperBound(FormatVar, ArgsVar)
 	return cret
 }
@@ -899,9 +853,7 @@ var xReturnIfFailWarning func(string, string, string)
 // Internal function used to print messages from the public [func@GLib.return_if_fail]
 // and [func@GLib.return_val_if_fail] macros.
 func ReturnIfFailWarning(LogDomainVar string, PrettyFunctionVar string, ExpressionVar string) {
-
 	xReturnIfFailWarning(LogDomainVar, PrettyFunctionVar, ExpressionVar)
-
 }
 
 var xSetPrintHandler func(uintptr) uintptr
@@ -922,7 +874,6 @@ var xSetPrintHandler func(uintptr) uintptr
 // decorate its output and/or to write to `stderr`
 // in all platforms. Before GLib 2.76, this was `NULL`.
 func SetPrintHandler(FuncVar *PrintFunc) uintptr {
-
 	cret := xSetPrintHandler(NewCallbackNullable(FuncVar))
 	return cret
 }
@@ -945,7 +896,6 @@ var xSetPrinterrHandler func(uintptr) uintptr
 // its output and/or to write to `stderr` in all platforms.
 // Before GLib 2.76, this was `NULL`.
 func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
-
 	cret := xSetPrinterrHandler(NewCallbackNullable(FuncVar))
 	return cret
 }
@@ -955,9 +905,7 @@ var xWarnMessage func(string, string, int32, string, string)
 // Internal function used to print messages from the public [func@GLib.warn_if_reached]
 // and [func@GLib.warn_if_fail] macros.
 func WarnMessage(DomainVar string, FileVar string, LineVar int32, FuncVar string, WarnexprVar string) {
-
 	xWarnMessage(DomainVar, FileVar, LineVar, FuncVar, WarnexprVar)
-
 }
 
 func init() {
@@ -1007,5 +955,4 @@ func init() {
 	core.PuregoSafeRegister(&xSetPrintHandler, libs, "g_set_print_handler")
 	core.PuregoSafeRegister(&xSetPrinterrHandler, libs, "g_set_printerr_handler")
 	core.PuregoSafeRegister(&xWarnMessage, libs, "g_warn_message")
-
 }

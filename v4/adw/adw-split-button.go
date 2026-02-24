@@ -112,7 +112,6 @@ var xSplitButtonGetCanShrink func(uintptr) bool
 
 // gets whether the button can be smaller than the natural size of its contents.
 func (x *SplitButton) GetCanShrink() bool {
-
 	cret := xSplitButtonGetCanShrink(x.GoPointer())
 	return cret
 }
@@ -138,7 +137,6 @@ var xSplitButtonGetDirection func(uintptr) gtk.ArrowType
 
 // Gets the direction in which the popup will be popped up.
 func (x *SplitButton) GetDirection() gtk.ArrowType {
-
 	cret := xSplitButtonGetDirection(x.GoPointer())
 	return cret
 }
@@ -147,7 +145,6 @@ var xSplitButtonGetDropdownTooltip func(uintptr) string
 
 // Gets the tooltip of the dropdown button of @self.
 func (x *SplitButton) GetDropdownTooltip() string {
-
 	cret := xSplitButtonGetDropdownTooltip(x.GoPointer())
 	return cret
 }
@@ -156,7 +153,6 @@ var xSplitButtonGetIconName func(uintptr) string
 
 // Gets the name of the icon used to automatically populate the button.
 func (x *SplitButton) GetIconName() string {
-
 	cret := xSplitButtonGetIconName(x.GoPointer())
 	return cret
 }
@@ -165,7 +161,6 @@ var xSplitButtonGetLabel func(uintptr) string
 
 // Gets the label for @self.
 func (x *SplitButton) GetLabel() string {
-
 	cret := xSplitButtonGetLabel(x.GoPointer())
 	return cret
 }
@@ -208,7 +203,6 @@ var xSplitButtonGetUseUnderline func(uintptr) bool
 
 // Gets whether an underline in the text indicates a mnemonic.
 func (x *SplitButton) GetUseUnderline() bool {
-
 	cret := xSplitButtonGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -217,18 +211,14 @@ var xSplitButtonPopdown func(uintptr)
 
 // Dismisses the menu.
 func (x *SplitButton) Popdown() {
-
 	xSplitButtonPopdown(x.GoPointer())
-
 }
 
 var xSplitButtonPopup func(uintptr)
 
 // Pops up the menu.
 func (x *SplitButton) Popup() {
-
 	xSplitButtonPopup(x.GoPointer())
-
 }
 
 var xSplitButtonSetCanShrink func(uintptr, bool)
@@ -240,9 +230,7 @@ var xSplitButtonSetCanShrink func(uintptr, bool)
 // See [method@Gtk.Button.set_can_shrink] and
 // [method@Gtk.MenuButton.set_can_shrink].
 func (x *SplitButton) SetCanShrink(CanShrinkVar bool) {
-
 	xSplitButtonSetCanShrink(x.GoPointer(), CanShrinkVar)
-
 }
 
 var xSplitButtonSetChild func(uintptr, uintptr)
@@ -252,9 +240,7 @@ var xSplitButtonSetChild func(uintptr, uintptr)
 // Setting the child widget will set [property@SplitButton:label] and
 // [property@SplitButton:icon-name] to `NULL`.
 func (x *SplitButton) SetChild(ChildVar *gtk.Widget) {
-
 	xSplitButtonSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xSplitButtonSetDirection func(uintptr, gtk.ArrowType)
@@ -268,9 +254,7 @@ var xSplitButtonSetDirection func(uintptr, gtk.ArrowType)
 //
 // If you pass `GTK_ARROW_NONE`, it's equivalent to `GTK_ARROW_DOWN`.
 func (x *SplitButton) SetDirection(DirectionVar gtk.ArrowType) {
-
 	xSplitButtonSetDirection(x.GoPointer(), DirectionVar)
-
 }
 
 var xSplitButtonSetDropdownTooltip func(uintptr, string)
@@ -279,9 +263,7 @@ var xSplitButtonSetDropdownTooltip func(uintptr, string)
 //
 // The tooltip can be marked up with the Pango text markup language.
 func (x *SplitButton) SetDropdownTooltip(TooltipVar string) {
-
 	xSplitButtonSetDropdownTooltip(x.GoPointer(), TooltipVar)
-
 }
 
 var xSplitButtonSetIconName func(uintptr, string)
@@ -291,9 +273,7 @@ var xSplitButtonSetIconName func(uintptr, string)
 // Setting the icon name will set [property@SplitButton:label] and
 // [property@SplitButton:child] to `NULL`.
 func (x *SplitButton) SetIconName(IconNameVar string) {
-
 	xSplitButtonSetIconName(x.GoPointer(), IconNameVar)
-
 }
 
 var xSplitButtonSetLabel func(uintptr, string)
@@ -303,9 +283,7 @@ var xSplitButtonSetLabel func(uintptr, string)
 // Setting the label will set [property@SplitButton:icon-name] and
 // [property@SplitButton:child] to `NULL`.
 func (x *SplitButton) SetLabel(LabelVar string) {
-
 	xSplitButtonSetLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xSplitButtonSetMenuModel func(uintptr, uintptr)
@@ -321,9 +299,7 @@ var xSplitButtonSetMenuModel func(uintptr, uintptr)
 // If [property@SplitButton:popover] is already set, it will be dissociated from
 // the button, and the property is set to `NULL`.
 func (x *SplitButton) SetMenuModel(MenuModelVar *gio.MenuModel) {
-
 	xSplitButtonSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
-
 }
 
 var xSplitButtonSetPopover func(uintptr, uintptr)
@@ -335,9 +311,7 @@ var xSplitButtonSetPopover func(uintptr, uintptr)
 // If [property@SplitButton:menu-model] is set, the menu model is dissociated
 // from the button, and the property is set to `NULL`.
 func (x *SplitButton) SetPopover(PopoverVar *gtk.Popover) {
-
 	xSplitButtonSetPopover(x.GoPointer(), PopoverVar.GoPointer())
-
 }
 
 var xSplitButtonSetUseUnderline func(uintptr, bool)
@@ -346,9 +320,7 @@ var xSplitButtonSetUseUnderline func(uintptr, bool)
 //
 // See [property@SplitButton:label].
 func (x *SplitButton) SetUseUnderline(UseUnderlineVar bool) {
-
 	xSplitButtonSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 func (c *SplitButton) GoPointer() uintptr {
@@ -493,7 +465,6 @@ func (x *SplitButton) ConnectActivate(cb *func(SplitButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -513,7 +484,6 @@ func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -530,9 +500,7 @@ func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *SplitButton) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -553,7 +521,6 @@ func (x *SplitButton) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *SplitButton) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -578,7 +545,6 @@ func (x *SplitButton) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *SplitButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -617,30 +583,23 @@ func (x *SplitButton) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *SplitButton) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *SplitButton) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *SplitButton) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *SplitButton) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -653,9 +612,7 @@ func (x *SplitButton) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *SplitButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -663,9 +620,7 @@ func (x *SplitButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *SplitButton) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -674,9 +629,7 @@ func (x *SplitButton) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *SplitButton) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -698,9 +651,7 @@ func (x *SplitButton) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *SplitButton) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -710,9 +661,7 @@ func (x *SplitButton) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *SplitButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -734,9 +683,7 @@ func (x *SplitButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []
 //
 // ```
 func (x *SplitButton) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -746,9 +693,7 @@ func (x *SplitButton) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *SplitButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -771,9 +716,7 @@ func (x *SplitButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []gt
 //
 // ```
 func (x *SplitButton) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -783,21 +726,17 @@ func (x *SplitButton) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *SplitButton) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *SplitButton) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *SplitButton) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -816,9 +755,7 @@ func (x *SplitButton) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *SplitButton) SetActionName(ActionNameVar string) {
-
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -831,9 +768,7 @@ func (x *SplitButton) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *SplitButton) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -855,9 +790,7 @@ func (x *SplitButton) SetActionTarget(FormatStringVar string, varArgs ...interfa
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *SplitButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -866,9 +799,7 @@ func (x *SplitButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *SplitButton) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -876,7 +807,6 @@ func (x *SplitButton) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SplitButton) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -917,5 +847,4 @@ func init() {
 	core.PuregoSafeRegister(&xSplitButtonSetMenuModel, libs, "adw_split_button_set_menu_model")
 	core.PuregoSafeRegister(&xSplitButtonSetPopover, libs, "adw_split_button_set_popover")
 	core.PuregoSafeRegister(&xSplitButtonSetUseUnderline, libs, "adw_split_button_set_use_underline")
-
 }

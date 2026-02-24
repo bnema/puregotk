@@ -64,7 +64,6 @@ func (x *DtlsClientConnectionBase) SetGoPointer(ptr uintptr) {
 // Each item in the list is a #GByteArray which contains the complete
 // subject DN of the certificate authority.
 func (x *DtlsClientConnectionBase) GetAcceptedCas() *glib.List {
-
 	cret := XGDtlsClientConnectionGetAcceptedCas(x.GoPointer())
 	return cret
 }
@@ -90,7 +89,6 @@ func (x *DtlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 // to use correctly. See #GDtlsClientConnection:validation-flags for more
 // information.
 func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
-
 	cret := XGDtlsClientConnectionGetValidationFlags(x.GoPointer())
 	return cret
 }
@@ -100,9 +98,7 @@ func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 // to let @conn know what name to look for in the certificate when
 // performing %G_TLS_CERTIFICATE_BAD_IDENTITY validation, if enabled.
 func (x *DtlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectable) {
-
 	XGDtlsClientConnectionSetServerIdentity(x.GoPointer(), IdentityVar.GoPointer())
-
 }
 
 // Sets @conn's validation flags, to override the default set of
@@ -113,16 +109,16 @@ func (x *DtlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectab
 // to use correctly. See #GDtlsClientConnection:validation-flags for more
 // information.
 func (x *DtlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFlags) {
-
 	XGDtlsClientConnectionSetValidationFlags(x.GoPointer(), FlagsVar)
-
 }
 
-var XGDtlsClientConnectionGetAcceptedCas func(uintptr) *glib.List
-var XGDtlsClientConnectionGetServerIdentity func(uintptr) uintptr
-var XGDtlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
-var XGDtlsClientConnectionSetServerIdentity func(uintptr, uintptr)
-var XGDtlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+var (
+	XGDtlsClientConnectionGetAcceptedCas     func(uintptr) *glib.List
+	XGDtlsClientConnectionGetServerIdentity  func(uintptr) uintptr
+	XGDtlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
+	XGDtlsClientConnectionSetServerIdentity  func(uintptr, uintptr)
+	XGDtlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+)
 
 var xDtlsClientConnectionNew func(uintptr, uintptr, **glib.Error) uintptr
 
@@ -143,7 +139,6 @@ func DtlsClientConnectionNew(BaseSocketVar DatagramBased, ServerIdentityVar Sock
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -167,5 +162,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDtlsClientConnectionGetValidationFlags, libs, "g_dtls_client_connection_get_validation_flags")
 	core.PuregoSafeRegister(&XGDtlsClientConnectionSetServerIdentity, libs, "g_dtls_client_connection_set_server_identity")
 	core.PuregoSafeRegister(&XGDtlsClientConnectionSetValidationFlags, libs, "g_dtls_client_connection_set_validation_flags")
-
 }

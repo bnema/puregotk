@@ -57,16 +57,13 @@ var xOptionsForeach func(uintptr, uintptr)
 // Iterates all available options calling @function for each one. Iteration can
 // stop early if @function returns %FALSE.
 func OptionsForeach(FunctionVar *OptionsFunc, UserDataVar uintptr) {
-
 	xOptionsForeach(glib.NewCallback(FunctionVar), UserDataVar)
-
 }
 
 var xOptionsGetBoolean func(string, *bool) bool
 
 // Get @option as a #gboolean value.
 func OptionsGetBoolean(OptionVar string, ValueVar *bool) bool {
-
 	cret := xOptionsGetBoolean(OptionVar, ValueVar)
 	return cret
 }
@@ -75,7 +72,6 @@ var xOptionsGetDouble func(string, *float64) bool
 
 // Get @option as a #gdouble value.
 func OptionsGetDouble(OptionVar string, ValueVar *float64) bool {
-
 	cret := xOptionsGetDouble(OptionVar, ValueVar)
 	return cret
 }
@@ -84,7 +80,6 @@ var xOptionsGetInt func(string, *int32) bool
 
 // Get @option as a #gint value.
 func OptionsGetInt(OptionVar string, ValueVar *int32) bool {
-
 	cret := xOptionsGetInt(OptionVar, ValueVar)
 	return cret
 }
@@ -99,7 +94,6 @@ var xOptionsGetOptionGroup func() *glib.OptionGroup
 // pass the returned group to g_option_context_add_group(), and the rest will
 // be taken care for automatically.
 func OptionsGetOptionGroup() *glib.OptionGroup {
-
 	cret := xOptionsGetOptionGroup()
 	return cret
 }
@@ -111,7 +105,6 @@ var xOptionsGetRangeString func(string, *string) bool
 // Values between low and high (both included) will be considered in
 // the range, unless &lt;emphasis&gt;!&lt;/emphasis&gt; is used to invert the range.
 func OptionsGetRangeString(OptionVar string, ValueVar *string) bool {
-
 	cret := xOptionsGetRangeString(OptionVar, ValueVar)
 	return cret
 }
@@ -120,7 +113,6 @@ var xOptionsGetSize func(string, *uint) bool
 
 // Get @option as a #gsize value.
 func OptionsGetSize(OptionVar string, ValueVar *uint) bool {
-
 	cret := xOptionsGetSize(OptionVar, ValueVar)
 	return cret
 }
@@ -129,7 +121,6 @@ var xOptionsGetString func(string, *string) bool
 
 // Get @option as a string.
 func OptionsGetString(OptionVar string, ValueVar *string) bool {
-
 	cret := xOptionsGetString(OptionVar, ValueVar)
 	return cret
 }
@@ -138,7 +129,6 @@ var xOptionsGetUint func(string, *uint32) bool
 
 // Get @option as a #guint value.
 func OptionsGetUint(OptionVar string, ValueVar *uint32) bool {
-
 	cret := xOptionsGetUint(OptionVar, ValueVar)
 	return cret
 }
@@ -147,7 +137,6 @@ var xOptionsSetBoolean func(string, bool) bool
 
 // Set @option as a #gboolean value.
 func OptionsSetBoolean(OptionVar string, ValueVar bool) bool {
-
 	cret := xOptionsSetBoolean(OptionVar, ValueVar)
 	return cret
 }
@@ -156,7 +145,6 @@ var xOptionsSetDouble func(string, float64) bool
 
 // Set @option as a #gdouble value.
 func OptionsSetDouble(OptionVar string, ValueVar float64) bool {
-
 	cret := xOptionsSetDouble(OptionVar, ValueVar)
 	return cret
 }
@@ -165,7 +153,6 @@ var xOptionsSetInt func(string, int32) bool
 
 // Set @option as a #gint value.
 func OptionsSetInt(OptionVar string, ValueVar int32) bool {
-
 	cret := xOptionsSetInt(OptionVar, ValueVar)
 	return cret
 }
@@ -177,7 +164,6 @@ var xOptionsSetRangeString func(string, string) bool
 // Values between low and high (both included) will be considered in
 // the range, unless &lt;emphasis&gt;!&lt;/emphasis&gt; is used to invert the range.
 func OptionsSetRangeString(OptionVar string, ValueVar string) bool {
-
 	cret := xOptionsSetRangeString(OptionVar, ValueVar)
 	return cret
 }
@@ -186,7 +172,6 @@ var xOptionsSetSize func(string, uint) bool
 
 // Set @option as a #gsize value.
 func OptionsSetSize(OptionVar string, ValueVar uint) bool {
-
 	cret := xOptionsSetSize(OptionVar, ValueVar)
 	return cret
 }
@@ -195,7 +180,6 @@ var xOptionsSetString func(string, string) bool
 
 // Set @option as a string.
 func OptionsSetString(OptionVar string, ValueVar string) bool {
-
 	cret := xOptionsSetString(OptionVar, ValueVar)
 	return cret
 }
@@ -204,7 +188,6 @@ var xOptionsSetUint func(string, uint32) bool
 
 // Set @option as a #guint value.
 func OptionsSetUint(OptionVar string, ValueVar uint32) bool {
-
 	cret := xOptionsSetUint(OptionVar, ValueVar)
 	return cret
 }
@@ -237,5 +220,4 @@ func init() {
 	core.PuregoSafeRegister(&xOptionsSetSize, libs, "jsc_options_set_size")
 	core.PuregoSafeRegister(&xOptionsSetString, libs, "jsc_options_set_string")
 	core.PuregoSafeRegister(&xOptionsSetUint, libs, "jsc_options_set_uint")
-
 }

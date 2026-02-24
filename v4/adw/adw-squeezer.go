@@ -129,7 +129,6 @@ var xSqueezerGetAllowNone func(uintptr) bool
 
 // Gets whether to allow squeezing beyond the last child's minimum size.
 func (x *Squeezer) GetAllowNone() bool {
-
 	cret := xSqueezerGetAllowNone(x.GoPointer())
 	return cret
 }
@@ -138,7 +137,6 @@ var xSqueezerGetHomogeneous func(uintptr) bool
 
 // Gets whether all children have the same size for the opposite orientation.
 func (x *Squeezer) GetHomogeneous() bool {
-
 	cret := xSqueezerGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -147,7 +145,6 @@ var xSqueezerGetInterpolateSize func(uintptr) bool
 
 // Gets whether @self interpolates its size when changing the visible child.
 func (x *Squeezer) GetInterpolateSize() bool {
-
 	cret := xSqueezerGetInterpolateSize(x.GoPointer())
 	return cret
 }
@@ -192,7 +189,6 @@ var xSqueezerGetSwitchThresholdPolicy func(uintptr) FoldThresholdPolicy
 
 // Gets the switch threshold policy for @self.
 func (x *Squeezer) GetSwitchThresholdPolicy() FoldThresholdPolicy {
-
 	cret := xSqueezerGetSwitchThresholdPolicy(x.GoPointer())
 	return cret
 }
@@ -201,7 +197,6 @@ var xSqueezerGetTransitionDuration func(uintptr) uint32
 
 // Gets the transition animation duration for @self.
 func (x *Squeezer) GetTransitionDuration() uint32 {
-
 	cret := xSqueezerGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -214,7 +209,6 @@ var xSqueezerGetTransitionRunning func(uintptr) bool
 // then immediately to `FALSE`, so it's possible to rely on its notifications
 // to know that a transition has happened.
 func (x *Squeezer) GetTransitionRunning() bool {
-
 	cret := xSqueezerGetTransitionRunning(x.GoPointer())
 	return cret
 }
@@ -223,7 +217,6 @@ var xSqueezerGetTransitionType func(uintptr) SqueezerTransitionType
 
 // Gets the type of animation used for transitions between children in @self.
 func (x *Squeezer) GetTransitionType() SqueezerTransitionType {
-
 	cret := xSqueezerGetTransitionType(x.GoPointer())
 	return cret
 }
@@ -249,7 +242,6 @@ var xSqueezerGetXalign func(uintptr) float32
 
 // Gets the horizontal alignment, from 0 (start) to 1 (end).
 func (x *Squeezer) GetXalign() float32 {
-
 	cret := xSqueezerGetXalign(x.GoPointer())
 	return cret
 }
@@ -258,7 +250,6 @@ var xSqueezerGetYalign func(uintptr) float32
 
 // Gets the vertical alignment, from 0 (top) to 1 (bottom).
 func (x *Squeezer) GetYalign() float32 {
-
 	cret := xSqueezerGetYalign(x.GoPointer())
 	return cret
 }
@@ -267,9 +258,7 @@ var xSqueezerRemove func(uintptr, uintptr)
 
 // Removes a child widget from @self.
 func (x *Squeezer) Remove(ChildVar *gtk.Widget) {
-
 	xSqueezerRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xSqueezerSetAllowNone func(uintptr, bool)
@@ -280,9 +269,7 @@ var xSqueezerSetAllowNone func(uintptr, bool)
 // shown. This is functionally equivalent to appending a widget with 0×0 minimum
 // size.
 func (x *Squeezer) SetAllowNone(AllowNoneVar bool) {
-
 	xSqueezerSetAllowNone(x.GoPointer(), AllowNoneVar)
-
 }
 
 var xSqueezerSetHomogeneous func(uintptr, bool)
@@ -293,9 +280,7 @@ var xSqueezerSetHomogeneous func(uintptr, bool)
 // the same height for all its children. If it isn't, the squeezer may change
 // size when a different child becomes visible.
 func (x *Squeezer) SetHomogeneous(HomogeneousVar bool) {
-
 	xSqueezerSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xSqueezerSetInterpolateSize func(uintptr, bool)
@@ -307,9 +292,7 @@ var xSqueezerSetInterpolateSize func(uintptr, bool)
 // set transition duration and the orientation, e.g. if the squeezer is
 // horizontal, it will interpolate the its height.
 func (x *Squeezer) SetInterpolateSize(InterpolateSizeVar bool) {
-
 	xSqueezerSetInterpolateSize(x.GoPointer(), InterpolateSizeVar)
-
 }
 
 var xSqueezerSetSwitchThresholdPolicy func(uintptr, FoldThresholdPolicy)
@@ -325,27 +308,21 @@ var xSqueezerSetSwitchThresholdPolicy func(uintptr, FoldThresholdPolicy)
 // This can be useful if you have a long ellipsizing label and want to let it
 // ellipsize instead of immediately switching.
 func (x *Squeezer) SetSwitchThresholdPolicy(PolicyVar FoldThresholdPolicy) {
-
 	xSqueezerSetSwitchThresholdPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 var xSqueezerSetTransitionDuration func(uintptr, uint32)
 
 // Sets the transition animation duration for @self.
 func (x *Squeezer) SetTransitionDuration(DurationVar uint32) {
-
 	xSqueezerSetTransitionDuration(x.GoPointer(), DurationVar)
-
 }
 
 var xSqueezerSetTransitionType func(uintptr, SqueezerTransitionType)
 
 // Sets the type of animation used for transitions between children in @self.
 func (x *Squeezer) SetTransitionType(TransitionVar SqueezerTransitionType) {
-
 	xSqueezerSetTransitionType(x.GoPointer(), TransitionVar)
-
 }
 
 var xSqueezerSetXalign func(uintptr, float32)
@@ -358,9 +335,7 @@ var xSqueezerSetXalign func(uintptr, float32)
 // For example, 0.5 means the child will be centered, 0 means it will keep the
 // start side aligned and overflow the end side, and 1 means the opposite.
 func (x *Squeezer) SetXalign(XalignVar float32) {
-
 	xSqueezerSetXalign(x.GoPointer(), XalignVar)
-
 }
 
 var xSqueezerSetYalign func(uintptr, float32)
@@ -373,9 +348,7 @@ var xSqueezerSetYalign func(uintptr, float32)
 // For example, 0.5 means the child will be centered, 0 means it will keep the
 // top side aligned and overflow the bottom side, and 1 means the opposite.
 func (x *Squeezer) SetYalign(YalignVar float32) {
-
 	xSqueezerSetYalign(x.GoPointer(), YalignVar)
-
 }
 
 func (c *Squeezer) GoPointer() uintptr {
@@ -563,9 +536,7 @@ func (x *Squeezer) GetPropertyYalign() float32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Squeezer) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -586,7 +557,6 @@ func (x *Squeezer) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Squeezer) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -611,7 +581,6 @@ func (x *Squeezer) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Squeezer) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -650,30 +619,23 @@ func (x *Squeezer) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Squeezer) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Squeezer) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Squeezer) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Squeezer) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -686,9 +648,7 @@ func (x *Squeezer) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Squeezer) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -696,9 +656,7 @@ func (x *Squeezer) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Squeezer) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -707,9 +665,7 @@ func (x *Squeezer) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Squeezer) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -731,9 +687,7 @@ func (x *Squeezer) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Squeezer) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -743,9 +697,7 @@ func (x *Squeezer) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *Squeezer) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -767,9 +719,7 @@ func (x *Squeezer) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk
 //
 // ```
 func (x *Squeezer) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -779,9 +729,7 @@ func (x *Squeezer) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *Squeezer) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -804,9 +752,7 @@ func (x *Squeezer) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.A
 //
 // ```
 func (x *Squeezer) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -816,9 +762,7 @@ func (x *Squeezer) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *Squeezer) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -826,23 +770,19 @@ func (x *Squeezer) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Accessible
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Squeezer) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Squeezer) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Squeezer) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 // An auxiliary class used by [class@Squeezer].
@@ -883,7 +823,6 @@ var xSqueezerPageGetEnabled func(uintptr) bool
 
 // Gets whether @self is enabled.
 func (x *SqueezerPage) GetEnabled() bool {
-
 	cret := xSqueezerPageGetEnabled(x.GoPointer())
 	return cret
 }
@@ -901,9 +840,7 @@ var xSqueezerPageSetEnabled func(uintptr, bool)
 // This can be used e.g. to ensure a certain child is hidden below a certain
 // window width, or any other constraint you find suitable.
 func (x *SqueezerPage) SetEnabled(EnabledVar bool) {
-
 	xSqueezerPageSetEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 func (c *SqueezerPage) GoPointer() uintptr {
@@ -998,5 +935,4 @@ func init() {
 	core.PuregoSafeRegister(&xSqueezerPageGetChild, libs, "adw_squeezer_page_get_child")
 	core.PuregoSafeRegister(&xSqueezerPageGetEnabled, libs, "adw_squeezer_page_get_enabled")
 	core.PuregoSafeRegister(&xSqueezerPageSetEnabled, libs, "adw_squeezer_page_set_enabled")
-
 }

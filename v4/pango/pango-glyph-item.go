@@ -61,7 +61,6 @@ var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
 // This function takes ownership of @glyph_item; it will be reused
 // as one of the elements in the list.
 func (x *GlyphItem) ApplyAttrs(TextVar string, ListVar *AttrList) *glib.SList {
-
 	cret := xGlyphItemApplyAttrs(x.GoPointer(), TextVar, ListVar)
 	return cret
 }
@@ -70,7 +69,6 @@ var xGlyphItemCopy func(uintptr) *GlyphItem
 
 // Make a deep copy of an existing `PangoGlyphItem` structure.
 func (x *GlyphItem) Copy() *GlyphItem {
-
 	cret := xGlyphItemCopy(x.GoPointer())
 	return cret
 }
@@ -79,9 +77,7 @@ var xGlyphItemFree func(uintptr)
 
 // Frees a `PangoGlyphItem` and resources to which it points.
 func (x *GlyphItem) Free() {
-
 	xGlyphItemFree(x.GoPointer())
-
 }
 
 var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int32)
@@ -94,9 +90,7 @@ var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int32)
 //
 // See also [method@Pango.GlyphString.get_logical_widths].
 func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar *[]int32) {
-
 	xGlyphItemGetLogicalWidths(x.GoPointer(), TextVar, LogicalWidthsVar)
-
 }
 
 var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int32)
@@ -104,9 +98,7 @@ var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int32)
 // Adds spacing between the graphemes of @glyph_item to
 // give the effect of typographic letter spacing.
 func (x *GlyphItem) LetterSpace(TextVar string, LogAttrsVar []LogAttr, LetterSpacingVar int32) {
-
 	xGlyphItemLetterSpace(x.GoPointer(), TextVar, LogAttrsVar, LetterSpacingVar)
-
 }
 
 var xGlyphItemSplit func(uintptr, string, int32) *GlyphItem
@@ -123,7 +115,6 @@ var xGlyphItemSplit func(uintptr, string, int32) *GlyphItem
 // This function is similar in function to pango_item_split() (and uses
 // it internally.)
 func (x *GlyphItem) Split(TextVar string, SplitIndexVar int32) *GlyphItem {
-
 	cret := xGlyphItemSplit(x.GoPointer(), TextVar, SplitIndexVar)
 	return cret
 }
@@ -205,7 +196,6 @@ var xGlyphItemIterCopy func(uintptr) *GlyphItemIter
 
 // Make a shallow copy of an existing `PangoGlyphItemIter` structure.
 func (x *GlyphItemIter) Copy() *GlyphItemIter {
-
 	cret := xGlyphItemIterCopy(x.GoPointer())
 	return cret
 }
@@ -214,9 +204,7 @@ var xGlyphItemIterFree func(uintptr)
 
 // Frees a `PangoGlyphItem`Iter.
 func (x *GlyphItemIter) Free() {
-
 	xGlyphItemIterFree(x.GoPointer())
-
 }
 
 var xGlyphItemIterInitEnd func(uintptr, *GlyphItem, string) bool
@@ -226,7 +214,6 @@ var xGlyphItemIterInitEnd func(uintptr, *GlyphItem, string) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) InitEnd(GlyphItemVar *GlyphItem, TextVar string) bool {
-
 	cret := xGlyphItemIterInitEnd(x.GoPointer(), GlyphItemVar, TextVar)
 	return cret
 }
@@ -238,7 +225,6 @@ var xGlyphItemIterInitStart func(uintptr, *GlyphItem, string) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) InitStart(GlyphItemVar *GlyphItem, TextVar string) bool {
-
 	cret := xGlyphItemIterInitStart(x.GoPointer(), GlyphItemVar, TextVar)
 	return cret
 }
@@ -249,7 +235,6 @@ var xGlyphItemIterNextCluster func(uintptr) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) NextCluster() bool {
-
 	cret := xGlyphItemIterNextCluster(x.GoPointer())
 	return cret
 }
@@ -259,7 +244,6 @@ var xGlyphItemIterPrevCluster func(uintptr) bool
 // Moves the iterator to the preceding cluster in the glyph item.
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) PrevCluster() bool {
-
 	cret := xGlyphItemIterPrevCluster(x.GoPointer())
 	return cret
 }
@@ -293,5 +277,4 @@ func init() {
 	core.PuregoSafeRegister(&xGlyphItemIterInitStart, libs, "pango_glyph_item_iter_init_start")
 	core.PuregoSafeRegister(&xGlyphItemIterNextCluster, libs, "pango_glyph_item_iter_next_cluster")
 	core.PuregoSafeRegister(&xGlyphItemIterPrevCluster, libs, "pango_glyph_item_iter_prev_cluster")
-
 }

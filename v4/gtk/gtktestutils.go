@@ -18,9 +18,7 @@ var xTestInit func(int32, []string, ...interface{})
 // Like gtk_init() and g_test_init(), any known arguments will be
 // processed and stripped from @argc and @argv.
 func TestInit(ArgcpVar int32, ArgvpVar []string, varArgs ...interface{}) {
-
 	xTestInit(ArgcpVar, ArgvpVar, varArgs...)
-
 }
 
 var xTestListAllTypes func(*uint32) uintptr
@@ -28,7 +26,6 @@ var xTestListAllTypes func(*uint32) uintptr
 // Return the type ids that have been registered after
 // calling gtk_test_register_all_types().
 func TestListAllTypes(NTypesVar *uint32) uintptr {
-
 	cret := xTestListAllTypes(NTypesVar)
 	return cret
 }
@@ -40,9 +37,7 @@ var xTestRegisterAllTypes func()
 // This allows to refer to any of those object types via
 // g_type_from_name() after calling this function.
 func TestRegisterAllTypes() {
-
 	xTestRegisterAllTypes()
-
 }
 
 var xTestWidgetWaitForDraw func(uintptr)
@@ -56,9 +51,7 @@ var xTestWidgetWaitForDraw func(uintptr)
 // depend on @widget relayouting or on interaction with the display
 // server.
 func TestWidgetWaitForDraw(WidgetVar *Widget) {
-
 	xTestWidgetWaitForDraw(WidgetVar.GoPointer())
-
 }
 
 func init() {
@@ -77,5 +70,4 @@ func init() {
 	core.PuregoSafeRegister(&xTestListAllTypes, libs, "gtk_test_list_all_types")
 	core.PuregoSafeRegister(&xTestRegisterAllTypes, libs, "gtk_test_register_all_types")
 	core.PuregoSafeRegister(&xTestWidgetWaitForDraw, libs, "gtk_test_widget_wait_for_draw")
-
 }

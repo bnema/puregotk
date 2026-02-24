@@ -108,7 +108,6 @@ var xBuilderListItemFactoryGetBytes func(uintptr) *glib.Bytes
 // Gets the data used as the `GtkBuilder` UI template for constructing
 // listitems.
 func (x *BuilderListItemFactory) GetBytes() *glib.Bytes {
-
 	cret := xBuilderListItemFactoryGetBytes(x.GoPointer())
 	return cret
 }
@@ -117,7 +116,6 @@ var xBuilderListItemFactoryGetResource func(uintptr) string
 
 // If the data references a resource, gets the path of that resource.
 func (x *BuilderListItemFactory) GetResource() string {
-
 	cret := xBuilderListItemFactoryGetResource(x.GoPointer())
 	return cret
 }
@@ -204,5 +202,4 @@ func init() {
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetBytes, libs, "gtk_builder_list_item_factory_get_bytes")
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetResource, libs, "gtk_builder_list_item_factory_get_resource")
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetScope, libs, "gtk_builder_list_item_factory_get_scope")
-
 }

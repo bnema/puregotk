@@ -156,7 +156,6 @@ var xTlsPasswordGetDescription func(uintptr) string
 
 // Get a description string about what the password will be used for.
 func (x *TlsPassword) GetDescription() string {
-
 	cret := xTlsPasswordGetDescription(x.GoPointer())
 	return cret
 }
@@ -165,7 +164,6 @@ var xTlsPasswordGetFlags func(uintptr) TlsPasswordFlags
 
 // Get flags about the password.
 func (x *TlsPassword) GetFlags() TlsPasswordFlags {
-
 	cret := xTlsPasswordGetFlags(x.GoPointer())
 	return cret
 }
@@ -178,7 +176,6 @@ var xTlsPasswordGetValue func(uintptr, *uint) uintptr
 // for @length in contexts where you know the password will have a
 // certain fixed length.)
 func (x *TlsPassword) GetValue(LengthVar *uint) uintptr {
-
 	cret := xTlsPasswordGetValue(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -189,7 +186,6 @@ var xTlsPasswordGetWarning func(uintptr) string
 // representation of the password flags returned from
 // g_tls_password_get_flags().
 func (x *TlsPassword) GetWarning() string {
-
 	cret := xTlsPasswordGetWarning(x.GoPointer())
 	return cret
 }
@@ -198,18 +194,14 @@ var xTlsPasswordSetDescription func(uintptr, string)
 
 // Set a description string about what the password will be used for.
 func (x *TlsPassword) SetDescription(DescriptionVar string) {
-
 	xTlsPasswordSetDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xTlsPasswordSetFlags func(uintptr, TlsPasswordFlags)
 
 // Set flags about the password.
 func (x *TlsPassword) SetFlags(FlagsVar TlsPasswordFlags) {
-
 	xTlsPasswordSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xTlsPasswordSetValue func(uintptr, []byte, int)
@@ -222,9 +214,7 @@ var xTlsPasswordSetValue func(uintptr, []byte, int)
 // calculated automatically. (Note that the terminating nul is not
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValue(ValueVar []byte, LengthVar int) {
-
 	xTlsPasswordSetValue(x.GoPointer(), ValueVar, LengthVar)
-
 }
 
 var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
@@ -239,9 +229,7 @@ var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
 // calculated automatically. (Note that the terminating nul is not
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValueFull(ValueVar []byte, LengthVar int, DestroyVar *glib.DestroyNotify) {
-
 	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 var xTlsPasswordSetWarning func(uintptr, string)
@@ -250,9 +238,7 @@ var xTlsPasswordSetWarning func(uintptr, string)
 // representation of the password flags returned from
 // g_tls_password_get_flags().
 func (x *TlsPassword) SetWarning(WarningVar string) {
-
 	xTlsPasswordSetWarning(x.GoPointer(), WarningVar)
-
 }
 
 func (c *TlsPassword) GoPointer() uintptr {
@@ -325,5 +311,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsPasswordSetValue, libs, "g_tls_password_set_value")
 	core.PuregoSafeRegister(&xTlsPasswordSetValueFull, libs, "g_tls_password_set_value_full")
 	core.PuregoSafeRegister(&xTlsPasswordSetWarning, libs, "g_tls_password_set_warning")
-
 }

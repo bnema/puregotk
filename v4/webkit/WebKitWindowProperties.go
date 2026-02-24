@@ -98,7 +98,6 @@ var xWindowPropertiesGetFullscreen func(uintptr) bool
 
 // Get whether the window should be shown in fullscreen state or not.
 func (x *WindowProperties) GetFullscreen() bool {
-
 	cret := xWindowPropertiesGetFullscreen(x.GoPointer())
 	return cret
 }
@@ -107,16 +106,13 @@ var xWindowPropertiesGetGeometry func(uintptr, *gdk.Rectangle)
 
 // Get the geometry the window should have on the screen when shown.
 func (x *WindowProperties) GetGeometry(GeometryVar *gdk.Rectangle) {
-
 	xWindowPropertiesGetGeometry(x.GoPointer(), GeometryVar)
-
 }
 
 var xWindowPropertiesGetLocationbarVisible func(uintptr) bool
 
 // Get whether the window should have the locationbar visible or not.
 func (x *WindowProperties) GetLocationbarVisible() bool {
-
 	cret := xWindowPropertiesGetLocationbarVisible(x.GoPointer())
 	return cret
 }
@@ -125,7 +121,6 @@ var xWindowPropertiesGetMenubarVisible func(uintptr) bool
 
 // Get whether the window should have the menubar visible or not.
 func (x *WindowProperties) GetMenubarVisible() bool {
-
 	cret := xWindowPropertiesGetMenubarVisible(x.GoPointer())
 	return cret
 }
@@ -134,7 +129,6 @@ var xWindowPropertiesGetResizable func(uintptr) bool
 
 // Get whether the window should be resizable by the user or not.
 func (x *WindowProperties) GetResizable() bool {
-
 	cret := xWindowPropertiesGetResizable(x.GoPointer())
 	return cret
 }
@@ -143,7 +137,6 @@ var xWindowPropertiesGetScrollbarsVisible func(uintptr) bool
 
 // Get whether the window should have the scrollbars visible or not.
 func (x *WindowProperties) GetScrollbarsVisible() bool {
-
 	cret := xWindowPropertiesGetScrollbarsVisible(x.GoPointer())
 	return cret
 }
@@ -152,7 +145,6 @@ var xWindowPropertiesGetStatusbarVisible func(uintptr) bool
 
 // Get whether the window should have the statusbar visible or not.
 func (x *WindowProperties) GetStatusbarVisible() bool {
-
 	cret := xWindowPropertiesGetStatusbarVisible(x.GoPointer())
 	return cret
 }
@@ -161,7 +153,6 @@ var xWindowPropertiesGetToolbarVisible func(uintptr) bool
 
 // Get whether the window should have the toolbar visible or not.
 func (x *WindowProperties) GetToolbarVisible() bool {
-
 	cret := xWindowPropertiesGetToolbarVisible(x.GoPointer())
 	return cret
 }

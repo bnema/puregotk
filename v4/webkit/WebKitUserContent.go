@@ -32,7 +32,6 @@ var xUserContentFilterGetIdentifier func(uintptr) string
 // Obtain the identifier previously used to save the @user_content_filter in the
 // #WebKitUserContentFilterStore.
 func (x *UserContentFilter) GetIdentifier() string {
-
 	cret := xUserContentFilterGetIdentifier(x.GoPointer())
 	return cret
 }
@@ -43,7 +42,6 @@ var xUserContentFilterRef func(uintptr) *UserContentFilter
 //
 // This function is MT-safe and may be called from any thread.
 func (x *UserContentFilter) Ref() *UserContentFilter {
-
 	cret := xUserContentFilterRef(x.GoPointer())
 	return cret
 }
@@ -56,9 +54,7 @@ var xUserContentFilterUnref func(uintptr)
 // #WebKitUserContentFilter is released. This function is MT-safe and may
 // be called from any thread.
 func (x *UserContentFilter) Unref() {
-
 	xUserContentFilterUnref(x.GoPointer())
-
 }
 
 // A JavaScript snippet which can be injected in loaded pages.
@@ -88,7 +84,6 @@ var xNewUserScript func(string, UserContentInjectedFrames, UserScriptInjectionTi
 // *host* and *path* components can contain the wildcard character (`*`) to
 // represent zero or more other characters.
 func NewUserScript(SourceVar string, InjectedFramesVar UserContentInjectedFrames, InjectionTimeVar UserScriptInjectionTime, AllowListVar []string, BlockListVar []string) *UserScript {
-
 	cret := xNewUserScript(SourceVar, InjectedFramesVar, InjectionTimeVar, AllowListVar, BlockListVar)
 	return cret
 }
@@ -99,7 +94,6 @@ var xNewUserScriptForWorld func(string, UserContentInjectedFrames, UserScriptInj
 //
 // See webkit_user_script_new() for a full description.
 func NewUserScriptForWorld(SourceVar string, InjectedFramesVar UserContentInjectedFrames, InjectionTimeVar UserScriptInjectionTime, WorldNameVar string, AllowListVar []string, BlockListVar []string) *UserScript {
-
 	cret := xNewUserScriptForWorld(SourceVar, InjectedFramesVar, InjectionTimeVar, WorldNameVar, AllowListVar, BlockListVar)
 	return cret
 }
@@ -110,7 +104,6 @@ var xUserScriptRef func(uintptr) *UserScript
 //
 // This function is MT-safe and may be called from any thread.
 func (x *UserScript) Ref() *UserScript {
-
 	cret := xUserScriptRef(x.GoPointer())
 	return cret
 }
@@ -123,9 +116,7 @@ var xUserScriptUnref func(uintptr)
 // #WebKitUserScript is released. This function is MT-safe and may be called
 // from any thread.
 func (x *UserScript) Unref() {
-
 	xUserScriptUnref(x.GoPointer())
-
 }
 
 // A CSS style sheet which can be injected in loaded pages.
@@ -155,7 +146,6 @@ var xNewUserStyleSheet func(string, UserContentInjectedFrames, UserStyleLevel, [
 // *host* and *path* components can contain the wildcard character (`*`) to
 // represent zero or more other characters.
 func NewUserStyleSheet(SourceVar string, InjectedFramesVar UserContentInjectedFrames, LevelVar UserStyleLevel, AllowListVar []string, BlockListVar []string) *UserStyleSheet {
-
 	cret := xNewUserStyleSheet(SourceVar, InjectedFramesVar, LevelVar, AllowListVar, BlockListVar)
 	return cret
 }
@@ -167,7 +157,6 @@ var xNewUserStyleSheetForWorld func(string, UserContentInjectedFrames, UserStyle
 // Creates a new user style sheet for script world with name @world_name.
 // See webkit_user_style_sheet_new() for a full description.
 func NewUserStyleSheetForWorld(SourceVar string, InjectedFramesVar UserContentInjectedFrames, LevelVar UserStyleLevel, WorldNameVar string, AllowListVar []string, BlockListVar []string) *UserStyleSheet {
-
 	cret := xNewUserStyleSheetForWorld(SourceVar, InjectedFramesVar, LevelVar, WorldNameVar, AllowListVar, BlockListVar)
 	return cret
 }
@@ -178,7 +167,6 @@ var xUserStyleSheetRef func(uintptr) *UserStyleSheet
 //
 // This function is MT-safe and may be called from any thread.
 func (x *UserStyleSheet) Ref() *UserStyleSheet {
-
 	cret := xUserStyleSheetRef(x.GoPointer())
 	return cret
 }
@@ -191,9 +179,7 @@ var xUserStyleSheetUnref func(uintptr)
 // #WebKitUserStyleSheet is released. This function is MT-safe and may be
 // called from any thread.
 func (x *UserStyleSheet) Unref() {
-
 	xUserStyleSheetUnref(x.GoPointer())
-
 }
 
 // Specifies in which frames user style sheets are to be inserted in.
@@ -295,5 +281,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xUserStyleSheetRef, libs, "webkit_user_style_sheet_ref")
 	core.PuregoSafeRegister(&xUserStyleSheetUnref, libs, "webkit_user_style_sheet_unref")
-
 }

@@ -100,7 +100,6 @@ var xPathParse func(string) *Path
 //
 // The `O` command is an extension that is not supported in SVG.
 func PathParse(StringVar string) *Path {
-
 	cret := xPathParse(StringVar)
 	return cret
 }
@@ -122,5 +121,4 @@ func init() {
 	core.PuregoSafeRegister(&xPathIntersectionGLibType, libs, "gsk_path_intersection_get_type")
 
 	core.PuregoSafeRegister(&xPathParse, libs, "gsk_path_parse")
-
 }

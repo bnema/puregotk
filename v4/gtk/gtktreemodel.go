@@ -52,7 +52,6 @@ var xTreeIterCopy func(uintptr) *TreeIter
 // (`GtkTreeIter new_iter = iter;`).
 // You must free this iter with gtk_tree_iter_free().
 func (x *TreeIter) Copy() *TreeIter {
-
 	cret := xTreeIterCopy(x.GoPointer())
 	return cret
 }
@@ -63,9 +62,7 @@ var xTreeIterFree func(uintptr)
 //
 // This function is mainly used for language bindings.
 func (x *TreeIter) Free() {
-
 	xTreeIterFree(x.GoPointer())
-
 }
 
 type TreeModelIface struct {
@@ -662,7 +659,6 @@ var xNewTreePath func() *TreePath
 // Creates a new `GtkTreePath`
 // This refers to a row.
 func NewTreePath() *TreePath {
-
 	cret := xNewTreePath()
 	return cret
 }
@@ -673,7 +669,6 @@ var xNewTreePathFirst func() *TreePath
 //
 // The string representation of this path is “0”.
 func NewTreePathFirst() *TreePath {
-
 	cret := xNewTreePathFirst()
 	return cret
 }
@@ -682,7 +677,6 @@ var xNewTreePathFromIndices func(int32, ...interface{}) *TreePath
 
 // Creates a new path with @first_index and @varargs as indices.
 func NewTreePathFromIndices(FirstIndexVar int32, varArgs ...interface{}) *TreePath {
-
 	cret := xNewTreePathFromIndices(FirstIndexVar, varArgs...)
 	return cret
 }
@@ -691,7 +685,6 @@ var xNewTreePathFromIndicesv func([]int32, uint) *TreePath
 
 // Creates a new path with the given @indices array of @length.
 func NewTreePathFromIndicesv(IndicesVar []int32, LengthVar uint) *TreePath {
-
 	cret := xNewTreePathFromIndicesv(IndicesVar, LengthVar)
 	return cret
 }
@@ -706,7 +699,6 @@ var xNewTreePathFromString func(string) *TreePath
 // child of that 11th child, and the 1st child of that 5th child.
 // If an invalid path string is passed in, %NULL is returned.
 func NewTreePathFromString(PathVar string) *TreePath {
-
 	cret := xNewTreePathFromString(PathVar)
 	return cret
 }
@@ -717,9 +709,7 @@ var xTreePathAppendIndex func(uintptr, int32)
 //
 // As a result, the depth of the path is increased.
 func (x *TreePath) AppendIndex(IndexVar int32) {
-
 	xTreePathAppendIndex(x.GoPointer(), IndexVar)
-
 }
 
 var xTreePathCompare func(uintptr, *TreePath) int32
@@ -730,7 +720,6 @@ var xTreePathCompare func(uintptr, *TreePath) int32
 // If @b appears before @a, then 1 is returned.
 // If the two nodes are equal, then 0 is returned.
 func (x *TreePath) Compare(BVar *TreePath) int32 {
-
 	cret := xTreePathCompare(x.GoPointer(), BVar)
 	return cret
 }
@@ -739,7 +728,6 @@ var xTreePathCopy func(uintptr) *TreePath
 
 // Creates a new `GtkTreePath` as a copy of @path.
 func (x *TreePath) Copy() *TreePath {
-
 	cret := xTreePathCopy(x.GoPointer())
 	return cret
 }
@@ -748,25 +736,20 @@ var xTreePathDown func(uintptr)
 
 // Moves @path to point to the first child of the current path.
 func (x *TreePath) Down() {
-
 	xTreePathDown(x.GoPointer())
-
 }
 
 var xTreePathFree func(uintptr)
 
 // Frees @path. If @path is %NULL, it simply returns.
 func (x *TreePath) Free() {
-
 	xTreePathFree(x.GoPointer())
-
 }
 
 var xTreePathGetDepth func(uintptr) int32
 
 // Returns the current depth of @path.
 func (x *TreePath) GetDepth() int32 {
-
 	cret := xTreePathGetDepth(x.GoPointer())
 	return cret
 }
@@ -780,7 +763,6 @@ var xTreePathGetIndices func(uintptr) int32
 //
 // The length of the array can be obtained with gtk_tree_path_get_depth().
 func (x *TreePath) GetIndices() int32 {
-
 	cret := xTreePathGetIndices(x.GoPointer())
 	return cret
 }
@@ -793,7 +775,6 @@ var xTreePathGetIndicesWithDepth func(uintptr, *int32) uintptr
 // It also returns the number of elements in the array.
 // The array should not be freed.
 func (x *TreePath) GetIndicesWithDepth(DepthVar *int32) uintptr {
-
 	cret := xTreePathGetIndicesWithDepth(x.GoPointer(), DepthVar)
 	return cret
 }
@@ -802,7 +783,6 @@ var xTreePathIsAncestor func(uintptr, *TreePath) bool
 
 // Returns %TRUE if @descendant is a descendant of @path.
 func (x *TreePath) IsAncestor(DescendantVar *TreePath) bool {
-
 	cret := xTreePathIsAncestor(x.GoPointer(), DescendantVar)
 	return cret
 }
@@ -811,7 +791,6 @@ var xTreePathIsDescendant func(uintptr, *TreePath) bool
 
 // Returns %TRUE if @path is a descendant of @ancestor.
 func (x *TreePath) IsDescendant(AncestorVar *TreePath) bool {
-
 	cret := xTreePathIsDescendant(x.GoPointer(), AncestorVar)
 	return cret
 }
@@ -820,9 +799,7 @@ var xTreePathNext func(uintptr)
 
 // Moves the @path to point to the next node at the current depth.
 func (x *TreePath) Next() {
-
 	xTreePathNext(x.GoPointer())
-
 }
 
 var xTreePathPrependIndex func(uintptr, int32)
@@ -831,9 +808,7 @@ var xTreePathPrependIndex func(uintptr, int32)
 //
 // As a result, the depth of the path is increased.
 func (x *TreePath) PrependIndex(IndexVar int32) {
-
 	xTreePathPrependIndex(x.GoPointer(), IndexVar)
-
 }
 
 var xTreePathPrev func(uintptr) bool
@@ -841,7 +816,6 @@ var xTreePathPrev func(uintptr) bool
 // Moves the @path to point to the previous node at the
 // current depth, if it exists.
 func (x *TreePath) Prev() bool {
-
 	cret := xTreePathPrev(x.GoPointer())
 	return cret
 }
@@ -855,7 +829,6 @@ var xTreePathToString func(uintptr) string
 // return value for this string. If the path has
 // depth 0, %NULL is returned.
 func (x *TreePath) ToString() string {
-
 	cret := xTreePathToString(x.GoPointer())
 	return cret
 }
@@ -864,7 +837,6 @@ var xTreePathUp func(uintptr) bool
 
 // Moves the @path to point to its parent node, if it has a parent.
 func (x *TreePath) Up() bool {
-
 	cret := xTreePathUp(x.GoPointer())
 	return cret
 }
@@ -895,7 +867,6 @@ var xNewTreeRowReference func(uintptr, *TreePath) *TreeRowReference
 // propagated, and the path is updated appropriately. If
 // @path isn’t a valid path in @model, then %NULL is returned.
 func NewTreeRowReference(ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
-
 	cret := xNewTreeRowReference(ModelVar.GoPointer(), PathVar)
 	return cret
 }
@@ -927,7 +898,6 @@ var xNewTreeRowReferenceProxy func(uintptr, uintptr, *TreePath) *TreeRowReferenc
 // need to carefully monitor exactly when a row reference updates
 // itself, and is not generally needed by most applications.
 func NewTreeRowReferenceProxy(ProxyVar *gobject.Object, ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
-
 	cret := xNewTreeRowReferenceProxy(ProxyVar.GoPointer(), ModelVar.GoPointer(), PathVar)
 	return cret
 }
@@ -936,7 +906,6 @@ var xTreeRowReferenceCopy func(uintptr) *TreeRowReference
 
 // Copies a `GtkTreeRowReference`.
 func (x *TreeRowReference) Copy() *TreeRowReference {
-
 	cret := xTreeRowReferenceCopy(x.GoPointer())
 	return cret
 }
@@ -945,9 +914,7 @@ var xTreeRowReferenceFree func(uintptr)
 
 // Free’s @reference. @reference may be %NULL
 func (x *TreeRowReference) Free() {
-
 	xTreeRowReferenceFree(x.GoPointer())
-
 }
 
 var xTreeRowReferenceGetModel func(uintptr) uintptr
@@ -972,7 +939,6 @@ var xTreeRowReferenceGetPath func(uintptr) *TreePath
 // Returns a path that the row reference currently points to,
 // or %NULL if the path pointed to is no longer valid.
 func (x *TreeRowReference) GetPath() *TreePath {
-
 	cret := xTreeRowReferenceGetPath(x.GoPointer())
 	return cret
 }
@@ -982,7 +948,6 @@ var xTreeRowReferenceValid func(uintptr) bool
 // Returns %TRUE if the @reference is non-%NULL and refers to
 // a current valid path.
 func (x *TreeRowReference) Valid() bool {
-
 	cret := xTreeRowReferenceValid(x.GoPointer())
 	return cret
 }
@@ -1270,9 +1235,7 @@ func (x *TreeModelBase) FilterNew(RootVar *TreePath) *TreeModelBase {
 // If @func returns %TRUE, then the tree ceases to be walked,
 // and gtk_tree_model_foreach() returns.
 func (x *TreeModelBase) Foreach(FuncVar *TreeModelForeachFunc, UserDataVar uintptr) {
-
 	XGtkTreeModelForeach(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar)
-
 }
 
 // Gets the value of one or more cells in the row referenced by @iter.
@@ -1289,14 +1252,11 @@ func (x *TreeModelBase) Foreach(FuncVar *TreeModelForeachFunc, UserDataVar uintp
 // values with type %G_TYPE_STRING or %G_TYPE_BOXED have to be freed.
 // Other values are passed by value.
 func (x *TreeModelBase) Get(IterVar *TreeIter, varArgs ...interface{}) {
-
 	XGtkTreeModelGet(x.GoPointer(), IterVar, varArgs...)
-
 }
 
 // Returns the type of the column.
 func (x *TreeModelBase) GetColumnType(IndexVar int32) types.GType {
-
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -1307,7 +1267,6 @@ func (x *TreeModelBase) GetColumnType(IndexVar int32) types.GType {
 // The flags supported should not change during the lifetime
 // of the @tree_model.
 func (x *TreeModelBase) GetFlags() TreeModelFlags {
-
 	cret := XGtkTreeModelGetFlags(x.GoPointer())
 	return cret
 }
@@ -1317,7 +1276,6 @@ func (x *TreeModelBase) GetFlags() TreeModelFlags {
 // If @path does not exist, @iter is set to an invalid
 // iterator and %FALSE is returned.
 func (x *TreeModelBase) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
-
 	cret := XGtkTreeModelGetIter(x.GoPointer(), IterVar, PathVar)
 	return cret
 }
@@ -1327,7 +1285,6 @@ func (x *TreeModelBase) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 //
 // Returns %FALSE if the tree is empty, %TRUE otherwise.
 func (x *TreeModelBase) GetIterFirst(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelGetIterFirst(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1337,14 +1294,12 @@ func (x *TreeModelBase) GetIterFirst(IterVar *TreeIter) bool {
 //
 // Otherwise, @iter is left invalid and %FALSE is returned.
 func (x *TreeModelBase) GetIterFromString(IterVar *TreeIter, PathStringVar string) bool {
-
 	cret := XGtkTreeModelGetIterFromString(x.GoPointer(), IterVar, PathStringVar)
 	return cret
 }
 
 // Returns the number of columns supported by @tree_model.
 func (x *TreeModelBase) GetNColumns() int32 {
-
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
 	return cret
 }
@@ -1353,7 +1308,6 @@ func (x *TreeModelBase) GetNColumns() int32 {
 //
 // This path should be freed with gtk_tree_path_free().
 func (x *TreeModelBase) GetPath(IterVar *TreeIter) *TreePath {
-
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1364,7 +1318,6 @@ func (x *TreeModelBase) GetPath(IterVar *TreeIter) *TreePath {
 // For example, “4:10:0:3” would be an acceptable
 // return value for this string.
 func (x *TreeModelBase) GetStringFromIter(IterVar *TreeIter) string {
-
 	cret := XGtkTreeModelGetStringFromIter(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1374,9 +1327,7 @@ func (x *TreeModelBase) GetStringFromIter(IterVar *TreeIter) string {
 // See [method@Gtk.TreeModel.get], this version takes a va_list
 // for language bindings to use.
 func (x *TreeModelBase) GetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
-
 	XGtkTreeModelGetValist(x.GoPointer(), IterVar, VarArgsVar)
-
 }
 
 // Initializes and sets @value to that at @column.
@@ -1384,9 +1335,7 @@ func (x *TreeModelBase) GetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
 // When done with @value, g_value_unset() needs to be called
 // to free any allocated memory.
 func (x *TreeModelBase) GetValue(IterVar *TreeIter, ColumnVar int32, ValueVar *gobject.Value) {
-
 	XGtkTreeModelGetValue(x.GoPointer(), IterVar, ColumnVar, ValueVar)
-
 }
 
 // Sets @iter to point to the first child of @parent.
@@ -1398,14 +1347,12 @@ func (x *TreeModelBase) GetValue(IterVar *TreeIter, ColumnVar int32, ValueVar *g
 // If @parent is %NULL returns the first node, equivalent to
 // `gtk_tree_model_get_iter_first (tree_model, iter);`
 func (x *TreeModelBase) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterChildren(x.GoPointer(), IterVar, ParentVar)
 	return cret
 }
 
 // Returns %TRUE if @iter has children, %FALSE otherwise.
 func (x *TreeModelBase) IterHasChild(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterHasChild(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1415,7 +1362,6 @@ func (x *TreeModelBase) IterHasChild(IterVar *TreeIter) bool {
 // As a special case, if @iter is %NULL, then the number
 // of toplevel nodes is returned.
 func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int32 {
-
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1425,7 +1371,6 @@ func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int32 {
 // If there is no next @iter, %FALSE is returned and @iter is set
 // to be invalid.
 func (x *TreeModelBase) IterNext(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterNext(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1438,7 +1383,6 @@ func (x *TreeModelBase) IterNext(IterVar *TreeIter) bool {
 // special case, if @parent is %NULL, then the @n-th root node
 // is set.
 func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int32) bool {
-
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
 	return cret
 }
@@ -1453,7 +1397,6 @@ func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVa
 // @iter will be initialized before the lookup is performed, so @child
 // and @iter cannot point to the same memory location.
 func (x *TreeModelBase) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterParent(x.GoPointer(), IterVar, ChildVar)
 	return cret
 }
@@ -1463,7 +1406,6 @@ func (x *TreeModelBase) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 // If there is no previous @iter, %FALSE is returned and @iter is
 // set to be invalid.
 func (x *TreeModelBase) IterPrevious(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterPrevious(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1486,18 +1428,14 @@ func (x *TreeModelBase) IterPrevious(IterVar *TreeIter) bool {
 // A model should be expected to be able to get an iter independent
 // of its reffed state.
 func (x *TreeModelBase) RefNode(IterVar *TreeIter) {
-
 	XGtkTreeModelRefNode(x.GoPointer(), IterVar)
-
 }
 
 // Emits the ::row-changed signal on @tree_model.
 //
 // See [signal@Gtk.TreeModel::row-changed].
 func (x *TreeModelBase) RowChanged(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowChanged(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::row-deleted signal on @tree_model.
@@ -1511,9 +1449,7 @@ func (x *TreeModelBase) RowChanged(PathVar *TreePath, IterVar *TreeIter) {
 // Nodes that are deleted are not unreffed, this means that any
 // outstanding references on the deleted node should not be released.
 func (x *TreeModelBase) RowDeleted(PathVar *TreePath) {
-
 	XGtkTreeModelRowDeleted(x.GoPointer(), PathVar)
-
 }
 
 // Emits the ::row-has-child-toggled signal on @tree_model.
@@ -1523,18 +1459,14 @@ func (x *TreeModelBase) RowDeleted(PathVar *TreePath) {
 // This should be called by models after the child
 // state of a node changes.
 func (x *TreeModelBase) RowHasChildToggled(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowHasChildToggled(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::row-inserted signal on @tree_model.
 //
 // See [signal@Gtk.TreeModel::row-inserted].
 func (x *TreeModelBase) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowInserted(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::rows-reordered signal on @tree_model.
@@ -1544,9 +1476,7 @@ func (x *TreeModelBase) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
 // This should be called by models when their rows have been
 // reordered.
 func (x *TreeModelBase) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int32) {
-
 	XGtkTreeModelRowsReordered(x.GoPointer(), PathVar, IterVar, NewOrderVar)
-
 }
 
 // Emits the ::rows-reordered signal on @tree_model.
@@ -1556,9 +1486,7 @@ func (x *TreeModelBase) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewO
 // This should be called by models when their rows have been
 // reordered.
 func (x *TreeModelBase) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32, LengthVar int32) {
-
 	XGtkTreeModelRowsReorderedWithLength(x.GoPointer(), PathVar, IterVar, NewOrderVar, LengthVar)
-
 }
 
 // Lets the tree unref the node.
@@ -1570,39 +1498,39 @@ func (x *TreeModelBase) RowsReorderedWithLength(PathVar *TreePath, IterVar *Tree
 //
 // Please note that nodes that are deleted are not unreffed.
 func (x *TreeModelBase) UnrefNode(IterVar *TreeIter) {
-
 	XGtkTreeModelUnrefNode(x.GoPointer(), IterVar)
-
 }
 
-var XGtkTreeModelFilterNew func(uintptr, *TreePath) uintptr
-var XGtkTreeModelForeach func(uintptr, uintptr, uintptr)
-var XGtkTreeModelGet func(uintptr, *TreeIter, ...interface{})
-var XGtkTreeModelGetColumnType func(uintptr, int32) types.GType
-var XGtkTreeModelGetFlags func(uintptr) TreeModelFlags
-var XGtkTreeModelGetIter func(uintptr, *TreeIter, *TreePath) bool
-var XGtkTreeModelGetIterFirst func(uintptr, *TreeIter) bool
-var XGtkTreeModelGetIterFromString func(uintptr, *TreeIter, string) bool
-var XGtkTreeModelGetNColumns func(uintptr) int32
-var XGtkTreeModelGetPath func(uintptr, *TreeIter) *TreePath
-var XGtkTreeModelGetStringFromIter func(uintptr, *TreeIter) string
-var XGtkTreeModelGetValist func(uintptr, *TreeIter, []interface{})
-var XGtkTreeModelGetValue func(uintptr, *TreeIter, int32, *gobject.Value)
-var XGtkTreeModelIterChildren func(uintptr, *TreeIter, *TreeIter) bool
-var XGtkTreeModelIterHasChild func(uintptr, *TreeIter) bool
-var XGtkTreeModelIterNChildren func(uintptr, *TreeIter) int32
-var XGtkTreeModelIterNext func(uintptr, *TreeIter) bool
-var XGtkTreeModelIterNthChild func(uintptr, *TreeIter, *TreeIter, int32) bool
-var XGtkTreeModelIterParent func(uintptr, *TreeIter, *TreeIter) bool
-var XGtkTreeModelIterPrevious func(uintptr, *TreeIter) bool
-var XGtkTreeModelRefNode func(uintptr, *TreeIter)
-var XGtkTreeModelRowChanged func(uintptr, *TreePath, *TreeIter)
-var XGtkTreeModelRowDeleted func(uintptr, *TreePath)
-var XGtkTreeModelRowHasChildToggled func(uintptr, *TreePath, *TreeIter)
-var XGtkTreeModelRowInserted func(uintptr, *TreePath, *TreeIter)
-var XGtkTreeModelRowsReordered func(uintptr, *TreePath, *TreeIter, int32)
-var XGtkTreeModelRowsReorderedWithLength func(uintptr, *TreePath, *TreeIter, []int32, int32)
-var XGtkTreeModelUnrefNode func(uintptr, *TreeIter)
+var (
+	XGtkTreeModelFilterNew               func(uintptr, *TreePath) uintptr
+	XGtkTreeModelForeach                 func(uintptr, uintptr, uintptr)
+	XGtkTreeModelGet                     func(uintptr, *TreeIter, ...interface{})
+	XGtkTreeModelGetColumnType           func(uintptr, int32) types.GType
+	XGtkTreeModelGetFlags                func(uintptr) TreeModelFlags
+	XGtkTreeModelGetIter                 func(uintptr, *TreeIter, *TreePath) bool
+	XGtkTreeModelGetIterFirst            func(uintptr, *TreeIter) bool
+	XGtkTreeModelGetIterFromString       func(uintptr, *TreeIter, string) bool
+	XGtkTreeModelGetNColumns             func(uintptr) int32
+	XGtkTreeModelGetPath                 func(uintptr, *TreeIter) *TreePath
+	XGtkTreeModelGetStringFromIter       func(uintptr, *TreeIter) string
+	XGtkTreeModelGetValist               func(uintptr, *TreeIter, []interface{})
+	XGtkTreeModelGetValue                func(uintptr, *TreeIter, int32, *gobject.Value)
+	XGtkTreeModelIterChildren            func(uintptr, *TreeIter, *TreeIter) bool
+	XGtkTreeModelIterHasChild            func(uintptr, *TreeIter) bool
+	XGtkTreeModelIterNChildren           func(uintptr, *TreeIter) int32
+	XGtkTreeModelIterNext                func(uintptr, *TreeIter) bool
+	XGtkTreeModelIterNthChild            func(uintptr, *TreeIter, *TreeIter, int32) bool
+	XGtkTreeModelIterParent              func(uintptr, *TreeIter, *TreeIter) bool
+	XGtkTreeModelIterPrevious            func(uintptr, *TreeIter) bool
+	XGtkTreeModelRefNode                 func(uintptr, *TreeIter)
+	XGtkTreeModelRowChanged              func(uintptr, *TreePath, *TreeIter)
+	XGtkTreeModelRowDeleted              func(uintptr, *TreePath)
+	XGtkTreeModelRowHasChildToggled      func(uintptr, *TreePath, *TreeIter)
+	XGtkTreeModelRowInserted             func(uintptr, *TreePath, *TreeIter)
+	XGtkTreeModelRowsReordered           func(uintptr, *TreePath, *TreeIter, int32)
+	XGtkTreeModelRowsReorderedWithLength func(uintptr, *TreePath, *TreeIter, []int32, int32)
+	XGtkTreeModelUnrefNode               func(uintptr, *TreeIter)
+)
 
 // These flags indicate various properties of a `GtkTreeModel`.
 //
@@ -1634,9 +1562,7 @@ var xTreeRowReferenceDeleted func(uintptr, *TreePath)
 // gtk_tree_row_reference_new_proxy() know that the
 // model emitted the ::row-deleted signal.
 func TreeRowReferenceDeleted(ProxyVar *gobject.Object, PathVar *TreePath) {
-
 	xTreeRowReferenceDeleted(ProxyVar.GoPointer(), PathVar)
-
 }
 
 var xTreeRowReferenceInserted func(uintptr, *TreePath)
@@ -1645,9 +1571,7 @@ var xTreeRowReferenceInserted func(uintptr, *TreePath)
 // gtk_tree_row_reference_new_proxy() know that the
 // model emitted the ::row-inserted signal.
 func TreeRowReferenceInserted(ProxyVar *gobject.Object, PathVar *TreePath) {
-
 	xTreeRowReferenceInserted(ProxyVar.GoPointer(), PathVar)
-
 }
 
 var xTreeRowReferenceReordered func(uintptr, *TreePath, *TreeIter, []int32)
@@ -1656,9 +1580,7 @@ var xTreeRowReferenceReordered func(uintptr, *TreePath, *TreeIter, []int32)
 // gtk_tree_row_reference_new_proxy() know that the
 // model emitted the ::rows-reordered signal.
 func TreeRowReferenceReordered(ProxyVar *gobject.Object, PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32) {
-
 	xTreeRowReferenceReordered(ProxyVar.GoPointer(), PathVar, IterVar, NewOrderVar)
-
 }
 
 func init() {
@@ -1749,5 +1671,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkTreeModelRowsReordered, libs, "gtk_tree_model_rows_reordered")
 	core.PuregoSafeRegister(&XGtkTreeModelRowsReorderedWithLength, libs, "gtk_tree_model_rows_reordered_with_length")
 	core.PuregoSafeRegister(&XGtkTreeModelUnrefNode, libs, "gtk_tree_model_unref_node")
-
 }

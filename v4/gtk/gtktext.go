@@ -187,9 +187,7 @@ var xTextComputeCursorExtents func(uintptr, uint, *graphene.Rect, *graphene.Rect
 //
 // The rectangle positions are in widget coordinates.
 func (x *Text) ComputeCursorExtents(PositionVar uint, StrongVar *graphene.Rect, WeakVar *graphene.Rect) {
-
 	xTextComputeCursorExtents(x.GoPointer(), PositionVar, StrongVar, WeakVar)
-
 }
 
 var xTextGetActivatesDefault func(uintptr) bool
@@ -199,7 +197,6 @@ var xTextGetActivatesDefault func(uintptr) bool
 //
 // See [method@Gtk.Text.set_activates_default].
 func (x *Text) GetActivatesDefault() bool {
-
 	cret := xTextGetActivatesDefault(x.GoPointer())
 	return cret
 }
@@ -210,7 +207,6 @@ var xTextGetAttributes func(uintptr) *pango.AttrList
 //
 // See [method@Gtk.Text.set_attributes].
 func (x *Text) GetAttributes() *pango.AttrList {
-
 	cret := xTextGetAttributes(x.GoPointer())
 	return cret
 }
@@ -237,7 +233,6 @@ var xTextGetEnableEmojiCompletion func(uintptr) bool
 
 // Returns whether Emoji completion is enabled.
 func (x *Text) GetEnableEmojiCompletion() bool {
-
 	cret := xTextGetEnableEmojiCompletion(x.GoPointer())
 	return cret
 }
@@ -265,7 +260,6 @@ var xTextGetInputHints func(uintptr) InputHints
 
 // Gets the input hints of the text widget.
 func (x *Text) GetInputHints() InputHints {
-
 	cret := xTextGetInputHints(x.GoPointer())
 	return cret
 }
@@ -274,7 +268,6 @@ var xTextGetInputPurpose func(uintptr) InputPurpose
 
 // Gets the input purpose of the text widget.
 func (x *Text) GetInputPurpose() InputPurpose {
-
 	cret := xTextGetInputPurpose(x.GoPointer())
 	return cret
 }
@@ -287,7 +280,6 @@ var xTextGetInvisibleChar func(uintptr) uint32
 // so the value returned by this function is not very useful unless
 // it has been explicitly set with [method@Gtk.Text.set_invisible_char].
 func (x *Text) GetInvisibleChar() uint32 {
-
 	cret := xTextGetInvisibleChar(x.GoPointer())
 	return cret
 }
@@ -301,7 +293,6 @@ var xTextGetMaxLength func(uintptr) int32
 // This is equivalent to getting @self's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.get_max_length] on it.
 func (x *Text) GetMaxLength() int32 {
-
 	cret := xTextGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -312,7 +303,6 @@ var xTextGetOverwriteMode func(uintptr) bool
 //
 // See [method@Gtk.Text.set_overwrite_mode].
 func (x *Text) GetOverwriteMode() bool {
-
 	cret := xTextGetOverwriteMode(x.GoPointer())
 	return cret
 }
@@ -324,7 +314,6 @@ var xTextGetPlaceholderText func(uintptr) string
 //
 // See [method@Gtk.Text.set_placeholder_text].
 func (x *Text) GetPlaceholderText() string {
-
 	cret := xTextGetPlaceholderText(x.GoPointer())
 	return cret
 }
@@ -334,7 +323,6 @@ var xTextGetPropagateTextWidth func(uintptr) bool
 // Returns whether the text widget will grow and shrink
 // with the content.
 func (x *Text) GetPropagateTextWidth() bool {
-
 	cret := xTextGetPropagateTextWidth(x.GoPointer())
 	return cret
 }
@@ -345,7 +333,6 @@ var xTextGetTabs func(uintptr) *pango.TabArray
 //
 // See [method@Gtk.Text.set_tabs].
 func (x *Text) GetTabs() *pango.TabArray {
-
 	cret := xTextGetTabs(x.GoPointer())
 	return cret
 }
@@ -357,7 +344,6 @@ var xTextGetTextLength func(uintptr) uint16
 // This is equivalent to getting @self's `GtkEntryBuffer`
 // and calling [method@Gtk.EntryBuffer.get_length] on it.
 func (x *Text) GetTextLength() uint16 {
-
 	cret := xTextGetTextLength(x.GoPointer())
 	return cret
 }
@@ -366,7 +352,6 @@ var xTextGetTruncateMultiline func(uintptr) bool
 
 // Returns whether pasted text will be truncated to the first line.
 func (x *Text) GetTruncateMultiline() bool {
-
 	cret := xTextGetTruncateMultiline(x.GoPointer())
 	return cret
 }
@@ -375,7 +360,6 @@ var xTextGetVisibility func(uintptr) bool
 
 // Retrieves whether the text is visible.
 func (x *Text) GetVisibility() bool {
-
 	cret := xTextGetVisibility(x.GoPointer())
 	return cret
 }
@@ -391,7 +375,6 @@ var xTextGrabFocusWithoutSelecting func(uintptr) bool
 // which the user usually doesn't want to replace all
 // text in, such as search-as-you-type entries.
 func (x *Text) GrabFocusWithoutSelecting() bool {
-
 	cret := xTextGrabFocusWithoutSelecting(x.GoPointer())
 	return cret
 }
@@ -405,18 +388,14 @@ var xTextSetActivatesDefault func(uintptr, bool)
 // be closed, since the default widget is usually one of
 // the dialog buttons.
 func (x *Text) SetActivatesDefault(ActivatesVar bool) {
-
 	xTextSetActivatesDefault(x.GoPointer(), ActivatesVar)
-
 }
 
 var xTextSetAttributes func(uintptr, *pango.AttrList)
 
 // Apply attributes to the contents of the text widget.
 func (x *Text) SetAttributes(AttrsVar *pango.AttrList) {
-
 	xTextSetAttributes(x.GoPointer(), AttrsVar)
-
 }
 
 var xTextSetBuffer func(uintptr, uintptr)
@@ -424,9 +403,7 @@ var xTextSetBuffer func(uintptr, uintptr)
 // Set the entry buffer object which holds the text for
 // this widget.
 func (x *Text) SetBuffer(BufferVar *EntryBuffer) {
-
 	xTextSetBuffer(x.GoPointer(), BufferVar.GoPointer())
-
 }
 
 var xTextSetEnableEmojiCompletion func(uintptr, bool)
@@ -437,27 +414,21 @@ var xTextSetEnableEmojiCompletion func(uintptr, bool)
 // will pop up a window with suggested Emojis matching the
 // keyword.
 func (x *Text) SetEnableEmojiCompletion(EnableEmojiCompletionVar bool) {
-
 	xTextSetEnableEmojiCompletion(x.GoPointer(), EnableEmojiCompletionVar)
-
 }
 
 var xTextSetExtraMenu func(uintptr, uintptr)
 
 // Sets a menu model to add to the context menu of the text widget.
 func (x *Text) SetExtraMenu(ModelVar *gio.MenuModel) {
-
 	xTextSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xTextSetInputHints func(uintptr, InputHints)
 
 // Sets hints that allow input methods to fine-tune their behaviour.
 func (x *Text) SetInputHints(HintsVar InputHints) {
-
 	xTextSetInputHints(x.GoPointer(), HintsVar)
-
 }
 
 var xTextSetInputPurpose func(uintptr, InputPurpose)
@@ -467,9 +438,7 @@ var xTextSetInputPurpose func(uintptr, InputPurpose)
 // The input purpose can be used by on-screen keyboards
 // and other input methods to adjust their behaviour.
 func (x *Text) SetInputPurpose(PurposeVar InputPurpose) {
-
 	xTextSetInputPurpose(x.GoPointer(), PurposeVar)
-
 }
 
 var xTextSetInvisibleChar func(uintptr, uint32)
@@ -481,9 +450,7 @@ var xTextSetInvisibleChar func(uintptr, uint32)
 // will get no feedback at all; there will be no text on the screen
 // as they type.
 func (x *Text) SetInvisibleChar(ChVar uint32) {
-
 	xTextSetInvisibleChar(x.GoPointer(), ChVar)
-
 }
 
 var xTextSetMaxLength func(uintptr, int32)
@@ -496,18 +463,14 @@ var xTextSetMaxLength func(uintptr, int32)
 // This is equivalent to getting @self's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.set_max_length] on it.
 func (x *Text) SetMaxLength(LengthVar int32) {
-
 	xTextSetMaxLength(x.GoPointer(), LengthVar)
-
 }
 
 var xTextSetOverwriteMode func(uintptr, bool)
 
 // Sets whether the text is overwritten when typing.
 func (x *Text) SetOverwriteMode(OverwriteVar bool) {
-
 	xTextSetOverwriteMode(x.GoPointer(), OverwriteVar)
-
 }
 
 var xTextSetPlaceholderText func(uintptr, string)
@@ -518,36 +481,28 @@ var xTextSetPlaceholderText func(uintptr, string)
 // This can be used to give a visual hint of the expected
 // contents of the text widget.
 func (x *Text) SetPlaceholderText(TextVar string) {
-
 	xTextSetPlaceholderText(x.GoPointer(), TextVar)
-
 }
 
 var xTextSetPropagateTextWidth func(uintptr, bool)
 
 // Sets whether the text widget should grow and shrink with the content.
 func (x *Text) SetPropagateTextWidth(PropagateTextWidthVar bool) {
-
 	xTextSetPropagateTextWidth(x.GoPointer(), PropagateTextWidthVar)
-
 }
 
 var xTextSetTabs func(uintptr, *pango.TabArray)
 
 // Sets tab stops for the text widget.
 func (x *Text) SetTabs(TabsVar *pango.TabArray) {
-
 	xTextSetTabs(x.GoPointer(), TabsVar)
-
 }
 
 var xTextSetTruncateMultiline func(uintptr, bool)
 
 // Sets whether pasted text should be truncated to the first line.
 func (x *Text) SetTruncateMultiline(TruncateMultilineVar bool) {
-
 	xTextSetTruncateMultiline(x.GoPointer(), TruncateMultilineVar)
-
 }
 
 var xTextSetVisibility func(uintptr, bool)
@@ -567,9 +522,7 @@ var xTextSetVisibility func(uintptr, bool)
 // to inform input methods about the purpose of this widget, in addition
 // to setting visibility to false.
 func (x *Text) SetVisibility(VisibleVar bool) {
-
 	xTextSetVisibility(x.GoPointer(), VisibleVar)
-
 }
 
 var xTextUnsetInvisibleChar func(uintptr)
@@ -578,9 +531,7 @@ var xTextUnsetInvisibleChar func(uintptr)
 //
 // After calling this, the default invisible char is used again.
 func (x *Text) UnsetInvisibleChar() {
-
 	xTextUnsetInvisibleChar(x.GoPointer())
-
 }
 
 func (c *Text) GoPointer() uintptr {
@@ -867,7 +818,6 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -892,7 +842,6 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -918,7 +867,6 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -944,7 +892,6 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -974,7 +921,6 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int32)) uint32
 		cbFn := *cb
 
 		cbFn(fa, TypeVarp, CountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -999,7 +945,6 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, StringVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1025,7 +970,6 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1064,7 +1008,6 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int32, bool)) uint
 		cbFn := *cb
 
 		cbFn(fa, StepVarp, CountVarp, ExtendVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1089,7 +1032,6 @@ func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1113,7 +1055,6 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, PreeditVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1137,7 +1078,6 @@ func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1154,9 +1094,7 @@ func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Text) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1177,7 +1115,6 @@ func (x *Text) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Text) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1202,7 +1139,6 @@ func (x *Text) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Text) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1241,30 +1177,23 @@ func (x *Text) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Text) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Text) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Text) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Text) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1277,9 +1206,7 @@ func (x *Text) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Text) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1287,9 +1214,7 @@ func (x *Text) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessib
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Text) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1298,9 +1223,7 @@ func (x *Text) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Text) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1322,9 +1245,7 @@ func (x *Text) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Text) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1334,9 +1255,7 @@ func (x *Text) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *Text) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1358,9 +1277,7 @@ func (x *Text) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Accessi
 //
 // ```
 func (x *Text) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1370,9 +1287,7 @@ func (x *Text) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *Text) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1395,9 +1310,7 @@ func (x *Text) UpdateRelationValue(NRelationsVar int32, RelationsVar []Accessibl
 //
 // ```
 func (x *Text) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1407,9 +1320,7 @@ func (x *Text) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}
 //
 // This function is meant to be used by language bindings.
 func (x *Text) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Updates the position of the caret.
@@ -1418,9 +1329,7 @@ func (x *Text) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, V
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *Text) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -1433,9 +1342,7 @@ func (x *Text) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *Text) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint32, EndVar uint32) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -1444,9 +1351,7 @@ func (x *Text) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar ui
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *Text) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1454,7 +1359,6 @@ func (x *Text) UpdateSelectionBound() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Text) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1496,7 +1400,6 @@ func (x *Text) GetBuildableId() string {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *Text) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -1505,9 +1408,7 @@ func (x *Text) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformSta
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *Text) DeleteSelection() {
-
 	XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -1519,9 +1420,7 @@ func (x *Text) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *Text) DeleteText(StartPosVar int32, EndPosVar int32) {
-
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -1529,14 +1428,11 @@ func (x *Text) DeleteText(StartPosVar int32, EndPosVar int32) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *Text) FinishDelegate() {
-
 	XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Gets the alignment of the editable.
 func (x *Text) GetAlignment() float32 {
-
 	cret := XGtkEditableGetAlignment(x.GoPointer())
 	return cret
 }
@@ -1550,7 +1446,6 @@ func (x *Text) GetAlignment() float32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Text) GetChars(StartPosVar int32, EndPosVar int32) string {
-
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1575,21 +1470,18 @@ func (x *Text) GetDelegate() *EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *Text) GetEditable() bool {
-
 	cret := XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *Text) GetEnableUndo() bool {
-
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *Text) GetMaxWidthChars() int32 {
-
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -1599,7 +1491,6 @@ func (x *Text) GetMaxWidthChars() int32 {
 //
 // Note that this position is in characters, not in bytes.
 func (x *Text) GetPosition() int32 {
-
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -1612,7 +1503,6 @@ func (x *Text) GetPosition() int32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Text) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
-
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1621,7 +1511,6 @@ func (x *Text) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *Text) GetText() string {
-
 	cret := XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -1629,7 +1518,6 @@ func (x *Text) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *Text) GetWidthChars() int32 {
-
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -1642,9 +1530,7 @@ func (x *Text) GetWidthChars() int32 {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *Text) InitDelegate() {
-
 	XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -1654,9 +1540,7 @@ func (x *Text) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *Text) InsertText(TextVar string, LengthVar int32, PositionVar int32) {
-
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -1668,9 +1552,7 @@ func (x *Text) InsertText(TextVar string, LengthVar int32, PositionVar int32) {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Text) SelectRegion(StartPosVar int32, EndPosVar int32) {
-
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Sets the alignment for the contents of the editable.
@@ -1678,16 +1560,12 @@ func (x *Text) SelectRegion(StartPosVar int32, EndPosVar int32) {
 // This controls the horizontal positioning of the contents when
 // the displayed text is shorter than the width of the editable.
 func (x *Text) SetAlignment(XalignVar float32) {
-
 	XGtkEditableSetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *Text) SetEditable(IsEditableVar bool) {
-
 	XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -1697,16 +1575,12 @@ func (x *Text) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *Text) SetEnableUndo(EnableUndoVar bool) {
-
 	XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *Text) SetMaxWidthChars(NCharsVar int32) {
-
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -1717,18 +1591,14 @@ func (x *Text) SetMaxWidthChars(NCharsVar int32) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *Text) SetPosition(PositionVar int32) {
-
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *Text) SetText(TextVar string) {
-
 	XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -1738,9 +1608,7 @@ func (x *Text) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *Text) SetWidthChars(NCharsVar int32) {
-
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 func init() {
@@ -1794,5 +1662,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextSetTruncateMultiline, libs, "gtk_text_set_truncate_multiline")
 	core.PuregoSafeRegister(&xTextSetVisibility, libs, "gtk_text_set_visibility")
 	core.PuregoSafeRegister(&xTextUnsetInvisibleChar, libs, "gtk_text_unset_invisible_char")
-
 }

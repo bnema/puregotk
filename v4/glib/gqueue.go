@@ -30,9 +30,7 @@ var xQueueClear func(uintptr)
 // Removes all the elements in @queue. If queue elements contain
 // dynamically-allocated memory, they should be freed first.
 func (x *Queue) Clear() {
-
 	xQueueClear(x.GoPointer())
-
 }
 
 var xQueueClearFull func(uintptr, uintptr)
@@ -40,9 +38,7 @@ var xQueueClearFull func(uintptr, uintptr)
 // Convenience method, which frees all the memory used by a #GQueue,
 // and calls the provided @free_func on each item in the #GQueue.
 func (x *Queue) ClearFull(FreeFuncVar *DestroyNotify) {
-
 	xQueueClearFull(x.GoPointer(), NewCallbackNullable(FreeFuncVar))
-
 }
 
 var xQueueCopy func(uintptr) *Queue
@@ -51,7 +47,6 @@ var xQueueCopy func(uintptr) *Queue
 // queue consist of pointers to data, the pointers are copied, but the
 // actual data is not.
 func (x *Queue) Copy() *Queue {
-
 	cret := xQueueCopy(x.GoPointer())
 	return cret
 }
@@ -62,16 +57,13 @@ var xQueueDeleteLink func(uintptr, *List)
 //
 // @link_ must be part of @queue.
 func (x *Queue) DeleteLink(LinkVar *List) {
-
 	xQueueDeleteLink(x.GoPointer(), LinkVar)
-
 }
 
 var xQueueFind func(uintptr, uintptr) *List
 
 // Finds the first link in @queue which contains @data.
 func (x *Queue) Find(DataVar uintptr) *List {
-
 	cret := xQueueFind(x.GoPointer(), DataVar)
 	return cret
 }
@@ -84,7 +76,6 @@ var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
 // takes two gconstpointer arguments, the #GQueue element's data as the
 // first argument and the given user data as the second argument.
 func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
-
 	cret := xQueueFindCustom(x.GoPointer(), DataVar, NewCallback(FuncVar))
 	return cret
 }
@@ -97,9 +88,7 @@ var xQueueForeach func(uintptr, uintptr, uintptr)
 // It is safe for @func to remove the element from @queue, but it must
 // not modify any part of the queue after that element.
 func (x *Queue) Foreach(FuncVar *Func, UserDataVar uintptr) {
-
 	xQueueForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xQueueFree func(uintptr)
@@ -111,9 +100,7 @@ var xQueueFree func(uintptr)
 // If queue elements contain dynamically-allocated memory, you should
 // either use g_queue_free_full() or free them manually first.
 func (x *Queue) Free() {
-
 	xQueueFree(x.GoPointer())
-
 }
 
 var xQueueFreeFull func(uintptr, uintptr)
@@ -124,16 +111,13 @@ var xQueueFreeFull func(uintptr, uintptr)
 // @free_func should not modify the queue (eg, by removing the freed
 // element from it).
 func (x *Queue) FreeFull(FreeFuncVar *DestroyNotify) {
-
 	xQueueFreeFull(x.GoPointer(), NewCallback(FreeFuncVar))
-
 }
 
 var xQueueGetLength func(uintptr) uint32
 
 // Returns the number of items in @queue.
 func (x *Queue) GetLength() uint32 {
-
 	cret := xQueueGetLength(x.GoPointer())
 	return cret
 }
@@ -142,7 +126,6 @@ var xQueueIndex func(uintptr, uintptr) int32
 
 // Returns the position of the first element in @queue which contains @data.
 func (x *Queue) Index(DataVar uintptr) int32 {
-
 	cret := xQueueIndex(x.GoPointer(), DataVar)
 	return cret
 }
@@ -154,9 +137,7 @@ var xQueueInit func(uintptr)
 // %G_QUEUE_INIT. It is not necessary to initialize queues created with
 // g_queue_new().
 func (x *Queue) Init() {
-
 	xQueueInit(x.GoPointer())
-
 }
 
 var xQueueInsertAfter func(uintptr, *List, uintptr)
@@ -166,9 +147,7 @@ var xQueueInsertAfter func(uintptr, *List, uintptr)
 // @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
 // data at the head of the queue.
 func (x *Queue) InsertAfter(SiblingVar *List, DataVar uintptr) {
-
 	xQueueInsertAfter(x.GoPointer(), SiblingVar, DataVar)
-
 }
 
 var xQueueInsertAfterLink func(uintptr, *List, *List)
@@ -177,9 +156,7 @@ var xQueueInsertAfterLink func(uintptr, *List, *List)
 //
 // @sibling must be part of @queue.
 func (x *Queue) InsertAfterLink(SiblingVar *List, LinkVar *List) {
-
 	xQueueInsertAfterLink(x.GoPointer(), SiblingVar, LinkVar)
-
 }
 
 var xQueueInsertBefore func(uintptr, *List, uintptr)
@@ -189,9 +166,7 @@ var xQueueInsertBefore func(uintptr, *List, uintptr)
 // @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
 // data at the tail of the queue.
 func (x *Queue) InsertBefore(SiblingVar *List, DataVar uintptr) {
-
 	xQueueInsertBefore(x.GoPointer(), SiblingVar, DataVar)
-
 }
 
 var xQueueInsertBeforeLink func(uintptr, *List, *List)
@@ -200,25 +175,20 @@ var xQueueInsertBeforeLink func(uintptr, *List, *List)
 //
 // @sibling must be part of @queue.
 func (x *Queue) InsertBeforeLink(SiblingVar *List, LinkVar *List) {
-
 	xQueueInsertBeforeLink(x.GoPointer(), SiblingVar, LinkVar)
-
 }
 
 var xQueueInsertSorted func(uintptr, uintptr, uintptr, uintptr)
 
 // Inserts @data into @queue using @func to determine the new position.
 func (x *Queue) InsertSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xQueueInsertSorted(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xQueueIsEmpty func(uintptr) bool
 
 // Returns %TRUE if the queue is empty.
 func (x *Queue) IsEmpty() bool {
-
 	cret := xQueueIsEmpty(x.GoPointer())
 	return cret
 }
@@ -227,7 +197,6 @@ var xQueueLinkIndex func(uintptr, *List) int32
 
 // Returns the position of @link_ in @queue.
 func (x *Queue) LinkIndex(LinkVar *List) int32 {
-
 	cret := xQueueLinkIndex(x.GoPointer(), LinkVar)
 	return cret
 }
@@ -236,7 +205,6 @@ var xQueuePeekHead func(uintptr) uintptr
 
 // Returns the first element of the queue.
 func (x *Queue) PeekHead() uintptr {
-
 	cret := xQueuePeekHead(x.GoPointer())
 	return cret
 }
@@ -245,7 +213,6 @@ var xQueuePeekHeadLink func(uintptr) *List
 
 // Returns the first link in @queue.
 func (x *Queue) PeekHeadLink() *List {
-
 	cret := xQueuePeekHeadLink(x.GoPointer())
 	return cret
 }
@@ -254,7 +221,6 @@ var xQueuePeekNth func(uintptr, uint32) uintptr
 
 // Returns the @n'th element of @queue.
 func (x *Queue) PeekNth(NVar uint32) uintptr {
-
 	cret := xQueuePeekNth(x.GoPointer(), NVar)
 	return cret
 }
@@ -263,7 +229,6 @@ var xQueuePeekNthLink func(uintptr, uint32) *List
 
 // Returns the link at the given position
 func (x *Queue) PeekNthLink(NVar uint32) *List {
-
 	cret := xQueuePeekNthLink(x.GoPointer(), NVar)
 	return cret
 }
@@ -272,7 +237,6 @@ var xQueuePeekTail func(uintptr) uintptr
 
 // Returns the last element of the queue.
 func (x *Queue) PeekTail() uintptr {
-
 	cret := xQueuePeekTail(x.GoPointer())
 	return cret
 }
@@ -281,7 +245,6 @@ var xQueuePeekTailLink func(uintptr) *List
 
 // Returns the last link in @queue.
 func (x *Queue) PeekTailLink() *List {
-
 	cret := xQueuePeekTailLink(x.GoPointer())
 	return cret
 }
@@ -290,7 +253,6 @@ var xQueuePopHead func(uintptr) uintptr
 
 // Removes the first element of the queue and returns its data.
 func (x *Queue) PopHead() uintptr {
-
 	cret := xQueuePopHead(x.GoPointer())
 	return cret
 }
@@ -299,7 +261,6 @@ var xQueuePopHeadLink func(uintptr) *List
 
 // Removes and returns the first element of the queue.
 func (x *Queue) PopHeadLink() *List {
-
 	cret := xQueuePopHeadLink(x.GoPointer())
 	return cret
 }
@@ -308,7 +269,6 @@ var xQueuePopNth func(uintptr, uint32) uintptr
 
 // Removes the @n'th element of @queue and returns its data.
 func (x *Queue) PopNth(NVar uint32) uintptr {
-
 	cret := xQueuePopNth(x.GoPointer(), NVar)
 	return cret
 }
@@ -317,7 +277,6 @@ var xQueuePopNthLink func(uintptr, uint32) *List
 
 // Removes and returns the link at the given position.
 func (x *Queue) PopNthLink(NVar uint32) *List {
-
 	cret := xQueuePopNthLink(x.GoPointer(), NVar)
 	return cret
 }
@@ -326,7 +285,6 @@ var xQueuePopTail func(uintptr) uintptr
 
 // Removes the last element of the queue and returns its data.
 func (x *Queue) PopTail() uintptr {
-
 	cret := xQueuePopTail(x.GoPointer())
 	return cret
 }
@@ -335,7 +293,6 @@ var xQueuePopTailLink func(uintptr) *List
 
 // Removes and returns the last element of the queue.
 func (x *Queue) PopTailLink() *List {
-
 	cret := xQueuePopTailLink(x.GoPointer())
 	return cret
 }
@@ -344,61 +301,48 @@ var xQueuePushHead func(uintptr, uintptr)
 
 // Adds a new element at the head of the queue.
 func (x *Queue) PushHead(DataVar uintptr) {
-
 	xQueuePushHead(x.GoPointer(), DataVar)
-
 }
 
 var xQueuePushHeadLink func(uintptr, *List)
 
 // Adds a new element at the head of the queue.
 func (x *Queue) PushHeadLink(LinkVar *List) {
-
 	xQueuePushHeadLink(x.GoPointer(), LinkVar)
-
 }
 
 var xQueuePushNth func(uintptr, uintptr, int32)
 
 // Inserts a new element into @queue at the given position.
 func (x *Queue) PushNth(DataVar uintptr, NVar int32) {
-
 	xQueuePushNth(x.GoPointer(), DataVar, NVar)
-
 }
 
 var xQueuePushNthLink func(uintptr, int32, *List)
 
 // Inserts @link into @queue at the given position.
 func (x *Queue) PushNthLink(NVar int32, LinkVar *List) {
-
 	xQueuePushNthLink(x.GoPointer(), NVar, LinkVar)
-
 }
 
 var xQueuePushTail func(uintptr, uintptr)
 
 // Adds a new element at the tail of the queue.
 func (x *Queue) PushTail(DataVar uintptr) {
-
 	xQueuePushTail(x.GoPointer(), DataVar)
-
 }
 
 var xQueuePushTailLink func(uintptr, *List)
 
 // Adds a new element at the tail of the queue.
 func (x *Queue) PushTailLink(LinkVar *List) {
-
 	xQueuePushTailLink(x.GoPointer(), LinkVar)
-
 }
 
 var xQueueRemove func(uintptr, uintptr) bool
 
 // Removes the first element in @queue that contains @data.
 func (x *Queue) Remove(DataVar uintptr) bool {
-
 	cret := xQueueRemove(x.GoPointer(), DataVar)
 	return cret
 }
@@ -407,7 +351,6 @@ var xQueueRemoveAll func(uintptr, uintptr) uint32
 
 // Remove all elements whose data equals @data from @queue.
 func (x *Queue) RemoveAll(DataVar uintptr) uint32 {
-
 	cret := xQueueRemoveAll(x.GoPointer(), DataVar)
 	return cret
 }
@@ -416,18 +359,14 @@ var xQueueReverse func(uintptr)
 
 // Reverses the order of the items in @queue.
 func (x *Queue) Reverse() {
-
 	xQueueReverse(x.GoPointer())
-
 }
 
 var xQueueSort func(uintptr, uintptr, uintptr)
 
 // Sorts @queue using @compare_func.
 func (x *Queue) Sort(CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xQueueSort(x.GoPointer(), NewCallback(CompareFuncVar), UserDataVar)
-
 }
 
 var xQueueUnlink func(uintptr, *List)
@@ -437,9 +376,7 @@ var xQueueUnlink func(uintptr, *List)
 //
 // @link_ must be part of @queue.
 func (x *Queue) Unlink(LinkVar *List) {
-
 	xQueueUnlink(x.GoPointer(), LinkVar)
-
 }
 
 func init() {
@@ -496,5 +433,4 @@ func init() {
 	core.PuregoSafeRegister(&xQueueReverse, libs, "g_queue_reverse")
 	core.PuregoSafeRegister(&xQueueSort, libs, "g_queue_sort")
 	core.PuregoSafeRegister(&xQueueUnlink, libs, "g_queue_unlink")
-
 }

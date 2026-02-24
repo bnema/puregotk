@@ -74,9 +74,7 @@ var xEnumeratePrinters func(uintptr, uintptr, uintptr, bool)
 //
 // If @func returns true, the enumeration is stopped.
 func EnumeratePrinters(FuncVar *PrinterFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify, WaitVar bool) {
-
 	xEnumeratePrinters(glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar), WaitVar)
-
 }
 
 // Represents a printer.
@@ -125,7 +123,6 @@ var xPrinterAcceptsPdf func(uintptr) bool
 // Returns whether the printer accepts input in
 // PDF format.
 func (x *Printer) AcceptsPdf() bool {
-
 	cret := xPrinterAcceptsPdf(x.GoPointer())
 	return cret
 }
@@ -135,7 +132,6 @@ var xPrinterAcceptsPs func(uintptr) bool
 // Returns whether the printer accepts input in
 // PostScript format.
 func (x *Printer) AcceptsPs() bool {
-
 	cret := xPrinterAcceptsPs(x.GoPointer())
 	return cret
 }
@@ -144,7 +140,6 @@ var xPrinterCompare func(uintptr, uintptr) int32
 
 // Compares two printers.
 func (x *Printer) Compare(BVar *Printer) int32 {
-
 	cret := xPrinterCompare(x.GoPointer(), BVar.GoPointer())
 	return cret
 }
@@ -153,7 +148,6 @@ var xPrinterGetBackend func(uintptr) *PrintBackend
 
 // Returns the backend of the printer.
 func (x *Printer) GetBackend() *PrintBackend {
-
 	cret := xPrinterGetBackend(x.GoPointer())
 	return cret
 }
@@ -170,7 +164,6 @@ var xPrinterGetCapabilities func(uintptr) PrintCapabilities
 // available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
 func (x *Printer) GetCapabilities() PrintCapabilities {
-
 	cret := xPrinterGetCapabilities(x.GoPointer())
 	return cret
 }
@@ -195,7 +188,6 @@ var xPrinterGetDescription func(uintptr) string
 
 // Gets the description of the printer.
 func (x *Printer) GetDescription() string {
-
 	cret := xPrinterGetDescription(x.GoPointer())
 	return cret
 }
@@ -211,7 +203,6 @@ var xPrinterGetHardMargins func(uintptr, *float64, *float64, *float64, *float64)
 // available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
 func (x *Printer) GetHardMargins(TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
-
 	cret := xPrinterGetHardMargins(x.GoPointer(), TopVar, BottomVar, LeftVar, RightVar)
 	return cret
 }
@@ -227,7 +218,6 @@ var xPrinterGetHardMarginsForPaperSize func(uintptr, *PaperSize, *float64, *floa
 // available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
 func (x *Printer) GetHardMarginsForPaperSize(PaperSizeVar *PaperSize, TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
-
 	cret := xPrinterGetHardMarginsForPaperSize(x.GoPointer(), PaperSizeVar, TopVar, BottomVar, LeftVar, RightVar)
 	return cret
 }
@@ -236,7 +226,6 @@ var xPrinterGetIconName func(uintptr) string
 
 // Gets the name of the icon to use for the printer.
 func (x *Printer) GetIconName() string {
-
 	cret := xPrinterGetIconName(x.GoPointer())
 	return cret
 }
@@ -245,7 +234,6 @@ var xPrinterGetJobCount func(uintptr) int32
 
 // Gets the number of jobs currently queued on the printer.
 func (x *Printer) GetJobCount() int32 {
-
 	cret := xPrinterGetJobCount(x.GoPointer())
 	return cret
 }
@@ -254,7 +242,6 @@ var xPrinterGetLocation func(uintptr) string
 
 // Returns a description of the location of the printer.
 func (x *Printer) GetLocation() string {
-
 	cret := xPrinterGetLocation(x.GoPointer())
 	return cret
 }
@@ -263,7 +250,6 @@ var xPrinterGetName func(uintptr) string
 
 // Returns the name of the printer.
 func (x *Printer) GetName() string {
-
 	cret := xPrinterGetName(x.GoPointer())
 	return cret
 }
@@ -273,7 +259,6 @@ var xPrinterGetStateMessage func(uintptr) string
 // Returns the state message describing the current state
 // of the printer.
 func (x *Printer) GetStateMessage() string {
-
 	cret := xPrinterGetStateMessage(x.GoPointer())
 	return cret
 }
@@ -282,7 +267,6 @@ var xPrinterHasDetails func(uintptr) bool
 
 // Returns whether the printer details are available.
 func (x *Printer) HasDetails() bool {
-
 	cret := xPrinterHasDetails(x.GoPointer())
 	return cret
 }
@@ -291,7 +275,6 @@ var xPrinterIsAcceptingJobs func(uintptr) bool
 
 // Returns whether the printer is accepting jobs
 func (x *Printer) IsAcceptingJobs() bool {
-
 	cret := xPrinterIsAcceptingJobs(x.GoPointer())
 	return cret
 }
@@ -301,7 +284,6 @@ var xPrinterIsActive func(uintptr) bool
 // Returns whether the printer is currently active (i.e.
 // accepts new jobs).
 func (x *Printer) IsActive() bool {
-
 	cret := xPrinterIsActive(x.GoPointer())
 	return cret
 }
@@ -310,7 +292,6 @@ var xPrinterIsDefault func(uintptr) bool
 
 // Returns whether the printer is the default printer.
 func (x *Printer) IsDefault() bool {
-
 	cret := xPrinterIsDefault(x.GoPointer())
 	return cret
 }
@@ -322,7 +303,6 @@ var xPrinterIsPaused func(uintptr) bool
 // A paused printer still accepts jobs, but it is not
 // printing them.
 func (x *Printer) IsPaused() bool {
-
 	cret := xPrinterIsPaused(x.GoPointer())
 	return cret
 }
@@ -333,7 +313,6 @@ var xPrinterIsVirtual func(uintptr) bool
 // represent actual printer hardware, but something like
 // a CUPS class).
 func (x *Printer) IsVirtual() bool {
-
 	cret := xPrinterIsVirtual(x.GoPointer())
 	return cret
 }
@@ -346,7 +325,6 @@ var xPrinterListPapers func(uintptr) *glib.List
 // are available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
 func (x *Printer) ListPapers() *glib.List {
-
 	cret := xPrinterListPapers(x.GoPointer())
 	return cret
 }
@@ -359,9 +337,7 @@ var xPrinterRequestDetails func(uintptr)
 // [signal@Gtk.Printer::details-acquired] signal
 // will be emitted on @printer.
 func (x *Printer) RequestDetails() {
-
 	xPrinterRequestDetails(x.GoPointer())
-
 }
 
 func (c *Printer) GoPointer() uintptr {
@@ -511,7 +487,6 @@ func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, SuccessVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -560,5 +535,4 @@ func init() {
 	core.PuregoSafeRegister(&xPrinterIsVirtual, libs, "gtk_printer_is_virtual")
 	core.PuregoSafeRegister(&xPrinterListPapers, libs, "gtk_printer_list_papers")
 	core.PuregoSafeRegister(&xPrinterRequestDetails, libs, "gtk_printer_request_details")
-
 }

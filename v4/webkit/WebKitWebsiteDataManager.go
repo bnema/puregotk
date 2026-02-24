@@ -32,7 +32,6 @@ var xITPFirstPartyGetDomain func(uintptr) string
 
 // Get the domain name of @itp_first_party.
 func (x *ITPFirstParty) GetDomain() string {
-
 	cret := xITPFirstPartyGetDomain(x.GoPointer())
 	return cret
 }
@@ -44,7 +43,6 @@ var xITPFirstPartyGetLastUpdateTime func(uintptr) *glib.DateTime
 // Each @WebKitITPFirstParty is created by webkit_itp_third_party_get_first_parties() and
 // therefore corresponds to exactly one #WebKitITPThirdParty.
 func (x *ITPFirstParty) GetLastUpdateTime() *glib.DateTime {
-
 	cret := xITPFirstPartyGetLastUpdateTime(x.GoPointer())
 	return cret
 }
@@ -56,7 +54,6 @@ var xITPFirstPartyGetWebsiteDataAccessAllowed func(uintptr) bool
 // Each @WebKitITPFirstParty is created by webkit_itp_third_party_get_first_parties() and
 // therefore corresponds to exactly one #WebKitITPThirdParty.
 func (x *ITPFirstParty) GetWebsiteDataAccessAllowed() bool {
-
 	cret := xITPFirstPartyGetWebsiteDataAccessAllowed(x.GoPointer())
 	return cret
 }
@@ -67,7 +64,6 @@ var xITPFirstPartyRef func(uintptr) *ITPFirstParty
 //
 // This function is MT-safe and may be called from any thread.
 func (x *ITPFirstParty) Ref() *ITPFirstParty {
-
 	cret := xITPFirstPartyRef(x.GoPointer())
 	return cret
 }
@@ -80,9 +76,7 @@ var xITPFirstPartyUnref func(uintptr)
 // #WebKitITPFirstParty is released. This function is MT-safe and may be
 // called from any thread.
 func (x *ITPFirstParty) Unref() {
-
 	xITPFirstPartyUnref(x.GoPointer())
-
 }
 
 // Describes a third party origin.
@@ -104,7 +98,6 @@ var xITPThirdPartyGetDomain func(uintptr) string
 
 // Get the domain name of @itp_third_party.
 func (x *ITPThirdParty) GetDomain() string {
-
 	cret := xITPThirdPartyGetDomain(x.GoPointer())
 	return cret
 }
@@ -113,7 +106,6 @@ var xITPThirdPartyGetFirstParties func(uintptr) *glib.List
 
 // Get the list of #WebKitITPFirstParty under which @itp_third_party has been seen.
 func (x *ITPThirdParty) GetFirstParties() *glib.List {
-
 	cret := xITPThirdPartyGetFirstParties(x.GoPointer())
 	return cret
 }
@@ -124,7 +116,6 @@ var xITPThirdPartyRef func(uintptr) *ITPThirdParty
 //
 // This function is MT-safe and may be called from any thread.
 func (x *ITPThirdParty) Ref() *ITPThirdParty {
-
 	cret := xITPThirdPartyRef(x.GoPointer())
 	return cret
 }
@@ -137,9 +128,7 @@ var xITPThirdPartyUnref func(uintptr)
 // #WebKitITPThirdParty is released. This function is MT-safe and may be
 // called from any thread.
 func (x *ITPThirdParty) Unref() {
-
 	xITPThirdPartyUnref(x.GoPointer())
-
 }
 
 type WebsiteDataManagerClass struct {
@@ -215,9 +204,7 @@ var xWebsiteDataManagerClear func(uintptr, WebsiteDataTypes, glib.TimeSpan, uint
 // any stored cookies if @timespan is nonzero. This behavior may change in the
 // future.
 func (x *WebsiteDataManager) Clear(TypesVar WebsiteDataTypes, TimespanVar glib.TimeSpan, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebsiteDataManagerClear(x.GoPointer(), TypesVar, TimespanVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebsiteDataManagerClearFinish func(uintptr, uintptr, **glib.Error) bool
@@ -231,7 +218,6 @@ func (x *WebsiteDataManager) ClearFinish(ResultVar gio.AsyncResult) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsiteDataManagerFetch func(uintptr, WebsiteDataTypes, uintptr, uintptr, uintptr)
@@ -241,9 +227,7 @@ var xWebsiteDataManagerFetch func(uintptr, WebsiteDataTypes, uintptr, uintptr, u
 // When the operation is finished, @callback will be called. You can then call
 // webkit_website_data_manager_fetch_finish() to get the result of the operation.
 func (x *WebsiteDataManager) Fetch(TypesVar WebsiteDataTypes, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebsiteDataManagerFetch(x.GoPointer(), TypesVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebsiteDataManagerFetchFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -257,14 +241,12 @@ func (x *WebsiteDataManager) FetchFinish(ResultVar gio.AsyncResult) (*glib.List,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsiteDataManagerGetBaseCacheDirectory func(uintptr) string
 
 // Get the #WebKitWebsiteDataManager:base-cache-directory property.
 func (x *WebsiteDataManager) GetBaseCacheDirectory() string {
-
 	cret := xWebsiteDataManagerGetBaseCacheDirectory(x.GoPointer())
 	return cret
 }
@@ -273,7 +255,6 @@ var xWebsiteDataManagerGetBaseDataDirectory func(uintptr) string
 
 // Get the #WebKitWebsiteDataManager:base-data-directory property.
 func (x *WebsiteDataManager) GetBaseDataDirectory() string {
-
 	cret := xWebsiteDataManagerGetBaseDataDirectory(x.GoPointer())
 	return cret
 }
@@ -299,7 +280,6 @@ var xWebsiteDataManagerGetFaviconsEnabled func(uintptr) bool
 
 // Get whether website icons are enabled.
 func (x *WebsiteDataManager) GetFaviconsEnabled() bool {
-
 	cret := xWebsiteDataManagerGetFaviconsEnabled(x.GoPointer())
 	return cret
 }
@@ -314,9 +294,7 @@ var xWebsiteDataManagerGetItpSummary func(uintptr, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be called. You can then call
 // webkit_website_data_manager_get_itp_summary_finish() to get the result of the operation.
 func (x *WebsiteDataManager) GetItpSummary(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebsiteDataManagerGetItpSummary(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebsiteDataManagerGetItpSummaryFinish func(uintptr, uintptr, **glib.Error) *glib.List
@@ -330,7 +308,6 @@ func (x *WebsiteDataManager) GetItpSummaryFinish(ResultVar gio.AsyncResult) (*gl
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsiteDataManagerIsEphemeral func(uintptr) bool
@@ -339,7 +316,6 @@ var xWebsiteDataManagerIsEphemeral func(uintptr) bool
 //
 // See #WebKitWebsiteDataManager:is-ephemeral for more details.
 func (x *WebsiteDataManager) IsEphemeral() bool {
-
 	cret := xWebsiteDataManagerIsEphemeral(x.GoPointer())
 	return cret
 }
@@ -354,9 +330,7 @@ var xWebsiteDataManagerRemove func(uintptr, WebsiteDataTypes, *glib.List, uintpt
 // When the operation is finished, @callback will be called. You can then call
 // webkit_website_data_manager_remove_finish() to get the result of the operation.
 func (x *WebsiteDataManager) Remove(TypesVar WebsiteDataTypes, WebsiteDataVar *glib.List, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebsiteDataManagerRemove(x.GoPointer(), TypesVar, WebsiteDataVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebsiteDataManagerRemoveFinish func(uintptr, uintptr, **glib.Error) bool
@@ -370,7 +344,6 @@ func (x *WebsiteDataManager) RemoveFinish(ResultVar gio.AsyncResult) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebsiteDataManagerSetFaviconsEnabled func(uintptr, bool)
@@ -381,9 +354,7 @@ var xWebsiteDataManagerSetFaviconsEnabled func(uintptr, bool)
 // return %NULL. If website icons are enabled again, a new #WebKitFaviconDatabase will
 // be created.
 func (x *WebsiteDataManager) SetFaviconsEnabled(EnabledVar bool) {
-
 	xWebsiteDataManagerSetFaviconsEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 func (c *WebsiteDataManager) GoPointer() uintptr {

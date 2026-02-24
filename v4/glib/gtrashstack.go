@@ -39,7 +39,6 @@ var xTrashStackHeight func(**TrashStack) uint32
 // Note that execution of this function is of O(N) complexity
 // where N denotes the number of items on the stack.
 func TrashStackHeight(StackPVar **TrashStack) uint32 {
-
 	cret := xTrashStackHeight(StackPVar)
 	return cret
 }
@@ -49,7 +48,6 @@ var xTrashStackPeek func(**TrashStack) uintptr
 // Returns the element at the top of a #GTrashStack
 // which may be %NULL.
 func TrashStackPeek(StackPVar **TrashStack) uintptr {
-
 	cret := xTrashStackPeek(StackPVar)
 	return cret
 }
@@ -58,7 +56,6 @@ var xTrashStackPop func(**TrashStack) uintptr
 
 // Pops a piece of memory off a #GTrashStack.
 func TrashStackPop(StackPVar **TrashStack) uintptr {
-
 	cret := xTrashStackPop(StackPVar)
 	return cret
 }
@@ -67,9 +64,7 @@ var xTrashStackPush func(**TrashStack, uintptr)
 
 // Pushes a piece of memory onto a #GTrashStack.
 func TrashStackPush(StackPVar **TrashStack, DataPVar uintptr) {
-
 	xTrashStackPush(StackPVar, DataPVar)
-
 }
 
 func init() {
@@ -88,5 +83,4 @@ func init() {
 	core.PuregoSafeRegister(&xTrashStackPeek, libs, "g_trash_stack_peek")
 	core.PuregoSafeRegister(&xTrashStackPop, libs, "g_trash_stack_pop")
 	core.PuregoSafeRegister(&xTrashStackPush, libs, "g_trash_stack_push")
-
 }

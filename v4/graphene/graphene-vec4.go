@@ -38,7 +38,6 @@ var xVec4Alloc func() *Vec4
 //
 // Use graphene_vec4_init() to initialize the vector.
 func Vec4Alloc() *Vec4 {
-
 	cret := xVec4Alloc()
 	return cret
 }
@@ -47,9 +46,7 @@ var xVec4Add func(uintptr, *Vec4, *Vec4)
 
 // Adds each component of the two given vectors.
 func (x *Vec4) Add(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Add(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4Divide func(uintptr, *Vec4, *Vec4)
@@ -58,16 +55,13 @@ var xVec4Divide func(uintptr, *Vec4, *Vec4)
 // component of the second operand @b, and places the results into the
 // vector @res.
 func (x *Vec4) Divide(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Divide(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4Dot func(uintptr, *Vec4) float32
 
 // Computes the dot product of the two given vectors.
 func (x *Vec4) Dot(BVar *Vec4) float32 {
-
 	cret := xVec4Dot(x.GoPointer(), BVar)
 	return cret
 }
@@ -76,7 +70,6 @@ var xVec4Equal func(uintptr, *Vec4) bool
 
 // Checks whether the two given #graphene_vec4_t are equal.
 func (x *Vec4) Equal(V2Var *Vec4) bool {
-
 	cret := xVec4Equal(x.GoPointer(), V2Var)
 	return cret
 }
@@ -85,16 +78,13 @@ var xVec4Free func(uintptr)
 
 // Frees the resources allocated by @v
 func (x *Vec4) Free() {
-
 	xVec4Free(x.GoPointer())
-
 }
 
 var xVec4GetW func(uintptr) float32
 
 // Retrieves the value of the fourth component of the given #graphene_vec4_t.
 func (x *Vec4) GetW() float32 {
-
 	cret := xVec4GetW(x.GoPointer())
 	return cret
 }
@@ -103,7 +93,6 @@ var xVec4GetX func(uintptr) float32
 
 // Retrieves the value of the first component of the given #graphene_vec4_t.
 func (x *Vec4) GetX() float32 {
-
 	cret := xVec4GetX(x.GoPointer())
 	return cret
 }
@@ -113,9 +102,7 @@ var xVec4GetXy func(uintptr, *Vec2)
 // Creates a #graphene_vec2_t that contains the first two components
 // of the given #graphene_vec4_t.
 func (x *Vec4) GetXy(ResVar *Vec2) {
-
 	xVec4GetXy(x.GoPointer(), ResVar)
-
 }
 
 var xVec4GetXyz func(uintptr, *Vec3)
@@ -123,16 +110,13 @@ var xVec4GetXyz func(uintptr, *Vec3)
 // Creates a #graphene_vec3_t that contains the first three components
 // of the given #graphene_vec4_t.
 func (x *Vec4) GetXyz(ResVar *Vec3) {
-
 	xVec4GetXyz(x.GoPointer(), ResVar)
-
 }
 
 var xVec4GetY func(uintptr) float32
 
 // Retrieves the value of the second component of the given #graphene_vec4_t.
 func (x *Vec4) GetY() float32 {
-
 	cret := xVec4GetY(x.GoPointer())
 	return cret
 }
@@ -141,7 +125,6 @@ var xVec4GetZ func(uintptr) float32
 
 // Retrieves the value of the third component of the given #graphene_vec4_t.
 func (x *Vec4) GetZ() float32 {
-
 	cret := xVec4GetZ(x.GoPointer())
 	return cret
 }
@@ -152,7 +135,6 @@ var xVec4Init func(uintptr, float32, float32, float32, float32) *Vec4
 //
 // This function can be called multiple times.
 func (x *Vec4) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Vec4 {
-
 	cret := xVec4Init(x.GoPointer(), XVar, YVar, ZVar, WVar)
 	return cret
 }
@@ -161,7 +143,6 @@ var xVec4InitFromFloat func(uintptr, [4]float32) *Vec4
 
 // Initializes a #graphene_vec4_t with the values inside the given array.
 func (x *Vec4) InitFromFloat(SrcVar [4]float32) *Vec4 {
-
 	cret := xVec4InitFromFloat(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -171,7 +152,6 @@ var xVec4InitFromVec2 func(uintptr, *Vec2, float32, float32) *Vec4
 // Initializes a #graphene_vec4_t using the components of a
 // #graphene_vec2_t and the values of @z and @w.
 func (x *Vec4) InitFromVec2(SrcVar *Vec2, ZVar float32, WVar float32) *Vec4 {
-
 	cret := xVec4InitFromVec2(x.GoPointer(), SrcVar, ZVar, WVar)
 	return cret
 }
@@ -181,7 +161,6 @@ var xVec4InitFromVec3 func(uintptr, *Vec3, float32) *Vec4
 // Initializes a #graphene_vec4_t using the components of a
 // #graphene_vec3_t and the value of @w.
 func (x *Vec4) InitFromVec3(SrcVar *Vec3, WVar float32) *Vec4 {
-
 	cret := xVec4InitFromVec3(x.GoPointer(), SrcVar, WVar)
 	return cret
 }
@@ -191,7 +170,6 @@ var xVec4InitFromVec4 func(uintptr, *Vec4) *Vec4
 // Initializes a #graphene_vec4_t using the components of
 // another #graphene_vec4_t.
 func (x *Vec4) InitFromVec4(SrcVar *Vec4) *Vec4 {
-
 	cret := xVec4InitFromVec4(x.GoPointer(), SrcVar)
 	return cret
 }
@@ -200,16 +178,13 @@ var xVec4Interpolate func(uintptr, *Vec4, float64, *Vec4)
 
 // Linearly interpolates @v1 and @v2 using the given @factor.
 func (x *Vec4) Interpolate(V2Var *Vec4, FactorVar float64, ResVar *Vec4) {
-
 	xVec4Interpolate(x.GoPointer(), V2Var, FactorVar, ResVar)
-
 }
 
 var xVec4Length func(uintptr) float32
 
 // Computes the length of the given #graphene_vec4_t.
 func (x *Vec4) Length() float32 {
-
 	cret := xVec4Length(x.GoPointer())
 	return cret
 }
@@ -219,9 +194,7 @@ var xVec4Max func(uintptr, *Vec4, *Vec4)
 // Compares each component of the two given vectors and creates a
 // vector that contains the maximum values.
 func (x *Vec4) Max(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Max(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4Min func(uintptr, *Vec4, *Vec4)
@@ -229,18 +202,14 @@ var xVec4Min func(uintptr, *Vec4, *Vec4)
 // Compares each component of the two given vectors and creates a
 // vector that contains the minimum values.
 func (x *Vec4) Min(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Min(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4Multiply func(uintptr, *Vec4, *Vec4)
 
 // Multiplies each component of the two given vectors.
 func (x *Vec4) Multiply(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Multiply(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4Near func(uintptr, *Vec4, float32) bool
@@ -248,7 +217,6 @@ var xVec4Near func(uintptr, *Vec4, float32) bool
 // Compares the two given #graphene_vec4_t vectors and checks
 // whether their values are within the given @epsilon.
 func (x *Vec4) Near(V2Var *Vec4, EpsilonVar float32) bool {
-
 	cret := xVec4Near(x.GoPointer(), V2Var, EpsilonVar)
 	return cret
 }
@@ -257,27 +225,21 @@ var xVec4Negate func(uintptr, *Vec4)
 
 // Negates the given #graphene_vec4_t.
 func (x *Vec4) Negate(ResVar *Vec4) {
-
 	xVec4Negate(x.GoPointer(), ResVar)
-
 }
 
 var xVec4Normalize func(uintptr, *Vec4)
 
 // Normalizes the given #graphene_vec4_t.
 func (x *Vec4) Normalize(ResVar *Vec4) {
-
 	xVec4Normalize(x.GoPointer(), ResVar)
-
 }
 
 var xVec4Scale func(uintptr, float32, *Vec4)
 
 // Multiplies all components of the given vector with the given scalar @factor.
 func (x *Vec4) Scale(FactorVar float32, ResVar *Vec4) {
-
 	xVec4Scale(x.GoPointer(), FactorVar, ResVar)
-
 }
 
 var xVec4Subtract func(uintptr, *Vec4, *Vec4)
@@ -286,9 +248,7 @@ var xVec4Subtract func(uintptr, *Vec4, *Vec4)
 // corresponding component of the second operand @b and places
 // each result into the components of @res.
 func (x *Vec4) Subtract(BVar *Vec4, ResVar *Vec4) {
-
 	xVec4Subtract(x.GoPointer(), BVar, ResVar)
-
 }
 
 var xVec4ToFloat func(uintptr, *[4]float32)
@@ -296,9 +256,7 @@ var xVec4ToFloat func(uintptr, *[4]float32)
 // Stores the components of the given #graphene_vec4_t into an array
 // of floating point values.
 func (x *Vec4) ToFloat(DestVar *[4]float32) {
-
 	xVec4ToFloat(x.GoPointer(), DestVar)
-
 }
 
 var xVec4One func() *Vec4
@@ -306,7 +264,6 @@ var xVec4One func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with all its
 // components set to 1.
 func Vec4One() *Vec4 {
-
 	cret := xVec4One()
 	return cret
 }
@@ -316,7 +273,6 @@ var xVec4WAxis func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 0, 0, 1).
 func Vec4WAxis() *Vec4 {
-
 	cret := xVec4WAxis()
 	return cret
 }
@@ -326,7 +282,6 @@ var xVec4XAxis func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (1, 0, 0, 0).
 func Vec4XAxis() *Vec4 {
-
 	cret := xVec4XAxis()
 	return cret
 }
@@ -336,7 +291,6 @@ var xVec4YAxis func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 1, 0, 0).
 func Vec4YAxis() *Vec4 {
-
 	cret := xVec4YAxis()
 	return cret
 }
@@ -346,7 +300,6 @@ var xVec4ZAxis func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 0, 1, 0).
 func Vec4ZAxis() *Vec4 {
-
 	cret := xVec4ZAxis()
 	return cret
 }
@@ -356,7 +309,6 @@ var xVec4Zero func() *Vec4
 // Retrieves a pointer to a #graphene_vec4_t with all its
 // components set to 0.
 func Vec4Zero() *Vec4 {
-
 	cret := xVec4Zero()
 	return cret
 }
@@ -411,5 +363,4 @@ func init() {
 	core.PuregoSafeRegister(&xVec4Scale, libs, "graphene_vec4_scale")
 	core.PuregoSafeRegister(&xVec4Subtract, libs, "graphene_vec4_subtract")
 	core.PuregoSafeRegister(&xVec4ToFloat, libs, "graphene_vec4_to_float")
-
 }

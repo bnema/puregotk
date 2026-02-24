@@ -35,7 +35,6 @@ var xNewScriptIter func(string, int32) *ScriptIter
 // sure it remains valid until the iterator is freed with
 // [method@Pango.ScriptIter.free].
 func NewScriptIter(TextVar string, LengthVar int32) *ScriptIter {
-
 	cret := xNewScriptIter(TextVar, LengthVar)
 	return cret
 }
@@ -44,9 +43,7 @@ var xScriptIterFree func(uintptr)
 
 // Frees a `PangoScriptIter`.
 func (x *ScriptIter) Free() {
-
 	xScriptIterFree(x.GoPointer())
-
 }
 
 var xScriptIterGetRange func(uintptr, *string, *string, *Script)
@@ -61,9 +58,7 @@ var xScriptIterGetRange func(uintptr, *string, *string, *Script)
 // `GUnicodeScript` values. Callers must be prepared to handle unknown
 // values.
 func (x *ScriptIter) GetRange(StartVar *string, EndVar *string, ScriptVar *Script) {
-
 	xScriptIterGetRange(x.GoPointer(), StartVar, EndVar, ScriptVar)
-
 }
 
 var xScriptIterNext func(uintptr) bool
@@ -73,7 +68,6 @@ var xScriptIterNext func(uintptr) bool
 // If @iter is already at the end, it is left unchanged
 // and %FALSE is returned.
 func (x *ScriptIter) Next() bool {
-
 	cret := xScriptIterNext(x.GoPointer())
 	return cret
 }
@@ -352,7 +346,6 @@ var xScriptForUnichar func(uint32) Script
 // the return value of [func@GLib.unichar_get_script]. Callers must be
 // prepared to handle unknown values.
 func ScriptForUnichar(ChVar uint32) Script {
-
 	cret := xScriptForUnichar(ChVar)
 	return cret
 }
@@ -389,7 +382,6 @@ var xScriptGetSampleLanguage func(Script) *Language
 // choose a default language for %PANGO_SCRIPT_HAN when setting
 // context language is not feasible.
 func ScriptGetSampleLanguage(ScriptVar Script) *Language {
-
 	cret := xScriptGetSampleLanguage(ScriptVar)
 	return cret
 }
@@ -418,5 +410,4 @@ func init() {
 	core.PuregoSafeRegister(&xScriptIterFree, libs, "pango_script_iter_free")
 	core.PuregoSafeRegister(&xScriptIterGetRange, libs, "pango_script_iter_get_range")
 	core.PuregoSafeRegister(&xScriptIterNext, libs, "pango_script_iter_next")
-
 }

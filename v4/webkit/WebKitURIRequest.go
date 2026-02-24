@@ -63,7 +63,6 @@ var xURIRequestGetHttpHeaders func(uintptr) *soup.MessageHeaders
 
 // Get the HTTP headers of a #WebKitURIRequest as a #SoupMessageHeaders.
 func (x *URIRequest) GetHttpHeaders() *soup.MessageHeaders {
-
 	cret := xURIRequestGetHttpHeaders(x.GoPointer())
 	return cret
 }
@@ -72,7 +71,6 @@ var xURIRequestGetHttpMethod func(uintptr) string
 
 // Get the HTTP method of the #WebKitURIRequest.
 func (x *URIRequest) GetHttpMethod() string {
-
 	cret := xURIRequestGetHttpMethod(x.GoPointer())
 	return cret
 }
@@ -81,7 +79,6 @@ var xURIRequestGetUri func(uintptr) string
 
 // Obtains the request URI.
 func (x *URIRequest) GetUri() string {
-
 	cret := xURIRequestGetUri(x.GoPointer())
 	return cret
 }
@@ -90,9 +87,7 @@ var xURIRequestSetUri func(uintptr, string)
 
 // Set the URI of @request
 func (x *URIRequest) SetUri(UriVar string) {
-
 	xURIRequestSetUri(x.GoPointer(), UriVar)
-
 }
 
 func (c *URIRequest) GoPointer() uintptr {

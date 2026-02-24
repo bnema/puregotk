@@ -38,7 +38,6 @@ var xIConvGIconv func(uintptr, string, uint, string, uint) uint
 // See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
 // error occurs.
 func (x *IConv) GIconv(InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
-
 	cret := xIConvGIconv(x.GoPointer(), InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
 	return cret
 }
@@ -54,7 +53,6 @@ var xIConvClose func(uintptr) int32
 // GLib provides g_convert() and g_locale_to_utf8() which are likely
 // more convenient than the raw iconv wrappers.
 func (x *IConv) Close() int32 {
-
 	cret := xIConvClose(x.GoPointer())
 	return cret
 }
@@ -111,7 +109,6 @@ func Convert(StrVar []byte, LenVar int, ToCodesetVar string, FromCodesetVar stri
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xConvertWithFallback func([]byte, int, string, string, string, *uint, *uint, **Error) uintptr
@@ -141,7 +138,6 @@ func ConvertWithFallback(StrVar []byte, LenVar int, ToCodesetVar string, FromCod
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xConvertWithIconv func([]byte, int, uintptr, *uint, *uint, **Error) uintptr
@@ -173,7 +169,6 @@ func ConvertWithIconv(StrVar []byte, LenVar int, ConverterVar uintptr, BytesRead
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFilenameDisplayBasename func(string) string
@@ -195,7 +190,6 @@ var xFilenameDisplayBasename func(string) string
 // This function is preferred over g_filename_display_name() if you know the
 // whole path, as it allows translation.
 func FilenameDisplayBasename(FilenameVar string) string {
-
 	cret := xFilenameDisplayBasename(FilenameVar)
 	return cret
 }
@@ -218,7 +212,6 @@ var xFilenameDisplayName func(string) string
 // g_filename_display_basename(), since that allows location-based
 // translation of filenames.
 func FilenameDisplayName(FilenameVar string) string {
-
 	cret := xFilenameDisplayName(FilenameVar)
 	return cret
 }
@@ -240,7 +233,6 @@ func FilenameFromUri(UriVar string, HostnameVar *string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFilenameFromUtf8 func(string, int, *uint, *uint, **Error) string
@@ -263,7 +255,6 @@ func FilenameFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, Byte
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFilenameToUri func(string, string, **Error) string
@@ -278,7 +269,6 @@ func FilenameToUri(FilenameVar string, HostnameVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFilenameToUtf8 func(string, int, *uint, *uint, **Error) string
@@ -303,7 +293,6 @@ func FilenameToUtf8(OpsysstringVar string, LenVar int, BytesReadVar *uint, Bytes
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xGetFilenameCharsets func(*[]string) bool
@@ -333,7 +322,6 @@ var xGetFilenameCharsets func(*[]string) bool
 // `G_FILENAME_ENCODING` value, the actual file names present
 // on a system might be in any random encoding or just gibberish.
 func GetFilenameCharsets(FilenameCharsetsVar *[]string) bool {
-
 	cret := xGetFilenameCharsets(FilenameCharsetsVar)
 	return cret
 }
@@ -357,7 +345,6 @@ var xIconv func(uintptr, string, uint, string, uint) uint
 // See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
 // error occurs.
 func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
-
 	cret := xIconv(ConverterVar, InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
 	return cret
 }
@@ -371,7 +358,6 @@ var xIconvOpen func(string, string) uintptr
 // GLib provides g_convert() and g_locale_to_utf8() which are likely
 // more convenient than the raw iconv wrappers.
 func IconvOpen(ToCodesetVar string, FromCodesetVar string) uintptr {
-
 	cret := xIconvOpen(ToCodesetVar, FromCodesetVar)
 	return cret
 }
@@ -395,7 +381,6 @@ func LocaleFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, BytesW
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xLocaleToUtf8 func([]byte, int, *uint, *uint, **Error) string
@@ -419,7 +404,6 @@ func LocaleToUtf8(OpsysstringVar []byte, LenVar int, BytesReadVar *uint, BytesWr
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriListExtractUris func(string) []string
@@ -428,7 +412,6 @@ var xUriListExtractUris func(string) []string
 // mime type defined in RFC 2483 into individual URIs,
 // discarding any comments. The URIs are not validated.
 func UriListExtractUris(UriListVar string) []string {
-
 	cret := xUriListExtractUris(UriListVar)
 	return cret
 }
@@ -463,5 +446,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIConvGIconv, libs, "g_iconv")
 	core.PuregoSafeRegister(&xIConvClose, libs, "g_iconv_close")
-
 }

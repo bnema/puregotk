@@ -282,7 +282,6 @@ var xNamedActionGetActionName func(uintptr) string
 
 // Returns the name of the action that will be activated.
 func (x *NamedAction) GetActionName() string {
-
 	cret := xNamedActionGetActionName(x.GoPointer())
 	return cret
 }
@@ -442,7 +441,6 @@ var xShortcutActionActivate func(uintptr, ShortcutActionFlags, uintptr, *glib.Va
 // is not supported by the @widget, if the @args don't match the action
 // or if the activation otherwise had no effect, %FALSE will be returned.
 func (x *ShortcutAction) Activate(FlagsVar ShortcutActionFlags, WidgetVar *Widget, ArgsVar *glib.Variant) bool {
-
 	cret := xShortcutActionActivate(x.GoPointer(), FlagsVar, WidgetVar.GoPointer(), ArgsVar)
 	return cret
 }
@@ -456,9 +454,7 @@ var xShortcutActionPrint func(uintptr, *glib.String)
 // The form of the representation may change at any time and is
 // not guaranteed to stay identical.
 func (x *ShortcutAction) Print(StringVar *glib.String) {
-
 	xShortcutActionPrint(x.GoPointer(), StringVar)
-
 }
 
 var xShortcutActionToString func(uintptr) string
@@ -468,7 +464,6 @@ var xShortcutActionToString func(uintptr) string
 // This is a small wrapper around [method@Gtk.ShortcutAction.print]
 // to help when debugging.
 func (x *ShortcutAction) ToString() string {
-
 	cret := xShortcutActionToString(x.GoPointer())
 	return cret
 }
@@ -527,7 +522,6 @@ var xSignalActionGetSignalName func(uintptr) string
 
 // Returns the name of the signal that will be emitted.
 func (x *SignalAction) GetSignalName() string {
-
 	cret := xSignalActionGetSignalName(x.GoPointer())
 	return cret
 }
@@ -609,5 +603,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewSignalAction, libs, "gtk_signal_action_new")
 
 	core.PuregoSafeRegister(&xSignalActionGetSignalName, libs, "gtk_signal_action_get_signal_name")
-
 }

@@ -112,5 +112,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewTcpWrapperConnection, libs, "g_tcp_wrapper_connection_new")
 
 	core.PuregoSafeRegister(&xTcpWrapperConnectionGetBaseIoStream, libs, "g_tcp_wrapper_connection_get_base_io_stream")
-
 }

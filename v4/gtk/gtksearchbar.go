@@ -110,9 +110,7 @@ var xSearchBarConnectEntry func(uintptr, uintptr)
 // function manually is only required if the entry isn’t the direct
 // child of the search bar (as in our main example).
 func (x *SearchBar) ConnectEntry(EntryVar Editable) {
-
 	xSearchBarConnectEntry(x.GoPointer(), EntryVar.GoPointer())
-
 }
 
 var xSearchBarGetChild func(uintptr) uintptr
@@ -153,7 +151,6 @@ var xSearchBarGetSearchMode func(uintptr) bool
 
 // Returns whether the search mode is on or off.
 func (x *SearchBar) GetSearchMode() bool {
-
 	cret := xSearchBarGetSearchMode(x.GoPointer())
 	return cret
 }
@@ -162,7 +159,6 @@ var xSearchBarGetShowCloseButton func(uintptr) bool
 
 // Returns whether the close button is shown.
 func (x *SearchBar) GetShowCloseButton() bool {
-
 	cret := xSearchBarGetShowCloseButton(x.GoPointer())
 	return cret
 }
@@ -171,9 +167,7 @@ var xSearchBarSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @bar.
 func (x *SearchBar) SetChild(ChildVar *Widget) {
-
 	xSearchBarSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xSearchBarSetKeyCaptureWidget func(uintptr, uintptr)
@@ -191,18 +185,14 @@ var xSearchBarSetKeyCaptureWidget func(uintptr, uintptr)
 // capture and forward the events yourself with
 // [method@Gtk.EventControllerKey.forward].
 func (x *SearchBar) SetKeyCaptureWidget(WidgetVar *Widget) {
-
 	xSearchBarSetKeyCaptureWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xSearchBarSetSearchMode func(uintptr, bool)
 
 // Switches the search mode on or off.
 func (x *SearchBar) SetSearchMode(SearchModeVar bool) {
-
 	xSearchBarSetSearchMode(x.GoPointer(), SearchModeVar)
-
 }
 
 var xSearchBarSetShowCloseButton func(uintptr, bool)
@@ -213,9 +203,7 @@ var xSearchBarSetShowCloseButton func(uintptr, bool)
 // show a close button in their search bar, as it duplicates the role
 // of the toggle button.
 func (x *SearchBar) SetShowCloseButton(VisibleVar bool) {
-
 	xSearchBarSetShowCloseButton(x.GoPointer(), VisibleVar)
-
 }
 
 func (c *SearchBar) GoPointer() uintptr {
@@ -273,9 +261,7 @@ func (x *SearchBar) GetPropertyShowCloseButton() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *SearchBar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -296,7 +282,6 @@ func (x *SearchBar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *SearchBar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -321,7 +306,6 @@ func (x *SearchBar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *SearchBar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -360,30 +344,23 @@ func (x *SearchBar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *SearchBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *SearchBar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *SearchBar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *SearchBar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -396,9 +373,7 @@ func (x *SearchBar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *SearchBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -406,9 +381,7 @@ func (x *SearchBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *SearchBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -417,9 +390,7 @@ func (x *SearchBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *SearchBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -441,9 +412,7 @@ func (x *SearchBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *SearchBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -453,9 +422,7 @@ func (x *SearchBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *SearchBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -477,9 +444,7 @@ func (x *SearchBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Ac
 //
 // ```
 func (x *SearchBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -489,9 +454,7 @@ func (x *SearchBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *SearchBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -514,9 +477,7 @@ func (x *SearchBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acce
 //
 // ```
 func (x *SearchBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -526,9 +487,7 @@ func (x *SearchBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interf
 //
 // This function is meant to be used by language bindings.
 func (x *SearchBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -536,7 +495,6 @@ func (x *SearchBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SearchBar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -566,5 +524,4 @@ func init() {
 	core.PuregoSafeRegister(&xSearchBarSetKeyCaptureWidget, libs, "gtk_search_bar_set_key_capture_widget")
 	core.PuregoSafeRegister(&xSearchBarSetSearchMode, libs, "gtk_search_bar_set_search_mode")
 	core.PuregoSafeRegister(&xSearchBarSetShowCloseButton, libs, "gtk_search_bar_set_show_close_button")
-
 }

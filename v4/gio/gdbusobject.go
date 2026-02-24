@@ -217,21 +217,21 @@ func (x *DBusObjectBase) GetInterface(InterfaceNameVar string) *DBusInterfaceBas
 
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectBase) GetInterfaces() *glib.List {
-
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
 	return cret
 }
 
 // Gets the object path for @object.
 func (x *DBusObjectBase) GetObjectPath() string {
-
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
 	return cret
 }
 
-var XGDbusObjectGetInterface func(uintptr, string) uintptr
-var XGDbusObjectGetInterfaces func(uintptr) *glib.List
-var XGDbusObjectGetObjectPath func(uintptr) string
+var (
+	XGDbusObjectGetInterface  func(uintptr, string) uintptr
+	XGDbusObjectGetInterfaces func(uintptr) *glib.List
+	XGDbusObjectGetObjectPath func(uintptr) string
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -250,5 +250,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDbusObjectGetInterface, libs, "g_dbus_object_get_interface")
 	core.PuregoSafeRegister(&XGDbusObjectGetInterfaces, libs, "g_dbus_object_get_interfaces")
 	core.PuregoSafeRegister(&XGDbusObjectGetObjectPath, libs, "g_dbus_object_get_object_path")
-
 }

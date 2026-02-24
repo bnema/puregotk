@@ -126,9 +126,7 @@ var xCacheClear func(uintptr)
 //
 // This is not thread safe and must be called only from the thread that created the #SoupCache
 func (x *Cache) Clear() {
-
 	xCacheClear(x.GoPointer())
-
 }
 
 var xCacheDump func(uintptr)
@@ -143,9 +141,7 @@ var xCacheDump func(uintptr)
 //
 // This is not thread safe and must be called only from the thread that created the #SoupCache
 func (x *Cache) Dump() {
-
 	xCacheDump(x.GoPointer())
-
 }
 
 var xCacheFlush func(uintptr)
@@ -158,16 +154,13 @@ var xCacheFlush func(uintptr)
 //
 // Contrast with [method@Cache.dump], which writes out the cache index file.
 func (x *Cache) Flush() {
-
 	xCacheFlush(x.GoPointer())
-
 }
 
 var xCacheGetMaxSize func(uintptr) uint32
 
 // Gets the maximum size of the cache.
 func (x *Cache) GetMaxSize() uint32 {
-
 	cret := xCacheGetMaxSize(x.GoPointer())
 	return cret
 }
@@ -178,18 +171,14 @@ var xCacheLoad func(uintptr)
 //
 // This is not thread safe and must be called only from the thread that created the #SoupCache
 func (x *Cache) Load() {
-
 	xCacheLoad(x.GoPointer())
-
 }
 
 var xCacheSetMaxSize func(uintptr, uint32)
 
 // Sets the maximum size of the cache.
 func (x *Cache) SetMaxSize(MaxSizeVar uint32) {
-
 	xCacheSetMaxSize(x.GoPointer(), MaxSizeVar)
-
 }
 
 func (c *Cache) GoPointer() uintptr {
@@ -246,5 +235,4 @@ func init() {
 	core.PuregoSafeRegister(&xCacheGetMaxSize, libs, "soup_cache_get_max_size")
 	core.PuregoSafeRegister(&xCacheLoad, libs, "soup_cache_load")
 	core.PuregoSafeRegister(&xCacheSetMaxSize, libs, "soup_cache_set_max_size")
-
 }

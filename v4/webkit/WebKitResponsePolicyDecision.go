@@ -88,7 +88,6 @@ var xResponsePolicyDecisionIsMainFrameMainResource func(uintptr) bool
 
 // Gets whether the request is the main frame main resource
 func (x *ResponsePolicyDecision) IsMainFrameMainResource() bool {
-
 	cret := xResponsePolicyDecisionIsMainFrameMainResource(x.GoPointer())
 	return cret
 }
@@ -100,7 +99,6 @@ var xResponsePolicyDecisionIsMimeTypeSupported func(uintptr) bool
 // Gets whether the MIME type of the response can be displayed in the #WebKitWebView
 // that triggered this policy decision request. See also webkit_web_view_can_show_mime_type().
 func (x *ResponsePolicyDecision) IsMimeTypeSupported() bool {
-
 	cret := xResponsePolicyDecisionIsMimeTypeSupported(x.GoPointer())
 	return cret
 }

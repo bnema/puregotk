@@ -309,7 +309,6 @@ var xLabelGetAttributes func(uintptr) *pango.AttrList
 // attributes for the label, use
 // `pango_layout_get_attributes (gtk_label_get_layout (self))`.
 func (x *Label) GetAttributes() *pango.AttrList {
-
 	cret := xLabelGetAttributes(x.GoPointer())
 	return cret
 }
@@ -325,7 +324,6 @@ var xLabelGetCurrentUri func(uintptr) string
 // This function is intended for use in a [signal@Gtk.Label::activate-link]
 // handler or for use in a [signal@Gtk.Widget::query-tooltip] handler.
 func (x *Label) GetCurrentUri() string {
-
 	cret := xLabelGetCurrentUri(x.GoPointer())
 	return cret
 }
@@ -336,7 +334,6 @@ var xLabelGetEllipsize func(uintptr) pango.EllipsizeMode
 //
 // See [method@Gtk.Label.set_ellipsize].
 func (x *Label) GetEllipsize() pango.EllipsizeMode {
-
 	cret := xLabelGetEllipsize(x.GoPointer())
 	return cret
 }
@@ -366,7 +363,6 @@ var xLabelGetJustify func(uintptr) Justification
 //
 // See [method@Gtk.Label.set_justify].
 func (x *Label) GetJustify() Justification {
-
 	cret := xLabelGetJustify(x.GoPointer())
 	return cret
 }
@@ -378,7 +374,6 @@ var xLabelGetLabel func(uintptr) string
 // The returned text includes any embedded underlines indicating
 // mnemonics and Pango markup. (See [method@Gtk.Label.get_text]).
 func (x *Label) GetLabel() string {
-
 	cret := xLabelGetLabel(x.GoPointer())
 	return cret
 }
@@ -416,9 +411,7 @@ var xLabelGetLayoutOffsets func(uintptr, *int32, *int32)
 // functions you need to convert to and from pixels using `PANGO_PIXELS()`
 // or [const@Pango.SCALE].
 func (x *Label) GetLayoutOffsets(XVar *int32, YVar *int32) {
-
 	xLabelGetLayoutOffsets(x.GoPointer(), XVar, YVar)
-
 }
 
 var xLabelGetLines func(uintptr) int32
@@ -428,7 +421,6 @@ var xLabelGetLines func(uintptr) int32
 //
 // See [method@Gtk.Label.set_lines].
 func (x *Label) GetLines() int32 {
-
 	cret := xLabelGetLines(x.GoPointer())
 	return cret
 }
@@ -439,7 +431,6 @@ var xLabelGetMaxWidthChars func(uintptr) int32
 //
 // See [method@Gtk.Label.set_width_chars].
 func (x *Label) GetMaxWidthChars() int32 {
-
 	cret := xLabelGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -452,7 +443,6 @@ var xLabelGetMnemonicKeyval func(uintptr) uint32
 // returns the keyval used for the mnemonic accelerator. If there is no
 // mnemonic set up it returns `GDK_KEY_VoidSymbol`.
 func (x *Label) GetMnemonicKeyval() uint32 {
-
 	cret := xLabelGetMnemonicKeyval(x.GoPointer())
 	return cret
 }
@@ -482,7 +472,6 @@ var xLabelGetNaturalWrapMode func(uintptr) NaturalWrapMode
 //
 // See [method@Gtk.Label.set_natural_wrap_mode].
 func (x *Label) GetNaturalWrapMode() NaturalWrapMode {
-
 	cret := xLabelGetNaturalWrapMode(x.GoPointer())
 	return cret
 }
@@ -491,7 +480,6 @@ var xLabelGetSelectable func(uintptr) bool
 
 // Returns whether the label is selectable.
 func (x *Label) GetSelectable() bool {
-
 	cret := xLabelGetSelectable(x.GoPointer())
 	return cret
 }
@@ -502,7 +490,6 @@ var xLabelGetSelectionBounds func(uintptr, *int32, *int32) bool
 //
 // The returned @start and @end positions are in characters.
 func (x *Label) GetSelectionBounds(StartVar *int32, EndVar *int32) bool {
-
 	cret := xLabelGetSelectionBounds(x.GoPointer(), StartVar, EndVar)
 	return cret
 }
@@ -511,7 +498,6 @@ var xLabelGetSingleLineMode func(uintptr) bool
 
 // Returns whether the label is in single line mode.
 func (x *Label) GetSingleLineMode() bool {
-
 	cret := xLabelGetSingleLineMode(x.GoPointer())
 	return cret
 }
@@ -522,7 +508,6 @@ var xLabelGetTabs func(uintptr) *pango.TabArray
 //
 // The returned array will be `NULL` if “standard” (8-space) tabs are used.
 func (x *Label) GetTabs() *pango.TabArray {
-
 	cret := xLabelGetTabs(x.GoPointer())
 	return cret
 }
@@ -535,7 +520,6 @@ var xLabelGetText func(uintptr) string
 // any embedded underlines indicating mnemonics or Pango markup. (See
 // [method@Gtk.Label.get_label])
 func (x *Label) GetText() string {
-
 	cret := xLabelGetText(x.GoPointer())
 	return cret
 }
@@ -546,7 +530,6 @@ var xLabelGetUseMarkup func(uintptr) bool
 //
 // See [method@Gtk.Label.set_use_markup].
 func (x *Label) GetUseMarkup() bool {
-
 	cret := xLabelGetUseMarkup(x.GoPointer())
 	return cret
 }
@@ -557,7 +540,6 @@ var xLabelGetUseUnderline func(uintptr) bool
 //
 // See [method@Gtk.Label.set_use_underline].
 func (x *Label) GetUseUnderline() bool {
-
 	cret := xLabelGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -568,7 +550,6 @@ var xLabelGetWidthChars func(uintptr) int32
 //
 // See [method@Gtk.Label.set_width_chars].
 func (x *Label) GetWidthChars() int32 {
-
 	cret := xLabelGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -579,7 +560,6 @@ var xLabelGetWrap func(uintptr) bool
 //
 // See [method@Gtk.Label.set_wrap].
 func (x *Label) GetWrap() bool {
-
 	cret := xLabelGetWrap(x.GoPointer())
 	return cret
 }
@@ -590,7 +570,6 @@ var xLabelGetWrapMode func(uintptr) pango.WrapMode
 //
 // See [method@Gtk.Label.set_wrap_mode].
 func (x *Label) GetWrapMode() pango.WrapMode {
-
 	cret := xLabelGetWrapMode(x.GoPointer())
 	return cret
 }
@@ -601,7 +580,6 @@ var xLabelGetXalign func(uintptr) float32
 //
 // See the [property@Gtk.Label:xalign] property.
 func (x *Label) GetXalign() float32 {
-
 	cret := xLabelGetXalign(x.GoPointer())
 	return cret
 }
@@ -612,7 +590,6 @@ var xLabelGetYalign func(uintptr) float32
 //
 // See the [property@Gtk.Label:yalign] property.
 func (x *Label) GetYalign() float32 {
-
 	cret := xLabelGetYalign(x.GoPointer())
 	return cret
 }
@@ -625,9 +602,7 @@ var xLabelSelectRegion func(uintptr, int32, int32)
 // this function has no effect. If @start_offset or
 // @end_offset are -1, then the end of the label will be substituted.
 func (x *Label) SelectRegion(StartOffsetVar int32, EndOffsetVar int32) {
-
 	xLabelSelectRegion(x.GoPointer(), StartOffsetVar, EndOffsetVar)
-
 }
 
 var xLabelSetAttributes func(uintptr, *pango.AttrList)
@@ -643,9 +618,7 @@ var xLabelSetAttributes func(uintptr, *pango.AttrList)
 // attributes, if you must; know that the attributes will be applied
 // to the label after the markup string is parsed.
 func (x *Label) SetAttributes(AttrsVar *pango.AttrList) {
-
 	xLabelSetAttributes(x.GoPointer(), AttrsVar)
-
 }
 
 var xLabelSetEllipsize func(uintptr, pango.EllipsizeMode)
@@ -655,18 +628,14 @@ var xLabelSetEllipsize func(uintptr, pango.EllipsizeMode)
 // The text will be ellipsized if there is not
 // enough space to render the entire string.
 func (x *Label) SetEllipsize(ModeVar pango.EllipsizeMode) {
-
 	xLabelSetEllipsize(x.GoPointer(), ModeVar)
-
 }
 
 var xLabelSetExtraMenu func(uintptr, uintptr)
 
 // Sets a menu model to add to the context menu of the label.
 func (x *Label) SetExtraMenu(ModelVar *gio.MenuModel) {
-
 	xLabelSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
-
 }
 
 var xLabelSetJustify func(uintptr, Justification)
@@ -681,9 +650,7 @@ var xLabelSetJustify func(uintptr, Justification)
 // If you instead want to set the alignment of the label as a whole,
 // use [method@Gtk.Widget.set_halign] instead.
 func (x *Label) SetJustify(JtypeVar Justification) {
-
 	xLabelSetJustify(x.GoPointer(), JtypeVar)
-
 }
 
 var xLabelSetLabel func(uintptr, string)
@@ -694,9 +661,7 @@ var xLabelSetLabel func(uintptr, string)
 // markup depending on the values of the [property@Gtk.Label:use-underline]
 // and [property@Gtk.Label:use-markup] properties.
 func (x *Label) SetLabel(StrVar string) {
-
 	xLabelSetLabel(x.GoPointer(), StrVar)
-
 }
 
 var xLabelSetLines func(uintptr, int32)
@@ -707,9 +672,7 @@ var xLabelSetLines func(uintptr, int32)
 // This has no effect if the label is not wrapping or ellipsized.
 // Set this to -1 if you don’t want to limit the number of lines.
 func (x *Label) SetLines(LinesVar int32) {
-
 	xLabelSetLines(x.GoPointer(), LinesVar)
-
 }
 
 var xLabelSetMarkup func(uintptr, string)
@@ -738,9 +701,7 @@ var xLabelSetMarkup func(uintptr, string)
 //
 // Also see [method@Gtk.Label.set_text].
 func (x *Label) SetMarkup(StrVar string) {
-
 	xLabelSetMarkup(x.GoPointer(), StrVar)
-
 }
 
 var xLabelSetMarkupWithMnemonic func(uintptr, string)
@@ -755,18 +716,14 @@ var xLabelSetMarkupWithMnemonic func(uintptr, string)
 // The mnemonic key can be used to activate another widget, chosen
 // automatically, or explicitly using [method@Gtk.Label.set_mnemonic_widget].
 func (x *Label) SetMarkupWithMnemonic(StrVar string) {
-
 	xLabelSetMarkupWithMnemonic(x.GoPointer(), StrVar)
-
 }
 
 var xLabelSetMaxWidthChars func(uintptr, int32)
 
 // Sets the maximum width of the label in characters.
 func (x *Label) SetMaxWidthChars(NCharsVar int32) {
-
 	xLabelSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 var xLabelSetMnemonicWidget func(uintptr, uintptr)
@@ -789,9 +746,7 @@ var xLabelSetMnemonicWidget func(uintptr, uintptr)
 // for this signal will activate the widget if there are no mnemonic
 // collisions and toggle focus between the colliding widgets otherwise.
 func (x *Label) SetMnemonicWidget(WidgetVar *Widget) {
-
 	xLabelSetMnemonicWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xLabelSetNaturalWrapMode func(uintptr, NaturalWrapMode)
@@ -801,9 +756,7 @@ var xLabelSetNaturalWrapMode func(uintptr, NaturalWrapMode)
 // This only affects the natural size requested, for the actual wrapping used,
 // see the [property@Gtk.Label:wrap-mode] property.
 func (x *Label) SetNaturalWrapMode(WrapModeVar NaturalWrapMode) {
-
 	xLabelSetNaturalWrapMode(x.GoPointer(), WrapModeVar)
-
 }
 
 var xLabelSetSelectable func(uintptr, bool)
@@ -813,27 +766,21 @@ var xLabelSetSelectable func(uintptr, bool)
 // Selectable labels allow the user to select text from the label,
 // for copy-and-paste.
 func (x *Label) SetSelectable(SettingVar bool) {
-
 	xLabelSetSelectable(x.GoPointer(), SettingVar)
-
 }
 
 var xLabelSetSingleLineMode func(uintptr, bool)
 
 // Sets whether the label is in single line mode.
 func (x *Label) SetSingleLineMode(SingleLineModeVar bool) {
-
 	xLabelSetSingleLineMode(x.GoPointer(), SingleLineModeVar)
-
 }
 
 var xLabelSetTabs func(uintptr, *pango.TabArray)
 
 // Sets tab stops for the label.
 func (x *Label) SetTabs(TabsVar *pango.TabArray) {
-
 	xLabelSetTabs(x.GoPointer(), TabsVar)
-
 }
 
 var xLabelSetText func(uintptr, string)
@@ -847,9 +794,7 @@ var xLabelSetText func(uintptr, string)
 //
 // Also see [method@Gtk.Label.set_markup].
 func (x *Label) SetText(StrVar string) {
-
 	xLabelSetText(x.GoPointer(), StrVar)
-
 }
 
 var xLabelSetTextWithMnemonic func(uintptr, string)
@@ -861,9 +806,7 @@ var xLabelSetTextWithMnemonic func(uintptr, string)
 // The mnemonic key can be used to activate another widget, chosen
 // automatically, or explicitly using [method@Gtk.Label.set_mnemonic_widget].
 func (x *Label) SetTextWithMnemonic(StrVar string) {
-
 	xLabelSetTextWithMnemonic(x.GoPointer(), StrVar)
-
 }
 
 var xLabelSetUseMarkup func(uintptr, bool)
@@ -872,27 +815,21 @@ var xLabelSetUseMarkup func(uintptr, bool)
 //
 // See [method@Gtk.Label.set_markup].
 func (x *Label) SetUseMarkup(SettingVar bool) {
-
 	xLabelSetUseMarkup(x.GoPointer(), SettingVar)
-
 }
 
 var xLabelSetUseUnderline func(uintptr, bool)
 
 // Sets whether underlines in the text indicate mnemonics.
 func (x *Label) SetUseUnderline(SettingVar bool) {
-
 	xLabelSetUseUnderline(x.GoPointer(), SettingVar)
-
 }
 
 var xLabelSetWidthChars func(uintptr, int32)
 
 // Sets the desired width in characters of the label.
 func (x *Label) SetWidthChars(NCharsVar int32) {
-
 	xLabelSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 var xLabelSetWrap func(uintptr, bool)
@@ -909,9 +846,7 @@ var xLabelSetWrap func(uintptr, bool)
 // For a label that wraps at a specific position, set the label’s width
 // using [method@Gtk.Widget.set_size_request].
 func (x *Label) SetWrap(WrapVar bool) {
-
 	xLabelSetWrap(x.GoPointer(), WrapVar)
-
 }
 
 var xLabelSetWrapMode func(uintptr, pango.WrapMode)
@@ -927,9 +862,7 @@ var xLabelSetWrapMode func(uintptr, pango.WrapMode)
 // For sizing behavior, also consider the
 // [property@Gtk.Label:natural-wrap-mode] property.
 func (x *Label) SetWrapMode(WrapModeVar pango.WrapMode) {
-
 	xLabelSetWrapMode(x.GoPointer(), WrapModeVar)
-
 }
 
 var xLabelSetXalign func(uintptr, float32)
@@ -938,9 +871,7 @@ var xLabelSetXalign func(uintptr, float32)
 //
 // See the [property@Gtk.Label:xalign] property.
 func (x *Label) SetXalign(XalignVar float32) {
-
 	xLabelSetXalign(x.GoPointer(), XalignVar)
-
 }
 
 var xLabelSetYalign func(uintptr, float32)
@@ -949,9 +880,7 @@ var xLabelSetYalign func(uintptr, float32)
 //
 // See the [property@Gtk.Label:yalign] property.
 func (x *Label) SetYalign(YalignVar float32) {
-
 	xLabelSetYalign(x.GoPointer(), YalignVar)
-
 }
 
 func (c *Label) GoPointer() uintptr {
@@ -1318,7 +1247,6 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1341,7 +1269,6 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 		cbFn := *cb
 
 		return cbFn(fa, UriVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1365,7 +1292,6 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1403,7 +1329,6 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int32, bool)) ui
 		cbFn := *cb
 
 		cbFn(fa, StepVarp, CountVarp, ExtendSelectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1420,9 +1345,7 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int32, bool)) ui
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Label) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1443,7 +1366,6 @@ func (x *Label) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Label) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1468,7 +1390,6 @@ func (x *Label) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Label) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1507,30 +1428,23 @@ func (x *Label) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Label) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Label) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Label) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Label) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1543,9 +1457,7 @@ func (x *Label) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Label) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1553,9 +1465,7 @@ func (x *Label) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Label) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1564,9 +1474,7 @@ func (x *Label) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Label) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1588,9 +1496,7 @@ func (x *Label) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Label) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1600,9 +1506,7 @@ func (x *Label) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Label) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1624,9 +1528,7 @@ func (x *Label) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Access
 //
 // ```
 func (x *Label) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1636,9 +1538,7 @@ func (x *Label) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Label) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1661,9 +1561,7 @@ func (x *Label) UpdateRelationValue(NRelationsVar int32, RelationsVar []Accessib
 //
 // ```
 func (x *Label) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1673,9 +1571,7 @@ func (x *Label) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Label) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Updates the position of the caret.
@@ -1684,9 +1580,7 @@ func (x *Label) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, 
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *Label) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -1699,9 +1593,7 @@ func (x *Label) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *Label) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint32, EndVar uint32) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -1710,9 +1602,7 @@ func (x *Label) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar u
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *Label) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1720,7 +1610,6 @@ func (x *Label) UpdateSelectionBound() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Label) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1791,5 +1680,4 @@ func init() {
 	core.PuregoSafeRegister(&xLabelSetWrapMode, libs, "gtk_label_set_wrap_mode")
 	core.PuregoSafeRegister(&xLabelSetXalign, libs, "gtk_label_set_xalign")
 	core.PuregoSafeRegister(&xLabelSetYalign, libs, "gtk_label_set_yalign")
-
 }

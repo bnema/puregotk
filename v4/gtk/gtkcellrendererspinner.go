@@ -122,5 +122,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererSpinnerGLibType, libs, "gtk_cell_renderer_spinner_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererSpinner, libs, "gtk_cell_renderer_spinner_new")
-
 }

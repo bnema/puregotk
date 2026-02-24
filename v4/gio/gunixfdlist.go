@@ -246,7 +246,6 @@ func (x *UnixFDList) Append(FdVar int32) (int32, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixFDListGet func(uintptr, int32, **glib.Error) int32
@@ -271,7 +270,6 @@ func (x *UnixFDList) Get(IndexVar int32) (int32, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixFDListGetLength func(uintptr) int32
@@ -279,7 +277,6 @@ var xUnixFDListGetLength func(uintptr) int32
 // Gets the length of @list (ie: the number of file descriptors
 // contained within).
 func (x *UnixFDList) GetLength() int32 {
-
 	cret := xUnixFDListGetLength(x.GoPointer())
 	return cret
 }
@@ -300,7 +297,6 @@ var xUnixFDListPeekFds func(uintptr, *int32) uintptr
 // This function never returns %NULL. In case there are no file
 // descriptors contained in @list, an empty array is returned.
 func (x *UnixFDList) PeekFds(LengthVar *int32) uintptr {
-
 	cret := xUnixFDListPeekFds(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -326,7 +322,6 @@ var xUnixFDListStealFds func(uintptr, *int32) uintptr
 // This function never returns %NULL. In case there are no file
 // descriptors contained in @list, an empty array is returned.
 func (x *UnixFDList) StealFds(LengthVar *int32) uintptr {
-
 	cret := xUnixFDListStealFds(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -364,5 +359,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixFDListGetLength, libs, "g_unix_fd_list_get_length")
 	core.PuregoSafeRegister(&xUnixFDListPeekFds, libs, "g_unix_fd_list_peek_fds")
 	core.PuregoSafeRegister(&xUnixFDListStealFds, libs, "g_unix_fd_list_steal_fds")
-
 }

@@ -14,9 +14,7 @@ var xQsortWithData func(uintptr, int32, uint, uintptr, uintptr)
 //
 // Unlike `qsort()`, this is guaranteed to be a stable sort (since GLib 2.32).
 func QsortWithData(PbaseVar uintptr, TotalElemsVar int32, SizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xQsortWithData(PbaseVar, TotalElemsVar, SizeVar, NewCallback(CompareFuncVar), UserDataVar)
-
 }
 
 var xSortArray func([]uintptr, uint, uint, uintptr, uintptr)
@@ -27,9 +25,7 @@ var xSortArray func([]uintptr, uint, uint, uintptr, uintptr)
 //
 // Unlike `qsort()`, this is guaranteed to be a stable sort.
 func SortArray(ArrayVar []uintptr, NElementsVar uint, ElementSizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xSortArray(ArrayVar, NElementsVar, ElementSizeVar, NewCallback(CompareFuncVar), UserDataVar)
-
 }
 
 func init() {
@@ -46,5 +42,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xQsortWithData, libs, "g_qsort_with_data")
 	core.PuregoSafeRegister(&xSortArray, libs, "g_sort_array")
-
 }

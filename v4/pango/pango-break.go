@@ -58,9 +58,7 @@ var xAttrBreak func(string, int32, *AttrList, int32, *[]LogAttr, int32)
 // The line breaks are assumed to have been produced
 // by [func@Pango.default_break] and [func@Pango.tailor_break].
 func AttrBreak(TextVar string, LengthVar int32, AttrListVar *AttrList, OffsetVar int32, AttrsVar *[]LogAttr, AttrsLenVar int32) {
-
 	xAttrBreak(TextVar, LengthVar, AttrListVar, OffsetVar, AttrsVar, AttrsLenVar)
-
 }
 
 var xBreak func(string, int32, *Analysis, *[]LogAttr, int32)
@@ -70,9 +68,7 @@ var xBreak func(string, int32, *Analysis, *[]LogAttr, int32)
 //
 // For most purposes you may want to use [func@Pango.get_log_attrs].
 func Break(TextVar string, LengthVar int32, AnalysisVar *Analysis, AttrsVar *[]LogAttr, AttrsLenVar int32) {
-
 	xBreak(TextVar, LengthVar, AnalysisVar, AttrsVar, AttrsLenVar)
-
 }
 
 var xDefaultBreak func(string, int32, *Analysis, *[]LogAttr, int32)
@@ -87,9 +83,7 @@ var xDefaultBreak func(string, int32, *Analysis, *[]LogAttr, int32)
 //
 // See [func@Pango.attr_break] for attribute-based customization.
 func DefaultBreak(TextVar string, LengthVar int32, AnalysisVar *Analysis, AttrsVar *[]LogAttr, AttrsLenVar int32) {
-
 	xDefaultBreak(TextVar, LengthVar, AnalysisVar, AttrsVar, AttrsLenVar)
-
 }
 
 var xGetLogAttrs func(string, int32, int32, *Language, *[]LogAttr, int32)
@@ -104,9 +98,7 @@ var xGetLogAttrs func(string, int32, int32, *Language, *[]LogAttr, int32)
 // (for example you need to see spaces on either side of
 // a word to know the word is a word).
 func GetLogAttrs(TextVar string, LengthVar int32, LevelVar int32, LanguageVar *Language, AttrsVar *[]LogAttr, AttrsLenVar int32) {
-
 	xGetLogAttrs(TextVar, LengthVar, LevelVar, LanguageVar, AttrsVar, AttrsLenVar)
-
 }
 
 var xTailorBreak func(string, int32, *Analysis, int32, *[]LogAttr, int32)
@@ -121,9 +113,7 @@ var xTailorBreak func(string, int32, *Analysis, int32, *[]LogAttr, int32)
 // Note that it is better to pass -1 for @offset and use [func@Pango.attr_break]
 // to apply attributes to the whole paragraph.
 func TailorBreak(TextVar string, LengthVar int32, AnalysisVar *Analysis, OffsetVar int32, AttrsVar *[]LogAttr, AttrsLenVar int32) {
-
 	xTailorBreak(TextVar, LengthVar, AnalysisVar, OffsetVar, AttrsVar, AttrsLenVar)
-
 }
 
 func init() {
@@ -143,5 +133,4 @@ func init() {
 	core.PuregoSafeRegister(&xDefaultBreak, libs, "pango_default_break")
 	core.PuregoSafeRegister(&xGetLogAttrs, libs, "pango_get_log_attrs")
 	core.PuregoSafeRegister(&xTailorBreak, libs, "pango_tailor_break")
-
 }

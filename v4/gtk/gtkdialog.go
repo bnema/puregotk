@@ -369,9 +369,7 @@ var xDialogAddActionWidget func(uintptr, uintptr, int32)
 // If you want to add a non-activatable widget, simply pack it into
 // the @action_area field of the `GtkDialog` struct.
 func (x *Dialog) AddActionWidget(ChildVar *Widget, ResponseIdVar int32) {
-
 	xDialogAddActionWidget(x.GoPointer(), ChildVar.GoPointer(), ResponseIdVar)
-
 }
 
 var xDialogAddButton func(uintptr, string, int32) uintptr
@@ -405,9 +403,7 @@ var xDialogAddButtons func(uintptr, string, ...interface{})
 // as with [ctor@Gtk.Dialog.new_with_buttons]. Each button must have both
 // text and response ID.
 func (x *Dialog) AddButtons(FirstButtonTextVar string, varArgs ...interface{}) {
-
 	xDialogAddButtons(x.GoPointer(), FirstButtonTextVar, varArgs...)
-
 }
 
 var xDialogGetContentArea func(uintptr) uintptr
@@ -452,7 +448,6 @@ var xDialogGetResponseForWidget func(uintptr, uintptr) int32
 // Gets the response id of a widget in the action area
 // of a dialog.
 func (x *Dialog) GetResponseForWidget(WidgetVar *Widget) int32 {
-
 	cret := xDialogGetResponseForWidget(x.GoPointer(), WidgetVar.GoPointer())
 	return cret
 }
@@ -481,9 +476,7 @@ var xDialogResponse func(uintptr, int32)
 //
 // Used to indicate that the user has responded to the dialog in some way.
 func (x *Dialog) Response(ResponseIdVar int32) {
-
 	xDialogResponse(x.GoPointer(), ResponseIdVar)
-
 }
 
 var xDialogSetDefaultResponse func(uintptr, int32)
@@ -492,9 +485,7 @@ var xDialogSetDefaultResponse func(uintptr, int32)
 //
 // Pressing “Enter” normally activates the default widget.
 func (x *Dialog) SetDefaultResponse(ResponseIdVar int32) {
-
 	xDialogSetDefaultResponse(x.GoPointer(), ResponseIdVar)
-
 }
 
 var xDialogSetResponseSensitive func(uintptr, int32, bool)
@@ -504,9 +495,7 @@ var xDialogSetResponseSensitive func(uintptr, int32, bool)
 // Calls `gtk_widget_set_sensitive (widget, @setting)`
 // for each widget in the dialog’s action area with the given @response_id.
 func (x *Dialog) SetResponseSensitive(ResponseIdVar int32, SettingVar bool) {
-
 	xDialogSetResponseSensitive(x.GoPointer(), ResponseIdVar, SettingVar)
-
 }
 
 func (c *Dialog) GoPointer() uintptr {
@@ -588,7 +577,6 @@ func (x *Dialog) ConnectClose(cb *func(Dialog)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -613,7 +601,6 @@ func (x *Dialog) ConnectResponse(cb *func(Dialog, int32)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ResponseIdVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -630,9 +617,7 @@ func (x *Dialog) ConnectResponse(cb *func(Dialog, int32)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Dialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -653,7 +638,6 @@ func (x *Dialog) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Dialog) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -678,7 +662,6 @@ func (x *Dialog) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Dialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -717,30 +700,23 @@ func (x *Dialog) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Dialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Dialog) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Dialog) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Dialog) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -753,9 +729,7 @@ func (x *Dialog) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Dialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -763,9 +737,7 @@ func (x *Dialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -774,9 +746,7 @@ func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Dialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -798,9 +768,7 @@ func (x *Dialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Dialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -810,9 +778,7 @@ func (x *Dialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -834,9 +800,7 @@ func (x *Dialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acces
 //
 // ```
 func (x *Dialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -846,9 +810,7 @@ func (x *Dialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -871,9 +833,7 @@ func (x *Dialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []Accessi
 //
 // ```
 func (x *Dialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -883,9 +843,7 @@ func (x *Dialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -893,7 +851,6 @@ func (x *Dialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Dialog) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -933,27 +890,21 @@ func (x *Dialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *Dialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Dialog) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Dialog) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -1000,9 +951,7 @@ func (x *Dialog) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *Dialog) SetFocus(FocusVar *Widget) {
-
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -1036,5 +985,4 @@ func init() {
 	core.PuregoSafeRegister(&xDialogResponse, libs, "gtk_dialog_response")
 	core.PuregoSafeRegister(&xDialogSetDefaultResponse, libs, "gtk_dialog_set_default_response")
 	core.PuregoSafeRegister(&xDialogSetResponseSensitive, libs, "gtk_dialog_set_response_sensitive")
-
 }

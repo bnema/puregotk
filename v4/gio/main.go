@@ -10,7 +10,6 @@ import (
 var xDbusErrorQuark func() glib.Quark
 
 func DbusErrorQuark() glib.Quark {
-
 	cret := xDbusErrorQuark()
 	return cret
 }
@@ -28,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xDbusErrorQuark, libs, "g_dbus_error_quark")
-
 }

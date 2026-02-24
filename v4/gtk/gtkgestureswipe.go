@@ -72,7 +72,6 @@ var xGestureSwipeGetVelocity func(uintptr, *float64, *float64) bool
 // in @velocity_x and @velocity_y with the recorded velocity, as per the
 // last events processed.
 func (x *GestureSwipe) GetVelocity(VelocityXVar *float64, VelocityYVar *float64) bool {
-
 	cret := xGestureSwipeGetVelocity(x.GoPointer(), VelocityXVar, VelocityYVar)
 	return cret
 }
@@ -103,7 +102,6 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 		cbFn := *cb
 
 		cbFn(fa, VelocityXVarp, VelocityYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -127,5 +125,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureSwipe, libs, "gtk_gesture_swipe_new")
 
 	core.PuregoSafeRegister(&xGestureSwipeGetVelocity, libs, "gtk_gesture_swipe_get_velocity")
-
 }

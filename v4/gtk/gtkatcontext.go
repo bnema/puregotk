@@ -83,7 +83,6 @@ var xATContextGetAccessibleRole func(uintptr) AccessibleRole
 
 // Retrieves the accessible role of this context.
 func (x *ATContext) GetAccessibleRole() AccessibleRole {
-
 	cret := xATContextGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -113,7 +112,6 @@ func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -138,5 +136,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xATContextGetAccessible, libs, "gtk_at_context_get_accessible")
 	core.PuregoSafeRegister(&xATContextGetAccessibleRole, libs, "gtk_at_context_get_accessible_role")
-
 }

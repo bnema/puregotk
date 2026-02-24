@@ -107,5 +107,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xLayoutChildGetChildWidget, libs, "gtk_layout_child_get_child_widget")
 	core.PuregoSafeRegister(&xLayoutChildGetLayoutManager, libs, "gtk_layout_child_get_layout_manager")
-
 }

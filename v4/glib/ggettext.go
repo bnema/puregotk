@@ -13,7 +13,6 @@ var xDcgettext func(string, string, int32) string
 // more information about how this functions differs from calling
 // dcgettext() directly.
 func Dcgettext(DomainVar string, MsgidVar string, CategoryVar int32) string {
-
 	cret := xDcgettext(DomainVar, MsgidVar, CategoryVar)
 	return cret
 }
@@ -53,7 +52,6 @@ var xDgettext func(string, string) string
 // Applications should normally not use this function directly,
 // but use the _() macro for translations.
 func Dgettext(DomainVar string, MsgidVar string) string {
-
 	cret := xDgettext(DomainVar, MsgidVar)
 	return cret
 }
@@ -67,7 +65,6 @@ var xDngettext func(string, string, string, uint32) string
 // See g_dgettext() for details of how this differs from dngettext()
 // proper.
 func Dngettext(DomainVar string, MsgidVar string, MsgidPluralVar string, NVar uint32) string {
-
 	cret := xDngettext(DomainVar, MsgidVar, MsgidPluralVar, NVar)
 	return cret
 }
@@ -88,7 +85,6 @@ var xDpgettext func(string, string, uint) string
 // Applications should normally not use this function directly,
 // but use the C_() macro for translations with context.
 func Dpgettext(DomainVar string, MsgctxtidVar string, MsgidoffsetVar uint) string {
-
 	cret := xDpgettext(DomainVar, MsgctxtidVar, MsgidoffsetVar)
 	return cret
 }
@@ -106,7 +102,6 @@ var xDpgettext2 func(string, string, string) string
 // This function differs from C_() in that it is not a macro and
 // thus you may use non-string-literals as context and msgid arguments.
 func Dpgettext2(DomainVar string, ContextVar string, MsgidVar string) string {
-
 	cret := xDpgettext2(DomainVar, ContextVar, MsgidVar)
 	return cret
 }
@@ -115,7 +110,6 @@ var xStripContext func(string, string) string
 
 // An auxiliary function for gettext() support (see Q_()).
 func StripContext(MsgidVar string, MsgvalVar string) string {
-
 	cret := xStripContext(MsgidVar, MsgvalVar)
 	return cret
 }
@@ -138,5 +132,4 @@ func init() {
 	core.PuregoSafeRegister(&xDpgettext, libs, "g_dpgettext")
 	core.PuregoSafeRegister(&xDpgettext2, libs, "g_dpgettext2")
 	core.PuregoSafeRegister(&xStripContext, libs, "g_strip_context")
-
 }

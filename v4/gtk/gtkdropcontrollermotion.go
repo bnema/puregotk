@@ -66,7 +66,6 @@ var xDropControllerMotionContainsPointer func(uintptr) bool
 // Returns if a Drag-and-Drop operation is within the widget
 // @self or one of its children.
 func (x *DropControllerMotion) ContainsPointer() bool {
-
 	cret := xDropControllerMotionContainsPointer(x.GoPointer())
 	return cret
 }
@@ -94,7 +93,6 @@ var xDropControllerMotionIsPointer func(uintptr) bool
 // Returns if a Drag-and-Drop operation is within the widget
 // @self, not one of its children.
 func (x *DropControllerMotion) IsPointer() bool {
-
 	cret := xDropControllerMotionIsPointer(x.GoPointer())
 	return cret
 }
@@ -153,7 +151,6 @@ func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -173,7 +170,6 @@ func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -193,7 +189,6 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -219,5 +214,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropControllerMotionContainsPointer, libs, "gtk_drop_controller_motion_contains_pointer")
 	core.PuregoSafeRegister(&xDropControllerMotionGetDrop, libs, "gtk_drop_controller_motion_get_drop")
 	core.PuregoSafeRegister(&xDropControllerMotionIsPointer, libs, "gtk_drop_controller_motion_is_pointer")
-
 }

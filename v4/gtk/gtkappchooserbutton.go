@@ -90,9 +90,7 @@ var xAppChooserButtonAppendCustomItem func(uintptr, string, string, uintptr)
 //
 // See also [method@Gtk.AppChooserButton.append_separator].
 func (x *AppChooserButton) AppendCustomItem(NameVar string, LabelVar string, IconVar gio.Icon) {
-
 	xAppChooserButtonAppendCustomItem(x.GoPointer(), NameVar, LabelVar, IconVar.GoPointer())
-
 }
 
 var xAppChooserButtonAppendSeparator func(uintptr)
@@ -100,16 +98,13 @@ var xAppChooserButtonAppendSeparator func(uintptr)
 // Appends a separator to the list of applications that is shown
 // in the popup.
 func (x *AppChooserButton) AppendSeparator() {
-
 	xAppChooserButtonAppendSeparator(x.GoPointer())
-
 }
 
 var xAppChooserButtonGetHeading func(uintptr) string
 
 // Returns the text to display at the top of the dialog.
 func (x *AppChooserButton) GetHeading() string {
-
 	cret := xAppChooserButtonGetHeading(x.GoPointer())
 	return cret
 }
@@ -118,7 +113,6 @@ var xAppChooserButtonGetModal func(uintptr) bool
 
 // Gets whether the dialog is modal.
 func (x *AppChooserButton) GetModal() bool {
-
 	cret := xAppChooserButtonGetModal(x.GoPointer())
 	return cret
 }
@@ -128,7 +122,6 @@ var xAppChooserButtonGetShowDefaultItem func(uintptr) bool
 // Returns whether the dropdown menu should show the default
 // application at the top.
 func (x *AppChooserButton) GetShowDefaultItem() bool {
-
 	cret := xAppChooserButtonGetShowDefaultItem(x.GoPointer())
 	return cret
 }
@@ -138,7 +131,6 @@ var xAppChooserButtonGetShowDialogItem func(uintptr) bool
 // Returns whether the dropdown menu shows an item
 // for a `GtkAppChooserDialog`.
 func (x *AppChooserButton) GetShowDialogItem() bool {
-
 	cret := xAppChooserButtonGetShowDialogItem(x.GoPointer())
 	return cret
 }
@@ -152,9 +144,7 @@ var xAppChooserButtonSetActiveCustomItem func(uintptr, string)
 // Use [method@Gtk.AppChooser.refresh] to bring the selection
 // to its initial state.
 func (x *AppChooserButton) SetActiveCustomItem(NameVar string) {
-
 	xAppChooserButtonSetActiveCustomItem(x.GoPointer(), NameVar)
-
 }
 
 var xAppChooserButtonSetHeading func(uintptr, string)
@@ -163,18 +153,14 @@ var xAppChooserButtonSetHeading func(uintptr, string)
 //
 // If the heading is not set, the dialog displays a default text.
 func (x *AppChooserButton) SetHeading(HeadingVar string) {
-
 	xAppChooserButtonSetHeading(x.GoPointer(), HeadingVar)
-
 }
 
 var xAppChooserButtonSetModal func(uintptr, bool)
 
 // Sets whether the dialog should be modal.
 func (x *AppChooserButton) SetModal(ModalVar bool) {
-
 	xAppChooserButtonSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xAppChooserButtonSetShowDefaultItem func(uintptr, bool)
@@ -182,9 +168,7 @@ var xAppChooserButtonSetShowDefaultItem func(uintptr, bool)
 // Sets whether the dropdown menu of this button should show the
 // default application for the given content type at top.
 func (x *AppChooserButton) SetShowDefaultItem(SettingVar bool) {
-
 	xAppChooserButtonSetShowDefaultItem(x.GoPointer(), SettingVar)
-
 }
 
 var xAppChooserButtonSetShowDialogItem func(uintptr, bool)
@@ -192,9 +176,7 @@ var xAppChooserButtonSetShowDialogItem func(uintptr, bool)
 // Sets whether the dropdown menu of this button should show an
 // entry to trigger a `GtkAppChooserDialog`.
 func (x *AppChooserButton) SetShowDialogItem(SettingVar bool) {
-
 	xAppChooserButtonSetShowDialogItem(x.GoPointer(), SettingVar)
-
 }
 
 func (c *AppChooserButton) GoPointer() uintptr {
@@ -302,7 +284,6 @@ func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -322,7 +303,6 @@ func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -345,7 +325,6 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 		cbFn := *cb
 
 		cbFn(fa, ItemNameVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -362,9 +341,7 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AppChooserButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -385,7 +362,6 @@ func (x *AppChooserButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AppChooserButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -410,7 +386,6 @@ func (x *AppChooserButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AppChooserButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -449,30 +424,23 @@ func (x *AppChooserButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AppChooserButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AppChooserButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AppChooserButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AppChooserButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -485,9 +453,7 @@ func (x *AppChooserButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AppChooserButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -495,9 +461,7 @@ func (x *AppChooserButton) SetAccessibleParent(ParentVar Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AppChooserButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -506,9 +470,7 @@ func (x *AppChooserButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AppChooserButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -530,9 +492,7 @@ func (x *AppChooserButton) UpdatePlatformState(StateVar AccessiblePlatformState)
 //
 // ```
 func (x *AppChooserButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -542,9 +502,7 @@ func (x *AppChooserButton) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -566,9 +524,7 @@ func (x *AppChooserButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesV
 //
 // ```
 func (x *AppChooserButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -578,9 +534,7 @@ func (x *AppChooserButton) UpdateRelation(FirstRelationVar AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -603,9 +557,7 @@ func (x *AppChooserButton) UpdateRelationValue(NRelationsVar int32, RelationsVar
 //
 // ```
 func (x *AppChooserButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -615,9 +567,7 @@ func (x *AppChooserButton) UpdateState(FirstStateVar AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Returns the currently selected application.
@@ -637,16 +587,13 @@ func (x *AppChooserButton) GetAppInfo() *gio.AppInfoBase {
 // Returns the content type for which the `GtkAppChooser`
 // shows applications.
 func (x *AppChooserButton) GetContentType() string {
-
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
 	return cret
 }
 
 // Reloads the list of applications.
 func (x *AppChooserButton) Refresh() {
-
 	XGtkAppChooserRefresh(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -654,7 +601,6 @@ func (x *AppChooserButton) Refresh() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AppChooserButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -686,5 +632,4 @@ func init() {
 	core.PuregoSafeRegister(&xAppChooserButtonSetModal, libs, "gtk_app_chooser_button_set_modal")
 	core.PuregoSafeRegister(&xAppChooserButtonSetShowDefaultItem, libs, "gtk_app_chooser_button_set_show_default_item")
 	core.PuregoSafeRegister(&xAppChooserButtonSetShowDialogItem, libs, "gtk_app_chooser_button_set_show_dialog_item")
-
 }

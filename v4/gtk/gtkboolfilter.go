@@ -76,7 +76,6 @@ var xBoolFilterGetInvert func(uintptr) bool
 
 // Returns whether the filter inverts the expression.
 func (x *BoolFilter) GetInvert() bool {
-
 	cret := xBoolFilterGetInvert(x.GoPointer())
 	return cret
 }
@@ -88,18 +87,14 @@ var xBoolFilterSetExpression func(uintptr, uintptr)
 //
 // The expression must have a value type of `G_TYPE_BOOLEAN`.
 func (x *BoolFilter) SetExpression(ExpressionVar *Expression) {
-
 	xBoolFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
-
 }
 
 var xBoolFilterSetInvert func(uintptr, bool)
 
 // Sets whether the filter should invert the expression.
 func (x *BoolFilter) SetInvert(InvertVar bool) {
-
 	xBoolFilterSetInvert(x.GoPointer(), InvertVar)
-
 }
 
 func (c *BoolFilter) GoPointer() uintptr {
@@ -150,5 +145,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoolFilterGetInvert, libs, "gtk_bool_filter_get_invert")
 	core.PuregoSafeRegister(&xBoolFilterSetExpression, libs, "gtk_bool_filter_set_expression")
 	core.PuregoSafeRegister(&xBoolFilterSetInvert, libs, "gtk_bool_filter_set_invert")
-
 }

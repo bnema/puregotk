@@ -179,7 +179,6 @@ var xUnixCredentialsMessageIsSupported func() bool
 
 // Checks if passing #GCredentials on a #GSocket is supported on this platform.
 func UnixCredentialsMessageIsSupported() bool {
-
 	cret := xUnixCredentialsMessageIsSupported()
 	return cret
 }
@@ -204,5 +203,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixCredentialsMessageGetCredentials, libs, "g_unix_credentials_message_get_credentials")
 
 	core.PuregoSafeRegister(&xUnixCredentialsMessageIsSupported, libs, "g_unix_credentials_message_is_supported")
-
 }

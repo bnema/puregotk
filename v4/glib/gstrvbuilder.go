@@ -44,7 +44,6 @@ var xNewStrvBuilder func() *StrvBuilder
 // Creates a new #GStrvBuilder with a reference count of 1.
 // Use g_strv_builder_unref() on the returned value when no longer needed.
 func NewStrvBuilder() *StrvBuilder {
-
 	cret := xNewStrvBuilder()
 	return cret
 }
@@ -55,9 +54,7 @@ var xStrvBuilderAdd func(uintptr, string)
 //
 // Since 2.68
 func (x *StrvBuilder) Add(ValueVar string) {
-
 	xStrvBuilderAdd(x.GoPointer(), ValueVar)
-
 }
 
 var xStrvBuilderAddMany func(uintptr, ...interface{})
@@ -66,9 +63,7 @@ var xStrvBuilderAddMany func(uintptr, ...interface{})
 //
 // Since 2.70
 func (x *StrvBuilder) AddMany(varArgs ...interface{}) {
-
 	xStrvBuilderAddMany(x.GoPointer(), varArgs...)
-
 }
 
 var xStrvBuilderAddv func(uintptr, []string)
@@ -77,9 +72,7 @@ var xStrvBuilderAddv func(uintptr, []string)
 //
 // Since 2.70
 func (x *StrvBuilder) Addv(ValueVar []string) {
-
 	xStrvBuilderAddv(x.GoPointer(), ValueVar)
-
 }
 
 var xStrvBuilderEnd func(uintptr) []string
@@ -88,7 +81,6 @@ var xStrvBuilderEnd func(uintptr) []string
 // array. The returned value should be freed with g_strfreev() when no longer
 // needed.
 func (x *StrvBuilder) End() []string {
-
 	cret := xStrvBuilderEnd(x.GoPointer())
 	return cret
 }
@@ -98,7 +90,6 @@ var xStrvBuilderRef func(uintptr) *StrvBuilder
 // Atomically increments the reference count of @builder by one.
 // This function is thread-safe and may be called from any thread.
 func (x *StrvBuilder) Ref() *StrvBuilder {
-
 	cret := xStrvBuilderRef(x.GoPointer())
 	return cret
 }
@@ -110,9 +101,7 @@ var xStrvBuilderTake func(uintptr, string)
 //
 // Since 2.80
 func (x *StrvBuilder) Take(ValueVar string) {
-
 	xStrvBuilderTake(x.GoPointer(), ValueVar)
-
 }
 
 var xStrvBuilderUnref func(uintptr)
@@ -122,9 +111,7 @@ var xStrvBuilderUnref func(uintptr)
 // In the event that there are no more references, releases all memory
 // associated with the #GStrvBuilder.
 func (x *StrvBuilder) Unref() {
-
 	xStrvBuilderUnref(x.GoPointer())
-
 }
 
 var xStrvBuilderUnrefToStrv func(uintptr) []string
@@ -147,7 +134,6 @@ var xStrvBuilderUnrefToStrv func(uintptr) []string
 // g_strfreev (array);
 // ```
 func (x *StrvBuilder) UnrefToStrv() []string {
-
 	cret := xStrvBuilderUnrefToStrv(x.GoPointer())
 	return cret
 }
@@ -176,5 +162,4 @@ func init() {
 	core.PuregoSafeRegister(&xStrvBuilderTake, libs, "g_strv_builder_take")
 	core.PuregoSafeRegister(&xStrvBuilderUnref, libs, "g_strv_builder_unref")
 	core.PuregoSafeRegister(&xStrvBuilderUnrefToStrv, libs, "g_strv_builder_unref_to_strv")
-
 }

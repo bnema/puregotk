@@ -485,9 +485,7 @@ var xSettingsBackendChanged func(uintptr, string, uintptr)
 // g_settings_backend_write() then @origin_tag must be set to the same
 // value that was passed to that call.
 func (x *SettingsBackend) Changed(KeyVar string, OriginTagVar uintptr) {
-
 	xSettingsBackendChanged(x.GoPointer(), KeyVar, OriginTagVar)
-
 }
 
 var xSettingsBackendChangedTree func(uintptr, *glib.Tree, uintptr)
@@ -496,9 +494,7 @@ var xSettingsBackendChangedTree func(uintptr, *glib.Tree, uintptr)
 // @tree, computes the longest common prefix and calls
 // g_settings_backend_changed().
 func (x *SettingsBackend) ChangedTree(TreeVar *glib.Tree, OriginTagVar uintptr) {
-
 	xSettingsBackendChangedTree(x.GoPointer(), TreeVar, OriginTagVar)
-
 }
 
 var xSettingsBackendKeysChanged func(uintptr, string, []string, uintptr)
@@ -525,9 +521,7 @@ var xSettingsBackendKeysChanged func(uintptr, string, []string, uintptr)
 // be as long as possible (ie: the longest common prefix of all of the
 // keys that were changed) but this is not strictly required.
 func (x *SettingsBackend) KeysChanged(PathVar string, ItemsVar []string, OriginTagVar uintptr) {
-
 	xSettingsBackendKeysChanged(x.GoPointer(), PathVar, ItemsVar, OriginTagVar)
-
 }
 
 var xSettingsBackendPathChanged func(uintptr, string, uintptr)
@@ -554,9 +548,7 @@ var xSettingsBackendPathChanged func(uintptr, string, uintptr)
 // example, if this function is called with the path of "/" then every
 // single key in the application will be notified of a possible change.
 func (x *SettingsBackend) PathChanged(PathVar string, OriginTagVar uintptr) {
-
 	xSettingsBackendPathChanged(x.GoPointer(), PathVar, OriginTagVar)
-
 }
 
 var xSettingsBackendPathWritableChanged func(uintptr, string)
@@ -567,9 +559,7 @@ var xSettingsBackendPathWritableChanged func(uintptr, string)
 // Since GSettings performs no locking operations for itself, this call
 // will always be made in response to external events.
 func (x *SettingsBackend) PathWritableChanged(PathVar string) {
-
 	xSettingsBackendPathWritableChanged(x.GoPointer(), PathVar)
-
 }
 
 var xSettingsBackendWritableChanged func(uintptr, string)
@@ -579,9 +569,7 @@ var xSettingsBackendWritableChanged func(uintptr, string)
 // Since GSettings performs no locking operations for itself, this call
 // will always be made in response to external events.
 func (x *SettingsBackend) WritableChanged(KeyVar string) {
-
 	xSettingsBackendWritableChanged(x.GoPointer(), KeyVar)
-
 }
 
 func (c *SettingsBackend) GoPointer() uintptr {
@@ -605,9 +593,7 @@ var xSettingsBackendFlattenTree func(*glib.Tree, *string, *[]string, *uintptr)
 // g_free().  You should not attempt to free or unref the contents of
 // @keys or @values.
 func SettingsBackendFlattenTree(TreeVar *glib.Tree, PathVar *string, KeysVar *[]string, ValuesVar *uintptr) {
-
 	xSettingsBackendFlattenTree(TreeVar, PathVar, KeysVar, ValuesVar)
-
 }
 
 var xSettingsBackendGetDefault func() uintptr
@@ -657,5 +643,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSettingsBackendFlattenTree, libs, "g_settings_backend_flatten_tree")
 	core.PuregoSafeRegister(&xSettingsBackendGetDefault, libs, "g_settings_backend_get_default")
-
 }

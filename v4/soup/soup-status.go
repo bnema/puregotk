@@ -180,7 +180,6 @@ var xStatusGetPhrase func(uint32) string
 // Instead, you should create you own error messages based on the
 // status code, and on what you were trying to do.
 func StatusGetPhrase(StatusCodeVar uint32) string {
-
 	cret := xStatusGetPhrase(StatusCodeVar)
 	return cret
 }
@@ -202,5 +201,4 @@ func init() {
 	core.PuregoSafeRegister(&xStatusGLibType, libs, "soup_status_get_type")
 
 	core.PuregoSafeRegister(&xStatusGetPhrase, libs, "soup_status_get_phrase")
-
 }

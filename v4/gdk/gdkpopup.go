@@ -61,7 +61,6 @@ func (x *PopupBase) SetGoPointer(ptr uintptr) {
 
 // Returns whether this popup is set to hide on outside clicks.
 func (x *PopupBase) GetAutohide() bool {
-
 	cret := XGdkPopupGetAutohide(x.GoPointer())
 	return cret
 }
@@ -83,14 +82,12 @@ func (x *PopupBase) GetParent() *Surface {
 
 // Obtains the position of the popup relative to its parent.
 func (x *PopupBase) GetPositionX() int32 {
-
 	cret := XGdkPopupGetPositionX(x.GoPointer())
 	return cret
 }
 
 // Obtains the position of the popup relative to its parent.
 func (x *PopupBase) GetPositionY() int32 {
-
 	cret := XGdkPopupGetPositionY(x.GoPointer())
 	return cret
 }
@@ -100,7 +97,6 @@ func (x *PopupBase) GetPositionY() int32 {
 // The value returned may change after calling [method@Gdk.Popup.present],
 // or after the [signal@Gdk.Surface::layout] signal is emitted.
 func (x *PopupBase) GetRectAnchor() Gravity {
-
 	cret := XGdkPopupGetRectAnchor(x.GoPointer())
 	return cret
 }
@@ -110,7 +106,6 @@ func (x *PopupBase) GetRectAnchor() Gravity {
 // The value returned may change after calling [method@Gdk.Popup.present],
 // or after the [signal@Gdk.Surface::layout] signal is emitted.
 func (x *PopupBase) GetSurfaceAnchor() Gravity {
-
 	cret := XGdkPopupGetSurfaceAnchor(x.GoPointer())
 	return cret
 }
@@ -131,7 +126,6 @@ func (x *PopupBase) GetSurfaceAnchor() Gravity {
 // and is immediately hidden upon being presented. If presenting failed,
 // the [signal@Gdk.Surface::layout] signal will not me emitted.
 func (x *PopupBase) Present(WidthVar int32, HeightVar int32, LayoutVar *PopupLayout) bool {
-
 	cret := XGdkPopupPresent(x.GoPointer(), WidthVar, HeightVar, LayoutVar)
 	return cret
 }
@@ -157,13 +151,15 @@ func (x *PopupBase) GetPropertyAutohide() bool {
 	return v.GetBoolean()
 }
 
-var XGdkPopupGetAutohide func(uintptr) bool
-var XGdkPopupGetParent func(uintptr) uintptr
-var XGdkPopupGetPositionX func(uintptr) int32
-var XGdkPopupGetPositionY func(uintptr) int32
-var XGdkPopupGetRectAnchor func(uintptr) Gravity
-var XGdkPopupGetSurfaceAnchor func(uintptr) Gravity
-var XGdkPopupPresent func(uintptr, int32, int32, *PopupLayout) bool
+var (
+	XGdkPopupGetAutohide      func(uintptr) bool
+	XGdkPopupGetParent        func(uintptr) uintptr
+	XGdkPopupGetPositionX     func(uintptr) int32
+	XGdkPopupGetPositionY     func(uintptr) int32
+	XGdkPopupGetRectAnchor    func(uintptr) Gravity
+	XGdkPopupGetSurfaceAnchor func(uintptr) Gravity
+	XGdkPopupPresent          func(uintptr, int32, int32, *PopupLayout) bool
+)
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
@@ -186,5 +182,4 @@ func init() {
 	core.PuregoSafeRegister(&XGdkPopupGetRectAnchor, libs, "gdk_popup_get_rect_anchor")
 	core.PuregoSafeRegister(&XGdkPopupGetSurfaceAnchor, libs, "gdk_popup_get_surface_anchor")
 	core.PuregoSafeRegister(&XGdkPopupPresent, libs, "gdk_popup_present")
-
 }

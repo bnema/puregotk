@@ -127,7 +127,6 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 		cbFn := *cb
 
 		cbFn(fa, ObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -155,7 +154,6 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 		cbFn := *cb
 
 		cbFn(fa, ObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -180,7 +178,6 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 		cbFn := *cb
 
 		cbFn(fa, ObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -207,7 +204,6 @@ func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, ui
 		cbFn := *cb
 
 		cbFn(fa, ObjectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -229,5 +225,4 @@ func init() {
 	core.PuregoSafeRegister(&xSignalListItemFactoryGLibType, libs, "gtk_signal_list_item_factory_get_type")
 
 	core.PuregoSafeRegister(&xNewSignalListItemFactory, libs, "gtk_signal_list_item_factory_new")
-
 }

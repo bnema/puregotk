@@ -46,7 +46,6 @@ var xRGBACopy func(uintptr) *RGBA
 //
 // The result must be freed through [method@Gdk.RGBA.free].
 func (x *RGBA) Copy() *RGBA {
-
 	cret := xRGBACopy(x.GoPointer())
 	return cret
 }
@@ -55,7 +54,6 @@ var xRGBAEqual func(uintptr, uintptr) bool
 
 // Compares two `GdkRGBA` colors.
 func (x *RGBA) Equal(P2Var uintptr) bool {
-
 	cret := xRGBAEqual(x.GoPointer(), P2Var)
 	return cret
 }
@@ -64,9 +62,7 @@ var xRGBAFree func(uintptr)
 
 // Frees a `GdkRGBA`.
 func (x *RGBA) Free() {
-
 	xRGBAFree(x.GoPointer())
-
 }
 
 var xRGBAHash func(uintptr) uint32
@@ -74,7 +70,6 @@ var xRGBAHash func(uintptr) uint32
 // A hash function suitable for using for a hash
 // table that stores `GdkRGBA`s.
 func (x *RGBA) Hash() uint32 {
-
 	cret := xRGBAHash(x.GoPointer())
 	return cret
 }
@@ -85,7 +80,6 @@ var xRGBAIsClear func(uintptr) bool
 //
 // That is, drawing with the value would not produce any change.
 func (x *RGBA) IsClear() bool {
-
 	cret := xRGBAIsClear(x.GoPointer())
 	return cret
 }
@@ -97,7 +91,6 @@ var xRGBAIsOpaque func(uintptr) bool
 // That is, drawing with the value will not retain any results
 // from previous contents.
 func (x *RGBA) IsOpaque() bool {
-
 	cret := xRGBAIsOpaque(x.GoPointer())
 	return cret
 }
@@ -125,7 +118,6 @@ var xRGBAParse func(uintptr, string) bool
 // values in the range 0% to 100%, and a is a floating point value
 // in the range 0 to 1.
 func (x *RGBA) Parse(SpecVar string) bool {
-
 	cret := xRGBAParse(x.GoPointer(), SpecVar)
 	return cret
 }
@@ -146,7 +138,6 @@ var xRGBAToString func(uintptr) string
 // since “r”, “g” and “b” are represented as 8-bit integers. If
 // this is a concern, you should use a different representation.
 func (x *RGBA) ToString() string {
-
 	cret := xRGBAToString(x.GoPointer())
 	return cret
 }
@@ -173,5 +164,4 @@ func init() {
 	core.PuregoSafeRegister(&xRGBAIsOpaque, libs, "gdk_rgba_is_opaque")
 	core.PuregoSafeRegister(&xRGBAParse, libs, "gdk_rgba_parse")
 	core.PuregoSafeRegister(&xRGBAToString, libs, "gdk_rgba_to_string")
-
 }

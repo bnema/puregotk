@@ -204,7 +204,6 @@ func (x *DBusInterfaceSkeleton) Export(ConnectionVar *DBusConnection, ObjectPath
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDBusInterfaceSkeletonFlush func(uintptr)
@@ -218,9 +217,7 @@ var xDBusInterfaceSkeletonFlush func(uintptr)
 // signal later (e.g. in an idle handler). This technique is useful
 // for collapsing multiple property changes into one.
 func (x *DBusInterfaceSkeleton) Flush() {
-
 	xDBusInterfaceSkeletonFlush(x.GoPointer())
-
 }
 
 var xDBusInterfaceSkeletonGetConnection func(uintptr) uintptr
@@ -244,7 +241,6 @@ var xDBusInterfaceSkeletonGetConnections func(uintptr) *glib.List
 
 // Gets a list of the connections that @interface_ is exported on.
 func (x *DBusInterfaceSkeleton) GetConnections() *glib.List {
-
 	cret := xDBusInterfaceSkeletonGetConnections(x.GoPointer())
 	return cret
 }
@@ -254,7 +250,6 @@ var xDBusInterfaceSkeletonGetFlags func(uintptr) DBusInterfaceSkeletonFlags
 // Gets the #GDBusInterfaceSkeletonFlags that describes what the behavior
 // of @interface_
 func (x *DBusInterfaceSkeleton) GetFlags() DBusInterfaceSkeletonFlags {
-
 	cret := xDBusInterfaceSkeletonGetFlags(x.GoPointer())
 	return cret
 }
@@ -264,7 +259,6 @@ var xDBusInterfaceSkeletonGetInfo func(uintptr) *DBusInterfaceInfo
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
 func (x *DBusInterfaceSkeleton) GetInfo() *DBusInterfaceInfo {
-
 	cret := xDBusInterfaceSkeletonGetInfo(x.GoPointer())
 	return cret
 }
@@ -273,7 +267,6 @@ var xDBusInterfaceSkeletonGetObjectPath func(uintptr) string
 
 // Gets the object path that @interface_ is exported on, if any.
 func (x *DBusInterfaceSkeleton) GetObjectPath() string {
-
 	cret := xDBusInterfaceSkeletonGetObjectPath(x.GoPointer())
 	return cret
 }
@@ -282,7 +275,6 @@ var xDBusInterfaceSkeletonGetProperties func(uintptr) *glib.Variant
 
 // Gets all D-Bus properties for @interface_.
 func (x *DBusInterfaceSkeleton) GetProperties() *glib.Variant {
-
 	cret := xDBusInterfaceSkeletonGetProperties(x.GoPointer())
 	return cret
 }
@@ -293,7 +285,6 @@ var xDBusInterfaceSkeletonGetVtable func(uintptr) *DBusInterfaceVTable
 // @interface_. The returned function pointers should expect @interface_
 // itself to be passed as @user_data.
 func (x *DBusInterfaceSkeleton) GetVtable() *DBusInterfaceVTable {
-
 	cret := xDBusInterfaceSkeletonGetVtable(x.GoPointer())
 	return cret
 }
@@ -302,7 +293,6 @@ var xDBusInterfaceSkeletonHasConnection func(uintptr, uintptr) bool
 
 // Checks if @interface_ is exported on @connection.
 func (x *DBusInterfaceSkeleton) HasConnection(ConnectionVar *DBusConnection) bool {
-
 	cret := xDBusInterfaceSkeletonHasConnection(x.GoPointer(), ConnectionVar.GoPointer())
 	return cret
 }
@@ -311,9 +301,7 @@ var xDBusInterfaceSkeletonSetFlags func(uintptr, DBusInterfaceSkeletonFlags)
 
 // Sets flags describing what the behavior of @skeleton should be.
 func (x *DBusInterfaceSkeleton) SetFlags(FlagsVar DBusInterfaceSkeletonFlags) {
-
 	xDBusInterfaceSkeletonSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xDBusInterfaceSkeletonUnexport func(uintptr)
@@ -323,9 +311,7 @@ var xDBusInterfaceSkeletonUnexport func(uintptr)
 // To unexport @interface_ from only a single connection, use
 // g_dbus_interface_skeleton_unexport_from_connection()
 func (x *DBusInterfaceSkeleton) Unexport() {
-
 	xDBusInterfaceSkeletonUnexport(x.GoPointer())
-
 }
 
 var xDBusInterfaceSkeletonUnexportFromConnection func(uintptr, uintptr)
@@ -335,9 +321,7 @@ var xDBusInterfaceSkeletonUnexportFromConnection func(uintptr, uintptr)
 // To stop exporting on all connections the interface is exported on,
 // use g_dbus_interface_skeleton_unexport().
 func (x *DBusInterfaceSkeleton) UnexportFromConnection(ConnectionVar *DBusConnection) {
-
 	xDBusInterfaceSkeletonUnexportFromConnection(x.GoPointer(), ConnectionVar.GoPointer())
-
 }
 
 func (c *DBusInterfaceSkeleton) GoPointer() uintptr {
@@ -396,7 +380,6 @@ func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSk
 		cbFn := *cb
 
 		return cbFn(fa, InvocationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -440,9 +423,7 @@ func (x *DBusInterfaceSkeleton) GetObject() *DBusObjectBase {
 //
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceSkeleton) SetObject(ObjectVar DBusObject) {
-
 	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
 func init() {
@@ -472,5 +453,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonSetFlags, libs, "g_dbus_interface_skeleton_set_flags")
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexport, libs, "g_dbus_interface_skeleton_unexport")
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexportFromConnection, libs, "g_dbus_interface_skeleton_unexport_from_connection")
-
 }

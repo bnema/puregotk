@@ -239,14 +239,12 @@ func (x *IconBase) SetGoPointer(ptr uintptr) {
 
 // Checks if two icons are equal.
 func (x *IconBase) Equal(Icon2Var Icon) bool {
-
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *IconBase) Hash() uint32 {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -257,7 +255,6 @@ func (x *IconBase) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *IconBase) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -279,15 +276,16 @@ func (x *IconBase) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *IconBase) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
 
-var XGIconEqual func(uintptr, uintptr) bool
-var XGIconHash func(uintptr) uint32
-var XGIconSerialize func(uintptr) *glib.Variant
-var XGIconToString func(uintptr) string
+var (
+	XGIconEqual     func(uintptr, uintptr) bool
+	XGIconHash      func(uintptr) uint32
+	XGIconSerialize func(uintptr) *glib.Variant
+	XGIconToString  func(uintptr) string
+)
 
 var xIconDeserialize func(*glib.Variant) uintptr
 
@@ -328,7 +326,6 @@ func IconNewForString(StrVar string) (*IconBase, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -352,5 +349,4 @@ func init() {
 	core.PuregoSafeRegister(&XGIconHash, libs, "g_icon_hash")
 	core.PuregoSafeRegister(&XGIconSerialize, libs, "g_icon_serialize")
 	core.PuregoSafeRegister(&XGIconToString, libs, "g_icon_to_string")
-
 }

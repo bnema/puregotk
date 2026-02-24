@@ -69,7 +69,6 @@ var xNewBookmarkFile func() *BookmarkFile
 // or g_bookmark_file_load_from_data_dirs() to read an existing bookmark
 // file.
 func NewBookmarkFile() *BookmarkFile {
-
 	cret := xNewBookmarkFile()
 	return cret
 }
@@ -99,9 +98,7 @@ var xBookmarkFileAddApplication func(uintptr, string, string, string)
 //
 // If no bookmark for @uri is found, one is created.
 func (x *BookmarkFile) AddApplication(UriVar string, NameVar string, ExecVar string) {
-
 	xBookmarkFileAddApplication(x.GoPointer(), UriVar, NameVar, ExecVar)
-
 }
 
 var xBookmarkFileAddGroup func(uintptr, string, string)
@@ -111,16 +108,13 @@ var xBookmarkFileAddGroup func(uintptr, string, string)
 //
 // If no bookmark for @uri is found then it is created.
 func (x *BookmarkFile) AddGroup(UriVar string, GroupVar string) {
-
 	xBookmarkFileAddGroup(x.GoPointer(), UriVar, GroupVar)
-
 }
 
 var xBookmarkFileCopy func(uintptr) *BookmarkFile
 
 // Deeply copies a @bookmark #GBookmarkFile object to a new one.
 func (x *BookmarkFile) Copy() *BookmarkFile {
-
 	cret := xBookmarkFileCopy(x.GoPointer())
 	return cret
 }
@@ -129,9 +123,7 @@ var xBookmarkFileFree func(uintptr)
 
 // Frees a #GBookmarkFile.
 func (x *BookmarkFile) Free() {
-
 	xBookmarkFileFree(x.GoPointer())
-
 }
 
 var xBookmarkFileGetAdded func(uintptr, string, **Error) int
@@ -148,7 +140,6 @@ func (x *BookmarkFile) GetAdded(UriVar string) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetAddedDateTime func(uintptr, string, **Error) *DateTime
@@ -165,7 +156,6 @@ func (x *BookmarkFile) GetAddedDateTime(UriVar string) (*DateTime, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetAppInfo func(uintptr, string, string, *string, *uint32, *int, **Error) bool
@@ -191,7 +181,6 @@ func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar *string
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetApplicationInfo func(uintptr, string, string, *string, *uint32, **DateTime, **Error) bool
@@ -217,7 +206,6 @@ func (x *BookmarkFile) GetApplicationInfo(UriVar string, NameVar string, ExecVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetApplications func(uintptr, string, *uint, **Error) []string
@@ -235,7 +223,6 @@ func (x *BookmarkFile) GetApplications(UriVar string, LengthVar *uint) ([]string
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetDescription func(uintptr, string, **Error) string
@@ -252,7 +239,6 @@ func (x *BookmarkFile) GetDescription(UriVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetGroups func(uintptr, string, *uint, **Error) []string
@@ -272,7 +258,6 @@ func (x *BookmarkFile) GetGroups(UriVar string, LengthVar *uint) ([]string, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetIcon func(uintptr, string, *string, *string, **Error) bool
@@ -289,7 +274,6 @@ func (x *BookmarkFile) GetIcon(UriVar string, HrefVar *string, MimeTypeVar *stri
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetIsPrivate func(uintptr, string, **Error) bool
@@ -308,7 +292,6 @@ func (x *BookmarkFile) GetIsPrivate(UriVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetMimeType func(uintptr, string, **Error) string
@@ -327,7 +310,6 @@ func (x *BookmarkFile) GetMimeType(UriVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetModified func(uintptr, string, **Error) int
@@ -344,7 +326,6 @@ func (x *BookmarkFile) GetModified(UriVar string) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetModifiedDateTime func(uintptr, string, **Error) *DateTime
@@ -361,14 +342,12 @@ func (x *BookmarkFile) GetModifiedDateTime(UriVar string) (*DateTime, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetSize func(uintptr) int32
 
 // Gets the number of bookmarks inside @bookmark.
 func (x *BookmarkFile) GetSize() int32 {
-
 	cret := xBookmarkFileGetSize(x.GoPointer())
 	return cret
 }
@@ -389,7 +368,6 @@ func (x *BookmarkFile) GetTitle(UriVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetUris func(uintptr, *uint) []string
@@ -398,7 +376,6 @@ var xBookmarkFileGetUris func(uintptr, *uint) []string
 // The array of returned URIs will be %NULL-terminated, so @length may
 // optionally be %NULL.
 func (x *BookmarkFile) GetUris(LengthVar *uint) []string {
-
 	cret := xBookmarkFileGetUris(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -417,7 +394,6 @@ func (x *BookmarkFile) GetVisited(UriVar string) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileGetVisitedDateTime func(uintptr, string, **Error) *DateTime
@@ -434,7 +410,6 @@ func (x *BookmarkFile) GetVisitedDateTime(UriVar string) (*DateTime, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileHasApplication func(uintptr, string, string, **Error) bool
@@ -452,7 +427,6 @@ func (x *BookmarkFile) HasApplication(UriVar string, NameVar string) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileHasGroup func(uintptr, string, string, **Error) bool
@@ -470,14 +444,12 @@ func (x *BookmarkFile) HasGroup(UriVar string, GroupVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileHasItem func(uintptr, string) bool
 
 // Looks whether the desktop bookmark has an item with its URI set to @uri.
 func (x *BookmarkFile) HasItem(UriVar string) bool {
-
 	cret := xBookmarkFileHasItem(x.GoPointer(), UriVar)
 	return cret
 }
@@ -495,7 +467,6 @@ func (x *BookmarkFile) LoadFromData(DataVar []byte, LengthVar uint) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileLoadFromDataDirs func(uintptr, string, *string, **Error) bool
@@ -513,7 +484,6 @@ func (x *BookmarkFile) LoadFromDataDirs(FileVar string, FullPathVar *string) (bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileLoadFromFile func(uintptr, string, **Error) bool
@@ -529,7 +499,6 @@ func (x *BookmarkFile) LoadFromFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileMoveItem func(uintptr, string, string, **Error) bool
@@ -548,7 +517,6 @@ func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar string) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileRemoveApplication func(uintptr, string, string, **Error) bool
@@ -569,7 +537,6 @@ func (x *BookmarkFile) RemoveApplication(UriVar string, NameVar string) (bool, e
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileRemoveGroup func(uintptr, string, string, **Error) bool
@@ -589,7 +556,6 @@ func (x *BookmarkFile) RemoveGroup(UriVar string, GroupVar string) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileRemoveItem func(uintptr, string, **Error) bool
@@ -603,7 +569,6 @@ func (x *BookmarkFile) RemoveItem(UriVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileSetAdded func(uintptr, string, int)
@@ -612,9 +577,7 @@ var xBookmarkFileSetAdded func(uintptr, string, int)
 //
 // If no bookmark for @uri is found then it is created.
 func (x *BookmarkFile) SetAdded(UriVar string, AddedVar int) {
-
 	xBookmarkFileSetAdded(x.GoPointer(), UriVar, AddedVar)
-
 }
 
 var xBookmarkFileSetAddedDateTime func(uintptr, string, *DateTime)
@@ -623,9 +586,7 @@ var xBookmarkFileSetAddedDateTime func(uintptr, string, *DateTime)
 //
 // If no bookmark for @uri is found then it is created.
 func (x *BookmarkFile) SetAddedDateTime(UriVar string, AddedVar *DateTime) {
-
 	xBookmarkFileSetAddedDateTime(x.GoPointer(), UriVar, AddedVar)
-
 }
 
 var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int32, int, **Error) bool
@@ -666,7 +627,6 @@ func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileSetApplicationInfo func(uintptr, string, string, string, int32, *DateTime, **Error) bool
@@ -706,7 +666,6 @@ func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileSetDescription func(uintptr, string, string)
@@ -717,9 +676,7 @@ var xBookmarkFileSetDescription func(uintptr, string, string)
 //
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetDescription(UriVar string, DescriptionVar string) {
-
 	xBookmarkFileSetDescription(x.GoPointer(), UriVar, DescriptionVar)
-
 }
 
 var xBookmarkFileSetGroups func(uintptr, string, []string, uint)
@@ -729,9 +686,7 @@ var xBookmarkFileSetGroups func(uintptr, string, []string, uint)
 //
 // If @uri cannot be found then an item for it is created.
 func (x *BookmarkFile) SetGroups(UriVar string, GroupsVar []string, LengthVar uint) {
-
 	xBookmarkFileSetGroups(x.GoPointer(), UriVar, GroupsVar, LengthVar)
-
 }
 
 var xBookmarkFileSetIcon func(uintptr, string, string, string)
@@ -742,9 +697,7 @@ var xBookmarkFileSetIcon func(uintptr, string, string, string)
 //
 // If no bookmark for @uri is found one is created.
 func (x *BookmarkFile) SetIcon(UriVar string, HrefVar string, MimeTypeVar string) {
-
 	xBookmarkFileSetIcon(x.GoPointer(), UriVar, HrefVar, MimeTypeVar)
-
 }
 
 var xBookmarkFileSetIsPrivate func(uintptr, string, bool)
@@ -753,9 +706,7 @@ var xBookmarkFileSetIsPrivate func(uintptr, string, bool)
 //
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetIsPrivate(UriVar string, IsPrivateVar bool) {
-
 	xBookmarkFileSetIsPrivate(x.GoPointer(), UriVar, IsPrivateVar)
-
 }
 
 var xBookmarkFileSetMimeType func(uintptr, string, string)
@@ -764,9 +715,7 @@ var xBookmarkFileSetMimeType func(uintptr, string, string)
 //
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetMimeType(UriVar string, MimeTypeVar string) {
-
 	xBookmarkFileSetMimeType(x.GoPointer(), UriVar, MimeTypeVar)
-
 }
 
 var xBookmarkFileSetModified func(uintptr, string, int)
@@ -780,9 +729,7 @@ var xBookmarkFileSetModified func(uintptr, string, int)
 // modifies a bookmark also changes the modification time, except for
 // g_bookmark_file_set_visited_date_time().
 func (x *BookmarkFile) SetModified(UriVar string, ModifiedVar int) {
-
 	xBookmarkFileSetModified(x.GoPointer(), UriVar, ModifiedVar)
-
 }
 
 var xBookmarkFileSetModifiedDateTime func(uintptr, string, *DateTime)
@@ -796,9 +743,7 @@ var xBookmarkFileSetModifiedDateTime func(uintptr, string, *DateTime)
 // modifies a bookmark also changes the modification time, except for
 // g_bookmark_file_set_visited_date_time().
 func (x *BookmarkFile) SetModifiedDateTime(UriVar string, ModifiedVar *DateTime) {
-
 	xBookmarkFileSetModifiedDateTime(x.GoPointer(), UriVar, ModifiedVar)
-
 }
 
 var xBookmarkFileSetTitle func(uintptr, string, string)
@@ -810,9 +755,7 @@ var xBookmarkFileSetTitle func(uintptr, string, string)
 //
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetTitle(UriVar string, TitleVar string) {
-
 	xBookmarkFileSetTitle(x.GoPointer(), UriVar, TitleVar)
-
 }
 
 var xBookmarkFileSetVisited func(uintptr, string, int)
@@ -827,9 +770,7 @@ var xBookmarkFileSetVisited func(uintptr, string, int)
 // using g_bookmark_file_get_mime_type().  Changing the "visited" time
 // does not affect the "modified" time.
 func (x *BookmarkFile) SetVisited(UriVar string, VisitedVar int) {
-
 	xBookmarkFileSetVisited(x.GoPointer(), UriVar, VisitedVar)
-
 }
 
 var xBookmarkFileSetVisitedDateTime func(uintptr, string, *DateTime)
@@ -844,9 +785,7 @@ var xBookmarkFileSetVisitedDateTime func(uintptr, string, *DateTime)
 // using g_bookmark_file_get_mime_type().  Changing the "visited" time
 // does not affect the "modified" time.
 func (x *BookmarkFile) SetVisitedDateTime(UriVar string, VisitedVar *DateTime) {
-
 	xBookmarkFileSetVisitedDateTime(x.GoPointer(), UriVar, VisitedVar)
-
 }
 
 var xBookmarkFileToData func(uintptr, *uint, **Error) uintptr
@@ -860,7 +799,6 @@ func (x *BookmarkFile) ToData(LengthVar *uint) (uintptr, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xBookmarkFileToFile func(uintptr, string, **Error) bool
@@ -875,7 +813,6 @@ func (x *BookmarkFile) ToFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Error codes returned by bookmark file parsing.
@@ -966,5 +903,4 @@ func init() {
 	core.PuregoSafeRegister(&xBookmarkFileSetVisitedDateTime, libs, "g_bookmark_file_set_visited_date_time")
 	core.PuregoSafeRegister(&xBookmarkFileToData, libs, "g_bookmark_file_to_data")
 	core.PuregoSafeRegister(&xBookmarkFileToFile, libs, "g_bookmark_file_to_file")
-
 }

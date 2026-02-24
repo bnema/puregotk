@@ -235,7 +235,6 @@ func (x *TreeDragDestBase) SetGoPointer(ptr uintptr) {
 // not created for some model-specific reason.  Should robustly handle
 // a @dest no longer found in the model!
 func (x *TreeDragDestBase) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value) bool {
-
 	cret := XGtkTreeDragDestDragDataReceived(x.GoPointer(), DestVar, ValueVar)
 	return cret
 }
@@ -246,13 +245,14 @@ func (x *TreeDragDestBase) DragDataReceived(DestVar *TreePath, ValueVar *gobject
 // exist; the return value will almost certainly be %FALSE if the
 // parent of @dest_path doesn’t exist, though.
 func (x *TreeDragDestBase) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Value) bool {
-
 	cret := XGtkTreeDragDestRowDropPossible(x.GoPointer(), DestPathVar, ValueVar)
 	return cret
 }
 
-var XGtkTreeDragDestDragDataReceived func(uintptr, *TreePath, *gobject.Value) bool
-var XGtkTreeDragDestRowDropPossible func(uintptr, *TreePath, *gobject.Value) bool
+var (
+	XGtkTreeDragDestDragDataReceived func(uintptr, *TreePath, *gobject.Value) bool
+	XGtkTreeDragDestRowDropPossible  func(uintptr, *TreePath, *gobject.Value) bool
+)
 
 // Interface for Drag-and-Drop destinations in `GtkTreeView`.
 type TreeDragSource interface {
@@ -290,7 +290,6 @@ func (x *TreeDragSourceBase) SetGoPointer(ptr uintptr) {
 // some model-specific reason. Should robustly handle a @path no
 // longer found in the model!
 func (x *TreeDragSourceBase) DragDataDelete(PathVar *TreePath) bool {
-
 	cret := XGtkTreeDragSourceDragDataDelete(x.GoPointer(), PathVar)
 	return cret
 }
@@ -315,14 +314,15 @@ func (x *TreeDragSourceBase) DragDataGet(PathVar *TreePath) *gdk.ContentProvider
 // the source of a DND operation. If the source doesn’t implement
 // this interface, the row is assumed draggable.
 func (x *TreeDragSourceBase) RowDraggable(PathVar *TreePath) bool {
-
 	cret := XGtkTreeDragSourceRowDraggable(x.GoPointer(), PathVar)
 	return cret
 }
 
-var XGtkTreeDragSourceDragDataDelete func(uintptr, *TreePath) bool
-var XGtkTreeDragSourceDragDataGet func(uintptr, *TreePath) uintptr
-var XGtkTreeDragSourceRowDraggable func(uintptr, *TreePath) bool
+var (
+	XGtkTreeDragSourceDragDataDelete func(uintptr, *TreePath) bool
+	XGtkTreeDragSourceDragDataGet    func(uintptr, *TreePath) uintptr
+	XGtkTreeDragSourceRowDraggable   func(uintptr, *TreePath) bool
+)
 
 var xTreeCreateRowDragContent func(uintptr, *TreePath) uintptr
 
@@ -347,7 +347,6 @@ var xTreeGetRowDragData func(*gobject.Value, **TreeModel, **TreePath) bool
 //
 // The returned path must be freed with gtk_tree_path_free().
 func TreeGetRowDragData(ValueVar *gobject.Value, TreeModelVar **TreeModel, PathVar **TreePath) bool {
-
 	cret := xTreeGetRowDragData(ValueVar, TreeModelVar, PathVar)
 	return cret
 }
@@ -377,5 +376,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataDelete, libs, "gtk_tree_drag_source_drag_data_delete")
 	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataGet, libs, "gtk_tree_drag_source_drag_data_get")
 	core.PuregoSafeRegister(&XGtkTreeDragSourceRowDraggable, libs, "gtk_tree_drag_source_row_draggable")
-
 }

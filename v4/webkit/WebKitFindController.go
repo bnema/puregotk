@@ -87,9 +87,7 @@ var xFindControllerCountMatches func(uintptr, string, uint32, uint32)
 // matches will be provided by the
 // #WebKitFindController::counted-matches signal.
 func (x *FindController) CountMatches(SearchTextVar string, FindOptionsVar uint32, MaxMatchCountVar uint32) {
-
 	xFindControllerCountMatches(x.GoPointer(), SearchTextVar, FindOptionsVar, MaxMatchCountVar)
-
 }
 
 var xFindControllerGetMaxMatchCount func(uintptr) uint32
@@ -101,7 +99,6 @@ var xFindControllerGetMaxMatchCount func(uintptr) uint32
 // webkit_find_controller_search() or
 // webkit_find_controller_count_matches().
 func (x *FindController) GetMaxMatchCount() uint32 {
-
 	cret := xFindControllerGetMaxMatchCount(x.GoPointer())
 	return cret
 }
@@ -113,7 +110,6 @@ var xFindControllerGetOptions func(uintptr) uint32
 // Gets a bitmask containing the #WebKitFindOptions associated with
 // the current search.
 func (x *FindController) GetOptions() uint32 {
-
 	cret := xFindControllerGetOptions(x.GoPointer())
 	return cret
 }
@@ -127,7 +123,6 @@ var xFindControllerGetSearchText func(uintptr) string
 // webkit_find_controller_search() or
 // webkit_find_controller_count_matches().
 func (x *FindController) GetSearchText() string {
-
 	cret := xFindControllerGetSearchText(x.GoPointer())
 	return cret
 }
@@ -177,9 +172,7 @@ var xFindControllerSearch func(uintptr, string, uint32, uint32)
 // Callers should call webkit_find_controller_search_finish() to
 // finish the current search operation.
 func (x *FindController) Search(SearchTextVar string, FindOptionsVar uint32, MaxMatchCountVar uint32) {
-
 	xFindControllerSearch(x.GoPointer(), SearchTextVar, FindOptionsVar, MaxMatchCountVar)
-
 }
 
 var xFindControllerSearchFinish func(uintptr)
@@ -193,9 +186,7 @@ var xFindControllerSearchFinish func(uintptr)
 // This method will be typically called when the search UI is
 // closed/hidden by the client application.
 func (x *FindController) SearchFinish() {
-
 	xFindControllerSearchFinish(x.GoPointer())
-
 }
 
 var xFindControllerSearchNext func(uintptr)
@@ -205,9 +196,7 @@ var xFindControllerSearchNext func(uintptr)
 // Calling this method before webkit_find_controller_search() or
 // webkit_find_controller_count_matches() is a programming error.
 func (x *FindController) SearchNext() {
-
 	xFindControllerSearchNext(x.GoPointer())
-
 }
 
 var xFindControllerSearchPrevious func(uintptr)
@@ -217,9 +206,7 @@ var xFindControllerSearchPrevious func(uintptr)
 // Calling this method before webkit_find_controller_search() or
 // webkit_find_controller_count_matches() is a programming error.
 func (x *FindController) SearchPrevious() {
-
 	xFindControllerSearchPrevious(x.GoPointer())
-
 }
 
 func (c *FindController) GoPointer() uintptr {
@@ -264,7 +251,6 @@ func (x *FindController) ConnectCountedMatches(cb *func(FindController, uint32))
 		cbFn := *cb
 
 		cbFn(fa, MatchCountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -288,7 +274,6 @@ func (x *FindController) ConnectFailedToFindText(cb *func(FindController)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -312,7 +297,6 @@ func (x *FindController) ConnectFoundText(cb *func(FindController, uint32)) uint
 		cbFn := *cb
 
 		cbFn(fa, MatchCountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

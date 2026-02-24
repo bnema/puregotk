@@ -185,9 +185,7 @@ var xListBoxAppend func(uintptr, uintptr)
 // If a sort function is set, the widget will
 // actually be inserted at the calculated position.
 func (x *ListBox) Append(ChildVar *Widget) {
-
 	xListBoxAppend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xListBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -208,9 +206,7 @@ var xListBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // functionality in `GtkListBox`. When using a model, filtering and sorting
 // should be implemented by the model.
 func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
-
 	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
-
 }
 
 var xListBoxDragHighlightRow func(uintptr, uintptr)
@@ -225,9 +221,7 @@ var xListBoxDragHighlightRow func(uintptr, uintptr)
 // The row will also be unhighlighted when the widget gets
 // a drag leave event.
 func (x *ListBox) DragHighlightRow(RowVar *ListBoxRow) {
-
 	xListBoxDragHighlightRow(x.GoPointer(), RowVar.GoPointer())
-
 }
 
 var xListBoxDragUnhighlightRow func(uintptr)
@@ -235,16 +229,13 @@ var xListBoxDragUnhighlightRow func(uintptr)
 // If a row has previously been highlighted via gtk_list_box_drag_highlight_row(),
 // it will have the highlight removed.
 func (x *ListBox) DragUnhighlightRow() {
-
 	xListBoxDragUnhighlightRow(x.GoPointer())
-
 }
 
 var xListBoxGetActivateOnSingleClick func(uintptr) bool
 
 // Returns whether rows activate on single clicks.
 func (x *ListBox) GetActivateOnSingleClick() bool {
-
 	cret := xListBoxGetActivateOnSingleClick(x.GoPointer())
 	return cret
 }
@@ -329,7 +320,6 @@ var xListBoxGetSelectedRows func(uintptr) *glib.List
 
 // Creates a list of all selected children.
 func (x *ListBox) GetSelectedRows() *glib.List {
-
 	cret := xListBoxGetSelectedRows(x.GoPointer())
 	return cret
 }
@@ -338,7 +328,6 @@ var xListBoxGetSelectionMode func(uintptr) SelectionMode
 
 // Gets the selection mode of the listbox.
 func (x *ListBox) GetSelectionMode() SelectionMode {
-
 	cret := xListBoxGetSelectionMode(x.GoPointer())
 	return cret
 }
@@ -348,7 +337,6 @@ var xListBoxGetShowSeparators func(uintptr) bool
 // Returns whether the list box should show separators
 // between rows.
 func (x *ListBox) GetShowSeparators() bool {
-
 	cret := xListBoxGetShowSeparators(x.GoPointer())
 	return cret
 }
@@ -357,7 +345,6 @@ var xListBoxGetTabBehavior func(uintptr) ListTabBehavior
 
 // Returns the behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys.
 func (x *ListBox) GetTabBehavior() ListTabBehavior {
-
 	cret := xListBoxGetTabBehavior(x.GoPointer())
 	return cret
 }
@@ -372,9 +359,7 @@ var xListBoxInsert func(uintptr, uintptr, int32)
 // If @position is -1, or larger than the total number of items in the
 // @box, then the @child will be appended to the end.
 func (x *ListBox) Insert(ChildVar *Widget, PositionVar int32) {
-
 	xListBoxInsert(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
-
 }
 
 var xListBoxInvalidateFilter func(uintptr)
@@ -387,9 +372,7 @@ var xListBoxInvalidateFilter func(uintptr)
 // if the filter function just looked for a specific search
 // string and the entry with the search string has changed.
 func (x *ListBox) InvalidateFilter() {
-
 	xListBoxInvalidateFilter(x.GoPointer())
-
 }
 
 var xListBoxInvalidateHeaders func(uintptr)
@@ -400,9 +383,7 @@ var xListBoxInvalidateHeaders func(uintptr)
 // of the header function on the @box is changed due
 // to an external factor.
 func (x *ListBox) InvalidateHeaders() {
-
 	xListBoxInvalidateHeaders(x.GoPointer())
-
 }
 
 var xListBoxInvalidateSort func(uintptr)
@@ -413,9 +394,7 @@ var xListBoxInvalidateSort func(uintptr)
 // of the sort function on the @box is changed due
 // to an external factor.
 func (x *ListBox) InvalidateSort() {
-
 	xListBoxInvalidateSort(x.GoPointer())
-
 }
 
 var xListBoxPrepend func(uintptr, uintptr)
@@ -425,18 +404,14 @@ var xListBoxPrepend func(uintptr, uintptr)
 // If a sort function is set, the widget will
 // actually be inserted at the calculated position.
 func (x *ListBox) Prepend(ChildVar *Widget) {
-
 	xListBoxPrepend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xListBoxRemove func(uintptr, uintptr)
 
 // Removes a child from @box.
 func (x *ListBox) Remove(ChildVar *Widget) {
-
 	xListBoxRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xListBoxRemoveAll func(uintptr)
@@ -445,27 +420,21 @@ var xListBoxRemoveAll func(uintptr)
 //
 // This function does nothing if @box is backed by a model.
 func (x *ListBox) RemoveAll() {
-
 	xListBoxRemoveAll(x.GoPointer())
-
 }
 
 var xListBoxSelectAll func(uintptr)
 
 // Select all children of @box, if the selection mode allows it.
 func (x *ListBox) SelectAll() {
-
 	xListBoxSelectAll(x.GoPointer())
-
 }
 
 var xListBoxSelectRow func(uintptr, uintptr)
 
 // Make @row the currently selected row.
 func (x *ListBox) SelectRow(RowVar *ListBoxRow) {
-
 	xListBoxSelectRow(x.GoPointer(), RowVar.GoPointer())
-
 }
 
 var xListBoxSelectedForeach func(uintptr, uintptr, uintptr)
@@ -474,9 +443,7 @@ var xListBoxSelectedForeach func(uintptr, uintptr, uintptr)
 //
 // Note that the selection cannot be modified from within this function.
 func (x *ListBox) SelectedForeach(FuncVar *ListBoxForeachFunc, DataVar uintptr) {
-
 	xListBoxSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
-
 }
 
 var xListBoxSetActivateOnSingleClick func(uintptr, bool)
@@ -484,9 +451,7 @@ var xListBoxSetActivateOnSingleClick func(uintptr, bool)
 // If @single is %TRUE, rows will be activated when you click on them,
 // otherwise you need to double-click.
 func (x *ListBox) SetActivateOnSingleClick(SingleVar bool) {
-
 	xListBoxSetActivateOnSingleClick(x.GoPointer(), SingleVar)
-
 }
 
 var xListBoxSetAdjustment func(uintptr, uintptr)
@@ -502,9 +467,7 @@ var xListBoxSetAdjustment func(uintptr, uintptr)
 // be picked up automatically, so there is no need
 // to manually do that.
 func (x *ListBox) SetAdjustment(AdjustmentVar *Adjustment) {
-
 	xListBoxSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xListBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -523,9 +486,7 @@ var xListBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a filter function is incompatible with using a model
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -556,9 +517,7 @@ var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
 // row becomes a different row). It is also called for all rows when
 // [method@Gtk.ListBox.invalidate_headers] is called.
 func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallbackNullable(UpdateHeaderVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xListBoxSetPlaceholder func(uintptr, uintptr)
@@ -566,18 +525,14 @@ var xListBoxSetPlaceholder func(uintptr, uintptr)
 // Sets the placeholder widget that is shown in the list when
 // it doesn't display any visible children.
 func (x *ListBox) SetPlaceholder(PlaceholderVar *Widget) {
-
 	xListBoxSetPlaceholder(x.GoPointer(), PlaceholderVar.GoPointer())
-
 }
 
 var xListBoxSetSelectionMode func(uintptr, SelectionMode)
 
 // Sets how selection works in the listbox.
 func (x *ListBox) SetSelectionMode(ModeVar SelectionMode) {
-
 	xListBoxSetSelectionMode(x.GoPointer(), ModeVar)
-
 }
 
 var xListBoxSetShowSeparators func(uintptr, bool)
@@ -585,9 +540,7 @@ var xListBoxSetShowSeparators func(uintptr, bool)
 // Sets whether the list box should show separators
 // between rows.
 func (x *ListBox) SetShowSeparators(ShowSeparatorsVar bool) {
-
 	xListBoxSetShowSeparators(x.GoPointer(), ShowSeparatorsVar)
-
 }
 
 var xListBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -605,36 +558,28 @@ var xListBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a sort function is incompatible with using a model
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
-
 }
 
 var xListBoxSetTabBehavior func(uintptr, ListTabBehavior)
 
 // Sets the behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys.
 func (x *ListBox) SetTabBehavior(BehaviorVar ListTabBehavior) {
-
 	xListBoxSetTabBehavior(x.GoPointer(), BehaviorVar)
-
 }
 
 var xListBoxUnselectAll func(uintptr)
 
 // Unselect all children of @box, if the selection mode allows it.
 func (x *ListBox) UnselectAll() {
-
 	xListBoxUnselectAll(x.GoPointer())
-
 }
 
 var xListBoxUnselectRow func(uintptr, uintptr)
 
 // Unselects a single row of @box, if the selection mode allows it.
 func (x *ListBox) UnselectRow(RowVar *ListBoxRow) {
-
 	xListBoxUnselectRow(x.GoPointer(), RowVar.GoPointer())
-
 }
 
 func (c *ListBox) GoPointer() uintptr {
@@ -714,7 +659,6 @@ func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -744,7 +688,6 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int32, bool,
 		cbFn := *cb
 
 		cbFn(fa, StepVarp, CountVarp, ExtendVarp, ModifyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -764,7 +707,6 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, RowVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -789,7 +731,6 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, RowVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -814,7 +755,6 @@ func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -834,7 +774,6 @@ func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -856,7 +795,6 @@ func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -882,7 +820,6 @@ func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -899,9 +836,7 @@ func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ListBox) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -922,7 +857,6 @@ func (x *ListBox) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ListBox) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -947,7 +881,6 @@ func (x *ListBox) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ListBox) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -986,30 +919,23 @@ func (x *ListBox) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ListBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ListBox) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ListBox) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ListBox) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1022,9 +948,7 @@ func (x *ListBox) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ListBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1032,9 +956,7 @@ func (x *ListBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ListBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1043,9 +965,7 @@ func (x *ListBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ListBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1067,9 +987,7 @@ func (x *ListBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ListBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1079,9 +997,7 @@ func (x *ListBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *ListBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1103,9 +1019,7 @@ func (x *ListBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []Acce
 //
 // ```
 func (x *ListBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1115,9 +1029,7 @@ func (x *ListBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *ListBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1140,9 +1052,7 @@ func (x *ListBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []Access
 //
 // ```
 func (x *ListBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1152,9 +1062,7 @@ func (x *ListBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 //
 // This function is meant to be used by language bindings.
 func (x *ListBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1162,7 +1070,6 @@ func (x *ListBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ListBox) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1225,16 +1132,13 @@ var xListBoxRowChanged func(uintptr)
 // is to call [method@Gtk.ListBox.invalidate_sort] on any model change,
 // but that is more expensive.
 func (x *ListBoxRow) Changed() {
-
 	xListBoxRowChanged(x.GoPointer())
-
 }
 
 var xListBoxRowGetActivatable func(uintptr) bool
 
 // Gets whether the row is activatable.
 func (x *ListBoxRow) GetActivatable() bool {
-
 	cret := xListBoxRowGetActivatable(x.GoPointer())
 	return cret
 }
@@ -1282,7 +1186,6 @@ var xListBoxRowGetIndex func(uintptr) int32
 
 // Gets the current index of the @row in its `GtkListBox` container.
 func (x *ListBoxRow) GetIndex() int32 {
-
 	cret := xListBoxRowGetIndex(x.GoPointer())
 	return cret
 }
@@ -1291,7 +1194,6 @@ var xListBoxRowGetSelectable func(uintptr) bool
 
 // Gets whether the row can be selected.
 func (x *ListBoxRow) GetSelectable() bool {
-
 	cret := xListBoxRowGetSelectable(x.GoPointer())
 	return cret
 }
@@ -1301,7 +1203,6 @@ var xListBoxRowIsSelected func(uintptr) bool
 // Returns whether the child is currently selected in its
 // `GtkListBox` container.
 func (x *ListBoxRow) IsSelected() bool {
-
 	cret := xListBoxRowIsSelected(x.GoPointer())
 	return cret
 }
@@ -1310,18 +1211,14 @@ var xListBoxRowSetActivatable func(uintptr, bool)
 
 // Set whether the row is activatable.
 func (x *ListBoxRow) SetActivatable(ActivatableVar bool) {
-
 	xListBoxRowSetActivatable(x.GoPointer(), ActivatableVar)
-
 }
 
 var xListBoxRowSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *ListBoxRow) SetChild(ChildVar *Widget) {
-
 	xListBoxRowSetChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xListBoxRowSetHeader func(uintptr, uintptr)
@@ -1333,18 +1230,14 @@ var xListBoxRowSetHeader func(uintptr, uintptr)
 // It will replace any existing header in the row,
 // and be shown in front of the row in the listbox.
 func (x *ListBoxRow) SetHeader(HeaderVar *Widget) {
-
 	xListBoxRowSetHeader(x.GoPointer(), HeaderVar.GoPointer())
-
 }
 
 var xListBoxRowSetSelectable func(uintptr, bool)
 
 // Set whether the row can be selected.
 func (x *ListBoxRow) SetSelectable(SelectableVar bool) {
-
 	xListBoxRowSetSelectable(x.GoPointer(), SelectableVar)
-
 }
 
 func (c *ListBoxRow) GoPointer() uintptr {
@@ -1411,7 +1304,6 @@ func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -1428,9 +1320,7 @@ func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ListBoxRow) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1451,7 +1341,6 @@ func (x *ListBoxRow) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ListBoxRow) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1476,7 +1365,6 @@ func (x *ListBoxRow) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ListBoxRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1515,30 +1403,23 @@ func (x *ListBoxRow) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ListBoxRow) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ListBoxRow) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ListBoxRow) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ListBoxRow) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1551,9 +1432,7 @@ func (x *ListBoxRow) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ListBoxRow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -1561,9 +1440,7 @@ func (x *ListBoxRow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ListBoxRow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -1572,9 +1449,7 @@ func (x *ListBoxRow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ListBoxRow) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1596,9 +1471,7 @@ func (x *ListBoxRow) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ListBoxRow) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1608,9 +1481,7 @@ func (x *ListBoxRow) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *ListBoxRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1632,9 +1503,7 @@ func (x *ListBoxRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []A
 //
 // ```
 func (x *ListBoxRow) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1644,9 +1513,7 @@ func (x *ListBoxRow) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *ListBoxRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1669,9 +1536,7 @@ func (x *ListBoxRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []Acc
 //
 // ```
 func (x *ListBoxRow) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1681,21 +1546,17 @@ func (x *ListBoxRow) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *ListBoxRow) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *ListBoxRow) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
 	return cret
 }
@@ -1714,9 +1575,7 @@ func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *ListBoxRow) SetActionName(ActionNameVar string) {
-
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
-
 }
 
 // Sets the target of an actionable widget.
@@ -1729,9 +1588,7 @@ func (x *ListBoxRow) SetActionName(ActionNameVar string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *ListBoxRow) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -1753,9 +1610,7 @@ func (x *ListBoxRow) SetActionTarget(FormatStringVar string, varArgs ...interfac
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *ListBoxRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -1764,9 +1619,7 @@ func (x *ListBoxRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *ListBoxRow) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1774,7 +1627,6 @@ func (x *ListBoxRow) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ListBoxRow) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1845,5 +1697,4 @@ func init() {
 	core.PuregoSafeRegister(&xListBoxRowSetChild, libs, "gtk_list_box_row_set_child")
 	core.PuregoSafeRegister(&xListBoxRowSetHeader, libs, "gtk_list_box_row_set_header")
 	core.PuregoSafeRegister(&xListBoxRowSetSelectable, libs, "gtk_list_box_row_set_selectable")
-
 }

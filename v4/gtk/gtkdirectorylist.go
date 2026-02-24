@@ -84,7 +84,6 @@ var xDirectoryListGetAttributes func(uintptr) string
 
 // Gets the attributes queried on the children.
 func (x *DirectoryList) GetAttributes() string {
-
 	cret := xDirectoryListGetAttributes(x.GoPointer())
 	return cret
 }
@@ -100,7 +99,6 @@ var xDirectoryListGetError func(uintptr) *glib.Error
 // An error being set does not mean that no files were loaded, and all
 // successfully queried files will remain in the list.
 func (x *DirectoryList) GetError() *glib.Error {
-
 	cret := xDirectoryListGetError(x.GoPointer())
 	return cret
 }
@@ -126,7 +124,6 @@ var xDirectoryListGetIoPriority func(uintptr) int32
 
 // Gets the IO priority set via gtk_directory_list_set_io_priority().
 func (x *DirectoryList) GetIoPriority() int32 {
-
 	cret := xDirectoryListGetIoPriority(x.GoPointer())
 	return cret
 }
@@ -136,7 +133,6 @@ var xDirectoryListGetMonitored func(uintptr) bool
 // Returns whether the directory list is monitoring
 // the directory for changes.
 func (x *DirectoryList) GetMonitored() bool {
-
 	cret := xDirectoryListGetMonitored(x.GoPointer())
 	return cret
 }
@@ -150,7 +146,6 @@ var xDirectoryListIsLoading func(uintptr) bool
 // going on. The order in which are added is undefined and may change
 // in between runs.
 func (x *DirectoryList) IsLoading() bool {
-
 	cret := xDirectoryListIsLoading(x.GoPointer())
 	return cret
 }
@@ -162,9 +157,7 @@ var xDirectoryListSetAttributes func(uintptr, string)
 // If @attributes is %NULL, the list of file infos will still be created, it will just
 // not contain any extra attributes.
 func (x *DirectoryList) SetAttributes(AttributesVar string) {
-
 	xDirectoryListSetAttributes(x.GoPointer(), AttributesVar)
-
 }
 
 var xDirectoryListSetFile func(uintptr, uintptr)
@@ -173,9 +166,7 @@ var xDirectoryListSetFile func(uintptr, uintptr)
 //
 // If @file is %NULL, the result will be an empty list.
 func (x *DirectoryList) SetFile(FileVar gio.File) {
-
 	xDirectoryListSetFile(x.GoPointer(), FileVar.GoPointer())
-
 }
 
 var xDirectoryListSetIoPriority func(uintptr, int32)
@@ -190,9 +181,7 @@ var xDirectoryListSetIoPriority func(uintptr, int32)
 // parallel, lowering it to something like %G_PRIORITY_DEFAULT_IDLE
 // may increase responsiveness.
 func (x *DirectoryList) SetIoPriority(IoPriorityVar int32) {
-
 	xDirectoryListSetIoPriority(x.GoPointer(), IoPriorityVar)
-
 }
 
 var xDirectoryListSetMonitored func(uintptr, bool)
@@ -208,9 +197,7 @@ var xDirectoryListSetMonitored func(uintptr, bool)
 // missing files that appeared between the initial loading
 // and when monitoring was turned on.
 func (x *DirectoryList) SetMonitored(MonitoredVar bool) {
-
 	xDirectoryListSetMonitored(x.GoPointer(), MonitoredVar)
-
 }
 
 func (c *DirectoryList) GoPointer() uintptr {
@@ -309,7 +296,6 @@ func (x *DirectoryList) GetPropertyNItems() uint32 {
 //
 // See also: g_list_model_get_n_items()
 func (x *DirectoryList) GetItem(PositionVar uint32) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -323,7 +309,6 @@ func (x *DirectoryList) GetItem(PositionVar uint32) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *DirectoryList) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -334,7 +319,6 @@ func (x *DirectoryList) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *DirectoryList) GetNItems() uint32 {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -385,9 +369,7 @@ func (x *DirectoryList) GetObject(PositionVar uint32) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *DirectoryList) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
@@ -416,5 +398,4 @@ func init() {
 	core.PuregoSafeRegister(&xDirectoryListSetFile, libs, "gtk_directory_list_set_file")
 	core.PuregoSafeRegister(&xDirectoryListSetIoPriority, libs, "gtk_directory_list_set_io_priority")
 	core.PuregoSafeRegister(&xDirectoryListSetMonitored, libs, "gtk_directory_list_set_monitored")
-
 }

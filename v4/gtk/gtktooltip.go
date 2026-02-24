@@ -62,9 +62,7 @@ var xTooltipSetCustom func(uintptr, uintptr)
 // the tooltip, which can be configured using gtk_tooltip_set_markup()
 // and gtk_tooltip_set_icon().
 func (x *Tooltip) SetCustom(CustomWidgetVar *Widget) {
-
 	xTooltipSetCustom(x.GoPointer(), CustomWidgetVar.GoPointer())
-
 }
 
 var xTooltipSetIcon func(uintptr, uintptr)
@@ -72,9 +70,7 @@ var xTooltipSetIcon func(uintptr, uintptr)
 // Sets the icon of the tooltip (which is in front of the text) to be
 // @paintable.  If @paintable is %NULL, the image will be hidden.
 func (x *Tooltip) SetIcon(PaintableVar gdk.Paintable) {
-
 	xTooltipSetIcon(x.GoPointer(), PaintableVar.GoPointer())
-
 }
 
 var xTooltipSetIconFromGicon func(uintptr, uintptr)
@@ -83,9 +79,7 @@ var xTooltipSetIconFromGicon func(uintptr, uintptr)
 // to be the icon indicated by @gicon with the size indicated
 // by @size. If @gicon is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromGicon(GiconVar gio.Icon) {
-
 	xTooltipSetIconFromGicon(x.GoPointer(), GiconVar.GoPointer())
-
 }
 
 var xTooltipSetIconFromIconName func(uintptr, string)
@@ -94,9 +88,7 @@ var xTooltipSetIconFromIconName func(uintptr, string)
 // the icon indicated by @icon_name with the size indicated
 // by @size.  If @icon_name is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromIconName(IconNameVar string) {
-
 	xTooltipSetIconFromIconName(x.GoPointer(), IconNameVar)
-
 }
 
 var xTooltipSetMarkup func(uintptr, string)
@@ -106,9 +98,7 @@ var xTooltipSetMarkup func(uintptr, string)
 // The string must be marked up with Pango markup.
 // If @markup is %NULL, the label will be hidden.
 func (x *Tooltip) SetMarkup(MarkupVar string) {
-
 	xTooltipSetMarkup(x.GoPointer(), MarkupVar)
-
 }
 
 var xTooltipSetText func(uintptr, string)
@@ -118,9 +108,7 @@ var xTooltipSetText func(uintptr, string)
 // If @text is %NULL, the label will be hidden.
 // See also [method@Gtk.Tooltip.set_markup].
 func (x *Tooltip) SetText(TextVar string) {
-
 	xTooltipSetText(x.GoPointer(), TextVar)
-
 }
 
 var xTooltipSetTipArea func(uintptr, *gdk.Rectangle)
@@ -134,9 +122,7 @@ var xTooltipSetTipArea func(uintptr, *gdk.Rectangle)
 // functions for this: gtk_tree_view_set_tooltip_row() and
 // gtk_tree_view_set_tooltip_cell().
 func (x *Tooltip) SetTipArea(RectVar *gdk.Rectangle) {
-
 	xTooltipSetTipArea(x.GoPointer(), RectVar)
-
 }
 
 func (c *Tooltip) GoPointer() uintptr {
@@ -171,5 +157,4 @@ func init() {
 	core.PuregoSafeRegister(&xTooltipSetMarkup, libs, "gtk_tooltip_set_markup")
 	core.PuregoSafeRegister(&xTooltipSetText, libs, "gtk_tooltip_set_text")
 	core.PuregoSafeRegister(&xTooltipSetTipArea, libs, "gtk_tooltip_set_tip_area")
-
 }

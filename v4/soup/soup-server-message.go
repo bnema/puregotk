@@ -55,7 +55,6 @@ var xServerMessageGetHttpVersion func(uintptr) HTTPVersion
 
 // Get the HTTP version of @msg.
 func (x *ServerMessage) GetHttpVersion() HTTPVersion {
-
 	cret := xServerMessageGetHttpVersion(x.GoPointer())
 	return cret
 }
@@ -82,7 +81,6 @@ var xServerMessageGetMethod func(uintptr) string
 
 // Get the HTTP method of @msg.
 func (x *ServerMessage) GetMethod() string {
-
 	cret := xServerMessageGetMethod(x.GoPointer())
 	return cret
 }
@@ -91,7 +89,6 @@ var xServerMessageGetReasonPhrase func(uintptr) string
 
 // Get the HTTP reason phrase of @msg.
 func (x *ServerMessage) GetReasonPhrase() string {
-
 	cret := xServerMessageGetReasonPhrase(x.GoPointer())
 	return cret
 }
@@ -119,7 +116,6 @@ var xServerMessageGetRemoteHost func(uintptr) string
 // Retrieves the IP address associated with the remote end of a
 // connection.
 func (x *ServerMessage) GetRemoteHost() string {
-
 	cret := xServerMessageGetRemoteHost(x.GoPointer())
 	return cret
 }
@@ -128,7 +124,6 @@ var xServerMessageGetRequestBody func(uintptr) *MessageBody
 
 // Get the request body of @msg.
 func (x *ServerMessage) GetRequestBody() *MessageBody {
-
 	cret := xServerMessageGetRequestBody(x.GoPointer())
 	return cret
 }
@@ -137,7 +132,6 @@ var xServerMessageGetRequestHeaders func(uintptr) *MessageHeaders
 
 // Get the request headers of @msg.
 func (x *ServerMessage) GetRequestHeaders() *MessageHeaders {
-
 	cret := xServerMessageGetRequestHeaders(x.GoPointer())
 	return cret
 }
@@ -146,7 +140,6 @@ var xServerMessageGetResponseBody func(uintptr) *MessageBody
 
 // Get the response body of @msg.
 func (x *ServerMessage) GetResponseBody() *MessageBody {
-
 	cret := xServerMessageGetResponseBody(x.GoPointer())
 	return cret
 }
@@ -155,7 +148,6 @@ var xServerMessageGetResponseHeaders func(uintptr) *MessageHeaders
 
 // Get the response headers of @msg.
 func (x *ServerMessage) GetResponseHeaders() *MessageHeaders {
-
 	cret := xServerMessageGetResponseHeaders(x.GoPointer())
 	return cret
 }
@@ -188,7 +180,6 @@ var xServerMessageGetStatus func(uintptr) uint32
 
 // Get the HTTP status code of @msg.
 func (x *ServerMessage) GetStatus() uint32 {
-
 	cret := xServerMessageGetStatus(x.GoPointer())
 	return cret
 }
@@ -218,7 +209,6 @@ var xServerMessageGetTlsPeerCertificateErrors func(uintptr) gio.TlsCertificateFl
 // Note that this is not set yet during the emission of
 // SoupServerMessage::accept-certificate signal.
 func (x *ServerMessage) GetTlsPeerCertificateErrors() gio.TlsCertificateFlags {
-
 	cret := xServerMessageGetTlsPeerCertificateErrors(x.GoPointer())
 	return cret
 }
@@ -227,7 +217,6 @@ var xServerMessageGetUri func(uintptr) *glib.Uri
 
 // Get @msg's URI.
 func (x *ServerMessage) GetUri() *glib.Uri {
-
 	cret := xServerMessageGetUri(x.GoPointer())
 	return cret
 }
@@ -236,7 +225,6 @@ var xServerMessageIsOptionsPing func(uintptr) bool
 
 // Gets if @msg represents an OPTIONS message with the path `*`.
 func (x *ServerMessage) IsOptionsPing() bool {
-
 	cret := xServerMessageIsOptionsPing(x.GoPointer())
 	return cret
 }
@@ -249,18 +237,14 @@ var xServerMessagePause func(uintptr)
 // having the full response ready yet. Use [method@ServerMessage.unpause] to
 // resume I/O.
 func (x *ServerMessage) Pause() {
-
 	xServerMessagePause(x.GoPointer())
-
 }
 
 var xServerMessageSetHttpVersion func(uintptr, HTTPVersion)
 
 // Set the HTTP version of @msg.
 func (x *ServerMessage) SetHttpVersion(VersionVar HTTPVersion) {
-
 	xServerMessageSetHttpVersion(x.GoPointer(), VersionVar)
-
 }
 
 var xServerMessageSetRedirect func(uintptr, uint32, string)
@@ -274,9 +258,7 @@ var xServerMessageSetRedirect func(uintptr, uint32, string)
 // @redirect_uri is just a path, it will replace the path
 // *and query* of @msg's URI.
 func (x *ServerMessage) SetRedirect(StatusCodeVar uint32, RedirectUriVar string) {
-
 	xServerMessageSetRedirect(x.GoPointer(), StatusCodeVar, RedirectUriVar)
-
 }
 
 var xServerMessageSetResponse func(uintptr, string, MemoryUse, string, uint)
@@ -284,9 +266,7 @@ var xServerMessageSetResponse func(uintptr, string, MemoryUse, string, uint)
 // Convenience function to set the response body of a #SoupServerMessage. If
 // @content_type is %NULL, the response body must be empty as well.
 func (x *ServerMessage) SetResponse(ContentTypeVar string, RespUseVar MemoryUse, RespBodyVar string, RespLengthVar uint) {
-
 	xServerMessageSetResponse(x.GoPointer(), ContentTypeVar, RespUseVar, RespBodyVar, RespLengthVar)
-
 }
 
 var xServerMessageSetStatus func(uintptr, uint32, string)
@@ -296,9 +276,7 @@ var xServerMessageSetStatus func(uintptr, uint32, string)
 // If @status_code is a known value and @reason_phrase is %NULL, the
 // reason_phrase will be set automatically.
 func (x *ServerMessage) SetStatus(StatusCodeVar uint32, ReasonPhraseVar string) {
-
 	xServerMessageSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVar)
-
 }
 
 var xServerMessageStealConnection func(uintptr) uintptr
@@ -334,9 +312,7 @@ var xServerMessageUnpause func(uintptr)
 // adding a new chunk to a chunked response. I/O won't actually resume until you
 // return to the main loop.
 func (x *ServerMessage) Unpause() {
-
 	xServerMessageUnpause(x.GoPointer())
-
 }
 
 func (c *ServerMessage) GoPointer() uintptr {
@@ -366,7 +342,6 @@ func (x *ServerMessage) ConnectAcceptCertificate(cb *func(ServerMessage, uintptr
 		cbFn := *cb
 
 		return cbFn(fa, TlsPeerCertificateVarp, TlsPeerErrorsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -386,7 +361,6 @@ func (x *ServerMessage) ConnectConnected(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -406,7 +380,6 @@ func (x *ServerMessage) ConnectDisconnected(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -427,7 +400,6 @@ func (x *ServerMessage) ConnectFinished(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -447,7 +419,6 @@ func (x *ServerMessage) ConnectGotBody(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -470,7 +441,6 @@ func (x *ServerMessage) ConnectGotChunk(cb *func(ServerMessage, uintptr)) uint32
 		cbFn := *cb
 
 		cbFn(fa, ChunkVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -490,7 +460,6 @@ func (x *ServerMessage) ConnectGotHeaders(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -511,7 +480,6 @@ func (x *ServerMessage) ConnectWroteBody(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -532,7 +500,6 @@ func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint32)) ui
 		cbFn := *cb
 
 		cbFn(fa, ChunkSizeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -559,7 +526,6 @@ func (x *ServerMessage) ConnectWroteChunk(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -580,7 +546,6 @@ func (x *ServerMessage) ConnectWroteHeaders(cb *func(ServerMessage)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -600,7 +565,6 @@ func (x *ServerMessage) ConnectWroteInformational(cb *func(ServerMessage)) uint3
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -644,5 +608,4 @@ func init() {
 	core.PuregoSafeRegister(&xServerMessageSetStatus, libs, "soup_server_message_set_status")
 	core.PuregoSafeRegister(&xServerMessageStealConnection, libs, "soup_server_message_steal_connection")
 	core.PuregoSafeRegister(&xServerMessageUnpause, libs, "soup_server_message_unpause")
-
 }

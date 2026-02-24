@@ -192,7 +192,6 @@ var xBindingGetFlags func(uintptr) BindingFlags
 
 // Retrieves the flags passed when constructing the #GBinding.
 func (x *Binding) GetFlags() BindingFlags {
-
 	cret := xBindingGetFlags(x.GoPointer())
 	return cret
 }
@@ -227,7 +226,6 @@ var xBindingGetSourceProperty func(uintptr) string
 // Retrieves the name of the property of #GBinding:source used as the source
 // of the binding.
 func (x *Binding) GetSourceProperty() string {
-
 	cret := xBindingGetSourceProperty(x.GoPointer())
 	return cret
 }
@@ -262,7 +260,6 @@ var xBindingGetTargetProperty func(uintptr) string
 // Retrieves the name of the property of #GBinding:target used as the target
 // of the binding.
 func (x *Binding) GetTargetProperty() string {
-
 	cret := xBindingGetTargetProperty(x.GoPointer())
 	return cret
 }
@@ -281,9 +278,7 @@ var xBindingUnbind func(uintptr)
 // only unrefs the reference that was initially created by
 // g_object_bind_property() and is owned by the binding.
 func (x *Binding) Unbind() {
-
 	xBindingUnbind(x.GoPointer())
-
 }
 
 func (c *Binding) GoPointer() uintptr {
@@ -371,5 +366,4 @@ func init() {
 	core.PuregoSafeRegister(&xBindingGetTarget, libs, "g_binding_get_target")
 	core.PuregoSafeRegister(&xBindingGetTargetProperty, libs, "g_binding_get_target_property")
 	core.PuregoSafeRegister(&xBindingUnbind, libs, "g_binding_unbind")
-
 }

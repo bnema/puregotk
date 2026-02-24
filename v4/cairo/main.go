@@ -791,9 +791,7 @@ const (
 var xImageSurfaceCreate func()
 
 func ImageSurfaceCreate() {
-
 	xImageSurfaceCreate()
-
 }
 
 func init() {
@@ -877,5 +875,4 @@ func init() {
 	core.PuregoSafeRegister(&xGlyphGLibType, libs, "cairo_gobject_glyph_get_type")
 
 	core.PuregoSafeRegister(&xTextClusterGLibType, libs, "cairo_gobject_text_cluster_get_type")
-
 }

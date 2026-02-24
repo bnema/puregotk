@@ -259,9 +259,7 @@ var xMessageDialogAddResponse func(uintptr, string, string)
 // [method@MessageDialog.set_response_appearance] can be used to customize the
 // responses further.
 func (x *MessageDialog) AddResponse(IdVar string, LabelVar string) {
-
 	xMessageDialogAddResponse(x.GoPointer(), IdVar, LabelVar)
-
 }
 
 var xMessageDialogAddResponses func(uintptr, string, ...interface{})
@@ -284,25 +282,20 @@ var xMessageDialogAddResponses func(uintptr, string, ...interface{})
 //
 // ```
 func (x *MessageDialog) AddResponses(FirstIdVar string, varArgs ...interface{}) {
-
 	xMessageDialogAddResponses(x.GoPointer(), FirstIdVar, varArgs...)
-
 }
 
 var xMessageDialogChoose func(uintptr, uintptr, uintptr, uintptr)
 
 // This function shows @self to the user.
 func (x *MessageDialog) Choose(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xMessageDialogChooseFinish func(uintptr, uintptr) string
 
 // Finishes the [method@MessageDialog.choose] call and returns the response ID.
 func (x *MessageDialog) ChooseFinish(ResultVar gio.AsyncResult) string {
-
 	cret := xMessageDialogChooseFinish(x.GoPointer(), ResultVar.GoPointer())
 	return cret
 }
@@ -313,9 +306,7 @@ var xMessageDialogFormatBody func(uintptr, string, ...interface{})
 //
 // See [property@MessageDialog:body].
 func (x *MessageDialog) FormatBody(FormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatBody(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xMessageDialogFormatBodyMarkup func(uintptr, string, ...interface{})
@@ -330,9 +321,7 @@ var xMessageDialogFormatBodyMarkup func(uintptr, string, ...interface{})
 //
 // See [property@MessageDialog:body].
 func (x *MessageDialog) FormatBodyMarkup(FormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatBodyMarkup(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xMessageDialogFormatHeading func(uintptr, string, ...interface{})
@@ -341,9 +330,7 @@ var xMessageDialogFormatHeading func(uintptr, string, ...interface{})
 //
 // See [property@MessageDialog:heading].
 func (x *MessageDialog) FormatHeading(FormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatHeading(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xMessageDialogFormatHeadingMarkup func(uintptr, string, ...interface{})
@@ -358,16 +345,13 @@ var xMessageDialogFormatHeadingMarkup func(uintptr, string, ...interface{})
 //
 // See [property@MessageDialog:heading].
 func (x *MessageDialog) FormatHeadingMarkup(FormatVar string, varArgs ...interface{}) {
-
 	xMessageDialogFormatHeadingMarkup(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xMessageDialogGetBody func(uintptr) string
 
 // Gets the body text of @self.
 func (x *MessageDialog) GetBody() string {
-
 	cret := xMessageDialogGetBody(x.GoPointer())
 	return cret
 }
@@ -376,7 +360,6 @@ var xMessageDialogGetBodyUseMarkup func(uintptr) bool
 
 // Gets whether the body text of @self includes Pango markup.
 func (x *MessageDialog) GetBodyUseMarkup() bool {
-
 	cret := xMessageDialogGetBodyUseMarkup(x.GoPointer())
 	return cret
 }
@@ -385,7 +368,6 @@ var xMessageDialogGetCloseResponse func(uintptr) string
 
 // Gets the ID of the close response of @self.
 func (x *MessageDialog) GetCloseResponse() string {
-
 	cret := xMessageDialogGetCloseResponse(x.GoPointer())
 	return cret
 }
@@ -394,7 +376,6 @@ var xMessageDialogGetDefaultResponse func(uintptr) string
 
 // Gets the ID of the default response of @self.
 func (x *MessageDialog) GetDefaultResponse() string {
-
 	cret := xMessageDialogGetDefaultResponse(x.GoPointer())
 	return cret
 }
@@ -420,7 +401,6 @@ var xMessageDialogGetHeading func(uintptr) string
 
 // Gets the heading of @self.
 func (x *MessageDialog) GetHeading() string {
-
 	cret := xMessageDialogGetHeading(x.GoPointer())
 	return cret
 }
@@ -429,7 +409,6 @@ var xMessageDialogGetHeadingUseMarkup func(uintptr) bool
 
 // Gets whether the heading of @self includes Pango markup.
 func (x *MessageDialog) GetHeadingUseMarkup() bool {
-
 	cret := xMessageDialogGetHeadingUseMarkup(x.GoPointer())
 	return cret
 }
@@ -440,7 +419,6 @@ var xMessageDialogGetResponseAppearance func(uintptr, string) ResponseAppearance
 //
 // See [method@MessageDialog.set_response_appearance].
 func (x *MessageDialog) GetResponseAppearance(ResponseVar string) ResponseAppearance {
-
 	cret := xMessageDialogGetResponseAppearance(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -451,7 +429,6 @@ var xMessageDialogGetResponseEnabled func(uintptr, string) bool
 //
 // See [method@MessageDialog.set_response_enabled].
 func (x *MessageDialog) GetResponseEnabled(ResponseVar string) bool {
-
 	cret := xMessageDialogGetResponseEnabled(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -462,7 +439,6 @@ var xMessageDialogGetResponseLabel func(uintptr, string) string
 //
 // See [method@MessageDialog.set_response_label].
 func (x *MessageDialog) GetResponseLabel(ResponseVar string) string {
-
 	cret := xMessageDialogGetResponseLabel(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -471,7 +447,6 @@ var xMessageDialogHasResponse func(uintptr, string) bool
 
 // Gets whether @self has a response with the ID @response.
 func (x *MessageDialog) HasResponse(ResponseVar string) bool {
-
 	cret := xMessageDialogHasResponse(x.GoPointer(), ResponseVar)
 	return cret
 }
@@ -480,9 +455,7 @@ var xMessageDialogRemoveResponse func(uintptr, string)
 
 // Removes a response from @self.
 func (x *MessageDialog) RemoveResponse(IdVar string) {
-
 	xMessageDialogRemoveResponse(x.GoPointer(), IdVar)
-
 }
 
 var xMessageDialogResponse func(uintptr, string)
@@ -491,18 +464,14 @@ var xMessageDialogResponse func(uintptr, string)
 //
 // Used to indicate that the user has responded to the dialog in some way.
 func (x *MessageDialog) Response(ResponseVar string) {
-
 	xMessageDialogResponse(x.GoPointer(), ResponseVar)
-
 }
 
 var xMessageDialogSetBody func(uintptr, string)
 
 // Sets the body text of @self.
 func (x *MessageDialog) SetBody(BodyVar string) {
-
 	xMessageDialogSetBody(x.GoPointer(), BodyVar)
-
 }
 
 var xMessageDialogSetBodyUseMarkup func(uintptr, bool)
@@ -511,9 +480,7 @@ var xMessageDialogSetBodyUseMarkup func(uintptr, bool)
 //
 // See [func@Pango.parse_markup].
 func (x *MessageDialog) SetBodyUseMarkup(UseMarkupVar bool) {
-
 	xMessageDialogSetBodyUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 var xMessageDialogSetCloseResponse func(uintptr, string)
@@ -527,9 +494,7 @@ var xMessageDialogSetCloseResponse func(uintptr, string)
 //
 // The default close response is `close`.
 func (x *MessageDialog) SetCloseResponse(ResponseVar string) {
-
 	xMessageDialogSetCloseResponse(x.GoPointer(), ResponseVar)
-
 }
 
 var xMessageDialogSetDefaultResponse func(uintptr, string)
@@ -544,9 +509,7 @@ var xMessageDialogSetDefaultResponse func(uintptr, string)
 //
 // See [property@Gtk.Window:default-widget].
 func (x *MessageDialog) SetDefaultResponse(ResponseVar string) {
-
 	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
-
 }
 
 var xMessageDialogSetExtraChild func(uintptr, uintptr)
@@ -555,18 +518,14 @@ var xMessageDialogSetExtraChild func(uintptr, uintptr)
 //
 // The child widget is displayed below the heading and body.
 func (x *MessageDialog) SetExtraChild(ChildVar *gtk.Widget) {
-
 	xMessageDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xMessageDialogSetHeading func(uintptr, string)
 
 // Sets the heading of @self.
 func (x *MessageDialog) SetHeading(HeadingVar string) {
-
 	xMessageDialogSetHeading(x.GoPointer(), HeadingVar)
-
 }
 
 var xMessageDialogSetHeadingUseMarkup func(uintptr, bool)
@@ -575,9 +534,7 @@ var xMessageDialogSetHeadingUseMarkup func(uintptr, bool)
 //
 // See [func@Pango.parse_markup].
 func (x *MessageDialog) SetHeadingUseMarkup(UseMarkupVar bool) {
-
 	xMessageDialogSetHeadingUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 var xMessageDialogSetResponseAppearance func(uintptr, string, ResponseAppearance)
@@ -602,9 +559,7 @@ var xMessageDialogSetResponseAppearance func(uintptr, string, ResponseAppearance
 //
 // Negative responses like Cancel or Close should use the default appearance.
 func (x *MessageDialog) SetResponseAppearance(ResponseVar string, AppearanceVar ResponseAppearance) {
-
 	xMessageDialogSetResponseAppearance(x.GoPointer(), ResponseVar, AppearanceVar)
-
 }
 
 var xMessageDialogSetResponseEnabled func(uintptr, string, bool)
@@ -620,9 +575,7 @@ var xMessageDialogSetResponseEnabled func(uintptr, string, bool)
 //
 // Responses are enabled by default.
 func (x *MessageDialog) SetResponseEnabled(ResponseVar string, EnabledVar bool) {
-
 	xMessageDialogSetResponseEnabled(x.GoPointer(), ResponseVar, EnabledVar)
-
 }
 
 var xMessageDialogSetResponseLabel func(uintptr, string, string)
@@ -632,9 +585,7 @@ var xMessageDialogSetResponseLabel func(uintptr, string, string)
 // Labels are displayed on the dialog buttons. An embedded underline in @label
 // indicates a mnemonic.
 func (x *MessageDialog) SetResponseLabel(ResponseVar string, LabelVar string) {
-
 	xMessageDialogSetResponseLabel(x.GoPointer(), ResponseVar, LabelVar)
-
 }
 
 func (c *MessageDialog) GoPointer() uintptr {
@@ -808,7 +759,6 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 		cbFn := *cb
 
 		cbFn(fa, ResponseVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -825,9 +775,7 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *MessageDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -848,7 +796,6 @@ func (x *MessageDialog) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *MessageDialog) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -873,7 +820,6 @@ func (x *MessageDialog) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *MessageDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -912,30 +858,23 @@ func (x *MessageDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *MessageDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *MessageDialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *MessageDialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *MessageDialog) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -948,9 +887,7 @@ func (x *MessageDialog) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *MessageDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -958,9 +895,7 @@ func (x *MessageDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblin
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -969,9 +904,7 @@ func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *MessageDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -993,9 +926,7 @@ func (x *MessageDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState
 //
 // ```
 func (x *MessageDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1005,9 +936,7 @@ func (x *MessageDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, 
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1029,9 +958,7 @@ func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar 
 //
 // ```
 func (x *MessageDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1041,9 +968,7 @@ func (x *MessageDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, 
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1066,9 +991,7 @@ func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []
 //
 // ```
 func (x *MessageDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1078,9 +1001,7 @@ func (x *MessageDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1088,7 +1009,6 @@ func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MessageDialog) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1128,27 +1048,21 @@ func (x *MessageDialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *MessageDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MessageDialog) Realize() {
-
 	gtk.XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MessageDialog) Unrealize() {
-
 	gtk.XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -1195,9 +1109,7 @@ func (x *MessageDialog) GetFocus() *gtk.Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *MessageDialog) SetFocus(FocusVar *gtk.Widget) {
-
 	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
-
 }
 
 func init() {
@@ -1247,5 +1159,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageDialogSetResponseAppearance, libs, "adw_message_dialog_set_response_appearance")
 	core.PuregoSafeRegister(&xMessageDialogSetResponseEnabled, libs, "adw_message_dialog_set_response_enabled")
 	core.PuregoSafeRegister(&xMessageDialogSetResponseLabel, libs, "adw_message_dialog_set_response_label")
-
 }

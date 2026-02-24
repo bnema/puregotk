@@ -15,9 +15,7 @@ var xSourceSetClosure func(*glib.Source, *Closure)
 // and @closure_marshal fields of the #GSourceFuncs structure must have been
 // filled in with pointers to appropriate functions.
 func SourceSetClosure(SourceVar *glib.Source, ClosureVar *Closure) {
-
 	xSourceSetClosure(SourceVar, ClosureVar)
-
 }
 
 var xSourceSetDummyCallback func(*glib.Source)
@@ -33,9 +31,7 @@ var xSourceSetDummyCallback func(*glib.Source)
 // structure must have been filled in with pointers to appropriate
 // functions.
 func SourceSetDummyCallback(SourceVar *glib.Source) {
-
 	xSourceSetDummyCallback(SourceVar)
-
 }
 
 func init() {
@@ -52,5 +48,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSourceSetClosure, libs, "g_source_set_closure")
 	core.PuregoSafeRegister(&xSourceSetDummyCallback, libs, "g_source_set_dummy_callback")
-
 }

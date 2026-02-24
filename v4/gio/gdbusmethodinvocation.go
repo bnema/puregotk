@@ -88,7 +88,6 @@ var xDBusMethodInvocationGetInterfaceName func(uintptr) string
 // "org.freedesktop.DBus.Properties" will be returned.  See
 // #GDBusInterfaceVTable for more information.
 func (x *DBusMethodInvocation) GetInterfaceName() string {
-
 	cret := xDBusMethodInvocationGetInterfaceName(x.GoPointer())
 	return cret
 }
@@ -127,7 +126,6 @@ var xDBusMethodInvocationGetMethodInfo func(uintptr) *DBusMethodInfo
 // returned.  See g_dbus_method_invocation_get_property_info() and
 // #GDBusInterfaceVTable for more information.
 func (x *DBusMethodInvocation) GetMethodInfo() *DBusMethodInfo {
-
 	cret := xDBusMethodInvocationGetMethodInfo(x.GoPointer())
 	return cret
 }
@@ -136,7 +134,6 @@ var xDBusMethodInvocationGetMethodName func(uintptr) string
 
 // Gets the name of the method that was invoked.
 func (x *DBusMethodInvocation) GetMethodName() string {
-
 	cret := xDBusMethodInvocationGetMethodName(x.GoPointer())
 	return cret
 }
@@ -145,7 +142,6 @@ var xDBusMethodInvocationGetObjectPath func(uintptr) string
 
 // Gets the object path the method was invoked on.
 func (x *DBusMethodInvocation) GetObjectPath() string {
-
 	cret := xDBusMethodInvocationGetObjectPath(x.GoPointer())
 	return cret
 }
@@ -155,7 +151,6 @@ var xDBusMethodInvocationGetParameters func(uintptr) *glib.Variant
 // Gets the parameters of the method invocation. If there are no input
 // parameters then this will return a GVariant with 0 children rather than NULL.
 func (x *DBusMethodInvocation) GetParameters() *glib.Variant {
-
 	cret := xDBusMethodInvocationGetParameters(x.GoPointer())
 	return cret
 }
@@ -174,7 +169,6 @@ var xDBusMethodInvocationGetPropertyInfo func(uintptr) *DBusPropertyInfo
 //
 // If the call was GetAll, %NULL will be returned.
 func (x *DBusMethodInvocation) GetPropertyInfo() *DBusPropertyInfo {
-
 	cret := xDBusMethodInvocationGetPropertyInfo(x.GoPointer())
 	return cret
 }
@@ -186,7 +180,6 @@ var xDBusMethodInvocationGetSender func(uintptr) string
 // This can return %NULL if not specified by the caller, e.g. on peer-to-peer
 // connections.
 func (x *DBusMethodInvocation) GetSender() string {
-
 	cret := xDBusMethodInvocationGetSender(x.GoPointer())
 	return cret
 }
@@ -195,7 +188,6 @@ var xDBusMethodInvocationGetUserData func(uintptr) uintptr
 
 // Gets the @user_data #gpointer passed to g_dbus_connection_register_object().
 func (x *DBusMethodInvocation) GetUserData() uintptr {
-
 	cret := xDBusMethodInvocationGetUserData(x.GoPointer())
 	return cret
 }
@@ -208,9 +200,7 @@ var xDBusMethodInvocationReturnDbusError func(uintptr, string, string)
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) ReturnDbusError(ErrorNameVar string, ErrorMessageVar string) {
-
 	xDBusMethodInvocationReturnDbusError(x.GoPointer(), ErrorNameVar, ErrorMessageVar)
-
 }
 
 var xDBusMethodInvocationReturnError func(uintptr, glib.Quark, int32, string, ...interface{})
@@ -236,9 +226,7 @@ var xDBusMethodInvocationReturnError func(uintptr, glib.Quark, int32, string, ..
 // then this call will free @invocation but otherwise do nothing (as per
 // the recommendations of the D-Bus specification).
 func (x *DBusMethodInvocation) ReturnError(DomainVar glib.Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) {
-
 	xDBusMethodInvocationReturnError(x.GoPointer(), DomainVar, CodeVar, FormatVar, varArgs...)
-
 }
 
 var xDBusMethodInvocationReturnErrorLiteral func(uintptr, glib.Quark, int32, string)
@@ -249,9 +237,7 @@ var xDBusMethodInvocationReturnErrorLiteral func(uintptr, glib.Quark, int32, str
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) ReturnErrorLiteral(DomainVar glib.Quark, CodeVar int32, MessageVar string) {
-
 	xDBusMethodInvocationReturnErrorLiteral(x.GoPointer(), DomainVar, CodeVar, MessageVar)
-
 }
 
 var xDBusMethodInvocationReturnErrorValist func(uintptr, glib.Quark, int32, string, []interface{})
@@ -263,9 +249,7 @@ var xDBusMethodInvocationReturnErrorValist func(uintptr, glib.Quark, int32, stri
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) ReturnErrorValist(DomainVar glib.Quark, CodeVar int32, FormatVar string, VarArgsVar []interface{}) {
-
 	xDBusMethodInvocationReturnErrorValist(x.GoPointer(), DomainVar, CodeVar, FormatVar, VarArgsVar)
-
 }
 
 var xDBusMethodInvocationReturnGerror func(uintptr, *glib.Error)
@@ -277,9 +261,7 @@ var xDBusMethodInvocationReturnGerror func(uintptr, *glib.Error)
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) ReturnGerror(ErrorVar *glib.Error) {
-
 	xDBusMethodInvocationReturnGerror(x.GoPointer(), ErrorVar)
-
 }
 
 var xDBusMethodInvocationReturnValue func(uintptr, *glib.Variant)
@@ -320,9 +302,7 @@ var xDBusMethodInvocationReturnValue func(uintptr, *glib.Variant)
 // otherwise do nothing (as per the recommendations of the D-Bus
 // specification).
 func (x *DBusMethodInvocation) ReturnValue(ParametersVar *glib.Variant) {
-
 	xDBusMethodInvocationReturnValue(x.GoPointer(), ParametersVar)
-
 }
 
 var xDBusMethodInvocationReturnValueWithUnixFdList func(uintptr, *glib.Variant, uintptr)
@@ -335,9 +315,7 @@ var xDBusMethodInvocationReturnValueWithUnixFdList func(uintptr, *glib.Variant, 
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) ReturnValueWithUnixFdList(ParametersVar *glib.Variant, FdListVar *UnixFDList) {
-
 	xDBusMethodInvocationReturnValueWithUnixFdList(x.GoPointer(), ParametersVar, FdListVar.GoPointer())
-
 }
 
 var xDBusMethodInvocationTakeError func(uintptr, *glib.Error)
@@ -349,9 +327,7 @@ var xDBusMethodInvocationTakeError func(uintptr, *glib.Error)
 // #GDBusInterfaceVTable for more information about the ownership of
 // @invocation.
 func (x *DBusMethodInvocation) TakeError(ErrorVar *glib.Error) {
-
 	xDBusMethodInvocationTakeError(x.GoPointer(), ErrorVar)
-
 }
 
 func (c *DBusMethodInvocation) GoPointer() uintptr {
@@ -397,5 +373,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValue, libs, "g_dbus_method_invocation_return_value")
 	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValueWithUnixFdList, libs, "g_dbus_method_invocation_return_value_with_unix_fd_list")
 	core.PuregoSafeRegister(&xDBusMethodInvocationTakeError, libs, "g_dbus_method_invocation_take_error")
-
 }

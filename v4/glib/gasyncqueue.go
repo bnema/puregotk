@@ -31,7 +31,6 @@ var xAsyncQueueLength func(uintptr) int32
 // in the queue and n threads waiting. This can happen due to locking
 // of the queue or due to scheduling.
 func (x *AsyncQueue) Length() int32 {
-
 	cret := xAsyncQueueLength(x.GoPointer())
 	return cret
 }
@@ -49,7 +48,6 @@ var xAsyncQueueLengthUnlocked func(uintptr) int32
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) LengthUnlocked() int32 {
-
 	cret := xAsyncQueueLengthUnlocked(x.GoPointer())
 	return cret
 }
@@ -66,9 +64,7 @@ var xAsyncQueueLock func(uintptr)
 // g_async_queue_*_unlocked() functions on @queue. Otherwise,
 // deadlock may occur.
 func (x *AsyncQueue) Lock() {
-
 	xAsyncQueueLock(x.GoPointer())
-
 }
 
 var xAsyncQueuePop func(uintptr) uintptr
@@ -76,7 +72,6 @@ var xAsyncQueuePop func(uintptr) uintptr
 // Pops data from the @queue. If @queue is empty, this function
 // blocks until data becomes available.
 func (x *AsyncQueue) Pop() uintptr {
-
 	cret := xAsyncQueuePop(x.GoPointer())
 	return cret
 }
@@ -88,7 +83,6 @@ var xAsyncQueuePopUnlocked func(uintptr) uintptr
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) PopUnlocked() uintptr {
-
 	cret := xAsyncQueuePopUnlocked(x.GoPointer())
 	return cret
 }
@@ -99,9 +93,7 @@ var xAsyncQueuePush func(uintptr, uintptr)
 //
 // The @data parameter must not be %NULL.
 func (x *AsyncQueue) Push(DataVar uintptr) {
-
 	xAsyncQueuePush(x.GoPointer(), DataVar)
-
 }
 
 var xAsyncQueuePushFront func(uintptr, uintptr)
@@ -111,9 +103,7 @@ var xAsyncQueuePushFront func(uintptr, uintptr)
 // pushes the new item ahead of the items already in the queue,
 // so that it will be the next one to be popped off the queue.
 func (x *AsyncQueue) PushFront(ItemVar uintptr) {
-
 	xAsyncQueuePushFront(x.GoPointer(), ItemVar)
-
 }
 
 var xAsyncQueuePushFrontUnlocked func(uintptr, uintptr)
@@ -125,9 +115,7 @@ var xAsyncQueuePushFrontUnlocked func(uintptr, uintptr)
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) PushFrontUnlocked(ItemVar uintptr) {
-
 	xAsyncQueuePushFrontUnlocked(x.GoPointer(), ItemVar)
-
 }
 
 var xAsyncQueuePushSorted func(uintptr, uintptr, uintptr, uintptr)
@@ -143,9 +131,7 @@ var xAsyncQueuePushSorted func(uintptr, uintptr, uintptr, uintptr)
 //
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xAsyncQueuePushSorted(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xAsyncQueuePushSortedUnlocked func(uintptr, uintptr, uintptr, uintptr)
@@ -166,9 +152,7 @@ var xAsyncQueuePushSortedUnlocked func(uintptr, uintptr, uintptr, uintptr)
 //
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSortedUnlocked(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xAsyncQueuePushSortedUnlocked(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xAsyncQueuePushUnlocked func(uintptr, uintptr)
@@ -179,9 +163,7 @@ var xAsyncQueuePushUnlocked func(uintptr, uintptr)
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) PushUnlocked(DataVar uintptr) {
-
 	xAsyncQueuePushUnlocked(x.GoPointer(), DataVar)
-
 }
 
 var xAsyncQueueRef func(uintptr) *AsyncQueue
@@ -189,7 +171,6 @@ var xAsyncQueueRef func(uintptr) *AsyncQueue
 // Increases the reference count of the asynchronous @queue by 1.
 // You do not need to hold the lock to call this function.
 func (x *AsyncQueue) Ref() *AsyncQueue {
-
 	cret := xAsyncQueueRef(x.GoPointer())
 	return cret
 }
@@ -198,16 +179,13 @@ var xAsyncQueueRefUnlocked func(uintptr)
 
 // Increases the reference count of the asynchronous @queue by 1.
 func (x *AsyncQueue) RefUnlocked() {
-
 	xAsyncQueueRefUnlocked(x.GoPointer())
-
 }
 
 var xAsyncQueueRemove func(uintptr, uintptr) bool
 
 // Remove an item from the queue.
 func (x *AsyncQueue) Remove(ItemVar uintptr) bool {
-
 	cret := xAsyncQueueRemove(x.GoPointer(), ItemVar)
 	return cret
 }
@@ -218,7 +196,6 @@ var xAsyncQueueRemoveUnlocked func(uintptr, uintptr) bool
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) RemoveUnlocked(ItemVar uintptr) bool {
-
 	cret := xAsyncQueueRemoveUnlocked(x.GoPointer(), ItemVar)
 	return cret
 }
@@ -250,9 +227,7 @@ var xAsyncQueueSort func(uintptr, uintptr, uintptr)
 //
 // ]|
 func (x *AsyncQueue) Sort(FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xAsyncQueueSort(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xAsyncQueueSortUnlocked func(uintptr, uintptr, uintptr)
@@ -267,9 +242,7 @@ var xAsyncQueueSortUnlocked func(uintptr, uintptr, uintptr)
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) SortUnlocked(FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
 	xAsyncQueueSortUnlocked(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
-
 }
 
 var xAsyncQueueTimedPop func(uintptr, *TimeVal) uintptr
@@ -282,7 +255,6 @@ var xAsyncQueueTimedPop func(uintptr, *TimeVal) uintptr
 // To easily calculate @end_time, a combination of g_get_real_time()
 // and g_time_val_add() can be used.
 func (x *AsyncQueue) TimedPop(EndTimeVar *TimeVal) uintptr {
-
 	cret := xAsyncQueueTimedPop(x.GoPointer(), EndTimeVar)
 	return cret
 }
@@ -299,7 +271,6 @@ var xAsyncQueueTimedPopUnlocked func(uintptr, *TimeVal) uintptr
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) TimedPopUnlocked(EndTimeVar *TimeVal) uintptr {
-
 	cret := xAsyncQueueTimedPopUnlocked(x.GoPointer(), EndTimeVar)
 	return cret
 }
@@ -311,7 +282,6 @@ var xAsyncQueueTimeoutPop func(uintptr, uint64) uintptr
 //
 // If no data is received before the timeout, %NULL is returned.
 func (x *AsyncQueue) TimeoutPop(TimeoutVar uint64) uintptr {
-
 	cret := xAsyncQueueTimeoutPop(x.GoPointer(), TimeoutVar)
 	return cret
 }
@@ -325,7 +295,6 @@ var xAsyncQueueTimeoutPopUnlocked func(uintptr, uint64) uintptr
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) TimeoutPopUnlocked(TimeoutVar uint64) uintptr {
-
 	cret := xAsyncQueueTimeoutPopUnlocked(x.GoPointer(), TimeoutVar)
 	return cret
 }
@@ -335,7 +304,6 @@ var xAsyncQueueTryPop func(uintptr) uintptr
 // Tries to pop data from the @queue. If no data is available,
 // %NULL is returned.
 func (x *AsyncQueue) TryPop() uintptr {
-
 	cret := xAsyncQueueTryPop(x.GoPointer())
 	return cret
 }
@@ -347,7 +315,6 @@ var xAsyncQueueTryPopUnlocked func(uintptr) uintptr
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) TryPopUnlocked() uintptr {
-
 	cret := xAsyncQueueTryPopUnlocked(x.GoPointer())
 	return cret
 }
@@ -360,9 +327,7 @@ var xAsyncQueueUnlock func(uintptr)
 // the with g_async_queue_lock() leads to undefined
 // behaviour.
 func (x *AsyncQueue) Unlock() {
-
 	xAsyncQueueUnlock(x.GoPointer())
-
 }
 
 var xAsyncQueueUnref func(uintptr)
@@ -374,9 +339,7 @@ var xAsyncQueueUnref func(uintptr)
 // to use the @queue afterwards, as it might have disappeared.
 // You do not need to hold the lock to call this function.
 func (x *AsyncQueue) Unref() {
-
 	xAsyncQueueUnref(x.GoPointer())
-
 }
 
 var xAsyncQueueUnrefAndUnlock func(uintptr)
@@ -386,16 +349,13 @@ var xAsyncQueueUnrefAndUnlock func(uintptr)
 // the @queue's lock. If the reference count went to 0, the @queue
 // will be destroyed and the memory allocated will be freed.
 func (x *AsyncQueue) UnrefAndUnlock() {
-
 	xAsyncQueueUnrefAndUnlock(x.GoPointer())
-
 }
 
 var xAsyncQueueNew func() *AsyncQueue
 
 // Creates a new asynchronous queue.
 func AsyncQueueNew() *AsyncQueue {
-
 	cret := xAsyncQueueNew()
 	return cret
 }
@@ -406,7 +366,6 @@ var xAsyncQueueNewFull func(uintptr) *AsyncQueue
 // function that is used to free any remaining queue items when
 // the queue is destroyed after the final unref.
 func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
-
 	cret := xAsyncQueueNewFull(NewCallbackNullable(ItemFreeFuncVar))
 	return cret
 }
@@ -452,5 +411,4 @@ func init() {
 	core.PuregoSafeRegister(&xAsyncQueueUnlock, libs, "g_async_queue_unlock")
 	core.PuregoSafeRegister(&xAsyncQueueUnref, libs, "g_async_queue_unref")
 	core.PuregoSafeRegister(&xAsyncQueueUnrefAndUnlock, libs, "g_async_queue_unref_and_unlock")
-
 }

@@ -1186,5 +1186,4 @@ func init() {
 	core.PuregoSafeRegister(&xParamSpecValueArrayGLibType, libs, "intern")
 
 	core.PuregoSafeRegister(&xParamSpecVariantGLibType, libs, "intern")
-
 }

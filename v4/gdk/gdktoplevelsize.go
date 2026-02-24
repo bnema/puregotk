@@ -35,9 +35,7 @@ var xToplevelSizeGetBounds func(uintptr, *int32, *int32)
 // window is being presented on, or something else that limits the way a
 // toplevel can be presented.
 func (x *ToplevelSize) GetBounds(BoundsWidthVar *int32, BoundsHeightVar *int32) {
-
 	xToplevelSizeGetBounds(x.GoPointer(), BoundsWidthVar, BoundsHeightVar)
-
 }
 
 var xToplevelSizeSetMinSize func(uintptr, int32, int32)
@@ -52,9 +50,7 @@ var xToplevelSizeSetMinSize func(uintptr, int32, int32)
 // The minimum size should be within the bounds (see
 // [method@Gdk.ToplevelSize.get_bounds]).
 func (x *ToplevelSize) SetMinSize(MinWidthVar int32, MinHeightVar int32) {
-
 	xToplevelSizeSetMinSize(x.GoPointer(), MinWidthVar, MinHeightVar)
-
 }
 
 var xToplevelSizeSetShadowWidth func(uintptr, int32, int32, int32, int32)
@@ -68,9 +64,7 @@ var xToplevelSizeSetShadowWidth func(uintptr, int32, int32, int32, int32)
 // Shadow width should only be set if
 // [method@Gtk.Display.supports_shadow_width] is %TRUE.
 func (x *ToplevelSize) SetShadowWidth(LeftVar int32, RightVar int32, TopVar int32, BottomVar int32) {
-
 	xToplevelSizeSetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
-
 }
 
 var xToplevelSizeSetSize func(uintptr, int32, int32)
@@ -82,9 +76,7 @@ var xToplevelSizeSetSize func(uintptr, int32, int32)
 // be considered as a hint, and should not be assumed to be
 // respected by the windowing system, or backend.
 func (x *ToplevelSize) SetSize(WidthVar int32, HeightVar int32) {
-
 	xToplevelSizeSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
@@ -105,5 +97,4 @@ func init() {
 	core.PuregoSafeRegister(&xToplevelSizeSetMinSize, libs, "gdk_toplevel_size_set_min_size")
 	core.PuregoSafeRegister(&xToplevelSizeSetShadowWidth, libs, "gdk_toplevel_size_set_shadow_width")
 	core.PuregoSafeRegister(&xToplevelSizeSetSize, libs, "gdk_toplevel_size_set_size")
-
 }

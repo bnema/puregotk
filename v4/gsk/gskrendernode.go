@@ -71,7 +71,6 @@ var xSerializationErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gsk.RenderNode] errors.
 func SerializationErrorQuark() glib.Quark {
-
 	cret := xSerializationErrorQuark()
 	return cret
 }
@@ -117,9 +116,7 @@ var xValueSetRenderNode func(*gobject.Value, uintptr)
 // The [struct@GObject.Value] will acquire a reference
 // to the render node.
 func ValueSetRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
-
 	xValueSetRenderNode(ValueVar, NodeVar.GoPointer())
-
 }
 
 var xValueTakeRenderNode func(*gobject.Value, uintptr)
@@ -129,9 +126,7 @@ var xValueTakeRenderNode func(*gobject.Value, uintptr)
 // This function transfers the ownership of the
 // render node to the `GValue`.
 func ValueTakeRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
-
 	xValueTakeRenderNode(ValueVar, NodeVar.GoPointer())
-
 }
 
 // The basic block in a scene graph to be rendered using [class@Gsk.Renderer].
@@ -173,9 +168,7 @@ var xRenderNodeDraw func(uintptr, *cairo.Context)
 // For advanced nodes that cannot be supported using Cairo, in particular
 // for nodes doing 3D operations, this function may fail.
 func (x *RenderNode) Draw(CrVar *cairo.Context) {
-
 	xRenderNodeDraw(x.GoPointer(), CrVar)
-
 }
 
 var xRenderNodeGetBounds func(uintptr, *graphene.Rect)
@@ -184,16 +177,13 @@ var xRenderNodeGetBounds func(uintptr, *graphene.Rect)
 //
 // The node will not draw outside of its boundaries.
 func (x *RenderNode) GetBounds(BoundsVar *graphene.Rect) {
-
 	xRenderNodeGetBounds(x.GoPointer(), BoundsVar)
-
 }
 
 var xRenderNodeGetNodeType func(uintptr) RenderNodeType
 
 // Returns the type of the render node.
 func (x *RenderNode) GetNodeType() RenderNodeType {
-
 	cret := xRenderNodeGetNodeType(x.GoPointer())
 	return cret
 }
@@ -209,7 +199,6 @@ var xRenderNodeGetOpaqueRect func(uintptr, *graphene.Rect) bool
 //
 // The rectangle will be fully contained in the bounds of the node.
 func (x *RenderNode) GetOpaqueRect(OutOpaqueVar *graphene.Rect) bool {
-
 	cret := xRenderNodeGetOpaqueRect(x.GoPointer(), OutOpaqueVar)
 	return cret
 }
@@ -242,7 +231,6 @@ var xRenderNodeSerialize func(uintptr) *glib.Bytes
 // The intended use of this functions is testing, benchmarking and debugging.
 // The format is not meant as a permanent storage format.
 func (x *RenderNode) Serialize() *glib.Bytes {
-
 	cret := xRenderNodeSerialize(x.GoPointer())
 	return cret
 }
@@ -254,9 +242,7 @@ var xRenderNodeUnref func(uintptr)
 // If the reference was the last, the resources associated to the @node are
 // freed.
 func (x *RenderNode) Unref() {
-
 	xRenderNodeUnref(x.GoPointer())
-
 }
 
 var xRenderNodeWriteToFile func(uintptr, string, **glib.Error) bool
@@ -276,7 +262,6 @@ func (x *RenderNode) WriteToFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *RenderNode) GoPointer() uintptr {
@@ -338,5 +323,4 @@ func init() {
 	core.PuregoSafeRegister(&xRenderNodeWriteToFile, libs, "gsk_render_node_write_to_file")
 
 	core.PuregoSafeRegister(&xRenderNodeDeserialize, libs, "gsk_render_node_deserialize")
-
 }

@@ -452,7 +452,6 @@ var xValueArrayBufferGetData func(uintptr, *uint) uintptr
 // the meantime. Consider taking a copy of the data and using the copy instead
 // in asynchronous code.
 func (x *Value) ArrayBufferGetData(SizeVar *uint) uintptr {
-
 	cret := xValueArrayBufferGetData(x.GoPointer(), SizeVar)
 	return cret
 }
@@ -464,7 +463,6 @@ var xValueArrayBufferGetSize func(uintptr) uint
 // Obtains the size in bytes of the memory region that holds the contents of
 // an %ArrayBuffer.
 func (x *Value) ArrayBufferGetSize() uint {
-
 	cret := xValueArrayBufferGetSize(x.GoPointer())
 	return cret
 }
@@ -564,7 +562,6 @@ var xValueIsArray func(uintptr) bool
 
 // Get whether the value referenced by @value is an array.
 func (x *Value) IsArray() bool {
-
 	cret := xValueIsArray(x.GoPointer())
 	return cret
 }
@@ -573,7 +570,6 @@ var xValueIsArrayBuffer func(uintptr) bool
 
 // Check whether the @value is an %ArrayBuffer.
 func (x *Value) IsArrayBuffer() bool {
-
 	cret := xValueIsArrayBuffer(x.GoPointer())
 	return cret
 }
@@ -582,7 +578,6 @@ var xValueIsBoolean func(uintptr) bool
 
 // Get whether the value referenced by @value is a boolean.
 func (x *Value) IsBoolean() bool {
-
 	cret := xValueIsBoolean(x.GoPointer())
 	return cret
 }
@@ -591,7 +586,6 @@ var xValueIsConstructor func(uintptr) bool
 
 // Get whether the value referenced by @value is a constructor.
 func (x *Value) IsConstructor() bool {
-
 	cret := xValueIsConstructor(x.GoPointer())
 	return cret
 }
@@ -600,7 +594,6 @@ var xValueIsFunction func(uintptr) bool
 
 // Get whether the value referenced by @value is a function
 func (x *Value) IsFunction() bool {
-
 	cret := xValueIsFunction(x.GoPointer())
 	return cret
 }
@@ -609,7 +602,6 @@ var xValueIsNull func(uintptr) bool
 
 // Get whether the value referenced by @value is &lt;function&gt;null&lt;/function&gt;.
 func (x *Value) IsNull() bool {
-
 	cret := xValueIsNull(x.GoPointer())
 	return cret
 }
@@ -618,7 +610,6 @@ var xValueIsNumber func(uintptr) bool
 
 // Get whether the value referenced by @value is a number.
 func (x *Value) IsNumber() bool {
-
 	cret := xValueIsNumber(x.GoPointer())
 	return cret
 }
@@ -627,7 +618,6 @@ var xValueIsObject func(uintptr) bool
 
 // Get whether the value referenced by @value is an object.
 func (x *Value) IsObject() bool {
-
 	cret := xValueIsObject(x.GoPointer())
 	return cret
 }
@@ -636,7 +626,6 @@ var xValueIsString func(uintptr) bool
 
 // Get whether the value referenced by @value is a string
 func (x *Value) IsString() bool {
-
 	cret := xValueIsString(x.GoPointer())
 	return cret
 }
@@ -645,7 +634,6 @@ var xValueIsTypedArray func(uintptr) bool
 
 // Determines whether a value is a typed array.
 func (x *Value) IsTypedArray() bool {
-
 	cret := xValueIsTypedArray(x.GoPointer())
 	return cret
 }
@@ -654,7 +642,6 @@ var xValueIsUndefined func(uintptr) bool
 
 // Get whether the value referenced by @value is &lt;function&gt;undefined&lt;/function&gt;.
 func (x *Value) IsUndefined() bool {
-
 	cret := xValueIsUndefined(x.GoPointer())
 	return cret
 }
@@ -704,9 +691,7 @@ var xValueObjectDefinePropertyAccessor func(uintptr, string, ValuePropertyFlags,
 // Note that @getter and @setter are called as functions and not methods, so they don't receive an instance as
 // first parameter. Use jsc_class_add_property() if you want to add property accessor invoked as a method.
 func (x *Value) ObjectDefinePropertyAccessor(PropertyNameVar string, FlagsVar ValuePropertyFlags, PropertyTypeVar types.GType, GetterVar *gobject.Callback, SetterVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
 	xValueObjectDefinePropertyAccessor(x.GoPointer(), PropertyNameVar, FlagsVar, PropertyTypeVar, glib.NewCallbackNullable(GetterVar), glib.NewCallbackNullable(SetterVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
-
 }
 
 var xValueObjectDefinePropertyData func(uintptr, string, ValuePropertyFlags, uintptr)
@@ -714,9 +699,7 @@ var xValueObjectDefinePropertyData func(uintptr, string, ValuePropertyFlags, uin
 // Define or modify a property with @property_name in object referenced by @value. This is equivalent to
 // JavaScript &lt;function&gt;Object.defineProperty()&lt;/function&gt; when used with a data descriptor.
 func (x *Value) ObjectDefinePropertyData(PropertyNameVar string, FlagsVar ValuePropertyFlags, PropertyValueVar *Value) {
-
 	xValueObjectDefinePropertyData(x.GoPointer(), PropertyNameVar, FlagsVar, PropertyValueVar.GoPointer())
-
 }
 
 var xValueObjectDeleteProperty func(uintptr, string) bool
@@ -724,7 +707,6 @@ var xValueObjectDeleteProperty func(uintptr, string) bool
 // Try to delete property with @name from @value. This function will return %FALSE if
 // the property was defined without %JSC_VALUE_PROPERTY_CONFIGURABLE flag.
 func (x *Value) ObjectDeleteProperty(NameVar string) bool {
-
 	cret := xValueObjectDeleteProperty(x.GoPointer(), NameVar)
 	return cret
 }
@@ -734,7 +716,6 @@ var xValueObjectEnumerateProperties func(uintptr) []string
 // Get the list of property names of @value. Only properties defined with %JSC_VALUE_PROPERTY_ENUMERABLE
 // flag will be collected.
 func (x *Value) ObjectEnumerateProperties() []string {
-
 	cret := xValueObjectEnumerateProperties(x.GoPointer())
 	return cret
 }
@@ -775,7 +756,6 @@ var xValueObjectHasProperty func(uintptr, string) bool
 
 // Get whether @value has property with @name.
 func (x *Value) ObjectHasProperty(NameVar string) bool {
-
 	cret := xValueObjectHasProperty(x.GoPointer(), NameVar)
 	return cret
 }
@@ -830,7 +810,6 @@ var xValueObjectIsInstanceOf func(uintptr, string) bool
 
 // Get whether the value referenced by @value is an instance of class @name.
 func (x *Value) ObjectIsInstanceOf(NameVar string) bool {
-
 	cret := xValueObjectIsInstanceOf(x.GoPointer(), NameVar)
 	return cret
 }
@@ -839,25 +818,20 @@ var xValueObjectSetProperty func(uintptr, string, uintptr)
 
 // Set @property with @name on @value.
 func (x *Value) ObjectSetProperty(NameVar string, PropertyVar *Value) {
-
 	xValueObjectSetProperty(x.GoPointer(), NameVar, PropertyVar.GoPointer())
-
 }
 
 var xValueObjectSetPropertyAtIndex func(uintptr, uint32, uintptr)
 
 // Set @property at @index on @value.
 func (x *Value) ObjectSetPropertyAtIndex(IndexVar uint32, PropertyVar *Value) {
-
 	xValueObjectSetPropertyAtIndex(x.GoPointer(), IndexVar, PropertyVar.GoPointer())
-
 }
 
 var xValueToBoolean func(uintptr) bool
 
 // Convert @value to a boolean.
 func (x *Value) ToBoolean() bool {
-
 	cret := xValueToBoolean(x.GoPointer())
 	return cret
 }
@@ -866,7 +840,6 @@ var xValueToDouble func(uintptr) float64
 
 // Convert @value to a double.
 func (x *Value) ToDouble() float64 {
-
 	cret := xValueToDouble(x.GoPointer())
 	return cret
 }
@@ -875,7 +848,6 @@ var xValueToInt32 func(uintptr) int32
 
 // Convert @value to a #gint32.
 func (x *Value) ToInt32() int32 {
-
 	cret := xValueToInt32(x.GoPointer())
 	return cret
 }
@@ -885,7 +857,6 @@ var xValueToJson func(uintptr, uint32) string
 // Create a JSON string of @value serialization. If @indent is 0, the resulting JSON will
 // not contain newlines. The size of the indent is clamped to 10 spaces.
 func (x *Value) ToJson(IndentVar uint32) string {
-
 	cret := xValueToJson(x.GoPointer(), IndentVar)
 	return cret
 }
@@ -895,7 +866,6 @@ var xValueToString func(uintptr) string
 // Convert @value to a string. Use jsc_value_to_string_as_bytes() instead, if you need to
 // handle strings containing null characters.
 func (x *Value) ToString() string {
-
 	cret := xValueToString(x.GoPointer())
 	return cret
 }
@@ -905,7 +875,6 @@ var xValueToStringAsBytes func(uintptr) *glib.Bytes
 // Convert @value to a string and return the results as #GBytes. This is needed
 // to handle strings with null characters.
 func (x *Value) ToStringAsBytes() *glib.Bytes {
-
 	cret := xValueToStringAsBytes(x.GoPointer())
 	return cret
 }
@@ -955,7 +924,6 @@ var xValueTypedArrayGetData func(uintptr, *uint) uintptr
 // the same after calls to other JSC API functions. See
 // jsc_value_array_buffer_get_data() for details.
 func (x *Value) TypedArrayGetData(LengthVar *uint) uintptr {
-
 	cret := xValueTypedArrayGetData(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -964,7 +932,6 @@ var xValueTypedArrayGetLength func(uintptr) uint
 
 // Gets the number of elements in a typed array.
 func (x *Value) TypedArrayGetLength() uint {
-
 	cret := xValueTypedArrayGetLength(x.GoPointer())
 	return cret
 }
@@ -973,7 +940,6 @@ var xValueTypedArrayGetOffset func(uintptr) uint
 
 // Gets the offset over the underlying array buffer data.
 func (x *Value) TypedArrayGetOffset() uint {
-
 	cret := xValueTypedArrayGetOffset(x.GoPointer())
 	return cret
 }
@@ -982,7 +948,6 @@ var xValueTypedArrayGetSize func(uintptr) uint
 
 // Gets the size of a typed array.
 func (x *Value) TypedArrayGetSize() uint {
-
 	cret := xValueTypedArrayGetSize(x.GoPointer())
 	return cret
 }
@@ -991,7 +956,6 @@ var xValueTypedArrayGetType func(uintptr) TypedArrayType
 
 // Gets the type of elements contained in a typed array.
 func (x *Value) TypedArrayGetType() TypedArrayType {
-
 	cret := xValueTypedArrayGetType(x.GoPointer())
 	return cret
 }
@@ -1082,5 +1046,4 @@ func init() {
 	core.PuregoSafeRegister(&xValueTypedArrayGetOffset, libs, "jsc_value_typed_array_get_offset")
 	core.PuregoSafeRegister(&xValueTypedArrayGetSize, libs, "jsc_value_typed_array_get_size")
 	core.PuregoSafeRegister(&xValueTypedArrayGetType, libs, "jsc_value_typed_array_get_type")
-
 }

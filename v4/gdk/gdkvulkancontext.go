@@ -15,7 +15,6 @@ var xVulkanErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gdk.VulkanContext] errors.
 func VulkanErrorQuark() glib.Quark {
-
 	cret := xVulkanErrorQuark()
 	return cret
 }
@@ -71,7 +70,6 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -93,5 +91,4 @@ func init() {
 	core.PuregoSafeRegister(&xVulkanErrorQuark, libs, "gdk_vulkan_error_quark")
 
 	core.PuregoSafeRegister(&xVulkanContextGLibType, libs, "gdk_vulkan_context_get_type")
-
 }

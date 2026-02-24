@@ -73,7 +73,6 @@ var xNewCookie func(string, string, string, string, int32) *Cookie
 // As of version 3.4.0 the default value of a cookie's same-site-policy
 // is %SOUP_SAME_SITE_POLICY_LAX.
 func NewCookie(NameVar string, ValueVar string, DomainVar string, PathVar string, MaxAgeVar int32) *Cookie {
-
 	cret := xNewCookie(NameVar, ValueVar, DomainVar, PathVar, MaxAgeVar)
 	return cret
 }
@@ -86,7 +85,6 @@ var xCookieAppliesToUri func(uintptr, *glib.Uri) bool
 // @uri, because it assumes that the caller has already done that.
 // But don't rely on that; it may change in the future.)
 func (x *Cookie) AppliesToUri(UriVar *glib.Uri) bool {
-
 	cret := xCookieAppliesToUri(x.GoPointer(), UriVar)
 	return cret
 }
@@ -95,7 +93,6 @@ var xCookieCopy func(uintptr) *Cookie
 
 // Copies @cookie.
 func (x *Cookie) Copy() *Cookie {
-
 	cret := xCookieCopy(x.GoPointer())
 	return cret
 }
@@ -107,7 +104,6 @@ var xCookieDomainMatches func(uintptr, string) bool
 // The domains match if @cookie should be sent when making a request to @host,
 // or that @cookie should be accepted when receiving a response from @host.
 func (x *Cookie) DomainMatches(HostVar string) bool {
-
 	cret := xCookieDomainMatches(x.GoPointer(), HostVar)
 	return cret
 }
@@ -119,7 +115,6 @@ var xCookieEqual func(uintptr, *Cookie) bool
 // Note that currently, this does not check that the cookie domains
 // match. This may change in the future.
 func (x *Cookie) Equal(Cookie2Var *Cookie) bool {
-
 	cret := xCookieEqual(x.GoPointer(), Cookie2Var)
 	return cret
 }
@@ -128,16 +123,13 @@ var xCookieFree func(uintptr)
 
 // Frees @cookie.
 func (x *Cookie) Free() {
-
 	xCookieFree(x.GoPointer())
-
 }
 
 var xCookieGetDomain func(uintptr) string
 
 // Gets @cookie's domain.
 func (x *Cookie) GetDomain() string {
-
 	cret := xCookieGetDomain(x.GoPointer())
 	return cret
 }
@@ -146,7 +138,6 @@ var xCookieGetExpires func(uintptr) *glib.DateTime
 
 // Gets @cookie's expiration time.
 func (x *Cookie) GetExpires() *glib.DateTime {
-
 	cret := xCookieGetExpires(x.GoPointer())
 	return cret
 }
@@ -155,7 +146,6 @@ var xCookieGetHttpOnly func(uintptr) bool
 
 // Gets @cookie's HttpOnly attribute.
 func (x *Cookie) GetHttpOnly() bool {
-
 	cret := xCookieGetHttpOnly(x.GoPointer())
 	return cret
 }
@@ -164,7 +154,6 @@ var xCookieGetName func(uintptr) string
 
 // Gets @cookie's name.
 func (x *Cookie) GetName() string {
-
 	cret := xCookieGetName(x.GoPointer())
 	return cret
 }
@@ -173,7 +162,6 @@ var xCookieGetPath func(uintptr) string
 
 // Gets @cookie's path.
 func (x *Cookie) GetPath() string {
-
 	cret := xCookieGetPath(x.GoPointer())
 	return cret
 }
@@ -182,7 +170,6 @@ var xCookieGetSameSitePolicy func(uintptr) SameSitePolicy
 
 // Returns the same-site policy for this cookie.
 func (x *Cookie) GetSameSitePolicy() SameSitePolicy {
-
 	cret := xCookieGetSameSitePolicy(x.GoPointer())
 	return cret
 }
@@ -191,7 +178,6 @@ var xCookieGetSecure func(uintptr) bool
 
 // Gets @cookie's secure attribute.
 func (x *Cookie) GetSecure() bool {
-
 	cret := xCookieGetSecure(x.GoPointer())
 	return cret
 }
@@ -200,7 +186,6 @@ var xCookieGetValue func(uintptr) string
 
 // Gets @cookie's value.
 func (x *Cookie) GetValue() string {
-
 	cret := xCookieGetValue(x.GoPointer())
 	return cret
 }
@@ -209,9 +194,7 @@ var xCookieSetDomain func(uintptr, string)
 
 // Sets @cookie's domain to @domain.
 func (x *Cookie) SetDomain(DomainVar string) {
-
 	xCookieSetDomain(x.GoPointer(), DomainVar)
-
 }
 
 var xCookieSetExpires func(uintptr, *glib.DateTime)
@@ -223,9 +206,7 @@ var xCookieSetExpires func(uintptr, *glib.DateTime)
 //
 // (This sets the same property as [method@Cookie.set_max_age].)
 func (x *Cookie) SetExpires(ExpiresVar *glib.DateTime) {
-
 	xCookieSetExpires(x.GoPointer(), ExpiresVar)
-
 }
 
 var xCookieSetHttpOnly func(uintptr, bool)
@@ -235,9 +216,7 @@ var xCookieSetHttpOnly func(uintptr, bool)
 // If %TRUE, @cookie will be marked as "http only", meaning it should not be
 // exposed to web page scripts or other untrusted code.
 func (x *Cookie) SetHttpOnly(HttpOnlyVar bool) {
-
 	xCookieSetHttpOnly(x.GoPointer(), HttpOnlyVar)
-
 }
 
 var xCookieSetMaxAge func(uintptr, int32)
@@ -254,27 +233,21 @@ var xCookieSetMaxAge func(uintptr, int32)
 //
 // This sets the same property as [method@Cookie.set_expires].
 func (x *Cookie) SetMaxAge(MaxAgeVar int32) {
-
 	xCookieSetMaxAge(x.GoPointer(), MaxAgeVar)
-
 }
 
 var xCookieSetName func(uintptr, string)
 
 // Sets @cookie's name to @name.
 func (x *Cookie) SetName(NameVar string) {
-
 	xCookieSetName(x.GoPointer(), NameVar)
-
 }
 
 var xCookieSetPath func(uintptr, string)
 
 // Sets @cookie's path to @path.
 func (x *Cookie) SetPath(PathVar string) {
-
 	xCookieSetPath(x.GoPointer(), PathVar)
-
 }
 
 var xCookieSetSameSitePolicy func(uintptr, SameSitePolicy)
@@ -283,9 +256,7 @@ var xCookieSetSameSitePolicy func(uintptr, SameSitePolicy)
 // [method@CookieJar.get_cookie_list_with_same_site_info] this sets the policy
 // of when this cookie should be exposed.
 func (x *Cookie) SetSameSitePolicy(PolicyVar SameSitePolicy) {
-
 	xCookieSetSameSitePolicy(x.GoPointer(), PolicyVar)
-
 }
 
 var xCookieSetSecure func(uintptr, bool)
@@ -295,18 +266,14 @@ var xCookieSetSecure func(uintptr, bool)
 // If %TRUE, @cookie will only be transmitted from the client to the server over
 // secure (https) connections.
 func (x *Cookie) SetSecure(SecureVar bool) {
-
 	xCookieSetSecure(x.GoPointer(), SecureVar)
-
 }
 
 var xCookieSetValue func(uintptr, string)
 
 // Sets @cookie's value to @value.
 func (x *Cookie) SetValue(ValueVar string) {
-
 	xCookieSetValue(x.GoPointer(), ValueVar)
-
 }
 
 var xCookieToCookieHeader func(uintptr) string
@@ -314,7 +281,6 @@ var xCookieToCookieHeader func(uintptr) string
 // Serializes @cookie in the format used by the Cookie header (ie, for
 // returning a cookie from a [class@Session] to a server).
 func (x *Cookie) ToCookieHeader() string {
-
 	cret := xCookieToCookieHeader(x.GoPointer())
 	return cret
 }
@@ -325,7 +291,6 @@ var xCookieToSetCookieHeader func(uintptr) string
 //
 // i.e. for sending a cookie from a [class@Server] to a client.
 func (x *Cookie) ToSetCookieHeader() string {
-
 	cret := xCookieToSetCookieHeader(x.GoPointer())
 	return cret
 }
@@ -375,7 +340,6 @@ var xNewHSTSPolicy func(string, uint32, bool) *HSTSPolicy
 // If @include_subdomains is %TRUE, the strict transport security policy
 // must also be enforced on all subdomains of @domain.
 func NewHSTSPolicy(DomainVar string, MaxAgeVar uint32, IncludeSubdomainsVar bool) *HSTSPolicy {
-
 	cret := xNewHSTSPolicy(DomainVar, MaxAgeVar, IncludeSubdomainsVar)
 	return cret
 }
@@ -385,7 +349,6 @@ var xNewHSTSPolicyFromResponse func(uintptr) *HSTSPolicy
 // Parses @msg's first "Strict-Transport-Security" response header and
 // returns a #SoupHSTSPolicy.
 func NewHSTSPolicyFromResponse(MsgVar *Message) *HSTSPolicy {
-
 	cret := xNewHSTSPolicyFromResponse(MsgVar.GoPointer())
 	return cret
 }
@@ -397,7 +360,6 @@ var xNewHSTSPolicyFull func(string, uint32, *glib.DateTime, bool) *HSTSPolicy
 //
 // See [ctor@HSTSPolicy.new] for details.
 func NewHSTSPolicyFull(DomainVar string, MaxAgeVar uint32, ExpiresVar *glib.DateTime, IncludeSubdomainsVar bool) *HSTSPolicy {
-
 	cret := xNewHSTSPolicyFull(DomainVar, MaxAgeVar, ExpiresVar, IncludeSubdomainsVar)
 	return cret
 }
@@ -418,7 +380,6 @@ var xNewHSTSPolicySessionPolicy func(string, bool) *HSTSPolicy
 // If @include_subdomains is %TRUE, the strict transport security policy
 // must also be enforced on all subdomains of @domain.
 func NewHSTSPolicySessionPolicy(DomainVar string, IncludeSubdomainsVar bool) *HSTSPolicy {
-
 	cret := xNewHSTSPolicySessionPolicy(DomainVar, IncludeSubdomainsVar)
 	return cret
 }
@@ -427,7 +388,6 @@ var xHSTSPolicyCopy func(uintptr) *HSTSPolicy
 
 // Copies @policy.
 func (x *HSTSPolicy) Copy() *HSTSPolicy {
-
 	cret := xHSTSPolicyCopy(x.GoPointer())
 	return cret
 }
@@ -436,7 +396,6 @@ var xHSTSPolicyEqual func(uintptr, *HSTSPolicy) bool
 
 // Tests if @policy1 and @policy2 are equal.
 func (x *HSTSPolicy) Equal(Policy2Var *HSTSPolicy) bool {
-
 	cret := xHSTSPolicyEqual(x.GoPointer(), Policy2Var)
 	return cret
 }
@@ -445,16 +404,13 @@ var xHSTSPolicyFree func(uintptr)
 
 // Frees @policy.
 func (x *HSTSPolicy) Free() {
-
 	xHSTSPolicyFree(x.GoPointer())
-
 }
 
 var xHSTSPolicyGetDomain func(uintptr) string
 
 // Gets @policy's domain.
 func (x *HSTSPolicy) GetDomain() string {
-
 	cret := xHSTSPolicyGetDomain(x.GoPointer())
 	return cret
 }
@@ -463,7 +419,6 @@ var xHSTSPolicyGetExpires func(uintptr) *glib.DateTime
 
 // Returns the expiration date for @policy.
 func (x *HSTSPolicy) GetExpires() *glib.DateTime {
-
 	cret := xHSTSPolicyGetExpires(x.GoPointer())
 	return cret
 }
@@ -472,7 +427,6 @@ var xHSTSPolicyGetMaxAge func(uintptr) uint32
 
 // Returns the max age for @policy.
 func (x *HSTSPolicy) GetMaxAge() uint32 {
-
 	cret := xHSTSPolicyGetMaxAge(x.GoPointer())
 	return cret
 }
@@ -481,7 +435,6 @@ var xHSTSPolicyIncludesSubdomains func(uintptr) bool
 
 // Gets whether @policy include its subdomains.
 func (x *HSTSPolicy) IncludesSubdomains() bool {
-
 	cret := xHSTSPolicyIncludesSubdomains(x.GoPointer())
 	return cret
 }
@@ -492,7 +445,6 @@ var xHSTSPolicyIsExpired func(uintptr) bool
 //
 // Permanent policies never expire.
 func (x *HSTSPolicy) IsExpired() bool {
-
 	cret := xHSTSPolicyIsExpired(x.GoPointer())
 	return cret
 }
@@ -503,7 +455,6 @@ var xHSTSPolicyIsSessionPolicy func(uintptr) bool
 //
 // See [ctor@HSTSPolicy.new_session_policy] for details.
 func (x *HSTSPolicy) IsSessionPolicy() bool {
-
 	cret := xHSTSPolicyIsSessionPolicy(x.GoPointer())
 	return cret
 }
@@ -540,7 +491,6 @@ var xMessageMetricsCopy func(uintptr) *MessageMetrics
 
 // Copies @metrics.
 func (x *MessageMetrics) Copy() *MessageMetrics {
-
 	cret := xMessageMetricsCopy(x.GoPointer())
 	return cret
 }
@@ -549,9 +499,7 @@ var xMessageMetricsFree func(uintptr)
 
 // Frees @metrics.
 func (x *MessageMetrics) Free() {
-
 	xMessageMetricsFree(x.GoPointer())
-
 }
 
 var xMessageMetricsGetConnectEnd func(uintptr) uint64
@@ -564,7 +512,6 @@ var xMessageMetricsGetConnectEnd func(uintptr) uint64
 // persistent connection was used or resource was loaded from the local disk
 // cache).
 func (x *MessageMetrics) GetConnectEnd() uint64 {
-
 	cret := xMessageMetricsGetConnectEnd(x.GoPointer())
 	return cret
 }
@@ -578,7 +525,6 @@ var xMessageMetricsGetConnectStart func(uintptr) uint64
 // persistent connection was used or resource was loaded from the local disk
 // cache).
 func (x *MessageMetrics) GetConnectStart() uint64 {
-
 	cret := xMessageMetricsGetConnectStart(x.GoPointer())
 	return cret
 }
@@ -592,7 +538,6 @@ var xMessageMetricsGetDnsEnd func(uintptr) uint64
 // persistent connection was used or resource was loaded from the local disk
 // cache).
 func (x *MessageMetrics) GetDnsEnd() uint64 {
-
 	cret := xMessageMetricsGetDnsEnd(x.GoPointer())
 	return cret
 }
@@ -606,7 +551,6 @@ var xMessageMetricsGetDnsStart func(uintptr) uint64
 // persistent connection was used or resource was loaded from the local disk
 // cache).
 func (x *MessageMetrics) GetDnsStart() uint64 {
-
 	cret := xMessageMetricsGetDnsStart(x.GoPointer())
 	return cret
 }
@@ -616,7 +560,6 @@ var xMessageMetricsGetFetchStart func(uintptr) uint64
 // Get the time immediately before the [class@Message] started to
 // fetch a resource either from a remote server or local disk cache.
 func (x *MessageMetrics) GetFetchStart() uint64 {
-
 	cret := xMessageMetricsGetFetchStart(x.GoPointer())
 	return cret
 }
@@ -631,7 +574,6 @@ var xMessageMetricsGetRequestBodyBytesSent func(uintptr) uint64
 // before [signal@Message::wrote-body] signal is emitted, but you might get an
 // intermediate value if called before.
 func (x *MessageMetrics) GetRequestBodyBytesSent() uint64 {
-
 	cret := xMessageMetricsGetRequestBodyBytesSent(x.GoPointer())
 	return cret
 }
@@ -644,7 +586,6 @@ var xMessageMetricsGetRequestBodySize func(uintptr) uint64
 // This value is available right before [signal@Message::wrote-body] signal is
 // emitted, but you might get an intermediate value if called before.
 func (x *MessageMetrics) GetRequestBodySize() uint64 {
-
 	cret := xMessageMetricsGetRequestBodySize(x.GoPointer())
 	return cret
 }
@@ -656,7 +597,6 @@ var xMessageMetricsGetRequestHeaderBytesSent func(uintptr) uint64
 // This value is available right before [signal@Message::wrote-headers] signal
 // is emitted, but you might get an intermediate value if called before.
 func (x *MessageMetrics) GetRequestHeaderBytesSent() uint64 {
-
 	cret := xMessageMetricsGetRequestHeaderBytesSent(x.GoPointer())
 	return cret
 }
@@ -666,7 +606,6 @@ var xMessageMetricsGetRequestStart func(uintptr) uint64
 // Get the time immediately before the [class@Message] started the
 // request of the resource from the server or the local disk cache.
 func (x *MessageMetrics) GetRequestStart() uint64 {
-
 	cret := xMessageMetricsGetRequestStart(x.GoPointer())
 	return cret
 }
@@ -679,7 +618,6 @@ var xMessageMetricsGetResponseBodyBytesReceived func(uintptr) uint64
 // emitted, but you might get an intermediate value if called before. For
 // resources loaded from the disk cache this value is always 0.
 func (x *MessageMetrics) GetResponseBodyBytesReceived() uint64 {
-
 	cret := xMessageMetricsGetResponseBodyBytesReceived(x.GoPointer())
 	return cret
 }
@@ -694,7 +632,6 @@ var xMessageMetricsGetResponseBodySize func(uintptr) uint64
 // available right before [signal@Message::got-body] signal is emitted, but you
 // might get an intermediate value if called before.
 func (x *MessageMetrics) GetResponseBodySize() uint64 {
-
 	cret := xMessageMetricsGetResponseBodySize(x.GoPointer())
 	return cret
 }
@@ -707,7 +644,6 @@ var xMessageMetricsGetResponseEnd func(uintptr) uint64
 // In case of load failure, this returns the time immediately before the
 // fetch is aborted.
 func (x *MessageMetrics) GetResponseEnd() uint64 {
-
 	cret := xMessageMetricsGetResponseEnd(x.GoPointer())
 	return cret
 }
@@ -720,7 +656,6 @@ var xMessageMetricsGetResponseHeaderBytesReceived func(uintptr) uint64
 // is emitted, but you might get an intermediate value if called before.
 // For resources loaded from the disk cache this value is always 0.
 func (x *MessageMetrics) GetResponseHeaderBytesReceived() uint64 {
-
 	cret := xMessageMetricsGetResponseHeaderBytesReceived(x.GoPointer())
 	return cret
 }
@@ -730,7 +665,6 @@ var xMessageMetricsGetResponseStart func(uintptr) uint64
 // Get the time immediately after the [class@Message] received the first
 // bytes of the response from the server or the local disk cache.
 func (x *MessageMetrics) GetResponseStart() uint64 {
-
 	cret := xMessageMetricsGetResponseStart(x.GoPointer())
 	return cret
 }
@@ -744,7 +678,6 @@ var xMessageMetricsGetTlsStart func(uintptr) uint64
 // (connection was not secure, a persistent connection was used or resource was
 // loaded from the local disk cache).
 func (x *MessageMetrics) GetTlsStart() uint64 {
-
 	cret := xMessageMetricsGetTlsStart(x.GoPointer())
 	return cret
 }
@@ -826,5 +759,4 @@ func init() {
 	core.PuregoSafeRegister(&xMessageMetricsGetResponseHeaderBytesReceived, libs, "soup_message_metrics_get_response_header_bytes_received")
 	core.PuregoSafeRegister(&xMessageMetricsGetResponseStart, libs, "soup_message_metrics_get_response_start")
 	core.PuregoSafeRegister(&xMessageMetricsGetTlsStart, libs, "soup_message_metrics_get_tls_start")
-
 }

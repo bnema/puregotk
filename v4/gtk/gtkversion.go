@@ -55,7 +55,6 @@ var xCheckVersion func(uint32, uint32, uint32) string
 // old version of gtk_check_version(), but still get loaded
 // into an application using a newer version of GTK.
 func CheckVersion(RequiredMajorVar uint32, RequiredMinorVar uint32, RequiredMicroVar uint32) string {
-
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
 	return cret
 }
@@ -66,7 +65,6 @@ var xGetBinaryAge func() uint32
 //
 // If `libtool` means nothing to you, don't worry about it.
 func GetBinaryAge() uint32 {
-
 	cret := xGetBinaryAge()
 	return cret
 }
@@ -77,7 +75,6 @@ var xGetInterfaceAge func() uint32
 //
 // If `libtool` means nothing to you, don't worry about it.
 func GetInterfaceAge() uint32 {
-
 	cret := xGetInterfaceAge()
 	return cret
 }
@@ -93,7 +90,6 @@ var xGetMajorVersion func() uint32
 // macro, which represents the major version of the GTK headers you
 // have included when compiling your code.
 func GetMajorVersion() uint32 {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -109,7 +105,6 @@ var xGetMicroVersion func() uint32
 // %GTK_MICRO_VERSION macro, which represents the micro version of the
 // GTK headers you have included when compiling your code.
 func GetMicroVersion() uint32 {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -125,7 +120,6 @@ var xGetMinorVersion func() uint32
 // %GTK_MINOR_VERSION macro, which represents the minor version of the
 // GTK headers you have included when compiling your code.
 func GetMinorVersion() uint32 {
-
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -148,5 +142,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "gtk_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "gtk_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "gtk_get_minor_version")
-
 }

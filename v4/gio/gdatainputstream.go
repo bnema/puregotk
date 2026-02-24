@@ -192,7 +192,6 @@ var xDataInputStreamGetByteOrder func(uintptr) DataStreamByteOrder
 
 // Gets the byte order for the data input stream.
 func (x *DataInputStream) GetByteOrder() DataStreamByteOrder {
-
 	cret := xDataInputStreamGetByteOrder(x.GoPointer())
 	return cret
 }
@@ -201,7 +200,6 @@ var xDataInputStreamGetNewlineType func(uintptr) DataStreamNewlineType
 
 // Gets the current newline type for the @stream.
 func (x *DataInputStream) GetNewlineType() DataStreamNewlineType {
-
 	cret := xDataInputStreamGetNewlineType(x.GoPointer())
 	return cret
 }
@@ -217,7 +215,6 @@ func (x *DataInputStream) ReadByte(CancellableVar *Cancellable) (byte, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadInt16 func(uintptr, uintptr, **glib.Error) int16
@@ -234,7 +231,6 @@ func (x *DataInputStream) ReadInt16(CancellableVar *Cancellable) (int16, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadInt32 func(uintptr, uintptr, **glib.Error) int32
@@ -255,7 +251,6 @@ func (x *DataInputStream) ReadInt32(CancellableVar *Cancellable) (int32, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadInt64 func(uintptr, uintptr, **glib.Error) int64
@@ -276,7 +271,6 @@ func (x *DataInputStream) ReadInt64(CancellableVar *Cancellable) (int64, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadLine func(uintptr, *uint, uintptr, **glib.Error) uintptr
@@ -296,7 +290,6 @@ func (x *DataInputStream) ReadLine(LengthVar *uint, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadLineAsync func(uintptr, int32, uintptr, uintptr, uintptr)
@@ -308,9 +301,7 @@ var xDataInputStreamReadLineAsync func(uintptr, int32, uintptr, uintptr, uintptr
 // can then call g_data_input_stream_read_line_finish() to get
 // the result of the operation.
 func (x *DataInputStream) ReadLineAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDataInputStreamReadLineAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDataInputStreamReadLineFinish func(uintptr, uintptr, *uint, **glib.Error) uintptr
@@ -327,7 +318,6 @@ func (x *DataInputStream) ReadLineFinish(ResultVar AsyncResult, LengthVar *uint)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadLineFinishUtf8 func(uintptr, uintptr, *uint, **glib.Error) string
@@ -342,7 +332,6 @@ func (x *DataInputStream) ReadLineFinishUtf8(ResultVar AsyncResult, LengthVar *u
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadLineUtf8 func(uintptr, *uint, uintptr, **glib.Error) string
@@ -360,7 +349,6 @@ func (x *DataInputStream) ReadLineUtf8(LengthVar *uint, CancellableVar *Cancella
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUint16 func(uintptr, uintptr, **glib.Error) uint16
@@ -377,7 +365,6 @@ func (x *DataInputStream) ReadUint16(CancellableVar *Cancellable) (uint16, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUint32 func(uintptr, uintptr, **glib.Error) uint32
@@ -398,7 +385,6 @@ func (x *DataInputStream) ReadUint32(CancellableVar *Cancellable) (uint32, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUint64 func(uintptr, uintptr, **glib.Error) uint64
@@ -419,7 +405,6 @@ func (x *DataInputStream) ReadUint64(CancellableVar *Cancellable) (uint64, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUntil func(uintptr, string, *uint, uintptr, **glib.Error) string
@@ -443,7 +428,6 @@ func (x *DataInputStream) ReadUntil(StopCharsVar string, LengthVar *uint, Cancel
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUntilAsync func(uintptr, string, int32, uintptr, uintptr, uintptr)
@@ -464,9 +448,7 @@ var xDataInputStreamReadUntilAsync func(uintptr, string, int32, uintptr, uintptr
 // will be marked as deprecated in a future release.  Use
 // g_data_input_stream_read_upto_async() instead.
 func (x *DataInputStream) ReadUntilAsync(StopCharsVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDataInputStreamReadUntilAsync(x.GoPointer(), StopCharsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDataInputStreamReadUntilFinish func(uintptr, uintptr, *uint, **glib.Error) string
@@ -481,7 +463,6 @@ func (x *DataInputStream) ReadUntilFinish(ResultVar AsyncResult, LengthVar *uint
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUpto func(uintptr, string, int, *uint, uintptr, **glib.Error) string
@@ -506,7 +487,6 @@ func (x *DataInputStream) ReadUpto(StopCharsVar string, StopCharsLenVar int, Len
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamReadUptoAsync func(uintptr, string, int, int32, uintptr, uintptr, uintptr)
@@ -526,9 +506,7 @@ var xDataInputStreamReadUptoAsync func(uintptr, string, int, int32, uintptr, uin
 // can then call g_data_input_stream_read_upto_finish() to get
 // the result of the operation.
 func (x *DataInputStream) ReadUptoAsync(StopCharsVar string, StopCharsLenVar int, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
 	xDataInputStreamReadUptoAsync(x.GoPointer(), StopCharsVar, StopCharsLenVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xDataInputStreamReadUptoFinish func(uintptr, uintptr, *uint, **glib.Error) string
@@ -549,7 +527,6 @@ func (x *DataInputStream) ReadUptoFinish(ResultVar AsyncResult, LengthVar *uint)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDataInputStreamSetByteOrder func(uintptr, DataStreamByteOrder)
@@ -557,9 +534,7 @@ var xDataInputStreamSetByteOrder func(uintptr, DataStreamByteOrder)
 // This function sets the byte order for the given @stream. All subsequent
 // reads from the @stream will be read in the given @order.
 func (x *DataInputStream) SetByteOrder(OrderVar DataStreamByteOrder) {
-
 	xDataInputStreamSetByteOrder(x.GoPointer(), OrderVar)
-
 }
 
 var xDataInputStreamSetNewlineType func(uintptr, DataStreamNewlineType)
@@ -570,9 +545,7 @@ var xDataInputStreamSetNewlineType func(uintptr, DataStreamNewlineType)
 // chunk ends in "CR" we must read an additional byte to know if this is "CR" or
 // "CR LF", and this might block if there is no more data available.
 func (x *DataInputStream) SetNewlineType(TypeVar DataStreamNewlineType) {
-
 	xDataInputStreamSetNewlineType(x.GoPointer(), TypeVar)
-
 }
 
 func (c *DataInputStream) GoPointer() uintptr {
@@ -588,7 +561,6 @@ func (c *DataInputStream) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *DataInputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -596,7 +568,6 @@ func (x *DataInputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *DataInputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -623,12 +594,10 @@ func (x *DataInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancellab
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *DataInputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -650,7 +619,6 @@ func (x *DataInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -691,5 +659,4 @@ func init() {
 	core.PuregoSafeRegister(&xDataInputStreamReadUptoFinish, libs, "g_data_input_stream_read_upto_finish")
 	core.PuregoSafeRegister(&xDataInputStreamSetByteOrder, libs, "g_data_input_stream_set_byte_order")
 	core.PuregoSafeRegister(&xDataInputStreamSetNewlineType, libs, "g_data_input_stream_set_newline_type")
-
 }

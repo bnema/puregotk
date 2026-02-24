@@ -40,7 +40,6 @@ var xDbusErrorEncodeGerror func(*glib.Error) string
 // This function is typically only used in object mappings to put a
 // [type@GLib.Error] on the wire. Regular applications should not use it.
 func DbusErrorEncodeGerror(ErrorVar *glib.Error) string {
-
 	cret := xDbusErrorEncodeGerror(ErrorVar)
 	return cret
 }
@@ -54,7 +53,6 @@ var xDbusErrorGetRemoteError func(*glib.Error) string
 // (for example, [method@Gio.DBusConnection.call_finish]) unless
 // [func@Gio.DBusError.strip_remote_error] has already been used on @error.
 func DbusErrorGetRemoteError(ErrorVar *glib.Error) string {
-
 	cret := xDbusErrorGetRemoteError(ErrorVar)
 	return cret
 }
@@ -65,7 +63,6 @@ var xDbusErrorIsRemoteError func(*glib.Error) bool
 //
 // If so, use [func@Gio.DBusError.get_remote_error] to get the name of the error.
 func DbusErrorIsRemoteError(ErrorVar *glib.Error) bool {
-
 	cret := xDbusErrorIsRemoteError(ErrorVar)
 	return cret
 }
@@ -102,7 +99,6 @@ var xDbusErrorNewForDbusError func(string, string) *glib.Error
 // [type@GLib.Error] instances for applications. Regular applications should not
 // use it.
 func DbusErrorNewForDbusError(DbusErrorNameVar string, DbusErrorMessageVar string) *glib.Error {
-
 	cret := xDbusErrorNewForDbusError(DbusErrorNameVar, DbusErrorMessageVar)
 	return cret
 }
@@ -115,7 +111,6 @@ var xDbusErrorRegisterError func(glib.Quark, int32, string) bool
 // This is typically done in the function that returns the [type@GLib.Quark] for
 // an error domain.
 func DbusErrorRegisterError(ErrorDomainVar glib.Quark, ErrorCodeVar int32, DbusErrorNameVar string) bool {
-
 	cret := xDbusErrorRegisterError(ErrorDomainVar, ErrorCodeVar, DbusErrorNameVar)
 	return cret
 }
@@ -128,9 +123,7 @@ var xDbusErrorRegisterErrorDomain func(string, uint, []DBusErrorEntry, uint32)
 // While @quark_volatile has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func DbusErrorRegisterErrorDomain(ErrorDomainQuarkNameVar string, QuarkVolatileVar uint, EntriesVar []DBusErrorEntry, NumEntriesVar uint32) {
-
 	xDbusErrorRegisterErrorDomain(ErrorDomainQuarkNameVar, QuarkVolatileVar, EntriesVar, NumEntriesVar)
-
 }
 
 var xDbusErrorStripRemoteError func(*glib.Error) bool
@@ -144,7 +137,6 @@ var xDbusErrorStripRemoteError func(*glib.Error) bool
 //
 // This is typically used when presenting errors to the end user.
 func DbusErrorStripRemoteError(ErrorVar *glib.Error) bool {
-
 	cret := xDbusErrorStripRemoteError(ErrorVar)
 	return cret
 }
@@ -154,7 +146,6 @@ var xDbusErrorUnregisterError func(glib.Quark, int32, string) bool
 // Destroys an association previously set up with
 // [func@Gio.DBusError.register_error].
 func DbusErrorUnregisterError(ErrorDomainVar glib.Quark, ErrorCodeVar int32, DbusErrorNameVar string) bool {
-
 	cret := xDbusErrorUnregisterError(ErrorDomainVar, ErrorCodeVar, DbusErrorNameVar)
 	return cret
 }
@@ -179,5 +170,4 @@ func init() {
 	core.PuregoSafeRegister(&xDbusErrorRegisterErrorDomain, libs, "g_dbus_error_register_error_domain")
 	core.PuregoSafeRegister(&xDbusErrorStripRemoteError, libs, "g_dbus_error_strip_remote_error")
 	core.PuregoSafeRegister(&xDbusErrorUnregisterError, libs, "g_dbus_error_unregister_error")
-
 }

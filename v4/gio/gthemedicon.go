@@ -115,16 +115,13 @@ var xThemedIconAppendName func(uintptr, string)
 // Note that doing so invalidates the hash computed by prior calls
 // to g_icon_hash().
 func (x *ThemedIcon) AppendName(IconnameVar string) {
-
 	xThemedIconAppendName(x.GoPointer(), IconnameVar)
-
 }
 
 var xThemedIconGetNames func(uintptr) []string
 
 // Gets the names of icons from within @icon.
 func (x *ThemedIcon) GetNames() []string {
-
 	cret := xThemedIconGetNames(x.GoPointer())
 	return cret
 }
@@ -136,9 +133,7 @@ var xThemedIconPrependName func(uintptr, string)
 // Note that doing so invalidates the hash computed by prior calls
 // to g_icon_hash().
 func (x *ThemedIcon) PrependName(IconnameVar string) {
-
 	xThemedIconPrependName(x.GoPointer(), IconnameVar)
-
 }
 
 func (c *ThemedIcon) GoPointer() uintptr {
@@ -229,14 +224,12 @@ func (x *ThemedIcon) GetPropertyUseDefaultFallbacks() bool {
 
 // Checks if two icons are equal.
 func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
-
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *ThemedIcon) Hash() uint32 {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -247,7 +240,6 @@ func (x *ThemedIcon) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *ThemedIcon) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -269,7 +261,6 @@ func (x *ThemedIcon) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *ThemedIcon) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
@@ -295,5 +286,4 @@ func init() {
 	core.PuregoSafeRegister(&xThemedIconAppendName, libs, "g_themed_icon_append_name")
 	core.PuregoSafeRegister(&xThemedIconGetNames, libs, "g_themed_icon_get_names")
 	core.PuregoSafeRegister(&xThemedIconPrependName, libs, "g_themed_icon_prepend_name")
-
 }

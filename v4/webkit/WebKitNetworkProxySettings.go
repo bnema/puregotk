@@ -63,7 +63,6 @@ var xNewNetworkProxySettings func(string, []string) *NetworkProxySettings
 // to connections made to hosts identified by address. That is, if example.com has an address of 192.168.1.1, and @ignore_hosts
 // contains only "192.168.1.1", then a connection to "example.com" will use the proxy, and a connection to 192.168.1.1" will not.
 func NewNetworkProxySettings(DefaultProxyUriVar string, IgnoreHostsVar []string) *NetworkProxySettings {
-
 	cret := xNewNetworkProxySettings(DefaultProxyUriVar, IgnoreHostsVar)
 	return cret
 }
@@ -76,16 +75,13 @@ var xNetworkProxySettingsAddProxyForScheme func(uintptr, string, string)
 // As with the default proxy URI, if @proxy_uri starts with "socks://", it will be treated as referring to
 // all three of the socks5, socks4a, and socks4 proxy types.
 func (x *NetworkProxySettings) AddProxyForScheme(SchemeVar string, ProxyUriVar string) {
-
 	xNetworkProxySettingsAddProxyForScheme(x.GoPointer(), SchemeVar, ProxyUriVar)
-
 }
 
 var xNetworkProxySettingsCopy func(uintptr) *NetworkProxySettings
 
 // Make a copy of the #WebKitNetworkProxySettings.
 func (x *NetworkProxySettings) Copy() *NetworkProxySettings {
-
 	cret := xNetworkProxySettingsCopy(x.GoPointer())
 	return cret
 }
@@ -94,9 +90,7 @@ var xNetworkProxySettingsFree func(uintptr)
 
 // Free the #WebKitNetworkProxySettings.
 func (x *NetworkProxySettings) Free() {
-
 	xNetworkProxySettingsFree(x.GoPointer())
-
 }
 
 // Enum values used to set the network proxy mode.
@@ -139,5 +133,4 @@ func init() {
 	core.PuregoSafeRegister(&xNetworkProxySettingsAddProxyForScheme, libs, "webkit_network_proxy_settings_add_proxy_for_scheme")
 	core.PuregoSafeRegister(&xNetworkProxySettingsCopy, libs, "webkit_network_proxy_settings_copy")
 	core.PuregoSafeRegister(&xNetworkProxySettingsFree, libs, "webkit_network_proxy_settings_free")
-
 }

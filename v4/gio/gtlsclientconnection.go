@@ -115,9 +115,7 @@ func (x *TlsClientConnectionBase) SetGoPointer(ptr uintptr) {
 // reuse would be a privacy weakness. Using this function causes the
 // ticket to be copied without regard for privacy considerations.
 func (x *TlsClientConnectionBase) CopySessionState(SourceVar TlsClientConnection) {
-
 	XGTlsClientConnectionCopySessionState(x.GoPointer(), SourceVar.GoPointer())
-
 }
 
 // Gets the list of distinguished names of the Certificate Authorities
@@ -128,7 +126,6 @@ func (x *TlsClientConnectionBase) CopySessionState(SourceVar TlsClientConnection
 // Each item in the list is a #GByteArray which contains the complete
 // subject DN of the certificate authority.
 func (x *TlsClientConnectionBase) GetAcceptedCas() *glib.List {
-
 	cret := XGTlsClientConnectionGetAcceptedCas(x.GoPointer())
 	return cret
 }
@@ -151,7 +148,6 @@ func (x *TlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 // SSL 3.0 is no longer supported. See
 // g_tls_client_connection_set_use_ssl3() for details.
 func (x *TlsClientConnectionBase) GetUseSsl3() bool {
-
 	cret := XGTlsClientConnectionGetUseSsl3(x.GoPointer())
 	return cret
 }
@@ -162,7 +158,6 @@ func (x *TlsClientConnectionBase) GetUseSsl3() bool {
 // to use correctly. See #GTlsClientConnection:validation-flags for more
 // information.
 func (x *TlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
-
 	cret := XGTlsClientConnectionGetValidationFlags(x.GoPointer())
 	return cret
 }
@@ -172,9 +167,7 @@ func (x *TlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 // to let @conn know what name to look for in the certificate when
 // performing %G_TLS_CERTIFICATE_BAD_IDENTITY validation, if enabled.
 func (x *TlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectable) {
-
 	XGTlsClientConnectionSetServerIdentity(x.GoPointer(), IdentityVar.GoPointer())
-
 }
 
 // Since GLib 2.42.1, SSL 3.0 is no longer supported.
@@ -188,9 +181,7 @@ func (x *TlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectabl
 //
 // Since GLib 2.64, this function does nothing.
 func (x *TlsClientConnectionBase) SetUseSsl3(UseSsl3Var bool) {
-
 	XGTlsClientConnectionSetUseSsl3(x.GoPointer(), UseSsl3Var)
-
 }
 
 // Sets @conn's validation flags, to override the default set of
@@ -201,9 +192,7 @@ func (x *TlsClientConnectionBase) SetUseSsl3(UseSsl3Var bool) {
 // to use correctly. See #GTlsClientConnection:validation-flags for more
 // information.
 func (x *TlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFlags) {
-
 	XGTlsClientConnectionSetValidationFlags(x.GoPointer(), FlagsVar)
-
 }
 
 // SetPropertyUseSsl3 sets the "use-ssl3" property.
@@ -229,14 +218,16 @@ func (x *TlsClientConnectionBase) GetPropertyUseSsl3() bool {
 	return v.GetBoolean()
 }
 
-var XGTlsClientConnectionCopySessionState func(uintptr, uintptr)
-var XGTlsClientConnectionGetAcceptedCas func(uintptr) *glib.List
-var XGTlsClientConnectionGetServerIdentity func(uintptr) uintptr
-var XGTlsClientConnectionGetUseSsl3 func(uintptr) bool
-var XGTlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
-var XGTlsClientConnectionSetServerIdentity func(uintptr, uintptr)
-var XGTlsClientConnectionSetUseSsl3 func(uintptr, bool)
-var XGTlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+var (
+	XGTlsClientConnectionCopySessionState   func(uintptr, uintptr)
+	XGTlsClientConnectionGetAcceptedCas     func(uintptr) *glib.List
+	XGTlsClientConnectionGetServerIdentity  func(uintptr) uintptr
+	XGTlsClientConnectionGetUseSsl3         func(uintptr) bool
+	XGTlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
+	XGTlsClientConnectionSetServerIdentity  func(uintptr, uintptr)
+	XGTlsClientConnectionSetUseSsl3         func(uintptr, bool)
+	XGTlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+)
 
 var xTlsClientConnectionNew func(uintptr, uintptr, **glib.Error) uintptr
 
@@ -262,7 +253,6 @@ func TlsClientConnectionNew(BaseIoStreamVar *IOStream, ServerIdentityVar SocketC
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
@@ -289,5 +279,4 @@ func init() {
 	core.PuregoSafeRegister(&XGTlsClientConnectionSetServerIdentity, libs, "g_tls_client_connection_set_server_identity")
 	core.PuregoSafeRegister(&XGTlsClientConnectionSetUseSsl3, libs, "g_tls_client_connection_set_use_ssl3")
 	core.PuregoSafeRegister(&XGTlsClientConnectionSetValidationFlags, libs, "g_tls_client_connection_set_validation_flags")
-
 }

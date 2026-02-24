@@ -126,7 +126,6 @@ func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint32
 		cbFn := *cb
 
 		cbFn(fa, TextVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -143,9 +142,7 @@ func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint32
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *EmojiChooser) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
-
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -166,7 +163,6 @@ func (x *EmojiChooser) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *EmojiChooser) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -191,7 +187,6 @@ func (x *EmojiChooser) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *EmojiChooser) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -230,30 +225,23 @@ func (x *EmojiChooser) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *EmojiChooser) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *EmojiChooser) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *EmojiChooser) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *EmojiChooser) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -266,9 +254,7 @@ func (x *EmojiChooser) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *EmojiChooser) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
 	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
-
 }
 
 // Updates the next accessible sibling.
@@ -276,9 +262,7 @@ func (x *EmojiChooser) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *EmojiChooser) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
 	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
-
 }
 
 // Informs ATs that the platform state has changed.
@@ -287,9 +271,7 @@ func (x *EmojiChooser) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *EmojiChooser) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -311,9 +293,7 @@ func (x *EmojiChooser) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *EmojiChooser) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -323,9 +303,7 @@ func (x *EmojiChooser) UpdateProperty(FirstPropertyVar AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *EmojiChooser) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -347,9 +325,7 @@ func (x *EmojiChooser) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar [
 //
 // ```
 func (x *EmojiChooser) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -359,9 +335,7 @@ func (x *EmojiChooser) UpdateRelation(FirstRelationVar AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *EmojiChooser) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -384,9 +358,7 @@ func (x *EmojiChooser) UpdateRelationValue(NRelationsVar int32, RelationsVar []A
 //
 // ```
 func (x *EmojiChooser) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -396,9 +368,7 @@ func (x *EmojiChooser) UpdateState(FirstStateVar AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *EmojiChooser) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -406,7 +376,6 @@ func (x *EmojiChooser) UpdateStateValue(NStatesVar int32, StatesVar []Accessible
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EmojiChooser) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -446,27 +415,21 @@ func (x *EmojiChooser) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *EmojiChooser) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *EmojiChooser) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *EmojiChooser) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 func init() {
@@ -484,5 +447,4 @@ func init() {
 	core.PuregoSafeRegister(&xEmojiChooserGLibType, libs, "gtk_emoji_chooser_get_type")
 
 	core.PuregoSafeRegister(&xNewEmojiChooser, libs, "gtk_emoji_chooser_new")
-
 }

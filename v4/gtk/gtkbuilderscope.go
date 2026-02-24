@@ -273,9 +273,7 @@ var xBuilderCScopeAddCallbackSymbol func(uintptr, string, uintptr)
 // does not require that callback symbols be declared in the global
 // namespace.
 func (x *BuilderCScope) AddCallbackSymbol(CallbackNameVar string, CallbackSymbolVar *gobject.Callback) {
-
 	xBuilderCScopeAddCallbackSymbol(x.GoPointer(), CallbackNameVar, glib.NewCallback(CallbackSymbolVar))
-
 }
 
 var xBuilderCScopeAddCallbackSymbols func(uintptr, string, uintptr, ...interface{})
@@ -285,9 +283,7 @@ var xBuilderCScopeAddCallbackSymbols func(uintptr, string, uintptr, ...interface
 // This is equivalent to calling [method@Gtk.BuilderCScope.add_callback_symbol]
 // for each symbol.
 func (x *BuilderCScope) AddCallbackSymbols(FirstCallbackNameVar string, FirstCallbackSymbolVar *gobject.Callback, varArgs ...interface{}) {
-
 	xBuilderCScopeAddCallbackSymbols(x.GoPointer(), FirstCallbackNameVar, glib.NewCallback(FirstCallbackSymbolVar), varArgs...)
-
 }
 
 var xBuilderCScopeLookupCallbackSymbol func(uintptr, string) uintptr
@@ -295,7 +291,6 @@ var xBuilderCScopeLookupCallbackSymbol func(uintptr, string) uintptr
 // Fetches a symbol previously added with
 // gtk_builder_cscope_add_callback_symbol().
 func (x *BuilderCScope) LookupCallbackSymbol(CallbackNameVar string) uintptr {
-
 	cret := xBuilderCScopeLookupCallbackSymbol(x.GoPointer(), CallbackNameVar)
 	return cret
 }
@@ -334,5 +329,4 @@ func init() {
 	core.PuregoSafeRegister(&xBuilderCScopeLookupCallbackSymbol, libs, "gtk_builder_cscope_lookup_callback_symbol")
 
 	core.PuregoSafeRegister(&xBuilderScopeGLibType, libs, "gtk_builder_scope_get_type")
-
 }

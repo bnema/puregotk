@@ -55,7 +55,6 @@ var xClosefrom func(int32) int32
 // See [`signal(7)`](man:signal(7)) and
 // [`signal-safety(7)`](man:signal-safety(7)) for more details.
 func Closefrom(LowfdVar int32) int32 {
-
 	cret := xClosefrom(LowfdVar)
 	return cret
 }
@@ -77,7 +76,6 @@ var xFdwalkSetCloexec func(int32) int32
 // See [`signal(7)`](man:signal(7)) and
 // [`signal-safety(7)`](man:signal-safety(7)) for more details.
 func FdwalkSetCloexec(LowfdVar int32) int32 {
-
 	cret := xFdwalkSetCloexec(LowfdVar)
 	return cret
 }
@@ -98,7 +96,6 @@ var xUnixFdAdd func(int32, IOCondition, uintptr, uintptr) uint32
 //
 // The source will never close the fd -- you must do it yourself.
 func UnixFdAdd(FdVar int32, ConditionVar IOCondition, FunctionVar *UnixFDSourceFunc, UserDataVar uintptr) uint32 {
-
 	cret := xUnixFdAdd(FdVar, ConditionVar, NewCallback(FunctionVar), UserDataVar)
 	return cret
 }
@@ -112,7 +109,6 @@ var xUnixFdAddFull func(int32, int32, IOCondition, uintptr, uintptr, uintptr) ui
 // specify a non-default priority and a provide a #GDestroyNotify for
 // @user_data.
 func UnixFdAddFull(PriorityVar int32, FdVar int32, ConditionVar IOCondition, FunctionVar *UnixFDSourceFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xUnixFdAddFull(PriorityVar, FdVar, ConditionVar, NewCallback(FunctionVar), UserDataVar, NewCallback(NotifyVar))
 	return cret
 }
@@ -127,7 +123,6 @@ var xUnixFdSourceNew func(int32, IOCondition) *Source
 // Any callback attached to the returned #GSource must have type
 // #GUnixFDSourceFunc.
 func UnixFdSourceNew(FdVar int32, ConditionVar IOCondition) *Source {
-
 	cret := xUnixFdSourceNew(FdVar, ConditionVar)
 	return cret
 }
@@ -153,7 +148,6 @@ func UnixGetPasswdEntry(UserNameVar string) (uintptr, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixOpenPipe func([2]int32, int32, **Error) bool
@@ -185,7 +179,6 @@ func UnixOpenPipe(FdsVar [2]int32, FlagsVar int32) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixSetFdNonblocking func(int32, bool, **Error) bool
@@ -201,7 +194,6 @@ func UnixSetFdNonblocking(FdVar int32, NonblockVar bool) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixSignalAdd func(int32, uintptr, uintptr) uint32
@@ -210,7 +202,6 @@ var xUnixSignalAdd func(int32, uintptr, uintptr) uint32
 // attaches to the default #GMainContext.  You can remove the watch
 // using g_source_remove().
 func UnixSignalAdd(SignumVar int32, HandlerVar *SourceFunc, UserDataVar uintptr) uint32 {
-
 	cret := xUnixSignalAdd(SignumVar, NewCallback(HandlerVar), UserDataVar)
 	return cret
 }
@@ -221,7 +212,6 @@ var xUnixSignalAddFull func(int32, int32, uintptr, uintptr, uintptr) uint32
 // attaches to the default #GMainContext.  You can remove the watch
 // using g_source_remove().
 func UnixSignalAddFull(PriorityVar int32, SignumVar int32, HandlerVar *SourceFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-
 	cret := xUnixSignalAddFull(PriorityVar, SignumVar, NewCallback(HandlerVar), UserDataVar, NewCallback(NotifyVar))
 	return cret
 }
@@ -252,7 +242,6 @@ var xUnixSignalSourceNew func(int32) *Source
 // and must be added to one with g_source_attach() before it will be
 // executed.
 func UnixSignalSourceNew(SignumVar int32) *Source {
-
 	cret := xUnixSignalSourceNew(SignumVar)
 	return cret
 }
@@ -280,5 +269,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixSignalAdd, libs, "g_unix_signal_add")
 	core.PuregoSafeRegister(&xUnixSignalAddFull, libs, "g_unix_signal_add_full")
 	core.PuregoSafeRegister(&xUnixSignalSourceNew, libs, "g_unix_signal_source_new")
-
 }

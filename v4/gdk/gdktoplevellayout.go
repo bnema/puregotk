@@ -44,7 +44,6 @@ var xNewToplevelLayout func() *ToplevelLayout
 // The size is in ”application pixels”, not
 // ”device pixels” (see [method@Gdk.Surface.get_scale]).
 func NewToplevelLayout() *ToplevelLayout {
-
 	cret := xNewToplevelLayout()
 	return cret
 }
@@ -53,7 +52,6 @@ var xToplevelLayoutCopy func(uintptr) *ToplevelLayout
 
 // Create a new `GdkToplevelLayout` and copy the contents of @layout into it.
 func (x *ToplevelLayout) Copy() *ToplevelLayout {
-
 	cret := xToplevelLayoutCopy(x.GoPointer())
 	return cret
 }
@@ -62,7 +60,6 @@ var xToplevelLayoutEqual func(uintptr, *ToplevelLayout) bool
 
 // Check whether @layout and @other has identical layout properties.
 func (x *ToplevelLayout) Equal(OtherVar *ToplevelLayout) bool {
-
 	cret := xToplevelLayoutEqual(x.GoPointer(), OtherVar)
 	return cret
 }
@@ -73,7 +70,6 @@ var xToplevelLayoutGetFullscreen func(uintptr, *bool) bool
 // the value pointed to by @fullscreen is set to true if it should go
 // fullscreen, or false, if it should go unfullscreen.
 func (x *ToplevelLayout) GetFullscreen(FullscreenVar *bool) bool {
-
 	cret := xToplevelLayoutGetFullscreen(x.GoPointer(), FullscreenVar)
 	return cret
 }
@@ -102,7 +98,6 @@ var xToplevelLayoutGetMaximized func(uintptr, *bool) bool
 // the value pointed to by @maximized is set to true if it should go
 // maximized, or false, if it should go unmaximized.
 func (x *ToplevelLayout) GetMaximized(MaximizedVar *bool) bool {
-
 	cret := xToplevelLayoutGetMaximized(x.GoPointer(), MaximizedVar)
 	return cret
 }
@@ -112,7 +107,6 @@ var xToplevelLayoutGetResizable func(uintptr) bool
 // Returns whether the layout should allow the user
 // to resize the surface.
 func (x *ToplevelLayout) GetResizable() bool {
-
 	cret := xToplevelLayoutGetResizable(x.GoPointer())
 	return cret
 }
@@ -121,7 +115,6 @@ var xToplevelLayoutRef func(uintptr) *ToplevelLayout
 
 // Increases the reference count of @layout.
 func (x *ToplevelLayout) Ref() *ToplevelLayout {
-
 	cret := xToplevelLayoutRef(x.GoPointer())
 	return cret
 }
@@ -131,9 +124,7 @@ var xToplevelLayoutSetFullscreen func(uintptr, bool, uintptr)
 // Sets whether the layout should cause the surface
 // to be fullscreen when presented.
 func (x *ToplevelLayout) SetFullscreen(FullscreenVar bool, MonitorVar *Monitor) {
-
 	xToplevelLayoutSetFullscreen(x.GoPointer(), FullscreenVar, MonitorVar.GoPointer())
-
 }
 
 var xToplevelLayoutSetMaximized func(uintptr, bool)
@@ -141,9 +132,7 @@ var xToplevelLayoutSetMaximized func(uintptr, bool)
 // Sets whether the layout should cause the surface
 // to be maximized when presented.
 func (x *ToplevelLayout) SetMaximized(MaximizedVar bool) {
-
 	xToplevelLayoutSetMaximized(x.GoPointer(), MaximizedVar)
-
 }
 
 var xToplevelLayoutSetResizable func(uintptr, bool)
@@ -151,18 +140,14 @@ var xToplevelLayoutSetResizable func(uintptr, bool)
 // Sets whether the layout should allow the user
 // to resize the surface after it has been presented.
 func (x *ToplevelLayout) SetResizable(ResizableVar bool) {
-
 	xToplevelLayoutSetResizable(x.GoPointer(), ResizableVar)
-
 }
 
 var xToplevelLayoutUnref func(uintptr)
 
 // Decreases the reference count of @layout.
 func (x *ToplevelLayout) Unref() {
-
 	xToplevelLayoutUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -192,5 +177,4 @@ func init() {
 	core.PuregoSafeRegister(&xToplevelLayoutSetMaximized, libs, "gdk_toplevel_layout_set_maximized")
 	core.PuregoSafeRegister(&xToplevelLayoutSetResizable, libs, "gdk_toplevel_layout_set_resizable")
 	core.PuregoSafeRegister(&xToplevelLayoutUnref, libs, "gdk_toplevel_layout_unref")
-
 }

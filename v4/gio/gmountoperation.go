@@ -464,7 +464,6 @@ var xMountOperationGetAnonymous func(uintptr) bool
 // Check to see whether the mount operation is being used
 // for an anonymous user.
 func (x *MountOperation) GetAnonymous() bool {
-
 	cret := xMountOperationGetAnonymous(x.GoPointer())
 	return cret
 }
@@ -473,7 +472,6 @@ var xMountOperationGetChoice func(uintptr) int32
 
 // Gets a choice from the mount operation.
 func (x *MountOperation) GetChoice() int32 {
-
 	cret := xMountOperationGetChoice(x.GoPointer())
 	return cret
 }
@@ -482,7 +480,6 @@ var xMountOperationGetDomain func(uintptr) string
 
 // Gets the domain of the mount operation.
 func (x *MountOperation) GetDomain() string {
-
 	cret := xMountOperationGetDomain(x.GoPointer())
 	return cret
 }
@@ -492,7 +489,6 @@ var xMountOperationGetIsTcryptHiddenVolume func(uintptr) bool
 // Check to see whether the mount operation is being used
 // for a TCRYPT hidden volume.
 func (x *MountOperation) GetIsTcryptHiddenVolume() bool {
-
 	cret := xMountOperationGetIsTcryptHiddenVolume(x.GoPointer())
 	return cret
 }
@@ -502,7 +498,6 @@ var xMountOperationGetIsTcryptSystemVolume func(uintptr) bool
 // Check to see whether the mount operation is being used
 // for a TCRYPT system volume.
 func (x *MountOperation) GetIsTcryptSystemVolume() bool {
-
 	cret := xMountOperationGetIsTcryptSystemVolume(x.GoPointer())
 	return cret
 }
@@ -511,7 +506,6 @@ var xMountOperationGetPassword func(uintptr) string
 
 // Gets a password from the mount operation.
 func (x *MountOperation) GetPassword() string {
-
 	cret := xMountOperationGetPassword(x.GoPointer())
 	return cret
 }
@@ -520,7 +514,6 @@ var xMountOperationGetPasswordSave func(uintptr) PasswordSave
 
 // Gets the state of saving passwords for the mount operation.
 func (x *MountOperation) GetPasswordSave() PasswordSave {
-
 	cret := xMountOperationGetPasswordSave(x.GoPointer())
 	return cret
 }
@@ -529,7 +522,6 @@ var xMountOperationGetPim func(uintptr) uint32
 
 // Gets a PIM from the mount operation.
 func (x *MountOperation) GetPim() uint32 {
-
 	cret := xMountOperationGetPim(x.GoPointer())
 	return cret
 }
@@ -538,7 +530,6 @@ var xMountOperationGetUsername func(uintptr) string
 
 // Get the user name from the mount operation.
 func (x *MountOperation) GetUsername() string {
-
 	cret := xMountOperationGetUsername(x.GoPointer())
 	return cret
 }
@@ -547,90 +538,70 @@ var xMountOperationReply func(uintptr, MountOperationResult)
 
 // Emits the #GMountOperation::reply signal.
 func (x *MountOperation) Reply(ResultVar MountOperationResult) {
-
 	xMountOperationReply(x.GoPointer(), ResultVar)
-
 }
 
 var xMountOperationSetAnonymous func(uintptr, bool)
 
 // Sets the mount operation to use an anonymous user if @anonymous is %TRUE.
 func (x *MountOperation) SetAnonymous(AnonymousVar bool) {
-
 	xMountOperationSetAnonymous(x.GoPointer(), AnonymousVar)
-
 }
 
 var xMountOperationSetChoice func(uintptr, int32)
 
 // Sets a default choice for the mount operation.
 func (x *MountOperation) SetChoice(ChoiceVar int32) {
-
 	xMountOperationSetChoice(x.GoPointer(), ChoiceVar)
-
 }
 
 var xMountOperationSetDomain func(uintptr, string)
 
 // Sets the mount operation's domain.
 func (x *MountOperation) SetDomain(DomainVar string) {
-
 	xMountOperationSetDomain(x.GoPointer(), DomainVar)
-
 }
 
 var xMountOperationSetIsTcryptHiddenVolume func(uintptr, bool)
 
 // Sets the mount operation to use a hidden volume if @hidden_volume is %TRUE.
 func (x *MountOperation) SetIsTcryptHiddenVolume(HiddenVolumeVar bool) {
-
 	xMountOperationSetIsTcryptHiddenVolume(x.GoPointer(), HiddenVolumeVar)
-
 }
 
 var xMountOperationSetIsTcryptSystemVolume func(uintptr, bool)
 
 // Sets the mount operation to use a system volume if @system_volume is %TRUE.
 func (x *MountOperation) SetIsTcryptSystemVolume(SystemVolumeVar bool) {
-
 	xMountOperationSetIsTcryptSystemVolume(x.GoPointer(), SystemVolumeVar)
-
 }
 
 var xMountOperationSetPassword func(uintptr, string)
 
 // Sets the mount operation's password to @password.
 func (x *MountOperation) SetPassword(PasswordVar string) {
-
 	xMountOperationSetPassword(x.GoPointer(), PasswordVar)
-
 }
 
 var xMountOperationSetPasswordSave func(uintptr, PasswordSave)
 
 // Sets the state of saving passwords for the mount operation.
 func (x *MountOperation) SetPasswordSave(SaveVar PasswordSave) {
-
 	xMountOperationSetPasswordSave(x.GoPointer(), SaveVar)
-
 }
 
 var xMountOperationSetPim func(uintptr, uint32)
 
 // Sets the mount operation's PIM to @pim.
 func (x *MountOperation) SetPim(PimVar uint32) {
-
 	xMountOperationSetPim(x.GoPointer(), PimVar)
-
 }
 
 var xMountOperationSetUsername func(uintptr, string)
 
 // Sets the user name within @op to @username.
 func (x *MountOperation) SetUsername(UsernameVar string) {
-
 	xMountOperationSetUsername(x.GoPointer(), UsernameVar)
-
 }
 
 func (c *MountOperation) GoPointer() uintptr {
@@ -815,7 +786,6 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -839,7 +809,6 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, DefaultUserVarp, DefaultDomainVarp, FlagsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -864,7 +833,6 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, ChoicesVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -884,7 +852,6 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 		cbFn := *cb
 
 		cbFn(fa, ResultVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -915,7 +882,6 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, ProcessesVarp, ChoicesVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -950,7 +916,6 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, TimeLeftVarp, BytesLeftVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -992,5 +957,4 @@ func init() {
 	core.PuregoSafeRegister(&xMountOperationSetPasswordSave, libs, "g_mount_operation_set_password_save")
 	core.PuregoSafeRegister(&xMountOperationSetPim, libs, "g_mount_operation_set_pim")
 	core.PuregoSafeRegister(&xMountOperationSetUsername, libs, "g_mount_operation_set_username")
-
 }

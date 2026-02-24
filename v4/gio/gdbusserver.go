@@ -84,7 +84,6 @@ func NewDBusServerSync(AddressVar string, FlagsVar DBusServerFlags, GuidVar stri
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDBusServerGetClientAddress func(uintptr) string
@@ -95,7 +94,6 @@ var xDBusServerGetClientAddress func(uintptr) string
 //
 // This is valid and non-empty if initializing the #GDBusServer succeeded.
 func (x *DBusServer) GetClientAddress() string {
-
 	cret := xDBusServerGetClientAddress(x.GoPointer())
 	return cret
 }
@@ -104,7 +102,6 @@ var xDBusServerGetFlags func(uintptr) DBusServerFlags
 
 // Gets the flags for @server.
 func (x *DBusServer) GetFlags() DBusServerFlags {
-
 	cret := xDBusServerGetFlags(x.GoPointer())
 	return cret
 }
@@ -113,7 +110,6 @@ var xDBusServerGetGuid func(uintptr) string
 
 // Gets the GUID for @server, as provided to g_dbus_server_new_sync().
 func (x *DBusServer) GetGuid() string {
-
 	cret := xDBusServerGetGuid(x.GoPointer())
 	return cret
 }
@@ -122,7 +118,6 @@ var xDBusServerIsActive func(uintptr) bool
 
 // Gets whether @server is active.
 func (x *DBusServer) IsActive() bool {
-
 	cret := xDBusServerIsActive(x.GoPointer())
 	return cret
 }
@@ -131,18 +126,14 @@ var xDBusServerStart func(uintptr)
 
 // Starts @server.
 func (x *DBusServer) Start() {
-
 	xDBusServerStart(x.GoPointer())
-
 }
 
 var xDBusServerStop func(uintptr)
 
 // Stops @server.
 func (x *DBusServer) Stop() {
-
 	xDBusServerStop(x.GoPointer())
-
 }
 
 func (c *DBusServer) GoPointer() uintptr {
@@ -243,7 +234,6 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 		cbFn := *cb
 
 		return cbFn(fa, ConnectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -296,7 +286,6 @@ func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -321,5 +310,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusServerIsActive, libs, "g_dbus_server_is_active")
 	core.PuregoSafeRegister(&xDBusServerStart, libs, "g_dbus_server_start")
 	core.PuregoSafeRegister(&xDBusServerStop, libs, "g_dbus_server_stop")
-
 }

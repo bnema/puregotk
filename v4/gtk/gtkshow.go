@@ -13,9 +13,7 @@ var xShowUri func(uintptr, string, uint32)
 // This function launches the default application for showing
 // a given uri, or shows an error dialog if that fails.
 func ShowUri(ParentVar *Window, UriVar string, TimestampVar uint32) {
-
 	xShowUri(ParentVar.GoPointer(), UriVar, TimestampVar)
-
 }
 
 var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
@@ -28,9 +26,7 @@ var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
 // This is the recommended call to be used as it passes information
 // necessary for sandbox helpers to parent their dialogs properly.
 func ShowUriFull(ParentVar *Window, UriVar string, TimestampVar uint32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xShowUriFullFinish func(uintptr, uintptr, **glib.Error) bool
@@ -45,7 +41,6 @@ func ShowUriFullFinish(ParentVar *Window, ResultVar gio.AsyncResult) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
@@ -63,5 +58,4 @@ func init() {
 	core.PuregoSafeRegister(&xShowUri, libs, "gtk_show_uri")
 	core.PuregoSafeRegister(&xShowUriFull, libs, "gtk_show_uri_full")
 	core.PuregoSafeRegister(&xShowUriFullFinish, libs, "gtk_show_uri_full_finish")
-
 }

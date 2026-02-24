@@ -63,9 +63,7 @@ var xColorChooserRequestCancel func(uintptr)
 // The signal #WebKitColorChooserRequest::finished
 // is emitted to notify that the request has finished.
 func (x *ColorChooserRequest) Cancel() {
-
 	xColorChooserRequestCancel(x.GoPointer())
-
 }
 
 var xColorChooserRequestFinish func(uintptr)
@@ -78,36 +76,28 @@ var xColorChooserRequestFinish func(uintptr)
 // The signal #WebKitColorChooserRequest::finished
 // is emitted to notify that the request has finished.
 func (x *ColorChooserRequest) Finish() {
-
 	xColorChooserRequestFinish(x.GoPointer())
-
 }
 
 var xColorChooserRequestGetElementRectangle func(uintptr, *gdk.Rectangle)
 
 // Gets the bounding box of the color input element.
 func (x *ColorChooserRequest) GetElementRectangle(RectVar *gdk.Rectangle) {
-
 	xColorChooserRequestGetElementRectangle(x.GoPointer(), RectVar)
-
 }
 
 var xColorChooserRequestGetRgba func(uintptr, *gdk.RGBA)
 
 // Gets the current #GdkRGBA color of @request
 func (x *ColorChooserRequest) GetRgba(RgbaVar *gdk.RGBA) {
-
 	xColorChooserRequestGetRgba(x.GoPointer(), RgbaVar)
-
 }
 
 var xColorChooserRequestSetRgba func(uintptr, *gdk.RGBA)
 
 // Sets the current #GdkRGBA color of @request
 func (x *ColorChooserRequest) SetRgba(RgbaVar *gdk.RGBA) {
-
 	xColorChooserRequestSetRgba(x.GoPointer(), RgbaVar)
-
 }
 
 func (c *ColorChooserRequest) GoPointer() uintptr {
@@ -154,7 +144,6 @@ func (x *ColorChooserRequest) ConnectFinished(cb *func(ColorChooserRequest)) uin
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

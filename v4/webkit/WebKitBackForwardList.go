@@ -74,7 +74,6 @@ var xBackForwardListGetBackList func(uintptr) *glib.List
 
 // Obtain the list of items preceding the current one.
 func (x *BackForwardList) GetBackList() *glib.List {
-
 	cret := xBackForwardListGetBackList(x.GoPointer())
 	return cret
 }
@@ -83,7 +82,6 @@ var xBackForwardListGetBackListWithLimit func(uintptr, uint32) *glib.List
 
 // Obtain a list up to some number of items preceding the current one.
 func (x *BackForwardList) GetBackListWithLimit(LimitVar uint32) *glib.List {
-
 	cret := xBackForwardListGetBackListWithLimit(x.GoPointer(), LimitVar)
 	return cret
 }
@@ -126,7 +124,6 @@ var xBackForwardListGetForwardList func(uintptr) *glib.List
 
 // Obtain the list of items following the current one.
 func (x *BackForwardList) GetForwardList() *glib.List {
-
 	cret := xBackForwardListGetForwardList(x.GoPointer())
 	return cret
 }
@@ -135,7 +132,6 @@ var xBackForwardListGetForwardListWithLimit func(uintptr, uint32) *glib.List
 
 // Obtain a list up to some number of items following the current one.
 func (x *BackForwardList) GetForwardListWithLimit(LimitVar uint32) *glib.List {
-
 	cret := xBackForwardListGetForwardListWithLimit(x.GoPointer(), LimitVar)
 	return cret
 }
@@ -144,7 +140,6 @@ var xBackForwardListGetLength func(uintptr) uint32
 
 // Obtain the amount of items in the list.
 func (x *BackForwardList) GetLength() uint32 {
-
 	cret := xBackForwardListGetLength(x.GoPointer())
 	return cret
 }
@@ -194,7 +189,6 @@ func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uint
 		cbFn := *cb
 
 		cbFn(fa, ItemAddedVarp, ItemsRemovedVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

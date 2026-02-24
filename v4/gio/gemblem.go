@@ -95,7 +95,6 @@ var xEmblemGetOrigin func(uintptr) EmblemOrigin
 
 // Gets the origin of the emblem.
 func (x *Emblem) GetOrigin() EmblemOrigin {
-
 	cret := xEmblemGetOrigin(x.GoPointer())
 	return cret
 }
@@ -113,14 +112,12 @@ func (c *Emblem) SetGoPointer(ptr uintptr) {
 
 // Checks if two icons are equal.
 func (x *Emblem) Equal(Icon2Var Icon) bool {
-
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *Emblem) Hash() uint32 {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -131,7 +128,6 @@ func (x *Emblem) Hash() uint32 {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Emblem) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
 	return cret
 }
@@ -153,7 +149,6 @@ func (x *Emblem) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *Emblem) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
@@ -177,5 +172,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEmblemGetIcon, libs, "g_emblem_get_icon")
 	core.PuregoSafeRegister(&xEmblemGetOrigin, libs, "g_emblem_get_origin")
-
 }

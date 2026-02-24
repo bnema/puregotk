@@ -74,7 +74,6 @@ var xProxyAddressGetDestinationHostname func(uintptr) string
 // that will be connected to via the proxy, not the name of the proxy
 // itself.
 func (x *ProxyAddress) GetDestinationHostname() string {
-
 	cret := xProxyAddressGetDestinationHostname(x.GoPointer())
 	return cret
 }
@@ -85,7 +84,6 @@ var xProxyAddressGetDestinationPort func(uintptr) uint16
 // destination host that will be connected to via the proxy, not the
 // port number of the proxy itself.
 func (x *ProxyAddress) GetDestinationPort() uint16 {
-
 	cret := xProxyAddressGetDestinationPort(x.GoPointer())
 	return cret
 }
@@ -95,7 +93,6 @@ var xProxyAddressGetDestinationProtocol func(uintptr) string
 // Gets the protocol that is being spoken to the destination
 // server; eg, "http" or "ftp".
 func (x *ProxyAddress) GetDestinationProtocol() string {
-
 	cret := xProxyAddressGetDestinationProtocol(x.GoPointer())
 	return cret
 }
@@ -104,7 +101,6 @@ var xProxyAddressGetPassword func(uintptr) string
 
 // Gets @proxy's password.
 func (x *ProxyAddress) GetPassword() string {
-
 	cret := xProxyAddressGetPassword(x.GoPointer())
 	return cret
 }
@@ -113,7 +109,6 @@ var xProxyAddressGetProtocol func(uintptr) string
 
 // Gets @proxy's protocol. eg, "socks" or "http"
 func (x *ProxyAddress) GetProtocol() string {
-
 	cret := xProxyAddressGetProtocol(x.GoPointer())
 	return cret
 }
@@ -122,7 +117,6 @@ var xProxyAddressGetUri func(uintptr) string
 
 // Gets the proxy URI that @proxy was constructed from.
 func (x *ProxyAddress) GetUri() string {
-
 	cret := xProxyAddressGetUri(x.GoPointer())
 	return cret
 }
@@ -131,7 +125,6 @@ var xProxyAddressGetUsername func(uintptr) string
 
 // Gets @proxy's username.
 func (x *ProxyAddress) GetUsername() string {
-
 	cret := xProxyAddressGetUsername(x.GoPointer())
 	return cret
 }
@@ -312,7 +305,6 @@ func (x *ProxyAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *ProxyAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
@@ -340,5 +332,4 @@ func init() {
 	core.PuregoSafeRegister(&xProxyAddressGetProtocol, libs, "g_proxy_address_get_protocol")
 	core.PuregoSafeRegister(&xProxyAddressGetUri, libs, "g_proxy_address_get_uri")
 	core.PuregoSafeRegister(&xProxyAddressGetUsername, libs, "g_proxy_address_get_username")
-
 }

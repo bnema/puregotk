@@ -466,25 +466,19 @@ func (x *CellLayoutBase) SetGoPointer(ptr uintptr) {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *CellLayoutBase) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int32) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *CellLayoutBase) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *CellLayoutBase) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -506,7 +500,6 @@ func (x *CellLayoutBase) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellLayoutBase) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
 	return cret
 }
@@ -517,9 +510,7 @@ func (x *CellLayoutBase) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellLayoutBase) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -528,9 +519,7 @@ func (x *CellLayoutBase) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellLayoutBase) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -538,9 +527,7 @@ func (x *CellLayoutBase) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int32) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -552,9 +539,7 @@ func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int32) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *CellLayoutBase) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -565,21 +550,21 @@ func (x *CellLayoutBase) SetAttributes(CellVar *CellRenderer, varArgs ...interfa
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellLayoutBase) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
 }
 
-var XGtkCellLayoutAddAttribute func(uintptr, uintptr, string, int32)
-var XGtkCellLayoutClear func(uintptr)
-var XGtkCellLayoutClearAttributes func(uintptr, uintptr)
-var XGtkCellLayoutGetArea func(uintptr) uintptr
-var XGtkCellLayoutGetCells func(uintptr) *glib.List
-var XGtkCellLayoutPackEnd func(uintptr, uintptr, bool)
-var XGtkCellLayoutPackStart func(uintptr, uintptr, bool)
-var XGtkCellLayoutReorder func(uintptr, uintptr, int32)
-var XGtkCellLayoutSetAttributes func(uintptr, uintptr, ...interface{})
-var XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintptr)
+var (
+	XGtkCellLayoutAddAttribute    func(uintptr, uintptr, string, int32)
+	XGtkCellLayoutClear           func(uintptr)
+	XGtkCellLayoutClearAttributes func(uintptr, uintptr)
+	XGtkCellLayoutGetArea         func(uintptr) uintptr
+	XGtkCellLayoutGetCells        func(uintptr) *glib.List
+	XGtkCellLayoutPackEnd         func(uintptr, uintptr, bool)
+	XGtkCellLayoutPackStart       func(uintptr, uintptr, bool)
+	XGtkCellLayoutReorder         func(uintptr, uintptr, int32)
+	XGtkCellLayoutSetAttributes   func(uintptr, uintptr, ...interface{})
+	XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
@@ -605,5 +590,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkCellLayoutReorder, libs, "gtk_cell_layout_reorder")
 	core.PuregoSafeRegister(&XGtkCellLayoutSetAttributes, libs, "gtk_cell_layout_set_attributes")
 	core.PuregoSafeRegister(&XGtkCellLayoutSetCellDataFunc, libs, "gtk_cell_layout_set_cell_data_func")
-
 }

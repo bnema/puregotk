@@ -58,7 +58,6 @@ var xNewComponentTransferDiscrete func(uint32, []float32) *ComponentTransfer
 //
 // &lt;/figure&gt;
 func NewComponentTransferDiscrete(NVar uint32, ValuesVar []float32) *ComponentTransfer {
-
 	cret := xNewComponentTransferDiscrete(NVar, ValuesVar)
 	return cret
 }
@@ -81,7 +80,6 @@ var xNewComponentTransferGamma func(float32, float32, float32) *ComponentTransfe
 //
 // &lt;/figure&gt;
 func NewComponentTransferGamma(AmpVar float32, ExpVar float32, OfsVar float32) *ComponentTransfer {
-
 	cret := xNewComponentTransferGamma(AmpVar, ExpVar, OfsVar)
 	return cret
 }
@@ -100,7 +98,6 @@ var xNewComponentTransferIdentity func() *ComponentTransfer
 //
 // &lt;/figure&gt;
 func NewComponentTransferIdentity() *ComponentTransfer {
-
 	cret := xNewComponentTransferIdentity()
 	return cret
 }
@@ -123,7 +120,6 @@ var xNewComponentTransferLevels func(float32) *ComponentTransfer
 //
 // &lt;/figure&gt;
 func NewComponentTransferLevels(NVar float32) *ComponentTransfer {
-
 	cret := xNewComponentTransferLevels(NVar)
 	return cret
 }
@@ -146,7 +142,6 @@ var xNewComponentTransferLinear func(float32, float32) *ComponentTransfer
 //
 // &lt;/figure&gt;
 func NewComponentTransferLinear(MVar float32, BVar float32) *ComponentTransfer {
-
 	cret := xNewComponentTransferLinear(MVar, BVar)
 	return cret
 }
@@ -173,7 +168,6 @@ var xNewComponentTransferTable func(uint32, []float32) *ComponentTransfer
 //
 // &lt;/figure&gt;
 func NewComponentTransferTable(NVar uint32, ValuesVar []float32) *ComponentTransfer {
-
 	cret := xNewComponentTransferTable(NVar, ValuesVar)
 	return cret
 }
@@ -182,7 +176,6 @@ var xComponentTransferCopy func(uintptr) *ComponentTransfer
 
 // Creates a copy of @other.
 func (x *ComponentTransfer) Copy() *ComponentTransfer {
-
 	cret := xComponentTransferCopy(x.GoPointer())
 	return cret
 }
@@ -191,9 +184,7 @@ var xComponentTransferFree func(uintptr)
 
 // Frees a component transfer.
 func (x *ComponentTransfer) Free() {
-
 	xComponentTransferFree(x.GoPointer())
-
 }
 
 // Describes lines and curves that are more complex than simple rectangles.
@@ -246,7 +237,6 @@ var xPathForeach func(uintptr, PathForeachFlags, uintptr, uintptr) bool
 //   - When the @flags disallow certain operations, it provides
 //     an approximation of the path using just the allowed operations.
 func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, UserDataVar uintptr) bool {
-
 	cret := xPathForeach(x.GoPointer(), FlagsVar, glib.NewCallback(FuncVar), UserDataVar)
 	return cret
 }
@@ -269,7 +259,6 @@ var xPathForeachIntersection func(uintptr, *Path, uintptr, uintptr) bool
 //
 // If @func returns `FALSE`, the iteration is stopped.
 func (x *Path) ForeachIntersection(Path2Var *Path, FuncVar *PathIntersectionFunc, UserDataVar uintptr) bool {
-
 	cret := xPathForeachIntersection(x.GoPointer(), Path2Var, glib.NewCallback(FuncVar), UserDataVar)
 	return cret
 }
@@ -291,7 +280,6 @@ var xPathGetBounds func(uintptr, *graphene.Rect) bool
 // is a single point at the origin, where the @bounds will also be set to
 // the zero rectangle but true will be returned.
 func (x *Path) GetBounds(BoundsVar *graphene.Rect) bool {
-
 	cret := xPathGetBounds(x.GoPointer(), BoundsVar)
 	return cret
 }
@@ -303,7 +291,6 @@ var xPathGetClosestPoint func(uintptr, *graphene.Point, float32, *PathPoint, *fl
 // If there is no point closer than the given threshold,
 // false is returned.
 func (x *Path) GetClosestPoint(PointVar *graphene.Point, ThresholdVar float32, ResultVar *PathPoint, DistanceVar *float32) bool {
-
 	cret := xPathGetClosestPoint(x.GoPointer(), PointVar, ThresholdVar, ResultVar, DistanceVar)
 	return cret
 }
@@ -315,7 +302,6 @@ var xPathGetEndPoint func(uintptr, *PathPoint) bool
 // An empty path has no points, so false
 // is returned in this case.
 func (x *Path) GetEndPoint(ResultVar *PathPoint) bool {
-
 	cret := xPathGetEndPoint(x.GoPointer(), ResultVar)
 	return cret
 }
@@ -327,7 +313,6 @@ var xPathGetStartPoint func(uintptr, *PathPoint) bool
 // An empty path has no points, so false
 // is returned in this case.
 func (x *Path) GetStartPoint(ResultVar *PathPoint) bool {
-
 	cret := xPathGetStartPoint(x.GoPointer(), ResultVar)
 	return cret
 }
@@ -342,7 +327,6 @@ var xPathGetStrokeBounds func(uintptr, *Stroke, *graphene.Rect) bool
 // to contain the area affected by the stroke, including protrusions
 // like miters.
 func (x *Path) GetStrokeBounds(StrokeVar *Stroke, BoundsVar *graphene.Rect) bool {
-
 	cret := xPathGetStrokeBounds(x.GoPointer(), StrokeVar, BoundsVar)
 	return cret
 }
@@ -354,7 +338,6 @@ var xPathInFill func(uintptr, *graphene.Point, FillRule) bool
 // Note that this function assumes that filling a contour
 // implicitly closes it.
 func (x *Path) InFill(PointVar *graphene.Point, FillRuleVar FillRule) bool {
-
 	cret := xPathInFill(x.GoPointer(), PointVar, FillRuleVar)
 	return cret
 }
@@ -363,7 +346,6 @@ var xPathIsClosed func(uintptr) bool
 
 // Returns if the path represents a single closed contour.
 func (x *Path) IsClosed() bool {
-
 	cret := xPathIsClosed(x.GoPointer())
 	return cret
 }
@@ -372,7 +354,6 @@ var xPathIsEmpty func(uintptr) bool
 
 // Checks if the path is empty, i.e. contains no lines or curves.
 func (x *Path) IsEmpty() bool {
-
 	cret := xPathIsEmpty(x.GoPointer())
 	return cret
 }
@@ -385,16 +366,13 @@ var xPathPrint func(uintptr, *glib.String)
 // [SVG path syntax](https://www.w3.org/TR/SVG11/paths.html#PathData),
 // see [func@Gsk.Path.parse] for a summary of the syntax.
 func (x *Path) Print(StringVar *glib.String) {
-
 	xPathPrint(x.GoPointer(), StringVar)
-
 }
 
 var xPathRef func(uintptr) *Path
 
 // Increases the reference count of a path by one.
 func (x *Path) Ref() *Path {
-
 	cret := xPathRef(x.GoPointer())
 	return cret
 }
@@ -409,9 +387,7 @@ var xPathToCairo func(uintptr, *cairo.Context)
 // This function does not clear the existing Cairo path. Call
 // cairo_new_path() if you want this.
 func (x *Path) ToCairo(CrVar *cairo.Context) {
-
 	xPathToCairo(x.GoPointer(), CrVar)
-
 }
 
 var xPathToString func(uintptr) string
@@ -424,7 +400,6 @@ var xPathToString func(uintptr) string
 // This is a wrapper around [method@Gsk.Path.print], see that function
 // for details.
 func (x *Path) ToString() string {
-
 	cret := xPathToString(x.GoPointer())
 	return cret
 }
@@ -435,9 +410,7 @@ var xPathUnref func(uintptr)
 //
 // If the resulting reference count is zero, frees the path.
 func (x *Path) Unref() {
-
 	xPathUnref(x.GoPointer())
-
 }
 
 // Constructs `GskPath` objects.
@@ -501,7 +474,6 @@ var xNewPathBuilder func() *PathBuilder
 // The resulting builder would create an empty `GskPath`.
 // Use addition functions to add types to it.
 func NewPathBuilder() *PathBuilder {
-
 	cret := xNewPathBuilder()
 	return cret
 }
@@ -513,9 +485,7 @@ var xPathBuilderAddCairoPath func(uintptr, *cairo.Path)
 // You can use cairo_copy_path() to access the path
 // from a Cairo context.
 func (x *PathBuilder) AddCairoPath(PathVar *cairo.Path) {
-
 	xPathBuilderAddCairoPath(x.GoPointer(), PathVar)
-
 }
 
 var xPathBuilderAddCircle func(uintptr, *graphene.Point, float32)
@@ -526,27 +496,21 @@ var xPathBuilderAddCircle func(uintptr, *graphene.Point, float32)
 //
 // If @radius is zero, the contour will be a closed point.
 func (x *PathBuilder) AddCircle(CenterVar *graphene.Point, RadiusVar float32) {
-
 	xPathBuilderAddCircle(x.GoPointer(), CenterVar, RadiusVar)
-
 }
 
 var xPathBuilderAddLayout func(uintptr, uintptr)
 
 // Adds the outlines for the glyphs in @layout to the builder.
 func (x *PathBuilder) AddLayout(LayoutVar *pango.Layout) {
-
 	xPathBuilderAddLayout(x.GoPointer(), LayoutVar.GoPointer())
-
 }
 
 var xPathBuilderAddPath func(uintptr, *Path)
 
 // Appends all of @path to the builder.
 func (x *PathBuilder) AddPath(PathVar *Path) {
-
 	xPathBuilderAddPath(x.GoPointer(), PathVar)
-
 }
 
 var xPathBuilderAddRect func(uintptr, *graphene.Rect)
@@ -558,18 +522,14 @@ var xPathBuilderAddRect func(uintptr, *graphene.Rect)
 // If the the width or height are 0, the path will be a closed
 // horizontal or vertical line. If both are 0, it'll be a closed dot.
 func (x *PathBuilder) AddRect(RectVar *graphene.Rect) {
-
 	xPathBuilderAddRect(x.GoPointer(), RectVar)
-
 }
 
 var xPathBuilderAddReversePath func(uintptr, *Path)
 
 // Appends all of @path to the builder, in reverse order.
 func (x *PathBuilder) AddReversePath(PathVar *Path) {
-
 	xPathBuilderAddReversePath(x.GoPointer(), PathVar)
-
 }
 
 var xPathBuilderAddRoundedRect func(uintptr, *RoundedRect)
@@ -578,9 +538,7 @@ var xPathBuilderAddRoundedRect func(uintptr, *RoundedRect)
 //
 // The path is going around the rectangle in clockwise direction.
 func (x *PathBuilder) AddRoundedRect(RectVar *RoundedRect) {
-
 	xPathBuilderAddRoundedRect(x.GoPointer(), RectVar)
-
 }
 
 var xPathBuilderAddSegment func(uintptr, *Path, *PathPoint, *PathPoint)
@@ -595,9 +553,7 @@ var xPathBuilderAddSegment func(uintptr, *Path, *PathPoint, *PathPoint)
 // Note that this method always adds a path with the given start point
 // and end point. To add a closed path, use [method@Gsk.PathBuilder.add_path].
 func (x *PathBuilder) AddSegment(PathVar *Path, StartVar *PathPoint, EndVar *PathPoint) {
-
 	xPathBuilderAddSegment(x.GoPointer(), PathVar, StartVar, EndVar)
-
 }
 
 var xPathBuilderArcTo func(uintptr, float32, float32, float32, float32)
@@ -619,9 +575,7 @@ var xPathBuilderArcTo func(uintptr, float32, float32, float32, float32)
 //
 // &lt;/picture&gt;
 func (x *PathBuilder) ArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
-
 	xPathBuilderArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
-
 }
 
 var xPathBuilderClose func(uintptr)
@@ -634,9 +588,7 @@ var xPathBuilderClose func(uintptr)
 // start and end point are considered connected, so they will be
 // joined via the line join, and not ended with line caps.
 func (x *PathBuilder) Close() {
-
 	xPathBuilderClose(x.GoPointer())
-
 }
 
 var xPathBuilderConicTo func(uintptr, float32, float32, float32, float32, float32)
@@ -660,9 +612,7 @@ var xPathBuilderConicTo func(uintptr, float32, float32, float32, float32, float3
 //
 // &lt;/picture&gt;
 func (x *PathBuilder) ConicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, WeightVar float32) {
-
 	xPathBuilderConicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, WeightVar)
-
 }
 
 var xPathBuilderCubicTo func(uintptr, float32, float32, float32, float32, float32, float32)
@@ -680,9 +630,7 @@ var xPathBuilderCubicTo func(uintptr, float32, float32, float32, float32, float3
 //
 // &lt;/picture&gt;
 func (x *PathBuilder) CubicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, X3Var float32, Y3Var float32) {
-
 	xPathBuilderCubicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, X3Var, Y3Var)
-
 }
 
 var xPathBuilderFreeToPath func(uintptr) *Path
@@ -690,7 +638,6 @@ var xPathBuilderFreeToPath func(uintptr) *Path
 // Creates a new path from the current state of the
 // builder, and unrefs the builder.
 func (x *PathBuilder) FreeToPath() *Path {
-
 	cret := xPathBuilderFreeToPath(x.GoPointer())
 	return cret
 }
@@ -706,7 +653,6 @@ var xPathBuilderGetCurrentPoint func(uintptr) *graphene.Point
 // to `0, 0`. Note that this is different from cairo, which starts
 // out without a current point.
 func (x *PathBuilder) GetCurrentPoint() *graphene.Point {
-
 	cret := xPathBuilderGetCurrentPoint(x.GoPointer())
 	return cret
 }
@@ -723,9 +669,7 @@ var xPathBuilderHtmlArcTo func(uintptr, float32, float32, float32, float32, floa
 // the circle with the given radius touches the line from
 // @x1, @y1 to @x2, @y2.
 func (x *PathBuilder) HtmlArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, RadiusVar float32) {
-
 	xPathBuilderHtmlArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, RadiusVar)
-
 }
 
 var xPathBuilderLineTo func(uintptr, float32, float32)
@@ -740,9 +684,7 @@ var xPathBuilderLineTo func(uintptr, float32, float32)
 //
 // &lt;/picture&gt;
 func (x *PathBuilder) LineTo(XVar float32, YVar float32) {
-
 	xPathBuilderLineTo(x.GoPointer(), XVar, YVar)
-
 }
 
 var xPathBuilderMoveTo func(uintptr, float32, float32)
@@ -753,9 +695,7 @@ var xPathBuilderMoveTo func(uintptr, float32, float32)
 // call will result in a contour made up of a single point.
 // The second call will start a new contour.
 func (x *PathBuilder) MoveTo(XVar float32, YVar float32) {
-
 	xPathBuilderMoveTo(x.GoPointer(), XVar, YVar)
-
 }
 
 var xPathBuilderQuadTo func(uintptr, float32, float32, float32, float32)
@@ -772,9 +712,7 @@ var xPathBuilderQuadTo func(uintptr, float32, float32, float32, float32)
 //
 // &lt;/picture&gt;
 func (x *PathBuilder) QuadTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
-
 	xPathBuilderQuadTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
-
 }
 
 var xPathBuilderRef func(uintptr) *PathBuilder
@@ -784,7 +722,6 @@ var xPathBuilderRef func(uintptr) *PathBuilder
 // This function is intended primarily for language bindings.
 // `GskPathBuilder` objects should not be kept around.
 func (x *PathBuilder) Ref() *PathBuilder {
-
 	cret := xPathBuilderRef(x.GoPointer())
 	return cret
 }
@@ -798,9 +735,7 @@ var xPathBuilderRelArcTo func(uintptr, float32, float32, float32, float32)
 //
 // This is the relative version of [method@Gsk.PathBuilder.arc_to].
 func (x *PathBuilder) RelArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
-
 	xPathBuilderRelArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
-
 }
 
 var xPathBuilderRelConicTo func(uintptr, float32, float32, float32, float32, float32)
@@ -813,9 +748,7 @@ var xPathBuilderRelConicTo func(uintptr, float32, float32, float32, float32, flo
 //
 // This is the relative version of [method@Gsk.PathBuilder.conic_to].
 func (x *PathBuilder) RelConicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, WeightVar float32) {
-
 	xPathBuilderRelConicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, WeightVar)
-
 }
 
 var xPathBuilderRelCubicTo func(uintptr, float32, float32, float32, float32, float32, float32)
@@ -828,9 +761,7 @@ var xPathBuilderRelCubicTo func(uintptr, float32, float32, float32, float32, flo
 //
 // This is the relative version of [method@Gsk.PathBuilder.cubic_to].
 func (x *PathBuilder) RelCubicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, X3Var float32, Y3Var float32) {
-
 	xPathBuilderRelCubicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, X3Var, Y3Var)
-
 }
 
 var xPathBuilderRelHtmlArcTo func(uintptr, float32, float32, float32, float32, float32)
@@ -841,9 +772,7 @@ var xPathBuilderRelHtmlArcTo func(uintptr, float32, float32, float32, float32, f
 //
 // This is the relative version of [method@Gsk.PathBuilder.html_arc_to].
 func (x *PathBuilder) RelHtmlArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, RadiusVar float32) {
-
 	xPathBuilderRelHtmlArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, RadiusVar)
-
 }
 
 var xPathBuilderRelLineTo func(uintptr, float32, float32)
@@ -853,9 +782,7 @@ var xPathBuilderRelLineTo func(uintptr, float32, float32)
 //
 // This is the relative version of [method@Gsk.PathBuilder.line_to].
 func (x *PathBuilder) RelLineTo(XVar float32, YVar float32) {
-
 	xPathBuilderRelLineTo(x.GoPointer(), XVar, YVar)
-
 }
 
 var xPathBuilderRelMoveTo func(uintptr, float32, float32)
@@ -865,9 +792,7 @@ var xPathBuilderRelMoveTo func(uintptr, float32, float32)
 //
 // This is the relative version of [method@Gsk.PathBuilder.move_to].
 func (x *PathBuilder) RelMoveTo(XVar float32, YVar float32) {
-
 	xPathBuilderRelMoveTo(x.GoPointer(), XVar, YVar)
-
 }
 
 var xPathBuilderRelQuadTo func(uintptr, float32, float32, float32, float32)
@@ -879,9 +804,7 @@ var xPathBuilderRelQuadTo func(uintptr, float32, float32, float32, float32)
 //
 // This is the relative version of [method@Gsk.PathBuilder.quad_to].
 func (x *PathBuilder) RelQuadTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
-
 	xPathBuilderRelQuadTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
-
 }
 
 var xPathBuilderRelSvgArcTo func(uintptr, float32, float32, float32, bool, bool, float32, float32)
@@ -892,9 +815,7 @@ var xPathBuilderRelSvgArcTo func(uintptr, float32, float32, float32, bool, bool,
 //
 // This is the relative version of [method@Gsk.PathBuilder.svg_arc_to].
 func (x *PathBuilder) RelSvgArcTo(RxVar float32, RyVar float32, XAxisRotationVar float32, LargeArcVar bool, PositiveSweepVar bool, XVar float32, YVar float32) {
-
 	xPathBuilderRelSvgArcTo(x.GoPointer(), RxVar, RyVar, XAxisRotationVar, LargeArcVar, PositiveSweepVar, XVar, YVar)
-
 }
 
 var xPathBuilderSvgArcTo func(uintptr, float32, float32, float32, bool, bool, float32, float32)
@@ -907,9 +828,7 @@ var xPathBuilderSvgArcTo func(uintptr, float32, float32, float32, bool, bool, fl
 //
 // After this, @x, @y will be the new current point.
 func (x *PathBuilder) SvgArcTo(RxVar float32, RyVar float32, XAxisRotationVar float32, LargeArcVar bool, PositiveSweepVar bool, XVar float32, YVar float32) {
-
 	xPathBuilderSvgArcTo(x.GoPointer(), RxVar, RyVar, XAxisRotationVar, LargeArcVar, PositiveSweepVar, XVar, YVar)
-
 }
 
 var xPathBuilderToPath func(uintptr) *Path
@@ -924,7 +843,6 @@ var xPathBuilderToPath func(uintptr) *Path
 // This function is intended primarily for language bindings.
 // C code should use [method@Gsk.PathBuilder.free_to_path].
 func (x *PathBuilder) ToPath() *Path {
-
 	cret := xPathBuilderToPath(x.GoPointer())
 	return cret
 }
@@ -933,9 +851,7 @@ var xPathBuilderUnref func(uintptr)
 
 // Releases a reference on the given builder.
 func (x *PathBuilder) Unref() {
-
 	xPathBuilderUnref(x.GoPointer())
-
 }
 
 // Performs measurements on paths such as determining the length of the path.
@@ -966,7 +882,6 @@ var xNewPathMeasure func(*Path) *PathMeasure
 // Creates a measure object for the given @path with the
 // default tolerance.
 func NewPathMeasure(PathVar *Path) *PathMeasure {
-
 	cret := xNewPathMeasure(PathVar)
 	return cret
 }
@@ -975,7 +890,6 @@ var xNewPathMeasureWithTolerance func(*Path, float32) *PathMeasure
 
 // Creates a measure object for the given @path and @tolerance.
 func NewPathMeasureWithTolerance(PathVar *Path, ToleranceVar float32) *PathMeasure {
-
 	cret := xNewPathMeasureWithTolerance(PathVar, ToleranceVar)
 	return cret
 }
@@ -986,7 +900,6 @@ var xPathMeasureGetLength func(uintptr) float32
 //
 // The length is cached, so this function does not do any work.
 func (x *PathMeasure) GetLength() float32 {
-
 	cret := xPathMeasureGetLength(x.GoPointer())
 	return cret
 }
@@ -995,7 +908,6 @@ var xPathMeasureGetPath func(uintptr) *Path
 
 // Returns the path that the measure was created for.
 func (x *PathMeasure) GetPath() *Path {
-
 	cret := xPathMeasureGetPath(x.GoPointer())
 	return cret
 }
@@ -1006,7 +918,6 @@ var xPathMeasureGetPoint func(uintptr, float32, *PathPoint) bool
 //
 // An empty path has no points, so false is returned in that case.
 func (x *PathMeasure) GetPoint(DistanceVar float32, ResultVar *PathPoint) bool {
-
 	cret := xPathMeasureGetPoint(x.GoPointer(), DistanceVar, ResultVar)
 	return cret
 }
@@ -1015,7 +926,6 @@ var xPathMeasureGetTolerance func(uintptr) float32
 
 // Returns the tolerance that the measure was created with.
 func (x *PathMeasure) GetTolerance() float32 {
-
 	cret := xPathMeasureGetTolerance(x.GoPointer())
 	return cret
 }
@@ -1024,7 +934,6 @@ var xPathMeasureRef func(uintptr) *PathMeasure
 
 // Increases the reference count of a `GskPathMeasure` by one.
 func (x *PathMeasure) Ref() *PathMeasure {
-
 	cret := xPathMeasureRef(x.GoPointer())
 	return cret
 }
@@ -1035,9 +944,7 @@ var xPathMeasureUnref func(uintptr)
 //
 // If the resulting reference count is zero, frees the object.
 func (x *PathMeasure) Unref() {
-
 	xPathMeasureUnref(x.GoPointer())
-
 }
 
 // Collects the parameters that are needed when stroking a path.
@@ -1059,7 +966,6 @@ var xNewStroke func(float32) *Stroke
 
 // Creates a new `GskStroke` with the given @line_width.
 func NewStroke(LineWidthVar float32) *Stroke {
-
 	cret := xNewStroke(LineWidthVar)
 	return cret
 }
@@ -1068,7 +974,6 @@ var xStrokeCopy func(uintptr) *Stroke
 
 // Creates a copy of a `GskStroke`.
 func (x *Stroke) Copy() *Stroke {
-
 	cret := xStrokeCopy(x.GoPointer())
 	return cret
 }
@@ -1077,16 +982,13 @@ var xStrokeFree func(uintptr)
 
 // Frees a `GskStroke`.
 func (x *Stroke) Free() {
-
 	xStrokeFree(x.GoPointer())
-
 }
 
 var xStrokeGetDash func(uintptr, *uint) uintptr
 
 // Gets the dash array in use.
 func (x *Stroke) GetDash(NDashVar *uint) uintptr {
-
 	cret := xStrokeGetDash(x.GoPointer(), NDashVar)
 	return cret
 }
@@ -1095,7 +997,6 @@ var xStrokeGetDashOffset func(uintptr) float32
 
 // Gets the dash offset.
 func (x *Stroke) GetDashOffset() float32 {
-
 	cret := xStrokeGetDashOffset(x.GoPointer())
 	return cret
 }
@@ -1106,7 +1007,6 @@ var xStrokeGetLineCap func(uintptr) LineCap
 //
 // See [enum@Gsk.LineCap] for details.
 func (x *Stroke) GetLineCap() LineCap {
-
 	cret := xStrokeGetLineCap(x.GoPointer())
 	return cret
 }
@@ -1117,7 +1017,6 @@ var xStrokeGetLineJoin func(uintptr) LineJoin
 //
 // See [enum@Gsk.LineJoin] for details.
 func (x *Stroke) GetLineJoin() LineJoin {
-
 	cret := xStrokeGetLineJoin(x.GoPointer())
 	return cret
 }
@@ -1126,7 +1025,6 @@ var xStrokeGetLineWidth func(uintptr) float32
 
 // Gets the line width used.
 func (x *Stroke) GetLineWidth() float32 {
-
 	cret := xStrokeGetLineWidth(x.GoPointer())
 	return cret
 }
@@ -1135,7 +1033,6 @@ var xStrokeGetMiterLimit func(uintptr) float32
 
 // Gets the miter limit.
 func (x *Stroke) GetMiterLimit() float32 {
-
 	cret := xStrokeGetMiterLimit(x.GoPointer())
 	return cret
 }
@@ -1166,9 +1063,7 @@ var xStrokeSetDash func(uintptr, []float32, uint)
 // You can specify a starting offset into the dash with
 // [method@Gsk.Stroke.set_dash_offset].
 func (x *Stroke) SetDash(DashVar []float32, NDashVar uint) {
-
 	xStrokeSetDash(x.GoPointer(), DashVar, NDashVar)
-
 }
 
 var xStrokeSetDashOffset func(uintptr, float32)
@@ -1180,9 +1075,7 @@ var xStrokeSetDashOffset func(uintptr, float32)
 //
 // See [method@Gsk.Stroke.set_dash] for more details on dashing.
 func (x *Stroke) SetDashOffset(OffsetVar float32) {
-
 	xStrokeSetDashOffset(x.GoPointer(), OffsetVar)
-
 }
 
 var xStrokeSetLineCap func(uintptr, LineCap)
@@ -1191,9 +1084,7 @@ var xStrokeSetLineCap func(uintptr, LineCap)
 //
 // See [enum@Gsk.LineCap] for details.
 func (x *Stroke) SetLineCap(LineCapVar LineCap) {
-
 	xStrokeSetLineCap(x.GoPointer(), LineCapVar)
-
 }
 
 var xStrokeSetLineJoin func(uintptr, LineJoin)
@@ -1202,9 +1093,7 @@ var xStrokeSetLineJoin func(uintptr, LineJoin)
 //
 // See [enum@Gsk.LineJoin] for details.
 func (x *Stroke) SetLineJoin(LineJoinVar LineJoin) {
-
 	xStrokeSetLineJoin(x.GoPointer(), LineJoinVar)
-
 }
 
 var xStrokeSetLineWidth func(uintptr, float32)
@@ -1213,9 +1102,7 @@ var xStrokeSetLineWidth func(uintptr, float32)
 //
 // The line width must be &gt;= 0.
 func (x *Stroke) SetLineWidth(LineWidthVar float32) {
-
 	xStrokeSetLineWidth(x.GoPointer(), LineWidthVar)
-
 }
 
 var xStrokeSetMiterLimit func(uintptr, float32)
@@ -1230,9 +1117,7 @@ var xStrokeSetMiterLimit func(uintptr, float32)
 // For joins of type [enum@Gsk.LineJoin.miter] that exceed the miter limit,
 // the join gets rendered as if it was of type [enum@Gsk.LineJoin.bevel].
 func (x *Stroke) SetMiterLimit(LimitVar float32) {
-
 	xStrokeSetMiterLimit(x.GoPointer(), LimitVar)
-
 }
 
 var xStrokeToCairo func(uintptr, *cairo.Context)
@@ -1240,9 +1125,7 @@ var xStrokeToCairo func(uintptr, *cairo.Context)
 // A helper function that sets the stroke parameters
 // of a cairo context from a `GskStroke`.
 func (x *Stroke) ToCairo(CrVar *cairo.Context) {
-
 	xStrokeToCairo(x.GoPointer(), CrVar)
-
 }
 
 // Describes a 3D transform.
@@ -1275,7 +1158,6 @@ var xNewTransform func() *Transform
 // This function is meant to be used by language
 // bindings. For C code, this is equivalent to using `NULL`.
 func NewTransform() *Transform {
-
 	cret := xNewTransform()
 	return cret
 }
@@ -1284,7 +1166,6 @@ var xTransformEqual func(uintptr, *Transform) bool
 
 // Checks two transforms for equality.
 func (x *Transform) Equal(SecondVar *Transform) bool {
-
 	cret := xTransformEqual(x.GoPointer(), SecondVar)
 	return cret
 }
@@ -1293,7 +1174,6 @@ var xTransformGetCategory func(uintptr) TransformCategory
 
 // Returns the category this transform belongs to.
 func (x *Transform) GetCategory() TransformCategory {
-
 	cret := xTransformGetCategory(x.GoPointer())
 	return cret
 }
@@ -1311,7 +1191,6 @@ var xTransformInvert func(uintptr) *Transform
 // This function consumes @self. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Invert() *Transform {
-
 	cret := xTransformInvert(x.GoPointer())
 	return cret
 }
@@ -1323,7 +1202,6 @@ var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Matrix(MatrixVar *graphene.Matrix) *Transform {
-
 	cret := xTransformMatrix(x.GoPointer(), MatrixVar)
 	return cret
 }
@@ -1339,7 +1217,6 @@ var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Matrix2d(XxVar float32, YxVar float32, XyVar float32, YyVar float32, DxVar float32, DyVar float32) *Transform {
-
 	cret := xTransformMatrix2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, DxVar, DyVar)
 	return cret
 }
@@ -1356,7 +1233,6 @@ var xTransformPerspective func(uintptr, float32) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Perspective(DepthVar float32) *Transform {
-
 	cret := xTransformPerspective(x.GoPointer(), DepthVar)
 	return cret
 }
@@ -1368,16 +1244,13 @@ var xTransformPrint func(uintptr, *glib.String)
 // The result of this function can later be parsed with
 // [func@Gsk.Transform.parse].
 func (x *Transform) Print(StringVar *glib.String) {
-
 	xTransformPrint(x.GoPointer(), StringVar)
-
 }
 
 var xTransformRef func(uintptr) *Transform
 
 // Acquires a reference on the given transform.
 func (x *Transform) Ref() *Transform {
-
 	cret := xTransformRef(x.GoPointer())
 	return cret
 }
@@ -1391,7 +1264,6 @@ var xTransformRotate func(uintptr, float32) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Rotate(AngleVar float32) *Transform {
-
 	cret := xTransformRotate(x.GoPointer(), AngleVar)
 	return cret
 }
@@ -1405,7 +1277,6 @@ var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Rotate3d(AngleVar float32, AxisVar *graphene.Vec3) *Transform {
-
 	cret := xTransformRotate3d(x.GoPointer(), AngleVar, AxisVar)
 	return cret
 }
@@ -1419,7 +1290,6 @@ var xTransformScale func(uintptr, float32, float32) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Scale(FactorXVar float32, FactorYVar float32) *Transform {
-
 	cret := xTransformScale(x.GoPointer(), FactorXVar, FactorYVar)
 	return cret
 }
@@ -1431,7 +1301,6 @@ var xTransformScale3d func(uintptr, float32, float32, float32) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar float32) *Transform {
-
 	cret := xTransformScale3d(x.GoPointer(), FactorXVar, FactorYVar, FactorZVar)
 	return cret
 }
@@ -1443,7 +1312,6 @@ var xTransformSkew func(uintptr, float32, float32) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
-
 	cret := xTransformSkew(x.GoPointer(), SkewXVar, SkewYVar)
 	return cret
 }
@@ -1475,9 +1343,7 @@ var xTransformTo2d func(uintptr, *float32, *float32, *float32, *float32, *float3
 // and a matrix type from other 2D drawing libraries, in particular
 // Cairo.
 func (x *Transform) To2d(OutXxVar *float32, OutYxVar *float32, OutXyVar *float32, OutYyVar *float32, OutDxVar *float32, OutDyVar *float32) {
-
 	xTransformTo2d(x.GoPointer(), OutXxVar, OutYxVar, OutXyVar, OutYyVar, OutDxVar, OutDyVar)
-
 }
 
 var xTransformTo2dComponents func(uintptr, *float32, *float32, *float32, *float32, *float32, *float32, *float32)
@@ -1501,9 +1367,7 @@ var xTransformTo2dComponents func(uintptr, *float32, *float32, *float32, *float3
 //
 // to check.
 func (x *Transform) To2dComponents(OutSkewXVar *float32, OutSkewYVar *float32, OutScaleXVar *float32, OutScaleYVar *float32, OutAngleVar *float32, OutDxVar *float32, OutDyVar *float32) {
-
 	xTransformTo2dComponents(x.GoPointer(), OutSkewXVar, OutSkewYVar, OutScaleXVar, OutScaleYVar, OutAngleVar, OutDxVar, OutDyVar)
-
 }
 
 var xTransformToAffine func(uintptr, *float32, *float32, *float32, *float32)
@@ -1526,9 +1390,7 @@ var xTransformToAffine func(uintptr, *float32, *float32, *float32, *float32)
 //
 // to check.
 func (x *Transform) ToAffine(OutScaleXVar *float32, OutScaleYVar *float32, OutDxVar *float32, OutDyVar *float32) {
-
 	xTransformToAffine(x.GoPointer(), OutScaleXVar, OutScaleYVar, OutDxVar, OutDyVar)
-
 }
 
 var xTransformToMatrix func(uintptr, *graphene.Matrix)
@@ -1537,9 +1399,7 @@ var xTransformToMatrix func(uintptr, *graphene.Matrix)
 //
 // The previous value of @out_matrix will be ignored.
 func (x *Transform) ToMatrix(OutMatrixVar *graphene.Matrix) {
-
 	xTransformToMatrix(x.GoPointer(), OutMatrixVar)
-
 }
 
 var xTransformToString func(uintptr) string
@@ -1550,7 +1410,6 @@ var xTransformToString func(uintptr) string
 //
 // This is a wrapper around [method@Gsk.Transform.print].
 func (x *Transform) ToString() string {
-
 	cret := xTransformToString(x.GoPointer())
 	return cret
 }
@@ -1566,9 +1425,7 @@ var xTransformToTranslate func(uintptr, *float32, *float32)
 //
 // to check.
 func (x *Transform) ToTranslate(OutDxVar *float32, OutDyVar *float32) {
-
 	xTransformToTranslate(x.GoPointer(), OutDxVar, OutDyVar)
-
 }
 
 var xTransformTransform func(uintptr, *Transform) *Transform
@@ -1578,7 +1435,6 @@ var xTransformTransform func(uintptr, *Transform) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Transform(OtherVar *Transform) *Transform {
-
 	cret := xTransformTransform(x.GoPointer(), OtherVar)
 	return cret
 }
@@ -1589,18 +1445,14 @@ var xTransformTransformBounds func(uintptr, *graphene.Rect, *graphene.Rect)
 //
 // The result is the bounding box containing the coplanar quad.
 func (x *Transform) TransformBounds(RectVar *graphene.Rect, OutRectVar *graphene.Rect) {
-
 	xTransformTransformBounds(x.GoPointer(), RectVar, OutRectVar)
-
 }
 
 var xTransformTransformPoint func(uintptr, *graphene.Point, *graphene.Point)
 
 // Transforms a point using the given transform.
 func (x *Transform) TransformPoint(PointVar *graphene.Point, OutPointVar *graphene.Point) {
-
 	xTransformTransformPoint(x.GoPointer(), PointVar, OutPointVar)
-
 }
 
 var xTransformTranslate func(uintptr, *graphene.Point) *Transform
@@ -1610,7 +1462,6 @@ var xTransformTranslate func(uintptr, *graphene.Point) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Translate(PointVar *graphene.Point) *Transform {
-
 	cret := xTransformTranslate(x.GoPointer(), PointVar)
 	return cret
 }
@@ -1622,7 +1473,6 @@ var xTransformTranslate3d func(uintptr, *graphene.Point3D) *Transform
 // This function consumes @next. Use [method@Gsk.Transform.ref] first
 // if you want to keep it around.
 func (x *Transform) Translate3d(PointVar *graphene.Point3D) *Transform {
-
 	cret := xTransformTranslate3d(x.GoPointer(), PointVar)
 	return cret
 }
@@ -1634,9 +1484,7 @@ var xTransformUnref func(uintptr)
 // If the reference was the last, the resources associated to the @self are
 // freed.
 func (x *Transform) Unref() {
-
 	xTransformUnref(x.GoPointer())
-
 }
 
 func init() {
@@ -1777,5 +1625,4 @@ func init() {
 	core.PuregoSafeRegister(&xTransformTranslate, libs, "gsk_transform_translate")
 	core.PuregoSafeRegister(&xTransformTranslate3d, libs, "gsk_transform_translate_3d")
 	core.PuregoSafeRegister(&xTransformUnref, libs, "gsk_transform_unref")
-
 }

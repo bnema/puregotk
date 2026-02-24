@@ -57,9 +57,7 @@ var xWebResourceGetData func(uintptr, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be called. You can then call
 // webkit_web_resource_get_data_finish() to get the result of the operation.
 func (x *WebResource) GetData(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
 	xWebResourceGetData(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
 }
 
 var xWebResourceGetDataFinish func(uintptr, uintptr, *uint, **glib.Error) uintptr
@@ -73,7 +71,6 @@ func (x *WebResource) GetDataFinish(ResultVar gio.AsyncResult, LengthVar *uint) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xWebResourceGetResponse func(uintptr) uintptr
@@ -135,7 +132,6 @@ var xWebResourceGetUri func(uintptr) string
 // You can monitor the active URI by connecting to the notify::uri
 // signal of @resource.
 func (x *WebResource) GetUri() string {
-
 	cret := xWebResourceGetUri(x.GoPointer())
 	return cret
 }
@@ -174,7 +170,6 @@ func (x *WebResource) ConnectFailed(cb *func(WebResource, uintptr)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa, ErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -194,7 +189,6 @@ func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, 
 		cbFn := *cb
 
 		cbFn(fa, CertificateVarp, ErrorsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -216,7 +210,6 @@ func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint32 {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -241,7 +234,6 @@ func (x *WebResource) ConnectSentRequest(cb *func(WebResource, uintptr, uintptr)
 		cbFn := *cb
 
 		cbFn(fa, RequestVarp, RedirectedResponseVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)

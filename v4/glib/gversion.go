@@ -24,7 +24,6 @@ var xCheckVersion func(uint32, uint32, uint32) string
 // version `@required_major.@required_minor.@required_micro`
 // (same major version.)
 func CheckVersion(RequiredMajorVar uint32, RequiredMinorVar uint32, RequiredMicroVar uint32) string {
-
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
 	return cret
 }
@@ -42,5 +41,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xCheckVersion, libs, "glib_check_version")
-
 }

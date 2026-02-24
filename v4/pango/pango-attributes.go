@@ -220,7 +220,6 @@ var xAttrIteratorCopy func(uintptr) *AttrIterator
 
 // Copy a `PangoAttrIterator`.
 func (x *AttrIterator) Copy() *AttrIterator {
-
 	cret := xAttrIteratorCopy(x.GoPointer())
 	return cret
 }
@@ -229,9 +228,7 @@ var xAttrIteratorDestroy func(uintptr)
 
 // Destroy a `PangoAttrIterator` and free all associated memory.
 func (x *AttrIterator) Destroy() {
-
 	xAttrIteratorDestroy(x.GoPointer())
-
 }
 
 var xAttrIteratorGet func(uintptr, AttrType) *Attribute
@@ -243,7 +240,6 @@ var xAttrIteratorGet func(uintptr, AttrType) *Attribute
 // the attribute whose range starts closest to the
 // current location is used.
 func (x *AttrIterator) Get(TypeVar AttrType) *Attribute {
-
 	cret := xAttrIteratorGet(x.GoPointer(), TypeVar)
 	return cret
 }
@@ -253,7 +249,6 @@ var xAttrIteratorGetAttrs func(uintptr) *glib.SList
 // Gets a list of all attributes at the current position of the
 // iterator.
 func (x *AttrIterator) GetAttrs() *glib.SList {
-
 	cret := xAttrIteratorGetAttrs(x.GoPointer())
 	return cret
 }
@@ -263,16 +258,13 @@ var xAttrIteratorGetFont func(uintptr, *FontDescription, **Language, **glib.SLis
 // Get the font and other attributes at the current
 // iterator position.
 func (x *AttrIterator) GetFont(DescVar *FontDescription, LanguageVar **Language, ExtraAttrsVar **glib.SList) {
-
 	xAttrIteratorGetFont(x.GoPointer(), DescVar, LanguageVar, ExtraAttrsVar)
-
 }
 
 var xAttrIteratorNext func(uintptr) bool
 
 // Advance the iterator until the next change of style.
 func (x *AttrIterator) Next() bool {
-
 	cret := xAttrIteratorNext(x.GoPointer())
 	return cret
 }
@@ -286,9 +278,7 @@ var xAttrIteratorRange func(uintptr, *int32, *int32)
 // oversight, stored return values that wouldn't fit into
 // a signed integer are clamped to %G_MAXINT.
 func (x *AttrIterator) Range(StartVar *int32, EndVar *int32) {
-
 	xAttrIteratorRange(x.GoPointer(), StartVar, EndVar)
-
 }
 
 // The `PangoAttrLanguage` structure is used to represent attributes that
@@ -335,7 +325,6 @@ var xNewAttrList func() *AttrList
 // Create a new empty attribute list with a reference
 // count of one.
 func NewAttrList() *AttrList {
-
 	cret := xNewAttrList()
 	return cret
 }
@@ -355,16 +344,13 @@ var xAttrListChange func(uintptr, *Attribute)
 // continually changing a set of attributes since it
 // never removes or combines existing attributes.
 func (x *AttrList) Change(AttrVar *Attribute) {
-
 	xAttrListChange(x.GoPointer(), AttrVar)
-
 }
 
 var xAttrListCopy func(uintptr) *AttrList
 
 // Copy @list and return an identical new list.
 func (x *AttrList) Copy() *AttrList {
-
 	cret := xAttrListCopy(x.GoPointer())
 	return cret
 }
@@ -378,7 +364,6 @@ var xAttrListEqual func(uintptr, *AttrList) bool
 // Beware that this will return wrong values if any list
 // contains duplicates.
 func (x *AttrList) Equal(OtherListVar *AttrList) bool {
-
 	cret := xAttrListEqual(x.GoPointer(), OtherListVar)
 	return cret
 }
@@ -389,7 +374,6 @@ var xAttrListFilter func(uintptr, uintptr, uintptr) *AttrList
 // any elements of @list for which @func returns %TRUE and
 // inserts them into a new list.
 func (x *AttrList) Filter(FuncVar *AttrFilterFunc, DataVar uintptr) *AttrList {
-
 	cret := xAttrListFilter(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 	return cret
 }
@@ -398,7 +382,6 @@ var xAttrListGetAttributes func(uintptr) *glib.SList
 
 // Gets a list of all attributes in @list.
 func (x *AttrList) GetAttributes() *glib.SList {
-
 	cret := xAttrListGetAttributes(x.GoPointer())
 	return cret
 }
@@ -409,7 +392,6 @@ var xAttrListGetIterator func(uintptr) *AttrIterator
 //
 // @list must not be modified until this iterator is freed.
 func (x *AttrList) GetIterator() *AttrIterator {
-
 	cret := xAttrListGetIterator(x.GoPointer())
 	return cret
 }
@@ -421,9 +403,7 @@ var xAttrListInsert func(uintptr, *Attribute)
 // It will be inserted after all other attributes with a
 // matching @start_index.
 func (x *AttrList) Insert(AttrVar *Attribute) {
-
 	xAttrListInsert(x.GoPointer(), AttrVar)
-
 }
 
 var xAttrListInsertBefore func(uintptr, *Attribute)
@@ -433,9 +413,7 @@ var xAttrListInsertBefore func(uintptr, *Attribute)
 // It will be inserted before all other attributes with a
 // matching @start_index.
 func (x *AttrList) InsertBefore(AttrVar *Attribute) {
-
 	xAttrListInsertBefore(x.GoPointer(), AttrVar)
-
 }
 
 var xAttrListRef func(uintptr) *AttrList
@@ -443,7 +421,6 @@ var xAttrListRef func(uintptr) *AttrList
 // Increase the reference count of the given attribute
 // list by one.
 func (x *AttrList) Ref() *AttrList {
-
 	cret := xAttrListRef(x.GoPointer())
 	return cret
 }
@@ -469,9 +446,7 @@ var xAttrListSplice func(uintptr, *AttrList, int32, int32)
 //
 // This mode is useful for merging two lists of attributes together.
 func (x *AttrList) Splice(OtherVar *AttrList, PosVar int32, LenVar int32) {
-
 	xAttrListSplice(x.GoPointer(), OtherVar, PosVar, LenVar)
-
 }
 
 var xAttrListToString func(uintptr) string
@@ -511,7 +486,6 @@ var xAttrListToString func(uintptr) string
 //
 // Note that shape attributes can not be serialized.
 func (x *AttrList) ToString() string {
-
 	cret := xAttrListToString(x.GoPointer())
 	return cret
 }
@@ -524,9 +498,7 @@ var xAttrListUnref func(uintptr)
 // If the result is zero, free the attribute list
 // and the attributes it contains.
 func (x *AttrList) Unref() {
-
 	xAttrListUnref(x.GoPointer())
-
 }
 
 var xAttrListUpdate func(uintptr, int32, int32, int32)
@@ -546,9 +518,7 @@ var xAttrListUpdate func(uintptr, int32, int32, int32)
 // Attributes start and end positions are updated if they are
 // behind @pos + @remove.
 func (x *AttrList) Update(PosVar int32, RemoveVar int32, AddVar int32) {
-
 	xAttrListUpdate(x.GoPointer(), PosVar, RemoveVar, AddVar)
-
 }
 
 // The `PangoAttrShape` structure is used to represent attributes which
@@ -637,7 +607,6 @@ var xAttributeAsColor func(uintptr) *AttrColor
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsColor() *AttrColor {
-
 	cret := xAttributeAsColor(x.GoPointer())
 	return cret
 }
@@ -648,7 +617,6 @@ var xAttributeAsFloat func(uintptr) *AttrFloat
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsFloat() *AttrFloat {
-
 	cret := xAttributeAsFloat(x.GoPointer())
 	return cret
 }
@@ -659,7 +627,6 @@ var xAttributeAsFontDesc func(uintptr) *AttrFontDesc
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsFontDesc() *AttrFontDesc {
-
 	cret := xAttributeAsFontDesc(x.GoPointer())
 	return cret
 }
@@ -670,7 +637,6 @@ var xAttributeAsFontFeatures func(uintptr) *AttrFontFeatures
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsFontFeatures() *AttrFontFeatures {
-
 	cret := xAttributeAsFontFeatures(x.GoPointer())
 	return cret
 }
@@ -681,7 +647,6 @@ var xAttributeAsInt func(uintptr) *AttrInt
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsInt() *AttrInt {
-
 	cret := xAttributeAsInt(x.GoPointer())
 	return cret
 }
@@ -692,7 +657,6 @@ var xAttributeAsLanguage func(uintptr) *AttrLanguage
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsLanguage() *AttrLanguage {
-
 	cret := xAttributeAsLanguage(x.GoPointer())
 	return cret
 }
@@ -703,7 +667,6 @@ var xAttributeAsShape func(uintptr) *AttrShape
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsShape() *AttrShape {
-
 	cret := xAttributeAsShape(x.GoPointer())
 	return cret
 }
@@ -714,7 +677,6 @@ var xAttributeAsSize func(uintptr) *AttrSize
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsSize() *AttrSize {
-
 	cret := xAttributeAsSize(x.GoPointer())
 	return cret
 }
@@ -725,7 +687,6 @@ var xAttributeAsString func(uintptr) *AttrString
 //
 // This is mainly useful for language bindings.
 func (x *Attribute) AsString() *AttrString {
-
 	cret := xAttributeAsString(x.GoPointer())
 	return cret
 }
@@ -734,7 +695,6 @@ var xAttributeCopy func(uintptr) *Attribute
 
 // Make a copy of an attribute.
 func (x *Attribute) Copy() *Attribute {
-
 	cret := xAttributeCopy(x.GoPointer())
 	return cret
 }
@@ -743,9 +703,7 @@ var xAttributeDestroy func(uintptr)
 
 // Destroy a `PangoAttribute` and free all associated memory.
 func (x *Attribute) Destroy() {
-
 	xAttributeDestroy(x.GoPointer())
-
 }
 
 var xAttributeEqual func(uintptr, *Attribute) bool
@@ -756,7 +714,6 @@ var xAttributeEqual func(uintptr, *Attribute) bool
 // attributes and not the ranges that the attributes
 // apply to.
 func (x *Attribute) Equal(Attr2Var *Attribute) bool {
-
 	cret := xAttributeEqual(x.GoPointer(), Attr2Var)
 	return cret
 }
@@ -768,9 +725,7 @@ var xAttributeInit func(uintptr, *AttrClass)
 // %PANGO_ATTR_INDEX_TO_TEXT_END such that the attribute applies
 // to the entire text by default.
 func (x *Attribute) Init(KlassVar *AttrClass) {
-
 	xAttributeInit(x.GoPointer(), KlassVar)
-
 }
 
 const (
@@ -1038,7 +993,6 @@ var xAttrAllowBreaksNew func(bool) *Attribute
 // If breaks are disabled, the range will be kept in a
 // single run, as far as possible.
 func AttrAllowBreaksNew(AllowBreaksVar bool) *Attribute {
-
 	cret := xAttrAllowBreaksNew(AllowBreaksVar)
 	return cret
 }
@@ -1047,7 +1001,6 @@ var xAttrBackgroundAlphaNew func(uint16) *Attribute
 
 // Create a new background alpha attribute.
 func AttrBackgroundAlphaNew(AlphaVar uint16) *Attribute {
-
 	cret := xAttrBackgroundAlphaNew(AlphaVar)
 	return cret
 }
@@ -1056,7 +1009,6 @@ var xAttrBackgroundNew func(uint16, uint16, uint16) *Attribute
 
 // Create a new background color attribute.
 func AttrBackgroundNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
-
 	cret := xAttrBackgroundNew(RedVar, GreenVar, BlueVar)
 	return cret
 }
@@ -1075,7 +1027,6 @@ var xAttrBaselineShiftNew func(int32) *Attribute
 //
 // &lt;/picture&gt;
 func AttrBaselineShiftNew(ShiftVar int32) *Attribute {
-
 	cret := xAttrBaselineShiftNew(ShiftVar)
 	return cret
 }
@@ -1089,7 +1040,6 @@ var xAttrFallbackNew func(bool) *Attribute
 // No fallback will be done to other fonts on the system
 // that might contain the characters in the text.
 func AttrFallbackNew(EnableFallbackVar bool) *Attribute {
-
 	cret := xAttrFallbackNew(EnableFallbackVar)
 	return cret
 }
@@ -1098,7 +1048,6 @@ var xAttrFamilyNew func(string) *Attribute
 
 // Create a new font family attribute.
 func AttrFamilyNew(FamilyVar string) *Attribute {
-
 	cret := xAttrFamilyNew(FamilyVar)
 	return cret
 }
@@ -1110,7 +1059,6 @@ var xAttrFontDescNew func(*FontDescription) *Attribute
 // This attribute allows setting family, style, weight, variant,
 // stretch, and size simultaneously.
 func AttrFontDescNew(DescVar *FontDescription) *Attribute {
-
 	cret := xAttrFontDescNew(DescVar)
 	return cret
 }
@@ -1122,7 +1070,6 @@ var xAttrFontFeaturesNew func(string) *Attribute
 // You can use this attribute to select OpenType font features like small-caps,
 // alternative glyphs, ligatures, etc. for fonts that support them.
 func AttrFontFeaturesNew(FeaturesVar string) *Attribute {
-
 	cret := xAttrFontFeaturesNew(FeaturesVar)
 	return cret
 }
@@ -1134,7 +1081,6 @@ var xAttrFontScaleNew func(FontScale) *Attribute
 // The effect of this attribute is to change the font size of a run,
 // relative to the size of preceding run.
 func AttrFontScaleNew(ScaleVar FontScale) *Attribute {
-
 	cret := xAttrFontScaleNew(ScaleVar)
 	return cret
 }
@@ -1143,7 +1089,6 @@ var xAttrForegroundAlphaNew func(uint16) *Attribute
 
 // Create a new foreground alpha attribute.
 func AttrForegroundAlphaNew(AlphaVar uint16) *Attribute {
-
 	cret := xAttrForegroundAlphaNew(AlphaVar)
 	return cret
 }
@@ -1152,7 +1097,6 @@ var xAttrForegroundNew func(uint16, uint16, uint16) *Attribute
 
 // Create a new foreground color attribute.
 func AttrForegroundNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
-
 	cret := xAttrForegroundNew(RedVar, GreenVar, BlueVar)
 	return cret
 }
@@ -1161,7 +1105,6 @@ var xAttrGravityHintNew func(GravityHint) *Attribute
 
 // Create a new gravity hint attribute.
 func AttrGravityHintNew(HintVar GravityHint) *Attribute {
-
 	cret := xAttrGravityHintNew(HintVar)
 	return cret
 }
@@ -1170,7 +1113,6 @@ var xAttrGravityNew func(Gravity) *Attribute
 
 // Create a new gravity attribute.
 func AttrGravityNew(GravityVar Gravity) *Attribute {
-
 	cret := xAttrGravityNew(GravityVar)
 	return cret
 }
@@ -1183,7 +1125,6 @@ var xAttrInsertHyphensNew func(bool) *Attribute
 // the middle of a word. This attribute can be used
 // to suppress the hyphen.
 func AttrInsertHyphensNew(InsertHyphensVar bool) *Attribute {
-
 	cret := xAttrInsertHyphensNew(InsertHyphensVar)
 	return cret
 }
@@ -1192,7 +1133,6 @@ var xAttrLanguageNew func(*Language) *Attribute
 
 // Create a new language tag attribute.
 func AttrLanguageNew(LanguageVar *Language) *Attribute {
-
 	cret := xAttrLanguageNew(LanguageVar)
 	return cret
 }
@@ -1201,7 +1141,6 @@ var xAttrLetterSpacingNew func(int32) *Attribute
 
 // Create a new letter-spacing attribute.
 func AttrLetterSpacingNew(LetterSpacingVar int32) *Attribute {
-
 	cret := xAttrLetterSpacingNew(LetterSpacingVar)
 	return cret
 }
@@ -1215,7 +1154,6 @@ var xAttrLineHeightNew func(float64) *Attribute
 // [method@Pango.LayoutLine.get_pixel_extents] and
 // [method@Pango.LayoutIter.get_line_extents].
 func AttrLineHeightNew(FactorVar float64) *Attribute {
-
 	cret := xAttrLineHeightNew(FactorVar)
 	return cret
 }
@@ -1229,7 +1167,6 @@ var xAttrLineHeightNewAbsolute func(int32) *Attribute
 // [method@Pango.LayoutLine.get_pixel_extents] and
 // [method@Pango.LayoutIter.get_line_extents].
 func AttrLineHeightNewAbsolute(HeightVar int32) *Attribute {
-
 	cret := xAttrLineHeightNewAbsolute(HeightVar)
 	return cret
 }
@@ -1241,7 +1178,6 @@ var xAttrListFromString func(string) *AttrList
 // This is the counterpart to [method@Pango.AttrList.to_string].
 // See that functions for details about the format.
 func AttrListFromString(TextVar string) *AttrList {
-
 	cret := xAttrListFromString(TextVar)
 	return cret
 }
@@ -1253,7 +1189,6 @@ var xAttrOverlineColorNew func(uint16, uint16, uint16) *Attribute
 // This attribute modifies the color of overlines.
 // If not set, overlines will use the foreground color.
 func AttrOverlineColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
-
 	cret := xAttrOverlineColorNew(RedVar, GreenVar, BlueVar)
 	return cret
 }
@@ -1262,7 +1197,6 @@ var xAttrOverlineNew func(Overline) *Attribute
 
 // Create a new overline-style attribute.
 func AttrOverlineNew(OverlineVar Overline) *Attribute {
-
 	cret := xAttrOverlineNew(OverlineVar)
 	return cret
 }
@@ -1271,7 +1205,6 @@ var xAttrRiseNew func(int32) *Attribute
 
 // Create a new baseline displacement attribute.
 func AttrRiseNew(RiseVar int32) *Attribute {
-
 	cret := xAttrRiseNew(RiseVar)
 	return cret
 }
@@ -1283,7 +1216,6 @@ var xAttrScaleNew func(float64) *Attribute
 // The base font for the affected text will have
 // its size multiplied by @scale_factor.
 func AttrScaleNew(ScaleFactorVar float64) *Attribute {
-
 	cret := xAttrScaleNew(ScaleFactorVar)
 	return cret
 }
@@ -1295,7 +1227,6 @@ var xAttrSentenceNew func() *Attribute
 // Note that this may require adjustments to word and
 // sentence classification around the range.
 func AttrSentenceNew() *Attribute {
-
 	cret := xAttrSentenceNew()
 	return cret
 }
@@ -1309,7 +1240,6 @@ var xAttrShapeNew func(*Rectangle, *Rectangle) *Attribute
 // This might be used, for instance, for embedding a picture
 // or a widget inside a `PangoLayout`.
 func AttrShapeNew(InkRectVar *Rectangle, LogicalRectVar *Rectangle) *Attribute {
-
 	cret := xAttrShapeNew(InkRectVar, LogicalRectVar)
 	return cret
 }
@@ -1322,7 +1252,6 @@ var xAttrShapeNewWithData func(*Rectangle, *Rectangle, uintptr, uintptr, uintptr
 // is also provided; this pointer can be accessed when later
 // rendering the glyph.
 func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, DataVar uintptr, CopyFuncVar *AttrDataCopyFunc, DestroyFuncVar *glib.DestroyNotify) *Attribute {
-
 	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, glib.NewCallbackNullable(CopyFuncVar), glib.NewCallbackNullable(DestroyFuncVar))
 	return cret
 }
@@ -1332,7 +1261,6 @@ var xAttrShowNew func(ShowFlags) *Attribute
 // Create a new attribute that influences how invisible
 // characters are rendered.
 func AttrShowNew(FlagsVar ShowFlags) *Attribute {
-
 	cret := xAttrShowNew(FlagsVar)
 	return cret
 }
@@ -1341,7 +1269,6 @@ var xAttrSizeNew func(int32) *Attribute
 
 // Create a new font-size attribute in fractional points.
 func AttrSizeNew(SizeVar int32) *Attribute {
-
 	cret := xAttrSizeNew(SizeVar)
 	return cret
 }
@@ -1350,7 +1277,6 @@ var xAttrSizeNewAbsolute func(int32) *Attribute
 
 // Create a new font-size attribute in device units.
 func AttrSizeNewAbsolute(SizeVar int32) *Attribute {
-
 	cret := xAttrSizeNewAbsolute(SizeVar)
 	return cret
 }
@@ -1359,7 +1285,6 @@ var xAttrStretchNew func(Stretch) *Attribute
 
 // Create a new font stretch attribute.
 func AttrStretchNew(StretchVar Stretch) *Attribute {
-
 	cret := xAttrStretchNew(StretchVar)
 	return cret
 }
@@ -1371,7 +1296,6 @@ var xAttrStrikethroughColorNew func(uint16, uint16, uint16) *Attribute
 // This attribute modifies the color of strikethrough lines.
 // If not set, strikethrough lines will use the foreground color.
 func AttrStrikethroughColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
-
 	cret := xAttrStrikethroughColorNew(RedVar, GreenVar, BlueVar)
 	return cret
 }
@@ -1380,7 +1304,6 @@ var xAttrStrikethroughNew func(bool) *Attribute
 
 // Create a new strike-through attribute.
 func AttrStrikethroughNew(StrikethroughVar bool) *Attribute {
-
 	cret := xAttrStrikethroughNew(StrikethroughVar)
 	return cret
 }
@@ -1389,7 +1312,6 @@ var xAttrStyleNew func(Style) *Attribute
 
 // Create a new font slant style attribute.
 func AttrStyleNew(StyleVar Style) *Attribute {
-
 	cret := xAttrStyleNew(StyleVar)
 	return cret
 }
@@ -1399,7 +1321,6 @@ var xAttrTextTransformNew func(TextTransform) *Attribute
 // Create a new attribute that influences how characters
 // are transformed during shaping.
 func AttrTextTransformNew(TransformVar TextTransform) *Attribute {
-
 	cret := xAttrTextTransformNew(TransformVar)
 	return cret
 }
@@ -1416,7 +1337,6 @@ var xAttrTypeGetName func(AttrType) string
 // g_intern_string() for what that means) that should
 // not be modified or freed.
 func AttrTypeGetName(TypeVar AttrType) string {
-
 	cret := xAttrTypeGetName(TypeVar)
 	return cret
 }
@@ -1428,7 +1348,6 @@ var xAttrTypeRegister func(string) AttrType
 // The attribute type name can be accessed later
 // by using [func@Pango.AttrType.get_name].
 func AttrTypeRegister(NameVar string) AttrType {
-
 	cret := xAttrTypeRegister(NameVar)
 	return cret
 }
@@ -1440,7 +1359,6 @@ var xAttrUnderlineColorNew func(uint16, uint16, uint16) *Attribute
 // This attribute modifies the color of underlines.
 // If not set, underlines will use the foreground color.
 func AttrUnderlineColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
-
 	cret := xAttrUnderlineColorNew(RedVar, GreenVar, BlueVar)
 	return cret
 }
@@ -1449,7 +1367,6 @@ var xAttrUnderlineNew func(Underline) *Attribute
 
 // Create a new underline-style attribute.
 func AttrUnderlineNew(UnderlineVar Underline) *Attribute {
-
 	cret := xAttrUnderlineNew(UnderlineVar)
 	return cret
 }
@@ -1458,7 +1375,6 @@ var xAttrVariantNew func(Variant) *Attribute
 
 // Create a new font variant attribute (normal or small caps).
 func AttrVariantNew(VariantVar Variant) *Attribute {
-
 	cret := xAttrVariantNew(VariantVar)
 	return cret
 }
@@ -1467,7 +1383,6 @@ var xAttrWeightNew func(Weight) *Attribute
 
 // Create a new font weight attribute.
 func AttrWeightNew(WeightVar Weight) *Attribute {
-
 	cret := xAttrWeightNew(WeightVar)
 	return cret
 }
@@ -1479,7 +1394,6 @@ var xAttrWordNew func() *Attribute
 // Note that this may require adjustments to word and
 // sentence classification around the range.
 func AttrWordNew() *Attribute {
-
 	cret := xAttrWordNew()
 	return cret
 }
@@ -1595,5 +1509,4 @@ func init() {
 	core.PuregoSafeRegister(&xAttributeDestroy, libs, "pango_attribute_destroy")
 	core.PuregoSafeRegister(&xAttributeEqual, libs, "pango_attribute_equal")
 	core.PuregoSafeRegister(&xAttributeInit, libs, "pango_attribute_init")
-
 }

@@ -42,7 +42,6 @@ var xPathPointCompare func(uintptr, *PathPoint) int32
 
 // Returns whether @point1 is before or after @point2.
 func (x *PathPoint) Compare(Point2Var *PathPoint) int32 {
-
 	cret := xPathPointCompare(x.GoPointer(), Point2Var)
 	return cret
 }
@@ -51,7 +50,6 @@ var xPathPointCopy func(uintptr) *PathPoint
 
 // Copies a path point.
 func (x *PathPoint) Copy() *PathPoint {
-
 	cret := xPathPointCopy(x.GoPointer())
 	return cret
 }
@@ -67,7 +65,6 @@ var xPathPointEqual func(uintptr, *PathPoint) bool
 // start- and endpoint of a concrete path refer to the
 // same location.
 func (x *PathPoint) Equal(Point2Var *PathPoint) bool {
-
 	cret := xPathPointEqual(x.GoPointer(), Point2Var)
 	return cret
 }
@@ -76,9 +73,7 @@ var xPathPointFree func(uintptr)
 
 // Frees a path point copied by [method@Gsk.PathPoint.copy].
 func (x *PathPoint) Free() {
-
 	xPathPointFree(x.GoPointer())
-
 }
 
 var xPathPointGetCurvature func(uintptr, *Path, PathDirection, *graphene.Point) float32
@@ -106,7 +101,6 @@ var xPathPointGetCurvature func(uintptr, *Path, PathDirection, *graphene.Point) 
 //
 // &lt;/picture&gt;
 func (x *PathPoint) GetCurvature(PathVar *Path, DirectionVar PathDirection, CenterVar *graphene.Point) float32 {
-
 	cret := xPathPointGetCurvature(x.GoPointer(), PathVar, DirectionVar, CenterVar)
 	return cret
 }
@@ -116,7 +110,6 @@ var xPathPointGetDistance func(uintptr, *PathMeasure) float32
 // Returns the distance from the beginning of the path
 // to the point.
 func (x *PathPoint) GetDistance(MeasureVar *PathMeasure) float32 {
-
 	cret := xPathPointGetDistance(x.GoPointer(), MeasureVar)
 	return cret
 }
@@ -125,9 +118,7 @@ var xPathPointGetPosition func(uintptr, *Path, *graphene.Point)
 
 // Gets the position of the point.
 func (x *PathPoint) GetPosition(PathVar *Path, PositionVar *graphene.Point) {
-
 	xPathPointGetPosition(x.GoPointer(), PathVar, PositionVar)
-
 }
 
 var xPathPointGetRotation func(uintptr, *Path, PathDirection) float32
@@ -139,7 +130,6 @@ var xPathPointGetRotation func(uintptr, *Path, PathDirection) float32
 // can e.g. be used in
 // [gtk_snapshot_rotate()](../gtk4/method.Snapshot.rotate.html).
 func (x *PathPoint) GetRotation(PathVar *Path, DirectionVar PathDirection) float32 {
-
 	cret := xPathPointGetRotation(x.GoPointer(), PathVar, DirectionVar)
 	return cret
 }
@@ -161,9 +151,7 @@ var xPathPointGetTangent func(uintptr, *Path, PathDirection, *graphene.Vec2)
 // path, [method@Gsk.PathPoint.get_rotation] may be more
 // convenient to use.
 func (x *PathPoint) GetTangent(PathVar *Path, DirectionVar PathDirection, TangentVar *graphene.Vec2) {
-
 	xPathPointGetTangent(x.GoPointer(), PathVar, DirectionVar, TangentVar)
-
 }
 
 func init() {
@@ -189,5 +177,4 @@ func init() {
 	core.PuregoSafeRegister(&xPathPointGetPosition, libs, "gsk_path_point_get_position")
 	core.PuregoSafeRegister(&xPathPointGetRotation, libs, "gsk_path_point_get_rotation")
 	core.PuregoSafeRegister(&xPathPointGetTangent, libs, "gsk_path_point_get_tangent")
-
 }

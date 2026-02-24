@@ -174,7 +174,6 @@ var xNewKeyFile func() *KeyFile
 // [method@GLib.KeyFile.load_from_data_dirs] to
 // read an existing key file.
 func NewKeyFile() *KeyFile {
-
 	cret := xNewKeyFile()
 	return cret
 }
@@ -187,9 +186,7 @@ var xKeyFileFree func(uintptr)
 // If the reference count reaches zero, frees the key file and all its allocated
 // memory.
 func (x *KeyFile) Free() {
-
 	xKeyFileFree(x.GoPointer())
-
 }
 
 var xKeyFileGetBoolean func(uintptr, string, string, **Error) bool
@@ -208,7 +205,6 @@ func (x *KeyFile) GetBoolean(GroupNameVar string, KeyVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetBooleanList func(uintptr, string, string, *uint, **Error) uintptr
@@ -227,7 +223,6 @@ func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar *
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetComment func(uintptr, string, string, **Error) string
@@ -249,7 +244,6 @@ func (x *KeyFile) GetComment(GroupNameVar string, KeyVar string) (string, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetDouble func(uintptr, string, string, **Error) float64
@@ -267,7 +261,6 @@ func (x *KeyFile) GetDouble(GroupNameVar string, KeyVar string) (float64, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetDoubleList func(uintptr, string, string, *uint, **Error) uintptr
@@ -286,7 +279,6 @@ func (x *KeyFile) GetDoubleList(GroupNameVar string, KeyVar string, LengthVar *u
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetGroups func(uintptr, *uint) []string
@@ -296,7 +288,6 @@ var xKeyFileGetGroups func(uintptr, *uint) []string
 // The array of returned groups will be `NULL`-terminated, so
 // @length may optionally be `NULL`.
 func (x *KeyFile) GetGroups(LengthVar *uint) []string {
-
 	cret := xKeyFileGetGroups(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -316,7 +307,6 @@ func (x *KeyFile) GetInt64(GroupNameVar string, KeyVar string) (int64, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetInteger func(uintptr, string, string, **Error) int32
@@ -336,7 +326,6 @@ func (x *KeyFile) GetInteger(GroupNameVar string, KeyVar string) (int32, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetIntegerList func(uintptr, string, string, *uint, **Error) uintptr
@@ -356,7 +345,6 @@ func (x *KeyFile) GetIntegerList(GroupNameVar string, KeyVar string, LengthVar *
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetKeys func(uintptr, string, *uint, **Error) []string
@@ -374,7 +362,6 @@ func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar *uint) ([]string, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
@@ -389,7 +376,6 @@ var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
 // have originally been tagged with the locale that is the result of
 // this function.
 func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar string) string {
-
 	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar)
 	return cret
 }
@@ -420,7 +406,6 @@ func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetLocaleStringList func(uintptr, string, string, string, *uint, **Error) []string
@@ -451,14 +436,12 @@ func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, Locale
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetStartGroup func(uintptr) string
 
 // Returns the name of the start group of the file.
 func (x *KeyFile) GetStartGroup() string {
-
 	cret := xKeyFileGetStartGroup(x.GoPointer())
 	return cret
 }
@@ -481,7 +464,6 @@ func (x *KeyFile) GetString(GroupNameVar string, KeyVar string) (string, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetStringList func(uintptr, string, string, *uint, **Error) []string
@@ -499,7 +481,6 @@ func (x *KeyFile) GetStringList(GroupNameVar string, KeyVar string, LengthVar *u
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetUint64 func(uintptr, string, string, **Error) uint64
@@ -517,7 +498,6 @@ func (x *KeyFile) GetUint64(GroupNameVar string, KeyVar string) (uint64, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileGetValue func(uintptr, string, string, **Error) string
@@ -537,14 +517,12 @@ func (x *KeyFile) GetValue(GroupNameVar string, KeyVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileHasGroup func(uintptr, string) bool
 
 // Looks whether the key file has the group @group_name.
 func (x *KeyFile) HasGroup(GroupNameVar string) bool {
-
 	cret := xKeyFileHasGroup(x.GoPointer(), GroupNameVar)
 	return cret
 }
@@ -570,7 +548,6 @@ func (x *KeyFile) HasKey(GroupNameVar string, KeyVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileLoadFromBytes func(uintptr, *Bytes, KeyFileFlags, **Error) bool
@@ -587,7 +564,6 @@ func (x *KeyFile) LoadFromBytes(BytesVar *Bytes, FlagsVar KeyFileFlags) (bool, e
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileLoadFromData func(uintptr, string, uint, KeyFileFlags, **Error) bool
@@ -603,7 +579,6 @@ func (x *KeyFile) LoadFromData(DataVar string, LengthVar uint, FlagsVar KeyFileF
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileLoadFromDataDirs func(uintptr, string, *string, KeyFileFlags, **Error) bool
@@ -625,7 +600,6 @@ func (x *KeyFile) LoadFromDataDirs(FileVar string, FullPathVar *string, FlagsVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileLoadFromDirs func(uintptr, string, []string, *string, KeyFileFlags, **Error) bool
@@ -653,7 +627,6 @@ func (x *KeyFile) LoadFromDirs(FileVar string, SearchDirsVar []string, FullPathV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileLoadFromFile func(uintptr, string, KeyFileFlags, **Error) bool
@@ -674,14 +647,12 @@ func (x *KeyFile) LoadFromFile(FileVar string, FlagsVar KeyFileFlags) (bool, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileRef func(uintptr) *KeyFile
 
 // Increases the reference count of @key_file.
 func (x *KeyFile) Ref() *KeyFile {
-
 	cret := xKeyFileRef(x.GoPointer())
 	return cret
 }
@@ -701,7 +672,6 @@ func (x *KeyFile) RemoveComment(GroupNameVar string, KeyVar string) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileRemoveGroup func(uintptr, string, **Error) bool
@@ -716,7 +686,6 @@ func (x *KeyFile) RemoveGroup(GroupNameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileRemoveKey func(uintptr, string, string, **Error) bool
@@ -730,7 +699,6 @@ func (x *KeyFile) RemoveKey(GroupNameVar string, KeyVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileSaveToFile func(uintptr, string, **Error) bool
@@ -753,7 +721,6 @@ func (x *KeyFile) SaveToFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileSetBoolean func(uintptr, string, string, bool)
@@ -762,9 +729,7 @@ var xKeyFileSetBoolean func(uintptr, string, string, bool)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetBoolean(GroupNameVar string, KeyVar string, ValueVar bool) {
-
 	xKeyFileSetBoolean(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileSetBooleanList func(uintptr, string, string, []bool, uint)
@@ -773,9 +738,7 @@ var xKeyFileSetBooleanList func(uintptr, string, string, []bool, uint)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetBooleanList(GroupNameVar string, KeyVar string, ListVar []bool, LengthVar uint) {
-
 	xKeyFileSetBooleanList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
-
 }
 
 var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
@@ -801,7 +764,6 @@ func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar stri
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileSetDouble func(uintptr, string, string, float64)
@@ -810,9 +772,7 @@ var xKeyFileSetDouble func(uintptr, string, string, float64)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetDouble(GroupNameVar string, KeyVar string, ValueVar float64) {
-
 	xKeyFileSetDouble(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileSetDoubleList func(uintptr, string, string, []float64, uint)
@@ -821,9 +781,7 @@ var xKeyFileSetDoubleList func(uintptr, string, string, []float64, uint)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetDoubleList(GroupNameVar string, KeyVar string, ListVar []float64, LengthVar uint) {
-
 	xKeyFileSetDoubleList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
-
 }
 
 var xKeyFileSetInt64 func(uintptr, string, string, int64)
@@ -832,9 +790,7 @@ var xKeyFileSetInt64 func(uintptr, string, string, int64)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetInt64(GroupNameVar string, KeyVar string, ValueVar int64) {
-
 	xKeyFileSetInt64(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileSetInteger func(uintptr, string, string, int32)
@@ -843,9 +799,7 @@ var xKeyFileSetInteger func(uintptr, string, string, int32)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetInteger(GroupNameVar string, KeyVar string, ValueVar int32) {
-
 	xKeyFileSetInteger(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileSetIntegerList func(uintptr, string, string, []int32, uint)
@@ -854,9 +808,7 @@ var xKeyFileSetIntegerList func(uintptr, string, string, []int32, uint)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetIntegerList(GroupNameVar string, KeyVar string, ListVar []int32, LengthVar uint) {
-
 	xKeyFileSetIntegerList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
-
 }
 
 var xKeyFileSetListSeparator func(uintptr, byte)
@@ -866,9 +818,7 @@ var xKeyFileSetListSeparator func(uintptr, byte)
 // Typically `;` or `,` are used as separators. The default list separator
 // is `;`.
 func (x *KeyFile) SetListSeparator(SeparatorVar byte) {
-
 	xKeyFileSetListSeparator(x.GoPointer(), SeparatorVar)
-
 }
 
 var xKeyFileSetLocaleString func(uintptr, string, string, string, string)
@@ -879,9 +829,7 @@ var xKeyFileSetLocaleString func(uintptr, string, string, string, string)
 //
 // If @locale is `C` then the untranslated value is set (since GLib 2.84).
 func (x *KeyFile) SetLocaleString(GroupNameVar string, KeyVar string, LocaleVar string, StringVar string) {
-
 	xKeyFileSetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, StringVar)
-
 }
 
 var xKeyFileSetLocaleStringList func(uintptr, string, string, string, []string, uint)
@@ -893,9 +841,7 @@ var xKeyFileSetLocaleStringList func(uintptr, string, string, string, []string, 
 //
 // If the translation for @key cannot be found then it is created.
 func (x *KeyFile) SetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar string, ListVar []string, LengthVar uint) {
-
 	xKeyFileSetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, ListVar, LengthVar)
-
 }
 
 var xKeyFileSetString func(uintptr, string, string, string)
@@ -907,9 +853,7 @@ var xKeyFileSetString func(uintptr, string, string, string)
 // Unlike [method@GLib.KeyFile.set_value], this function handles characters
 // that need escaping, such as newlines.
 func (x *KeyFile) SetString(GroupNameVar string, KeyVar string, StringVar string) {
-
 	xKeyFileSetString(x.GoPointer(), GroupNameVar, KeyVar, StringVar)
-
 }
 
 var xKeyFileSetStringList func(uintptr, string, string, []string, uint)
@@ -919,9 +863,7 @@ var xKeyFileSetStringList func(uintptr, string, string, []string, uint)
 // If @key cannot be found then it is created.
 // If @group_name cannot be found then it is created.
 func (x *KeyFile) SetStringList(GroupNameVar string, KeyVar string, ListVar []string, LengthVar uint) {
-
 	xKeyFileSetStringList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
-
 }
 
 var xKeyFileSetUint64 func(uintptr, string, string, uint64)
@@ -930,9 +872,7 @@ var xKeyFileSetUint64 func(uintptr, string, string, uint64)
 //
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetUint64(GroupNameVar string, KeyVar string, ValueVar uint64) {
-
 	xKeyFileSetUint64(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileSetValue func(uintptr, string, string, string)
@@ -944,9 +884,7 @@ var xKeyFileSetValue func(uintptr, string, string, string)
 // characters that need escaping (such as newlines or spaces), use
 // [method@GLib.KeyFile.set_string].
 func (x *KeyFile) SetValue(GroupNameVar string, KeyVar string, ValueVar string) {
-
 	xKeyFileSetValue(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
-
 }
 
 var xKeyFileToData func(uintptr, *uint, **Error) string
@@ -962,7 +900,6 @@ func (x *KeyFile) ToData(LengthVar *uint) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xKeyFileUnref func(uintptr)
@@ -972,9 +909,7 @@ var xKeyFileUnref func(uintptr)
 // If the reference count reaches zero, frees the key file and all its allocated
 // memory.
 func (x *KeyFile) Unref() {
-
 	xKeyFileUnref(x.GoPointer())
-
 }
 
 const (
@@ -1185,5 +1120,4 @@ func init() {
 	core.PuregoSafeRegister(&xKeyFileSetValue, libs, "g_key_file_set_value")
 	core.PuregoSafeRegister(&xKeyFileToData, libs, "g_key_file_to_data")
 	core.PuregoSafeRegister(&xKeyFileUnref, libs, "g_key_file_unref")
-
 }
