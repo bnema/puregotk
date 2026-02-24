@@ -12,7 +12,7 @@ GOPATH="$tmp" goimports --srcdir . -w v4 || { rm -r "$tmp"; exit 1; }
 rm -r "$tmp"
 
 echo "formatting files..."
-go fmt "codeberg.org/puregotk/puregotk/v4/..."
+gofumpt -w v4 || go fmt "codeberg.org/puregotk/puregotk/v4/..."
 
 echo "running a second pass for goimports..."
 goimports -w v4
