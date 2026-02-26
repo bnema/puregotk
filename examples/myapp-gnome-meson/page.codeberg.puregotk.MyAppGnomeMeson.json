@@ -1,5 +1,5 @@
 {
-  "id": "io.github.puregotk.MyAppGnomeMeson",
+  "id": "page.codeberg.puregotk.MyAppGnomeMeson",
   "runtime": "org.gnome.Platform",
   "runtime-version": "49",
   "sdk": "org.gnome.Sdk",

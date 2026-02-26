@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	AppID      = "io.github.puregotk.MyAppGnomeMeson"
+	AppID      = "page.codeberg.puregotk.MyAppGnomeMeson"
 	AppVersion = "0.1.0"
 )
 
@@ -14,7 +14,7 @@ const (
 var ResourceContents []byte
 
 var (
-	AppPath = path.Join("/io", "github", "puregotk", "MyAppGnomeMeson")
+	AppPath = path.Join("/page", "codeberg", "puregotk", "MyAppGnomeMeson")
 
 	ResourceWindowUIPath = path.Join(AppPath, "window.ui")
 )

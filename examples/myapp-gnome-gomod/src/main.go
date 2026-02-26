@@ -3,6 +3,7 @@ package main
 //go:generate sh -c "if [ -z \"$FLATPAK_ID\" ]; then cd .. && GOWORK=off go tool github.com/dennwc/flatpak-go-mod --json . && GOWORK=off go tool github.com/dennwc/flatpak-go-mod --json --module-name mylibgtkmeson ../mylib-gtk-meson; fi"
 
 import (
+	"log/slog"
 	"os"
 
 	"codeberg.org/puregotk/puregotk/v4/gio"
@@ -11,7 +12,7 @@ import (
 )
 
 func init() {
-	if err := i18n.InitI18n(GettextPackage, LocaleDir); err != nil {
+	if err := i18n.InitI18n(GettextPackage, LocaleDir, slog.Default()); err != nil {
 		panic(err)
 	}
 

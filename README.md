@@ -68,7 +68,7 @@ import (
 )
 
 func main() {
-	app := gtk.NewApplication("com.github.jwijenbergh.puregotk.gtk4.hello", gio.GApplicationFlagsNoneValue)
+	app := gtk.NewApplication("page.codeberg.puregotk.Gtk4Hello", gio.GApplicationFlagsNoneValue)
 	// cleanup, no finalizers are used in this library
 	defer app.Unref()
 	// functions with callback arguments take function pointers

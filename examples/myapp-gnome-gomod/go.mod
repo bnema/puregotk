@@ -7,7 +7,7 @@ tool github.com/dennwc/flatpak-go-mod
 require (
 	codeberg.org/puregotk/puregotk v0.0.0-20260224102311-59dc2ea18838
 	codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go v0.0.0-20260224102311-59dc2ea18838
-	github.com/pojntfx/go-gettext v0.3.0
+	github.com/pojntfx/go-gettext v0.4.0
 )
 
 require (
@@ -15,7 +15,6 @@ require (
 	github.com/dennwc/flatpak-go-mod v0.1.0 // indirect
 	github.com/fatih/color v1.10.0 // indirect
 	github.com/goccy/go-yaml v1.12.0 // indirect
-	github.com/jwijenbergh/purego v0.0.0-20251017112123-b71757b9ba42 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	golang.org/x/mod v0.16.0 // indirect

@@ -13,7 +13,7 @@ const ExampleApplication = GObject.registerClass(
   class ExampleApplication extends Adw.Application {
     constructor() {
       super({
-        application_id: "io.github.puregotk.MyLibGtkMesonExample",
+        application_id: "page.codeberg.puregotk.MyLibGtkMesonExample",
         flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
       });
     }

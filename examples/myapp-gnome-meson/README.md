@@ -24,7 +24,7 @@ meson compile -C _build myapp-gnome-meson-update-po
 Alternatively, you can build and run the application using Flatpak, which will also build `mylib-gtk-meson` for you:
 
 ```shell
-flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir io.github.puregotk.MyAppGnomeMeson.json
+flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir page.codeberg.puregotk.MyAppGnomeMeson.json
 
-flatpak run io.github.puregotk.MyAppGnomeMeson
+flatpak run page.codeberg.puregotk.MyAppGnomeMeson
 ```

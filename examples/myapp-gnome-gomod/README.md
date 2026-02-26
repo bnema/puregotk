@@ -17,9 +17,9 @@ Note the `ldflags` flag; without using Meson, the `.mo` files for i18n don't get
 Alternatively, you can build and run the application using Flatpak, which will also build `mylib-gtk-meson` for you and install the `.mo` files for i18n:
 
 ```shell
-flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir io.github.puregotk.MyAppGnomeGomod.json
+flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir page.codeberg.puregotk.MyAppGnomeGomod.json
 
-flatpak run io.github.puregotk.MyAppGnomeMeson
+flatpak run page.codeberg.puregotk.MyAppGnomeGomod
 ```
 
 ![Screenshot of myapp-gnome-gomod showing the main application window](../../docs/screenshot-myapp-gnome-gomod.png)

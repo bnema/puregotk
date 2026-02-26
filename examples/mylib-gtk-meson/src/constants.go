@@ -12,7 +12,7 @@ const (
 )
 
 var (
-	appPath = path.Join("/io", "github", "puregotk", "MyLibGtkMeson")
+	appPath = path.Join("/page", "codeberg", "puregotk", "MyLibGtkMeson")
 
 	resourceWindowUIPath = path.Join(appPath, "window.ui")
 )

@@ -36,9 +36,9 @@ The GJS example app simply displays the custom widget written in Go, which looks
 Alternatively, you can also build the library and example using Flatpak and then start it like so:
 
 ```shell
-flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir io.github.puregotk.MyLibGtkMesonExample.json
+flatpak-builder --force-clean --force-clean --user --repo=repo --install builddir page.codeberg.puregotk.MyLibGtkMesonExample.json
 
-flatpak run io.github.puregotk.MyLibGtkMesonExample
+flatpak run page.codeberg.puregotk.MyLibGtkMesonExample
 ```
 
 If you want to import the custom widget from Go, you'll have to generate bindings to the custom library using puregotk. For an example of how to do that, see [../mylib-gtk-meson-go](../mylib-gtk-meson-go/).

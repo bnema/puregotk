@@ -4,6 +4,7 @@ package main
 
 import (
 	_ "embed"
+	"log/slog"
 
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/glib"
@@ -11,7 +12,7 @@ import (
 )
 
 func init() {
-	if err := i18n.BindI18n(GettextPackage, LocaleDir); err != nil {
+	if err := i18n.BindI18n(GettextPackage, LocaleDir, slog.Default()); err != nil {
 		panic(err)
 	}
 
