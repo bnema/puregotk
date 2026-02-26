@@ -5,7 +5,7 @@ codeberg.org/puregotk/purego/internal/cgo
 codeberg.org/puregotk/purego/internal/fakecgo
 codeberg.org/puregotk/purego/internal/strings
 codeberg.org/puregotk/purego/internal/xreflect
-# codeberg.org/puregotk/puregotk v0.0.0-20260224102311-59dc2ea18838
+# codeberg.org/puregotk/puregotk v0.0.0-00010101000000-000000000000 => ../..
 ## explicit; go 1.23.0
 codeberg.org/puregotk/puregotk/internal/core
 codeberg.org/puregotk/puregotk/pkg/core
@@ -22,10 +22,10 @@ codeberg.org/puregotk/puregotk/v4/graphene
 codeberg.org/puregotk/puregotk/v4/gsk
 codeberg.org/puregotk/puregotk/v4/gtk
 codeberg.org/puregotk/puregotk/v4/pango
-# codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go v0.0.0-20260224102311-59dc2ea18838
+# codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go v0.0.0-00010101000000-000000000000 => ../mylib-gtk-meson-go
 ## explicit; go 1.25.0
 codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go/mylibgtkmeson
-# github.com/dennwc/flatpak-go-mod v0.1.1-0.20251127123506-956509dd96ba
+# github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050
 ## explicit; go 1.24.4
 github.com/dennwc/flatpak-go-mod
 # github.com/goccy/go-yaml v1.18.0
@@ -39,17 +39,10 @@ github.com/goccy/go-yaml/parser
 github.com/goccy/go-yaml/printer
 github.com/goccy/go-yaml/scanner
 github.com/goccy/go-yaml/token
-# github.com/jwijenbergh/purego v0.0.0-20251017112123-b71757b9ba42
-## explicit; go 1.18
-github.com/jwijenbergh/purego
-github.com/jwijenbergh/purego/internal/cgo
-github.com/jwijenbergh/purego/internal/fakecgo
-github.com/jwijenbergh/purego/internal/strings
-github.com/jwijenbergh/purego/internal/xreflect
-# github.com/pojntfx/go-gettext v0.3.0
+# github.com/pojntfx/go-gettext v0.4.0
 ## explicit; go 1.25.0
 github.com/pojntfx/go-gettext/pkg/i18n
-# golang.org/x/mod v0.30.0
+# golang.org/x/mod v0.31.0
 ## explicit; go 1.24.0
 golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/modfile

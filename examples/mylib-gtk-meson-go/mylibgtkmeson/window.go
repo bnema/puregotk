@@ -6,6 +6,14 @@ import (
 
 	"codeberg.org/puregotk/purego"
 	"codeberg.org/puregotk/puregotk/pkg/core"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gdk"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gobject"
+	"codeberg.org/puregotk/puregotk/v4/gobject/types"
+	"codeberg.org/puregotk/puregotk/v4/gsk"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 // Example application window with a test button and toast notifications.
@@ -29,7 +37,9 @@ var xMainApplicationWindowShowToast func(uintptr, string)
 
 // Shows a toast notification with the given message inside the window.
 func (x *MainApplicationWindow) ShowToast(MessageVar string) {
+
 	xMainApplicationWindowShowToast(x.GoPointer(), MessageVar)
+
 }
 
 func (c *MainApplicationWindow) GoPointer() uintptr {
@@ -70,6 +80,7 @@ func (x *MainApplicationWindow) ConnectButtonTestClicked(cb *func(MainApplicatio
 		cbFn := *cb
 
 		cbFn(fa)
+
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
@@ -80,28 +91,36 @@ func (x *MainApplicationWindow) ConnectButtonTestClicked(cb *func(MainApplicatio
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *MainApplicationWindow) ActionAdded(ActionNameVar string) {
+
 	gio.XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
+
 }
 
 // Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *MainApplicationWindow) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
+
 	gio.XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
+
 }
 
 // Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *MainApplicationWindow) ActionRemoved(ActionNameVar string) {
+
 	gio.XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
+
 }
 
 // Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *MainApplicationWindow) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
+
 	gio.XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
+
 }
 
 // Activate the named action within @action_group.
@@ -138,7 +157,9 @@ func (x *MainApplicationWindow) ActionStateChanged(ActionNameVar string, StateVa
 // exit (0);
 // ```
 func (x *MainApplicationWindow) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
+
 	gio.XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
+
 }
 
 // Request for the state of the named action within @action_group to be
@@ -153,7 +174,9 @@ func (x *MainApplicationWindow) ActivateAction(ActionNameVar string, ParameterVa
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *MainApplicationWindow) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
+
 	gio.XGActionGroupChangeActionState(x.GoPointer(), ActionNameVar, ValueVar)
+
 }
 
 // Checks if the named action within @action_group is currently enabled.
@@ -161,6 +184,7 @@ func (x *MainApplicationWindow) ChangeActionState(ActionNameVar string, ValueVar
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *MainApplicationWindow) GetActionEnabled(ActionNameVar string) bool {
+
 	cret := gio.XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -179,6 +203,7 @@ func (x *MainApplicationWindow) GetActionEnabled(ActionNameVar string) bool {
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different parameter type.
 func (x *MainApplicationWindow) GetActionParameterType(ActionNameVar string) *glib.VariantType {
+
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -192,6 +217,7 @@ func (x *MainApplicationWindow) GetActionParameterType(ActionNameVar string) *gl
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *MainApplicationWindow) GetActionState(ActionNameVar string) *glib.Variant {
+
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -215,6 +241,7 @@ func (x *MainApplicationWindow) GetActionState(ActionNameVar string) *glib.Varia
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *MainApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.Variant {
+
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -236,12 +263,14 @@ func (x *MainApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.V
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different state type.
 func (x *MainApplicationWindow) GetActionStateType(ActionNameVar string) *glib.VariantType {
+
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
 	return cret
 }
 
 // Checks if the named action exists within @action_group.
 func (x *MainApplicationWindow) HasAction(ActionNameVar string) bool {
+
 	cret := gio.XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -251,6 +280,7 @@ func (x *MainApplicationWindow) HasAction(ActionNameVar string) bool {
 // The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *MainApplicationWindow) ListActions() []string {
+
 	cret := gio.XGActionGroupListActions(x.GoPointer())
 	return cret
 }
@@ -283,6 +313,7 @@ func (x *MainApplicationWindow) ListActions() []string {
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *MainApplicationWindow) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
 }
@@ -294,7 +325,9 @@ func (x *MainApplicationWindow) QueryAction(ActionNameVar string, EnabledVar *bo
 //
 // The action map takes its own reference on @action.
 func (x *MainApplicationWindow) AddAction(ActionVar gio.Action) {
+
 	gio.XGActionMapAddAction(x.GoPointer(), ActionVar.GoPointer())
+
 }
 
 // A convenience function for creating multiple [class@Gio.SimpleAction]
@@ -341,7 +374,9 @@ func (x *MainApplicationWindow) AddAction(ActionVar gio.Action) {
 //
 // ```
 func (x *MainApplicationWindow) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
+
 	gio.XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
+
 }
 
 // Looks up the action with the name @action_name in @action_map.
@@ -365,7 +400,9 @@ func (x *MainApplicationWindow) LookupAction(ActionNameVar string) *gio.ActionBa
 //
 // If no action of this name is in the map then nothing happens.
 func (x *MainApplicationWindow) RemoveAction(ActionNameVar string) {
+
 	gio.XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
+
 }
 
 // Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
@@ -394,7 +431,9 @@ func (x *MainApplicationWindow) RemoveAction(ActionNameVar string) {
 //
 // ```
 func (x *MainApplicationWindow) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32) {
+
 	gio.XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
+
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -407,7 +446,9 @@ func (x *MainApplicationWindow) RemoveActionEntries(EntriesVar []gio.ActionEntry
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *MainApplicationWindow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -428,6 +469,7 @@ func (x *MainApplicationWindow) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *MainApplicationWindow) GetAccessibleRole() gtk.AccessibleRole {
+
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -452,6 +494,7 @@ func (x *MainApplicationWindow) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *MainApplicationWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -490,23 +533,30 @@ func (x *MainApplicationWindow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *MainApplicationWindow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *MainApplicationWindow) ResetProperty(PropertyVar gtk.AccessibleProperty) {
+
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
+
 }
 
 // Resets the accessible relation to its default value.
 func (x *MainApplicationWindow) ResetRelation(RelationVar gtk.AccessibleRelation) {
+
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
+
 }
 
 // Resets the accessible state to its default value.
 func (x *MainApplicationWindow) ResetState(StateVar gtk.AccessibleState) {
+
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -519,7 +569,9 @@ func (x *MainApplicationWindow) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *MainApplicationWindow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
 	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
 }
 
 // Updates the next accessible sibling.
@@ -527,7 +579,9 @@ func (x *MainApplicationWindow) SetAccessibleParent(ParentVar gtk.Accessible, Ne
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *MainApplicationWindow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
 	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
 }
 
 // Informs ATs that the platform state has changed.
@@ -536,7 +590,9 @@ func (x *MainApplicationWindow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Ac
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *MainApplicationWindow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
+
 }
 
 // Updates a list of accessible properties.
@@ -558,7 +614,9 @@ func (x *MainApplicationWindow) UpdatePlatformState(StateVar gtk.AccessiblePlatf
 //
 // ```
 func (x *MainApplicationWindow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
+
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
+
 }
 
 // Updates an array of accessible properties.
@@ -568,7 +626,9 @@ func (x *MainApplicationWindow) UpdateProperty(FirstPropertyVar gtk.AccessiblePr
 //
 // This function is meant to be used by language bindings.
 func (x *MainApplicationWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
+
 }
 
 // Updates a list of accessible relations.
@@ -590,7 +650,9 @@ func (x *MainApplicationWindow) UpdatePropertyValue(NPropertiesVar int32, Proper
 //
 // ```
 func (x *MainApplicationWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
+
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
+
 }
 
 // Updates an array of accessible relations.
@@ -600,7 +662,9 @@ func (x *MainApplicationWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRe
 //
 // This function is meant to be used by language bindings.
 func (x *MainApplicationWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
+
 }
 
 // Updates a list of accessible states.
@@ -623,7 +687,9 @@ func (x *MainApplicationWindow) UpdateRelationValue(NRelationsVar int32, Relatio
 //
 // ```
 func (x *MainApplicationWindow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
+
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
+
 }
 
 // Updates an array of accessible states.
@@ -633,7 +699,9 @@ func (x *MainApplicationWindow) UpdateState(FirstStateVar gtk.AccessibleState, v
 //
 // This function is meant to be used by language bindings.
 func (x *MainApplicationWindow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
+
 }
 
 // Gets the ID of the @buildable object.
@@ -641,6 +709,7 @@ func (x *MainApplicationWindow) UpdateStateValue(NStatesVar int32, StatesVar []g
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MainApplicationWindow) GetBuildableId() string {
+
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -680,21 +749,27 @@ func (x *MainApplicationWindow) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *MainApplicationWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
+
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
+
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MainApplicationWindow) Realize() {
+
 	gtk.XGtkNativeRealize(x.GoPointer())
+
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *MainApplicationWindow) Unrealize() {
+
 	gtk.XGtkNativeUnrealize(x.GoPointer())
+
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -741,7 +816,9 @@ func (x *MainApplicationWindow) GetFocus() *gtk.Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *MainApplicationWindow) SetFocus(FocusVar *gtk.Widget) {
+
 	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+
 }
 
 func init() {
@@ -759,4 +836,5 @@ func init() {
 	core.PuregoSafeRegister(&xMainApplicationWindowGLibType, libs, "mylib_gtk_meson_main_application_window_get_type")
 
 	core.PuregoSafeRegister(&xMainApplicationWindowShowToast, libs, "mylib_gtk_meson_main_application_window_show_toast")
+
 }

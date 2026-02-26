@@ -1,6 +1,7 @@
 _build
 repo
 builddir
+.flatpak-builder
 *.gresource
 *.ui
 *.mo

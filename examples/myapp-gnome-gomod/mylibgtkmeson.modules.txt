@@ -1,18 +1,4 @@
-# github.com/dennwc/flatpak-go-mod v0.1.1-0.20251127123506-956509dd96ba
-## explicit; go 1.24.4
-github.com/dennwc/flatpak-go-mod
-# github.com/goccy/go-yaml v1.18.0
-## explicit; go 1.21.0
-github.com/goccy/go-yaml
-github.com/goccy/go-yaml/ast
-github.com/goccy/go-yaml/internal/errors
-github.com/goccy/go-yaml/internal/format
-github.com/goccy/go-yaml/lexer
-github.com/goccy/go-yaml/parser
-github.com/goccy/go-yaml/printer
-github.com/goccy/go-yaml/scanner
-github.com/goccy/go-yaml/token
-# codeberg.org/puregotk/purego v0.0.0-20251017112123-b71757b9ba42
+# codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80
 ## explicit; go 1.18
 codeberg.org/puregotk/purego
 codeberg.org/puregotk/purego/internal/cgo
@@ -36,10 +22,24 @@ codeberg.org/puregotk/puregotk/v4/graphene
 codeberg.org/puregotk/puregotk/v4/gsk
 codeberg.org/puregotk/puregotk/v4/gtk
 codeberg.org/puregotk/puregotk/v4/pango
-# github.com/pojntfx/go-gettext v0.2.0
+# github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050
+## explicit; go 1.24.4
+github.com/dennwc/flatpak-go-mod
+# github.com/goccy/go-yaml v1.18.0
+## explicit; go 1.21.0
+github.com/goccy/go-yaml
+github.com/goccy/go-yaml/ast
+github.com/goccy/go-yaml/internal/errors
+github.com/goccy/go-yaml/internal/format
+github.com/goccy/go-yaml/lexer
+github.com/goccy/go-yaml/parser
+github.com/goccy/go-yaml/printer
+github.com/goccy/go-yaml/scanner
+github.com/goccy/go-yaml/token
+# github.com/pojntfx/go-gettext v0.4.0
 ## explicit; go 1.25.0
 github.com/pojntfx/go-gettext/pkg/i18n
-# golang.org/x/mod v0.30.0
+# golang.org/x/mod v0.31.0
 ## explicit; go 1.24.0
 golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/modfile
