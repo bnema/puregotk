@@ -37,8 +37,10 @@ func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
 // https://ubuntu.pkgs.org/23.04/ubuntu-main-arm64/libgtk-4-1_4.10.1+ds-2ubuntu1_arm64.deb.html
 // https://docs.flatpak.org/en/latest/flatpak-builder-command-reference.html (see --libdir)
 var paths = map[string][]string{
-	"amd64": {"/app/lib/", "/usr/lib/x86_64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
-	"arm64": {"/app/lib/", "/usr/lib/aarch64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
+	"linux_amd64":  {"/app/lib/", "/usr/lib/x86_64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
+	"linux_arm64":  {"/app/lib/", "/usr/lib/aarch64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
+	"darwin_arm64": {"/opt/homebrew/lib/"},
+	"darwin_amd64": {"/usr/local/lib/"},
 }
 
 // names is a lookup from library names to shared object filenames
@@ -138,7 +140,7 @@ func GetPaths(name string) []string {
 	}
 
 	// fallback to lookup a path if no env var is found
-	gp, ok := paths[runtime.GOARCH]
+	gp, ok := paths[runtime.GOOS+"_"+runtime.GOARCH]
 	if ok {
 		// try to loop over paths
 		for _, p := range gp {

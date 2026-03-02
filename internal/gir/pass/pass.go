@@ -405,6 +405,15 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		}
 	}
 
+	// Derive macOS .dylib equivalents from .so names
+	var dylibNames []string
+	for _, soName := range sharedLibraries {
+		if strings.Contains(soName, ".so.") {
+			dylibNames = append(dylibNames, strings.Replace(soName, ".so.", ".", 1)+".dylib")
+		}
+	}
+	sharedLibraries = append(sharedLibraries, dylibNames...)
+
 	for _, fn := range files {
 		methods := 0
 		for _, i := range interfaces[fn] {
