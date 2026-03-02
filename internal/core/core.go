@@ -39,8 +39,8 @@ func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
 var paths = map[string][]string{
 	"linux_amd64":  {"/app/lib/", "/usr/lib/x86_64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
 	"linux_arm64":  {"/app/lib/", "/usr/lib/aarch64-linux-gnu/", "/usr/lib64/", "/usr/lib/"},
-	"darwin_arm64": {"/opt/homebrew/lib/"},
-	"darwin_amd64": {"/usr/local/lib/"},
+	"darwin_arm64": {"/opt/homebrew/lib/", "/opt/local/lib/"},
+	"darwin_amd64": {"/usr/local/lib/", "/opt/local/lib/"},
 }
 
 // names is a lookup from library names to shared object filenames
