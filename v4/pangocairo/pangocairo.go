@@ -490,7 +490,7 @@ func UpdateLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
 
 func init() {
 	core.SetPackageName("PANGOCAIRO", "pangocairo")
-	core.SetSharedLibraries("PANGOCAIRO", []string{"libpangocairo-1.0.so.0"})
+	core.SetSharedLibraries("PANGOCAIRO", []string{"libpangocairo-1.0.so.0", "libpangocairo-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGOCAIRO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)

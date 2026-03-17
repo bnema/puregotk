@@ -16,7 +16,7 @@ func ModuleErrorQuark() glib.Quark {
 
 func init() {
 	core.SetPackageName("GMODULE", "gmodule-2.0")
-	core.SetSharedLibraries("GMODULE", []string{"libgmodule-2.0.so.0"})
+	core.SetSharedLibraries("GMODULE", []string{"libgmodule-2.0.so.0", "libgmodule-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GMODULE") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
