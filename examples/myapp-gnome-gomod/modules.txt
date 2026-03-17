@@ -39,7 +39,7 @@ github.com/goccy/go-yaml/parser
 github.com/goccy/go-yaml/printer
 github.com/goccy/go-yaml/scanner
 github.com/goccy/go-yaml/token
-# github.com/pojntfx/go-gettext v0.4.0
+# github.com/pojntfx/go-gettext v0.4.1
 ## explicit; go 1.25.0
 github.com/pojntfx/go-gettext/pkg/i18n
 # golang.org/x/mod v0.31.0

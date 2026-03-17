@@ -6,10 +6,10 @@
   },
   {
     "dest": "vendor/github.com/pojntfx/go-gettext",
-    "sha256": "bf5a0cddfa2f389ba8150ea1046667415ba676b9253c08ed6ef7664817793e22",
+    "sha256": "d0ad3df0fd73beaa2af18ce69102097b1f352d5dc5083eb1148655272ef4e999",
     "strip-components": 3,
     "type": "archive",
-    "url": "https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.4.0.zip"
+    "url": "https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.4.1.zip"
   },
   {
     "dest": "vendor/codeberg.org/puregotk/purego",
