@@ -20,11 +20,19 @@ func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
 	for _, lib := range libs {
 		sym, err := purego.Dlsym(lib, name)
 		if err == nil {
-			purego.RegisterFunc(fptr, sym)
-
+			registerFuncSafe(fptr, sym)
 			return
 		}
 	}
+}
+
+// registerFuncSafe wraps purego.RegisterFunc with panic recovery for
+// functions whose signatures exceed upstream purego limits (e.g. "too
+// many stack arguments"). The function pointer stays nil and will
+// panic only if actually called.
+func registerFuncSafe(fptr interface{}, sym uintptr) {
+	defer func() { recover() }()
+	purego.RegisterFunc(fptr, sym)
 }
 
 // paths to where the shared object files should be located
