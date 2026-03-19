@@ -68,14 +68,14 @@ func NewSnapshot() *Snapshot {
 	return cls
 }
 
-var xSnapshotAppendBorder func(uintptr, *gsk.RoundedRect, [4]float32, [4]gdk.RGBA)
+var xSnapshotAppendBorder func(uintptr, *gsk.RoundedRect, *[4]float32, *[4]gdk.RGBA)
 
 // Appends a stroked border rectangle inside the given @outline.
 //
 // The four sides of the border can have different widths and colors.
 func (x *Snapshot) AppendBorder(OutlineVar *gsk.RoundedRect, BorderWidthVar [4]float32, BorderColorVar [4]gdk.RGBA) {
 
-	xSnapshotAppendBorder(x.GoPointer(), OutlineVar, BorderWidthVar, BorderColorVar)
+	xSnapshotAppendBorder(x.GoPointer(), OutlineVar, &BorderWidthVar, &BorderColorVar)
 
 }
 

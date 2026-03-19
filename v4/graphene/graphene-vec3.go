@@ -187,12 +187,12 @@ func (x *Vec3) Init(XVar float32, YVar float32, ZVar float32) *Vec3 {
 	return cret
 }
 
-var xVec3InitFromFloat func(uintptr, [3]float32) *Vec3
+var xVec3InitFromFloat func(uintptr, *[3]float32) *Vec3
 
 // Initializes a #graphene_vec3_t with the values from an array.
 func (x *Vec3) InitFromFloat(SrcVar [3]float32) *Vec3 {
 
-	cret := xVec3InitFromFloat(x.GoPointer(), SrcVar)
+	cret := xVec3InitFromFloat(x.GoPointer(), &SrcVar)
 	return cret
 }
 

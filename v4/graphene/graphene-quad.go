@@ -86,12 +86,12 @@ func (x *Quad) Init(P1Var *Point, P2Var *Point, P3Var *Point, P4Var *Point) *Qua
 	return cret
 }
 
-var xQuadInitFromPoints func(uintptr, [4]Point) *Quad
+var xQuadInitFromPoints func(uintptr, *[4]Point) *Quad
 
 // Initializes a #graphene_quad_t using an array of points.
 func (x *Quad) InitFromPoints(PointsVar [4]Point) *Quad {
 
-	cret := xQuadInitFromPoints(x.GoPointer(), PointsVar)
+	cret := xQuadInitFromPoints(x.GoPointer(), &PointsVar)
 	return cret
 }
 

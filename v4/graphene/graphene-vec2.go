@@ -120,12 +120,12 @@ func (x *Vec2) Init(XVar float32, YVar float32) *Vec2 {
 	return cret
 }
 
-var xVec2InitFromFloat func(uintptr, [2]float32) *Vec2
+var xVec2InitFromFloat func(uintptr, *[2]float32) *Vec2
 
 // Initializes @v with the contents of the given array.
 func (x *Vec2) InitFromFloat(SrcVar [2]float32) *Vec2 {
 
-	cret := xVec2InitFromFloat(x.GoPointer(), SrcVar)
+	cret := xVec2InitFromFloat(x.GoPointer(), &SrcVar)
 	return cret
 }
 

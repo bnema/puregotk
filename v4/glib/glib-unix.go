@@ -207,7 +207,7 @@ func UnixGetPasswdEntry(UserNameVar string) (uintptr, error) {
 
 }
 
-var xUnixOpenPipe func([2]int, int, **Error) bool
+var xUnixOpenPipe func(*[2]int, int, **Error) bool
 
 // Similar to the UNIX pipe() call, but on modern systems like Linux
 // uses the pipe2() system call, which atomically creates a pipe with
@@ -231,7 +231,7 @@ var xUnixOpenPipe func([2]int, int, **Error) bool
 func UnixOpenPipe(FdsVar [2]int, FlagsVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xUnixOpenPipe(FdsVar, FlagsVar, &cerr)
+	cret := xUnixOpenPipe(&FdsVar, FlagsVar, &cerr)
 
 	if cerr == nil {
 		return cret, nil

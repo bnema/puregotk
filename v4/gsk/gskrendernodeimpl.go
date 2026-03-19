@@ -188,7 +188,7 @@ func BorderNodeNewFromInternalPtr(ptr uintptr) *BorderNode {
 	return cls
 }
 
-var xNewBorderNode func(*RoundedRect, [4]float32, [4]gdk.RGBA) uintptr
+var xNewBorderNode func(*RoundedRect, *[4]float32, *[4]gdk.RGBA) uintptr
 
 // Creates a `GskRenderNode` that will stroke a border rectangle inside the
 // given @outline.
@@ -197,7 +197,7 @@ var xNewBorderNode func(*RoundedRect, [4]float32, [4]gdk.RGBA) uintptr
 func NewBorderNode(OutlineVar *RoundedRect, BorderWidthVar [4]float32, BorderColorVar [4]gdk.RGBA) *BorderNode {
 	var cls *BorderNode
 
-	cret := xNewBorderNode(OutlineVar, BorderWidthVar, BorderColorVar)
+	cret := xNewBorderNode(OutlineVar, &BorderWidthVar, &BorderColorVar)
 
 	if cret == 0 {
 		return nil

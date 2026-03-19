@@ -339,6 +339,19 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, transferFull)
 	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx, transferFull)
 
+	// Upstream purego does not support direct array parameters (reflect.Array kind).
+	// Fixed-size C arrays like "int fds[2]" are pointer params at the ABI level.
+	// For non-out fixed-size array params, change the pure signature to *[N]T and
+	// pass &param from the API wrapper so purego sees a pointer.
+	if p.Array != nil && p.Array.FixedSize > 0 && !isOut {
+		idx := len(f.Pure.Types) - 1
+		f.Pure.Types[idx] = "*" + f.Pure.Types[idx]
+		f.Pure.Full[idx] = f.Pure.Names[idx] + " " + f.Pure.Types[idx]
+		apiIdx := len(f.API.Call) - 1
+		f.API.Call[apiIdx] = "&" + f.API.Call[apiIdx]
+		f.API.CallWithRefs[apiIdx] = "&" + f.API.CallWithRefs[apiIdx]
+	}
+
 	// For callback parameters (not out parameters), populate callback metadata
 	// This enables the template to generate proper closure wrapping
 	if kind == CallbackType && !isOut {
