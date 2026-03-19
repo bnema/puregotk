@@ -2,7 +2,7 @@
 package gio
 
 import (
-	"github.com/jwijenbergh/purego"
+	"github.com/ebitengine/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"

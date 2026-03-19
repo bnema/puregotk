@@ -5,8 +5,6 @@ package glib
 import (
 	"fmt"
 	"reflect"
-
-	"github.com/jwijenbergh/purego"
 )
 
 func unrefCallback(fnPtr interface{}) error {
@@ -17,15 +15,10 @@ func unrefCallback(fnPtr interface{}) error {
 	if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Func {
 		return fmt.Errorf("type must be a function pointer")
 	}
-	cbPtr := reflect.ValueOf(fnPtr).Pointer()
-	refPtr, ok := GetCallback(cbPtr)
-	if !ok {
-		return purego.UnrefCallbackFnPtr(fnPtr)
+	cbPtr := val.Pointer()
+	if _, ok := GetCallback(cbPtr); !ok {
+		return fmt.Errorf("callback not found in registry")
 	}
-	defer func() {
-		callbacks.Lock()
-		delete(callbacks.refs, cbPtr)
-		callbacks.Unlock()
-	}()
-	return purego.UnrefCallback(refPtr)
+	RemoveCallback(cbPtr)
+	return nil
 }

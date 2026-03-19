@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/jwijenbergh/purego"
+	"github.com/ebitengine/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
@@ -333,18 +333,35 @@ func removeSourceTrampolineBySourceID(sourceID uint) {
 	sourceTrampolines.Unlock()
 }
 
-// UnrefCallbackValue unreferences the provided callback by reflect.value to free a purego slot
+// UnrefCallback removes puregotk's bookkeeping for a callback created from
+// a function pointer.
 //
-// NOTE: Windows does not support unreferencing callbacks, so on that platform this operation is
-// a NOOP, callback memory is never freed, and there is a limit on maximum total callbacks.
-// See the purego documentation for further details.
+// NOTE: Upstream purego does not support releasing callback slots after
+// purego.NewCallback, so this only clears puregotk's local registry state.
 func UnrefCallback(fnPtr interface{}) error {
 	return unrefCallback(fnPtr)
 }
 
-// NewCallback is an alias to purego.NewCallback
+// NewCallback converts a pointer-to-function into a C callback pointer.
+// It reuses an existing callback for the same function pointer via the
+// local callback registry.
 func NewCallback(fnPtr interface{}) uintptr {
-	return purego.NewCallbackFnPtr(fnPtr)
+	val := reflect.ValueOf(fnPtr)
+	if val.IsNil() {
+		panic("purego: function must not be nil")
+	}
+	if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Func {
+		panic("purego: the type must be a function pointer but was not")
+	}
+
+	cbPtr := val.Pointer()
+	if refPtr, ok := GetCallback(cbPtr); ok {
+		return refPtr
+	}
+
+	refPtr := purego.NewCallback(val.Elem().Interface())
+	SaveCallbackWithClosure(cbPtr, refPtr, fnPtr)
+	return refPtr
 }
 
 // NewCallbackNullable is an alias to purego.NewCallback that returns a null pointer for null functions

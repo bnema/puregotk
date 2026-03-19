@@ -1,7 +1,5 @@
 module github.com/jwijenbergh/puregotk
 
-go 1.23.0
+go 1.26.1
 
-toolchain go1.24.5
-
-require github.com/jwijenbergh/purego v0.0.0-20251017112123-b71757b9ba42
+require github.com/ebitengine/purego v0.10.0

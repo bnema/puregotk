@@ -4,7 +4,7 @@ package glib
 import (
 	"unsafe"
 
-	"github.com/jwijenbergh/purego"
+	"github.com/ebitengine/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 

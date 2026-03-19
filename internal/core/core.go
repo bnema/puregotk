@@ -13,7 +13,7 @@ import (
 	"sync"
 	"unsafe"
 
-	"github.com/jwijenbergh/purego"
+	"github.com/ebitengine/purego"
 )
 
 func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
