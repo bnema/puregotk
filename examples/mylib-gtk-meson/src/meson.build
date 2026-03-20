@@ -43,7 +43,7 @@ configure_file(
 
 mylib_gtk_meson_deps = [
     dependency('gtk4'),
-    dependency('libadwaita-1', version: '>= 1.4'),
+    dependency('libadwaita-1', version: '>= 1.9'),
 ]
 
 mylib_gtk_meson_blueprints = custom_target(
@@ -137,7 +137,7 @@ pkg.generate(
     filebase: 'mylib-gtk-meson-' + api_version,
     version: meson.project_version(),
     subdirs: 'mylib-gtk-meson',
-    requires: ['gtk4 >= 4.17.5', 'libadwaita-1 >= 1.7.5'],
+    requires: ['gtk4 >= 4.22.1', 'libadwaita-1 >= 1.9.0'],
     install_dir: get_option('libdir') / 'pkgconfig',
 )
 

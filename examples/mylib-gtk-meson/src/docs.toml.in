@@ -18,7 +18,7 @@
 [dependencies."Adw-1"]
     name = "Adw"
     description = "Building blocks for modern GNOME applications"
-    docs_url = "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.7/"
+    docs_url = "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.9/"
 
 [theme]
     show_index_summary = true

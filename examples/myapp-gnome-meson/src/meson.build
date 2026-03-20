@@ -20,7 +20,7 @@ myapp_gnome_meson_source_go_files = files('main.go')
 
 myapp_gnome_meson_deps = [
     dependency('gtk4'),
-    dependency('libadwaita-1', version: '>= 1.4'),
+    dependency('libadwaita-1', version: '>= 1.9'),
     dependency('mylib-gtk-meson-0.1', version: '>= 0.1.0'),
 ]
 
