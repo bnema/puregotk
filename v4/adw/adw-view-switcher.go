@@ -98,7 +98,7 @@ const (
 // ```
 //
 // It's recommended to set [property@ViewSwitcher:policy] to
-// `ADW_VIEW_SWITCHER_POLICY_WIDE` in this case.
+// [enum@Adw.ViewSwitcherPolicy.wide] in this case.
 //
 // You may have to adjust the breakpoint condition for your specific pages.
 //
@@ -109,8 +109,11 @@ const (
 //
 // ## Accessibility
 //
-// `AdwViewSwitcher` uses the `GTK_ACCESSIBLE_ROLE_TAB_LIST` role and uses the
-// `GTK_ACCESSIBLE_ROLE_TAB` for its buttons.
+// `AdwViewSwitcher` uses the [enum@Gtk.AccessibleRole.tab-list] role and the
+// [enum@Gtk.AccessibleRole.tab] role for its buttons.
+//
+// See also: [class@ViewSwitcherBar], [class@InlineViewSwitcher],
+// [class@ViewSwitcherSidebar].
 type ViewSwitcher struct {
 	gtk.Widget
 }
@@ -205,6 +208,18 @@ func (c *ViewSwitcher) SetGoPointer(ptr uintptr) {
 // does not interrupts the user's current screen reader output.
 func (x *ViewSwitcher) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ViewSwitcher) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

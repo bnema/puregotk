@@ -7,6 +7,21 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gdk"
 )
 
+var xAcceleratorGetAccessibleLabel func(uint32, gdk.ModifierType) string
+
+// Generates an accessible description of an accelerator.
+//
+// This function is similar to [func@Gtk.accelerator_get_label] but it is meant
+// for accessibility layers labels rather than user-facing labels. The output
+// of this function is fit for [enum@Gtk.AccessibleProperty.KEY_SHORTCUTS].
+//
+// For more information, see the [WAI-ARIA](https://www.w3.org/TR/wai-aria/#aria-keyshortcuts)
+// reference.
+func AcceleratorGetAccessibleLabel(AcceleratorKeyVar uint32, AcceleratorModsVar gdk.ModifierType) string {
+	cret := xAcceleratorGetAccessibleLabel(AcceleratorKeyVar, AcceleratorModsVar)
+	return cret
+}
+
 var xAcceleratorGetDefaultModMask func() gdk.ModifierType
 
 // Gets the modifier mask.
@@ -148,6 +163,7 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xAcceleratorGetAccessibleLabel, libs, "gtk_accelerator_get_accessible_label")
 	core.PuregoSafeRegister(&xAcceleratorGetDefaultModMask, libs, "gtk_accelerator_get_default_mod_mask")
 	core.PuregoSafeRegister(&xAcceleratorGetLabel, libs, "gtk_accelerator_get_label")
 	core.PuregoSafeRegister(&xAcceleratorGetLabelWithKeycode, libs, "gtk_accelerator_get_label_with_keycode")

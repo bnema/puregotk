@@ -434,13 +434,15 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 // [class@Gtk.BuilderListItemFactory] for an example of this technique.
 //
 // To create a constant expression, use the `&lt;constant&gt;` element. If the type attribute
-// is specified, the element content is interpreted as a value of that type. Otherwise,
+// is specified, the element content is interpreted as a value of that type, and the
+// initial attribute can be specified to get the initial value for that type. Otherwise,
 // it is assumed to be an object. For instance:
 //
 // ```xml
 //
 //	&lt;constant&gt;string_filter&lt;/constant&gt;
 //	&lt;constant type='gchararray'&gt;Hello, world&lt;/constant&gt;
+//	&lt;constant type='gchararray' initial='true' /&gt; &lt;!-- NULL --&gt;
 //
 // ```
 //
@@ -477,6 +479,21 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //	  &lt;constant type='gchararray'&gt;File size:&lt;/constant&gt;
 //	  &lt;lookup type='GFile' name='size'&gt;myfile&lt;/lookup&gt;
 //	&lt;/closure&gt;
+//
+// ```
+//
+// If an expression can fail, a `&lt;try&gt;` element can be used to provide fallbacks.
+// The expressions are tried from top to bottom until one of them succeeds.
+// If none of the expressions succeed, the expression fails as normal:
+//
+// ```xml
+//
+//	&lt;try&gt;
+//	  &lt;lookup type='GtkWindow' name='title'&gt;
+//	    &lt;lookup type='GtkLabel' name='root'&gt;&lt;/lookup&gt;
+//	  &lt;/lookup&gt;
+//	  &lt;constant type='gchararray'&gt;Hello World&lt;/constant&gt;
+//	&lt;/try&gt;
 //
 // ```
 //
@@ -522,8 +539,7 @@ var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
 // the object's property stays synchronized with `self`.
 //
 // If `self`'s evaluation fails, `target`'s `property` is not updated.
-// You can ensure that this doesn't happen by using a fallback
-// expression.
+// Use a [class@Gtk.TryExpression] to provide a fallback for this case.
 //
 // Note that this function takes ownership of `self`. If you want
 // to keep it around, you should [method@Gtk.Expression.ref] it beforehand.
@@ -833,6 +849,57 @@ func (c *PropertyExpression) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A `GtkExpression` that tries to evaluate each of its expressions until it succeeds.
+//
+// If all expressions fail to evaluate, the `GtkTryExpression`'s evaluation fails as well.
+type TryExpression struct {
+	Expression
+}
+
+var xTryExpressionGLibType func() types.GType
+
+func TryExpressionGLibType() types.GType {
+	return xTryExpressionGLibType()
+}
+
+func TryExpressionNewFromInternalPtr(ptr uintptr) *TryExpression {
+	cls := &TryExpression{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewTryExpression func(uint32, uintptr) uintptr
+
+// Creates a `GtkExpression` with an array of expressions.
+//
+// When evaluated, the `GtkTryExpression` tries to evaluate each of its expressions until it succeeds.
+// If all expressions fail to evaluate, the `GtkTryExpression`'s evaluation fails as well.
+//
+// The value type of the expressions in the array must match.
+func NewTryExpression(NExpressionsVar uint32, ExpressionsVar uintptr) *TryExpression {
+	var cls *TryExpression
+
+	cret := xNewTryExpression(NExpressionsVar, ExpressionsVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &TryExpression{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *TryExpression) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *TryExpression) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
@@ -898,4 +965,8 @@ func init() {
 
 	core.PuregoSafeRegister(&xPropertyExpressionGetExpression, libs, "gtk_property_expression_get_expression")
 	core.PuregoSafeRegister(&xPropertyExpressionGetPspec, libs, "gtk_property_expression_get_pspec")
+
+	core.PuregoSafeRegister(&xTryExpressionGLibType, libs, "gtk_try_expression_get_type")
+
+	core.PuregoSafeRegister(&xNewTryExpression, libs, "gtk_try_expression_new")
 }

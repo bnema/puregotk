@@ -31,7 +31,7 @@ func (x *MessageHeaders) GoPointer() uintptr {
 
 var xNewMessageHeaders func(MessageHeadersType) *MessageHeaders
 
-// Creates a #SoupMessageHeaders.
+// Creates a [struct@MessageHeaders].
 //
 // ([class@Message] does this automatically for its own headers. You would only
 // need to use this method if you are manually parsing or generating message
@@ -235,7 +235,7 @@ var xMessageHeadersGetRanges func(uintptr, int64, *uintptr, *int32) bool
 // Beware that even if given a @total_length, this function does not
 // check that the ranges are satisfiable.
 //
-// #SoupServer has built-in handling for range requests. If your
+// [class@Server] has built-in handling for range requests. If your
 // server handler returns a %SOUP_STATUS_OK response containing the
 // complete response body (rather than pausing the message and
 // returning some of the response body later), and there is a Range
@@ -412,11 +412,10 @@ func (x *MessageHeaders) Unref() {
 	xMessageHeadersUnref(x.GoPointer())
 }
 
-// An opaque type used to iterate over a %SoupMessageHeaders
-// structure.
+// An opaque type used to iterate over a [struct@MessageHeaders] structure
 //
 // After intializing the iterator with [func@MessageHeadersIter.init], call
-// [method@MessageHeadersIter.next] to fetch data from it.
+// [func@MessageHeadersIter.next] to fetch data from it.
 //
 // You may not modify the headers while iterating over them.
 type MessageHeadersIter struct {
@@ -533,7 +532,7 @@ var xMessageHeadersIterNext func(*MessageHeadersIter, *string, *string) bool
 // iterated by @iter.
 //
 // If @iter has already yielded the last header, then
-// [method@MessageHeadersIter.next] will return %FALSE and @name and @value
+// [func@MessageHeadersIter.next] will return %FALSE and @name and @value
 // will be unchanged.
 func MessageHeadersIterNext(IterVar *MessageHeadersIter, NameVar *string, ValueVar *string) bool {
 	cret := xMessageHeadersIterNext(IterVar, NameVar, ValueVar)

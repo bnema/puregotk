@@ -492,6 +492,14 @@ func (x *Settings) GetLoadIconsIgnoringImageLoadSetting() bool {
 	return cret
 }
 
+var xSettingsGetMathFontFamily func(uintptr) string
+
+// Gets the #WebKitSettings:math-font-family property.
+func (x *Settings) GetMathFontFamily() string {
+	cret := xSettingsGetMathFontFamily(x.GoPointer())
+	return cret
+}
+
 var xSettingsGetMediaContentTypesRequiringHardwareSupport func(uintptr) string
 
 // Gets the #WebKitSettings:media-content-types-requiring-hardware-support property.
@@ -915,6 +923,15 @@ var xSettingsSetLoadIconsIgnoringImageLoadSetting func(uintptr, bool)
 // Setting no longer supported. This function does nothing.
 func (x *Settings) SetLoadIconsIgnoringImageLoadSetting(EnabledVar bool) {
 	xSettingsSetLoadIconsIgnoringImageLoadSetting(x.GoPointer(), EnabledVar)
+}
+
+var xSettingsSetMathFontFamily func(uintptr, string)
+
+// Set the #WebKitSettings:math-font-family property.
+//
+// Since 2.52
+func (x *Settings) SetMathFontFamily(MathFontFamilyVar string) {
+	xSettingsSetMathFontFamily(x.GoPointer(), MathFontFamilyVar)
 }
 
 var xSettingsSetMediaContentTypesRequiringHardwareSupport func(uintptr, string)
@@ -1973,6 +1990,23 @@ func (x *Settings) GetPropertyLoadIconsIgnoringImageLoadSetting() bool {
 	return v.GetBoolean()
 }
 
+// SetPropertyMathFontFamily sets the "math-font-family" property.
+// The font family used as the default for content using a math font.
+func (x *Settings) SetPropertyMathFontFamily(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("math-font-family", &v)
+}
+
+// GetPropertyMathFontFamily gets the "math-font-family" property.
+// The font family used as the default for content using a math font.
+func (x *Settings) GetPropertyMathFontFamily() string {
+	var v gobject.Value
+	x.GetProperty("math-font-family", &v)
+	return v.GetString()
+}
+
 // SetPropertyMediaContentTypesRequiringHardwareSupport sets the "media-content-types-requiring-hardware-support" property.
 // List of media content types requiring hardware support, split by semicolons (:).
 // For example: 'video/webm; codecs="vp*":video/mp4; codecs="avc*":video/&amp;ast; codecs="av1*"'.
@@ -2360,6 +2394,7 @@ func init() {
 	core.PuregoSafeRegister(&xSettingsGetJavascriptCanAccessClipboard, libs, "webkit_settings_get_javascript_can_access_clipboard")
 	core.PuregoSafeRegister(&xSettingsGetJavascriptCanOpenWindowsAutomatically, libs, "webkit_settings_get_javascript_can_open_windows_automatically")
 	core.PuregoSafeRegister(&xSettingsGetLoadIconsIgnoringImageLoadSetting, libs, "webkit_settings_get_load_icons_ignoring_image_load_setting")
+	core.PuregoSafeRegister(&xSettingsGetMathFontFamily, libs, "webkit_settings_get_math_font_family")
 	core.PuregoSafeRegister(&xSettingsGetMediaContentTypesRequiringHardwareSupport, libs, "webkit_settings_get_media_content_types_requiring_hardware_support")
 	core.PuregoSafeRegister(&xSettingsGetMediaPlaybackAllowsInline, libs, "webkit_settings_get_media_playback_allows_inline")
 	core.PuregoSafeRegister(&xSettingsGetMediaPlaybackRequiresUserGesture, libs, "webkit_settings_get_media_playback_requires_user_gesture")
@@ -2418,6 +2453,7 @@ func init() {
 	core.PuregoSafeRegister(&xSettingsSetJavascriptCanAccessClipboard, libs, "webkit_settings_set_javascript_can_access_clipboard")
 	core.PuregoSafeRegister(&xSettingsSetJavascriptCanOpenWindowsAutomatically, libs, "webkit_settings_set_javascript_can_open_windows_automatically")
 	core.PuregoSafeRegister(&xSettingsSetLoadIconsIgnoringImageLoadSetting, libs, "webkit_settings_set_load_icons_ignoring_image_load_setting")
+	core.PuregoSafeRegister(&xSettingsSetMathFontFamily, libs, "webkit_settings_set_math_font_family")
 	core.PuregoSafeRegister(&xSettingsSetMediaContentTypesRequiringHardwareSupport, libs, "webkit_settings_set_media_content_types_requiring_hardware_support")
 	core.PuregoSafeRegister(&xSettingsSetMediaPlaybackAllowsInline, libs, "webkit_settings_set_media_playback_allows_inline")
 	core.PuregoSafeRegister(&xSettingsSetMediaPlaybackRequiresUserGesture, libs, "webkit_settings_set_media_playback_requires_user_gesture")

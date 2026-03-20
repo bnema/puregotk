@@ -1171,22 +1171,8 @@ const (
 	//     recognized. If this option is set, the only recognized newline character
 	//     is '\n'.
 	GRegexNewlineLfValue RegexCompileFlags = 2097152
-	// Usually any newline character or character sequence is
-	//     recognized. If this option is set, the only recognized newline character
-	//     sequence is '\r\n'.
-	GRegexNewlineCrlfValue RegexCompileFlags = 3145728
-	// Usually any newline character or character sequence
-	//     is recognized. If this option is set, the only recognized newline character
-	//     sequences are '\r', '\n', and '\r\n'. Since: 2.34
-	GRegexNewlineAnycrlfValue RegexCompileFlags = 5242880
-	// Usually any newline character or character sequence
-	//     is recognised. If this option is set, then "\R" only recognizes the newline
-	//    characters '\r', '\n' and '\r\n'. Since: 2.34
-	GRegexBsrAnycrlfValue RegexCompileFlags = 8388608
-	// Changes behaviour so that it is compatible with
-	//     JavaScript rather than PCRE. Since GLib 2.74 this is no longer supported,
-	//     as libpcre2 does not support it. Since: 2.34 Deprecated: 2.74
-	GRegexJavascriptCompatValue RegexCompileFlags = 33554432
+
+	GRegexNewlineReserved1Value RegexCompileFlags = 4194304
 )
 
 // Flags specifying match-time options.

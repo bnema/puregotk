@@ -48,14 +48,14 @@ const (
 
 var xCookieParse func(string, *glib.Uri) *Cookie
 
-// Parses @header and returns a #SoupCookie.
+// Parses @header and returns a [struct@Cookie].
 //
 // If @header contains multiple cookies, only the first one will be parsed.
 //
 // If @header does not have "path" or "domain" attributes, they will
 // be defaulted from @origin. If @origin is %NULL, path will default
 // to "/", but domain will be left as %NULL. Note that this is not a
-// valid state for a #SoupCookie, and you will need to fill in some
+// valid state for a [struct@Cookie], and you will need to fill in some
 // appropriate string for the domain if you want to actually make use
 // of the cookie.
 //
@@ -79,7 +79,7 @@ var xCookiesFromRequest func(uintptr) *glib.SList
 // `SoupCookie`s.
 //
 // As the "Cookie" header, unlike "Set-Cookie", only contains cookie names and
-// values, none of the other #SoupCookie fields will be filled in. (Thus, you
+// values, none of the other [struct@Cookie] fields will be filled in. (Thus, you
 // can't generally pass a cookie returned from this method directly to
 // [func@cookies_to_response].)
 func CookiesFromRequest(MsgVar *Message) *glib.SList {
@@ -101,7 +101,7 @@ func CookiesFromResponse(MsgVar *Message) *glib.SList {
 
 var xCookiesToCookieHeader func(*glib.SList) string
 
-// Serializes a [struct@GLib.SList] of #SoupCookie into a string suitable for
+// Serializes a [struct@GLib.SList] of [struct@Cookie] into a string suitable for
 // setting as the value of the "Cookie" header.
 func CookiesToCookieHeader(CookiesVar *glib.SList) string {
 	cret := xCookiesToCookieHeader(CookiesVar)

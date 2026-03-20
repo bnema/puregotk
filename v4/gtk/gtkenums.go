@@ -302,16 +302,24 @@ const (
 	// Defines a string value that describes
 	//    or annotates the current element. Value type: string
 	AccessiblePropertyDescriptionValue AccessibleProperty = 1
-	// Indicates the availability and type of
-	//    interactive popup element, such as menu or dialog, that can be triggered
-	//    by an element.
+	// Indicates the availability of interactive
+	//    popup element, such as menu or popover, that can be triggered by an
+	//    element. Contrary to “aria-haspopup”, it doesn't indicate the type of the
+	//    element, as such it cannot be used to indicate the availability of more
+	//    complex elements such as dialog. Value type: boolean
 	AccessiblePropertyHasPopupValue AccessibleProperty = 2
 	// Indicates keyboard shortcuts that an
 	//    author has implemented to activate or give focus to an element. Value type:
 	//    string. The format of the value is a space-separated list of shortcuts, with
 	//    each shortcut consisting of one or more modifiers (`Control`, `Alt` or `Shift`),
-	//    followed by a non-modifier key, all separated by `+`.
-	//    Examples: `F2`, `Alt-F`, `Control+Shift+N`
+	//    followed by a non-modifier key, all separated by `+`. The
+	//    [WAI-ARIA](https://www.w3.org/TR/wai-aria/#aria-keyshortcuts) reference
+	//    specifies how to build keyboard shortcuts strings, with specific values
+	//    for each key which are the same regardless of the language, so these
+	//    strings can't be built from localized key names. You can convert an
+	//    accelerator into the matching key shortcuts label with
+	//    [func@Gtk.accelerator_get_accessible_label].
+	//    Examples: `F2`, `Alt+F`, `Control+Shift+N`
 	AccessiblePropertyKeyShortcutsValue AccessibleProperty = 3
 	// Defines a string value that labels the current
 	//    element. Value type: string
@@ -1750,6 +1758,30 @@ const (
 	PhaseTargetValue PropagationPhase = 3
 )
 
+// Values for the [property@Gtk.Settings:gtk-interface-reduced-motion]
+// and [property@Gtk.CssProvider:prefers-reduced-motion] properties
+// that indicates the preferred level of motion animations.
+//
+// This information can be used inside CSS via media queries.
+type ReducedMotion int
+
+var xReducedMotionGLibType func() types.GType
+
+func ReducedMotionGLibType() types.GType {
+	return xReducedMotionGLibType()
+}
+
+const (
+
+	// The user has made no preference known to the system
+	ReducedMotionNoPreferenceValue ReducedMotion = 0
+	// The user has notified the system that they
+	//   prefer an interface that removes or replaces the types of motion-based
+	//   animation that either trigger discomfort for those with vestibular
+	//   motion sensitivity, or distraction for those with attention deficits
+	ReducedMotionReduceValue ReducedMotion = 1
+)
+
 // Passed as argument to various keybinding signals.
 type ScrollStep int
 
@@ -1992,6 +2024,8 @@ const (
 	SymbolicColorWarningValue SymbolicColor = 2
 	// Indication color for success
 	SymbolicColorSuccessValue SymbolicColor = 3
+	// The system accent color.
+	SymbolicColorAccentValue SymbolicColor = 4
 )
 
 // Values that can be passed to the [vfunc@Gtk.Widget.system_setting_changed]
@@ -2241,6 +2275,8 @@ func init() {
 	core.PuregoSafeRegister(&xPropagationLimitGLibType, libs, "gtk_propagation_limit_get_type")
 
 	core.PuregoSafeRegister(&xPropagationPhaseGLibType, libs, "gtk_propagation_phase_get_type")
+
+	core.PuregoSafeRegister(&xReducedMotionGLibType, libs, "gtk_reduced_motion_get_type")
 
 	core.PuregoSafeRegister(&xScrollStepGLibType, libs, "gtk_scroll_step_get_type")
 

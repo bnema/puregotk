@@ -3214,9 +3214,9 @@ func (x *FileIface) GetQueryExists() func(File, *Cancellable) bool {
 // short. Entity tags are somewhat like a more abstract version of the
 // traditional mtime, and can be used to quickly determine if the file
 // has been modified from the version on the file system. See the
-// HTTP 1.1
-// [specification](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html)
-// for HTTP `ETag` headers, which are a very similar concept.
+// description of HTTP ETags in
+// [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-etag).
+// `GFile` Entity Tags are a very similar concept.
 type File interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -3820,29 +3820,29 @@ func (x *FileBase) EjectMountableWithOperationFinish(ResultVar AsyncResult) (boo
 }
 
 // Gets the requested information about the files in a directory.
-// The result is a #GFileEnumerator object that will give out
-// #GFileInfo objects for all the files in the directory.
+// The result is a [class@FileEnumerator] object that will give out
+// [class@FileInfo] objects for all the files in the directory.
 //
 // The @attributes value is a string that specifies the file
 // attributes that should be gathered. It is not an error if
 // it's not possible to read a particular requested attribute
 // from a file - it just won't be set. @attributes should
 // be a comma-separated list of attributes or attribute wildcards.
-// The wildcard "*" means all attributes, and a wildcard like
-// "standard::*" means all attributes in the standard namespace.
-// An example attribute query be "standard::*,owner::user".
+// The wildcard `*` means all attributes, and a wildcard like
+// `"standard::*"` means all attributes in the standard namespace.
+// An example attribute query be `"standard::*,owner::user"`.
 // The standard attributes are available as defines, like
-// %G_FILE_ATTRIBUTE_STANDARD_NAME. %G_FILE_ATTRIBUTE_STANDARD_NAME should
-// always be specified if you plan to call g_file_enumerator_get_child() or
-// g_file_enumerator_iterate() on the returned enumerator.
+// [const@FILE_ATTRIBUTE_STANDARD_NAME]. [const@FILE_ATTRIBUTE_STANDARD_NAME] should
+// always be specified if you plan to call [method@FileEnumerator.get_child] or
+// [method@FileEnumerator.iterate] on the returned enumerator.
 //
-// If @cancellable is not %NULL, then the operation can be cancelled
+// If @cancellable is not `NULL`, then the operation can be cancelled
 // by triggering the cancellable object from another thread. If the
-// operation was cancelled, the error %G_IO_ERROR_CANCELLED will be
+// operation was cancelled, the error [error@Gio.IOErrorEnum.CANCELLED] will be
 // returned.
 //
-// If the file does not exist, the %G_IO_ERROR_NOT_FOUND error will
-// be returned. If the file is not a directory, the %G_IO_ERROR_NOT_DIRECTORY
+// If the file does not exist, the [error@Gio.IOErrorEnum.NOT_FOUND] error will
+// be returned. If the file is not a directory, the [error@Gio.IOErrorEnum.NOT_DIRECTORY]
 // error will be returned. Other errors are possible too.
 func (x *FileBase) EnumerateChildren(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (*FileEnumerator, error) {
 	var cls *FileEnumerator
@@ -3896,9 +3896,17 @@ func (x *FileBase) EnumerateChildrenFinish(ResVar AsyncResult) (*FileEnumerator,
 
 // Checks if the two given #GFiles refer to the same file.
 //
+// This function can be used with [method@Gio.File.hash] to insert
+// [iface@Gio.File]s efficiently in a hash table.
+//
 // Note that two #GFiles that differ can still refer to the same
 // file on the filesystem due to various forms of filename
-// aliasing.
+// aliasing. For local files, this function essentially compares the file paths,
+// so two [iface@Gio.File]s which point to different hard or soft links will not
+// be considered equal, despite pointing to the same content.
+//
+// For determining whether two files are hardlinked, see
+// [const@Gio.FILE_ATTRIBUTE_ID_FILE].
 //
 // This call does no blocking I/O.
 func (x *FileBase) Equal(File2Var File) bool {
@@ -4866,7 +4874,7 @@ func (x *FileBase) QueryFileType(FlagsVar FileQueryInfoFlags, CancellableVar *Ca
 // that should be gathered. It is not an error if it's not possible
 // to read a particular requested attribute from a file - it just
 // won't be set. @attributes should be a comma-separated list of
-// attributes or attribute wildcards. The wildcard "*" means all
+// attributes or attribute wildcards. The wildcard "\*" means all
 // attributes, and a wildcard like "filesystem::*" means all attributes
 // in the filesystem namespace. The standard namespace for filesystem
 // attributes is "filesystem". Common attributes of interest are
@@ -4955,7 +4963,7 @@ func (x *FileBase) QueryFilesystemInfoFinish(ResVar AsyncResult) (*FileInfo, err
 //   - [const@Gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME]
 //
 // @attributes should be a comma-separated list of attributes or attribute
-// wildcards. The wildcard `"*"` means all attributes, and a wildcard like
+// wildcards. The wildcard `"\*"` means all attributes, and a wildcard like
 // `"standard::*"` means all attributes in the standard namespace.
 // An example attribute query might be `"standard::*,owner::user"`.
 // The standard attributes are available as defines, like

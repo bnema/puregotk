@@ -158,6 +158,37 @@ const (
 	UserContentFilterErrorNotFoundValue UserContentFilterError = 1
 )
 
+// Enum values used to denote errors happening when parsing a #WebKitWebExtension
+type WebExtensionError int
+
+var xWebExtensionErrorGLibType func() types.GType
+
+func WebExtensionErrorGLibType() types.GType {
+	return xWebExtensionErrorGLibType()
+}
+
+const (
+
+	// An unknown error occured.
+	WebExtensionErrorUnknownValue WebExtensionError = 899
+	// A specified resource was not found on disk.
+	WebExtensionErrorResourceNotFoundValue WebExtensionError = 800
+	// A resource failed the bundle's code signature checks.
+	WebExtensionErrorInvalidResourceCodeSignatureValue WebExtensionError = 801
+	// An invalid `manifest.json` was encountered.
+	WebExtensionErrorInvalidManifestValue WebExtensionError = 802
+	// The manifest version is not supported.
+	WebExtensionErrorUnsupportedManifestVersionValue WebExtensionError = 803
+	// An invalid manifest entry was encountered.
+	WebExtensionErrorInvalidManifestEntryValue WebExtensionError = 804
+	// An invalid declarative net request entry was encountered.
+	WebExtensionErrorInvalidDeclarativeNetRequestEntryValue WebExtensionError = 805
+	// The extension specified background persistence that was not compatible with the platform or features requested.
+	WebExtensionErrorInvalidBackgroundPersistenceValue WebExtensionError = 806
+	// The archive file is invalid or corrupt.
+	WebExtensionErrorInvalidArchiveValue WebExtensionError = 807
+)
+
 // Enum values used to denote errors happening when creating a #WebKitWebExtensionMatchPattern
 type WebExtensionMatchPatternError int
 
@@ -243,6 +274,14 @@ func UserContentFilterErrorQuark() glib.Quark {
 	return cret
 }
 
+var xWebExtensionErrorQuark func() glib.Quark
+
+// Gets the quark for the domain of Web Extension errors.
+func WebExtensionErrorQuark() glib.Quark {
+	cret := xWebExtensionErrorQuark()
+	return cret
+}
+
 var xWebExtensionMatchPatternErrorQuark func() glib.Quark
 
 // Gets the quark for the domain of Web Extension Match Pattern errors.
@@ -279,6 +318,8 @@ func init() {
 
 	core.PuregoSafeRegister(&xUserContentFilterErrorGLibType, libs, "webkit_user_content_filter_error_get_type")
 
+	core.PuregoSafeRegister(&xWebExtensionErrorGLibType, libs, "webkit_web_extension_error_get_type")
+
 	core.PuregoSafeRegister(&xWebExtensionMatchPatternErrorGLibType, libs, "webkit_web_extension_match_pattern_error_get_type")
 
 	core.PuregoSafeRegister(&xDownloadErrorQuark, libs, "webkit_download_error_quark")
@@ -289,5 +330,6 @@ func init() {
 	core.PuregoSafeRegister(&xPrintErrorQuark, libs, "webkit_print_error_quark")
 	core.PuregoSafeRegister(&xSnapshotErrorQuark, libs, "webkit_snapshot_error_quark")
 	core.PuregoSafeRegister(&xUserContentFilterErrorQuark, libs, "webkit_user_content_filter_error_quark")
+	core.PuregoSafeRegister(&xWebExtensionErrorQuark, libs, "webkit_web_extension_error_quark")
 	core.PuregoSafeRegister(&xWebExtensionMatchPatternErrorQuark, libs, "webkit_web_extension_match_pattern_error_quark")
 }

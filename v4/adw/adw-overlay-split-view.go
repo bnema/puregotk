@@ -163,7 +163,7 @@ func (x *OverlaySplitViewClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwOverlaySplitView` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwOverlaySplitView` uses the [enum@Gtk.AccessibleRole.group] role.
 type OverlaySplitView struct {
 	gtk.Widget
 }
@@ -399,8 +399,8 @@ var xOverlaySplitViewSetSidebarPosition func(uintptr, gtk.PackType)
 
 // Sets the sidebar position for @self.
 //
-// If it's set to `GTK_PACK_START`, the sidebar is displayed before the content,
-// if `GTK_PACK_END`, it's displayed after the content.
+// If it's set to [enum@Gtk.PackType.start], the sidebar is displayed before the
+// content; if [enum@Gtk.PackType.end], it's displayed after the content.
 func (x *OverlaySplitView) SetSidebarPosition(PositionVar gtk.PackType) {
 	xOverlaySplitViewSetSidebarPosition(x.GoPointer(), PositionVar)
 }
@@ -689,6 +689,18 @@ func (x *OverlaySplitView) GetSwipeArea(NavigationDirectionVar NavigationDirecti
 // does not interrupts the user's current screen reader output.
 func (x *OverlaySplitView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *OverlaySplitView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

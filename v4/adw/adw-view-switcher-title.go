@@ -40,7 +40,7 @@ func (x *ViewSwitcherTitleClass) GoPointer() uintptr {
 //
 // In order to center the title in narrow windows, the header bar should have
 // [property@HeaderBar:centering-policy] set to
-// `ADW_CENTERING_POLICY_STRICT`.
+// [enum@Adw.CenteringPolicy.strict].
 //
 // `AdwViewSwitcherTitle` is intended to be used together with
 // [class@ViewSwitcherBar].
@@ -318,6 +318,18 @@ func (x *ViewSwitcherTitle) GetPropertyViewSwitcherEnabled() bool {
 // does not interrupts the user's current screen reader output.
 func (x *ViewSwitcherTitle) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ViewSwitcherTitle) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

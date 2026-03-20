@@ -99,6 +99,14 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *ShortcutsSection) GetPropertyNItems() uint32 {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUlong()
+}
+
 // SetPropertyTitle sets the "title" property.
 // The title of the section, can be `NULL`.
 func (x *ShortcutsSection) SetPropertyTitle(value string) {

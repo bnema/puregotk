@@ -30,7 +30,7 @@ func (x *MultipartInputStreamClass) GoPointer() uintptr {
 // [method@MultipartInputStream.next_part] before reading. Responses
 // which are not wrapped will be treated like non-multipart responses.
 //
-// Note that although #SoupMultipartInputStream is a [class@Gio.InputStream],
+// Note that although [class@MultipartInputStream] is a [class@Gio.InputStream],
 // you should not read directly from it, and the results are undefined
 // if you do.
 type MultipartInputStream struct {
@@ -51,7 +51,7 @@ func MultipartInputStreamNewFromInternalPtr(ptr uintptr) *MultipartInputStream {
 
 var xNewMultipartInputStream func(uintptr, uintptr) uintptr
 
-// Creates a new #SoupMultipartInputStream that wraps the
+// Creates a new [class@MultipartInputStream] that wraps the
 // [class@Gio.InputStream] obtained by sending the [class@Message].
 //
 // Reads should not be done directly through this object, use the input streams
@@ -75,7 +75,7 @@ var xMultipartInputStreamGetHeaders func(uintptr) *MessageHeaders
 // Obtains the headers for the part currently being processed.
 //
 // Note that the [struct@MessageHeaders] that are returned are owned by the
-// #SoupMultipartInputStream and will be replaced when a call is made to
+// [class@MultipartInputStream] and will be replaced when a call is made to
 // [method@MultipartInputStream.next_part] or its async counterpart, so if
 // keeping the headers is required, a copy must be made.
 //
@@ -91,7 +91,7 @@ var xMultipartInputStreamNextPart func(uintptr, uintptr, **glib.Error) uintptr
 // Obtains an input stream for the next part.
 //
 // When dealing with a multipart response the input stream needs to be wrapped
-// in a #SoupMultipartInputStream and this function or its async counterpart
+// in a [class@MultipartInputStream] and this function or its async counterpart
 // need to be called to obtain the first part for reading.
 //
 // After calling this function,

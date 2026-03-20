@@ -66,6 +66,8 @@ const (
 	DebugCssValue DebugFlags = 1048576
 	// Information about deprecated GtkBuilder features.
 	DebugBuilderValue DebugFlags = 2097152
+	// Information about session saving.
+	DebugSessionValue DebugFlags = 4194304
 )
 
 var xGetDebugFlags func() DebugFlags

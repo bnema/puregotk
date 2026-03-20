@@ -201,6 +201,11 @@ func (x *DBusInterfaceBase) DupObject() *DBusObjectBase {
 
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
+//
+// This can return %NULL if no #GDBusInterfaceInfo was provided during
+// construction of @interface_ and is also not made available otherwise.
+// For example, #GDBusProxy implements #GDBusInterface but allows for a %NULL
+// #GDBusInterfaceInfo.
 func (x *DBusInterfaceBase) GetInfo() *DBusInterfaceInfo {
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
 	return cret

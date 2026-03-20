@@ -23,7 +23,7 @@ func (x *CookieJarDBClass) GoPointer() uintptr {
 
 // Database-based Cookie Jar.
 //
-// #SoupCookieJarDB is a [class@CookieJar] that reads cookies from and writes
+// [class@CookieJarDB] is a [class@CookieJar] that reads cookies from and writes
 // them to a sqlite database in the new Mozilla format.
 //
 // (This is identical to `SoupCookieJarSqlite` in
@@ -47,7 +47,7 @@ func CookieJarDBNewFromInternalPtr(ptr uintptr) *CookieJarDB {
 
 var xNewCookieJarDB func(string, bool) uintptr
 
-// Creates a #SoupCookieJarDB.
+// Creates a [class@CookieJarDB].
 //
 // @filename will be read in at startup to create an initial set of cookies. If
 // @read_only is %FALSE, then the non-session cookies will be written to

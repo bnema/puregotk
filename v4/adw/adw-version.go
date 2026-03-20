@@ -10,12 +10,12 @@ const (
 	// Adwaita major version component (e.g. 1 if the version is 1.2.3).
 	MAJOR_VERSION int32 = 1
 	// Adwaita micro version component (e.g. 3 if the version is 1.2.3).
-	MICRO_VERSION int32 = 2
+	MICRO_VERSION int32 = 0
 	// Adwaita minor version component (e.g. 2 if the version is 1.2.3).
-	MINOR_VERSION int32 = 8
+	MINOR_VERSION int32 = 9
 	// Adwaita version, encoded as a string, useful for printing and
 	// concatenation.
-	VERSION_S string = "1.8.2"
+	VERSION_S string = "1.9.0"
 )
 
 var xGetMajorVersion func() uint32

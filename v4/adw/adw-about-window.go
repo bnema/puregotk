@@ -263,7 +263,7 @@ var xNewAboutWindowFromAppdata func(string, string) uintptr
 //   - [property@AboutWindow:issue-url] is set from the `&lt;url type="bugtracker"&gt;`
 //   - [property@AboutWindow:license-type] is set from the `&lt;project_license&gt;`.
 //     If the license type retrieved from AppStream is not listed in
-//     [enum@Gtk.License], it will be set to `GTK_LICENCE_CUSTOM`.
+//     [enum@Gtk.License], it will be set to [enum@Gtk.License.custom].
 //
 // If @release_notes_version is not `NULL`,
 // [property@AboutWindow:release-notes-version] is set to match it, while
@@ -741,7 +741,7 @@ var xAboutWindowSetLicense func(uintptr, string)
 // [property@AboutWindow:license-type].
 //
 // When set, [property@AboutWindow:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -760,11 +760,11 @@ var xAboutWindowSetLicenseType func(uintptr, gtk.License)
 //
 // If the application's license is not in the list,
 // [property@AboutWindow:license] can be used instead. The license type will be
-// automatically set to `GTK_LICENSE_CUSTOM` in that case.
+// automatically set to [enum@Gtk.License.custom] in that case.
 //
-// If @license_type is `GTK_LICENSE_UNKNOWN`, no information will be displayed.
+// If @license_type is [enum@Gtk.License.unknown], no information will be displayed.
 //
-// If @license_type is different from `GTK_LICENSE_CUSTOM`.
+// If @license_type is different from [enum@Gtk.License.custom].
 // [property@AboutWindow:license] will be cleared out.
 //
 // The license description will be displayed on the Legal page, below the
@@ -1304,7 +1304,7 @@ func (x *AboutWindow) GetPropertyIssueUrl() string {
 // via [property@AboutWindow:license-type].
 //
 // When set, [property@AboutWindow:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1327,7 +1327,7 @@ func (x *AboutWindow) SetPropertyLicense(value string) {
 // via [property@AboutWindow:license-type].
 //
 // When set, [property@AboutWindow:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1603,6 +1603,18 @@ func (x *AboutWindow) ConnectActivateLink(cb *func(AboutWindow, string) bool) ui
 // does not interrupts the user's current screen reader output.
 func (x *AboutWindow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AboutWindow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

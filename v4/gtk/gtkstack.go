@@ -573,6 +573,18 @@ func (x *Stack) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPr
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Stack) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.
@@ -1067,6 +1079,18 @@ func (x *StackPage) GetPropertyVisible() bool {
 // does not interrupts the user's current screen reader output.
 func (x *StackPage) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *StackPage) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

@@ -24,10 +24,10 @@ func (x *ContentSnifferClass) GoPointer() uintptr {
 
 // Sniffs the mime type of messages.
 //
-// A #SoupContentSniffer tries to detect the actual content type of
+// A [class@ContentSniffer] tries to detect the actual content type of
 // the files that are being downloaded by looking at some of the data
 // before the [class@Message] emits its [signal@Message::got-headers] signal.
-// #SoupContentSniffer implements [iface@SessionFeature], so you can add
+// [class@ContentSniffer] implements [iface@SessionFeature], so you can add
 // content sniffing to a session with [method@Session.add_feature] or
 // [method@Session.add_feature_by_type].
 type ContentSniffer struct {
@@ -48,7 +48,7 @@ func ContentSnifferNewFromInternalPtr(ptr uintptr) *ContentSniffer {
 
 var xNewContentSniffer func() uintptr
 
-// Creates a new #SoupContentSniffer.
+// Creates a new [class@ContentSniffer].
 func NewContentSniffer() *ContentSniffer {
 	var cls *ContentSniffer
 

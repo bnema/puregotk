@@ -12,7 +12,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// Callback used by #SoupAuthDomainDigest for authentication purposes.
+// Callback used by [class@AuthDomainDigest] for authentication purposes.
 //
 // The application should look up @username in its password database,
 // and return the corresponding encoded password (see
@@ -31,7 +31,7 @@ func (x *AuthDomainDigestClass) GoPointer() uintptr {
 
 // Server-side "Digest" authentication.
 //
-// #SoupAuthDomainDigest handles the server side of HTTP "Digest"
+// [class@AuthDomainDigest] handles the server side of HTTP "Digest"
 // authentication.
 type AuthDomainDigest struct {
 	AuthDomain
@@ -51,7 +51,7 @@ func AuthDomainDigestNewFromInternalPtr(ptr uintptr) *AuthDomainDigest {
 
 var xNewAuthDomainDigest func(string, ...interface{}) uintptr
 
-// Creates a #SoupAuthDomainDigest.
+// Creates a [class@AuthDomainDigest].
 //
 // You must set the [property@AuthDomain:realm] property, to indicate the realm name to
 // be returned with the authentication challenge to the client. Other parameters
@@ -122,7 +122,7 @@ var xAuthDomainDigestEncodePassword func(string, string, string) string
 // That is, it returns a stringified MD5 hash of
 // @username, @realm, and @password concatenated together. This is
 // the form that is needed as the return value of
-// #SoupAuthDomainDigest's auth handler.
+// [class@AuthDomainDigest]'s auth handler.
 //
 // For security reasons, you should store the encoded hash, rather
 // than storing the cleartext password itself and calling this method

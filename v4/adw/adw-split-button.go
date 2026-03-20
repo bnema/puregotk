@@ -74,7 +74,7 @@ func (x *SplitButtonClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwSplitButton` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwSplitButton` uses the [enum@Gtk.AccessibleRole.group] role.
 type SplitButton struct {
 	gtk.Widget
 }
@@ -252,7 +252,7 @@ var xSplitButtonSetDirection func(uintptr, gtk.ArrowType)
 // If the does not fit in the available space in the given direction, GTK will
 // try its best to keep it inside the screen and fully visible.
 //
-// If you pass `GTK_ARROW_NONE`, it's equivalent to `GTK_ARROW_DOWN`.
+// [enum@Gtk.ArrowType.none] behaves same as [enum@Gtk.ArrowType.down].
 func (x *SplitButton) SetDirection(DirectionVar gtk.ArrowType) {
 	xSplitButtonSetDirection(x.GoPointer(), DirectionVar)
 }
@@ -501,6 +501,18 @@ func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *SplitButton) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *SplitButton) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

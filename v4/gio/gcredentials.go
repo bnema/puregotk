@@ -128,6 +128,10 @@ var xCredentialsGetUnixUser func(uintptr) uint
 // This operation can fail if #GCredentials is not supported on the
 // OS or if the native credentials type does not contain information
 // about the UNIX user.
+//
+// As the signedness of `uid_t` is not specified by POSIX, it is recommended to
+// check @error for failure rather than trying to check the return value,
+// particularly in language bindings.
 func (x *Credentials) GetUnixUser() (uint, error) {
 	var cerr *glib.Error
 

@@ -406,7 +406,7 @@ func (x *Class) AddMethodv(NameVar string, CallbackVar *gobject.Callback, UserDa
 
 var xClassAddProperty func(uintptr, string, types.GType, uintptr, uintptr, uintptr, uintptr)
 
-// Add a property with @name to @jsc_class. When the property value needs to be getted, @getter is called
+// Add a property with @name to @jsc_class. When the property value is read, @getter is called
 // receiving the the class instance as first parameter and @user_data as last parameter. When the property
 // value needs to be set, @setter is called receiving the the class instance as first parameter, followed
 // by the value to be set and then @user_data as the last parameter. When the property is cleared in the

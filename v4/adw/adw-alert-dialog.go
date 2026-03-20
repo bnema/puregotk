@@ -442,7 +442,7 @@ func (x *AlertDialog) GetHeadingUseMarkup() bool {
 
 var xAlertDialogGetPreferWideLayout func(uintptr) bool
 
-// Gets whether @self prefers wide layout.
+// Gets whether @self prefers horizontal button layout.
 func (x *AlertDialog) GetPreferWideLayout() bool {
 	cret := xAlertDialogGetPreferWideLayout(x.GoPointer())
 	return cret
@@ -565,10 +565,21 @@ func (x *AlertDialog) SetHeadingUseMarkup(UseMarkupVar bool) {
 
 var xAlertDialogSetPreferWideLayout func(uintptr, bool)
 
-// Sets whether @self prefers wide layout.
+// Whether to prefer horizontal button layout.
 //
-// Prefer horizontal button layout when possible, and wider dialog width
+// `AdwAlertDialog` can present buttons horizontally or vertically depending
+// on available space, how many buttons there are and how wide they are.
+//
+// By default it will prefer to stack buttons vertically at medium sizes.
+//
+// Set to `TRUE` to prefer horizontal layout in these cases instead. This will
+// make the dialog slightly wider as well.
+//
+// Vertical layout may still be used if the dialog would get too wide
 // otherwise.
+//
+// Does nothing with just one button, or when the buttons are already
+// horizontal.
 func (x *AlertDialog) SetPreferWideLayout(PreferWideLayoutVar bool) {
 	xAlertDialogSetPreferWideLayout(x.GoPointer(), PreferWideLayoutVar)
 }
@@ -584,14 +595,15 @@ var xAlertDialogSetResponseAppearance func(uintptr, string, ResponseAppearance)
 //
 // &lt;/picture&gt;
 //
-// Use `ADW_RESPONSE_SUGGESTED` to mark important responses such as the
-// affirmative action, like the Save button in the example.
+// Use [enum@Adw.ResponseAppearance.suggested] to mark important responses such
+// as the affirmative action, like the Save button in the example.
 //
-// Use `ADW_RESPONSE_DESTRUCTIVE` to draw attention to the potentially damaging
-// consequences of using @response. This appearance acts as a warning to the
-// user. The Discard button in the example is using this appearance.
+// Use [enum@Adw.ResponseAppearance.destructive] to draw attention to the
+// potentially damaging consequences of using @response. This appearance acts as
+// a warning to the user. The Discard button in the example is using this
+// appearance.
 //
-// The default appearance is `ADW_RESPONSE_DEFAULT`.
+// The default appearance is [enum@Adw.ResponseAppearance.default].
 //
 // Negative responses like Cancel or Close should use the default appearance.
 func (x *AlertDialog) SetResponseAppearance(ResponseVar string, AppearanceVar ResponseAppearance) {
@@ -776,10 +788,21 @@ func (x *AlertDialog) GetPropertyHeadingUseMarkup() bool {
 }
 
 // SetPropertyPreferWideLayout sets the "prefer-wide-layout" property.
-// Whether to prefer wide layout.
+// Whether to prefer horizontal button layout.
 //
-// Prefer horizontal button layout when possible, and wider dialog width
+// `AdwAlertDialog` can present buttons horizontally or vertically depending
+// on available space, how many buttons there are and how wide they are.
+//
+// By default it will prefer to stack buttons vertically at medium sizes.
+//
+// Set to `TRUE` to prefer horizontal layout in these cases instead. This will
+// make the dialog slightly wider as well.
+//
+// Vertical layout may still be used if the dialog would get too wide
 // otherwise.
+//
+// Does nothing with just one button, or when the buttons are already
+// horizontal.
 func (x *AlertDialog) SetPropertyPreferWideLayout(value bool) {
 	var v gobject.Value
 	v.Init(gobject.TypeBooleanVal)
@@ -788,10 +811,21 @@ func (x *AlertDialog) SetPropertyPreferWideLayout(value bool) {
 }
 
 // GetPropertyPreferWideLayout gets the "prefer-wide-layout" property.
-// Whether to prefer wide layout.
+// Whether to prefer horizontal button layout.
 //
-// Prefer horizontal button layout when possible, and wider dialog width
+// `AdwAlertDialog` can present buttons horizontally or vertically depending
+// on available space, how many buttons there are and how wide they are.
+//
+// By default it will prefer to stack buttons vertically at medium sizes.
+//
+// Set to `TRUE` to prefer horizontal layout in these cases instead. This will
+// make the dialog slightly wider as well.
+//
+// Vertical layout may still be used if the dialog would get too wide
 // otherwise.
+//
+// Does nothing with just one button, or when the buttons are already
+// horizontal.
 func (x *AlertDialog) GetPropertyPreferWideLayout() bool {
 	var v gobject.Value
 	x.GetProperty("prefer-wide-layout", &v)
@@ -835,6 +869,18 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *AlertDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AlertDialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

@@ -393,6 +393,10 @@ var xStringReplace func(uintptr, string, string, uint32) uint32
 // replacement will be inserted no more than once per possible position
 // (beginning of string, end of string and between characters). This did
 // not work correctly in earlier versions.
+//
+// If @limit is zero and more than `G_MAXUINT` instances of @find are in
+// the input string, they will all be replaced, but the return value will
+// be capped at `G_MAXUINT`.
 func (x *String) Replace(FindVar string, ReplaceVar string, LimitVar uint32) uint32 {
 	cret := xStringReplace(x.GoPointer(), FindVar, ReplaceVar, LimitVar)
 	return cret

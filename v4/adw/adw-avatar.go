@@ -40,8 +40,8 @@ func (x *AvatarClass) GoPointer() uintptr {
 // The color is picked based on the hash of the [property@Avatar:text].
 //
 // If [property@Avatar:show-initials] is set to `FALSE`,
-// [property@Avatar:icon-name] or `avatar-default-symbolic` is shown instead of
-// the initials.
+// [property@Avatar:icon-name] or `adw-avatar-default-symbolic` is shown instead
+// of the initials.
 //
 // Use [property@Avatar:custom-image] to set a custom image.
 //
@@ -51,7 +51,7 @@ func (x *AvatarClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwAvatar` uses the `GTK_ACCESSIBLE_ROLE_IMG` role.
+// `AdwAvatar` uses the [enum@Gtk.AccessibleRole.img] role.
 type Avatar struct {
 	gtk.Widget
 }
@@ -165,7 +165,7 @@ var xAvatarSetIconName func(uintptr, string)
 
 // Sets the name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) SetIconName(IconNameVar string) {
 	xAvatarSetIconName(x.GoPointer(), IconNameVar)
 }
@@ -210,7 +210,7 @@ func (c *Avatar) SetGoPointer(ptr uintptr) {
 // SetPropertyIconName sets the "icon-name" property.
 // The name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
@@ -221,7 +221,7 @@ func (x *Avatar) SetPropertyIconName(value string) {
 // GetPropertyIconName gets the "icon-name" property.
 // The name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) GetPropertyIconName() string {
 	var v gobject.Value
 	x.GetProperty("icon-name", &v)
@@ -300,6 +300,18 @@ func (x *Avatar) GetPropertyText() string {
 // does not interrupts the user's current screen reader output.
 func (x *Avatar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Avatar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

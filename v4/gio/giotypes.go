@@ -120,16 +120,16 @@ func (x *FileAttributeMatcher) GoPointer() uintptr {
 var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
 
 // Creates a new file attribute matcher, which matches attributes
-// against a given string. #GFileAttributeMatchers are reference
+// against a given string. [GFileAttributeMatchers][struct@FileAttributeMatcher] are reference
 // counted structures, and are created with a reference count of 1. If
-// the number of references falls to 0, the #GFileAttributeMatcher is
+// the number of references falls to 0, the [struct@FileAttributeMatcher] is
 // automatically destroyed.
 //
 // The @attributes string should be formatted with specific keys separated
-// from namespaces with a double colon. Several "namespace::key" strings may be
-// concatenated with a single comma (e.g. "standard::type,standard::is-hidden").
-// The wildcard "*" may be used to match all keys and namespaces, or
-// "namespace::*" will match all keys in a given namespace.
+// from namespaces with a double colon. Several `"namespace::key"` strings may be
+// concatenated with a single comma (e.g. `"standard::type,standard::is-hidden"`).
+// The wildcard `"*"` may be used to match all keys and namespaces, or
+// `"namespace::*"` will match all keys in a given namespace.
 //
 // ## Examples of file attribute matcher strings and results
 //
@@ -147,7 +147,7 @@ var xFileAttributeMatcherEnumerateNamespace func(uintptr, string) bool
 
 // Checks if the matcher will match all of the keys in a given namespace.
 // This will always return %TRUE if a wildcard character is in use (e.g. if
-// matcher was created with "standard::*" and @ns is "standard", or if matcher was created
+// matcher was created with "standard::\*" and @ns is "standard", or if matcher was created
 // using "*" and namespace is anything.)
 //
 // TODO: this is awkwardly worded.
@@ -667,9 +667,9 @@ func (x *OutputVector) GoPointer() uintptr {
 // supported.
 //
 // Substitutions must start with a slash, and must not contain a trailing slash
-// before the `=`.  The path after the slash should ideally be absolute, but
-// this is not strictly required.  It is possible to overlay the location of a
-// single resource with an individual file.
+// before the `=`.  The filesystem path after the `=` should ideally be absolute,
+// but this is not strictly required.  It is possible to overlay the location of
+// a single resource with an individual file.
 type Resource struct {
 	_ structs.HostLayout
 }

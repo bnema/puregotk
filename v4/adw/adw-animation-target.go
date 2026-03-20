@@ -31,6 +31,14 @@ func (x *CallbackAnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+type NoneAnimationTargetClass struct {
+	_ structs.HostLayout
+}
+
+func (x *NoneAnimationTargetClass) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
 type PropertyAnimationTargetClass struct {
 	_ structs.HostLayout
 }
@@ -110,6 +118,50 @@ func (c *CallbackAnimationTarget) GoPointer() uintptr {
 }
 
 func (c *CallbackAnimationTarget) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
+// An [class@AnimationTarget] that doesn't do anything.
+type NoneAnimationTarget struct {
+	AnimationTarget
+}
+
+var xNoneAnimationTargetGLibType func() types.GType
+
+func NoneAnimationTargetGLibType() types.GType {
+	return xNoneAnimationTargetGLibType()
+}
+
+func NoneAnimationTargetNewFromInternalPtr(ptr uintptr) *NoneAnimationTarget {
+	cls := &NoneAnimationTarget{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewNoneAnimationTarget func() uintptr
+
+// Creates a new `AdwAnimationTarget` that doesn't do anything.
+func NewNoneAnimationTarget() *NoneAnimationTarget {
+	var cls *NoneAnimationTarget
+
+	cret := xNewNoneAnimationTarget()
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &NoneAnimationTarget{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *NoneAnimationTarget) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *NoneAnimationTarget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
@@ -231,6 +283,10 @@ func init() {
 	core.PuregoSafeRegister(&xCallbackAnimationTargetGLibType, libs, "adw_callback_animation_target_get_type")
 
 	core.PuregoSafeRegister(&xNewCallbackAnimationTarget, libs, "adw_callback_animation_target_new")
+
+	core.PuregoSafeRegister(&xNoneAnimationTargetGLibType, libs, "adw_none_animation_target_get_type")
+
+	core.PuregoSafeRegister(&xNewNoneAnimationTarget, libs, "adw_none_animation_target_new")
 
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGLibType, libs, "adw_property_animation_target_get_type")
 

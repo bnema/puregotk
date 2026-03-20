@@ -267,7 +267,7 @@ var xContextPushExceptionHandler func(uintptr, uintptr, uintptr, uintptr)
 // jsc_context_throw_exception() in @handler like the default one does.
 // The last exception handler pushed is the only one used by the #JSCContext, use
 // jsc_context_pop_exception_handler() to remove it and set the previous one. When @handler
-// is removed from the context, @destroy_notify i called with @user_data as parameter.
+// is removed from the context, @destroy_notify is called with @user_data as parameter.
 func (x *Context) PushExceptionHandler(HandlerVar *ExceptionHandler, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 	xContextPushExceptionHandler(x.GoPointer(), glib.NewCallback(HandlerVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 }

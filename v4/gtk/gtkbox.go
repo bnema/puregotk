@@ -293,6 +293,18 @@ func (x *Box) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPrio
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Box) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.

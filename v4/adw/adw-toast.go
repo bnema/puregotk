@@ -396,9 +396,9 @@ var xToastSetPriority func(uintptr, ToastPriority)
 // Priority controls how the toast behaves when another toast is already
 // being displayed.
 //
-// If @priority is `ADW_TOAST_PRIORITY_NORMAL`, the toast will be queued.
+// If @priority is [enum@Adw.ToastPriority.normal], the toast will be queued.
 //
-// If @priority is `ADW_TOAST_PRIORITY_HIGH`, the toast will be displayed
+// If @priority is [enum@Adw.ToastPriority.high], the toast will be displayed
 // immediately, pushing the previous toast into the queue instead.
 func (x *Toast) SetPriority(PriorityVar ToastPriority) {
 	xToastSetPriority(x.GoPointer(), PriorityVar)

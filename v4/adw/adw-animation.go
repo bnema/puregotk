@@ -190,9 +190,10 @@ var xAnimationPause func(uintptr)
 
 // Pauses a playing animation for @self.
 //
-// Does nothing if the current state of @self isn't `ADW_ANIMATION_PLAYING`.
+// Does nothing if the current state of @self isn't
+// [enum@Adw.AnimationState.playing].
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PAUSED`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.paused].
 func (x *Animation) Pause() {
 	xAnimationPause(x.GoPointer())
 }
@@ -205,7 +206,7 @@ var xAnimationPlay func(uintptr)
 // the beginning. This allows to easily play an animation regardless of whether
 // it's already playing or not.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PLAYING`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.playing].
 //
 // The animation will be automatically skipped if [property@Animation:widget] is
 // unmapped, or if [property@Gtk.Settings:gtk-enable-animations] is `FALSE`.
@@ -222,7 +223,7 @@ var xAnimationReset func(uintptr)
 
 // Resets the animation for @self.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_IDLE`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.idle].
 func (x *Animation) Reset() {
 	xAnimationReset(x.GoPointer())
 }
@@ -234,7 +235,7 @@ var xAnimationResume func(uintptr)
 // This function must only be used if the animation has been paused with
 // [method@Animation.pause].
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PLAYING`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.playing].
 func (x *Animation) Resume() {
 	xAnimationResume(x.GoPointer())
 }
@@ -269,7 +270,7 @@ var xAnimationSkip func(uintptr)
 // skips the animation to the end and causes [signal@Animation::done] to be
 // emitted.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_FINISHED`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.finished].
 func (x *Animation) Skip() {
 	xAnimationSkip(x.GoPointer())
 }

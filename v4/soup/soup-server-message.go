@@ -25,15 +25,15 @@ func (x *ServerMessageClass) GoPointer() uintptr {
 
 // An HTTP server request and response pair.
 //
-// A SoupServerMessage represents an HTTP message that is being sent or
+// A [class@ServerMessage] represents an HTTP message that is being sent or
 // received on a [class@Server].
 //
-// [class@Server] will create `SoupServerMessage`s automatically for
+// [class@Server] will create [class@ServerMessage]s automatically for
 // incoming requests, which your application will receive via handlers.
 //
 // Note that libsoup's terminology here does not quite match the HTTP
 // specification: in RFC 2616, an "HTTP-message" is *either* a Request, *or* a
-// Response. In libsoup, a #SoupServerMessage combines both the request and the
+// Response. In libsoup, a [class@ServerMessage] combines both the request and the
 // response.
 type ServerMessage struct {
 	gobject.Object
@@ -263,7 +263,7 @@ func (x *ServerMessage) SetRedirect(StatusCodeVar uint32, RedirectUriVar string)
 
 var xServerMessageSetResponse func(uintptr, string, MemoryUse, string, uint)
 
-// Convenience function to set the response body of a #SoupServerMessage. If
+// Convenience function to set the response body of a [class@ServerMessage]. If
 // @content_type is %NULL, the response body must be empty as well.
 func (x *ServerMessage) SetResponse(ContentTypeVar string, RespUseVar MemoryUse, RespBodyVar string, RespLengthVar uint) {
 	xServerMessageSetResponse(x.GoPointer(), ContentTypeVar, RespUseVar, RespBodyVar, RespLengthVar)
@@ -281,7 +281,7 @@ func (x *ServerMessage) SetStatus(StatusCodeVar uint32, ReasonPhraseVar string) 
 
 var xServerMessageStealConnection func(uintptr) uintptr
 
-// "Steals" the HTTP connection associated with @msg from its #SoupServer. This
+// "Steals" the HTTP connection associated with @msg from its [class@Server]. This
 // happens immediately, regardless of the current state of the connection; if
 // the response to @msg has not yet finished being sent, then it will be
 // discarded; you can steal the connection from a

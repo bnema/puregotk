@@ -29,6 +29,8 @@ type AccessibleInterface struct {
 	xGetNextAccessibleSibling uintptr
 
 	xGetBounds uintptr
+
+	xGetAccessibleId uintptr
 }
 
 func (x *AccessibleInterface) GoPointer() uintptr {
@@ -221,6 +223,29 @@ func (x *AccessibleInterface) GetGetBounds() func(Accessible, *int32, *int32, *i
 	}
 }
 
+// OverrideGetAccessibleId sets the "get_accessible_id" callback function.
+func (x *AccessibleInterface) OverrideGetAccessibleId(cb func(Accessible) string) {
+	if cb == nil {
+		x.xGetAccessibleId = 0
+	} else {
+		x.xGetAccessibleId = purego.NewCallback(func(SelfVarp uintptr) string {
+			return cb(&AccessibleBase{Ptr: SelfVarp})
+		})
+	}
+}
+
+// GetGetAccessibleId gets the "get_accessible_id" callback function.
+func (x *AccessibleInterface) GetGetAccessibleId() func(Accessible) string {
+	if x.xGetAccessibleId == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetAccessibleId)
+	return func(SelfVar Accessible) string {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
 // Wraps a list of references to [iface@Gtk.Accessible] objects.
 type AccessibleList struct {
 	_ structs.HostLayout
@@ -295,6 +320,7 @@ type Accessible interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority)
+	GetAccessibleId() string
 	GetAccessibleParent() *AccessibleBase
 	GetAccessibleRole() AccessibleRole
 	GetAtContext() *ATContext
@@ -348,6 +374,18 @@ func (x *AccessibleBase) SetGoPointer(ptr uintptr) {
 // does not interrupts the user's current screen reader output.
 func (x *AccessibleBase) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AccessibleBase) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -578,6 +616,7 @@ func (x *AccessibleBase) UpdateStateValue(NStatesVar int32, StatesVar []Accessib
 
 var (
 	XGtkAccessibleAnnounce                    func(uintptr, string, AccessibleAnnouncementPriority)
+	XGtkAccessibleGetAccessibleId             func(uintptr) string
 	XGtkAccessibleGetAccessibleParent         func(uintptr) uintptr
 	XGtkAccessibleGetAccessibleRole           func(uintptr) AccessibleRole
 	XGtkAccessibleGetAtContext                func(uintptr) uintptr
@@ -677,6 +716,7 @@ func init() {
 	core.PuregoSafeRegister(&xAccessibleGLibType, libs, "gtk_accessible_get_type")
 
 	core.PuregoSafeRegister(&XGtkAccessibleAnnounce, libs, "gtk_accessible_announce")
+	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleId, libs, "gtk_accessible_get_accessible_id")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleParent, libs, "gtk_accessible_get_accessible_parent")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleRole, libs, "gtk_accessible_get_accessible_role")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAtContext, libs, "gtk_accessible_get_at_context")

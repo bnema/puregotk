@@ -1159,6 +1159,14 @@ func (x *ScrollEvent) GetDirection() ScrollDirection {
 	return cret
 }
 
+var xScrollEventGetRelativeDirection func(uintptr) ScrollRelativeDirection
+
+// Extracts the scroll direction relative to the physical motion.
+func (x *ScrollEvent) GetRelativeDirection() ScrollRelativeDirection {
+	cret := xScrollEventGetRelativeDirection(x.GoPointer())
+	return cret
+}
+
 var xScrollEventGetUnit func(uintptr) ScrollUnit
 
 // Extracts the scroll delta unit of a scroll event.
@@ -1195,13 +1203,6 @@ func (c *ScrollEvent) GoPointer() uintptr {
 
 func (c *ScrollEvent) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
-}
-
-var xScrollEventGetRelativeDirection func(uintptr) ScrollRelativeDirection
-
-func ScrollEventGetRelativeDirection(EventVar *Event) ScrollRelativeDirection {
-	cret := xScrollEventGetRelativeDirection(EventVar.GoPointer())
-	return cret
 }
 
 // An event related to a touch-based device.
@@ -1417,10 +1418,9 @@ func init() {
 
 	core.PuregoSafeRegister(&xScrollEventGetDeltas, libs, "gdk_scroll_event_get_deltas")
 	core.PuregoSafeRegister(&xScrollEventGetDirection, libs, "gdk_scroll_event_get_direction")
+	core.PuregoSafeRegister(&xScrollEventGetRelativeDirection, libs, "gdk_scroll_event_get_relative_direction")
 	core.PuregoSafeRegister(&xScrollEventGetUnit, libs, "gdk_scroll_event_get_unit")
 	core.PuregoSafeRegister(&xScrollEventIsStop, libs, "gdk_scroll_event_is_stop")
-
-	core.PuregoSafeRegister(&xScrollEventGetRelativeDirection, libs, "gdk_scroll_event_get_relative_direction")
 
 	core.PuregoSafeRegister(&xTouchEventGLibType, libs, "gdk_touch_event_get_type")
 

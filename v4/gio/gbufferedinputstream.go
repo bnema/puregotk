@@ -373,8 +373,8 @@ func (x *BufferedInputStream) GetBufferSize() uint {
 
 var xBufferedInputStreamPeek func(uintptr, []byte, uint, uint) uint
 
-// Peeks in the buffer, copying data of size @count into @buffer,
-// offset @offset bytes.
+// Peeks in the buffered input, copying @count bytes of data from @offset bytes
+// in the buffered input into @buffer.
 func (x *BufferedInputStream) Peek(BufferVar []byte, OffsetVar uint, CountVar uint) uint {
 	cret := xBufferedInputStreamPeek(x.GoPointer(), BufferVar, OffsetVar, CountVar)
 	return cret

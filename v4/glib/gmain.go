@@ -1609,7 +1609,7 @@ func GetCurrentTime(ResultVar *TimeVal) {
 
 var xGetMonotonicTime func() int64
 
-// Queries the system monotonic time.
+// Queries the system monotonic time in microseconds.
 //
 // The monotonic clock will always increase and doesn’t suffer
 // discontinuities when the user (or NTP) changes the system time.  It
@@ -1620,8 +1620,33 @@ var xGetMonotonicTime func() int64
 // the passage of time as measured by system calls such as
 // [`poll()`](man:poll(2)) but it
 // may not always be possible to do this.
+//
+// A more accurate version of this function exists.
+// [func@GLib.get_monotonic_time_ns] returns the time in nanoseconds.
 func GetMonotonicTime() int64 {
 	cret := xGetMonotonicTime()
+	return cret
+}
+
+var xGetMonotonicTimeNs func() uint64
+
+// Queries the system monotonic time in nanoseconds.
+//
+// The monotonic clock will always increase and doesn’t suffer
+// discontinuities when the user (or NTP) changes the system time.  It
+// may or may not continue to tick during times where the machine is
+// suspended.
+//
+// We try to use the clock that corresponds as closely as possible to
+// the passage of time as measured by system calls such as
+// [`poll()`](man:poll(2)) but it
+// may not always be possible to do this.
+//
+// Another version of this function exists.
+// [func@GLib.get_monotonic_time] returns the time in microseconds.
+// If you want to support older GLib versions, it is an alternative.
+func GetMonotonicTimeNs() uint64 {
+	cret := xGetMonotonicTimeNs()
 	return cret
 }
 
@@ -2197,6 +2222,7 @@ func init() {
 	core.PuregoSafeRegister(&xClearHandleId, libs, "g_clear_handle_id")
 	core.PuregoSafeRegister(&xGetCurrentTime, libs, "g_get_current_time")
 	core.PuregoSafeRegister(&xGetMonotonicTime, libs, "g_get_monotonic_time")
+	core.PuregoSafeRegister(&xGetMonotonicTimeNs, libs, "g_get_monotonic_time_ns")
 	core.PuregoSafeRegister(&xGetRealTime, libs, "g_get_real_time")
 	core.PuregoSafeRegister(&xIdleAdd, libs, "g_idle_add")
 	core.PuregoSafeRegister(&xIdleAddFull, libs, "g_idle_add_full")

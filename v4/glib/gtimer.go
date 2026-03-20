@@ -87,6 +87,9 @@ func (x *Timer) Stop() {
 }
 
 const (
+	// Number of nanoseconds in one second (1 billion).
+	// This macro is provided for code readability.
+	NSEC_PER_SEC uint64 = 1000000000
 	// Number of microseconds in one second (1 million).
 	// This macro is provided for code readability.
 	USEC_PER_SEC int32 = 1000000

@@ -16,6 +16,15 @@ const (
 	PRIORITY_RESIZE int32 = 110
 )
 
+var xDisablePortalInterfaces func([]string)
+
+// Prevents GTK from using the specified portals.
+//
+// This should only be used in portal implementations, apps must not call it.
+func DisablePortalInterfaces(PortalInterfacesVar []string) {
+	xDisablePortalInterfaces(PortalInterfacesVar)
+}
+
 var xDisablePortals func()
 
 // Prevents GTK from using portals.
@@ -160,6 +169,7 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xDisablePortalInterfaces, libs, "gtk_disable_portal_interfaces")
 	core.PuregoSafeRegister(&xDisablePortals, libs, "gtk_disable_portals")
 	core.PuregoSafeRegister(&xDisableSetlocale, libs, "gtk_disable_setlocale")
 	core.PuregoSafeRegister(&xGetDefaultLanguage, libs, "gtk_get_default_language")

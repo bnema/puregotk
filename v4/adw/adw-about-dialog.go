@@ -266,7 +266,7 @@ var xNewAboutDialogFromAppdata func(string, string) uintptr
 //   - [property@AboutDialog:issue-url] is set from the `&lt;url type="bugtracker"&gt;`
 //   - [property@AboutDialog:license-type] is set from the `&lt;project_license&gt;`.
 //     If the license type retrieved from AppStream is not listed in
-//     [enum@Gtk.License], it will be set to `GTK_LICENCE_CUSTOM`.
+//     [enum@Gtk.License], it will be set to [enum@Gtk.License.custom].
 //
 // If @release_notes_version is not `NULL`,
 // [property@AboutDialog:release-notes-version] is set to match it, while
@@ -417,6 +417,14 @@ var xAboutDialogAddOtherApp func(uintptr, string, string, string)
 // ```
 func (x *AboutDialog) AddOtherApp(AppidVar string, NameVar string, SummaryVar string) {
 	xAboutDialogAddOtherApp(x.GoPointer(), AppidVar, NameVar, SummaryVar)
+}
+
+var xAboutDialogGetAppdataResourcePath func(uintptr) string
+
+// Gets the AppStream metadata resource path for @self.
+func (x *AboutDialog) GetAppdataResourcePath() string {
+	cret := xAboutDialogGetAppdataResourcePath(x.GoPointer())
+	return cret
 }
 
 var xAboutDialogGetApplicationIcon func(uintptr) string
@@ -769,7 +777,7 @@ var xAboutDialogSetLicense func(uintptr, string)
 // [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -788,11 +796,12 @@ var xAboutDialogSetLicenseType func(uintptr, gtk.License)
 //
 // If the application's license is not in the list,
 // [property@AboutDialog:license] can be used instead. The license type will be
-// automatically set to `GTK_LICENSE_CUSTOM` in that case.
+// automatically set to [enum@Gtk.License.custom] in that case.
 //
-// If @license_type is `GTK_LICENSE_UNKNOWN`, no information will be displayed.
+// If @license_type is [enum@Gtk.License.unknown], no information will be
+// displayed.
 //
-// If @license_type is different from `GTK_LICENSE_CUSTOM`.
+// If @license_type is different from [enum@Gtk.License.custom].
 // [property@AboutDialog:license] will be cleared out.
 //
 // The license description will be displayed on the Legal page, below the
@@ -919,6 +928,37 @@ func (c *AboutDialog) GoPointer() uintptr {
 
 func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAppdataResourcePath sets the "appdata-resource-path" property.
+// The path to the Appstream metadata resource.
+//
+// If provided, the dialog will be constructed from it.
+//
+// See [ctor@AboutDialog.new_from_appdata].
+//
+// If [property@AboutDialog:release-notes-version] is set, release notes will
+// be set from the AppStream release description for that version.
+func (x *AboutDialog) SetPropertyAppdataResourcePath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("appdata-resource-path", &v)
+}
+
+// GetPropertyAppdataResourcePath gets the "appdata-resource-path" property.
+// The path to the Appstream metadata resource.
+//
+// If provided, the dialog will be constructed from it.
+//
+// See [ctor@AboutDialog.new_from_appdata].
+//
+// If [property@AboutDialog:release-notes-version] is set, release notes will
+// be set from the AppStream release description for that version.
+func (x *AboutDialog) GetPropertyAppdataResourcePath() string {
+	var v gobject.Value
+	x.GetProperty("appdata-resource-path", &v)
+	return v.GetString()
 }
 
 // SetPropertyApplicationIcon sets the "application-icon" property.
@@ -1332,7 +1372,7 @@ func (x *AboutDialog) GetPropertyIssueUrl() string {
 // via [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1355,7 +1395,7 @@ func (x *AboutDialog) SetPropertyLicense(value string) {
 // via [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1633,6 +1673,18 @@ func (x *AboutDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnno
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AboutDialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.
@@ -1893,6 +1945,7 @@ func init() {
 	core.PuregoSafeRegister(&xAboutDialogAddLegalSection, libs, "adw_about_dialog_add_legal_section")
 	core.PuregoSafeRegister(&xAboutDialogAddLink, libs, "adw_about_dialog_add_link")
 	core.PuregoSafeRegister(&xAboutDialogAddOtherApp, libs, "adw_about_dialog_add_other_app")
+	core.PuregoSafeRegister(&xAboutDialogGetAppdataResourcePath, libs, "adw_about_dialog_get_appdata_resource_path")
 	core.PuregoSafeRegister(&xAboutDialogGetApplicationIcon, libs, "adw_about_dialog_get_application_icon")
 	core.PuregoSafeRegister(&xAboutDialogGetApplicationName, libs, "adw_about_dialog_get_application_name")
 	core.PuregoSafeRegister(&xAboutDialogGetArtists, libs, "adw_about_dialog_get_artists")

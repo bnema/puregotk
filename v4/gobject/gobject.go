@@ -1009,7 +1009,7 @@ func (c *InitiallyUnowned) SetGoPointer(ptr uintptr) {
 // methods for all object types in GTK, Pango and other libraries
 // based on GObject. The `GObject` class provides methods for object
 // construction and destruction, property access methods, and signal
-// support. Signals are described in detail [here][gobject-Signals].
+// support. Signals are described in detail [here](signals.html).
 //
 // For a tutorial on implementing a new `GObject` class, see [How to define and
 // implement a new GObject](tutorial.html#how-to-define-and-implement-a-new-gobject).
@@ -1410,7 +1410,7 @@ func (x *Object) DupQdata(QuarkVar glib.Quark, DupFuncVar *glib.DuplicateFunc, U
 var xObjectForceFloating func(uintptr)
 
 // This function is intended for #GObject implementations to re-enforce
-// a [floating][floating-ref] object reference. Doing this is seldom
+// a [floating](floating-refs.html) object reference. Doing this is seldom
 // required: all #GInitiallyUnowneds are created with a floating reference
 // which usually just needs to be sunken by calling g_object_ref_sink().
 func (x *Object) ForceFloating() {
@@ -1530,7 +1530,7 @@ func (x *Object) Getv(NPropertiesVar uint32, NamesVar []string, ValuesVar []Valu
 
 var xObjectIsFloating func(uintptr) bool
 
-// Checks whether @object has a [floating][floating-ref] reference.
+// Checks whether @object has a [floating](floating-refs.html) reference.
 func (x *Object) IsFloating() bool {
 	cret := xObjectIsFloating(x.GoPointer())
 	return cret
@@ -1623,7 +1623,7 @@ func (x *Object) Ref() *Object {
 var xObjectRefSink func(uintptr) uintptr
 
 // Increase the reference count of @object, and possibly remove the
-// [floating][floating-ref] reference, if @object has a floating reference.
+// [floating](floating-refs.html) reference, if @object has a floating reference.
 //
 // In other words, if the object is floating, then this call "assumes
 // ownership" of the floating reference, converting it to a normal

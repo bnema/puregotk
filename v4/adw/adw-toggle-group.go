@@ -86,6 +86,14 @@ func (x *Toggle) GetChild() *gtk.Widget {
 	return cls
 }
 
+var xToggleGetDescription func(uintptr) string
+
+// Gets the description of @self.
+func (x *Toggle) GetDescription() string {
+	cret := xToggleGetDescription(x.GoPointer())
+	return cret
+}
+
 var xToggleGetEnabled func(uintptr) bool
 
 // Gets whether @self is enabled.
@@ -154,6 +162,18 @@ func (x *Toggle) SetChild(ChildVar *gtk.Widget) {
 	xToggleSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
+var xToggleSetDescription func(uintptr, string)
+
+// Sets the description of @self to @description.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) SetDescription(DescriptionVar string) {
+	xToggleSetDescription(x.GoPointer(), DescriptionVar)
+}
+
 var xToggleSetEnabled func(uintptr, bool)
 
 // Sets whether @self is enabled.
@@ -198,6 +218,9 @@ var xToggleSetTooltip func(uintptr, string)
 // Sets the tooltip of @self to @tooltip.
 //
 // @tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) SetTooltip(TooltipVar string) {
 	xToggleSetTooltip(x.GoPointer(), TooltipVar)
 }
@@ -220,6 +243,33 @@ func (c *Toggle) GoPointer() uintptr {
 
 func (c *Toggle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDescription sets the "description" property.
+// The description of the toggle.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// The description of the toggle.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
 }
 
 // SetPropertyEnabled sets the "enabled" property.
@@ -316,6 +366,9 @@ func (x *Toggle) GetPropertyName() string {
 // The tooltip of the toggle.
 //
 // The tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
@@ -327,6 +380,9 @@ func (x *Toggle) SetPropertyTooltip(value string) {
 // The tooltip of the toggle.
 //
 // The tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) GetPropertyTooltip() string {
 	var v gobject.Value
 	x.GetProperty("tooltip", &v)
@@ -458,8 +514,8 @@ func (x *Toggle) GetPropertyUseUnderline() bool {
 //
 // ## Accessibility
 //
-// `AdwToggleGroup` uses the `GTK_ACCESSIBLE_ROLE_RADIO_GROUP` role. Its toggles
-// use the `GTK_ACCESSIBLE_ROLE_RADIO` role.
+// `AdwToggleGroup` uses the [enum@Gtk.AccessibleRole.radio-group] role. Its
+// toggles use the [enum@Gtk.AccessibleRole.radio] role.
 type ToggleGroup struct {
 	gtk.Widget
 }
@@ -504,7 +560,7 @@ var xToggleGroupGetActive func(uintptr) uint32
 
 // Gets the index of the active toggle in @self.
 //
-// Returns `GTK_INVALID_LIST_POSITION` if no toggle is active.
+// Returns [const@Gtk.INVALID_LIST_POSITION] if no toggle is active.
 func (x *ToggleGroup) GetActive() uint32 {
 	cret := xToggleGroupGetActive(x.GoPointer())
 	return cret
@@ -785,6 +841,18 @@ func (x *ToggleGroup) Announce(MessageVar string, PriorityVar gtk.AccessibleAnno
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ToggleGroup) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.
@@ -1048,6 +1116,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewToggle, libs, "adw_toggle_new")
 
 	core.PuregoSafeRegister(&xToggleGetChild, libs, "adw_toggle_get_child")
+	core.PuregoSafeRegister(&xToggleGetDescription, libs, "adw_toggle_get_description")
 	core.PuregoSafeRegister(&xToggleGetEnabled, libs, "adw_toggle_get_enabled")
 	core.PuregoSafeRegister(&xToggleGetIconName, libs, "adw_toggle_get_icon_name")
 	core.PuregoSafeRegister(&xToggleGetIndex, libs, "adw_toggle_get_index")
@@ -1056,6 +1125,7 @@ func init() {
 	core.PuregoSafeRegister(&xToggleGetTooltip, libs, "adw_toggle_get_tooltip")
 	core.PuregoSafeRegister(&xToggleGetUseUnderline, libs, "adw_toggle_get_use_underline")
 	core.PuregoSafeRegister(&xToggleSetChild, libs, "adw_toggle_set_child")
+	core.PuregoSafeRegister(&xToggleSetDescription, libs, "adw_toggle_set_description")
 	core.PuregoSafeRegister(&xToggleSetEnabled, libs, "adw_toggle_set_enabled")
 	core.PuregoSafeRegister(&xToggleSetIconName, libs, "adw_toggle_set_icon_name")
 	core.PuregoSafeRegister(&xToggleSetLabel, libs, "adw_toggle_set_label")

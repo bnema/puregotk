@@ -59,7 +59,7 @@ type IMContextClass struct {
 
 	xActivateOskWithEvent uintptr
 
-	xGtkReserved2 uintptr
+	xInvalidComposition uintptr
 
 	xGtkReserved3 uintptr
 
@@ -696,26 +696,32 @@ func (x *IMContextClass) GetActivateOskWithEvent() func(*IMContext, *gdk.Event) 
 	}
 }
 
-// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
-func (x *IMContextClass) OverrideGtkReserved2(cb func()) {
+// OverrideInvalidComposition sets the "invalid_composition" callback function.
+// Default handler of the
+//
+//	[signal@Gtk.IMContext::invalid-composition] signal. Since: 4.22
+func (x *IMContextClass) OverrideInvalidComposition(cb func(*IMContext, string) bool) {
 	if cb == nil {
-		x.xGtkReserved2 = 0
+		x.xInvalidComposition = 0
 	} else {
-		x.xGtkReserved2 = purego.NewCallback(func() {
-			cb()
+		x.xInvalidComposition = purego.NewCallback(func(ContextVarp uintptr, StrVarp string) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp), StrVarp)
 		})
 	}
 }
 
-// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
-func (x *IMContextClass) GetGtkReserved2() func() {
-	if x.xGtkReserved2 == 0 {
+// GetInvalidComposition gets the "invalid_composition" callback function.
+// Default handler of the
+//
+//	[signal@Gtk.IMContext::invalid-composition] signal. Since: 4.22
+func (x *IMContextClass) GetInvalidComposition() func(*IMContext, string) bool {
+	if x.xInvalidComposition == 0 {
 		return nil
 	}
-	var rawCallback func()
-	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
-	return func() {
-		rawCallback()
+	var rawCallback func(ContextVarp uintptr, StrVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xInvalidComposition)
+	return func(ContextVar *IMContext, StrVar string) bool {
+		return rawCallback(ContextVar.GoPointer(), StrVar)
 	}
 }
 
@@ -1064,6 +1070,25 @@ func (x *IMContext) ConnectDeleteSurrounding(cb *func(IMContext, int32, int32) b
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "delete-surrounding", cbRefPtr)
+}
+
+// Emitted when the filtered keys do not compose to a single valid character.
+func (x *IMContext) ConnectInvalidComposition(cb *func(IMContext, string) bool) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), "invalid-composition", cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, StrVarp string) bool {
+		fa := IMContext{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		return cbFn(fa, StrVarp)
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), "invalid-composition", cbRefPtr)
 }
 
 // The ::preedit-changed signal is emitted whenever the preedit sequence

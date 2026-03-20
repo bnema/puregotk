@@ -169,6 +169,8 @@ const (
 	GUnicodeBreakViramaFinalValue UnicodeBreakType = 46
 	// Virama (VI). Since: 2.80
 	GUnicodeBreakViramaValue UnicodeBreakType = 47
+	// Unambiguous Hyphen (HH). Since: 2.88
+	GUnicodeBreakUnambiguousHyphenValue UnicodeBreakType = 48
 )
 
 // The #GUnicodeScript enumeration identifies different writing
@@ -536,6 +538,14 @@ const (
 	GUnicodeScriptKiratRaiValue UnicodeScript = 170
 	// Ol Onal. Since: 2.84
 	GUnicodeScriptOlOnalValue UnicodeScript = 171
+	// Sidetic. Since: 2.88
+	GUnicodeScriptSideticValue UnicodeScript = 172
+	// Tolong Siki. Since: 2.88
+	GUnicodeScriptTolongSikiValue UnicodeScript = 173
+	// Tai Yo. Since: 2.88
+	GUnicodeScriptTaiYoValue UnicodeScript = 174
+	// Beria Erfe. Since: 2.88
+	GUnicodeScriptBeriaErfeValue UnicodeScript = 175
 )
 
 // These are the possible character classifications from the

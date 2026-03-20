@@ -172,7 +172,7 @@ var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, string
 //
 //	G_CALLBACK (handle_script_message), NULL);
 //
-// webkit_user_content_manager_register_script_message_handler (manager, "foobar");
+// webkit_user_content_manager_register_script_message_handler (manager, "foobar", "world");
 // ```
 //
 // Registering a script message handler will fail if the requested

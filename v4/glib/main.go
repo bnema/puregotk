@@ -97,13 +97,6 @@ func ThreadErrorQuark() Quark {
 	return cret
 }
 
-var xUnixErrorQuark func() Quark
-
-func UnixErrorQuark() Quark {
-	cret := xUnixErrorQuark()
-	return cret
-}
-
 var xUriErrorQuark func() Quark
 
 func UriErrorQuark() Quark {
@@ -143,7 +136,6 @@ func init() {
 	core.PuregoSafeRegister(&xSpawnErrorQuark, libs, "g_spawn_error_quark")
 	core.PuregoSafeRegister(&xSpawnExitErrorQuark, libs, "g_spawn_exit_error_quark")
 	core.PuregoSafeRegister(&xThreadErrorQuark, libs, "g_thread_error_quark")
-	core.PuregoSafeRegister(&xUnixErrorQuark, libs, "g_unix_error_quark")
 	core.PuregoSafeRegister(&xUriErrorQuark, libs, "g_uri_error_quark")
 	core.PuregoSafeRegister(&xVariantParseErrorQuark, libs, "g_variant_parse_error_quark")
 }

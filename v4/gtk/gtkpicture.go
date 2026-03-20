@@ -262,6 +262,14 @@ func (x *Picture) GetFile() *gio.FileBase {
 	return cls
 }
 
+var xPictureGetIsolateContents func(uintptr) bool
+
+// Returns whether the contents are isolated.
+func (x *Picture) GetIsolateContents() bool {
+	cret := xPictureGetIsolateContents(x.GoPointer())
+	return cret
+}
+
 var xPictureGetKeepAspectRatio func(uintptr) bool
 
 // Returns whether the `GtkPicture` preserves its contents aspect ratio.
@@ -302,7 +310,7 @@ func (x *Picture) SetAlternativeText(AlternativeTextVar string) {
 
 var xPictureSetCanShrink func(uintptr, bool)
 
-// If set to %TRUE, the @self can be made smaller than its contents.
+// If set to %TRUE, then @self can be made smaller than its contents.
 //
 // The contents will then be scaled down when rendering.
 //
@@ -355,6 +363,22 @@ var xPictureSetFilename func(uintptr, string)
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Picture) SetFilename(FilenameVar string) {
 	xPictureSetFilename(x.GoPointer(), FilenameVar)
+}
+
+var xPictureSetIsolateContents func(uintptr, bool)
+
+// If set to true, then the contents will be rendered individually.
+//
+// If set to false they will be able to erase or otherwise mix with
+// the background.
+//
+// GTK supports finer grained isolation, in rare cases where you need
+// this, you can use [method@Gtk.Snapshot.push_isolation] yourself to
+// achieve this.
+//
+// By default contents are isolated.
+func (x *Picture) SetIsolateContents(IsolateContentsVar bool) {
+	xPictureSetIsolateContents(x.GoPointer(), IsolateContentsVar)
 }
 
 var xPictureSetKeepAspectRatio func(uintptr, bool)
@@ -448,6 +472,23 @@ func (x *Picture) GetPropertyCanShrink() bool {
 	return v.GetBoolean()
 }
 
+// SetPropertyIsolateContents sets the "isolate-contents" property.
+// If the rendering of the contents is isolated from the rest of the widget tree.
+func (x *Picture) SetPropertyIsolateContents(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("isolate-contents", &v)
+}
+
+// GetPropertyIsolateContents gets the "isolate-contents" property.
+// If the rendering of the contents is isolated from the rest of the widget tree.
+func (x *Picture) GetPropertyIsolateContents() bool {
+	var v gobject.Value
+	x.GetProperty("isolate-contents", &v)
+	return v.GetBoolean()
+}
+
 // SetPropertyKeepAspectRatio sets the "keep-aspect-ratio" property.
 // Whether the GtkPicture will render its contents trying to preserve the aspect
 // ratio.
@@ -478,6 +519,18 @@ func (x *Picture) GetPropertyKeepAspectRatio() bool {
 // does not interrupts the user's current screen reader output.
 func (x *Picture) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Picture) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -740,6 +793,7 @@ func init() {
 	core.PuregoSafeRegister(&xPictureGetCanShrink, libs, "gtk_picture_get_can_shrink")
 	core.PuregoSafeRegister(&xPictureGetContentFit, libs, "gtk_picture_get_content_fit")
 	core.PuregoSafeRegister(&xPictureGetFile, libs, "gtk_picture_get_file")
+	core.PuregoSafeRegister(&xPictureGetIsolateContents, libs, "gtk_picture_get_isolate_contents")
 	core.PuregoSafeRegister(&xPictureGetKeepAspectRatio, libs, "gtk_picture_get_keep_aspect_ratio")
 	core.PuregoSafeRegister(&xPictureGetPaintable, libs, "gtk_picture_get_paintable")
 	core.PuregoSafeRegister(&xPictureSetAlternativeText, libs, "gtk_picture_set_alternative_text")
@@ -747,6 +801,7 @@ func init() {
 	core.PuregoSafeRegister(&xPictureSetContentFit, libs, "gtk_picture_set_content_fit")
 	core.PuregoSafeRegister(&xPictureSetFile, libs, "gtk_picture_set_file")
 	core.PuregoSafeRegister(&xPictureSetFilename, libs, "gtk_picture_set_filename")
+	core.PuregoSafeRegister(&xPictureSetIsolateContents, libs, "gtk_picture_set_isolate_contents")
 	core.PuregoSafeRegister(&xPictureSetKeepAspectRatio, libs, "gtk_picture_set_keep_aspect_ratio")
 	core.PuregoSafeRegister(&xPictureSetPaintable, libs, "gtk_picture_set_paintable")
 	core.PuregoSafeRegister(&xPictureSetPixbuf, libs, "gtk_picture_set_pixbuf")

@@ -678,7 +678,7 @@ func (x *Value) NewTypedArrayWithBuffer(TypeVar TypedArrayType, OffsetVar uint, 
 var xValueObjectDefinePropertyAccessor func(uintptr, string, ValuePropertyFlags, types.GType, uintptr, uintptr, uintptr, uintptr)
 
 // Define or modify a property with @property_name in object referenced by @value. When the
-// property value needs to be getted or set, @getter and @setter callbacks will be called.
+// property value is read or set, @getter and @setter callbacks will be called.
 // When the property is cleared in the #JSCClass context, @destroy_notify is called with
 // @user_data as parameter. This is equivalent to JavaScript &lt;function&gt;Object.defineProperty()&lt;/function&gt;
 // when used with an accessor descriptor.

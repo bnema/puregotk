@@ -209,7 +209,7 @@ func (x *AuthClass) GetCanAuthenticate() func(*Auth) bool {
 // but applications never need to be aware of the specific subclasses being
 // used.
 //
-// #SoupAuth objects store the authentication data associated with a given bit
+// [class@Auth] objects store the authentication data associated with a given bit
 // of web space. They are created automatically by [class@Session].
 type Auth struct {
 	gobject.Object
@@ -229,7 +229,7 @@ func AuthNewFromInternalPtr(ptr uintptr) *Auth {
 
 var xNewAuth func(types.GType, uintptr, string) uintptr
 
-// Creates a new #SoupAuth of type @type with the information from
+// Creates a new [class@Auth] of type @type with the information from
 // @msg and @auth_header.
 //
 // This is called by [class@Session]; you will normally not create auths
@@ -272,7 +272,7 @@ var xAuthCancel func(uintptr)
 //
 // You need to cancel an auth to complete an asynchronous authenticate operation
 // when no credentials are provided ([method@Auth.authenticate] is not called).
-// The #SoupAuth will be cancelled on dispose if it hans't been authenticated.
+// The [class@Auth] will be cancelled on dispose if it hasn't been authenticated.
 func (x *Auth) Cancel() {
 	xAuthCancel(x.GoPointer())
 }
@@ -307,7 +307,7 @@ var xAuthGetInfo func(uintptr) string
 
 // Gets an opaque identifier for @auth.
 //
-// The identifier can be used as a hash key or the like. #SoupAuth objects from
+// The identifier can be used as a hash key or the like. [class@Auth] objects from
 // the same server with the same identifier refer to the same authentication
 // domain (eg, the URLs associated with them take the same usernames and
 // passwords).

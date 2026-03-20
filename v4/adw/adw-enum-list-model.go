@@ -147,7 +147,7 @@ var xEnumListModelFindPosition func(uintptr, int32) uint32
 
 // Finds the position of a given enum value in @self.
 //
-// If the value is not found, `GTK_INVALID_LIST_POSITION` is returned.
+// If the value is not found, [const@Gtk.INVALID_LIST_POSITION] is returned.
 func (x *EnumListModel) FindPosition(ValueVar int32) uint32 {
 	cret := xEnumListModelFindPosition(x.GoPointer(), ValueVar)
 	return cret
@@ -170,6 +170,14 @@ func (c *EnumListModel) GoPointer() uintptr {
 
 func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *EnumListModel) GetPropertyNItems() uint32 {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUlong()
 }
 
 // Get the item at @position.

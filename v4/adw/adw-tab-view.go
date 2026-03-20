@@ -807,6 +807,18 @@ func (x *TabPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnounce
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.
@@ -1074,8 +1086,8 @@ func (x *TabPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleS
 //
 // ## Accessibility
 //
-// `AdwTabView` uses the `GTK_ACCESSIBLE_ROLE_TAB_PANEL` for the tab pages which
-// are the accessible parent objects of the child widgets.
+// `AdwTabView` uses the [enum@Gtk.AccessibleRole.tab-panel] role for the tab
+// pages which are the accessible parent objects of the child widgets.
 type TabView struct {
 	gtk.Widget
 }
@@ -1350,9 +1362,13 @@ var xTabViewGetPages func(uintptr) uintptr
 
 // Returns a [iface@Gio.ListModel] that contains the pages of @self.
 //
-// This can be used to keep an up-to-date view. The model also implements
-// [iface@Gtk.SelectionModel] and can be used to track and change the selected
-// page.
+// This can be used to keep an up-to-date view.
+//
+// The model implements [iface@Gtk.SectionModel], with one section for pinned
+// pages and one for the rest of the pages.
+//
+// It also implements [iface@Gtk.SelectionModel] and can be used to track and
+// change the selected page.
 func (x *TabView) GetPages() *gtk.SelectionModelBase {
 	var cls *gtk.SelectionModelBase
 
@@ -1716,8 +1732,8 @@ func (x *TabView) GetPropertyNPinnedPages() int32 {
 // A typical reason to connect to this signal is to show a confirmation dialog
 // for closing a tab.
 //
-// The signal handler should return `GDK_EVENT_STOP` to stop propagation or
-// `GDK_EVENT_CONTINUE` to invoke the default handler.
+// The signal handler should return [const@Gdk.EVENT_STOP] to stop propagation
+// or [const@Gdk.EVENT_PROPAGATE] to invoke the default handler.
 func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1886,6 +1902,18 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *TabView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

@@ -130,6 +130,18 @@ func (x *FileFilter) AddMimeType(MimeTypeVar string) {
 	xFileFilterAddMimeType(x.GoPointer(), MimeTypeVar)
 }
 
+var xFileFilterAddMimeTypes func(uintptr, []string)
+
+// Adds a rule allowing a given array of mime types.
+// It can for example be used with
+// [Gly.Loader.get_mime_types](https://gnome.pages.gitlab.gnome.org/glycin/libglycin/type_func.Loader.get_mime_types.html).
+//
+// This is equivalent to calling [method@Gtk.FileFilter.add_mime_type]
+// for all the supported mime types.
+func (x *FileFilter) AddMimeTypes(MimeTypesVar []string) {
+	xFileFilterAddMimeTypes(x.GoPointer(), MimeTypesVar)
+}
+
 var xFileFilterAddPattern func(uintptr, string)
 
 // Adds a rule allowing a shell style glob pattern.
@@ -298,6 +310,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewFileFilterFromGvariant, libs, "gtk_file_filter_new_from_gvariant")
 
 	core.PuregoSafeRegister(&xFileFilterAddMimeType, libs, "gtk_file_filter_add_mime_type")
+	core.PuregoSafeRegister(&xFileFilterAddMimeTypes, libs, "gtk_file_filter_add_mime_types")
 	core.PuregoSafeRegister(&xFileFilterAddPattern, libs, "gtk_file_filter_add_pattern")
 	core.PuregoSafeRegister(&xFileFilterAddPixbufFormats, libs, "gtk_file_filter_add_pixbuf_formats")
 	core.PuregoSafeRegister(&xFileFilterAddSuffix, libs, "gtk_file_filter_add_suffix")

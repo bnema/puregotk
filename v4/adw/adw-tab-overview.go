@@ -74,6 +74,26 @@ func (x *TabOverviewClass) GoPointer() uintptr {
 // If search and window buttons are disabled, and secondary menu is not set, the
 // header bar will be hidden.
 //
+// ## Drag-and-Drop
+//
+// `AdwTabOverview` thumbnails can have an additional drop target for arbitrary
+// content.
+//
+// Use [method@TabOverview.setup_extra_drop_target] to set it up, specifying the
+// supported content types and drag actions, then connect to
+// [signal@TabOverview::extra-drag-drop] to handle a drop.
+//
+// In some cases, it may be necessary to determine the used action based on the
+// content. In that case, set [property@TabOverview:extra-drag-preload] to
+// `TRUE` and connect to [signal@TabOverview::extra-drag-value] signal, then
+// return the action from its handler. To access this action from the
+// [signal@TabOverview::extra-drag-drop] handler, use the
+// [property@TabOverview:extra-drag-preferred-action] property.
+//
+// [signal@TabOverview::extra-drag-value] is also always emitted when starting to
+// hover an item, with a `NULL` value. This happens even when
+// [property@TabOverview:extra-drag-preload] is `FALSE`.
+//
 // ## Actions
 //
 // `AdwTabOverview` defines the `overview.open` and `overview.close` actions for
@@ -159,7 +179,13 @@ func (x *TabOverview) GetExtraDragPreferredAction() gdk.DragAction {
 
 var xTabOverviewGetExtraDragPreload func(uintptr) bool
 
-// Gets whether drop data should be preloaded on hover.
+// Gets the current drag action during a drop.
+//
+// This method should only be used from inside a
+// [signal@TabOverview::extra-drag-drop] handler.
+//
+// The action will be a subset of what was originally passed to
+// [method@TabOverview.setup_extra_drop_target].
 func (x *TabOverview) GetExtraDragPreload() bool {
 	cret := xTabOverviewGetExtraDragPreload(x.GoPointer())
 	return cret
@@ -337,8 +363,6 @@ func (x *TabOverview) SetView(ViewVar *TabView) {
 
 var xTabOverviewSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType, uint)
 
-// Sets the supported types for this drop target.
-//
 // Sets up an extra drop target on tabs.
 //
 // This allows to drag arbitrary content onto tabs, for example URLs in a web
@@ -559,7 +583,7 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
 }
 
-// This signal is emitted when content is dropped onto a tab.
+// Emitted when content is dropped onto a tab.
 //
 // The content must be of one of the types set up via
 // [method@TabOverview.setup_extra_drop_target].
@@ -583,7 +607,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
 }
 
-// This signal is emitted when the dropped content is preloaded.
+// Emitted when the dropped content is preloaded.
 //
 // In order for data to be preloaded, [property@TabOverview:extra-drag-preload]
 // must be set to `TRUE`.
@@ -621,6 +645,18 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintp
 // does not interrupts the user's current screen reader output.
 func (x *TabOverview) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabOverview) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

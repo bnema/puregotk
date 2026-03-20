@@ -23,7 +23,7 @@ func (x *HSTSEnforcerDBClass) GoPointer() uintptr {
 
 // Persistent HTTP Strict Transport Security enforcer.
 //
-// #SoupHSTSEnforcerDB is a [class@HSTSEnforcer] that uses a SQLite
+// [class@HSTSEnforcerDB] is a [class@HSTSEnforcer] that uses a SQLite
 // database as a backend for persistency.
 type HSTSEnforcerDB struct {
 	HSTSEnforcer
@@ -43,13 +43,13 @@ func HSTSEnforcerDBNewFromInternalPtr(ptr uintptr) *HSTSEnforcerDB {
 
 var xNewHSTSEnforcerDB func(string) uintptr
 
-// Creates a #SoupHSTSEnforcerDB.
+// Creates a [class@HSTSEnforcerDB].
 //
 // @filename will be read in during the initialization of a
-// #SoupHSTSEnforcerDB, in order to create an initial set of HSTS
+// [class@HSTSEnforcerDB], in order to create an initial set of HSTS
 // policies. If the file doesn't exist, a new database will be created
 // and initialized. Changes to the policies during the lifetime of a
-// #SoupHSTSEnforcerDB will be written to @filename when
+// [class@HSTSEnforcerDB] will be written to @filename when
 // [signal@HSTSEnforcer::changed] is emitted.
 func NewHSTSEnforcerDB(FilenameVar string) *HSTSEnforcerDB {
 	var cls *HSTSEnforcerDB

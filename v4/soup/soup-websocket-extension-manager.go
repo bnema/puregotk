@@ -22,7 +22,7 @@ func (x *WebsocketExtensionManagerClass) GoPointer() uintptr {
 // SoupWebsocketExtensionManager is the [iface@SessionFeature] that handles WebSockets
 // extensions for a [class@Session].
 //
-// A #SoupWebsocketExtensionManager is added to the session by default, and normally
+// A [class@WebsocketExtensionManager] is added to the session by default, and normally
 // you don't need to worry about it at all. However, if you want to
 // disable WebSocket extensions, you can remove the feature from the
 // session with [method@Session.remove_feature_by_type] or disable it on

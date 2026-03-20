@@ -103,6 +103,25 @@ func NewBytes(DataVar []byte, SizeVar uint) *Bytes {
 	return cret
 }
 
+var xNewBytesFromBytes func(*Bytes, uint, uint) *Bytes
+
+// Creates a [struct@GLib.Bytes] which is a subsection of another `GBytes`.
+//
+// The @offset + @length may not be longer than the size of @bytes.
+//
+// A reference to @bytes will be held by the newly created `GBytes` until
+// the byte data is no longer needed.
+//
+// Since 2.56, if @offset is 0 and @length matches the size of @bytes, then
+// @bytes will be returned with the reference count incremented by 1. If @bytes
+// is a slice of another `GBytes`, then the resulting `GBytes` will reference
+// the same `GBytes` instead of @bytes. This allows consumers to simplify the
+// usage of `GBytes` when asynchronously writing to streams.
+func NewBytesFromBytes(BytesVar *Bytes, OffsetVar uint, LengthVar uint) *Bytes {
+	cret := xNewBytesFromBytes(BytesVar, OffsetVar, LengthVar)
+	return cret
+}
+
 var xNewBytesStatic func([]byte, uint) *Bytes
 
 // Creates a new [struct@GLib.Bytes] from static data.
@@ -239,25 +258,6 @@ var xBytesHash func(uintptr) uint32
 // a [struct@GLib.HashTable].
 func (x *Bytes) Hash() uint32 {
 	cret := xBytesHash(x.GoPointer())
-	return cret
-}
-
-var xBytesNewFromBytes func(uintptr, uint, uint) *Bytes
-
-// Creates a [struct@GLib.Bytes] which is a subsection of another `GBytes`.
-//
-// The @offset + @length may not be longer than the size of @bytes.
-//
-// A reference to @bytes will be held by the newly created `GBytes` until
-// the byte data is no longer needed.
-//
-// Since 2.56, if @offset is 0 and @length matches the size of @bytes, then
-// @bytes will be returned with the reference count incremented by 1. If @bytes
-// is a slice of another `GBytes`, then the resulting `GBytes` will reference
-// the same `GBytes` instead of @bytes. This allows consumers to simplify the
-// usage of `GBytes` when asynchronously writing to streams.
-func (x *Bytes) NewFromBytes(OffsetVar uint, LengthVar uint) *Bytes {
-	cret := xBytesNewFromBytes(x.GoPointer(), OffsetVar, LengthVar)
 	return cret
 }
 
@@ -721,6 +721,7 @@ func init() {
 	core.PuregoSafeRegister(&xBytesGLibType, libs, "g_bytes_get_type")
 
 	core.PuregoSafeRegister(&xNewBytes, libs, "g_bytes_new")
+	core.PuregoSafeRegister(&xNewBytesFromBytes, libs, "g_bytes_new_from_bytes")
 	core.PuregoSafeRegister(&xNewBytesStatic, libs, "g_bytes_new_static")
 	core.PuregoSafeRegister(&xNewBytesTake, libs, "g_bytes_new_take")
 	core.PuregoSafeRegister(&xNewBytesWithFreeFunc, libs, "g_bytes_new_with_free_func")
@@ -731,7 +732,6 @@ func init() {
 	core.PuregoSafeRegister(&xBytesGetRegion, libs, "g_bytes_get_region")
 	core.PuregoSafeRegister(&xBytesGetSize, libs, "g_bytes_get_size")
 	core.PuregoSafeRegister(&xBytesHash, libs, "g_bytes_hash")
-	core.PuregoSafeRegister(&xBytesNewFromBytes, libs, "g_bytes_new_from_bytes")
 	core.PuregoSafeRegister(&xBytesRef, libs, "g_bytes_ref")
 	core.PuregoSafeRegister(&xBytesUnref, libs, "g_bytes_unref")
 	core.PuregoSafeRegister(&xBytesUnrefToArray, libs, "g_bytes_unref_to_array")

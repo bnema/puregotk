@@ -301,8 +301,8 @@ var xSqueezerSetSwitchThresholdPolicy func(uintptr, FoldThresholdPolicy)
 //
 // Determines when the squeezer will switch children.
 //
-// If set to `ADW_FOLD_THRESHOLD_POLICY_MINIMUM`, it will only switch when the
-// visible child cannot fit anymore. With `ADW_FOLD_THRESHOLD_POLICY_NATURAL`,
+// If set to [enum@Adw.FoldThresholdPolicy.minimum], it will only switch when
+// the visible child cannot fit anymore. With [enum@Adw.FoldThresholdPolicy.natural],
 // it will switch as soon as the visible child doesn't get their natural size.
 //
 // This can be useful if you have a long ellipsizing label and want to let it
@@ -537,6 +537,18 @@ func (x *Squeezer) GetPropertyYalign() float32 {
 // does not interrupts the user's current screen reader output.
 func (x *Squeezer) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Squeezer) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

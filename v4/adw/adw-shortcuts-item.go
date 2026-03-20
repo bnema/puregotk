@@ -146,7 +146,7 @@ var xShortcutsItemSetDirection func(uintptr, gtk.TextDirection)
 
 // Sets the direction of @self.
 //
-// If set to [enum@Gtk.TextDirection.LTR] or [enum@Gtk.TextDirection.RTL], the
+// If set to [enum@Gtk.TextDirection.ltr] or [enum@Gtk.TextDirection.rtl], the
 // shortcut will only be displayed for this direction.
 func (x *ShortcutsItem) SetDirection(DirectionVar gtk.TextDirection) {
 	xShortcutsItemSetDirection(x.GoPointer(), DirectionVar)

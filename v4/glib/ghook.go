@@ -153,9 +153,8 @@ const (
 	GHookFlagActiveValue HookFlagMask = 1
 	// set if the hook is currently being run
 	GHookFlagInCallValue HookFlagMask = 2
-	// A mask covering all bits reserved for
-	//   hook flags; see %G_HOOK_FLAG_USER_SHIFT
-	GHookFlagMaskValue HookFlagMask = 15
+
+	GHookFlagReserved1Value HookFlagMask = 4
 )
 
 var xHookDestroy func(*HookList, uint32) bool

@@ -61,7 +61,7 @@ func (x *SpinRowClass) GoPointer() uintptr {
 // ## Accessibility
 //
 // `AdwSpinRow` uses an internal `GtkSpinButton` with the
-// `GTK_ACCESSIBLE_ROLE_SPIN_BUTTON` role.
+// [enum@Gtk.AccessibleRole.spin-button] role.
 type SpinRow struct {
 	ActionRow
 }
@@ -473,6 +473,18 @@ func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *SpinRow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *SpinRow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

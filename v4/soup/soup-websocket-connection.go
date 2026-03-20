@@ -40,11 +40,11 @@ func (x *WebsocketConnectionClass) GoPointer() uintptr {
 // WebSocket handshake, and [func@websocket_server_process_handshake] for
 // handling the server side.)
 //
-// #SoupWebsocketConnection handles the details of WebSocket communication. You
+// [class@WebsocketConnection] handles the details of WebSocket communication. You
 // can use [method@WebsocketConnection.send_text] and
 // [method@WebsocketConnection.send_binary] to send data, and the
 // [signal@WebsocketConnection::message] signal to receive data.
-// (#SoupWebsocketConnection currently only supports asynchronous I/O.)
+// ([class@WebsocketConnection] currently only supports asynchronous I/O.)
 type WebsocketConnection struct {
 	gobject.Object
 }
@@ -63,7 +63,7 @@ func WebsocketConnectionNewFromInternalPtr(ptr uintptr) *WebsocketConnection {
 
 var xNewWebsocketConnection func(uintptr, *glib.Uri, WebsocketConnectionType, string, string, *glib.List) uintptr
 
-// Creates a #SoupWebsocketConnection on @stream with the given active @extensions.
+// Creates a [class@WebsocketConnection] on @stream with the given active @extensions.
 //
 // This should be called after completing the handshake to begin using the WebSocket
 // protocol.

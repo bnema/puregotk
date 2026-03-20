@@ -23,7 +23,7 @@ func (x *CookieJarTextClass) GoPointer() uintptr {
 
 // Text-file-based ("cookies.txt") Cookie Jar
 //
-// #SoupCookieJarText is a [class@CookieJar] that reads cookies from and writes
+// [class@CookieJarText] is a [class@CookieJar] that reads cookies from and writes
 // them to a text file in format similar to Mozilla's "cookies.txt".
 type CookieJarText struct {
 	CookieJar
@@ -43,7 +43,7 @@ func CookieJarTextNewFromInternalPtr(ptr uintptr) *CookieJarText {
 
 var xNewCookieJarText func(string, bool) uintptr
 
-// Creates a #SoupCookieJarText.
+// Creates a [class@CookieJarText].
 //
 // @filename will be read in at startup to create an initial set of cookies. If
 // @read_only is %FALSE, then the non-session cookies will be written to

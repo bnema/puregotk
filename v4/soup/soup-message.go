@@ -23,8 +23,7 @@ func (x *MessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Various flags that can be set on a #SoupMessage to alter its
-// behavior.
+// Various flags that can be set on a [class@Message] to alter its behavior.
 type MessageFlags int
 
 var xMessageFlagsGLibType func() types.GType
@@ -77,27 +76,27 @@ const (
 	//   with this priority will be the last ones to be attended.
 	MessagePriorityVeryLowValue MessagePriority = 0
 	// Use this for low priority messages, a
-	//   #SoupMessage with the default priority will be processed first.
+	//   [class@Message] with the default priority will be processed first.
 	MessagePriorityLowValue MessagePriority = 1
 	// The default priotity, this is the
-	//   priority assigned to the #SoupMessage by default.
+	//   priority assigned to the [class@Message] by default.
 	MessagePriorityNormalValue MessagePriority = 2
-	// High priority, a #SoupMessage with
+	// High priority, a [class@Message] with
 	//   this priority will be processed before the ones with the default
 	//   priority.
 	MessagePriorityHighValue MessagePriority = 3
 	// The highest priority, use this
-	//   for very urgent #SoupMessage as they will be the first ones to be
+	//   for very urgent [class@Message] as they will be the first ones to be
 	//   attended.
 	MessagePriorityVeryHighValue MessagePriority = 4
 )
 
 // Represents an HTTP message being sent or received.
 //
-// A #SoupMessage represents an HTTP message that is being sent or
+// A [class@Message] represents an HTTP message that is being sent or
 // received.
 //
-// You would create a #SoupMessage with [ctor@Message.new] or
+// You would create a [class@Message] with [ctor@Message.new] or
 // [ctor@Message.new_from_uri], set up its fields appropriately, and send it.
 //
 // [property@Message:status-code] will normally be a [enum@Status] value, eg,
@@ -112,7 +111,7 @@ const (
 //
 // Note that libsoup's terminology here does not quite match the HTTP
 // specification: in RFC 2616, an "HTTP-message" is *either* a Request, *or* a
-// Response. In libsoup, a #SoupMessage combines both the request and the
+// Response. In libsoup, a [class@Message] combines both the request and the
 // response.
 type Message struct {
 	gobject.Object
@@ -132,7 +131,7 @@ func MessageNewFromInternalPtr(ptr uintptr) *Message {
 
 var xNewMessage func(string, string) uintptr
 
-// Creates a new empty #SoupMessage, which will connect to @uri.
+// Creates a new empty [class@Message], which will connect to @uri.
 func NewMessage(MethodVar string, UriStringVar string) *Message {
 	var cls *Message
 
@@ -148,7 +147,7 @@ func NewMessage(MethodVar string, UriStringVar string) *Message {
 
 var xNewMessageFromEncodedForm func(string, string, string) uintptr
 
-// Creates a new #SoupMessage and sets it up to send the given @encoded_form
+// Creates a new [class@Message] and sets it up to send the given @encoded_form
 // to @uri via @method. If @method is "GET", it will include the form data
 // into @uri's query field, and if @method is "POST" or "PUT", it will be set as
 // request body.
@@ -171,7 +170,7 @@ func NewMessageFromEncodedForm(MethodVar string, UriStringVar string, EncodedFor
 
 var xNewMessageFromMultipart func(string, *Multipart) uintptr
 
-// Creates a new #SoupMessage and sets it up to send @multipart to
+// Creates a new [class@Message] and sets it up to send @multipart to
 // @uri_string via POST.
 func NewMessageFromMultipart(UriStringVar string, MultipartVar *Multipart) *Message {
 	var cls *Message
@@ -188,7 +187,7 @@ func NewMessageFromMultipart(UriStringVar string, MultipartVar *Multipart) *Mess
 
 var xNewMessageFromUri func(string, *glib.Uri) uintptr
 
-// Creates a new empty #SoupMessage, which will connect to @uri.
+// Creates a new empty [class@Message], which will connect to @uri.
 func NewMessageFromUri(MethodVar string, UriVar *glib.Uri) *Message {
 	var cls *Message
 
@@ -204,7 +203,7 @@ func NewMessageFromUri(MethodVar string, UriVar *glib.Uri) *Message {
 
 var xNewMessageOptionsPing func(*glib.Uri) uintptr
 
-// Creates a new #SoupMessage to send `OPTIONS *` to a server. The path of
+// Creates a new [class@Message] to send `OPTIONS *` to a server. The path of
 // @base_uri will be ignored.
 func NewMessageOptionsPing(BaseUriVar *glib.Uri) *Message {
 	var cls *Message
@@ -593,7 +592,7 @@ func (x *Message) SetPriority(PriorityVar MessagePriority) {
 
 var xMessageSetRequestBody func(uintptr, string, uintptr, int)
 
-// Set the request body of a #SoupMessage.
+// Set the request body of a [class@Message].
 //
 // If @content_type is %NULL and @stream is not %NULL the Content-Type header will
 // not be changed if present.
@@ -605,7 +604,7 @@ func (x *Message) SetRequestBody(ContentTypeVar string, StreamVar *gio.InputStre
 
 var xMessageSetRequestBodyFromBytes func(uintptr, string, *glib.Bytes)
 
-// Set the request body of a #SoupMessage from [struct@GLib.Bytes].
+// Set the request body of a [class@Message] from [struct@GLib.Bytes].
 //
 // If @content_type is %NULL and @bytes is not %NULL the Content-Type header will
 // not be changed if present.
@@ -698,7 +697,7 @@ func (x *Message) GetPropertyFirstParty() uintptr {
 // SetPropertyIsOptionsPing sets the "is-options-ping" property.
 // Whether the message is an OPTIONS ping.
 //
-// The #SoupMessage is intended to be used to send
+// The [class@Message] is intended to be used to send
 // `OPTIONS *` to a server. When set to %TRUE, the
 // path of [property@Message:uri] will be ignored and
 // [property@Message:method] set to %SOUP_METHOD_OPTIONS.
@@ -712,7 +711,7 @@ func (x *Message) SetPropertyIsOptionsPing(value bool) {
 // GetPropertyIsOptionsPing gets the "is-options-ping" property.
 // Whether the message is an OPTIONS ping.
 //
-// The #SoupMessage is intended to be used to send
+// The [class@Message] is intended to be used to send
 // `OPTIONS *` to a server. When set to %TRUE, the
 // path of [property@Message:uri] will be ignored and
 // [property@Message:method] set to %SOUP_METHOD_OPTIONS.

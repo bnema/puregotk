@@ -56,7 +56,7 @@ func (x *SwitchRowClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwSwitchRow` uses the `GTK_ACCESSIBLE_ROLE_SWITCH` role.
+// `AdwSwitchRow` uses the [enum@Gtk.AccessibleRole.switch] role.
 type SwitchRow struct {
 	ActionRow
 }
@@ -144,6 +144,18 @@ func (x *SwitchRow) GetPropertyActive() bool {
 // does not interrupts the user's current screen reader output.
 func (x *SwitchRow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *SwitchRow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

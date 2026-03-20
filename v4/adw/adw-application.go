@@ -36,6 +36,10 @@ func (x *ApplicationClass) GoPointer() uintptr {
 //
 // ## Automatic Resources
 //
+// `AdwApplication` will automatically load certain resources located in the
+// application's resource base path (see
+// [method@Gio.Application.set_resource_base_path], if they're present.
+//
 // ### Shortcuts Dialog
 //
 // If there's a resource located at `shortcuts-dialog.ui` which defines an
@@ -45,27 +49,25 @@ func (x *ApplicationClass) GoPointer() uintptr {
 //
 // ### Stylesheet
 //
-// `AdwApplication` will automatically load stylesheets located in the
-// application's resource base path (see
-// [method@Gio.Application.set_resource_base_path], if they're present.
+// If there's a resource located at `style.css`, `AdwApplication` will load
+// styles from it. This can be used to add custom styles to the application.
 //
-// They can be used to add custom styles to the application, as follows:
+// #### Additional styles (deprecated)
 //
-// - `style.css` contains styles that are always present.
+// `AdwApplication` will also load the following stylesheets conditionally:
 //
-// - `style-dark.css` contains styles only used when
-// [property@StyleManager:dark] is `TRUE`.
+// - `style-dark.css` when [property@StyleManager:dark] is `TRUE`.
 //
-//   - `style-hc.css` contains styles used when the system high contrast
-//     preference is enabled.
+// - `style-hc.css` when the system high contrast preference is enabled.
 //
-//   - `style-hc-dark.css` contains styles used when the system high contrast
-//     preference is enabled and [property@StyleManager:dark] is `TRUE`.
+//   - `style-hc-dark.css` when the system high contrast preference is enabled and
+//     [property@StyleManager:dark] is `TRUE`.
 //
-// :::note
+// :::warning
 //
-//	`style.css` can contain styles for dark and high contrast appearance as
-//	well, using media queries:
+//	These resources are deprecated since 1.9.
+//
+//	Use `style.css` with the following media queries instead:
 //
 //	- `prefers-color-scheme: dark` for styles used only for dark appearance.
 //	- `prefers-contrast: more` for styles used only when the system high

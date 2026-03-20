@@ -50,23 +50,6 @@ func (x *ParseLocation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The shadow parameters in a shadow node.
-type Shadow struct {
-	_ structs.HostLayout
-
-	Color uintptr
-
-	Dx float32
-
-	Dy float32
-
-	Radius float32
-}
-
-func (x *Shadow) GoPointer() uintptr {
-	return uintptr(unsafe.Pointer(x))
-}
-
 var xSerializationErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gsk.RenderNode] errors.
@@ -178,6 +161,18 @@ var xRenderNodeGetBounds func(uintptr, *graphene.Rect)
 // The node will not draw outside of its boundaries.
 func (x *RenderNode) GetBounds(BoundsVar *graphene.Rect) {
 	xRenderNodeGetBounds(x.GoPointer(), BoundsVar)
+}
+
+var xRenderNodeGetChildren func(uintptr, *uint) uintptr
+
+// Gets a list of all children nodes of the rendernode.
+//
+// Keep in mind that for various rendernodes, their children have different
+// semantics, like the mask vs the source of a mask node. If you care about
+// thse semantics, don't use this function, use the specific getters instead.
+func (x *RenderNode) GetChildren(NChildrenVar *uint) uintptr {
+	cret := xRenderNodeGetChildren(x.GoPointer(), NChildrenVar)
+	return cret
 }
 
 var xRenderNodeGetNodeType func(uintptr) RenderNodeType
@@ -315,6 +310,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xRenderNodeDraw, libs, "gsk_render_node_draw")
 	core.PuregoSafeRegister(&xRenderNodeGetBounds, libs, "gsk_render_node_get_bounds")
+	core.PuregoSafeRegister(&xRenderNodeGetChildren, libs, "gsk_render_node_get_children")
 	core.PuregoSafeRegister(&xRenderNodeGetNodeType, libs, "gsk_render_node_get_node_type")
 	core.PuregoSafeRegister(&xRenderNodeGetOpaqueRect, libs, "gsk_render_node_get_opaque_rect")
 	core.PuregoSafeRegister(&xRenderNodeRef, libs, "gsk_render_node_ref")

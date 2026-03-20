@@ -36,6 +36,11 @@ func (x *SnapshotClass) GoPointer() uintptr {
 // The typical way to obtain a `GtkSnapshot` object is as an argument to
 // the [vfunc@Gtk.Widget.snapshot] vfunc. If you need to create your own
 // `GtkSnapshot`, use [ctor@Gtk.Snapshot.new].
+//
+// Note that `GtkSnapshot` applies some optimizations, so the node
+// it produces may not match the API calls 1:1. For example, it will
+// omit clip nodes if the child node is entirely contained within the
+// clip rectangle.
 type Snapshot struct {
 	gdk.Snapshot
 }
@@ -159,6 +164,14 @@ var xSnapshotAppendOutsetShadow func(uintptr, *gsk.RoundedRect, *gdk.RGBA, float
 // Appends an outset shadow node around the box given by @outline.
 func (x *Snapshot) AppendOutsetShadow(OutlineVar *gsk.RoundedRect, ColorVar *gdk.RGBA, DxVar float32, DyVar float32, SpreadVar float32, BlurRadiusVar float32) {
 	xSnapshotAppendOutsetShadow(x.GoPointer(), OutlineVar, ColorVar, DxVar, DyVar, SpreadVar, BlurRadiusVar)
+}
+
+var xSnapshotAppendPaste func(uintptr, *graphene.Rect, uint)
+
+// Creates a new render node that pastes the contents
+// copied by a previous call to [method@Gtk.Snapshot.push_copy]
+func (x *Snapshot) AppendPaste(BoundsVar *graphene.Rect, NthVar uint) {
+	xSnapshotAppendPaste(x.GoPointer(), BoundsVar, NthVar)
 }
 
 var xSnapshotAppendRadialGradient func(uintptr, *graphene.Rect, *graphene.Point, float32, float32, float32, float32, []gsk.ColorStop, uint)
@@ -346,6 +359,29 @@ func (x *Snapshot) PushComponentTransfer(RedVar *gsk.ComponentTransfer, GreenVar
 	xSnapshotPushComponentTransfer(x.GoPointer(), RedVar, GreenVar, BlueVar, AlphaVar)
 }
 
+var xSnapshotPushComposite func(uintptr, gsk.PorterDuff)
+
+// Until the first call to [method@Gtk.Snapshot.pop], the
+// mask image for the mask operation will be recorded.
+//
+// After that call, the child image will be recorded until
+// the second call to [method@Gtk.Snapshot.pop].
+//
+// Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
+func (x *Snapshot) PushComposite(OpVar gsk.PorterDuff) {
+	xSnapshotPushComposite(x.GoPointer(), OpVar)
+}
+
+var xSnapshotPushCopy func(uintptr)
+
+// Stores the current rendering state for later pasting via
+// [method@Gtk.Snapshot.append_paste].
+//
+// Pasting is possible until the matching call to [method@Gtk.Snapshot.pop].
+func (x *Snapshot) PushCopy() {
+	xSnapshotPushCopy(x.GoPointer())
+}
+
 var xSnapshotPushCrossFade func(uintptr, float64)
 
 // Snapshots a cross-fade operation between two images with the
@@ -424,6 +460,22 @@ var xSnapshotPushGlShader func(uintptr, uintptr, *graphene.Rect, *glib.Bytes)
 // For details on how to write shaders, see [class@Gsk.GLShader].
 func (x *Snapshot) PushGlShader(ShaderVar *gsk.GLShader, BoundsVar *graphene.Rect, TakeArgsVar *glib.Bytes) {
 	xSnapshotPushGlShader(x.GoPointer(), ShaderVar.GoPointer(), BoundsVar, TakeArgsVar)
+}
+
+var xSnapshotPushIsolation func(uintptr, gsk.Isolation)
+
+// Isolates the following drawing operations from previous ones.
+//
+// You can express "everything but these flags" in a forward compatible
+// way by using bit math:
+// `GSK_ISOLATION_ALL &amp; ~(GSK_ISOLATION_BACKGROUND | GSK_ISOLATION_COPY_PASTE)`
+// will isolate everything but background and copy/paste.
+//
+// For what isolation features exist, see [flags@Gsk.Isolation].
+//
+// Content is isolated until the next call to [method@Gtk.Snapshot.pop].
+func (x *Snapshot) PushIsolation(FeaturesVar gsk.Isolation) {
+	xSnapshotPushIsolation(x.GoPointer(), FeaturesVar)
 }
 
 var xSnapshotPushMask func(uintptr, gsk.MaskMode)
@@ -710,6 +762,7 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotAppendLinearGradient, libs, "gtk_snapshot_append_linear_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendNode, libs, "gtk_snapshot_append_node")
 	core.PuregoSafeRegister(&xSnapshotAppendOutsetShadow, libs, "gtk_snapshot_append_outset_shadow")
+	core.PuregoSafeRegister(&xSnapshotAppendPaste, libs, "gtk_snapshot_append_paste")
 	core.PuregoSafeRegister(&xSnapshotAppendRadialGradient, libs, "gtk_snapshot_append_radial_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingLinearGradient, libs, "gtk_snapshot_append_repeating_linear_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingRadialGradient, libs, "gtk_snapshot_append_repeating_radial_gradient")
@@ -726,10 +779,13 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotPushClip, libs, "gtk_snapshot_push_clip")
 	core.PuregoSafeRegister(&xSnapshotPushColorMatrix, libs, "gtk_snapshot_push_color_matrix")
 	core.PuregoSafeRegister(&xSnapshotPushComponentTransfer, libs, "gtk_snapshot_push_component_transfer")
+	core.PuregoSafeRegister(&xSnapshotPushComposite, libs, "gtk_snapshot_push_composite")
+	core.PuregoSafeRegister(&xSnapshotPushCopy, libs, "gtk_snapshot_push_copy")
 	core.PuregoSafeRegister(&xSnapshotPushCrossFade, libs, "gtk_snapshot_push_cross_fade")
 	core.PuregoSafeRegister(&xSnapshotPushDebug, libs, "gtk_snapshot_push_debug")
 	core.PuregoSafeRegister(&xSnapshotPushFill, libs, "gtk_snapshot_push_fill")
 	core.PuregoSafeRegister(&xSnapshotPushGlShader, libs, "gtk_snapshot_push_gl_shader")
+	core.PuregoSafeRegister(&xSnapshotPushIsolation, libs, "gtk_snapshot_push_isolation")
 	core.PuregoSafeRegister(&xSnapshotPushMask, libs, "gtk_snapshot_push_mask")
 	core.PuregoSafeRegister(&xSnapshotPushOpacity, libs, "gtk_snapshot_push_opacity")
 	core.PuregoSafeRegister(&xSnapshotPushRepeat, libs, "gtk_snapshot_push_repeat")

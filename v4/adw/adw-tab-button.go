@@ -54,7 +54,7 @@ func (x *TabButtonClass) GoPointer() uintptr {
 //
 // # Accessibility
 //
-// `AdwTabButton` uses the `GTK_ACCESSIBLE_ROLE_BUTTON` role.
+// `AdwTabButton` uses the [enum@Gtk.AccessibleRole.button] role.
 type TabButton struct {
 	gtk.Widget
 }
@@ -175,6 +175,18 @@ func (x *TabButton) ConnectClicked(cb *func(TabButton)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *TabButton) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabButton) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

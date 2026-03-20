@@ -14,11 +14,11 @@ const (
 	// Like jsc_get_micro_version(), but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int32 = 3
+	MICRO_VERSION int32 = 93
 	// Like jsc_get_minor_version(), but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MINOR_VERSION int32 = 50
+	MINOR_VERSION int32 = 51
 )
 
 var xGetMajorVersion func() uint32

@@ -78,13 +78,16 @@ func (x *ViewSwitcherBarClass) GoPointer() uintptr {
 // ```
 //
 // It's recommended to set [property@ViewSwitcher:policy] to
-// `ADW_VIEW_SWITCHER_POLICY_WIDE` in this case.
+// [enum@Adw.ViewSwitcherPolicy.wide] in this case.
 //
 // You may have to adjust the breakpoint condition for your specific pages.
 //
 // ## CSS nodes
 //
 // `AdwViewSwitcherBar` has a single CSS node with name` viewswitcherbar`.
+//
+// See also: [class@ViewSwitcher], [class@InlineViewSwitcher],
+// [class@ViewSwitcherSidebar].
 type ViewSwitcherBar struct {
 	gtk.Widget
 }
@@ -196,6 +199,18 @@ func (x *ViewSwitcherBar) GetPropertyReveal() bool {
 // does not interrupts the user's current screen reader output.
 func (x *ViewSwitcherBar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ViewSwitcherBar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

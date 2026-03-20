@@ -136,7 +136,7 @@ const (
 //
 // ## Accessibility
 //
-// `AdwHeaderBar` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwHeaderBar` uses the [enum@Gtk.AccessibleRole.group] role.
 type HeaderBar struct {
 	gtk.Widget
 }
@@ -514,6 +514,18 @@ func (x *HeaderBar) GetPropertyShowTitle() bool {
 // does not interrupts the user's current screen reader output.
 func (x *HeaderBar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *HeaderBar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

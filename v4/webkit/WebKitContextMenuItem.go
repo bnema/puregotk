@@ -163,6 +163,14 @@ func (x *ContextMenuItem) GetGaction() *gio.ActionBase {
 	return cls
 }
 
+var xContextMenuItemGetGactionTarget func(uintptr) *glib.Variant
+
+// Gets the target #GVariant associated with @item.
+func (x *ContextMenuItem) GetGactionTarget() *glib.Variant {
+	cret := xContextMenuItemGetGactionTarget(x.GoPointer())
+	return cret
+}
+
 var xContextMenuItemGetStockAction func(uintptr) ContextMenuAction
 
 // Gets the #WebKitContextMenuAction of @item.
@@ -191,6 +199,14 @@ func (x *ContextMenuItem) GetSubmenu() *ContextMenu {
 	cls = &ContextMenu{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xContextMenuItemGetTitle func(uintptr) string
+
+// Gets the title of @item.
+func (x *ContextMenuItem) GetTitle() string {
+	cret := xContextMenuItemGetTitle(x.GoPointer())
+	return cret
 }
 
 var xContextMenuItemIsSeparator func(uintptr) bool
@@ -243,8 +259,10 @@ func init() {
 	core.PuregoSafeRegister(&xNewContextMenuItemWithSubmenu, libs, "webkit_context_menu_item_new_with_submenu")
 
 	core.PuregoSafeRegister(&xContextMenuItemGetGaction, libs, "webkit_context_menu_item_get_gaction")
+	core.PuregoSafeRegister(&xContextMenuItemGetGactionTarget, libs, "webkit_context_menu_item_get_gaction_target")
 	core.PuregoSafeRegister(&xContextMenuItemGetStockAction, libs, "webkit_context_menu_item_get_stock_action")
 	core.PuregoSafeRegister(&xContextMenuItemGetSubmenu, libs, "webkit_context_menu_item_get_submenu")
+	core.PuregoSafeRegister(&xContextMenuItemGetTitle, libs, "webkit_context_menu_item_get_title")
 	core.PuregoSafeRegister(&xContextMenuItemIsSeparator, libs, "webkit_context_menu_item_is_separator")
 	core.PuregoSafeRegister(&xContextMenuItemSetSubmenu, libs, "webkit_context_menu_item_set_submenu")
 

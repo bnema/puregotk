@@ -128,6 +128,33 @@ const (
 // While `GtkApplication` works fine with plain [class@Gtk.Window]s,
 // it is recommended to use it together with [class@Gtk.ApplicationWindow].
 //
+// ## Initialization
+//
+// A typical `GtkApplication` will create a window in its
+// [signal@GIO.Application::activate], [signal@GIO.Application::open]
+// or [signal@GIO.Application::command-line] handlers. Note that all
+// of these signals may be emitted multiple times, so handlers must
+// be careful to take existing windows into account.
+//
+// A typical ::activate handler should look like this:
+//
+// ```
+// static void
+// activate (GApplication *gapp)
+//
+//	{
+//	  GtkApplication *app = GTK_APPLICATION (gapp);
+//	  GtkWindow *window;
+//
+//	  window = gtk_application_get_active_window (app);
+//	  if (!window)
+//	    window = create_window (app);
+//
+//	  gtk_window_present (window);
+//	}
+//
+// ```
+//
 // ## Automatic resources
 //
 // `GtkApplication` will automatically load menus from the `GtkBuilder`
@@ -163,13 +190,7 @@ const (
 // default window icon. Use [func@Gtk.Window.set_default_icon_name] or
 // [property@Gtk.Window:icon-name] to override that behavior.
 //
-// ## A simple application
-//
-// [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/main/examples/bp/bloatpad.c)
-// is available in the GTK source code repository
-//
-// `GtkApplication` registers with a session manager if possible and
-// offers various functionality related to the session life-cycle.
+// # Inhibiting
 //
 // An application can block various ways to end the session with
 // the [method@Gtk.Application.inhibit] function. Typical use cases for
@@ -178,6 +199,11 @@ const (
 // manager may not honor the inhibitor, but it can be expected to
 // inform the user about the negative consequences of ending the
 // session while inhibitors are present.
+//
+// ## A simple application
+//
+// [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/main/examples/bp/bloatpad.c)
+// is available in the GTK source code repository
 //
 // ## See Also
 //

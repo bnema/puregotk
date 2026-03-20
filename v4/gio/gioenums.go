@@ -632,6 +632,25 @@ const (
 	GFileQueryInfoNofollowSymlinksValue FileQueryInfoFlags = 1
 )
 
+// Flags for use with g_io_module_scope_new().
+type IOModuleScopeFlags int
+
+var xIOModuleScopeFlagsGLibType func() types.GType
+
+func IOModuleScopeFlagsGLibType() types.GType {
+	return xIOModuleScopeFlagsGLibType()
+}
+
+const (
+
+	// No module scan flags
+	GIoModuleScopeNoneValue IOModuleScopeFlags = 0
+	// When using this scope to load or
+	//     scan modules, automatically block a modules which has the same base
+	//     basename as previously loaded module.
+	GIoModuleScopeBlockDuplicatesValue IOModuleScopeFlags = 1
+)
+
 // GIOStreamSpliceFlags determine how streams should be spliced.
 type IOStreamSpliceFlags int
 
@@ -888,6 +907,43 @@ const (
 	// the combination of all of the above
 	//   flags
 	GTlsCertificateValidateAllValue TlsCertificateFlags = 127
+)
+
+// Flags for g_tls_interaction_request_certificate(),
+// g_tls_interaction_request_certificate_async(), and
+// g_tls_interaction_invoke_request_certificate().
+type TlsCertificateRequestFlags int
+
+var xTlsCertificateRequestFlagsGLibType func() types.GType
+
+func TlsCertificateRequestFlagsGLibType() types.GType {
+	return xTlsCertificateRequestFlagsGLibType()
+}
+
+const (
+
+	// No flags
+	GTlsCertificateRequestNoneValue TlsCertificateRequestFlags = 0
+)
+
+// Flags for g_tls_database_lookup_certificate_for_handle(),
+// g_tls_database_lookup_certificate_issuer(),
+// and g_tls_database_lookup_certificates_issued_by().
+type TlsDatabaseLookupFlags int
+
+var xTlsDatabaseLookupFlagsGLibType func() types.GType
+
+func TlsDatabaseLookupFlagsGLibType() types.GType {
+	return xTlsDatabaseLookupFlagsGLibType()
+}
+
+const (
+
+	// No lookup flags
+	GTlsDatabaseLookupNoneValue TlsDatabaseLookupFlags = 0
+	// Restrict lookup to certificates that have
+	//     a private key.
+	GTlsDatabaseLookupKeypairValue TlsDatabaseLookupFlags = 1
 )
 
 // Flags for g_tls_database_verify_chain().
@@ -1266,6 +1322,30 @@ const (
 	GDriveStartStopTypePasswordValue DriveStartStopType = 4
 )
 
+// Possible values of Explicit Congestion Notification code points.
+//
+// These appear in `TOS` (IPv4) or `TCLASS` (IPv6) packet headers and
+// are described in [RFC 3168](https://www.rfc-editor.org/rfc/rfc3168#section-5).
+type EcnCodePoint int
+
+var xEcnCodePointGLibType func() types.GType
+
+func EcnCodePointGLibType() types.GType {
+	return xEcnCodePointGLibType()
+}
+
+const (
+
+	// Not ECN-capable transport
+	GEcnNoEcnValue EcnCodePoint = 0
+	// ECN Capable Transport(1)
+	GEcnEct1Value EcnCodePoint = 1
+	// ECN Capable Transport(0)
+	GEcnEct0Value EcnCodePoint = 2
+	// Congestion Experienced
+	GEcnEctCeValue EcnCodePoint = 3
+)
+
 // GEmblemOrigin is used to add information about the origin of the emblem
 // to #GEmblem.
 type EmblemOrigin int
@@ -1584,25 +1664,6 @@ const (
 	GIoErrorNoSuchDeviceValue IOErrorEnum = 47
 	// Destination address unset. Since 2.80
 	GIoErrorDestinationUnsetValue IOErrorEnum = 48
-)
-
-// Flags for use with g_io_module_scope_new().
-type IOModuleScopeFlags int
-
-var xIOModuleScopeFlagsGLibType func() types.GType
-
-func IOModuleScopeFlagsGLibType() types.GType {
-	return xIOModuleScopeFlagsGLibType()
-}
-
-const (
-
-	// No module scan flags
-	GIoModuleScopeNoneValue IOModuleScopeFlags = 0
-	// When using this scope to load or
-	//     scan modules, automatically block a modules which has the same base
-	//     basename as previously loaded module.
-	GIoModuleScopeBlockDuplicatesValue IOModuleScopeFlags = 1
 )
 
 // Memory availability warning levels.
@@ -2021,23 +2082,6 @@ const (
 	GTlsAuthenticationRequiredValue TlsAuthenticationMode = 2
 )
 
-// Flags for g_tls_interaction_request_certificate(),
-// g_tls_interaction_request_certificate_async(), and
-// g_tls_interaction_invoke_request_certificate().
-type TlsCertificateRequestFlags int
-
-var xTlsCertificateRequestFlagsGLibType func() types.GType
-
-func TlsCertificateRequestFlagsGLibType() types.GType {
-	return xTlsCertificateRequestFlagsGLibType()
-}
-
-const (
-
-	// No flags
-	GTlsCertificateRequestNoneValue TlsCertificateRequestFlags = 0
-)
-
 // An error code used with %G_TLS_CHANNEL_BINDING_ERROR in a #GError to
 // indicate a TLS channel binding retrieval error.
 type TlsChannelBindingError int
@@ -2096,26 +2140,6 @@ const (
 	// [`tls-exporter`](https://www.rfc-editor.org/rfc/rfc9266.html) binding
 	//    type. Since: 2.74
 	GTlsChannelBindingTlsExporterValue TlsChannelBindingType = 2
-)
-
-// Flags for g_tls_database_lookup_certificate_for_handle(),
-// g_tls_database_lookup_certificate_issuer(),
-// and g_tls_database_lookup_certificates_issued_by().
-type TlsDatabaseLookupFlags int
-
-var xTlsDatabaseLookupFlagsGLibType func() types.GType
-
-func TlsDatabaseLookupFlagsGLibType() types.GType {
-	return xTlsDatabaseLookupFlagsGLibType()
-}
-
-const (
-
-	// No lookup flags
-	GTlsDatabaseLookupNoneValue TlsDatabaseLookupFlags = 0
-	// Restrict lookup to certificates that have
-	//     a private key.
-	GTlsDatabaseLookupKeypairValue TlsDatabaseLookupFlags = 1
 )
 
 // An error code used with %G_TLS_ERROR in a #GError returned from a

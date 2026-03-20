@@ -53,8 +53,6 @@ func (x *NavigationSplitViewClass) GoPointer() uintptr {
 // ```xml
 // &lt;object class="AdwWindow"&gt;
 //
-//	&lt;property name="width-request"&gt;280&lt;/property&gt;
-//	&lt;property name="height-request"&gt;200&lt;/property&gt;
 //	&lt;property name="default-width"&gt;800&lt;/property&gt;
 //	&lt;property name="default-height"&gt;800&lt;/property&gt;
 //	&lt;child&gt;
@@ -165,7 +163,7 @@ func (x *NavigationSplitViewClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwNavigationSplitView` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwNavigationSplitView` uses the [enum@Gtk.AccessibleRole.group] role.
 type NavigationSplitView struct {
 	gtk.Widget
 }
@@ -359,11 +357,11 @@ var xNavigationSplitViewSetSidebarPosition func(uintptr, gtk.PackType)
 
 // Sets the sidebar position for @self.
 //
-// If set to `GTK_PACK_START`, the sidebar is displayed before the content,
-// and the sidebar will be the root page when collapsed.
+// If set to [enum@Gtk.PackType.start], the sidebar is displayed before the
+// content, and the sidebar will be the root page when collapsed.
 //
-// If set to `GTK_PACK_END`, the sidebar is displayed after the content,
-// and the content will be the root page.
+// If set to [enum@Gtk.PackType.end], the sidebar is displayed after the
+// content, and the content will be the root page.
 func (x *NavigationSplitView) SetSidebarPosition(PositionVar gtk.PackType) {
 	xNavigationSplitViewSetSidebarPosition(x.GoPointer(), PositionVar)
 }
@@ -563,6 +561,18 @@ func (x *NavigationSplitView) GetPropertySidebarWidthFraction() float64 {
 // does not interrupts the user's current screen reader output.
 func (x *NavigationSplitView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *NavigationSplitView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

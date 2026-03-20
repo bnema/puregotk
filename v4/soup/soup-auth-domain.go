@@ -12,12 +12,12 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// The prototype for a #SoupAuthDomain filter.
+// The prototype for a [class@AuthDomain] filter.
 //
 // See [method@AuthDomain.set_filter] for details.
 type AuthDomainFilter func(uintptr, uintptr, uintptr) bool
 
-// The prototype for a #SoupAuthDomain generic authentication callback.
+// The prototype for a [class@AuthDomain] generic authentication callback.
 //
 // The callback should look up the user's password, call
 // [method@AuthDomain.check_password], and use the return value from that method
@@ -124,9 +124,9 @@ func (x *AuthDomainClass) GetCheckPassword() func(*AuthDomain, *ServerMessage, s
 
 // Server-side authentication.
 //
-// A #SoupAuthDomain manages authentication for all or part of a
+// A [class@AuthDomain] manages authentication for all or part of a
 // [class@Server]. To make a server require authentication, first create
-// an appropriate subclass of #SoupAuthDomain, and then add it to the
+// an appropriate subclass of [class@AuthDomain], and then add it to the
 // server with [method@Server.add_auth_domain].
 //
 // In order for an auth domain to have any effect, you must add one or more

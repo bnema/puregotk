@@ -866,7 +866,7 @@ func (c *MenuModel) SetGoPointer(ptr uintptr) {
 //
 // As an example, if the menu contains items a, b, c, d (in that
 // order) and the signal (2, 1, 3) occurs then the new composition of
-// the menu will be a, b, _, _, _, d (with each _ representing some
+// the menu will be a, b, \_, \_, \_, d (with each _ representing some
 // new item).
 //
 // Signal handlers may query the model (particularly the added items)

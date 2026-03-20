@@ -49,7 +49,8 @@ func (x *ViewStackPagesClass) GoPointer() uintptr {
 // It is typically used to hold an application's main views.
 //
 // It doesn't provide a way to transition between pages.
-// Instead, a separate widget such as [class@ViewSwitcher] can be used with
+// Instead, a separate widget such as [class@ViewSwitcher],
+// [class@InlineViewSwitcher] or [class@ViewSwitcherSidebar] can be used with
 // `AdwViewStack` to provide this functionality.
 //
 // `AdwViewStack` pages can have a title, an icon, an attention request, and a
@@ -58,6 +59,11 @@ func (x *ViewStackPagesClass) GoPointer() uintptr {
 // [property@ViewStackPage:icon-name],
 // [property@ViewStackPage:needs-attention], and
 // [property@ViewStackPage:badge-number] properties.
+//
+// `AdwViewStack` pages can also be grouped into sections, using the
+// [property@ViewStackPage:starts-section] and
+// [property@ViewStackPage:section-title] properties. Currently, only
+// [class@ViewSwitcherSidebar] displays groups.
 //
 // Unlike [class@Gtk.Stack], transitions between views can only be animated via
 // a crossfade and size changes are always interpolated. Animations are disabled
@@ -99,8 +105,8 @@ func (x *ViewStackPagesClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwViewStack` uses the `GTK_ACCESSIBLE_ROLE_TAB_PANEL` for the stack pages
-// which are the accessible parent objects of the child widgets.
+// `AdwViewStack` uses the [enum@Gtk.AccessibleRole.tab-panel] for the stack
+// pages which are the accessible parent objects of the child widgets.
 type ViewStack struct {
 	gtk.Widget
 }
@@ -268,9 +274,13 @@ var xViewStackGetPages func(uintptr) uintptr
 
 // Returns a [iface@Gio.ListModel] that contains the pages of the stack.
 //
-// This can be used to keep an up-to-date view. The model also implements
-// [iface@Gtk.SelectionModel] and can be used to track and change the visible
-// page.
+// This can be used to keep an up-to-date view.
+//
+// The model implements [iface@Gtk.SectionModel] and creates sections based on
+// [property@ViewStackPage:starts-section] values.
+//
+// The model also implements [iface@Gtk.SelectionModel] and can be used to track
+// and change the visible page.
 func (x *ViewStack) GetPages() *gtk.SelectionModelBase {
 	var cls *gtk.SelectionModelBase
 
@@ -561,6 +571,18 @@ func (x *ViewStack) GetPropertyVisibleChildName() string {
 // does not interrupts the user's current screen reader output.
 func (x *ViewStack) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ViewStack) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -864,6 +886,22 @@ func (x *ViewStackPage) GetNeedsAttention() bool {
 	return cret
 }
 
+var xViewStackPageGetSectionTitle func(uintptr) string
+
+// Gets the section title for @self.
+func (x *ViewStackPage) GetSectionTitle() string {
+	cret := xViewStackPageGetSectionTitle(x.GoPointer())
+	return cret
+}
+
+var xViewStackPageGetStartsSection func(uintptr) bool
+
+// Gets whether @self starts a section.
+func (x *ViewStackPage) GetStartsSection() bool {
+	cret := xViewStackPageGetStartsSection(x.GoPointer())
+	return cret
+}
+
 var xViewStackPageGetTitle func(uintptr) string
 
 // Gets the page title.
@@ -926,6 +964,28 @@ func (x *ViewStackPage) SetNeedsAttention(NeedsAttentionVar bool) {
 	xViewStackPageSetNeedsAttention(x.GoPointer(), NeedsAttentionVar)
 }
 
+var xViewStackPageSetSectionTitle func(uintptr, string)
+
+// Sets the section title for @self.
+//
+// Does nothing unless [property@ViewStackPage:starts-section] is set.
+func (x *ViewStackPage) SetSectionTitle(SectionTitleVar string) {
+	xViewStackPageSetSectionTitle(x.GoPointer(), SectionTitleVar)
+}
+
+var xViewStackPageSetStartsSection func(uintptr, bool)
+
+// Sets whether @self starts a section.
+//
+// If set to `TRUE`, [property@ViewStack:pages] will have a section starting
+// from this page.
+//
+// If [property@ViewStackPage:section-title] is set, it should be used as a
+// title for the section.
+func (x *ViewStackPage) SetStartsSection(StartsSectionVar bool) {
+	xViewStackPageSetStartsSection(x.GoPointer(), StartsSectionVar)
+}
+
 var xViewStackPageSetTitle func(uintptr, string)
 
 // Sets the page title.
@@ -942,7 +1002,7 @@ func (x *ViewStackPage) SetUseUnderline(UseUnderlineVar bool) {
 
 var xViewStackPageSetVisible func(uintptr, bool)
 
-// Sets whether @page is visible in its `AdwViewStack`.
+// Sets whether @self is visible in its `AdwViewStack`.
 //
 // This is independent from the [property@Gtk.Widget:visible] property of
 // [property@ViewStackPage:child].
@@ -1043,6 +1103,56 @@ func (x *ViewStackPage) GetPropertyNeedsAttention() bool {
 	return v.GetBoolean()
 }
 
+// SetPropertySectionTitle sets the "section-title" property.
+// Section title for this page.
+//
+// Does nothing unless [property@ViewStackPage:starts-section] is set.
+func (x *ViewStackPage) SetPropertySectionTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("section-title", &v)
+}
+
+// GetPropertySectionTitle gets the "section-title" property.
+// Section title for this page.
+//
+// Does nothing unless [property@ViewStackPage:starts-section] is set.
+func (x *ViewStackPage) GetPropertySectionTitle() string {
+	var v gobject.Value
+	x.GetProperty("section-title", &v)
+	return v.GetString()
+}
+
+// SetPropertyStartsSection sets the "starts-section" property.
+// Whether this page starts a section.
+//
+// If set to `TRUE`, [property@ViewStack:pages] will have a section starting
+// from this page.
+//
+// If [property@ViewStackPage:section-title] is set, it should be used as a
+// title for the section.
+func (x *ViewStackPage) SetPropertyStartsSection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("starts-section", &v)
+}
+
+// GetPropertyStartsSection gets the "starts-section" property.
+// Whether this page starts a section.
+//
+// If set to `TRUE`, [property@ViewStack:pages] will have a section starting
+// from this page.
+//
+// If [property@ViewStackPage:section-title] is set, it should be used as a
+// title for the section.
+func (x *ViewStackPage) GetPropertyStartsSection() bool {
+	var v gobject.Value
+	x.GetProperty("starts-section", &v)
+	return v.GetBoolean()
+}
+
 // SetPropertyTitle sets the "title" property.
 // The title of the child page.
 func (x *ViewStackPage) SetPropertyTitle(value string) {
@@ -1111,6 +1221,18 @@ func (x *ViewStackPage) GetPropertyVisible() bool {
 // does not interrupts the user's current screen reader output.
 func (x *ViewStackPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ViewStackPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1399,6 +1521,14 @@ func (c *ViewStackPages) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *ViewStackPages) GetPropertyNItems() uint32 {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUlong()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -1483,6 +1613,34 @@ func (x *ViewStackPages) GetObject(PositionVar uint32) *gobject.Object {
 // same contents of the model.
 func (x *ViewStackPages) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
+}
+
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *ViewStackPages) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
+	gtk.XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *ViewStackPages) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
+	gtk.XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 
 // Gets the set containing all currently selected items in the model.
@@ -1643,6 +1801,8 @@ func init() {
 	core.PuregoSafeRegister(&xViewStackPageGetIconName, libs, "adw_view_stack_page_get_icon_name")
 	core.PuregoSafeRegister(&xViewStackPageGetName, libs, "adw_view_stack_page_get_name")
 	core.PuregoSafeRegister(&xViewStackPageGetNeedsAttention, libs, "adw_view_stack_page_get_needs_attention")
+	core.PuregoSafeRegister(&xViewStackPageGetSectionTitle, libs, "adw_view_stack_page_get_section_title")
+	core.PuregoSafeRegister(&xViewStackPageGetStartsSection, libs, "adw_view_stack_page_get_starts_section")
 	core.PuregoSafeRegister(&xViewStackPageGetTitle, libs, "adw_view_stack_page_get_title")
 	core.PuregoSafeRegister(&xViewStackPageGetUseUnderline, libs, "adw_view_stack_page_get_use_underline")
 	core.PuregoSafeRegister(&xViewStackPageGetVisible, libs, "adw_view_stack_page_get_visible")
@@ -1650,6 +1810,8 @@ func init() {
 	core.PuregoSafeRegister(&xViewStackPageSetIconName, libs, "adw_view_stack_page_set_icon_name")
 	core.PuregoSafeRegister(&xViewStackPageSetName, libs, "adw_view_stack_page_set_name")
 	core.PuregoSafeRegister(&xViewStackPageSetNeedsAttention, libs, "adw_view_stack_page_set_needs_attention")
+	core.PuregoSafeRegister(&xViewStackPageSetSectionTitle, libs, "adw_view_stack_page_set_section_title")
+	core.PuregoSafeRegister(&xViewStackPageSetStartsSection, libs, "adw_view_stack_page_set_starts_section")
 	core.PuregoSafeRegister(&xViewStackPageSetTitle, libs, "adw_view_stack_page_set_title")
 	core.PuregoSafeRegister(&xViewStackPageSetUseUnderline, libs, "adw_view_stack_page_set_use_underline")
 	core.PuregoSafeRegister(&xViewStackPageSetVisible, libs, "adw_view_stack_page_set_visible")

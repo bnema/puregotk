@@ -12,7 +12,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// The class structure for the #SoupWebsocketExtension.
+// The class structure for the [class@WebsocketExtension].
 type WebsocketExtensionClass struct {
 	_ structs.HostLayout
 
@@ -180,7 +180,7 @@ func (x *WebsocketExtensionClass) GetProcessIncomingMessage() func(*WebsocketExt
 
 // A WebSocket extension
 //
-// #SoupWebsocketExtension is the base class for WebSocket extension objects.
+// [class@WebsocketExtension] is the base class for WebSocket extension objects.
 type WebsocketExtension struct {
 	gobject.Object
 }

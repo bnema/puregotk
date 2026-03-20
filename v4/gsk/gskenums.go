@@ -3,6 +3,35 @@ package gsk
 
 import "codeberg.org/puregotk/puregotk/v4/gobject/types"
 
+// These flags describe the types of isolations possible with a
+// [class@Gsk.IsolationNode].
+//
+// More isolation options may be added in the future.
+type Isolation int
+
+var xIsolationGLibType func() types.GType
+
+func IsolationGLibType() types.GType {
+	return xIsolationGLibType()
+}
+
+const (
+
+	// No isolation is defined.
+	IsolationNoneValue Isolation = 0
+	// If the background should be made available.
+	//   If the background is not available, future operations will be rendered
+	//   to a transparent background and added to the existing background later.
+	IsolationBackgroundValue Isolation = 1
+	// If copies should be available to paste nodes.
+	//   If copies are not available, paste nodes can only paste from copies that
+	//   are made inside the isolated contents.
+	IsolationCopyPasteValue Isolation = 2
+	// Isolate everything. This will include features that
+	//   are added in the future.
+	IsolationAllValue Isolation = -1
+)
+
 // The blend modes available for render nodes.
 //
 // The implementation of each blend mode is deferred to the
@@ -311,6 +340,56 @@ const (
 	PathConicValue PathOperation = 5
 )
 
+// GSK_PORTER_DUFF_SOURCE:
+// GSK_PORTER_DUFF_DEST:
+// GSK_PORTER_DUFF_SOURCE_OVER_DEST:
+// GSK_PORTER_DUFF_DEST_OVER_SOURCE:
+// GSK_PORTER_DUFF_SOURCE_IN_DEST:
+// GSK_PORTER_DUFF_DEST_IN_SOURCE:
+// GSK_PORTER_DUFF_SOURCE_OUT_DEST:
+// GSK_PORTER_DUFF_DEST_OUT_SOURCE:
+// GSK_PORTER_DUFF_SOURCE_ATOP_DEST:
+// GSK_PORTER_DUFF_DEST_ATOP_SOURCE:
+// GSK_PORTER_DUFF_XOR:
+// GSK_PORTER_DUFF_CLEAR:
+// The 12 compositing modes defined by the seminal paper
+// by Thomas Porter and Tom Duff.
+//
+// They are used in SVG, PDF and in Cairo with `cairo_operator_t`.
+type PorterDuff int
+
+var xPorterDuffGLibType func() types.GType
+
+func PorterDuffGLibType() types.GType {
+	return xPorterDuffGLibType()
+}
+
+const (
+	PorterDuffSourceValue PorterDuff = 0
+
+	PorterDuffDestValue PorterDuff = 1
+
+	PorterDuffSourceOverDestValue PorterDuff = 2
+
+	PorterDuffDestOverSourceValue PorterDuff = 3
+
+	PorterDuffSourceInDestValue PorterDuff = 4
+
+	PorterDuffDestInSourceValue PorterDuff = 5
+
+	PorterDuffSourceOutDestValue PorterDuff = 6
+
+	PorterDuffDestOutSourceValue PorterDuff = 7
+
+	PorterDuffSourceAtopDestValue PorterDuff = 8
+
+	PorterDuffDestAtopSourceValue PorterDuff = 9
+
+	PorterDuffXorValue PorterDuff = 10
+
+	PorterDuffClearValue PorterDuff = 11
+)
+
 // The type of a node determines what the node is rendering.
 type RenderNodeType int
 
@@ -386,6 +465,19 @@ const (
 	SubsurfaceNodeValue RenderNodeType = 30
 	// A node that applies some function to each color component.
 	ComponentTransferNodeValue RenderNodeType = 31
+	// A node that copies the rendering canvas to be pasted later.
+	CopyNodeValue RenderNodeType = 32
+	// A node that pastes a previously copied canvas.
+	PasteNodeValue RenderNodeType = 33
+	// A node that combines a child with the background using Porter/Duff
+	// operations.
+	CompositeNodeValue RenderNodeType = 34
+	// A node that isolated content of its child from previous content.
+	IsolationNodeValue RenderNodeType = 35
+	// A node that displaces content according to some mask.
+	DisplacementNodeValue RenderNodeType = 36
+	// A node that combines two child nodes in an arithmetic way.
+	ArithmeticNodeValue RenderNodeType = 37
 )
 
 // The filters used when scaling texture data.

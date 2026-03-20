@@ -124,7 +124,7 @@ var xCacheClear func(uintptr)
 
 // Will remove all entries in the @cache plus all the cache files.
 //
-// This is not thread safe and must be called only from the thread that created the #SoupCache
+// This is not thread safe and must be called only from the thread that created the [class@Cache]
 func (x *Cache) Clear() {
 	xCacheClear(x.GoPointer())
 }
@@ -139,7 +139,7 @@ var xCacheDump func(uintptr)
 // You must call this before exiting if you want your cache data to
 // persist between sessions.
 //
-// This is not thread safe and must be called only from the thread that created the #SoupCache
+// This is not thread safe and must be called only from the thread that created the [class@Cache]
 func (x *Cache) Dump() {
 	xCacheDump(x.GoPointer())
 }
@@ -169,7 +169,7 @@ var xCacheLoad func(uintptr)
 
 // Loads the contents of @cache's index into memory.
 //
-// This is not thread safe and must be called only from the thread that created the #SoupCache
+// This is not thread safe and must be called only from the thread that created the [class@Cache]
 func (x *Cache) Load() {
 	xCacheLoad(x.GoPointer())
 }

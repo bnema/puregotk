@@ -165,8 +165,9 @@ var xBannerSetButtonStyle func(uintptr, BannerButtonStyle)
 
 // Sets the style class to use for the banner button.
 //
-// When set to `ADW_BANNER_BUTTON_DEFAULT`, the button stays grey.
-// When set to `ADW_BANNER_BUTTON_SUGGESTED`, the button follows the [`.suggested-action`](style-classes.html#suggested-action) style
+// When set to [enum@Adw.BannerButtonStyle.default], the button is grey.
+// When set to [enum@Adw.BannerButtonStyle.suggested], the button uses the
+// [`.suggested-action`](style-classes.html#suggested-action) appearance.
 //
 // &lt;picture&gt;
 //
@@ -332,6 +333,18 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *Banner) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Banner) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

@@ -326,7 +326,7 @@ func (x *Value) GetVariant() *glib.Variant {
 var xValueInit func(uintptr, types.GType) *Value
 
 // Initializes @value to store values of the given @type, and sets its value
-// to the default for @type.
+// to the initial value for @type.
 //
 // This must be called before any other methods on a [struct@GObject.Value], so
 // the value knows what type it’s meant to store.
@@ -375,7 +375,7 @@ func (x *Value) PeekPointer() uintptr {
 
 var xValueReset func(uintptr) *Value
 
-// Clears the current value in @value and resets it to the default value
+// Clears the current value in @value and resets it to the initial value
 // (as if the value had just been initialized using
 // [method@GObject.Value.init]).
 func (x *Value) Reset() *Value {

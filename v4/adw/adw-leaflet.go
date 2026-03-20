@@ -466,8 +466,8 @@ var xLeafletSetFoldThresholdPolicy func(uintptr, FoldThresholdPolicy)
 
 // Sets the fold threshold policy for @self.
 //
-// If set to `ADW_FOLD_THRESHOLD_POLICY_MINIMUM`, it will only fold when the
-// children cannot fit anymore. With `ADW_FOLD_THRESHOLD_POLICY_NATURAL`, it
+// If set to [enum@Adw.FoldThresholdPolicy.minimum], it will only fold when the
+// children cannot fit anymore. With [enum@Adw.FoldThresholdPolicy.natural], it
 // will fold as soon as children don't get their natural size.
 //
 // This can be useful if you have a long ellipsizing label and want to let it
@@ -814,6 +814,18 @@ func (x *Leaflet) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDra
 // does not interrupts the user's current screen reader output.
 func (x *Leaflet) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Leaflet) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

@@ -17,12 +17,12 @@ import (
 // Of particular interest to HTTP are `multipart/byte-ranges` and
 // `multipart/form-data`,
 //
-// Although the headers of a #SoupMultipart body part will contain the
+// Although the headers of a [struct@Multipart] body part will contain the
 // full headers from that body part, libsoup does not interpret them
 // according to MIME rules. For example, each body part is assumed to
 // have "binary" Content-Transfer-Encoding, even if its headers
 // explicitly state otherwise. In other words, don't try to use
-// #SoupMultipart for handling real MIME multiparts.
+// [struct@Multipart] for handling real MIME multiparts.
 type Multipart struct {
 	_ structs.HostLayout
 }
@@ -39,7 +39,7 @@ func (x *Multipart) GoPointer() uintptr {
 
 var xNewMultipart func(string) *Multipart
 
-// Creates a new empty #SoupMultipart with a randomly-generated
+// Creates a new empty [struct@Multipart] with a randomly-generated
 // boundary string.
 //
 // Note that @mime_type must be the full MIME type, including "multipart/".
@@ -52,7 +52,7 @@ func NewMultipart(MimeTypeVar string) *Multipart {
 
 var xNewMultipartFromMessage func(*MessageHeaders, *glib.Bytes) *Multipart
 
-// Parses @headers and @body to form a new #SoupMultipart
+// Parses @headers and @body to form a new [struct@Multipart]
 func NewMultipartFromMessage(HeadersVar *MessageHeaders, BodyVar *glib.Bytes) *Multipart {
 	cret := xNewMultipartFromMessage(HeadersVar, BodyVar)
 	return cret

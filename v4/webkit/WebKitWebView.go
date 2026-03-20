@@ -2344,7 +2344,8 @@ func (x *WebView) GetSnapshot(RegionVar SnapshotRegion, OptionsVar SnapshotOptio
 
 var xWebViewGetSnapshotFinish func(uintptr, uintptr, **glib.Error) uintptr
 
-// Finishes an asynchronous operation started with webkit_web_view_get_snapshot().
+// Finishes an asynchronous operation started with webkit_web_view_get_snapshot(), producing
+// an image of the snapshot using the BGRA8888 pixel format.
 func (x *WebView) GetSnapshotFinish(ResultVar gio.AsyncResult) (*gdk.Texture, error) {
 	var cls *gdk.Texture
 	var cerr *glib.Error
@@ -2606,6 +2607,19 @@ func (x *WebView) IsEditable() bool {
 	return cret
 }
 
+var xWebViewIsImmersiveModeEnabled func(uintptr) bool
+
+// Gets whether @web_view is in immersive mode.
+//
+// An immersive session is a mode in which the user is presented with a fully immersive XR experience
+// (such as VR or AR), typically rendered via a headset.
+//
+// Note that if WebXR is disabled or OPENXR is not used, this API always returns %FALSE.
+func (x *WebView) IsImmersiveModeEnabled() bool {
+	cret := xWebViewIsImmersiveModeEnabled(x.GoPointer())
+	return cret
+}
+
 var xWebViewIsLoading func(uintptr) bool
 
 // Gets the value of the #WebKitWebView:is-loading property.
@@ -2631,6 +2645,20 @@ var xWebViewIsPlayingAudio func(uintptr) bool
 func (x *WebView) IsPlayingAudio() bool {
 	cret := xWebViewIsPlayingAudio(x.GoPointer())
 	return cret
+}
+
+var xWebViewLeaveImmersiveMode func(uintptr)
+
+// Requests to leave the immersive mode this #WebKitWebView is in.
+//
+// Users interact with web content to start XR sessions, and can typically
+// end the sessions themselves, but applications might need to end a session on their
+// own based on application or platform logic.
+//
+// Note that if WebXR is disabled, or if it is enabled but the @web_view is not in
+// immersive mode, this API does nothing. See also webkit_web_view_is_immersive_mode_enabled().
+func (x *WebView) LeaveImmersiveMode() {
+	xWebViewLeaveImmersiveMode(x.GoPointer())
 }
 
 var xWebViewLoadAlternateHtml func(uintptr, string, string, string)
@@ -3103,6 +3131,14 @@ func (x *WebView) SetPropertyIsControlledByAutomation(value bool) {
 func (x *WebView) GetPropertyIsControlledByAutomation() bool {
 	var v gobject.Value
 	x.GetProperty("is-controlled-by-automation", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsImmersiveModeEnabled gets the "is-immersive-mode-enabled" property.
+// Whether the #WebKitWebView is in immersive mode.
+func (x *WebView) GetPropertyIsImmersiveModeEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("is-immersive-mode-enabled", &v)
 	return v.GetBoolean()
 }
 
@@ -4094,6 +4130,18 @@ func (x *WebView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnounce
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
 }
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *WebView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
+}
+
 // Retrieves the accessible parent for an accessible object.
 //
 // This function returns `NULL` for top level widgets.
@@ -4413,8 +4461,10 @@ func init() {
 	core.PuregoSafeRegister(&xWebViewGoToBackForwardListItem, libs, "webkit_web_view_go_to_back_forward_list_item")
 	core.PuregoSafeRegister(&xWebViewIsControlledByAutomation, libs, "webkit_web_view_is_controlled_by_automation")
 	core.PuregoSafeRegister(&xWebViewIsEditable, libs, "webkit_web_view_is_editable")
+	core.PuregoSafeRegister(&xWebViewIsImmersiveModeEnabled, libs, "webkit_web_view_is_immersive_mode_enabled")
 	core.PuregoSafeRegister(&xWebViewIsLoading, libs, "webkit_web_view_is_loading")
 	core.PuregoSafeRegister(&xWebViewIsPlayingAudio, libs, "webkit_web_view_is_playing_audio")
+	core.PuregoSafeRegister(&xWebViewLeaveImmersiveMode, libs, "webkit_web_view_leave_immersive_mode")
 	core.PuregoSafeRegister(&xWebViewLoadAlternateHtml, libs, "webkit_web_view_load_alternate_html")
 	core.PuregoSafeRegister(&xWebViewLoadBytes, libs, "webkit_web_view_load_bytes")
 	core.PuregoSafeRegister(&xWebViewLoadHtml, libs, "webkit_web_view_load_html")

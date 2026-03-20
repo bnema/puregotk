@@ -51,7 +51,7 @@ func (x *Cookie) GoPointer() uintptr {
 
 var xNewCookie func(string, string, string, string, int32) *Cookie
 
-// Creates a new #SoupCookie with the given attributes.
+// Creates a new [struct@Cookie] with the given attributes.
 //
 // Use [method@Cookie.set_secure] and [method@Cookie.set_http_only] if you
 // need to set those attributes on the returned cookie.
@@ -295,7 +295,7 @@ func (x *Cookie) ToSetCookieHeader() string {
 	return cret
 }
 
-// #SoupHSTSPolicy implements HTTP policies, as described by
+// [struct@HSTSPolicy] implements HTTP policies, as described by
 // [RFC 6797](http://tools.ietf.org/html/rfc6797).
 //
 // @domain represents the host that this policy applies to. The domain
@@ -328,7 +328,7 @@ func (x *HSTSPolicy) GoPointer() uintptr {
 
 var xNewHSTSPolicy func(string, uint32, bool) *HSTSPolicy
 
-// Creates a new #SoupHSTSPolicy with the given attributes.
+// Creates a new [struct@HSTSPolicy] with the given attributes.
 //
 // @domain is a domain on which the strict transport security policy
 // represented by this object must be enforced.
@@ -347,7 +347,7 @@ func NewHSTSPolicy(DomainVar string, MaxAgeVar uint32, IncludeSubdomainsVar bool
 var xNewHSTSPolicyFromResponse func(uintptr) *HSTSPolicy
 
 // Parses @msg's first "Strict-Transport-Security" response header and
-// returns a #SoupHSTSPolicy.
+// returns a [struct@HSTSPolicy].
 func NewHSTSPolicyFromResponse(MsgVar *Message) *HSTSPolicy {
 	cret := xNewHSTSPolicyFromResponse(MsgVar.GoPointer())
 	return cret
@@ -366,7 +366,7 @@ func NewHSTSPolicyFull(DomainVar string, MaxAgeVar uint32, ExpiresVar *glib.Date
 
 var xNewHSTSPolicySessionPolicy func(string, bool) *HSTSPolicy
 
-// Creates a new session #SoupHSTSPolicy with the given attributes.
+// Creates a new session [struct@HSTSPolicy] with the given attributes.
 //
 // A session policy is a policy that is valid during the lifetime of
 // the [class@HSTSEnforcer] it is added to. Contrary to regular policies,

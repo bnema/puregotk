@@ -185,6 +185,31 @@ const (
 	AxisLastValue AxisUse = 12
 )
 
+// Enumerates the color channels of RGBA values as used in
+// `GdkColor` and OpenGL/Vulkan shaders.
+//
+// Note that this is not the order of pixel values in Cairo
+// and `GdkMemoryFormat` can have many different orders.
+type ColorChannel int
+
+var xColorChannelGLibType func() types.GType
+
+func ColorChannelGLibType() types.GType {
+	return xColorChannelGLibType()
+}
+
+const (
+
+	// The red color channel, aka 0
+	ColorChannelRedValue ColorChannel = 0
+	// The green color channel, aka 1
+	ColorChannelGreenValue ColorChannel = 1
+	// The blue color channel, aka 2
+	ColorChannelBlueValue ColorChannel = 2
+	// The alpha color channel, aka 3
+	ColorChannelAlphaValue ColorChannel = 3
+)
+
 // Error enumeration for `GdkDmabufTexture`.
 type DmabufError int
 

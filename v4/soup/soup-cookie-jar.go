@@ -136,7 +136,7 @@ const (
 	//   from that page, reject any cookie that it could try to set unless it
 	//   already has a cookie in the cookie jar. For libsoup to be able to tell
 	//   apart first party cookies from the rest, the application must call
-	//   [method@Message.set_first_party] on each outgoing #SoupMessage, setting the
+	//   [method@Message.set_first_party] on each outgoing [class@Message], setting the
 	//   [struct@GLib.Uri] of the main document. If no first party is set in a
 	//   message when this policy is in effect, cookies will be assumed to be third
 	//   party by default.
@@ -145,12 +145,12 @@ const (
 
 // Automatic cookie handling for SoupSession.
 //
-// A #SoupCookieJar stores [struct@Cookie]s and arrange for them to be sent with
-// the appropriate [class@Message]s. #SoupCookieJar implements
+// A [class@CookieJar] stores [struct@Cookie]s and arrange for them to be sent with
+// the appropriate [class@Message]s. [class@CookieJar] implements
 // [iface@SessionFeature], so you can add a cookie jar to a session with
 // [method@Session.add_feature] or [method@Session.add_feature_by_type].
 //
-// Note that the base #SoupCookieJar class does not support any form
+// Note that the base [class@CookieJar] class does not support any form
 // of long-term cookie persistence.
 type CookieJar struct {
 	gobject.Object
@@ -170,9 +170,9 @@ func CookieJarNewFromInternalPtr(ptr uintptr) *CookieJar {
 
 var xNewCookieJar func() uintptr
 
-// Creates a new #SoupCookieJar.
+// Creates a new [class@CookieJar].
 //
-// The base #SoupCookieJar class does not support persistent storage of cookies;
+// The base [class@CookieJar] class does not support persistent storage of cookies;
 // use a subclass for that.
 func NewCookieJar() *CookieJar {
 	var cls *CookieJar
@@ -271,12 +271,12 @@ func (x *CookieJar) GetAcceptPolicy() CookieJarAcceptPolicy {
 var xCookieJarGetCookieList func(uintptr, *glib.Uri, bool) *glib.SList
 
 // Retrieves the list of cookies that would be sent with a request to @uri
-// as a [struct@GLib.List] of #SoupCookie objects.
+// as a [struct@GLib.List] of [struct@Cookie] objects.
 //
 // If @for_http is %TRUE, the return value will include cookies marked
 // "HttpOnly" (that is, cookies that the server wishes to keep hidden
 // from client-side scripting operations such as the JavaScript
-// document.cookies property). Since #SoupCookieJar sets the Cookie
+// document.cookies property). Since [class@CookieJar] sets the Cookie
 // header itself when making the actual HTTP request, you should
 // almost certainly be setting @for_http to %FALSE if you are calling
 // this.
@@ -306,7 +306,7 @@ var xCookieJarGetCookies func(uintptr, *glib.Uri, bool) string
 // If @for_http is %TRUE, the return value will include cookies marked
 // "HttpOnly" (that is, cookies that the server wishes to keep hidden
 // from client-side scripting operations such as the JavaScript
-// document.cookies property). Since #SoupCookieJar sets the Cookie
+// document.cookies property). Since [class@CookieJar] sets the Cookie
 // header itself when making the actual HTTP request, you should
 // almost certainly be setting @for_http to %FALSE if you are calling
 // this.

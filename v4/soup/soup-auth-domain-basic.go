@@ -12,7 +12,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// Callback used by #SoupAuthDomainBasic for authentication purposes.
+// Callback used by [class@AuthDomainBasic] for authentication purposes.
 //
 // The application should verify that @username and @password and valid
 // and return %TRUE or %FALSE.
@@ -41,7 +41,7 @@ func (x *AuthDomainBasicClass) GoPointer() uintptr {
 
 // Server-side "Basic" authentication.
 //
-// #SoupAuthDomainBasic handles the server side of HTTP "Basic" (ie,
+// [class@AuthDomainBasic] handles the server side of HTTP "Basic" (ie,
 // cleartext password) authentication.
 type AuthDomainBasic struct {
 	AuthDomain
@@ -61,7 +61,7 @@ func AuthDomainBasicNewFromInternalPtr(ptr uintptr) *AuthDomainBasic {
 
 var xNewAuthDomainBasic func(string, ...interface{}) uintptr
 
-// Creates a #SoupAuthDomainBasic.
+// Creates a [class@AuthDomainBasic].
 //
 // You must set the [property@AuthDomain:realm] property, to indicate the realm
 // name to be returned with the authentication challenge to the client. Other

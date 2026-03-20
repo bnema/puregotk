@@ -14,7 +14,7 @@ const (
 	// Like [func@get_micro_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int32 = 5
+	MICRO_VERSION int32 = 6
 	// Like [func@get_minor_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.

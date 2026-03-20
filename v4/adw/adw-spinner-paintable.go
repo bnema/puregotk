@@ -257,10 +257,18 @@ func (x *SpinnerPaintable) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64,
 
 // Snapshots the paintable with the given colors.
 //
-// If less than 4 colors are provided, GTK will pad the array with default
+// If less than 5 colors are provided, GTK will pad the array with default
 // colors.
 func (x *SpinnerPaintable) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
 	gtk.XGtkSymbolicPaintableSnapshotSymbolic(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
+}
+
+// Snapshots the paintable with the given colors and weight.
+//
+// If less than 5 colors are provided, GTK will pad the array with default
+// colors.
+func (x *SpinnerPaintable) SnapshotWithWeight(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64) {
+	gtk.XGtkSymbolicPaintableSnapshotWithWeight(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar, WeightVar)
 }
 
 func init() {

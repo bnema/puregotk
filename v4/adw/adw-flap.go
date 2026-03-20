@@ -348,8 +348,8 @@ var xFlapSetFlapPosition func(uintptr, gtk.PackType)
 
 // Sets the flap position for @self.
 //
-// If it's set to `GTK_PACK_START`, the flap is displayed before the content,
-// if `GTK_PACK_END`, it's displayed after the content.
+// If it's set to [enum@Gtk.PackType.start], the flap is displayed before the
+// content, if [enum@Gtk.PackType.end], it's displayed after the content.
 func (x *Flap) SetFlapPosition(PositionVar gtk.PackType) {
 	xFlapSetFlapPosition(x.GoPointer(), PositionVar)
 }
@@ -372,9 +372,9 @@ var xFlapSetFoldThresholdPolicy func(uintptr, FoldThresholdPolicy)
 
 // Sets the fold threshold policy for @self.
 //
-// If set to `ADW_FOLD_THRESHOLD_POLICY_MINIMUM`, flap will only fold when the
-// children cannot fit anymore. With `ADW_FOLD_THRESHOLD_POLICY_NATURAL`, it
-// will fold as soon as children don't get their natural size.
+// If set to [enum@Adw.FoldThresholdPolicy.minimum], flap will only fold when
+// the children cannot fit anymore. With [enum@Adw.FoldThresholdPolicy.natural],
+// it will fold as soon as children don't get their natural size.
 //
 // This can be useful if you have a long ellipsizing label and want to let it
 // ellipsize instead of immediately folding.
@@ -460,9 +460,9 @@ var xFlapSetTransitionType func(uintptr, FlapTransitionType)
 // Sets the type of animation used for reveal and fold transitions in @self.
 //
 // [property@Flap:flap] is transparent by default, which means the content will
-// be seen through it with `ADW_FLAP_TRANSITION_TYPE_OVER` transitions; add the
-// [`.background`](style-classes.html#background) style class to it if this is
-// unwanted.
+// be seen through it with [enum@Adw.FlapTransitionType.over] transitions; add
+// the [`.background`](style-classes.html#background) style class to it if this
+// is unwanted.
 func (x *Flap) SetTransitionType(TransitionTypeVar FlapTransitionType) {
 	xFlapSetTransitionType(x.GoPointer(), TransitionTypeVar)
 }
@@ -712,6 +712,18 @@ func (x *Flap) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVa
 // does not interrupts the user's current screen reader output.
 func (x *Flap) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Flap) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

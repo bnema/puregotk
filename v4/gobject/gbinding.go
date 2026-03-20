@@ -296,7 +296,7 @@ func (c *Binding) SetGoPointer(ptr uintptr) {
 // The name of the property of #GBinding:source that should be used
 // as the source of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) SetPropertySourceProperty(value string) {
 	var v Value
@@ -309,7 +309,7 @@ func (x *Binding) SetPropertySourceProperty(value string) {
 // The name of the property of #GBinding:source that should be used
 // as the source of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) GetPropertySourceProperty() string {
 	var v Value
@@ -321,7 +321,7 @@ func (x *Binding) GetPropertySourceProperty() string {
 // The name of the property of #GBinding:target that should be used
 // as the target of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) SetPropertyTargetProperty(value string) {
 	var v Value
@@ -334,7 +334,7 @@ func (x *Binding) SetPropertyTargetProperty(value string) {
 // The name of the property of #GBinding:target that should be used
 // as the target of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) GetPropertyTargetProperty() string {
 	var v Value

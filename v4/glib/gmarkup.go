@@ -98,6 +98,19 @@ func (x *MarkupParseContext) GetElementStack() *SList {
 	return cret
 }
 
+var xMarkupParseContextGetOffset func(uintptr) uint
+
+// Retrieves the current offset from the beginning of the document,
+// in bytes.
+//
+// The information is meant to accompany the values returned by
+// [method@GLib.MarkupParseContext.get_position], and comes with the
+// same accuracy guarantees.
+func (x *MarkupParseContext) GetOffset() uint {
+	cret := xMarkupParseContextGetOffset(x.GoPointer())
+	return cret
+}
+
 var xMarkupParseContextGetPosition func(uintptr, *int32, *int32)
 
 // Retrieves the current line number and the number of the character on
@@ -106,6 +119,25 @@ var xMarkupParseContextGetPosition func(uintptr, *int32, *int32)
 // "the best number we could come up with for error messages."
 func (x *MarkupParseContext) GetPosition(LineNumberVar *int32, CharNumberVar *int32) {
 	xMarkupParseContextGetPosition(x.GoPointer(), LineNumberVar, CharNumberVar)
+}
+
+var xMarkupParseContextGetTagStart func(uintptr, *uint, *uint, *uint)
+
+// Retrieves the start position of the current start or end tag.
+//
+// This function can be used in the `start_element` or `end_element`
+// callbacks to obtain location information for error reporting.
+//
+// Note that @line_number and @char_number are intended for human
+// readable error messages and are therefore 1-based and in Unicode
+// characters. @offset on the other hand is meant for programmatic
+// use, and thus is 0-based and in bytes.
+//
+// The information is meant to accompany the values returned by
+// [method@GLib.MarkupParseContext.get_position], and comes with the
+// same accuracy guarantees.
+func (x *MarkupParseContext) GetTagStart(LineNumberVar *uint, CharNumberVar *uint, OffsetVar *uint) {
+	xMarkupParseContextGetTagStart(x.GoPointer(), LineNumberVar, CharNumberVar, OffsetVar)
 }
 
 var xMarkupParseContextGetUserData func(uintptr) uintptr
@@ -711,7 +743,9 @@ func init() {
 	core.PuregoSafeRegister(&xMarkupParseContextFree, libs, "g_markup_parse_context_free")
 	core.PuregoSafeRegister(&xMarkupParseContextGetElement, libs, "g_markup_parse_context_get_element")
 	core.PuregoSafeRegister(&xMarkupParseContextGetElementStack, libs, "g_markup_parse_context_get_element_stack")
+	core.PuregoSafeRegister(&xMarkupParseContextGetOffset, libs, "g_markup_parse_context_get_offset")
 	core.PuregoSafeRegister(&xMarkupParseContextGetPosition, libs, "g_markup_parse_context_get_position")
+	core.PuregoSafeRegister(&xMarkupParseContextGetTagStart, libs, "g_markup_parse_context_get_tag_start")
 	core.PuregoSafeRegister(&xMarkupParseContextGetUserData, libs, "g_markup_parse_context_get_user_data")
 	core.PuregoSafeRegister(&xMarkupParseContextParse, libs, "g_markup_parse_context_parse")
 	core.PuregoSafeRegister(&xMarkupParseContextPop, libs, "g_markup_parse_context_pop")

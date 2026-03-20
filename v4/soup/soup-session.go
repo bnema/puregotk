@@ -273,7 +273,7 @@ func (x *SessionClass) GetSoupReserved8() func() {
 	}
 }
 
-// A #SoupSession error.
+// A [class@Session] error.
 type SessionError int
 
 var xSessionErrorGLibType func() types.GType
@@ -317,13 +317,13 @@ func SessionErrorQuark() glib.Quark {
 
 // Soup session state object.
 //
-// #SoupSession is the object that controls client-side HTTP. A
-// #SoupSession encapsulates all of the state that libsoup is keeping
+// [class@Session] is the object that controls client-side HTTP. A
+// [class@Session] encapsulates all of the state that libsoup is keeping
 // on behalf of your program; cached HTTP connections, authentication
 // information, etc. It also keeps track of various global options
 // and features that you are using.
 //
-// Most applications will only need a single #SoupSession; the primary
+// Most applications will only need a single [class@Session]; the primary
 // reason you might need multiple sessions is if you need to have
 // multiple independent authentication contexts. (Eg, you are
 // connecting to a server and authenticating as two different users at
@@ -332,7 +332,7 @@ func SessionErrorQuark() glib.Quark {
 // one session for the first user, and a second session for the other
 // user.)
 //
-// Additional #SoupSession functionality is provided by
+// Additional [class@Session] functionality is provided by
 // [iface@SessionFeature] objects, which can be added to a session with
 // [method@Session.add_feature] or [method@Session.add_feature_by_type]
 // For example, [class@Logger] provides support for
@@ -344,7 +344,7 @@ func SessionErrorQuark() glib.Quark {
 //
 // All `SoupSession`s are created with a [class@AuthManager], and support
 // for %SOUP_TYPE_AUTH_BASIC and %SOUP_TYPE_AUTH_DIGEST. Additionally,
-// sessions using the plain #SoupSession class (rather than one of its deprecated
+// sessions using the plain [class@Session] class (rather than one of its deprecated
 // subtypes) have a [class@ContentDecoder] by default.
 //
 // Note that all async methods will invoke their callbacks on the thread-default
@@ -367,7 +367,7 @@ func SessionNewFromInternalPtr(ptr uintptr) *Session {
 
 var xNewSession func() uintptr
 
-// Creates a #SoupSession with the default options.
+// Creates a [class@Session] with the default options.
 func NewSession() *Session {
 	var cls *Session
 
@@ -383,7 +383,7 @@ func NewSession() *Session {
 
 var xNewSessionWithOptions func(string, ...interface{}) uintptr
 
-// Creates a #SoupSession with the specified options.
+// Creates a [class@Session] with the specified options.
 func NewSessionWithOptions(Optname1Var string, varArgs ...interface{}) *Session {
 	var cls *Session
 
@@ -410,7 +410,7 @@ var xSessionAddFeature func(uintptr, uintptr)
 // Adds @feature's functionality to @session. You cannot add multiple
 // features of the same [alias@GObject.Type] to a session.
 //
-// See the main #SoupSession documentation for information on what
+// See the main [class@Session] documentation for information on what
 // features are present in sessions by default.
 func (x *Session) AddFeature(FeatureVar SessionFeature) {
 	xSessionAddFeature(x.GoPointer(), FeatureVar.GoPointer())
@@ -428,7 +428,7 @@ var xSessionAddFeatureByType func(uintptr, types.GType)
 // existing feature on @session the chance to accept @feature_type as
 // a "subfeature". This can be used to add new [class@Auth] types, for instance.
 //
-// See the main #SoupSession documentation for information on what
+// See the main [class@Session] documentation for information on what
 // features are present in sessions by default.
 func (x *Session) AddFeatureByType(FeatureTypeVar types.GType) {
 	xSessionAddFeatureByType(x.GoPointer(), FeatureTypeVar)
@@ -1024,7 +1024,7 @@ func (x *Session) GetPropertyAcceptLanguage() string {
 }
 
 // SetPropertyAcceptLanguageAuto sets the "accept-language-auto" property.
-// If %TRUE, #SoupSession will automatically set the string
+// If %TRUE, [class@Session] will automatically set the string
 // for the "Accept-Language" header on every [class@Message]
 // sent, based on the return value of [func@GLib.get_language_names].
 //
@@ -1038,7 +1038,7 @@ func (x *Session) SetPropertyAcceptLanguageAuto(value bool) {
 }
 
 // GetPropertyAcceptLanguageAuto gets the "accept-language-auto" property.
-// If %TRUE, #SoupSession will automatically set the string
+// If %TRUE, [class@Session] will automatically set the string
 // for the "Accept-Language" header on every [class@Message]
 // sent, based on the return value of [func@GLib.get_language_names].
 //
@@ -1181,7 +1181,7 @@ func (x *Session) GetPropertyTimeout() uint32 {
 // enclosed in parentheses, between or after the tokens.
 //
 // If you set a [property@Session:user-agent] property that has trailing
-// whitespace, #SoupSession will append its own product token
+// whitespace, [class@Session] will append its own product token
 // (eg, `libsoup/2.3.2`) to the end of the
 // header for you.
 func (x *Session) SetPropertyUserAgent(value string) {
@@ -1214,7 +1214,7 @@ func (x *Session) SetPropertyUserAgent(value string) {
 // enclosed in parentheses, between or after the tokens.
 //
 // If you set a [property@Session:user-agent] property that has trailing
-// whitespace, #SoupSession will append its own product token
+// whitespace, [class@Session] will append its own product token
 // (eg, `libsoup/2.3.2`) to the end of the
 // header for you.
 func (x *Session) GetPropertyUserAgent() string {

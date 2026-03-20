@@ -150,6 +150,13 @@ const (
 	//
 	// An example use would be during listing files, to avoid recursive
 	// directory scanning.
+	//
+	// For local files on Linux, this is a combination of the file’s device number
+	// and inode, so is invariant with respect to hard linking. The format used by
+	// other VFS implementations may vary, and some VFS backends may not set it.
+	//
+	// For simply seeing if two [iface@Gio.File] instances refer to the same path
+	// on disk, see [method@Gio.File.equal].
 	FILE_ATTRIBUTE_ID_FILE string = "id::file"
 	// A key in the "id" namespace for getting the file system identifier.
 	//
@@ -317,6 +324,11 @@ const (
 	// The value for this key should contain a #GIcon.
 	FILE_ATTRIBUTE_STANDARD_ICON string = "standard::icon"
 	// A key in the "standard" namespace for checking if a file is a backup file.
+	//
+	// The exact semantics of what constitutes a backup file are backend-specific.
+	// For local files, a file is considered a backup if its name ends with `~`
+	// and it is a regular file. This follows the POSIX convention used by text
+	// editors such as Emacs.
 	//
 	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
 	FILE_ATTRIBUTE_STANDARD_IS_BACKUP string = "standard::is-backup"
@@ -1069,6 +1081,11 @@ func (x *FileInfo) GetIcon() *IconBase {
 var xFileInfoGetIsBackup func(uintptr) bool
 
 // Checks if a file is a backup file.
+//
+// The exact semantics of what constitutes a backup file are
+// backend-specific. For local files, a file is considered a backup
+// if its name ends with `~` and it is a regular file. This follows
+// the POSIX convention used by text editors such as Emacs.
 //
 // It is an error to call this if the #GFileInfo does not contain
 // %G_FILE_ATTRIBUTE_STANDARD_IS_BACKUP.

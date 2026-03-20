@@ -26,7 +26,9 @@ type DBusInterfaceSkeletonClass struct {
 
 	xFlush uintptr
 
-	VfuncPadding [8]uintptr
+	xMethodDispatch uintptr
+
+	VfuncPadding [7]uintptr
 
 	xGAuthorizeMethod uintptr
 
@@ -134,6 +136,31 @@ func (x *DBusInterfaceSkeletonClass) GetFlush() func(*DBusInterfaceSkeleton) {
 	purego.RegisterFunc(&rawCallback, x.xFlush)
 	return func(InterfaceVar *DBusInterfaceSkeleton) {
 		rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideMethodDispatch sets the "method_dispatch" callback function.
+// Dispatches a method invocation. (Since: 2.88)
+func (x *DBusInterfaceSkeletonClass) OverrideMethodDispatch(cb func(*DBusInterfaceSkeleton, *DBusInterfaceMethodCallFunc, *DBusMethodInvocation, DBusInterfaceSkeletonFlags, DBusObject)) {
+	if cb == nil {
+		x.xMethodDispatch = 0
+	} else {
+		x.xMethodDispatch = purego.NewCallback(func(InterfaceVarp uintptr, MethodCallFuncVarp uintptr, InvocationVarp uintptr, FlagsVarp DBusInterfaceSkeletonFlags, ObjectVarp uintptr) {
+			cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp), (*DBusInterfaceMethodCallFunc)(unsafe.Pointer(MethodCallFuncVarp)), DBusMethodInvocationNewFromInternalPtr(InvocationVarp), FlagsVarp, &DBusObjectBase{Ptr: ObjectVarp})
+		})
+	}
+}
+
+// GetMethodDispatch gets the "method_dispatch" callback function.
+// Dispatches a method invocation. (Since: 2.88)
+func (x *DBusInterfaceSkeletonClass) GetMethodDispatch() func(*DBusInterfaceSkeleton, *DBusInterfaceMethodCallFunc, *DBusMethodInvocation, DBusInterfaceSkeletonFlags, DBusObject) {
+	if x.xMethodDispatch == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr, MethodCallFuncVarp uintptr, InvocationVarp uintptr, FlagsVarp DBusInterfaceSkeletonFlags, ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMethodDispatch)
+	return func(InterfaceVar *DBusInterfaceSkeleton, MethodCallFuncVar *DBusInterfaceMethodCallFunc, InvocationVar *DBusMethodInvocation, FlagsVar DBusInterfaceSkeletonFlags, ObjectVar DBusObject) {
+		rawCallback(InterfaceVar.GoPointer(), glib.NewCallback(MethodCallFuncVar), InvocationVar.GoPointer(), FlagsVar, ObjectVar.GoPointer())
 	}
 }
 

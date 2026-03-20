@@ -90,8 +90,9 @@ func DialogPresentationModeGLibType() types.GType {
 
 const (
 
-	// Switch between `ADW_DIALOG_FLOATING` and
-	//   `ADW_DIALOG_BOTTOM_SHEET` depending on available size.
+	// Switch between [enum@Adw.DialogPresentationMode.floating]
+	//   and [enum@Adw.DialogPresentationMode.bottom-sheet] depending on available
+	//   size.
 	DialogAutoValue DialogPresentationMode = 0
 	// Present dialog as a centered floating window.
 	DialogFloatingValue DialogPresentationMode = 1
@@ -432,13 +433,13 @@ var xDialogSetPresentationMode func(uintptr, DialogPresentationMode)
 
 // Sets presentation mode for @self.
 //
-// When set to `ADW_DIALOG_AUTO`, the dialog appears as a bottom sheet when the
-// following condition is met: `max-width: 450px or max-height: 360px`, and as a
-// floating window otherwise.
+// When set to [enum@Adw.DialogPresentationMode.auto], the dialog appears as a
+// bottom sheet when the following condition is met:
+// `max-width: 450px or max-height: 360px`, and as a floating window otherwise.
 //
-// Set it to `ADW_DIALOG_FLOATING` or `ADW_DIALOG_BOTTOM_SHEET` to always
-// present it a floating window or a bottom sheet respectively, regardless of
-// available size.
+// Set it to [enum@Adw.DialogPresentationMode.floating] or
+// [enum@Adw.DialogPresentationMode.bottom-sheet] to always present it a
+// floating window or a bottom sheet respectively, regardless of available size.
 //
 // Presentation mode does nothing for dialogs presented as a window.
 func (x *Dialog) SetPresentationMode(PresentationModeVar DialogPresentationMode) {
@@ -637,6 +638,18 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint32 {
 // does not interrupts the user's current screen reader output.
 func (x *Dialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Dialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

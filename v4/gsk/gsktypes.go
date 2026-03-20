@@ -8,6 +8,7 @@ import (
 	"codeberg.org/puregotk/purego"
 	"codeberg.org/puregotk/puregotk/pkg/core"
 	"codeberg.org/puregotk/puregotk/v4/cairo"
+	"codeberg.org/puregotk/puregotk/v4/gdk"
 	"codeberg.org/puregotk/puregotk/v4/glib"
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 	"codeberg.org/puregotk/puregotk/v4/graphene"
@@ -221,6 +222,17 @@ func (x *Path) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+var xPathEqual func(uintptr, *Path) bool
+
+// Returns whether two paths have identical structure.
+//
+// Note that it is possible to construct paths that render
+// identical even though they don't have the same structure.
+func (x *Path) Equal(Path2Var *Path) bool {
+	cret := xPathEqual(x.GoPointer(), Path2Var)
+	return cret
+}
+
 var xPathForeach func(uintptr, PathForeachFlags, uintptr, uintptr) bool
 
 // Calls @func for every operation of the path.
@@ -269,7 +281,8 @@ var xPathGetBounds func(uintptr, *graphene.Rect) bool
 //
 // The returned bounds may be larger than necessary, because this
 // function aims to be fast, not accurate. The bounds are guaranteed
-// to contain the path.
+// to contain the path. For accurate bounds, use
+// [method@Gsk.Path.get_tight_bounds].
 //
 // It is possible that the returned rectangle has 0 width and/or height.
 // This can happen when the path only describes a point or an
@@ -306,6 +319,28 @@ func (x *Path) GetEndPoint(ResultVar *PathPoint) bool {
 	return cret
 }
 
+var xPathGetNext func(uintptr, *PathPoint) bool
+
+// Moves @point to the next vertex.
+//
+// An empty path has no points, so false
+// is returned in this case.
+func (x *Path) GetNext(PointVar *PathPoint) bool {
+	cret := xPathGetNext(x.GoPointer(), PointVar)
+	return cret
+}
+
+var xPathGetPrevious func(uintptr, *PathPoint) bool
+
+// Moves @point to the previous vertex.
+//
+// An empty path has no points, so false
+// is returned in this case.
+func (x *Path) GetPrevious(PointVar *PathPoint) bool {
+	cret := xPathGetPrevious(x.GoPointer(), PointVar)
+	return cret
+}
+
 var xPathGetStartPoint func(uintptr, *PathPoint) bool
 
 // Gets the start point of the path.
@@ -328,6 +363,17 @@ var xPathGetStrokeBounds func(uintptr, *Stroke, *graphene.Rect) bool
 // like miters.
 func (x *Path) GetStrokeBounds(StrokeVar *Stroke, BoundsVar *graphene.Rect) bool {
 	cret := xPathGetStrokeBounds(x.GoPointer(), StrokeVar, BoundsVar)
+	return cret
+}
+
+var xPathGetTightBounds func(uintptr, *graphene.Rect) bool
+
+// Computes the tight bounds of the given path.
+//
+// This function works harder than [method@Gsk.Path.get_bounds] to
+// produce the smallest possible bounds.
+func (x *Path) GetTightBounds(BoundsVar *graphene.Rect) bool {
+	cret := xPathGetTightBounds(x.GoPointer(), BoundsVar)
 	return cret
 }
 
@@ -947,6 +993,242 @@ func (x *PathMeasure) Unref() {
 	xPathMeasureUnref(x.GoPointer())
 }
 
+// A facility to replay a [class@Gsk.RenderNode] and its children, potentially
+// modifying them.
+//
+// This is a utility tool to walk a rendernode tree. The most powerful way
+// is to provide a function via [method@Gsk.RenderReplay.set_node_filter]
+// to filter each individual node and then run
+// [method@Gsk.RenderReplay.filter_node] on the nodes you want to filter.
+//
+// If you want to just walk the node tree and extract information
+// without any modifications, you can also use [method@Gsk.RenderNode.get_children].
+//
+// Here is a little example application that redacts text in a node file:
+//
+// ```
+// #include &lt;gtk/gtk.h&gt;
+//
+// static GskRenderNode *
+// redact_nodes (GskRenderReplay *replay,
+//
+//	GskRenderNode   *node,
+//	gpointer         user_data)
+//
+//	{
+//	  GskRenderNode *result;
+//
+//	  if (gsk_render_node_get_node_type (node) == GSK_TEXT_NODE)
+//	    {
+//	      graphene_rect_t bounds;
+//	      const GdkRGBA *color;
+//
+//	      gsk_render_node_get_bounds (node, &amp;bounds);
+//	      color = gsk_text_node_get_color (node);
+//
+//	      result = gsk_color_node_new (color, &amp;bounds);
+//	    }
+//	  else
+//	    {
+//	      result = gsk_render_replay_default (replay, node);
+//	    }
+//
+//	  return result;
+//	}
+//
+// int
+// main (int argc, char *argv[])
+//
+//	{
+//	  GFile *file;
+//	  GBytes *bytes;
+//	  GskRenderNode *result, *node;
+//	  GskRenderReplay *replay;
+//
+//	  gtk_init ();
+//
+//	  if (argc != 3)
+//	    {
+//	      g_print ("usage: %s INFILE OUTFILE\n", argv[0]);
+//	      return 0;
+//	    }
+//
+//	  file = g_file_new_for_commandline_arg (argv[1]);
+//	  bytes = g_file_load_bytes (file, NULL, NULL, NULL);
+//	  g_object_unref (file);
+//	  if (bytes == NULL)
+//	    return 1;
+//
+//	  node = gsk_render_node_deserialize (bytes, NULL, NULL);
+//	  g_bytes_unref (bytes);
+//	  if (node == NULL)
+//	    return 1;
+//
+//	  replay = gsk_render_replay_new ();
+//	  gsk_render_replay_set_node_filter (replay, redact_nodes, NULL, NULL);
+//	  result = gsk_render_replay_filter_node (replay, node);
+//	  gsk_render_replay_free (replay);
+//
+//	  if (!gsk_render_node_write_to_file (result, argv[2], NULL))
+//	    return 1;
+//
+//	  gsk_render_node_unref (result);
+//	  gsk_render_node_unref (node);
+//
+//	  return 0;
+//	}
+//
+// ```
+type RenderReplay struct {
+	_ structs.HostLayout
+}
+
+var xRenderReplayGLibType func() types.GType
+
+func RenderReplayGLibType() types.GType {
+	return xRenderReplayGLibType()
+}
+
+func (x *RenderReplay) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewRenderReplay func() *RenderReplay
+
+// Creates a new replay object to replay nodes.
+func NewRenderReplay() *RenderReplay {
+	cret := xNewRenderReplay()
+	return cret
+}
+
+var xRenderReplayDefault func(uintptr, uintptr) uintptr
+
+// Replays the node using the default method.
+//
+// The default method calls [method@Gsk.RenderReplay.filter_node]
+// on all its child nodes and the filter functions for all its
+// properties. If none of them are changed, it returns the passed
+// in node. Otherwise it constructs a new node with the changed
+// children and properties.
+//
+// It may not be possible to construct a new node when any of the
+// callbacks return NULL. In that case, this function will return
+// NULL, too.
+func (x *RenderReplay) Default(NodeVar *RenderNode) *RenderNode {
+	var cls *RenderNode
+
+	cret := xRenderReplayDefault(x.GoPointer(), NodeVar.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xRenderReplayFilterFont func(uintptr, uintptr) uintptr
+
+// Filters a font using the current filter function.
+func (x *RenderReplay) FilterFont(FontVar *pango.Font) *pango.Font {
+	var cls *pango.Font
+
+	cret := xRenderReplayFilterFont(x.GoPointer(), FontVar.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &pango.Font{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xRenderReplayFilterNode func(uintptr, uintptr) uintptr
+
+// Replays a node using the replay's filter function.
+//
+// After the replay the node may be unchanged, or it may be
+// removed, which will result in %NULL being returned.
+//
+// If no filter node is set, [method@Gsk.RenderReplay.default] is
+// called instead.
+func (x *RenderReplay) FilterNode(NodeVar *RenderNode) *RenderNode {
+	var cls *RenderNode
+
+	cret := xRenderReplayFilterNode(x.GoPointer(), NodeVar.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xRenderReplayFilterTexture func(uintptr, uintptr) uintptr
+
+// Filters a texture using the current filter function.
+func (x *RenderReplay) FilterTexture(TextureVar *gdk.Texture) *gdk.Texture {
+	var cls *gdk.Texture
+
+	cret := xRenderReplayFilterTexture(x.GoPointer(), TextureVar.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gdk.Texture{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xRenderReplayFree func(uintptr)
+
+// Frees a `GskRenderReplay`.
+func (x *RenderReplay) Free() {
+	xRenderReplayFree(x.GoPointer())
+}
+
+var xRenderReplaySetFontFilter func(uintptr, uintptr, uintptr, uintptr)
+
+// Sets a filter function to be called by [method@Gsk.RenderReplay.default]
+// for nodes that contain fonts.
+//
+// You can call [method@GskRenderReplay.filter_font] to filter
+// a font yourself.
+func (x *RenderReplay) SetFontFilter(FilterVar *RenderReplayFontFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
+	xRenderReplaySetFontFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+}
+
+var xRenderReplaySetNodeFilter func(uintptr, uintptr, uintptr, uintptr)
+
+// Sets the function to use as a node filter.
+//
+// This is the most complex function to use for replaying nodes.
+// It can either:
+//
+// * keep the node and just return it unchanged
+//
+// * create a replacement node and return that
+//
+// * discard the node by returning `NULL`
+//
+//   - call [method@Gsk.RenderReplay.default] to have the default handler
+//     run for this node, which calls your function on its children
+func (x *RenderReplay) SetNodeFilter(FilterVar *RenderReplayNodeFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
+	xRenderReplaySetNodeFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+}
+
+var xRenderReplaySetTextureFilter func(uintptr, uintptr, uintptr, uintptr)
+
+// Sets a filter function to be called by [method@Gsk.RenderReplay.default]
+// for nodes that contain textures.
+//
+// You can call [method@GskRenderReplay.filter_texture] to filter
+// a texture yourself.
+func (x *RenderReplay) SetTextureFilter(FilterVar *RenderReplayTextureFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
+	xRenderReplaySetTextureFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+}
+
 // Collects the parameters that are needed when stroking a path.
 type Stroke struct {
 	_ structs.HostLayout
@@ -1444,6 +1726,8 @@ var xTransformTransformBounds func(uintptr, *graphene.Rect, *graphene.Rect)
 // Transforms a rectangle using the given transform.
 //
 // The result is the bounding box containing the coplanar quad.
+//
+// The input and output rect may point to the same rectangle.
 func (x *Transform) TransformBounds(RectVar *graphene.Rect, OutRectVar *graphene.Rect) {
 	xTransformTransformBounds(x.GoPointer(), RectVar, OutRectVar)
 }
@@ -1513,13 +1797,17 @@ func init() {
 
 	core.PuregoSafeRegister(&xPathGLibType, libs, "gsk_path_get_type")
 
+	core.PuregoSafeRegister(&xPathEqual, libs, "gsk_path_equal")
 	core.PuregoSafeRegister(&xPathForeach, libs, "gsk_path_foreach")
 	core.PuregoSafeRegister(&xPathForeachIntersection, libs, "gsk_path_foreach_intersection")
 	core.PuregoSafeRegister(&xPathGetBounds, libs, "gsk_path_get_bounds")
 	core.PuregoSafeRegister(&xPathGetClosestPoint, libs, "gsk_path_get_closest_point")
 	core.PuregoSafeRegister(&xPathGetEndPoint, libs, "gsk_path_get_end_point")
+	core.PuregoSafeRegister(&xPathGetNext, libs, "gsk_path_get_next")
+	core.PuregoSafeRegister(&xPathGetPrevious, libs, "gsk_path_get_previous")
 	core.PuregoSafeRegister(&xPathGetStartPoint, libs, "gsk_path_get_start_point")
 	core.PuregoSafeRegister(&xPathGetStrokeBounds, libs, "gsk_path_get_stroke_bounds")
+	core.PuregoSafeRegister(&xPathGetTightBounds, libs, "gsk_path_get_tight_bounds")
 	core.PuregoSafeRegister(&xPathInFill, libs, "gsk_path_in_fill")
 	core.PuregoSafeRegister(&xPathIsClosed, libs, "gsk_path_is_closed")
 	core.PuregoSafeRegister(&xPathIsEmpty, libs, "gsk_path_is_empty")
@@ -1575,6 +1863,19 @@ func init() {
 	core.PuregoSafeRegister(&xPathMeasureGetTolerance, libs, "gsk_path_measure_get_tolerance")
 	core.PuregoSafeRegister(&xPathMeasureRef, libs, "gsk_path_measure_ref")
 	core.PuregoSafeRegister(&xPathMeasureUnref, libs, "gsk_path_measure_unref")
+
+	core.PuregoSafeRegister(&xRenderReplayGLibType, libs, "gsk_render_replay_get_type")
+
+	core.PuregoSafeRegister(&xNewRenderReplay, libs, "gsk_render_replay_new")
+
+	core.PuregoSafeRegister(&xRenderReplayDefault, libs, "gsk_render_replay_default")
+	core.PuregoSafeRegister(&xRenderReplayFilterFont, libs, "gsk_render_replay_filter_font")
+	core.PuregoSafeRegister(&xRenderReplayFilterNode, libs, "gsk_render_replay_filter_node")
+	core.PuregoSafeRegister(&xRenderReplayFilterTexture, libs, "gsk_render_replay_filter_texture")
+	core.PuregoSafeRegister(&xRenderReplayFree, libs, "gsk_render_replay_free")
+	core.PuregoSafeRegister(&xRenderReplaySetFontFilter, libs, "gsk_render_replay_set_font_filter")
+	core.PuregoSafeRegister(&xRenderReplaySetNodeFilter, libs, "gsk_render_replay_set_node_filter")
+	core.PuregoSafeRegister(&xRenderReplaySetTextureFilter, libs, "gsk_render_replay_set_texture_filter")
 
 	core.PuregoSafeRegister(&xStrokeGLibType, libs, "gsk_stroke_get_type")
 

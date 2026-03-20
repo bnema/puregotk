@@ -191,6 +191,16 @@ func WebExtensionMatchPatternRegisterCustomURLScheme(UrlSchemeVar string) {
 	xWebExtensionMatchPatternRegisterCustomURLScheme(UrlSchemeVar)
 }
 
+var xWebExtensionMatchPatternRegisterCustomUrlScheme func(string)
+
+// Registers a custom URL scheme that can be used in match patterns.
+//
+// This method should be used to register any custom URL schemes used by the app for the extension base URLs,
+// other than `webkit-extension`, or if extensions should have access to other supported URL schemes when using `&lt;all_urls&gt;`.
+func WebExtensionMatchPatternRegisterCustomUrlScheme(UrlSchemeVar string) {
+	xWebExtensionMatchPatternRegisterCustomUrlScheme(UrlSchemeVar)
+}
+
 func init() {
 	core.SetPackageName("WEBKIT", "webkitgtk-6.0")
 	core.SetSharedLibraries("WEBKIT", []string{"libwebkitgtk-6.0.so.4", "libjavascriptcoregtk-6.0.so.1", "libwebkitgtk-6.0.4.dylib", "libjavascriptcoregtk-6.0.1.dylib"})
@@ -206,6 +216,7 @@ func init() {
 	core.PuregoSafeRegister(&xWebExtensionMatchPatternOptionsGLibType, libs, "webkit_web_extension_match_pattern_options_get_type")
 
 	core.PuregoSafeRegister(&xWebExtensionMatchPatternRegisterCustomURLScheme, libs, "webkit_web_extension_match_pattern_register_custom_URL_scheme")
+	core.PuregoSafeRegister(&xWebExtensionMatchPatternRegisterCustomUrlScheme, libs, "webkit_web_extension_match_pattern_register_custom_url_scheme")
 
 	core.PuregoSafeRegister(&xWebExtensionMatchPatternGLibType, libs, "webkit_web_extension_match_pattern_get_type")
 

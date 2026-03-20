@@ -43,6 +43,25 @@ func (x *TabBarClass) GoPointer() uintptr {
 // them. Pinned tabs always stay visible and aren't a part of the scrollable
 // area.
 //
+// ## Drag-and-Drop
+//
+// `AdwTabBar` tabs can have an additional drop target for arbitrary content.
+//
+// Use [method@TabBar.setup_extra_drop_target] to set it up, specifying the
+// supported content types and drag actions, then connect to
+// [signal@TabBar::extra-drag-drop] to handle a drop.
+//
+// In some cases, it may be necessary to determine the used action based on the
+// content. In that case, set [property@TabBar:extra-drag-preload] to `TRUE`
+// and connect to [signal@TabBar::extra-drag-value] signal, then return the
+// action from its handler. To access this action from the
+// [signal@TabBar::extra-drag-drop] handler, use the
+// [property@TabBar:extra-drag-preferred-action] property.
+//
+// [signal@TabBar::extra-drag-value] is also always emitted when starting to
+// hover an item, with a `NULL` value. This happens even when
+// [property@TabBar:extra-drag-preload] is `FALSE`.
+//
 // ## CSS nodes
 //
 // `AdwTabBar` has a single CSS node with name `tabbar`.
@@ -128,7 +147,13 @@ func (x *TabBar) GetExpandTabs() bool {
 
 var xTabBarGetExtraDragPreferredAction func(uintptr) gdk.DragAction
 
-// Gets the current action during a drop on the extra_drop_target.
+// Gets the current drag action during a drop.
+//
+// This method should only be used from inside a
+// [signal@TabBar::extra-drag-drop] handler.
+//
+// The action will be a subset of what was originally passed to
+// [method@TabBar.setup_extra_drop_target].
 func (x *TabBar) GetExtraDragPreferredAction() gdk.DragAction {
 	cret := xTabBarGetExtraDragPreferredAction(x.GoPointer())
 	return cret
@@ -268,8 +293,6 @@ func (x *TabBar) SetView(ViewVar *TabView) {
 
 var xTabBarSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType, uint)
 
-// Sets the supported types for this drop target.
-//
 // Sets up an extra drop target on tabs.
 //
 // This allows to drag arbitrary content onto tabs, for example URLs in a web
@@ -408,7 +431,7 @@ func (x *TabBar) GetPropertyTabsRevealed() bool {
 	return v.GetBoolean()
 }
 
-// This signal is emitted when content is dropped onto a tab.
+// Emitted when content is dropped onto a tab.
 //
 // The content must be of one of the types set up via
 // [method@TabBar.setup_extra_drop_target].
@@ -432,7 +455,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
 }
 
-// This signal is emitted when the dropped content is preloaded.
+// Emitted when the dropped content is preloaded.
 //
 // In order for data to be preloaded, [property@TabBar:extra-drag-preload]
 // must be set to `TRUE`.
@@ -470,6 +493,18 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.Dr
 // does not interrupts the user's current screen reader output.
 func (x *TabBar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabBar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

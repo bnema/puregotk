@@ -23,7 +23,7 @@ type EnumClass struct {
 
 	NValues uint32
 
-	Values *EnumValue
+	Values []EnumValue
 }
 
 func (x *EnumClass) GoPointer() uintptr {
@@ -57,7 +57,7 @@ type FlagsClass struct {
 
 	NValues uint32
 
-	Values *FlagsValue
+	Values []FlagsValue
 }
 
 func (x *FlagsClass) GoPointer() uintptr {

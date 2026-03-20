@@ -185,6 +185,17 @@ func (x *ContextMenu) GetNItems() uint32 {
 	return cret
 }
 
+var xContextMenuGetPosition func(uintptr, *int32, *int32) bool
+
+// Gets the position in view coordinates where the context menu was triggered.
+//
+// This function only returns valid coordinates when called for a #WebKitContextMenu
+// passed to #WebKitWebView::context-menu signal.
+func (x *ContextMenu) GetPosition(XVar *int32, YVar *int32) bool {
+	cret := xContextMenuGetPosition(x.GoPointer(), XVar, YVar)
+	return cret
+}
+
 var xContextMenuGetUserData func(uintptr) *glib.Variant
 
 // Gets the user data of @menu.
@@ -304,6 +315,7 @@ func init() {
 	core.PuregoSafeRegister(&xContextMenuGetItemAtPosition, libs, "webkit_context_menu_get_item_at_position")
 	core.PuregoSafeRegister(&xContextMenuGetItems, libs, "webkit_context_menu_get_items")
 	core.PuregoSafeRegister(&xContextMenuGetNItems, libs, "webkit_context_menu_get_n_items")
+	core.PuregoSafeRegister(&xContextMenuGetPosition, libs, "webkit_context_menu_get_position")
 	core.PuregoSafeRegister(&xContextMenuGetUserData, libs, "webkit_context_menu_get_user_data")
 	core.PuregoSafeRegister(&xContextMenuInsert, libs, "webkit_context_menu_insert")
 	core.PuregoSafeRegister(&xContextMenuLast, libs, "webkit_context_menu_last")

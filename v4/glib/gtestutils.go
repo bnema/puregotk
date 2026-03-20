@@ -222,6 +222,9 @@ const (
 	//   stderr will not be visible, but it will be captured to allow
 	//   later tests with [func@GLib.test_trap_assert_stderr].
 	GTestSubprocessInheritStderrValue TestSubprocessFlags = 4
+	// If this flag is given, the
+	//   child process will inherit the parent’s open file descriptors.
+	GTestSubprocessInheritDescriptorsValue TestSubprocessFlags = 8
 )
 
 // Flags to pass to [func@GLib.test_trap_fork] to control input and output.
@@ -1148,6 +1151,14 @@ func TestTrapHasPassed() bool {
 	return cret
 }
 
+var xTestTrapHasSkipped func() bool
+
+// Checks the result of the last [func@GLib.test_trap_subprocess] call.
+func TestTrapHasSkipped() bool {
+	cret := xTestTrapHasSkipped()
+	return cret
+}
+
 var xTestTrapReachedTimeout func() bool
 
 // Checks the result of the last [func@GLib.test_trap_subprocess] call.
@@ -1330,6 +1341,7 @@ func init() {
 	core.PuregoSafeRegister(&xTestTrapAssertions, libs, "g_test_trap_assertions")
 	core.PuregoSafeRegister(&xTestTrapFork, libs, "g_test_trap_fork")
 	core.PuregoSafeRegister(&xTestTrapHasPassed, libs, "g_test_trap_has_passed")
+	core.PuregoSafeRegister(&xTestTrapHasSkipped, libs, "g_test_trap_has_skipped")
 	core.PuregoSafeRegister(&xTestTrapReachedTimeout, libs, "g_test_trap_reached_timeout")
 	core.PuregoSafeRegister(&xTestTrapSubprocess, libs, "g_test_trap_subprocess")
 	core.PuregoSafeRegister(&xTestTrapSubprocessWithEnvp, libs, "g_test_trap_subprocess_with_envp")

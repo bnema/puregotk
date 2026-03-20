@@ -33,6 +33,10 @@ type AccessibleTextInterface struct {
 	xGetExtents uintptr
 
 	xGetOffset uintptr
+
+	xSetCaretPosition uintptr
+
+	xSetSelection uintptr
 }
 
 func (x *AccessibleTextInterface) GoPointer() uintptr {
@@ -220,6 +224,52 @@ func (x *AccessibleTextInterface) GetGetOffset() func(AccessibleText, *graphene.
 	purego.RegisterFunc(&rawCallback, x.xGetOffset)
 	return func(SelfVar AccessibleText, PointVar *graphene.Point, OffsetVar *uint32) bool {
 		return rawCallback(SelfVar.GoPointer(), PointVar, OffsetVar)
+	}
+}
+
+// OverrideSetCaretPosition sets the "set_caret_position" callback function.
+func (x *AccessibleTextInterface) OverrideSetCaretPosition(cb func(AccessibleText, uint32) bool) {
+	if cb == nil {
+		x.xSetCaretPosition = 0
+	} else {
+		x.xSetCaretPosition = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint32) bool {
+			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp)
+		})
+	}
+}
+
+// GetSetCaretPosition gets the "set_caret_position" callback function.
+func (x *AccessibleTextInterface) GetSetCaretPosition() func(AccessibleText, uint32) bool {
+	if x.xSetCaretPosition == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint32) bool
+	purego.RegisterFunc(&rawCallback, x.xSetCaretPosition)
+	return func(SelfVar AccessibleText, OffsetVar uint32) bool {
+		return rawCallback(SelfVar.GoPointer(), OffsetVar)
+	}
+}
+
+// OverrideSetSelection sets the "set_selection" callback function.
+func (x *AccessibleTextInterface) OverrideSetSelection(cb func(AccessibleText, uint, *AccessibleTextRange) bool) {
+	if cb == nil {
+		x.xSetSelection = 0
+	} else {
+		x.xSetSelection = purego.NewCallback(func(SelfVarp uintptr, IVarp uint, RangeVarp *AccessibleTextRange) bool {
+			return cb(&AccessibleTextBase{Ptr: SelfVarp}, IVarp, RangeVarp)
+		})
+	}
+}
+
+// GetSetSelection gets the "set_selection" callback function.
+func (x *AccessibleTextInterface) GetSetSelection() func(AccessibleText, uint, *AccessibleTextRange) bool {
+	if x.xSetSelection == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, IVarp uint, RangeVarp *AccessibleTextRange) bool
+	purego.RegisterFunc(&rawCallback, x.xSetSelection)
+	return func(SelfVar AccessibleText, IVar uint, RangeVar *AccessibleTextRange) bool {
+		return rawCallback(SelfVar.GoPointer(), IVar, RangeVar)
 	}
 }
 

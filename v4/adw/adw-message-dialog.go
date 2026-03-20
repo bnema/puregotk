@@ -191,7 +191,7 @@ func (x *MessageDialogClass) GetResponse() func(*MessageDialog, string) {
 //
 // ## Accessibility
 //
-// `AdwMessageDialog` uses the `GTK_ACCESSIBLE_ROLE_DIALOG` role.
+// `AdwMessageDialog` uses the [enum@Gtk.AccessibleRole.dialog] role.
 type MessageDialog struct {
 	gtk.Window
 }
@@ -548,14 +548,15 @@ var xMessageDialogSetResponseAppearance func(uintptr, string, ResponseAppearance
 //
 // &lt;/picture&gt;
 //
-// Use `ADW_RESPONSE_SUGGESTED` to mark important responses such as the
-// affirmative action, like the Save button in the example.
+// Use [enum@Adw.ResponseAppearance.suggested] to mark important responses such
+// as the affirmative action, like the Save button in the example.
 //
-// Use `ADW_RESPONSE_DESTRUCTIVE` to draw attention to the potentially damaging
-// consequences of using @response. This appearance acts as a warning to the
-// user. The Discard button in the example is using this appearance.
+// Use [enum@Adw.ResponseAppearance.destructive] to draw attention to the
+// potentially damaging consequences of using @response. This appearance acts as
+// a warning to the user. The Discard button in the example is using this
+// appearance.
 //
-// The default appearance is `ADW_RESPONSE_DEFAULT`.
+// The default appearance is [enum@Adw.ResponseAppearance.default].
 //
 // Negative responses like Cancel or Close should use the default appearance.
 func (x *MessageDialog) SetResponseAppearance(ResponseVar string, AppearanceVar ResponseAppearance) {
@@ -776,6 +777,18 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 // does not interrupts the user's current screen reader output.
 func (x *MessageDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
+
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *MessageDialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.

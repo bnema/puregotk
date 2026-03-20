@@ -580,7 +580,7 @@ var xStrcompress func(string) string
 //   - `\r` → [U+000D Carriage Return](https://en.wikipedia.org/wiki/Carriage_return)
 //   - `\t` → [U+0009 Horizontal Tabulation](https://en.wikipedia.org/wiki/Tab_character)
 //   - `\v` → [U+000B Vertical Tabulation](https://en.wikipedia.org/wiki/Vertical_Tab)
-//   - `\` followed by one to three octal digits → the numeric value (mod 255)
+//   - `\` followed by one to three octal digits → the numeric value (mod 256)
 //   - `\` followed by any other character → the character as is.
 //     For example, `\\` will turn into a backslash (`\`) and `\"` into a double quote (`"`).
 //
@@ -917,20 +917,23 @@ func Strsplit(StringVar string, DelimiterVar string, MaxTokensVar int32) []strin
 	return cret
 }
 
-var xStrsplitSet func(string, string, int32) []string
+var xStrsplitSet func(string, []byte, int32) []string
 
-// Splits @string into a number of tokens not containing any of the characters
-// in @delimiters. A token is the (possibly empty) longest string that does not
-// contain any of the characters in @delimiters. If @max_tokens is reached, the
-// remainder is appended to the last token.
+// Splits @string into a number of tokens not containing any of the
+// bytes in @delimiters.
 //
-// For example, the result of g_strsplit_set ("abc:def/ghi", ":/", -1) is an
-// array containing the three strings "abc", "def", and "ghi".
+// A token is the (possibly empty) longest string that does not
+// contain any of the bytes in @delimiters. Note that separators
+// will only be single bytes from @delimiters. If @max_tokens is reached,
+// the remainder is appended to the last token.
 //
-// The result of g_strsplit_set (":def/ghi:", ":/", -1) is an array containing
-// the four strings "", "def", "ghi", and "".
+// For example, the result of `g_strsplit_set ("abc:def/ghi", ":/", -1)`
+// is an array containing the three strings `"abc"`, `"def"`, and `"ghi"`.
 //
-// As a special case, the result of splitting the empty string "" is an empty
+// The result of `g_strsplit_set (":def/ghi:/x", ":/", -1)` is an array
+// containing the five strings `""`, `"def"`, `"ghi"`, `""`, `"x"`.
+//
+// As a special case, the result of splitting the empty string `""` is an empty
 // array, not an array containing a single string. The reason for this
 // special case is that being able to represent an empty array is typically
 // more useful than consistent handling of empty elements. If you do need
@@ -939,7 +942,7 @@ var xStrsplitSet func(string, string, int32) []string
 //
 // Note that this function works on bytes not characters, so it can't be used
 // to delimit UTF-8 strings for anything but ASCII characters.
-func StrsplitSet(StringVar string, DelimitersVar string, MaxTokensVar int32) []string {
+func StrsplitSet(StringVar string, DelimitersVar []byte, MaxTokensVar int32) []string {
 	cret := xStrsplitSet(StringVar, DelimitersVar, MaxTokensVar)
 	return cret
 }

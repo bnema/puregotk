@@ -11,7 +11,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// #SoupMessageBody represents the request or response body of a
+// [struct@MessageBody] represents the request or response body of a
 // [class@Message].
 //
 // Note that while @length always reflects the full length of the
@@ -44,7 +44,7 @@ func (x *MessageBody) GoPointer() uintptr {
 
 var xNewMessageBody func() *MessageBody
 
-// Creates a new #SoupMessageBody.
+// Creates a new [struct@MessageBody]
 //
 // [class@Message] uses this internally; you
 // will not normally need to call it yourself.
@@ -134,7 +134,7 @@ func (x *MessageBody) GetChunk(OffsetVar int64) *glib.Bytes {
 
 var xMessageBodyGotChunk func(uintptr, *glib.Bytes)
 
-// Handles the #SoupMessageBody part of receiving a chunk of data from
+// Handles the [struct@MessageBody] part of receiving a chunk of data from
 // the network.
 //
 // Normally this means appending @chunk to @body, exactly as with
@@ -193,7 +193,7 @@ func (x *MessageBody) Unref() {
 
 var xMessageBodyWroteChunk func(uintptr, *glib.Bytes)
 
-// Handles the #SoupMessageBody part of writing a chunk of data to the
+// Handles the [struct@MessageBody] part of writing a chunk of data to the
 // network.
 //
 // Normally this is a no-op, but if you have set @body's accumulate flag to

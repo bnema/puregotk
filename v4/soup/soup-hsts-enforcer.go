@@ -12,7 +12,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gobject/types"
 )
 
-// Class structure for #SoupHSTSEnforcer.
+// Class structure for [class@HSTSEnforcer].
 type HSTSEnforcerClass struct {
 	_ structs.HostLayout
 
@@ -60,8 +60,8 @@ func (x *HSTSEnforcerClass) GetIsPersistent() func(*HSTSEnforcer) bool {
 
 // OverrideHasValidPolicy sets the "has_valid_policy" callback function.
 // The @has_valid_policy function is called to check whether there is a valid
-// policy for the given domain. This method should return %TRUE for #SoupHSTSEnforcer to
-// change the scheme of the #GUri in the #SoupMessage to HTTPS. Implementations might want to
+// policy for the given domain. This method should return %TRUE for [class@HSTSEnforcer] to
+// change the scheme of the #GUri in the [class@Message] to HTTPS. Implementations might want to
 // chain up to the @has_valid_policy in the parent class to check, for instance, for runtime
 // policies.
 func (x *HSTSEnforcerClass) OverrideHasValidPolicy(cb func(*HSTSEnforcer, string) bool) {
@@ -76,8 +76,8 @@ func (x *HSTSEnforcerClass) OverrideHasValidPolicy(cb func(*HSTSEnforcer, string
 
 // GetHasValidPolicy gets the "has_valid_policy" callback function.
 // The @has_valid_policy function is called to check whether there is a valid
-// policy for the given domain. This method should return %TRUE for #SoupHSTSEnforcer to
-// change the scheme of the #GUri in the #SoupMessage to HTTPS. Implementations might want to
+// policy for the given domain. This method should return %TRUE for [class@HSTSEnforcer] to
+// change the scheme of the #GUri in the [class@Message] to HTTPS. Implementations might want to
 // chain up to the @has_valid_policy in the parent class to check, for instance, for runtime
 // policies.
 func (x *HSTSEnforcerClass) GetHasValidPolicy() func(*HSTSEnforcer, string) bool {
@@ -92,7 +92,7 @@ func (x *HSTSEnforcerClass) GetHasValidPolicy() func(*HSTSEnforcer, string) bool
 }
 
 // OverrideChanged sets the "changed" callback function.
-// The class closure for the #SoupHSTSEnforcer::changed signal.
+// The class closure for the [signal@HSTSEnforcer::changed] signal.
 func (x *HSTSEnforcerClass) OverrideChanged(cb func(*HSTSEnforcer, *HSTSPolicy, *HSTSPolicy)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -104,7 +104,7 @@ func (x *HSTSEnforcerClass) OverrideChanged(cb func(*HSTSEnforcer, *HSTSPolicy, 
 }
 
 // GetChanged gets the "changed" callback function.
-// The class closure for the #SoupHSTSEnforcer::changed signal.
+// The class closure for the [signal@HSTSEnforcer::changed] signal.
 func (x *HSTSEnforcerClass) GetChanged() func(*HSTSEnforcer, *HSTSPolicy, *HSTSPolicy) {
 	if x.xChanged == 0 {
 		return nil
@@ -118,24 +118,24 @@ func (x *HSTSEnforcerClass) GetChanged() func(*HSTSEnforcer, *HSTSPolicy, *HSTSP
 
 // Automatic HTTP Strict Transport Security enforcing for [class@Session].
 //
-// A #SoupHSTSEnforcer stores HSTS policies and enforces them when
-// required. #SoupHSTSEnforcer implements [iface@SessionFeature], so you
+// A [class@HSTSEnforcer] stores HSTS policies and enforces them when
+// required. [class@HSTSEnforcer] implements [iface@SessionFeature], so you
 // can add an HSTS enforcer to a session with
 // [method@Session.add_feature] or [method@Session.add_feature_by_type].
 //
-// #SoupHSTSEnforcer keeps track of all the HTTPS destinations that,
+// [class@HSTSEnforcer] keeps track of all the HTTPS destinations that,
 // when connected to, return the Strict-Transport-Security header with
-// valid values. #SoupHSTSEnforcer will forget those destinations
+// valid values. [class@HSTSEnforcer] will forget those destinations
 // upon expiry or when the server requests it.
 //
-// When the [class@Session] the #SoupHSTSEnforcer is attached to queues or
-// restarts a message, the #SoupHSTSEnforcer will rewrite the URI to HTTPS if
+// When the [class@Session] the [class@HSTSEnforcer] is attached to queues or
+// restarts a message, the [class@HSTSEnforcer] will rewrite the URI to HTTPS if
 // the destination is a known HSTS host and is contacted over an insecure
-// transport protocol (HTTP). Users of #SoupHSTSEnforcer are advised to listen
+// transport protocol (HTTP). Users of [class@HSTSEnforcer] are advised to listen
 // to changes in the [property@Message:uri] property in order to be aware of
 // changes in the message URI.
 //
-// Note that #SoupHSTSEnforcer does not support any form of long-term
+// Note that [class@HSTSEnforcer] does not support any form of long-term
 // HSTS policy persistence. See [class@HSTSEnforcerDB] for a persistent
 // enforcer.
 type HSTSEnforcer struct {
@@ -156,9 +156,9 @@ func HSTSEnforcerNewFromInternalPtr(ptr uintptr) *HSTSEnforcer {
 
 var xNewHSTSEnforcer func() uintptr
 
-// Creates a new #SoupHSTSEnforcer.
+// Creates a new [class@HSTSEnforcer].
 //
-// The base #SoupHSTSEnforcer class does not support persistent storage of HSTS
+// The base [class@HSTSEnforcer] class does not support persistent storage of HSTS
 // policies, see [class@HSTSEnforcerDB] for that.
 func NewHSTSEnforcer() *HSTSEnforcer {
 	var cls *HSTSEnforcer

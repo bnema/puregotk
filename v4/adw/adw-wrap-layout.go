@@ -129,7 +129,7 @@ const (
 //
 // By default, `AdwWrapLayout` wraps as soon as the previous line cannot fit
 // any more children without shrinking them past their natural size. Set
-// [property@WrapLayout:wrap-policy] to [enum@Adw.WrapPolicy.MINIMUM] to only
+// [property@WrapLayout:wrap-policy] to [enum@Adw.WrapPolicy.minimum] to only
 // wrap once all the children in the previous line have been shrunk to their
 // minimum size.
 //
@@ -288,7 +288,7 @@ var xWrapLayoutSetAlign func(uintptr, float32)
 // line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) SetAlign(AlignVar float32) {
 	xWrapLayoutSetAlign(x.GoPointer(), AlignVar)
@@ -319,16 +319,17 @@ var xWrapLayoutSetJustify func(uintptr, JustifyMode)
 // Sets whether and how each complete line should be stretched to fill the
 // entire widget.
 //
-// If set to `ADW_JUSTIFY_FILL`, each widget in the line will be stretched,
-// keeping consistent spacing, so that the line fills the entire widget.
+// If set to [enum@Adw.JustifyMode.fill], each widget in the line will be
+// stretched, keeping consistent spacing, so that the line fills the entire
+// widget.
 //
-// If set to `ADW_JUSTIFY_SPREAD`, the spacing between widgets will be
+// If set to [enum@Adw.JustifyMode.spread], the spacing between widgets will be
 // increased, keeping widget sizes intact. The first and last widget will be
 // aligned with the beginning and end of the line. If the line only contains a
 // single widget, it will be stretched regardless.
 //
-// If set to `ADW_JUSTIFY_NONE`, the line will not be stretched and the children
-// will be placed together within the line, according to
+// If set to [enum@Adw.JustifyMode.none], the line will not be stretched and the
+// children will be placed together within the line, according to
 // [property@WrapLayout:align].
 //
 // By default this doesn't affect the last line, as it will be incomplete. Use
@@ -407,13 +408,13 @@ var xWrapLayoutSetWrapPolicy func(uintptr, WrapPolicy)
 
 // Sets the policy for line wrapping.
 //
-// If set to `ADW_WRAP_NATURAL`, the box will wrap to the next line as soon as
-// the previous line cannot fit any more children without shrinking them past
-// their natural size.
+// If set to [enum@Adw.WrapPolicy.natural], the box will wrap to the next line
+// as soon as the previous line cannot fit any more children without shrinking
+// them past their natural size.
 //
-// If set to `ADW_WRAP_MINIMUM`, the box will try to fit as many children into
-// each line as possible, shrinking them down to their minimum size before
-// wrapping to the next line.
+// If set to [enum@Adw.WrapPolicy.minimum], the box will try to fit as many
+// children into each line as possible, shrinking them down to their minimum
+// size before wrapping to the next line.
 func (x *WrapLayout) SetWrapPolicy(WrapPolicyVar WrapPolicy) {
 	xWrapLayoutSetWrapPolicy(x.GoPointer(), WrapPolicyVar)
 }
@@ -448,7 +449,7 @@ func (c *WrapLayout) SetGoPointer(ptr uintptr) {
 // the line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) SetPropertyAlign(value float32) {
 	var v gobject.Value
@@ -465,7 +466,7 @@ func (x *WrapLayout) SetPropertyAlign(value float32) {
 // the line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) GetPropertyAlign() float32 {
 	var v gobject.Value
