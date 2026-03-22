@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"github.com/bnema/puregotk/internal/gir/util"
 )
 
 type argsTemplate struct {
@@ -89,6 +89,44 @@ func isStringType(t string) bool {
 // NeedsCore reports whether this argument set requires core helpers.
 func (f funcArgsTemplate) NeedsCore() bool {
 	return f.UsesNullableHelper || f.UsesGStrdup
+}
+
+// HasPureStrings reports whether any Pure parameter is a string type.
+// Signal closures with string parameters need core.GoString() conversion.
+func (f funcArgsTemplate) HasPureStrings() bool {
+	for _, t := range f.Pure.Types {
+		if t == "string" {
+			return true
+		}
+	}
+	return false
+}
+
+// PuregoSignalFull returns Pure.Full with string types replaced by uintptr.
+// Used for signal fcb closures passed to purego.NewCallback, which cannot
+// handle Go string parameters (C passes const char* as a pointer).
+func (f funcArgsTemplate) PuregoSignalFull() []string {
+	out := make([]string, len(f.Pure.Full))
+	copy(out, f.Pure.Full)
+	for i, t := range f.Pure.Types {
+		if t == "string" {
+			out[i] = f.Pure.Names[i] + " uintptr"
+		}
+	}
+	return out
+}
+
+// PuregoSignalCall returns Pure.Call with string variables wrapped in
+// core.GoString() for C char* → Go string conversion in signal closures.
+func (f funcArgsTemplate) PuregoSignalCall() []string {
+	out := make([]string, len(f.Pure.Call))
+	copy(out, f.Pure.Call)
+	for i, t := range f.Pure.Types {
+		if t == "string" {
+			out[i] = "core.GoString(" + f.Pure.Names[i] + ")"
+		}
+	}
+	return out
 }
 
 func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
@@ -721,6 +759,19 @@ type TemplateArg struct {
 	HasReceiverCallbacks bool
 	// HasFunctionCallbacks indicates if any standalone function has callback parameters
 	HasFunctionCallbacks bool
+	// HasSignalStrings indicates if any signal has string parameters that need
+	// core.GoString() conversion in the purego callback closure.
+	HasSignalStrings bool
+	// HasTypeGetters indicates if any record, class, interface, alias, or enum
+	// in this file has a GLib type getter that uses types.GType.
+	HasTypeGetters bool
+	// NeedsGLib indicates if the generated file uses glib.* symbols.
+	NeedsGLib bool
+	// NeedsGObject indicates if the generated file uses gobject.* symbols.
+	NeedsGObject bool
+	// CrossPkgImports are fully qualified import paths for cross-package
+	// references detected in the generated code (e.g. gio.*, cairo.*, pango.*).
+	CrossPkgImports []string
 	// Imports defines the package imports that we need
 	// This does not include purego
 	// As the template already includes that if `NeedsInit` is set to true

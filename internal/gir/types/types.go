@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"github.com/bnema/puregotk/internal/gir/util"
 )
 
 // convList maps the given GIR primitive type to a Go builtin type.

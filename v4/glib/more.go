@@ -6,7 +6,8 @@ import (
 	"sync"
 
 	"github.com/ebitengine/purego"
-	"github.com/jwijenbergh/puregotk/pkg/core"
+
+	"github.com/bnema/puregotk/pkg/core"
 )
 
 var callbacks = struct {

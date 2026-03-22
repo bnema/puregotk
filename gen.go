@@ -1,13 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
 
-	"github.com/jwijenbergh/puregotk/pkg/gir/pass"
-	"github.com/jwijenbergh/puregotk/pkg/gir/util"
+	"github.com/bnema/puregotk/pkg/gir/pass"
+	"github.com/bnema/puregotk/pkg/gir/util"
 )
 
 //go:generate go run gen.go
@@ -78,5 +80,16 @@ func main() {
 	data, err = os.ReadFile("templates/glib_other")
 	if err == nil {
 		os.WriteFile("v4/glib/more_other.go", data, 0o644)
+	}
+
+	// Fix imports: goimports adds missing imports and removes unused ones.
+	// This is more robust than trying to statically predict all cross-package
+	// references from template data.
+	fmt.Println("Running goimports on generated files...")
+	cmd := exec.Command("goimports", "-w", "-local", "github.com/bnema/puregotk", dir)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		fmt.Fprintf(os.Stderr, "warning: goimports failed: %v\n", err)
 	}
 }

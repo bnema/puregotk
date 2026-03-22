@@ -1,8 +1,8 @@
 package pass
 
 import (
-	"github.com/jwijenbergh/puregotk/internal/gir/pass"
-	"github.com/jwijenbergh/puregotk/internal/gir/types"
+	"github.com/bnema/puregotk/internal/gir/pass"
+	"github.com/bnema/puregotk/internal/gir/types"
 )
 
 type (

@@ -1,4 +1,4 @@
-module github.com/jwijenbergh/puregotk
+module github.com/bnema/puregotk
 
 go 1.26.1
 

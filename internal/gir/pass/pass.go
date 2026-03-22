@@ -10,8 +10,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/types"
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"github.com/bnema/puregotk/internal/gir/types"
+	"github.com/bnema/puregotk/internal/gir/util"
 )
 
 type Pass struct {
@@ -499,6 +499,67 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			checkInterfaceArgs(inter.Methods)
 		}
 
+		// Check if any signal has string parameters that need core.GoString()
+		hasSignalStrings := false
+		for _, cls := range classes[fn] {
+			for _, sig := range cls.Signals {
+				if sig.Args.HasPureStrings() {
+					hasSignalStrings = true
+					break
+				}
+			}
+			if hasSignalStrings {
+				break
+			}
+		}
+
+		// Scan all types for cross-package references (glib.*, gobject.*, types.*).
+		needsGLib, needsGObject, hasTypeGetters, crossPkgImports := scanCrossPackageRefs(
+			pkgName, functions[fn], records[fn], classes[fn], interfaces[fn])
+		// TypeGetters are emitted by the template when .TypeGetter != "", but
+		// the string "types.GType" only appears in template output — not in the
+		// Go data structures that scanCrossPackageRefs inspects. Check explicitly.
+		if !hasTypeGetters {
+			for _, r := range records[fn] {
+				if r.TypeGetter != "" {
+					hasTypeGetters = true
+					break
+				}
+			}
+		}
+		if !hasTypeGetters {
+			for _, c := range classes[fn] {
+				if c.TypeGetter != "" {
+					hasTypeGetters = true
+					break
+				}
+			}
+		}
+		if !hasTypeGetters {
+			for _, i := range interfaces[fn] {
+				if i.TypeGetter != "" {
+					hasTypeGetters = true
+					break
+				}
+			}
+		}
+		if !hasTypeGetters {
+			for _, a := range aliases[fn] {
+				if a.TypeGetter != "" {
+					hasTypeGetters = true
+					break
+				}
+			}
+		}
+		if !hasTypeGetters {
+			for _, e := range enums[fn] {
+				if e.TypeGetter != "" {
+					hasTypeGetters = true
+					break
+				}
+			}
+		}
+
 		args := types.TemplateArg{
 			PkgName:              pkgName,
 			PkgEnv:               strings.ToUpper(pkgName),
@@ -508,6 +569,11 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			NeedsCore:            needsCoreHelpers,
 			HasReceiverCallbacks: hasReceiverCallbacks,
 			HasFunctionCallbacks: hasFunctionCallbacks,
+			HasSignalStrings:     hasSignalStrings,
+			HasTypeGetters:       hasTypeGetters,
+			NeedsGLib:            needsGLib,
+			NeedsGObject:         needsGObject,
+			CrossPkgImports:      crossPkgImports,
 			Aliases:              aliases[fn],
 			Callbacks:            callbacks[fn],
 			Records:              records[fn],
@@ -536,4 +602,163 @@ func (p *Pass) Second(dir string, gotemp *template.Template) {
 	for _, r := range p.Parsed {
 		p.writeGo(r, gotemp, dir)
 	}
+}
+
+// scanCrossPackageRefs checks if any generated code in the file references
+// glib.* or gobject.* symbols in pure types, return types, record fields,
+// class parents, signal args, or callback accessor types.
+func scanCrossPackageRefs(
+	pkgName string,
+	funcs []types.FuncTemplate,
+	recs []types.RecordTemplate,
+	classes []types.ClassTemplate,
+	ifaces []types.InterfaceTemplate,
+) (needsGLib, needsGObject, needsTypes bool, crossPkgImports []string) {
+	// Track all cross-package references (e.g. "gio.", "cairo.", "pango.")
+	crossPkgs := make(map[string]bool)
+	check := func(s string) {
+		if !needsGLib && strings.Contains(s, "glib.") {
+			needsGLib = true
+		}
+		if !needsGObject && strings.Contains(s, "gobject.") {
+			needsGObject = true
+		}
+		if !needsTypes && strings.Contains(s, "types.") {
+			needsTypes = true
+		}
+		// Detect any "pkg." references for cross-package imports
+		for _, pkg := range []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk"} {
+			if strings.Contains(s, pkg+".") {
+				crossPkgs[pkg] = true
+			}
+		}
+	}
+	checkFuncTypes := func(f types.FuncTemplate) {
+		check(f.Ret.Raw)
+		check(f.Ret.Value)
+		// RefSink return types trigger gobject.IncreaseRef in template Fmt()
+		if f.Ret.RefSink {
+			needsGObject = true
+		}
+		// Throws trigger glib.Error in template Preamble()
+		if f.Ret.Throws {
+			needsGLib = true
+		}
+		for _, t := range f.Args.Pure.Types {
+			check(t)
+		}
+		for _, t := range f.Args.API.Types {
+			check(t)
+		}
+	}
+
+	for _, f := range funcs {
+		checkFuncTypes(f)
+		// Callback parameters generate glib.GetCallback/SaveCallbackWithClosure
+		// and gobject.SignalConnect calls in the template output.
+		if len(f.Args.Callbacks) > 0 {
+			needsGLib = true
+		}
+	}
+	for _, r := range recs {
+		for _, f := range r.Fields {
+			check(f.Type)
+		}
+		for _, c := range r.Constructors {
+			checkFuncTypes(c)
+		}
+		for _, m := range r.Receivers {
+			checkFuncTypes(m)
+			if len(m.Args.Callbacks) > 0 {
+				needsGLib = true
+			}
+		}
+		for _, ca := range r.CallbackAccessors {
+			check(ca.CallbackType)
+		}
+	}
+	for _, c := range classes {
+		check(c.Parent)
+		// Signals use glib helpers + gobject.SignalConnect
+		if len(c.Signals) > 0 {
+			needsGLib = true
+			needsGObject = true
+		}
+		for _, con := range c.Constructors {
+			checkFuncTypes(con)
+		}
+		for _, m := range c.Receivers {
+			checkFuncTypes(m)
+		}
+		for _, f := range c.Functions {
+			checkFuncTypes(f)
+		}
+		for _, s := range c.Signals {
+			for _, t := range s.Args.Pure.Types {
+				check(t)
+			}
+			for _, t := range s.Args.API.Types {
+				check(t)
+			}
+		}
+		// Class properties use gobject.Value
+		if len(c.Properties) > 0 {
+			needsGObject = true
+		}
+		// Class interface implementations (e.g. gio.ListModel methods on pango.FontFamily)
+		for _, iface := range c.Interfaces {
+			for _, m := range iface.Methods {
+				checkFuncTypes(m.FuncTemplate)
+				if m.Namespace != "" {
+					check(m.Namespace)
+				}
+			}
+			if len(iface.Properties) > 0 {
+				needsGObject = true
+			}
+		}
+	}
+	for _, i := range ifaces {
+		for _, m := range i.Methods {
+			checkFuncTypes(m.FuncTemplate)
+			// Interface methods have a Namespace prefix (e.g. "gio.")
+			if m.Namespace != "" {
+				check(m.Namespace)
+			}
+		}
+		// Interface properties use gobject.Value/Object for get/set
+		if len(i.Properties) > 0 {
+			needsGObject = true
+			needsGLib = true // glib.StrvGetType etc. used in property vector types
+		}
+		for _, p := range i.Properties {
+			check(p.GoType)
+		}
+		// Interface methods with callbacks need glib for GetCallback/SaveCallbackWithClosure
+		for _, m := range i.Methods {
+			if len(m.FuncTemplate.Args.Callbacks) > 0 {
+				needsGLib = true
+			}
+		}
+	}
+	// A package never needs to import itself, and glib/gobject cannot
+	// import each other (circular dependency).
+	if strings.EqualFold(pkgName, "glib") {
+		needsGLib = false
+		needsGObject = false // glib cannot import gobject (cycle)
+	}
+	if strings.EqualFold(pkgName, "gobject") {
+		needsGObject = false
+		// gobject CAN import glib (no cycle: glib does not import gobject)
+	}
+	delete(crossPkgs, strings.ToLower(pkgName))
+	// glib, gobject, and types are handled by dedicated template conditions
+	delete(crossPkgs, "glib")
+	delete(crossPkgs, "gobject")
+	// Build import paths for detected cross-package references
+	const moduleBase = "github.com/bnema/puregotk/v4/"
+	for pkg := range crossPkgs {
+		crossPkgImports = append(crossPkgImports, moduleBase+pkg)
+	}
+	return
 }
