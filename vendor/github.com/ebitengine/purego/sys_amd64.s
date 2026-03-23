@@ -38,11 +38,8 @@
 // C calling convention (use libcCall).
 GLOBL ·syscall15XABI0(SB), NOPTR|RODATA, $8
 DATA ·syscall15XABI0(SB)/8, $syscall15X(SB)
-TEXT syscall15X(SB), NOSPLIT|NOFRAME, $0
-	PUSHQ BP
-	MOVQ  SP, BP
-	SUBQ  $STACK_SIZE, SP
-	MOVQ  DI, PTR_ADDRESS(BP) // save the pointer
+TEXT syscall15X(SB), NOSPLIT, $STACK_SIZE
+	MOVQ  DI, PTR_ADDRESS(SP) // save the pointer
 	MOVQ  DI, R11
 
 	MOVQ syscall15Args_f1(R11), X0 // f1
@@ -61,7 +58,7 @@ TEXT syscall15X(SB), NOSPLIT|NOFRAME, $0
 	MOVQ syscall15Args_a5(R11), R8 // a5
 	MOVQ syscall15Args_a6(R11), R9 // a6
 
-	// push the remaining paramters onto the stack
+	// push the remaining parameters onto the stack
 	MOVQ syscall15Args_a7(R11), R12
 	MOVQ R12, 0(SP)                  // push a7
 	MOVQ syscall15Args_a8(R11), R12
@@ -85,22 +82,20 @@ TEXT syscall15X(SB), NOSPLIT|NOFRAME, $0
 	MOVQ syscall15Args_fn(R11), R10 // fn
 	CALL R10
 
-	MOVQ PTR_ADDRESS(BP), DI      // get the pointer back
+	MOVQ PTR_ADDRESS(SP), DI      // get the pointer back
 	MOVQ AX, syscall15Args_a1(DI) // r1
-	MOVQ DX, syscall15Args_a2(DI) // r3
+	MOVQ DX, syscall15Args_a2(DI) // r2
 	MOVQ X0, syscall15Args_f1(DI) // f1
 	MOVQ X1, syscall15Args_f2(DI) // f2
 
 #ifdef GOOS_darwin
-    CALL purego_error(SB)
-    MOVD (AX), AX
-    MOVD AX, syscall15Args_a3(DI) // save errno
+	CALL purego_error(SB)
+	MOVQ PTR_ADDRESS(SP), DI      // reload (DI clobbered by call)
+	MOVQ (AX), AX
+	MOVQ AX, syscall15Args_a3(DI) // save errno
 #endif
 
 	XORL AX, AX          // no error (it's ignored anyway)
-	ADDQ $STACK_SIZE, SP
-	MOVQ BP, SP
-	POPQ BP
 	RET
 
 TEXT callbackasm1(SB), NOSPLIT|NOFRAME, $0
@@ -145,7 +140,7 @@ TEXT callbackasm1(SB), NOSPLIT|NOFRAME, $0
 	SUBQ $(24+callbackArgs__size), SP
 	MOVQ AX, (24+callbackArgs_index)(SP)  // callback index
 	MOVQ R8, (24+callbackArgs_args)(SP)   // address of args vector
-	MOVQ $0, (24+callbackArgs_result)(SP) // result
+	MOVQ DI, (24+callbackArgs_result)(SP) // result
 	LEAQ 24(SP), AX                       // take the address of callbackArgs
 
 	// Call cgocallback, which will call callbackWrap(frame).
@@ -158,7 +153,12 @@ TEXT callbackasm1(SB), NOSPLIT|NOFRAME, $0
 
 	// Get callback result.
 	MOVQ (24+callbackArgs_result)(SP), AX
-	ADDQ $(24+callbackArgs__size), SP     // remove callbackArgs struct
+	MOVQ (24+callbackArgs_result+8)(SP), DX
+	// Restore XMM0/XMM1 from result[2]/result[3] for struct eightbytes
+	// classified as SSE by the SysV ABI.
+	MOVQ (24+callbackArgs_result+16)(SP), X0
+	MOVQ (24+callbackArgs_result+24)(SP), X1
+	ADDQ $(24+callbackArgs__size), SP      // remove callbackArgs struct
 
 	POP_REGS_HOST_TO_ABI0()
 

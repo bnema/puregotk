@@ -55,9 +55,10 @@ func NewCallback(fn any) uintptr {
 const maxCB = 2000
 
 var cbs struct {
-	lock  sync.Mutex
-	numFn int                  // the number of functions currently in cbs.funcs
-	funcs [maxCB]reflect.Value // the saved callbacks
+	lock     sync.RWMutex
+	numFn    int                  // the number of functions currently in cbs.funcs
+	funcs    [maxCB]reflect.Value // the saved callbacks
+	argPools [maxCB]*sync.Pool    // pre-allocated argument buffers per callback
 }
 
 func compileCallback(fn any) uintptr {
@@ -76,7 +77,9 @@ func compileCallback(fn any) uintptr {
 			if i == 0 && in.AssignableTo(reflect.TypeOf(CDecl{})) {
 				continue
 			}
-			fallthrough
+			ensureStructSupported()
+			checkStructFieldsSupported(in)
+			continue
 		case reflect.Interface, reflect.Func, reflect.Slice,
 			reflect.Chan, reflect.Complex64, reflect.Complex128,
 			reflect.String, reflect.Map, reflect.Invalid:
@@ -89,7 +92,7 @@ output:
 		switch ty.Out(0).Kind() {
 		case reflect.Pointer, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
 			reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr,
-			reflect.Bool, reflect.UnsafePointer:
+			reflect.Bool, reflect.UnsafePointer, reflect.Struct:
 			break output
 		}
 		panic("purego: unsupported return type: " + ty.String())
@@ -101,9 +104,16 @@ output:
 	if cbs.numFn >= maxCB {
 		panic("purego: the maximum number of callbacks has been reached")
 	}
-	cbs.funcs[cbs.numFn] = val
+	index := cbs.numFn
+	cbs.funcs[index] = val
+	numIn := ty.NumIn()
+	cbs.argPools[index] = &sync.Pool{
+		New: func() any {
+			return make([]reflect.Value, numIn)
+		},
+	}
 	cbs.numFn++
-	return callbackasmAddr(cbs.numFn - 1)
+	return callbackasmAddr(index)
 }
 
 const ptrSize = unsafe.Sizeof((*int)(nil))
@@ -125,11 +135,18 @@ var callbackWrap_call = callbackWrap
 // callbackWrap is called by assembly code which determines which Go function to call.
 // This function takes the arguments and passes them to the Go function and returns the result.
 func callbackWrap(a *callbackArgs) {
-	cbs.lock.Lock()
+	cbs.lock.RLock()
 	fn := cbs.funcs[a.index]
-	cbs.lock.Unlock()
+	pool := cbs.argPools[a.index]
+	cbs.lock.RUnlock()
 	fnType := fn.Type()
-	args := make([]reflect.Value, fnType.NumIn())
+	args := pool.Get().([]reflect.Value)
+	defer func() {
+		for i := range args {
+			args[i] = reflect.Value{}
+		}
+		pool.Put(args)
+	}()
 	frame := (*[callbackMaxFrame]uintptr)(a.args)
 	// stackFrame points to stack-passed arguments. On most architectures this is
 	// contiguous with frame (after register args), but on ppc64le it's separate.
@@ -142,6 +159,14 @@ func callbackWrap(a *callbackArgs) {
 	// This distinction matters on ARM32 where float64 uses 2 slots (32-bit registers).
 	var floatsN int
 	var intsN int
+	// On amd64/loong64/ppc64le/riscv64/s390x, when returning a struct larger than
+	// maxRegAllocStructSize, the caller passes a hidden pointer in the first integer
+	// register. Skip it to avoid misreading it as the first function argument.
+	if (runtime.GOARCH == "amd64" || runtime.GOARCH == "loong64" || runtime.GOARCH == "ppc64le" || runtime.GOARCH == "riscv64" || runtime.GOARCH == "s390x") &&
+		fnType.NumOut() == 1 && fnType.Out(0).Kind() == reflect.Struct &&
+		fnType.Out(0).Size() > maxRegAllocStructSize {
+		intsN = 1
+	}
 	// stackSlot points to the index into frame (or stackFrame) of the current stack element.
 	// When stackFrame is nil, stack begins after float and integer registers in frame.
 	// When stackFrame is not nil (ppc64le), stackSlot indexes into stackFrame starting at 0.
@@ -187,8 +212,16 @@ func callbackWrap(a *callbackArgs) {
 			}
 			floatsN += slots
 		case reflect.Struct:
-			// This is the CDecl field
-			args[i] = reflect.Zero(inType)
+			if i == 0 && inType.AssignableTo(reflect.TypeOf(CDecl{})) {
+				args[i] = reflect.Zero(inType)
+				continue
+			}
+			if inType.Size() == 0 {
+				args[i] = reflect.New(inType).Elem()
+				continue
+			}
+			args[i] = getCallbackStruct(inType, a.args, &floatsN, &intsN, &stackSlot, &stackByteOffset)
+			continue
 		default:
 			slots = int((inType.Size() + ptrSize - 1) / ptrSize)
 			if intsN+slots > numOfIntegerRegisters() {
@@ -225,19 +258,21 @@ func callbackWrap(a *callbackArgs) {
 	if len(ret) > 0 {
 		switch k := ret[0].Kind(); k {
 		case reflect.Uint, reflect.Uint64, reflect.Uint32, reflect.Uint16, reflect.Uint8, reflect.Uintptr:
-			a.result = uintptr(ret[0].Uint())
+			a.result[0] = uintptr(ret[0].Uint())
 		case reflect.Int, reflect.Int64, reflect.Int32, reflect.Int16, reflect.Int8:
-			a.result = uintptr(ret[0].Int())
+			a.result[0] = uintptr(ret[0].Int())
 		case reflect.Bool:
 			if ret[0].Bool() {
-				a.result = 1
+				a.result[0] = 1
 			} else {
-				a.result = 0
+				a.result[0] = 0
 			}
 		case reflect.Pointer:
-			a.result = ret[0].Pointer()
+			a.result[0] = ret[0].Pointer()
 		case reflect.UnsafePointer:
-			a.result = ret[0].Pointer()
+			a.result[0] = ret[0].Pointer()
+		case reflect.Struct:
+			setStruct(a, ret[0])
 		default:
 			panic("purego: unsupported kind: " + k.String())
 		}
