@@ -47,6 +47,16 @@ type NullableStringParam struct {
 	Name string
 }
 
+// GErrorParam tracks a signal/callback parameter that is a GLib.Error record.
+// The Pure type stays uintptr (purego ABI), but the API type is *glib.Error
+// and the signal closure converts via unsafe.Pointer.
+type GErrorParam struct {
+	// Index is the position in the Pure args slice.
+	Index int
+	// GoType is the qualified Go type for the cast (e.g., "glib.Error" or "Error").
+	GoType string
+}
+
 type funcArgsTemplate struct {
 	// Pure are the arguments as passed directly to PureGo
 	// The pure Call is a special case that contains the arguments for a callback call
@@ -60,6 +70,10 @@ type funcArgsTemplate struct {
 
 	// NullableStrings tracks nullable string parameters that need temporary C strings
 	NullableStrings []NullableStringParam
+
+	// GErrors tracks GError record parameters in signal/callback contexts
+	// so PuregoSignalCall can emit unsafe.Pointer casts.
+	GErrors []GErrorParam
 
 	// UsesNullableHelper indicates nullable string handling that needs core import.
 	UsesNullableHelper bool
@@ -84,6 +98,12 @@ func isStringType(t string) bool {
 		return false
 	}
 	return strings.TrimLeft(t, "*") == "string"
+}
+
+// isGErrorType reports whether a GIR type name refers to GLib.Error.
+// Within the GLib namespace the name is just "Error"; elsewhere it is "GLib.Error".
+func isGErrorType(girName string) bool {
+	return girName == "GLib.Error" || girName == "Error"
 }
 
 // NeedsCore reports whether this argument set requires core helpers.
@@ -117,7 +137,8 @@ func (f funcArgsTemplate) PuregoSignalFull() []string {
 }
 
 // PuregoSignalCall returns Pure.Call with string variables wrapped in
-// core.GoString() for C char* → Go string conversion in signal closures.
+// core.GoString() for C char* → Go string conversion in signal closures,
+// and GError parameters wrapped in (*glib.Error)(unsafe.Pointer(...)).
 func (f funcArgsTemplate) PuregoSignalCall() []string {
 	out := make([]string, len(f.Pure.Call))
 	copy(out, f.Pure.Call)
@@ -126,7 +147,16 @@ func (f funcArgsTemplate) PuregoSignalCall() []string {
 			out[i] = "core.GoString(" + f.Pure.Names[i] + ")"
 		}
 	}
+	for _, ge := range f.GErrors {
+		out[ge.Index] = "(*" + ge.GoType + ")(unsafe.Pointer(" + f.Pure.Names[ge.Index] + "))"
+	}
 	return out
+}
+
+// HasGErrors reports whether any parameter is a GError that needs
+// an unsafe.Pointer cast in the signal closure.
+func (f funcArgsTemplate) HasGErrors() bool {
+	return len(f.GErrors) > 0
 }
 
 func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
@@ -376,6 +406,27 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	transferFull := p.TransferOwnership.TransferOwnership == "full"
 	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, transferFull)
 	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx, transferFull)
+
+	// For GError record parameters in signal/callback contexts (C→Go), the type
+	// is collapsed to uintptr by Type.Template(). Override the API type to
+	// *glib.Error so consumers get a proper Go error, and track the Pure index
+	// so PuregoSignalCall() can emit the unsafe.Pointer cast.
+	if ctx == ArgsFromCToGo && !isOut && goType == "uintptr" && p.Type != nil && isGErrorType(p.Type.Name) {
+		gerrorGoType := "glib.Error"
+		if strings.ToLower(ns) == "glib" {
+			gerrorGoType = "Error"
+		}
+		// Override API type from uintptr to *glib.Error
+		apiIdx := len(f.API.Types) - 1
+		f.API.Types[apiIdx] = "*" + gerrorGoType
+		f.API.Full[apiIdx] = varName + " *" + gerrorGoType
+		// Pure stays uintptr; record the index for signal call casting
+		pureIdx := len(f.Pure.Types) - 1
+		f.GErrors = append(f.GErrors, GErrorParam{
+			Index:  pureIdx,
+			GoType: gerrorGoType,
+		})
+	}
 
 	// Upstream purego does not support direct array parameters (reflect.Array kind).
 	// Fixed-size C arrays like "int fds[2]" are pointer params at the ABI level.
