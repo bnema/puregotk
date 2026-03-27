@@ -1222,7 +1222,7 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, Size
 
 }
 
-var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *uintptr, *int, int, uintptr, **glib.Error) int
+var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *uintptr, *int, *int, uintptr, **glib.Error) int
 
 // Receive data from a socket.  For receiving multiple messages, see
 // g_socket_receive_messages(); for easier use, see
@@ -1283,7 +1283,7 @@ var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *ui
 // %G_IO_IN condition.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar *uintptr, NumMessagesVar *int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar *uintptr, NumMessagesVar *int, FlagsVar *int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)

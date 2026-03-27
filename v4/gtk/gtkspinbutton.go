@@ -1364,7 +1364,7 @@ func (x *SpinButton) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *SpinButton) InsertText(TextVar string, LengthVar int, PositionVar int) {
+func (x *SpinButton) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 

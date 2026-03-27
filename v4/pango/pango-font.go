@@ -199,24 +199,24 @@ func (x *FontClass) GetDescribeAbsolute() func(*Font) *FontDescription {
 }
 
 // OverrideGetFeatures sets the "get_features" callback function.
-func (x *FontClass) OverrideGetFeatures(cb func(*Font, *[]uintptr, uint, uint)) {
+func (x *FontClass) OverrideGetFeatures(cb func(*Font, *[]uintptr, uint, *uint)) {
 	if cb == nil {
 		x.xGetFeatures = 0
 	} else {
-		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp uint) {
+		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp *uint) {
 			cb(FontNewFromInternalPtr(FontVarp), FeaturesVarp, LenVarp, NumFeaturesVarp)
 		})
 	}
 }
 
 // GetGetFeatures gets the "get_features" callback function.
-func (x *FontClass) GetGetFeatures() func(*Font, *[]uintptr, uint, uint) {
+func (x *FontClass) GetGetFeatures() func(*Font, *[]uintptr, uint, *uint) {
 	if x.xGetFeatures == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp uint)
+	var rawCallback func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp *uint)
 	purego.RegisterFunc(&rawCallback, x.xGetFeatures)
-	return func(FontVar *Font, FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar uint) {
+	return func(FontVar *Font, FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar *uint) {
 		rawCallback(FontVar.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 	}
 }
@@ -1673,7 +1673,7 @@ func (x *Font) GetFace() *FontFace {
 	return cls
 }
 
-var xFontGetFeatures func(uintptr, *[]uintptr, uint, uint)
+var xFontGetFeatures func(uintptr, *[]uintptr, uint, *uint)
 
 // Obtain the OpenType features that are provided by the font.
 //
@@ -1682,7 +1682,7 @@ var xFontGetFeatures func(uintptr, *[]uintptr, uint, uint)
 //
 // Note that this does not include OpenType features which the
 // rendering system enables by default.
-func (x *Font) GetFeatures(FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar uint) {
+func (x *Font) GetFeatures(FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar *uint) {
 
 	xFontGetFeatures(x.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 

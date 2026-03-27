@@ -167,11 +167,11 @@ func (x *ApplicationClass) GetCommandLine() func(*Application, *ApplicationComma
 //	g_application_run() for more information. Also see the
 //	#GApplication::handle-local-options signal, which is a simpler
 //	alternative to handling some commandline options locally
-func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []string, *int) bool) {
+func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, *[]string, *int) bool) {
 	if cb == nil {
 		x.xLocalCommandLine = 0
 	} else {
-		x.xLocalCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp *int) bool {
+		x.xLocalCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, ArgumentsVarp *[]string, ExitStatusVarp *int) bool {
 			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), ArgumentsVarp, ExitStatusVarp)
 		})
 	}
@@ -184,13 +184,13 @@ func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []stri
 //	g_application_run() for more information. Also see the
 //	#GApplication::handle-local-options signal, which is a simpler
 //	alternative to handling some commandline options locally
-func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, *int) bool {
+func (x *ApplicationClass) GetLocalCommandLine() func(*Application, *[]string, *int) bool {
 	if x.xLocalCommandLine == 0 {
 		return nil
 	}
-	var rawCallback func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp *int) bool
+	var rawCallback func(ApplicationVarp uintptr, ArgumentsVarp *[]string, ExitStatusVarp *int) bool
 	purego.RegisterFunc(&rawCallback, x.xLocalCommandLine)
-	return func(ApplicationVar *Application, ArgumentsVar []string, ExitStatusVar *int) bool {
+	return func(ApplicationVar *Application, ArgumentsVar *[]string, ExitStatusVar *int) bool {
 		return rawCallback(ApplicationVar.GoPointer(), ArgumentsVar, ExitStatusVar)
 	}
 }

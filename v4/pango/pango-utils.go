@@ -135,7 +135,7 @@ func ParseWeight(StrVar string, WeightVar *Weight, WarnVar bool) bool {
 	return cret
 }
 
-var xQuantizeLineGeometry func(int, int)
+var xQuantizeLineGeometry func(*int, *int)
 
 // Quantizes the thickness and position of a line to whole device pixels.
 //
@@ -145,7 +145,7 @@ var xQuantizeLineGeometry func(int, int)
 // Care is taken to make sure @thickness is at least one pixel when this
 // function returns, but returned @position may become zero as a result
 // of rounding.
-func QuantizeLineGeometry(ThicknessVar int, PositionVar int) {
+func QuantizeLineGeometry(ThicknessVar *int, PositionVar *int) {
 
 	xQuantizeLineGeometry(ThicknessVar, PositionVar)
 
@@ -167,46 +167,46 @@ func ReadLine(StreamVar uintptr, StrVar *glib.String) int {
 	return cret
 }
 
-var xScanInt func(string, *int) bool
+var xScanInt func(*string, *int) bool
 
 // Scans an integer.
 //
 // Leading white space is skipped.
-func ScanInt(PosVar string, OutVar *int) bool {
+func ScanInt(PosVar *string, OutVar *int) bool {
 
 	cret := xScanInt(PosVar, OutVar)
 	return cret
 }
 
-var xScanString func(string, *glib.String) bool
+var xScanString func(*string, *glib.String) bool
 
 // Scans a string into a `GString` buffer.
 //
 // The string may either be a sequence of non-white-space characters,
 // or a quoted string with '"'. Instead a quoted string, '\"' represents
 // a literal quote. Leading white space outside of quotes is skipped.
-func ScanString(PosVar string, OutVar *glib.String) bool {
+func ScanString(PosVar *string, OutVar *glib.String) bool {
 
 	cret := xScanString(PosVar, OutVar)
 	return cret
 }
 
-var xScanWord func(string, *glib.String) bool
+var xScanWord func(*string, *glib.String) bool
 
 // Scans a word into a `GString` buffer.
 //
 // A word consists of [A-Za-z_] followed by zero or more
 // [A-Za-z_0-9]. Leading white space is skipped.
-func ScanWord(PosVar string, OutVar *glib.String) bool {
+func ScanWord(PosVar *string, OutVar *glib.String) bool {
 
 	cret := xScanWord(PosVar, OutVar)
 	return cret
 }
 
-var xSkipSpace func(string) bool
+var xSkipSpace func(*string) bool
 
 // Skips 0 or more characters of white space.
-func SkipSpace(PosVar string) bool {
+func SkipSpace(PosVar *string) bool {
 
 	cret := xSkipSpace(PosVar)
 	return cret

@@ -41,24 +41,24 @@ func (x *EditableInterface) GoPointer() uintptr {
 }
 
 // OverrideInsertText sets the "insert_text" callback function.
-func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, int)) {
+func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, *int)) {
 	if cb == nil {
 		x.xInsertText = 0
 	} else {
-		x.xInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int) {
+		x.xInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp *int) {
 			cb(&EditableBase{Ptr: EditableVarp}, TextVarp, LengthVarp, PositionVarp)
 		})
 	}
 }
 
 // GetInsertText gets the "insert_text" callback function.
-func (x *EditableInterface) GetInsertText() func(Editable, string, int, int) {
+func (x *EditableInterface) GetInsertText() func(Editable, string, int, *int) {
 	if x.xInsertText == 0 {
 		return nil
 	}
-	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int)
+	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xInsertText)
-	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar int) {
+	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar *int) {
 		rawCallback(EditableVar.GoPointer(), TextVar, LengthVar, PositionVar)
 	}
 }
@@ -133,24 +133,24 @@ func (x *EditableInterface) GetGetText() func(Editable) string {
 }
 
 // OverrideDoInsertText sets the "do_insert_text" callback function.
-func (x *EditableInterface) OverrideDoInsertText(cb func(Editable, string, int, int)) {
+func (x *EditableInterface) OverrideDoInsertText(cb func(Editable, string, int, *int)) {
 	if cb == nil {
 		x.xDoInsertText = 0
 	} else {
-		x.xDoInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int) {
+		x.xDoInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp *int) {
 			cb(&EditableBase{Ptr: EditableVarp}, TextVarp, LengthVarp, PositionVarp)
 		})
 	}
 }
 
 // GetDoInsertText gets the "do_insert_text" callback function.
-func (x *EditableInterface) GetDoInsertText() func(Editable, string, int, int) {
+func (x *EditableInterface) GetDoInsertText() func(Editable, string, int, *int) {
 	if x.xDoInsertText == 0 {
 		return nil
 	}
-	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int)
+	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xDoInsertText)
-	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar int) {
+	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar *int) {
 		rawCallback(EditableVar.GoPointer(), TextVar, LengthVar, PositionVar)
 	}
 }
@@ -417,7 +417,7 @@ type Editable interface {
 	GetText() string
 	GetWidthChars() int
 	InitDelegate()
-	InsertText(TextVar string, LengthVar int, PositionVar int)
+	InsertText(TextVar string, LengthVar int, PositionVar *int)
 	SelectRegion(StartPosVar int, EndPosVar int)
 	SetAlignment(XalignVar float32)
 	SetEditable(IsEditableVar bool)
@@ -643,7 +643,7 @@ func (x *EditableBase) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *EditableBase) InsertText(TextVar string, LengthVar int, PositionVar int) {
+func (x *EditableBase) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 
@@ -898,7 +898,7 @@ var XGtkEditableGetSelectionBounds func(uintptr, *int, *int) bool
 var XGtkEditableGetText func(uintptr) string
 var XGtkEditableGetWidthChars func(uintptr) int
 var XGtkEditableInitDelegate func(uintptr)
-var XGtkEditableInsertText func(uintptr, string, int, int)
+var XGtkEditableInsertText func(uintptr, string, int, *int)
 var XGtkEditableSelectRegion func(uintptr, int, int)
 var XGtkEditableSetAlignment func(uintptr, float32)
 var XGtkEditableSetEditable func(uintptr, bool)

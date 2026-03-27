@@ -1065,7 +1065,7 @@ func (x *SpinRow) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *SpinRow) InsertText(TextVar string, LengthVar int, PositionVar int) {
+func (x *SpinRow) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 
 	gtk.XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 

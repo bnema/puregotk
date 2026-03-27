@@ -100,24 +100,24 @@ func RefCountCompare(RcVar int, ValVar int) bool {
 	return cret
 }
 
-var xRefCountDec func(int) bool
+var xRefCountDec func(*int) bool
 
 // Decreases the reference count.
 //
 // If %TRUE is returned, the reference count reached 0. After this point, @rc
 // is an undefined state and must be reinitialized with
 // g_ref_count_init() to be used again.
-func RefCountDec(RcVar int) bool {
+func RefCountDec(RcVar *int) bool {
 
 	cret := xRefCountDec(RcVar)
 
 	return cret
 }
 
-var xRefCountInc func(int)
+var xRefCountInc func(*int)
 
 // Increases the reference count.
-func RefCountInc(RcVar int) {
+func RefCountInc(RcVar *int) {
 
 	xRefCountInc(RcVar)
 

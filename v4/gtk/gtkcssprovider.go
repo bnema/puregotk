@@ -226,12 +226,12 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.E
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, SectionVarp uintptr, ErrorVarp uintptr) {
+	fcb := func(clsPtr uintptr, SectionVarp uintptr, ErrorVarp unsafe.Pointer) {
 		fa := CssProvider{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, SectionVarp, (*glib.Error)(unsafe.Pointer(ErrorVarp)))
+		cbFn(fa, SectionVarp, (*glib.Error)(ErrorVarp))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

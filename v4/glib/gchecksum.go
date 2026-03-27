@@ -82,14 +82,14 @@ func (x *Checksum) Free() {
 
 }
 
-var xChecksumGetDigest func(uintptr, []byte, uint)
+var xChecksumGetDigest func(uintptr, []byte, *uint)
 
 // Gets the digest from @checksum as a raw binary vector and places it
 // into @buffer. The size of the digest depends on the type of checksum.
 //
 // Once this function has been called, the #GChecksum is closed and can
 // no longer be updated with g_checksum_update().
-func (x *Checksum) GetDigest(BufferVar []byte, DigestLenVar uint) {
+func (x *Checksum) GetDigest(BufferVar []byte, DigestLenVar *uint) {
 
 	xChecksumGetDigest(x.GoPointer(), BufferVar, DigestLenVar)
 

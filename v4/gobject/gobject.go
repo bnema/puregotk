@@ -1264,7 +1264,7 @@ func (x *Object) AddToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 
 }
 
-var xObjectAddWeakPointer func(uintptr, uintptr)
+var xObjectAddWeakPointer func(uintptr, *uintptr)
 
 // Adds a weak reference from weak_pointer to @object to indicate that
 // the pointer located at @weak_pointer_location is only valid during
@@ -1275,7 +1275,7 @@ var xObjectAddWeakPointer func(uintptr, uintptr)
 // this method are not thread-safe: they cannot safely be used in one
 // thread if the object's last g_object_unref() might happen in another
 // thread. Use #GWeakRef if thread-safety is required.
-func (x *Object) AddWeakPointer(WeakPointerLocationVar uintptr) {
+func (x *Object) AddWeakPointer(WeakPointerLocationVar *uintptr) {
 
 	xObjectAddWeakPointer(x.GoPointer(), WeakPointerLocationVar)
 
@@ -1859,12 +1859,12 @@ func (x *Object) RemoveToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 
 }
 
-var xObjectRemoveWeakPointer func(uintptr, uintptr)
+var xObjectRemoveWeakPointer func(uintptr, *uintptr)
 
 // Removes a weak reference from @object that was previously added
 // using g_object_add_weak_pointer(). The @weak_pointer_location has
 // to match the one used with g_object_add_weak_pointer().
-func (x *Object) RemoveWeakPointer(WeakPointerLocationVar uintptr) {
+func (x *Object) RemoveWeakPointer(WeakPointerLocationVar *uintptr) {
 
 	xObjectRemoveWeakPointer(x.GoPointer(), WeakPointerLocationVar)
 

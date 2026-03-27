@@ -133,6 +133,9 @@ func (f funcArgsTemplate) PuregoSignalFull() []string {
 			out[i] = f.Pure.Names[i] + " uintptr"
 		}
 	}
+	for _, ge := range f.GErrors {
+		out[ge.Index] = f.Pure.Names[ge.Index] + " unsafe.Pointer"
+	}
 	return out
 }
 
@@ -148,7 +151,7 @@ func (f funcArgsTemplate) PuregoSignalCall() []string {
 		}
 	}
 	for _, ge := range f.GErrors {
-		out[ge.Index] = "(*" + ge.GoType + ")(unsafe.Pointer(" + f.Pure.Names[ge.Index] + "))"
+		out[ge.Index] = "(*" + ge.GoType + ")(" + f.Pure.Names[ge.Index] + ")"
 	}
 	return out
 }
@@ -401,7 +404,10 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	// Get a suitable variable name
 	varName := p.VarName()
 
-	isOut := p.Direction == "out"
+	// GIR "inout" parameters are also pointer-bearing at the ABI/API level.
+	// Treat them like out params so generated wrappers, raw bindings, and
+	// callback accessors all agree on pointer semantics.
+	isOut := p.Direction == "out" || p.Direction == "inout"
 
 	transferFull := p.TransferOwnership.TransferOwnership == "full"
 	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, transferFull)
@@ -420,7 +426,7 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 		apiIdx := len(f.API.Types) - 1
 		f.API.Types[apiIdx] = "*" + gerrorGoType
 		f.API.Full[apiIdx] = varName + " *" + gerrorGoType
-		// Pure stays uintptr; record the index for signal call casting
+		// Pure stays uintptr; PuregoSignalFull promotes it to unsafe.Pointer
 		pureIdx := len(f.Pure.Types) - 1
 		f.GErrors = append(f.GErrors, GErrorParam{
 			Index:  pureIdx,

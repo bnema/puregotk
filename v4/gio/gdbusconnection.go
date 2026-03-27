@@ -1849,12 +1849,12 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Erro
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, RemotePeerVanishedVarp bool, ErrorVarp uintptr) {
+	fcb := func(clsPtr uintptr, RemotePeerVanishedVarp bool, ErrorVarp unsafe.Pointer) {
 		fa := DBusConnection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RemotePeerVanishedVarp, (*glib.Error)(unsafe.Pointer(ErrorVarp)))
+		cbFn(fa, RemotePeerVanishedVarp, (*glib.Error)(ErrorVarp))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

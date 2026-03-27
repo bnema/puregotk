@@ -193,7 +193,7 @@ func NewTimeZoneUtc() *TimeZone {
 	return cret
 }
 
-var xTimeZoneAdjustTime func(uintptr, TimeType, int64) int
+var xTimeZoneAdjustTime func(uintptr, TimeType, *int64) int
 
 // Finds an interval within @tz that corresponds to the given @time_,
 // possibly adjusting @time_ if required to fit into an interval.
@@ -211,7 +211,7 @@ var xTimeZoneAdjustTime func(uintptr, TimeType, int64) int
 // requested on March 14th 2010 in Toronto then this function would
 // adjust @time_ to be 03:00 and return the interval containing the
 // adjusted time.
-func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar int64) int {
+func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar *int64) int {
 
 	cret := xTimeZoneAdjustTime(x.GoPointer(), TypeVar, TimeVar)
 	return cret
