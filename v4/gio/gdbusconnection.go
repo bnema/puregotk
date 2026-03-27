@@ -1841,7 +1841,7 @@ func (x *DBusConnection) GetPropertyUniqueName() string {
 // Upon receiving this signal, you should give up your reference to
 // @connection. You are guaranteed that this signal is emitted only
 // once.
-func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, uintptr)) uint {
+func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -1854,7 +1854,7 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, uintptr)) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RemotePeerVanishedVarp, ErrorVarp)
+		cbFn(fa, RemotePeerVanishedVarp, (*glib.Error)(unsafe.Pointer(ErrorVarp)))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
