@@ -115,7 +115,12 @@ func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintpt
 		}
 	}
 
-	cret := xNewCursorFromCallback(CallbackVarRef, DataVar, DestroyVarRef, FallbackVar.GoPointer())
+	var FallbackVarPtr uintptr
+	if FallbackVar != nil {
+		FallbackVarPtr = FallbackVar.GoPointer()
+	}
+
+	cret := xNewCursorFromCallback(CallbackVarRef, DataVar, DestroyVarRef, FallbackVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -175,7 +180,12 @@ var xNewCursorFromName func(string, uintptr) uintptr
 func NewCursorFromName(NameVar string, FallbackVar *Cursor) *Cursor {
 	var cls *Cursor
 
-	cret := xNewCursorFromName(NameVar, FallbackVar.GoPointer())
+	var FallbackVarPtr uintptr
+	if FallbackVar != nil {
+		FallbackVarPtr = FallbackVar.GoPointer()
+	}
+
+	cret := xNewCursorFromName(NameVar, FallbackVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -191,7 +201,12 @@ var xNewCursorFromTexture func(uintptr, int, int, uintptr) uintptr
 func NewCursorFromTexture(TextureVar *Texture, HotspotXVar int, HotspotYVar int, FallbackVar *Cursor) *Cursor {
 	var cls *Cursor
 
-	cret := xNewCursorFromTexture(TextureVar.GoPointer(), HotspotXVar, HotspotYVar, FallbackVar.GoPointer())
+	var FallbackVarPtr uintptr
+	if FallbackVar != nil {
+		FallbackVarPtr = FallbackVar.GoPointer()
+	}
+
+	cret := xNewCursorFromTexture(TextureVar.GoPointer(), HotspotXVar, HotspotYVar, FallbackVarPtr)
 
 	if cret == 0 {
 		return nil

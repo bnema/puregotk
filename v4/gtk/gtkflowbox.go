@@ -229,7 +229,12 @@ func (x *FlowBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *FlowBox
 		}
 	}
 
-	xFlowBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xFlowBoxBindModel(x.GoPointer(), ModelVarPtr, CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -866,7 +871,7 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 }
 
 // Emitted when a child has been activated by the user.
-func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
+func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, *FlowBoxChild)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
@@ -879,7 +884,7 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ChildVarp)
+		cbFn(fa, func() *FlowBoxChild { cls := &FlowBoxChild{}; cls.Ptr = ChildVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1176,7 +1181,17 @@ func (x *FlowBox) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *FlowBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1186,7 +1201,12 @@ func (x *FlowBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // is created, and it needs to be linked to a previous child.
 func (x *FlowBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1441,7 +1461,12 @@ var xFlowBoxChildSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *FlowBoxChild) SetChild(ChildVar *Widget) {
 
-	xFlowBoxChildSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xFlowBoxChildSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -1622,7 +1647,17 @@ func (x *FlowBoxChild) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *FlowBoxChild) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1632,7 +1667,12 @@ func (x *FlowBoxChild) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // is created, and it needs to be linked to a previous child.
 func (x *FlowBoxChild) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

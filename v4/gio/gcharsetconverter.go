@@ -306,7 +306,12 @@ func (x *CharsetConverter) Reset() {
 func (x *CharsetConverter) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

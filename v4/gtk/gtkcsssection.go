@@ -39,7 +39,12 @@ var xNewCssSection func(uintptr, *CssLocation, *CssLocation) *CssSection
 // `end` location.
 func NewCssSection(FileVar gio.File, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 
-	cret := xNewCssSection(FileVar.GoPointer(), StartVar, EndVar)
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := xNewCssSection(FileVarPtr, StartVar, EndVar)
 	return cret
 }
 
@@ -50,7 +55,12 @@ var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocatio
 // `end` location.
 func NewCssSectionWithBytes(FileVar gio.File, BytesVar *glib.Bytes, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 
-	cret := xNewCssSectionWithBytes(FileVar.GoPointer(), BytesVar, StartVar, EndVar)
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := xNewCssSectionWithBytes(FileVarPtr, BytesVar, StartVar, EndVar)
 	return cret
 }
 

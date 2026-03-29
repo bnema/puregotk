@@ -151,7 +151,12 @@ var xValueTakeExpression func(*gobject.Value, uintptr)
 // This function transfers the ownership of the `expression` to the `GValue`.
 func ValueTakeExpression(ValueVar *gobject.Value, ExpressionVar *Expression) {
 
-	xValueTakeExpression(ValueVar, ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xValueTakeExpression(ValueVar, ExpressionVarPtr)
 
 }
 
@@ -586,7 +591,12 @@ var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
 // to keep it around, you should [method@Gtk.Expression.ref] it beforehand.
 func (x *Expression) Bind(TargetVar *gobject.Object, PropertyVar string, ThisVar *gobject.Object) *ExpressionWatch {
 
-	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVar.GoPointer())
+	var ThisVarPtr uintptr
+	if ThisVar != nil {
+		ThisVarPtr = ThisVar.GoPointer()
+	}
+
+	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVarPtr)
 	return cret
 }
 
@@ -604,7 +614,12 @@ var xExpressionEvaluate func(uintptr, uintptr, *gobject.Value) bool
 // will be returned.
 func (x *Expression) Evaluate(ThisVar *gobject.Object, ValueVar *gobject.Value) bool {
 
-	cret := xExpressionEvaluate(x.GoPointer(), ThisVar.GoPointer(), ValueVar)
+	var ThisVarPtr uintptr
+	if ThisVar != nil {
+		ThisVarPtr = ThisVar.GoPointer()
+	}
+
+	cret := xExpressionEvaluate(x.GoPointer(), ThisVarPtr, ValueVar)
 	return cret
 }
 
@@ -705,7 +720,12 @@ func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify,
 		}
 	}
 
-	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), NotifyVarRef, UserDataVar, UserDestroyVarRef)
+	var ThisVarPtr uintptr
+	if ThisVar != nil {
+		ThisVarPtr = ThisVar.GoPointer()
+	}
+
+	cret := xExpressionWatch(x.GoPointer(), ThisVarPtr, NotifyVarRef, UserDataVar, UserDestroyVarRef)
 	return cret
 }
 
@@ -847,7 +867,12 @@ var xNewPropertyExpression func(types.GType, uintptr, string) uintptr
 func NewPropertyExpression(ThisTypeVar types.GType, ExpressionVar *Expression, PropertyNameVar string) *PropertyExpression {
 	var cls *PropertyExpression
 
-	cret := xNewPropertyExpression(ThisTypeVar, ExpressionVar.GoPointer(), PropertyNameVar)
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewPropertyExpression(ThisTypeVar, ExpressionVarPtr, PropertyNameVar)
 
 	if cret == 0 {
 		return nil
@@ -870,7 +895,12 @@ var xNewPropertyExpressionForPspec func(uintptr, uintptr) uintptr
 func NewPropertyExpressionForPspec(ExpressionVar *Expression, PspecVar *gobject.ParamSpec) *PropertyExpression {
 	var cls *PropertyExpression
 
-	cret := xNewPropertyExpressionForPspec(ExpressionVar.GoPointer(), PspecVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewPropertyExpressionForPspec(ExpressionVarPtr, PspecVar.GoPointer())
 
 	if cret == 0 {
 		return nil

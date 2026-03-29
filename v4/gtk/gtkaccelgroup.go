@@ -44,7 +44,12 @@ var xAcceleratorGetLabelWithKeycode func(uintptr, uint, uint, gdk.ModifierType) 
 // instead.
 func AcceleratorGetLabelWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint, KeycodeVar uint, AcceleratorModsVar gdk.ModifierType) string {
 
-	cret := xAcceleratorGetLabelWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
+	var DisplayVarPtr uintptr
+	if DisplayVar != nil {
+		DisplayVarPtr = DisplayVar.GoPointer()
+	}
+
+	cret := xAcceleratorGetLabelWithKeycode(DisplayVarPtr, AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
 
@@ -74,7 +79,12 @@ var xAcceleratorNameWithKeycode func(uintptr, uint, uint, gdk.ModifierType) stri
 // should use [func@Gtk.accelerator_name] instead.
 func AcceleratorNameWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint, KeycodeVar uint, AcceleratorModsVar gdk.ModifierType) string {
 
-	cret := xAcceleratorNameWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
+	var DisplayVarPtr uintptr
+	if DisplayVar != nil {
+		DisplayVarPtr = DisplayVar.GoPointer()
+	}
+
+	cret := xAcceleratorNameWithKeycode(DisplayVarPtr, AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
 
@@ -127,7 +137,12 @@ var xAcceleratorParseWithKeycode func(string, uintptr, *uint, *[]uint, *gdk.Modi
 // @accelerator_codes will be set to 0 (zero).
 func AcceleratorParseWithKeycode(AcceleratorVar string, DisplayVar *gdk.Display, AcceleratorKeyVar *uint, AcceleratorCodesVar *[]uint, AcceleratorModsVar *gdk.ModifierType) bool {
 
-	cret := xAcceleratorParseWithKeycode(AcceleratorVar, DisplayVar.GoPointer(), AcceleratorKeyVar, AcceleratorCodesVar, AcceleratorModsVar)
+	var DisplayVarPtr uintptr
+	if DisplayVar != nil {
+		DisplayVarPtr = DisplayVar.GoPointer()
+	}
+
+	cret := xAcceleratorParseWithKeycode(AcceleratorVar, DisplayVarPtr, AcceleratorKeyVar, AcceleratorCodesVar, AcceleratorModsVar)
 	return cret
 }
 

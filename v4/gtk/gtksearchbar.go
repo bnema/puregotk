@@ -173,7 +173,12 @@ var xSearchBarSetChild func(uintptr, uintptr)
 // Sets the child widget of @bar.
 func (x *SearchBar) SetChild(ChildVar *Widget) {
 
-	xSearchBarSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xSearchBarSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -193,7 +198,12 @@ var xSearchBarSetKeyCaptureWidget func(uintptr, uintptr)
 // [method@Gtk.EventControllerKey.forward].
 func (x *SearchBar) SetKeyCaptureWidget(WidgetVar *Widget) {
 
-	xSearchBarSetKeyCaptureWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xSearchBarSetKeyCaptureWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -398,7 +408,17 @@ func (x *SearchBar) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *SearchBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -408,7 +428,12 @@ func (x *SearchBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // is created, and it needs to be linked to a previous child.
 func (x *SearchBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

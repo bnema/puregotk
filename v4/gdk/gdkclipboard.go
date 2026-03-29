@@ -130,7 +130,12 @@ func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, Cancella
 		}
 	}
 
-	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -181,7 +186,12 @@ func (x *Clipboard) ReadTextAsync(CancellableVar *gio.Cancellable, CallbackVar *
 		}
 	}
 
-	xClipboardReadTextAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xClipboardReadTextAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -225,7 +235,12 @@ func (x *Clipboard) ReadTextureAsync(CancellableVar *gio.Cancellable, CallbackVa
 		}
 	}
 
-	xClipboardReadTextureAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xClipboardReadTextureAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -277,7 +292,12 @@ func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, Cance
 		}
 	}
 
-	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -332,7 +352,12 @@ var xClipboardSetContent func(uintptr, uintptr) bool
 // transfer the contents and then request that format from @provider.
 func (x *Clipboard) SetContent(ProviderVar *ContentProvider) bool {
 
-	cret := xClipboardSetContent(x.GoPointer(), ProviderVar.GoPointer())
+	var ProviderVarPtr uintptr
+	if ProviderVar != nil {
+		ProviderVarPtr = ProviderVar.GoPointer()
+	}
+
+	cret := xClipboardSetContent(x.GoPointer(), ProviderVarPtr)
 	return cret
 }
 
@@ -403,7 +428,12 @@ func (x *Clipboard) StoreAsync(IoPriorityVar int, CancellableVar *gio.Cancellabl
 		}
 	}
 
-	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

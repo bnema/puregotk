@@ -167,7 +167,12 @@ var xBindingGroupSetSource func(uintptr, uintptr)
 // Note that all properties that have been bound must exist on @source.
 func (x *BindingGroup) SetSource(SourceVar *Object) {
 
-	xBindingGroupSetSource(x.GoPointer(), SourceVar.GoPointer())
+	var SourceVarPtr uintptr
+	if SourceVar != nil {
+		SourceVarPtr = SourceVar.GoPointer()
+	}
+
+	xBindingGroupSetSource(x.GoPointer(), SourceVarPtr)
 
 }
 

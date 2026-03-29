@@ -90,7 +90,17 @@ func (x *AlertDialog) Choose(ParentVar *Window, CancellableVar *gio.Cancellable,
 		}
 	}
 
-	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xAlertDialogChoose(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -236,7 +246,12 @@ var xAlertDialogShow func(uintptr, uintptr)
 // [class@Gio.Cancellable] and callback respectively.
 func (x *AlertDialog) Show(ParentVar *Window) {
 
-	xAlertDialogShow(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xAlertDialogShow(x.GoPointer(), ParentVarPtr)
 
 }
 

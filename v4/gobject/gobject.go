@@ -907,7 +907,12 @@ var xWeakRefInit func(uintptr, uintptr)
 // properly initialised.  Just use g_weak_ref_set() directly.
 func (x *WeakRef) Init(ObjectVar *Object) {
 
-	xWeakRefInit(x.GoPointer(), ObjectVar.GoPointer())
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	xWeakRefInit(x.GoPointer(), ObjectVarPtr)
 
 }
 
@@ -920,7 +925,12 @@ var xWeakRefSet func(uintptr, uintptr)
 // function.
 func (x *WeakRef) Set(ObjectVar *Object) {
 
-	xWeakRefSet(x.GoPointer(), ObjectVar.GoPointer())
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	xWeakRefSet(x.GoPointer(), ObjectVarPtr)
 
 }
 
@@ -1033,7 +1043,12 @@ func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CH
 		}
 	}
 
-	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, CHandlerVarRef, GobjectVar.GoPointer(), ConnectFlagsVar)
+	var GobjectVarPtr uintptr
+	if GobjectVar != nil {
+		GobjectVarPtr = GobjectVar.GoPointer()
+	}
+
+	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, CHandlerVarRef, GobjectVarPtr, ConnectFlagsVar)
 	return cret
 }
 
@@ -2347,7 +2362,7 @@ func (c *Object) SetGoPointer(ptr uintptr) {
 // It is important to note that you must use
 // [canonical parameter names][class@GObject.ParamSpec#parameter-names] as
 // detail strings for the notify signal.
-func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
+func (x *Object) ConnectNotify(cb *func(Object, *ParamSpec)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
@@ -2360,7 +2375,7 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PspecVarp)
+		cbFn(fa, func() *ParamSpec { cls := &ParamSpec{}; cls.Ptr = PspecVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2372,7 +2387,7 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
 
 // ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
 // The detail is appended as "notify::<detail>".
-func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr)) uint {
+func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, *ParamSpec)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("notify::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -2386,7 +2401,7 @@ func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PspecVarp)
+		cbFn(fa, func() *ParamSpec { cls := &ParamSpec{}; cls.Ptr = PspecVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

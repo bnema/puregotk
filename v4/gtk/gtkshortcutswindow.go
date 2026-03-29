@@ -371,7 +371,17 @@ func (x *ShortcutsWindow) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ShortcutsWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -381,7 +391,12 @@ func (x *ShortcutsWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *ShortcutsWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -618,7 +633,12 @@ func (x *ShortcutsWindow) GetFocus() *Widget {
 // this function.
 func (x *ShortcutsWindow) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

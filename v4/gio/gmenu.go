@@ -708,7 +708,12 @@ var xMenuItemSetLink func(uintptr, string, uintptr)
 // must not end with a '-', and must not contain consecutive dashes.
 func (x *MenuItem) SetLink(LinkVar string, ModelVar *MenuModel) {
 
-	xMenuItemSetLink(x.GoPointer(), LinkVar, ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xMenuItemSetLink(x.GoPointer(), LinkVar, ModelVarPtr)
 
 }
 
@@ -723,7 +728,12 @@ var xMenuItemSetSection func(uintptr, uintptr)
 // section.
 func (x *MenuItem) SetSection(SectionVar *MenuModel) {
 
-	xMenuItemSetSection(x.GoPointer(), SectionVar.GoPointer())
+	var SectionVarPtr uintptr
+	if SectionVar != nil {
+		SectionVarPtr = SectionVar.GoPointer()
+	}
+
+	xMenuItemSetSection(x.GoPointer(), SectionVarPtr)
 
 }
 
@@ -738,7 +748,12 @@ var xMenuItemSetSubmenu func(uintptr, uintptr)
 // exactly as it sounds.
 func (x *MenuItem) SetSubmenu(SubmenuVar *MenuModel) {
 
-	xMenuItemSetSubmenu(x.GoPointer(), SubmenuVar.GoPointer())
+	var SubmenuVarPtr uintptr
+	if SubmenuVar != nil {
+		SubmenuVarPtr = SubmenuVar.GoPointer()
+	}
+
+	xMenuItemSetSubmenu(x.GoPointer(), SubmenuVarPtr)
 
 }
 

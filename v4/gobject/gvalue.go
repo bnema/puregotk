@@ -563,7 +563,12 @@ var xValueSetObject func(uintptr, uintptr)
 // the #GValue still exists).
 func (x *Value) SetObject(VObjectVar *Object) {
 
-	xValueSetObject(x.GoPointer(), VObjectVar.GoPointer())
+	var VObjectVarPtr uintptr
+	if VObjectVar != nil {
+		VObjectVarPtr = VObjectVar.GoPointer()
+	}
+
+	xValueSetObject(x.GoPointer(), VObjectVarPtr)
 
 }
 
@@ -581,7 +586,12 @@ var xValueSetParam func(uintptr, uintptr)
 // Set the contents of a %G_TYPE_PARAM #GValue to @param.
 func (x *Value) SetParam(ParamVar *ParamSpec) {
 
-	xValueSetParam(x.GoPointer(), ParamVar.GoPointer())
+	var ParamVarPtr uintptr
+	if ParamVar != nil {
+		ParamVarPtr = ParamVar.GoPointer()
+	}
+
+	xValueSetParam(x.GoPointer(), ParamVarPtr)
 
 }
 
@@ -590,7 +600,12 @@ var xValueSetParamTakeOwnership func(uintptr, uintptr)
 // This is an internal function introduced mainly for C marshallers.
 func (x *Value) SetParamTakeOwnership(ParamVar *ParamSpec) {
 
-	xValueSetParamTakeOwnership(x.GoPointer(), ParamVar.GoPointer())
+	var ParamVarPtr uintptr
+	if ParamVar != nil {
+		ParamVarPtr = ParamVar.GoPointer()
+	}
+
+	xValueSetParamTakeOwnership(x.GoPointer(), ParamVarPtr)
 
 }
 
@@ -761,7 +776,12 @@ var xValueTakeParam func(uintptr, uintptr)
 // doesn’t have to unref it any more.
 func (x *Value) TakeParam(ParamVar *ParamSpec) {
 
-	xValueTakeParam(x.GoPointer(), ParamVar.GoPointer())
+	var ParamVarPtr uintptr
+	if ParamVar != nil {
+		ParamVarPtr = ParamVar.GoPointer()
+	}
+
+	xValueTakeParam(x.GoPointer(), ParamVarPtr)
 
 }
 

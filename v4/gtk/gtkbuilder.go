@@ -732,7 +732,12 @@ var xBuilderCreateClosure func(uintptr, string, BuilderClosureFlags, uintptr, **
 func (x *Builder) CreateClosure(FunctionNameVar string, FlagsVar BuilderClosureFlags, ObjectVar *gobject.Object) (*gobject.Closure, error) {
 	var cerr *glib.Error
 
-	cret := xBuilderCreateClosure(x.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer(), &cerr)
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	cret := xBuilderCreateClosure(x.GoPointer(), FunctionNameVar, FlagsVar, ObjectVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -874,7 +879,12 @@ var xBuilderSetCurrentObject func(uintptr, uintptr)
 // [ctor@Gtk.Builder.new_from_resource], the current object will be %NULL.
 func (x *Builder) SetCurrentObject(CurrentObjectVar *gobject.Object) {
 
-	xBuilderSetCurrentObject(x.GoPointer(), CurrentObjectVar.GoPointer())
+	var CurrentObjectVarPtr uintptr
+	if CurrentObjectVar != nil {
+		CurrentObjectVarPtr = CurrentObjectVar.GoPointer()
+	}
+
+	xBuilderSetCurrentObject(x.GoPointer(), CurrentObjectVarPtr)
 
 }
 
@@ -885,7 +895,12 @@ var xBuilderSetScope func(uintptr, uintptr)
 // If @scope is %NULL, a new [class@Gtk.BuilderCScope] will be created.
 func (x *Builder) SetScope(ScopeVar BuilderScope) {
 
-	xBuilderSetScope(x.GoPointer(), ScopeVar.GoPointer())
+	var ScopeVarPtr uintptr
+	if ScopeVar != nil {
+		ScopeVarPtr = ScopeVar.GoPointer()
+	}
+
+	xBuilderSetScope(x.GoPointer(), ScopeVarPtr)
 
 }
 

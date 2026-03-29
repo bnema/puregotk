@@ -390,7 +390,12 @@ func (x *DtlsConnectionBase) SetGoPointer(ptr uintptr) {
 func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGDtlsConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDtlsConnectionClose(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -402,7 +407,12 @@ func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 // more information.
 func (x *DtlsConnectionBase) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -609,7 +619,12 @@ func (x *DtlsConnectionBase) GetRequireCloseNotify() bool {
 func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGDtlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDtlsConnectionHandshake(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -621,7 +636,12 @@ func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error
 // g_dtls_connection_handshake() for more information.
 func (x *DtlsConnectionBase) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -691,7 +711,12 @@ func (x *DtlsConnectionBase) SetCertificate(CertificateVar *TlsCertificate) {
 // database. See #GDtlsConnection:database for details.
 func (x *DtlsConnectionBase) SetDatabase(DatabaseVar *TlsDatabase) {
 
-	XGDtlsConnectionSetDatabase(x.GoPointer(), DatabaseVar.GoPointer())
+	var DatabaseVarPtr uintptr
+	if DatabaseVar != nil {
+		DatabaseVarPtr = DatabaseVar.GoPointer()
+	}
+
+	XGDtlsConnectionSetDatabase(x.GoPointer(), DatabaseVarPtr)
 
 }
 
@@ -703,7 +728,12 @@ func (x *DtlsConnectionBase) SetDatabase(DatabaseVar *TlsDatabase) {
 // should occur for this connection.
 func (x *DtlsConnectionBase) SetInteraction(InteractionVar *TlsInteraction) {
 
-	XGDtlsConnectionSetInteraction(x.GoPointer(), InteractionVar.GoPointer())
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	XGDtlsConnectionSetInteraction(x.GoPointer(), InteractionVarPtr)
 
 }
 
@@ -767,7 +797,12 @@ func (x *DtlsConnectionBase) SetRequireCloseNotify(RequireCloseNotifyVar bool) {
 func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGDtlsConnectionShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDtlsConnectionShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -779,7 +814,12 @@ func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar boo
 // g_dtls_connection_shutdown() for more information.
 func (x *DtlsConnectionBase) ShutdownAsync(ShutdownReadVar bool, ShutdownWriteVar bool, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -659,10 +659,15 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, uintptr) uintptr
 func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar *string) *Settings {
 	var cls *Settings
 
+	var BackendVarPtr uintptr
+	if BackendVar != nil {
+		BackendVarPtr = BackendVar.GoPointer()
+	}
+
 	PathVarPtr := core.GStrdupNullable(PathVar)
 	defer core.GFreeNullable(PathVarPtr)
 
-	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVarPtr)
+	cret := xNewSettingsFull(SchemaVar, BackendVarPtr, PathVarPtr)
 
 	if cret == 0 {
 		return nil

@@ -58,7 +58,12 @@ func DtlsServerConnectionNew(BaseSocketVar DatagramBased, CertificateVar *TlsCer
 	var cls *DtlsServerConnectionBase
 	var cerr *glib.Error
 
-	cret := xDtlsServerConnectionNew(BaseSocketVar.GoPointer(), CertificateVar.GoPointer(), &cerr)
+	var CertificateVarPtr uintptr
+	if CertificateVar != nil {
+		CertificateVarPtr = CertificateVar.GoPointer()
+	}
+
+	cret := xDtlsServerConnectionNew(BaseSocketVar.GoPointer(), CertificateVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

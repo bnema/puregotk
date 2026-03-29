@@ -239,7 +239,12 @@ var xGLTextureBuilderSetContext func(uintptr, uintptr)
 // The context must be set before calling [method@Gdk.GLTextureBuilder.build].
 func (x *GLTextureBuilder) SetContext(ContextVar *GLContext) {
 
-	xGLTextureBuilderSetContext(x.GoPointer(), ContextVar.GoPointer())
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	xGLTextureBuilderSetContext(x.GoPointer(), ContextVarPtr)
 
 }
 
@@ -343,7 +348,12 @@ var xGLTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 // [method@Gdk.GLTextureBuilder.set_update_region] for an explanation.
 func (x *GLTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
 
-	xGLTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
+	var TextureVarPtr uintptr
+	if TextureVar != nil {
+		TextureVarPtr = TextureVar.GoPointer()
+	}
+
+	xGLTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVarPtr)
 
 }
 

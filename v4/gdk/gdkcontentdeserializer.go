@@ -43,7 +43,12 @@ func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, Typ
 		}
 	}
 
-	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

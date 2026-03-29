@@ -467,7 +467,12 @@ func (x *FontChooserBase) SetFontDesc(FontDescVar *pango.FontDescription) {
 // ```
 func (x *FontChooserBase) SetFontMap(FontmapVar *pango.FontMap) {
 
-	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
+	var FontmapVarPtr uintptr
+	if FontmapVar != nil {
+		FontmapVarPtr = FontmapVar.GoPointer()
+	}
+
+	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVarPtr)
 
 }
 

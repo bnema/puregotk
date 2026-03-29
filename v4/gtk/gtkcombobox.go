@@ -496,7 +496,12 @@ var xComboBoxSetChild func(uintptr, uintptr)
 // Sets the child widget of @combo_box.
 func (x *ComboBox) SetChild(ChildVar *Widget) {
 
-	xComboBoxSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xComboBoxSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -544,7 +549,12 @@ var xComboBoxSetModel func(uintptr, uintptr)
 // cell renderers for the new model.
 func (x *ComboBox) SetModel(ModelVar TreeModel) {
 
-	xComboBoxSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xComboBoxSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -1092,7 +1102,17 @@ func (x *ComboBox) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ComboBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1102,7 +1122,12 @@ func (x *ComboBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *ComboBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1262,7 +1287,12 @@ func (x *ComboBox) RemoveWidget() {
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *ComboBox) StartEditing(EventVar *gdk.Event) {
 
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
 
 }
 

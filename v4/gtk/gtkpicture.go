@@ -122,7 +122,12 @@ var xNewPictureForFile func(uintptr) uintptr
 func NewPictureForFile(FileVar gio.File) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForFile(FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := xNewPictureForFile(FileVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -165,7 +170,12 @@ var xNewPictureForPaintable func(uintptr) uintptr
 func NewPictureForPaintable(PaintableVar gdk.Paintable) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForPaintable(PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	cret := xNewPictureForPaintable(PaintableVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -187,7 +197,12 @@ var xNewPictureForPixbuf func(uintptr) uintptr
 func NewPictureForPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForPixbuf(PixbufVar.GoPointer())
+	var PixbufVarPtr uintptr
+	if PixbufVar != nil {
+		PixbufVarPtr = PixbufVar.GoPointer()
+	}
+
+	cret := xNewPictureForPixbuf(PixbufVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -359,7 +374,12 @@ var xPictureSetFile func(uintptr, uintptr)
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Picture) SetFile(FileVar gio.File) {
 
-	xPictureSetFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xPictureSetFile(x.GoPointer(), FileVarPtr)
 
 }
 
@@ -409,7 +429,12 @@ var xPictureSetPaintable func(uintptr, uintptr)
 // See [ctor@Gtk.Picture.new_for_paintable] for details.
 func (x *Picture) SetPaintable(PaintableVar gdk.Paintable) {
 
-	xPictureSetPaintable(x.GoPointer(), PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xPictureSetPaintable(x.GoPointer(), PaintableVarPtr)
 
 }
 
@@ -422,7 +447,12 @@ var xPictureSetPixbuf func(uintptr, uintptr)
 // This is a utility function that calls [method@Gtk.Picture.set_paintable].
 func (x *Picture) SetPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 
-	xPictureSetPixbuf(x.GoPointer(), PixbufVar.GoPointer())
+	var PixbufVarPtr uintptr
+	if PixbufVar != nil {
+		PixbufVarPtr = PixbufVar.GoPointer()
+	}
+
+	xPictureSetPixbuf(x.GoPointer(), PixbufVarPtr)
 
 }
 
@@ -639,7 +669,17 @@ func (x *Picture) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Picture) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -649,7 +689,12 @@ func (x *Picture) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // is created, and it needs to be linked to a previous child.
 func (x *Picture) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

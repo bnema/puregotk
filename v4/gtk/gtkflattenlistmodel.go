@@ -49,7 +49,12 @@ var xNewFlattenListModel func(uintptr) uintptr
 func NewFlattenListModel(ModelVar gio.ListModel) *FlattenListModel {
 	var cls *FlattenListModel
 
-	cret := xNewFlattenListModel(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewFlattenListModel(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -98,7 +103,12 @@ var xFlattenListModelSetModel func(uintptr, uintptr)
 // Sets a new model to be flattened.
 func (x *FlattenListModel) SetModel(ModelVar gio.ListModel) {
 
-	xFlattenListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xFlattenListModelSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

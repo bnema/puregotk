@@ -231,13 +231,18 @@ var xNewMessageDialog func(uintptr, uintptr, uintptr) uintptr
 func NewMessageDialog(ParentVar *gtk.Window, HeadingVar *string, BodyVar *string) *MessageDialog {
 	var cls *MessageDialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
 	defer core.GFreeNullable(HeadingVarPtr)
 
 	BodyVarPtr := core.GStrdupNullable(BodyVar)
 	defer core.GFreeNullable(BodyVarPtr)
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), HeadingVarPtr, BodyVarPtr)
+	cret := xNewMessageDialog(ParentVarPtr, HeadingVarPtr, BodyVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -317,7 +322,12 @@ func (x *MessageDialog) Choose(CancellableVar *gio.Cancellable, CallbackVar *gio
 		}
 	}
 
-	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xMessageDialogChoose(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -582,7 +592,12 @@ var xMessageDialogSetExtraChild func(uintptr, uintptr)
 // The child widget is displayed below the heading and body.
 func (x *MessageDialog) SetExtraChild(ChildVar *gtk.Widget) {
 
-	xMessageDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xMessageDialogSetExtraChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -1008,7 +1023,17 @@ func (x *MessageDialog) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *MessageDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1018,7 +1043,12 @@ func (x *MessageDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblin
 // is created, and it needs to be linked to a previous child.
 func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1255,7 +1285,12 @@ func (x *MessageDialog) GetFocus() *gtk.Widget {
 // this function.
 func (x *MessageDialog) SetFocus(FocusVar *gtk.Widget) {
 
-	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

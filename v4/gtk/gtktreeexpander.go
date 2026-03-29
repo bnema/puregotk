@@ -219,7 +219,12 @@ var xTreeExpanderSetChild func(uintptr, uintptr)
 // Sets the content widget to display.
 func (x *TreeExpander) SetChild(ChildVar *Widget) {
 
-	xTreeExpanderSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xTreeExpanderSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -255,7 +260,12 @@ var xTreeExpanderSetListRow func(uintptr, uintptr)
 // Sets the tree list row that this expander should manage.
 func (x *TreeExpander) SetListRow(ListRowVar *TreeListRow) {
 
-	xTreeExpanderSetListRow(x.GoPointer(), ListRowVar.GoPointer())
+	var ListRowVarPtr uintptr
+	if ListRowVar != nil {
+		ListRowVarPtr = ListRowVar.GoPointer()
+	}
+
+	xTreeExpanderSetListRow(x.GoPointer(), ListRowVarPtr)
 
 }
 
@@ -465,7 +475,17 @@ func (x *TreeExpander) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *TreeExpander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -475,7 +495,12 @@ func (x *TreeExpander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // is created, and it needs to be linked to a previous child.
 func (x *TreeExpander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -179,7 +179,12 @@ func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVa
 		}
 	}
 
-	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -236,7 +241,12 @@ func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, Cancellabl
 		}
 	}
 
-	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

@@ -470,7 +470,12 @@ var xTlsConnectionHandshake func(uintptr, uintptr, **glib.Error) bool
 func (x *TlsConnection) Handshake(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xTlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsConnectionHandshake(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -499,7 +504,12 @@ func (x *TlsConnection) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancel
 		}
 	}
 
-	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -577,7 +587,12 @@ var xTlsConnectionSetDatabase func(uintptr, uintptr)
 // database. See #GTlsConnection:database for details.
 func (x *TlsConnection) SetDatabase(DatabaseVar *TlsDatabase) {
 
-	xTlsConnectionSetDatabase(x.GoPointer(), DatabaseVar.GoPointer())
+	var DatabaseVarPtr uintptr
+	if DatabaseVar != nil {
+		DatabaseVarPtr = DatabaseVar.GoPointer()
+	}
+
+	xTlsConnectionSetDatabase(x.GoPointer(), DatabaseVarPtr)
 
 }
 
@@ -591,7 +606,12 @@ var xTlsConnectionSetInteraction func(uintptr, uintptr)
 // should occur for this connection.
 func (x *TlsConnection) SetInteraction(InteractionVar *TlsInteraction) {
 
-	xTlsConnectionSetInteraction(x.GoPointer(), InteractionVar.GoPointer())
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	xTlsConnectionSetInteraction(x.GoPointer(), InteractionVarPtr)
 
 }
 
@@ -788,7 +808,7 @@ func (x *TlsConnection) GetPropertyUseSystemCertdb() bool {
 // If you are doing I/O in another thread, you do not
 // need to worry about this, and can simply block in the signal
 // handler until the UI thread returns an answer.
-func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr, TlsCertificateFlags) bool) uint {
+func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
@@ -801,7 +821,7 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PeerCertVarp, ErrorsVarp)
+		return cbFn(fa, func() *TlsCertificate { cls := &TlsCertificate{}; cls.Ptr = PeerCertVarp; return cls }(), ErrorsVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

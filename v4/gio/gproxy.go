@@ -199,7 +199,12 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 	var cls *IOStream
 	var cerr *glib.Error
 
-	cret := XGProxyConnect(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGProxyConnect(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -216,7 +221,12 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 // Asynchronous version of g_proxy_connect().
 func (x *ProxyBase) ConnectAsync(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

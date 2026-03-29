@@ -915,7 +915,12 @@ func (x *MountBase) CanUnmount() bool {
 // and #GAsyncResult data returned in the @callback.
 func (x *MountBase) Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountEject(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountEject(x.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -937,7 +942,17 @@ func (x *MountBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 // and #GAsyncResult data returned in the @callback.
 func (x *MountBase) EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1080,7 +1095,12 @@ func (x *MountBase) GetVolume() *VolumeBase {
 // @mount and #GAsyncResult data returned in the @callback.
 func (x *MountBase) GuessContentType(ForceRescanVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountGuessContentType(x.GoPointer(), ForceRescanVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountGuessContentType(x.GoPointer(), ForceRescanVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1112,7 +1132,12 @@ func (x *MountBase) GuessContentTypeFinish(ResultVar AsyncResult) ([]string, err
 func (x *MountBase) GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Cancellable) ([]string, error) {
 	var cerr *glib.Error
 
-	cret := XGMountGuessContentTypeSync(x.GoPointer(), ForceRescanVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGMountGuessContentTypeSync(x.GoPointer(), ForceRescanVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1160,7 +1185,17 @@ func (x *MountBase) IsShadowed() bool {
 // unmounted.
 func (x *MountBase) Remount(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountRemount(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountRemount(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1192,7 +1227,12 @@ func (x *MountBase) Shadow() {
 // and #GAsyncResult data returned in the @callback.
 func (x *MountBase) Unmount(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountUnmount(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountUnmount(x.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1214,7 +1254,17 @@ func (x *MountBase) UnmountFinish(ResultVar AsyncResult) (bool, error) {
 // and #GAsyncResult data returned in the @callback.
 func (x *MountBase) UnmountWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGMountUnmountWithOperation(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGMountUnmountWithOperation(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -108,7 +108,12 @@ func (x *RootBase) GetFocus() *Widget {
 // this function.
 func (x *RootBase) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

@@ -52,7 +52,17 @@ var xNewViewport func(uintptr, uintptr) uintptr
 func NewViewport(HadjustmentVar *Adjustment, VadjustmentVar *Adjustment) *Viewport {
 	var cls *Viewport
 
-	cret := xNewViewport(HadjustmentVar.GoPointer(), VadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	cret := xNewViewport(HadjustmentVarPtr, VadjustmentVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -107,7 +117,12 @@ var xViewportSetChild func(uintptr, uintptr)
 // Sets the child widget of @viewport.
 func (x *Viewport) SetChild(ChildVar *Widget) {
 
-	xViewportSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xViewportSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -291,7 +306,17 @@ func (x *Viewport) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Viewport) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -301,7 +326,12 @@ func (x *Viewport) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *Viewport) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -494,7 +524,12 @@ func (x *Viewport) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *Viewport) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -511,7 +546,12 @@ func (x *Viewport) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *Viewport) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

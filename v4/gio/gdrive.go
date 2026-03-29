@@ -1037,7 +1037,12 @@ func (x *DriveBase) CanStop() bool {
 // result of the operation.
 func (x *DriveBase) Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDriveEject(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDriveEject(x.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1058,7 +1063,17 @@ func (x *DriveBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 // and #GAsyncResult data returned in the @callback.
 func (x *DriveBase) EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDriveEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDriveEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1197,7 +1212,12 @@ func (x *DriveBase) IsRemovable() bool {
 // result of the operation.
 func (x *DriveBase) PollForMedia(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDrivePollForMedia(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDrivePollForMedia(x.GoPointer(), CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1220,7 +1240,17 @@ func (x *DriveBase) PollForMediaFinish(ResultVar AsyncResult) (bool, error) {
 // result of the operation.
 func (x *DriveBase) Start(FlagsVar DriveStartFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDriveStart(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDriveStart(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1243,7 +1273,17 @@ func (x *DriveBase) StartFinish(ResultVar AsyncResult) (bool, error) {
 // result of the operation.
 func (x *DriveBase) Stop(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDriveStop(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var MountOperationVarPtr uintptr
+	if MountOperationVar != nil {
+		MountOperationVarPtr = MountOperationVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGDriveStop(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

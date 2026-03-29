@@ -337,7 +337,12 @@ var xDBusMethodInvocationReturnValueWithUnixFdList func(uintptr, *glib.Variant, 
 // @invocation.
 func (x *DBusMethodInvocation) ReturnValueWithUnixFdList(ParametersVar *glib.Variant, FdListVar *UnixFDList) {
 
-	xDBusMethodInvocationReturnValueWithUnixFdList(x.GoPointer(), ParametersVar, FdListVar.GoPointer())
+	var FdListVarPtr uintptr
+	if FdListVar != nil {
+		FdListVarPtr = FdListVar.GoPointer()
+	}
+
+	xDBusMethodInvocationReturnValueWithUnixFdList(x.GoPointer(), ParametersVar, FdListVarPtr)
 
 }
 

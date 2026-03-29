@@ -64,7 +64,12 @@ var xNewWidgetPaintable func(uintptr) uintptr
 func NewWidgetPaintable(WidgetVar *Widget) *WidgetPaintable {
 	var cls *WidgetPaintable
 
-	cret := xNewWidgetPaintable(WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	cret := xNewWidgetPaintable(WidgetVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -96,7 +101,12 @@ var xWidgetPaintableSetWidget func(uintptr, uintptr)
 // Sets the widget that should be observed.
 func (x *WidgetPaintable) SetWidget(WidgetVar *Widget) {
 
-	xWidgetPaintableSetWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xWidgetPaintableSetWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 

@@ -81,7 +81,12 @@ var xNewVideoForFile func(uintptr) uintptr
 func NewVideoForFile(FileVar gio.File) *Video {
 	var cls *Video
 
-	cret := xNewVideoForFile(FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := xNewVideoForFile(FileVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -121,7 +126,12 @@ var xNewVideoForMediaStream func(uintptr) uintptr
 func NewVideoForMediaStream(StreamVar *MediaStream) *Video {
 	var cls *Video
 
-	cret := xNewVideoForMediaStream(StreamVar.GoPointer())
+	var StreamVarPtr uintptr
+	if StreamVar != nil {
+		StreamVarPtr = StreamVar.GoPointer()
+	}
+
+	cret := xNewVideoForMediaStream(StreamVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -234,7 +244,12 @@ var xVideoSetFile func(uintptr, uintptr)
 // Makes @self play the given @file.
 func (x *Video) SetFile(FileVar gio.File) {
 
-	xVideoSetFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xVideoSetFile(x.GoPointer(), FileVarPtr)
 
 }
 
@@ -284,7 +299,12 @@ var xVideoSetMediaStream func(uintptr, uintptr)
 // instead.
 func (x *Video) SetMediaStream(StreamVar *MediaStream) {
 
-	xVideoSetMediaStream(x.GoPointer(), StreamVar.GoPointer())
+	var StreamVarPtr uintptr
+	if StreamVar != nil {
+		StreamVarPtr = StreamVar.GoPointer()
+	}
+
+	xVideoSetMediaStream(x.GoPointer(), StreamVarPtr)
 
 }
 
@@ -481,7 +501,17 @@ func (x *Video) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Video) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -491,7 +521,12 @@ func (x *Video) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Video) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

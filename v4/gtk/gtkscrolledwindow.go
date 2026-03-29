@@ -390,7 +390,12 @@ var xScrolledWindowSetChild func(uintptr, uintptr)
 // and then add the viewport as its child widget.
 func (x *ScrolledWindow) SetChild(ChildVar *Widget) {
 
-	xScrolledWindowSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xScrolledWindowSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -399,7 +404,12 @@ var xScrolledWindowSetHadjustment func(uintptr, uintptr)
 // Sets the `GtkAdjustment` for the horizontal scrollbar.
 func (x *ScrolledWindow) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	xScrolledWindowSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	xScrolledWindowSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -552,7 +562,12 @@ var xScrolledWindowSetVadjustment func(uintptr, uintptr)
 // Sets the `GtkAdjustment` for the vertical scrollbar.
 func (x *ScrolledWindow) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	xScrolledWindowSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	xScrolledWindowSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 
@@ -1024,7 +1039,17 @@ func (x *ScrolledWindow) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ScrolledWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1034,7 +1059,12 @@ func (x *ScrolledWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVa
 // is created, and it needs to be linked to a previous child.
 func (x *ScrolledWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -317,7 +317,12 @@ var xNavigationSplitViewSetContent func(uintptr, uintptr)
 // Sets the content widget for @self.
 func (x *NavigationSplitView) SetContent(ContentVar *NavigationPage) {
 
-	xNavigationSplitViewSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xNavigationSplitViewSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -371,7 +376,12 @@ var xNavigationSplitViewSetSidebar func(uintptr, uintptr)
 // Sets the sidebar widget for @self.
 func (x *NavigationSplitView) SetSidebar(SidebarVar *NavigationPage) {
 
-	xNavigationSplitViewSetSidebar(x.GoPointer(), SidebarVar.GoPointer())
+	var SidebarVarPtr uintptr
+	if SidebarVar != nil {
+		SidebarVarPtr = SidebarVar.GoPointer()
+	}
+
+	xNavigationSplitViewSetSidebar(x.GoPointer(), SidebarVarPtr)
 
 }
 
@@ -712,7 +722,17 @@ func (x *NavigationSplitView) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *NavigationSplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -722,7 +742,12 @@ func (x *NavigationSplitView) SetAccessibleParent(ParentVar gtk.Accessible, Next
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationSplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

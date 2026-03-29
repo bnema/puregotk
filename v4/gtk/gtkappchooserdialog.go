@@ -58,7 +58,12 @@ var xNewAppChooserDialog func(uintptr, DialogFlags, uintptr) uintptr
 func NewAppChooserDialog(ParentVar *Window, FlagsVar DialogFlags, FileVar gio.File) *AppChooserDialog {
 	var cls *AppChooserDialog
 
-	cret := xNewAppChooserDialog(ParentVar.GoPointer(), FlagsVar, FileVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	cret := xNewAppChooserDialog(ParentVarPtr, FlagsVar, FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -77,7 +82,12 @@ var xNewAppChooserDialogForContentType func(uintptr, DialogFlags, string) uintpt
 func NewAppChooserDialogForContentType(ParentVar *Window, FlagsVar DialogFlags, ContentTypeVar string) *AppChooserDialog {
 	var cls *AppChooserDialog
 
-	cret := xNewAppChooserDialogForContentType(ParentVar.GoPointer(), FlagsVar, ContentTypeVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	cret := xNewAppChooserDialogForContentType(ParentVarPtr, FlagsVar, ContentTypeVar)
 
 	if cret == 0 {
 		return nil
@@ -291,7 +301,17 @@ func (x *AppChooserDialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *AppChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -301,7 +321,12 @@ func (x *AppChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSibling
 // is created, and it needs to be linked to a previous child.
 func (x *AppChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -567,7 +592,12 @@ func (x *AppChooserDialog) GetFocus() *Widget {
 // this function.
 func (x *AppChooserDialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

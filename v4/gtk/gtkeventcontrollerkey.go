@@ -102,7 +102,12 @@ var xEventControllerKeySetImContext func(uintptr, uintptr)
 // Sets the input method context of the key @controller.
 func (x *EventControllerKey) SetImContext(ImContextVar *IMContext) {
 
-	xEventControllerKeySetImContext(x.GoPointer(), ImContextVar.GoPointer())
+	var ImContextVarPtr uintptr
+	if ImContextVar != nil {
+		ImContextVarPtr = ImContextVar.GoPointer()
+	}
+
+	xEventControllerKeySetImContext(x.GoPointer(), ImContextVarPtr)
 
 }
 

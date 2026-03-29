@@ -420,10 +420,15 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, uintptr)
 // the request.
 func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar *string) uint {
 
+	var WindowVarPtr uintptr
+	if WindowVar != nil {
+		WindowVarPtr = WindowVar.GoPointer()
+	}
+
 	ReasonVarPtr := core.GStrdupNullable(ReasonVar)
 	defer core.GFreeNullable(ReasonVarPtr)
 
-	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVarPtr)
+	cret := xApplicationInhibit(x.GoPointer(), WindowVarPtr, FlagsVar, ReasonVarPtr)
 	return cret
 }
 
@@ -495,7 +500,12 @@ var xApplicationSetMenubar func(uintptr, uintptr)
 // user selecting these menu items.
 func (x *Application) SetMenubar(MenubarVar *gio.MenuModel) {
 
-	xApplicationSetMenubar(x.GoPointer(), MenubarVar.GoPointer())
+	var MenubarVarPtr uintptr
+	if MenubarVar != nil {
+		MenubarVarPtr = MenubarVar.GoPointer()
+	}
+
+	xApplicationSetMenubar(x.GoPointer(), MenubarVarPtr)
 
 }
 
@@ -589,7 +599,7 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint {
 // Emitted when a window is added to an application.
 //
 // See [method@Gtk.Application.add_window].
-func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
+func (x *Application) ConnectWindowAdded(cb *func(Application, *Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
@@ -602,7 +612,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, WindowVarp)
+		cbFn(fa, func() *Window { cls := &Window{}; cls.Ptr = WindowVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -616,7 +626,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
 //
 // This can happen as a side-effect of the window being destroyed
 // or explicitly through [method@Gtk.Application.remove_window].
-func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint {
+func (x *Application) ConnectWindowRemoved(cb *func(Application, *Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
@@ -629,7 +639,7 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, WindowVarp)
+		cbFn(fa, func() *Window { cls := &Window{}; cls.Ptr = WindowVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

@@ -295,7 +295,12 @@ var xTlsInteractionAskPassword func(uintptr, uintptr, uintptr, **glib.Error) Tls
 func (x *TlsInteraction) AskPassword(PasswordVar *TlsPassword, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	cret := xTlsInteractionAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsInteractionAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -337,7 +342,12 @@ func (x *TlsInteraction) AskPasswordAsync(PasswordVar *TlsPassword, CancellableV
 		}
 	}
 
-	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -387,7 +397,12 @@ var xTlsInteractionInvokeAskPassword func(uintptr, uintptr, uintptr, **glib.Erro
 func (x *TlsInteraction) InvokeAskPassword(PasswordVar *TlsPassword, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	cret := xTlsInteractionInvokeAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsInteractionInvokeAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -420,7 +435,12 @@ var xTlsInteractionInvokeRequestCertificate func(uintptr, uintptr, TlsCertificat
 func (x *TlsInteraction) InvokeRequestCertificate(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	cret := xTlsInteractionInvokeRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsInteractionInvokeRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -449,7 +469,12 @@ var xTlsInteractionRequestCertificate func(uintptr, uintptr, TlsCertificateReque
 func (x *TlsInteraction) RequestCertificate(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	cret := xTlsInteractionRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsInteractionRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -484,7 +509,12 @@ func (x *TlsInteraction) RequestCertificateAsync(ConnectionVar *TlsConnection, F
 		}
 	}
 
-	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

@@ -205,7 +205,12 @@ func (x *ProxyResolverBase) IsSupported() bool {
 func (x *ProxyResolverBase) Lookup(UriVar string, CancellableVar *Cancellable) ([]string, error) {
 	var cerr *glib.Error
 
-	cret := XGProxyResolverLookup(x.GoPointer(), UriVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGProxyResolverLookup(x.GoPointer(), UriVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -217,7 +222,12 @@ func (x *ProxyResolverBase) Lookup(UriVar string, CancellableVar *Cancellable) (
 // details.
 func (x *ProxyResolverBase) LookupAsync(UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -435,10 +435,15 @@ var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, uintptr) uintptr
 func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar *string) *Font {
 	var cls *Font
 
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
 	VariationsVarPtr := core.GStrdupNullable(VariationsVar)
 	defer core.GFreeNullable(VariationsVarPtr)
 
-	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVarPtr)
+	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVarPtr, VariationsVarPtr)
 
 	if cret == 0 {
 		return nil

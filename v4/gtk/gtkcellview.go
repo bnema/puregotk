@@ -236,7 +236,12 @@ var xCellViewSetModel func(uintptr, uintptr)
 // %NULL, then it will unset the old model.
 func (x *CellView) SetModel(ModelVar TreeModel) {
 
-	xCellViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xCellViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -437,7 +442,17 @@ func (x *CellView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *CellView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -447,7 +462,12 @@ func (x *CellView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *CellView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

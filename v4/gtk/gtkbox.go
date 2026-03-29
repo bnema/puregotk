@@ -152,7 +152,12 @@ var xBoxInsertChildAfter func(uintptr, uintptr, uintptr)
 // If @sibling is `NULL`, the @child is placed at the beginning.
 func (x *Box) InsertChildAfter(ChildVar *Widget, SiblingVar *Widget) {
 
-	xBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
+	var SiblingVarPtr uintptr
+	if SiblingVar != nil {
+		SiblingVarPtr = SiblingVar.GoPointer()
+	}
+
+	xBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
 
 }
 
@@ -188,7 +193,12 @@ var xBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 // If @sibling is `NULL`, the child is placed at the beginning.
 func (x *Box) ReorderChildAfter(ChildVar *Widget, SiblingVar *Widget) {
 
-	xBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
+	var SiblingVarPtr uintptr
+	if SiblingVar != nil {
+		SiblingVarPtr = SiblingVar.GoPointer()
+	}
+
+	xBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
 
 }
 
@@ -437,7 +447,17 @@ func (x *Box) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Box) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -447,7 +467,12 @@ func (x *Box) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessibl
 // is created, and it needs to be linked to a previous child.
 func (x *Box) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

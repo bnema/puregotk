@@ -294,7 +294,12 @@ var xCheckButtonSetChild func(uintptr, uintptr)
 // relations from @child to @button.
 func (x *CheckButton) SetChild(ChildVar *Widget) {
 
-	xCheckButtonSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xCheckButtonSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -317,7 +322,12 @@ var xCheckButtonSetGroup func(uintptr, uintptr)
 // value.
 func (x *CheckButton) SetGroup(GroupVar *CheckButton) {
 
-	xCheckButtonSetGroup(x.GoPointer(), GroupVar.GoPointer())
+	var GroupVarPtr uintptr
+	if GroupVar != nil {
+		GroupVarPtr = GroupVar.GoPointer()
+	}
+
+	xCheckButtonSetGroup(x.GoPointer(), GroupVarPtr)
 
 }
 
@@ -647,7 +657,17 @@ func (x *CheckButton) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *CheckButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -657,7 +677,12 @@ func (x *CheckButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // is created, and it needs to be linked to a previous child.
 func (x *CheckButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

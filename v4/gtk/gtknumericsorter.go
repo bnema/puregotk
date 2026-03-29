@@ -51,7 +51,12 @@ var xNewNumericSorter func(uintptr) uintptr
 func NewNumericSorter(ExpressionVar *Expression) *NumericSorter {
 	var cls *NumericSorter
 
-	cret := xNewNumericSorter(ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewNumericSorter(ExpressionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -98,7 +103,12 @@ var xNumericSorterSetExpression func(uintptr, uintptr)
 // numerically, such as %G_TYPE_INT or %G_TYPE_DOUBLE.
 func (x *NumericSorter) SetExpression(ExpressionVar *Expression) {
 
-	xNumericSorterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xNumericSorterSetExpression(x.GoPointer(), ExpressionVarPtr)
 
 }
 

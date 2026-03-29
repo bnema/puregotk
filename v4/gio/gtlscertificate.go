@@ -415,7 +415,17 @@ var xTlsCertificateVerify func(uintptr, uintptr, uintptr) TlsCertificateFlags
 // handle the verification.
 func (x *TlsCertificate) Verify(IdentityVar SocketConnectable, TrustedCaVar *TlsCertificate) TlsCertificateFlags {
 
-	cret := xTlsCertificateVerify(x.GoPointer(), IdentityVar.GoPointer(), TrustedCaVar.GoPointer())
+	var IdentityVarPtr uintptr
+	if IdentityVar != nil {
+		IdentityVarPtr = IdentityVar.GoPointer()
+	}
+
+	var TrustedCaVarPtr uintptr
+	if TrustedCaVar != nil {
+		TrustedCaVarPtr = TrustedCaVar.GoPointer()
+	}
+
+	cret := xTlsCertificateVerify(x.GoPointer(), IdentityVarPtr, TrustedCaVarPtr)
 	return cret
 }
 

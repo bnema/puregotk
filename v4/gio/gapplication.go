@@ -1080,7 +1080,12 @@ var xApplicationRegister func(uintptr, uintptr, **glib.Error) bool
 func (x *Application) Register(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xApplicationRegister(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xApplicationRegister(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1231,7 +1236,12 @@ var xApplicationSetActionGroup func(uintptr, uintptr)
 // Now there is #GActionMap for that.
 func (x *Application) SetActionGroup(ActionGroupVar ActionGroup) {
 
-	xApplicationSetActionGroup(x.GoPointer(), ActionGroupVar.GoPointer())
+	var ActionGroupVarPtr uintptr
+	if ActionGroupVar != nil {
+		ActionGroupVarPtr = ActionGroupVar.GoPointer()
+	}
+
+	xApplicationSetActionGroup(x.GoPointer(), ActionGroupVarPtr)
 
 }
 
@@ -1578,7 +1588,7 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint {
 // The ::command-line signal is emitted on the primary instance when
 // a commandline is not handled locally. See g_application_run() and
 // the #GApplicationCommandLine documentation for more information.
-func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int) uint {
+func (x *Application) ConnectCommandLine(cb *func(Application, *ApplicationCommandLine) int) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
@@ -1591,7 +1601,11 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int) uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, CommandLineVarp)
+		return cbFn(fa, func() *ApplicationCommandLine {
+			cls := &ApplicationCommandLine{}
+			cls.Ptr = CommandLineVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

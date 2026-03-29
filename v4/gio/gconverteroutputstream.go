@@ -247,7 +247,12 @@ func (x *ConverterOutputStream) CanPoll() bool {
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
-	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
 	return cret
 }
 
@@ -289,7 +294,12 @@ func (x *ConverterOutputStream) IsWritable() bool {
 func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -319,7 +329,12 @@ func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint
 func (x *ConverterOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
-	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

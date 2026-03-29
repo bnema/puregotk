@@ -169,7 +169,12 @@ func (x *ScrollableBase) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ScrollableBase) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -186,7 +191,12 @@ func (x *ScrollableBase) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ScrollableBase) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

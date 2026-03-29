@@ -76,7 +76,12 @@ var xShowAboutDialog func(uintptr, string, ...interface{})
 // reused for future invocations of this function.
 func ShowAboutDialog(ParentVar *Window, FirstPropertyNameVar string, varArgs ...interface{}) {
 
-	xShowAboutDialog(ParentVar.GoPointer(), FirstPropertyNameVar, varArgs...)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xShowAboutDialog(ParentVarPtr, FirstPropertyNameVar, varArgs...)
 
 }
 
@@ -429,7 +434,12 @@ var xAboutDialogSetLogo func(uintptr, uintptr)
 // Sets the logo in the about dialog.
 func (x *AboutDialog) SetLogo(LogoVar gdk.Paintable) {
 
-	xAboutDialogSetLogo(x.GoPointer(), LogoVar.GoPointer())
+	var LogoVarPtr uintptr
+	if LogoVar != nil {
+		LogoVarPtr = LogoVar.GoPointer()
+	}
+
+	xAboutDialogSetLogo(x.GoPointer(), LogoVarPtr)
 
 }
 
@@ -1054,7 +1064,17 @@ func (x *AboutDialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *AboutDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1064,7 +1084,12 @@ func (x *AboutDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // is created, and it needs to be linked to a previous child.
 func (x *AboutDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1301,7 +1326,12 @@ func (x *AboutDialog) GetFocus() *Widget {
 // this function.
 func (x *AboutDialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

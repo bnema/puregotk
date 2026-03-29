@@ -57,7 +57,12 @@ var xNewFileLauncher func(uintptr) uintptr
 func NewFileLauncher(FileVar gio.File) *FileLauncher {
 	var cls *FileLauncher
 
-	cret := xNewFileLauncher(FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := xNewFileLauncher(FileVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -124,7 +129,17 @@ func (x *FileLauncher) Launch(ParentVar *Window, CancellableVar *gio.Cancellable
 		}
 	}
 
-	xFileLauncherLaunch(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileLauncherLaunch(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -166,7 +181,17 @@ func (x *FileLauncher) OpenContainingFolder(ParentVar *Window, CancellableVar *g
 		}
 	}
 
-	xFileLauncherOpenContainingFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileLauncherOpenContainingFolder(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -202,7 +227,12 @@ var xFileLauncherSetFile func(uintptr, uintptr)
 // Sets the file that will be opened.
 func (x *FileLauncher) SetFile(FileVar gio.File) {
 
-	xFileLauncherSetFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xFileLauncherSetFile(x.GoPointer(), FileVarPtr)
 
 }
 

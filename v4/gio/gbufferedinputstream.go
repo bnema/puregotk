@@ -324,7 +324,12 @@ var xBufferedInputStreamFill func(uintptr, int, uintptr, **glib.Error) int
 func (x *BufferedInputStream) Fill(CountVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xBufferedInputStreamFill(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xBufferedInputStreamFill(x.GoPointer(), CountVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -357,7 +362,12 @@ func (x *BufferedInputStream) FillAsync(CountVar int, IoPriorityVar int, Cancell
 		}
 	}
 
-	xBufferedInputStreamFillAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xBufferedInputStreamFillAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -432,7 +442,12 @@ var xBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
 func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -511,7 +526,12 @@ func (x *BufferedInputStream) CanTruncate() bool {
 func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -538,7 +558,12 @@ func (x *BufferedInputStream) Tell() int64 {
 func (x *BufferedInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

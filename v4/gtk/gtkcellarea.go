@@ -1636,7 +1636,12 @@ var xCellAreaSetFocusCell func(uintptr, uintptr)
 // as gtk_tree_view_set_cursor_on_cell().
 func (x *CellArea) SetFocusCell(RendererVar *CellRenderer) {
 
-	xCellAreaSetFocusCell(x.GoPointer(), RendererVar.GoPointer())
+	var RendererVarPtr uintptr
+	if RendererVar != nil {
+		RendererVarPtr = RendererVar.GoPointer()
+	}
+
+	xCellAreaSetFocusCell(x.GoPointer(), RendererVarPtr)
 
 }
 
@@ -1679,7 +1684,7 @@ func (c *CellArea) SetGoPointer(ptr uintptr) {
 
 // Indicates that editing has started on @renderer and that @editable
 // should be added to the owning cell-layouting widget at @cell_area.
-func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintptr, string)) uint {
+func (x *CellArea) ConnectAddEditable(cb *func(CellArea, *CellRenderer, uintptr, uintptr, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
@@ -1692,7 +1697,7 @@ func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintp
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RendererVarp, EditableVarp, CellAreaVarp, core.GoString(PathVarp))
+		cbFn(fa, func() *CellRenderer { cls := &CellRenderer{}; cls.Ptr = RendererVarp; return cls }(), EditableVarp, CellAreaVarp, core.GoString(PathVarp))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1734,7 +1739,7 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 // currently focused renderer did not change, this is
 // because focus may change to the same renderer in the
 // same cell area for a different row of data.
-func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint {
+func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, *CellRenderer, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
@@ -1747,7 +1752,7 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RendererVarp, core.GoString(PathVarp))
+		cbFn(fa, func() *CellRenderer { cls := &CellRenderer{}; cls.Ptr = RendererVarp; return cls }(), core.GoString(PathVarp))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1759,7 +1764,7 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 
 // Indicates that editing finished on @renderer and that @editable
 // should be removed from the owning cell-layouting widget.
-func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) uint {
+func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, *CellRenderer, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
@@ -1772,7 +1777,7 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RendererVarp, EditableVarp)
+		cbFn(fa, func() *CellRenderer { cls := &CellRenderer{}; cls.Ptr = RendererVarp; return cls }(), EditableVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

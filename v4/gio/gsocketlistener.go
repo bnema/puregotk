@@ -275,7 +275,12 @@ func (x *SocketListener) Accept(SourceObjectVar **gobject.Object, CancellableVar
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketListenerAccept(x.GoPointer(), SourceObjectVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketListenerAccept(x.GoPointer(), SourceObjectVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -313,7 +318,12 @@ func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *A
 		}
 	}
 
-	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -358,7 +368,12 @@ func (x *SocketListener) AcceptSocket(SourceObjectVar **gobject.Object, Cancella
 	var cls *Socket
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptSocket(x.GoPointer(), SourceObjectVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketListenerAcceptSocket(x.GoPointer(), SourceObjectVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -396,7 +411,12 @@ func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, Callback
 		}
 	}
 
-	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -449,7 +469,12 @@ var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol,
 func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketType, ProtocolVar SocketProtocol, SourceObjectVar *gobject.Object, EffectiveAddressVar **SocketAddress) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), EffectiveAddressVar, &cerr)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVarPtr, EffectiveAddressVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -480,7 +505,12 @@ var xSocketListenerAddAnyInetPort func(uintptr, uintptr, **glib.Error) uint16
 func (x *SocketListener) AddAnyInetPort(SourceObjectVar *gobject.Object) (uint16, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddAnyInetPort(x.GoPointer(), SourceObjectVar.GoPointer(), &cerr)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xSocketListenerAddAnyInetPort(x.GoPointer(), SourceObjectVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -513,7 +543,12 @@ var xSocketListenerAddInetPort func(uintptr, uint16, uintptr, **glib.Error) bool
 func (x *SocketListener) AddInetPort(PortVar uint16, SourceObjectVar *gobject.Object) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddInetPort(x.GoPointer(), PortVar, SourceObjectVar.GoPointer(), &cerr)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xSocketListenerAddInetPort(x.GoPointer(), PortVar, SourceObjectVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -542,7 +577,12 @@ var xSocketListenerAddSocket func(uintptr, uintptr, uintptr, **glib.Error) bool
 func (x *SocketListener) AddSocket(SocketVar *Socket, SourceObjectVar *gobject.Object) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddSocket(x.GoPointer(), SocketVar.GoPointer(), SourceObjectVar.GoPointer(), &cerr)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xSocketListenerAddSocket(x.GoPointer(), SocketVar.GoPointer(), SourceObjectVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -604,7 +644,7 @@ func (x *SocketListener) GetPropertyListenBacklog() int {
 // Note that when @listener is used to listen on both IPv4 and
 // IPv6, a separate set of signals will be emitted for each, and
 // the order they happen in is undefined.
-func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint {
+func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, *Socket)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -617,7 +657,7 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, EventVarp, SocketVarp)
+		cbFn(fa, EventVarp, func() *Socket { cls := &Socket{}; cls.Ptr = SocketVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

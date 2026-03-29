@@ -82,7 +82,12 @@ func (x *UnixConnection) ReceiveCredentials(CancellableVar *Cancellable) (*Crede
 	var cls *Credentials
 	var cerr *glib.Error
 
-	cret := xUnixConnectionReceiveCredentials(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xUnixConnectionReceiveCredentials(x.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -122,7 +127,12 @@ func (x *UnixConnection) ReceiveCredentialsAsync(CancellableVar *Cancellable, Ca
 		}
 	}
 
-	xUnixConnectionReceiveCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xUnixConnectionReceiveCredentialsAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -160,7 +170,12 @@ var xUnixConnectionReceiveFd func(uintptr, uintptr, **glib.Error) int
 func (x *UnixConnection) ReceiveFd(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xUnixConnectionReceiveFd(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xUnixConnectionReceiveFd(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -192,7 +207,12 @@ var xUnixConnectionSendCredentials func(uintptr, uintptr, **glib.Error) bool
 func (x *UnixConnection) SendCredentials(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xUnixConnectionSendCredentials(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xUnixConnectionSendCredentials(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -226,7 +246,12 @@ func (x *UnixConnection) SendCredentialsAsync(CancellableVar *Cancellable, Callb
 		}
 	}
 
-	xUnixConnectionSendCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xUnixConnectionSendCredentialsAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -257,7 +282,12 @@ var xUnixConnectionSendFd func(uintptr, int, uintptr, **glib.Error) bool
 func (x *UnixConnection) SendFd(FdVar int, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xUnixConnectionSendFd(x.GoPointer(), FdVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xUnixConnectionSendFd(x.GoPointer(), FdVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

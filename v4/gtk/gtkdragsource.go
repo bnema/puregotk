@@ -221,7 +221,12 @@ var xDragSourceSetContent func(uintptr, uintptr)
 // %NULL in a [signal@Gtk.DragSource::drag-end] signal handler.
 func (x *DragSource) SetContent(ContentVar *gdk.ContentProvider) {
 
-	xDragSourceSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xDragSourceSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -239,7 +244,12 @@ var xDragSourceSetIcon func(uintptr, uintptr, int, int)
 // [signal@Gtk.DragSource::drag-begin] signal handler.
 func (x *DragSource) SetIcon(PaintableVar gdk.Paintable, HotXVar int, HotYVar int) {
 
-	xDragSourceSetIcon(x.GoPointer(), PaintableVar.GoPointer(), HotXVar, HotYVar)
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xDragSourceSetIcon(x.GoPointer(), PaintableVarPtr, HotXVar, HotYVar)
 
 }
 
@@ -258,7 +268,7 @@ func (c *DragSource) SetGoPointer(ptr uintptr) {
 //
 // It can be used to e.g. set a custom drag icon with
 // [method@Gtk.DragSource.set_icon].
-func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
+func (x *DragSource) ConnectDragBegin(cb *func(DragSource, *gdk.Drag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
@@ -271,7 +281,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, DragVarp)
+		cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -286,7 +296,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 // The signal handler may handle a failed drag operation based on
 // the type of error. It should return %TRUE if the failure has been handled
 // and the default "drag operation failed" animation should not be shown.
-func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint {
+func (x *DragSource) ConnectDragCancel(cb *func(DragSource, *gdk.Drag, gdk.DragCancelReason) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
@@ -299,7 +309,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, DragVarp, ReasonVarp)
+		return cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }(), ReasonVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -314,7 +324,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 // A typical reason to connect to this signal is to undo
 // things done in [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] handlers.
-func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
+func (x *DragSource) ConnectDragEnd(cb *func(DragSource, *gdk.Drag, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
@@ -327,7 +337,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, DragVarp, DeleteDataVarp)
+		cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }(), DeleteDataVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -343,7 +353,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 // to start. The default handler for this signal returns the value of
 // the [property@Gtk.DragSource:content] property, so if you set up that
 // property ahead of time, you don't need to connect to this signal.
-func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint {
+func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) *gdk.ContentProvider) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)

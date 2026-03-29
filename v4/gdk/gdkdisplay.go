@@ -599,7 +599,7 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint {
 }
 
 // Emitted whenever a new seat is made known to the windowing system.
-func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
+func (x *Display) ConnectSeatAdded(cb *func(Display, *Seat)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-added", cbRefPtr)
@@ -612,7 +612,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, SeatVarp)
+		cbFn(fa, func() *Seat { cls := &Seat{}; cls.Ptr = SeatVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -623,7 +623,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
 }
 
 // Emitted whenever a seat is removed by the windowing system.
-func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint {
+func (x *Display) ConnectSeatRemoved(cb *func(Display, *Seat)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-removed", cbRefPtr)
@@ -636,7 +636,7 @@ func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, SeatVarp)
+		cbFn(fa, func() *Seat { cls := &Seat{}; cls.Ptr = SeatVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

@@ -186,7 +186,12 @@ var xCenterBoxSetCenterWidget func(uintptr, uintptr)
 // To remove the existing center widget, pass `NULL`.
 func (x *CenterBox) SetCenterWidget(ChildVar *Widget) {
 
-	xCenterBoxSetCenterWidget(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xCenterBoxSetCenterWidget(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -197,7 +202,12 @@ var xCenterBoxSetEndWidget func(uintptr, uintptr)
 // To remove the existing end widget, pass `NULL`.
 func (x *CenterBox) SetEndWidget(ChildVar *Widget) {
 
-	xCenterBoxSetEndWidget(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xCenterBoxSetEndWidget(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -224,7 +234,12 @@ var xCenterBoxSetStartWidget func(uintptr, uintptr)
 // To remove the existing start widget, pass `NULL`.
 func (x *CenterBox) SetStartWidget(ChildVar *Widget) {
 
-	xCenterBoxSetStartWidget(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xCenterBoxSetStartWidget(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -404,7 +419,17 @@ func (x *CenterBox) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *CenterBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -414,7 +439,12 @@ func (x *CenterBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // is created, and it needs to be linked to a previous child.
 func (x *CenterBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

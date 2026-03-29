@@ -63,7 +63,12 @@ func TlsServerConnectionNew(BaseIoStreamVar *IOStream, CertificateVar *TlsCertif
 	var cls *TlsServerConnectionBase
 	var cerr *glib.Error
 
-	cret := xTlsServerConnectionNew(BaseIoStreamVar.GoPointer(), CertificateVar.GoPointer(), &cerr)
+	var CertificateVarPtr uintptr
+	if CertificateVar != nil {
+		CertificateVarPtr = CertificateVar.GoPointer()
+	}
+
+	cret := xTlsServerConnectionNew(BaseIoStreamVar.GoPointer(), CertificateVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

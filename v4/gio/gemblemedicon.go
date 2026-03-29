@@ -59,7 +59,12 @@ var xNewEmblemedIcon func(uintptr, uintptr) uintptr
 func NewEmblemedIcon(IconVar Icon, EmblemVar *Emblem) *EmblemedIcon {
 	var cls *EmblemedIcon
 
-	cret := xNewEmblemedIcon(IconVar.GoPointer(), EmblemVar.GoPointer())
+	var EmblemVarPtr uintptr
+	if EmblemVar != nil {
+		EmblemVarPtr = EmblemVar.GoPointer()
+	}
+
+	cret := xNewEmblemedIcon(IconVar.GoPointer(), EmblemVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -127,7 +132,12 @@ func (c *EmblemedIcon) SetGoPointer(ptr uintptr) {
 // Checks if two icons are equal.
 func (x *EmblemedIcon) Equal(Icon2Var Icon) bool {
 
-	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 

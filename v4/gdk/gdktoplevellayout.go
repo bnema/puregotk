@@ -133,7 +133,12 @@ var xToplevelLayoutSetFullscreen func(uintptr, bool, uintptr)
 // to be fullscreen when presented.
 func (x *ToplevelLayout) SetFullscreen(FullscreenVar bool, MonitorVar *Monitor) {
 
-	xToplevelLayoutSetFullscreen(x.GoPointer(), FullscreenVar, MonitorVar.GoPointer())
+	var MonitorVarPtr uintptr
+	if MonitorVar != nil {
+		MonitorVarPtr = MonitorVar.GoPointer()
+	}
+
+	xToplevelLayoutSetFullscreen(x.GoPointer(), FullscreenVar, MonitorVarPtr)
 
 }
 

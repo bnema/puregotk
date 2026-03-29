@@ -117,7 +117,12 @@ func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, Us
 		}
 	}
 
-	cret := xNewMapListModel(ModelVar.GoPointer(), MapFuncVarRef, UserDataVar, UserDestroyVarRef)
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewMapListModel(ModelVarPtr, MapFuncVarRef, UserDataVar, UserDestroyVarRef)
 
 	if cret == 0 {
 		return nil
@@ -211,7 +216,12 @@ var xMapListModelSetModel func(uintptr, uintptr)
 // they are doing and have set up an appropriate map function.
 func (x *MapListModel) SetModel(ModelVar gio.ListModel) {
 
-	xMapListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xMapListModelSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

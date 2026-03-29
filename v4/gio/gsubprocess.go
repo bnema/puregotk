@@ -182,7 +182,12 @@ var xSubprocessCommunicate func(uintptr, *glib.Bytes, uintptr, **glib.Bytes, **g
 func (x *Subprocess) Communicate(StdinBufVar *glib.Bytes, CancellableVar *Cancellable, StdoutBufVar **glib.Bytes, StderrBufVar **glib.Bytes) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessCommunicate(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSubprocessCommunicate(x.GoPointer(), StdinBufVar, CancellableVarPtr, StdoutBufVar, StderrBufVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -211,7 +216,12 @@ func (x *Subprocess) CommunicateAsync(StdinBufVar *glib.Bytes, CancellableVar *C
 		}
 	}
 
-	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -239,10 +249,15 @@ var xSubprocessCommunicateUtf8 func(uintptr, uintptr, uintptr, *string, *string,
 func (x *Subprocess) CommunicateUtf8(StdinBufVar *string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	StdinBufVarPtr := core.GStrdupNullable(StdinBufVar)
 	defer core.GFreeNullable(StdinBufVarPtr)
 
-	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVarPtr, CancellableVarPtr, StdoutBufVar, StderrBufVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -271,10 +286,15 @@ func (x *Subprocess) CommunicateUtf8Async(StdinBufVar *string, CancellableVar *C
 		}
 	}
 
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	StdinBufVarPtr := core.GStrdupNullable(StdinBufVar)
 	defer core.GFreeNullable(StdinBufVarPtr)
 
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -505,7 +525,12 @@ var xSubprocessWait func(uintptr, uintptr, **glib.Error) bool
 func (x *Subprocess) Wait(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessWait(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSubprocessWait(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -535,7 +560,12 @@ func (x *Subprocess) WaitAsync(CancellableVar *Cancellable, CallbackVar *AsyncRe
 		}
 	}
 
-	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSubprocessWaitAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -545,7 +575,12 @@ var xSubprocessWaitCheck func(uintptr, uintptr, **glib.Error) bool
 func (x *Subprocess) WaitCheck(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessWaitCheck(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSubprocessWaitCheck(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -575,7 +610,12 @@ func (x *Subprocess) WaitCheckAsync(CancellableVar *Cancellable, CallbackVar *As
 		}
 	}
 
-	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -670,7 +710,12 @@ func (x *Subprocess) SetPropertyArgv(value []string) {
 func (x *Subprocess) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

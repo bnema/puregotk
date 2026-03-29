@@ -240,7 +240,12 @@ func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBox
 		}
 	}
 
-	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xListBoxBindModel(x.GoPointer(), ModelVarPtr, CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -495,7 +500,12 @@ var xListBoxSelectRow func(uintptr, uintptr)
 // Make @row the currently selected row.
 func (x *ListBox) SelectRow(RowVar *ListBoxRow) {
 
-	xListBoxSelectRow(x.GoPointer(), RowVar.GoPointer())
+	var RowVarPtr uintptr
+	if RowVar != nil {
+		RowVarPtr = RowVar.GoPointer()
+	}
+
+	xListBoxSelectRow(x.GoPointer(), RowVarPtr)
 
 }
 
@@ -549,7 +559,12 @@ var xListBoxSetAdjustment func(uintptr, uintptr)
 // to manually do that.
 func (x *ListBox) SetAdjustment(AdjustmentVar *Adjustment) {
 
-	xListBoxSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	xListBoxSetAdjustment(x.GoPointer(), AdjustmentVarPtr)
 
 }
 
@@ -673,7 +688,12 @@ var xListBoxSetPlaceholder func(uintptr, uintptr)
 // it doesn't display any visible children.
 func (x *ListBox) SetPlaceholder(PlaceholderVar *Widget) {
 
-	xListBoxSetPlaceholder(x.GoPointer(), PlaceholderVar.GoPointer())
+	var PlaceholderVarPtr uintptr
+	if PlaceholderVar != nil {
+		PlaceholderVarPtr = PlaceholderVar.GoPointer()
+	}
+
+	xListBoxSetPlaceholder(x.GoPointer(), PlaceholderVarPtr)
 
 }
 
@@ -896,7 +916,7 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int, bool, b
 }
 
 // Emitted when a row has been activated by the user.
-func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint {
+func (x *ListBox) ConnectRowActivated(cb *func(ListBox, *ListBoxRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
@@ -909,7 +929,7 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RowVarp)
+		cbFn(fa, func() *ListBoxRow { cls := &ListBoxRow{}; cls.Ptr = RowVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -925,7 +945,7 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint {
 // When the @box is using %GTK_SELECTION_MULTIPLE, this signal will not
 // give you the full picture of selection changes, and you should use
 // the [signal@Gtk.ListBox::selected-rows-changed] signal instead.
-func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint {
+func (x *ListBox) ConnectRowSelected(cb *func(ListBox, *ListBoxRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "row-selected", cbRefPtr)
@@ -938,7 +958,7 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, RowVarp)
+		cbFn(fa, func() *ListBoxRow { cls := &ListBoxRow{}; cls.Ptr = RowVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1191,7 +1211,17 @@ func (x *ListBox) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ListBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1201,7 +1231,12 @@ func (x *ListBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // is created, and it needs to be linked to a previous child.
 func (x *ListBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1488,7 +1523,12 @@ var xListBoxRowSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *ListBoxRow) SetChild(ChildVar *Widget) {
 
-	xListBoxRowSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xListBoxRowSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -1502,7 +1542,12 @@ var xListBoxRowSetHeader func(uintptr, uintptr)
 // and be shown in front of the row in the listbox.
 func (x *ListBoxRow) SetHeader(HeaderVar *Widget) {
 
-	xListBoxRowSetHeader(x.GoPointer(), HeaderVar.GoPointer())
+	var HeaderVarPtr uintptr
+	if HeaderVar != nil {
+		HeaderVarPtr = HeaderVar.GoPointer()
+	}
+
+	xListBoxRowSetHeader(x.GoPointer(), HeaderVarPtr)
 
 }
 
@@ -1724,7 +1769,17 @@ func (x *ListBoxRow) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ListBoxRow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1734,7 +1789,12 @@ func (x *ListBoxRow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *ListBoxRow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

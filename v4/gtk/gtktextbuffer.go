@@ -603,7 +603,12 @@ var xNewTextBuffer func(uintptr) uintptr
 func NewTextBuffer(TableVar *TextTagTable) *TextBuffer {
 	var cls *TextBuffer
 
-	cret := xNewTextBuffer(TableVar.GoPointer())
+	var TableVarPtr uintptr
+	if TableVar != nil {
+		TableVarPtr = TableVar.GoPointer()
+	}
+
+	cret := xNewTextBuffer(TableVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -1858,7 +1863,7 @@ func (x *TextBuffer) GetPropertyText() string {
 // [method@Gtk.TextBuffer.apply_tag],
 // [method@Gtk.TextBuffer.insert_with_tags],
 // [method@Gtk.TextBuffer.insert_range].
-func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint {
+func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, *TextTag, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
@@ -1871,7 +1876,7 @@ func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uint
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, TagVarp, StartVarp, EndVarp)
+		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }(), StartVarp, EndVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2016,7 +2021,7 @@ func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint {
 // it to be placed after the inserted @anchor.
 //
 // See also: [method@Gtk.TextBuffer.insert_child_anchor].
-func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uintptr)) uint {
+func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, *TextChildAnchor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
@@ -2029,7 +2034,7 @@ func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uint
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, LocationVarp, AnchorVarp)
+		cbFn(fa, LocationVarp, func() *TextChildAnchor { cls := &TextChildAnchor{}; cls.Ptr = AnchorVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2109,7 +2114,7 @@ func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int
 // Emitted as notification after a `GtkTextMark` is deleted.
 //
 // See also: [method@Gtk.TextBuffer.delete_mark].
-func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint {
+func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, *TextMark)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
@@ -2122,7 +2127,7 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, MarkVarp)
+		cbFn(fa, func() *TextMark { cls := &TextMark{}; cls.Ptr = MarkVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2137,7 +2142,7 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint {
 // See also:
 // [method@Gtk.TextBuffer.create_mark],
 // [method@Gtk.TextBuffer.move_mark].
-func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint {
+func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, *TextMark)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
@@ -2150,7 +2155,7 @@ func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, LocationVarp, MarkVarp)
+		cbFn(fa, LocationVarp, func() *TextMark { cls := &TextMark{}; cls.Ptr = MarkVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2191,7 +2196,7 @@ func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint {
 // This is useful to properly scroll the view to the end
 // of the pasted text. See [method@Gtk.TextBuffer.paste_clipboard]
 // for more details.
-func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint {
+func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, *gdk.Clipboard)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
@@ -2204,7 +2209,7 @@ func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ClipboardVarp)
+		cbFn(fa, func() *gdk.Clipboard { cls := &gdk.Clipboard{}; cls.Ptr = ClipboardVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2249,7 +2254,7 @@ func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint {
 // to revalidate them).
 //
 // See also: [method@Gtk.TextBuffer.remove_tag].
-func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint {
+func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, *TextTag, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
@@ -2262,7 +2267,7 @@ func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, TagVarp, StartVarp, EndVarp)
+		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }(), StartVarp, EndVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

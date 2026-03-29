@@ -166,7 +166,7 @@ func (c *TextTagTable) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted every time a new tag is added in the `GtkTextTagTable`.
-func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
+func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, *TextTag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
@@ -179,7 +179,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, TagVarp)
+		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -190,7 +190,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 }
 
 // Emitted every time a tag in the `GtkTextTagTable` changes.
-func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint {
+func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, *TextTag, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
@@ -203,7 +203,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, TagVarp, SizeChangedVarp)
+		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }(), SizeChangedVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -217,7 +217,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 //
 // The @tag is still valid by the time the signal is emitted, but
 // it is not associated with a tag table any more.
-func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
+func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, *TextTag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
@@ -230,7 +230,7 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, TagVarp)
+		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

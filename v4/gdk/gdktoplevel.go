@@ -88,7 +88,12 @@ func (x *ToplevelBase) BeginMove(DeviceVar *Device, ButtonVar int, XVar float64,
 // You might use this function to implement a “window resize grip.”
 func (x *ToplevelBase) BeginResize(EdgeVar SurfaceEdge, DeviceVar *Device, ButtonVar int, XVar float64, YVar float64, TimestampVar uint32) {
 
-	XGdkToplevelBeginResize(x.GoPointer(), EdgeVar, DeviceVar.GoPointer(), ButtonVar, XVar, YVar, TimestampVar)
+	var DeviceVarPtr uintptr
+	if DeviceVar != nil {
+		DeviceVarPtr = DeviceVar.GoPointer()
+	}
+
+	XGdkToplevelBeginResize(x.GoPointer(), EdgeVar, DeviceVarPtr, ButtonVar, XVar, YVar, TimestampVar)
 
 }
 
@@ -149,7 +154,12 @@ func (x *ToplevelBase) GetState() ToplevelState {
 // by listening to the [property@Gdk.Toplevel:shortcuts-inhibited] property.
 func (x *ToplevelBase) InhibitSystemShortcuts(EventVar *Event) {
 
-	XGdkToplevelInhibitSystemShortcuts(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	XGdkToplevelInhibitSystemShortcuts(x.GoPointer(), EventVarPtr)
 
 }
 

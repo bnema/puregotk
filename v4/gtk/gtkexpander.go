@@ -267,7 +267,12 @@ var xExpanderSetChild func(uintptr, uintptr)
 // Sets the child widget of @expander.
 func (x *Expander) SetChild(ChildVar *Widget) {
 
-	xExpanderSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xExpanderSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -305,7 +310,12 @@ var xExpanderSetLabelWidget func(uintptr, uintptr)
 // the expander arrow.
 func (x *Expander) SetLabelWidget(LabelWidgetVar *Widget) {
 
-	xExpanderSetLabelWidget(x.GoPointer(), LabelWidgetVar.GoPointer())
+	var LabelWidgetVarPtr uintptr
+	if LabelWidgetVar != nil {
+		LabelWidgetVarPtr = LabelWidgetVar.GoPointer()
+	}
+
+	xExpanderSetLabelWidget(x.GoPointer(), LabelWidgetVarPtr)
 
 }
 
@@ -593,7 +603,17 @@ func (x *Expander) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Expander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -603,7 +623,12 @@ func (x *Expander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *Expander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -124,7 +124,12 @@ var xListHeaderSetChild func(uintptr, uintptr)
 // binding it multiple times.
 func (x *ListHeader) SetChild(ChildVar *Widget) {
 
-	xListHeaderSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xListHeaderSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 

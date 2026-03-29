@@ -211,7 +211,12 @@ var xNewImageFromPaintable func(uintptr) uintptr
 func NewImageFromPaintable(PaintableVar gdk.Paintable) *Image {
 	var cls *Image
 
-	cret := xNewImageFromPaintable(PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	cret := xNewImageFromPaintable(PaintableVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -239,7 +244,12 @@ var xNewImageFromPixbuf func(uintptr) uintptr
 func NewImageFromPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Image {
 	var cls *Image
 
-	cret := xNewImageFromPixbuf(PixbufVar.GoPointer())
+	var PixbufVarPtr uintptr
+	if PixbufVar != nil {
+		PixbufVarPtr = PixbufVar.GoPointer()
+	}
+
+	cret := xNewImageFromPixbuf(PixbufVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -430,7 +440,12 @@ var xImageSetFromPaintable func(uintptr, uintptr)
 // See [ctor@Gtk.Image.new_from_paintable] for details.
 func (x *Image) SetFromPaintable(PaintableVar gdk.Paintable) {
 
-	xImageSetFromPaintable(x.GoPointer(), PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xImageSetFromPaintable(x.GoPointer(), PaintableVarPtr)
 
 }
 
@@ -445,7 +460,12 @@ var xImageSetFromPixbuf func(uintptr, uintptr)
 // only a paintable.
 func (x *Image) SetFromPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 
-	xImageSetFromPixbuf(x.GoPointer(), PixbufVar.GoPointer())
+	var PixbufVarPtr uintptr
+	if PixbufVar != nil {
+		PixbufVarPtr = PixbufVar.GoPointer()
+	}
+
+	xImageSetFromPixbuf(x.GoPointer(), PixbufVarPtr)
 
 }
 
@@ -734,7 +754,17 @@ func (x *Image) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Image) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -744,7 +774,12 @@ func (x *Image) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Image) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

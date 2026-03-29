@@ -204,7 +204,12 @@ var xDataOutputStreamPutByte func(uintptr, byte, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutByte(DataVar byte, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutByte(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutByte(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -218,7 +223,12 @@ var xDataOutputStreamPutInt16 func(uintptr, int16, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutInt16(DataVar int16, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutInt16(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutInt16(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -232,7 +242,12 @@ var xDataOutputStreamPutInt32 func(uintptr, int32, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutInt32(DataVar int32, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutInt32(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutInt32(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -246,7 +261,12 @@ var xDataOutputStreamPutInt64 func(uintptr, int64, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutInt64(DataVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutInt64(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutInt64(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -260,7 +280,12 @@ var xDataOutputStreamPutString func(uintptr, string, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutString(StrVar string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutString(x.GoPointer(), StrVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutString(x.GoPointer(), StrVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -274,7 +299,12 @@ var xDataOutputStreamPutUint16 func(uintptr, uint16, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutUint16(DataVar uint16, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutUint16(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutUint16(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -288,7 +318,12 @@ var xDataOutputStreamPutUint32 func(uintptr, uint32, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutUint32(DataVar uint32, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutUint32(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutUint32(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -302,7 +337,12 @@ var xDataOutputStreamPutUint64 func(uintptr, uint64, uintptr, **glib.Error) bool
 func (x *DataOutputStream) PutUint64(DataVar uint64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDataOutputStreamPutUint64(x.GoPointer(), DataVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDataOutputStreamPutUint64(x.GoPointer(), DataVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -362,7 +402,12 @@ func (x *DataOutputStream) CanTruncate() bool {
 func (x *DataOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -389,7 +434,12 @@ func (x *DataOutputStream) Tell() int64 {
 func (x *DataOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

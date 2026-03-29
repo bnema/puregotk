@@ -190,7 +190,7 @@ func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
 // except that it is for the enclosing object.
 //
 // The default class handler just returns %TRUE.
-func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint {
+func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
@@ -203,7 +203,7 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, InterfaceVarp, InvocationVarp)
+		return cbFn(fa, func() *DBusInterfaceSkeleton { cls := &DBusInterfaceSkeleton{}; cls.Ptr = InterfaceVarp; return cls }(), func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

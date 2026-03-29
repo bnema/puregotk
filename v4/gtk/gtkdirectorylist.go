@@ -71,10 +71,15 @@ var xNewDirectoryList func(uintptr, uintptr) uintptr
 func NewDirectoryList(AttributesVar *string, FileVar gio.File) *DirectoryList {
 	var cls *DirectoryList
 
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
 	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
 	defer core.GFreeNullable(AttributesVarPtr)
 
-	cret := xNewDirectoryList(AttributesVarPtr, FileVar.GoPointer())
+	cret := xNewDirectoryList(AttributesVarPtr, FileVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -181,7 +186,12 @@ var xDirectoryListSetFile func(uintptr, uintptr)
 // If @file is %NULL, the result will be an empty list.
 func (x *DirectoryList) SetFile(FileVar gio.File) {
 
-	xDirectoryListSetFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xDirectoryListSetFile(x.GoPointer(), FileVarPtr)
 
 }
 

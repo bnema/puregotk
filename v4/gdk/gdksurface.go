@@ -425,7 +425,12 @@ var xSurfaceSetCursor func(uintptr, uintptr)
 // to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
 func (x *Surface) SetCursor(CursorVar *Cursor) {
 
-	xSurfaceSetCursor(x.GoPointer(), CursorVar.GoPointer())
+	var CursorVarPtr uintptr
+	if CursorVar != nil {
+		CursorVarPtr = CursorVar.GoPointer()
+	}
+
+	xSurfaceSetCursor(x.GoPointer(), CursorVarPtr)
 
 }
 
@@ -556,7 +561,7 @@ func (x *Surface) GetPropertyWidth() int {
 }
 
 // Emitted when @surface starts being present on the monitor.
-func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint {
+func (x *Surface) ConnectEnterMonitor(cb *func(Surface, *Monitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter-monitor", cbRefPtr)
@@ -569,7 +574,7 @@ func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, MonitorVarp)
+		cbFn(fa, func() *Monitor { cls := &Monitor{}; cls.Ptr = MonitorVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -593,7 +598,7 @@ func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, EventNewFromInternalPtr(EventVarp))
+		return cbFn(fa, func() *Event { cls := &Event{}; cls.Ptr = EventVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -632,7 +637,7 @@ func (x *Surface) ConnectLayout(cb *func(Surface, int, int)) uint {
 }
 
 // Emitted when @surface stops being present on the monitor.
-func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint {
+func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, *Monitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave-monitor", cbRefPtr)
@@ -645,7 +650,7 @@ func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, MonitorVarp)
+		cbFn(fa, func() *Monitor { cls := &Monitor{}; cls.Ptr = MonitorVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

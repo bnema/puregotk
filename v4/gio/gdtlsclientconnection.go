@@ -133,7 +133,12 @@ func DtlsClientConnectionNew(BaseSocketVar DatagramBased, ServerIdentityVar Sock
 	var cls *DtlsClientConnectionBase
 	var cerr *glib.Error
 
-	cret := xDtlsClientConnectionNew(BaseSocketVar.GoPointer(), ServerIdentityVar.GoPointer(), &cerr)
+	var ServerIdentityVarPtr uintptr
+	if ServerIdentityVar != nil {
+		ServerIdentityVarPtr = ServerIdentityVar.GoPointer()
+	}
+
+	cret := xDtlsClientConnectionNew(BaseSocketVar.GoPointer(), ServerIdentityVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

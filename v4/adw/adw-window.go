@@ -259,7 +259,12 @@ var xWindowSetContent func(uintptr, uintptr)
 // This method should always be used instead of [method@Gtk.Window.set_child].
 func (x *Window) SetContent(ContentVar *gtk.Widget) {
 
-	xWindowSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xWindowSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -441,7 +446,17 @@ func (x *Window) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *Window) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -451,7 +466,12 @@ func (x *Window) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // is created, and it needs to be linked to a previous child.
 func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -688,7 +708,12 @@ func (x *Window) GetFocus() *gtk.Widget {
 // this function.
 func (x *Window) SetFocus(FocusVar *gtk.Widget) {
 
-	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

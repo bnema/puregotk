@@ -241,7 +241,12 @@ func (x *IconBase) SetGoPointer(ptr uintptr) {
 // Checks if two icons are equal.
 func (x *IconBase) Equal(Icon2Var Icon) bool {
 
-	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 

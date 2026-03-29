@@ -241,7 +241,12 @@ func BusGet(BusTypeVar BusType, CancellableVar *Cancellable, CallbackVar *AsyncR
 		}
 	}
 
-	xBusGet(BusTypeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xBusGet(BusTypeVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -301,7 +306,12 @@ func BusGetSync(BusTypeVar BusType, CancellableVar *Cancellable) (*DBusConnectio
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	cret := xBusGetSync(BusTypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xBusGetSync(BusTypeVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -448,7 +458,17 @@ func NewDBusConnectionForAddressSync(AddressVar string, FlagsVar DBusConnectionF
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	cret := xNewDBusConnectionForAddressSync(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var ObserverVarPtr uintptr
+	if ObserverVar != nil {
+		ObserverVarPtr = ObserverVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewDBusConnectionForAddressSync(AddressVar, FlagsVar, ObserverVarPtr, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -483,10 +503,20 @@ func NewDBusConnectionSync(StreamVar *IOStream, GuidVar *string, FlagsVar DBusCo
 	var cls *DBusConnection
 	var cerr *glib.Error
 
+	var ObserverVarPtr uintptr
+	if ObserverVar != nil {
+		ObserverVarPtr = ObserverVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	GuidVarPtr := core.GStrdupNullable(GuidVar)
 	defer core.GFreeNullable(GuidVarPtr)
 
-	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVarPtr, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -631,10 +661,15 @@ func (x *DBusConnection) Call(BusNameVar *string, ObjectPathVar string, Interfac
 		}
 	}
 
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
 	defer core.GFreeNullable(BusNameVarPtr)
 
-	xDBusConnectionCall(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xDBusConnectionCall(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -695,10 +730,15 @@ var xDBusConnectionCallSync func(uintptr, uintptr, string, string, string, *glib
 func (x *DBusConnection) CallSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
 	defer core.GFreeNullable(BusNameVarPtr)
 
-	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -740,10 +780,20 @@ func (x *DBusConnection) CallWithUnixFdList(BusNameVar *string, ObjectPathVar st
 		}
 	}
 
+	var FdListVarPtr uintptr
+	if FdListVar != nil {
+		FdListVarPtr = FdListVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
 	defer core.GFreeNullable(BusNameVarPtr)
 
-	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -782,10 +832,20 @@ var xDBusConnectionCallWithUnixFdListSync func(uintptr, uintptr, string, string,
 func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
+	var FdListVarPtr uintptr
+	if FdListVar != nil {
+		FdListVarPtr = FdListVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
 	defer core.GFreeNullable(BusNameVarPtr)
 
-	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVarPtr, OutFdListVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -836,7 +896,12 @@ func (x *DBusConnection) Close(CancellableVar *Cancellable, CallbackVar *AsyncRe
 		}
 	}
 
-	xDBusConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusConnectionClose(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -863,7 +928,12 @@ var xDBusConnectionCloseSync func(uintptr, uintptr, **glib.Error) bool
 func (x *DBusConnection) CloseSync(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCloseSync(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDBusConnectionCloseSync(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -990,7 +1060,12 @@ func (x *DBusConnection) Flush(CancellableVar *Cancellable, CallbackVar *AsyncRe
 		}
 	}
 
-	xDBusConnectionFlush(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusConnectionFlush(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1017,7 +1092,12 @@ var xDBusConnectionFlushSync func(uintptr, uintptr, **glib.Error) bool
 func (x *DBusConnection) FlushSync(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionFlushSync(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDBusConnectionFlushSync(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1417,7 +1497,12 @@ func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar 
 		}
 	}
 
-	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1489,7 +1574,12 @@ func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, Flags
 	var cls *DBusMessage
 	var cerr *glib.Error
 
-	cret := xDBusConnectionSendMessageWithReplySync(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xDBusConnectionSendMessageWithReplySync(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1902,7 +1992,12 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Erro
 // any interface methods.
 func (x *DBusConnection) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1980,7 +2075,12 @@ func (x *DBusConnection) NewFinish(ResVar AsyncResult) (*gobject.Object, error) 
 func (x *DBusConnection) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2027,10 +2127,20 @@ func DBusConnectionNew(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnec
 		}
 	}
 
+	var ObserverVarPtr uintptr
+	if ObserverVar != nil {
+		ObserverVarPtr = ObserverVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	GuidVarPtr := core.GStrdupNullable(GuidVar)
 	defer core.GFreeNullable(GuidVarPtr)
 
-	xDBusConnectionNew(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xDBusConnectionNew(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -2075,7 +2185,17 @@ func DBusConnectionNewForAddress(AddressVar string, FlagsVar DBusConnectionFlags
 		}
 	}
 
-	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ObserverVarPtr uintptr
+	if ObserverVar != nil {
+		ObserverVarPtr = ObserverVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

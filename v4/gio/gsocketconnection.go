@@ -219,7 +219,12 @@ var xSocketConnectionConnect func(uintptr, uintptr, uintptr, **glib.Error) bool
 func (x *SocketConnection) Connect(AddressVar *SocketAddress, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketConnectionConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketConnectionConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -256,7 +261,12 @@ func (x *SocketConnection) ConnectAsync(AddressVar *SocketAddress, CancellableVa
 		}
 	}
 
-	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

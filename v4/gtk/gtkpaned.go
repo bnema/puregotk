@@ -223,7 +223,12 @@ var xPanedSetEndChild func(uintptr, uintptr)
 // If @child is `NULL`, the existing child will be removed.
 func (x *Paned) SetEndChild(ChildVar *Widget) {
 
-	xPanedSetEndChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xPanedSetEndChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -279,7 +284,12 @@ var xPanedSetStartChild func(uintptr, uintptr)
 // If @child is `NULL`, the existing child will be removed.
 func (x *Paned) SetStartChild(ChildVar *Widget) {
 
-	xPanedSetStartChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xPanedSetStartChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -775,7 +785,17 @@ func (x *Paned) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Paned) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -785,7 +805,12 @@ func (x *Paned) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Paned) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

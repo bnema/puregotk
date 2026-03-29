@@ -95,7 +95,17 @@ var xNewGridView func(uintptr, uintptr) uintptr
 func NewGridView(ModelVar SelectionModel, FactoryVar *ListItemFactory) *GridView {
 	var cls *GridView
 
-	cret := xNewGridView(ModelVar.GoPointer(), FactoryVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	cret := xNewGridView(ModelVarPtr, FactoryVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -213,7 +223,12 @@ var xGridViewSetFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *GridView) SetFactory(FactoryVar *ListItemFactory) {
 
-	xGridViewSetFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xGridViewSetFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -252,7 +267,12 @@ var xGridViewSetModel func(uintptr, uintptr)
 // This must be a [iface@Gtk.SelectionModel].
 func (x *GridView) SetModel(ModelVar SelectionModel) {
 
-	xGridViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xGridViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -523,7 +543,17 @@ func (x *GridView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *GridView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -533,7 +563,12 @@ func (x *GridView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *GridView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -740,7 +775,12 @@ func (x *GridView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *GridView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -757,7 +797,12 @@ func (x *GridView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *GridView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

@@ -85,7 +85,12 @@ var xNewSpinRow func(uintptr, float64, uint) uintptr
 func NewSpinRow(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint) *SpinRow {
 	var cls *SpinRow
 
-	cret := xNewSpinRow(AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	cret := xNewSpinRow(AdjustmentVarPtr, ClimbRateVar, DigitsVar)
 
 	if cret == 0 {
 		return nil
@@ -132,7 +137,12 @@ var xSpinRowConfigure func(uintptr, uintptr, float64, uint)
 // accordingly.
 func (x *SpinRow) Configure(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint) {
 
-	xSpinRowConfigure(x.GoPointer(), AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	xSpinRowConfigure(x.GoPointer(), AdjustmentVarPtr, ClimbRateVar, DigitsVar)
 
 }
 
@@ -221,7 +231,12 @@ var xSpinRowSetAdjustment func(uintptr, uintptr)
 // Sets the adjustment that holds the value for the spin row.
 func (x *SpinRow) SetAdjustment(AdjustmentVar *gtk.Adjustment) {
 
-	xSpinRowSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	xSpinRowSetAdjustment(x.GoPointer(), AdjustmentVarPtr)
 
 }
 
@@ -641,7 +656,17 @@ func (x *SpinRow) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *SpinRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -651,7 +676,12 @@ func (x *SpinRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // is created, and it needs to be linked to a previous child.
 func (x *SpinRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

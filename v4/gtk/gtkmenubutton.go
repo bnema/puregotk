@@ -328,7 +328,12 @@ var xMenuButtonSetChild func(uintptr, uintptr)
 // will be shown next to the child.
 func (x *MenuButton) SetChild(ChildVar *Widget) {
 
-	xMenuButtonSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xMenuButtonSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -454,7 +459,12 @@ var xMenuButtonSetMenuModel func(uintptr, uintptr)
 // dissociated from the @menu_button, and the property is set to %NULL.
 func (x *MenuButton) SetMenuModel(MenuModelVar *gio.MenuModel) {
 
-	xMenuButtonSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
+	var MenuModelVarPtr uintptr
+	if MenuModelVar != nil {
+		MenuModelVarPtr = MenuModelVar.GoPointer()
+	}
+
+	xMenuButtonSetMenuModel(x.GoPointer(), MenuModelVarPtr)
 
 }
 
@@ -468,7 +478,12 @@ var xMenuButtonSetPopover func(uintptr, uintptr)
 // from the @menu_button, and the property is set to %NULL.
 func (x *MenuButton) SetPopover(PopoverVar *Popover) {
 
-	xMenuButtonSetPopover(x.GoPointer(), PopoverVar.GoPointer())
+	var PopoverVarPtr uintptr
+	if PopoverVar != nil {
+		PopoverVarPtr = PopoverVar.GoPointer()
+	}
+
+	xMenuButtonSetPopover(x.GoPointer(), PopoverVarPtr)
 
 }
 
@@ -806,7 +821,17 @@ func (x *MenuButton) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *MenuButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -816,7 +841,12 @@ func (x *MenuButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *MenuButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

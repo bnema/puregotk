@@ -114,7 +114,12 @@ var xRendererRealize func(uintptr, uintptr, **glib.Error) bool
 func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xRendererRealize(x.GoPointer(), SurfaceVar.GoPointer(), &cerr)
+	var SurfaceVarPtr uintptr
+	if SurfaceVar != nil {
+		SurfaceVarPtr = SurfaceVar.GoPointer()
+	}
+
+	cret := xRendererRealize(x.GoPointer(), SurfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

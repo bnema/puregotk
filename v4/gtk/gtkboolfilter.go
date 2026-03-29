@@ -45,7 +45,12 @@ var xNewBoolFilter func(uintptr) uintptr
 func NewBoolFilter(ExpressionVar *Expression) *BoolFilter {
 	var cls *BoolFilter
 
-	cret := xNewBoolFilter(ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewBoolFilter(ExpressionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -90,7 +95,12 @@ var xBoolFilterSetExpression func(uintptr, uintptr)
 // The expression must have a value type of `G_TYPE_BOOLEAN`.
 func (x *BoolFilter) SetExpression(ExpressionVar *Expression) {
 
-	xBoolFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xBoolFilterSetExpression(x.GoPointer(), ExpressionVarPtr)
 
 }
 

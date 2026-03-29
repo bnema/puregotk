@@ -487,7 +487,12 @@ func NewPixbufFromStream(StreamVar *gio.InputStream, CancellableVar *gio.Cancell
 	var cls *Pixbuf
 	var cerr *glib.Error
 
-	cret := xNewPixbufFromStream(StreamVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewPixbufFromStream(StreamVar.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -528,7 +533,12 @@ func NewPixbufFromStreamAtScale(StreamVar *gio.InputStream, WidthVar int, Height
 	var cls *Pixbuf
 	var cerr *glib.Error
 
-	cret := xNewPixbufFromStreamAtScale(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewPixbufFromStreamAtScale(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1232,7 +1242,12 @@ var xPixbufSaveToStream func(uintptr, uintptr, string, uintptr, **glib.Error, ..
 // The stream is not closed at the end of this call.
 func (x *Pixbuf) SaveToStream(StreamVar *gio.OutputStream, TypeVar string, CancellableVar *gio.Cancellable, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
-	cret := xPixbufSaveToStream(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), ErrorVar, varArgs...)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xPixbufSaveToStream(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVarPtr, ErrorVar, varArgs...)
 	return cret
 }
 
@@ -1264,7 +1279,12 @@ func (x *Pixbuf) SaveToStreamAsync(StreamVar *gio.OutputStream, TypeVar string, 
 		}
 	}
 
-	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar, varArgs...)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVarPtr, CallbackVarRef, UserDataVar, varArgs...)
 
 }
 
@@ -1279,7 +1299,12 @@ var xPixbufSaveToStreamv func(uintptr, uintptr, string, []string, []string, uint
 func (x *Pixbuf) SaveToStreamv(StreamVar *gio.OutputStream, TypeVar string, OptionKeysVar []string, OptionValuesVar []string, CancellableVar *gio.Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPixbufSaveToStreamv(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xPixbufSaveToStreamv(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1315,7 +1340,12 @@ func (x *Pixbuf) SaveToStreamvAsync(StreamVar *gio.OutputStream, TypeVar string,
 		}
 	}
 
-	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1578,7 +1608,12 @@ func (x *Pixbuf) GetPropertyWidth() int {
 // Checks if two icons are equal.
 func (x *Pixbuf) Equal(Icon2Var gio.Icon) bool {
 
-	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := gio.XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 
@@ -1628,7 +1663,12 @@ func (x *Pixbuf) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancella
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
-	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1647,7 +1687,12 @@ func (x *Pixbuf) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancella
 // version of this function, see g_loadable_icon_load().
 func (x *Pixbuf) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1720,7 +1765,12 @@ func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable,
 		}
 	}
 
-	xPixbufGetFileInfoAsync(FilenameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufGetFileInfoAsync(FilenameVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1802,7 +1852,12 @@ func PixbufNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Ca
 		}
 	}
 
-	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1832,7 +1887,12 @@ func PixbufNewFromStreamAtScaleAsync(StreamVar *gio.InputStream, WidthVar int, H
 		}
 	}
 
-	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

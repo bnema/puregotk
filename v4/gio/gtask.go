@@ -649,7 +649,17 @@ func NewTask(SourceObjectVar *gobject.Object, CancellableVar *Cancellable, Callb
 		}
 	}
 
-	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, CallbackDataVar)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewTask(SourceObjectVarPtr, CancellableVarPtr, CallbackVarRef, CallbackDataVar)
 
 	if cret == 0 {
 		return nil
@@ -1377,7 +1387,12 @@ var xTaskIsValid func(uintptr, uintptr) bool
 // source object). This can be used in g_return_if_fail() checks.
 func TaskIsValid(ResultVar AsyncResult, SourceObjectVar *gobject.Object) bool {
 
-	cret := xTaskIsValid(ResultVar.GoPointer(), SourceObjectVar.GoPointer())
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xTaskIsValid(ResultVar.GoPointer(), SourceObjectVarPtr)
 	return cret
 }
 
@@ -1408,7 +1423,12 @@ func TaskReportError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCal
 		}
 	}
 
-	xTaskReportError(SourceObjectVar.GoPointer(), CallbackVarRef, CallbackDataVar, SourceTagVar, ErrorVar)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	xTaskReportError(SourceObjectVarPtr, CallbackVarRef, CallbackDataVar, SourceTagVar, ErrorVar)
 
 }
 
@@ -1440,7 +1460,12 @@ func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReady
 		}
 	}
 
-	xTaskReportNewError(SourceObjectVar.GoPointer(), CallbackVarRef, CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	xTaskReportNewError(SourceObjectVarPtr, CallbackVarRef, CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 

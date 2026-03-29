@@ -155,7 +155,12 @@ var xCenterLayoutSetCenterWidget func(uintptr, uintptr)
 // To remove the existing center widget, pass %NULL.
 func (x *CenterLayout) SetCenterWidget(WidgetVar *Widget) {
 
-	xCenterLayoutSetCenterWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xCenterLayoutSetCenterWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -166,7 +171,12 @@ var xCenterLayoutSetEndWidget func(uintptr, uintptr)
 // To remove the existing center widget, pass %NULL.
 func (x *CenterLayout) SetEndWidget(WidgetVar *Widget) {
 
-	xCenterLayoutSetEndWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xCenterLayoutSetEndWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -202,7 +212,12 @@ var xCenterLayoutSetStartWidget func(uintptr, uintptr)
 // To remove the existing start widget, pass %NULL.
 func (x *CenterLayout) SetStartWidget(WidgetVar *Widget) {
 
-	xCenterLayoutSetStartWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xCenterLayoutSetStartWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 

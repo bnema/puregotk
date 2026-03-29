@@ -101,7 +101,17 @@ var xNewConstraint func(uintptr, ConstraintAttribute, ConstraintRelation, uintpt
 func NewConstraint(TargetVar ConstraintTarget, TargetAttributeVar ConstraintAttribute, RelationVar ConstraintRelation, SourceVar ConstraintTarget, SourceAttributeVar ConstraintAttribute, MultiplierVar float64, ConstantVar float64, StrengthVar int) *Constraint {
 	var cls *Constraint
 
-	cret := xNewConstraint(TargetVar.GoPointer(), TargetAttributeVar, RelationVar, SourceVar.GoPointer(), SourceAttributeVar, MultiplierVar, ConstantVar, StrengthVar)
+	var TargetVarPtr uintptr
+	if TargetVar != nil {
+		TargetVarPtr = TargetVar.GoPointer()
+	}
+
+	var SourceVarPtr uintptr
+	if SourceVar != nil {
+		SourceVarPtr = SourceVar.GoPointer()
+	}
+
+	cret := xNewConstraint(TargetVarPtr, TargetAttributeVar, RelationVar, SourceVarPtr, SourceAttributeVar, MultiplierVar, ConstantVar, StrengthVar)
 
 	if cret == 0 {
 		return nil
@@ -118,7 +128,12 @@ var xNewConstraintConstant func(uintptr, ConstraintAttribute, ConstraintRelation
 func NewConstraintConstant(TargetVar ConstraintTarget, TargetAttributeVar ConstraintAttribute, RelationVar ConstraintRelation, ConstantVar float64, StrengthVar int) *Constraint {
 	var cls *Constraint
 
-	cret := xNewConstraintConstant(TargetVar.GoPointer(), TargetAttributeVar, RelationVar, ConstantVar, StrengthVar)
+	var TargetVarPtr uintptr
+	if TargetVar != nil {
+		TargetVarPtr = TargetVar.GoPointer()
+	}
+
+	cret := xNewConstraintConstant(TargetVarPtr, TargetAttributeVar, RelationVar, ConstantVar, StrengthVar)
 
 	if cret == 0 {
 		return nil

@@ -252,7 +252,12 @@ func (x *SocketClient) Connect(ConnectableVar SocketConnectable, CancellableVar 
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketClientConnect(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketClientConnect(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -299,7 +304,12 @@ func (x *SocketClient) ConnectAsync(ConnectableVar SocketConnectable, Cancellabl
 		}
 	}
 
-	xSocketClientConnectAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketClientConnectAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -360,7 +370,12 @@ func (x *SocketClient) ConnectToHost(HostAndPortVar string, DefaultPortVar uint1
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketClientConnectToHost(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketClientConnectToHost(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -398,7 +413,12 @@ func (x *SocketClient) ConnectToHostAsync(HostAndPortVar string, DefaultPortVar 
 		}
 	}
 
-	xSocketClientConnectToHostAsync(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketClientConnectToHostAsync(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -443,7 +463,12 @@ func (x *SocketClient) ConnectToService(DomainVar string, ServiceVar string, Can
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketClientConnectToService(x.GoPointer(), DomainVar, ServiceVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketClientConnectToService(x.GoPointer(), DomainVar, ServiceVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -478,7 +503,12 @@ func (x *SocketClient) ConnectToServiceAsync(DomainVar string, ServiceVar string
 		}
 	}
 
-	xSocketClientConnectToServiceAsync(x.GoPointer(), DomainVar, ServiceVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketClientConnectToServiceAsync(x.GoPointer(), DomainVar, ServiceVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -530,7 +560,12 @@ func (x *SocketClient) ConnectToUri(UriVar string, DefaultPortVar uint16, Cancel
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketClientConnectToUri(x.GoPointer(), UriVar, DefaultPortVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xSocketClientConnectToUri(x.GoPointer(), UriVar, DefaultPortVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -568,7 +603,12 @@ func (x *SocketClient) ConnectToUriAsync(UriVar string, DefaultPortVar uint16, C
 		}
 	}
 
-	xSocketClientConnectToUriAsync(x.GoPointer(), UriVar, DefaultPortVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSocketClientConnectToUriAsync(x.GoPointer(), UriVar, DefaultPortVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -749,7 +789,12 @@ var xSocketClientSetLocalAddress func(uintptr, uintptr)
 // a specific interface.
 func (x *SocketClient) SetLocalAddress(AddressVar *SocketAddress) {
 
-	xSocketClientSetLocalAddress(x.GoPointer(), AddressVar.GoPointer())
+	var AddressVarPtr uintptr
+	if AddressVar != nil {
+		AddressVarPtr = AddressVar.GoPointer()
+	}
+
+	xSocketClientSetLocalAddress(x.GoPointer(), AddressVarPtr)
 
 }
 
@@ -778,7 +823,12 @@ var xSocketClientSetProxyResolver func(uintptr, uintptr)
 // changed by this function (but which is %TRUE by default)
 func (x *SocketClient) SetProxyResolver(ProxyResolverVar ProxyResolver) {
 
-	xSocketClientSetProxyResolver(x.GoPointer(), ProxyResolverVar.GoPointer())
+	var ProxyResolverVarPtr uintptr
+	if ProxyResolverVar != nil {
+		ProxyResolverVarPtr = ProxyResolverVar.GoPointer()
+	}
+
+	xSocketClientSetProxyResolver(x.GoPointer(), ProxyResolverVarPtr)
 
 }
 
@@ -961,7 +1011,7 @@ func (x *SocketClient) GetPropertyTls() bool {
 //
 // Note that there may be additional #GSocketClientEvent values in
 // the future; unrecognized @event values should be ignored.
-func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint {
+func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, *IOStream)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -974,7 +1024,7 @@ func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, ui
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, EventVarp, ConnectableVarp, ConnectionVarp)
+		cbFn(fa, EventVarp, ConnectableVarp, func() *IOStream { cls := &IOStream{}; cls.Ptr = ConnectionVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

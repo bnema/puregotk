@@ -92,7 +92,12 @@ var xZlibCompressorSetFileInfo func(uintptr, uintptr)
 // or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetFileInfo(FileInfoVar *FileInfo) {
 
-	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVar.GoPointer())
+	var FileInfoVarPtr uintptr
+	if FileInfoVar != nil {
+		FileInfoVarPtr = FileInfoVar.GoPointer()
+	}
+
+	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVarPtr)
 
 }
 

@@ -692,7 +692,12 @@ var xEntrySetCompletion func(uintptr, uintptr)
 // Completion is disabled if @completion is set to %NULL.
 func (x *Entry) SetCompletion(CompletionVar *EntryCompletion) {
 
-	xEntrySetCompletion(x.GoPointer(), CompletionVar.GoPointer())
+	var CompletionVarPtr uintptr
+	if CompletionVar != nil {
+		CompletionVarPtr = CompletionVar.GoPointer()
+	}
+
+	xEntrySetCompletion(x.GoPointer(), CompletionVarPtr)
 
 }
 
@@ -702,7 +707,12 @@ var xEntrySetExtraMenu func(uintptr, uintptr)
 // the context menu for @entry.
 func (x *Entry) SetExtraMenu(ModelVar *gio.MenuModel) {
 
-	xEntrySetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xEntrySetExtraMenu(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -748,7 +758,12 @@ var xEntrySetIconFromGicon func(uintptr, EntryIconPosition, uintptr)
 // specified position.
 func (x *Entry) SetIconFromGicon(IconPosVar EntryIconPosition, IconVar gio.Icon) {
 
-	xEntrySetIconFromGicon(x.GoPointer(), IconPosVar, IconVar.GoPointer())
+	var IconVarPtr uintptr
+	if IconVar != nil {
+		IconVarPtr = IconVar.GoPointer()
+	}
+
+	xEntrySetIconFromGicon(x.GoPointer(), IconPosVar, IconVarPtr)
 
 }
 
@@ -778,7 +793,12 @@ var xEntrySetIconFromPaintable func(uintptr, EntryIconPosition, uintptr)
 // If @paintable is %NULL, no icon will be shown in the specified position.
 func (x *Entry) SetIconFromPaintable(IconPosVar EntryIconPosition, PaintableVar gdk.Paintable) {
 
-	xEntrySetIconFromPaintable(x.GoPointer(), IconPosVar, PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xEntrySetIconFromPaintable(x.GoPointer(), IconPosVar, PaintableVarPtr)
 
 }
 
@@ -1862,7 +1882,17 @@ func (x *Entry) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Entry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1872,7 +1902,12 @@ func (x *Entry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Entry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -2032,7 +2067,12 @@ func (x *Entry) RemoveWidget() {
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *Entry) StartEditing(EventVar *gdk.Event) {
 
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
 
 }
 

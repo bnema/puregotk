@@ -111,7 +111,12 @@ var xNewColumnView func(uintptr) uintptr
 func NewColumnView(ModelVar SelectionModel) *ColumnView {
 	var cls *ColumnView
 
-	cret := xNewColumnView(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewColumnView(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -322,7 +327,12 @@ var xColumnViewScrollTo func(uintptr, uint, uintptr, ListScrollFlags, *ScrollInf
 // If it isn't, then the changes will take effect once that happens.
 func (x *ColumnView) ScrollTo(PosVar uint, ColumnVar *ColumnViewColumn, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
 
-	xColumnViewScrollTo(x.GoPointer(), PosVar, ColumnVar.GoPointer(), FlagsVar, ScrollVar)
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xColumnViewScrollTo(x.GoPointer(), PosVar, ColumnVarPtr, FlagsVar, ScrollVar)
 
 }
 
@@ -344,7 +354,12 @@ var xColumnViewSetHeaderFactory func(uintptr, uintptr)
 // section headers.
 func (x *ColumnView) SetHeaderFactory(FactoryVar *ListItemFactory) {
 
-	xColumnViewSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xColumnViewSetHeaderFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -355,7 +370,12 @@ var xColumnViewSetModel func(uintptr, uintptr)
 // This must be a [iface@Gtk.SelectionModel].
 func (x *ColumnView) SetModel(ModelVar SelectionModel) {
 
-	xColumnViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xColumnViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -382,7 +402,12 @@ var xColumnViewSetRowFactory func(uintptr, uintptr)
 // [class@GtkColumnViewCell].
 func (x *ColumnView) SetRowFactory(FactoryVar *ListItemFactory) {
 
-	xColumnViewSetRowFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xColumnViewSetRowFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -443,7 +468,12 @@ var xColumnViewSortByColumn func(uintptr, uintptr, SortType)
 // If @column is unset, the view will be unsorted.
 func (x *ColumnView) SortByColumn(ColumnVar *ColumnViewColumn, DirectionVar SortType) {
 
-	xColumnViewSortByColumn(x.GoPointer(), ColumnVar.GoPointer(), DirectionVar)
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xColumnViewSortByColumn(x.GoPointer(), ColumnVarPtr, DirectionVar)
 
 }
 
@@ -706,7 +736,17 @@ func (x *ColumnView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ColumnView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -716,7 +756,12 @@ func (x *ColumnView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *ColumnView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -909,7 +954,12 @@ func (x *ColumnView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ColumnView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -926,7 +976,12 @@ func (x *ColumnView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ColumnView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

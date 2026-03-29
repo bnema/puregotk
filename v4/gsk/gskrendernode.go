@@ -131,7 +131,12 @@ var xValueTakeRenderNode func(*gobject.Value, uintptr)
 // render node to the `GValue`.
 func ValueTakeRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
 
-	xValueTakeRenderNode(ValueVar, NodeVar.GoPointer())
+	var NodeVarPtr uintptr
+	if NodeVar != nil {
+		NodeVarPtr = NodeVar.GoPointer()
+	}
+
+	xValueTakeRenderNode(ValueVar, NodeVarPtr)
 
 }
 

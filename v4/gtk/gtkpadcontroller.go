@@ -150,7 +150,12 @@ var xNewPadController func(uintptr, uintptr) uintptr
 func NewPadController(GroupVar gio.ActionGroup, PadVar *gdk.Device) *PadController {
 	var cls *PadController
 
-	cret := xNewPadController(GroupVar.GoPointer(), PadVar.GoPointer())
+	var PadVarPtr uintptr
+	if PadVar != nil {
+		PadVarPtr = PadVar.GoPointer()
+	}
+
+	cret := xNewPadController(GroupVar.GoPointer(), PadVarPtr)
 
 	if cret == 0 {
 		return nil

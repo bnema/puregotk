@@ -242,7 +242,17 @@ func (x *PrintDialog) Print(ParentVar *Window, SetupVar *PrintSetup, Cancellable
 		}
 	}
 
-	xPrintDialogPrint(x.GoPointer(), ParentVar.GoPointer(), SetupVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPrintDialogPrint(x.GoPointer(), ParentVarPtr, SetupVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -269,7 +279,17 @@ func (x *PrintDialog) PrintFile(ParentVar *Window, SetupVar *PrintSetup, FileVar
 		}
 	}
 
-	xPrintDialogPrintFile(x.GoPointer(), ParentVar.GoPointer(), SetupVar, FileVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPrintDialogPrintFile(x.GoPointer(), ParentVarPtr, SetupVar, FileVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -405,7 +425,17 @@ func (x *PrintDialog) Setup(ParentVar *Window, CancellableVar *gio.Cancellable, 
 		}
 	}
 
-	xPrintDialogSetup(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPrintDialogSetup(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

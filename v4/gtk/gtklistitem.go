@@ -208,7 +208,12 @@ var xListItemSetChild func(uintptr, uintptr)
 // binding it multiple times.
 func (x *ListItem) SetChild(ChildVar *Widget) {
 
-	xListItemSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xListItemSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 

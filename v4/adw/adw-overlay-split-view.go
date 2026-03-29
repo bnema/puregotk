@@ -339,7 +339,12 @@ var xOverlaySplitViewSetContent func(uintptr, uintptr)
 // Sets the content widget for @self.
 func (x *OverlaySplitView) SetContent(ContentVar *gtk.Widget) {
 
-	xOverlaySplitViewSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xOverlaySplitViewSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -420,7 +425,12 @@ var xOverlaySplitViewSetSidebar func(uintptr, uintptr)
 // Sets the sidebar widget for @self.
 func (x *OverlaySplitView) SetSidebar(SidebarVar *gtk.Widget) {
 
-	xOverlaySplitViewSetSidebar(x.GoPointer(), SidebarVar.GoPointer())
+	var SidebarVarPtr uintptr
+	if SidebarVar != nil {
+		SidebarVarPtr = SidebarVar.GoPointer()
+	}
+
+	xOverlaySplitViewSetSidebar(x.GoPointer(), SidebarVarPtr)
 
 }
 
@@ -853,7 +863,17 @@ func (x *OverlaySplitView) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *OverlaySplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -863,7 +883,12 @@ func (x *OverlaySplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSib
 // is created, and it needs to be linked to a previous child.
 func (x *OverlaySplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

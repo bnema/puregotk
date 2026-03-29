@@ -343,7 +343,12 @@ var xEntryCompletionSetModel func(uintptr, uintptr)
 // will unset the model.
 func (x *EntryCompletion) SetModel(ModelVar TreeModel) {
 
-	xEntryCompletionSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xEntryCompletionSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

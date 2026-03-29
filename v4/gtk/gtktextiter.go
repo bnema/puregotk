@@ -242,7 +242,12 @@ var xTextIterBackwardToTagToggle func(uintptr, uintptr) bool
 // if no toggle is found.
 func (x *TextIter) BackwardToTagToggle(TagVar *TextTag) bool {
 
-	cret := xTextIterBackwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
+	var TagVarPtr uintptr
+	if TagVar != nil {
+		TagVarPtr = TagVar.GoPointer()
+	}
+
+	cret := xTextIterBackwardToTagToggle(x.GoPointer(), TagVarPtr)
 	return cret
 }
 
@@ -461,7 +466,12 @@ var xTextIterEndsTag func(uintptr, uintptr) bool
 // %FALSE for the same parameters.
 func (x *TextIter) EndsTag(TagVar *TextTag) bool {
 
-	cret := xTextIterEndsTag(x.GoPointer(), TagVar.GoPointer())
+	var TagVarPtr uintptr
+	if TagVar != nil {
+		TagVarPtr = TagVar.GoPointer()
+	}
+
+	cret := xTextIterEndsTag(x.GoPointer(), TagVarPtr)
 	return cret
 }
 
@@ -707,7 +717,12 @@ var xTextIterForwardToTagToggle func(uintptr, uintptr) bool
 // if no toggle is found.
 func (x *TextIter) ForwardToTagToggle(TagVar *TextTag) bool {
 
-	cret := xTextIterForwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
+	var TagVarPtr uintptr
+	if TagVar != nil {
+		TagVarPtr = TagVar.GoPointer()
+	}
+
+	cret := xTextIterForwardToTagToggle(x.GoPointer(), TagVarPtr)
 	return cret
 }
 
@@ -1334,7 +1349,12 @@ var xTextIterStartsTag func(uintptr, uintptr) bool
 // will also return %TRUE for the same parameters.
 func (x *TextIter) StartsTag(TagVar *TextTag) bool {
 
-	cret := xTextIterStartsTag(x.GoPointer(), TagVar.GoPointer())
+	var TagVarPtr uintptr
+	if TagVar != nil {
+		TagVarPtr = TagVar.GoPointer()
+	}
+
+	cret := xTextIterStartsTag(x.GoPointer(), TagVarPtr)
 	return cret
 }
 
@@ -1359,7 +1379,12 @@ var xTextIterTogglesTag func(uintptr, uintptr) bool
 // gtk_text_iter_ends_tag())
 func (x *TextIter) TogglesTag(TagVar *TextTag) bool {
 
-	cret := xTextIterTogglesTag(x.GoPointer(), TagVar.GoPointer())
+	var TagVarPtr uintptr
+	if TagVar != nil {
+		TagVarPtr = TagVar.GoPointer()
+	}
+
+	cret := xTextIterTogglesTag(x.GoPointer(), TagVarPtr)
 	return cret
 }
 

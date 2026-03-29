@@ -197,7 +197,17 @@ func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 		}
 	}
 
-	xFileDialogOpen(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogOpen(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -252,7 +262,17 @@ func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancell
 		}
 	}
 
-	xFileDialogOpenMultiple(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogOpenMultiple(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -310,7 +330,17 @@ func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gi
 		}
 	}
 
-	xFileDialogOpenMultipleTextFiles(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogOpenMultipleTextFiles(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -364,7 +394,17 @@ func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 		}
 	}
 
-	xFileDialogOpenTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogOpenTextFile(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -422,7 +462,17 @@ func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 		}
 	}
 
-	xFileDialogSave(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogSave(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -477,7 +527,17 @@ func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 		}
 	}
 
-	xFileDialogSaveTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogSaveTextFile(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -542,7 +602,17 @@ func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancell
 		}
 	}
 
-	xFileDialogSelectFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogSelectFolder(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -598,7 +668,17 @@ func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gi
 		}
 	}
 
-	xFileDialogSelectMultipleFolders(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileDialogSelectMultipleFolders(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -652,7 +732,12 @@ var xFileDialogSetDefaultFilter func(uintptr, uintptr)
 // will be unfiltered.
 func (x *FileDialog) SetDefaultFilter(FilterVar *FileFilter) {
 
-	xFileDialogSetDefaultFilter(x.GoPointer(), FilterVar.GoPointer())
+	var FilterVarPtr uintptr
+	if FilterVar != nil {
+		FilterVarPtr = FilterVar.GoPointer()
+	}
+
+	xFileDialogSetDefaultFilter(x.GoPointer(), FilterVarPtr)
 
 }
 
@@ -662,7 +747,12 @@ var xFileDialogSetFilters func(uintptr, uintptr)
 // in the file chooser dialog.
 func (x *FileDialog) SetFilters(FiltersVar gio.ListModel) {
 
-	xFileDialogSetFilters(x.GoPointer(), FiltersVar.GoPointer())
+	var FiltersVarPtr uintptr
+	if FiltersVar != nil {
+		FiltersVarPtr = FiltersVar.GoPointer()
+	}
+
+	xFileDialogSetFilters(x.GoPointer(), FiltersVarPtr)
 
 }
 
@@ -677,7 +767,12 @@ var xFileDialogSetInitialFile func(uintptr, uintptr)
 // directory and name of @file, respectively.
 func (x *FileDialog) SetInitialFile(FileVar gio.File) {
 
-	xFileDialogSetInitialFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xFileDialogSetInitialFile(x.GoPointer(), FileVarPtr)
 
 }
 
@@ -687,7 +782,12 @@ var xFileDialogSetInitialFolder func(uintptr, uintptr)
 // initial folder in the file chooser dialog.
 func (x *FileDialog) SetInitialFolder(FolderVar gio.File) {
 
-	xFileDialogSetInitialFolder(x.GoPointer(), FolderVar.GoPointer())
+	var FolderVarPtr uintptr
+	if FolderVar != nil {
+		FolderVarPtr = FolderVar.GoPointer()
+	}
+
+	xFileDialogSetInitialFolder(x.GoPointer(), FolderVarPtr)
 
 }
 

@@ -279,7 +279,12 @@ var xComboRowSetExpression func(uintptr, uintptr)
 // [property@ComboRow:use-subtitle] is set to `TRUE`.
 func (x *ComboRow) SetExpression(ExpressionVar *gtk.Expression) {
 
-	xComboRowSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xComboRowSetExpression(x.GoPointer(), ExpressionVarPtr)
 
 }
 
@@ -291,7 +296,12 @@ var xComboRowSetFactory func(uintptr, uintptr)
 // items in the popup unless [property@ComboRow:list-factory] is set.
 func (x *ComboRow) SetFactory(FactoryVar *gtk.ListItemFactory) {
 
-	xComboRowSetFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xComboRowSetFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -300,7 +310,12 @@ var xComboRowSetHeaderFactory func(uintptr, uintptr)
 // Sets the factory to use for creating header widgets for the popup.
 func (x *ComboRow) SetHeaderFactory(FactoryVar *gtk.ListItemFactory) {
 
-	xComboRowSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xComboRowSetHeaderFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -311,7 +326,12 @@ var xComboRowSetListFactory func(uintptr, uintptr)
 // If this is not set, [property@ComboRow:factory] is used.
 func (x *ComboRow) SetListFactory(FactoryVar *gtk.ListItemFactory) {
 
-	xComboRowSetListFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xComboRowSetListFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -320,7 +340,12 @@ var xComboRowSetModel func(uintptr, uintptr)
 // Sets the model that provides the displayed items.
 func (x *ComboRow) SetModel(ModelVar gio.ListModel) {
 
-	xComboRowSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xComboRowSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -587,7 +612,17 @@ func (x *ComboRow) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *ComboRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -597,7 +632,12 @@ func (x *ComboRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar 
 // is created, and it needs to be linked to a previous child.
 func (x *ComboRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

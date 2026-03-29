@@ -266,7 +266,12 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 		}
 	}
 
-	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -321,10 +326,15 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 		}
 	}
 
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVarPtr, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVarPtr, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -505,7 +515,7 @@ func (x *DBusObjectManagerClient) GetPropertyObjectPath() string {
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, uintptr, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
@@ -518,7 +528,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, ChangedPropertiesVarp, InvalidatedPropertiesVarp)
+		cbFn(fa, func() *DBusObjectProxy { cls := &DBusObjectProxy{}; cls.Ptr = ObjectProxyVarp; return cls }(), func() *DBusProxy { cls := &DBusProxy{}; cls.Ptr = InterfaceProxyVarp; return cls }(), ChangedPropertiesVarp, InvalidatedPropertiesVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -536,7 +546,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
@@ -549,7 +559,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, core.GoString(SenderNameVarp), core.GoString(SignalNameVarp), ParametersVarp)
+		cbFn(fa, func() *DBusObjectProxy { cls := &DBusObjectProxy{}; cls.Ptr = ObjectProxyVarp; return cls }(), func() *DBusProxy { cls := &DBusProxy{}; cls.Ptr = InterfaceProxyVarp; return cls }(), core.GoString(SenderNameVarp), core.GoString(SignalNameVarp), ParametersVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -597,7 +607,12 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 // any interface methods.
 func (x *DBusObjectManagerClient) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -718,7 +733,12 @@ func (x *DBusObjectManagerClient) GetObjects() *glib.List {
 func (x *DBusObjectManagerClient) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -783,7 +803,12 @@ func DBusObjectManagerClientNew(ConnectionVar *DBusConnection, FlagsVar DBusObje
 		}
 	}
 
-	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -845,7 +870,12 @@ func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectMan
 		}
 	}
 
-	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

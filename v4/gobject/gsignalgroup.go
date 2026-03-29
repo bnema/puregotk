@@ -270,7 +270,12 @@ var xSignalGroupSetTarget func(uintptr, uintptr)
 // disconnected from that object prior to connecting to @target.
 func (x *SignalGroup) SetTarget(TargetVar *Object) {
 
-	xSignalGroupSetTarget(x.GoPointer(), TargetVar.GoPointer())
+	var TargetVarPtr uintptr
+	if TargetVar != nil {
+		TargetVarPtr = TargetVar.GoPointer()
+	}
+
+	xSignalGroupSetTarget(x.GoPointer(), TargetVarPtr)
 
 }
 
@@ -301,7 +306,7 @@ func (c *SignalGroup) SetGoPointer(ptr uintptr) {
 // other than %NULL. It is similar to #GObject::notify on `target` except it
 // will not emit when #GSignalGroup:target is %NULL and also allows for
 // receiving the #GObject without a data-race.
-func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
+func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, *Object)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
@@ -314,7 +319,7 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, InstanceVarp)
+		cbFn(fa, func() *Object { cls := &Object{}; cls.Ptr = InstanceVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

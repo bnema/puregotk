@@ -250,7 +250,12 @@ var xActionRowSetActivatableWidget func(uintptr, uintptr)
 // [signal@Gtk.Widget::mnemonic-activate] signal on it.
 func (x *ActionRow) SetActivatableWidget(WidgetVar *gtk.Widget) {
 
-	xActionRowSetActivatableWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xActionRowSetActivatableWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -587,7 +592,17 @@ func (x *ActionRow) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *ActionRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -597,7 +612,12 @@ func (x *ActionRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar
 // is created, and it needs to be linked to a previous child.
 func (x *ActionRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

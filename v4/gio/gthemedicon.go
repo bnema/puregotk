@@ -231,7 +231,12 @@ func (x *ThemedIcon) GetPropertyUseDefaultFallbacks() bool {
 // Checks if two icons are equal.
 func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
 
-	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 

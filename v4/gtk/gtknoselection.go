@@ -51,7 +51,12 @@ var xNewNoSelection func(uintptr) uintptr
 func NewNoSelection(ModelVar gio.ListModel) *NoSelection {
 	var cls *NoSelection
 
-	cret := xNewNoSelection(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewNoSelection(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -85,7 +90,12 @@ var xNoSelectionSetModel func(uintptr, uintptr)
 // If @model is %NULL, this model will be empty.
 func (x *NoSelection) SetModel(ModelVar gio.ListModel) {
 
-	xNoSelectionSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xNoSelectionSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

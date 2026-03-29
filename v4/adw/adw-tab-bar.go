@@ -231,7 +231,12 @@ var xTabBarSetEndActionWidget func(uintptr, uintptr)
 // Sets the widget to show after the tabs.
 func (x *TabBar) SetEndActionWidget(WidgetVar *gtk.Widget) {
 
-	xTabBarSetEndActionWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xTabBarSetEndActionWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -275,7 +280,12 @@ var xTabBarSetStartActionWidget func(uintptr, uintptr)
 // Sets the widget to show before the tabs.
 func (x *TabBar) SetStartActionWidget(WidgetVar *gtk.Widget) {
 
-	xTabBarSetStartActionWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xTabBarSetStartActionWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -284,7 +294,12 @@ var xTabBarSetView func(uintptr, uintptr)
 // Sets the tab view @self controls.
 func (x *TabBar) SetView(ViewVar *TabView) {
 
-	xTabBarSetView(x.GoPointer(), ViewVar.GoPointer())
+	var ViewVarPtr uintptr
+	if ViewVar != nil {
+		ViewVarPtr = ViewVar.GoPointer()
+	}
+
+	xTabBarSetView(x.GoPointer(), ViewVarPtr)
 
 }
 
@@ -438,7 +453,7 @@ func (x *TabBar) GetPropertyTabsRevealed() bool {
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) uint {
+func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, *TabPage, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
@@ -451,7 +466,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PageVarp, ValueVarp)
+		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -470,7 +485,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.DragAction) uint {
+func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, *TabPage, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
@@ -483,7 +498,7 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.Dr
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PageVarp, ValueVarp)
+		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -627,7 +642,17 @@ func (x *TabBar) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *TabBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -637,7 +662,12 @@ func (x *TabBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // is created, and it needs to be linked to a previous child.
 func (x *TabBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

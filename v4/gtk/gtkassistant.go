@@ -596,7 +596,7 @@ func (x *Assistant) ConnectEscape(cb *func(Assistant)) uint {
 //
 // A handler for this signal can do any preparations which are
 // necessary before showing @page.
-func (x *Assistant) ConnectPrepare(cb *func(Assistant, uintptr)) uint {
+func (x *Assistant) ConnectPrepare(cb *func(Assistant, *Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
@@ -609,7 +609,7 @@ func (x *Assistant) ConnectPrepare(cb *func(Assistant, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp)
+		cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = PageVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -753,7 +753,17 @@ func (x *Assistant) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Assistant) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -763,7 +773,12 @@ func (x *Assistant) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // is created, and it needs to be linked to a previous child.
 func (x *Assistant) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1000,7 +1015,12 @@ func (x *Assistant) GetFocus() *Widget {
 // this function.
 func (x *Assistant) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

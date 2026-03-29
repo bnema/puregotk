@@ -17,7 +17,12 @@ var xShowUri func(uintptr, string, uint32)
 // a given uri, or shows an error dialog if that fails.
 func ShowUri(ParentVar *Window, UriVar string, TimestampVar uint32) {
 
-	xShowUri(ParentVar.GoPointer(), UriVar, TimestampVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xShowUri(ParentVarPtr, UriVar, TimestampVar)
 
 }
 
@@ -47,7 +52,17 @@ func ShowUriFull(ParentVar *Window, UriVar string, TimestampVar uint32, Cancella
 		}
 	}
 
-	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xShowUriFull(ParentVarPtr, UriVar, TimestampVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

@@ -381,7 +381,12 @@ func (x *TlsBackendBase) GetServerConnectionType() types.GType {
 // database as if g_tls_backend_set_default_database() had never been called.
 func (x *TlsBackendBase) SetDefaultDatabase(DatabaseVar *TlsDatabase) {
 
-	XGTlsBackendSetDefaultDatabase(x.GoPointer(), DatabaseVar.GoPointer())
+	var DatabaseVarPtr uintptr
+	if DatabaseVar != nil {
+		DatabaseVarPtr = DatabaseVar.GoPointer()
+	}
+
+	XGTlsBackendSetDefaultDatabase(x.GoPointer(), DatabaseVarPtr)
 
 }
 

@@ -79,7 +79,12 @@ var xNewSpinnerPaintable func(uintptr) uintptr
 func NewSpinnerPaintable(WidgetVar *gtk.Widget) *SpinnerPaintable {
 	var cls *SpinnerPaintable
 
-	cret := xNewSpinnerPaintable(WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	cret := xNewSpinnerPaintable(WidgetVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -111,7 +116,12 @@ var xSpinnerPaintableSetWidget func(uintptr, uintptr)
 // Sets the widget used for frame clock.
 func (x *SpinnerPaintable) SetWidget(WidgetVar *gtk.Widget) {
 
-	xSpinnerPaintableSetWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xSpinnerPaintableSetWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 

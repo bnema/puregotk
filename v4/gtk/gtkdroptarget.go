@@ -374,7 +374,7 @@ func (x *DropTarget) GetPropertyValue() uintptr {
 // [property@Gtk.DropTarget:preload] property should be set and the value
 // should be inspected via the ::notify:value signal, calling
 // [method@Gtk.DropTarget.reject] if required.
-func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint {
+func (x *DropTarget) ConnectAccept(cb *func(DropTarget, *gdk.Drop) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
@@ -387,7 +387,7 @@ func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, DropVarp)
+		return cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

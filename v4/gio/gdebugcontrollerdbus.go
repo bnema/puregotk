@@ -198,7 +198,12 @@ func NewDebugControllerDBus(ConnectionVar *DBusConnection, CancellableVar *Cance
 	var cls *DebugControllerDBus
 	var cerr *glib.Error
 
-	cret := xNewDebugControllerDBus(ConnectionVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewDebugControllerDBus(ConnectionVar.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -264,7 +269,7 @@ func (c *DebugControllerDBus) SetGoPointer(ptr uintptr) {
 // Signal handlers must not modify @invocation, or cause it to return a value.
 //
 // The default class handler just returns %TRUE.
-func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint {
+func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, *DBusMethodInvocation) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
@@ -277,7 +282,7 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, InvocationVarp)
+		return cbFn(fa, func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -342,7 +347,12 @@ func (x *DebugControllerDBus) SetDebugEnabled(DebugEnabledVar bool) {
 func (x *DebugControllerDBus) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

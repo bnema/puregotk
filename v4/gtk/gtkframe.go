@@ -195,7 +195,12 @@ var xFrameSetChild func(uintptr, uintptr)
 // Sets the child widget of @frame.
 func (x *Frame) SetChild(ChildVar *Widget) {
 
-	xFrameSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xFrameSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -231,7 +236,12 @@ var xFrameSetLabelWidget func(uintptr, uintptr)
 // of the frame as a title.
 func (x *Frame) SetLabelWidget(LabelWidgetVar *Widget) {
 
-	xFrameSetLabelWidget(x.GoPointer(), LabelWidgetVar.GoPointer())
+	var LabelWidgetVarPtr uintptr
+	if LabelWidgetVar != nil {
+		LabelWidgetVarPtr = LabelWidgetVar.GoPointer()
+	}
+
+	xFrameSetLabelWidget(x.GoPointer(), LabelWidgetVarPtr)
 
 }
 
@@ -414,7 +424,17 @@ func (x *Frame) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Frame) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -424,7 +444,12 @@ func (x *Frame) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Frame) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

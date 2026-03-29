@@ -303,7 +303,12 @@ var xBottomSheetSetBottomBar func(uintptr, uintptr)
 // [property@BottomSheet:reveal-bottom-bar] property.
 func (x *BottomSheet) SetBottomBar(BottomBarVar *gtk.Widget) {
 
-	xBottomSheetSetBottomBar(x.GoPointer(), BottomBarVar.GoPointer())
+	var BottomBarVarPtr uintptr
+	if BottomBarVar != nil {
+		BottomBarVarPtr = BottomBarVar.GoPointer()
+	}
+
+	xBottomSheetSetBottomBar(x.GoPointer(), BottomBarVarPtr)
 
 }
 
@@ -343,7 +348,12 @@ var xBottomSheetSetContent func(uintptr, uintptr)
 // It's always shown, and the bottom sheet is overlaid over it.
 func (x *BottomSheet) SetContent(ContentVar *gtk.Widget) {
 
-	xBottomSheetSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xBottomSheetSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -403,7 +413,12 @@ var xBottomSheetSetSheet func(uintptr, uintptr)
 // Only shown when [property@BottomSheet:open] is `TRUE`.
 func (x *BottomSheet) SetSheet(SheetVar *gtk.Widget) {
 
-	xBottomSheetSetSheet(x.GoPointer(), SheetVar.GoPointer())
+	var SheetVarPtr uintptr
+	if SheetVar != nil {
+		SheetVarPtr = SheetVar.GoPointer()
+	}
+
+	xBottomSheetSetSheet(x.GoPointer(), SheetVarPtr)
 
 }
 
@@ -873,7 +888,17 @@ func (x *BottomSheet) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *BottomSheet) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -883,7 +908,12 @@ func (x *BottomSheet) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *BottomSheet) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -397,7 +397,12 @@ func NewPixbufAnimationFromStream(StreamVar *gio.InputStream, CancellableVar *gi
 	var cls *PixbufAnimation
 	var cerr *glib.Error
 
-	cret := xNewPixbufAnimationFromStream(StreamVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewPixbufAnimationFromStream(StreamVar.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -604,7 +609,12 @@ func PixbufAnimationNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVa
 		}
 	}
 
-	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

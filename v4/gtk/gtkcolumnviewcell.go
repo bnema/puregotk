@@ -130,7 +130,12 @@ var xColumnViewCellSetChild func(uintptr, uintptr)
 // binding it multiple times.
 func (x *ColumnViewCell) SetChild(ChildVar *Widget) {
 
-	xColumnViewCellSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xColumnViewCellSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 

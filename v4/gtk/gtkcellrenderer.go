@@ -596,7 +596,12 @@ var xCellRendererGetState func(uintptr, uintptr, CellRendererState) StateFlags
 // the given `GtkCellRenderer`State.
 func (x *CellRenderer) GetState(WidgetVar *Widget, CellStateVar CellRendererState) StateFlags {
 
-	cret := xCellRendererGetState(x.GoPointer(), WidgetVar.GoPointer(), CellStateVar)
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	cret := xCellRendererGetState(x.GoPointer(), WidgetVarPtr, CellStateVar)
 	return cret
 }
 
@@ -703,7 +708,12 @@ var xCellRendererStartEditing func(uintptr, uintptr, uintptr, string, *gdk.Recta
 func (x *CellRenderer) StartEditing(EventVar *gdk.Event, WidgetVar *Widget, PathVar string, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) *CellEditableBase {
 	var cls *CellEditableBase
 
-	cret := xCellRendererStartEditing(x.GoPointer(), EventVar.GoPointer(), WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	cret := xCellRendererStartEditing(x.GoPointer(), EventVarPtr, WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
 
 	if cret == 0 {
 		return nil

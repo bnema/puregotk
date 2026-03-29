@@ -8,6 +8,7 @@ import (
 	"github.com/ebitengine/purego"
 
 	"github.com/bnema/puregotk/pkg/core"
+	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -69,7 +70,7 @@ func (c *EventControllerLegacy) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted for each GDK event delivered to @controller.
-func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uintptr) bool) uint {
+func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, *gdk.Event) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -82,7 +83,7 @@ func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, EventVarp)
+		return cbFn(fa, func() *gdk.Event { cls := &gdk.Event{}; cls.Ptr = EventVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

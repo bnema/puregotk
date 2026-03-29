@@ -172,7 +172,12 @@ func (x *CellEditableBase) RemoveWidget() {
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *CellEditableBase) StartEditing(EventVar *gdk.Event) {
 
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
 
 }
 

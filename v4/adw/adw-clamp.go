@@ -136,7 +136,12 @@ var xClampSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *Clamp) SetChild(ChildVar *gtk.Widget) {
 
-	xClampSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xClampSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -393,7 +398,17 @@ func (x *Clamp) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *Clamp) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -403,7 +418,12 @@ func (x *Clamp) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk
 // is created, and it needs to be linked to a previous child.
 func (x *Clamp) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

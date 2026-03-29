@@ -348,7 +348,12 @@ var xMediaFileSetFile func(uintptr, uintptr)
 // If any file is still playing, stop playing it.
 func (x *MediaFile) SetFile(FileVar gio.File) {
 
-	xMediaFileSetFile(x.GoPointer(), FileVar.GoPointer())
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	xMediaFileSetFile(x.GoPointer(), FileVarPtr)
 
 }
 
@@ -377,7 +382,12 @@ var xMediaFileSetInputStream func(uintptr, uintptr)
 // playback. The stream will not be closed.
 func (x *MediaFile) SetInputStream(StreamVar *gio.InputStream) {
 
-	xMediaFileSetInputStream(x.GoPointer(), StreamVar.GoPointer())
+	var StreamVarPtr uintptr
+	if StreamVar != nil {
+		StreamVarPtr = StreamVar.GoPointer()
+	}
+
+	xMediaFileSetInputStream(x.GoPointer(), StreamVarPtr)
 
 }
 

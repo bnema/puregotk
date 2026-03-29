@@ -317,7 +317,12 @@ var xContextSetFontMap func(uintptr, uintptr)
 // suitable font map.
 func (x *Context) SetFontMap(FontMapVar *FontMap) {
 
-	xContextSetFontMap(x.GoPointer(), FontMapVar.GoPointer())
+	var FontMapVarPtr uintptr
+	if FontMapVar != nil {
+		FontMapVarPtr = FontMapVar.GoPointer()
+	}
+
+	xContextSetFontMap(x.GoPointer(), FontMapVarPtr)
 
 }
 

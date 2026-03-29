@@ -164,7 +164,17 @@ var xNewListView func(uintptr, uintptr) uintptr
 func NewListView(ModelVar SelectionModel, FactoryVar *ListItemFactory) *ListView {
 	var cls *ListView
 
-	cret := xNewListView(ModelVar.GoPointer(), FactoryVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	cret := xNewListView(ModelVarPtr, FactoryVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -291,7 +301,12 @@ var xListViewSetFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *ListView) SetFactory(FactoryVar *ListItemFactory) {
 
-	xListViewSetFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xListViewSetFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -304,7 +319,12 @@ var xListViewSetHeaderFactory func(uintptr, uintptr)
 // section headers.
 func (x *ListView) SetHeaderFactory(FactoryVar *ListItemFactory) {
 
-	xListViewSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xListViewSetHeaderFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -315,7 +335,12 @@ var xListViewSetModel func(uintptr, uintptr)
 // This must be a [iface@Gtk.SelectionModel] to use.
 func (x *ListView) SetModel(ModelVar SelectionModel) {
 
-	xListViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xListViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -579,7 +604,17 @@ func (x *ListView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *ListView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -589,7 +624,12 @@ func (x *ListView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *ListView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -796,7 +836,12 @@ func (x *ListView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ListView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -813,7 +858,12 @@ func (x *ListView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ListView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

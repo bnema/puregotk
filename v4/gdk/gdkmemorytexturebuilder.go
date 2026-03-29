@@ -291,7 +291,12 @@ var xMemoryTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 // See [method@Gdk.MemoryTextureBuilder.set_update_region] for an explanation.
 func (x *MemoryTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
 
-	xMemoryTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
+	var TextureVarPtr uintptr
+	if TextureVar != nil {
+		TextureVarPtr = TextureVar.GoPointer()
+	}
+
+	xMemoryTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVarPtr)
 
 }
 

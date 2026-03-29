@@ -232,7 +232,12 @@ func (x *DBusInterfaceBase) GetObject() *DBusObjectBase {
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceBase) SetObject(ObjectVar DBusObject) {
 
-	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVarPtr)
 
 }
 

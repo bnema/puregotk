@@ -217,13 +217,18 @@ var xNewFileChooserDialog func(uintptr, uintptr, FileChooserAction, uintptr, ...
 func NewFileChooserDialog(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, FirstButtonTextVar *string, varArgs ...interface{}) *FileChooserDialog {
 	var cls *FileChooserDialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
 	FirstButtonTextVarPtr := core.GStrdupNullable(FirstButtonTextVar)
 	defer core.GFreeNullable(FirstButtonTextVarPtr)
 
-	cret := xNewFileChooserDialog(TitleVarPtr, ParentVar.GoPointer(), ActionVar, FirstButtonTextVarPtr, varArgs...)
+	cret := xNewFileChooserDialog(TitleVarPtr, ParentVarPtr, ActionVar, FirstButtonTextVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -379,7 +384,17 @@ func (x *FileChooserDialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *FileChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -389,7 +404,12 @@ func (x *FileChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // is created, and it needs to be linked to a previous child.
 func (x *FileChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -767,7 +787,12 @@ func (x *FileChooserDialog) SetCreateFolders(CreateFoldersVar bool) {
 func (x *FileChooserDialog) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -979,7 +1004,12 @@ func (x *FileChooserDialog) GetFocus() *Widget {
 // this function.
 func (x *FileChooserDialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

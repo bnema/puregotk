@@ -635,7 +635,7 @@ func (x *GLArea) GetPropertyUseEs() bool {
 // If context creation fails then the signal handler can use
 // [method@Gtk.GLArea.set_error] to register a more detailed error
 // of how the construction failed.
-func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
+func (x *GLArea) ConnectCreateContext(cb *func(GLArea) *gdk.GLContext) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
@@ -663,7 +663,7 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
 //
 // The @context is bound to the @area prior to emitting this function,
 // and the buffers are painted to the window once the emission terminates.
-func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
+func (x *GLArea) ConnectRender(cb *func(GLArea, *gdk.GLContext) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
@@ -676,7 +676,7 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ContextVarp)
+		return cbFn(fa, func() *gdk.GLContext { cls := &gdk.GLContext{}; cls.Ptr = ContextVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -854,7 +854,17 @@ func (x *GLArea) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *GLArea) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -864,7 +874,12 @@ func (x *GLArea) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // is created, and it needs to be linked to a previous child.
 func (x *GLArea) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

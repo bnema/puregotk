@@ -51,7 +51,12 @@ var xNewSingleSelection func(uintptr) uintptr
 func NewSingleSelection(ModelVar gio.ListModel) *SingleSelection {
 	var cls *SingleSelection
 
-	cret := xNewSingleSelection(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewSingleSelection(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -162,7 +167,12 @@ var xSingleSelectionSetModel func(uintptr, uintptr)
 // If @model is %NULL, @self will be empty.
 func (x *SingleSelection) SetModel(ModelVar gio.ListModel) {
 
-	xSingleSelectionSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xSingleSelectionSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

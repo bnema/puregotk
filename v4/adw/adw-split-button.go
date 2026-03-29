@@ -254,7 +254,12 @@ var xSplitButtonSetChild func(uintptr, uintptr)
 // [property@SplitButton:icon-name] to `NULL`.
 func (x *SplitButton) SetChild(ChildVar *gtk.Widget) {
 
-	xSplitButtonSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xSplitButtonSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -323,7 +328,12 @@ var xSplitButtonSetMenuModel func(uintptr, uintptr)
 // the button, and the property is set to `NULL`.
 func (x *SplitButton) SetMenuModel(MenuModelVar *gio.MenuModel) {
 
-	xSplitButtonSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
+	var MenuModelVarPtr uintptr
+	if MenuModelVar != nil {
+		MenuModelVarPtr = MenuModelVar.GoPointer()
+	}
+
+	xSplitButtonSetMenuModel(x.GoPointer(), MenuModelVarPtr)
 
 }
 
@@ -337,7 +347,12 @@ var xSplitButtonSetPopover func(uintptr, uintptr)
 // from the button, and the property is set to `NULL`.
 func (x *SplitButton) SetPopover(PopoverVar *gtk.Popover) {
 
-	xSplitButtonSetPopover(x.GoPointer(), PopoverVar.GoPointer())
+	var PopoverVarPtr uintptr
+	if PopoverVar != nil {
+		PopoverVarPtr = PopoverVar.GoPointer()
+	}
+
+	xSplitButtonSetPopover(x.GoPointer(), PopoverVarPtr)
 
 }
 
@@ -663,7 +678,17 @@ func (x *SplitButton) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *SplitButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -673,7 +698,12 @@ func (x *SplitButton) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *SplitButton) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

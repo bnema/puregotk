@@ -56,7 +56,17 @@ var xNewFilterListModel func(uintptr, uintptr) uintptr
 func NewFilterListModel(ModelVar gio.ListModel, FilterVar *Filter) *FilterListModel {
 	var cls *FilterListModel
 
-	cret := xNewFilterListModel(ModelVar.GoPointer(), FilterVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	var FilterVarPtr uintptr
+	if FilterVar != nil {
+		FilterVarPtr = FilterVar.GoPointer()
+	}
+
+	cret := xNewFilterListModel(ModelVarPtr, FilterVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -151,7 +161,12 @@ var xFilterListModelSetFilter func(uintptr, uintptr)
 // Sets the filter used to filter items.
 func (x *FilterListModel) SetFilter(FilterVar *Filter) {
 
-	xFilterListModelSetFilter(x.GoPointer(), FilterVar.GoPointer())
+	var FilterVarPtr uintptr
+	if FilterVar != nil {
+		FilterVarPtr = FilterVar.GoPointer()
+	}
+
+	xFilterListModelSetFilter(x.GoPointer(), FilterVarPtr)
 
 }
 
@@ -189,7 +204,12 @@ var xFilterListModelSetModel func(uintptr, uintptr)
 // types match.
 func (x *FilterListModel) SetModel(ModelVar gio.ListModel) {
 
-	xFilterListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xFilterListModelSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

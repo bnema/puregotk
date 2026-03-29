@@ -642,7 +642,17 @@ func (x *FileChooserWidget) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *FileChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -652,7 +662,12 @@ func (x *FileChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblin
 // is created, and it needs to be linked to a previous child.
 func (x *FileChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1030,7 +1045,12 @@ func (x *FileChooserWidget) SetCreateFolders(CreateFoldersVar bool) {
 func (x *FileChooserWidget) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

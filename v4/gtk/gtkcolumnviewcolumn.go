@@ -67,10 +67,15 @@ var xNewColumnViewColumn func(uintptr, uintptr) uintptr
 func NewColumnViewColumn(TitleVar *string, FactoryVar *ListItemFactory) *ColumnViewColumn {
 	var cls *ColumnViewColumn
 
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
-	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVar.GoPointer())
+	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -224,7 +229,12 @@ var xColumnViewColumnSetFactory func(uintptr, uintptr)
 // for this column.
 func (x *ColumnViewColumn) SetFactory(FactoryVar *ListItemFactory) {
 
-	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -248,7 +258,12 @@ var xColumnViewColumnSetHeaderMenu func(uintptr, uintptr)
 // for the column header.
 func (x *ColumnViewColumn) SetHeaderMenu(MenuVar *gio.MenuModel) {
 
-	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVar.GoPointer())
+	var MenuVarPtr uintptr
+	if MenuVar != nil {
+		MenuVarPtr = MenuVar.GoPointer()
+	}
+
+	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVarPtr)
 
 }
 
@@ -292,7 +307,12 @@ var xColumnViewColumnSetSorter func(uintptr, uintptr)
 // for setting up customizable sorting for [class@Gtk.ColumnView].
 func (x *ColumnViewColumn) SetSorter(SorterVar *Sorter) {
 
-	xColumnViewColumnSetSorter(x.GoPointer(), SorterVar.GoPointer())
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	xColumnViewColumnSetSorter(x.GoPointer(), SorterVarPtr)
 
 }
 

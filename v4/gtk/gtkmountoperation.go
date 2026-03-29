@@ -167,7 +167,12 @@ var xNewMountOperation func(uintptr) uintptr
 func NewMountOperation(ParentVar *Window) *MountOperation {
 	var cls *MountOperation
 
-	cret := xNewMountOperation(ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	cret := xNewMountOperation(ParentVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -237,7 +242,12 @@ var xMountOperationSetParent func(uintptr, uintptr)
 // `GtkMountOperation`.
 func (x *MountOperation) SetParent(ParentVar *Window) {
 
-	xMountOperationSetParent(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xMountOperationSetParent(x.GoPointer(), ParentVarPtr)
 
 }
 

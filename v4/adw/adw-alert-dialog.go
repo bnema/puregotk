@@ -344,7 +344,17 @@ func (x *AlertDialog) Choose(ParentVar *gtk.Widget, CancellableVar *gio.Cancella
 		}
 	}
 
-	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xAlertDialogChoose(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -607,7 +617,12 @@ var xAlertDialogSetExtraChild func(uintptr, uintptr)
 // The child widget is displayed below the heading and body.
 func (x *AlertDialog) SetExtraChild(ChildVar *gtk.Widget) {
 
-	xAlertDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xAlertDialogSetExtraChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -1068,7 +1083,17 @@ func (x *AlertDialog) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *AlertDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1078,7 +1103,12 @@ func (x *AlertDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *AlertDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -565,7 +565,7 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint {
 }
 
 // Emitted on pen/eraser devices whenever tools enter or leave proximity.
-func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
+func (x *Device) ConnectToolChanged(cb *func(Device, *DeviceTool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
@@ -578,7 +578,7 @@ func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ToolVarp)
+		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

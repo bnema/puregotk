@@ -74,7 +74,17 @@ func NewDBusServerSync(AddressVar string, FlagsVar DBusServerFlags, GuidVar stri
 	var cls *DBusServer
 	var cerr *glib.Error
 
-	cret := xNewDBusServerSync(AddressVar, FlagsVar, GuidVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var ObserverVarPtr uintptr
+	if ObserverVar != nil {
+		ObserverVarPtr = ObserverVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xNewDBusServerSync(AddressVar, FlagsVar, GuidVar, ObserverVarPtr, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -232,7 +242,7 @@ func (x *DBusServer) GetPropertyGuid() string {
 // before incoming messages on @connection are processed. This means
 // that it's suitable to call g_dbus_connection_register_object() or
 // similar from the signal handler.
-func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint {
+func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, *DBusConnection) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
@@ -245,7 +255,7 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ConnectionVarp)
+		return cbFn(fa, func() *DBusConnection { cls := &DBusConnection{}; cls.Ptr = ConnectionVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -296,7 +306,12 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

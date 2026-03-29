@@ -517,7 +517,12 @@ var xResolverLookupByAddress func(uintptr, uintptr, uintptr, **glib.Error) strin
 func (x *Resolver) LookupByAddress(AddressVar *InetAddress, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	cret := xResolverLookupByAddress(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xResolverLookupByAddress(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -547,7 +552,12 @@ func (x *Resolver) LookupByAddressAsync(AddressVar *InetAddress, CancellableVar 
 		}
 	}
 
-	xResolverLookupByAddressAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xResolverLookupByAddressAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -598,7 +608,12 @@ var xResolverLookupByName func(uintptr, string, uintptr, **glib.Error) *glib.Lis
 func (x *Resolver) LookupByName(HostnameVar string, CancellableVar *Cancellable) (*glib.List, error) {
 	var cerr *glib.Error
 
-	cret := xResolverLookupByName(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xResolverLookupByName(x.GoPointer(), HostnameVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -629,7 +644,12 @@ func (x *Resolver) LookupByNameAsync(HostnameVar string, CancellableVar *Cancell
 		}
 	}
 
-	xResolverLookupByNameAsync(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xResolverLookupByNameAsync(x.GoPointer(), HostnameVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -660,7 +680,12 @@ var xResolverLookupByNameWithFlags func(uintptr, string, ResolverNameLookupFlags
 func (x *Resolver) LookupByNameWithFlags(HostnameVar string, FlagsVar ResolverNameLookupFlags, CancellableVar *Cancellable) (*glib.List, error) {
 	var cerr *glib.Error
 
-	cret := xResolverLookupByNameWithFlags(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xResolverLookupByNameWithFlags(x.GoPointer(), HostnameVar, FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -691,7 +716,12 @@ func (x *Resolver) LookupByNameWithFlagsAsync(HostnameVar string, FlagsVar Resol
 		}
 	}
 
-	xResolverLookupByNameWithFlagsAsync(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xResolverLookupByNameWithFlagsAsync(x.GoPointer(), HostnameVar, FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -729,7 +759,12 @@ var xResolverLookupRecords func(uintptr, string, ResolverRecordType, uintptr, **
 func (x *Resolver) LookupRecords(RrnameVar string, RecordTypeVar ResolverRecordType, CancellableVar *Cancellable) (*glib.List, error) {
 	var cerr *glib.Error
 
-	cret := xResolverLookupRecords(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xResolverLookupRecords(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -760,7 +795,12 @@ func (x *Resolver) LookupRecordsAsync(RrnameVar string, RecordTypeVar ResolverRe
 		}
 	}
 
-	xResolverLookupRecordsAsync(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xResolverLookupRecordsAsync(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -811,7 +851,12 @@ var xResolverLookupService func(uintptr, string, string, string, uintptr, **glib
 func (x *Resolver) LookupService(ServiceVar string, ProtocolVar string, DomainVar string, CancellableVar *Cancellable) (*glib.List, error) {
 	var cerr *glib.Error
 
-	cret := xResolverLookupService(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xResolverLookupService(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -843,7 +888,12 @@ func (x *Resolver) LookupServiceAsync(ServiceVar string, ProtocolVar string, Dom
 		}
 	}
 
-	xResolverLookupServiceAsync(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xResolverLookupServiceAsync(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

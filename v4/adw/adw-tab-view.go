@@ -311,7 +311,12 @@ var xTabPageSetIcon func(uintptr, uintptr)
 // [propertyTabPage:indicator-icon] is set.
 func (x *TabPage) SetIcon(IconVar gio.Icon) {
 
-	xTabPageSetIcon(x.GoPointer(), IconVar.GoPointer())
+	var IconVarPtr uintptr
+	if IconVar != nil {
+		IconVarPtr = IconVar.GoPointer()
+	}
+
+	xTabPageSetIcon(x.GoPointer(), IconVarPtr)
 
 }
 
@@ -350,7 +355,12 @@ var xTabPageSetIndicatorIcon func(uintptr, uintptr)
 // indicator icon can act as a button.
 func (x *TabPage) SetIndicatorIcon(IndicatorIconVar gio.Icon) {
 
-	xTabPageSetIndicatorIcon(x.GoPointer(), IndicatorIconVar.GoPointer())
+	var IndicatorIconVarPtr uintptr
+	if IndicatorIconVar != nil {
+		IndicatorIconVarPtr = IndicatorIconVar.GoPointer()
+	}
+
+	xTabPageSetIndicatorIcon(x.GoPointer(), IndicatorIconVarPtr)
 
 }
 
@@ -967,7 +977,17 @@ func (x *TabPage) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *TabPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -977,7 +997,12 @@ func (x *TabPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // is created, and it needs to be linked to a previous child.
 func (x *TabPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1189,7 +1214,12 @@ var xTabViewAddPage func(uintptr, uintptr, uintptr) uintptr
 func (x *TabView) AddPage(ChildVar *gtk.Widget, ParentVar *TabPage) *TabPage {
 	var cls *TabPage
 
-	cret := xTabViewAddPage(x.GoPointer(), ChildVar.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	cret := xTabViewAddPage(x.GoPointer(), ChildVar.GoPointer(), ParentVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -1672,7 +1702,12 @@ var xTabViewSetMenuModel func(uintptr, uintptr)
 // the menu actions for the particular tab.
 func (x *TabView) SetMenuModel(MenuModelVar *gio.MenuModel) {
 
-	xTabViewSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
+	var MenuModelVarPtr uintptr
+	if MenuModelVar != nil {
+		MenuModelVarPtr = MenuModelVar.GoPointer()
+	}
+
+	xTabViewSetMenuModel(x.GoPointer(), MenuModelVarPtr)
 
 }
 
@@ -1826,7 +1861,7 @@ func (x *TabView) GetPropertyNPinnedPages() int {
 //
 // The signal handler should return `GDK_EVENT_STOP` to stop propagation or
 // `GDK_EVENT_CONTINUE` to invoke the default handler.
-func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
+func (x *TabView) ConnectClosePage(cb *func(TabView, *TabPage) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
@@ -1839,7 +1874,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PageVarp)
+		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1855,7 +1890,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
 //
 // The signal handler is expected to create a new window, position it as
 // needed and return its `AdwTabView` that the page will be transferred into.
-func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint {
+func (x *TabView) ConnectCreateWindow(cb *func(TabView) *TabView) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
@@ -1883,7 +1918,7 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint {
 //
 // See [property@TabPage:indicator-icon] and
 // [property@TabPage:indicator-activatable].
-func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
+func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, *TabPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
@@ -1896,7 +1931,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp)
+		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1910,7 +1945,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
 //
 // A typical reason to connect to this signal would be to connect to page
 // signals for things such as updating window title.
-func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
+func (x *TabView) ConnectPageAttached(cb *func(TabView, *TabPage, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
@@ -1923,7 +1958,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp, PositionVarp)
+		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1942,7 +1977,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
 // this function as the child might merely be moved to another window; use
 // child dispose handler for that or do it in sync with your
 // [method@TabView.close_page_finish] calls.
-func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
+func (x *TabView) ConnectPageDetached(cb *func(TabView, *TabPage, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
@@ -1955,7 +1990,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp, PositionVarp)
+		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1966,7 +2001,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
 }
 
 // Emitted after @page has been reordered to @position.
-func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
+func (x *TabView) ConnectPageReordered(cb *func(TabView, *TabPage, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
@@ -1979,7 +2014,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp, PositionVarp)
+		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1995,7 +2030,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
 //
 // It can be used to set up menu actions before showing the menu, for example
 // disable actions not applicable to @page.
-func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint {
+func (x *TabView) ConnectSetupMenu(cb *func(TabView, *TabPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
@@ -2008,7 +2043,7 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp)
+		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2152,7 +2187,17 @@ func (x *TabView) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *TabView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -2162,7 +2207,12 @@ func (x *TabView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // is created, and it needs to be linked to a previous child.
 func (x *TabView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

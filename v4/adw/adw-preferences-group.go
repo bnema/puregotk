@@ -144,7 +144,12 @@ func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *g
 		}
 	}
 
-	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateRowFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xPreferencesGroupBindModel(x.GoPointer(), ModelVarPtr, CreateRowFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -241,7 +246,12 @@ var xPreferencesGroupSetHeaderSuffix func(uintptr, uintptr)
 // Suffixes are commonly used to show a button or a spinner for the whole group.
 func (x *PreferencesGroup) SetHeaderSuffix(SuffixVar *gtk.Widget) {
 
-	xPreferencesGroupSetHeaderSuffix(x.GoPointer(), SuffixVar.GoPointer())
+	var SuffixVarPtr uintptr
+	if SuffixVar != nil {
+		SuffixVarPtr = SuffixVar.GoPointer()
+	}
+
+	xPreferencesGroupSetHeaderSuffix(x.GoPointer(), SuffixVarPtr)
 
 }
 
@@ -471,7 +481,17 @@ func (x *PreferencesGroup) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *PreferencesGroup) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -481,7 +501,12 @@ func (x *PreferencesGroup) SetAccessibleParent(ParentVar gtk.Accessible, NextSib
 // is created, and it needs to be linked to a previous child.
 func (x *PreferencesGroup) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

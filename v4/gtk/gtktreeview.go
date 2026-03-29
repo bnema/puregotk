@@ -776,7 +776,12 @@ var xTreeViewGetBackgroundArea func(uintptr, *TreePath, uintptr, *gdk.Rectangle)
 // itself, excluding surrounding borders and the tree expander area.
 func (x *TreeView) GetBackgroundArea(PathVar *TreePath, ColumnVar *TreeViewColumn, RectVar *gdk.Rectangle) {
 
-	xTreeViewGetBackgroundArea(x.GoPointer(), PathVar, ColumnVar.GoPointer(), RectVar)
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xTreeViewGetBackgroundArea(x.GoPointer(), PathVar, ColumnVarPtr, RectVar)
 
 }
 
@@ -793,7 +798,12 @@ var xTreeViewGetCellArea func(uintptr, *TreePath, uintptr, *gdk.Rectangle)
 // realized.
 func (x *TreeView) GetCellArea(PathVar *TreePath, ColumnVar *TreeViewColumn, RectVar *gdk.Rectangle) {
 
-	xTreeViewGetCellArea(x.GoPointer(), PathVar, ColumnVar.GoPointer(), RectVar)
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xTreeViewGetCellArea(x.GoPointer(), PathVar, ColumnVarPtr, RectVar)
 
 }
 
@@ -1293,7 +1303,12 @@ var xTreeViewMoveColumnAfter func(uintptr, uintptr, uintptr)
 // @column is placed in the first position.
 func (x *TreeView) MoveColumnAfter(ColumnVar *TreeViewColumn, BaseColumnVar *TreeViewColumn) {
 
-	xTreeViewMoveColumnAfter(x.GoPointer(), ColumnVar.GoPointer(), BaseColumnVar.GoPointer())
+	var BaseColumnVarPtr uintptr
+	if BaseColumnVar != nil {
+		BaseColumnVarPtr = BaseColumnVar.GoPointer()
+	}
+
+	xTreeViewMoveColumnAfter(x.GoPointer(), ColumnVar.GoPointer(), BaseColumnVarPtr)
 
 }
 
@@ -1311,7 +1326,12 @@ var xTreeViewRowActivated func(uintptr, *TreePath, uintptr)
 // Activates the cell determined by @path and @column.
 func (x *TreeView) RowActivated(PathVar *TreePath, ColumnVar *TreeViewColumn) {
 
-	xTreeViewRowActivated(x.GoPointer(), PathVar, ColumnVar.GoPointer())
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xTreeViewRowActivated(x.GoPointer(), PathVar, ColumnVarPtr)
 
 }
 
@@ -1344,7 +1364,12 @@ var xTreeViewScrollToCell func(uintptr, *TreePath, uintptr, bool, float32, float
 // path will be modified to reflect this change.
 func (x *TreeView) ScrollToCell(PathVar *TreePath, ColumnVar *TreeViewColumn, UseAlignVar bool, RowAlignVar float32, ColAlignVar float32) {
 
-	xTreeViewScrollToCell(x.GoPointer(), PathVar, ColumnVar.GoPointer(), UseAlignVar, RowAlignVar, ColAlignVar)
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xTreeViewScrollToCell(x.GoPointer(), PathVar, ColumnVarPtr, UseAlignVar, RowAlignVar, ColAlignVar)
 
 }
 
@@ -1435,7 +1460,12 @@ var xTreeViewSetCursor func(uintptr, *TreePath, uintptr, bool)
 // and the function will return without failing.
 func (x *TreeView) SetCursor(PathVar *TreePath, FocusColumnVar *TreeViewColumn, StartEditingVar bool) {
 
-	xTreeViewSetCursor(x.GoPointer(), PathVar, FocusColumnVar.GoPointer(), StartEditingVar)
+	var FocusColumnVarPtr uintptr
+	if FocusColumnVar != nil {
+		FocusColumnVarPtr = FocusColumnVar.GoPointer()
+	}
+
+	xTreeViewSetCursor(x.GoPointer(), PathVar, FocusColumnVarPtr, StartEditingVar)
 
 }
 
@@ -1457,7 +1487,17 @@ var xTreeViewSetCursorOnCell func(uintptr, *TreePath, uintptr, uintptr, bool)
 // and the function will return without failing.
 func (x *TreeView) SetCursorOnCell(PathVar *TreePath, FocusColumnVar *TreeViewColumn, FocusCellVar *CellRenderer, StartEditingVar bool) {
 
-	xTreeViewSetCursorOnCell(x.GoPointer(), PathVar, FocusColumnVar.GoPointer(), FocusCellVar.GoPointer(), StartEditingVar)
+	var FocusColumnVarPtr uintptr
+	if FocusColumnVar != nil {
+		FocusColumnVarPtr = FocusColumnVar.GoPointer()
+	}
+
+	var FocusCellVarPtr uintptr
+	if FocusCellVar != nil {
+		FocusCellVarPtr = FocusCellVar.GoPointer()
+	}
+
+	xTreeViewSetCursorOnCell(x.GoPointer(), PathVar, FocusColumnVarPtr, FocusCellVarPtr, StartEditingVar)
 
 }
 
@@ -1504,7 +1544,12 @@ var xTreeViewSetExpanderColumn func(uintptr, uintptr)
 // expander column to a hidden column.
 func (x *TreeView) SetExpanderColumn(ColumnVar *TreeViewColumn) {
 
-	xTreeViewSetExpanderColumn(x.GoPointer(), ColumnVar.GoPointer())
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	xTreeViewSetExpanderColumn(x.GoPointer(), ColumnVarPtr)
 
 }
 
@@ -1591,7 +1636,12 @@ var xTreeViewSetModel func(uintptr, uintptr)
 // then it will unset the old model.
 func (x *TreeView) SetModel(ModelVar TreeModel) {
 
-	xTreeViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xTreeViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -1695,7 +1745,12 @@ var xTreeViewSetSearchEntry func(uintptr, uintptr)
 // entry again.
 func (x *TreeView) SetSearchEntry(EntryVar Editable) {
 
-	xTreeViewSetSearchEntry(x.GoPointer(), EntryVar.GoPointer())
+	var EntryVarPtr uintptr
+	if EntryVar != nil {
+		EntryVarPtr = EntryVar.GoPointer()
+	}
+
+	xTreeViewSetSearchEntry(x.GoPointer(), EntryVarPtr)
 
 }
 
@@ -1770,7 +1825,17 @@ var xTreeViewSetTooltipCell func(uintptr, uintptr, *TreePath, uintptr, uintptr)
 // See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
 func (x *TreeView) SetTooltipCell(TooltipVar *Tooltip, PathVar *TreePath, ColumnVar *TreeViewColumn, CellVar *CellRenderer) {
 
-	xTreeViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, ColumnVar.GoPointer(), CellVar.GoPointer())
+	var ColumnVarPtr uintptr
+	if ColumnVar != nil {
+		ColumnVarPtr = ColumnVar.GoPointer()
+	}
+
+	var CellVarPtr uintptr
+	if CellVar != nil {
+		CellVarPtr = CellVar.GoPointer()
+	}
+
+	xTreeViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, ColumnVarPtr, CellVarPtr)
 
 }
 
@@ -2207,7 +2272,7 @@ func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool,
 // For selection handling refer to the
 // [tree widget conceptual overview](section-tree-widget.html)
 // as well as `GtkTreeSelection`.
-func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uint {
+func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, *TreeViewColumn)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
@@ -2220,7 +2285,7 @@ func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PathVarp, ColumnVarp)
+		cbFn(fa, PathVarp, func() *TreeViewColumn { cls := &TreeViewColumn{}; cls.Ptr = ColumnVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -2600,7 +2665,17 @@ func (x *TreeView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *TreeView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -2610,7 +2685,12 @@ func (x *TreeView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *TreeView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -2803,7 +2883,12 @@ func (x *TreeView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *TreeView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -2820,7 +2905,12 @@ func (x *TreeView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *TreeView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

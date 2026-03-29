@@ -256,7 +256,12 @@ var xTabOverviewSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *TabOverview) SetChild(ChildVar *gtk.Widget) {
 
-	xTabOverviewSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xTabOverviewSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -328,7 +333,12 @@ var xTabOverviewSetSecondaryMenu func(uintptr, uintptr)
 // Use it to add extra actions, e.g. to open a new window or undo closed tab.
 func (x *TabOverview) SetSecondaryMenu(SecondaryMenuVar *gio.MenuModel) {
 
-	xTabOverviewSetSecondaryMenu(x.GoPointer(), SecondaryMenuVar.GoPointer())
+	var SecondaryMenuVarPtr uintptr
+	if SecondaryMenuVar != nil {
+		SecondaryMenuVarPtr = SecondaryMenuVar.GoPointer()
+	}
+
+	xTabOverviewSetSecondaryMenu(x.GoPointer(), SecondaryMenuVarPtr)
 
 }
 
@@ -361,7 +371,12 @@ var xTabOverviewSetView func(uintptr, uintptr)
 // The view must be inside @self, see [property@TabOverview:child].
 func (x *TabOverview) SetView(ViewVar *TabView) {
 
-	xTabOverviewSetView(x.GoPointer(), ViewVar.GoPointer())
+	var ViewVarPtr uintptr
+	if ViewVar != nil {
+		ViewVarPtr = ViewVar.GoPointer()
+	}
+
+	xTabOverviewSetView(x.GoPointer(), ViewVarPtr)
 
 }
 
@@ -572,7 +587,7 @@ func (x *TabOverview) GetPropertyShowStartTitleButtons() bool {
 //
 // The signal handler is expected to create a new page in the corresponding
 // [class@TabView] and return it.
-func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
+func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) *TabPage) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
@@ -602,7 +617,7 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
 // [method@TabOverview.setup_extra_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintptr) bool) uint {
+func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, *TabPage, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
@@ -615,7 +630,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PageVarp, ValueVarp)
+		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -634,7 +649,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 // [method@TabOverview.setup_extra_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintptr) gdk.DragAction) uint {
+func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, *TabPage, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
@@ -647,7 +662,7 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintp
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PageVarp, ValueVarp)
+		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -791,7 +806,17 @@ func (x *TabOverview) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *TabOverview) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -801,7 +826,12 @@ func (x *TabOverview) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *TabOverview) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

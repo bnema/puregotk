@@ -223,7 +223,12 @@ var xNewSpinButton func(uintptr, float64, uint) uintptr
 func NewSpinButton(AdjustmentVar *Adjustment, ClimbRateVar float64, DigitsVar uint) *SpinButton {
 	var cls *SpinButton
 
-	cret := xNewSpinButton(AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	cret := xNewSpinButton(AdjustmentVarPtr, ClimbRateVar, DigitsVar)
 
 	if cret == 0 {
 		return nil
@@ -271,7 +276,12 @@ var xSpinButtonConfigure func(uintptr, uintptr, float64, uint)
 // are updated accordingly.
 func (x *SpinButton) Configure(AdjustmentVar *Adjustment, ClimbRateVar float64, DigitsVar uint) {
 
-	xSpinButtonConfigure(x.GoPointer(), AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
+	var AdjustmentVarPtr uintptr
+	if AdjustmentVar != nil {
+		AdjustmentVarPtr = AdjustmentVar.GoPointer()
+	}
+
+	xSpinButtonConfigure(x.GoPointer(), AdjustmentVarPtr, ClimbRateVar, DigitsVar)
 
 }
 
@@ -996,7 +1006,17 @@ func (x *SpinButton) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *SpinButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1006,7 +1026,12 @@ func (x *SpinButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *SpinButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1166,7 +1191,12 @@ func (x *SpinButton) RemoveWidget() {
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *SpinButton) StartEditing(EventVar *gdk.Event) {
 
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
 
 }
 

@@ -733,7 +733,12 @@ var xTreeViewColumnSetWidget func(uintptr, uintptr)
 // header button is set with a `GtkLabel` set to the title of @tree_column.
 func (x *TreeViewColumn) SetWidget(WidgetVar *Widget) {
 
-	xTreeViewColumnSetWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xTreeViewColumnSetWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 

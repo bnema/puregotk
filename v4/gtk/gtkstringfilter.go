@@ -81,7 +81,12 @@ var xNewStringFilter func(uintptr) uintptr
 func NewStringFilter(ExpressionVar *Expression) *StringFilter {
 	var cls *StringFilter
 
-	cret := xNewStringFilter(ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewStringFilter(ExpressionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -144,7 +149,12 @@ var xStringFilterSetExpression func(uintptr, uintptr)
 // The expression must have a value type of `G_TYPE_STRING`.
 func (x *StringFilter) SetExpression(ExpressionVar *Expression) {
 
-	xStringFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xStringFilterSetExpression(x.GoPointer(), ExpressionVarPtr)
 
 }
 

@@ -435,7 +435,12 @@ var xDmabufTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 // [method@Gdk.DmabufTextureBuilder.set_update_region] for an explanation.
 func (x *DmabufTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
 
-	xDmabufTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
+	var TextureVarPtr uintptr
+	if TextureVar != nil {
+		TextureVarPtr = TextureVar.GoPointer()
+	}
+
+	xDmabufTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVarPtr)
 
 }
 

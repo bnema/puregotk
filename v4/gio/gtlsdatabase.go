@@ -547,7 +547,17 @@ func (x *TlsDatabase) LookupCertificateForHandle(HandleVar string, InteractionVa
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xTlsDatabaseLookupCertificateForHandle(x.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsDatabaseLookupCertificateForHandle(x.GoPointer(), HandleVar, InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -582,7 +592,17 @@ func (x *TlsDatabase) LookupCertificateForHandleAsync(HandleVar string, Interact
 		}
 	}
 
-	xTlsDatabaseLookupCertificateForHandleAsync(x.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsDatabaseLookupCertificateForHandleAsync(x.GoPointer(), HandleVar, InteractionVarPtr, FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -637,7 +657,17 @@ func (x *TlsDatabase) LookupCertificateIssuer(CertificateVar *TlsCertificate, In
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xTlsDatabaseLookupCertificateIssuer(x.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsDatabaseLookupCertificateIssuer(x.GoPointer(), CertificateVar.GoPointer(), InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -672,7 +702,17 @@ func (x *TlsDatabase) LookupCertificateIssuerAsync(CertificateVar *TlsCertificat
 		}
 	}
 
-	xTlsDatabaseLookupCertificateIssuerAsync(x.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsDatabaseLookupCertificateIssuerAsync(x.GoPointer(), CertificateVar.GoPointer(), InteractionVarPtr, FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -707,7 +747,17 @@ var xTlsDatabaseLookupCertificatesIssuedBy func(uintptr, []byte, uintptr, TlsDat
 func (x *TlsDatabase) LookupCertificatesIssuedBy(IssuerRawDnVar []byte, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable) (*glib.List, error) {
 	var cerr *glib.Error
 
-	cret := xTlsDatabaseLookupCertificatesIssuedBy(x.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsDatabaseLookupCertificatesIssuedBy(x.GoPointer(), IssuerRawDnVar, InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -740,7 +790,17 @@ func (x *TlsDatabase) LookupCertificatesIssuedByAsync(IssuerRawDnVar []byte, Int
 		}
 	}
 
-	xTlsDatabaseLookupCertificatesIssuedByAsync(x.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsDatabaseLookupCertificatesIssuedByAsync(x.GoPointer(), IssuerRawDnVar, InteractionVarPtr, FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -824,7 +884,22 @@ var xTlsDatabaseVerifyChain func(uintptr, uintptr, string, uintptr, uintptr, Tls
 func (x *TlsDatabase) VerifyChain(ChainVar *TlsCertificate, PurposeVar string, IdentityVar SocketConnectable, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseVerifyFlags, CancellableVar *Cancellable) (TlsCertificateFlags, error) {
 	var cerr *glib.Error
 
-	cret := xTlsDatabaseVerifyChain(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var IdentityVarPtr uintptr
+	if IdentityVar != nil {
+		IdentityVarPtr = IdentityVar.GoPointer()
+	}
+
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xTlsDatabaseVerifyChain(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVarPtr, InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -854,7 +929,22 @@ func (x *TlsDatabase) VerifyChainAsync(ChainVar *TlsCertificate, PurposeVar stri
 		}
 	}
 
-	xTlsDatabaseVerifyChainAsync(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var IdentityVarPtr uintptr
+	if IdentityVar != nil {
+		IdentityVarPtr = IdentityVar.GoPointer()
+	}
+
+	var InteractionVarPtr uintptr
+	if InteractionVar != nil {
+		InteractionVarPtr = InteractionVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xTlsDatabaseVerifyChainAsync(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVarPtr, InteractionVarPtr, FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

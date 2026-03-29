@@ -640,7 +640,12 @@ var xDBusMessageSetUnixFdList func(uintptr, uintptr)
 // %G_VARIANT_TYPE_HANDLE in the body of the message.
 func (x *DBusMessage) SetUnixFdList(FdListVar *UnixFDList) {
 
-	xDBusMessageSetUnixFdList(x.GoPointer(), FdListVar.GoPointer())
+	var FdListVarPtr uintptr
+	if FdListVar != nil {
+		FdListVarPtr = FdListVar.GoPointer()
+	}
+
+	xDBusMessageSetUnixFdList(x.GoPointer(), FdListVarPtr)
 
 }
 

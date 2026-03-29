@@ -97,7 +97,12 @@ var xCarouselIndicatorLinesSetCarousel func(uintptr, uintptr)
 // Sets the displayed carousel.
 func (x *CarouselIndicatorLines) SetCarousel(CarouselVar *Carousel) {
 
-	xCarouselIndicatorLinesSetCarousel(x.GoPointer(), CarouselVar.GoPointer())
+	var CarouselVarPtr uintptr
+	if CarouselVar != nil {
+		CarouselVarPtr = CarouselVar.GoPointer()
+	}
+
+	xCarouselIndicatorLinesSetCarousel(x.GoPointer(), CarouselVarPtr)
 
 }
 
@@ -246,7 +251,17 @@ func (x *CarouselIndicatorLines) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *CarouselIndicatorLines) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -256,7 +271,12 @@ func (x *CarouselIndicatorLines) SetAccessibleParent(ParentVar gtk.Accessible, N
 // is created, and it needs to be linked to a previous child.
 func (x *CarouselIndicatorLines) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

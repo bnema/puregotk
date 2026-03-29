@@ -154,7 +154,12 @@ var xDBusObjectManagerServerSetConnection func(uintptr, uintptr)
 // @connection is %NULL, stops exporting objects.
 func (x *DBusObjectManagerServer) SetConnection(ConnectionVar *DBusConnection) {
 
-	xDBusObjectManagerServerSetConnection(x.GoPointer(), ConnectionVar.GoPointer())
+	var ConnectionVarPtr uintptr
+	if ConnectionVar != nil {
+		ConnectionVarPtr = ConnectionVar.GoPointer()
+	}
+
+	xDBusObjectManagerServerSetConnection(x.GoPointer(), ConnectionVarPtr)
 
 }
 

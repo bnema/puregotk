@@ -607,7 +607,12 @@ var xOutputStreamClose func(uintptr, uintptr, **glib.Error) bool
 func (x *OutputStream) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamClose(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -644,7 +649,12 @@ func (x *OutputStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable
 		}
 	}
 
-	xOutputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -676,7 +686,12 @@ var xOutputStreamFlush func(uintptr, uintptr, **glib.Error) bool
 func (x *OutputStream) Flush(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamFlush(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamFlush(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -710,7 +725,12 @@ func (x *OutputStream) FlushAsync(IoPriorityVar int, CancellableVar *Cancellable
 		}
 	}
 
-	xOutputStreamFlushAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamFlushAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -774,7 +794,12 @@ var xOutputStreamPrintf func(uintptr, *uint, uintptr, **glib.Error, string, ...i
 // or g_output_stream_write_all().
 func (x *OutputStream) Printf(BytesWrittenVar *uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, varArgs ...interface{}) bool {
 
-	cret := xOutputStreamPrintf(x.GoPointer(), BytesWrittenVar, CancellableVar.GoPointer(), ErrorVar, FormatVar, varArgs...)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamPrintf(x.GoPointer(), BytesWrittenVar, CancellableVarPtr, ErrorVar, FormatVar, varArgs...)
 	return cret
 }
 
@@ -800,7 +825,12 @@ var xOutputStreamSplice func(uintptr, uintptr, OutputStreamSpliceFlags, uintptr,
 func (x *OutputStream) Splice(SourceVar *InputStream, FlagsVar OutputStreamSpliceFlags, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamSplice(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamSplice(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -834,7 +864,12 @@ func (x *OutputStream) SpliceAsync(SourceVar *InputStream, FlagsVar OutputStream
 		}
 	}
 
-	xOutputStreamSpliceAsync(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamSpliceAsync(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -868,7 +903,12 @@ var xOutputStreamVprintf func(uintptr, *uint, uintptr, **glib.Error, string, []i
 // or g_output_stream_write_all().
 func (x *OutputStream) Vprintf(BytesWrittenVar *uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, ArgsVar []interface{}) bool {
 
-	cret := xOutputStreamVprintf(x.GoPointer(), BytesWrittenVar, CancellableVar.GoPointer(), ErrorVar, FormatVar, ArgsVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamVprintf(x.GoPointer(), BytesWrittenVar, CancellableVarPtr, ErrorVar, FormatVar, ArgsVar)
 	return cret
 }
 
@@ -897,7 +937,12 @@ var xOutputStreamWrite func(uintptr, []byte, uint, uintptr, **glib.Error) int
 func (x *OutputStream) Write(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamWrite(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamWrite(x.GoPointer(), BufferVar, CountVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -929,7 +974,12 @@ var xOutputStreamWriteAll func(uintptr, []byte, uint, *uint, uintptr, **glib.Err
 func (x *OutputStream) WriteAll(BufferVar []byte, CountVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamWriteAll(x.GoPointer(), BufferVar, CountVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamWriteAll(x.GoPointer(), BufferVar, CountVar, BytesWrittenVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -971,7 +1021,12 @@ func (x *OutputStream) WriteAllAsync(BufferVar []byte, CountVar uint, IoPriority
 		}
 	}
 
-	xOutputStreamWriteAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamWriteAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1052,7 +1107,12 @@ func (x *OutputStream) WriteAsync(BufferVar []byte, CountVar uint, IoPriorityVar
 		}
 	}
 
-	xOutputStreamWriteAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamWriteAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1072,7 +1132,12 @@ var xOutputStreamWriteBytes func(uintptr, *glib.Bytes, uintptr, **glib.Error) in
 func (x *OutputStream) WriteBytes(BytesVar *glib.Bytes, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamWriteBytes(x.GoPointer(), BytesVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamWriteBytes(x.GoPointer(), BytesVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1112,7 +1177,12 @@ func (x *OutputStream) WriteBytesAsync(BytesVar *glib.Bytes, IoPriorityVar int, 
 		}
 	}
 
-	xOutputStreamWriteBytesAsync(x.GoPointer(), BytesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamWriteBytesAsync(x.GoPointer(), BytesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1172,7 +1242,12 @@ var xOutputStreamWritev func(uintptr, []OutputVector, uint, *uint, uintptr, **gl
 func (x *OutputStream) Writev(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamWritev(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamWritev(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1207,7 +1282,12 @@ var xOutputStreamWritevAll func(uintptr, []OutputVector, uint, *uint, uintptr, *
 func (x *OutputStream) WritevAll(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamWritevAll(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xOutputStreamWritevAll(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1250,7 +1330,12 @@ func (x *OutputStream) WritevAllAsync(VectorsVar []OutputVector, NVectorsVar uin
 		}
 	}
 
-	xOutputStreamWritevAllAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamWritevAllAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1326,7 +1411,12 @@ func (x *OutputStream) WritevAsync(VectorsVar []OutputVector, NVectorsVar uint, 
 		}
 	}
 
-	xOutputStreamWritevAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xOutputStreamWritevAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

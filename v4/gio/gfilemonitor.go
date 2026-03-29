@@ -255,7 +255,12 @@ var xFileMonitorEmitEvent func(uintptr, uintptr, uintptr, FileMonitorEvent)
 // of the thread that the monitor was created in.
 func (x *FileMonitor) EmitEvent(ChildVar File, OtherFileVar File, EventTypeVar FileMonitorEvent) {
 
-	xFileMonitorEmitEvent(x.GoPointer(), ChildVar.GoPointer(), OtherFileVar.GoPointer(), EventTypeVar)
+	var OtherFileVarPtr uintptr
+	if OtherFileVar != nil {
+		OtherFileVarPtr = OtherFileVar.GoPointer()
+	}
+
+	xFileMonitorEmitEvent(x.GoPointer(), ChildVar.GoPointer(), OtherFileVarPtr, EventTypeVar)
 
 }
 

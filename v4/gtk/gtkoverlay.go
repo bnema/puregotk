@@ -147,7 +147,12 @@ var xOverlaySetChild func(uintptr, uintptr)
 // Sets the child widget of @overlay.
 func (x *Overlay) SetChild(ChildVar *Widget) {
 
-	xOverlaySetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xOverlaySetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -198,7 +203,7 @@ func (c *Overlay) SetGoPointer(ptr uintptr) {
 // be full-width/height). If the main child is a
 // `GtkScrolledWindow`, the overlays are placed relative
 // to its contents.
-func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint {
+func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, *Widget, *uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
@@ -211,7 +216,7 @@ func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) b
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, WidgetVarp, AllocationVarp)
+		return cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = WidgetVarp; return cls }(), AllocationVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -355,7 +360,17 @@ func (x *Overlay) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Overlay) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -365,7 +380,12 @@ func (x *Overlay) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // is created, and it needs to be linked to a previous child.
 func (x *Overlay) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

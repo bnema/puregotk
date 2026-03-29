@@ -820,7 +820,12 @@ var xIMContextActivateOsk func(uintptr, uintptr) bool
 // keyboard effectively not showing up.
 func (x *IMContext) ActivateOsk(EventVar *gdk.Event) bool {
 
-	cret := xIMContextActivateOsk(x.GoPointer(), EventVar.GoPointer())
+	var EventVarPtr uintptr
+	if EventVar != nil {
+		EventVarPtr = EventVar.GoPointer()
+	}
+
+	cret := xIMContextActivateOsk(x.GoPointer(), EventVarPtr)
 	return cret
 }
 
@@ -978,7 +983,12 @@ var xIMContextSetClientWidget func(uintptr, uintptr)
 // also be used for purposes internal to the input method.
 func (x *IMContext) SetClientWidget(WidgetVar *Widget) {
 
-	xIMContextSetClientWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xIMContextSetClientWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 

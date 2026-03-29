@@ -92,7 +92,22 @@ func (x *FontDialog) ChooseFace(ParentVar *Window, InitialValueVar *pango.FontFa
 		}
 	}
 
-	xFontDialogChooseFace(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var InitialValueVarPtr uintptr
+	if InitialValueVar != nil {
+		InitialValueVarPtr = InitialValueVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFontDialogChooseFace(x.GoPointer(), ParentVarPtr, InitialValueVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -142,7 +157,22 @@ func (x *FontDialog) ChooseFamily(ParentVar *Window, InitialValueVar *pango.Font
 		}
 	}
 
-	xFontDialogChooseFamily(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var InitialValueVarPtr uintptr
+	if InitialValueVar != nil {
+		InitialValueVarPtr = InitialValueVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFontDialogChooseFamily(x.GoPointer(), ParentVarPtr, InitialValueVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -195,7 +225,17 @@ func (x *FontDialog) ChooseFont(ParentVar *Window, InitialValueVar *pango.FontDe
 		}
 	}
 
-	xFontDialogChooseFont(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFontDialogChooseFont(x.GoPointer(), ParentVarPtr, InitialValueVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -225,7 +265,17 @@ func (x *FontDialog) ChooseFontAndFeatures(ParentVar *Window, InitialValueVar *p
 		}
 	}
 
-	xFontDialogChooseFontAndFeatures(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFontDialogChooseFontAndFeatures(x.GoPointer(), ParentVarPtr, InitialValueVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -339,7 +389,12 @@ var xFontDialogSetFilter func(uintptr, uintptr)
 // and `PangoFontFace` objects.
 func (x *FontDialog) SetFilter(FilterVar *Filter) {
 
-	xFontDialogSetFilter(x.GoPointer(), FilterVar.GoPointer())
+	var FilterVarPtr uintptr
+	if FilterVar != nil {
+		FilterVarPtr = FilterVar.GoPointer()
+	}
+
+	xFontDialogSetFilter(x.GoPointer(), FilterVarPtr)
 
 }
 
@@ -350,7 +405,12 @@ var xFontDialogSetFontMap func(uintptr, uintptr)
 // If @fontmap is `NULL`, the default fontmap is used.
 func (x *FontDialog) SetFontMap(FontmapVar *pango.FontMap) {
 
-	xFontDialogSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
+	var FontmapVarPtr uintptr
+	if FontmapVar != nil {
+		FontmapVarPtr = FontmapVar.GoPointer()
+	}
+
+	xFontDialogSetFontMap(x.GoPointer(), FontmapVarPtr)
 
 }
 

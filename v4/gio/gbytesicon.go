@@ -87,7 +87,12 @@ func (x *BytesIcon) GetPropertyBytes() uintptr {
 // Checks if two icons are equal.
 func (x *BytesIcon) Equal(Icon2Var Icon) bool {
 
-	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 
@@ -137,7 +142,12 @@ func (x *BytesIcon) Load(SizeVar int, TypeVar *string, CancellableVar *Cancellab
 	var cls *InputStream
 	var cerr *glib.Error
 
-	cret := XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -156,7 +166,12 @@ func (x *BytesIcon) Load(SizeVar int, TypeVar *string, CancellableVar *Cancellab
 // version of this function, see g_loadable_icon_load().
 func (x *BytesIcon) LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

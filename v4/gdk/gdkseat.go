@@ -148,7 +148,7 @@ func (c *Seat) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a new input device is related to this seat.
-func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
+func (x *Seat) ConnectDeviceAdded(cb *func(Seat, *Device)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
@@ -161,7 +161,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, DeviceVarp)
+		cbFn(fa, func() *Device { cls := &Device{}; cls.Ptr = DeviceVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -172,7 +172,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 }
 
 // Emitted when an input device is removed (e.g. unplugged).
-func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
+func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, *Device)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
@@ -185,7 +185,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, DeviceVarp)
+		cbFn(fa, func() *Device { cls := &Device{}; cls.Ptr = DeviceVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -202,7 +202,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 // [signal@Gdk.Device::tool-changed] signal accordingly.
 //
 // A same tool may be used by several devices.
-func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
+func (x *Seat) ConnectToolAdded(cb *func(Seat, *DeviceTool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
@@ -215,7 +215,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ToolVarp)
+		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -226,7 +226,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 }
 
 // Emitted whenever a tool is no longer known to this @seat.
-func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
+func (x *Seat) ConnectToolRemoved(cb *func(Seat, *DeviceTool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
@@ -239,7 +239,7 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ToolVarp)
+		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

@@ -347,7 +347,12 @@ var xNativeDialogSetTransientFor func(uintptr, uintptr)
 // Passing %NULL for @parent unsets the current transient window.
 func (x *NativeDialog) SetTransientFor(ParentVar *Window) {
 
-	xNativeDialogSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xNativeDialogSetTransientFor(x.GoPointer(), ParentVarPtr)
 
 }
 

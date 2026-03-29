@@ -73,7 +73,17 @@ var xNewSortListModel func(uintptr, uintptr) uintptr
 func NewSortListModel(ModelVar gio.ListModel, SorterVar *Sorter) *SortListModel {
 	var cls *SortListModel
 
-	cret := xNewSortListModel(ModelVar.GoPointer(), SorterVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	cret := xNewSortListModel(ModelVarPtr, SorterVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -202,7 +212,12 @@ var xSortListModelSetModel func(uintptr, uintptr)
 // The @model's item type must conform to the item type of @self.
 func (x *SortListModel) SetModel(ModelVar gio.ListModel) {
 
-	xSortListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xSortListModelSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -211,7 +226,12 @@ var xSortListModelSetSectionSorter func(uintptr, uintptr)
 // Sets a new section sorter on @self.
 func (x *SortListModel) SetSectionSorter(SorterVar *Sorter) {
 
-	xSortListModelSetSectionSorter(x.GoPointer(), SorterVar.GoPointer())
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	xSortListModelSetSectionSorter(x.GoPointer(), SorterVarPtr)
 
 }
 
@@ -220,7 +240,12 @@ var xSortListModelSetSorter func(uintptr, uintptr)
 // Sets a new sorter on @self.
 func (x *SortListModel) SetSorter(SorterVar *Sorter) {
 
-	xSortListModelSetSorter(x.GoPointer(), SorterVar.GoPointer())
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	xSortListModelSetSorter(x.GoPointer(), SorterVarPtr)
 
 }
 

@@ -607,7 +607,12 @@ func (x *Texture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar fl
 // Checks if two icons are equal.
 func (x *Texture) Equal(Icon2Var gio.Icon) bool {
 
-	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	var Icon2VarPtr uintptr
+	if Icon2Var != nil {
+		Icon2VarPtr = Icon2Var.GoPointer()
+	}
+
+	cret := gio.XGIconEqual(x.GoPointer(), Icon2VarPtr)
 	return cret
 }
 
@@ -657,7 +662,12 @@ func (x *Texture) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancell
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
-	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -676,7 +686,12 @@ func (x *Texture) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancell
 // version of this function, see g_loadable_icon_load().
 func (x *Texture) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

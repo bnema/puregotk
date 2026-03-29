@@ -833,7 +833,12 @@ var xWindowSetApplication func(uintptr, uintptr)
 // as relevant.
 func (x *Window) SetApplication(ApplicationVar *Application) {
 
-	xWindowSetApplication(x.GoPointer(), ApplicationVar.GoPointer())
+	var ApplicationVarPtr uintptr
+	if ApplicationVar != nil {
+		ApplicationVarPtr = ApplicationVar.GoPointer()
+	}
+
+	xWindowSetApplication(x.GoPointer(), ApplicationVarPtr)
 
 }
 
@@ -842,7 +847,12 @@ var xWindowSetChild func(uintptr, uintptr)
 // Sets the child widget of the window.
 func (x *Window) SetChild(ChildVar *Widget) {
 
-	xWindowSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xWindowSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -914,7 +924,12 @@ var xWindowSetDefaultWidget func(uintptr, uintptr)
 // (for example).
 func (x *Window) SetDefaultWidget(DefaultWidgetVar *Widget) {
 
-	xWindowSetDefaultWidget(x.GoPointer(), DefaultWidgetVar.GoPointer())
+	var DefaultWidgetVarPtr uintptr
+	if DefaultWidgetVar != nil {
+		DefaultWidgetVarPtr = DefaultWidgetVar.GoPointer()
+	}
+
+	xWindowSetDefaultWidget(x.GoPointer(), DefaultWidgetVarPtr)
 
 }
 
@@ -973,7 +988,12 @@ var xWindowSetFocus func(uintptr, uintptr)
 // to use [method@Gtk.Widget.grab_focus] instead of this function.
 func (x *Window) SetFocus(FocusVar *Widget) {
 
-	xWindowSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	xWindowSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 
@@ -1133,7 +1153,12 @@ var xWindowSetTitlebar func(uintptr, uintptr)
 // [method@Gtk.Widget.show].
 func (x *Window) SetTitlebar(TitlebarVar *Widget) {
 
-	xWindowSetTitlebar(x.GoPointer(), TitlebarVar.GoPointer())
+	var TitlebarVarPtr uintptr
+	if TitlebarVar != nil {
+		TitlebarVarPtr = TitlebarVar.GoPointer()
+	}
+
+	xWindowSetTitlebar(x.GoPointer(), TitlebarVarPtr)
 
 }
 
@@ -1154,7 +1179,12 @@ var xWindowSetTransientFor func(uintptr, uintptr)
 // much as the window manager would have done on X.
 func (x *Window) SetTransientFor(ParentVar *Window) {
 
-	xWindowSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xWindowSetTransientFor(x.GoPointer(), ParentVarPtr)
 
 }
 
@@ -1834,7 +1864,17 @@ func (x *Window) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Window) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1844,7 +1884,12 @@ func (x *Window) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // is created, and it needs to be linked to a previous child.
 func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

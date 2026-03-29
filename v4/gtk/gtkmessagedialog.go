@@ -149,10 +149,15 @@ var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, uintp
 func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	MessageFormatVarPtr := core.GStrdupNullable(MessageFormatVar)
 	defer core.GFreeNullable(MessageFormatVarPtr)
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
+	cret := xNewMessageDialog(ParentVarPtr, FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -200,10 +205,15 @@ var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsT
 func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	MessageFormatVarPtr := core.GStrdupNullable(MessageFormatVar)
 	defer core.GFreeNullable(MessageFormatVarPtr)
 
-	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
+	cret := xNewMessageDialogWithMarkup(ParentVarPtr, FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -509,7 +519,17 @@ func (x *MessageDialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *MessageDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -519,7 +539,12 @@ func (x *MessageDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar
 // is created, and it needs to be linked to a previous child.
 func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -756,7 +781,12 @@ func (x *MessageDialog) GetFocus() *Widget {
 // this function.
 func (x *MessageDialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

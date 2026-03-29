@@ -1282,7 +1282,12 @@ func (x *AppInfoBase) GetSupportedTypes() []string {
 func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGAppInfoLaunch(x.GoPointer(), FilesVar, ContextVar.GoPointer(), &cerr)
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	cret := XGAppInfoLaunch(x.GoPointer(), FilesVar, ContextVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1305,7 +1310,12 @@ func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) 
 func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGAppInfoLaunchUris(x.GoPointer(), UrisVar, ContextVar.GoPointer(), &cerr)
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	cret := XGAppInfoLaunchUris(x.GoPointer(), UrisVar, ContextVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1321,7 +1331,17 @@ func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContex
 // [func@Gio.AppInfo.launch_default_for_uri_async].
 func (x *AppInfoBase) LaunchUrisAsync(UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1538,7 +1558,12 @@ func AppInfoGetDefaultForTypeAsync(ContentTypeVar string, MustSupportUrisVar boo
 		}
 	}
 
-	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1609,7 +1634,12 @@ func AppInfoGetDefaultForUriSchemeAsync(UriSchemeVar string, CancellableVar *Can
 		}
 	}
 
-	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1676,7 +1706,12 @@ var xAppInfoLaunchDefaultForUri func(string, uintptr, **glib.Error) bool
 func AppInfoLaunchDefaultForUri(UriVar string, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xAppInfoLaunchDefaultForUri(UriVar, ContextVar.GoPointer(), &cerr)
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	cret := xAppInfoLaunchDefaultForUri(UriVar, ContextVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1712,7 +1747,17 @@ func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext
 		}
 	}
 
-	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ContextVarPtr uintptr
+	if ContextVar != nil {
+		ContextVarPtr = ContextVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -1941,7 +1986,12 @@ var xAppLaunchContextGetStartupNotifyId func(uintptr, uintptr, *glib.List) strin
 // the returned token will be `NULL`.
 func (x *AppLaunchContext) GetStartupNotifyId(InfoVar AppInfo, FilesVar *glib.List) string {
 
-	cret := xAppLaunchContextGetStartupNotifyId(x.GoPointer(), InfoVar.GoPointer(), FilesVar)
+	var InfoVarPtr uintptr
+	if InfoVar != nil {
+		InfoVarPtr = InfoVar.GoPointer()
+	}
+
+	cret := xAppLaunchContextGetStartupNotifyId(x.GoPointer(), InfoVarPtr, FilesVar)
 	return cret
 }
 

@@ -79,7 +79,12 @@ var xUriLauncherCanLaunch func(uintptr, uintptr) bool
 // the launcher when they are known not to work.
 func (x *UriLauncher) CanLaunch(ParentVar *Window) bool {
 
-	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVarPtr)
 	return cret
 }
 
@@ -114,7 +119,17 @@ func (x *UriLauncher) Launch(ParentVar *Window, CancellableVar *gio.Cancellable,
 		}
 	}
 
-	xUriLauncherLaunch(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xUriLauncherLaunch(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

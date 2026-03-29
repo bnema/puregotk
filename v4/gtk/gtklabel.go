@@ -672,7 +672,12 @@ var xLabelSetExtraMenu func(uintptr, uintptr)
 // Sets a menu model to add to the context menu of the label.
 func (x *Label) SetExtraMenu(ModelVar *gio.MenuModel) {
 
-	xLabelSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xLabelSetExtraMenu(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -797,7 +802,12 @@ var xLabelSetMnemonicWidget func(uintptr, uintptr)
 // collisions and toggle focus between the colliding widgets otherwise.
 func (x *Label) SetMnemonicWidget(WidgetVar *Widget) {
 
-	xLabelSetMnemonicWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xLabelSetMnemonicWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -1567,7 +1577,17 @@ func (x *Label) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Label) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1577,7 +1597,12 @@ func (x *Label) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // is created, and it needs to be linked to a previous child.
 func (x *Label) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

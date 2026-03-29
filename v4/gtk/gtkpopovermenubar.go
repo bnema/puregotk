@@ -67,7 +67,12 @@ var xNewPopoverMenuBarFromModel func(uintptr) uintptr
 func NewPopoverMenuBarFromModel(ModelVar *gio.MenuModel) *PopoverMenuBar {
 	var cls *PopoverMenuBar
 
-	cret := xNewPopoverMenuBarFromModel(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewPopoverMenuBarFromModel(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -123,7 +128,12 @@ var xPopoverMenuBarSetMenuModel func(uintptr, uintptr)
 // its contents.
 func (x *PopoverMenuBar) SetMenuModel(ModelVar *gio.MenuModel) {
 
-	xPopoverMenuBarSetMenuModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xPopoverMenuBarSetMenuModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -272,7 +282,17 @@ func (x *PopoverMenuBar) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *PopoverMenuBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -282,7 +302,12 @@ func (x *PopoverMenuBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVa
 // is created, and it needs to be linked to a previous child.
 func (x *PopoverMenuBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

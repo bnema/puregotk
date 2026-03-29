@@ -47,7 +47,12 @@ var xNewSelectionFilterModel func(uintptr) uintptr
 func NewSelectionFilterModel(ModelVar SelectionModel) *SelectionFilterModel {
 	var cls *SelectionFilterModel
 
-	cret := xNewSelectionFilterModel(ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	cret := xNewSelectionFilterModel(ModelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -84,7 +89,12 @@ var xSelectionFilterModelSetModel func(uintptr, uintptr)
 // types match.
 func (x *SelectionFilterModel) SetModel(ModelVar SelectionModel) {
 
-	xSelectionFilterModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xSelectionFilterModelSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 

@@ -196,7 +196,12 @@ var xIconViewGetCellRect func(uintptr, *TreePath, uintptr, *gdk.Rectangle) bool
 // This function is only valid if @icon_view is realized.
 func (x *IconView) GetCellRect(PathVar *TreePath, CellVar *CellRenderer, RectVar *gdk.Rectangle) bool {
 
-	cret := xIconViewGetCellRect(x.GoPointer(), PathVar, CellVar.GoPointer(), RectVar)
+	var CellVarPtr uintptr
+	if CellVar != nil {
+		CellVarPtr = CellVar.GoPointer()
+	}
+
+	cret := xIconViewGetCellRect(x.GoPointer(), PathVar, CellVarPtr, RectVar)
 	return cret
 }
 
@@ -601,7 +606,12 @@ var xIconViewSetCursor func(uintptr, *TreePath, uintptr, bool)
 // Please note that editing can only happen when the widget is realized.
 func (x *IconView) SetCursor(PathVar *TreePath, CellVar *CellRenderer, StartEditingVar bool) {
 
-	xIconViewSetCursor(x.GoPointer(), PathVar, CellVar.GoPointer(), StartEditingVar)
+	var CellVarPtr uintptr
+	if CellVar != nil {
+		CellVarPtr = CellVar.GoPointer()
+	}
+
+	xIconViewSetCursor(x.GoPointer(), PathVar, CellVarPtr, StartEditingVar)
 
 }
 
@@ -676,7 +686,12 @@ var xIconViewSetModel func(uintptr, uintptr)
 // it will unset the old model.
 func (x *IconView) SetModel(ModelVar TreeModel) {
 
-	xIconViewSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xIconViewSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -758,7 +773,12 @@ var xIconViewSetTooltipCell func(uintptr, uintptr, *TreePath, uintptr)
 // See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 func (x *IconView) SetTooltipCell(TooltipVar *Tooltip, PathVar *TreePath, CellVar *CellRenderer) {
 
-	xIconViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, CellVar.GoPointer())
+	var CellVarPtr uintptr
+	if CellVar != nil {
+		CellVarPtr = CellVar.GoPointer()
+	}
+
+	xIconViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, CellVarPtr)
 
 }
 
@@ -1490,7 +1510,17 @@ func (x *IconView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *IconView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1500,7 +1530,12 @@ func (x *IconView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *IconView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1805,7 +1840,12 @@ func (x *IconView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *IconView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -1822,7 +1862,12 @@ func (x *IconView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *IconView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

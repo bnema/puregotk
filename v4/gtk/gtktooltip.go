@@ -64,7 +64,12 @@ var xTooltipSetCustom func(uintptr, uintptr)
 // and gtk_tooltip_set_icon().
 func (x *Tooltip) SetCustom(CustomWidgetVar *Widget) {
 
-	xTooltipSetCustom(x.GoPointer(), CustomWidgetVar.GoPointer())
+	var CustomWidgetVarPtr uintptr
+	if CustomWidgetVar != nil {
+		CustomWidgetVarPtr = CustomWidgetVar.GoPointer()
+	}
+
+	xTooltipSetCustom(x.GoPointer(), CustomWidgetVarPtr)
 
 }
 
@@ -74,7 +79,12 @@ var xTooltipSetIcon func(uintptr, uintptr)
 // @paintable.  If @paintable is %NULL, the image will be hidden.
 func (x *Tooltip) SetIcon(PaintableVar gdk.Paintable) {
 
-	xTooltipSetIcon(x.GoPointer(), PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xTooltipSetIcon(x.GoPointer(), PaintableVarPtr)
 
 }
 
@@ -85,7 +95,12 @@ var xTooltipSetIconFromGicon func(uintptr, uintptr)
 // by @size. If @gicon is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromGicon(GiconVar gio.Icon) {
 
-	xTooltipSetIconFromGicon(x.GoPointer(), GiconVar.GoPointer())
+	var GiconVarPtr uintptr
+	if GiconVar != nil {
+		GiconVarPtr = GiconVar.GoPointer()
+	}
+
+	xTooltipSetIconFromGicon(x.GoPointer(), GiconVarPtr)
 
 }
 

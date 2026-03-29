@@ -159,7 +159,12 @@ var xViewSwitcherBarSetStack func(uintptr, uintptr)
 // Sets the stack controlled by @self.
 func (x *ViewSwitcherBar) SetStack(StackVar *ViewStack) {
 
-	xViewSwitcherBarSetStack(x.GoPointer(), StackVar.GoPointer())
+	var StackVarPtr uintptr
+	if StackVar != nil {
+		StackVarPtr = StackVar.GoPointer()
+	}
+
+	xViewSwitcherBarSetStack(x.GoPointer(), StackVarPtr)
 
 }
 
@@ -325,7 +330,17 @@ func (x *ViewSwitcherBar) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *ViewSwitcherBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -335,7 +350,12 @@ func (x *ViewSwitcherBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSibl
 // is created, and it needs to be linked to a previous child.
 func (x *ViewSwitcherBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

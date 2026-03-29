@@ -202,7 +202,12 @@ func (x *NetworkMonitorBase) SetGoPointer(ptr uintptr) {
 func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGNetworkMonitorCanReach(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGNetworkMonitorCanReach(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -221,7 +226,12 @@ func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, Cancella
 // to get the result of the operation.
 func (x *NetworkMonitorBase) CanReachAsync(ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

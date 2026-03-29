@@ -111,7 +111,17 @@ var xNewDropDown func(uintptr, uintptr) uintptr
 func NewDropDown(ModelVar gio.ListModel, ExpressionVar *Expression) *DropDown {
 	var cls *DropDown
 
-	cret := xNewDropDown(ModelVar.GoPointer(), ExpressionVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	cret := xNewDropDown(ModelVarPtr, ExpressionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -305,7 +315,12 @@ var xDropDownSetExpression func(uintptr, uintptr)
 // a value type of %G_TYPE_STRING.
 func (x *DropDown) SetExpression(ExpressionVar *Expression) {
 
-	xDropDownSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
+	var ExpressionVarPtr uintptr
+	if ExpressionVar != nil {
+		ExpressionVarPtr = ExpressionVar.GoPointer()
+	}
+
+	xDropDownSetExpression(x.GoPointer(), ExpressionVarPtr)
 
 }
 
@@ -314,7 +329,12 @@ var xDropDownSetFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *DropDown) SetFactory(FactoryVar *ListItemFactory) {
 
-	xDropDownSetFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xDropDownSetFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -323,7 +343,12 @@ var xDropDownSetHeaderFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for creating header widgets for the popup.
 func (x *DropDown) SetHeaderFactory(FactoryVar *ListItemFactory) {
 
-	xDropDownSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xDropDownSetHeaderFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -332,7 +357,12 @@ var xDropDownSetListFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items in the popup.
 func (x *DropDown) SetListFactory(FactoryVar *ListItemFactory) {
 
-	xDropDownSetListFactory(x.GoPointer(), FactoryVar.GoPointer())
+	var FactoryVarPtr uintptr
+	if FactoryVar != nil {
+		FactoryVarPtr = FactoryVar.GoPointer()
+	}
+
+	xDropDownSetListFactory(x.GoPointer(), FactoryVarPtr)
 
 }
 
@@ -341,7 +371,12 @@ var xDropDownSetModel func(uintptr, uintptr)
 // Sets the `GListModel` to use.
 func (x *DropDown) SetModel(ModelVar gio.ListModel) {
 
-	xDropDownSetModel(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xDropDownSetModel(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -607,7 +642,17 @@ func (x *DropDown) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *DropDown) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -617,7 +662,12 @@ func (x *DropDown) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *DropDown) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

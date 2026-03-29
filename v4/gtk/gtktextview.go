@@ -1393,7 +1393,12 @@ var xTextViewSetBuffer func(uintptr, uintptr)
 // yourself; `GtkTextView` will not “adopt” it.
 func (x *TextView) SetBuffer(BufferVar *TextBuffer) {
 
-	xTextViewSetBuffer(x.GoPointer(), BufferVar.GoPointer())
+	var BufferVarPtr uintptr
+	if BufferVar != nil {
+		BufferVarPtr = BufferVar.GoPointer()
+	}
+
+	xTextViewSetBuffer(x.GoPointer(), BufferVarPtr)
 
 }
 
@@ -1432,7 +1437,12 @@ var xTextViewSetExtraMenu func(uintptr, uintptr)
 // You can pass %NULL to remove a previously set extra menu.
 func (x *TextView) SetExtraMenu(ModelVar *gio.MenuModel) {
 
-	xTextViewSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xTextViewSetExtraMenu(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -1444,7 +1454,12 @@ var xTextViewSetGutter func(uintptr, TextWindowType, uintptr)
 // %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
 func (x *TextView) SetGutter(WinVar TextWindowType, WidgetVar *Widget) {
 
-	xTextViewSetGutter(x.GoPointer(), WinVar, WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xTextViewSetGutter(x.GoPointer(), WinVar, WidgetVarPtr)
 
 }
 
@@ -2567,7 +2582,17 @@ func (x *TextView) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *TextView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -2577,7 +2602,12 @@ func (x *TextView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // is created, and it needs to be linked to a previous child.
 func (x *TextView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -2807,7 +2837,12 @@ func (x *TextView) GetVscrollPolicy() ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *TextView) SetHadjustment(HadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -2824,7 +2859,12 @@ func (x *TextView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *TextView) SetVadjustment(VadjustmentVar *Adjustment) {
 
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

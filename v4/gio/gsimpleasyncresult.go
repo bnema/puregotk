@@ -43,7 +43,12 @@ func SimpleAsyncReportErrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncR
 		}
 	}
 
-	xSimpleAsyncReportErrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	xSimpleAsyncReportErrorInIdle(ObjectVarPtr, CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 
@@ -69,7 +74,12 @@ func SimpleAsyncReportGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *Async
 		}
 	}
 
-	xSimpleAsyncReportGerrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	xSimpleAsyncReportGerrorInIdle(ObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
 
 }
 
@@ -95,7 +105,12 @@ func SimpleAsyncReportTakeGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *A
 		}
 	}
 
-	xSimpleAsyncReportTakeGerrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	xSimpleAsyncReportTakeGerrorInIdle(ObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
 
 }
 
@@ -318,7 +333,12 @@ func NewSimpleAsyncResult(SourceObjectVar *gobject.Object, CallbackVar *AsyncRea
 		}
 	}
 
-	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, SourceTagVar)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xNewSimpleAsyncResult(SourceObjectVarPtr, CallbackVarRef, UserDataVar, SourceTagVar)
 
 	if cret == 0 {
 		return nil
@@ -349,7 +369,12 @@ func NewSimpleAsyncResultError(SourceObjectVar *gobject.Object, CallbackVar *Asy
 		}
 	}
 
-	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xNewSimpleAsyncResultError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -380,7 +405,12 @@ func NewSimpleAsyncResultFromError(SourceObjectVar *gobject.Object, CallbackVar 
 		}
 	}
 
-	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xNewSimpleAsyncResultFromError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -412,7 +442,12 @@ func NewSimpleAsyncResultTakeError(SourceObjectVar *gobject.Object, CallbackVar 
 		}
 	}
 
-	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
+	var SourceObjectVarPtr uintptr
+	if SourceObjectVar != nil {
+		SourceObjectVarPtr = SourceObjectVar.GoPointer()
+	}
+
+	cret := xNewSimpleAsyncResultTakeError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -532,7 +567,12 @@ func (x *SimpleAsyncResult) RunInThread(FuncVar *SimpleAsyncThreadFunc, IoPriori
 		}
 	}
 
-	xSimpleAsyncResultRunInThread(x.GoPointer(), FuncVarRef, IoPriorityVar, CancellableVar.GoPointer())
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xSimpleAsyncResultRunInThread(x.GoPointer(), FuncVarRef, IoPriorityVar, CancellableVarPtr)
 
 }
 
@@ -555,7 +595,12 @@ var xSimpleAsyncResultSetCheckCancellable func(uintptr, uintptr)
 // unrelated g_simple_async_result_set_handle_cancellation() function.
 func (x *SimpleAsyncResult) SetCheckCancellable(CheckCancellableVar *Cancellable) {
 
-	xSimpleAsyncResultSetCheckCancellable(x.GoPointer(), CheckCancellableVar.GoPointer())
+	var CheckCancellableVarPtr uintptr
+	if CheckCancellableVar != nil {
+		CheckCancellableVarPtr = CheckCancellableVar.GoPointer()
+	}
+
+	xSimpleAsyncResultSetCheckCancellable(x.GoPointer(), CheckCancellableVarPtr)
 
 }
 
@@ -730,7 +775,12 @@ var xSimpleAsyncResultIsValid func(uintptr, uintptr, uintptr) bool
 // check is skipped.)
 func SimpleAsyncResultIsValid(ResultVar AsyncResult, SourceVar *gobject.Object, SourceTagVar uintptr) bool {
 
-	cret := xSimpleAsyncResultIsValid(ResultVar.GoPointer(), SourceVar.GoPointer(), SourceTagVar)
+	var SourceVarPtr uintptr
+	if SourceVar != nil {
+		SourceVarPtr = SourceVar.GoPointer()
+	}
+
+	cret := xSimpleAsyncResultIsValid(ResultVar.GoPointer(), SourceVarPtr, SourceTagVar)
 	return cret
 }
 

@@ -116,7 +116,12 @@ func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *gli
 		}
 	}
 
-	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, PositionVar)
+	var ItemVarPtr uintptr
+	if ItemVar != nil {
+		ItemVarPtr = ItemVar.GoPointer()
+	}
+
+	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVarPtr, EqualFuncVarRef, PositionVar)
 	return cret
 }
 
@@ -145,7 +150,12 @@ func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar 
 		}
 	}
 
-	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, UserDataVar, PositionVar)
+	var ItemVarPtr uintptr
+	if ItemVar != nil {
+		ItemVarPtr = ItemVar.GoPointer()
+	}
+
+	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVarPtr, EqualFuncVarRef, UserDataVar, PositionVar)
 	return cret
 }
 
@@ -242,7 +252,7 @@ func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintp
 
 }
 
-var xListStoreSplice func(uintptr, uint, uint, []gobject.Object, uint)
+var xListStoreSplice func(uintptr, uint, uint, uintptr, uint)
 
 // Changes @store by removing @n_removals items and adding @n_additions
 // items to it. @additions must contain @n_additions items of type
@@ -257,7 +267,7 @@ var xListStoreSplice func(uintptr, uint, uint, []gobject.Object, uint)
 // The parameters @position and @n_removals must be correct (ie:
 // @position + @n_removals must be less than or equal to the length of
 // the list at the time this function is called).
-func (x *ListStore) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar []gobject.Object, NAdditionsVar uint) {
+func (x *ListStore) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar uintptr, NAdditionsVar uint) {
 
 	xListStoreSplice(x.GoPointer(), PositionVar, NRemovalsVar, AdditionsVar, NAdditionsVar)
 

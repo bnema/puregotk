@@ -61,7 +61,17 @@ var xNewShortcut func(uintptr, uintptr) uintptr
 func NewShortcut(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction) *Shortcut {
 	var cls *Shortcut
 
-	cret := xNewShortcut(TriggerVar.GoPointer(), ActionVar.GoPointer())
+	var TriggerVarPtr uintptr
+	if TriggerVar != nil {
+		TriggerVarPtr = TriggerVar.GoPointer()
+	}
+
+	var ActionVarPtr uintptr
+	if ActionVar != nil {
+		ActionVarPtr = ActionVar.GoPointer()
+	}
+
+	cret := xNewShortcut(TriggerVarPtr, ActionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -78,10 +88,20 @@ var xNewShortcutWithArguments func(uintptr, uintptr, uintptr, ...interface{}) ui
 func NewShortcutWithArguments(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction, FormatStringVar *string, varArgs ...interface{}) *Shortcut {
 	var cls *Shortcut
 
+	var TriggerVarPtr uintptr
+	if TriggerVar != nil {
+		TriggerVarPtr = TriggerVar.GoPointer()
+	}
+
+	var ActionVarPtr uintptr
+	if ActionVar != nil {
+		ActionVarPtr = ActionVar.GoPointer()
+	}
+
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
-	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), FormatStringVarPtr, varArgs...)
+	cret := xNewShortcutWithArguments(TriggerVarPtr, ActionVarPtr, FormatStringVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -139,7 +159,12 @@ var xShortcutSetAction func(uintptr, uintptr)
 // Sets the new action for @self to be @action.
 func (x *Shortcut) SetAction(ActionVar *ShortcutAction) {
 
-	xShortcutSetAction(x.GoPointer(), ActionVar.GoPointer())
+	var ActionVarPtr uintptr
+	if ActionVar != nil {
+		ActionVarPtr = ActionVar.GoPointer()
+	}
+
+	xShortcutSetAction(x.GoPointer(), ActionVarPtr)
 
 }
 
@@ -157,7 +182,12 @@ var xShortcutSetTrigger func(uintptr, uintptr)
 // Sets the new trigger for @self to be @trigger.
 func (x *Shortcut) SetTrigger(TriggerVar *ShortcutTrigger) {
 
-	xShortcutSetTrigger(x.GoPointer(), TriggerVar.GoPointer())
+	var TriggerVarPtr uintptr
+	if TriggerVar != nil {
+		TriggerVarPtr = TriggerVar.GoPointer()
+	}
+
+	xShortcutSetTrigger(x.GoPointer(), TriggerVarPtr)
 
 }
 

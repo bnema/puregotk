@@ -251,7 +251,12 @@ var xWrapBoxInsertChildAfter func(uintptr, uintptr, uintptr)
 // If @sibling is `NULL`, inserts @child at the first position.
 func (x *WrapBox) InsertChildAfter(ChildVar *gtk.Widget, SiblingVar *gtk.Widget) {
 
-	xWrapBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
+	var SiblingVarPtr uintptr
+	if SiblingVar != nil {
+		SiblingVarPtr = SiblingVar.GoPointer()
+	}
+
+	xWrapBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
 
 }
 
@@ -292,7 +297,12 @@ var xWrapBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 // If @sibling is `NULL`, moves @child to the first position.
 func (x *WrapBox) ReorderChildAfter(ChildVar *gtk.Widget, SiblingVar *gtk.Widget) {
 
-	xWrapBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
+	var SiblingVarPtr uintptr
+	if SiblingVar != nil {
+		SiblingVarPtr = SiblingVar.GoPointer()
+	}
+
+	xWrapBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
 
 }
 
@@ -780,7 +790,17 @@ func (x *WrapBox) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *WrapBox) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -790,7 +810,12 @@ func (x *WrapBox) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // is created, and it needs to be linked to a previous child.
 func (x *WrapBox) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

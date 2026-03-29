@@ -60,7 +60,12 @@ var xNewTreeListRowSorter func(uintptr) uintptr
 func NewTreeListRowSorter(SorterVar *Sorter) *TreeListRowSorter {
 	var cls *TreeListRowSorter
 
-	cret := xNewTreeListRowSorter(SorterVar.GoPointer())
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	cret := xNewTreeListRowSorter(SorterVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -95,7 +100,12 @@ var xTreeListRowSorterSetSorter func(uintptr, uintptr)
 // the tree list rows passed to @self.
 func (x *TreeListRowSorter) SetSorter(SorterVar *Sorter) {
 
-	xTreeListRowSorterSetSorter(x.GoPointer(), SorterVar.GoPointer())
+	var SorterVarPtr uintptr
+	if SorterVar != nil {
+		SorterVarPtr = SorterVar.GoPointer()
+	}
+
+	xTreeListRowSorterSetSorter(x.GoPointer(), SorterVarPtr)
 
 }
 

@@ -198,6 +198,11 @@ var xNewFileChooserNative func(uintptr, uintptr, FileChooserAction, uintptr, uin
 func NewFileChooserNative(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar *string, CancelLabelVar *string) *FileChooserNative {
 	var cls *FileChooserNative
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
@@ -207,7 +212,7 @@ func NewFileChooserNative(TitleVar *string, ParentVar *Window, ActionVar FileCho
 	CancelLabelVarPtr := core.GStrdupNullable(CancelLabelVar)
 	defer core.GFreeNullable(CancelLabelVarPtr)
 
-	cret := xNewFileChooserNative(TitleVarPtr, ParentVar.GoPointer(), ActionVar, AcceptLabelVarPtr, CancelLabelVarPtr)
+	cret := xNewFileChooserNative(TitleVarPtr, ParentVarPtr, ActionVar, AcceptLabelVarPtr, CancelLabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -566,7 +571,12 @@ func (x *FileChooserNative) SetCreateFolders(CreateFoldersVar bool) {
 func (x *FileChooserNative) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+	var FileVarPtr uintptr
+	if FileVar != nil {
+		FileVarPtr = FileVar.GoPointer()
+	}
+
+	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

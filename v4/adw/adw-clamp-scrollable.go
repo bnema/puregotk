@@ -114,7 +114,12 @@ var xClampScrollableSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *ClampScrollable) SetChild(ChildVar *gtk.Widget) {
 
-	xClampScrollableSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xClampScrollableSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -371,7 +376,17 @@ func (x *ClampScrollable) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *ClampScrollable) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -381,7 +396,12 @@ func (x *ClampScrollable) SetAccessibleParent(ParentVar gtk.Accessible, NextSibl
 // is created, and it needs to be linked to a previous child.
 func (x *ClampScrollable) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -588,7 +608,12 @@ func (x *ClampScrollable) GetVscrollPolicy() gtk.ScrollablePolicy {
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *ClampScrollable) SetHadjustment(HadjustmentVar *gtk.Adjustment) {
 
-	gtk.XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
+	var HadjustmentVarPtr uintptr
+	if HadjustmentVar != nil {
+		HadjustmentVarPtr = HadjustmentVar.GoPointer()
+	}
+
+	gtk.XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
 
 }
 
@@ -605,7 +630,12 @@ func (x *ClampScrollable) SetHscrollPolicy(PolicyVar gtk.ScrollablePolicy) {
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *ClampScrollable) SetVadjustment(VadjustmentVar *gtk.Adjustment) {
 
-	gtk.XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
+	var VadjustmentVarPtr uintptr
+	if VadjustmentVar != nil {
+		VadjustmentVarPtr = VadjustmentVar.GoPointer()
+	}
+
+	gtk.XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
 
 }
 

@@ -64,7 +64,12 @@ func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, Not
 		}
 	}
 
-	xIoSchedulerPushJob(JobFuncVarRef, UserDataVar, NotifyVarRef, IoPriorityVar, CancellableVar.GoPointer())
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xIoSchedulerPushJob(JobFuncVarRef, UserDataVar, NotifyVarRef, IoPriorityVar, CancellableVarPtr)
 
 }
 

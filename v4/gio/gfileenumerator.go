@@ -419,7 +419,12 @@ var xFileEnumeratorClose func(uintptr, uintptr, **glib.Error) bool
 func (x *FileEnumerator) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xFileEnumeratorClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xFileEnumeratorClose(x.GoPointer(), CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -452,7 +457,12 @@ func (x *FileEnumerator) CloseAsync(IoPriorityVar int, CancellableVar *Cancellab
 		}
 	}
 
-	xFileEnumeratorCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileEnumeratorCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 
@@ -590,7 +600,12 @@ var xFileEnumeratorIterate func(uintptr, **FileInfo, **File, uintptr, **glib.Err
 func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar **File, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -615,7 +630,12 @@ func (x *FileEnumerator) NextFile(CancellableVar *Cancellable) (*FileInfo, error
 	var cls *FileInfo
 	var cerr *glib.Error
 
-	cret := xFileEnumeratorNextFile(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := xFileEnumeratorNextFile(x.GoPointer(), CancellableVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -719,7 +739,12 @@ func (x *FileEnumerator) NextFilesAsync(NumFilesVar int, IoPriorityVar int, Canc
 		}
 	}
 
-	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

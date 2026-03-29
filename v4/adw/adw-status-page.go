@@ -156,7 +156,12 @@ var xStatusPageSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *StatusPage) SetChild(ChildVar *gtk.Widget) {
 
-	xStatusPageSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xStatusPageSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -195,7 +200,12 @@ var xStatusPageSetPaintable func(uintptr, uintptr)
 // Changing this will set [property@StatusPage:icon-name] to `NULL`.
 func (x *StatusPage) SetPaintable(PaintableVar gdk.Paintable) {
 
-	xStatusPageSetPaintable(x.GoPointer(), PaintableVar.GoPointer())
+	var PaintableVarPtr uintptr
+	if PaintableVar != nil {
+		PaintableVarPtr = PaintableVar.GoPointer()
+	}
+
+	xStatusPageSetPaintable(x.GoPointer(), PaintableVarPtr)
 
 }
 
@@ -414,7 +424,17 @@ func (x *StatusPage) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *StatusPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -424,7 +444,12 @@ func (x *StatusPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVa
 // is created, and it needs to be linked to a previous child.
 func (x *StatusPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -404,7 +404,12 @@ var xToastSetCustomTitle func(uintptr, uintptr)
 // Setting a custom title will unset [property@Toast:title].
 func (x *Toast) SetCustomTitle(WidgetVar *gtk.Widget) {
 
-	xToastSetCustomTitle(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xToastSetCustomTitle(x.GoPointer(), WidgetVarPtr)
 
 }
 

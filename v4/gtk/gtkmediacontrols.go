@@ -54,7 +54,12 @@ var xNewMediaControls func(uintptr) uintptr
 func NewMediaControls(StreamVar *MediaStream) *MediaControls {
 	var cls *MediaControls
 
-	cret := xNewMediaControls(StreamVar.GoPointer())
+	var StreamVarPtr uintptr
+	if StreamVar != nil {
+		StreamVarPtr = StreamVar.GoPointer()
+	}
+
+	cret := xNewMediaControls(StreamVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -87,7 +92,12 @@ var xMediaControlsSetMediaStream func(uintptr, uintptr)
 // Sets the stream that is controlled by @controls.
 func (x *MediaControls) SetMediaStream(StreamVar *MediaStream) {
 
-	xMediaControlsSetMediaStream(x.GoPointer(), StreamVar.GoPointer())
+	var StreamVarPtr uintptr
+	if StreamVar != nil {
+		StreamVarPtr = StreamVar.GoPointer()
+	}
+
+	xMediaControlsSetMediaStream(x.GoPointer(), StreamVarPtr)
 
 }
 
@@ -236,7 +246,17 @@ func (x *MediaControls) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *MediaControls) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -246,7 +266,12 @@ func (x *MediaControls) SetAccessibleParent(ParentVar Accessible, NextSiblingVar
 // is created, and it needs to be linked to a previous child.
 func (x *MediaControls) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

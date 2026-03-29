@@ -385,7 +385,7 @@ func (c *DBusInterfaceSkeleton) SetGoPointer(ptr uintptr) {
 // flags set, no dedicated thread is ever used and the call will be
 // handled in the same thread as the object that @interface belongs
 // to was exported in.
-func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, uintptr) bool) uint {
+func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, *DBusMethodInvocation) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "g-authorize-method", cbRefPtr)
@@ -398,7 +398,7 @@ func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSk
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, InvocationVarp)
+		return cbFn(fa, func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -446,7 +446,12 @@ func (x *DBusInterfaceSkeleton) GetObject() *DBusObjectBase {
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceSkeleton) SetObject(ObjectVar DBusObject) {
 
-	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
+	var ObjectVarPtr uintptr
+	if ObjectVar != nil {
+		ObjectVarPtr = ObjectVar.GoPointer()
+	}
+
+	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVarPtr)
 
 }
 

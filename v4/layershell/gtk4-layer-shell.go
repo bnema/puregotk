@@ -292,7 +292,12 @@ var xSetMonitor func(uintptr, uintptr)
 // Default is %NULL
 func SetMonitor(WindowVar *gtk.Window, MonitorVar *gdk.Monitor) {
 
-	xSetMonitor(WindowVar.GoPointer(), MonitorVar.GoPointer())
+	var MonitorVarPtr uintptr
+	if MonitorVar != nil {
+		MonitorVarPtr = MonitorVar.GoPointer()
+	}
+
+	xSetMonitor(WindowVar.GoPointer(), MonitorVarPtr)
 
 }
 

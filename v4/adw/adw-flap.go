@@ -347,7 +347,12 @@ var xFlapSetContent func(uintptr, uintptr)
 // It's always displayed when unfolded, and partially visible when folded.
 func (x *Flap) SetContent(ContentVar *gtk.Widget) {
 
-	xFlapSetContent(x.GoPointer(), ContentVar.GoPointer())
+	var ContentVarPtr uintptr
+	if ContentVar != nil {
+		ContentVarPtr = ContentVar.GoPointer()
+	}
+
+	xFlapSetContent(x.GoPointer(), ContentVarPtr)
 
 }
 
@@ -358,7 +363,12 @@ var xFlapSetFlap func(uintptr, uintptr)
 // It's only visible when [property@Flap:reveal-progress] is greater than 0.
 func (x *Flap) SetFlap(FlapVar *gtk.Widget) {
 
-	xFlapSetFlap(x.GoPointer(), FlapVar.GoPointer())
+	var FlapVarPtr uintptr
+	if FlapVar != nil {
+		FlapVarPtr = FlapVar.GoPointer()
+	}
+
+	xFlapSetFlap(x.GoPointer(), FlapVarPtr)
 
 }
 
@@ -467,7 +477,12 @@ var xFlapSetSeparator func(uintptr, uintptr)
 // value.
 func (x *Flap) SetSeparator(SeparatorVar *gtk.Widget) {
 
-	xFlapSetSeparator(x.GoPointer(), SeparatorVar.GoPointer())
+	var SeparatorVarPtr uintptr
+	if SeparatorVar != nil {
+		SeparatorVarPtr = SeparatorVar.GoPointer()
+	}
+
+	xFlapSetSeparator(x.GoPointer(), SeparatorVarPtr)
 
 }
 
@@ -883,7 +898,17 @@ func (x *Flap) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *Flap) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -893,7 +918,12 @@ func (x *Flap) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.
 // is created, and it needs to be linked to a previous child.
 func (x *Flap) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -173,7 +173,12 @@ var xGridAttachNextTo func(uintptr, uintptr, uintptr, PositionType, int, int)
 // `@side == %GTK_POS_LEFT` yields a layout of `[3][2][1]`.
 func (x *Grid) AttachNextTo(ChildVar *Widget, SiblingVar *Widget, SideVar PositionType, WidthVar int, HeightVar int) {
 
-	xGridAttachNextTo(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer(), SideVar, WidthVar, HeightVar)
+	var SiblingVarPtr uintptr
+	if SiblingVar != nil {
+		SiblingVarPtr = SiblingVar.GoPointer()
+	}
+
+	xGridAttachNextTo(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr, SideVar, WidthVar, HeightVar)
 
 }
 
@@ -631,7 +636,17 @@ func (x *Grid) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Grid) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -641,7 +656,12 @@ func (x *Grid) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessib
 // is created, and it needs to be linked to a previous child.
 func (x *Grid) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

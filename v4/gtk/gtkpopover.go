@@ -371,7 +371,12 @@ var xPopoverSetChild func(uintptr, uintptr)
 // Sets the child widget of @popover.
 func (x *Popover) SetChild(ChildVar *Widget) {
 
-	xPopoverSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xPopoverSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -384,7 +389,12 @@ var xPopoverSetDefaultWidget func(uintptr, uintptr)
 // unsets the default widget for a `GtkPopover`.
 func (x *Popover) SetDefaultWidget(WidgetVar *Widget) {
 
-	xPopoverSetDefaultWidget(x.GoPointer(), WidgetVar.GoPointer())
+	var WidgetVarPtr uintptr
+	if WidgetVar != nil {
+		WidgetVarPtr = WidgetVar.GoPointer()
+	}
+
+	xPopoverSetDefaultWidget(x.GoPointer(), WidgetVarPtr)
 
 }
 
@@ -733,7 +743,17 @@ func (x *Popover) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Popover) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -743,7 +763,12 @@ func (x *Popover) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // is created, and it needs to be linked to a previous child.
 func (x *Popover) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

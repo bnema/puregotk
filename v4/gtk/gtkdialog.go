@@ -347,13 +347,18 @@ var xNewDialogWithButtons func(uintptr, uintptr, DialogFlags, uintptr, ...interf
 func NewDialogWithButtons(TitleVar *string, ParentVar *Window, FlagsVar DialogFlags, FirstButtonTextVar *string, varArgs ...interface{}) *Dialog {
 	var cls *Dialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
 	FirstButtonTextVarPtr := core.GStrdupNullable(FirstButtonTextVar)
 	defer core.GFreeNullable(FirstButtonTextVarPtr)
 
-	cret := xNewDialogWithButtons(TitleVarPtr, ParentVar.GoPointer(), FlagsVar, FirstButtonTextVarPtr, varArgs...)
+	cret := xNewDialogWithButtons(TitleVarPtr, ParentVarPtr, FlagsVar, FirstButtonTextVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -769,7 +774,17 @@ func (x *Dialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Dialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -779,7 +794,12 @@ func (x *Dialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // is created, and it needs to be linked to a previous child.
 func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1016,7 +1036,12 @@ func (x *Dialog) GetFocus() *Widget {
 // this function.
 func (x *Dialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

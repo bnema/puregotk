@@ -216,7 +216,12 @@ var xInlineViewSwitcherSetStack func(uintptr, uintptr)
 // Sets the stack to control.
 func (x *InlineViewSwitcher) SetStack(StackVar *ViewStack) {
 
-	xInlineViewSwitcherSetStack(x.GoPointer(), StackVar.GoPointer())
+	var StackVarPtr uintptr
+	if StackVar != nil {
+		StackVarPtr = StackVar.GoPointer()
+	}
+
+	xInlineViewSwitcherSetStack(x.GoPointer(), StackVarPtr)
 
 }
 
@@ -407,7 +412,17 @@ func (x *InlineViewSwitcher) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *InlineViewSwitcher) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -417,7 +432,12 @@ func (x *InlineViewSwitcher) SetAccessibleParent(ParentVar gtk.Accessible, NextS
 // is created, and it needs to be linked to a previous child.
 func (x *InlineViewSwitcher) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

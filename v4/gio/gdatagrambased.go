@@ -297,7 +297,12 @@ func (x *DatagramBasedBase) ConditionCheck(ConditionVar glib.IOCondition) glib.I
 func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGDatagramBasedConditionWait(x.GoPointer(), ConditionVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDatagramBasedConditionWait(x.GoPointer(), ConditionVar, TimeoutVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -321,7 +326,12 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 // g_cancellable_is_cancelled().
 func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
 
-	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVarPtr)
 	return cret
 }
 
@@ -378,7 +388,12 @@ func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, Cancella
 func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -430,7 +445,12 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

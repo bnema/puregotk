@@ -88,7 +88,17 @@ func (x *ColorDialog) ChooseRgba(ParentVar *Window, InitialColorVar *gdk.RGBA, C
 		}
 	}
 
-	xColorDialogChooseRgba(x.GoPointer(), ParentVar.GoPointer(), InitialColorVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var CancellableVarPtr uintptr
+	if CancellableVar != nil {
+		CancellableVarPtr = CancellableVar.GoPointer()
+	}
+
+	xColorDialogChooseRgba(x.GoPointer(), ParentVarPtr, InitialColorVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
 
 }
 

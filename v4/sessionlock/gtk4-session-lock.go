@@ -177,7 +177,7 @@ func (x *Instance) ConnectLocked(cb *func(Instance)) uint {
 // This API does not directly tell you when a monitor is removed (GTK APIs can be used for that), however the window you
 // send to gtk_session_lock_instance_assign_window_to_monitor() will be automatically unmapped and dereferenced when its
 // monitor is removed or the screen is unlocked.
-func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint {
+func (x *Instance) ConnectMonitor(cb *func(Instance, *gdk.Monitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "monitor", cbRefPtr)
@@ -190,7 +190,7 @@ func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, MonitorVarp)
+		cbFn(fa, func() *gdk.Monitor { cls := &gdk.Monitor{}; cls.Ptr = MonitorVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

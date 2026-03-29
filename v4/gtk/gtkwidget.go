@@ -3337,7 +3337,12 @@ var xWidgetInsertActionGroup func(uintptr, string, uintptr)
 // removed from @widget.
 func (x *Widget) InsertActionGroup(NameVar string, GroupVar gio.ActionGroup) {
 
-	xWidgetInsertActionGroup(x.GoPointer(), NameVar, GroupVar.GoPointer())
+	var GroupVarPtr uintptr
+	if GroupVar != nil {
+		GroupVarPtr = GroupVar.GoPointer()
+	}
+
+	xWidgetInsertActionGroup(x.GoPointer(), NameVar, GroupVarPtr)
 
 }
 
@@ -3363,7 +3368,12 @@ var xWidgetInsertAfter func(uintptr, uintptr, uintptr)
 // just using a widget, you *must* use its own API for adding children.
 func (x *Widget) InsertAfter(ParentVar *Widget, PreviousSiblingVar *Widget) {
 
-	xWidgetInsertAfter(x.GoPointer(), ParentVar.GoPointer(), PreviousSiblingVar.GoPointer())
+	var PreviousSiblingVarPtr uintptr
+	if PreviousSiblingVar != nil {
+		PreviousSiblingVarPtr = PreviousSiblingVar.GoPointer()
+	}
+
+	xWidgetInsertAfter(x.GoPointer(), ParentVar.GoPointer(), PreviousSiblingVarPtr)
 
 }
 
@@ -3388,7 +3398,12 @@ var xWidgetInsertBefore func(uintptr, uintptr, uintptr)
 // just using a widget, you *must* use its own API for adding children.
 func (x *Widget) InsertBefore(ParentVar *Widget, NextSiblingVar *Widget) {
 
-	xWidgetInsertBefore(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	xWidgetInsertBefore(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVarPtr)
 
 }
 
@@ -3822,7 +3837,12 @@ var xWidgetSetCursor func(uintptr, uintptr)
 // inherited from its parent.
 func (x *Widget) SetCursor(CursorVar *gdk.Cursor) {
 
-	xWidgetSetCursor(x.GoPointer(), CursorVar.GoPointer())
+	var CursorVarPtr uintptr
+	if CursorVar != nil {
+		CursorVarPtr = CursorVar.GoPointer()
+	}
+
+	xWidgetSetCursor(x.GoPointer(), CursorVarPtr)
 
 }
 
@@ -3880,7 +3900,12 @@ var xWidgetSetFocusChild func(uintptr, uintptr)
 // [method@Gtk.Widget.grab_focus] on it.
 func (x *Widget) SetFocusChild(ChildVar *Widget) {
 
-	xWidgetSetFocusChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xWidgetSetFocusChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -3931,7 +3956,12 @@ var xWidgetSetFontMap func(uintptr, uintptr)
 // When not set, the widget will inherit the font map from its parent.
 func (x *Widget) SetFontMap(FontMapVar *pango.FontMap) {
 
-	xWidgetSetFontMap(x.GoPointer(), FontMapVar.GoPointer())
+	var FontMapVarPtr uintptr
+	if FontMapVar != nil {
+		FontMapVarPtr = FontMapVar.GoPointer()
+	}
+
+	xWidgetSetFontMap(x.GoPointer(), FontMapVarPtr)
 
 }
 
@@ -4028,7 +4058,12 @@ var xWidgetSetLayoutManager func(uintptr, uintptr)
 // of the widget.
 func (x *Widget) SetLayoutManager(LayoutManagerVar *LayoutManager) {
 
-	xWidgetSetLayoutManager(x.GoPointer(), LayoutManagerVar.GoPointer())
+	var LayoutManagerVarPtr uintptr
+	if LayoutManagerVar != nil {
+		LayoutManagerVarPtr = LayoutManagerVar.GoPointer()
+	}
+
+	xWidgetSetLayoutManager(x.GoPointer(), LayoutManagerVarPtr)
 
 }
 
@@ -5268,7 +5303,7 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint {
 //
 // The signal handler is free to manipulate @tooltip with the therefore
 // destined function calls.
-func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) bool) uint {
+func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, *Tooltip) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
@@ -5281,7 +5316,7 @@ func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) b
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, XVarp, YVarp, KeyboardModeVarp, TooltipVarp)
+		return cbFn(fa, XVarp, YVarp, KeyboardModeVarp, func() *Tooltip { cls := &Tooltip{}; cls.Ptr = TooltipVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -5559,7 +5594,17 @@ func (x *Widget) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *Widget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -5569,7 +5614,12 @@ func (x *Widget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // is created, and it needs to be linked to a previous child.
 func (x *Widget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

@@ -432,7 +432,17 @@ func (x *FontButton) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *FontButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -442,7 +452,12 @@ func (x *FontButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *FontButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -755,7 +770,12 @@ func (x *FontButton) SetFontDesc(FontDescVar *pango.FontDescription) {
 // ```
 func (x *FontButton) SetFontMap(FontmapVar *pango.FontMap) {
 
-	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
+	var FontmapVarPtr uintptr
+	if FontmapVar != nil {
+		FontmapVarPtr = FontmapVar.GoPointer()
+	}
+
+	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVarPtr)
 
 }
 

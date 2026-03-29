@@ -361,7 +361,12 @@ var xDialogPresent func(uintptr, uintptr)
 // will be shown within it. Otherwise, it will be a separate window.
 func (x *Dialog) Present(ParentVar *gtk.Widget) {
 
-	xDialogPresent(x.GoPointer(), ParentVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	xDialogPresent(x.GoPointer(), ParentVarPtr)
 
 }
 
@@ -384,7 +389,12 @@ var xDialogSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *Dialog) SetChild(ChildVar *gtk.Widget) {
 
-	xDialogSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xDialogSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -421,7 +431,12 @@ var xDialogSetDefaultWidget func(uintptr, uintptr)
 // It's activated when the user presses Enter.
 func (x *Dialog) SetDefaultWidget(DefaultWidgetVar *gtk.Widget) {
 
-	xDialogSetDefaultWidget(x.GoPointer(), DefaultWidgetVar.GoPointer())
+	var DefaultWidgetVarPtr uintptr
+	if DefaultWidgetVar != nil {
+		DefaultWidgetVarPtr = DefaultWidgetVar.GoPointer()
+	}
+
+	xDialogSetDefaultWidget(x.GoPointer(), DefaultWidgetVarPtr)
 
 }
 
@@ -437,7 +452,12 @@ var xDialogSetFocus func(uintptr, uintptr)
 // [method@Gtk.Widget.grab_focus] instead of this function.
 func (x *Dialog) SetFocus(FocusVar *gtk.Widget) {
 
-	xDialogSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	xDialogSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 
@@ -802,7 +822,17 @@ func (x *Dialog) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *Dialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -812,7 +842,12 @@ func (x *Dialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // is created, and it needs to be linked to a previous child.
 func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

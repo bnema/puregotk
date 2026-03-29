@@ -96,10 +96,15 @@ var xNewPrintUnixDialog func(uintptr, uintptr) uintptr
 func NewPrintUnixDialog(TitleVar *string, ParentVar *Window) *PrintUnixDialog {
 	var cls *PrintUnixDialog
 
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
-	cret := xNewPrintUnixDialog(TitleVarPtr, ParentVar.GoPointer())
+	cret := xNewPrintUnixDialog(TitleVarPtr, ParentVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -290,7 +295,12 @@ var xPrintUnixDialogSetSettings func(uintptr, uintptr)
 // is shown.
 func (x *PrintUnixDialog) SetSettings(SettingsVar *PrintSettings) {
 
-	xPrintUnixDialogSetSettings(x.GoPointer(), SettingsVar.GoPointer())
+	var SettingsVarPtr uintptr
+	if SettingsVar != nil {
+		SettingsVarPtr = SettingsVar.GoPointer()
+	}
+
+	xPrintUnixDialogSetSettings(x.GoPointer(), SettingsVarPtr)
 
 }
 
@@ -516,7 +526,17 @@ func (x *PrintUnixDialog) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *PrintUnixDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -526,7 +546,12 @@ func (x *PrintUnixDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingV
 // is created, and it needs to be linked to a previous child.
 func (x *PrintUnixDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -763,7 +788,12 @@ func (x *PrintUnixDialog) GetFocus() *Widget {
 // this function.
 func (x *PrintUnixDialog) SetFocus(FocusVar *Widget) {
 
-	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+	var FocusVarPtr uintptr
+	if FocusVar != nil {
+		FocusVarPtr = FocusVar.GoPointer()
+	}
+
+	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
 
 }
 

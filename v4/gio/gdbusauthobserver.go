@@ -127,7 +127,12 @@ var xDBusAuthObserverAuthorizeAuthenticatedPeer func(uintptr, uintptr, uintptr) 
 // Emits the #GDBusAuthObserver::authorize-authenticated-peer signal on @observer.
 func (x *DBusAuthObserver) AuthorizeAuthenticatedPeer(StreamVar *IOStream, CredentialsVar *Credentials) bool {
 
-	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVar.GoPointer())
+	var CredentialsVarPtr uintptr
+	if CredentialsVar != nil {
+		CredentialsVarPtr = CredentialsVar.GoPointer()
+	}
+
+	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVarPtr)
 	return cret
 }
 
@@ -168,7 +173,7 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 
 // Emitted to check if a peer that is successfully authenticated
 // is authorized.
-func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint {
+func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, *IOStream, *Credentials) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
@@ -181,7 +186,7 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, StreamVarp, CredentialsVarp)
+		return cbFn(fa, func() *IOStream { cls := &IOStream{}; cls.Ptr = StreamVarp; return cls }(), func() *Credentials { cls := &Credentials{}; cls.Ptr = CredentialsVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

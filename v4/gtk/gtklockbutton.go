@@ -90,7 +90,12 @@ var xNewLockButton func(uintptr) uintptr
 func NewLockButton(PermissionVar *gio.Permission) *LockButton {
 	var cls *LockButton
 
-	cret := xNewLockButton(PermissionVar.GoPointer())
+	var PermissionVarPtr uintptr
+	if PermissionVar != nil {
+		PermissionVarPtr = PermissionVar.GoPointer()
+	}
+
+	cret := xNewLockButton(PermissionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -123,7 +128,12 @@ var xLockButtonSetPermission func(uintptr, uintptr)
 // Sets the `GPermission` object that controls @button.
 func (x *LockButton) SetPermission(PermissionVar *gio.Permission) {
 
-	xLockButtonSetPermission(x.GoPointer(), PermissionVar.GoPointer())
+	var PermissionVarPtr uintptr
+	if PermissionVar != nil {
+		PermissionVarPtr = PermissionVar.GoPointer()
+	}
+
+	xLockButtonSetPermission(x.GoPointer(), PermissionVarPtr)
 
 }
 
@@ -357,7 +367,17 @@ func (x *LockButton) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *LockButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -367,7 +387,12 @@ func (x *LockButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // is created, and it needs to be linked to a previous child.
 func (x *LockButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

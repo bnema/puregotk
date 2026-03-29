@@ -281,7 +281,12 @@ var xNavigationPageSetChild func(uintptr, uintptr)
 // Sets the child widget of @self.
 func (x *NavigationPage) SetChild(ChildVar *gtk.Widget) {
 
-	xNavigationPageSetChild(x.GoPointer(), ChildVar.GoPointer())
+	var ChildVarPtr uintptr
+	if ChildVar != nil {
+		ChildVarPtr = ChildVar.GoPointer()
+	}
+
+	xNavigationPageSetChild(x.GoPointer(), ChildVarPtr)
 
 }
 
@@ -668,7 +673,17 @@ func (x *NavigationPage) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *NavigationPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -678,7 +693,12 @@ func (x *NavigationPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSibli
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 
@@ -1480,7 +1500,7 @@ func (x *NavigationView) GetPropertyVisiblePageTag() string {
 // from a forward stack.
 //
 // Instead, it should be done in the [signal@NavigationView::pushed] handler.
-func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationPage) uint {
+func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) *NavigationPage) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
@@ -1511,7 +1531,7 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 // When using [method@NavigationView.pop_to_page] or
 // [method@NavigationView.pop_to_tag], this signal is emitted for each of the
 // popped pages.
-func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint {
+func (x *NavigationView) ConnectPopped(cb *func(NavigationView, *NavigationPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
@@ -1524,7 +1544,7 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PageVarp)
+		cbFn(fa, func() *NavigationPage { cls := &NavigationPage{}; cls.Ptr = PageVarp; return cls }())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -1768,7 +1788,17 @@ func (x *NavigationView) ResetState(StateVar gtk.AccessibleState) {
 // object is the container widget.
 func (x *NavigationView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -1778,7 +1808,12 @@ func (x *NavigationView) SetAccessibleParent(ParentVar gtk.Accessible, NextSibli
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

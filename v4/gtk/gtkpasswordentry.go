@@ -127,7 +127,12 @@ var xPasswordEntrySetExtraMenu func(uintptr, uintptr)
 // the context menu for @entry.
 func (x *PasswordEntry) SetExtraMenu(ModelVar *gio.MenuModel) {
 
-	xPasswordEntrySetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
+	var ModelVarPtr uintptr
+	if ModelVar != nil {
+		ModelVarPtr = ModelVar.GoPointer()
+	}
+
+	xPasswordEntrySetExtraMenu(x.GoPointer(), ModelVarPtr)
 
 }
 
@@ -367,7 +372,17 @@ func (x *PasswordEntry) ResetState(StateVar AccessibleState) {
 // object is the container widget.
 func (x *PasswordEntry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
 
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+	var ParentVarPtr uintptr
+	if ParentVar != nil {
+		ParentVarPtr = ParentVar.GoPointer()
+	}
+
+	var NextSiblingVarPtr uintptr
+	if NextSiblingVar != nil {
+		NextSiblingVarPtr = NextSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
 
 }
 
@@ -377,7 +392,12 @@ func (x *PasswordEntry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar
 // is created, and it needs to be linked to a previous child.
 func (x *PasswordEntry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+	var NewSiblingVarPtr uintptr
+	if NewSiblingVar != nil {
+		NewSiblingVarPtr = NewSiblingVar.GoPointer()
+	}
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
 
 }
 

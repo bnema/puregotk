@@ -95,7 +95,12 @@ var xAppLaunchContextSetIcon func(uintptr, uintptr)
 // See also [method@Gdk.AppLaunchContext.set_icon_name].
 func (x *AppLaunchContext) SetIcon(IconVar gio.Icon) {
 
-	xAppLaunchContextSetIcon(x.GoPointer(), IconVar.GoPointer())
+	var IconVarPtr uintptr
+	if IconVar != nil {
+		IconVarPtr = IconVar.GoPointer()
+	}
+
+	xAppLaunchContextSetIcon(x.GoPointer(), IconVarPtr)
 
 }
 
