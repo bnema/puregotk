@@ -1816,7 +1816,14 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, *Print
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PreviewVarp, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }(), func() *Window { cls := &Window{}; cls.Ptr = ParentVarp; return cls }())
+		return cbFn(fa, PreviewVarp, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }(), func() *Window {
+			if ParentVarp == 0 {
+				return nil
+			}
+			cls := &Window{}
+			cls.Ptr = ParentVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

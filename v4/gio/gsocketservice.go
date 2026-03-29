@@ -371,7 +371,14 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, *SocketConnectio
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *SocketConnection { cls := &SocketConnection{}; cls.Ptr = ConnectionVarp; return cls }(), func() *gobject.Object { cls := &gobject.Object{}; cls.Ptr = SourceObjectVarp; return cls }())
+		return cbFn(fa, func() *SocketConnection { cls := &SocketConnection{}; cls.Ptr = ConnectionVarp; return cls }(), func() *gobject.Object {
+			if SourceObjectVarp == 0 {
+				return nil
+			}
+			cls := &gobject.Object{}
+			cls.Ptr = SourceObjectVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

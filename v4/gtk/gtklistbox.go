@@ -958,7 +958,14 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, *ListBoxRow)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *ListBoxRow { cls := &ListBoxRow{}; cls.Ptr = RowVarp; return cls }())
+		cbFn(fa, func() *ListBoxRow {
+			if RowVarp == 0 {
+				return nil
+			}
+			cls := &ListBoxRow{}
+			cls.Ptr = RowVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

@@ -2285,7 +2285,14 @@ func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, *TreeViewColu
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PathVarp, func() *TreeViewColumn { cls := &TreeViewColumn{}; cls.Ptr = ColumnVarp; return cls }())
+		cbFn(fa, PathVarp, func() *TreeViewColumn {
+			if ColumnVarp == 0 {
+				return nil
+			}
+			cls := &TreeViewColumn{}
+			cls.Ptr = ColumnVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

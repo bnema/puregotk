@@ -186,7 +186,14 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *IOStream { cls := &IOStream{}; cls.Ptr = StreamVarp; return cls }(), func() *Credentials { cls := &Credentials{}; cls.Ptr = CredentialsVarp; return cls }())
+		return cbFn(fa, func() *IOStream { cls := &IOStream{}; cls.Ptr = StreamVarp; return cls }(), func() *Credentials {
+			if CredentialsVarp == 0 {
+				return nil
+			}
+			cls := &Credentials{}
+			cls.Ptr = CredentialsVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

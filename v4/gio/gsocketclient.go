@@ -1024,7 +1024,14 @@ func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, ui
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, EventVarp, ConnectableVarp, func() *IOStream { cls := &IOStream{}; cls.Ptr = ConnectionVarp; return cls }())
+		cbFn(fa, EventVarp, ConnectableVarp, func() *IOStream {
+			if ConnectionVarp == 0 {
+				return nil
+			}
+			cls := &IOStream{}
+			cls.Ptr = ConnectionVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

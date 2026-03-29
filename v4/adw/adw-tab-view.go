@@ -2043,7 +2043,14 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, *TabPage)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
+		cbFn(fa, func() *TabPage {
+			if PageVarp == 0 {
+				return nil
+			}
+			cls := &TabPage{}
+			cls.Ptr = PageVarp
+			return cls
+		}())
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
