@@ -153,7 +153,7 @@ func tryFindPaths(name string) []string {
 	return findPkgConf(name)
 }
 
-// TODO: Hardcore a library shared object with linker -X flag
+// TODO: Hardcode a library shared object with linker -X flag
 // This is useful for packaging
 func GetPaths(name string) []string {
 	g := tryFindPaths(name)

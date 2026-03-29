@@ -9,6 +9,7 @@ import (
 )
 
 func TestAvailable(t *testing.T) {
+	// Available() should not panic regardless of whether the library is installed
 	avail := sessionlock.Available()
 	t.Logf("sessionlock.Available() = %v", avail)
 }
