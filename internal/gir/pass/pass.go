@@ -94,14 +94,14 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	enums := make(map[string][]types.EnumTemplate)
 	var files []string
 	for _, el := range ns.Bitfields {
-		temp := el.Template(ns.Name)
+		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
 		fn := el.FilenameSafe()
 		files = append(files, fn)
 		enums[fn] = append(enums[fn], temp)
 	}
 
 	for _, el := range ns.Enums {
-		temp := el.Template(ns.Name)
+		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
 		fn := el.FilenameSafe()
 		files = append(files, fn)
 		enums[fn] = append(enums[fn], temp)
