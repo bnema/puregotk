@@ -57,8 +57,9 @@ type NullableClassParam struct {
 // The Pure type stays uintptr (purego ABI), but the API type is the proper
 // Go class type and the signal closure constructs the Go struct from the pointer.
 type SignalClassParam struct {
-	Index  int
-	GoType string // qualified Go type without pointer, e.g. "gdk.Monitor"
+	Index    int
+	GoType   string // qualified Go type without pointer, e.g. "gdk.Monitor"
+	Nullable bool   // when true, emit nil return for zero pointers
 }
 
 // GErrorParam tracks a signal/callback parameter that is a GLib.Error record.
@@ -175,7 +176,11 @@ func (f funcArgsTemplate) PuregoSignalCall() []string {
 	}
 	for _, sc := range f.SignalClasses {
 		name := f.Pure.Names[sc.Index]
-		out[sc.Index] = fmt.Sprintf("func() *%s { cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, sc.GoType, name)
+		if sc.Nullable {
+			out[sc.Index] = fmt.Sprintf("func() *%s { if %s == 0 { return nil }; cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, name, sc.GoType, name)
+		} else {
+			out[sc.Index] = fmt.Sprintf("func() *%s { cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, sc.GoType, name)
+		}
 	}
 	return out
 }
@@ -476,8 +481,9 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 		apiType := f.API.Types[len(f.API.Types)-1]
 		if f.Pure.Types[pureIdx] == "uintptr" && apiType != "uintptr" {
 			f.SignalClasses = append(f.SignalClasses, SignalClassParam{
-				Index:  pureIdx,
-				GoType: strings.TrimPrefix(apiType, "*"),
+				Index:    pureIdx,
+				GoType:   strings.TrimPrefix(apiType, "*"),
+				Nullable: p.Nullable,
 			})
 		}
 	}
