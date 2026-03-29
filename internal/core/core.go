@@ -167,6 +167,42 @@ func GetPaths(name string) []string {
 	panic(fmt.Sprintf("Path for library: %s not found. Please set the path to this library shared object file manually with env variable: %s or PUREGOTK_LIB_FOLDER. Or make sure pkg-config is setup correctly", strings.ToLower(name), ev))
 }
 
+// TryGetPaths is like GetPaths but returns an empty slice instead of
+// panicking when the library cannot be found. Use this for optional
+// libraries that may not be installed.
+func TryGetPaths(name string) []string {
+	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
+	if v := os.Getenv(ev); v != "" {
+		return []string{v}
+	}
+
+	ep := os.Getenv("PUREGOTK_LIB_FOLDER")
+	if ep != "" {
+		g := findSos(ep, name)
+		if len(g) > 0 {
+			return g
+		}
+		return []string{}
+	}
+
+	gp, ok := paths[runtime.GOARCH]
+	if ok {
+		for _, p := range gp {
+			g := findSos(p, name)
+			if len(g) > 0 {
+				return g
+			}
+		}
+	}
+
+	g := findPkgConf(name)
+	if len(g) > 0 {
+		return g
+	}
+
+	return []string{}
+}
+
 // hasSuffix tests whether the string s ends with suffix.
 // This function was copied from purego
 func hasSuffix(s, suffix string) bool {

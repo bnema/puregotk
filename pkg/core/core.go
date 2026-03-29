@@ -4,6 +4,7 @@ import "github.com/bnema/puregotk/internal/core"
 
 var (
 	GetPaths            = core.GetPaths
+	TryGetPaths         = core.TryGetPaths
 	ByteSlice           = core.ByteSlice
 	GoStringSlice       = core.GoStringSlice
 	GoString            = core.GoString
