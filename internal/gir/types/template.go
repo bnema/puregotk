@@ -829,6 +829,13 @@ type TemplateArg struct {
 	// CrossPkgImports are fully qualified import paths for cross-package
 	// references detected in the generated code (e.g. gio.*, cairo.*, pango.*).
 	CrossPkgImports []string
+	// OptionalLibrary indicates the shared library is optional (e.g. Wayland-only).
+	// When true, the template emits graceful dlopen (continue on error),
+	// package-level libs var, and an Available() helper.
+	OptionalLibrary bool
+	// BuildConstraint is emitted as a Go build constraint at the top of
+	// each generated file (e.g. "//go:build linux"). Empty means no constraint.
+	BuildConstraint string
 	// Imports defines the package imports that we need
 	// This does not include purego
 	// As the template already includes that if `NeedsInit` is set to true

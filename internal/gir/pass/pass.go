@@ -19,6 +19,18 @@ type Pass struct {
 	Types  types.KindMap
 }
 
+// NamespaceConfig holds per-namespace overrides for the code generator.
+type NamespaceConfig struct {
+	PackageName     string // override auto-derived package name (empty = use default)
+	OptionalLibrary bool   // continue on dlopen failure instead of panic
+	BuildConstraint string // e.g. "//go:build linux"
+}
+
+var namespaceConfigs = map[string]NamespaceConfig{
+	"Gtk4LayerShell":  {PackageName: "layershell", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
+	"Gtk4SessionLock": {PackageName: "sessionlock", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
+}
+
 // New creates a new pass struct by parsing gir files in the string slice
 // This pass object will then be used to go over these files multiple times up until we have the full info to convert it to go files
 func New(files []string) (*Pass, error) {
@@ -391,6 +403,10 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	}
 
 	pkgName := strings.ToLower(ns.Name)
+	nsCfg := namespaceConfigs[ns.Name] // zero value if not configured
+	if nsCfg.PackageName != "" {
+		pkgName = nsCfg.PackageName
+	}
 
 	var pkgConfigName string
 	if len(r.Packages) > 0 {
@@ -574,6 +590,8 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			NeedsGLib:            needsGLib,
 			NeedsGObject:         needsGObject,
 			CrossPkgImports:      crossPkgImports,
+			OptionalLibrary:      nsCfg.OptionalLibrary,
+			BuildConstraint:      nsCfg.BuildConstraint,
 			Aliases:              aliases[fn],
 			Callbacks:            callbacks[fn],
 			Records:              records[fn],
@@ -627,7 +645,7 @@ func scanCrossPackageRefs(
 			needsTypes = true
 		}
 		// Detect any "pkg." references for cross-package imports
-		for _, pkg := range []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk"} {
+		for _, pkg := range []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk", "gtk"} {
 			if strings.Contains(s, pkg+".") {
 				crossPkgs[pkg] = true
 			}
