@@ -111,6 +111,12 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           }
      }
      {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
+     }
+     {{end}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
      defer core.GFreeNullable({{.Name}}Ptr)
@@ -141,6 +147,12 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
                {{.Name}}Ref = purego.NewCallback(fcb)
                {{if $NotGLib}}glib.{{end}}SaveCallbackWithClosure({{.Name}}Ptr, {{.Name}}Ref, {{.Name}})
           }
+     }
+     {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
      }
      {{end}}
      {{range .Args.NullableStrings}}
@@ -228,6 +240,12 @@ func (x *{{.Name}}Base) SetGoPointer(ptr uintptr) {
 {{.Doc}}
 func (x *{{$outer.Name}}Base) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
+     }
+     {{end}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
      defer core.GFreeNullable({{.Name}}Ptr)
@@ -383,6 +401,12 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           }
      }
      {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
+     }
+     {{end}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
      defer core.GFreeNullable({{.Name}}Ptr)
@@ -442,6 +466,12 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           }
      }
      {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
+     }
+     {{end}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
      defer core.GFreeNullable({{.Name}}Ptr)
@@ -472,6 +502,12 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
                {{.Name}}Ref = purego.NewCallback(fcb)
                {{if $NotGLib}}glib.{{end}}SaveCallbackWithClosure({{.Name}}Ptr, {{.Name}}Ref, {{.Name}})
           }
+     }
+     {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
      }
      {{end}}
      {{range .Args.NullableStrings}}
@@ -585,6 +621,12 @@ func (x *{{$outer.Name}}) Connect{{.Name}}WithDetail(detail string, cb *func({{$
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
+     }
+     {{end}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
      defer core.GFreeNullable({{.Name}}Ptr)
@@ -615,6 +657,12 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
                {{.Name}}Ref = purego.NewCallback(fcb)
                {{if $NotGLib}}glib.{{end}}SaveCallbackWithClosure({{.Name}}Ptr, {{.Name}}Ref, {{.Name}})
           }
+     }
+     {{end}}
+     {{range .Args.NullableClasses}}
+     var {{.Name}}Ptr uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr = {{.Name}}.GoPointer()
      }
      {{end}}
      {{range .Args.NullableStrings}}

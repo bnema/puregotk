@@ -280,6 +280,11 @@ func (t *Type) Template(ns string, kinds KindMap, array bool) string {
 	kind := kinds.Kind(ns, _type)
 	// find the total pointer count
 	count := strings.Count(t.CType, "*")
+	// GObject classes are always passed by pointer. When c:type is omitted
+	// (common for signal parameters), infer a single pointer level.
+	if t.CType == "" && count == 0 && kind == ClassesType {
+		count = 1
+	}
 	w := strings.Trim(t.CType, "*")
 	if w == "gpointer" {
 		count += 1

@@ -47,6 +47,20 @@ type NullableStringParam struct {
 	Name string
 }
 
+// NullableClassParam holds metadata for nullable class/interface parameters
+// that need a nil-safe GoPointer() call.
+type NullableClassParam struct {
+	Name string
+}
+
+// SignalClassParam tracks a signal/callback parameter that is a class type.
+// The Pure type stays uintptr (purego ABI), but the API type is the proper
+// Go class type and the signal closure constructs the Go struct from the pointer.
+type SignalClassParam struct {
+	Index  int
+	GoType string // qualified Go type without pointer, e.g. "gdk.Monitor"
+}
+
 // GErrorParam tracks a signal/callback parameter that is a GLib.Error record.
 // The Pure type stays uintptr (purego ABI), but the API type is *glib.Error
 // and the signal closure converts via unsafe.Pointer.
@@ -70,6 +84,12 @@ type funcArgsTemplate struct {
 
 	// NullableStrings tracks nullable string parameters that need temporary C strings
 	NullableStrings []NullableStringParam
+
+	// NullableClasses tracks nullable class/interface parameters that need nil checks
+	NullableClasses []NullableClassParam
+
+	// SignalClasses tracks class-type signal parameters for struct construction
+	SignalClasses []SignalClassParam
 
 	// GErrors tracks GError record parameters in signal/callback contexts
 	// so PuregoSignalCall can emit unsafe.Pointer casts.
@@ -152,6 +172,10 @@ func (f funcArgsTemplate) PuregoSignalCall() []string {
 	}
 	for _, ge := range f.GErrors {
 		out[ge.Index] = "(*" + ge.GoType + ")(" + f.Pure.Names[ge.Index] + ")"
+	}
+	for _, sc := range f.SignalClasses {
+		name := f.Pure.Names[sc.Index]
+		out[sc.Index] = fmt.Sprintf("func() *%s { cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, sc.GoType, name)
 	}
 	return out
 }
@@ -282,7 +306,12 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
 			} else if stars == 1 {
-				c = n + ".GoPointer()"
+				if ctx == ArgsFromGoToC && nullable {
+					c = n + "Ptr"
+					f.NullableClasses = append(f.NullableClasses, NullableClassParam{Name: n})
+				} else {
+					c = n + ".GoPointer()"
+				}
 			}
 			cRef = c
 		case InterfacesType:
@@ -293,7 +322,12 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
 			} else if stars == 1 {
-				c = n + ".GoPointer()"
+				if ctx == ArgsFromGoToC && nullable {
+					c = n + "Ptr"
+					f.NullableClasses = append(f.NullableClasses, NullableClassParam{Name: n})
+				} else {
+					c = n + ".GoPointer()"
+				}
 			}
 			cRef = c
 		default:
@@ -432,6 +466,20 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 			Index:  pureIdx,
 			GoType: gerrorGoType,
 		})
+	}
+
+	// For signal/callback contexts (C→Go), class-type parameters arrive as
+	// uintptr at the purego ABI level but should be presented as typed structs
+	// in the user callback. Track them so PuregoSignalCall emits construction.
+	if ctx == ArgsFromCToGo && !isOut && kind == ClassesType {
+		pureIdx := len(f.Pure.Types) - 1
+		apiType := f.API.Types[len(f.API.Types)-1]
+		if f.Pure.Types[pureIdx] == "uintptr" && apiType != "uintptr" {
+			f.SignalClasses = append(f.SignalClasses, SignalClassParam{
+				Index:  pureIdx,
+				GoType: strings.TrimPrefix(apiType, "*"),
+			})
+		}
 	}
 
 	// Upstream purego does not support direct array parameters (reflect.Array kind).
