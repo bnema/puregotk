@@ -101,7 +101,7 @@ func RemoveSnakePrefixMulti(s, camelPrefix, fallbackNs string) string {
 		return RemoveSnakePrefix(s, fallbackNs)
 	}
 
-	sParts := strings.Split(strings.ToLower(s), "_")
+	sParts := strings.Split(s, "_")
 
 	if len(sParts) <= len(prefixParts) {
 		return s

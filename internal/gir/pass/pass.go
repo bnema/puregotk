@@ -31,6 +31,8 @@ var namespaceConfigs = map[string]NamespaceConfig{
 	"Gtk4SessionLock": {PackageName: "sessionlock", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
 }
 
+var crossPkgNames = []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk", "gtk"}
+
 // New creates a new pass struct by parsing gir files in the string slice
 // This pass object will then be used to go over these files multiple times up until we have the full info to convert it to go files
 func New(files []string) (*Pass, error) {
@@ -99,17 +101,21 @@ func (p *Pass) First() {
 	}
 }
 
-// filterSentinelEnumMembers returns a copy of the enum with sentinel members
-// (like *_ENTRY_NUMBER) removed. These are documented as "should not be used".
+// filterSentinelEnumMembers removes _ENTRY_NUMBER sentinel values that
+// gtk4-layer-shell uses as enum entry counts — not meant for public use.
 func filterSentinelEnumMembers(members []types.Member) []types.Member {
-	filtered := make([]types.Member, 0, len(members))
 	for _, m := range members {
 		if strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
-			continue
+			filtered := make([]types.Member, 0, len(members)-1)
+			for _, m := range members {
+				if !strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
+					filtered = append(filtered, m)
+				}
+			}
+			return filtered
 		}
-		filtered = append(filtered, m)
 	}
-	return filtered
+	return members
 }
 
 func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string) {
@@ -660,7 +666,7 @@ func scanCrossPackageRefs(
 			needsTypes = true
 		}
 		// Detect any "pkg." references for cross-package imports
-		for _, pkg := range []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk", "gtk"} {
+		for _, pkg := range crossPkgNames {
 			if strings.Contains(s, pkg+".") {
 				crossPkgs[pkg] = true
 			}

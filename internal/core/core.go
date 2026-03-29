@@ -127,43 +127,40 @@ func findPkgConf(name string) []string {
 // go over the hardcoded paths
 // find a library name with pkg-config
 // panic if failed
-// TODO: Hardcore a library shared object with linker -X flag
-// This is useful for packaging
-func GetPaths(name string) []string {
-	// try to get from env var
+// tryFindPaths searches for shared library paths using the standard
+// lookup chain: env var → PUREGOTK_LIB_FOLDER → arch paths → pkg-config.
+func tryFindPaths(name string) []string {
 	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
 	if v := os.Getenv(ev); v != "" {
 		return []string{v}
 	}
 
-	// Or if a general folder is set where everywhere is located, return that
 	ep := os.Getenv("PUREGOTK_LIB_FOLDER")
 	if ep != "" {
-		g := findSos(ep, name)
-		if len(g) == 0 {
-			panic(fmt.Sprintf("Could not find lib: %s, at path: %s with env: %s", name, ep, "PUREGOTK_FOLDER"))
-		}
-		return g
+		return findSos(ep, name)
 	}
 
-	// fallback to lookup a path if no env var is found
 	gp, ok := paths[runtime.GOARCH]
 	if ok {
-		// try to loop over paths
 		for _, p := range gp {
 			g := findSos(p, name)
 			if len(g) > 0 {
 				return g
 			}
-
 		}
 	}
-	// last effort: pkg-config
-	g := findPkgConf(name)
+
+	return findPkgConf(name)
+}
+
+// TODO: Hardcore a library shared object with linker -X flag
+// This is useful for packaging
+func GetPaths(name string) []string {
+	g := tryFindPaths(name)
 	if len(g) > 0 {
 		return g
 	}
-
+	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
 	panic(fmt.Sprintf("Path for library: %s not found. Please set the path to this library shared object file manually with env variable: %s or PUREGOTK_LIB_FOLDER. Or make sure pkg-config is setup correctly", strings.ToLower(name), ev))
 }
 
@@ -171,36 +168,7 @@ func GetPaths(name string) []string {
 // panicking when the library cannot be found. Use this for optional
 // libraries that may not be installed.
 func TryGetPaths(name string) []string {
-	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
-	if v := os.Getenv(ev); v != "" {
-		return []string{v}
-	}
-
-	ep := os.Getenv("PUREGOTK_LIB_FOLDER")
-	if ep != "" {
-		g := findSos(ep, name)
-		if len(g) > 0 {
-			return g
-		}
-		return []string{}
-	}
-
-	gp, ok := paths[runtime.GOARCH]
-	if ok {
-		for _, p := range gp {
-			g := findSos(p, name)
-			if len(g) > 0 {
-				return g
-			}
-		}
-	}
-
-	g := findPkgConf(name)
-	if len(g) > 0 {
-		return g
-	}
-
-	return []string{}
+	return tryFindPaths(name)
 }
 
 // hasSuffix tests whether the string s ends with suffix.
