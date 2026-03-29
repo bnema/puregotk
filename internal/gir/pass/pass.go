@@ -99,6 +99,19 @@ func (p *Pass) First() {
 	}
 }
 
+// filterSentinelEnumMembers returns a copy of the enum with sentinel members
+// (like *_ENTRY_NUMBER) removed. These are documented as "should not be used".
+func filterSentinelEnumMembers(members []types.Member) []types.Member {
+	filtered := make([]types.Member, 0, len(members))
+	for _, m := range members {
+		if strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
+			continue
+		}
+		filtered = append(filtered, m)
+	}
+	return filtered
+}
+
 func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string) {
 	ns := r.Namespaces[0]
 
@@ -106,6 +119,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	enums := make(map[string][]types.EnumTemplate)
 	var files []string
 	for _, el := range ns.Bitfields {
+		el.Members = filterSentinelEnumMembers(el.Members)
 		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
 		fn := el.FilenameSafe()
 		files = append(files, fn)
@@ -113,6 +127,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	}
 
 	for _, el := range ns.Enums {
+		el.Members = filterSentinelEnumMembers(el.Members)
 		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
 		fn := el.FilenameSafe()
 		files = append(files, fn)
