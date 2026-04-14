@@ -4,7 +4,11 @@ import (
 	"reflect"
 	"unsafe"
 
+	"github.com/ebitengine/purego"
+
+	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
+	"github.com/bnema/puregotk/v4/gobject/types"
 )
 
 type Ptr interface {
@@ -55,6 +59,40 @@ func (o Object) ConnectSignal(signal string, cb *func()) uint {
 func (o Object) DisconnectSignal(handler uint) {
 	SignalHandlerDisconnect(&o, handler)
 	glib.RemoveCallbackByHandler(handler)
+}
+
+var xTypeCheckInstanceIsAPtr func(uintptr, types.GType) bool
+
+// TypeCheckInstanceIsAPtr is like TypeCheckInstanceIsA but accepts a pointer
+// returned by GoPointer, avoiding a uintptr-to-unsafe.Pointer conversion in
+// downstream code. It returns false for a nil internal pointer.
+func TypeCheckInstanceIsAPtr(ptr uintptr, ifaceType types.GType) bool {
+	if ptr == 0 {
+		return false
+	}
+
+	return xTypeCheckInstanceIsAPtr(ptr, ifaceType)
+}
+
+// IsA reports whether o is an instance of t, one of its subtypes, or an
+// implementation of interface type t.
+func (o *Object) IsA(t types.GType) bool {
+	return TypeCheckInstanceIsAPtr(o.GoPointer(), t)
+}
+
+func init() {
+	core.SetPackageName("GOBJECT", "gobject-2.0")
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
+	}
+
+	core.PuregoSafeRegister(&xTypeCheckInstanceIsAPtr, libs, "g_type_check_instance_is_a")
 }
 
 // types
