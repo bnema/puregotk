@@ -777,7 +777,7 @@ func (x *Task) HadError() bool {
 	return cret
 }
 
-var xTaskPropagateBoolean func(uintptr) bool
+var xTaskPropagateBoolean func(uintptr, **glib.Error) bool
 
 // Gets the result of @task as a #gboolean.
 //
@@ -789,14 +789,14 @@ var xTaskPropagateBoolean func(uintptr) bool
 func (x *Task) PropagateBoolean() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xTaskPropagateBoolean(x.GoPointer())
+	cret := xTaskPropagateBoolean(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xTaskPropagateInt func(uintptr) int
+var xTaskPropagateInt func(uintptr, **glib.Error) int
 
 // Gets the result of @task as an integer (#gssize).
 //
@@ -808,14 +808,14 @@ var xTaskPropagateInt func(uintptr) int
 func (x *Task) PropagateInt() (int, error) {
 	var cerr *glib.Error
 
-	cret := xTaskPropagateInt(x.GoPointer())
+	cret := xTaskPropagateInt(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xTaskPropagatePointer func(uintptr) uintptr
+var xTaskPropagatePointer func(uintptr, **glib.Error) uintptr
 
 // Gets the result of @task as a pointer, and transfers ownership
 // of that value to the caller.
@@ -828,7 +828,7 @@ var xTaskPropagatePointer func(uintptr) uintptr
 func (x *Task) PropagatePointer() (uintptr, error) {
 	var cerr *glib.Error
 
-	cret := xTaskPropagatePointer(x.GoPointer())
+	cret := xTaskPropagatePointer(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1214,7 +1214,7 @@ func (x *Task) IsTagged(SourceTagVar uintptr) bool {
 func (x *Task) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

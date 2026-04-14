@@ -236,7 +236,7 @@ func (x *ContentSerializer) IsTagged(SourceTagVar uintptr) bool {
 func (x *ContentSerializer) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

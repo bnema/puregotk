@@ -96,7 +96,7 @@ func NewCicpParams() *CicpParams {
 	return cls
 }
 
-var xCicpParamsBuildColorState func(uintptr) *ColorState
+var xCicpParamsBuildColorState func(uintptr, **glib.Error) *ColorState
 
 // Creates a new `GdkColorState` object for the cicp parameters in @self.
 //
@@ -106,7 +106,7 @@ var xCicpParamsBuildColorState func(uintptr) *ColorState
 func (x *CicpParams) BuildColorState() (*ColorState, error) {
 	var cerr *glib.Error
 
-	cret := xCicpParamsBuildColorState(x.GoPointer())
+	cret := xCicpParamsBuildColorState(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

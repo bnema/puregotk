@@ -368,7 +368,7 @@ func (x *SimpleAsyncResult) GetSourceTag() uintptr {
 	return cret
 }
 
-var xSimpleAsyncResultPropagateError func(uintptr) bool
+var xSimpleAsyncResultPropagateError func(uintptr, **glib.Error) bool
 
 // Propagates an error from within the simple asynchronous result to
 // a given destination.
@@ -379,7 +379,7 @@ var xSimpleAsyncResultPropagateError func(uintptr) bool
 func (x *SimpleAsyncResult) PropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSimpleAsyncResultPropagateError(x.GoPointer())
+	cret := xSimpleAsyncResultPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -533,7 +533,7 @@ func (x *SimpleAsyncResult) IsTagged(SourceTagVar uintptr) bool {
 func (x *SimpleAsyncResult) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

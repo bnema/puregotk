@@ -673,7 +673,7 @@ func (x *PrintOperation) GetEmbedPageSetup() bool {
 	return cret
 }
 
-var xPrintOperationGetError func(uintptr)
+var xPrintOperationGetError func(uintptr, **glib.Error)
 
 // Call this when the result of a print operation is
 // %GTK_PRINT_OPERATION_RESULT_ERROR.
@@ -686,7 +686,7 @@ var xPrintOperationGetError func(uintptr)
 func (x *PrintOperation) GetError() error {
 	var cerr *glib.Error
 
-	xPrintOperationGetError(x.GoPointer())
+	xPrintOperationGetError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return nil
 	}

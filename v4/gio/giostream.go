@@ -622,7 +622,7 @@ func (x *IOStream) IsClosed() bool {
 	return cret
 }
 
-var xIOStreamSetPending func(uintptr) bool
+var xIOStreamSetPending func(uintptr, **glib.Error) bool
 
 // Sets @stream to have actions pending. If the pending flag is
 // already set or @stream is closed, it will return %FALSE and set
@@ -630,7 +630,7 @@ var xIOStreamSetPending func(uintptr) bool
 func (x *IOStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xIOStreamSetPending(x.GoPointer())
+	cret := xIOStreamSetPending(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

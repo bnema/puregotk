@@ -102,7 +102,7 @@ func (x *Credentials) GetNative(NativeTypeVar CredentialsType) uintptr {
 	return cret
 }
 
-var xCredentialsGetUnixPid func(uintptr) int
+var xCredentialsGetUnixPid func(uintptr, **glib.Error) int
 
 // Tries to get the UNIX process identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -113,14 +113,14 @@ var xCredentialsGetUnixPid func(uintptr) int
 func (x *Credentials) GetUnixPid() (int, error) {
 	var cerr *glib.Error
 
-	cret := xCredentialsGetUnixPid(x.GoPointer())
+	cret := xCredentialsGetUnixPid(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xCredentialsGetUnixUser func(uintptr) uint
+var xCredentialsGetUnixUser func(uintptr, **glib.Error) uint
 
 // Tries to get the UNIX user identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -135,7 +135,7 @@ var xCredentialsGetUnixUser func(uintptr) uint
 func (x *Credentials) GetUnixUser() (uint, error) {
 	var cerr *glib.Error
 
-	cret := xCredentialsGetUnixUser(x.GoPointer())
+	cret := xCredentialsGetUnixUser(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

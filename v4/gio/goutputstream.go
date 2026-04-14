@@ -733,7 +733,7 @@ func (x *OutputStream) Printf(BytesWrittenVar *uint, CancellableVar *Cancellable
 	return cret
 }
 
-var xOutputStreamSetPending func(uintptr) bool
+var xOutputStreamSetPending func(uintptr, **glib.Error) bool
 
 // Sets @stream to have actions pending. If the pending flag is
 // already set or @stream is closed, it will return %FALSE and set
@@ -741,7 +741,7 @@ var xOutputStreamSetPending func(uintptr) bool
 func (x *OutputStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xOutputStreamSetPending(x.GoPointer())
+	cret := xOutputStreamSetPending(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

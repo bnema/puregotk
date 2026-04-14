@@ -442,7 +442,7 @@ func (x *MatchInfo) Matches() bool {
 	return cret
 }
 
-var xMatchInfoNext func(uintptr) bool
+var xMatchInfoNext func(uintptr, **Error) bool
 
 // Scans for the next match using the same parameters of the previous
 // call to g_regex_match_full() or g_regex_match() that returned
@@ -453,7 +453,7 @@ var xMatchInfoNext func(uintptr) bool
 func (x *MatchInfo) Next() (bool, error) {
 	var cerr *Error
 
-	cret := xMatchInfoNext(x.GoPointer())
+	cret := xMatchInfoNext(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

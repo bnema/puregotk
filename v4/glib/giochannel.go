@@ -160,13 +160,13 @@ func (x *IOChannel) Close() {
 	xIOChannelClose(x.GoPointer())
 }
 
-var xIOChannelFlush func(uintptr) IOStatus
+var xIOChannelFlush func(uintptr, **Error) IOStatus
 
 // Flushes the write buffer for the GIOChannel.
 func (x *IOChannel) Flush() (IOStatus, error) {
 	var cerr *Error
 
-	cret := xIOChannelFlush(x.GoPointer())
+	cret := xIOChannelFlush(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

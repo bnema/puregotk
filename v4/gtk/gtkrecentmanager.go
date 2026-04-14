@@ -676,13 +676,13 @@ func (x *RecentManager) MoveItem(UriVar string, NewUriVar string) (bool, error) 
 	return cret, cerr
 }
 
-var xRecentManagerPurgeItems func(uintptr) int32
+var xRecentManagerPurgeItems func(uintptr, **glib.Error) int32
 
 // Purges every item from the recently used resources list.
 func (x *RecentManager) PurgeItems() (int32, error) {
 	var cerr *glib.Error
 
-	cret := xRecentManagerPurgeItems(x.GoPointer())
+	cret := xRecentManagerPurgeItems(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

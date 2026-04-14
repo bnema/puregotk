@@ -58,7 +58,7 @@ func (x *Display) Close() {
 	xDisplayClose(x.GoPointer())
 }
 
-var xDisplayCreateGlContext func(uintptr) uintptr
+var xDisplayCreateGlContext func(uintptr, **glib.Error) uintptr
 
 // Creates a new `GdkGLContext` for the `GdkDisplay`.
 //
@@ -73,7 +73,7 @@ func (x *Display) CreateGlContext() (*GLContext, error) {
 	var cls *GLContext
 	var cerr *glib.Error
 
-	cret := xDisplayCreateGlContext(x.GoPointer())
+	cret := xDisplayCreateGlContext(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -371,7 +371,7 @@ func (x *Display) NotifyStartupComplete(StartupIdVar string) {
 	xDisplayNotifyStartupComplete(x.GoPointer(), StartupIdVar)
 }
 
-var xDisplayPrepareGl func(uintptr) bool
+var xDisplayPrepareGl func(uintptr, **glib.Error) bool
 
 // Checks that OpenGL is available for @self and ensures that it is
 // properly initialized.
@@ -390,7 +390,7 @@ var xDisplayPrepareGl func(uintptr) bool
 func (x *Display) PrepareGl() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDisplayPrepareGl(x.GoPointer())
+	cret := xDisplayPrepareGl(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

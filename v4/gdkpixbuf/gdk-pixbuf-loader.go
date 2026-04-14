@@ -266,7 +266,7 @@ func NewPixbufLoaderWithType(ImageTypeVar string) (*PixbufLoader, error) {
 	return cls, cerr
 }
 
-var xPixbufLoaderClose func(uintptr) bool
+var xPixbufLoaderClose func(uintptr, **glib.Error) bool
 
 // Informs a pixbuf loader that no further writes with
 // gdk_pixbuf_loader_write() will occur, so that it can free its
@@ -286,7 +286,7 @@ var xPixbufLoaderClose func(uintptr) bool
 func (x *PixbufLoader) Close() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPixbufLoaderClose(x.GoPointer())
+	cret := xPixbufLoaderClose(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

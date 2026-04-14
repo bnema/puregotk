@@ -100,7 +100,7 @@ func NewDBusMessageSignal(PathVar string, InterfaceVar string, SignalVar string)
 	return cls
 }
 
-var xDBusMessageCopy func(uintptr) uintptr
+var xDBusMessageCopy func(uintptr, **glib.Error) uintptr
 
 // Copies @message. The copy is a deep copy and the returned
 // #GDBusMessage is completely identical except that it is guaranteed
@@ -112,7 +112,7 @@ func (x *DBusMessage) Copy() (*DBusMessage, error) {
 	var cls *DBusMessage
 	var cerr *glib.Error
 
-	cret := xDBusMessageCopy(x.GoPointer())
+	cret := xDBusMessageCopy(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -577,7 +577,7 @@ func (x *DBusMessage) ToBlob(OutSizeVar *uint, CapabilitiesVar DBusCapabilityFla
 	return cret, cerr
 }
 
-var xDBusMessageToGerror func(uintptr) bool
+var xDBusMessageToGerror func(uintptr, **glib.Error) bool
 
 // If @message is not of type %G_DBUS_MESSAGE_TYPE_ERROR does
 // nothing and returns %FALSE.
@@ -589,7 +589,7 @@ var xDBusMessageToGerror func(uintptr) bool
 func (x *DBusMessage) ToGerror() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusMessageToGerror(x.GoPointer())
+	cret := xDBusMessageToGerror(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

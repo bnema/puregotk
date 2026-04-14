@@ -254,14 +254,14 @@ func (x *SocketConnection) ConnectFinish(ResultVar AsyncResult) (bool, error) {
 	return cret, cerr
 }
 
-var xSocketConnectionGetLocalAddress func(uintptr) uintptr
+var xSocketConnectionGetLocalAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the local address of a socket connection.
 func (x *SocketConnection) GetLocalAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketConnectionGetLocalAddress(x.GoPointer())
+	cret := xSocketConnectionGetLocalAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -274,7 +274,7 @@ func (x *SocketConnection) GetLocalAddress() (*SocketAddress, error) {
 	return cls, cerr
 }
 
-var xSocketConnectionGetRemoteAddress func(uintptr) uintptr
+var xSocketConnectionGetRemoteAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the remote address of a socket connection.
 //
@@ -288,7 +288,7 @@ func (x *SocketConnection) GetRemoteAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketConnectionGetRemoteAddress(x.GoPointer())
+	cret := xSocketConnectionGetRemoteAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

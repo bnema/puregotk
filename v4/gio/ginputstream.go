@@ -713,7 +713,7 @@ func (x *InputStream) ReadFinish(ResultVar AsyncResult) (int, error) {
 	return cret, cerr
 }
 
-var xInputStreamSetPending func(uintptr) bool
+var xInputStreamSetPending func(uintptr, **glib.Error) bool
 
 // Sets @stream to have actions pending. If the pending flag is
 // already set or @stream is closed, it will return %FALSE and set
@@ -721,7 +721,7 @@ var xInputStreamSetPending func(uintptr) bool
 func (x *InputStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xInputStreamSetPending(x.GoPointer())
+	cret := xInputStreamSetPending(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

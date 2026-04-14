@@ -41,7 +41,7 @@ func NewMarkupParseContext(ParserVar *MarkupParser, FlagsVar MarkupParseFlags, U
 	return cret
 }
 
-var xMarkupParseContextEndParse func(uintptr) bool
+var xMarkupParseContextEndParse func(uintptr, **Error) bool
 
 // Signals to the #GMarkupParseContext that all data has been
 // fed into the parse context with g_markup_parse_context_parse().
@@ -51,7 +51,7 @@ var xMarkupParseContextEndParse func(uintptr) bool
 func (x *MarkupParseContext) EndParse() (bool, error) {
 	var cerr *Error
 
-	cret := xMarkupParseContextEndParse(x.GoPointer())
+	cret := xMarkupParseContextEndParse(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

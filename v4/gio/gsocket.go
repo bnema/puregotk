@@ -496,7 +496,7 @@ func (x *Socket) Bind(AddressVar *SocketAddress, AllowReuseVar bool) (bool, erro
 	return cret, cerr
 }
 
-var xSocketCheckConnectResult func(uintptr) bool
+var xSocketCheckConnectResult func(uintptr, **glib.Error) bool
 
 // Checks and resets the pending connect error for the socket.
 // This is used to check for errors when g_socket_connect() is
@@ -504,14 +504,14 @@ var xSocketCheckConnectResult func(uintptr) bool
 func (x *Socket) CheckConnectResult() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketCheckConnectResult(x.GoPointer())
+	cret := xSocketCheckConnectResult(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xSocketClose func(uintptr) bool
+var xSocketClose func(uintptr, **glib.Error) bool
 
 // Closes the socket, shutting down any active connection.
 //
@@ -545,7 +545,7 @@ var xSocketClose func(uintptr) bool
 func (x *Socket) Close() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketClose(x.GoPointer())
+	cret := xSocketClose(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -736,7 +736,7 @@ func (x *Socket) GetBroadcast() bool {
 	return cret
 }
 
-var xSocketGetCredentials func(uintptr) uintptr
+var xSocketGetCredentials func(uintptr, **glib.Error) uintptr
 
 // Returns the credentials of the foreign process connected to this
 // socket, if any (e.g. it is only supported for %G_SOCKET_FAMILY_UNIX
@@ -762,7 +762,7 @@ func (x *Socket) GetCredentials() (*Credentials, error) {
 	var cls *Credentials
 	var cerr *glib.Error
 
-	cret := xSocketGetCredentials(x.GoPointer())
+	cret := xSocketGetCredentials(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -813,7 +813,7 @@ func (x *Socket) GetListenBacklog() int32 {
 	return cret
 }
 
-var xSocketGetLocalAddress func(uintptr) uintptr
+var xSocketGetLocalAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the local address of a bound socket. This is only
 // useful if the socket has been bound to a local address,
@@ -822,7 +822,7 @@ func (x *Socket) GetLocalAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketGetLocalAddress(x.GoPointer())
+	cret := xSocketGetLocalAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -888,7 +888,7 @@ func (x *Socket) GetProtocol() SocketProtocol {
 	return cret
 }
 
-var xSocketGetRemoteAddress func(uintptr) uintptr
+var xSocketGetRemoteAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the remote address of a connected socket. This is only
 // useful for connection oriented sockets that have been connected.
@@ -896,7 +896,7 @@ func (x *Socket) GetRemoteAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketGetRemoteAddress(x.GoPointer())
+	cret := xSocketGetRemoteAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1049,7 +1049,7 @@ func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar
 	return cret, cerr
 }
 
-var xSocketListen func(uintptr) bool
+var xSocketListen func(uintptr, **glib.Error) bool
 
 // Marks the socket as a server socket, i.e. a socket that is used
 // to accept incoming requests using g_socket_accept().
@@ -1062,7 +1062,7 @@ var xSocketListen func(uintptr) bool
 func (x *Socket) Listen() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListen(x.GoPointer())
+	cret := xSocketListen(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

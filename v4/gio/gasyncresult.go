@@ -275,7 +275,7 @@ func (x *AsyncResultBase) IsTagged(SourceTagVar uintptr) bool {
 func (x *AsyncResultBase) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -286,7 +286,7 @@ var (
 	XGAsyncResultGetSourceObject      func(uintptr) uintptr
 	XGAsyncResultGetUserData          func(uintptr) uintptr
 	XGAsyncResultIsTagged             func(uintptr, uintptr) bool
-	XGAsyncResultLegacyPropagateError func(uintptr) bool
+	XGAsyncResultLegacyPropagateError func(uintptr, **glib.Error) bool
 )
 
 func init() {

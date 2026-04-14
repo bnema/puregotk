@@ -181,14 +181,14 @@ func (x *PrintJob) GetStatus() PrintStatus {
 	return cret
 }
 
-var xPrintJobGetSurface func(uintptr) *cairo.Surface
+var xPrintJobGetSurface func(uintptr, **glib.Error) *cairo.Surface
 
 // Gets a cairo surface onto which the pages of
 // the print job should be rendered.
 func (x *PrintJob) GetSurface() (*cairo.Surface, error) {
 	var cerr *glib.Error
 
-	cret := xPrintJobGetSurface(x.GoPointer())
+	cret := xPrintJobGetSurface(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

@@ -251,7 +251,7 @@ func (x *GLContext) MakeCurrent() {
 	xGLContextMakeCurrent(x.GoPointer())
 }
 
-var xGLContextRealize func(uintptr) bool
+var xGLContextRealize func(uintptr, **glib.Error) bool
 
 // Realizes the given `GdkGLContext`.
 //
@@ -259,7 +259,7 @@ var xGLContextRealize func(uintptr) bool
 func (x *GLContext) Realize() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xGLContextRealize(x.GoPointer())
+	cret := xGLContextRealize(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

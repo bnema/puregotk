@@ -433,14 +433,14 @@ func (x *Cancellable) Reset() {
 	xCancellableReset(x.GoPointer())
 }
 
-var xCancellableSetErrorIfCancelled func(uintptr) bool
+var xCancellableSetErrorIfCancelled func(uintptr, **glib.Error) bool
 
 // If the @cancellable is cancelled, sets the error to notify
 // that the operation was cancelled.
 func (x *Cancellable) SetErrorIfCancelled() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xCancellableSetErrorIfCancelled(x.GoPointer())
+	cret := xCancellableSetErrorIfCancelled(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
