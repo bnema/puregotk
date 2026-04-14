@@ -4,6 +4,7 @@
 package pass
 
 import (
+	"bytes"
 	"encoding/xml"
 	"fmt"
 	"os"
@@ -12,6 +13,7 @@ import (
 
 	"codeberg.org/puregotk/puregotk/internal/gir/types"
 	"codeberg.org/puregotk/puregotk/internal/gir/util"
+	"mvdan.cc/gofumpt/format"
 )
 
 type Pass struct {
@@ -453,17 +455,23 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			Classes:         classes[fn],
 		}
 
+		var uf bytes.Buffer
+		err := gotemp.Execute(&uf, args)
+		if err != nil {
+			panic(err)
+		}
+
+		f, err := format.Source(uf.Bytes(), format.Options{})
+		if err != nil {
+			panic(err)
+		}
+
 		os.MkdirAll(fmt.Sprintf(dir+"/%s", pkgName), 0o755)
 
-		f, err := os.Create(fmt.Sprintf(dir+"/%s/%s", pkgName, fn))
+		err = os.WriteFile(fmt.Sprintf(dir+"/%s/%s", pkgName, fn), f, 0666)
 		if err != nil {
 			panic(err)
 		}
-		err = gotemp.Execute(f, args)
-		if err != nil {
-			panic(err)
-		}
-
 	}
 }
 
