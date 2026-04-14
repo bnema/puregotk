@@ -3,7 +3,8 @@ package pass
 import "codeberg.org/puregotk/puregotk/internal/gir/pass"
 
 type (
-	Pass = pass.Pass
+	Pass       = pass.Pass
+	Dependency = pass.Dependency
 )
 
 var (

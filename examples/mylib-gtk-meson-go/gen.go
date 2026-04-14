@@ -17,22 +17,15 @@ func main() {
 	dir := "."
 	os.RemoveAll(dir)
 	var girs []string
-	var localNamespaces []string
 	filepath.Walk("internal/gir/spec", func(path string, f os.FileInfo, err error) error {
 		if !strings.HasSuffix(path, ".gir") {
 			return nil
 		}
 		girs = append(girs, path)
-
-		// Extract namespace from filename (e.g., "MyLibMeson-1.0.gir" -> "MyLibMeson")
-		base := filepath.Base(path)
-		if idx := strings.Index(base, "-"); idx != -1 {
-			localNamespaces = append(localNamespaces, base[:idx])
-		}
-
 		return nil
 	})
 
+	// Locate puregotk dependency and collect its GIR files
 	cmd := exec.Command("go", "list", "-m", "-f", "{{.Dir}}", "codeberg.org/puregotk/puregotk")
 	output, err := cmd.Output()
 	if err != nil {
@@ -40,14 +33,20 @@ func main() {
 	}
 	puregotk := strings.TrimSpace(string(output))
 
+	var puregotkGirs []string
 	filepath.Walk(filepath.Join(puregotk, "internal/gir/spec"), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".gir") {
-			girs = append(girs, path)
+			puregotkGirs = append(puregotkGirs, path)
 		}
 		return nil
 	})
 
-	p, err := pass.New(girs)
+	p, err := pass.New(girs, "codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go",
+		pass.Dependency{
+			Module: "codeberg.org/puregotk/puregotk/v4",
+			Files:  puregotkGirs,
+		},
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -72,18 +71,7 @@ func main() {
 	}
 
 	// Only generate code for local namespaces
-	original := p.Parsed
-	p.Parsed = nil
-	for _, repo := range original {
-		for _, ns := range repo.Namespaces {
-			for _, localNs := range localNamespaces {
-				if ns.Name == localNs {
-					p.Parsed = append(p.Parsed, repo)
-					break
-				}
-			}
-		}
-	}
+	p.Parsed = p.Parsed[:len(girs)]
 
 	// Write go files by making the second pass
 	p.Second(dir, gotemp)

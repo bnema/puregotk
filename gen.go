@@ -23,7 +23,8 @@ func main() {
 		girs = append(girs, path)
 		return nil
 	})
-	p, err := pass.New(girs)
+
+	p, err := pass.New(girs, "codeberg.org/puregotk/puregotk/v4")
 	if err != nil {
 		panic(err)
 	}

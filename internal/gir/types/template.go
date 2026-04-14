@@ -29,7 +29,7 @@ type funcArgsTemplate struct {
 	API argsTemplate
 }
 
-func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool) {
+func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, imps *ImportSet) {
 	c := n
 	stars := strings.Count(t, "*")
 	gobjectNs := "gobject."
@@ -56,6 +56,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 			} else {
 				c = fmt.Sprintf("%sNewCallback(%s)", glibNs, n)
 			}
+			imps.AddPkg("glib")
 			t = "*" + t
 		case ClassesType:
 			if stars == 0 {
@@ -63,6 +64,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				t = "uintptr"
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
+				imps.AddPkg("gobject")
 			} else if stars == 1 {
 				c = n + ".GoPointer()"
 			}
@@ -73,6 +75,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				t = "uintptr"
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
+				imps.AddPkg("gobject")
 			} else if stars == 1 {
 				c = n + ".GoPointer()"
 			}
@@ -88,6 +91,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	f.API.Types = append(f.API.Types, t)
 	f.API.Call = append(f.API.Call, c)
 	f.API.Full = append(f.API.Full, n+" "+t)
+	imps.TrackGoType(t)
 }
 
 func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
@@ -142,14 +146,16 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
 	f.Pure.Full = append(f.Pure.Full, n+" "+t)
 }
 
+// baseType returns strips prefixes from a Go type (e.g. `*glib.Error` → `glib`, `[4]gdk.RGBA` → `gdk`).
+func baseTypeName(typeName string) string {
+	return strings.TrimLeftFunc(typeName, func(r rune) bool {
+		return r == '*' || r == '[' || r == ']' || (r >= '0' && r <= '9')
+	})
+}
+
 // isGoPrimitive checks if a scalar or vector type name is a Go primitive type
 func isGoPrimitive(typeName string) bool {
-	baseType := strings.TrimLeftFunc(
-		typeName,
-		func(r rune) bool {
-			return r == '*' || r == '[' || r == ']' || (r >= '0' && r <= '9') // Strip pointer, slice and array prefixes
-		},
-	)
+	baseType := baseTypeName(typeName)
 
 	for _, goType := range convList {
 		if goType == baseType {
@@ -160,7 +166,7 @@ func isGoPrimitive(typeName string) bool {
 	return false
 }
 
-func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap) {
+func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, imps *ImportSet) {
 	// get the lookup namespace
 	// as if the interface namespace is non-empty
 	// means we can also lookup in the namespace of the interface
@@ -186,14 +192,15 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 	isOut := p.Direction == "out"
 
-	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut)
+	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, imps)
 	f.AddPure(goType, varName, kind, isOut)
 }
 
-func (f *funcArgsTemplate) AddThrows(ns string) {
+func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {
 	f.API.Call = append(f.API.Call, "&cerr")
 	if strings.ToLower(ns) != "glib" {
 		f.Pure.Types = append(f.Pure.Types, "**glib.Error")
+		imps.AddPkg("glib")
 	} else {
 		f.Pure.Types = append(f.Pure.Types, "**Error")
 	}

@@ -674,15 +674,15 @@ func (p *Parameter) VarName() string {
 	return snaked + "Var"
 }
 
-func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool) funcArgsTemplate {
+func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool, imps *ImportSet) funcArgsTemplate {
 	args := funcArgsTemplate{}
 	if p != nil {
 		for _, par := range p.Parameters {
-			args.Add(par, ifacens, ns, kinds)
+			args.Add(par, ifacens, ns, kinds, imps)
 		}
 	}
 	if throws {
-		args.AddThrows(ns)
+		args.AddThrows(ns, imps)
 	}
 	return args
 }
@@ -734,12 +734,34 @@ func (p Property) IsReadable() bool {
 	return p.Readable == nil || *p.Readable
 }
 
-func (p *Property) Template(ns string, kinds KindMap) PropertyTemplate {
+func (p *Property) Template(ns string, kinds KindMap, imps *ImportSet) PropertyTemplate {
 	var (
 		goType                           = p.AnyType.Translate(ns, kinds)
 		cName                            = p.Name
 		gvalueType, setMethod, getMethod = mapGoTypeToGValue(goType)
 	)
+
+	if gvalueType != "" {
+		imps.AddPkg("gobject")
+
+		switch gvalueType {
+		case "BoxedStrv":
+			if p.Writable {
+				imps.AddPkg("glib")
+			}
+
+			imps.AddCore()
+			imps.AddUnsafe()
+
+		case "BoxedByteArray", "BoxedPtrArray":
+			if p.Writable {
+				imps.AddPkg("glib")
+			}
+
+			imps.AddCore()
+			imps.AddUnsafe()
+		}
+	}
 
 	return PropertyTemplate{
 		Doc:        p.Doc.StringSafe(),
@@ -829,7 +851,7 @@ type ReturnValue struct {
 	AnyType
 }
 
-func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool) funcRetTemplate {
+func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool, imps *ImportSet) funcRetTemplate {
 	val := r.AnyType.Translate(ns, kinds)
 	raw := val
 	class := false
@@ -855,10 +877,17 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 			class = false
 			val = "uintptr"
 		}
+		imps.AddPkg(ins)
+		if r.TransferOwnership.TransferOwnership == "none" {
+			imps.AddPkg("gobject")
+		}
 	case InterfacesType:
 		raw = "uintptr"
 		val += "Base"
 		class = true
+		if r.TransferOwnership.TransferOwnership == "none" {
+			imps.AddPkg("gobject")
+		}
 	// callback returns should always be uintptr
 	// I needed this for glib.LogSetDefaultHandler
 	// Otherwise I got 'panic: reflect.MakeFunc: value of type *glib.LogFunc is not assignable to type glib.LogFunc'
@@ -872,6 +901,8 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 			val = "uintptr"
 		}
 	}
+	imps.TrackGoType(val)
+	imps.TrackGoType(raw)
 	return funcRetTemplate{
 		Raw:     raw,
 		Value:   val,

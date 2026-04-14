@@ -3,36 +3,25 @@ package {{.PkgName}}
 
 {{ $NotGObject := ne .PkgName "gobject" }}
 {{ $NotGLib := ne .PkgName "glib" }}
-{{ $HasSignals := false }}
-{{range .Classes -}}
-  {{if .Signals}}
-    {{ $HasSignals = true }}
-  {{end}}
-{{end}}
-{{ $NeedsUnsafe := or .Records $HasSignals }}
-{{ $NeedsPurego := or .NeedsInit $HasSignals }}
-{{ $AnyImports := or .NeedsInit .Records $HasSignals }}
 
-{{if $AnyImports}}
+{{if .Imports}}
+{{- if eq (len .Imports) 1}}
+import "{{index .Imports 0}}"
+{{- else}}
 import (
-{{- if $NeedsUnsafe}}
-	"unsafe"
-{{- end}}
-{{- if .Records}}
-	"structs"
-{{- end}}
-{{- if $NeedsPurego}}
-	"codeberg.org/puregotk/purego"
-{{- end}}
-{{- if .NeedsInit}}
-	"codeberg.org/puregotk/puregotk/pkg/core"
+{{- range .Imports}}
+{{- if .}}
+	"{{.}}"
+{{- else}}
+{{end}}
 {{- end}}
 )
+{{- end}}
 {{end}}
 
 {{$outer := .}}
 
-{{range .Callbacks -}}
+{{range .Callbacks}}
 {{.Doc}}
 type {{.Name}} func({{ conv .Args.Pure.Types }}) {{.Ret.Raw}}
 {{end}}
