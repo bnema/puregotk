@@ -675,16 +675,11 @@ func (p *Parameter) VarName() string {
 }
 
 func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool) funcArgsTemplate {
-	if p == nil {
-		return funcArgsTemplate{}
-	}
-	params := p.Parameters
-	if len(params) == 0 {
-		return funcArgsTemplate{}
-	}
 	args := funcArgsTemplate{}
-	for _, par := range params {
-		args.Add(par, ifacens, ns, kinds)
+	if p != nil {
+		for _, par := range p.Parameters {
+			args.Add(par, ifacens, ns, kinds)
+		}
 	}
 	if throws {
 		args.AddThrows(ns)
