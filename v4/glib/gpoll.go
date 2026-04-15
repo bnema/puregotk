@@ -57,7 +57,6 @@ var xPoll func(*PollFD, uint, int) int
 // #GPollFDs with g_io_channel_win32_make_pollfd().
 func Poll(FdsVar *PollFD, NfdsVar uint, TimeoutVar int) int {
 	cret := xPoll(FdsVar, NfdsVar, TimeoutVar)
-
 	return cret
 }
 

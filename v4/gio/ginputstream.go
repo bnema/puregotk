@@ -444,12 +444,7 @@ var xInputStreamClose func(uintptr, uintptr, **glib.Error) bool
 func (x *InputStream) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xInputStreamClose(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xInputStreamClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -527,12 +522,7 @@ var xInputStreamRead func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
 func (x *InputStream) Read(BufferVar *[]byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xInputStreamRead(x.GoPointer(), BufferVar, CountVar, CancellableVarPtr, &cerr)
+	cret := xInputStreamRead(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -563,12 +553,7 @@ var xInputStreamReadAll func(uintptr, *[]byte, uint, *uint, uintptr, **glib.Erro
 func (x *InputStream) ReadAll(BufferVar *[]byte, CountVar uint, BytesReadVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xInputStreamReadAll(x.GoPointer(), BufferVar, CountVar, BytesReadVar, CancellableVarPtr, &cerr)
+	cret := xInputStreamReadAll(x.GoPointer(), BufferVar, CountVar, BytesReadVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -768,12 +753,7 @@ var xInputStreamSkip func(uintptr, uint, uintptr, **glib.Error) int
 func (x *InputStream) Skip(CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xInputStreamSkip(x.GoPointer(), CountVar, CancellableVarPtr, &cerr)
+	cret := xInputStreamSkip(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

@@ -633,32 +633,7 @@ var xNewTask func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewTask(SourceObjectVar *gobject.Object, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr) *Task {
 	var cls *Task
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var SourceObjectVarPtr uintptr
-	if SourceObjectVar != nil {
-		SourceObjectVarPtr = SourceObjectVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewTask(SourceObjectVarPtr, CancellableVarPtr, CallbackVarRef, CallbackDataVar)
+	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar)
 
 	if cret == 0 {
 		return nil

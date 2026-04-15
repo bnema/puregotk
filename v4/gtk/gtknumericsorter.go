@@ -50,12 +50,7 @@ var xNewNumericSorter func(uintptr) uintptr
 func NewNumericSorter(ExpressionVar *Expression) *NumericSorter {
 	var cls *NumericSorter
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewNumericSorter(ExpressionVarPtr)
+	cret := xNewNumericSorter(ExpressionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -78,12 +78,7 @@ var xNewStringSorter func(uintptr) uintptr
 func NewStringSorter(ExpressionVar *Expression) *StringSorter {
 	var cls *StringSorter
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewStringSorter(ExpressionVarPtr)
+	cret := xNewStringSorter(ExpressionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

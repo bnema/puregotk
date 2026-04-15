@@ -2742,7 +2742,6 @@ var xVariantIsObjectPath func(string) bool
 // (including the one following the final `/` character) may be empty.
 func VariantIsObjectPath(StringVar string) bool {
 	cret := xVariantIsObjectPath(StringVar)
-
 	return cret
 }
 
@@ -2756,7 +2755,6 @@ var xVariantIsSignature func(string) bool
 // strings in sequence.
 func VariantIsSignature(StringVar string) bool {
 	cret := xVariantIsSignature(StringVar)
-
 	return cret
 }
 
@@ -2854,7 +2852,6 @@ var xVariantParseErrorPrintContext func(*Error, string) string
 // function.
 func VariantParseErrorPrintContext(ErrorVar *Error, SourceStrVar string) string {
 	cret := xVariantParseErrorPrintContext(ErrorVar, SourceStrVar)
-
 	return cret
 }
 

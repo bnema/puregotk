@@ -79,12 +79,7 @@ var xNewScrollbar func(Orientation, uintptr) uintptr
 func NewScrollbar(OrientationVar Orientation, AdjustmentVar *Adjustment) *Scrollbar {
 	var cls *Scrollbar
 
-	var AdjustmentVarPtr uintptr
-	if AdjustmentVar != nil {
-		AdjustmentVarPtr = AdjustmentVar.GoPointer()
-	}
-
-	cret := xNewScrollbar(OrientationVar, AdjustmentVarPtr)
+	cret := xNewScrollbar(OrientationVar, AdjustmentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

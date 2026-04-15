@@ -54,7 +54,6 @@ var xBitTrylock func(uintptr, int) bool
 // artifact and the argument passed to it should not be `volatile`.
 func BitTrylock(AddressVar uintptr, LockBitVar int) bool {
 	cret := xBitTrylock(AddressVar, LockBitVar)
-
 	return cret
 }
 
@@ -117,7 +116,6 @@ var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
 // do.
 func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
 	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
-
 	return cret
 }
 
@@ -133,7 +131,6 @@ var xPointerBitTrylock func(uintptr, int) bool
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitTrylock(AddressVar uintptr, LockBitVar int) bool {
 	cret := xPointerBitTrylock(AddressVar, LockBitVar)
-
 	return cret
 }
 

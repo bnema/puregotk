@@ -55,17 +55,7 @@ var xNewFilterListModel func(uintptr, uintptr) uintptr
 func NewFilterListModel(ModelVar gio.ListModel, FilterVar *Filter) *FilterListModel {
 	var cls *FilterListModel
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	var FilterVarPtr uintptr
-	if FilterVar != nil {
-		FilterVarPtr = FilterVar.GoPointer()
-	}
-
-	cret := xNewFilterListModel(ModelVarPtr, FilterVarPtr)
+	cret := xNewFilterListModel(ModelVar.GoPointer(), FilterVar.GoPointer())
 
 	if cret == 0 {
 		return nil

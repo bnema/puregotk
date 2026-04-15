@@ -11,7 +11,6 @@ var xAtomicRcBoxAcquire func(uintptr) uintptr
 // Atomically acquires a reference on the data pointed by @mem_block.
 func AtomicRcBoxAcquire(MemBlockVar uintptr) uintptr {
 	cret := xAtomicRcBoxAcquire(MemBlockVar)
-
 	return cret
 }
 
@@ -27,7 +26,6 @@ var xAtomicRcBoxAlloc func(uint) uintptr
 // built-in type.
 func AtomicRcBoxAlloc(BlockSizeVar uint) uintptr {
 	cret := xAtomicRcBoxAlloc(BlockSizeVar)
-
 	return cret
 }
 
@@ -45,7 +43,6 @@ var xAtomicRcBoxAlloc0 func(uint) uintptr
 // built-in type.
 func AtomicRcBoxAlloc0(BlockSizeVar uint) uintptr {
 	cret := xAtomicRcBoxAlloc0(BlockSizeVar)
-
 	return cret
 }
 
@@ -56,7 +53,6 @@ var xAtomicRcBoxDup func(uint, uintptr) uintptr
 // into it.
 func AtomicRcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 	cret := xAtomicRcBoxDup(BlockSizeVar, MemBlockVar)
-
 	return cret
 }
 
@@ -65,7 +61,6 @@ var xAtomicRcBoxGetSize func(uintptr) uint
 // Retrieves the size of the reference counted data pointed by @mem_block.
 func AtomicRcBoxGetSize(MemBlockVar uintptr) uint {
 	cret := xAtomicRcBoxGetSize(MemBlockVar)
-
 	return cret
 }
 
@@ -100,7 +95,6 @@ var xRcBoxAcquire func(uintptr) uintptr
 // Acquires a reference on the data pointed by @mem_block.
 func RcBoxAcquire(MemBlockVar uintptr) uintptr {
 	cret := xRcBoxAcquire(MemBlockVar)
-
 	return cret
 }
 
@@ -116,7 +110,6 @@ var xRcBoxAlloc func(uint) uintptr
 // built-in type.
 func RcBoxAlloc(BlockSizeVar uint) uintptr {
 	cret := xRcBoxAlloc(BlockSizeVar)
-
 	return cret
 }
 
@@ -134,7 +127,6 @@ var xRcBoxAlloc0 func(uint) uintptr
 // built-in type.
 func RcBoxAlloc0(BlockSizeVar uint) uintptr {
 	cret := xRcBoxAlloc0(BlockSizeVar)
-
 	return cret
 }
 
@@ -145,7 +137,6 @@ var xRcBoxDup func(uint, uintptr) uintptr
 // into it.
 func RcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 	cret := xRcBoxDup(BlockSizeVar, MemBlockVar)
-
 	return cret
 }
 
@@ -154,7 +145,6 @@ var xRcBoxGetSize func(uintptr) uint
 // Retrieves the size of the reference counted data pointed by @mem_block.
 func RcBoxGetSize(MemBlockVar uintptr) uint {
 	cret := xRcBoxGetSize(MemBlockVar)
-
 	return cret
 }
 

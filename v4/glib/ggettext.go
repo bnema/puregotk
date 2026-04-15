@@ -126,7 +126,6 @@ var xStripContext func(string, string) string
 // An auxiliary function for gettext() support (see Q_()).
 func StripContext(MsgidVar string, MsgvalVar string) string {
 	cret := xStripContext(MsgidVar, MsgvalVar)
-
 	return cret
 }
 

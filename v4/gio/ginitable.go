@@ -143,12 +143,7 @@ func (x *InitableBase) SetGoPointer(ptr uintptr) {
 func (x *InitableBase) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -166,12 +161,7 @@ func InitableNewv(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar 
 	var cls *gobject.Object
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xInitableNewv(ObjectTypeVar, NParametersVar, ParametersVar, CancellableVarPtr, &cerr)
+	cret := xInitableNewv(ObjectTypeVar, NParametersVar, ParametersVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

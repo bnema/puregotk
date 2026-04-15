@@ -162,7 +162,6 @@ var xHookDestroy func(*HookList, uint) bool
 // Destroys a #GHook, given its ID.
 func HookDestroy(HookListVar *HookList, HookIdVar uint) bool {
 	cret := xHookDestroy(HookListVar, HookIdVar)
-
 	return cret
 }
 

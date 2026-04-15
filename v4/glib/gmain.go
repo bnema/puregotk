@@ -1677,7 +1677,6 @@ var xGetMonotonicTime func() int64
 // [func@GLib.get_monotonic_time_ns] returns the time in nanoseconds.
 func GetMonotonicTime() int64 {
 	cret := xGetMonotonicTime()
-
 	return cret
 }
 
@@ -1715,7 +1714,6 @@ var xGetRealTime func() int64
 // measuring intervals.
 func GetRealTime() int64 {
 	cret := xGetRealTime()
-
 	return cret
 }
 
@@ -2007,7 +2005,6 @@ var xMainDepth func() int
 //     there is more work to do.
 func MainDepth() int {
 	cret := xMainDepth()
-
 	return cret
 }
 
@@ -2052,7 +2049,6 @@ var xSourceRemoveByFuncsUserData func(*SourceFuncs, uintptr) bool
 // one will be destroyed.
 func SourceRemoveByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) bool {
 	cret := xSourceRemoveByFuncsUserData(FuncsVar, UserDataVar)
-
 	return cret
 }
 

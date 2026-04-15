@@ -149,7 +149,6 @@ var xChecksumTypeGetLength func(ChecksumType) int
 // Gets the length in bytes of digests of type @checksum_type
 func ChecksumTypeGetLength(ChecksumTypeVar ChecksumType) int {
 	cret := xChecksumTypeGetLength(ChecksumTypeVar)
-
 	return cret
 }
 
@@ -162,7 +161,6 @@ var xComputeChecksumForBytes func(ChecksumType, *Bytes) string
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForBytes(ChecksumTypeVar ChecksumType, DataVar *Bytes) string {
 	cret := xComputeChecksumForBytes(ChecksumTypeVar, DataVar)
-
 	return cret
 }
 
@@ -175,7 +173,6 @@ var xComputeChecksumForData func(ChecksumType, []byte, uint) string
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForData(ChecksumTypeVar ChecksumType, DataVar []byte, LengthVar uint) string {
 	cret := xComputeChecksumForData(ChecksumTypeVar, DataVar, LengthVar)
-
 	return cret
 }
 
@@ -186,7 +183,6 @@ var xComputeChecksumForString func(ChecksumType, string, int) string
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForString(ChecksumTypeVar ChecksumType, StrVar string, LengthVar int) string {
 	cret := xComputeChecksumForString(ChecksumTypeVar, StrVar, LengthVar)
-
 	return cret
 }
 

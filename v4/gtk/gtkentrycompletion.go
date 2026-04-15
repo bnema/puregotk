@@ -539,7 +539,7 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PrefixVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, PrefixVarp string) bool {
 		fa := EntryCompletion{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

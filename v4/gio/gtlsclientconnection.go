@@ -245,12 +245,7 @@ func TlsClientConnectionNew(BaseIoStreamVar *IOStream, ServerIdentityVar SocketC
 	var cls *TlsClientConnectionBase
 	var cerr *glib.Error
 
-	var ServerIdentityVarPtr uintptr
-	if ServerIdentityVar != nil {
-		ServerIdentityVarPtr = ServerIdentityVar.GoPointer()
-	}
-
-	cret := xTlsClientConnectionNew(BaseIoStreamVar.GoPointer(), ServerIdentityVarPtr, &cerr)
+	cret := xTlsClientConnectionNew(BaseIoStreamVar.GoPointer(), ServerIdentityVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

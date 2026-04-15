@@ -78,12 +78,7 @@ var xNewSpinnerPaintable func(uintptr) uintptr
 func NewSpinnerPaintable(WidgetVar *gtk.Widget) *SpinnerPaintable {
 	var cls *SpinnerPaintable
 
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	cret := xNewSpinnerPaintable(WidgetVarPtr)
+	cret := xNewSpinnerPaintable(WidgetVar.GoPointer())
 
 	if cret == 0 {
 		return nil

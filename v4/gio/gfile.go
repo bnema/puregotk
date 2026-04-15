@@ -3411,12 +3411,7 @@ func (x *FileBase) AppendTo(FlagsVar FileCreateFlags, CancellableVar *Cancellabl
 	var cls *FileOutputStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileAppendTo(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileAppendTo(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -3472,12 +3467,7 @@ func (x *FileBase) AppendToFinish(ResVar AsyncResult) (*FileOutputStream, error)
 func (x *FileBase) BuildAttributeListForCopy(FlagsVar FileCopyFlags, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileBuildAttributeListForCopy(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileBuildAttributeListForCopy(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3527,12 +3517,7 @@ func (x *FileBase) BuildAttributeListForCopy(FlagsVar FileCopyFlags, Cancellable
 func (x *FileBase) Copy(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileCopy(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
+	cret := XGFileCopy(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3570,12 +3555,7 @@ func (x *FileBase) CopyAsyncWithClosures(DestinationVar File, FlagsVar FileCopyF
 func (x *FileBase) CopyAttributes(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileCopyAttributes(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileCopyAttributes(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3616,12 +3596,7 @@ func (x *FileBase) Create(FlagsVar FileCreateFlags, CancellableVar *Cancellable)
 	var cls *FileOutputStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileCreate(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileCreate(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -3693,12 +3668,7 @@ func (x *FileBase) CreateReadwrite(FlagsVar FileCreateFlags, CancellableVar *Can
 	var cls *FileIOStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileCreateReadwrite(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileCreateReadwrite(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -3769,12 +3739,7 @@ func (x *FileBase) CreateReadwriteFinish(ResVar AsyncResult) (*FileIOStream, err
 func (x *FileBase) Delete(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileDelete(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileDelete(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3899,12 +3864,7 @@ func (x *FileBase) EnumerateChildren(AttributesVar string, FlagsVar FileQueryInf
 	var cls *FileEnumerator
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileEnumerateChildren(x.GoPointer(), AttributesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileEnumerateChildren(x.GoPointer(), AttributesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -3983,12 +3943,7 @@ func (x *FileBase) FindEnclosingMount(CancellableVar *Cancellable) (*MountBase, 
 	var cls *MountBase
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileFindEnclosingMount(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileFindEnclosingMount(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -4305,12 +4260,7 @@ func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar *string) (*
 func (x *FileBase) LoadContents(CancellableVar *Cancellable, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileLoadContents(x.GoPointer(), CancellableVarPtr, ContentsVar, LengthVar, EtagOutVar, &cerr)
+	cret := XGFileLoadContents(x.GoPointer(), CancellableVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4400,12 +4350,7 @@ func (x *FileBase) LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar *[]
 func (x *FileBase) MakeDirectory(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMakeDirectory(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileMakeDirectory(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4445,12 +4390,7 @@ func (x *FileBase) MakeDirectoryFinish(ResultVar AsyncResult) (bool, error) {
 func (x *FileBase) MakeDirectoryWithParents(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMakeDirectoryWithParents(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileMakeDirectoryWithParents(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4466,12 +4406,7 @@ func (x *FileBase) MakeDirectoryWithParents(CancellableVar *Cancellable) (bool, 
 func (x *FileBase) MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMakeSymbolicLink(x.GoPointer(), SymlinkValueVar, CancellableVarPtr, &cerr)
+	cret := XGFileMakeSymbolicLink(x.GoPointer(), SymlinkValueVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4517,12 +4452,7 @@ func (x *FileBase) MakeSymbolicLinkFinish(ResultVar AsyncResult) (bool, error) {
 func (x *FileBase) MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMeasureDiskUsage(x.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
+	cret := XGFileMeasureDiskUsage(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4560,12 +4490,7 @@ func (x *FileBase) Monitor(FlagsVar FileMonitorFlags, CancellableVar *Cancellabl
 	var cls *FileMonitor
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMonitor(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileMonitor(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -4594,12 +4519,7 @@ func (x *FileBase) MonitorDirectory(FlagsVar FileMonitorFlags, CancellableVar *C
 	var cls *FileMonitor
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMonitorDirectory(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileMonitorDirectory(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -4630,12 +4550,7 @@ func (x *FileBase) MonitorFile(FlagsVar FileMonitorFlags, CancellableVar *Cancel
 	var cls *FileMonitor
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMonitorFile(x.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileMonitorFile(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -4745,12 +4660,7 @@ func (x *FileBase) MountMountableFinish(ResultVar AsyncResult) (*FileBase, error
 func (x *FileBase) Move(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileMove(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
+	cret := XGFileMove(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4808,12 +4718,7 @@ func (x *FileBase) OpenReadwrite(CancellableVar *Cancellable) (*FileIOStream, er
 	var cls *FileIOStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileOpenReadwrite(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileOpenReadwrite(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -4906,12 +4811,7 @@ func (x *FileBase) QueryDefaultHandler(CancellableVar *Cancellable) (*AppInfoBas
 	var cls *AppInfoBase
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileQueryDefaultHandler(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileQueryDefaultHandler(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5016,12 +4916,7 @@ func (x *FileBase) QueryFilesystemInfo(AttributesVar string, CancellableVar *Can
 	var cls *FileInfo
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileQueryFilesystemInfo(x.GoPointer(), AttributesVar, CancellableVarPtr, &cerr)
+	cret := XGFileQueryFilesystemInfo(x.GoPointer(), AttributesVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5115,12 +5010,7 @@ func (x *FileBase) QueryInfo(AttributesVar string, FlagsVar FileQueryInfoFlags, 
 	var cls *FileInfo
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileQueryInfo(x.GoPointer(), AttributesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileQueryInfo(x.GoPointer(), AttributesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5223,12 +5113,7 @@ func (x *FileBase) Read(CancellableVar *Cancellable) (*FileInputStream, error) {
 	var cls *FileInputStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileRead(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileRead(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5547,12 +5432,7 @@ func (x *FileBase) ResolveRelativePath(RelativePathVar string) *FileBase {
 func (x *FileBase) SetAttribute(AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttribute(x.GoPointer(), AttributeVar, TypeVar, ValuePVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttribute(x.GoPointer(), AttributeVar, TypeVar, ValuePVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5569,12 +5449,7 @@ func (x *FileBase) SetAttribute(AttributeVar string, TypeVar FileAttributeType, 
 func (x *FileBase) SetAttributeByteString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeByteString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeByteString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5590,12 +5465,7 @@ func (x *FileBase) SetAttributeByteString(AttributeVar string, ValueVar string, 
 func (x *FileBase) SetAttributeInt32(AttributeVar string, ValueVar int32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeInt32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeInt32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5611,12 +5481,7 @@ func (x *FileBase) SetAttributeInt32(AttributeVar string, ValueVar int32, FlagsV
 func (x *FileBase) SetAttributeInt64(AttributeVar string, ValueVar int64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeInt64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeInt64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5632,12 +5497,7 @@ func (x *FileBase) SetAttributeInt64(AttributeVar string, ValueVar int64, FlagsV
 func (x *FileBase) SetAttributeString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5653,12 +5513,7 @@ func (x *FileBase) SetAttributeString(AttributeVar string, ValueVar string, Flag
 func (x *FileBase) SetAttributeUint32(AttributeVar string, ValueVar uint32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeUint32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeUint32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5674,12 +5529,7 @@ func (x *FileBase) SetAttributeUint32(AttributeVar string, ValueVar uint32, Flag
 func (x *FileBase) SetAttributeUint64(AttributeVar string, ValueVar uint64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributeUint64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributeUint64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5724,12 +5574,7 @@ func (x *FileBase) SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo
 func (x *FileBase) SetAttributesFromInfo(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetAttributesFromInfo(x.GoPointer(), InfoVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetAttributesFromInfo(x.GoPointer(), InfoVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5755,12 +5600,7 @@ func (x *FileBase) SetDisplayName(DisplayNameVar string, CancellableVar *Cancell
 	var cls *FileBase
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileSetDisplayName(x.GoPointer(), DisplayNameVar, CancellableVarPtr, &cerr)
+	cret := XGFileSetDisplayName(x.GoPointer(), DisplayNameVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5885,12 +5725,7 @@ func (x *FileBase) SupportsThreadContexts() bool {
 func (x *FileBase) Trash(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGFileTrash(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGFileTrash(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

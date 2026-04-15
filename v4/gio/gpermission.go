@@ -233,12 +233,7 @@ var xPermissionAcquire func(uintptr, uintptr, **glib.Error) bool
 func (x *Permission) Acquire(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPermissionAcquire(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xPermissionAcquire(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -333,12 +328,7 @@ var xPermissionRelease func(uintptr, uintptr, **glib.Error) bool
 func (x *Permission) Release(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPermissionRelease(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xPermissionRelease(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

@@ -666,7 +666,6 @@ var xMarkupCollectAttributes func(string, string, string, **Error, MarkupCollect
 // will be returned and @error will be set as appropriate.
 func MarkupCollectAttributes(ElementNameVar string, AttributeNamesVar string, AttributeValuesVar string, ErrorVar **Error, FirstTypeVar MarkupCollectType, FirstAttrVar string, varArgs ...interface{}) bool {
 	cret := xMarkupCollectAttributes(ElementNameVar, AttributeNamesVar, AttributeValuesVar, ErrorVar, FirstTypeVar, FirstAttrVar, varArgs...)
-
 	return cret
 }
 
@@ -688,7 +687,6 @@ var xMarkupEscapeText func(string, int) string
 // valid XML 1.1 and will be accepted by the GMarkup parser.
 func MarkupEscapeText(TextVar string, LengthVar int) string {
 	cret := xMarkupEscapeText(TextVar, LengthVar)
-
 	return cret
 }
 
@@ -716,7 +714,6 @@ var xMarkupPrintfEscaped func(string, ...interface{}) string
 // ]|
 func MarkupPrintfEscaped(FormatVar string, varArgs ...interface{}) string {
 	cret := xMarkupPrintfEscaped(FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -727,7 +724,6 @@ var xMarkupVprintfEscaped func(string, []interface{}) string
 // of g_markup_escape_text(). See g_markup_printf_escaped().
 func MarkupVprintfEscaped(FormatVar string, ArgsVar []interface{}) string {
 	cret := xMarkupVprintfEscaped(FormatVar, ArgsVar)
-
 	return cret
 }
 

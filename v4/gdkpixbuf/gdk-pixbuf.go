@@ -221,22 +221,7 @@ var xNewPixbufFromData func([]byte, Colorspace, bool, int, int, int, int, uintpt
 func NewPixbufFromData(DataVar []byte, ColorspaceVar Colorspace, HasAlphaVar bool, BitsPerSampleVar int, WidthVar int, HeightVar int, RowstrideVar int, DestroyFnVar *PixbufDestroyNotify, DestroyFnDataVar uintptr) *Pixbuf {
 	var cls *Pixbuf
 
-	var DestroyFnVarRef uintptr
-	if DestroyFnVar != nil {
-		DestroyFnVarPtr := uintptr(unsafe.Pointer(DestroyFnVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyFnVarPtr); ok {
-			DestroyFnVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 []byte, arg1 uintptr) {
-				cbFn := *DestroyFnVar
-				cbFn(arg0, arg1)
-			}
-			DestroyFnVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyFnVarPtr, DestroyFnVarRef, DestroyFnVar)
-		}
-	}
-
-	cret := xNewPixbufFromData(DataVar, ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar, RowstrideVar, DestroyFnVarRef, DestroyFnDataVar)
+	cret := xNewPixbufFromData(DataVar, ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar, RowstrideVar, glib.NewCallbackNullable(DestroyFnVar), DestroyFnDataVar)
 
 	if cret == 0 {
 		return nil
@@ -480,12 +465,7 @@ func NewPixbufFromStream(StreamVar *gio.InputStream, CancellableVar *gio.Cancell
 	var cls *Pixbuf
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewPixbufFromStream(StreamVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xNewPixbufFromStream(StreamVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -525,12 +505,7 @@ func NewPixbufFromStreamAtScale(StreamVar *gio.InputStream, WidthVar int, Height
 	var cls *Pixbuf
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewPixbufFromStreamAtScale(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVarPtr, &cerr)
+	cret := xNewPixbufFromStreamAtScale(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1155,22 +1130,7 @@ var xPixbufSaveToCallbackv func(uintptr, uintptr, uintptr, string, []string, []s
 func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, OptionKeysVar []string, OptionValuesVar []string) (bool, error) {
 	var cerr *glib.Error
 
-	var SaveFuncVarRef uintptr
-	if SaveFuncVar != nil {
-		SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
-			SaveFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
-				cbFn := *SaveFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			SaveFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SaveFuncVarPtr, SaveFuncVarRef, SaveFuncVar)
-		}
-	}
-
-	cret := xPixbufSaveToCallbackv(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
+	cret := xPixbufSaveToCallbackv(x.GoPointer(), glib.NewCallback(SaveFuncVar), UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1221,12 +1181,7 @@ var xPixbufSaveToStreamv func(uintptr, uintptr, string, []string, []string, uint
 func (x *Pixbuf) SaveToStreamv(StreamVar *gio.OutputStream, TypeVar string, OptionKeysVar []string, OptionValuesVar []string, CancellableVar *gio.Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPixbufSaveToStreamv(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVarPtr, &cerr)
+	cret := xPixbufSaveToStreamv(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1550,12 +1505,7 @@ func (x *Pixbuf) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancella
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := gio.XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

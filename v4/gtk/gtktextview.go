@@ -2023,7 +2023,7 @@ func (x *TextView) ConnectInsertAtCursor(cb *func(TextView, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StringVarp uintptr) {
+	fcb := func(clsPtr uintptr, StringVarp string) {
 		fa := TextView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -2186,7 +2186,7 @@ func (x *TextView) ConnectPreeditChanged(cb *func(TextView, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PreeditVarp uintptr) {
+	fcb := func(clsPtr uintptr, PreeditVarp string) {
 		fa := TextView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

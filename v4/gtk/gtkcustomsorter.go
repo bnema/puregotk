@@ -47,37 +47,7 @@ var xNewCustomSorter func(uintptr, uintptr, uintptr) uintptr
 func NewCustomSorter(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *CustomSorter {
 	var cls *CustomSorter
 
-	var SortFuncVarRef uintptr
-	if SortFuncVar != nil {
-		SortFuncVarPtr := uintptr(unsafe.Pointer(SortFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(SortFuncVarPtr); ok {
-			SortFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *SortFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	cret := xNewCustomSorter(SortFuncVarRef, UserDataVar, UserDestroyVarRef)
+	cret := xNewCustomSorter(glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil

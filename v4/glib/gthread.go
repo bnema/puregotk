@@ -1985,7 +1985,6 @@ var xGetNumProcessors func() uint
 // similar cases.
 func GetNumProcessors() uint {
 	cret := xGetNumProcessors()
-
 	return cret
 }
 
@@ -1994,7 +1993,6 @@ var xMutexNew func() *Mutex
 // Allocates and initializes a new #GMutex.
 func MutexNew() *Mutex {
 	cret := xMutexNew()
-
 	return cret
 }
 
@@ -2029,7 +2027,6 @@ var xOnceInitEnter func(*uintptr) bool
 // the pointer passed to it should not be `volatile`.
 func OnceInitEnter(LocationVar *uintptr) bool {
 	cret := xOnceInitEnter(LocationVar)
-
 	return cret
 }
 
@@ -2037,7 +2034,6 @@ var xOnceInitEnterImpl func(uint) bool
 
 func OnceInitEnterImpl(LocationVar uint) bool {
 	cret := xOnceInitEnterImpl(LocationVar)
-
 	return cret
 }
 
@@ -2062,7 +2058,6 @@ var xOnceInitEnterPointer func(uintptr) bool
 // ]|
 func OnceInitEnterPointer(LocationVar uintptr) bool {
 	cret := xOnceInitEnterPointer(LocationVar)
-
 	return cret
 }
 
@@ -2189,7 +2184,6 @@ var xThreadGetInitialized func() bool
 // Indicates if g_thread_init() has been called.
 func ThreadGetInitialized() bool {
 	cret := xThreadGetInitialized()
-
 	return cret
 }
 

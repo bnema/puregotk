@@ -110,12 +110,7 @@ var xNewColumnView func(uintptr) uintptr
 func NewColumnView(ModelVar SelectionModel) *ColumnView {
 	var cls *ColumnView
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewColumnView(ModelVarPtr)
+	cret := xNewColumnView(ModelVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -110,17 +110,7 @@ var xNewDropDown func(uintptr, uintptr) uintptr
 func NewDropDown(ModelVar gio.ListModel, ExpressionVar *Expression) *DropDown {
 	var cls *DropDown
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewDropDown(ModelVarPtr, ExpressionVarPtr)
+	cret := xNewDropDown(ModelVar.GoPointer(), ExpressionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

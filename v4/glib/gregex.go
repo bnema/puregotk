@@ -1008,22 +1008,7 @@ var xRegexReplaceEval func(uintptr, []string, int, int, RegexMatchFlags, uintptr
 func (x *Regex) ReplaceEval(StringVar []string, StringLenVar int, StartPositionVar int, MatchOptionsVar RegexMatchFlags, EvalVar *RegexEvalCallback, UserDataVar uintptr) (string, error) {
 	var cerr *Error
 
-	var EvalVarRef uintptr
-	if EvalVar != nil {
-		EvalVarPtr := uintptr(unsafe.Pointer(EvalVar))
-		if cbRefPtr, ok := GetCallback(EvalVarPtr); ok {
-			EvalVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *MatchInfo, arg1 *String, arg2 uintptr) bool {
-				cbFn := *EvalVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			EvalVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(EvalVarPtr, EvalVarRef, EvalVar)
-		}
-	}
-
-	cret := xRegexReplaceEval(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, EvalVarRef, UserDataVar, &cerr)
+	cret := xRegexReplaceEval(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, NewCallback(EvalVar), UserDataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1464,7 +1449,6 @@ func RegexCheckReplacement(ReplacementVar string, HasReferencesVar *bool) (bool,
 	var cerr *Error
 
 	cret := xRegexCheckReplacement(ReplacementVar, HasReferencesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1480,7 +1464,6 @@ var xRegexEscapeNul func(string, int) string
 // In this case the output string will be of course equal to @string.
 func RegexEscapeNul(StringVar string, LengthVar int) string {
 	cret := xRegexEscapeNul(StringVar, LengthVar)
-
 	return cret
 }
 
@@ -1495,7 +1478,6 @@ var xRegexEscapeString func(string, int) string
 // in @length.
 func RegexEscapeString(StringVar string, LengthVar int) string {
 	cret := xRegexEscapeString(StringVar, LengthVar)
-
 	return cret
 }
 
@@ -1513,7 +1495,6 @@ var xRegexMatchSimple func(string, string, RegexCompileFlags, RegexMatchFlags) b
 // g_regex_new() and then use g_regex_match().
 func RegexMatchSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) bool {
 	cret := xRegexMatchSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
-
 	return cret
 }
 
@@ -1548,7 +1529,6 @@ var xRegexSplitSimple func(string, string, RegexCompileFlags, RegexMatchFlags) [
 // "\s*", you will get "a", "b" and "c".
 func RegexSplitSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) []string {
 	cret := xRegexSplitSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
-
 	return cret
 }
 

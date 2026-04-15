@@ -158,7 +158,6 @@ var xPatternMatchSimple func(string, string) bool
 // [method@GLib.PatternSpec.match_string] repeatedly.
 func PatternMatchSimple(PatternVar string, StringVar string) bool {
 	cret := xPatternMatchSimple(PatternVar, StringVar)
-
 	return cret
 }
 
@@ -171,7 +170,6 @@ var xPatternMatchString func(*PatternSpec, string) bool
 // [method@GLib.PatternSpec.match] instead while supplying the reversed string.
 func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 	cret := xPatternMatchString(PspecVar, StringVar)
-
 	return cret
 }
 

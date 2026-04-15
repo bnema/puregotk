@@ -1022,7 +1022,6 @@ var xIoChannelErrorFromErrno func(int) IOChannelError
 // Converts an `errno` error number to a #GIOChannelError.
 func IoChannelErrorFromErrno(EnVar int) IOChannelError {
 	cret := xIoChannelErrorFromErrno(EnVar)
-
 	return cret
 }
 

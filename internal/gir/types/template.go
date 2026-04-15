@@ -17,10 +17,6 @@ type argsTemplate struct {
 	// Call are the variables as given in a function call
 	Call []string
 
-	// CallWithRefs is like Call but with callback parameters using {name}Ref
-	// for use in contexts that generate closure wrappers
-	CallWithRefs []string
-
 	Full []string
 }
 
@@ -69,13 +65,12 @@ func isStringType(t string) bool {
 
 func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext, imps *ImportSet) {
 	c := n
-	cRef := n // For CallWithRefs, defaults to same as Call
 	stars := strings.Count(t, "*")
 	gobjectNs := "gobject."
-	glibNs := "glib."
 	if strings.ToLower(ns) == "gobject" {
 		gobjectNs = ""
 	}
+	glibNs := "glib."
 	if strings.ToLower(ns) == "glib" {
 		glibNs = ""
 	}
@@ -87,7 +82,6 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 			t = "*" + t
 		}
 		c = n
-		cRef = n
 	} else {
 		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			imps.AddCore()
@@ -118,14 +112,8 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
 				imps.AddPkg("gobject")
 			} else if stars == 1 {
-				if ctx == ArgsFromGoToC && nullable {
-					c = n + "Ptr"
-					f.NullableClasses = append(f.NullableClasses, NullableClassParam{Name: n})
-				} else {
-					c = n + ".GoPointer()"
-				}
+				c = n + ".GoPointer()"
 			}
-			cRef = c
 		case InterfacesType:
 			t = strings.TrimPrefix(t, "*")
 			if stars == 0 {
@@ -135,29 +123,19 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
 				imps.AddPkg("gobject")
 			} else if stars == 1 {
-				if ctx == ArgsFromGoToC && nullable {
-					c = n + "Ptr"
-					f.NullableClasses = append(f.NullableClasses, NullableClassParam{Name: n})
-				} else {
-					c = n + ".GoPointer()"
-				}
+				c = n + ".GoPointer()"
 			}
-			cRef = c
-		default:
-			cRef = c
 		}
 
 		// special case for varargs
 		if n == "varArgs" {
 			c = n + "..."
-			cRef = c
 		}
 	}
 
 	f.API.Names = append(f.API.Names, n)
 	f.API.Types = append(f.API.Types, t)
 	f.API.Call = append(f.API.Call, c)
-	f.API.CallWithRefs = append(f.API.CallWithRefs, cRef)
 	f.API.Full = append(f.API.Full, n+" "+t)
 	imps.TrackGoType(t)
 }
@@ -275,9 +253,6 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	goType := p.Translate(lns, kinds)
 	kind := kinds.Kind(lns, goType)
 
-	// Save the original type name before normalization for callback lookup
-	originalType := goType
-
 	stars := strings.Count(goType, "*")
 	goType = util.NormalizeNamespace(ns, goType, true)
 
@@ -316,7 +291,6 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {
 	f.API.Call = append(f.API.Call, "&cerr")
-	f.API.CallWithRefs = append(f.API.CallWithRefs, "&cerr")
 	if strings.ToLower(ns) != "glib" {
 		f.Pure.Types = append(f.Pure.Types, "**glib.Error")
 		imps.AddPkg("glib")
@@ -574,12 +548,11 @@ type InterfaceFuncTemplate struct {
 }
 
 type SignalsTemplate struct {
-	Doc      string
-	Name     string
-	CName    string
-	Args     funcArgsTemplate
-	Ret      funcRetTemplate
-	Detailed bool
+	Doc   string
+	Name  string
+	CName string
+	Args  funcArgsTemplate
+	Ret   funcRetTemplate
 }
 
 type PropertyTemplate struct {

@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"fmt"
 	"structs"
 	"unsafe"
 
@@ -861,7 +860,7 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ResponseVarp uintptr) {
+	fcb := func(clsPtr uintptr, ResponseVarp string) {
 		fa := AlertDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

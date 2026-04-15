@@ -57,12 +57,7 @@ var xNewAppChooserDialog func(uintptr, DialogFlags, uintptr) uintptr
 func NewAppChooserDialog(ParentVar *Window, FlagsVar DialogFlags, FileVar gio.File) *AppChooserDialog {
 	var cls *AppChooserDialog
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xNewAppChooserDialog(ParentVarPtr, FlagsVar, FileVar.GoPointer())
+	cret := xNewAppChooserDialog(ParentVar.GoPointer(), FlagsVar, FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -81,12 +76,7 @@ var xNewAppChooserDialogForContentType func(uintptr, DialogFlags, string) uintpt
 func NewAppChooserDialogForContentType(ParentVar *Window, FlagsVar DialogFlags, ContentTypeVar string) *AppChooserDialog {
 	var cls *AppChooserDialog
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xNewAppChooserDialogForContentType(ParentVarPtr, FlagsVar, ContentTypeVar)
+	cret := xNewAppChooserDialogForContentType(ParentVar.GoPointer(), FlagsVar, ContentTypeVar)
 
 	if cret == 0 {
 		return nil

@@ -448,12 +448,7 @@ func (x *Socket) Accept(CancellableVar *Cancellable) (*Socket, error) {
 	var cls *Socket
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketAccept(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSocketAccept(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -602,12 +597,7 @@ var xSocketConditionTimedWait func(uintptr, glib.IOCondition, int64, uintptr, **
 func (x *Socket) ConditionTimedWait(ConditionVar glib.IOCondition, TimeoutUsVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketConditionTimedWait(x.GoPointer(), ConditionVar, TimeoutUsVar, CancellableVarPtr, &cerr)
+	cret := xSocketConditionTimedWait(x.GoPointer(), ConditionVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -629,12 +619,7 @@ var xSocketConditionWait func(uintptr, glib.IOCondition, uintptr, **glib.Error) 
 func (x *Socket) ConditionWait(ConditionVar glib.IOCondition, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketConditionWait(x.GoPointer(), ConditionVar, CancellableVarPtr, &cerr)
+	cret := xSocketConditionWait(x.GoPointer(), ConditionVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -662,12 +647,7 @@ var xSocketConnect func(uintptr, uintptr, uintptr, **glib.Error) bool
 func (x *Socket) Connect(AddressVar *SocketAddress, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSocketConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1132,12 +1112,7 @@ var xSocketReceive func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
 func (x *Socket) Receive(BufferVar *[]byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketReceive(x.GoPointer(), BufferVar, SizeVar, CancellableVarPtr, &cerr)
+	cret := xSocketReceive(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1209,12 +1184,7 @@ var xSocketReceiveFrom func(uintptr, **SocketAddress, *[]byte, uint, uintptr, **
 func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketReceiveFrom(x.GoPointer(), AddressVar, BufferVar, SizeVar, CancellableVarPtr, &cerr)
+	cret := xSocketReceiveFrom(x.GoPointer(), AddressVar, BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1285,12 +1255,7 @@ var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *ui
 func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar *uintptr, NumMessagesVar *int, FlagsVar *int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1350,12 +1315,7 @@ var xSocketReceiveMessages func(uintptr, []InputMessage, uint, int, uintptr, **g
 func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xSocketReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1370,12 +1330,7 @@ var xSocketReceiveWithBlocking func(uintptr, *[]byte, uint, bool, uintptr, **gli
 func (x *Socket) ReceiveWithBlocking(BufferVar *[]byte, SizeVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketReceiveWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVarPtr, &cerr)
+	cret := xSocketReceiveWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1401,12 +1356,7 @@ var xSocketSend func(uintptr, []byte, uint, uintptr, **glib.Error) int
 func (x *Socket) Send(BufferVar []byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSend(x.GoPointer(), BufferVar, SizeVar, CancellableVarPtr, &cerr)
+	cret := xSocketSend(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1460,17 +1410,7 @@ var xSocketSendMessage func(uintptr, uintptr, []OutputVector, int, uintptr, int,
 func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var AddressVarPtr uintptr
-	if AddressVar != nil {
-		AddressVarPtr = AddressVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSendMessage(x.GoPointer(), AddressVarPtr, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xSocketSendMessage(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1489,17 +1429,7 @@ var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, ui
 func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, TimeoutUsVar int64, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
-	var AddressVarPtr uintptr
-	if AddressVar != nil {
-		AddressVarPtr = AddressVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSendMessageWithTimeout(x.GoPointer(), AddressVarPtr, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, TimeoutUsVar, BytesWrittenVar, CancellableVarPtr, &cerr)
+	cret := xSocketSendMessageWithTimeout(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, TimeoutUsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1545,12 +1475,7 @@ var xSocketSendMessages func(uintptr, []OutputMessage, uint, int, uintptr, **gli
 func (x *Socket) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xSocketSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1567,17 +1492,7 @@ var xSocketSendTo func(uintptr, uintptr, []byte, uint, uintptr, **glib.Error) in
 func (x *Socket) SendTo(AddressVar *SocketAddress, BufferVar []byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var AddressVarPtr uintptr
-	if AddressVar != nil {
-		AddressVarPtr = AddressVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSendTo(x.GoPointer(), AddressVarPtr, BufferVar, SizeVar, CancellableVarPtr, &cerr)
+	cret := xSocketSendTo(x.GoPointer(), AddressVar.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1592,12 +1507,7 @@ var xSocketSendWithBlocking func(uintptr, []byte, uint, bool, uintptr, **glib.Er
 func (x *Socket) SendWithBlocking(BufferVar []byte, SizeVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketSendWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVarPtr, &cerr)
+	cret := xSocketSendWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1981,12 +1891,7 @@ func (x *Socket) GetPropertyTtl() uint {
 func (x *Socket) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

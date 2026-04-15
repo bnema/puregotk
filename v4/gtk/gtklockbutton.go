@@ -91,12 +91,7 @@ var xNewLockButton func(uintptr) uintptr
 func NewLockButton(PermissionVar *gio.Permission) *LockButton {
 	var cls *LockButton
 
-	var PermissionVarPtr uintptr
-	if PermissionVar != nil {
-		PermissionVarPtr = PermissionVar.GoPointer()
-	}
-
-	cret := xNewLockButton(PermissionVarPtr)
+	cret := xNewLockButton(PermissionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -210,12 +210,7 @@ var xDataInputStreamReadByte func(uintptr, uintptr, **glib.Error) byte
 func (x *DataInputStream) ReadByte(CancellableVar *Cancellable) (byte, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadByte(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -231,12 +226,7 @@ var xDataInputStreamReadInt16 func(uintptr, uintptr, **glib.Error) int16
 func (x *DataInputStream) ReadInt16(CancellableVar *Cancellable) (int16, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadInt16(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadInt16(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -256,12 +246,7 @@ var xDataInputStreamReadInt32 func(uintptr, uintptr, **glib.Error) int32
 func (x *DataInputStream) ReadInt32(CancellableVar *Cancellable) (int32, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadInt32(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadInt32(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -281,12 +266,7 @@ var xDataInputStreamReadInt64 func(uintptr, uintptr, **glib.Error) int64
 func (x *DataInputStream) ReadInt64(CancellableVar *Cancellable) (int64, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadInt64(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadInt64(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -305,12 +285,7 @@ var xDataInputStreamReadLine func(uintptr, *uint, uintptr, **glib.Error) uintptr
 func (x *DataInputStream) ReadLine(LengthVar *uint, CancellableVar *Cancellable) (uintptr, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadLine(x.GoPointer(), LengthVar, CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadLine(x.GoPointer(), LengthVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -369,12 +344,7 @@ var xDataInputStreamReadLineUtf8 func(uintptr, *uint, uintptr, **glib.Error) str
 func (x *DataInputStream) ReadLineUtf8(LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadLineUtf8(x.GoPointer(), LengthVar, CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadLineUtf8(x.GoPointer(), LengthVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -390,12 +360,7 @@ var xDataInputStreamReadUint16 func(uintptr, uintptr, **glib.Error) uint16
 func (x *DataInputStream) ReadUint16(CancellableVar *Cancellable) (uint16, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadUint16(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadUint16(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -415,12 +380,7 @@ var xDataInputStreamReadUint32 func(uintptr, uintptr, **glib.Error) uint32
 func (x *DataInputStream) ReadUint32(CancellableVar *Cancellable) (uint32, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadUint32(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadUint32(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -440,12 +400,7 @@ var xDataInputStreamReadUint64 func(uintptr, uintptr, **glib.Error) uint64
 func (x *DataInputStream) ReadUint64(CancellableVar *Cancellable) (uint64, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadUint64(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadUint64(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -468,12 +423,7 @@ var xDataInputStreamReadUntil func(uintptr, string, *uint, uintptr, **glib.Error
 func (x *DataInputStream) ReadUntil(StopCharsVar string, LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadUntil(x.GoPointer(), StopCharsVar, LengthVar, CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadUntil(x.GoPointer(), StopCharsVar, LengthVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -532,12 +482,7 @@ var xDataInputStreamReadUpto func(uintptr, string, int, *uint, uintptr, **glib.E
 func (x *DataInputStream) ReadUpto(StopCharsVar string, StopCharsLenVar int, LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDataInputStreamReadUpto(x.GoPointer(), StopCharsVar, StopCharsLenVar, LengthVar, CancellableVarPtr, &cerr)
+	cret := xDataInputStreamReadUpto(x.GoPointer(), StopCharsVar, StopCharsLenVar, LengthVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -644,12 +589,7 @@ func (x *DataInputStream) CanTruncate() bool {
 func (x *DataInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -674,12 +614,7 @@ func (x *DataInputStream) Tell() int64 {
 func (x *DataInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

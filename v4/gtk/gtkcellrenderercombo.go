@@ -144,7 +144,7 @@ func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, u
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathStringVarp uintptr, NewIterVarp uintptr) {
+	fcb := func(clsPtr uintptr, PathStringVarp string, NewIterVarp uintptr) {
 		fa := CellRendererCombo{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

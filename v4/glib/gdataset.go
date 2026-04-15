@@ -69,7 +69,6 @@ var xDatalistGetData func(**Data, string) uintptr
 // g_datalist_id_get_data() because it compares strings.
 func DatalistGetData(DatalistVar **Data, KeyVar string) uintptr {
 	cret := xDatalistGetData(DatalistVar, KeyVar)
-
 	return cret
 }
 
@@ -79,7 +78,6 @@ var xDatalistGetFlags func(**Data) uint
 // See g_datalist_set_flags().
 func DatalistGetFlags(DatalistVar **Data) uint {
 	cret := xDatalistGetFlags(DatalistVar)
-
 	return cret
 }
 
@@ -108,7 +106,6 @@ var xDatalistIdGetData func(**Data, Quark) uintptr
 // Retrieves the data element corresponding to @key_id.
 func DatalistIdGetData(DatalistVar **Data, KeyIdVar Quark) uintptr {
 	cret := xDatalistIdGetData(DatalistVar, KeyIdVar)
-
 	return cret
 }
 
@@ -131,7 +128,6 @@ var xDatalistIdRemoveNoNotify func(**Data, Quark) uintptr
 // function.
 func DatalistIdRemoveNoNotify(DatalistVar **Data, KeyIdVar Quark) uintptr {
 	cret := xDatalistIdRemoveNoNotify(DatalistVar, KeyIdVar)
-
 	return cret
 }
 
@@ -219,7 +215,6 @@ var xDatasetIdGetData func(uintptr, Quark) uintptr
 // Gets the data element corresponding to a #GQuark.
 func DatasetIdGetData(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
 	cret := xDatasetIdGetData(DatasetLocationVar, KeyIdVar)
-
 	return cret
 }
 
@@ -229,7 +224,6 @@ var xDatasetIdRemoveNoNotify func(uintptr, Quark) uintptr
 // function.
 func DatasetIdRemoveNoNotify(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
 	cret := xDatasetIdRemoveNoNotify(DatasetLocationVar, KeyIdVar)
-
 	return cret
 }
 

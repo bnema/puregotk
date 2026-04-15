@@ -32,12 +32,7 @@ var xDbusAddressGetForBusSync func(BusType, uintptr, **glib.Error) string
 func DbusAddressGetForBusSync(BusTypeVar BusType, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDbusAddressGetForBusSync(BusTypeVar, CancellableVarPtr, &cerr)
+	cret := xDbusAddressGetForBusSync(BusTypeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -100,12 +95,7 @@ func DbusAddressGetStreamSync(AddressVar string, OutGuidVar *string, Cancellable
 	var cls *IOStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDbusAddressGetStreamSync(AddressVar, OutGuidVar, CancellableVarPtr, &cerr)
+	cret := xDbusAddressGetStreamSync(AddressVar, OutGuidVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

@@ -180,12 +180,7 @@ var xSubprocessCommunicate func(uintptr, *glib.Bytes, uintptr, **glib.Bytes, **g
 func (x *Subprocess) Communicate(StdinBufVar *glib.Bytes, CancellableVar *Cancellable, StdoutBufVar **glib.Bytes, StderrBufVar **glib.Bytes) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSubprocessCommunicate(x.GoPointer(), StdinBufVar, CancellableVarPtr, StdoutBufVar, StderrBufVar, &cerr)
+	cret := xSubprocessCommunicate(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -459,12 +454,7 @@ var xSubprocessWait func(uintptr, uintptr, **glib.Error) bool
 func (x *Subprocess) Wait(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSubprocessWait(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSubprocessWait(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -486,12 +476,7 @@ var xSubprocessWaitCheck func(uintptr, uintptr, **glib.Error) bool
 func (x *Subprocess) WaitCheck(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSubprocessWaitCheck(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSubprocessWaitCheck(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -596,12 +581,7 @@ func (x *Subprocess) SetPropertyArgv(value []string) {
 func (x *Subprocess) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

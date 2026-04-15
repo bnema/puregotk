@@ -174,52 +174,7 @@ var xNewCClosureExpression func(types.GType, uintptr, uint, uintptr, uintptr, ui
 func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.ClosureMarshal, NParamsVar uint, ParamsVar uintptr, CallbackFuncVar *gobject.Callback, UserDataVar uintptr, UserDestroyVar *gobject.ClosureNotify) *CClosureExpression {
 	var cls *CClosureExpression
 
-	var MarshalVarRef uintptr
-	if MarshalVar != nil {
-		MarshalVarPtr := uintptr(unsafe.Pointer(MarshalVar))
-		if cbRefPtr, ok := glib.GetCallback(MarshalVarPtr); ok {
-			MarshalVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *gobject.Closure, arg1 *gobject.Value, arg2 uint, arg3 []gobject.Value, arg4 uintptr, arg5 uintptr) {
-				cbFn := *MarshalVar
-				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
-			}
-			MarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MarshalVarPtr, MarshalVarRef, MarshalVar)
-		}
-	}
-
-	var CallbackFuncVarRef uintptr
-	if CallbackFuncVar != nil {
-		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
-			CallbackFuncVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CallbackFuncVar
-				cbFn()
-			}
-			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *gobject.Closure) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0, arg1)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	cret := xNewCClosureExpression(ValueTypeVar, MarshalVarRef, NParamsVar, ParamsVar, CallbackFuncVarRef, UserDataVar, UserDestroyVarRef)
+	cret := xNewCClosureExpression(ValueTypeVar, glib.NewCallbackNullable(MarshalVar), NParamsVar, ParamsVar, glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -826,12 +781,7 @@ var xNewPropertyExpression func(types.GType, uintptr, string) uintptr
 func NewPropertyExpression(ThisTypeVar types.GType, ExpressionVar *Expression, PropertyNameVar string) *PropertyExpression {
 	var cls *PropertyExpression
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewPropertyExpression(ThisTypeVar, ExpressionVarPtr, PropertyNameVar)
+	cret := xNewPropertyExpression(ThisTypeVar, ExpressionVar.GoPointer(), PropertyNameVar)
 
 	if cret == 0 {
 		return nil
@@ -854,12 +804,7 @@ var xNewPropertyExpressionForPspec func(uintptr, uintptr) uintptr
 func NewPropertyExpressionForPspec(ExpressionVar *Expression, PspecVar *gobject.ParamSpec) *PropertyExpression {
 	var cls *PropertyExpression
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewPropertyExpressionForPspec(ExpressionVarPtr, PspecVar.GoPointer())
+	cret := xNewPropertyExpressionForPspec(ExpressionVar.GoPointer(), PspecVar.GoPointer())
 
 	if cret == 0 {
 		return nil

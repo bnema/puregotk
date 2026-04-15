@@ -443,13 +443,7 @@ func (x *TlsCertificate) GetPropertyCertificate() []byte {
 	if ptr == 0 {
 		return nil
 	}
-	// GByteArray layout: { guint8 *data; guint len; }
-	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
-	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
-	if length == 0 || dataPtr == 0 {
-		return nil
-	}
-	return unsafe.Slice((*byte)(unsafe.Pointer(dataPtr)), length)
+	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
 }
 
 // SetPropertyCertificatePem sets the "certificate-pem" property.
@@ -483,13 +477,7 @@ func (x *TlsCertificate) GetPropertyDnsNames() []uintptr {
 	if ptr == 0 {
 		return nil
 	}
-	// GPtrArray layout: { gpointer *pdata; guint len; }
-	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
-	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
-	if length == 0 || dataPtr == 0 {
-		return nil
-	}
-	return unsafe.Slice((*uintptr)(unsafe.Pointer(dataPtr)), length)
+	return unsafe.Slice((*uintptr)(unsafe.Pointer(ptr)), 0)[:0]
 }
 
 // GetPropertyIpAddresses gets the "ip-addresses" property.
@@ -502,13 +490,7 @@ func (x *TlsCertificate) GetPropertyIpAddresses() []uintptr {
 	if ptr == 0 {
 		return nil
 	}
-	// GPtrArray layout: { gpointer *pdata; guint len; }
-	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
-	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
-	if length == 0 || dataPtr == 0 {
-		return nil
-	}
-	return unsafe.Slice((*uintptr)(unsafe.Pointer(dataPtr)), length)
+	return unsafe.Slice((*uintptr)(unsafe.Pointer(ptr)), 0)[:0]
 }
 
 // GetPropertyIssuerName gets the "issuer-name" property.
@@ -633,13 +615,7 @@ func (x *TlsCertificate) GetPropertyPrivateKey() []byte {
 	if ptr == 0 {
 		return nil
 	}
-	// GByteArray layout: { guint8 *data; guint len; }
-	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
-	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
-	if length == 0 || dataPtr == 0 {
-		return nil
-	}
-	return unsafe.Slice((*byte)(unsafe.Pointer(dataPtr)), length)
+	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
 }
 
 // SetPropertyPrivateKeyPem sets the "private-key-pem" property.

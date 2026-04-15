@@ -193,7 +193,7 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathVarp uintptr) {
+	fcb := func(clsPtr uintptr, PathVarp string) {
 		fa := CellRendererToggle{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

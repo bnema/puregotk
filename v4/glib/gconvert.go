@@ -105,7 +105,6 @@ func Convert(StrVar []byte, LenVar int, ToCodesetVar string, FromCodesetVar stri
 	var cerr *Error
 
 	cret := xConvert(StrVar, LenVar, ToCodesetVar, FromCodesetVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -135,7 +134,6 @@ func ConvertWithFallback(StrVar []byte, LenVar int, ToCodesetVar string, FromCod
 	var cerr *Error
 
 	cret := xConvertWithFallback(StrVar, LenVar, ToCodesetVar, FromCodesetVar, FallbackVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -167,7 +165,6 @@ func ConvertWithIconv(StrVar []byte, LenVar int, ConverterVar uintptr, BytesRead
 	var cerr *Error
 
 	cret := xConvertWithIconv(StrVar, LenVar, ConverterVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -194,7 +191,6 @@ var xFilenameDisplayBasename func(string) string
 // whole path, as it allows translation.
 func FilenameDisplayBasename(FilenameVar string) string {
 	cret := xFilenameDisplayBasename(FilenameVar)
-
 	return cret
 }
 
@@ -217,7 +213,6 @@ var xFilenameDisplayName func(string) string
 // translation of filenames.
 func FilenameDisplayName(FilenameVar string) string {
 	cret := xFilenameDisplayName(FilenameVar)
-
 	return cret
 }
 
@@ -234,7 +229,6 @@ func FilenameFromUri(UriVar string, HostnameVar *string) (string, error) {
 	var cerr *Error
 
 	cret := xFilenameFromUri(UriVar, HostnameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -257,7 +251,6 @@ func FilenameFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, Byte
 	var cerr *Error
 
 	cret := xFilenameFromUtf8(Utf8stringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -299,7 +292,6 @@ func FilenameToUtf8(OpsysstringVar string, LenVar int, BytesReadVar *uint, Bytes
 	var cerr *Error
 
 	cret := xFilenameToUtf8(OpsysstringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -334,7 +326,6 @@ var xGetFilenameCharsets func(*[]string) bool
 // on a system might be in any random encoding or just gibberish.
 func GetFilenameCharsets(FilenameCharsetsVar *[]string) bool {
 	cret := xGetFilenameCharsets(FilenameCharsetsVar)
-
 	return cret
 }
 
@@ -358,7 +349,6 @@ var xIconv func(uintptr, string, *uint, string, *uint) uint
 // error occurs.
 func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar *uint, OutbufVar string, OutbytesLeftVar *uint) uint {
 	cret := xIconv(ConverterVar, InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
-
 	return cret
 }
 
@@ -372,7 +362,6 @@ var xIconvOpen func(string, string) uintptr
 // more convenient than the raw iconv wrappers.
 func IconvOpen(ToCodesetVar string, FromCodesetVar string) uintptr {
 	cret := xIconvOpen(ToCodesetVar, FromCodesetVar)
-
 	return cret
 }
 
@@ -391,7 +380,6 @@ func LocaleFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, BytesW
 	var cerr *Error
 
 	cret := xLocaleFromUtf8(Utf8stringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -415,7 +403,6 @@ func LocaleToUtf8(OpsysstringVar []byte, LenVar int, BytesReadVar *uint, BytesWr
 	var cerr *Error
 
 	cret := xLocaleToUtf8(OpsysstringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -429,7 +416,6 @@ var xUriListExtractUris func(string) []string
 // discarding any comments. The URIs are not validated.
 func UriListExtractUris(UriListVar string) []string {
 	cret := xUriListExtractUris(UriListVar)
-
 	return cret
 }
 

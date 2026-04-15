@@ -389,12 +389,7 @@ func (x *DtlsConnectionBase) SetGoPointer(ptr uintptr) {
 func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDtlsConnectionClose(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGDtlsConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -601,12 +596,7 @@ func (x *DtlsConnectionBase) GetRequireCloseNotify() bool {
 func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDtlsConnectionHandshake(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGDtlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -748,12 +738,7 @@ func (x *DtlsConnectionBase) SetRequireCloseNotify(RequireCloseNotifyVar bool) {
 func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDtlsConnectionShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVarPtr, &cerr)
+	cret := XGDtlsConnectionShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

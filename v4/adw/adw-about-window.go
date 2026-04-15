@@ -1600,7 +1600,7 @@ func (x *AboutWindow) ConnectActivateLink(cb *func(AboutWindow, string) bool) ui
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, UriVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, UriVarp string) bool {
 		fa := AboutWindow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

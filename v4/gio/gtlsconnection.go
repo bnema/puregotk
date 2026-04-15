@@ -458,12 +458,7 @@ var xTlsConnectionHandshake func(uintptr, uintptr, **glib.Error) bool
 func (x *TlsConnection) Handshake(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsConnectionHandshake(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xTlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

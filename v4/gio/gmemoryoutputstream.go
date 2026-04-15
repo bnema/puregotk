@@ -228,37 +228,7 @@ var xNewMemoryOutputStream func(uintptr, uint, uintptr, uintptr) uintptr
 func NewMemoryOutputStream(DataVar uintptr, SizeVar uint, ReallocFunctionVar *ReallocFunc, DestroyFunctionVar *glib.DestroyNotify) *MemoryOutputStream {
 	var cls *MemoryOutputStream
 
-	var ReallocFunctionVarRef uintptr
-	if ReallocFunctionVar != nil {
-		ReallocFunctionVarPtr := uintptr(unsafe.Pointer(ReallocFunctionVar))
-		if cbRefPtr, ok := glib.GetCallback(ReallocFunctionVarPtr); ok {
-			ReallocFunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uint) uintptr {
-				cbFn := *ReallocFunctionVar
-				return cbFn(arg0, arg1)
-			}
-			ReallocFunctionVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ReallocFunctionVarPtr, ReallocFunctionVarRef, ReallocFunctionVar)
-		}
-	}
-
-	var DestroyFunctionVarRef uintptr
-	if DestroyFunctionVar != nil {
-		DestroyFunctionVarPtr := uintptr(unsafe.Pointer(DestroyFunctionVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyFunctionVarPtr); ok {
-			DestroyFunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyFunctionVar
-				cbFn(arg0)
-			}
-			DestroyFunctionVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyFunctionVarPtr, DestroyFunctionVarRef, DestroyFunctionVar)
-		}
-	}
-
-	cret := xNewMemoryOutputStream(DataVar, SizeVar, ReallocFunctionVarRef, DestroyFunctionVarRef)
+	cret := xNewMemoryOutputStream(DataVar, SizeVar, glib.NewCallbackNullable(ReallocFunctionVar), glib.NewCallbackNullable(DestroyFunctionVar))
 
 	if cret == 0 {
 		return nil
@@ -507,12 +477,7 @@ func (x *MemoryOutputStream) IsWritable() bool {
 func (x *MemoryOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVarPtr, &cerr)
+	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -541,12 +506,7 @@ func (x *MemoryOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, C
 func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVarPtr, &cerr)
+	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -583,12 +543,7 @@ func (x *MemoryOutputStream) CanTruncate() bool {
 func (x *MemoryOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -613,12 +568,7 @@ func (x *MemoryOutputStream) Tell() int64 {
 func (x *MemoryOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

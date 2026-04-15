@@ -18,7 +18,6 @@ var xUuidStringIsValid func(string) bool
 // as per the aforementioned RFC.
 func UuidStringIsValid(StrVar string) bool {
 	cret := xUuidStringIsValid(StrVar)
-
 	return cret
 }
 
@@ -29,7 +28,6 @@ var xUuidStringRandom func() string
 // purposes such as key generation, nonces, salts or one-time pads.
 func UuidStringRandom() string {
 	cret := xUuidStringRandom()
-
 	return cret
 }
 

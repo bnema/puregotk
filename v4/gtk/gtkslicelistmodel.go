@@ -54,12 +54,7 @@ var xNewSliceListModel func(uintptr, uint, uint) uintptr
 func NewSliceListModel(ModelVar gio.ListModel, OffsetVar uint, SizeVar uint) *SliceListModel {
 	var cls *SliceListModel
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewSliceListModel(ModelVarPtr, OffsetVar, SizeVar)
+	cret := xNewSliceListModel(ModelVar.GoPointer(), OffsetVar, SizeVar)
 
 	if cret == 0 {
 		return nil

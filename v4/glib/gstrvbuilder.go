@@ -100,7 +100,7 @@ func (x *StrvBuilder) Ref() *StrvBuilder {
 	return (*StrvBuilder)(unsafe.Pointer(cret))
 }
 
-var xStrvBuilderTake func(uintptr, uintptr)
+var xStrvBuilderTake func(uintptr, string)
 
 // Add a string to the end of the array. After @value belongs to the
 // #GStrvBuilder and may no longer be modified by the caller.

@@ -1269,12 +1269,7 @@ func (x *AppInfoBase) GetSupportedTypes() []string {
 func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
-	cret := XGAppInfoLaunch(x.GoPointer(), FilesVar, ContextVarPtr, &cerr)
+	cret := XGAppInfoLaunch(x.GoPointer(), FilesVar, ContextVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1296,12 +1291,7 @@ func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) 
 func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
-	cret := XGAppInfoLaunchUris(x.GoPointer(), UrisVar, ContextVarPtr, &cerr)
+	cret := XGAppInfoLaunchUris(x.GoPointer(), UrisVar, ContextVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1634,12 +1624,7 @@ var xAppInfoLaunchDefaultForUri func(string, uintptr, **glib.Error) bool
 func AppInfoLaunchDefaultForUri(UriVar string, ContextVar *AppLaunchContext) (bool, error) {
 	var cerr *glib.Error
 
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
-	cret := xAppInfoLaunchDefaultForUri(UriVar, ContextVarPtr, &cerr)
+	cret := xAppInfoLaunchDefaultForUri(UriVar, ContextVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1934,7 +1919,7 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StartupNotifyIdVarp uintptr) {
+	fcb := func(clsPtr uintptr, StartupNotifyIdVarp string) {
 		fa := AppLaunchContext{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

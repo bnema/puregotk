@@ -970,7 +970,7 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StringVarp uintptr) {
+	fcb := func(clsPtr uintptr, StringVarp string) {
 		fa := Text{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1096,7 +1096,7 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PreeditVarp uintptr) {
+	fcb := func(clsPtr uintptr, PreeditVarp string) {
 		fa := Text{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

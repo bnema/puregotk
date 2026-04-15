@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"fmt"
 	"unsafe"
 
 	"github.com/bnema/purego"
@@ -330,7 +329,7 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ItemNameVarp uintptr) {
+	fcb := func(clsPtr uintptr, ItemNameVarp string) {
 		fa := AppChooserButton{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

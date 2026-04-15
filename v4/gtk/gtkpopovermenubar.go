@@ -66,12 +66,7 @@ var xNewPopoverMenuBarFromModel func(uintptr) uintptr
 func NewPopoverMenuBarFromModel(ModelVar *gio.MenuModel) *PopoverMenuBar {
 	var cls *PopoverMenuBar
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewPopoverMenuBarFromModel(ModelVarPtr)
+	cret := xNewPopoverMenuBarFromModel(ModelVar.GoPointer())
 
 	if cret == 0 {
 		return nil

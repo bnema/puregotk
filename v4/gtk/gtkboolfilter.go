@@ -44,12 +44,7 @@ var xNewBoolFilter func(uintptr) uintptr
 func NewBoolFilter(ExpressionVar *Expression) *BoolFilter {
 	var cls *BoolFilter
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewBoolFilter(ExpressionVarPtr)
+	cret := xNewBoolFilter(ExpressionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

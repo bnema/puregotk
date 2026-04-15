@@ -155,7 +155,7 @@ func (x *StringList) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar []
 	xStringListSplice(x.GoPointer(), PositionVar, NRemovalsVar, AdditionsVar)
 }
 
-var xStringListTake func(uintptr, uintptr)
+var xStringListTake func(uintptr, string)
 
 // Adds @string to self at the end, and takes
 // ownership of it.

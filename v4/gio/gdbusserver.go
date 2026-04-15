@@ -73,17 +73,7 @@ func NewDBusServerSync(AddressVar string, FlagsVar DBusServerFlags, GuidVar stri
 	var cls *DBusServer
 	var cerr *glib.Error
 
-	var ObserverVarPtr uintptr
-	if ObserverVar != nil {
-		ObserverVarPtr = ObserverVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewDBusServerSync(AddressVar, FlagsVar, GuidVar, ObserverVarPtr, CancellableVarPtr, &cerr)
+	cret := xNewDBusServerSync(AddressVar, FlagsVar, GuidVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -295,12 +285,7 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

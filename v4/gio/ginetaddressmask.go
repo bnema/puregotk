@@ -220,12 +220,7 @@ func (x *InetAddressMask) GetPropertyLength() uint {
 func (x *InetAddressMask) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

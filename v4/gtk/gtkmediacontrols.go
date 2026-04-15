@@ -53,12 +53,7 @@ var xNewMediaControls func(uintptr) uintptr
 func NewMediaControls(StreamVar *MediaStream) *MediaControls {
 	var cls *MediaControls
 
-	var StreamVarPtr uintptr
-	if StreamVar != nil {
-		StreamVarPtr = StreamVar.GoPointer()
-	}
-
-	cret := xNewMediaControls(StreamVarPtr)
+	cret := xNewMediaControls(StreamVar.GoPointer())
 
 	if cret == 0 {
 		return nil

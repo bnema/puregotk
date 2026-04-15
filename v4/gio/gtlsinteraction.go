@@ -294,12 +294,7 @@ var xTlsInteractionAskPassword func(uintptr, uintptr, uintptr, **glib.Error) Tls
 func (x *TlsInteraction) AskPassword(PasswordVar *TlsPassword, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsInteractionAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xTlsInteractionAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -372,12 +367,7 @@ var xTlsInteractionInvokeAskPassword func(uintptr, uintptr, uintptr, **glib.Erro
 func (x *TlsInteraction) InvokeAskPassword(PasswordVar *TlsPassword, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsInteractionInvokeAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xTlsInteractionInvokeAskPassword(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -409,12 +399,7 @@ var xTlsInteractionInvokeRequestCertificate func(uintptr, uintptr, TlsCertificat
 func (x *TlsInteraction) InvokeRequestCertificate(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsInteractionInvokeRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := xTlsInteractionInvokeRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -442,12 +427,7 @@ var xTlsInteractionRequestCertificate func(uintptr, uintptr, TlsCertificateReque
 func (x *TlsInteraction) RequestCertificate(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable) (TlsInteractionResult, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsInteractionRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, &cerr)
+	cret := xTlsInteractionRequestCertificate(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

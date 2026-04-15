@@ -426,12 +426,7 @@ var xFileEnumeratorClose func(uintptr, uintptr, **glib.Error) bool
 func (x *FileEnumerator) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xFileEnumeratorClose(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xFileEnumeratorClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -581,12 +576,7 @@ var xFileEnumeratorIterate func(uintptr, **FileInfo, **File, uintptr, **glib.Err
 func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar **File, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVarPtr, &cerr)
+	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -610,12 +600,7 @@ func (x *FileEnumerator) NextFile(CancellableVar *Cancellable) (*FileInfo, error
 	var cls *FileInfo
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xFileEnumeratorNextFile(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xFileEnumeratorNextFile(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

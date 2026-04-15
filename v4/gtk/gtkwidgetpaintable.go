@@ -63,12 +63,7 @@ var xNewWidgetPaintable func(uintptr) uintptr
 func NewWidgetPaintable(WidgetVar *Widget) *WidgetPaintable {
 	var cls *WidgetPaintable
 
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	cret := xNewWidgetPaintable(WidgetVarPtr)
+	cret := xNewWidgetPaintable(WidgetVar.GoPointer())
 
 	if cret == 0 {
 		return nil

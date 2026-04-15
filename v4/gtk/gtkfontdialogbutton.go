@@ -97,12 +97,7 @@ var xNewFontDialogButton func(uintptr) uintptr
 func NewFontDialogButton(DialogVar *FontDialog) *FontDialogButton {
 	var cls *FontDialogButton
 
-	var DialogVarPtr uintptr
-	if DialogVar != nil {
-		DialogVarPtr = DialogVar.GoPointer()
-	}
-
-	cret := xNewFontDialogButton(DialogVarPtr)
+	cret := xNewFontDialogButton(DialogVar.GoPointer())
 
 	if cret == 0 {
 		return nil

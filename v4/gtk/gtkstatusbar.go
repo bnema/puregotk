@@ -152,7 +152,7 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp uintptr) {
+	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp string) {
 		fa := Statusbar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -175,7 +175,7 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp uintptr) {
+	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp string) {
 		fa := Statusbar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

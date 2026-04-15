@@ -72,17 +72,7 @@ var xNewSortListModel func(uintptr, uintptr) uintptr
 func NewSortListModel(ModelVar gio.ListModel, SorterVar *Sorter) *SortListModel {
 	var cls *SortListModel
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	var SorterVarPtr uintptr
-	if SorterVar != nil {
-		SorterVarPtr = SorterVar.GoPointer()
-	}
-
-	cret := xNewSortListModel(ModelVarPtr, SorterVarPtr)
+	cret := xNewSortListModel(ModelVar.GoPointer(), SorterVar.GoPointer())
 
 	if cret == 0 {
 		return nil

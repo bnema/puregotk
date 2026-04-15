@@ -615,7 +615,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PositionVarp uint, CharsVarp uintptr, NCharsVarp uint) {
+	fcb := func(clsPtr uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) {
 		fa := EntryBuffer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

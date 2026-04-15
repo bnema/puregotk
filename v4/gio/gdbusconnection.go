@@ -282,12 +282,7 @@ func BusGetSync(BusTypeVar BusType, CancellableVar *Cancellable) (*DBusConnectio
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xBusGetSync(BusTypeVar, CancellableVarPtr, &cerr)
+	cret := xBusGetSync(BusTypeVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -431,17 +426,7 @@ func NewDBusConnectionForAddressSync(AddressVar string, FlagsVar DBusConnectionF
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	var ObserverVarPtr uintptr
-	if ObserverVar != nil {
-		ObserverVarPtr = ObserverVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewDBusConnectionForAddressSync(AddressVar, FlagsVar, ObserverVarPtr, CancellableVarPtr, &cerr)
+	cret := xNewDBusConnectionForAddressSync(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -779,12 +764,7 @@ var xDBusConnectionCloseSync func(uintptr, uintptr, **glib.Error) bool
 func (x *DBusConnection) CloseSync(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDBusConnectionCloseSync(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDBusConnectionCloseSync(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -916,12 +896,7 @@ var xDBusConnectionFlushSync func(uintptr, uintptr, **glib.Error) bool
 func (x *DBusConnection) FlushSync(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDBusConnectionFlushSync(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xDBusConnectionFlushSync(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1083,22 +1058,7 @@ var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBu
 func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, VtableVar *DBusInterfaceVTable, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	var UserDataFreeFuncVarRef uintptr
-	if UserDataFreeFuncVar != nil {
-		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-			UserDataFreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDataFreeFuncVar
-				cbFn(arg0)
-			}
-			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
-		}
-	}
-
-	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
+	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1187,22 +1147,7 @@ var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBu
 func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSubtreeVTable, FlagsVar DBusSubtreeFlags, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	var UserDataFreeFuncVarRef uintptr
-	if UserDataFreeFuncVar != nil {
-		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-			UserDataFreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDataFreeFuncVar
-				cbFn(arg0)
-			}
-			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
-		}
-	}
-
-	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
+	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1360,12 +1305,7 @@ func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, Flags
 	var cls *DBusMessage
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xDBusConnectionSendMessageWithReplySync(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVarPtr, &cerr)
+	cret := xDBusConnectionSendMessageWithReplySync(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1807,12 +1747,7 @@ func (x *DBusConnection) NewFinish(ResVar AsyncResult) (*gobject.Object, error) 
 func (x *DBusConnection) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

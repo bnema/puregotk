@@ -508,17 +508,7 @@ var xPrintRunPageSetupDialog func(uintptr, uintptr, uintptr) uintptr
 func PrintRunPageSetupDialog(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings) *PageSetup {
 	var cls *PageSetup
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var PageSetupVarPtr uintptr
-	if PageSetupVar != nil {
-		PageSetupVarPtr = PageSetupVar.GoPointer()
-	}
-
-	cret := xPrintRunPageSetupDialog(ParentVarPtr, PageSetupVarPtr, SettingsVar.GoPointer())
+	cret := xPrintRunPageSetupDialog(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -870,12 +860,7 @@ var xPrintOperationRun func(uintptr, PrintOperationAction, uintptr, **glib.Error
 func (x *PrintOperation) Run(ActionVar PrintOperationAction, ParentVar *Window) (PrintOperationResult, error) {
 	var cerr *glib.Error
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xPrintOperationRun(x.GoPointer(), ActionVar, ParentVarPtr, &cerr)
+	cret := xPrintOperationRun(x.GoPointer(), ActionVar, ParentVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

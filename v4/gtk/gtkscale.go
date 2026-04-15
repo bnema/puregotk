@@ -173,12 +173,7 @@ var xNewScale func(Orientation, uintptr) uintptr
 func NewScale(OrientationVar Orientation, AdjustmentVar *Adjustment) *Scale {
 	var cls *Scale
 
-	var AdjustmentVarPtr uintptr
-	if AdjustmentVar != nil {
-		AdjustmentVarPtr = AdjustmentVar.GoPointer()
-	}
-
-	cret := xNewScale(OrientationVar, AdjustmentVarPtr)
+	cret := xNewScale(OrientationVar, AdjustmentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -56,12 +56,7 @@ var xNewFileLauncher func(uintptr) uintptr
 func NewFileLauncher(FileVar gio.File) *FileLauncher {
 	var cls *FileLauncher
 
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	cret := xNewFileLauncher(FileVarPtr)
+	cret := xNewFileLauncher(FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil

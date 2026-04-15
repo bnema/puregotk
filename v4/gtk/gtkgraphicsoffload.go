@@ -95,12 +95,7 @@ var xNewGraphicsOffload func(uintptr) uintptr
 func NewGraphicsOffload(ChildVar *Widget) *GraphicsOffload {
 	var cls *GraphicsOffload
 
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	cret := xNewGraphicsOffload(ChildVarPtr)
+	cret := xNewGraphicsOffload(ChildVar.GoPointer())
 
 	if cret == 0 {
 		return nil

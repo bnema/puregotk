@@ -48,12 +48,7 @@ var xNewFlattenListModel func(uintptr) uintptr
 func NewFlattenListModel(ModelVar gio.ListModel) *FlattenListModel {
 	var cls *FlattenListModel
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewFlattenListModel(ModelVarPtr)
+	cret := xNewFlattenListModel(ModelVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -699,7 +699,6 @@ func UriIsValid(UriStringVar string, FlagsVar UriFlags) (bool, error) {
 	var cerr *Error
 
 	cret := xUriIsValid(UriStringVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -847,7 +846,6 @@ var xUriParseScheme func(string) string
 // Common schemes include `file`, `https`, `svn+ssh`, etc.
 func UriParseScheme(UriVar string) string {
 	cret := xUriParseScheme(UriVar)
-
 	return cret
 }
 
@@ -865,7 +863,6 @@ var xUriPeekScheme func(string) string
 // all-lowercase and does not need to be freed.
 func UriPeekScheme(UriVar string) string {
 	cret := xUriPeekScheme(UriVar)
-
 	return cret
 }
 
@@ -913,7 +910,6 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserinfoVa
 	var cerr *Error
 
 	cret := xUriSplit(UriRefVar, FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -932,7 +928,6 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar *string, 
 	var cerr *Error
 
 	cret := xUriSplitNetwork(UriStringVar, FlagsVar, SchemeVar, HostVar, PortVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -956,7 +951,6 @@ func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, Us
 	var cerr *Error
 
 	cret := xUriSplitWithUser(UriRefVar, FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

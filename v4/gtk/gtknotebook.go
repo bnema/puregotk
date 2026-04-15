@@ -837,7 +837,7 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		CreateWindowCls := cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = PageVarp; return cls }())
+		CreateWindowCls := cbFn(fa, PageVarp)
 		return CreateWindowCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)

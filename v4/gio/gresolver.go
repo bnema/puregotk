@@ -578,12 +578,7 @@ var xResolverLookupByAddress func(uintptr, uintptr, uintptr, **glib.Error) strin
 func (x *Resolver) LookupByAddress(AddressVar *InetAddress, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xResolverLookupByAddress(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xResolverLookupByAddress(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

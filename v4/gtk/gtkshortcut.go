@@ -60,17 +60,7 @@ var xNewShortcut func(uintptr, uintptr) uintptr
 func NewShortcut(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction) *Shortcut {
 	var cls *Shortcut
 
-	var TriggerVarPtr uintptr
-	if TriggerVar != nil {
-		TriggerVarPtr = TriggerVar.GoPointer()
-	}
-
-	var ActionVarPtr uintptr
-	if ActionVar != nil {
-		ActionVarPtr = ActionVar.GoPointer()
-	}
-
-	cret := xNewShortcut(TriggerVarPtr, ActionVarPtr)
+	cret := xNewShortcut(TriggerVar.GoPointer(), ActionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

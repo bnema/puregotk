@@ -732,7 +732,7 @@ func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, stri
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathVarp uintptr, NewTextVarp uintptr) {
+	fcb := func(clsPtr uintptr, PathVarp string, NewTextVarp string) {
 		fa := CellRendererText{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

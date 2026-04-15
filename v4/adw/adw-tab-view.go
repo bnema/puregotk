@@ -1133,12 +1133,7 @@ var xTabViewAddPage func(uintptr, uintptr, uintptr) uintptr
 func (x *TabView) AddPage(ChildVar *gtk.Widget, ParentVar *TabPage) *TabPage {
 	var cls *TabPage
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xTabViewAddPage(x.GoPointer(), ChildVar.GoPointer(), ParentVarPtr)
+	cret := xTabViewAddPage(x.GoPointer(), ChildVar.GoPointer(), ParentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

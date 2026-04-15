@@ -81,22 +81,7 @@ var xGLTextureBuilderBuild func(uintptr, uintptr, uintptr) uintptr
 func (x *GLTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uintptr) *Texture {
 	var cls *Texture
 
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	cret := xGLTextureBuilderBuild(x.GoPointer(), DestroyVarRef, DataVar)
+	cret := xGLTextureBuilderBuild(x.GoPointer(), glib.NewCallbackNullable(DestroyVar), DataVar)
 
 	if cret == 0 {
 		return nil

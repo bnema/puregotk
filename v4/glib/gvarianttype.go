@@ -615,7 +615,6 @@ var xVariantTypeStringGetDepth func(string) uint
 
 func VariantTypeStringGetDepth(TypeStringVar string) uint {
 	cret := xVariantTypeStringGetDepth(TypeStringVar)
-
 	return cret
 }
 
@@ -628,7 +627,6 @@ var xVariantTypeStringIsValid func(string) bool
 // confirming that the following character is a nul terminator.
 func VariantTypeStringIsValid(TypeStringVar string) bool {
 	cret := xVariantTypeStringIsValid(TypeStringVar)
-
 	return cret
 }
 

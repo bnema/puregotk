@@ -174,12 +174,7 @@ func (x *SocketAddressEnumerator) Next(CancellableVar *Cancellable) (*SocketAddr
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketAddressEnumeratorNext(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSocketAddressEnumeratorNext(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

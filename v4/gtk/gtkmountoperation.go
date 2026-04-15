@@ -166,12 +166,7 @@ var xNewMountOperation func(uintptr) uintptr
 func NewMountOperation(ParentVar *Window) *MountOperation {
 	var cls *MountOperation
 
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xNewMountOperation(ParentVarPtr)
+	cret := xNewMountOperation(ParentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

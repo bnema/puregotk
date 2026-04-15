@@ -2,7 +2,7 @@ module github.com/bnema/puregotk
 
 go 1.24.0
 
-require github.com/ebitengine/purego v0.10.0
+toolchain go1.24.5
 
 require (
 	github.com/bnema/purego v0.11.0-bnema.2

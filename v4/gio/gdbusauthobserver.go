@@ -148,7 +148,7 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, MechanismVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, MechanismVarp string) bool {
 		fa := DBusAuthObserver{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

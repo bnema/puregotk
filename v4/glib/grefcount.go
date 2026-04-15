@@ -52,7 +52,6 @@ var xAtomicRefCountCompare func(int, int) bool
 // Atomically compares the current value of @arc with @val.
 func AtomicRefCountCompare(ArcVar int, ValVar int) bool {
 	cret := xAtomicRefCountCompare(ArcVar, ValVar)
-
 	return cret
 }
 
@@ -65,7 +64,6 @@ var xAtomicRefCountDec func(int) bool
 // g_atomic_ref_count_init() to be used again.
 func AtomicRefCountDec(ArcVar int) bool {
 	cret := xAtomicRefCountDec(ArcVar)
-
 	return cret
 }
 
@@ -88,7 +86,6 @@ var xRefCountCompare func(int, int) bool
 // Compares the current value of @rc with @val.
 func RefCountCompare(RcVar int, ValVar int) bool {
 	cret := xRefCountCompare(RcVar, ValVar)
-
 	return cret
 }
 
@@ -101,7 +98,6 @@ var xRefCountDec func(*int) bool
 // g_ref_count_init() to be used again.
 func RefCountDec(RcVar *int) bool {
 	cret := xRefCountDec(RcVar)
-
 	return cret
 }
 

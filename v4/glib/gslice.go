@@ -33,7 +33,6 @@ var xSliceAlloc func(uint) uintptr
 // internally.
 func SliceAlloc(BlockSizeVar uint) uintptr {
 	cret := xSliceAlloc(BlockSizeVar)
-
 	return cret
 }
 
@@ -46,7 +45,6 @@ var xSliceAlloc0 func(uint) uintptr
 // internally.
 func SliceAlloc0(BlockSizeVar uint) uintptr {
 	cret := xSliceAlloc0(BlockSizeVar)
-
 	return cret
 }
 
@@ -61,7 +59,6 @@ var xSliceCopy func(uint, uintptr) uintptr
 // internally.
 func SliceCopy(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 	cret := xSliceCopy(BlockSizeVar, MemBlockVar)
-
 	return cret
 }
 
@@ -106,7 +103,6 @@ var xSliceGetConfig func(SliceConfig) int64
 
 func SliceGetConfig(CkeyVar SliceConfig) int64 {
 	cret := xSliceGetConfig(CkeyVar)
-
 	return cret
 }
 
@@ -114,7 +110,6 @@ var xSliceGetConfigState func(SliceConfig, int64, uint) int64
 
 func SliceGetConfigState(CkeyVar SliceConfig, AddressVar int64, NValuesVar uint) int64 {
 	cret := xSliceGetConfigState(CkeyVar, AddressVar, NValuesVar)
-
 	return cret
 }
 

@@ -1668,7 +1668,7 @@ func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) ui
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, UriVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, UriVarp string) bool {
 		fa := AboutDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

@@ -222,12 +222,7 @@ var xNewSpinButton func(uintptr, float64, uint) uintptr
 func NewSpinButton(AdjustmentVar *Adjustment, ClimbRateVar float64, DigitsVar uint) *SpinButton {
 	var cls *SpinButton
 
-	var AdjustmentVarPtr uintptr
-	if AdjustmentVar != nil {
-		AdjustmentVarPtr = AdjustmentVar.GoPointer()
-	}
-
-	cret := xNewSpinButton(AdjustmentVarPtr, ClimbRateVar, DigitsVar)
+	cret := xNewSpinButton(AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
 
 	if cret == 0 {
 		return nil

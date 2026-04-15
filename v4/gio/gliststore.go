@@ -167,7 +167,7 @@ func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintp
 	xListStoreSort(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 }
 
-var xListStoreSplice func(uintptr, uint, uint, uintptr, uint)
+var xListStoreSplice func(uintptr, uint, uint, []gobject.Object, uint)
 
 // Changes @store by removing @n_removals items and adding @n_additions
 // items to it. @additions must contain @n_additions items of type

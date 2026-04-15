@@ -1593,7 +1593,7 @@ func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintp
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, CellAreaVarp uintptr, PathVarp uintptr) {
+	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, CellAreaVarp uintptr, PathVarp string) {
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1646,7 +1646,7 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, RendererVarp uintptr, PathVarp uintptr) {
+	fcb := func(clsPtr uintptr, RendererVarp uintptr, PathVarp string) {
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

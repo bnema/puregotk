@@ -51,17 +51,7 @@ var xNewViewport func(uintptr, uintptr) uintptr
 func NewViewport(HadjustmentVar *Adjustment, VadjustmentVar *Adjustment) *Viewport {
 	var cls *Viewport
 
-	var HadjustmentVarPtr uintptr
-	if HadjustmentVar != nil {
-		HadjustmentVarPtr = HadjustmentVar.GoPointer()
-	}
-
-	var VadjustmentVarPtr uintptr
-	if VadjustmentVar != nil {
-		VadjustmentVarPtr = VadjustmentVar.GoPointer()
-	}
-
-	cret := xNewViewport(HadjustmentVarPtr, VadjustmentVarPtr)
+	cret := xNewViewport(HadjustmentVar.GoPointer(), VadjustmentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

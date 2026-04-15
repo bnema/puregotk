@@ -131,22 +131,7 @@ func (x *DmabufTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uin
 	var cls *Texture
 	var cerr *glib.Error
 
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	cret := xDmabufTextureBuilderBuild(x.GoPointer(), DestroyVarRef, DataVar, &cerr)
+	cret := xDmabufTextureBuilderBuild(x.GoPointer(), glib.NewCallbackNullable(DestroyVar), DataVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

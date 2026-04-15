@@ -2,7 +2,6 @@
 package gobject
 
 import (
-	"fmt"
 	"structs"
 	"unsafe"
 
@@ -1283,52 +1282,7 @@ var xObjectBindPropertyFull func(uintptr, string, uintptr, string, BindingFlags,
 func (x *Object) BindPropertyFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) *Binding {
 	var cls *Binding
 
-	var TransformToVarRef uintptr
-	if TransformToVar != nil {
-		TransformToVarPtr := uintptr(unsafe.Pointer(TransformToVar))
-		if cbRefPtr, ok := glib.GetCallback(TransformToVarPtr); ok {
-			TransformToVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *TransformToVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			TransformToVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(TransformToVarPtr, TransformToVarRef, TransformToVar)
-		}
-	}
-
-	var TransformFromVarRef uintptr
-	if TransformFromVar != nil {
-		TransformFromVarPtr := uintptr(unsafe.Pointer(TransformFromVar))
-		if cbRefPtr, ok := glib.GetCallback(TransformFromVarPtr); ok {
-			TransformFromVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *TransformFromVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			TransformFromVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(TransformFromVarPtr, TransformFromVarRef, TransformFromVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	cret := xObjectBindPropertyFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVarRef, TransformFromVarRef, UserDataVar, NotifyVarRef)
+	cret := xObjectBindPropertyFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 
 	if cret == 0 {
 		return nil

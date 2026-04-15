@@ -210,12 +210,7 @@ var xNewImageFromPaintable func(uintptr) uintptr
 func NewImageFromPaintable(PaintableVar gdk.Paintable) *Image {
 	var cls *Image
 
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	cret := xNewImageFromPaintable(PaintableVarPtr)
+	cret := xNewImageFromPaintable(PaintableVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -243,12 +238,7 @@ var xNewImageFromPixbuf func(uintptr) uintptr
 func NewImageFromPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Image {
 	var cls *Image
 
-	var PixbufVarPtr uintptr
-	if PixbufVar != nil {
-		PixbufVarPtr = PixbufVar.GoPointer()
-	}
-
-	cret := xNewImageFromPixbuf(PixbufVarPtr)
+	cret := xNewImageFromPixbuf(PixbufVar.GoPointer())
 
 	if cret == 0 {
 		return nil

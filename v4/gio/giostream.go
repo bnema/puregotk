@@ -534,12 +534,7 @@ var xIOStreamClose func(uintptr, uintptr, **glib.Error) bool
 func (x *IOStream) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xIOStreamClose(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xIOStreamClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

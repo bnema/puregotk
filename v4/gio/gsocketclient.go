@@ -249,12 +249,7 @@ func (x *SocketClient) Connect(ConnectableVar SocketConnectable, CancellableVar 
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketClientConnect(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xSocketClientConnect(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -343,12 +338,7 @@ func (x *SocketClient) ConnectToHost(HostAndPortVar string, DefaultPortVar uint1
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketClientConnectToHost(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVarPtr, &cerr)
+	cret := xSocketClientConnectToHost(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -412,12 +402,7 @@ func (x *SocketClient) ConnectToService(DomainVar string, ServiceVar string, Can
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketClientConnectToService(x.GoPointer(), DomainVar, ServiceVar, CancellableVarPtr, &cerr)
+	cret := xSocketClientConnectToService(x.GoPointer(), DomainVar, ServiceVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -485,12 +470,7 @@ func (x *SocketClient) ConnectToUri(UriVar string, DefaultPortVar uint16, Cancel
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xSocketClientConnectToUri(x.GoPointer(), UriVar, DefaultPortVar, CancellableVarPtr, &cerr)
+	cret := xSocketClientConnectToUri(x.GoPointer(), UriVar, DefaultPortVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

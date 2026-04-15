@@ -233,178 +233,16 @@ func init() {
 
 // UnrefCallbackValue unreferences the provided callback by reflect.value to free a purego slot
 //
-// GLib source functions (IdleAdd, TimeoutAdd, etc.) previously allocated a new
-// purego callback slot for every invocation. purego has a hard limit of 2000
-// slots, so long-running programs that schedule many one-shot idle/timeout
-// callbacks would exhaust the pool and panic.
-//
-// The trampoline uses a single purego callback that dispatches through a
-// Go-side map keyed by an opaque ID passed as GLib's user_data pointer.
-// This means all IdleAdd/TimeoutAdd calls share ONE purego slot regardless
-// of how many are outstanding.
-// ---------------------------------------------------------------------------
-
-// sourceEntry holds a registered GLib source callback.
-type sourceEntry struct {
-	fn   SourceFunc
-	once bool // if true, automatically remove after first call (SourceOnceFunc semantics)
-}
-
-var sourceTrampolines = struct {
-	sync.Mutex
-	nextID         uintptr
-	funcs          map[uintptr]*sourceEntry
-	sourceToDataID map[uint]uintptr // GLib source ID → trampoline data ID
-}{
-	funcs:          make(map[uintptr]*sourceEntry),
-	sourceToDataID: make(map[uint]uintptr),
-}
-
-// sourceTrampolineCb is the single purego callback shared by all source functions.
-// GLib calls it with the user_data we provided (our map key).
-var sourceTrampolineCb uintptr
-
-// sourceTrampolineOnceCb is the single purego callback for SourceOnceFunc sources
-// (IdleAddOnce, TimeoutAddOnce). These have signature func(uintptr) with no return.
-var sourceTrampolineOnceCb uintptr
-
-func initSourceTrampoline() {
-	fn := func(id uintptr) uintptr {
-		sourceTrampolines.Lock()
-		entry, ok := sourceTrampolines.funcs[id]
-		if !ok {
-			sourceTrampolines.Unlock()
-			return 0 // SOURCE_REMOVE — entry already cleaned up (e.g. by SourceRemove)
-		}
-		cb := entry.fn
-		sourceTrampolines.Unlock()
-
-		result := cb(0)
-
-		if !result {
-			sourceTrampolines.Lock()
-			delete(sourceTrampolines.funcs, id)
-			// Also clean up the reverse mapping (source ID → data ID).
-			for sid, did := range sourceTrampolines.sourceToDataID {
-				if did == id {
-					delete(sourceTrampolines.sourceToDataID, sid)
-					break
-				}
-			}
-			sourceTrampolines.Unlock()
-		}
-		if result {
-			return 1
-		}
-		return 0
-	}
-	sourceTrampolineCb = purego.NewCallback(fn)
-
-	onceFn := func(id uintptr) {
-		sourceTrampolines.Lock()
-		entry, ok := sourceTrampolines.funcs[id]
-		if !ok {
-			sourceTrampolines.Unlock()
-			return
-		}
-		cb := entry.fn
-		delete(sourceTrampolines.funcs, id)
-		// Also clean up the reverse mapping.
-		for sid, did := range sourceTrampolines.sourceToDataID {
-			if did == id {
-				delete(sourceTrampolines.sourceToDataID, sid)
-				break
-			}
-		}
-		sourceTrampolines.Unlock()
-
-		cb(0)
-	}
-	sourceTrampolineOnceCb = purego.NewCallback(onceFn)
-}
-
-// registerSourceFunc stores a SourceFunc in the trampoline map and returns
-// the trampoline callback pointer and the user_data key.
-func registerSourceFunc(fn *SourceFunc, once bool) (trampolineCb uintptr, userData uintptr) {
-	if fn == nil {
-		return 0, 0
-	}
-	sourceTrampolines.Lock()
-	sourceTrampolines.nextID++
-	id := sourceTrampolines.nextID
-	sourceTrampolines.funcs[id] = &sourceEntry{fn: *fn, once: once}
-	sourceTrampolines.Unlock()
-	if once {
-		return sourceTrampolineOnceCb, id
-	}
-	return sourceTrampolineCb, id
-}
-
-// registerSourceOnceFunc stores a SourceOnceFunc in the trampoline map and
-// returns the trampoline callback pointer and the user_data key.
-func registerSourceOnceFunc(fn *SourceOnceFunc) (trampolineCb uintptr, userData uintptr) {
-	if fn == nil {
-		return 0, 0
-	}
-	// Wrap SourceOnceFunc as SourceFunc so the entry type is uniform.
-	wrapped := SourceFunc(func(data uintptr) bool {
-		(*fn)(data)
-		return false
-	})
-	return registerSourceFunc(&wrapped, true)
-}
-
-// saveSourceTrampolineMapping records the GLib source ID → trampoline data ID
-// mapping so that SourceRemove can clean up the trampoline entry.
-func saveSourceTrampolineMapping(sourceID uint, dataID uintptr) {
-	if sourceID == 0 {
-		return
-	}
-	sourceTrampolines.Lock()
-	sourceTrampolines.sourceToDataID[sourceID] = dataID
-	sourceTrampolines.Unlock()
-}
-
-// removeSourceTrampolineBySourceID cleans up trampoline state when a GLib
-// source is removed via SourceRemove (before the callback fires).
-func removeSourceTrampolineBySourceID(sourceID uint) {
-	sourceTrampolines.Lock()
-	if dataID, ok := sourceTrampolines.sourceToDataID[sourceID]; ok {
-		delete(sourceTrampolines.sourceToDataID, sourceID)
-		delete(sourceTrampolines.funcs, dataID)
-	}
-	sourceTrampolines.Unlock()
-}
-
-// UnrefCallback removes puregotk's bookkeeping for a callback created from
-// a function pointer.
-//
-// NOTE: Upstream purego does not support releasing callback slots after
-// purego.NewCallback, so this only clears puregotk's local registry state.
+// NOTE: Windows does not support unreferencing callbacks, so on that platform this operation is
+// a NOOP, callback memory is never freed, and there is a limit on maximum total callbacks.
+// See the purego documentation for further details.
 func UnrefCallback(fnPtr interface{}) error {
 	return unrefCallback(fnPtr)
 }
 
-// NewCallback converts a pointer-to-function into a C callback pointer.
-// It reuses an existing callback for the same function pointer via the
-// local callback registry.
+// NewCallback is an alias to purego.NewCallback
 func NewCallback(fnPtr interface{}) uintptr {
-	val := reflect.ValueOf(fnPtr)
-	if val.IsNil() {
-		panic("purego: function must not be nil")
-	}
-	if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Func {
-		panic("purego: the type must be a function pointer but was not")
-	}
-
-	cbPtr := val.Pointer()
-	if refPtr, ok := GetCallback(cbPtr); ok {
-		return refPtr
-	}
-
-	refPtr := purego.NewCallback(val.Elem().Interface())
-	SaveCallbackWithClosure(cbPtr, refPtr, fnPtr)
-	return refPtr
+	return purego.NewCallbackFnPtr(fnPtr)
 }
 
 // NewCallbackNullable is an alias to purego.NewCallback that returns a null pointer for null functions
@@ -415,10 +253,6 @@ func NewCallbackNullable(fn interface{}) uintptr {
 	}
 
 	return NewCallback(fn)
-}
-
-func init() {
-	initSourceTrampoline()
 }
 
 func (e *Error) Error() string {

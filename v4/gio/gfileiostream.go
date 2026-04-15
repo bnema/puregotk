@@ -467,12 +467,7 @@ func (x *FileIOStream) QueryInfo(AttributesVar string, CancellableVar *Cancellab
 	var cls *FileInfo
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xFileIOStreamQueryInfo(x.GoPointer(), AttributesVar, CancellableVarPtr, &cerr)
+	cret := xFileIOStreamQueryInfo(x.GoPointer(), AttributesVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -559,12 +554,7 @@ func (x *FileIOStream) CanTruncate() bool {
 func (x *FileIOStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -589,12 +579,7 @@ func (x *FileIOStream) Tell() int64 {
 func (x *FileIOStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

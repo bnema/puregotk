@@ -1042,7 +1042,7 @@ func (x *IMContext) ConnectCommit(cb *func(IMContext, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StrVarp uintptr) {
+	fcb := func(clsPtr uintptr, StrVarp string) {
 		fa := IMContext{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

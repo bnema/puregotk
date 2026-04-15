@@ -1281,7 +1281,7 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, UriVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, UriVarp string) bool {
 		fa := Label{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

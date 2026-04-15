@@ -45,12 +45,7 @@ var xNewMultiSelection func(uintptr) uintptr
 func NewMultiSelection(ModelVar gio.ListModel) *MultiSelection {
 	var cls *MultiSelection
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewMultiSelection(ModelVarPtr)
+	cret := xNewMultiSelection(ModelVar.GoPointer())
 
 	if cret == 0 {
 		return nil

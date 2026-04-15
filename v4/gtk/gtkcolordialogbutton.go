@@ -73,12 +73,7 @@ var xNewColorDialogButton func(uintptr) uintptr
 func NewColorDialogButton(DialogVar *ColorDialog) *ColorDialogButton {
 	var cls *ColorDialogButton
 
-	var DialogVarPtr uintptr
-	if DialogVar != nil {
-		DialogVarPtr = DialogVar.GoPointer()
-	}
-
-	cret := xNewColorDialogButton(DialogVarPtr)
+	cret := xNewColorDialogButton(DialogVar.GoPointer())
 
 	if cret == 0 {
 		return nil

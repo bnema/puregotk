@@ -37,7 +37,6 @@ var xAccess func(string, int) int
 // See your C library manual for more details about access().
 func Access(FilenameVar string, ModeVar int) int {
 	cret := xAccess(FilenameVar, ModeVar)
-
 	return cret
 }
 
@@ -49,7 +48,6 @@ var xChdir func(string) int
 // See your C library manual for more details about chdir().
 func Chdir(PathVar string) int {
 	cret := xChdir(PathVar)
-
 	return cret
 }
 
@@ -67,7 +65,6 @@ var xChmod func(string, int) int
 // See your C library manual for more details about chmod().
 func Chmod(FilenameVar string, ModeVar int) int {
 	cret := xChmod(FilenameVar, ModeVar)
-
 	return cret
 }
 
@@ -94,7 +91,6 @@ func Close(FdVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xClose(FdVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -124,7 +120,6 @@ var xCreat func(string, int) int
 // See your C library manual for more details about creat().
 func Creat(FilenameVar string, ModeVar int) int {
 	cret := xCreat(FilenameVar, ModeVar)
-
 	return cret
 }
 
@@ -155,7 +150,6 @@ var xFopen func(string, string) uintptr
 // file should be shared between this process and a new fork.
 func Fopen(FilenameVar string, ModeVar string) uintptr {
 	cret := xFopen(FilenameVar, ModeVar)
-
 	return cret
 }
 
@@ -170,7 +164,6 @@ var xFreopen func(string, string, uintptr) uintptr
 // the documentation for [func@GLib.fopen] for more details.
 func Freopen(FilenameVar string, ModeVar string, StreamVar uintptr) uintptr {
 	cret := xFreopen(FilenameVar, ModeVar, StreamVar)
-
 	return cret
 }
 
@@ -186,7 +179,6 @@ var xFsync func(int) int
 // See the C library manual for more details about fsync().
 func Fsync(FdVar int) int {
 	cret := xFsync(FdVar)
-
 	return cret
 }
 
@@ -201,7 +193,6 @@ var xLstat func(string, *StatBuf) int
 // See your C library manual for more details about lstat().
 func Lstat(FilenameVar string, BufVar *StatBuf) int {
 	cret := xLstat(FilenameVar, BufVar)
-
 	return cret
 }
 
@@ -214,7 +205,6 @@ var xMkdir func(string, int) int
 // See your C library manual for more details about mkdir().
 func Mkdir(FilenameVar string, ModeVar int) int {
 	cret := xMkdir(FilenameVar, ModeVar)
-
 	return cret
 }
 
@@ -240,7 +230,6 @@ var xOpen func(string, int, int) int
 // See your C library manual for more details about open().
 func Open(FilenameVar string, FlagsVar int, ModeVar int) int {
 	cret := xOpen(FilenameVar, FlagsVar, ModeVar)
-
 	return cret
 }
 
@@ -264,7 +253,6 @@ var xRemove func(string) int
 // set by rmdir().
 func Remove(FilenameVar string) int {
 	cret := xRemove(FilenameVar)
-
 	return cret
 }
 
@@ -278,7 +266,6 @@ var xRename func(string, string) int
 // a file that is open to some process.
 func Rename(OldfilenameVar string, NewfilenameVar string) int {
 	cret := xRename(OldfilenameVar, NewfilenameVar)
-
 	return cret
 }
 
@@ -291,7 +278,6 @@ var xRmdir func(string) int
 // on your system.
 func Rmdir(FilenameVar string) int {
 	cret := xRmdir(FilenameVar)
-
 	return cret
 }
 
@@ -319,7 +305,6 @@ var xStat func(string, *StatBuf) int
 // See your C library manual for more details about stat().
 func Stat(FilenameVar string, BufVar *StatBuf) int {
 	cret := xStat(FilenameVar, BufVar)
-
 	return cret
 }
 
@@ -335,7 +320,6 @@ var xUnlink func(string) int
 // are open to some process, or mapped into memory.
 func Unlink(FilenameVar string) int {
 	cret := xUnlink(FilenameVar)
-
 	return cret
 }
 
@@ -348,7 +332,6 @@ var xUtime func(string, uintptr) int
 // on your system.
 func Utime(FilenameVar string, UtbVar uintptr) int {
 	cret := xUtime(FilenameVar, UtbVar)
-
 	return cret
 }
 

@@ -281,22 +281,7 @@ var xRenderNodeDeserialize func(*glib.Bytes, uintptr, uintptr) uintptr
 func RenderNodeDeserialize(BytesVar *glib.Bytes, ErrorFuncVar *ParseErrorFunc, UserDataVar uintptr) *RenderNode {
 	var cls *RenderNode
 
-	var ErrorFuncVarRef uintptr
-	if ErrorFuncVar != nil {
-		ErrorFuncVarPtr := uintptr(unsafe.Pointer(ErrorFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(ErrorFuncVarPtr); ok {
-			ErrorFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *ParseLocation, arg1 *ParseLocation, arg2 *glib.Error, arg3 uintptr) {
-				cbFn := *ErrorFuncVar
-				cbFn(arg0, arg1, arg2, arg3)
-			}
-			ErrorFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ErrorFuncVarPtr, ErrorFuncVarRef, ErrorFuncVar)
-		}
-	}
-
-	cret := xRenderNodeDeserialize(BytesVar, ErrorFuncVarRef, UserDataVar)
+	cret := xRenderNodeDeserialize(BytesVar, glib.NewCallbackNullable(ErrorFuncVar), UserDataVar)
 
 	if cret == 0 {
 		return nil

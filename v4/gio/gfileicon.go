@@ -136,12 +136,7 @@ func (x *FileIcon) Load(SizeVar int, TypeVar *string, CancellableVar *Cancellabl
 	var cls *InputStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := XGLoadableIconLoad(x.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

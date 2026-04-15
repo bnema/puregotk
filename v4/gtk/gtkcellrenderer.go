@@ -660,12 +660,7 @@ var xCellRendererStartEditing func(uintptr, uintptr, uintptr, string, *gdk.Recta
 func (x *CellRenderer) StartEditing(EventVar *gdk.Event, WidgetVar *Widget, PathVar string, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) *CellEditableBase {
 	var cls *CellEditableBase
 
-	var EventVarPtr uintptr
-	if EventVar != nil {
-		EventVarPtr = EventVar.GoPointer()
-	}
-
-	cret := xCellRendererStartEditing(x.GoPointer(), EventVarPtr, WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
+	cret := xCellRendererStartEditing(x.GoPointer(), EventVar.GoPointer(), WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
 
 	if cret == 0 {
 		return nil
@@ -965,7 +960,7 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, EditableVarp uintptr, PathVarp uintptr) {
+	fcb := func(clsPtr uintptr, EditableVarp uintptr, PathVarp string) {
 		fa := CellRenderer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

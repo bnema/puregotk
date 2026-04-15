@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"fmt"
 	"structs"
 	"unsafe"
 
@@ -1610,7 +1609,7 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeyVarp uintptr) {
+	fcb := func(clsPtr uintptr, KeyVarp string) {
 		fa := Settings{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1681,7 +1680,7 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeyVarp uintptr) {
+	fcb := func(clsPtr uintptr, KeyVarp string) {
 		fa := Settings{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

@@ -84,12 +84,7 @@ var xNewSpinRow func(uintptr, float64, uint) uintptr
 func NewSpinRow(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint) *SpinRow {
 	var cls *SpinRow
 
-	var AdjustmentVarPtr uintptr
-	if AdjustmentVar != nil {
-		AdjustmentVarPtr = AdjustmentVar.GoPointer()
-	}
-
-	cret := xNewSpinRow(AdjustmentVarPtr, ClimbRateVar, DigitsVar)
+	cret := xNewSpinRow(AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
 
 	if cret == 0 {
 		return nil

@@ -73,7 +73,6 @@ var xAsciiDigitValue func(byte) int
 // there's no worry about sign extension if characters are signed.
 func AsciiDigitValue(CVar byte) int {
 	cret := xAsciiDigitValue(CVar)
-
 	return cret
 }
 
@@ -90,7 +89,6 @@ var xAsciiDtostr func(string, int, float64) string
 // nul character, which is always added.
 func AsciiDtostr(BufferVar string, BufLenVar int, DVar float64) string {
 	cret := xAsciiDtostr(BufferVar, BufLenVar, DVar)
-
 	return cret
 }
 
@@ -110,7 +108,6 @@ var xAsciiFormatd func(string, int, string, float64) string
 // string, use [func@GLib.ascii_dtostr].
 func AsciiFormatd(BufferVar string, BufLenVar int, FormatVar string, DVar float64) string {
 	cret := xAsciiFormatd(BufferVar, BufLenVar, FormatVar, DVar)
-
 	return cret
 }
 
@@ -133,7 +130,6 @@ var xAsciiStrcasecmp func(string, string) int
 // Both @s1 and @s2 must be non-`NULL`.
 func AsciiStrcasecmp(S1Var string, S2Var string) int {
 	cret := xAsciiStrcasecmp(S1Var, S2Var)
-
 	return cret
 }
 
@@ -143,7 +139,6 @@ var xAsciiStrdown func(string, int) string
 // semantics that exactly match [func@GLib.ascii_tolower].
 func AsciiStrdown(StrVar string, LenVar int) string {
 	cret := xAsciiStrdown(StrVar, LenVar)
-
 	return cret
 }
 
@@ -174,7 +169,6 @@ func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64
 	var cerr *Error
 
 	cret := xAsciiStringToSigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -209,7 +203,6 @@ func AsciiStringToUnsigned(StrVar string, BaseVar uint, MinVar uint64, MaxVar ui
 	var cerr *Error
 
 	cret := xAsciiStringToUnsigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -232,7 +225,6 @@ var xAsciiStrncasecmp func(string, string, uint) int
 // corresponding to ASCII letters always represent themselves.
 func AsciiStrncasecmp(S1Var string, S2Var string, NVar uint) int {
 	cret := xAsciiStrncasecmp(S1Var, S2Var, NVar)
-
 	return cret
 }
 
@@ -263,7 +255,6 @@ var xAsciiStrtod func(string, *string) float64
 // you can reliably detect overflow and underflow.
 func AsciiStrtod(NptrVar string, EndptrVar *string) float64 {
 	cret := xAsciiStrtod(NptrVar, EndptrVar)
-
 	return cret
 }
 
@@ -289,7 +280,6 @@ var xAsciiStrtoll func(string, *string, uint) int64
 // (if @endptr is non-`NULL`).
 func AsciiStrtoll(NptrVar string, EndptrVar *string, BaseVar uint) int64 {
 	cret := xAsciiStrtoll(NptrVar, EndptrVar, BaseVar)
-
 	return cret
 }
 
@@ -320,7 +310,6 @@ var xAsciiStrtoull func(string, *string, uint) uint64
 // @nptr (if @endptr is non-`NULL`).
 func AsciiStrtoull(NptrVar string, EndptrVar *string, BaseVar uint) uint64 {
 	cret := xAsciiStrtoull(NptrVar, EndptrVar, BaseVar)
-
 	return cret
 }
 
@@ -330,7 +319,6 @@ var xAsciiStrup func(string, int) string
 // semantics that exactly match [func@GLib.ascii_toupper].
 func AsciiStrup(StrVar string, LenVar int) string {
 	cret := xAsciiStrup(StrVar, LenVar)
-
 	return cret
 }
 
@@ -348,7 +336,6 @@ var xAsciiTolower func(byte) byte
 // before passing a possibly non-ASCII character in.
 func AsciiTolower(CVar byte) byte {
 	cret := xAsciiTolower(CVar)
-
 	return cret
 }
 
@@ -366,7 +353,6 @@ var xAsciiToupper func(byte) byte
 // before passing a possibly non-ASCII character in.
 func AsciiToupper(CVar byte) byte {
 	cret := xAsciiToupper(CVar)
-
 	return cret
 }
 
@@ -383,7 +369,6 @@ var xAsciiXdigitValue func(byte) int
 // there's no worry about sign extension if characters are signed.
 func AsciiXdigitValue(CVar byte) int {
 	cret := xAsciiXdigitValue(CVar)
-
 	return cret
 }
 
@@ -393,7 +378,6 @@ var xMemdup func(uintptr, uint) uintptr
 // from @mem. If @mem is `NULL` it returns `NULL`.
 func Memdup(MemVar uintptr, ByteSizeVar uint) uintptr {
 	cret := xMemdup(MemVar, ByteSizeVar)
-
 	return cret
 }
 
@@ -406,7 +390,6 @@ var xMemdup2 func(uintptr, uint) uintptr
 // converting the argument from a `gsize` to a `guint`.
 func Memdup2(MemVar uintptr, ByteSizeVar uint) uintptr {
 	cret := xMemdup2(MemVar, ByteSizeVar)
-
 	return cret
 }
 
@@ -418,7 +401,6 @@ var xStpcpy func(string, string) string
 // strings without having to repeatedly scan for the end.
 func Stpcpy(DestVar string, SrcVar string) string {
 	cret := xStpcpy(DestVar, SrcVar)
-
 	return cret
 }
 
@@ -427,7 +409,6 @@ var xStrHasPrefix func(string, string) bool
 // Looks whether the string @str begins with @prefix.
 func StrHasPrefix(StrVar string, PrefixVar string) bool {
 	cret := xStrHasPrefix(StrVar, PrefixVar)
-
 	return cret
 }
 
@@ -436,7 +417,6 @@ var xStrHasSuffix func(string, string) bool
 // Looks whether a string ends with @suffix.
 func StrHasSuffix(StrVar string, SuffixVar string) bool {
 	cret := xStrHasSuffix(StrVar, SuffixVar)
-
 	return cret
 }
 
@@ -446,7 +426,6 @@ var xStrIsAscii func(string) bool
 // contains no bytes with the high bit set.
 func StrIsAscii(StrVar string) bool {
 	cret := xStrIsAscii(StrVar)
-
 	return cret
 }
 
@@ -476,7 +455,6 @@ var xStrMatchString func(string, string, bool) bool
 // Baz’, but not ‘SFO’ (because no word has ‘fo’ as a prefix).
 func StrMatchString(SearchTermVar string, PotentialHitVar string, AcceptAlternatesVar bool) bool {
 	cret := xStrMatchString(SearchTermVar, PotentialHitVar, AcceptAlternatesVar)
-
 	return cret
 }
 
@@ -552,7 +530,6 @@ var xStrcanon func(string, string, byte) string
 // ```
 func Strcanon(StringVar string, ValidCharsVar string, SubstitutorVar byte) string {
 	cret := xStrcanon(StringVar, ValidCharsVar, SubstitutorVar)
-
 	return cret
 }
 
@@ -562,7 +539,6 @@ var xStrcasecmp func(string, string) int
 // `strcasecmp()` function on platforms which support it.
 func Strcasecmp(S1Var string, S2Var string) int {
 	cret := xStrcasecmp(S1Var, S2Var)
-
 	return cret
 }
 
@@ -579,7 +555,6 @@ var xStrchomp func(string) string
 // Also see [func@GLib.strchug] and [func@GLib.strstrip].
 func Strchomp(StringVar string) string {
 	cret := xStrchomp(StringVar)
-
 	return cret
 }
 
@@ -597,7 +572,6 @@ var xStrchug func(string) string
 // Also see [func@GLib.strchomp] and [func@GLib.strstrip].
 func Strchug(StringVar string) string {
 	cret := xStrchug(StringVar)
-
 	return cret
 }
 
@@ -619,7 +593,6 @@ var xStrcompress func(string) string
 // [func@GLib.strescape] does the reverse conversion.
 func Strcompress(SourceVar string) string {
 	cret := xStrcompress(SourceVar)
-
 	return cret
 }
 
@@ -635,7 +608,6 @@ var xStrconcat func(string, ...interface{}) string
 // often requires the pieces to be reordered.
 func Strconcat(String1Var string, varArgs ...interface{}) string {
 	cret := xStrconcat(String1Var, varArgs...)
-
 	return cret
 }
 
@@ -671,7 +643,6 @@ var xStrdown func(string) string
 // Converts a string to lower case.
 func Strdown(StringVar string) string {
 	cret := xStrdown(StringVar)
-
 	return cret
 }
 
@@ -697,7 +668,6 @@ var xStrdupPrintf func(string, ...interface{}) string
 // representation is available for the given character.
 func StrdupPrintf(FormatVar string, varArgs ...interface{}) string {
 	cret := xStrdupPrintf(FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -715,7 +685,6 @@ var xStrdupVprintf func(string, []interface{}) string
 // additionally returns the length of the allocated string.
 func StrdupVprintf(FormatVar string, ArgsVar []interface{}) string {
 	cret := xStrdupVprintf(FormatVar, ArgsVar)
-
 	return cret
 }
 
@@ -727,7 +696,6 @@ var xStrdupv func([]string) []string
 // If called on a `NULL` value, `g_strdupv()` simply returns `NULL`.
 func Strdupv(StrArrayVar []string) []string {
 	cret := xStrdupv(StrArrayVar)
-
 	return cret
 }
 
@@ -756,7 +724,6 @@ var xStrerror func(int) string
 // ```
 func Strerror(ErrnumVar int) string {
 	cret := xStrerror(ErrnumVar)
-
 	return cret
 }
 
@@ -843,7 +810,6 @@ var xStrlcat func(string, string, uint) uint
 // `strncat()`, but for real security [func@GLib.strconcat] is harder to mess up.
 func Strlcat(DestVar string, SrcVar string, DestSizeVar uint) uint {
 	cret := xStrlcat(DestVar, SrcVar, DestSizeVar)
-
 	return cret
 }
 
@@ -865,7 +831,6 @@ var xStrlcpy func(string, string, uint) uint
 // idea.
 func Strlcpy(DestVar string, SrcVar string, DestSizeVar uint) uint {
 	cret := xStrlcpy(DestVar, SrcVar, DestSizeVar)
-
 	return cret
 }
 
@@ -877,7 +842,6 @@ var xStrncasecmp func(string, string, uint) int
 // the strings.
 func Strncasecmp(S1Var string, S2Var string, NVar uint) int {
 	cret := xStrncasecmp(S1Var, S2Var, NVar)
-
 	return cret
 }
 
@@ -903,7 +867,6 @@ var xStrnfill func(uint, byte) string
 // Creates a new string @length bytes long filled with @fill_char.
 func Strnfill(LengthVar uint, FillCharVar byte) string {
 	cret := xStrnfill(LengthVar, FillCharVar)
-
 	return cret
 }
 
@@ -917,7 +880,6 @@ var xStrreverse func(string) string
 // [func@GLib.utf8_strreverse].
 func Strreverse(StringVar string) string {
 	cret := xStrreverse(StringVar)
-
 	return cret
 }
 
@@ -930,7 +892,6 @@ var xStrrstr func(string, string) string
 // a historical artifact.
 func Strrstr(HaystackVar string, NeedleVar string) string {
 	cret := xStrrstr(HaystackVar, NeedleVar)
-
 	return cret
 }
 
@@ -944,7 +905,6 @@ var xStrrstrLen func(string, int, string) string
 // a historical artifact.
 func StrrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 	cret := xStrrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
-
 	return cret
 }
 
@@ -958,7 +918,6 @@ var xStrsignal func(int) string
 // the `strsignal()` function.
 func Strsignal(SignumVar int) string {
 	cret := xStrsignal(SignumVar)
-
 	return cret
 }
 
@@ -979,7 +938,6 @@ var xStrsplit func(string, string, int) []string
 // before calling `g_strsplit()`.
 func Strsplit(StringVar string, DelimiterVar string, MaxTokensVar int) []string {
 	cret := xStrsplit(StringVar, DelimiterVar, MaxTokensVar)
-
 	return cret
 }
 
@@ -1010,7 +968,6 @@ var xStrsplitSet func(string, []byte, int) []string
 // to delimit UTF-8 strings for anything but ASCII characters.
 func StrsplitSet(StringVar string, DelimitersVar []byte, MaxTokensVar int) []string {
 	cret := xStrsplitSet(StringVar, DelimitersVar, MaxTokensVar)
-
 	return cret
 }
 
@@ -1027,7 +984,6 @@ var xStrstrLen func(string, int, string) string
 // a historical artifact.
 func StrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 	cret := xStrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
-
 	return cret
 }
 
@@ -1047,7 +1003,6 @@ var xStrtod func(string, *string) float64
 // point in some locales, causing unexpected results.
 func Strtod(NptrVar string, EndptrVar *string) float64 {
 	cret := xStrtod(NptrVar, EndptrVar)
-
 	return cret
 }
 
@@ -1056,7 +1011,6 @@ var xStrup func(string) string
 // Converts a string to upper case.
 func Strup(StringVar string) string {
 	cret := xStrup(StringVar)
-
 	return cret
 }
 
@@ -1066,7 +1020,6 @@ var xStrvContains func([]string, string) bool
 // [func@GLib.str_equal]. @strv must not be `NULL`.
 func StrvContains(StrvVar []string, StrVar string) bool {
 	cret := xStrvContains(StrvVar, StrVar)
-
 	return cret
 }
 
@@ -1083,7 +1036,6 @@ var xStrvEqual func([]string, []string) bool
 // `NULL`.
 func StrvEqual(Strv1Var []string, Strv2Var []string) bool {
 	cret := xStrvEqual(Strv1Var, Strv2Var)
-
 	return cret
 }
 
@@ -1092,7 +1044,6 @@ var xStrvLength func([]string) uint
 // Returns the length of an array of strings. @str_array must not be `NULL`.
 func StrvLength(StrArrayVar []string) uint {
 	cret := xStrvLength(StrArrayVar)
-
 	return cret
 }
 

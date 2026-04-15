@@ -599,7 +599,6 @@ var xDateGetDaysInMonth func(DateMonth, DateYear) byte
 // years into account.
 func DateGetDaysInMonth(MonthVar DateMonth, YearVar DateYear) byte {
 	cret := xDateGetDaysInMonth(MonthVar, YearVar)
-
 	return cret
 }
 
@@ -614,7 +613,6 @@ var xDateGetMondayWeeksInYear func(DateYear) byte
 // one of the extra days happens to be a Monday.)
 func DateGetMondayWeeksInYear(YearVar DateYear) byte {
 	cret := xDateGetMondayWeeksInYear(YearVar)
-
 	return cret
 }
 
@@ -629,7 +627,6 @@ var xDateGetSundayWeeksInYear func(DateYear) byte
 // one of the extra days happens to be a Sunday.)
 func DateGetSundayWeeksInYear(YearVar DateYear) byte {
 	cret := xDateGetSundayWeeksInYear(YearVar)
-
 	return cret
 }
 
@@ -646,7 +643,6 @@ var xDateGetWeeksInYear func(DateYear, DateWeekday) byte
 // the year.
 func DateGetWeeksInYear(YearVar DateYear, FirstDayOfWeekVar DateWeekday) byte {
 	cret := xDateGetWeeksInYear(YearVar, FirstDayOfWeekVar)
-
 	return cret
 }
 
@@ -660,7 +656,6 @@ var xDateIsLeapYear func(DateYear) bool
 // is also divisible by 400.
 func DateIsLeapYear(YearVar DateYear) bool {
 	cret := xDateIsLeapYear(YearVar)
-
 	return cret
 }
 
@@ -681,7 +676,6 @@ var xDateStrftime func(string, uint, string, *Date) uint
 // where the C library only complies to C89.
 func DateStrftime(SVar string, SlenVar uint, FormatVar string, DateVar *Date) uint {
 	cret := xDateStrftime(SVar, SlenVar, FormatVar, DateVar)
-
 	return cret
 }
 
@@ -691,7 +685,6 @@ var xDateValidDay func(DateDay) bool
 // between 1 and 31 inclusive).
 func DateValidDay(DayVar DateDay) bool {
 	cret := xDateValidDay(DayVar)
-
 	return cret
 }
 
@@ -702,7 +695,6 @@ var xDateValidDmy func(DateDay, DateMonth, DateYear) bool
 // a few thousand years in the future).
 func DateValidDmy(DayVar DateDay, MonthVar DateMonth, YearVar DateYear) bool {
 	cret := xDateValidDmy(DayVar, MonthVar, YearVar)
-
 	return cret
 }
 
@@ -712,7 +704,6 @@ var xDateValidJulian func(uint32) bool
 // is basically a valid Julian, though there is a 32-bit limit.
 func DateValidJulian(JulianDateVar uint32) bool {
 	cret := xDateValidJulian(JulianDateVar)
-
 	return cret
 }
 
@@ -722,7 +713,6 @@ var xDateValidMonth func(DateMonth) bool
 // enumeration values are the only valid months.
 func DateValidMonth(MonthVar DateMonth) bool {
 	cret := xDateValidMonth(MonthVar)
-
 	return cret
 }
 
@@ -732,7 +722,6 @@ var xDateValidWeekday func(DateWeekday) bool
 // values are the only valid weekdays.
 func DateValidWeekday(WeekdayVar DateWeekday) bool {
 	cret := xDateValidWeekday(WeekdayVar)
-
 	return cret
 }
 
@@ -742,7 +731,6 @@ var xDateValidYear func(DateYear) bool
 // though there is a 16-bit limit to what #GDate will understand.
 func DateValidYear(YearVar DateYear) bool {
 	cret := xDateValidYear(YearVar)
-
 	return cret
 }
 

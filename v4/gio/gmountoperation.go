@@ -818,7 +818,7 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, MessageVarp uintptr, DefaultUserVarp uintptr, DefaultDomainVarp uintptr, FlagsVarp AskPasswordFlags) {
+	fcb := func(clsPtr uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags) {
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -846,7 +846,7 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, MessageVarp uintptr, ChoicesVarp []string) {
+	fcb := func(clsPtr uintptr, MessageVarp string, ChoicesVarp []string) {
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -903,7 +903,7 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, MessageVarp uintptr, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
+	fcb := func(clsPtr uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -941,7 +941,7 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, MessageVarp uintptr, TimeLeftVarp int64, BytesLeftVarp int64) {
+	fcb := func(clsPtr uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64) {
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

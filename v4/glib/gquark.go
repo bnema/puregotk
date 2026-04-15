@@ -117,7 +117,6 @@ var xQuarkToString func(Quark) string
 // Gets the string associated with the given #GQuark.
 func QuarkToString(QuarkVar Quark) string {
 	cret := xQuarkToString(QuarkVar)
-
 	return cret
 }
 

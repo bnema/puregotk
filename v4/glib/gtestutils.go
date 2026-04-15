@@ -515,7 +515,6 @@ var xTestBuildFilename func(TestFileType, string, ...interface{}) string
 // same relative path as the test binary.
 func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 	cret := xTestBuildFilename(FileTypeVar, FirstPathVar, varArgs...)
-
 	return cret
 }
 
@@ -666,7 +665,6 @@ var xTestFailed func() bool
 // if it is called from inside a test function.
 func TestFailed() bool {
 	cret := xTestFailed()
-
 	return cret
 }
 
@@ -679,7 +677,6 @@ var xTestGetDir func(TestFileType) string
 // but you don't need to free the return value.
 func TestGetDir(FileTypeVar TestFileType) string {
 	cret := xTestGetDir(FileTypeVar)
-
 	return cret
 }
 
@@ -699,7 +696,6 @@ var xTestGetFilename func(TestFileType, string, ...interface{}) string
 // joined).
 func TestGetFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 	cret := xTestGetFilename(FileTypeVar, FirstPathVar, varArgs...)
-
 	return cret
 }
 
@@ -715,7 +711,6 @@ var xTestGetPath func() string
 // Note that this is a test path, not a file system path.
 func TestGetPath() string {
 	cret := xTestGetPath()
-
 	return cret
 }
 
@@ -857,7 +852,6 @@ var xTestLogTypeName func(TestLogType) string
 
 func TestLogTypeName(LogTypeVar TestLogType) string {
 	cret := xTestLogTypeName(LogTypeVar)
-
 	return cret
 }
 
@@ -923,7 +917,6 @@ var xTestRandDouble func() float64
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDouble() float64 {
 	cret := xTestRandDouble()
-
 	return cret
 }
 
@@ -934,7 +927,6 @@ var xTestRandDoubleRange func(float64, float64) float64
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
 	cret := xTestRandDoubleRange(RangeStartVar, RangeEndVar)
-
 	return cret
 }
 
@@ -951,7 +943,6 @@ var xTestRandInt func() int32
 // effective for all test cases.
 func TestRandInt() int32 {
 	cret := xTestRandInt()
-
 	return cret
 }
 
@@ -962,7 +953,6 @@ var xTestRandIntRange func(int32, int32) int32
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 	cret := xTestRandIntRange(BeginVar, EndVar)
-
 	return cret
 }
 
@@ -1004,7 +994,6 @@ var xTestRun func() int
 // as "skip test" by Automake) otherwise.
 func TestRun() int {
 	cret := xTestRun()
-
 	return cret
 }
 
@@ -1021,7 +1010,6 @@ var xTestRunSuite func(*TestSuite) int
 // called once in a program.
 func TestRunSuite(SuiteVar *TestSuite) int {
 	cret := xTestRunSuite(SuiteVar)
-
 	return cret
 }
 
@@ -1078,7 +1066,6 @@ var xTestSubprocess func() bool
 // Returns true if the test program is running under [func@GLib.test_trap_subprocess].
 func TestSubprocess() bool {
 	cret := xTestSubprocess()
-
 	return cret
 }
 
@@ -1118,7 +1105,6 @@ var xTestTimerElapsed func() float64
 // [func@GLib.test_timer_start].
 func TestTimerElapsed() float64 {
 	cret := xTestTimerElapsed()
-
 	return cret
 }
 
@@ -1127,7 +1113,6 @@ var xTestTimerLast func() float64
 // Reports the last result of [func@GLib.test_timer_elapsed].
 func TestTimerLast() float64 {
 	cret := xTestTimerLast()
-
 	return cret
 }
 
@@ -1188,7 +1173,6 @@ var xTestTrapFork func(uint64, TestTrapFlags) bool
 // ```
 func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
 	cret := xTestTrapFork(UsecTimeoutVar, TestTrapFlagsVar)
-
 	return cret
 }
 
@@ -1197,7 +1181,6 @@ var xTestTrapHasPassed func() bool
 // Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapHasPassed() bool {
 	cret := xTestTrapHasPassed()
-
 	return cret
 }
 
@@ -1214,7 +1197,6 @@ var xTestTrapReachedTimeout func() bool
 // Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapReachedTimeout() bool {
 	cret := xTestTrapReachedTimeout()
-
 	return cret
 }
 

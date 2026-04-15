@@ -122,7 +122,7 @@ func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, TextVarp uintptr) {
+	fcb := func(clsPtr uintptr, TextVarp string) {
 		fa := EmojiChooser{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

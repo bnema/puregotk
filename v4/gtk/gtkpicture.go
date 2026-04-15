@@ -121,12 +121,7 @@ var xNewPictureForFile func(uintptr) uintptr
 func NewPictureForFile(FileVar gio.File) *Picture {
 	var cls *Picture
 
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	cret := xNewPictureForFile(FileVarPtr)
+	cret := xNewPictureForFile(FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -169,12 +164,7 @@ var xNewPictureForPaintable func(uintptr) uintptr
 func NewPictureForPaintable(PaintableVar gdk.Paintable) *Picture {
 	var cls *Picture
 
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	cret := xNewPictureForPaintable(PaintableVarPtr)
+	cret := xNewPictureForPaintable(PaintableVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -196,12 +186,7 @@ var xNewPictureForPixbuf func(uintptr) uintptr
 func NewPictureForPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Picture {
 	var cls *Picture
 
-	var PixbufVarPtr uintptr
-	if PixbufVar != nil {
-		PixbufVarPtr = PixbufVar.GoPointer()
-	}
-
-	cret := xNewPictureForPixbuf(PixbufVarPtr)
+	cret := xNewPictureForPixbuf(PixbufVar.GoPointer())
 
 	if cret == 0 {
 		return nil

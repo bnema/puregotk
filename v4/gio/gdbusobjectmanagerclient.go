@@ -233,42 +233,7 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	var GetProxyTypeFuncVarRef uintptr
-	if GetProxyTypeFuncVar != nil {
-		GetProxyTypeFuncVarPtr := uintptr(unsafe.Pointer(GetProxyTypeFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
-			GetProxyTypeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) types.GType {
-				cbFn := *GetProxyTypeFuncVar
-				return cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
-			}
-			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef, GetProxyTypeFuncVar)
-		}
-	}
-
-	var GetProxyTypeDestroyNotifyVarRef uintptr
-	if GetProxyTypeDestroyNotifyVar != nil {
-		GetProxyTypeDestroyNotifyVarPtr := uintptr(unsafe.Pointer(GetProxyTypeDestroyNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeDestroyNotifyVarPtr); ok {
-			GetProxyTypeDestroyNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *GetProxyTypeDestroyNotifyVar
-				cbFn(arg0)
-			}
-			GetProxyTypeDestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(GetProxyTypeDestroyNotifyVarPtr, GetProxyTypeDestroyNotifyVarRef, GetProxyTypeDestroyNotifyVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVarPtr, &cerr)
+	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -510,7 +475,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp uintptr, SignalNameVarp uintptr, ParametersVarp uintptr) {
+	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
 		fa := DBusObjectManagerClient{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -680,12 +645,7 @@ func (x *DBusObjectManagerClient) GetObjects() *glib.List {
 func (x *DBusObjectManagerClient) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

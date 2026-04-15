@@ -538,12 +538,7 @@ func (x *FileChooserNative) SetCreateFolders(CreateFoldersVar bool) {
 func (x *FileChooserNative) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVarPtr, &cerr)
+	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

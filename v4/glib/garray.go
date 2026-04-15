@@ -373,7 +373,6 @@ var xArrayNewTake func(uintptr, uint, bool, uint) uintptr
 //	`guint`, which may be shorter than `gsize`.
 func ArrayNewTake(DataVar uintptr, LenVar uint, ClearVar bool, ElementSizeVar uint) uintptr {
 	cret := xArrayNewTake(DataVar, LenVar, ClearVar, ElementSizeVar)
-
 	return cret
 }
 
@@ -400,7 +399,6 @@ var xArrayNewTakeZeroTerminated func(uintptr, bool, uint) uintptr
 // `guint`, which may be shorter than `gsize`.
 func ArrayNewTakeZeroTerminated(DataVar uintptr, ClearVar bool, ElementSizeVar uint) uintptr {
 	cret := xArrayNewTakeZeroTerminated(DataVar, ClearVar, ElementSizeVar)
-
 	return cret
 }
 
@@ -410,7 +408,6 @@ var xByteArrayAppend func([]byte, []byte, uint) uintptr
 // The array will grow in size automatically if necessary.
 func ByteArrayAppend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 	cret := xByteArrayAppend(ArrayVar, DataVar, LenVar)
-
 	return cret
 }
 
@@ -422,7 +419,6 @@ var xByteArrayFree func([]byte, bool) uintptr
 // the size of @array will be set to zero.
 func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) uintptr {
 	cret := xByteArrayFree(ArrayVar, FreeSegmentVar)
-
 	return cret
 }
 
@@ -450,7 +446,6 @@ var xByteArrayNew func() uintptr
 // Creates a new `GByteArray` with a reference count of 1.
 func ByteArrayNew() uintptr {
 	cret := xByteArrayNew()
-
 	return cret
 }
 
@@ -466,7 +461,6 @@ var xByteArrayNewTake func([]byte, uint) uintptr
 // than `gsize`.
 func ByteArrayNewTake(DataVar []byte, LenVar uint) uintptr {
 	cret := xByteArrayNewTake(DataVar, LenVar)
-
 	return cret
 }
 
@@ -476,7 +470,6 @@ var xByteArrayPrepend func([]byte, []byte, uint) uintptr
 // The array will grow in size automatically if necessary.
 func ByteArrayPrepend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 	cret := xByteArrayPrepend(ArrayVar, DataVar, LenVar)
-
 	return cret
 }
 
@@ -486,7 +479,6 @@ var xByteArrayRef func([]byte) uintptr
 // This function is thread-safe and may be called from any thread.
 func ByteArrayRef(ArrayVar []byte) uintptr {
 	cret := xByteArrayRef(ArrayVar)
-
 	return cret
 }
 
@@ -496,7 +488,6 @@ var xByteArrayRemoveIndex func([]byte, uint) uintptr
 // The following bytes are moved down one place.
 func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
 	cret := xByteArrayRemoveIndex(ArrayVar, IndexVar)
-
 	return cret
 }
 
@@ -508,7 +499,6 @@ var xByteArrayRemoveIndexFast func([]byte, uint) uintptr
 // than [func@GLib.ByteArray.remove_index].
 func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
 	cret := xByteArrayRemoveIndexFast(ArrayVar, IndexVar)
-
 	return cret
 }
 
@@ -518,7 +508,6 @@ var xByteArrayRemoveRange func([]byte, uint, uint) uintptr
 // `GByteArray`. The following elements are moved to close the gap.
 func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintptr {
 	cret := xByteArrayRemoveRange(ArrayVar, IndexVar, LengthVar)
-
 	return cret
 }
 
@@ -527,7 +516,6 @@ var xByteArraySetSize func([]byte, uint) uintptr
 // Sets the size of the `GByteArray`, expanding it if necessary.
 func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
 	cret := xByteArraySetSize(ArrayVar, LengthVar)
-
 	return cret
 }
 
@@ -539,7 +527,6 @@ var xByteArraySizedNew func(uint) uintptr
 // 0.
 func ByteArraySizedNew(ReservedSizeVar uint) uintptr {
 	cret := xByteArraySizedNew(ReservedSizeVar)
-
 	return cret
 }
 
@@ -574,7 +561,6 @@ var xByteArraySteal func([]byte, *uint) uintptr
 // to the caller.
 func ByteArraySteal(ArrayVar []byte, LenVar *uint) uintptr {
 	cret := xByteArraySteal(ArrayVar, LenVar)
-
 	return cret
 }
 
@@ -600,7 +586,6 @@ var xPtrArrayFind func([]uintptr, uintptr, *uint) bool
 // [func@GLib.PtrArray.find_with_equal_func].
 func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar *uint) bool {
 	cret := xPtrArrayFind(HaystackVar, NeedleVar, IndexVar)
-
 	return cret
 }
 

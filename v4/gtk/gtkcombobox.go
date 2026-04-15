@@ -794,7 +794,7 @@ func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathVarp uintptr) string {
+	fcb := func(clsPtr uintptr, PathVarp string) string {
 		fa := ComboBox{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

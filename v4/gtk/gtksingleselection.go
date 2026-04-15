@@ -50,12 +50,7 @@ var xNewSingleSelection func(uintptr) uintptr
 func NewSingleSelection(ModelVar gio.ListModel) *SingleSelection {
 	var cls *SingleSelection
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewSingleSelection(ModelVarPtr)
+	cret := xNewSingleSelection(ModelVar.GoPointer())
 
 	if cret == 0 {
 		return nil

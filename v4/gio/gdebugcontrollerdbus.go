@@ -197,12 +197,7 @@ func NewDebugControllerDBus(ConnectionVar *DBusConnection, CancellableVar *Cance
 	var cls *DebugControllerDBus
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewDebugControllerDBus(ConnectionVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xNewDebugControllerDBus(ConnectionVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -339,12 +334,7 @@ func (x *DebugControllerDBus) SetDebugEnabled(DebugEnabledVar bool) {
 func (x *DebugControllerDBus) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

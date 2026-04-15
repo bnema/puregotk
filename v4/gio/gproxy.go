@@ -198,12 +198,7 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 	var cls *IOStream
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGProxyConnect(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGProxyConnect(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

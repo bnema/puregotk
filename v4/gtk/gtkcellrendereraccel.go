@@ -125,7 +125,7 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathStringVarp uintptr) {
+	fcb := func(clsPtr uintptr, PathStringVarp string) {
 		fa := CellRendererAccel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -148,7 +148,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathStringVarp uintptr, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint) {
+	fcb := func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint) {
 		fa := CellRendererAccel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

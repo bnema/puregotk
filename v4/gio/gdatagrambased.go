@@ -303,12 +303,7 @@ func (x *DatagramBasedBase) ConditionCheck(ConditionVar glib.IOCondition) glib.I
 func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDatagramBasedConditionWait(x.GoPointer(), ConditionVar, TimeoutVar, CancellableVarPtr, &cerr)
+	cret := XGDatagramBasedConditionWait(x.GoPointer(), ConditionVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -390,12 +385,7 @@ func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, Cancella
 func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVarPtr, &cerr)
+	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -446,12 +436,7 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVarPtr, &cerr)
+	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

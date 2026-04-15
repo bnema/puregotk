@@ -323,12 +323,7 @@ var xBufferedInputStreamFill func(uintptr, int, uintptr, **glib.Error) int
 func (x *BufferedInputStream) Fill(CountVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xBufferedInputStreamFill(x.GoPointer(), CountVar, CancellableVarPtr, &cerr)
+	cret := xBufferedInputStreamFill(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -413,12 +408,7 @@ var xBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
 func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -492,12 +482,7 @@ func (x *BufferedInputStream) CanTruncate() bool {
 func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -522,12 +507,7 @@ func (x *BufferedInputStream) Tell() int64 {
 func (x *BufferedInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVarPtr, &cerr)
+	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

@@ -385,7 +385,6 @@ var xSequenceGet func(*SequenceIter) uintptr
 // Returns the data that @iter points to.
 func SequenceGet(IterVar *SequenceIter) uintptr {
 	cret := xSequenceGet(IterVar)
-
 	return cret
 }
 

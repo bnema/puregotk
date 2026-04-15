@@ -40,7 +40,6 @@ var xTrashStackHeight func(**TrashStack) uint
 // where N denotes the number of items on the stack.
 func TrashStackHeight(StackPVar **TrashStack) uint {
 	cret := xTrashStackHeight(StackPVar)
-
 	return cret
 }
 
@@ -50,7 +49,6 @@ var xTrashStackPeek func(**TrashStack) uintptr
 // which may be %NULL.
 func TrashStackPeek(StackPVar **TrashStack) uintptr {
 	cret := xTrashStackPeek(StackPVar)
-
 	return cret
 }
 
@@ -59,7 +57,6 @@ var xTrashStackPop func(**TrashStack) uintptr
 // Pops a piece of memory off a #GTrashStack.
 func TrashStackPop(StackPVar **TrashStack) uintptr {
 	cret := xTrashStackPop(StackPVar)
-
 	return cret
 }
 

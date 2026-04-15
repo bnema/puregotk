@@ -1097,12 +1097,7 @@ func (x *MountBase) GuessContentTypeFinish(ResultVar AsyncResult) ([]string, err
 func (x *MountBase) GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Cancellable) ([]string, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGMountGuessContentTypeSync(x.GoPointer(), ForceRescanVar, CancellableVarPtr, &cerr)
+	cret := XGMountGuessContentTypeSync(x.GoPointer(), ForceRescanVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

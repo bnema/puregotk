@@ -425,7 +425,6 @@ func SpawnCheckExitStatus(WaitStatusVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCheckExitStatus(WaitStatusVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -477,7 +476,6 @@ func SpawnCheckWaitStatus(WaitStatusVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCheckWaitStatus(WaitStatusVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -510,7 +508,6 @@ func SpawnCommandLineAsync(CommandLineVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCommandLineAsync(CommandLineVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -552,7 +549,6 @@ func SpawnCommandLineSync(CommandLineVar string, StandardOutputVar *[]byte, Stan
 	var cerr *Error
 
 	cret := xSpawnCommandLineSync(CommandLineVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -94,17 +94,7 @@ var xNewGridView func(uintptr, uintptr) uintptr
 func NewGridView(ModelVar SelectionModel, FactoryVar *ListItemFactory) *GridView {
 	var cls *GridView
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	cret := xNewGridView(ModelVarPtr, FactoryVarPtr)
+	cret := xNewGridView(ModelVar.GoPointer(), FactoryVar.GoPointer())
 
 	if cret == 0 {
 		return nil

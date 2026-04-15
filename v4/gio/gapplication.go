@@ -1052,12 +1052,7 @@ var xApplicationRegister func(uintptr, uintptr, **glib.Error) bool
 func (x *Application) Register(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xApplicationRegister(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xApplicationRegister(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1644,7 +1639,7 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int, string)) u
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, FilesVarp uintptr, NFilesVarp int, HintVarp uintptr) {
+	fcb := func(clsPtr uintptr, FilesVarp uintptr, NFilesVarp int, HintVarp string) {
 		fa := Application{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

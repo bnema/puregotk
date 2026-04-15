@@ -256,7 +256,6 @@ var xLogGetAlwaysFatal func() LogLevelFlags
 // ```
 func LogGetAlwaysFatal() LogLevelFlags {
 	cret := xLogGetAlwaysFatal()
-
 	return cret
 }
 
@@ -273,7 +272,6 @@ var xLogGetDebugEnabled func() bool
 // the docs for [func@GLib.log_set_debug_enabled].
 func LogGetDebugEnabled() bool {
 	cret := xLogGetDebugEnabled()
-
 	return cret
 }
 
@@ -308,7 +306,6 @@ var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
 // are fatal. See [Using Structured Logging](logging.html#using-structured-logging).
 func LogSetAlwaysFatal(FatalMaskVar LogLevelFlags) LogLevelFlags {
 	cret := xLogSetAlwaysFatal(FatalMaskVar)
-
 	return cret
 }
 
@@ -359,7 +356,6 @@ var xLogSetFatalMask func(string, LogLevelFlags) LogLevelFlags
 // [flags@GLib.LogLevelFlags.LEVEL_DEBUG] as fatal except inside of test programs.
 func LogSetFatalMask(LogDomainVar string, FatalMaskVar LogLevelFlags) LogLevelFlags {
 	cret := xLogSetFatalMask(LogDomainVar, FatalMaskVar)
-
 	return cret
 }
 
@@ -622,7 +618,6 @@ var xLogWriterDefault func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOu
 // up to the writer function to determine which log messages are fatal.
 func LogWriterDefault(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 	cret := xLogWriterDefault(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
-
 	return cret
 }
 
@@ -716,7 +711,6 @@ var xLogWriterFormatFields func(LogLevelFlags, []LogField, uint, bool) string
 // UTF-8.
 func LogWriterFormatFields(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UseColorVar bool) string {
 	cret := xLogWriterFormatFields(LogLevelVar, FieldsVar, NFieldsVar, UseColorVar)
-
 	return cret
 }
 
@@ -733,7 +727,6 @@ var xLogWriterIsJournald func(int) bool
 // ```
 func LogWriterIsJournald(OutputFdVar int) bool {
 	cret := xLogWriterIsJournald(OutputFdVar)
-
 	return cret
 }
 
@@ -752,7 +745,6 @@ var xLogWriterJournald func(LogLevelFlags, []LogField, uint, uintptr) LogWriterO
 // defined, but will always return [enum@GLib.LogWriterOutput.UNHANDLED].
 func LogWriterJournald(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 	cret := xLogWriterJournald(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
-
 	return cret
 }
 
@@ -777,7 +769,6 @@ var xLogWriterStandardStreams func(LogLevelFlags, []LogField, uint, uintptr) Log
 // This is suitable for use as a [type@GLib.LogWriterFunc].
 func LogWriterStandardStreams(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 	cret := xLogWriterStandardStreams(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
-
 	return cret
 }
 
@@ -789,7 +780,6 @@ var xLogWriterSupportsColor func(int) bool
 // If so, they can safely be used when formatting log messages.
 func LogWriterSupportsColor(OutputFdVar int) bool {
 	cret := xLogWriterSupportsColor(OutputFdVar)
-
 	return cret
 }
 
@@ -809,7 +799,6 @@ var xLogWriterSyslog func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOut
 // return [enum@GLib.LogWriterOutput.UNHANDLED].
 func LogWriterSyslog(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 	cret := xLogWriterSyslog(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
-
 	return cret
 }
 
@@ -883,7 +872,6 @@ var xPrintfStringUpperBound func(string, []interface{}) uint
 // placeholders in any case, as their behaviour is locale-dependent.
 func PrintfStringUpperBound(FormatVar string, ArgsVar []interface{}) uint {
 	cret := xPrintfStringUpperBound(FormatVar, ArgsVar)
-
 	return cret
 }
 

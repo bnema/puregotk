@@ -163,17 +163,7 @@ var xNewListView func(uintptr, uintptr) uintptr
 func NewListView(ModelVar SelectionModel, FactoryVar *ListItemFactory) *ListView {
 	var cls *ListView
 
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	cret := xNewListView(ModelVarPtr, FactoryVarPtr)
+	cret := xNewListView(ModelVar.GoPointer(), FactoryVar.GoPointer())
 
 	if cret == 0 {
 		return nil

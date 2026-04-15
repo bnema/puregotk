@@ -76,12 +76,7 @@ var xNewBuilderListItemFactoryFromBytes func(uintptr, *glib.Bytes) uintptr
 func NewBuilderListItemFactoryFromBytes(ScopeVar BuilderScope, BytesVar *glib.Bytes) *BuilderListItemFactory {
 	var cls *BuilderListItemFactory
 
-	var ScopeVarPtr uintptr
-	if ScopeVar != nil {
-		ScopeVarPtr = ScopeVar.GoPointer()
-	}
-
-	cret := xNewBuilderListItemFactoryFromBytes(ScopeVarPtr, BytesVar)
+	cret := xNewBuilderListItemFactoryFromBytes(ScopeVar.GoPointer(), BytesVar)
 
 	if cret == 0 {
 		return nil
@@ -98,12 +93,7 @@ var xNewBuilderListItemFactoryFromResource func(uintptr, string) uintptr
 func NewBuilderListItemFactoryFromResource(ScopeVar BuilderScope, ResourcePathVar string) *BuilderListItemFactory {
 	var cls *BuilderListItemFactory
 
-	var ScopeVarPtr uintptr
-	if ScopeVar != nil {
-		ScopeVarPtr = ScopeVar.GoPointer()
-	}
-
-	cret := xNewBuilderListItemFactoryFromResource(ScopeVarPtr, ResourcePathVar)
+	cret := xNewBuilderListItemFactoryFromResource(ScopeVar.GoPointer(), ResourcePathVar)
 
 	if cret == 0 {
 		return nil

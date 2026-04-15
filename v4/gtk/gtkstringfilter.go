@@ -80,12 +80,7 @@ var xNewStringFilter func(uintptr) uintptr
 func NewStringFilter(ExpressionVar *Expression) *StringFilter {
 	var cls *StringFilter
 
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	cret := xNewStringFilter(ExpressionVarPtr)
+	cret := xNewStringFilter(ExpressionVar.GoPointer())
 
 	if cret == 0 {
 		return nil

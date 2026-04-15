@@ -53,12 +53,7 @@ var xPollableStreamRead func(uintptr, []byte, uint, bool, uintptr, **glib.Error)
 func PollableStreamRead(StreamVar *InputStream, BufferVar []byte, CountVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPollableStreamRead(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVarPtr, &cerr)
+	cret := xPollableStreamRead(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -80,12 +75,7 @@ var xPollableStreamWrite func(uintptr, []byte, uint, bool, uintptr, **glib.Error
 func PollableStreamWrite(StreamVar *OutputStream, BufferVar []byte, CountVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPollableStreamWrite(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVarPtr, &cerr)
+	cret := xPollableStreamWrite(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -115,12 +105,7 @@ var xPollableStreamWriteAll func(uintptr, []byte, uint, bool, *uint, uintptr, **
 func PollableStreamWriteAll(StreamVar *OutputStream, BufferVar []byte, CountVar uint, BlockingVar bool, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPollableStreamWriteAll(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, BytesWrittenVar, CancellableVarPtr, &cerr)
+	cret := xPollableStreamWriteAll(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

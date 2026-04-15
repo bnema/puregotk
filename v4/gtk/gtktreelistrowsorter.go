@@ -59,12 +59,7 @@ var xNewTreeListRowSorter func(uintptr) uintptr
 func NewTreeListRowSorter(SorterVar *Sorter) *TreeListRowSorter {
 	var cls *TreeListRowSorter
 
-	var SorterVarPtr uintptr
-	if SorterVar != nil {
-		SorterVarPtr = SorterVar.GoPointer()
-	}
-
-	cret := xNewTreeListRowSorter(SorterVarPtr)
+	cret := xNewTreeListRowSorter(SorterVar.GoPointer())
 
 	if cret == 0 {
 		return nil

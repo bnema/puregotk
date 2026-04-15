@@ -251,27 +251,7 @@ var xNewSimpleAsyncResult func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewSimpleAsyncResult(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, SourceTagVar uintptr) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var SourceObjectVarPtr uintptr
-	if SourceObjectVar != nil {
-		SourceObjectVarPtr = SourceObjectVar.GoPointer()
-	}
-
-	cret := xNewSimpleAsyncResult(SourceObjectVarPtr, CallbackVarRef, UserDataVar, SourceTagVar)
+	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, SourceTagVar)
 
 	if cret == 0 {
 		return nil
@@ -287,27 +267,7 @@ var xNewSimpleAsyncResultError func(uintptr, uintptr, uintptr, glib.Quark, int, 
 func NewSimpleAsyncResultError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var SourceObjectVarPtr uintptr
-	if SourceObjectVar != nil {
-		SourceObjectVarPtr = SourceObjectVar.GoPointer()
-	}
-
-	cret := xNewSimpleAsyncResultError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -323,27 +283,7 @@ var xNewSimpleAsyncResultFromError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultFromError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var SourceObjectVarPtr uintptr
-	if SourceObjectVar != nil {
-		SourceObjectVarPtr = SourceObjectVar.GoPointer()
-	}
-
-	cret := xNewSimpleAsyncResultFromError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
+	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -360,27 +300,7 @@ var xNewSimpleAsyncResultTakeError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultTakeError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var SourceObjectVarPtr uintptr
-	if SourceObjectVar != nil {
-		SourceObjectVarPtr = SourceObjectVar.GoPointer()
-	}
-
-	cret := xNewSimpleAsyncResultTakeError(SourceObjectVarPtr, CallbackVarRef, UserDataVar, ErrorVar)
+	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil

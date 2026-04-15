@@ -80,12 +80,7 @@ var xNewVideoForFile func(uintptr) uintptr
 func NewVideoForFile(FileVar gio.File) *Video {
 	var cls *Video
 
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	cret := xNewVideoForFile(FileVarPtr)
+	cret := xNewVideoForFile(FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -125,12 +120,7 @@ var xNewVideoForMediaStream func(uintptr) uintptr
 func NewVideoForMediaStream(StreamVar *MediaStream) *Video {
 	var cls *Video
 
-	var StreamVarPtr uintptr
-	if StreamVar != nil {
-		StreamVarPtr = StreamVar.GoPointer()
-	}
-
-	cret := xNewVideoForMediaStream(StreamVarPtr)
+	cret := xNewVideoForMediaStream(StreamVar.GoPointer())
 
 	if cret == 0 {
 		return nil

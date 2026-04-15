@@ -341,12 +341,7 @@ var xLeafletInsertChildAfter func(uintptr, uintptr, uintptr) uintptr
 func (x *Leaflet) InsertChildAfter(ChildVar *gtk.Widget, SiblingVar *gtk.Widget) *LeafletPage {
 	var cls *LeafletPage
 
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	cret := xLeafletInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
+	cret := xLeafletInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
 
 	if cret == 0 {
 		return nil

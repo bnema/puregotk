@@ -561,17 +561,7 @@ func (x *TlsDatabase) LookupCertificateForHandle(HandleVar string, InteractionVa
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	var InteractionVarPtr uintptr
-	if InteractionVar != nil {
-		InteractionVarPtr = InteractionVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsDatabaseLookupCertificateForHandle(x.GoPointer(), HandleVar, InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xTlsDatabaseLookupCertificateForHandle(x.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -642,17 +632,7 @@ func (x *TlsDatabase) LookupCertificateIssuer(CertificateVar *TlsCertificate, In
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	var InteractionVarPtr uintptr
-	if InteractionVar != nil {
-		InteractionVarPtr = InteractionVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsDatabaseLookupCertificateIssuer(x.GoPointer(), CertificateVar.GoPointer(), InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xTlsDatabaseLookupCertificateIssuer(x.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -807,22 +787,7 @@ var xTlsDatabaseVerifyChain func(uintptr, uintptr, string, uintptr, uintptr, Tls
 func (x *TlsDatabase) VerifyChain(ChainVar *TlsCertificate, PurposeVar string, IdentityVar SocketConnectable, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseVerifyFlags, CancellableVar *Cancellable) (TlsCertificateFlags, error) {
 	var cerr *glib.Error
 
-	var IdentityVarPtr uintptr
-	if IdentityVar != nil {
-		IdentityVarPtr = IdentityVar.GoPointer()
-	}
-
-	var InteractionVarPtr uintptr
-	if InteractionVar != nil {
-		InteractionVarPtr = InteractionVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xTlsDatabaseVerifyChain(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVarPtr, InteractionVarPtr, FlagsVar, CancellableVarPtr, &cerr)
+	cret := xTlsDatabaseVerifyChain(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

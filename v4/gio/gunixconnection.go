@@ -81,12 +81,7 @@ func (x *UnixConnection) ReceiveCredentials(CancellableVar *Cancellable) (*Crede
 	var cls *Credentials
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xUnixConnectionReceiveCredentials(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xUnixConnectionReceiveCredentials(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -145,12 +140,7 @@ var xUnixConnectionReceiveFd func(uintptr, uintptr, **glib.Error) int
 func (x *UnixConnection) ReceiveFd(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xUnixConnectionReceiveFd(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xUnixConnectionReceiveFd(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -181,12 +171,7 @@ var xUnixConnectionSendCredentials func(uintptr, uintptr, **glib.Error) bool
 func (x *UnixConnection) SendCredentials(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xUnixConnectionSendCredentials(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := xUnixConnectionSendCredentials(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -232,12 +217,7 @@ var xUnixConnectionSendFd func(uintptr, int, uintptr, **glib.Error) bool
 func (x *UnixConnection) SendFd(FdVar int, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xUnixConnectionSendFd(x.GoPointer(), FdVar, CancellableVarPtr, &cerr)
+	cret := xUnixConnectionSendFd(x.GoPointer(), FdVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

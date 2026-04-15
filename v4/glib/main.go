@@ -10,7 +10,6 @@ var xBookmarkFileErrorQuark func() Quark
 
 func BookmarkFileErrorQuark() Quark {
 	cret := xBookmarkFileErrorQuark()
-
 	return cret
 }
 
@@ -18,7 +17,6 @@ var xConvertErrorQuark func() Quark
 
 func ConvertErrorQuark() Quark {
 	cret := xConvertErrorQuark()
-
 	return cret
 }
 
@@ -26,7 +24,6 @@ var xFileErrorQuark func() Quark
 
 func FileErrorQuark() Quark {
 	cret := xFileErrorQuark()
-
 	return cret
 }
 
@@ -34,7 +31,6 @@ var xIoChannelErrorQuark func() Quark
 
 func IoChannelErrorQuark() Quark {
 	cret := xIoChannelErrorQuark()
-
 	return cret
 }
 
@@ -42,7 +38,6 @@ var xKeyFileErrorQuark func() Quark
 
 func KeyFileErrorQuark() Quark {
 	cret := xKeyFileErrorQuark()
-
 	return cret
 }
 
@@ -50,7 +45,6 @@ var xMarkupErrorQuark func() Quark
 
 func MarkupErrorQuark() Quark {
 	cret := xMarkupErrorQuark()
-
 	return cret
 }
 
@@ -58,7 +52,6 @@ var xNumberParserErrorQuark func() Quark
 
 func NumberParserErrorQuark() Quark {
 	cret := xNumberParserErrorQuark()
-
 	return cret
 }
 
@@ -66,7 +59,6 @@ var xOptionErrorQuark func() Quark
 
 func OptionErrorQuark() Quark {
 	cret := xOptionErrorQuark()
-
 	return cret
 }
 
@@ -74,7 +66,6 @@ var xRegexErrorQuark func() Quark
 
 func RegexErrorQuark() Quark {
 	cret := xRegexErrorQuark()
-
 	return cret
 }
 
@@ -82,7 +73,6 @@ var xShellErrorQuark func() Quark
 
 func ShellErrorQuark() Quark {
 	cret := xShellErrorQuark()
-
 	return cret
 }
 
@@ -90,7 +80,6 @@ var xSpawnErrorQuark func() Quark
 
 func SpawnErrorQuark() Quark {
 	cret := xSpawnErrorQuark()
-
 	return cret
 }
 
@@ -98,7 +87,6 @@ var xSpawnExitErrorQuark func() Quark
 
 func SpawnExitErrorQuark() Quark {
 	cret := xSpawnExitErrorQuark()
-
 	return cret
 }
 
@@ -106,7 +94,6 @@ var xThreadErrorQuark func() Quark
 
 func ThreadErrorQuark() Quark {
 	cret := xThreadErrorQuark()
-
 	return cret
 }
 
@@ -114,7 +101,6 @@ var xUriErrorQuark func() Quark
 
 func UriErrorQuark() Quark {
 	cret := xUriErrorQuark()
-
 	return cret
 }
 
@@ -122,7 +108,6 @@ var xVariantParseErrorQuark func() Quark
 
 func VariantParseErrorQuark() Quark {
 	cret := xVariantParseErrorQuark()
-
 	return cret
 }
 

@@ -58,12 +58,7 @@ var xNewEmblemedIcon func(uintptr, uintptr) uintptr
 func NewEmblemedIcon(IconVar Icon, EmblemVar *Emblem) *EmblemedIcon {
 	var cls *EmblemedIcon
 
-	var EmblemVarPtr uintptr
-	if EmblemVar != nil {
-		EmblemVarPtr = EmblemVar.GoPointer()
-	}
-
-	cret := xNewEmblemedIcon(IconVar.GoPointer(), EmblemVarPtr)
+	cret := xNewEmblemedIcon(IconVar.GoPointer(), EmblemVar.GoPointer())
 
 	if cret == 0 {
 		return nil

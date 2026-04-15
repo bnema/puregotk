@@ -628,7 +628,7 @@ func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, SettingVarp uintptr) {
+	fcb := func(clsPtr uintptr, SettingVarp string) {
 		fa := Display{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

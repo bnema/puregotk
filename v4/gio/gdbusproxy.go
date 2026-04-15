@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"fmt"
 	"structs"
 	"unsafe"
 
@@ -200,12 +199,7 @@ func NewDBusProxyForBusSync(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar
 	var cls *DBusProxy
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xNewDBusProxyForBusSync(BusTypeVar, FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVarPtr, &cerr)
+	cret := xNewDBusProxyForBusSync(BusTypeVar, FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -811,7 +805,7 @@ func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr))
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, SenderNameVarp uintptr, SignalNameVarp uintptr, ParametersVarp uintptr) {
+	fcb := func(clsPtr uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
 		fa := DBusProxy{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -992,12 +986,7 @@ func (x *DBusProxy) SetObject(ObjectVar DBusObject) {
 func (x *DBusProxy) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := XGInitableInit(x.GoPointer(), CancellableVarPtr, &cerr)
+	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

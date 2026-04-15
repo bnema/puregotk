@@ -602,12 +602,7 @@ var xNewTextBuffer func(uintptr) uintptr
 func NewTextBuffer(TableVar *TextTagTable) *TextBuffer {
 	var cls *TextBuffer
 
-	var TableVarPtr uintptr
-	if TableVar != nil {
-		TableVarPtr = TableVar.GoPointer()
-	}
-
-	cret := xNewTextBuffer(TableVarPtr)
+	cret := xNewTextBuffer(TableVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -1951,7 +1946,7 @@ func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, LocationVarp uintptr, TextVarp uintptr, LenVarp int) {
+	fcb := func(clsPtr uintptr, LocationVarp uintptr, TextVarp string, LenVarp int) {
 		fa := TextBuffer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

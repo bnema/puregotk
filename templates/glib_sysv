@@ -17,9 +17,10 @@ func unrefCallback(fnPtr interface{}) error {
 	if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Func {
 		return fmt.Errorf("type must be a function pointer")
 	}
-	cbPtr := val.Pointer()
-	if _, ok := GetCallback(cbPtr); !ok {
-		return fmt.Errorf("callback not found in registry")
+	cbPtr := reflect.ValueOf(fnPtr).Pointer()
+	refPtr, ok := GetCallback(cbPtr)
+	if !ok {
+		return purego.UnrefCallbackFnPtr(fnPtr)
 	}
 	defer RemoveCallback(cbPtr)
 	return purego.UnrefCallback(refPtr)

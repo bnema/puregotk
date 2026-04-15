@@ -12,7 +12,6 @@ var xEnvironGetenv func([]string, string) string
 // provided list @envp.
 func EnvironGetenv(EnvpVar []string, VariableVar string) string {
 	cret := xEnvironGetenv(EnvpVar, VariableVar)
-
 	return cret
 }
 
@@ -22,7 +21,6 @@ var xEnvironSetenv func([]string, string, string, bool) []string
 // @envp to @value.
 func EnvironSetenv(EnvpVar []string, VariableVar string, ValueVar string, OverwriteVar bool) []string {
 	cret := xEnvironSetenv(EnvpVar, VariableVar, ValueVar, OverwriteVar)
-
 	return cret
 }
 
@@ -32,7 +30,6 @@ var xEnvironUnsetenv func([]string, string) []string
 // environment @envp.
 func EnvironUnsetenv(EnvpVar []string, VariableVar string) []string {
 	cret := xEnvironUnsetenv(EnvpVar, VariableVar)
-
 	return cret
 }
 
@@ -50,7 +47,6 @@ var xGetEnviron func() []string
 // g_strfreev() when it is no longer needed.
 func GetEnviron() []string {
 	cret := xGetEnviron()
-
 	return cret
 }
 
@@ -65,7 +61,6 @@ var xGetenv func(string) string
 // references to other environment variables, they are expanded.
 func Getenv(VariableVar string) string {
 	cret := xGetenv(VariableVar)
-
 	return cret
 }
 
@@ -81,7 +76,6 @@ var xListenv func() []string
 // the UTF-8 encoding that this function and g_getenv() provide.
 func Listenv() []string {
 	cret := xListenv()
-
 	return cret
 }
 
@@ -108,7 +102,6 @@ var xSetenv func(string, string, bool) bool
 // array directly to execvpe(), g_spawn_async(), or the like.
 func Setenv(VariableVar string, ValueVar string, OverwriteVar bool) bool {
 	cret := xSetenv(VariableVar, ValueVar, OverwriteVar)
-
 	return cret
 }
 

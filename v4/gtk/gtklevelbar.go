@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"fmt"
 	"unsafe"
 
 	"github.com/bnema/purego"
@@ -398,7 +397,7 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, NameVarp uintptr) {
+	fcb := func(clsPtr uintptr, NameVarp string) {
 		fa := LevelBar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
