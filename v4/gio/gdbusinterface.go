@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -37,8 +36,12 @@ func (x *DBusInterfaceIface) OverrideGetInfo(cb func(DBusInterface) *DBusInterfa
 	if cb == nil {
 		x.xGetInfo = 0
 	} else {
-		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
-			return cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -49,10 +52,14 @@ func (x *DBusInterfaceIface) GetGetInfo() func(DBusInterface) *DBusInterfaceInfo
 	if x.xGetInfo == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetInfo)
 	return func(InterfaceVar DBusInterface) *DBusInterfaceInfo {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceInfo)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -202,10 +209,17 @@ func (x *DBusInterfaceBase) DupObject() *DBusObjectBase {
 
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
+//
+// This can return %NULL if no #GDBusInterfaceInfo was provided during
+// construction of @interface_ and is also not made available otherwise.
+// For example, #GDBusProxy implements #GDBusInterface but allows for a %NULL
+// #GDBusInterfaceInfo.
 func (x *DBusInterfaceBase) GetInfo() *DBusInterfaceInfo {
-
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
 // Gets the #GDBusObject that @interface_ belongs to, if any.
@@ -231,24 +245,19 @@ func (x *DBusInterfaceBase) GetObject() *DBusObjectBase {
 //
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceBase) SetObject(ObjectVar DBusObject) {
-
-	var ObjectVarPtr uintptr
-	if ObjectVar != nil {
-		ObjectVarPtr = ObjectVar.GoPointer()
-	}
-
-	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVarPtr)
-
+	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
 }
 
-var XGDbusInterfaceDupObject func(uintptr) uintptr
-var XGDbusInterfaceGetInfo func(uintptr) *DBusInterfaceInfo
-var XGDbusInterfaceGetObject func(uintptr) uintptr
-var XGDbusInterfaceSetObject func(uintptr, uintptr)
+var (
+	XGDbusInterfaceDupObject func(uintptr) uintptr
+	XGDbusInterfaceGetInfo   func(uintptr) uintptr
+	XGDbusInterfaceGetObject func(uintptr) uintptr
+	XGDbusInterfaceSetObject func(uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -264,5 +273,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDbusInterfaceGetInfo, libs, "g_dbus_interface_get_info")
 	core.PuregoSafeRegister(&XGDbusInterfaceGetObject, libs, "g_dbus_interface_get_object")
 	core.PuregoSafeRegister(&XGDbusInterfaceSetObject, libs, "g_dbus_interface_set_object")
-
 }

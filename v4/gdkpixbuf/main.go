@@ -2,8 +2,7 @@
 package gdkpixbuf
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -12,7 +11,6 @@ import (
 var xPixbufErrorQuark func() glib.Quark
 
 func PixbufErrorQuark() glib.Quark {
-
 	cret := xPixbufErrorQuark()
 	return cret
 }
@@ -88,7 +86,7 @@ func (c *PixbufSimpleAnimIter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0", "libgdk_pixbuf-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDKPIXBUF") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -105,5 +103,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewPixbufNonAnim, libs, "gdk_pixbuf_non_anim_new")
 
 	core.PuregoSafeRegister(&xPixbufSimpleAnimIterGLibType, libs, "gdk_pixbuf_simple_anim_iter_get_type")
-
 }

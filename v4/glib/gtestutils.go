@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -46,9 +45,7 @@ var xTestCaseFree func(uintptr)
 
 // Free the @test_case.
 func (x *TestCase) Free() {
-
 	xTestCaseFree(x.GoPointer())
-
 }
 
 type TestConfig struct {
@@ -87,27 +84,25 @@ var xTestLogBufferFree func(uintptr)
 
 // Internal function for gtester to free test log messages, no ABI guarantees provided.
 func (x *TestLogBuffer) Free() {
-
 	xTestLogBufferFree(x.GoPointer())
-
 }
 
-var xTestLogBufferPop func(uintptr) *TestLogMsg
+var xTestLogBufferPop func(uintptr) uintptr
 
 // Internal function for gtester to retrieve test log messages, no ABI guarantees provided.
 func (x *TestLogBuffer) Pop() *TestLogMsg {
-
 	cret := xTestLogBufferPop(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestLogMsg)(unsafe.Pointer(cret))
 }
 
 var xTestLogBufferPush func(uintptr, uint, byte)
 
 // Internal function for gtester to decode test log messages, no ABI guarantees provided.
 func (x *TestLogBuffer) Push(NBytesVar uint, BytesVar byte) {
-
 	xTestLogBufferPush(x.GoPointer(), NBytesVar, BytesVar)
-
 }
 
 type TestLogMsg struct {
@@ -132,9 +127,7 @@ var xTestLogMsgFree func(uintptr)
 
 // Internal function for gtester to free test log messages, no ABI guarantees provided.
 func (x *TestLogMsg) Free() {
-
 	xTestLogMsgFree(x.GoPointer())
-
 }
 
 // An opaque structure representing a test suite.
@@ -150,27 +143,21 @@ var xTestSuiteAdd func(uintptr, *TestCase)
 
 // Adds @test_case to @suite.
 func (x *TestSuite) Add(TestCaseVar *TestCase) {
-
 	xTestSuiteAdd(x.GoPointer(), TestCaseVar)
-
 }
 
 var xTestSuiteAddSuite func(uintptr, *TestSuite)
 
 // Adds @nestedsuite to @suite.
 func (x *TestSuite) AddSuite(NestedsuiteVar *TestSuite) {
-
 	xTestSuiteAddSuite(x.GoPointer(), NestedsuiteVar)
-
 }
 
 var xTestSuiteFree func(uintptr)
 
 // Frees the @suite and all nested suites.
 func (x *TestSuite) Free() {
-
 	xTestSuiteFree(x.GoPointer())
-
 }
 
 const (
@@ -238,6 +225,9 @@ const (
 	//   stderr will not be visible, but it will be captured to allow
 	//   later tests with [func@GLib.test_trap_assert_stderr].
 	GTestSubprocessInheritStderrValue TestSubprocessFlags = 4
+	// If this flag is given, the
+	//   child process will inherit the parent’s open file descriptors.
+	GTestSubprocessInheritDescriptorsValue TestSubprocessFlags = 8
 )
 
 // Flags to pass to [func@GLib.test_trap_fork] to control input and output.
@@ -335,49 +325,37 @@ const (
 var xAssertionMessage func(string, string, int, string, string)
 
 func AssertionMessage(DomainVar string, FileVar string, LineVar int, FuncVar string, MessageVar string) {
-
 	xAssertionMessage(DomainVar, FileVar, LineVar, FuncVar, MessageVar)
-
 }
 
 var xAssertionMessageCmpint func(string, string, int, string, string, uint64, string, uint64, byte)
 
 func AssertionMessageCmpint(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var uint64, CmpVar string, Arg2Var uint64, NumtypeVar byte) {
-
 	xAssertionMessageCmpint(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var, NumtypeVar)
-
 }
 
 var xAssertionMessageCmpnum func(string, string, int, string, string, float64, string, float64, byte)
 
 func AssertionMessageCmpnum(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var float64, CmpVar string, Arg2Var float64, NumtypeVar byte) {
-
 	xAssertionMessageCmpnum(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var, NumtypeVar)
-
 }
 
 var xAssertionMessageCmpstr func(string, string, int, string, string, string, string, string)
 
 func AssertionMessageCmpstr(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var string, CmpVar string, Arg2Var string) {
-
 	xAssertionMessageCmpstr(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var)
-
 }
 
 var xAssertionMessageCmpstrv func(string, string, int, string, string, string, string, uint)
 
 func AssertionMessageCmpstrv(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var string, Arg2Var string, FirstWrongIdxVar uint) {
-
 	xAssertionMessageCmpstrv(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, Arg2Var, FirstWrongIdxVar)
-
 }
 
 var xAssertionMessageError func(string, string, int, string, string, *Error, Quark, int)
 
 func AssertionMessageError(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, ErrorVar *Error, ErrorDomainVar Quark, ErrorCodeVar int) {
-
 	xAssertionMessageError(DomainVar, FileVar, LineVar, FuncVar, ExprVar, ErrorVar, ErrorDomainVar, ErrorCodeVar)
-
 }
 
 var xAssertionMessageExpr func(uintptr, string, int, string, uintptr)
@@ -385,7 +363,6 @@ var xAssertionMessageExpr func(uintptr, string, int, string, uintptr)
 // Internal function used to print messages from the public
 // g_assert() and g_assert_not_reached() macros.
 func AssertionMessageExpr(DomainVar *string, FileVar string, LineVar int, FuncVar string, ExprVar *string) {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
@@ -393,7 +370,6 @@ func AssertionMessageExpr(DomainVar *string, FileVar string, LineVar int, FuncVa
 	defer core.GFreeNullable(ExprVarPtr)
 
 	xAssertionMessageExpr(DomainVarPtr, FileVar, LineVar, FuncVar, ExprVarPtr)
-
 }
 
 var xStrcmp0 func(uintptr, uintptr) int
@@ -403,7 +379,6 @@ var xStrcmp0 func(uintptr, uintptr) int
 // Handles `NULL` gracefully by sorting it before non-`NULL` strings.
 // Comparing two `NULL` pointers returns 0.
 func Strcmp0(Str1Var *string, Str2Var *string) int {
-
 	Str1VarPtr := core.GStrdupNullable(Str1Var)
 	defer core.GFreeNullable(Str1VarPtr)
 
@@ -411,7 +386,6 @@ func Strcmp0(Str1Var *string, Str2Var *string) int {
 	defer core.GFreeNullable(Str2VarPtr)
 
 	cret := xStrcmp0(Str1VarPtr, Str2VarPtr)
-
 	return cret
 }
 
@@ -433,24 +407,7 @@ var xTestAddDataFunc func(string, uintptr, uintptr)
 // [const@GLib.TEST_OPTION_ISOLATE_DIRS] option is being used;
 // and it is recommended to do so even if it isn’t.
 func TestAddDataFunc(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc) {
-
-	var TestFuncVarRef uintptr
-	if TestFuncVar != nil {
-		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
-		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-			TestFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *TestFuncVar
-				cbFn(arg0)
-			}
-			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
-		}
-	}
-
-	xTestAddDataFunc(TestpathVar, TestDataVar, TestFuncVarRef)
-
+	xTestAddDataFunc(TestpathVar, TestDataVar, NewCallback(TestFuncVar))
 }
 
 var xTestAddDataFuncFull func(string, uintptr, uintptr, uintptr)
@@ -460,39 +417,7 @@ var xTestAddDataFuncFull func(string, uintptr, uintptr, uintptr)
 // In contrast to [func@GLib.test_add_data_func], this function
 // is freeing @test_data after the test run is complete.
 func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc, DataFreeFuncVar *DestroyNotify) {
-
-	var TestFuncVarRef uintptr
-	if TestFuncVar != nil {
-		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
-		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-			TestFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *TestFuncVar
-				cbFn(arg0)
-			}
-			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
-		}
-	}
-
-	var DataFreeFuncVarRef uintptr
-	if DataFreeFuncVar != nil {
-		DataFreeFuncVarPtr := uintptr(unsafe.Pointer(DataFreeFuncVar))
-		if cbRefPtr, ok := GetCallback(DataFreeFuncVarPtr); ok {
-			DataFreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DataFreeFuncVar
-				cbFn(arg0)
-			}
-			DataFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataFreeFuncVarPtr, DataFreeFuncVarRef, DataFreeFuncVar)
-		}
-	}
-
-	xTestAddDataFuncFull(TestpathVar, TestDataVar, TestFuncVarRef, DataFreeFuncVarRef)
-
+	xTestAddDataFuncFull(TestpathVar, TestDataVar, NewCallback(TestFuncVar), NewCallback(DataFreeFuncVar))
 }
 
 var xTestAddFunc func(string, uintptr)
@@ -512,85 +437,19 @@ var xTestAddFunc func(string, uintptr)
 // [const@GLib.TEST_OPTION_ISOLATE_DIRS] option is being used; and
 // it is recommended to do so even if it isn’t.
 func TestAddFunc(TestpathVar string, TestFuncVar *TestFunc) {
-
-	var TestFuncVarRef uintptr
-	if TestFuncVar != nil {
-		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
-		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-			TestFuncVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *TestFuncVar
-				cbFn()
-			}
-			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
-		}
-	}
-
-	xTestAddFunc(TestpathVar, TestFuncVarRef)
-
+	xTestAddFunc(TestpathVar, NewCallback(TestFuncVar))
 }
 
 var xTestAddVtable func(string, uint, uintptr, uintptr, uintptr, uintptr)
 
 func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) {
-
-	var DataSetupVarRef uintptr
-	if DataSetupVar != nil {
-		DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
-		if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
-			DataSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataSetupVar
-				cbFn(arg0, arg1)
-			}
-			DataSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataSetupVarPtr, DataSetupVarRef, DataSetupVar)
-		}
-	}
-
-	var DataTestVarRef uintptr
-	if DataTestVar != nil {
-		DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
-		if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
-			DataTestVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataTestVar
-				cbFn(arg0, arg1)
-			}
-			DataTestVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataTestVarPtr, DataTestVarRef, DataTestVar)
-		}
-	}
-
-	var DataTeardownVarRef uintptr
-	if DataTeardownVar != nil {
-		DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
-		if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
-			DataTeardownVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataTeardownVar
-				cbFn(arg0, arg1)
-			}
-			DataTeardownVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataTeardownVarPtr, DataTeardownVarRef, DataTeardownVar)
-		}
-	}
-
-	xTestAddVtable(TestpathVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
-
+	xTestAddVtable(TestpathVar, DataSizeVar, TestDataVar, NewCallback(DataSetupVar), NewCallback(DataTestVar), NewCallback(DataTeardownVar))
 }
 
 var xTestAssertExpectedMessagesInternal func(string, string, int, string)
 
 func TestAssertExpectedMessagesInternal(DomainVar string, FileVar string, LineVar int, FuncVar string) {
-
 	xTestAssertExpectedMessagesInternal(DomainVar, FileVar, LineVar, FuncVar)
-
 }
 
 var xTestBug func(string)
@@ -607,9 +466,7 @@ var xTestBug func(string)
 // Since GLib 2.70, the base URI is not prepended to @bug_uri_snippet
 // if it is already a valid URI.
 func TestBug(BugUriSnippetVar string) {
-
 	xTestBug(BugUriSnippetVar)
-
 }
 
 var xTestBugBase func(string)
@@ -629,9 +486,7 @@ var xTestBugBase func(string)
 // If [func@GLib.test_bug_base] is not called, bug URIs are formed
 // solely from the value provided by [func@GLib.test_bug].
 func TestBugBase(UriPatternVar string) {
-
 	xTestBugBase(UriPatternVar)
-
 }
 
 var xTestBuildFilename func(TestFileType, string, ...interface{}) string
@@ -659,13 +514,12 @@ var xTestBuildFilename func(TestFileType, string, ...interface{}) string
 // installed tests, assuming the data files have been installed in the
 // same relative path as the test binary.
 func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
-
 	cret := xTestBuildFilename(FileTypeVar, FirstPathVar, varArgs...)
 
 	return cret
 }
 
-var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *TestCase
+var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Creates a new [struct@GLib.TestCase].
 //
@@ -685,65 +539,22 @@ var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *Test
 // called with the same type of fixture (the @data_size argument), but
 // varying @test_name and @data_test arguments.
 func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) *TestCase {
-
-	var DataSetupVarRef uintptr
-	if DataSetupVar != nil {
-		DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
-		if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
-			DataSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataSetupVar
-				cbFn(arg0, arg1)
-			}
-			DataSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataSetupVarPtr, DataSetupVarRef, DataSetupVar)
-		}
+	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, NewCallback(DataSetupVar), NewCallback(DataTestVar), NewCallback(DataTeardownVar))
+	if cret == 0 {
+		return nil
 	}
-
-	var DataTestVarRef uintptr
-	if DataTestVar != nil {
-		DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
-		if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
-			DataTestVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataTestVar
-				cbFn(arg0, arg1)
-			}
-			DataTestVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataTestVarPtr, DataTestVarRef, DataTestVar)
-		}
-	}
-
-	var DataTeardownVarRef uintptr
-	if DataTeardownVar != nil {
-		DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
-		if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
-			DataTeardownVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DataTeardownVar
-				cbFn(arg0, arg1)
-			}
-			DataTeardownVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DataTeardownVarPtr, DataTeardownVarRef, DataTeardownVar)
-		}
-	}
-
-	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
-
-	return cret
+	return (*TestCase)(unsafe.Pointer(cret))
 }
 
-var xTestCreateSuite func(string) *TestSuite
+var xTestCreateSuite func(string) uintptr
 
 // Creates a new test suite with the name @suite_name.
 func TestCreateSuite(SuiteNameVar string) *TestSuite {
-
 	cret := xTestCreateSuite(SuiteNameVar)
-
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestSuite)(unsafe.Pointer(cret))
 }
 
 var xTestDisableCrashReporting func()
@@ -754,9 +565,7 @@ var xTestDisableCrashReporting func()
 // expected or intended to crash, to avoid wasting resources in system-wide
 // crash collection infrastructure such as systemd-coredump or abrt.
 func TestDisableCrashReporting() {
-
 	xTestDisableCrashReporting()
-
 }
 
 var xTestExpectMessage func(uintptr, LogLevelFlags, string)
@@ -799,12 +608,10 @@ var xTestExpectMessage func(uintptr, LogLevelFlags, string)
 // If messages at [flags@GLib.LogLevelFlags.LEVEL_DEBUG] are emitted, but not explicitly
 // expected via [func@GLib.test_expect_message] then they will be ignored.
 func TestExpectMessage(LogDomainVar *string, LogLevelVar LogLevelFlags, PatternVar string) {
-
 	LogDomainVarPtr := core.GStrdupNullable(LogDomainVar)
 	defer core.GFreeNullable(LogDomainVarPtr)
 
 	xTestExpectMessage(LogDomainVarPtr, LogLevelVar, PatternVar)
-
 }
 
 var xTestFail func()
@@ -830,9 +637,7 @@ var xTestFail func()
 // [func@GLib.test_message] before [func@GLib.test_fail], or use
 // [func@GLib.test_fail_printf] instead.
 func TestFail() {
-
 	xTestFail()
-
 }
 
 var xTestFailPrintf func(string, ...interface{})
@@ -843,9 +648,7 @@ var xTestFailPrintf func(string, ...interface{})
 //
 // The message is formatted as if by [func@GLib.strdup_printf].
 func TestFailPrintf(FormatVar string, varArgs ...interface{}) {
-
 	xTestFailPrintf(FormatVar, varArgs...)
-
 }
 
 var xTestFailed func() bool
@@ -862,7 +665,6 @@ var xTestFailed func() bool
 // The return value of this function is only meaningful
 // if it is called from inside a test function.
 func TestFailed() bool {
-
 	cret := xTestFailed()
 
 	return cret
@@ -876,7 +678,6 @@ var xTestGetDir func(TestFileType) string
 // This is approximately the same as calling `g_test_build_filename(".")`,
 // but you don't need to free the return value.
 func TestGetDir(FileTypeVar TestFileType) string {
-
 	cret := xTestGetDir(FileTypeVar)
 
 	return cret
@@ -897,7 +698,6 @@ var xTestGetFilename func(TestFileType, string, ...interface{}) string
 // function returns (ie: it is best to ensure that all threads have been
 // joined).
 func TestGetFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
-
 	cret := xTestGetFilename(FileTypeVar, FirstPathVar, varArgs...)
 
 	return cret
@@ -914,20 +714,20 @@ var xTestGetPath func() string
 //
 // Note that this is a test path, not a file system path.
 func TestGetPath() string {
-
 	cret := xTestGetPath()
 
 	return cret
 }
 
-var xTestGetRoot func() *TestSuite
+var xTestGetRoot func() uintptr
 
 // Gets the toplevel test suite for the test path API.
 func TestGetRoot() *TestSuite {
-
 	cret := xTestGetRoot()
-
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestSuite)(unsafe.Pointer(cret))
 }
 
 var xTestIncomplete func(uintptr)
@@ -944,12 +744,10 @@ var xTestIncomplete func(uintptr)
 //
 // If not called from inside a test, this function does nothing.
 func TestIncomplete(MsgVar *string) {
-
 	MsgVarPtr := core.GStrdupNullable(MsgVar)
 	defer core.GFreeNullable(MsgVarPtr)
 
 	xTestIncomplete(MsgVarPtr)
-
 }
 
 var xTestIncompletePrintf func(string, ...interface{})
@@ -960,9 +758,7 @@ var xTestIncompletePrintf func(string, ...interface{})
 // Equivalent to [func@GLib.test_incomplete], but the explanation
 // is formatted as if by [func@GLib.strdup_printf].
 func TestIncompletePrintf(FormatVar string, varArgs ...interface{}) {
-
 	xTestIncompletePrintf(FormatVar, varArgs...)
-
 }
 
 var xTestInit func(int, string, ...interface{})
@@ -1027,9 +823,7 @@ var xTestInit func(int, string, ...interface{})
 // when compiled with `G_DISABLE_ASSERT`. Ensure your tests are compiled without
 // `G_DISABLE_ASSERT` defined.
 func TestInit(ArgcVar int, ArgvVar string, varArgs ...interface{}) {
-
 	xTestInit(ArgcVar, ArgvVar, varArgs...)
-
 }
 
 var xTestLogSetFatalHandler func(uintptr, uintptr)
@@ -1056,30 +850,12 @@ var xTestLogSetFatalHandler func(uintptr, uintptr)
 // writer function using [func@GLib.log_set_writer_func].See
 // [Using Structured Logging](logging.html#using-structured-logging).
 func TestLogSetFatalHandler(LogFuncVar *TestLogFatalFunc, UserDataVar uintptr) {
-
-	var LogFuncVarRef uintptr
-	if LogFuncVar != nil {
-		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
-		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
-			LogFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 LogLevelFlags, arg2 uintptr, arg3 uintptr) bool {
-				cbFn := *LogFuncVar
-				return cbFn(core.GoString(arg0), arg1, core.GoString(arg2), arg3)
-			}
-			LogFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
-		}
-	}
-
-	xTestLogSetFatalHandler(LogFuncVarRef, UserDataVar)
-
+	xTestLogSetFatalHandler(NewCallback(LogFuncVar), UserDataVar)
 }
 
 var xTestLogTypeName func(TestLogType) string
 
 func TestLogTypeName(LogTypeVar TestLogType) string {
-
 	cret := xTestLogTypeName(LogTypeVar)
 
 	return cret
@@ -1094,18 +870,14 @@ var xTestMaximizedResult func(float64, string, ...interface{})
 // this and @maximized_quantity can determine sorting
 // order for test result reports.
 func TestMaximizedResult(MaximizedQuantityVar float64, FormatVar string, varArgs ...interface{}) {
-
 	xTestMaximizedResult(MaximizedQuantityVar, FormatVar, varArgs...)
-
 }
 
 var xTestMessage func(string, ...interface{})
 
 // Adds a message to the test report.
 func TestMessage(FormatVar string, varArgs ...interface{}) {
-
 	xTestMessage(FormatVar, varArgs...)
-
 }
 
 var xTestMinimizedResult func(float64, string, ...interface{})
@@ -1117,9 +889,7 @@ var xTestMinimizedResult func(float64, string, ...interface{})
 // this and @minimized_quantity can determine sorting
 // order for test result reports.
 func TestMinimizedResult(MinimizedQuantityVar float64, FormatVar string, varArgs ...interface{}) {
-
 	xTestMinimizedResult(MinimizedQuantityVar, FormatVar, varArgs...)
-
 }
 
 var xTestQueueDestroy func(uintptr, uintptr)
@@ -1132,24 +902,7 @@ var xTestQueueDestroy func(uintptr, uintptr)
 // enqueueing callback `A` before callback `B` will cause `B()` to be called
 // before `A()` during teardown.
 func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
-
-	var DestroyFuncVarRef uintptr
-	if DestroyFuncVar != nil {
-		DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
-		if cbRefPtr, ok := GetCallback(DestroyFuncVarPtr); ok {
-			DestroyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyFuncVar
-				cbFn(arg0)
-			}
-			DestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DestroyFuncVarPtr, DestroyFuncVarRef, DestroyFuncVar)
-		}
-	}
-
-	xTestQueueDestroy(DestroyFuncVarRef, DestroyDataVar)
-
+	xTestQueueDestroy(NewCallbackNullable(DestroyFuncVar), DestroyDataVar)
 }
 
 var xTestQueueFree func(uintptr)
@@ -1160,9 +913,7 @@ var xTestQueueFree func(uintptr)
 // This is equivalent to calling [func@GLib.test_queue_destroy]
 // with a destroy callback of [func@GLib.free].
 func TestQueueFree(GfreePointerVar uintptr) {
-
 	xTestQueueFree(GfreePointerVar)
-
 }
 
 var xTestRandDouble func() float64
@@ -1171,7 +922,6 @@ var xTestRandDouble func() float64
 //
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDouble() float64 {
-
 	cret := xTestRandDouble()
 
 	return cret
@@ -1183,7 +933,6 @@ var xTestRandDoubleRange func(float64, float64) float64
 //
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
-
 	cret := xTestRandDoubleRange(RangeStartVar, RangeEndVar)
 
 	return cret
@@ -1201,7 +950,6 @@ var xTestRandInt func() int32
 // reseeded, to avoid dependencies between tests and to make --seed
 // effective for all test cases.
 func TestRandInt() int32 {
-
 	cret := xTestRandInt()
 
 	return cret
@@ -1213,7 +961,6 @@ var xTestRandIntRange func(int32, int32) int32
 //
 // See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
-
 	cret := xTestRandIntRange(BeginVar, EndVar)
 
 	return cret
@@ -1256,7 +1003,6 @@ var xTestRun func() int
 // this function will return 0 if producing TAP output, or 77 (treated
 // as "skip test" by Automake) otherwise.
 func TestRun() int {
-
 	cret := xTestRun()
 
 	return cret
@@ -1274,7 +1020,6 @@ var xTestRunSuite func(*TestSuite) int
 // [func@GLib.test_run_suite] or [func@GLib.test_run] may only be
 // called once in a program.
 func TestRunSuite(SuiteVar *TestSuite) int {
-
 	cret := xTestRunSuite(SuiteVar)
 
 	return cret
@@ -1298,9 +1043,7 @@ var xTestSetNonfatalAssertions func()
 //
 // This function can only be called after [func@GLib.test_init].
 func TestSetNonfatalAssertions() {
-
 	xTestSetNonfatalAssertions()
-
 }
 
 var xTestSkip func(uintptr)
@@ -1314,12 +1057,10 @@ var xTestSkip func(uintptr)
 //
 // If not called from inside a test, this function does nothing.
 func TestSkip(MsgVar *string) {
-
 	MsgVarPtr := core.GStrdupNullable(MsgVar)
 	defer core.GFreeNullable(MsgVarPtr)
 
 	xTestSkip(MsgVarPtr)
-
 }
 
 var xTestSkipPrintf func(string, ...interface{})
@@ -1329,16 +1070,13 @@ var xTestSkipPrintf func(string, ...interface{})
 // Equivalent to [func@GLib.test_skip], but the explanation
 // is formatted as if by [func@GLib.strdup_printf].
 func TestSkipPrintf(FormatVar string, varArgs ...interface{}) {
-
 	xTestSkipPrintf(FormatVar, varArgs...)
-
 }
 
 var xTestSubprocess func() bool
 
 // Returns true if the test program is running under [func@GLib.test_trap_subprocess].
 func TestSubprocess() bool {
-
 	cret := xTestSubprocess()
 
 	return cret
@@ -1371,9 +1109,7 @@ var xTestSummary func(string)
 //
 // See also [func@GLib.test_bug].
 func TestSummary(SummaryVar string) {
-
 	xTestSummary(SummaryVar)
-
 }
 
 var xTestTimerElapsed func() float64
@@ -1381,7 +1117,6 @@ var xTestTimerElapsed func() float64
 // Gets the number of seconds since the last start of the timer with
 // [func@GLib.test_timer_start].
 func TestTimerElapsed() float64 {
-
 	cret := xTestTimerElapsed()
 
 	return cret
@@ -1391,7 +1126,6 @@ var xTestTimerLast func() float64
 
 // Reports the last result of [func@GLib.test_timer_elapsed].
 func TestTimerLast() float64 {
-
 	cret := xTestTimerLast()
 
 	return cret
@@ -1404,17 +1138,13 @@ var xTestTimerStart func()
 // Call [func@GLib.test_timer_elapsed] when the task is supposed
 // to be done. Call this function again to restart the timer.
 func TestTimerStart() {
-
 	xTestTimerStart()
-
 }
 
 var xTestTrapAssertions func(string, string, int, string, uint64, string)
 
 func TestTrapAssertions(DomainVar string, FileVar string, LineVar int, FuncVar string, AssertionFlagsVar uint64, PatternVar string) {
-
 	xTestTrapAssertions(DomainVar, FileVar, LineVar, FuncVar, AssertionFlagsVar, PatternVar)
-
 }
 
 var xTestTrapFork func(uint64, TestTrapFlags) bool
@@ -1457,7 +1187,6 @@ var xTestTrapFork func(uint64, TestTrapFlags) bool
 //
 // ```
 func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
-
 	cret := xTestTrapFork(UsecTimeoutVar, TestTrapFlagsVar)
 
 	return cret
@@ -1467,9 +1196,16 @@ var xTestTrapHasPassed func() bool
 
 // Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapHasPassed() bool {
-
 	cret := xTestTrapHasPassed()
 
+	return cret
+}
+
+var xTestTrapHasSkipped func() bool
+
+// Checks the result of the last [func@GLib.test_trap_subprocess] call.
+func TestTrapHasSkipped() bool {
+	cret := xTestTrapHasSkipped()
 	return cret
 }
 
@@ -1477,7 +1213,6 @@ var xTestTrapReachedTimeout func() bool
 
 // Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapReachedTimeout() bool {
-
 	cret := xTestTrapReachedTimeout()
 
 	return cret
@@ -1491,12 +1226,10 @@ var xTestTrapSubprocess func(uintptr, uint64, TestSubprocessFlags)
 // with `envp` set to `NULL`. See the documentation for that function
 // for full details.
 func TestTrapSubprocess(TestPathVar *string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
-
 	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
 	defer core.GFreeNullable(TestPathVarPtr)
 
 	xTestTrapSubprocess(TestPathVarPtr, UsecTimeoutVar, TestFlagsVar)
-
 }
 
 var xTestTrapSubprocessWithEnvp func(uintptr, []string, uint64, TestSubprocessFlags)
@@ -1593,17 +1326,15 @@ var xTestTrapSubprocessWithEnvp func(uintptr, []string, uint64, TestSubprocessFl
 //
 // ```
 func TestTrapSubprocessWithEnvp(TestPathVar *string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
-
 	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
 	defer core.GFreeNullable(TestPathVarPtr)
 
 	xTestTrapSubprocessWithEnvp(TestPathVarPtr, EnvpVar, UsecTimeoutVar, TestFlagsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1667,6 +1398,7 @@ func init() {
 	core.PuregoSafeRegister(&xTestTrapAssertions, libs, "g_test_trap_assertions")
 	core.PuregoSafeRegister(&xTestTrapFork, libs, "g_test_trap_fork")
 	core.PuregoSafeRegister(&xTestTrapHasPassed, libs, "g_test_trap_has_passed")
+	core.PuregoSafeRegister(&xTestTrapHasSkipped, libs, "g_test_trap_has_skipped")
 	core.PuregoSafeRegister(&xTestTrapReachedTimeout, libs, "g_test_trap_reached_timeout")
 	core.PuregoSafeRegister(&xTestTrapSubprocess, libs, "g_test_trap_subprocess")
 	core.PuregoSafeRegister(&xTestTrapSubprocessWithEnvp, libs, "g_test_trap_subprocess_with_envp")
@@ -1682,5 +1414,4 @@ func init() {
 	core.PuregoSafeRegister(&xTestSuiteAdd, libs, "g_test_suite_add")
 	core.PuregoSafeRegister(&xTestSuiteAddSuite, libs, "g_test_suite_add_suite")
 	core.PuregoSafeRegister(&xTestSuiteFree, libs, "g_test_suite_free")
-
 }

@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -69,7 +68,6 @@ var xTreeSelectionCountSelectedRows func(uintptr) int
 
 // Returns the number of rows that have been selected in @tree.
 func (x *TreeSelection) CountSelectedRows() int {
-
 	cret := xTreeSelectionCountSelectedRows(x.GoPointer())
 	return cret
 }
@@ -79,7 +77,6 @@ var xTreeSelectionGetMode func(uintptr) SelectionMode
 // Gets the selection mode for @selection. See
 // gtk_tree_selection_set_mode().
 func (x *TreeSelection) GetMode() SelectionMode {
-
 	cret := xTreeSelectionGetMode(x.GoPointer())
 	return cret
 }
@@ -88,7 +85,6 @@ var xTreeSelectionGetSelectFunction func(uintptr) uintptr
 
 // Returns the current selection function.
 func (x *TreeSelection) GetSelectFunction() uintptr {
-
 	cret := xTreeSelectionGetSelectFunction(x.GoPointer())
 	return cret
 }
@@ -101,12 +97,11 @@ var xTreeSelectionGetSelected func(uintptr, **TreeModel, *TreeIter) bool
 // with the current model as a convenience.  This function will not work if you
 // use @selection is %GTK_SELECTION_MULTIPLE.
 func (x *TreeSelection) GetSelected(ModelVar **TreeModel, IterVar *TreeIter) bool {
-
 	cret := xTreeSelectionGetSelected(x.GoPointer(), ModelVar, IterVar)
 	return cret
 }
 
-var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) *glib.List
+var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) uintptr
 
 // Creates a list of path of all selected rows. Additionally, if you are
 // planning on modifying the model after calling this function, you may
@@ -119,9 +114,11 @@ var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) *glib.List
 // g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 // ```
 func (x *TreeSelection) GetSelectedRows(ModelVar **TreeModel) *glib.List {
-
 	cret := xTreeSelectionGetSelectedRows(x.GoPointer(), ModelVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xTreeSelectionGetTreeView func(uintptr) uintptr
@@ -145,7 +142,6 @@ var xTreeSelectionGetUserData func(uintptr) uintptr
 
 // Returns the user data for the selection function.
 func (x *TreeSelection) GetUserData() uintptr {
-
 	cret := xTreeSelectionGetUserData(x.GoPointer())
 	return cret
 }
@@ -154,7 +150,6 @@ var xTreeSelectionIterIsSelected func(uintptr, *TreeIter) bool
 
 // Returns %TRUE if the row at @iter is currently selected.
 func (x *TreeSelection) IterIsSelected(IterVar *TreeIter) bool {
-
 	cret := xTreeSelectionIterIsSelected(x.GoPointer(), IterVar)
 	return cret
 }
@@ -164,7 +159,6 @@ var xTreeSelectionPathIsSelected func(uintptr, *TreePath) bool
 // Returns %TRUE if the row pointed to by @path is currently selected.  If @path
 // does not point to a valid location, %FALSE is returned
 func (x *TreeSelection) PathIsSelected(PathVar *TreePath) bool {
-
 	cret := xTreeSelectionPathIsSelected(x.GoPointer(), PathVar)
 	return cret
 }
@@ -174,27 +168,21 @@ var xTreeSelectionSelectAll func(uintptr)
 // Selects all the nodes. @selection must be set to %GTK_SELECTION_MULTIPLE
 // mode.
 func (x *TreeSelection) SelectAll() {
-
 	xTreeSelectionSelectAll(x.GoPointer())
-
 }
 
 var xTreeSelectionSelectIter func(uintptr, *TreeIter)
 
 // Selects the specified iterator.
 func (x *TreeSelection) SelectIter(IterVar *TreeIter) {
-
 	xTreeSelectionSelectIter(x.GoPointer(), IterVar)
-
 }
 
 var xTreeSelectionSelectPath func(uintptr, *TreePath)
 
 // Select the row at @path.
 func (x *TreeSelection) SelectPath(PathVar *TreePath) {
-
 	xTreeSelectionSelectPath(x.GoPointer(), PathVar)
-
 }
 
 var xTreeSelectionSelectRange func(uintptr, *TreePath, *TreePath)
@@ -202,9 +190,7 @@ var xTreeSelectionSelectRange func(uintptr, *TreePath, *TreePath)
 // Selects a range of nodes, determined by @start_path and @end_path inclusive.
 // @selection must be set to %GTK_SELECTION_MULTIPLE mode.
 func (x *TreeSelection) SelectRange(StartPathVar *TreePath, EndPathVar *TreePath) {
-
 	xTreeSelectionSelectRange(x.GoPointer(), StartPathVar, EndPathVar)
-
 }
 
 var xTreeSelectionSelectedForeach func(uintptr, uintptr, uintptr)
@@ -213,24 +199,7 @@ var xTreeSelectionSelectedForeach func(uintptr, uintptr, uintptr)
 // the tree or selection from within this function. As a result,
 // gtk_tree_selection_get_selected_rows() might be more useful.
 func (x *TreeSelection) SelectedForeach(FuncVar *TreeSelectionForeachFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TreePath, arg2 *TreeIter, arg3 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1, arg2, arg3)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xTreeSelectionSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
-
+	xTreeSelectionSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
 var xTreeSelectionSetMode func(uintptr, SelectionMode)
@@ -239,9 +208,7 @@ var xTreeSelectionSetMode func(uintptr, SelectionMode)
 // %GTK_SELECTION_MULTIPLE, then the anchor is kept selected, if it was
 // previously selected.
 func (x *TreeSelection) SetMode(TypeVar SelectionMode) {
-
 	xTreeSelectionSetMode(x.GoPointer(), TypeVar)
-
 }
 
 var xTreeSelectionSetSelectFunction func(uintptr, uintptr, uintptr, uintptr)
@@ -253,66 +220,28 @@ var xTreeSelectionSetSelectFunction func(uintptr, uintptr, uintptr, uintptr)
 // should return %TRUE if the state of the node may be toggled, and %FALSE
 // if the state of the node should be left unchanged.
 func (x *TreeSelection) SetSelectFunction(FuncVar *TreeSelectionFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *TreePath, arg3 bool, arg4 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1, arg2, arg3, arg4)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xTreeSelectionSetSelectFunction(x.GoPointer(), FuncVarRef, DataVar, DestroyVarRef)
-
+	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xTreeSelectionUnselectAll func(uintptr)
 
 // Unselects all the nodes.
 func (x *TreeSelection) UnselectAll() {
-
 	xTreeSelectionUnselectAll(x.GoPointer())
-
 }
 
 var xTreeSelectionUnselectIter func(uintptr, *TreeIter)
 
 // Unselects the specified iterator.
 func (x *TreeSelection) UnselectIter(IterVar *TreeIter) {
-
 	xTreeSelectionUnselectIter(x.GoPointer(), IterVar)
-
 }
 
 var xTreeSelectionUnselectPath func(uintptr, *TreePath)
 
 // Unselects the row at @path.
 func (x *TreeSelection) UnselectPath(PathVar *TreePath) {
-
 	xTreeSelectionUnselectPath(x.GoPointer(), PathVar)
-
 }
 
 var xTreeSelectionUnselectRange func(uintptr, *TreePath, *TreePath)
@@ -320,9 +249,7 @@ var xTreeSelectionUnselectRange func(uintptr, *TreePath, *TreePath)
 // Unselects a range of nodes, determined by @start_path and @end_path
 // inclusive.
 func (x *TreeSelection) UnselectRange(StartPathVar *TreePath, EndPathVar *TreePath) {
-
 	xTreeSelectionUnselectRange(x.GoPointer(), StartPathVar, EndPathVar)
-
 }
 
 func (c *TreeSelection) GoPointer() uintptr {
@@ -354,7 +281,6 @@ func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -365,7 +291,7 @@ func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -397,5 +323,4 @@ func init() {
 	core.PuregoSafeRegister(&xTreeSelectionUnselectIter, libs, "gtk_tree_selection_unselect_iter")
 	core.PuregoSafeRegister(&xTreeSelectionUnselectPath, libs, "gtk_tree_selection_unselect_path")
 	core.PuregoSafeRegister(&xTreeSelectionUnselectRange, libs, "gtk_tree_selection_unselect_range")
-
 }

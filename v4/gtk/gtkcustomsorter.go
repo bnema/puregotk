@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -100,39 +99,7 @@ var xCustomSorterSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // If a previous function was set, its @user_destroy will be
 // called now.
 func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-
-	var SortFuncVarRef uintptr
-	if SortFuncVar != nil {
-		SortFuncVarPtr := uintptr(unsafe.Pointer(SortFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(SortFuncVarPtr); ok {
-			SortFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *SortFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	xCustomSorterSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, UserDestroyVarRef)
-
+	xCustomSorterSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 func (c *CustomSorter) GoPointer() uintptr {
@@ -148,7 +115,7 @@ func (c *CustomSorter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -163,5 +130,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewCustomSorter, libs, "gtk_custom_sorter_new")
 
 	core.PuregoSafeRegister(&xCustomSorterSetSortFunc, libs, "gtk_custom_sorter_set_sort_func")
-
 }

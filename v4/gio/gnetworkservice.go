@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -78,7 +77,6 @@ var xNetworkServiceGetDomain func(uintptr) string
 // Gets the domain that @srv serves. This might be either UTF-8 or
 // ASCII-encoded, depending on what @srv was created with.
 func (x *NetworkService) GetDomain() string {
-
 	cret := xNetworkServiceGetDomain(x.GoPointer())
 	return cret
 }
@@ -87,7 +85,6 @@ var xNetworkServiceGetProtocol func(uintptr) string
 
 // Gets @srv's protocol name (eg, "tcp").
 func (x *NetworkService) GetProtocol() string {
-
 	cret := xNetworkServiceGetProtocol(x.GoPointer())
 	return cret
 }
@@ -97,7 +94,6 @@ var xNetworkServiceGetScheme func(uintptr) string
 // Gets the URI scheme used to resolve proxies. By default, the service name
 // is used as scheme.
 func (x *NetworkService) GetScheme() string {
-
 	cret := xNetworkServiceGetScheme(x.GoPointer())
 	return cret
 }
@@ -106,7 +102,6 @@ var xNetworkServiceGetService func(uintptr) string
 
 // Gets @srv's service name (eg, "ldap").
 func (x *NetworkService) GetService() string {
-
 	cret := xNetworkServiceGetService(x.GoPointer())
 	return cret
 }
@@ -116,9 +111,7 @@ var xNetworkServiceSetScheme func(uintptr, string)
 // Set's the URI scheme used to resolve proxies. By default, the service name
 // is used as scheme.
 func (x *NetworkService) SetScheme(SchemeVar string) {
-
 	xNetworkServiceSetScheme(x.GoPointer(), SchemeVar)
-
 }
 
 func (c *NetworkService) GoPointer() uintptr {
@@ -242,14 +235,13 @@ func (x *NetworkService) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *NetworkService) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -268,5 +260,4 @@ func init() {
 	core.PuregoSafeRegister(&xNetworkServiceGetScheme, libs, "g_network_service_get_scheme")
 	core.PuregoSafeRegister(&xNetworkServiceGetService, libs, "g_network_service_get_service")
 	core.PuregoSafeRegister(&xNetworkServiceSetScheme, libs, "g_network_service_set_scheme")
-
 }

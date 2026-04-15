@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -42,7 +41,7 @@ func (x *GlyphItem) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
+var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) uintptr
 
 // Splits a shaped item (`PangoGlyphItem`) into multiple items based
 // on an attribute list.
@@ -62,27 +61,29 @@ var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
 // This function takes ownership of @glyph_item; it will be reused
 // as one of the elements in the list.
 func (x *GlyphItem) ApplyAttrs(TextVar string, ListVar *AttrList) *glib.SList {
-
 	cret := xGlyphItemApplyAttrs(x.GoPointer(), TextVar, ListVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xGlyphItemCopy func(uintptr) *GlyphItem
+var xGlyphItemCopy func(uintptr) uintptr
 
 // Make a deep copy of an existing `PangoGlyphItem` structure.
 func (x *GlyphItem) Copy() *GlyphItem {
-
 	cret := xGlyphItemCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItem)(unsafe.Pointer(cret))
 }
 
 var xGlyphItemFree func(uintptr)
 
 // Frees a `PangoGlyphItem` and resources to which it points.
 func (x *GlyphItem) Free() {
-
 	xGlyphItemFree(x.GoPointer())
-
 }
 
 var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int)
@@ -95,9 +96,7 @@ var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int)
 //
 // See also [method@Pango.GlyphString.get_logical_widths].
 func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar *[]int) {
-
 	xGlyphItemGetLogicalWidths(x.GoPointer(), TextVar, LogicalWidthsVar)
-
 }
 
 var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int)
@@ -105,12 +104,10 @@ var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int)
 // Adds spacing between the graphemes of @glyph_item to
 // give the effect of typographic letter spacing.
 func (x *GlyphItem) LetterSpace(TextVar string, LogAttrsVar []LogAttr, LetterSpacingVar int) {
-
 	xGlyphItemLetterSpace(x.GoPointer(), TextVar, LogAttrsVar, LetterSpacingVar)
-
 }
 
-var xGlyphItemSplit func(uintptr, string, int) *GlyphItem
+var xGlyphItemSplit func(uintptr, string, int) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -124,9 +121,11 @@ var xGlyphItemSplit func(uintptr, string, int) *GlyphItem
 // This function is similar in function to pango_item_split() (and uses
 // it internally.)
 func (x *GlyphItem) Split(TextVar string, SplitIndexVar int) *GlyphItem {
-
 	cret := xGlyphItemSplit(x.GoPointer(), TextVar, SplitIndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItem)(unsafe.Pointer(cret))
 }
 
 // A `PangoGlyphItemIter` is an iterator over the clusters in a
@@ -202,22 +201,22 @@ func (x *GlyphItemIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xGlyphItemIterCopy func(uintptr) *GlyphItemIter
+var xGlyphItemIterCopy func(uintptr) uintptr
 
 // Make a shallow copy of an existing `PangoGlyphItemIter` structure.
 func (x *GlyphItemIter) Copy() *GlyphItemIter {
-
 	cret := xGlyphItemIterCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItemIter)(unsafe.Pointer(cret))
 }
 
 var xGlyphItemIterFree func(uintptr)
 
 // Frees a `PangoGlyphItem`Iter.
 func (x *GlyphItemIter) Free() {
-
 	xGlyphItemIterFree(x.GoPointer())
-
 }
 
 var xGlyphItemIterInitEnd func(uintptr, *GlyphItem, string) bool
@@ -227,7 +226,6 @@ var xGlyphItemIterInitEnd func(uintptr, *GlyphItem, string) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) InitEnd(GlyphItemVar *GlyphItem, TextVar string) bool {
-
 	cret := xGlyphItemIterInitEnd(x.GoPointer(), GlyphItemVar, TextVar)
 	return cret
 }
@@ -239,7 +237,6 @@ var xGlyphItemIterInitStart func(uintptr, *GlyphItem, string) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) InitStart(GlyphItemVar *GlyphItem, TextVar string) bool {
-
 	cret := xGlyphItemIterInitStart(x.GoPointer(), GlyphItemVar, TextVar)
 	return cret
 }
@@ -250,7 +247,6 @@ var xGlyphItemIterNextCluster func(uintptr) bool
 //
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) NextCluster() bool {
-
 	cret := xGlyphItemIterNextCluster(x.GoPointer())
 	return cret
 }
@@ -260,14 +256,13 @@ var xGlyphItemIterPrevCluster func(uintptr) bool
 // Moves the iterator to the preceding cluster in the glyph item.
 // See `PangoGlyphItemIter` for details of cluster orders.
 func (x *GlyphItemIter) PrevCluster() bool {
-
 	cret := xGlyphItemIterPrevCluster(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -294,5 +289,4 @@ func init() {
 	core.PuregoSafeRegister(&xGlyphItemIterInitStart, libs, "pango_glyph_item_iter_init_start")
 	core.PuregoSafeRegister(&xGlyphItemIterNextCluster, libs, "pango_glyph_item_iter_next_cluster")
 	core.PuregoSafeRegister(&xGlyphItemIterPrevCluster, libs, "pango_glyph_item_iter_prev_cluster")
-
 }

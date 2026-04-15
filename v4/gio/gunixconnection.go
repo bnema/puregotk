@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -98,7 +97,6 @@ func (x *UnixConnection) ReceiveCredentials(CancellableVar *Cancellable) (*Crede
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xUnixConnectionReceiveCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -111,29 +109,7 @@ var xUnixConnectionReceiveCredentialsAsync func(uintptr, uintptr, uintptr, uintp
 // When the operation is finished, @callback will be called. You can then call
 // g_unix_connection_receive_credentials_finish() to get the result of the operation.
 func (x *UnixConnection) ReceiveCredentialsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xUnixConnectionReceiveCredentialsAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xUnixConnectionReceiveCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xUnixConnectionReceiveCredentialsFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -155,7 +131,6 @@ func (x *UnixConnection) ReceiveCredentialsFinish(ResultVar AsyncResult) (*Crede
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xUnixConnectionReceiveFd func(uintptr, uintptr, **glib.Error) int
@@ -180,7 +155,6 @@ func (x *UnixConnection) ReceiveFd(CancellableVar *Cancellable) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendCredentials func(uintptr, uintptr, **glib.Error) bool
@@ -217,7 +191,6 @@ func (x *UnixConnection) SendCredentials(CancellableVar *Cancellable) (bool, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -230,29 +203,7 @@ var xUnixConnectionSendCredentialsAsync func(uintptr, uintptr, uintptr, uintptr)
 // When the operation is finished, @callback will be called. You can then call
 // g_unix_connection_send_credentials_finish() to get the result of the operation.
 func (x *UnixConnection) SendCredentialsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xUnixConnectionSendCredentialsAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xUnixConnectionSendCredentialsAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xUnixConnectionSendCredentialsFinish func(uintptr, uintptr, **glib.Error) bool
@@ -267,7 +218,6 @@ func (x *UnixConnection) SendCredentialsFinish(ResultVar AsyncResult) (bool, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixConnectionSendFd func(uintptr, int, uintptr, **glib.Error) bool
@@ -292,7 +242,6 @@ func (x *UnixConnection) SendFd(FdVar int, CancellableVar *Cancellable) (bool, e
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *UnixConnection) GoPointer() uintptr {
@@ -308,7 +257,7 @@ func (c *UnixConnection) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -328,5 +277,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsAsync, libs, "g_unix_connection_send_credentials_async")
 	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsFinish, libs, "g_unix_connection_send_credentials_finish")
 	core.PuregoSafeRegister(&xUnixConnectionSendFd, libs, "g_unix_connection_send_fd")
-
 }

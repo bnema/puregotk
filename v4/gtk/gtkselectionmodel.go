@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -85,8 +84,12 @@ func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionM
 	if cb == nil {
 		x.xGetSelectionInRange = 0
 	} else {
-		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) *Bitset {
-			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
+		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) uintptr {
+			ret := cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -100,10 +103,14 @@ func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, 
 	if x.xGetSelectionInRange == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) *Bitset
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetSelectionInRange)
 	return func(ModelVar SelectionModel, PositionVar uint, NItemsVar uint) *Bitset {
-		return rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
+		rawRet := rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Bitset)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -394,9 +401,11 @@ func (x *SelectionModelBase) SetGoPointer(ptr uintptr) {
 // consider using [method@Gtk.SelectionModel.is_selected] or if you are only
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *SelectionModelBase) GetSelection() *Bitset {
-
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -407,35 +416,33 @@ func (x *SelectionModelBase) GetSelection() *Bitset {
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
 func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
-
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.
 func (x *SelectionModelBase) IsSelected(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to select all items in the model.
 func (x *SelectionModelBase) SelectAll() bool {
-
 	cret := XGtkSelectionModelSelectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to select an item in the model.
 func (x *SelectionModelBase) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
 func (x *SelectionModelBase) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -445,9 +452,7 @@ func (x *SelectionModelBase) SelectRange(PositionVar uint, NItemsVar uint, Unsel
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *SelectionModelBase) SelectionChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Make selection changes.
@@ -487,47 +492,45 @@ func (x *SelectionModelBase) SelectionChanged(PositionVar uint, NItemsVar uint) 
 // same bitset, which would mean that every item in the set should
 // be selected.
 func (x *SelectionModelBase) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
-
 	cret := XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
 	return cret
 }
 
 // Requests to unselect all items in the model.
 func (x *SelectionModelBase) UnselectAll() bool {
-
 	cret := XGtkSelectionModelUnselectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to unselect an item in the model.
 func (x *SelectionModelBase) UnselectItem(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
 func (x *SelectionModelBase) UnselectRange(PositionVar uint, NItemsVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
 
-var XGtkSelectionModelGetSelection func(uintptr) *Bitset
-var XGtkSelectionModelGetSelectionInRange func(uintptr, uint, uint) *Bitset
-var XGtkSelectionModelIsSelected func(uintptr, uint) bool
-var XGtkSelectionModelSelectAll func(uintptr) bool
-var XGtkSelectionModelSelectItem func(uintptr, uint, bool) bool
-var XGtkSelectionModelSelectRange func(uintptr, uint, uint, bool) bool
-var XGtkSelectionModelSelectionChanged func(uintptr, uint, uint)
-var XGtkSelectionModelSetSelection func(uintptr, *Bitset, *Bitset) bool
-var XGtkSelectionModelUnselectAll func(uintptr) bool
-var XGtkSelectionModelUnselectItem func(uintptr, uint) bool
-var XGtkSelectionModelUnselectRange func(uintptr, uint, uint) bool
+var (
+	XGtkSelectionModelGetSelection        func(uintptr) uintptr
+	XGtkSelectionModelGetSelectionInRange func(uintptr, uint, uint) uintptr
+	XGtkSelectionModelIsSelected          func(uintptr, uint) bool
+	XGtkSelectionModelSelectAll           func(uintptr) bool
+	XGtkSelectionModelSelectItem          func(uintptr, uint, bool) bool
+	XGtkSelectionModelSelectRange         func(uintptr, uint, uint, bool) bool
+	XGtkSelectionModelSelectionChanged    func(uintptr, uint, uint)
+	XGtkSelectionModelSetSelection        func(uintptr, *Bitset, *Bitset) bool
+	XGtkSelectionModelUnselectAll         func(uintptr) bool
+	XGtkSelectionModelUnselectItem        func(uintptr, uint) bool
+	XGtkSelectionModelUnselectRange       func(uintptr, uint, uint) bool
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -550,5 +553,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkSelectionModelUnselectAll, libs, "gtk_selection_model_unselect_all")
 	core.PuregoSafeRegister(&XGtkSelectionModelUnselectItem, libs, "gtk_selection_model_unselect_item")
 	core.PuregoSafeRegister(&XGtkSelectionModelUnselectRange, libs, "gtk_selection_model_unselect_range")
-
 }

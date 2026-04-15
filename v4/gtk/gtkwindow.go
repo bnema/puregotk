@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -357,18 +356,14 @@ var xWindowClose func(uintptr)
 // This function can be used with close buttons in custom
 // titlebars.
 func (x *Window) Close() {
-
 	xWindowClose(x.GoPointer())
-
 }
 
 var xWindowDestroy func(uintptr)
 
 // Drops the internal reference GTK holds on toplevel windows.
 func (x *Window) Destroy() {
-
 	xWindowDestroy(x.GoPointer())
-
 }
 
 var xWindowFullscreen func(uintptr)
@@ -387,9 +382,7 @@ var xWindowFullscreen func(uintptr)
 // [property@Gdk.Toplevel:state] property, or by listening to
 // notifications of the [property@Gtk.Window:fullscreened] property.
 func (x *Window) Fullscreen() {
-
 	xWindowFullscreen(x.GoPointer())
-
 }
 
 var xWindowFullscreenOnMonitor func(uintptr, uintptr)
@@ -404,9 +397,7 @@ var xWindowFullscreenOnMonitor func(uintptr, uintptr)
 // [property@Gdk.Toplevel:state] property, or by listening to
 // notifications of the [property@Gtk.Window:fullscreened] property.
 func (x *Window) FullscreenOnMonitor(MonitorVar *gdk.Monitor) {
-
 	xWindowFullscreenOnMonitor(x.GoPointer(), MonitorVar.GoPointer())
-
 }
 
 var xWindowGetApplication func(uintptr) uintptr
@@ -447,7 +438,6 @@ var xWindowGetDecorated func(uintptr) bool
 
 // Returns whether the window has been set to have decorations.
 func (x *Window) GetDecorated() bool {
-
 	cret := xWindowGetDecorated(x.GoPointer())
 	return cret
 }
@@ -463,9 +453,7 @@ var xWindowGetDefaultSize func(uintptr, *int, *int)
 // This function is the recommended way for [saving window state
 // across restarts of applications](https://developer.gnome.org/documentation/tutorials/save-state.html).
 func (x *Window) GetDefaultSize(WidthVar *int, HeightVar *int) {
-
 	xWindowGetDefaultSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xWindowGetDefaultWidget func(uintptr) uintptr
@@ -489,7 +477,6 @@ var xWindowGetDeletable func(uintptr) bool
 
 // Returns whether the window has been set to have a close button.
 func (x *Window) GetDeletable() bool {
-
 	cret := xWindowGetDeletable(x.GoPointer())
 	return cret
 }
@@ -498,7 +485,6 @@ var xWindowGetDestroyWithParent func(uintptr) bool
 
 // Returns whether the window will be destroyed with its transient parent.
 func (x *Window) GetDestroyWithParent() bool {
-
 	cret := xWindowGetDestroyWithParent(x.GoPointer())
 	return cret
 }
@@ -529,7 +515,6 @@ var xWindowGetFocusVisible func(uintptr) bool
 
 // Gets whether “focus rectangles” are supposed to be visible.
 func (x *Window) GetFocusVisible() bool {
-
 	cret := xWindowGetFocusVisible(x.GoPointer())
 	return cret
 }
@@ -538,7 +523,6 @@ var xWindowGetGravity func(uintptr) WindowGravity
 
 // Returns the gravity that is used when changing the window size programmatically.
 func (x *Window) GetGravity() WindowGravity {
-
 	cret := xWindowGetGravity(x.GoPointer())
 	return cret
 }
@@ -567,7 +551,6 @@ var xWindowGetHandleMenubarAccel func(uintptr) bool
 // Returns whether this window reacts to &lt;kbd&gt;F10&lt;/kbd&gt;
 // presses by activating a menubar it contains.
 func (x *Window) GetHandleMenubarAccel() bool {
-
 	cret := xWindowGetHandleMenubarAccel(x.GoPointer())
 	return cret
 }
@@ -577,7 +560,6 @@ var xWindowGetHideOnClose func(uintptr) bool
 // Returns whether the window will be hidden instead of destroyed when the close
 // button is clicked.
 func (x *Window) GetHideOnClose() bool {
-
 	cret := xWindowGetHideOnClose(x.GoPointer())
 	return cret
 }
@@ -586,7 +568,6 @@ var xWindowGetIconName func(uintptr) string
 
 // Returns the name of the themed icon for the window.
 func (x *Window) GetIconName() string {
-
 	cret := xWindowGetIconName(x.GoPointer())
 	return cret
 }
@@ -595,7 +576,6 @@ var xWindowGetMnemonicsVisible func(uintptr) bool
 
 // Gets whether mnemonics are supposed to be visible.
 func (x *Window) GetMnemonicsVisible() bool {
-
 	cret := xWindowGetMnemonicsVisible(x.GoPointer())
 	return cret
 }
@@ -604,7 +584,6 @@ var xWindowGetModal func(uintptr) bool
 
 // Returns whether the window is modal.
 func (x *Window) GetModal() bool {
-
 	cret := xWindowGetModal(x.GoPointer())
 	return cret
 }
@@ -613,7 +592,6 @@ var xWindowGetResizable func(uintptr) bool
 
 // Gets whether the user can resize the window.
 func (x *Window) GetResizable() bool {
-
 	cret := xWindowGetResizable(x.GoPointer())
 	return cret
 }
@@ -622,7 +600,6 @@ var xWindowGetTitle func(uintptr) string
 
 // Retrieves the title of the window.
 func (x *Window) GetTitle() string {
-
 	cret := xWindowGetTitle(x.GoPointer())
 	return cret
 }
@@ -666,7 +643,6 @@ var xWindowHasGroup func(uintptr) bool
 
 // Returns whether the window has an explicit window group.
 func (x *Window) HasGroup() bool {
-
 	cret := xWindowHasGroup(x.GoPointer())
 	return cret
 }
@@ -681,7 +657,6 @@ var xWindowIsActive func(uintptr) bool
 // You might use this function if you wanted to draw a widget
 // differently in an active window from a widget in an inactive window.
 func (x *Window) IsActive() bool {
-
 	cret := xWindowIsActive(x.GoPointer())
 	return cret
 }
@@ -699,7 +674,6 @@ var xWindowIsFullscreen func(uintptr) bool
 // If the window isn't yet mapped, the value returned will whether the
 // initial requested state is fullscreen.
 func (x *Window) IsFullscreen() bool {
-
 	cret := xWindowIsFullscreen(x.GoPointer())
 	return cret
 }
@@ -717,7 +691,6 @@ var xWindowIsMaximized func(uintptr) bool
 // If the window isn't yet mapped, the value returned will whether the
 // initial requested state is maximized.
 func (x *Window) IsMaximized() bool {
-
 	cret := xWindowIsMaximized(x.GoPointer())
 	return cret
 }
@@ -730,7 +703,6 @@ var xWindowIsSuspended func(uintptr) bool
 // to the user, for example by being on a inactive workspace,
 // minimized, obstructed.
 func (x *Window) IsSuspended() bool {
-
 	cret := xWindowIsSuspended(x.GoPointer())
 	return cret
 }
@@ -758,9 +730,7 @@ var xWindowMaximize func(uintptr)
 // notifications on the [property@Gtk.Window:maximized]
 // property.
 func (x *Window) Maximize() {
-
 	xWindowMaximize(x.GoPointer())
-
 }
 
 var xWindowMinimize func(uintptr)
@@ -780,9 +750,7 @@ var xWindowMinimize func(uintptr)
 // You can track result of this operation via the
 // [property@Gdk.Toplevel:state] property.
 func (x *Window) Minimize() {
-
 	xWindowMinimize(x.GoPointer())
-
 }
 
 var xWindowPresent func(uintptr)
@@ -796,9 +764,7 @@ var xWindowPresent func(uintptr)
 //
 // If @window is hidden, this function also makes it visible.
 func (x *Window) Present() {
-
 	xWindowPresent(x.GoPointer())
-
 }
 
 var xWindowPresentWithTime func(uintptr, uint32)
@@ -811,9 +777,7 @@ var xWindowPresentWithTime func(uintptr, uint32)
 // to be shown (when clicking a link for example), rather than once
 // the window is ready to be shown.
 func (x *Window) PresentWithTime(TimestampVar uint32) {
-
 	xWindowPresentWithTime(x.GoPointer(), TimestampVar)
-
 }
 
 var xWindowSetApplication func(uintptr, uintptr)
@@ -832,28 +796,14 @@ var xWindowSetApplication func(uintptr, uintptr)
 // and/or [method@Gtk.Application.add_window] on the old/new applications
 // as relevant.
 func (x *Window) SetApplication(ApplicationVar *Application) {
-
-	var ApplicationVarPtr uintptr
-	if ApplicationVar != nil {
-		ApplicationVarPtr = ApplicationVar.GoPointer()
-	}
-
-	xWindowSetApplication(x.GoPointer(), ApplicationVarPtr)
-
+	xWindowSetApplication(x.GoPointer(), ApplicationVar.GoPointer())
 }
 
 var xWindowSetChild func(uintptr, uintptr)
 
 // Sets the child widget of the window.
 func (x *Window) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xWindowSetChild(x.GoPointer(), ChildVarPtr)
-
+	xWindowSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xWindowSetDecorated func(uintptr, bool)
@@ -872,9 +822,7 @@ var xWindowSetDecorated func(uintptr, bool)
 // On Windows, this function always works, since there’s no window manager
 // policy involved.
 func (x *Window) SetDecorated(SettingVar bool) {
-
 	xWindowSetDecorated(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetDefaultSize func(uintptr, int, int)
@@ -910,9 +858,7 @@ var xWindowSetDefaultSize func(uintptr, int, int)
 // directly will not work in all circumstances and can lead to growing
 // or shrinking windows.
 func (x *Window) SetDefaultSize(WidthVar int, HeightVar int) {
-
 	xWindowSetDefaultSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xWindowSetDefaultWidget func(uintptr, uintptr)
@@ -923,14 +869,7 @@ var xWindowSetDefaultWidget func(uintptr, uintptr)
 // when the user presses &lt;kbd&gt;Enter&lt;/kbd&gt; in a dialog
 // (for example).
 func (x *Window) SetDefaultWidget(DefaultWidgetVar *Widget) {
-
-	var DefaultWidgetVarPtr uintptr
-	if DefaultWidgetVar != nil {
-		DefaultWidgetVarPtr = DefaultWidgetVar.GoPointer()
-	}
-
-	xWindowSetDefaultWidget(x.GoPointer(), DefaultWidgetVarPtr)
-
+	xWindowSetDefaultWidget(x.GoPointer(), DefaultWidgetVar.GoPointer())
 }
 
 var xWindowSetDeletable func(uintptr, bool)
@@ -948,9 +887,7 @@ var xWindowSetDeletable func(uintptr, bool)
 // On Windows, this function always works, since there’s no window
 // manager policy involved.
 func (x *Window) SetDeletable(SettingVar bool) {
-
 	xWindowSetDeletable(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetDestroyWithParent func(uintptr, bool)
@@ -960,9 +897,7 @@ var xWindowSetDestroyWithParent func(uintptr, bool)
 // This is useful for dialogs that shouldn’t persist beyond the lifetime
 // of the main window they are associated with, for example.
 func (x *Window) SetDestroyWithParent(SettingVar bool) {
-
 	xWindowSetDestroyWithParent(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetDisplay func(uintptr, uintptr)
@@ -972,9 +907,7 @@ var xWindowSetDisplay func(uintptr, uintptr)
 // If the window is already mapped, it will be unmapped,
 // and then remapped on the new display.
 func (x *Window) SetDisplay(DisplayVar *gdk.Display) {
-
 	xWindowSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 var xWindowSetFocus func(uintptr, uintptr)
@@ -987,14 +920,7 @@ var xWindowSetFocus func(uintptr, uintptr)
 // particular widget in the toplevel, it is usually more convenient
 // to use [method@Gtk.Widget.grab_focus] instead of this function.
 func (x *Window) SetFocus(FocusVar *Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	xWindowSetFocus(x.GoPointer(), FocusVarPtr)
-
+	xWindowSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
 var xWindowSetFocusVisible func(uintptr, bool)
@@ -1004,18 +930,14 @@ var xWindowSetFocusVisible func(uintptr, bool)
 // This property is maintained by GTK based on user input,
 // and should not be set by applications.
 func (x *Window) SetFocusVisible(SettingVar bool) {
-
 	xWindowSetFocusVisible(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetGravity func(uintptr, WindowGravity)
 
 // Sets the gravity that is used when changing the window size programmatically.
 func (x *Window) SetGravity(GravityVar WindowGravity) {
-
 	xWindowSetGravity(x.GoPointer(), GravityVar)
-
 }
 
 var xWindowSetHandleMenubarAccel func(uintptr, bool)
@@ -1023,9 +945,7 @@ var xWindowSetHandleMenubarAccel func(uintptr, bool)
 // Sets whether this window should react to &lt;kbd&gt;F10&lt;/kbd&gt;
 // presses by activating a menubar it contains.
 func (x *Window) SetHandleMenubarAccel(HandleMenubarAccelVar bool) {
-
 	xWindowSetHandleMenubarAccel(x.GoPointer(), HandleMenubarAccelVar)
-
 }
 
 var xWindowSetHideOnClose func(uintptr, bool)
@@ -1033,9 +953,7 @@ var xWindowSetHideOnClose func(uintptr, bool)
 // Sets whether clicking the close button will hide the window instead
 // of destroying it.
 func (x *Window) SetHideOnClose(SettingVar bool) {
-
 	xWindowSetHideOnClose(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetIconName func(uintptr, uintptr)
@@ -1048,12 +966,10 @@ var xWindowSetIconName func(uintptr, uintptr)
 // Note that this has nothing to do with the WM_ICON_NAME
 // property which is mentioned in the ICCCM.
 func (x *Window) SetIconName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xWindowSetIconName(x.GoPointer(), NameVarPtr)
-
 }
 
 var xWindowSetMnemonicsVisible func(uintptr, bool)
@@ -1063,9 +979,7 @@ var xWindowSetMnemonicsVisible func(uintptr, bool)
 // This property is maintained by GTK based on user input,
 // and should not be set by applications.
 func (x *Window) SetMnemonicsVisible(SettingVar bool) {
-
 	xWindowSetMnemonicsVisible(x.GoPointer(), SettingVar)
-
 }
 
 var xWindowSetModal func(uintptr, bool)
@@ -1078,9 +992,7 @@ var xWindowSetModal func(uintptr, bool)
 // for the parent; most window managers will then disallow lowering the
 // dialog below the parent.
 func (x *Window) SetModal(ModalVar bool) {
-
 	xWindowSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xWindowSetResizable func(uintptr, bool)
@@ -1089,9 +1001,7 @@ var xWindowSetResizable func(uintptr, bool)
 //
 // Windows are user resizable by default.
 func (x *Window) SetResizable(ResizableVar bool) {
-
 	xWindowSetResizable(x.GoPointer(), ResizableVar)
-
 }
 
 var xWindowSetStartupId func(uintptr, string)
@@ -1112,9 +1022,7 @@ var xWindowSetStartupId func(uintptr, string)
 // This function is only useful on Wayland or X11, not with other GDK
 // backends.
 func (x *Window) SetStartupId(StartupIdVar string) {
-
 	xWindowSetStartupId(x.GoPointer(), StartupIdVar)
-
 }
 
 var xWindowSetTitle func(uintptr, uintptr)
@@ -1130,12 +1038,10 @@ var xWindowSetTitle func(uintptr, uintptr)
 //
 // Passing `NULL` does the same as setting the title to an empty string.
 func (x *Window) SetTitle(TitleVar *string) {
-
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
 	xWindowSetTitle(x.GoPointer(), TitleVarPtr)
-
 }
 
 var xWindowSetTitlebar func(uintptr, uintptr)
@@ -1152,14 +1058,7 @@ var xWindowSetTitlebar func(uintptr, uintptr)
 // that is already visible, so you set the titlebar before calling
 // [method@Gtk.Widget.show].
 func (x *Window) SetTitlebar(TitlebarVar *Widget) {
-
-	var TitlebarVarPtr uintptr
-	if TitlebarVar != nil {
-		TitlebarVarPtr = TitlebarVar.GoPointer()
-	}
-
-	xWindowSetTitlebar(x.GoPointer(), TitlebarVarPtr)
-
+	xWindowSetTitlebar(x.GoPointer(), TitlebarVar.GoPointer())
 }
 
 var xWindowSetTransientFor func(uintptr, uintptr)
@@ -1178,14 +1077,7 @@ var xWindowSetTransientFor func(uintptr, uintptr)
 // On Windows, this function puts the child window on top of the parent,
 // much as the window manager would have done on X.
 func (x *Window) SetTransientFor(ParentVar *Window) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	xWindowSetTransientFor(x.GoPointer(), ParentVarPtr)
-
+	xWindowSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
 }
 
 var xWindowUnfullscreen func(uintptr)
@@ -1207,9 +1099,7 @@ var xWindowUnfullscreen func(uintptr)
 // [property@Gdk.Toplevel:state] property, or by listening to
 // notifications of the [property@Gtk.Window:fullscreened] property.
 func (x *Window) Unfullscreen() {
-
 	xWindowUnfullscreen(x.GoPointer())
-
 }
 
 var xWindowUnmaximize func(uintptr)
@@ -1230,9 +1120,7 @@ var xWindowUnmaximize func(uintptr)
 // [property@Gdk.Toplevel:state] property, or by listening to
 // notifications on the [property@Gtk.Window:maximized] property.
 func (x *Window) Unmaximize() {
-
 	xWindowUnmaximize(x.GoPointer())
-
 }
 
 var xWindowUnminimize func(uintptr)
@@ -1248,9 +1136,7 @@ var xWindowUnminimize func(uintptr)
 // You can track result of this operation via the
 // [property@Gdk.Toplevel:state] property.
 func (x *Window) Unminimize() {
-
 	xWindowUnminimize(x.GoPointer())
-
 }
 
 func (c *Window) GoPointer() uintptr {
@@ -1609,7 +1495,6 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1638,7 +1523,6 @@ func (x *Window) ConnectActivateFocus(cb *func(Window)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1662,7 +1546,6 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1696,7 +1579,6 @@ func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa, ToggleVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1721,7 +1603,6 @@ func (x *Window) ConnectKeysChanged(cb *func(Window)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1740,9 +1621,19 @@ func (x *Window) ConnectKeysChanged(cb *func(Window)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Window) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Window) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1763,7 +1654,6 @@ func (x *Window) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Window) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1788,7 +1678,6 @@ func (x *Window) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1827,30 +1716,23 @@ func (x *Window) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Window) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Window) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Window) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Window) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1863,19 +1745,7 @@ func (x *Window) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Window) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1883,14 +1753,7 @@ func (x *Window) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1899,9 +1762,7 @@ func (x *Window) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Window) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1923,9 +1784,7 @@ func (x *Window) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Window) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1935,9 +1794,7 @@ func (x *Window) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1959,9 +1816,7 @@ func (x *Window) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessi
 //
 // ```
 func (x *Window) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1971,9 +1826,7 @@ func (x *Window) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1996,9 +1849,7 @@ func (x *Window) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessibl
 //
 // ```
 func (x *Window) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -2008,9 +1859,7 @@ func (x *Window) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 //
 // This function is meant to be used by language bindings.
 func (x *Window) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -2018,7 +1867,6 @@ func (x *Window) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Window) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -2058,27 +1906,21 @@ func (x *Window) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *Window) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Window) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Window) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -2104,7 +1946,6 @@ var xWindowGetDefaultIconName func() string
 // be modified. It is only valid until the next call to
 // [func@Gtk.Window.set_default_icon_name].
 func WindowGetDefaultIconName() string {
-
 	cret := xWindowGetDefaultIconName()
 	return cret
 }
@@ -2130,7 +1971,7 @@ func WindowGetToplevels() *gio.ListModelBase {
 	return cls
 }
 
-var xWindowListToplevels func() *glib.List
+var xWindowListToplevels func() uintptr
 
 // Returns the list of all existing toplevel windows.
 //
@@ -2140,9 +1981,11 @@ var xWindowListToplevels func() *glib.List
 // call `g_list_foreach (result, (GFunc)g_object_ref, NULL)` first,
 // and then unref all the widgets afterwards.
 func WindowListToplevels() *glib.List {
-
 	cret := xWindowListToplevels()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWindowSetAutoStartupNotification func(bool)
@@ -2160,9 +2003,7 @@ var xWindowSetAutoStartupNotification func(bool)
 // temporarily, show your splash screen, then re-enable it so that
 // showing the main window would automatically result in notification.
 func WindowSetAutoStartupNotification(SettingVar bool) {
-
 	xWindowSetAutoStartupNotification(SettingVar)
-
 }
 
 var xWindowSetDefaultIconName func(string)
@@ -2173,9 +2014,7 @@ var xWindowSetDefaultIconName func(string)
 // haven't had [method@Gtk.Window.set_icon_name]
 // called on them.
 func WindowSetDefaultIconName(NameVar string) {
-
 	xWindowSetDefaultIconName(NameVar)
-
 }
 
 var xWindowSetInteractiveDebugging func(bool)
@@ -2193,14 +2032,12 @@ var xWindowSetInteractiveDebugging func(bool)
 // If you are not overriding the default key shortcuts for the Inspector,
 // you should not use this function.
 func WindowSetInteractiveDebugging(EnableVar bool) {
-
 	xWindowSetInteractiveDebugging(EnableVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2280,5 +2117,4 @@ func init() {
 	core.PuregoSafeRegister(&xWindowSetAutoStartupNotification, libs, "gtk_window_set_auto_startup_notification")
 	core.PuregoSafeRegister(&xWindowSetDefaultIconName, libs, "gtk_window_set_default_icon_name")
 	core.PuregoSafeRegister(&xWindowSetInteractiveDebugging, libs, "gtk_window_set_interactive_debugging")
-
 }

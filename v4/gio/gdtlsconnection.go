@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -400,20 +399,12 @@ func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronously close the DTLS connection. See g_dtls_connection_close() for
 // more information.
 func (x *DtlsConnectionBase) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finish an asynchronous TLS close operation. See g_dtls_connection_close()
@@ -426,13 +417,11 @@ func (x *DtlsConnectionBase) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Used by #GDtlsConnection implementations to emit the
 // #GDtlsConnection::accept-certificate signal.
 func (x *DtlsConnectionBase) EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
-
 	cret := XGDtlsConnectionEmitAcceptCertificate(x.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
 	return cret
 }
@@ -474,7 +463,6 @@ func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Returns the name of the current DTLS ciphersuite, or %NULL if the
@@ -486,7 +474,6 @@ func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType
 // displayed to the user for informative purposes only, and parsing it
 // is not recommended.
 func (x *DtlsConnectionBase) GetCiphersuiteName() string {
-
 	cret := XGDtlsConnectionGetCiphersuiteName(x.GoPointer())
 	return cret
 }
@@ -532,7 +519,6 @@ func (x *DtlsConnectionBase) GetInteraction() *TlsInteraction {
 // does not support ALPN, then this will be %NULL. See
 // g_dtls_connection_set_advertised_protocols().
 func (x *DtlsConnectionBase) GetNegotiatedProtocol() string {
-
 	cret := XGDtlsConnectionGetNegotiatedProtocol(x.GoPointer())
 	return cret
 }
@@ -558,7 +544,6 @@ func (x *DtlsConnectionBase) GetPeerCertificate() *TlsCertificate {
 // certificate, after the handshake has completed or failed. (It is
 // not set during the emission of #GDtlsConnection::accept-certificate.)
 func (x *DtlsConnectionBase) GetPeerCertificateErrors() TlsCertificateFlags {
-
 	cret := XGDtlsConnectionGetPeerCertificateErrors(x.GoPointer())
 	return cret
 }
@@ -568,7 +553,6 @@ func (x *DtlsConnectionBase) GetPeerCertificateErrors() TlsCertificateFlags {
 // has been closed, or if the TLS backend has implemented a protocol version
 // that is not a recognized #GTlsProtocolVersion.
 func (x *DtlsConnectionBase) GetProtocolVersion() TlsProtocolVersion {
-
 	cret := XGDtlsConnectionGetProtocolVersion(x.GoPointer())
 	return cret
 }
@@ -576,7 +560,6 @@ func (x *DtlsConnectionBase) GetProtocolVersion() TlsProtocolVersion {
 // Gets @conn rehandshaking mode. See
 // g_dtls_connection_set_rehandshake_mode() for details.
 func (x *DtlsConnectionBase) GetRehandshakeMode() TlsRehandshakeMode {
-
 	cret := XGDtlsConnectionGetRehandshakeMode(x.GoPointer())
 	return cret
 }
@@ -585,7 +568,6 @@ func (x *DtlsConnectionBase) GetRehandshakeMode() TlsRehandshakeMode {
 // when the connection is closed. See
 // g_dtls_connection_set_require_close_notify() for details.
 func (x *DtlsConnectionBase) GetRequireCloseNotify() bool {
-
 	cret := XGDtlsConnectionGetRequireCloseNotify(x.GoPointer())
 	return cret
 }
@@ -629,20 +611,12 @@ func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronously performs a TLS handshake on @conn. See
 // g_dtls_connection_handshake() for more information.
 func (x *DtlsConnectionBase) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finish an asynchronous TLS handshake operation. See
@@ -655,7 +629,6 @@ func (x *DtlsConnectionBase) HandshakeFinish(ResultVar AsyncResult) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the list of application-layer protocols to advertise that the
@@ -669,9 +642,7 @@ func (x *DtlsConnectionBase) HandshakeFinish(ResultVar AsyncResult) (bool, error
 // See [IANA TLS ALPN Protocol IDs](https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids)
 // for a list of registered protocol IDs.
 func (x *DtlsConnectionBase) SetAdvertisedProtocols(ProtocolsVar []string) {
-
 	XGDtlsConnectionSetAdvertisedProtocols(x.GoPointer(), ProtocolsVar)
-
 }
 
 // This sets the certificate that @conn will present to its peer
@@ -693,9 +664,7 @@ func (x *DtlsConnectionBase) SetAdvertisedProtocols(ProtocolsVar []string) {
 // that g_dtls_client_connection_get_accepted_cas() will return
 // non-%NULL.)
 func (x *DtlsConnectionBase) SetCertificate(CertificateVar *TlsCertificate) {
-
 	XGDtlsConnectionSetCertificate(x.GoPointer(), CertificateVar.GoPointer())
-
 }
 
 // Sets the certificate database that is used to verify peer certificates.
@@ -710,14 +679,7 @@ func (x *DtlsConnectionBase) SetCertificate(CertificateVar *TlsCertificate) {
 // There are nonintuitive security implications when using a non-default
 // database. See #GDtlsConnection:database for details.
 func (x *DtlsConnectionBase) SetDatabase(DatabaseVar *TlsDatabase) {
-
-	var DatabaseVarPtr uintptr
-	if DatabaseVar != nil {
-		DatabaseVarPtr = DatabaseVar.GoPointer()
-	}
-
-	XGDtlsConnectionSetDatabase(x.GoPointer(), DatabaseVarPtr)
-
+	XGDtlsConnectionSetDatabase(x.GoPointer(), DatabaseVar.GoPointer())
 }
 
 // Set the object that will be used to interact with the user. It will be used
@@ -727,14 +689,7 @@ func (x *DtlsConnectionBase) SetDatabase(DatabaseVar *TlsDatabase) {
 // #GTlsInteraction. %NULL can also be provided if no user interaction
 // should occur for this connection.
 func (x *DtlsConnectionBase) SetInteraction(InteractionVar *TlsInteraction) {
-
-	var InteractionVarPtr uintptr
-	if InteractionVar != nil {
-		InteractionVarPtr = InteractionVar.GoPointer()
-	}
-
-	XGDtlsConnectionSetInteraction(x.GoPointer(), InteractionVarPtr)
-
+	XGDtlsConnectionSetInteraction(x.GoPointer(), InteractionVar.GoPointer())
 }
 
 // Since GLib 2.64, changing the rehandshake mode is no longer supported
@@ -742,9 +697,7 @@ func (x *DtlsConnectionBase) SetInteraction(InteractionVar *TlsInteraction) {
 // the TLS protocol, replaced by separate post-handshake authentication and
 // rekey operations.
 func (x *DtlsConnectionBase) SetRehandshakeMode(ModeVar TlsRehandshakeMode) {
-
 	XGDtlsConnectionSetRehandshakeMode(x.GoPointer(), ModeVar)
-
 }
 
 // Sets whether or not @conn expects a proper TLS close notification
@@ -773,9 +726,7 @@ func (x *DtlsConnectionBase) SetRehandshakeMode(ModeVar TlsRehandshakeMode) {
 // close, you can close @conn's #GDtlsConnection:base-socket rather
 // than closing @conn itself.
 func (x *DtlsConnectionBase) SetRequireCloseNotify(RequireCloseNotifyVar bool) {
-
 	XGDtlsConnectionSetRequireCloseNotify(x.GoPointer(), RequireCloseNotifyVar)
-
 }
 
 // Shut down part or all of a DTLS connection.
@@ -807,20 +758,12 @@ func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar boo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronously shut down part or all of the DTLS connection. See
 // g_dtls_connection_shutdown() for more information.
 func (x *DtlsConnectionBase) ShutdownAsync(ShutdownReadVar bool, ShutdownWriteVar bool, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finish an asynchronous TLS shutdown operation. See
@@ -833,7 +776,6 @@ func (x *DtlsConnectionBase) ShutdownFinish(ResultVar AsyncResult) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // SetPropertyAdvertisedProtocols sets the "advertised-protocols" property.
@@ -905,37 +847,39 @@ func (x *DtlsConnectionBase) GetPropertyRequireCloseNotify() bool {
 	return v.GetBoolean()
 }
 
-var XGDtlsConnectionClose func(uintptr, uintptr, **glib.Error) bool
-var XGDtlsConnectionCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
-var XGDtlsConnectionCloseFinish func(uintptr, uintptr, **glib.Error) bool
-var XGDtlsConnectionEmitAcceptCertificate func(uintptr, uintptr, TlsCertificateFlags) bool
-var XGDtlsConnectionGetCertificate func(uintptr) uintptr
-var XGDtlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, *[]byte, **glib.Error) bool
-var XGDtlsConnectionGetCiphersuiteName func(uintptr) string
-var XGDtlsConnectionGetDatabase func(uintptr) uintptr
-var XGDtlsConnectionGetInteraction func(uintptr) uintptr
-var XGDtlsConnectionGetNegotiatedProtocol func(uintptr) string
-var XGDtlsConnectionGetPeerCertificate func(uintptr) uintptr
-var XGDtlsConnectionGetPeerCertificateErrors func(uintptr) TlsCertificateFlags
-var XGDtlsConnectionGetProtocolVersion func(uintptr) TlsProtocolVersion
-var XGDtlsConnectionGetRehandshakeMode func(uintptr) TlsRehandshakeMode
-var XGDtlsConnectionGetRequireCloseNotify func(uintptr) bool
-var XGDtlsConnectionHandshake func(uintptr, uintptr, **glib.Error) bool
-var XGDtlsConnectionHandshakeAsync func(uintptr, int, uintptr, uintptr, uintptr)
-var XGDtlsConnectionHandshakeFinish func(uintptr, uintptr, **glib.Error) bool
-var XGDtlsConnectionSetAdvertisedProtocols func(uintptr, []string)
-var XGDtlsConnectionSetCertificate func(uintptr, uintptr)
-var XGDtlsConnectionSetDatabase func(uintptr, uintptr)
-var XGDtlsConnectionSetInteraction func(uintptr, uintptr)
-var XGDtlsConnectionSetRehandshakeMode func(uintptr, TlsRehandshakeMode)
-var XGDtlsConnectionSetRequireCloseNotify func(uintptr, bool)
-var XGDtlsConnectionShutdown func(uintptr, bool, bool, uintptr, **glib.Error) bool
-var XGDtlsConnectionShutdownAsync func(uintptr, bool, bool, int, uintptr, uintptr, uintptr)
-var XGDtlsConnectionShutdownFinish func(uintptr, uintptr, **glib.Error) bool
+var (
+	XGDtlsConnectionClose                    func(uintptr, uintptr, **glib.Error) bool
+	XGDtlsConnectionCloseAsync               func(uintptr, int, uintptr, uintptr, uintptr)
+	XGDtlsConnectionCloseFinish              func(uintptr, uintptr, **glib.Error) bool
+	XGDtlsConnectionEmitAcceptCertificate    func(uintptr, uintptr, TlsCertificateFlags) bool
+	XGDtlsConnectionGetCertificate           func(uintptr) uintptr
+	XGDtlsConnectionGetChannelBindingData    func(uintptr, TlsChannelBindingType, *[]byte, **glib.Error) bool
+	XGDtlsConnectionGetCiphersuiteName       func(uintptr) string
+	XGDtlsConnectionGetDatabase              func(uintptr) uintptr
+	XGDtlsConnectionGetInteraction           func(uintptr) uintptr
+	XGDtlsConnectionGetNegotiatedProtocol    func(uintptr) string
+	XGDtlsConnectionGetPeerCertificate       func(uintptr) uintptr
+	XGDtlsConnectionGetPeerCertificateErrors func(uintptr) TlsCertificateFlags
+	XGDtlsConnectionGetProtocolVersion       func(uintptr) TlsProtocolVersion
+	XGDtlsConnectionGetRehandshakeMode       func(uintptr) TlsRehandshakeMode
+	XGDtlsConnectionGetRequireCloseNotify    func(uintptr) bool
+	XGDtlsConnectionHandshake                func(uintptr, uintptr, **glib.Error) bool
+	XGDtlsConnectionHandshakeAsync           func(uintptr, int, uintptr, uintptr, uintptr)
+	XGDtlsConnectionHandshakeFinish          func(uintptr, uintptr, **glib.Error) bool
+	XGDtlsConnectionSetAdvertisedProtocols   func(uintptr, []string)
+	XGDtlsConnectionSetCertificate           func(uintptr, uintptr)
+	XGDtlsConnectionSetDatabase              func(uintptr, uintptr)
+	XGDtlsConnectionSetInteraction           func(uintptr, uintptr)
+	XGDtlsConnectionSetRehandshakeMode       func(uintptr, TlsRehandshakeMode)
+	XGDtlsConnectionSetRequireCloseNotify    func(uintptr, bool)
+	XGDtlsConnectionShutdown                 func(uintptr, bool, bool, uintptr, **glib.Error) bool
+	XGDtlsConnectionShutdownAsync            func(uintptr, bool, bool, int, uintptr, uintptr, uintptr)
+	XGDtlsConnectionShutdownFinish           func(uintptr, uintptr, **glib.Error) bool
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -974,5 +918,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDtlsConnectionShutdown, libs, "g_dtls_connection_shutdown")
 	core.PuregoSafeRegister(&XGDtlsConnectionShutdownAsync, libs, "g_dtls_connection_shutdown_async")
 	core.PuregoSafeRegister(&XGDtlsConnectionShutdownFinish, libs, "g_dtls_connection_shutdown_finish")
-
 }

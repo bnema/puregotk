@@ -2,8 +2,9 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -207,9 +208,7 @@ func (x *PropertyAction) GetPropertyStateType() uintptr {
 //
 // If the @parameter [type@GLib.Variant] is floating, it is consumed.
 func (x *PropertyAction) Activate(ParameterVar *glib.Variant) {
-
 	XGActionActivate(x.GoPointer(), ParameterVar)
-
 }
 
 // Request for the state of @action to be changed to @value.
@@ -223,9 +222,7 @@ func (x *PropertyAction) Activate(ParameterVar *glib.Variant) {
 //
 // If the @value [type@GLib.Variant] is floating, it is consumed.
 func (x *PropertyAction) ChangeState(ValueVar *glib.Variant) {
-
 	XGActionChangeState(x.GoPointer(), ValueVar)
-
 }
 
 // Checks if @action is currently enabled.
@@ -233,14 +230,12 @@ func (x *PropertyAction) ChangeState(ValueVar *glib.Variant) {
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *PropertyAction) GetEnabled() bool {
-
 	cret := XGActionGetEnabled(x.GoPointer())
 	return cret
 }
 
 // Queries the name of @action.
 func (x *PropertyAction) GetName() string {
-
 	cret := XGActionGetName(x.GoPointer())
 	return cret
 }
@@ -255,9 +250,11 @@ func (x *PropertyAction) GetName() string {
 // In the case that this function returns `NULL`, you must not give any
 // [type@GLib.Variant], but `NULL` instead.
 func (x *PropertyAction) GetParameterType() *glib.VariantType {
-
 	cret := XGActionGetParameterType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of @action.
@@ -269,9 +266,11 @@ func (x *PropertyAction) GetParameterType() *glib.VariantType {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetState() *glib.Variant {
-
 	cret := XGActionGetState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of
@@ -293,9 +292,11 @@ func (x *PropertyAction) GetState() *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetStateHint() *glib.Variant {
-
 	cret := XGActionGetStateHint(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of @action.
@@ -311,14 +312,16 @@ func (x *PropertyAction) GetStateHint() *glib.Variant {
 // then this function will return `NULL`. In that case, [method@Gio.Action.get_state]
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *PropertyAction) GetStateType() *glib.VariantType {
-
 	cret := XGActionGetStateType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -331,5 +334,4 @@ func init() {
 	core.PuregoSafeRegister(&xPropertyActionGLibType, libs, "g_property_action_get_type")
 
 	core.PuregoSafeRegister(&xNewPropertyAction, libs, "g_property_action_new")
-
 }

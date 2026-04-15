@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -93,8 +92,12 @@ func (x *DatagramBasedInterface) OverrideCreateSource(cb func(DatagramBased, gli
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source {
-			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) uintptr {
+			ret := cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -105,10 +108,14 @@ func (x *DatagramBasedInterface) GetCreateSource() func(DatagramBased, glib.IOCo
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(DatagramBasedVar DatagramBased, ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+		rawRet := rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -283,7 +290,6 @@ func (x *DatagramBasedBase) SetGoPointer(ptr uintptr) {
 //
 // This call never blocks.
 func (x *DatagramBasedBase) ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition {
-
 	cret := XGDatagramBasedConditionCheck(x.GoPointer(), ConditionVar)
 	return cret
 }
@@ -307,7 +313,6 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Creates a #GSource that can be attached to a #GMainContext to monitor for
@@ -325,14 +330,11 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 // change). You can check for this in the callback using
 // g_cancellable_is_cancelled().
 func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Receive one or more data messages from @datagram_based in one go.
@@ -398,7 +400,6 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Send one or more data messages from @datagram_based in one go.
@@ -455,18 +456,19 @@ func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessage
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGDatagramBasedConditionCheck func(uintptr, glib.IOCondition) glib.IOCondition
-var XGDatagramBasedConditionWait func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
-var XGDatagramBasedCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
-var XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint, int, int64, uintptr, **glib.Error) int
-var XGDatagramBasedSendMessages func(uintptr, []OutputMessage, uint, int, int64, uintptr, **glib.Error) int
+var (
+	XGDatagramBasedConditionCheck  func(uintptr, glib.IOCondition) glib.IOCondition
+	XGDatagramBasedConditionWait   func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
+	XGDatagramBasedCreateSource    func(uintptr, glib.IOCondition, uintptr) uintptr
+	XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint, int, int64, uintptr, **glib.Error) int
+	XGDatagramBasedSendMessages    func(uintptr, []OutputMessage, uint, int, int64, uintptr, **glib.Error) int
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -483,5 +485,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDatagramBasedCreateSource, libs, "g_datagram_based_create_source")
 	core.PuregoSafeRegister(&XGDatagramBasedReceiveMessages, libs, "g_datagram_based_receive_messages")
 	core.PuregoSafeRegister(&XGDatagramBasedSendMessages, libs, "g_datagram_based_send_messages")
-
 }

@@ -2,8 +2,9 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -133,14 +134,16 @@ func (x *PrintContext) CreatePangoLayout() *pango.Layout {
 	return cls
 }
 
-var xPrintContextGetCairoContext func(uintptr) *cairo.Context
+var xPrintContextGetCairoContext func(uintptr) uintptr
 
 // Obtains the cairo context that is associated with the
 // `GtkPrintContext`.
 func (x *PrintContext) GetCairoContext() *cairo.Context {
-
 	cret := xPrintContextGetCairoContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 var xPrintContextGetDpiX func(uintptr) float64
@@ -148,7 +151,6 @@ var xPrintContextGetDpiX func(uintptr) float64
 // Obtains the horizontal resolution of the `GtkPrintContext`,
 // in dots per inch.
 func (x *PrintContext) GetDpiX() float64 {
-
 	cret := xPrintContextGetDpiX(x.GoPointer())
 	return cret
 }
@@ -158,7 +160,6 @@ var xPrintContextGetDpiY func(uintptr) float64
 // Obtains the vertical resolution of the `GtkPrintContext`,
 // in dots per inch.
 func (x *PrintContext) GetDpiY() float64 {
-
 	cret := xPrintContextGetDpiY(x.GoPointer())
 	return cret
 }
@@ -168,7 +169,6 @@ var xPrintContextGetHardMargins func(uintptr, *float64, *float64, *float64, *flo
 // Obtains the hardware printer margins of the `GtkPrintContext`,
 // in units.
 func (x *PrintContext) GetHardMargins(TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
-
 	cret := xPrintContextGetHardMargins(x.GoPointer(), TopVar, BottomVar, LeftVar, RightVar)
 	return cret
 }
@@ -177,7 +177,6 @@ var xPrintContextGetHeight func(uintptr) float64
 
 // Obtains the height of the `GtkPrintContext`, in pixels.
 func (x *PrintContext) GetHeight() float64 {
-
 	cret := xPrintContextGetHeight(x.GoPointer())
 	return cret
 }
@@ -222,7 +221,6 @@ var xPrintContextGetWidth func(uintptr) float64
 
 // Obtains the width of the `GtkPrintContext`, in pixels.
 func (x *PrintContext) GetWidth() float64 {
-
 	cret := xPrintContextGetWidth(x.GoPointer())
 	return cret
 }
@@ -236,9 +234,7 @@ var xPrintContextSetCairoContext func(uintptr, *cairo.Context, float64, float64)
 // since GTK itself creates a suitable cairo context in that
 // case.
 func (x *PrintContext) SetCairoContext(CrVar *cairo.Context, DpiXVar float64, DpiYVar float64) {
-
 	xPrintContextSetCairoContext(x.GoPointer(), CrVar, DpiXVar, DpiYVar)
-
 }
 
 func (c *PrintContext) GoPointer() uintptr {
@@ -254,7 +250,7 @@ func (c *PrintContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -277,5 +273,4 @@ func init() {
 	core.PuregoSafeRegister(&xPrintContextGetPangoFontmap, libs, "gtk_print_context_get_pango_fontmap")
 	core.PuregoSafeRegister(&xPrintContextGetWidth, libs, "gtk_print_context_get_width")
 	core.PuregoSafeRegister(&xPrintContextSetCairoContext, libs, "gtk_print_context_set_cairo_context")
-
 }

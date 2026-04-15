@@ -5,9 +5,9 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
+	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
 
@@ -41,22 +41,23 @@ func (x *RGBA) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xRGBACopy func(uintptr) *RGBA
+var xRGBACopy func(uintptr) uintptr
 
 // Makes a copy of a `GdkRGBA`.
 //
 // The result must be freed through [method@Gdk.RGBA.free].
 func (x *RGBA) Copy() *RGBA {
-
 	cret := xRGBACopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RGBA)(unsafe.Pointer(cret))
 }
 
 var xRGBAEqual func(uintptr, uintptr) bool
 
 // Compares two `GdkRGBA` colors.
 func (x *RGBA) Equal(P2Var uintptr) bool {
-
 	cret := xRGBAEqual(x.GoPointer(), P2Var)
 	return cret
 }
@@ -65,9 +66,7 @@ var xRGBAFree func(uintptr)
 
 // Frees a `GdkRGBA`.
 func (x *RGBA) Free() {
-
 	xRGBAFree(x.GoPointer())
-
 }
 
 var xRGBAHash func(uintptr) uint
@@ -75,7 +74,6 @@ var xRGBAHash func(uintptr) uint
 // A hash function suitable for using for a hash
 // table that stores `GdkRGBA`s.
 func (x *RGBA) Hash() uint {
-
 	cret := xRGBAHash(x.GoPointer())
 	return cret
 }
@@ -86,7 +84,6 @@ var xRGBAIsClear func(uintptr) bool
 //
 // That is, drawing with the value would not produce any change.
 func (x *RGBA) IsClear() bool {
-
 	cret := xRGBAIsClear(x.GoPointer())
 	return cret
 }
@@ -98,7 +95,6 @@ var xRGBAIsOpaque func(uintptr) bool
 // That is, drawing with the value will not retain any results
 // from previous contents.
 func (x *RGBA) IsOpaque() bool {
-
 	cret := xRGBAIsOpaque(x.GoPointer())
 	return cret
 }
@@ -117,18 +113,29 @@ var xRGBAParse func(uintptr, string) bool
 //   - A RGB color in the form “rgb(r,g,b)” (In this case the color
 //     will have full opacity)
 //   - A RGBA color in the form “rgba(r,g,b,a)”
-//   - A HSL color in the form "hsl(hue, saturation, lightness)"
-//   - A HSLA color in the form "hsla(hue, saturation, lightness, alpha)"
+//   - A HSL color in the form “hsl(h,s,l)”
+//   - A HSLA color in the form “hsla(h,s,l,a)”
 //
 // Where “r”, “g”, “b” and “a” are respectively the red, green,
 // blue and alpha color values. In the last two cases, “r”, “g”,
 // and “b” are either integers in the range 0 to 255 or percentage
 // values in the range 0% to 100%, and a is a floating point value
-// in the range 0 to 1.
+// in the range 0 to 1. The range for “h” is 0 to 360, and
+// “s”, “l” can be either numbers in the range 0 to 100 or
+// percentages.
 func (x *RGBA) Parse(SpecVar string) bool {
-
 	cret := xRGBAParse(x.GoPointer(), SpecVar)
 	return cret
+}
+
+var xRGBAPrint func(uintptr, *glib.String) uintptr
+
+func (x *RGBA) Print(StringVar *glib.String) *glib.String {
+	cret := xRGBAPrint(x.GoPointer(), StringVar)
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.String)(unsafe.Pointer(cret))
 }
 
 var xRGBAToString func(uintptr) string
@@ -147,14 +154,13 @@ var xRGBAToString func(uintptr) string
 // since “r”, “g” and “b” are represented as 8-bit integers. If
 // this is a concern, you should use a different representation.
 func (x *RGBA) ToString() string {
-
 	cret := xRGBAToString(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -173,6 +179,6 @@ func init() {
 	core.PuregoSafeRegister(&xRGBAIsClear, libs, "gdk_rgba_is_clear")
 	core.PuregoSafeRegister(&xRGBAIsOpaque, libs, "gdk_rgba_is_opaque")
 	core.PuregoSafeRegister(&xRGBAParse, libs, "gdk_rgba_parse")
+	core.PuregoSafeRegister(&xRGBAPrint, libs, "gdk_rgba_print")
 	core.PuregoSafeRegister(&xRGBAToString, libs, "gdk_rgba_to_string")
-
 }

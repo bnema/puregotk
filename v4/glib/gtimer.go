@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -29,18 +28,14 @@ var xTimerContinue func(uintptr)
 // g_timer_stop(). g_timer_stop() must be called before using this
 // function.
 func (x *Timer) Continue() {
-
 	xTimerContinue(x.GoPointer())
-
 }
 
 var xTimerDestroy func(uintptr)
 
 // Destroys a timer, freeing associated resources.
 func (x *Timer) Destroy() {
-
 	xTimerDestroy(x.GoPointer())
-
 }
 
 var xTimerElapsed func(uintptr, uint) float64
@@ -52,7 +47,6 @@ var xTimerElapsed func(uintptr, uint) float64
 // including any fractional part. The @microseconds out parameter is
 // essentially useless.
 func (x *Timer) Elapsed(MicrosecondsVar uint) float64 {
-
 	cret := xTimerElapsed(x.GoPointer(), MicrosecondsVar)
 	return cret
 }
@@ -61,7 +55,6 @@ var xTimerIsActive func(uintptr) bool
 
 // Exposes whether the timer is currently active.
 func (x *Timer) IsActive() bool {
-
 	cret := xTimerIsActive(x.GoPointer())
 	return cret
 }
@@ -72,9 +65,7 @@ var xTimerReset func(uintptr)
 // already-started timer to reset the start time, so g_timer_reset()
 // serves no purpose.
 func (x *Timer) Reset() {
-
 	xTimerReset(x.GoPointer())
-
 }
 
 var xTimerStart func(uintptr)
@@ -84,9 +75,7 @@ var xTimerStart func(uintptr)
 // automatically marks the start time, so no need to call
 // g_timer_start() immediately after creating the timer.
 func (x *Timer) Start() {
-
 	xTimerStart(x.GoPointer())
-
 }
 
 var xTimerStop func(uintptr)
@@ -94,12 +83,13 @@ var xTimerStop func(uintptr)
 // Marks an end time, so calls to g_timer_elapsed() will return the
 // difference between this end time and the start time.
 func (x *Timer) Stop() {
-
 	xTimerStop(x.GoPointer())
-
 }
 
 const (
+	// Number of nanoseconds in one second (1 billion).
+	// This macro is provided for code readability.
+	NSEC_PER_SEC uint64 = 1000000000
 	// Number of microseconds in one second (1 million).
 	// This macro is provided for code readability.
 	USEC_PER_SEC int = 1000000
@@ -125,7 +115,6 @@ var xTimeValFromIso8601 func(string, *TimeVal) bool
 // g_date_time_unref (dt);
 // ]|
 func TimeValFromIso8601(IsoDateVar string, TimeVar *TimeVal) bool {
-
 	cret := xTimeValFromIso8601(IsoDateVar, TimeVar)
 
 	return cret
@@ -140,14 +129,12 @@ var xUsleep func(uint)
 // depending on hardware and operating system; don't rely on the exact
 // length of the sleep.
 func Usleep(MicrosecondsVar uint) {
-
 	xUsleep(MicrosecondsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -167,5 +154,4 @@ func init() {
 	core.PuregoSafeRegister(&xTimerReset, libs, "g_timer_reset")
 	core.PuregoSafeRegister(&xTimerStart, libs, "g_timer_start")
 	core.PuregoSafeRegister(&xTimerStop, libs, "g_timer_stop")
-
 }

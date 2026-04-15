@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -94,7 +93,6 @@ var xDeviceGetActiveLayoutIndex func(uintptr) int
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetActiveLayoutIndex() int {
-
 	cret := xDeviceGetActiveLayoutIndex(x.GoPointer())
 	return cret
 }
@@ -105,7 +103,6 @@ var xDeviceGetCapsLockState func(uintptr) bool
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetCapsLockState() bool {
-
 	cret := xDeviceGetCapsLockState(x.GoPointer())
 	return cret
 }
@@ -136,7 +133,6 @@ var xDeviceGetDirection func(uintptr) pango.Direction
 // The direction of a layout is the direction of the majority
 // of its symbols. See [func@Pango.unichar_direction].
 func (x *Device) GetDirection() pango.Direction {
-
 	cret := xDeviceGetDirection(x.GoPointer())
 	return cret
 }
@@ -165,7 +161,6 @@ var xDeviceGetHasCursor func(uintptr) bool
 // This is not meaningful for keyboard devices, which
 // don't have a pointer.
 func (x *Device) GetHasCursor() bool {
-
 	cret := xDeviceGetHasCursor(x.GoPointer())
 	return cret
 }
@@ -176,7 +171,6 @@ var xDeviceGetLayoutNames func(uintptr) []string
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetLayoutNames() []string {
-
 	cret := xDeviceGetLayoutNames(x.GoPointer())
 	return cret
 }
@@ -187,7 +181,6 @@ var xDeviceGetModifierState func(uintptr) ModifierType
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetModifierState() ModifierType {
-
 	cret := xDeviceGetModifierState(x.GoPointer())
 	return cret
 }
@@ -196,7 +189,6 @@ var xDeviceGetName func(uintptr) string
 
 // The name of the device, suitable for showing in a user interface.
 func (x *Device) GetName() string {
-
 	cret := xDeviceGetName(x.GoPointer())
 	return cret
 }
@@ -207,7 +199,6 @@ var xDeviceGetNumLockState func(uintptr) bool
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetNumLockState() bool {
-
 	cret := xDeviceGetNumLockState(x.GoPointer())
 	return cret
 }
@@ -216,7 +207,6 @@ var xDeviceGetNumTouches func(uintptr) uint
 
 // Retrieves the number of touch points associated to @device.
 func (x *Device) GetNumTouches() uint {
-
 	cret := xDeviceGetNumTouches(x.GoPointer())
 	return cret
 }
@@ -228,7 +218,6 @@ var xDeviceGetProductId func(uintptr) string
 // This ID is retrieved from the device, and does not change.
 // See [method@Gdk.Device.get_vendor_id] for more information.
 func (x *Device) GetProductId() string {
-
 	cret := xDeviceGetProductId(x.GoPointer())
 	return cret
 }
@@ -239,7 +228,6 @@ var xDeviceGetScrollLockState func(uintptr) bool
 //
 // This is only relevant for keyboard devices.
 func (x *Device) GetScrollLockState() bool {
-
 	cret := xDeviceGetScrollLockState(x.GoPointer())
 	return cret
 }
@@ -265,7 +253,6 @@ var xDeviceGetSource func(uintptr) InputSource
 
 // Determines the type of the device.
 func (x *Device) GetSource() InputSource {
-
 	cret := xDeviceGetSource(x.GoPointer())
 	return cret
 }
@@ -300,7 +287,6 @@ var xDeviceGetTimestamp func(uintptr) uint32
 // events for a device that are not received from the OS, and will not
 // update the timestamp).
 func (x *Device) GetTimestamp() uint32 {
-
 	cret := xDeviceGetTimestamp(x.GoPointer())
 	return cret
 }
@@ -337,7 +323,6 @@ var xDeviceGetVendorId func(uintptr) string
 //
 // ```
 func (x *Device) GetVendorId() string {
-
 	cret := xDeviceGetVendorId(x.GoPointer())
 	return cret
 }
@@ -349,7 +334,6 @@ var xDeviceHasBidiLayouts func(uintptr) bool
 //
 // This is only relevant for keyboard devices.
 func (x *Device) HasBidiLayouts() bool {
-
 	cret := xDeviceHasBidiLayouts(x.GoPointer())
 	return cret
 }
@@ -555,7 +539,6 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -565,7 +548,7 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint {
 }
 
 // Emitted on pen/eraser devices whenever tools enter or leave proximity.
-func (x *Device) ConnectToolChanged(cb *func(Device, *DeviceTool)) uint {
+func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
@@ -578,8 +561,7 @@ func (x *Device) ConnectToolChanged(cb *func(Device, *DeviceTool)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
-
+		cbFn(fa, ToolVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -590,7 +572,7 @@ func (x *Device) ConnectToolChanged(cb *func(Device, *DeviceTool)) uint {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -623,5 +605,4 @@ func init() {
 	core.PuregoSafeRegister(&xDeviceGetTimestamp, libs, "gdk_device_get_timestamp")
 	core.PuregoSafeRegister(&xDeviceGetVendorId, libs, "gdk_device_get_vendor_id")
 	core.PuregoSafeRegister(&xDeviceHasBidiLayouts, libs, "gdk_device_has_bidi_layouts")
-
 }

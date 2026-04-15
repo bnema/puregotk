@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -159,8 +158,12 @@ func (x *IconIface) OverrideSerialize(cb func(Icon) *glib.Variant) {
 	if cb == nil {
 		x.xSerialize = 0
 	} else {
-		x.xSerialize = purego.NewCallback(func(IconVarp uintptr) *glib.Variant {
-			return cb(&IconBase{Ptr: IconVarp})
+		x.xSerialize = purego.NewCallback(func(IconVarp uintptr) uintptr {
+			ret := cb(&IconBase{Ptr: IconVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -171,10 +174,14 @@ func (x *IconIface) GetSerialize() func(Icon) *glib.Variant {
 	if x.xSerialize == 0 {
 		return nil
 	}
-	var rawCallback func(IconVarp uintptr) *glib.Variant
+	var rawCallback func(IconVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xSerialize)
 	return func(IconVar Icon) *glib.Variant {
-		return rawCallback(IconVar.GoPointer())
+		rawRet := rawCallback(IconVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -240,19 +247,12 @@ func (x *IconBase) SetGoPointer(ptr uintptr) {
 
 // Checks if two icons are equal.
 func (x *IconBase) Equal(Icon2Var Icon) bool {
-
-	var Icon2VarPtr uintptr
-	if Icon2Var != nil {
-		Icon2VarPtr = Icon2Var.GoPointer()
-	}
-
-	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
+	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *IconBase) Hash() uint {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -263,9 +263,11 @@ func (x *IconBase) Hash() uint {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *IconBase) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for
@@ -285,15 +287,16 @@ func (x *IconBase) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *IconBase) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
 
-var XGIconEqual func(uintptr, uintptr) bool
-var XGIconHash func(uintptr) uint
-var XGIconSerialize func(uintptr) *glib.Variant
-var XGIconToString func(uintptr) string
+var (
+	XGIconEqual     func(uintptr, uintptr) bool
+	XGIconHash      func(uintptr) uint
+	XGIconSerialize func(uintptr) uintptr
+	XGIconToString  func(uintptr) string
+)
 
 var xIconDeserialize func(*glib.Variant) uintptr
 
@@ -334,12 +337,11 @@ func IconNewForString(StrVar string) (*IconBase, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -358,5 +360,4 @@ func init() {
 	core.PuregoSafeRegister(&XGIconHash, libs, "g_icon_hash")
 	core.PuregoSafeRegister(&XGIconSerialize, libs, "g_icon_serialize")
 	core.PuregoSafeRegister(&XGIconToString, libs, "g_icon_to_string")
-
 }

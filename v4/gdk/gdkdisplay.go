@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -47,9 +46,7 @@ var xDisplayBeep func(uintptr)
 
 // Emits a short beep on @display
 func (x *Display) Beep() {
-
 	xDisplayBeep(x.GoPointer())
-
 }
 
 var xDisplayClose func(uintptr)
@@ -58,12 +55,10 @@ var xDisplayClose func(uintptr)
 //
 // This cleans up associated resources.
 func (x *Display) Close() {
-
 	xDisplayClose(x.GoPointer())
-
 }
 
-var xDisplayCreateGlContext func(uintptr) uintptr
+var xDisplayCreateGlContext func(uintptr, **glib.Error) uintptr
 
 // Creates a new `GdkGLContext` for the `GdkDisplay`.
 //
@@ -78,7 +73,7 @@ func (x *Display) CreateGlContext() (*GLContext, error) {
 	var cls *GLContext
 	var cerr *glib.Error
 
-	cret := xDisplayCreateGlContext(x.GoPointer())
+	cret := xDisplayCreateGlContext(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -89,14 +84,12 @@ func (x *Display) CreateGlContext() (*GLContext, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDisplayDeviceIsGrabbed func(uintptr, uintptr) bool
 
 // Returns %TRUE if there is an ongoing grab on @device for @display.
 func (x *Display) DeviceIsGrabbed(DeviceVar *Device) bool {
-
 	cret := xDisplayDeviceIsGrabbed(x.GoPointer(), DeviceVar.GoPointer())
 	return cret
 }
@@ -114,9 +107,7 @@ var xDisplayFlush func(uintptr)
 // This is most useful for X11. On windowing systems where requests are
 // handled synchronously, this function will do nothing.
 func (x *Display) Flush() {
-
 	xDisplayFlush(x.GoPointer())
-
 }
 
 var xDisplayGetAppLaunchContext func(uintptr) uintptr
@@ -173,7 +164,7 @@ func (x *Display) GetDefaultSeat() *Seat {
 	return cls
 }
 
-var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
+var xDisplayGetDmabufFormats func(uintptr) uintptr
 
 // Returns the dma-buf formats that are supported on this display.
 //
@@ -187,9 +178,11 @@ var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
 //
 // This function is threadsafe. It can be called from any thread.
 func (x *Display) GetDmabufFormats() *DmabufFormats {
-
 	cret := xDisplayGetDmabufFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DmabufFormats)(unsafe.Pointer(cret))
 }
 
 var xDisplayGetMonitorAtSurface func(uintptr, uintptr) uintptr
@@ -237,7 +230,6 @@ var xDisplayGetName func(uintptr) string
 
 // Gets the name of the display.
 func (x *Display) GetName() string {
-
 	cret := xDisplayGetName(x.GoPointer())
 	return cret
 }
@@ -267,7 +259,6 @@ var xDisplayGetSetting func(uintptr, string, *gobject.Value) bool
 // Retrieves a desktop-wide setting such as double-click time
 // for the @display.
 func (x *Display) GetSetting(NameVar string, ValueVar *gobject.Value) bool {
-
 	cret := xDisplayGetSetting(x.GoPointer(), NameVar, ValueVar)
 	return cret
 }
@@ -277,7 +268,6 @@ var xDisplayGetStartupNotificationId func(uintptr) string
 // Gets the startup notification ID for a Wayland display, or %NULL
 // if no ID has been defined.
 func (x *Display) GetStartupNotificationId() string {
-
 	cret := xDisplayGetStartupNotificationId(x.GoPointer())
 	return cret
 }
@@ -286,7 +276,6 @@ var xDisplayIsClosed func(uintptr) bool
 
 // Finds out if the display has been closed.
 func (x *Display) IsClosed() bool {
-
 	cret := xDisplayIsClosed(x.GoPointer())
 	return cret
 }
@@ -304,7 +293,6 @@ var xDisplayIsComposited func(uintptr) bool
 //
 // On modern displays, this value is always %TRUE.
 func (x *Display) IsComposited() bool {
-
 	cret := xDisplayIsComposited(x.GoPointer())
 	return cret
 }
@@ -323,18 +311,19 @@ var xDisplayIsRgba func(uintptr) bool
 //
 // On modern displays, this value is always %TRUE.
 func (x *Display) IsRgba() bool {
-
 	cret := xDisplayIsRgba(x.GoPointer())
 	return cret
 }
 
-var xDisplayListSeats func(uintptr) *glib.List
+var xDisplayListSeats func(uintptr) uintptr
 
 // Returns the list of seats known to @display.
 func (x *Display) ListSeats() *glib.List {
-
 	cret := xDisplayListSeats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xDisplayMapKeycode func(uintptr, uint, *uintptr, *[]uint, *int) bool
@@ -349,7 +338,6 @@ var xDisplayMapKeycode func(uintptr, uint, *uintptr, *[]uint, *int) bool
 //
 // Free the returned arrays with g_free().
 func (x *Display) MapKeycode(KeycodeVar uint, KeysVar *uintptr, KeyvalsVar *[]uint, NEntriesVar *int) bool {
-
 	cret := xDisplayMapKeycode(x.GoPointer(), KeycodeVar, KeysVar, KeyvalsVar, NEntriesVar)
 	return cret
 }
@@ -372,7 +360,6 @@ var xDisplayMapKeyval func(uintptr, uint, *uintptr, *int) bool
 //
 // The returned array should be freed with g_free().
 func (x *Display) MapKeyval(KeyvalVar uint, KeysVar *uintptr, NKeysVar *int) bool {
-
 	cret := xDisplayMapKeyval(x.GoPointer(), KeyvalVar, KeysVar, NKeysVar)
 	return cret
 }
@@ -387,12 +374,10 @@ var xDisplayNotifyStartupComplete func(uintptr, string)
 // [gtk_window_set_auto_startup_notification()](../gtk4/method.Window.set_auto_startup_notification.html)
 // is called to disable that feature.
 func (x *Display) NotifyStartupComplete(StartupIdVar string) {
-
 	xDisplayNotifyStartupComplete(x.GoPointer(), StartupIdVar)
-
 }
 
-var xDisplayPrepareGl func(uintptr) bool
+var xDisplayPrepareGl func(uintptr, **glib.Error) bool
 
 // Checks that OpenGL is available for @self and ensures that it is
 // properly initialized.
@@ -411,21 +396,18 @@ var xDisplayPrepareGl func(uintptr) bool
 func (x *Display) PrepareGl() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDisplayPrepareGl(x.GoPointer())
+	cret := xDisplayPrepareGl(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDisplayPutEvent func(uintptr, uintptr)
 
 // Adds the given event to the event queue for @display.
 func (x *Display) PutEvent(EventVar *Event) {
-
 	xDisplayPutEvent(x.GoPointer(), EventVar.GoPointer())
-
 }
 
 var xDisplaySupportsInputShapes func(uintptr) bool
@@ -437,7 +419,6 @@ var xDisplaySupportsInputShapes func(uintptr) bool
 //
 // On modern displays, this value is always %TRUE.
 func (x *Display) SupportsInputShapes() bool {
-
 	cret := xDisplaySupportsInputShapes(x.GoPointer())
 	return cret
 }
@@ -449,7 +430,6 @@ var xDisplaySupportsShadowWidth func(uintptr) bool
 // If %TRUE is returned the application decides if it wants to draw shadows.
 // If %FALSE is returned, the compositor decides if it wants to draw shadows.
 func (x *Display) SupportsShadowWidth() bool {
-
 	cret := xDisplaySupportsShadowWidth(x.GoPointer())
 	return cret
 }
@@ -467,9 +447,7 @@ var xDisplaySync func(uintptr)
 // This is most useful for X11. On windowing systems where requests are
 // handled synchronously, this function will do nothing.
 func (x *Display) Sync() {
-
 	xDisplaySync(x.GoPointer())
-
 }
 
 var xDisplayTranslateKey func(uintptr, uint, ModifierType, int, *uint, *int, *int, *ModifierType) bool
@@ -494,7 +472,6 @@ var xDisplayTranslateKey func(uintptr, uint, ModifierType, int, *uint, *int, *in
 // contains the translated keyval. It is exported for the benefit of
 // virtualized test environments.
 func (x *Display) TranslateKey(KeycodeVar uint, StateVar ModifierType, GroupVar int, KeyvalVar *uint, EffectiveGroupVar *int, LevelVar *int, ConsumedVar *ModifierType) bool {
-
 	cret := xDisplayTranslateKey(x.GoPointer(), KeycodeVar, StateVar, GroupVar, KeyvalVar, EffectiveGroupVar, LevelVar, ConsumedVar)
 	return cret
 }
@@ -565,7 +542,6 @@ func (x *Display) ConnectClosed(cb *func(Display, bool)) uint {
 		cbFn := *cb
 
 		cbFn(fa, IsErrorVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -589,7 +565,6 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -599,7 +574,7 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint {
 }
 
 // Emitted whenever a new seat is made known to the windowing system.
-func (x *Display) ConnectSeatAdded(cb *func(Display, *Seat)) uint {
+func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-added", cbRefPtr)
@@ -612,8 +587,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, *Seat)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Seat { cls := &Seat{}; cls.Ptr = SeatVarp; return cls }())
-
+		cbFn(fa, SeatVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -623,7 +597,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, *Seat)) uint {
 }
 
 // Emitted whenever a seat is removed by the windowing system.
-func (x *Display) ConnectSeatRemoved(cb *func(Display, *Seat)) uint {
+func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-removed", cbRefPtr)
@@ -636,8 +610,7 @@ func (x *Display) ConnectSeatRemoved(cb *func(Display, *Seat)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Seat { cls := &Seat{}; cls.Ptr = SeatVarp; return cls }())
-
+		cbFn(fa, SeatVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -660,8 +633,7 @@ func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(SettingVarp))
-
+		cbFn(fa, SettingVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -715,7 +687,7 @@ func DisplayOpen(DisplayNameVar *string) *Display {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -758,5 +730,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDisplayGetDefault, libs, "gdk_display_get_default")
 	core.PuregoSafeRegister(&xDisplayOpen, libs, "gdk_display_open")
-
 }

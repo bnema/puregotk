@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -110,9 +109,7 @@ var xIMContextSimpleAddComposeFile func(uintptr, string)
 
 // Adds an additional table from the X11 compose file.
 func (x *IMContextSimple) AddComposeFile(ComposeFileVar string) {
-
 	xIMContextSimpleAddComposeFile(x.GoPointer(), ComposeFileVar)
-
 }
 
 var xIMContextSimpleAddTable func(uintptr, []uint16, int, int)
@@ -127,9 +124,7 @@ var xIMContextSimpleAddTable func(uintptr, []uint16, int, int)
 // numeric value of the key symbol fields. (Values beyond
 // the length of the sequence should be zero.)
 func (x *IMContextSimple) AddTable(DataVar []uint16, MaxSeqLenVar int, NSeqsVar int) {
-
 	xIMContextSimpleAddTable(x.GoPointer(), DataVar, MaxSeqLenVar, NSeqsVar)
-
 }
 
 func (c *IMContextSimple) GoPointer() uintptr {
@@ -145,7 +140,7 @@ func (c *IMContextSimple) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -161,5 +156,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIMContextSimpleAddComposeFile, libs, "gtk_im_context_simple_add_compose_file")
 	core.PuregoSafeRegister(&xIMContextSimpleAddTable, libs, "gtk_im_context_simple_add_table")
-
 }

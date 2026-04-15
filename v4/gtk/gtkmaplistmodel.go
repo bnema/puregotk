@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -87,42 +86,7 @@ var xNewMapListModel func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *MapListModel {
 	var cls *MapListModel
 
-	var MapFuncVarRef uintptr
-	if MapFuncVar != nil {
-		MapFuncVarPtr := uintptr(unsafe.Pointer(MapFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(MapFuncVarPtr); ok {
-			MapFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-				cbFn := *MapFuncVar
-				return cbFn(arg0, arg1)
-			}
-			MapFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MapFuncVarPtr, MapFuncVarRef, MapFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	cret := xNewMapListModel(ModelVarPtr, MapFuncVarRef, UserDataVar, UserDestroyVarRef)
+	cret := xNewMapListModel(ModelVar.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -153,7 +117,6 @@ var xMapListModelHasMap func(uintptr) bool
 
 // Checks if a map function is currently set on @self.
 func (x *MapListModel) HasMap() bool {
-
 	cret := xMapListModelHasMap(x.GoPointer())
 	return cret
 }
@@ -172,39 +135,7 @@ var xMapListModelSetMapFunc func(uintptr, uintptr, uintptr, uintptr)
 // of @self. It assumes that the caller knows what they are doing and the map
 // function returns items of the appropriate type.
 func (x *MapListModel) SetMapFunc(MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-
-	var MapFuncVarRef uintptr
-	if MapFuncVar != nil {
-		MapFuncVarPtr := uintptr(unsafe.Pointer(MapFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(MapFuncVarPtr); ok {
-			MapFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-				cbFn := *MapFuncVar
-				return cbFn(arg0, arg1)
-			}
-			MapFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MapFuncVarPtr, MapFuncVarRef, MapFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	xMapListModelSetMapFunc(x.GoPointer(), MapFuncVarRef, UserDataVar, UserDestroyVarRef)
-
+	xMapListModelSetMapFunc(x.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 var xMapListModelSetModel func(uintptr, uintptr)
@@ -215,14 +146,7 @@ var xMapListModelSetModel func(uintptr, uintptr)
 // expected by the map function. It assumes that the caller knows what
 // they are doing and have set up an appropriate map function.
 func (x *MapListModel) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xMapListModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xMapListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *MapListModel) GoPointer() uintptr {
@@ -262,7 +186,6 @@ func (x *MapListModel) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *MapListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -276,7 +199,6 @@ func (x *MapListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *MapListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -287,7 +209,6 @@ func (x *MapListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *MapListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -338,9 +259,7 @@ func (x *MapListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *MapListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -349,9 +268,7 @@ func (x *MapListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar 
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *MapListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -370,14 +287,12 @@ func (x *MapListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *MapListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -395,5 +310,4 @@ func init() {
 	core.PuregoSafeRegister(&xMapListModelHasMap, libs, "gtk_map_list_model_has_map")
 	core.PuregoSafeRegister(&xMapListModelSetMapFunc, libs, "gtk_map_list_model_set_map_func")
 	core.PuregoSafeRegister(&xMapListModelSetModel, libs, "gtk_map_list_model_set_model")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -67,7 +66,6 @@ var xDropControllerMotionContainsPointer func(uintptr) bool
 // Returns if a Drag-and-Drop operation is within the widget
 // @self or one of its children.
 func (x *DropControllerMotion) ContainsPointer() bool {
-
 	cret := xDropControllerMotionContainsPointer(x.GoPointer())
 	return cret
 }
@@ -95,7 +93,6 @@ var xDropControllerMotionIsPointer func(uintptr) bool
 // Returns if a Drag-and-Drop operation is within the widget
 // @self, not one of its children.
 func (x *DropControllerMotion) IsPointer() bool {
-
 	cret := xDropControllerMotionIsPointer(x.GoPointer())
 	return cret
 }
@@ -156,7 +153,6 @@ func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -180,7 +176,6 @@ func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -204,7 +199,6 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -215,7 +209,7 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -232,5 +226,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropControllerMotionContainsPointer, libs, "gtk_drop_controller_motion_contains_pointer")
 	core.PuregoSafeRegister(&xDropControllerMotionGetDrop, libs, "gtk_drop_controller_motion_get_drop")
 	core.PuregoSafeRegister(&xDropControllerMotionIsPointer, libs, "gtk_drop_controller_motion_is_pointer")
-
 }

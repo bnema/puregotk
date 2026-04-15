@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -275,21 +274,13 @@ var xSpinButtonConfigure func(uintptr, uintptr, float64, uint)
 // The adjustment, climb rate, and number of decimal places
 // are updated accordingly.
 func (x *SpinButton) Configure(AdjustmentVar *Adjustment, ClimbRateVar float64, DigitsVar uint) {
-
-	var AdjustmentVarPtr uintptr
-	if AdjustmentVar != nil {
-		AdjustmentVarPtr = AdjustmentVar.GoPointer()
-	}
-
-	xSpinButtonConfigure(x.GoPointer(), AdjustmentVarPtr, ClimbRateVar, DigitsVar)
-
+	xSpinButtonConfigure(x.GoPointer(), AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
 }
 
 var xSpinButtonGetActivatesDefault func(uintptr) bool
 
 // Retrieves the value set by [method@Gtk.SpinButton.set_activates_default].
 func (x *SpinButton) GetActivatesDefault() bool {
-
 	cret := xSpinButtonGetActivatesDefault(x.GoPointer())
 	return cret
 }
@@ -315,7 +306,6 @@ var xSpinButtonGetClimbRate func(uintptr) float64
 
 // Returns the acceleration rate for repeated changes.
 func (x *SpinButton) GetClimbRate() float64 {
-
 	cret := xSpinButtonGetClimbRate(x.GoPointer())
 	return cret
 }
@@ -324,7 +314,6 @@ var xSpinButtonGetDigits func(uintptr) uint
 
 // Fetches the precision of @spin_button.
 func (x *SpinButton) GetDigits() uint {
-
 	cret := xSpinButtonGetDigits(x.GoPointer())
 	return cret
 }
@@ -336,16 +325,13 @@ var xSpinButtonGetIncrements func(uintptr, *float64, *float64)
 //
 // See [method@Gtk.SpinButton.set_increments].
 func (x *SpinButton) GetIncrements(StepVar *float64, PageVar *float64) {
-
 	xSpinButtonGetIncrements(x.GoPointer(), StepVar, PageVar)
-
 }
 
 var xSpinButtonGetNumeric func(uintptr) bool
 
 // Returns whether non-numeric text can be typed into the spin button.
 func (x *SpinButton) GetNumeric() bool {
-
 	cret := xSpinButtonGetNumeric(x.GoPointer())
 	return cret
 }
@@ -356,16 +342,13 @@ var xSpinButtonGetRange func(uintptr, *float64, *float64)
 //
 // See [method@Gtk.SpinButton.set_range].
 func (x *SpinButton) GetRange(MinVar *float64, MaxVar *float64) {
-
 	xSpinButtonGetRange(x.GoPointer(), MinVar, MaxVar)
-
 }
 
 var xSpinButtonGetSnapToTicks func(uintptr) bool
 
 // Returns whether the values are corrected to the nearest step.
 func (x *SpinButton) GetSnapToTicks() bool {
-
 	cret := xSpinButtonGetSnapToTicks(x.GoPointer())
 	return cret
 }
@@ -376,7 +359,6 @@ var xSpinButtonGetUpdatePolicy func(uintptr) SpinButtonUpdatePolicy
 //
 // See [method@Gtk.SpinButton.set_update_policy].
 func (x *SpinButton) GetUpdatePolicy() SpinButtonUpdatePolicy {
-
 	cret := xSpinButtonGetUpdatePolicy(x.GoPointer())
 	return cret
 }
@@ -385,7 +367,6 @@ var xSpinButtonGetValue func(uintptr) float64
 
 // Get the value in the @spin_button.
 func (x *SpinButton) GetValue() float64 {
-
 	cret := xSpinButtonGetValue(x.GoPointer())
 	return cret
 }
@@ -394,7 +375,6 @@ var xSpinButtonGetValueAsInt func(uintptr) int
 
 // Get the value @spin_button represented as an integer.
 func (x *SpinButton) GetValueAsInt() int {
-
 	cret := xSpinButtonGetValueAsInt(x.GoPointer())
 	return cret
 }
@@ -405,7 +385,6 @@ var xSpinButtonGetWrap func(uintptr) bool
 // opposite limit when the upper or lower limit of the range is
 // exceeded.
 func (x *SpinButton) GetWrap() bool {
-
 	cret := xSpinButtonGetWrap(x.GoPointer())
 	return cret
 }
@@ -417,18 +396,14 @@ var xSpinButtonSetActivatesDefault func(uintptr, bool)
 //
 // See [signal@Gtk.SpinButton::activate] for what counts as activation.
 func (x *SpinButton) SetActivatesDefault(ActivatesDefaultVar bool) {
-
 	xSpinButtonSetActivatesDefault(x.GoPointer(), ActivatesDefaultVar)
-
 }
 
 var xSpinButtonSetAdjustment func(uintptr, uintptr)
 
 // Replaces the `GtkAdjustment` associated with @spin_button.
 func (x *SpinButton) SetAdjustment(AdjustmentVar *Adjustment) {
-
 	xSpinButtonSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xSpinButtonSetClimbRate func(uintptr, float64)
@@ -436,9 +411,7 @@ var xSpinButtonSetClimbRate func(uintptr, float64)
 // Sets the acceleration rate for repeated changes when you
 // hold down a button or key.
 func (x *SpinButton) SetClimbRate(ClimbRateVar float64) {
-
 	xSpinButtonSetClimbRate(x.GoPointer(), ClimbRateVar)
-
 }
 
 var xSpinButtonSetDigits func(uintptr, uint)
@@ -447,9 +420,7 @@ var xSpinButtonSetDigits func(uintptr, uint)
 //
 // Up to 20 digit precision is allowed.
 func (x *SpinButton) SetDigits(DigitsVar uint) {
-
 	xSpinButtonSetDigits(x.GoPointer(), DigitsVar)
-
 }
 
 var xSpinButtonSetIncrements func(uintptr, float64, float64)
@@ -459,9 +430,7 @@ var xSpinButtonSetIncrements func(uintptr, float64, float64)
 // This affects how quickly the value changes when
 // the spin button’s arrows are activated.
 func (x *SpinButton) SetIncrements(StepVar float64, PageVar float64) {
-
 	xSpinButtonSetIncrements(x.GoPointer(), StepVar, PageVar)
-
 }
 
 var xSpinButtonSetNumeric func(uintptr, bool)
@@ -469,9 +438,7 @@ var xSpinButtonSetNumeric func(uintptr, bool)
 // Sets the flag that determines if non-numeric text can be typed
 // into the spin button.
 func (x *SpinButton) SetNumeric(NumericVar bool) {
-
 	xSpinButtonSetNumeric(x.GoPointer(), NumericVar)
-
 }
 
 var xSpinButtonSetRange func(uintptr, float64, float64)
@@ -481,9 +448,7 @@ var xSpinButtonSetRange func(uintptr, float64, float64)
 // If the current value is outside this range, it will be adjusted
 // to fit within the range, otherwise it will remain unchanged.
 func (x *SpinButton) SetRange(MinVar float64, MaxVar float64) {
-
 	xSpinButtonSetRange(x.GoPointer(), MinVar, MaxVar)
-
 }
 
 var xSpinButtonSetSnapToTicks func(uintptr, bool)
@@ -492,9 +457,7 @@ var xSpinButtonSetSnapToTicks func(uintptr, bool)
 // nearest step increment when a spin button is activated after
 // providing an invalid value.
 func (x *SpinButton) SetSnapToTicks(SnapToTicksVar bool) {
-
 	xSpinButtonSetSnapToTicks(x.GoPointer(), SnapToTicksVar)
-
 }
 
 var xSpinButtonSetUpdatePolicy func(uintptr, SpinButtonUpdatePolicy)
@@ -504,18 +467,14 @@ var xSpinButtonSetUpdatePolicy func(uintptr, SpinButtonUpdatePolicy)
 // This determines whether the spin button is always
 // updated or only when a valid value is set.
 func (x *SpinButton) SetUpdatePolicy(PolicyVar SpinButtonUpdatePolicy) {
-
 	xSpinButtonSetUpdatePolicy(x.GoPointer(), PolicyVar)
-
 }
 
 var xSpinButtonSetValue func(uintptr, float64)
 
 // Sets the value of @spin_button.
 func (x *SpinButton) SetValue(ValueVar float64) {
-
 	xSpinButtonSetValue(x.GoPointer(), ValueVar)
-
 }
 
 var xSpinButtonSetWrap func(uintptr, bool)
@@ -524,9 +483,7 @@ var xSpinButtonSetWrap func(uintptr, bool)
 // around to the opposite limit when the upper or lower limit
 // of the range is exceeded.
 func (x *SpinButton) SetWrap(WrapVar bool) {
-
 	xSpinButtonSetWrap(x.GoPointer(), WrapVar)
-
 }
 
 var xSpinButtonSpin func(uintptr, SpinType, float64)
@@ -534,18 +491,14 @@ var xSpinButtonSpin func(uintptr, SpinType, float64)
 // Increment or decrement a spin button’s value in a specified
 // direction by a specified amount.
 func (x *SpinButton) Spin(DirectionVar SpinType, IncrementVar float64) {
-
 	xSpinButtonSpin(x.GoPointer(), DirectionVar, IncrementVar)
-
 }
 
 var xSpinButtonUpdate func(uintptr)
 
 // Manually force an update of the spin button.
 func (x *SpinButton) Update() {
-
 	xSpinButtonUpdate(x.GoPointer())
-
 }
 
 func (c *SpinButton) GoPointer() uintptr {
@@ -705,7 +658,6 @@ func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -737,7 +689,6 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ScrollVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -767,7 +718,6 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint {
 		cbFn := *cb
 
 		return cbFn(fa, NewValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -812,7 +762,6 @@ func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -838,7 +787,6 @@ func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -863,7 +811,6 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -882,9 +829,19 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *SpinButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *SpinButton) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -905,7 +862,6 @@ func (x *SpinButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *SpinButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -930,7 +886,6 @@ func (x *SpinButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *SpinButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -969,30 +924,23 @@ func (x *SpinButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *SpinButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *SpinButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *SpinButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *SpinButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1005,19 +953,7 @@ func (x *SpinButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *SpinButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1025,14 +961,7 @@ func (x *SpinButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *SpinButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1041,9 +970,7 @@ func (x *SpinButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *SpinButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1065,9 +992,7 @@ func (x *SpinButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *SpinButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1077,9 +1002,7 @@ func (x *SpinButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *SpinButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1101,9 +1024,7 @@ func (x *SpinButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acc
 //
 // ```
 func (x *SpinButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1113,9 +1034,7 @@ func (x *SpinButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *SpinButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1138,9 +1057,7 @@ func (x *SpinButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acces
 //
 // ```
 func (x *SpinButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1150,9 +1067,7 @@ func (x *SpinButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *SpinButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1160,23 +1075,18 @@ func (x *SpinButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SpinButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Emits the `GtkCellEditable::editing-done` signal.
 func (x *SpinButton) EditingDone() {
-
 	XGtkCellEditableEditingDone(x.GoPointer())
-
 }
 
 // Emits the `GtkCellEditable::remove-widget` signal.
 func (x *SpinButton) RemoveWidget() {
-
 	XGtkCellEditableRemoveWidget(x.GoPointer())
-
 }
 
 // Begins editing on a @cell_editable.
@@ -1190,14 +1100,7 @@ func (x *SpinButton) RemoveWidget() {
 // Note that the @cell_editable is created on-demand for the current edit; its
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *SpinButton) StartEditing(EventVar *gdk.Event) {
-
-	var EventVarPtr uintptr
-	if EventVar != nil {
-		EventVarPtr = EventVar.GoPointer()
-	}
-
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
-
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
 }
 
 // Retrieves the accessible platform state from the editable delegate.
@@ -1237,7 +1140,6 @@ func (x *SpinButton) StartEditing(EventVar *gdk.Event) {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *SpinButton) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -1246,9 +1148,7 @@ func (x *SpinButton) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatf
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *SpinButton) DeleteSelection() {
-
 	XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -1260,9 +1160,7 @@ func (x *SpinButton) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *SpinButton) DeleteText(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -1270,14 +1168,11 @@ func (x *SpinButton) DeleteText(StartPosVar int, EndPosVar int) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *SpinButton) FinishDelegate() {
-
 	XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Gets the alignment of the editable.
 func (x *SpinButton) GetAlignment() float32 {
-
 	cret := XGtkEditableGetAlignment(x.GoPointer())
 	return cret
 }
@@ -1291,7 +1186,6 @@ func (x *SpinButton) GetAlignment() float32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SpinButton) GetChars(StartPosVar int, EndPosVar int) string {
-
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1316,21 +1210,18 @@ func (x *SpinButton) GetDelegate() *EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *SpinButton) GetEditable() bool {
-
 	cret := XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *SpinButton) GetEnableUndo() bool {
-
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *SpinButton) GetMaxWidthChars() int {
-
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -1340,7 +1231,6 @@ func (x *SpinButton) GetMaxWidthChars() int {
 //
 // Note that this position is in characters, not in bytes.
 func (x *SpinButton) GetPosition() int {
-
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -1353,7 +1243,6 @@ func (x *SpinButton) GetPosition() int {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SpinButton) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
-
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1362,7 +1251,6 @@ func (x *SpinButton) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *SpinButton) GetText() string {
-
 	cret := XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -1370,7 +1258,6 @@ func (x *SpinButton) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *SpinButton) GetWidthChars() int {
-
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -1383,9 +1270,7 @@ func (x *SpinButton) GetWidthChars() int {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *SpinButton) InitDelegate() {
-
 	XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -1395,9 +1280,7 @@ func (x *SpinButton) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *SpinButton) InsertText(TextVar string, LengthVar int, PositionVar *int) {
-
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -1409,9 +1292,7 @@ func (x *SpinButton) InsertText(TextVar string, LengthVar int, PositionVar *int)
 //
 // Note that positions are specified in characters, not bytes.
 func (x *SpinButton) SelectRegion(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Sets the alignment for the contents of the editable.
@@ -1419,16 +1300,12 @@ func (x *SpinButton) SelectRegion(StartPosVar int, EndPosVar int) {
 // This controls the horizontal positioning of the contents when
 // the displayed text is shorter than the width of the editable.
 func (x *SpinButton) SetAlignment(XalignVar float32) {
-
 	XGtkEditableSetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *SpinButton) SetEditable(IsEditableVar bool) {
-
 	XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -1438,16 +1315,12 @@ func (x *SpinButton) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *SpinButton) SetEnableUndo(EnableUndoVar bool) {
-
 	XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *SpinButton) SetMaxWidthChars(NCharsVar int) {
-
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -1458,18 +1331,14 @@ func (x *SpinButton) SetMaxWidthChars(NCharsVar int) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *SpinButton) SetPosition(PositionVar int) {
-
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *SpinButton) SetText(TextVar string) {
-
 	XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -1479,28 +1348,23 @@ func (x *SpinButton) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *SpinButton) SetWidthChars(NCharsVar int) {
-
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *SpinButton) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *SpinButton) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1545,5 +1409,4 @@ func init() {
 	core.PuregoSafeRegister(&xSpinButtonSetWrap, libs, "gtk_spin_button_set_wrap")
 	core.PuregoSafeRegister(&xSpinButtonSpin, libs, "gtk_spin_button_spin")
 	core.PuregoSafeRegister(&xSpinButtonUpdate, libs, "gtk_spin_button_update")
-
 }

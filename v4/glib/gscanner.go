@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -83,7 +82,6 @@ var xScannerCurLine func(uintptr) uint
 // from 1). This is the line of the last token parsed via
 // g_scanner_get_next_token().
 func (x *Scanner) CurLine() uint {
-
 	cret := xScannerCurLine(x.GoPointer())
 	return cret
 }
@@ -94,7 +92,6 @@ var xScannerCurPosition func(uintptr) uint
 // from 0). This is the position of the last token parsed via
 // g_scanner_get_next_token().
 func (x *Scanner) CurPosition() uint {
-
 	cret := xScannerCurPosition(x.GoPointer())
 	return cret
 }
@@ -104,7 +101,6 @@ var xScannerCurToken func(uintptr) TokenType
 // Gets the current token type. This is simply the @token
 // field in the #GScanner structure.
 func (x *Scanner) CurToken() TokenType {
-
 	cret := xScannerCurToken(x.GoPointer())
 	return cret
 }
@@ -114,7 +110,6 @@ var xScannerCurValue func(uintptr) TokenValue
 // Gets the current token value. This is simply the @value
 // field in the #GScanner structure.
 func (x *Scanner) CurValue() TokenValue {
-
 	cret := xScannerCurValue(x.GoPointer())
 	return cret
 }
@@ -123,9 +118,7 @@ var xScannerDestroy func(uintptr)
 
 // Frees all memory used by the #GScanner.
 func (x *Scanner) Destroy() {
-
 	xScannerDestroy(x.GoPointer())
-
 }
 
 var xScannerEof func(uintptr) bool
@@ -133,7 +126,6 @@ var xScannerEof func(uintptr) bool
 // Returns %TRUE if the scanner has reached the end of
 // the file or text buffer.
 func (x *Scanner) Eof() bool {
-
 	cret := xScannerEof(x.GoPointer())
 	return cret
 }
@@ -142,9 +134,7 @@ var xScannerError func(uintptr, string, ...interface{})
 
 // Outputs an error message, via the #GScanner message handler.
 func (x *Scanner) Error(FormatVar string, varArgs ...interface{}) {
-
 	xScannerError(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 var xScannerGetNextToken func(uintptr) TokenType
@@ -154,7 +144,6 @@ var xScannerGetNextToken func(uintptr) TokenType
 // placed in the @token, @value, @line, and @position fields of
 // the #GScanner structure.
 func (x *Scanner) GetNextToken() TokenType {
-
 	cret := xScannerGetNextToken(x.GoPointer())
 	return cret
 }
@@ -163,18 +152,14 @@ var xScannerInputFile func(uintptr, int)
 
 // Prepares to scan a file.
 func (x *Scanner) InputFile(InputFdVar int) {
-
 	xScannerInputFile(x.GoPointer(), InputFdVar)
-
 }
 
 var xScannerInputText func(uintptr, string, uint)
 
 // Prepares to scan a text buffer.
 func (x *Scanner) InputText(TextVar string, TextLenVar uint) {
-
 	xScannerInputText(x.GoPointer(), TextVar, TextLenVar)
-
 }
 
 var xScannerLookupSymbol func(uintptr, string) uintptr
@@ -183,7 +168,6 @@ var xScannerLookupSymbol func(uintptr, string) uintptr
 // If the symbol is not bound in the current scope, %NULL is
 // returned.
 func (x *Scanner) LookupSymbol(SymbolVar string) uintptr {
-
 	cret := xScannerLookupSymbol(x.GoPointer(), SymbolVar)
 	return cret
 }
@@ -202,7 +186,6 @@ var xScannerPeekNextToken func(uintptr) TokenType
 // configuration will return whatever was peeked before, regardless of
 // any symbols that may have been added or removed in the new scope.
 func (x *Scanner) PeekNextToken() TokenType {
-
 	cret := xScannerPeekNextToken(x.GoPointer())
 	return cret
 }
@@ -211,9 +194,7 @@ var xScannerScopeAddSymbol func(uintptr, uint, string, uintptr)
 
 // Adds a symbol to the given scope.
 func (x *Scanner) ScopeAddSymbol(ScopeIdVar uint, SymbolVar string, ValueVar uintptr) {
-
 	xScannerScopeAddSymbol(x.GoPointer(), ScopeIdVar, SymbolVar, ValueVar)
-
 }
 
 var xScannerScopeForeachSymbol func(uintptr, uint, uintptr, uintptr)
@@ -223,24 +204,7 @@ var xScannerScopeForeachSymbol func(uintptr, uint, uintptr, uintptr)
 // the symbol and value of each pair, and the given @user_data
 // parameter.
 func (x *Scanner) ScopeForeachSymbol(ScopeIdVar uint, FuncVar *HFunc, UserDataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xScannerScopeForeachSymbol(x.GoPointer(), ScopeIdVar, FuncVarRef, UserDataVar)
-
+	xScannerScopeForeachSymbol(x.GoPointer(), ScopeIdVar, NewCallback(FuncVar), UserDataVar)
 }
 
 var xScannerScopeLookupSymbol func(uintptr, uint, string) uintptr
@@ -248,7 +212,6 @@ var xScannerScopeLookupSymbol func(uintptr, uint, string) uintptr
 // Looks up a symbol in a scope and return its value. If the
 // symbol is not bound in the scope, %NULL is returned.
 func (x *Scanner) ScopeLookupSymbol(ScopeIdVar uint, SymbolVar string) uintptr {
-
 	cret := xScannerScopeLookupSymbol(x.GoPointer(), ScopeIdVar, SymbolVar)
 	return cret
 }
@@ -257,16 +220,13 @@ var xScannerScopeRemoveSymbol func(uintptr, uint, string)
 
 // Removes a symbol from a scope.
 func (x *Scanner) ScopeRemoveSymbol(ScopeIdVar uint, SymbolVar string) {
-
 	xScannerScopeRemoveSymbol(x.GoPointer(), ScopeIdVar, SymbolVar)
-
 }
 
 var xScannerSetScope func(uintptr, uint) uint
 
 // Sets the current scope.
 func (x *Scanner) SetScope(ScopeIdVar uint) uint {
-
 	cret := xScannerSetScope(x.GoPointer(), ScopeIdVar)
 	return cret
 }
@@ -278,9 +238,7 @@ var xScannerSyncFileOffset func(uintptr)
 // third party uses of the scanners filedescriptor, which hooks
 // onto the current scanning position.
 func (x *Scanner) SyncFileOffset() {
-
 	xScannerSyncFileOffset(x.GoPointer())
-
 }
 
 var xScannerUnexpToken func(uintptr, TokenType, string, string, string, string, int)
@@ -293,18 +251,14 @@ var xScannerUnexpToken func(uintptr, TokenType, string, string, string, string, 
 // evaluates the scanner's current token (not the peeked token)
 // to construct part of the message.
 func (x *Scanner) UnexpToken(ExpectedTokenVar TokenType, IdentifierSpecVar string, SymbolSpecVar string, SymbolNameVar string, MessageVar string, IsErrorVar int) {
-
 	xScannerUnexpToken(x.GoPointer(), ExpectedTokenVar, IdentifierSpecVar, SymbolSpecVar, SymbolNameVar, MessageVar, IsErrorVar)
-
 }
 
 var xScannerWarn func(uintptr, string, ...interface{})
 
 // Outputs a warning message, via the #GScanner message handler.
 func (x *Scanner) Warn(FormatVar string, varArgs ...interface{}) {
-
 	xScannerWarn(x.GoPointer(), FormatVar, varArgs...)
-
 }
 
 // Specifies the #GScanner parser configuration. Most settings can
@@ -470,7 +424,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -500,5 +454,4 @@ func init() {
 	core.PuregoSafeRegister(&xScannerSyncFileOffset, libs, "g_scanner_sync_file_offset")
 	core.PuregoSafeRegister(&xScannerUnexpToken, libs, "g_scanner_unexp_token")
 	core.PuregoSafeRegister(&xScannerWarn, libs, "g_scanner_warn")
-
 }

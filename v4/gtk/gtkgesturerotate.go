@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -66,7 +65,6 @@ var xGestureRotateGetAngleDelta func(uintptr) float64
 // in radians since the gesture was first recognized. If @gesture is
 // not active, 0 is returned.
 func (x *GestureRotate) GetAngleDelta() float64 {
-
 	cret := xGestureRotateGetAngleDelta(x.GoPointer())
 	return cret
 }
@@ -97,7 +95,6 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 		cbFn := *cb
 
 		cbFn(fa, AngleVarp, AngleDeltaVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -108,7 +105,7 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -123,5 +120,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureRotate, libs, "gtk_gesture_rotate_new")
 
 	core.PuregoSafeRegister(&xGestureRotateGetAngleDelta, libs, "gtk_gesture_rotate_get_angle_delta")
-
 }

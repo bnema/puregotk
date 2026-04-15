@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -21,9 +20,7 @@ func (x *Allocator) GoPointer() uintptr {
 var xAllocatorFree func(uintptr)
 
 func (x *Allocator) Free() {
-
 	xAllocatorFree(x.GoPointer())
-
 }
 
 type MemChunk struct {
@@ -37,7 +34,6 @@ func (x *MemChunk) GoPointer() uintptr {
 var xMemChunkAlloc func(uintptr) uintptr
 
 func (x *MemChunk) Alloc() uintptr {
-
 	cret := xMemChunkAlloc(x.GoPointer())
 	return cret
 }
@@ -45,7 +41,6 @@ func (x *MemChunk) Alloc() uintptr {
 var xMemChunkAlloc0 func(uintptr) uintptr
 
 func (x *MemChunk) Alloc0() uintptr {
-
 	cret := xMemChunkAlloc0(x.GoPointer())
 	return cret
 }
@@ -53,41 +48,31 @@ func (x *MemChunk) Alloc0() uintptr {
 var xMemChunkClean func(uintptr)
 
 func (x *MemChunk) Clean() {
-
 	xMemChunkClean(x.GoPointer())
-
 }
 
 var xMemChunkDestroy func(uintptr)
 
 func (x *MemChunk) Destroy() {
-
 	xMemChunkDestroy(x.GoPointer())
-
 }
 
 var xMemChunkFree func(uintptr, uintptr)
 
 func (x *MemChunk) Free(MemVar uintptr) {
-
 	xMemChunkFree(x.GoPointer(), MemVar)
-
 }
 
 var xMemChunkPrint func(uintptr)
 
 func (x *MemChunk) Print() {
-
 	xMemChunkPrint(x.GoPointer())
-
 }
 
 var xMemChunkReset func(uintptr)
 
 func (x *MemChunk) Reset() {
-
 	xMemChunkReset(x.GoPointer())
-
 }
 
 const (
@@ -105,70 +90,54 @@ const (
 var xBlowChunks func()
 
 func BlowChunks() {
-
 	xBlowChunks()
-
 }
 
 var xListPopAllocator func()
 
 func ListPopAllocator() {
-
 	xListPopAllocator()
-
 }
 
 var xListPushAllocator func(*Allocator)
 
 func ListPushAllocator(AllocatorVar *Allocator) {
-
 	xListPushAllocator(AllocatorVar)
-
 }
 
 var xMemChunkInfo func()
 
 func MemChunkInfo() {
-
 	xMemChunkInfo()
-
 }
 
 var xNodePopAllocator func()
 
 func NodePopAllocator() {
-
 	xNodePopAllocator()
-
 }
 
 var xNodePushAllocator func(*Allocator)
 
 func NodePushAllocator(AllocatorVar *Allocator) {
-
 	xNodePushAllocator(AllocatorVar)
-
 }
 
 var xSlistPopAllocator func()
 
 func SlistPopAllocator() {
-
 	xSlistPopAllocator()
-
 }
 
 var xSlistPushAllocator func(*Allocator)
 
 func SlistPushAllocator(AllocatorVar *Allocator) {
-
 	xSlistPushAllocator(AllocatorVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -196,5 +165,4 @@ func init() {
 	core.PuregoSafeRegister(&xMemChunkFree, libs, "g_mem_chunk_free")
 	core.PuregoSafeRegister(&xMemChunkPrint, libs, "g_mem_chunk_print")
 	core.PuregoSafeRegister(&xMemChunkReset, libs, "g_mem_chunk_reset")
-
 }

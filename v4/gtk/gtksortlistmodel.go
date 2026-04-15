@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -99,7 +98,6 @@ var xSortListModelGetIncremental func(uintptr) bool
 //
 // See [method@Gtk.SortListModel.set_incremental].
 func (x *SortListModel) GetIncremental() bool {
-
 	cret := xSortListModelGetIncremental(x.GoPointer())
 	return cret
 }
@@ -141,7 +139,6 @@ var xSortListModelGetPending func(uintptr) uint
 // [property@Gtk.SortListModel:incremental] is %FALSE - this
 // function returns 0.
 func (x *SortListModel) GetPending() uint {
-
 	cret := xSortListModelGetPending(x.GoPointer())
 	return cret
 }
@@ -200,9 +197,7 @@ var xSortListModelSetIncremental func(uintptr, bool)
 // See [method@Gtk.SortListModel.get_pending] for progress information
 // about an ongoing incremental sorting operation.
 func (x *SortListModel) SetIncremental(IncrementalVar bool) {
-
 	xSortListModelSetIncremental(x.GoPointer(), IncrementalVar)
-
 }
 
 var xSortListModelSetModel func(uintptr, uintptr)
@@ -211,42 +206,21 @@ var xSortListModelSetModel func(uintptr, uintptr)
 //
 // The @model's item type must conform to the item type of @self.
 func (x *SortListModel) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xSortListModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xSortListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xSortListModelSetSectionSorter func(uintptr, uintptr)
 
 // Sets a new section sorter on @self.
 func (x *SortListModel) SetSectionSorter(SorterVar *Sorter) {
-
-	var SorterVarPtr uintptr
-	if SorterVar != nil {
-		SorterVarPtr = SorterVar.GoPointer()
-	}
-
-	xSortListModelSetSectionSorter(x.GoPointer(), SorterVarPtr)
-
+	xSortListModelSetSectionSorter(x.GoPointer(), SorterVar.GoPointer())
 }
 
 var xSortListModelSetSorter func(uintptr, uintptr)
 
 // Sets a new sorter on @self.
 func (x *SortListModel) SetSorter(SorterVar *Sorter) {
-
-	var SorterVarPtr uintptr
-	if SorterVar != nil {
-		SorterVarPtr = SorterVar.GoPointer()
-	}
-
-	xSortListModelSetSorter(x.GoPointer(), SorterVarPtr)
-
+	xSortListModelSetSorter(x.GoPointer(), SorterVar.GoPointer())
 }
 
 func (c *SortListModel) GoPointer() uintptr {
@@ -303,7 +277,6 @@ func (x *SortListModel) GetPropertyPending() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *SortListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -317,7 +290,6 @@ func (x *SortListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SortListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -328,7 +300,6 @@ func (x *SortListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SortListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -379,9 +350,7 @@ func (x *SortListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SortListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -390,9 +359,7 @@ func (x *SortListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SortListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -411,14 +378,12 @@ func (x *SortListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVa
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SortListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -441,5 +406,4 @@ func init() {
 	core.PuregoSafeRegister(&xSortListModelSetModel, libs, "gtk_sort_list_model_set_model")
 	core.PuregoSafeRegister(&xSortListModelSetSectionSorter, libs, "gtk_sort_list_model_set_section_sorter")
 	core.PuregoSafeRegister(&xSortListModelSetSorter, libs, "gtk_sort_list_model_set_sorter")
-
 }

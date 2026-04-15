@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -48,9 +47,7 @@ var xSetAllowedBackends func(string)
 // as [func@Gdk.Display.open], `gtk_init()`, or `gtk_init_check()`
 // in order to take effect.
 func SetAllowedBackends(BackendsVar string) {
-
 	xSetAllowedBackends(BackendsVar)
-
 }
 
 // Offers notification when displays appear or disappear.
@@ -135,13 +132,15 @@ func (x *DisplayManager) GetDefaultDisplay() *Display {
 	return cls
 }
 
-var xDisplayManagerListDisplays func(uintptr) *glib.SList
+var xDisplayManagerListDisplays func(uintptr) uintptr
 
 // List all currently open displays.
 func (x *DisplayManager) ListDisplays() *glib.SList {
-
 	cret := xDisplayManagerListDisplays(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xDisplayManagerOpenDisplay func(uintptr, uintptr) uintptr
@@ -168,9 +167,7 @@ var xDisplayManagerSetDefaultDisplay func(uintptr, uintptr)
 
 // Sets @display as the default display.
 func (x *DisplayManager) SetDefaultDisplay(DisplayVar *Display) {
-
 	xDisplayManagerSetDefaultDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 func (c *DisplayManager) GoPointer() uintptr {
@@ -185,7 +182,7 @@ func (c *DisplayManager) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a display is opened.
-func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, *Display)) uint {
+func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
@@ -198,8 +195,7 @@ func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, *Display)
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Display { cls := &Display{}; cls.Ptr = DisplayVarp; return cls }())
-
+		cbFn(fa, DisplayVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -235,7 +231,7 @@ func DisplayManagerGet() *DisplayManager {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -255,5 +251,4 @@ func init() {
 	core.PuregoSafeRegister(&xDisplayManagerSetDefaultDisplay, libs, "gdk_display_manager_set_default_display")
 
 	core.PuregoSafeRegister(&xDisplayManagerGet, libs, "gdk_display_manager_get")
-
 }

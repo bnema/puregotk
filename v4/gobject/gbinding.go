@@ -2,8 +2,7 @@
 package gobject
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -193,7 +192,6 @@ var xBindingGetFlags func(uintptr) BindingFlags
 
 // Retrieves the flags passed when constructing the #GBinding.
 func (x *Binding) GetFlags() BindingFlags {
-
 	cret := xBindingGetFlags(x.GoPointer())
 	return cret
 }
@@ -228,7 +226,6 @@ var xBindingGetSourceProperty func(uintptr) string
 // Retrieves the name of the property of #GBinding:source used as the source
 // of the binding.
 func (x *Binding) GetSourceProperty() string {
-
 	cret := xBindingGetSourceProperty(x.GoPointer())
 	return cret
 }
@@ -263,7 +260,6 @@ var xBindingGetTargetProperty func(uintptr) string
 // Retrieves the name of the property of #GBinding:target used as the target
 // of the binding.
 func (x *Binding) GetTargetProperty() string {
-
 	cret := xBindingGetTargetProperty(x.GoPointer())
 	return cret
 }
@@ -282,9 +278,7 @@ var xBindingUnbind func(uintptr)
 // only unrefs the reference that was initially created by
 // g_object_bind_property() and is owned by the binding.
 func (x *Binding) Unbind() {
-
 	xBindingUnbind(x.GoPointer())
-
 }
 
 func (c *Binding) GoPointer() uintptr {
@@ -302,7 +296,7 @@ func (c *Binding) SetGoPointer(ptr uintptr) {
 // The name of the property of #GBinding:source that should be used
 // as the source of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) SetPropertySourceProperty(value string) {
 	var v Value
@@ -315,7 +309,7 @@ func (x *Binding) SetPropertySourceProperty(value string) {
 // The name of the property of #GBinding:source that should be used
 // as the source of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) GetPropertySourceProperty() string {
 	var v Value
@@ -327,7 +321,7 @@ func (x *Binding) GetPropertySourceProperty() string {
 // The name of the property of #GBinding:target that should be used
 // as the target of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) SetPropertyTargetProperty(value string) {
 	var v Value
@@ -340,7 +334,7 @@ func (x *Binding) SetPropertyTargetProperty(value string) {
 // The name of the property of #GBinding:target that should be used
 // as the target of the binding.
 //
-// This should be in [canonical form][canonical-parameter-names] to get the
+// This should be in [canonical form][class@GObject.ParamSpec#parameter-names] to get the
 // best performance.
 func (x *Binding) GetPropertyTargetProperty() string {
 	var v Value
@@ -350,7 +344,7 @@ func (x *Binding) GetPropertyTargetProperty() string {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -372,5 +366,4 @@ func init() {
 	core.PuregoSafeRegister(&xBindingGetTarget, libs, "g_binding_get_target")
 	core.PuregoSafeRegister(&xBindingGetTargetProperty, libs, "g_binding_get_target_property")
 	core.PuregoSafeRegister(&xBindingUnbind, libs, "g_binding_unbind")
-
 }

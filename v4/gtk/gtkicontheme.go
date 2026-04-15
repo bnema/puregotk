@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -59,7 +58,6 @@ var xIconThemeErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gtk.IconTheme] errors.
 func IconThemeErrorQuark() glib.Quark {
-
 	cret := xIconThemeErrorQuark()
 	return cret
 }
@@ -145,9 +143,7 @@ var xIconThemeAddResourcePath func(uintptr, string)
 // This function should be used to make application-specific icons
 // available as part of the icon theme.
 func (x *IconTheme) AddResourcePath(PathVar string) {
-
 	xIconThemeAddResourcePath(x.GoPointer(), PathVar)
-
 }
 
 var xIconThemeAddSearchPath func(uintptr, string)
@@ -156,9 +152,7 @@ var xIconThemeAddSearchPath func(uintptr, string)
 //
 // See [method@Gtk.IconTheme.set_search_path].
 func (x *IconTheme) AddSearchPath(PathVar string) {
-
 	xIconThemeAddSearchPath(x.GoPointer(), PathVar)
-
 }
 
 var xIconThemeGetDisplay func(uintptr) uintptr
@@ -183,7 +177,6 @@ var xIconThemeGetIconNames func(uintptr) []string
 
 // Lists the names of icons in the current icon theme.
 func (x *IconTheme) GetIconNames() []string {
-
 	cret := xIconThemeGetIconNames(x.GoPointer())
 	return cret
 }
@@ -196,7 +189,6 @@ var xIconThemeGetIconSizes func(uintptr, string) uintptr
 // A size of -1 means that the icon is available in a scalable
 // format. The array is zero-terminated.
 func (x *IconTheme) GetIconSizes(IconNameVar string) uintptr {
-
 	cret := xIconThemeGetIconSizes(x.GoPointer(), IconNameVar)
 	return cret
 }
@@ -207,7 +199,6 @@ var xIconThemeGetResourcePath func(uintptr) []string
 //
 // See [method@Gtk.IconTheme.set_resource_path].
 func (x *IconTheme) GetResourcePath() []string {
-
 	cret := xIconThemeGetResourcePath(x.GoPointer())
 	return cret
 }
@@ -218,7 +209,6 @@ var xIconThemeGetSearchPath func(uintptr) []string
 //
 // See [method@Gtk.IconTheme.set_search_path].
 func (x *IconTheme) GetSearchPath() []string {
-
 	cret := xIconThemeGetSearchPath(x.GoPointer())
 	return cret
 }
@@ -227,7 +217,6 @@ var xIconThemeGetThemeName func(uintptr) string
 
 // Gets the current icon theme name.
 func (x *IconTheme) GetThemeName() string {
-
 	cret := xIconThemeGetThemeName(x.GoPointer())
 	return cret
 }
@@ -237,7 +226,6 @@ var xIconThemeHasGicon func(uintptr, uintptr) bool
 // Checks whether an icon theme includes an icon
 // for a particular `GIcon`.
 func (x *IconTheme) HasGicon(GiconVar gio.Icon) bool {
-
 	cret := xIconThemeHasGicon(x.GoPointer(), GiconVar.GoPointer())
 	return cret
 }
@@ -247,7 +235,6 @@ var xIconThemeHasIcon func(uintptr, string) bool
 // Checks whether an icon theme includes an icon
 // for a particular name.
 func (x *IconTheme) HasIcon(IconNameVar string) bool {
-
 	cret := xIconThemeHasIcon(x.GoPointer(), IconNameVar)
 	return cret
 }
@@ -316,9 +303,7 @@ var xIconThemeSetResourcePath func(uintptr, []string)
 // of a subdirectory are also considered as ultimate fallback,
 // but they are treated like unthemed icons.
 func (x *IconTheme) SetResourcePath(PathVar []string) {
-
 	xIconThemeSetResourcePath(x.GoPointer(), PathVar)
-
 }
 
 var xIconThemeSetSearchPath func(uintptr, []string)
@@ -339,9 +324,7 @@ var xIconThemeSetSearchPath func(uintptr, []string)
 // into the fallback icon theme, which is called hicolor,
 // rather than directly on the icon path.)
 func (x *IconTheme) SetSearchPath(PathVar []string) {
-
 	xIconThemeSetSearchPath(x.GoPointer(), PathVar)
-
 }
 
 var xIconThemeSetThemeName func(uintptr, uintptr)
@@ -352,12 +335,10 @@ var xIconThemeSetThemeName func(uintptr, uintptr)
 // This function cannot be called on the icon theme objects returned
 // from [func@Gtk.IconTheme.get_for_display].
 func (x *IconTheme) SetThemeName(ThemeNameVar *string) {
-
 	ThemeNameVarPtr := core.GStrdupNullable(ThemeNameVar)
 	defer core.GFreeNullable(ThemeNameVarPtr)
 
 	xIconThemeSetThemeName(x.GoPointer(), ThemeNameVarPtr)
-
 }
 
 func (c *IconTheme) GoPointer() uintptr {
@@ -483,7 +464,6 @@ func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -518,7 +498,7 @@ func IconThemeGetForDisplay(DisplayVar *gdk.Display) *IconTheme {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -555,5 +535,4 @@ func init() {
 	core.PuregoSafeRegister(&xIconThemeSetThemeName, libs, "gtk_icon_theme_set_theme_name")
 
 	core.PuregoSafeRegister(&xIconThemeGetForDisplay, libs, "gtk_icon_theme_get_for_display")
-
 }

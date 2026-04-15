@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -54,7 +53,6 @@ var xEnumListItemGetName func(uintptr) string
 
 // Gets the enum value name.
 func (x *EnumListItem) GetName() string {
-
 	cret := xEnumListItemGetName(x.GoPointer())
 	return cret
 }
@@ -63,7 +61,6 @@ var xEnumListItemGetNick func(uintptr) string
 
 // Gets the enum value nick.
 func (x *EnumListItem) GetNick() string {
-
 	cret := xEnumListItemGetNick(x.GoPointer())
 	return cret
 }
@@ -72,7 +69,6 @@ var xEnumListItemGetValue func(uintptr) int
 
 // Gets the enum value.
 func (x *EnumListItem) GetValue() int {
-
 	cret := xEnumListItemGetValue(x.GoPointer())
 	return cret
 }
@@ -151,9 +147,8 @@ var xEnumListModelFindPosition func(uintptr, int) uint
 
 // Finds the position of a given enum value in @self.
 //
-// If the value is not found, `GTK_INVALID_LIST_POSITION` is returned.
+// If the value is not found, [const@Gtk.INVALID_LIST_POSITION] is returned.
 func (x *EnumListModel) FindPosition(ValueVar int) uint {
-
 	cret := xEnumListModelFindPosition(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -162,7 +157,6 @@ var xEnumListModelGetEnumType func(uintptr) types.GType
 
 // Gets the type of the enum represented by @self.
 func (x *EnumListModel) GetEnumType() types.GType {
-
 	cret := xEnumListModelGetEnumType(x.GoPointer())
 	return cret
 }
@@ -178,6 +172,14 @@ func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *EnumListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -188,7 +190,6 @@ func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *EnumListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -202,7 +203,6 @@ func (x *EnumListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *EnumListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -213,7 +213,6 @@ func (x *EnumListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *EnumListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -264,14 +263,12 @@ func (x *EnumListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *EnumListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -293,5 +290,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEnumListModelFindPosition, libs, "adw_enum_list_model_find_position")
 	core.PuregoSafeRegister(&xEnumListModelGetEnumType, libs, "adw_enum_list_model_get_enum_type")
-
 }

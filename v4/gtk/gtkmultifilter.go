@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -99,7 +98,6 @@ func (c *AnyFilter) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *AnyFilter) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -113,7 +111,6 @@ func (x *AnyFilter) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *AnyFilter) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -124,7 +121,6 @@ func (x *AnyFilter) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *AnyFilter) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -175,9 +171,7 @@ func (x *AnyFilter) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *AnyFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -185,7 +179,6 @@ func (x *AnyFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uin
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AnyFilter) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -252,7 +245,6 @@ func (c *EveryFilter) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *EveryFilter) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -266,7 +258,6 @@ func (x *EveryFilter) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *EveryFilter) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -277,7 +268,6 @@ func (x *EveryFilter) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *EveryFilter) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -328,9 +318,7 @@ func (x *EveryFilter) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *EveryFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -338,7 +326,6 @@ func (x *EveryFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EveryFilter) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -364,9 +351,7 @@ var xMultiFilterAppend func(uintptr, uintptr)
 
 // Adds a filter.
 func (x *MultiFilter) Append(FilterVar *Filter) {
-
 	xMultiFilterAppend(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 var xMultiFilterRemove func(uintptr, uint)
@@ -376,9 +361,7 @@ var xMultiFilterRemove func(uintptr, uint)
 // If @position is larger than the number of filters,
 // nothing happens.
 func (x *MultiFilter) Remove(PositionVar uint) {
-
 	xMultiFilterRemove(x.GoPointer(), PositionVar)
-
 }
 
 func (c *MultiFilter) GoPointer() uintptr {
@@ -412,7 +395,6 @@ func (x *MultiFilter) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *MultiFilter) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -426,7 +408,6 @@ func (x *MultiFilter) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *MultiFilter) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -437,7 +418,6 @@ func (x *MultiFilter) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *MultiFilter) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -488,9 +468,7 @@ func (x *MultiFilter) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *MultiFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -498,14 +476,13 @@ func (x *MultiFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MultiFilter) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -527,5 +504,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xMultiFilterAppend, libs, "gtk_multi_filter_append")
 	core.PuregoSafeRegister(&xMultiFilterRemove, libs, "gtk_multi_filter_remove")
-
 }

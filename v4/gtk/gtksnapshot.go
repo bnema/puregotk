@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -37,6 +36,11 @@ func (x *SnapshotClass) GoPointer() uintptr {
 // The typical way to obtain a `GtkSnapshot` object is as an argument to
 // the [vfunc@Gtk.Widget.snapshot] vfunc. If you need to create your own
 // `GtkSnapshot`, use [ctor@Gtk.Snapshot.new].
+//
+// Note that `GtkSnapshot` applies some optimizations, so the node
+// it produces may not match the API calls 1:1. For example, it will
+// omit clip nodes if the child node is entirely contained within the
+// clip rectangle.
 type Snapshot struct {
 	gdk.Snapshot
 }
@@ -75,19 +79,19 @@ var xSnapshotAppendBorder func(uintptr, *gsk.RoundedRect, *[4]float32, *[4]gdk.R
 //
 // The four sides of the border can have different widths and colors.
 func (x *Snapshot) AppendBorder(OutlineVar *gsk.RoundedRect, BorderWidthVar [4]float32, BorderColorVar [4]gdk.RGBA) {
-
-	xSnapshotAppendBorder(x.GoPointer(), OutlineVar, &BorderWidthVar, &BorderColorVar)
-
+	xSnapshotAppendBorder(x.GoPointer(), OutlineVar, BorderWidthVar, BorderColorVar)
 }
 
-var xSnapshotAppendCairo func(uintptr, *graphene.Rect) *cairo.Context
+var xSnapshotAppendCairo func(uintptr, *graphene.Rect) uintptr
 
 // Creates a new [class@Gsk.CairoNode] and appends it to the current
 // render node of @snapshot, without changing the current node.
 func (x *Snapshot) AppendCairo(BoundsVar *graphene.Rect) *cairo.Context {
-
 	cret := xSnapshotAppendCairo(x.GoPointer(), BoundsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 var xSnapshotAppendColor func(uintptr, *gdk.RGBA, *graphene.Rect)
@@ -99,18 +103,14 @@ var xSnapshotAppendColor func(uintptr, *gdk.RGBA, *graphene.Rect)
 // You should try to avoid calling this function if
 // @color is transparent.
 func (x *Snapshot) AppendColor(ColorVar *gdk.RGBA, BoundsVar *graphene.Rect) {
-
 	xSnapshotAppendColor(x.GoPointer(), ColorVar, BoundsVar)
-
 }
 
 var xSnapshotAppendConicGradient func(uintptr, *graphene.Rect, *graphene.Point, float32, []gsk.ColorStop, uint)
 
 // Appends a conic gradient node with the given stops to @snapshot.
 func (x *Snapshot) AppendConicGradient(BoundsVar *graphene.Rect, CenterVar *graphene.Point, RotationVar float32, StopsVar []gsk.ColorStop, NStopsVar uint) {
-
 	xSnapshotAppendConicGradient(x.GoPointer(), BoundsVar, CenterVar, RotationVar, StopsVar, NStopsVar)
-
 }
 
 var xSnapshotAppendFill func(uintptr, *gsk.Path, gsk.FillRule, *gdk.RGBA)
@@ -121,18 +121,14 @@ var xSnapshotAppendFill func(uintptr, *gsk.Path, gsk.FillRule, *gdk.RGBA)
 // to fill a path with more complex content than
 // a color.
 func (x *Snapshot) AppendFill(PathVar *gsk.Path, FillRuleVar gsk.FillRule, ColorVar *gdk.RGBA) {
-
 	xSnapshotAppendFill(x.GoPointer(), PathVar, FillRuleVar, ColorVar)
-
 }
 
 var xSnapshotAppendInsetShadow func(uintptr, *gsk.RoundedRect, *gdk.RGBA, float32, float32, float32, float32)
 
 // Appends an inset shadow into the box given by @outline.
 func (x *Snapshot) AppendInsetShadow(OutlineVar *gsk.RoundedRect, ColorVar *gdk.RGBA, DxVar float32, DyVar float32, SpreadVar float32, BlurRadiusVar float32) {
-
 	xSnapshotAppendInsetShadow(x.GoPointer(), OutlineVar, ColorVar, DxVar, DyVar, SpreadVar, BlurRadiusVar)
-
 }
 
 var xSnapshotAppendLayout func(uintptr, uintptr, *gdk.RGBA)
@@ -145,18 +141,14 @@ var xSnapshotAppendLayout func(uintptr, uintptr, *gdk.RGBA)
 // Note that if the layout does not produce any visible output, then nodes
 // may not be added to the @snapshot.
 func (x *Snapshot) AppendLayout(LayoutVar *pango.Layout, ColorVar *gdk.RGBA) {
-
 	xSnapshotAppendLayout(x.GoPointer(), LayoutVar.GoPointer(), ColorVar)
-
 }
 
 var xSnapshotAppendLinearGradient func(uintptr, *graphene.Rect, *graphene.Point, *graphene.Point, []gsk.ColorStop, uint)
 
 // Appends a linear gradient node with the given stops to @snapshot.
 func (x *Snapshot) AppendLinearGradient(BoundsVar *graphene.Rect, StartPointVar *graphene.Point, EndPointVar *graphene.Point, StopsVar []gsk.ColorStop, NStopsVar uint) {
-
 	xSnapshotAppendLinearGradient(x.GoPointer(), BoundsVar, StartPointVar, EndPointVar, StopsVar, NStopsVar)
-
 }
 
 var xSnapshotAppendNode func(uintptr, uintptr)
@@ -167,45 +159,43 @@ var xSnapshotAppendNode func(uintptr, uintptr)
 // If @snapshot does not have a current node yet, @node
 // will become the initial node.
 func (x *Snapshot) AppendNode(NodeVar *gsk.RenderNode) {
-
 	xSnapshotAppendNode(x.GoPointer(), NodeVar.GoPointer())
-
 }
 
 var xSnapshotAppendOutsetShadow func(uintptr, *gsk.RoundedRect, *gdk.RGBA, float32, float32, float32, float32)
 
 // Appends an outset shadow node around the box given by @outline.
 func (x *Snapshot) AppendOutsetShadow(OutlineVar *gsk.RoundedRect, ColorVar *gdk.RGBA, DxVar float32, DyVar float32, SpreadVar float32, BlurRadiusVar float32) {
-
 	xSnapshotAppendOutsetShadow(x.GoPointer(), OutlineVar, ColorVar, DxVar, DyVar, SpreadVar, BlurRadiusVar)
+}
 
+var xSnapshotAppendPaste func(uintptr, *graphene.Rect, uint)
+
+// Creates a new render node that pastes the contents
+// copied by a previous call to [method@Gtk.Snapshot.push_copy]
+func (x *Snapshot) AppendPaste(BoundsVar *graphene.Rect, NthVar uint) {
+	xSnapshotAppendPaste(x.GoPointer(), BoundsVar, NthVar)
 }
 
 var xSnapshotAppendRadialGradient func(uintptr, *graphene.Rect, *graphene.Point, float32, float32, float32, float32, []gsk.ColorStop, uint)
 
 // Appends a radial gradient node with the given stops to @snapshot.
 func (x *Snapshot) AppendRadialGradient(BoundsVar *graphene.Rect, CenterVar *graphene.Point, HradiusVar float32, VradiusVar float32, StartVar float32, EndVar float32, StopsVar []gsk.ColorStop, NStopsVar uint) {
-
 	xSnapshotAppendRadialGradient(x.GoPointer(), BoundsVar, CenterVar, HradiusVar, VradiusVar, StartVar, EndVar, StopsVar, NStopsVar)
-
 }
 
 var xSnapshotAppendRepeatingLinearGradient func(uintptr, *graphene.Rect, *graphene.Point, *graphene.Point, []gsk.ColorStop, uint)
 
 // Appends a repeating linear gradient node with the given stops to @snapshot.
 func (x *Snapshot) AppendRepeatingLinearGradient(BoundsVar *graphene.Rect, StartPointVar *graphene.Point, EndPointVar *graphene.Point, StopsVar []gsk.ColorStop, NStopsVar uint) {
-
 	xSnapshotAppendRepeatingLinearGradient(x.GoPointer(), BoundsVar, StartPointVar, EndPointVar, StopsVar, NStopsVar)
-
 }
 
 var xSnapshotAppendRepeatingRadialGradient func(uintptr, *graphene.Rect, *graphene.Point, float32, float32, float32, float32, []gsk.ColorStop, uint)
 
 // Appends a repeating radial gradient node with the given stops to @snapshot.
 func (x *Snapshot) AppendRepeatingRadialGradient(BoundsVar *graphene.Rect, CenterVar *graphene.Point, HradiusVar float32, VradiusVar float32, StartVar float32, EndVar float32, StopsVar []gsk.ColorStop, NStopsVar uint) {
-
 	xSnapshotAppendRepeatingRadialGradient(x.GoPointer(), BoundsVar, CenterVar, HradiusVar, VradiusVar, StartVar, EndVar, StopsVar, NStopsVar)
-
 }
 
 var xSnapshotAppendScaledTexture func(uintptr, uintptr, gsk.ScalingFilter, *graphene.Rect)
@@ -218,9 +208,7 @@ var xSnapshotAppendScaledTexture func(uintptr, uintptr, gsk.ScalingFilter, *grap
 // this function provides control about how the filter
 // that is used when scaling.
 func (x *Snapshot) AppendScaledTexture(TextureVar *gdk.Texture, FilterVar gsk.ScalingFilter, BoundsVar *graphene.Rect) {
-
 	xSnapshotAppendScaledTexture(x.GoPointer(), TextureVar.GoPointer(), FilterVar, BoundsVar)
-
 }
 
 var xSnapshotAppendStroke func(uintptr, *gsk.Path, *gsk.Stroke, *gdk.RGBA)
@@ -231,9 +219,7 @@ var xSnapshotAppendStroke func(uintptr, *gsk.Path, *gsk.Stroke, *gdk.RGBA)
 // to stroke a path with more complex content than
 // a color.
 func (x *Snapshot) AppendStroke(PathVar *gsk.Path, StrokeVar *gsk.Stroke, ColorVar *gdk.RGBA) {
-
 	xSnapshotAppendStroke(x.GoPointer(), PathVar, StrokeVar, ColorVar)
-
 }
 
 var xSnapshotAppendTexture func(uintptr, uintptr, *graphene.Rect)
@@ -246,9 +232,7 @@ var xSnapshotAppendTexture func(uintptr, uintptr, *graphene.Rect)
 // linear filtering is used. See [method@Gtk.Snapshot.append_scaled_texture]
 // if you need other filtering, such as nearest-neighbour.
 func (x *Snapshot) AppendTexture(TextureVar *gdk.Texture, BoundsVar *graphene.Rect) {
-
 	xSnapshotAppendTexture(x.GoPointer(), TextureVar.GoPointer(), BoundsVar)
-
 }
 
 var xSnapshotFreeToNode func(uintptr) uintptr
@@ -296,9 +280,7 @@ var xSnapshotGlShaderPopTexture func(uintptr)
 // of textures is needed for the shader in
 // [method@Gtk.Snapshot.push_gl_shader].
 func (x *Snapshot) GlShaderPopTexture() {
-
 	xSnapshotGlShaderPopTexture(x.GoPointer())
-
 }
 
 var xSnapshotPerspective func(uintptr, float32)
@@ -307,9 +289,7 @@ var xSnapshotPerspective func(uintptr, float32)
 //
 // See [method@Gsk.Transform.perspective] for a discussion on the details.
 func (x *Snapshot) Perspective(DepthVar float32) {
-
 	xSnapshotPerspective(x.GoPointer(), DepthVar)
-
 }
 
 var xSnapshotPop func(uintptr)
@@ -317,9 +297,7 @@ var xSnapshotPop func(uintptr)
 // Removes the top element from the stack of render nodes,
 // and appends it to the node underneath it.
 func (x *Snapshot) Pop() {
-
 	xSnapshotPop(x.GoPointer())
-
 }
 
 var xSnapshotPushBlend func(uintptr, gsk.BlendMode)
@@ -334,9 +312,7 @@ var xSnapshotPushBlend func(uintptr, gsk.BlendMode)
 // Calling this function requires two subsequent calls
 // to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushBlend(BlendModeVar gsk.BlendMode) {
-
 	xSnapshotPushBlend(x.GoPointer(), BlendModeVar)
-
 }
 
 var xSnapshotPushBlur func(uintptr, float64)
@@ -345,9 +321,7 @@ var xSnapshotPushBlur func(uintptr, float64)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushBlur(RadiusVar float64) {
-
 	xSnapshotPushBlur(x.GoPointer(), RadiusVar)
-
 }
 
 var xSnapshotPushClip func(uintptr, *graphene.Rect)
@@ -356,9 +330,7 @@ var xSnapshotPushClip func(uintptr, *graphene.Rect)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushClip(BoundsVar *graphene.Rect) {
-
 	xSnapshotPushClip(x.GoPointer(), BoundsVar)
-
 }
 
 var xSnapshotPushColorMatrix func(uintptr, *graphene.Matrix, *graphene.Vec4)
@@ -375,9 +347,7 @@ var xSnapshotPushColorMatrix func(uintptr, *graphene.Matrix, *graphene.Vec4)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushColorMatrix(ColorMatrixVar *graphene.Matrix, ColorOffsetVar *graphene.Vec4) {
-
 	xSnapshotPushColorMatrix(x.GoPointer(), ColorMatrixVar, ColorOffsetVar)
-
 }
 
 var xSnapshotPushComponentTransfer func(uintptr, *gsk.ComponentTransfer, *gsk.ComponentTransfer, *gsk.ComponentTransfer, *gsk.ComponentTransfer)
@@ -389,9 +359,30 @@ var xSnapshotPushComponentTransfer func(uintptr, *gsk.ComponentTransfer, *gsk.Co
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushComponentTransfer(RedVar *gsk.ComponentTransfer, GreenVar *gsk.ComponentTransfer, BlueVar *gsk.ComponentTransfer, AlphaVar *gsk.ComponentTransfer) {
-
 	xSnapshotPushComponentTransfer(x.GoPointer(), RedVar, GreenVar, BlueVar, AlphaVar)
+}
 
+var xSnapshotPushComposite func(uintptr, gsk.PorterDuff)
+
+// Until the first call to [method@Gtk.Snapshot.pop], the
+// mask image for the mask operation will be recorded.
+//
+// After that call, the child image will be recorded until
+// the second call to [method@Gtk.Snapshot.pop].
+//
+// Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
+func (x *Snapshot) PushComposite(OpVar gsk.PorterDuff) {
+	xSnapshotPushComposite(x.GoPointer(), OpVar)
+}
+
+var xSnapshotPushCopy func(uintptr)
+
+// Stores the current rendering state for later pasting via
+// [method@Gtk.Snapshot.append_paste].
+//
+// Pasting is possible until the matching call to [method@Gtk.Snapshot.pop].
+func (x *Snapshot) PushCopy() {
+	xSnapshotPushCopy(x.GoPointer())
 }
 
 var xSnapshotPushCrossFade func(uintptr, float64)
@@ -406,9 +397,7 @@ var xSnapshotPushCrossFade func(uintptr, float64)
 // Calling this function requires two subsequent calls
 // to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushCrossFade(ProgressVar float64) {
-
 	xSnapshotPushCrossFade(x.GoPointer(), ProgressVar)
-
 }
 
 var xSnapshotPushDebug func(uintptr, string, ...interface{})
@@ -419,9 +408,7 @@ var xSnapshotPushDebug func(uintptr, string, ...interface{})
 // helpful in identifying parts of a render node tree dump,
 // for example in the GTK inspector.
 func (x *Snapshot) PushDebug(MessageVar string, varArgs ...interface{}) {
-
 	xSnapshotPushDebug(x.GoPointer(), MessageVar, varArgs...)
-
 }
 
 var xSnapshotPushFill func(uintptr, *gsk.Path, gsk.FillRule)
@@ -435,9 +422,7 @@ var xSnapshotPushFill func(uintptr, *gsk.Path, gsk.FillRule)
 // than rendering new ones, use [method@Gtk.Snapshot.append_fill]
 // may be more convenient.
 func (x *Snapshot) PushFill(PathVar *gsk.Path, FillRuleVar gsk.FillRule) {
-
 	xSnapshotPushFill(x.GoPointer(), PathVar, FillRuleVar)
-
 }
 
 var xSnapshotPushGlShader func(uintptr, uintptr, *graphene.Rect, *glib.Bytes)
@@ -477,9 +462,23 @@ var xSnapshotPushGlShader func(uintptr, uintptr, *graphene.Rect, *glib.Bytes)
 //
 // For details on how to write shaders, see [class@Gsk.GLShader].
 func (x *Snapshot) PushGlShader(ShaderVar *gsk.GLShader, BoundsVar *graphene.Rect, TakeArgsVar *glib.Bytes) {
-
 	xSnapshotPushGlShader(x.GoPointer(), ShaderVar.GoPointer(), BoundsVar, TakeArgsVar)
+}
 
+var xSnapshotPushIsolation func(uintptr, gsk.Isolation)
+
+// Isolates the following drawing operations from previous ones.
+//
+// You can express "everything but these flags" in a forward compatible
+// way by using bit math:
+// `GSK_ISOLATION_ALL &amp; ~(GSK_ISOLATION_BACKGROUND | GSK_ISOLATION_COPY_PASTE)`
+// will isolate everything but background and copy/paste.
+//
+// For what isolation features exist, see [flags@Gsk.Isolation].
+//
+// Content is isolated until the next call to [method@Gtk.Snapshot.pop].
+func (x *Snapshot) PushIsolation(FeaturesVar gsk.Isolation) {
+	xSnapshotPushIsolation(x.GoPointer(), FeaturesVar)
 }
 
 var xSnapshotPushMask func(uintptr, gsk.MaskMode)
@@ -492,9 +491,7 @@ var xSnapshotPushMask func(uintptr, gsk.MaskMode)
 //
 // Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
 func (x *Snapshot) PushMask(MaskModeVar gsk.MaskMode) {
-
 	xSnapshotPushMask(x.GoPointer(), MaskModeVar)
-
 }
 
 var xSnapshotPushOpacity func(uintptr, float64)
@@ -503,9 +500,7 @@ var xSnapshotPushOpacity func(uintptr, float64)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushOpacity(OpacityVar float64) {
-
 	xSnapshotPushOpacity(x.GoPointer(), OpacityVar)
-
 }
 
 var xSnapshotPushRepeat func(uintptr, *graphene.Rect, *graphene.Rect)
@@ -514,9 +509,7 @@ var xSnapshotPushRepeat func(uintptr, *graphene.Rect, *graphene.Rect)
 //
 // The child is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushRepeat(BoundsVar *graphene.Rect, ChildBoundsVar *graphene.Rect) {
-
 	xSnapshotPushRepeat(x.GoPointer(), BoundsVar, ChildBoundsVar)
-
 }
 
 var xSnapshotPushRoundedClip func(uintptr, *gsk.RoundedRect)
@@ -525,9 +518,7 @@ var xSnapshotPushRoundedClip func(uintptr, *gsk.RoundedRect)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushRoundedClip(BoundsVar *gsk.RoundedRect) {
-
 	xSnapshotPushRoundedClip(x.GoPointer(), BoundsVar)
-
 }
 
 var xSnapshotPushShadow func(uintptr, []gsk.Shadow, uint)
@@ -536,9 +527,7 @@ var xSnapshotPushShadow func(uintptr, []gsk.Shadow, uint)
 //
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushShadow(ShadowVar []gsk.Shadow, NShadowsVar uint) {
-
 	xSnapshotPushShadow(x.GoPointer(), ShadowVar, NShadowsVar)
-
 }
 
 var xSnapshotPushStroke func(uintptr, *gsk.Path, *gsk.Stroke)
@@ -555,9 +544,7 @@ var xSnapshotPushStroke func(uintptr, *gsk.Path, *gsk.Stroke)
 // If you want to stroke the path with a color, [method@Gtk.Snapshot.append_stroke]
 // may be more convenient.
 func (x *Snapshot) PushStroke(PathVar *gsk.Path, StrokeVar *gsk.Stroke) {
-
 	xSnapshotPushStroke(x.GoPointer(), PathVar, StrokeVar)
-
 }
 
 var xSnapshotRenderBackground func(uintptr, uintptr, float64, float64, float64, float64)
@@ -566,9 +553,7 @@ var xSnapshotRenderBackground func(uintptr, uintptr, float64, float64, float64, 
 // and appends it to the current node of @snapshot, without changing
 // the current node.
 func (x *Snapshot) RenderBackground(ContextVar *StyleContext, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xSnapshotRenderBackground(x.GoPointer(), ContextVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xSnapshotRenderFocus func(uintptr, uintptr, float64, float64, float64, float64)
@@ -577,9 +562,7 @@ var xSnapshotRenderFocus func(uintptr, uintptr, float64, float64, float64, float
 // and appends it to the current node of @snapshot, without changing
 // the current node.
 func (x *Snapshot) RenderFocus(ContextVar *StyleContext, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xSnapshotRenderFocus(x.GoPointer(), ContextVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xSnapshotRenderFrame func(uintptr, uintptr, float64, float64, float64, float64)
@@ -588,18 +571,14 @@ var xSnapshotRenderFrame func(uintptr, uintptr, float64, float64, float64, float
 // and appends it to the current node of @snapshot, without changing
 // the current node.
 func (x *Snapshot) RenderFrame(ContextVar *StyleContext, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
-
 	xSnapshotRenderFrame(x.GoPointer(), ContextVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xSnapshotRenderInsertionCursor func(uintptr, uintptr, float64, float64, uintptr, int, pango.Direction)
 
 // Draws a text caret using @snapshot at the specified index of @layout.
 func (x *Snapshot) RenderInsertionCursor(ContextVar *StyleContext, XVar float64, YVar float64, LayoutVar *pango.Layout, IndexVar int, DirectionVar pango.Direction) {
-
 	xSnapshotRenderInsertionCursor(x.GoPointer(), ContextVar.GoPointer(), XVar, YVar, LayoutVar.GoPointer(), IndexVar, DirectionVar)
-
 }
 
 var xSnapshotRenderLayout func(uintptr, uintptr, float64, float64, uintptr)
@@ -608,9 +587,7 @@ var xSnapshotRenderLayout func(uintptr, uintptr, float64, float64, uintptr)
 // information in @context, and appends it to the current node of @snapshot,
 // without changing the current node.
 func (x *Snapshot) RenderLayout(ContextVar *StyleContext, XVar float64, YVar float64, LayoutVar *pango.Layout) {
-
 	xSnapshotRenderLayout(x.GoPointer(), ContextVar.GoPointer(), XVar, YVar, LayoutVar.GoPointer())
-
 }
 
 var xSnapshotRestore func(uintptr)
@@ -619,9 +596,7 @@ var xSnapshotRestore func(uintptr)
 // [method@Snapshot.save] and removes that state from the stack of
 // saved states.
 func (x *Snapshot) Restore() {
-
 	xSnapshotRestore(x.GoPointer())
-
 }
 
 var xSnapshotRotate func(uintptr, float32)
@@ -632,9 +607,7 @@ var xSnapshotRotate func(uintptr, float32)
 //
 // To rotate around axes other than the Z axis, use [method@Gsk.Transform.rotate_3d].
 func (x *Snapshot) Rotate(AngleVar float32) {
-
 	xSnapshotRotate(x.GoPointer(), AngleVar)
-
 }
 
 var xSnapshotRotate3d func(uintptr, float32, *graphene.Vec3)
@@ -643,9 +616,7 @@ var xSnapshotRotate3d func(uintptr, float32, *graphene.Vec3)
 //
 // For a rotation in 2D space, use [method@Gsk.Transform.rotate].
 func (x *Snapshot) Rotate3d(AngleVar float32, AxisVar *graphene.Vec3) {
-
 	xSnapshotRotate3d(x.GoPointer(), AngleVar, AxisVar)
-
 }
 
 var xSnapshotSave func(uintptr)
@@ -663,9 +634,7 @@ var xSnapshotSave func(uintptr)
 // It is necessary to clear all saved states with corresponding
 // calls to `gtk_snapshot_restore()`.
 func (x *Snapshot) Save() {
-
 	xSnapshotSave(x.GoPointer())
-
 }
 
 var xSnapshotScale func(uintptr, float32, float32)
@@ -675,18 +644,14 @@ var xSnapshotScale func(uintptr, float32, float32)
 //
 // Use [method@Gtk.Snapshot.scale_3d] to scale in all 3 dimensions.
 func (x *Snapshot) Scale(FactorXVar float32, FactorYVar float32) {
-
 	xSnapshotScale(x.GoPointer(), FactorXVar, FactorYVar)
-
 }
 
 var xSnapshotScale3d func(uintptr, float32, float32, float32)
 
 // Scales @snapshot's coordinate system by the given factors.
 func (x *Snapshot) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar float32) {
-
 	xSnapshotScale3d(x.GoPointer(), FactorXVar, FactorYVar, FactorZVar)
-
 }
 
 var xSnapshotToNode func(uintptr) uintptr
@@ -739,36 +704,28 @@ var xSnapshotTransform func(uintptr, *gsk.Transform)
 
 // Transforms @snapshot's coordinate system with the given @transform.
 func (x *Snapshot) Transform(TransformVar *gsk.Transform) {
-
 	xSnapshotTransform(x.GoPointer(), TransformVar)
-
 }
 
 var xSnapshotTransformMatrix func(uintptr, *graphene.Matrix)
 
 // Transforms @snapshot's coordinate system with the given @matrix.
 func (x *Snapshot) TransformMatrix(MatrixVar *graphene.Matrix) {
-
 	xSnapshotTransformMatrix(x.GoPointer(), MatrixVar)
-
 }
 
 var xSnapshotTranslate func(uintptr, *graphene.Point)
 
 // Translates @snapshot's coordinate system by @point in 2-dimensional space.
 func (x *Snapshot) Translate(PointVar *graphene.Point) {
-
 	xSnapshotTranslate(x.GoPointer(), PointVar)
-
 }
 
 var xSnapshotTranslate3d func(uintptr, *graphene.Point3D)
 
 // Translates @snapshot's coordinate system by @point.
 func (x *Snapshot) Translate3d(PointVar *graphene.Point3D) {
-
 	xSnapshotTranslate3d(x.GoPointer(), PointVar)
-
 }
 
 func (c *Snapshot) GoPointer() uintptr {
@@ -784,7 +741,7 @@ func (c *Snapshot) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -808,6 +765,7 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotAppendLinearGradient, libs, "gtk_snapshot_append_linear_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendNode, libs, "gtk_snapshot_append_node")
 	core.PuregoSafeRegister(&xSnapshotAppendOutsetShadow, libs, "gtk_snapshot_append_outset_shadow")
+	core.PuregoSafeRegister(&xSnapshotAppendPaste, libs, "gtk_snapshot_append_paste")
 	core.PuregoSafeRegister(&xSnapshotAppendRadialGradient, libs, "gtk_snapshot_append_radial_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingLinearGradient, libs, "gtk_snapshot_append_repeating_linear_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingRadialGradient, libs, "gtk_snapshot_append_repeating_radial_gradient")
@@ -824,10 +782,13 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotPushClip, libs, "gtk_snapshot_push_clip")
 	core.PuregoSafeRegister(&xSnapshotPushColorMatrix, libs, "gtk_snapshot_push_color_matrix")
 	core.PuregoSafeRegister(&xSnapshotPushComponentTransfer, libs, "gtk_snapshot_push_component_transfer")
+	core.PuregoSafeRegister(&xSnapshotPushComposite, libs, "gtk_snapshot_push_composite")
+	core.PuregoSafeRegister(&xSnapshotPushCopy, libs, "gtk_snapshot_push_copy")
 	core.PuregoSafeRegister(&xSnapshotPushCrossFade, libs, "gtk_snapshot_push_cross_fade")
 	core.PuregoSafeRegister(&xSnapshotPushDebug, libs, "gtk_snapshot_push_debug")
 	core.PuregoSafeRegister(&xSnapshotPushFill, libs, "gtk_snapshot_push_fill")
 	core.PuregoSafeRegister(&xSnapshotPushGlShader, libs, "gtk_snapshot_push_gl_shader")
+	core.PuregoSafeRegister(&xSnapshotPushIsolation, libs, "gtk_snapshot_push_isolation")
 	core.PuregoSafeRegister(&xSnapshotPushMask, libs, "gtk_snapshot_push_mask")
 	core.PuregoSafeRegister(&xSnapshotPushOpacity, libs, "gtk_snapshot_push_opacity")
 	core.PuregoSafeRegister(&xSnapshotPushRepeat, libs, "gtk_snapshot_push_repeat")
@@ -851,5 +812,4 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotTransformMatrix, libs, "gtk_snapshot_transform_matrix")
 	core.PuregoSafeRegister(&xSnapshotTranslate, libs, "gtk_snapshot_translate")
 	core.PuregoSafeRegister(&xSnapshotTranslate3d, libs, "gtk_snapshot_translate_3d")
-
 }

@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -37,14 +36,13 @@ var xDialogErrorQuark func() glib.Quark
 // Registers an error quark for an operation that requires a dialog if
 // necessary.
 func DialogErrorQuark() glib.Quark {
-
 	cret := xDialogErrorQuark()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -57,5 +55,4 @@ func init() {
 	core.PuregoSafeRegister(&xDialogErrorGLibType, libs, "gtk_dialog_error_get_type")
 
 	core.PuregoSafeRegister(&xDialogErrorQuark, libs, "gtk_dialog_error_quark")
-
 }

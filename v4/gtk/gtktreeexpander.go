@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -152,7 +151,6 @@ var xTreeExpanderGetHideExpander func(uintptr) bool
 
 // Gets whether the TreeExpander should be hidden in a GtkTreeListRow.
 func (x *TreeExpander) GetHideExpander() bool {
-
 	cret := xTreeExpanderGetHideExpander(x.GoPointer())
 	return cret
 }
@@ -161,7 +159,6 @@ var xTreeExpanderGetIndentForDepth func(uintptr) bool
 
 // TreeExpander indents each level of depth with an additional indent.
 func (x *TreeExpander) GetIndentForDepth() bool {
-
 	cret := xTreeExpanderGetIndentForDepth(x.GoPointer())
 	return cret
 }
@@ -170,7 +167,6 @@ var xTreeExpanderGetIndentForIcon func(uintptr) bool
 
 // TreeExpander indents the child by the width of an expander-icon if it is not expandable.
 func (x *TreeExpander) GetIndentForIcon() bool {
-
 	cret := xTreeExpanderGetIndentForIcon(x.GoPointer())
 	return cret
 }
@@ -218,55 +214,35 @@ var xTreeExpanderSetChild func(uintptr, uintptr)
 
 // Sets the content widget to display.
 func (x *TreeExpander) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xTreeExpanderSetChild(x.GoPointer(), ChildVarPtr)
-
+	xTreeExpanderSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xTreeExpanderSetHideExpander func(uintptr, bool)
 
 // Sets whether the expander icon should be visible in a GtkTreeListRow.
 func (x *TreeExpander) SetHideExpander(HideExpanderVar bool) {
-
 	xTreeExpanderSetHideExpander(x.GoPointer(), HideExpanderVar)
-
 }
 
 var xTreeExpanderSetIndentForDepth func(uintptr, bool)
 
 // Sets if the TreeExpander should indent the child according to its depth.
 func (x *TreeExpander) SetIndentForDepth(IndentForDepthVar bool) {
-
 	xTreeExpanderSetIndentForDepth(x.GoPointer(), IndentForDepthVar)
-
 }
 
 var xTreeExpanderSetIndentForIcon func(uintptr, bool)
 
 // Sets if the TreeExpander should indent the child by the width of an expander-icon when it is not expandable.
 func (x *TreeExpander) SetIndentForIcon(IndentForIconVar bool) {
-
 	xTreeExpanderSetIndentForIcon(x.GoPointer(), IndentForIconVar)
-
 }
 
 var xTreeExpanderSetListRow func(uintptr, uintptr)
 
 // Sets the tree list row that this expander should manage.
 func (x *TreeExpander) SetListRow(ListRowVar *TreeListRow) {
-
-	var ListRowVarPtr uintptr
-	if ListRowVar != nil {
-		ListRowVarPtr = ListRowVar.GoPointer()
-	}
-
-	xTreeExpanderSetListRow(x.GoPointer(), ListRowVarPtr)
-
+	xTreeExpanderSetListRow(x.GoPointer(), ListRowVar.GoPointer())
 }
 
 func (c *TreeExpander) GoPointer() uintptr {
@@ -351,9 +327,19 @@ func (x *TreeExpander) GetPropertyIndentForIcon() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TreeExpander) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TreeExpander) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -374,7 +360,6 @@ func (x *TreeExpander) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TreeExpander) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -399,7 +384,6 @@ func (x *TreeExpander) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TreeExpander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -438,30 +422,23 @@ func (x *TreeExpander) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TreeExpander) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TreeExpander) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TreeExpander) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TreeExpander) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -474,19 +451,7 @@ func (x *TreeExpander) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TreeExpander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -494,14 +459,7 @@ func (x *TreeExpander) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TreeExpander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -510,9 +468,7 @@ func (x *TreeExpander) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TreeExpander) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -534,9 +490,7 @@ func (x *TreeExpander) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *TreeExpander) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -546,9 +500,7 @@ func (x *TreeExpander) UpdateProperty(FirstPropertyVar AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *TreeExpander) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -570,9 +522,7 @@ func (x *TreeExpander) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []A
 //
 // ```
 func (x *TreeExpander) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -582,9 +532,7 @@ func (x *TreeExpander) UpdateRelation(FirstRelationVar AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *TreeExpander) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -607,9 +555,7 @@ func (x *TreeExpander) UpdateRelationValue(NRelationsVar int, RelationsVar []Acc
 //
 // ```
 func (x *TreeExpander) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -619,9 +565,7 @@ func (x *TreeExpander) UpdateState(FirstStateVar AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *TreeExpander) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -629,14 +573,13 @@ func (x *TreeExpander) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TreeExpander) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -661,5 +604,4 @@ func init() {
 	core.PuregoSafeRegister(&xTreeExpanderSetIndentForDepth, libs, "gtk_tree_expander_set_indent_for_depth")
 	core.PuregoSafeRegister(&xTreeExpanderSetIndentForIcon, libs, "gtk_tree_expander_set_indent_for_icon")
 	core.PuregoSafeRegister(&xTreeExpanderSetListRow, libs, "gtk_tree_expander_set_list_row")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -77,7 +76,6 @@ var xLayoutGetName func(uintptr) string
 
 // Gets the name of the layout.
 func (x *Layout) GetName() string {
-
 	cret := xLayoutGetName(x.GoPointer())
 	return cret
 }
@@ -86,12 +84,10 @@ var xLayoutSetName func(uintptr, uintptr)
 
 // Sets the name of the layout.
 func (x *Layout) SetName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xLayoutSetName(x.GoPointer(), NameVarPtr)
-
 }
 
 func (c *Layout) GoPointer() uintptr {
@@ -127,14 +123,13 @@ func (x *Layout) GetPropertyName() string {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Layout) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -151,5 +146,4 @@ func init() {
 	core.PuregoSafeRegister(&xLayoutGetContent, libs, "adw_layout_get_content")
 	core.PuregoSafeRegister(&xLayoutGetName, libs, "adw_layout_get_name")
 	core.PuregoSafeRegister(&xLayoutSetName, libs, "adw_layout_set_name")
-
 }

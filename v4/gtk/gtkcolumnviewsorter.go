@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -82,7 +81,6 @@ var xColumnViewSorterGetNSortColumns func(uintptr) uint
 // Use the [signal@Gtk.Sorter::changed] signal to get notified
 // when the number of sort columns changes.
 func (x *ColumnViewSorter) GetNSortColumns() uint {
-
 	cret := xColumnViewSorterGetNSortColumns(x.GoPointer())
 	return cret
 }
@@ -138,7 +136,6 @@ var xColumnViewSorterGetPrimarySortOrder func(uintptr) SortType
 // If there is no primary sort column, then this function returns
 // `GTK_SORT_ASCENDING`.
 func (x *ColumnViewSorter) GetPrimarySortOrder() SortType {
-
 	cret := xColumnViewSorterGetPrimarySortOrder(x.GoPointer())
 	return cret
 }
@@ -156,7 +153,7 @@ func (c *ColumnViewSorter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -172,5 +169,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewSorterGetNthSortColumn, libs, "gtk_column_view_sorter_get_nth_sort_column")
 	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortColumn, libs, "gtk_column_view_sorter_get_primary_sort_column")
 	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortOrder, libs, "gtk_column_view_sorter_get_primary_sort_order")
-
 }

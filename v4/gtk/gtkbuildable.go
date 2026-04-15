@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -414,7 +413,6 @@ var xBuildableParseContextGetElement func(uintptr) string
 // give the element_name as passed to those functions. For the parent
 // elements, see gtk_buildable_parse_context_get_element_stack().
 func (x *BuildableParseContext) GetElement() string {
-
 	cret := xBuildableParseContextGetElement(x.GoPointer())
 	return cret
 }
@@ -433,7 +431,6 @@ var xBuildableParseContextGetElementStack func(uintptr) []string
 // would merely return the name of the element that is being
 // processed.
 func (x *BuildableParseContext) GetElementStack() []string {
-
 	cret := xBuildableParseContextGetElementStack(x.GoPointer())
 	return cret
 }
@@ -445,9 +442,7 @@ var xBuildableParseContextGetPosition func(uintptr, *int, *int)
 // semantics for what constitutes the "current" line number other than
 // "the best number we could come up with for error messages."
 func (x *BuildableParseContext) GetPosition(LineNumberVar *int, CharNumberVar *int) {
-
 	xBuildableParseContextGetPosition(x.GoPointer(), LineNumberVar, CharNumberVar)
-
 }
 
 var xBuildableParseContextPop func(uintptr) uintptr
@@ -466,7 +461,6 @@ var xBuildableParseContextPop func(uintptr) uintptr
 // be used by the subparsers themselves to implement a higher-level
 // interface.
 func (x *BuildableParseContext) Pop() uintptr {
-
 	cret := xBuildableParseContextPop(x.GoPointer())
 	return cret
 }
@@ -503,9 +497,7 @@ var xBuildableParseContextPush func(uintptr, *BuildableParser, uintptr)
 // For an example of how to use this, see g_markup_parse_context_push() which
 // has the same kind of API.
 func (x *BuildableParseContext) Push(ParserVar *BuildableParser, UserDataVar uintptr) {
-
 	xBuildableParseContextPush(x.GoPointer(), ParserVar, UserDataVar)
-
 }
 
 // A sub-parser for `GtkBuildable` implementations.
@@ -671,7 +663,6 @@ func (x *BuildableBase) SetGoPointer(ptr uintptr) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *BuildableBase) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -680,7 +671,7 @@ var XGtkBuildableGetBuildableId func(uintptr) string
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -699,5 +690,4 @@ func init() {
 	core.PuregoSafeRegister(&xBuildableGLibType, libs, "gtk_buildable_get_type")
 
 	core.PuregoSafeRegister(&XGtkBuildableGetBuildableId, libs, "gtk_buildable_get_buildable_id")
-
 }

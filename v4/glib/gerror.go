@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -60,54 +59,60 @@ func (x *Error) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewError func(Quark, int, string, ...interface{}) *Error
+var xNewError func(Quark, int, string, ...interface{}) uintptr
 
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewError(DomainVar Quark, CodeVar int, FormatVar string, varArgs ...interface{}) *Error {
-
 	cret := xNewError(DomainVar, CodeVar, FormatVar, varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xNewErrorLiteral func(Quark, int, string) *Error
+var xNewErrorLiteral func(Quark, int, string) uintptr
 
 // Creates a new #GError; unlike g_error_new(), @message is
 // not a printf()-style format string. Use this function if
 // @message contains text you don't have control over,
 // that could include printf() escape sequences.
 func NewErrorLiteral(DomainVar Quark, CodeVar int, MessageVar string) *Error {
-
 	cret := xNewErrorLiteral(DomainVar, CodeVar, MessageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xNewErrorValist func(Quark, int, string, []interface{}) *Error
+var xNewErrorValist func(Quark, int, string, []interface{}) uintptr
 
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewErrorValist(DomainVar Quark, CodeVar int, FormatVar string, ArgsVar []interface{}) *Error {
-
 	cret := xNewErrorValist(DomainVar, CodeVar, FormatVar, ArgsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xErrorCopy func(uintptr) *Error
+var xErrorCopy func(uintptr) uintptr
 
 // Makes a copy of @error.
 func (x *Error) Copy() *Error {
-
 	cret := xErrorCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
 var xErrorFree func(uintptr)
 
 // Frees a #GError and associated resources.
 func (x *Error) Free() {
-
 	xErrorFree(x.GoPointer())
-
 }
 
 var xErrorMatches func(uintptr, Quark, int) bool
@@ -123,25 +128,22 @@ var xErrorMatches func(uintptr, Quark, int) bool
 // extended in the future to provide a more specific error code for
 // a certain case, your code will still work.
 func (x *Error) Matches(DomainVar Quark, CodeVar int) bool {
-
 	cret := xErrorMatches(x.GoPointer(), DomainVar, CodeVar)
 	return cret
 }
 
-var xClearError func()
+var xClearError func(**Error)
 
 // If @err or `*err` is %NULL, does nothing. Otherwise,
 // calls g_error_free() on `*err` and sets `*err` to %NULL.
 func ClearError() error {
 	var cerr *Error
 
-	xClearError()
-
+	xClearError(&cerr)
 	if cerr == nil {
 		return nil
 	}
 	return cerr
-
 }
 
 var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
@@ -150,54 +152,7 @@ var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
 // @error_type_name will be duplicated. Otherwise does the same as
 // g_error_domain_register_static().
 func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
-
-	var ErrorTypeInitVarRef uintptr
-	if ErrorTypeInitVar != nil {
-		ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
-			ErrorTypeInitVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error) {
-				cbFn := *ErrorTypeInitVar
-				cbFn(arg0)
-			}
-			ErrorTypeInitVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeInitVarPtr, ErrorTypeInitVarRef, ErrorTypeInitVar)
-		}
-	}
-
-	var ErrorTypeCopyVarRef uintptr
-	if ErrorTypeCopyVar != nil {
-		ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
-			ErrorTypeCopyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error, arg1 *Error) {
-				cbFn := *ErrorTypeCopyVar
-				cbFn(arg0, arg1)
-			}
-			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef, ErrorTypeCopyVar)
-		}
-	}
-
-	var ErrorTypeClearVarRef uintptr
-	if ErrorTypeClearVar != nil {
-		ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
-			ErrorTypeClearVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error) {
-				cbFn := *ErrorTypeClearVar
-				cbFn(arg0)
-			}
-			ErrorTypeClearVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeClearVarPtr, ErrorTypeClearVarRef, ErrorTypeClearVar)
-		}
-	}
-
-	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
-
+	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
 	return cret
 }
 
@@ -221,54 +176,7 @@ var xErrorDomainRegisterStatic func(string, uint, uintptr, uintptr, uintptr) Qua
 // Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
 // already takes care of passing valid information to this function.
 func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
-
-	var ErrorTypeInitVarRef uintptr
-	if ErrorTypeInitVar != nil {
-		ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
-			ErrorTypeInitVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error) {
-				cbFn := *ErrorTypeInitVar
-				cbFn(arg0)
-			}
-			ErrorTypeInitVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeInitVarPtr, ErrorTypeInitVarRef, ErrorTypeInitVar)
-		}
-	}
-
-	var ErrorTypeCopyVarRef uintptr
-	if ErrorTypeCopyVar != nil {
-		ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
-			ErrorTypeCopyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error, arg1 *Error) {
-				cbFn := *ErrorTypeCopyVar
-				cbFn(arg0, arg1)
-			}
-			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef, ErrorTypeCopyVar)
-		}
-	}
-
-	var ErrorTypeClearVarRef uintptr
-	if ErrorTypeClearVar != nil {
-		ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
-		if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
-			ErrorTypeClearVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Error) {
-				cbFn := *ErrorTypeClearVar
-				cbFn(arg0)
-			}
-			ErrorTypeClearVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ErrorTypeClearVarPtr, ErrorTypeClearVarRef, ErrorTypeClearVar)
-		}
-	}
-
-	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
-
+	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
 	return cret
 }
 
@@ -281,9 +189,7 @@ var xPrefixError func(**Error, string, ...interface{})
 // If `*err` is %NULL (ie: an error variable is present but there is no
 // error condition) then also do nothing.
 func PrefixError(ErrVar **Error, FormatVar string, varArgs ...interface{}) {
-
 	xPrefixError(ErrVar, FormatVar, varArgs...)
-
 }
 
 var xPrefixErrorLiteral func(**Error, string)
@@ -291,9 +197,7 @@ var xPrefixErrorLiteral func(**Error, string)
 // Prefixes @prefix to an existing error message. If @err or `*err` is
 // %NULL (i.e.: no error variable) then do nothing.
 func PrefixErrorLiteral(ErrVar **Error, PrefixVar string) {
-
 	xPrefixErrorLiteral(ErrVar, PrefixVar)
-
 }
 
 var xPropagateError func(**Error, *Error)
@@ -307,9 +211,7 @@ var xPropagateError func(**Error, *Error)
 // to keep using the same GError*, you need to set it to %NULL
 // after calling this function on it.
 func PropagateError(DestVar **Error, SrcVar *Error) {
-
 	xPropagateError(DestVar, SrcVar)
-
 }
 
 var xPropagatePrefixedError func(**Error, *Error, string, ...interface{})
@@ -318,9 +220,7 @@ var xPropagatePrefixedError func(**Error, *Error, string, ...interface{})
 // `*dest` must be %NULL. After the move, add a prefix as with
 // g_prefix_error().
 func PropagatePrefixedError(DestVar **Error, SrcVar *Error, FormatVar string, varArgs ...interface{}) {
-
 	xPropagatePrefixedError(DestVar, SrcVar, FormatVar, varArgs...)
-
 }
 
 var xSetError func(**Error, Quark, int, string, ...interface{})
@@ -328,9 +228,7 @@ var xSetError func(**Error, Quark, int, string, ...interface{})
 // Does nothing if @err is %NULL; if @err is non-%NULL, then `*err`
 // must be %NULL. A new #GError is created and assigned to `*err`.
 func SetError(ErrVar **Error, DomainVar Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
-
 	xSetError(ErrVar, DomainVar, CodeVar, FormatVar, varArgs...)
-
 }
 
 var xSetErrorLiteral func(**Error, Quark, int, string)
@@ -341,14 +239,12 @@ var xSetErrorLiteral func(**Error, Quark, int, string)
 // Use this function if @message contains text you don't have control over,
 // that could include printf() escape sequences.
 func SetErrorLiteral(ErrVar **Error, DomainVar Quark, CodeVar int, MessageVar string) {
-
 	xSetErrorLiteral(ErrVar, DomainVar, CodeVar, MessageVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -377,5 +273,4 @@ func init() {
 	core.PuregoSafeRegister(&xErrorCopy, libs, "g_error_copy")
 	core.PuregoSafeRegister(&xErrorFree, libs, "g_error_free")
 	core.PuregoSafeRegister(&xErrorMatches, libs, "g_error_matches")
-
 }

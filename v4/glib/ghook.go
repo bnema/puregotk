@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -65,7 +64,6 @@ var xHookCompareIds func(uintptr, *Hook) int
 // Compares the ids of two #GHook elements, returning a negative value
 // if the second id is greater than the first.
 func (x *Hook) CompareIds(SiblingVar *Hook) int {
-
 	cret := xHookCompareIds(x.GoPointer(), SiblingVar)
 	return cret
 }
@@ -97,9 +95,7 @@ var xHookListClear func(uintptr)
 
 // Removes all the #GHook elements from a #GHookList.
 func (x *HookList) Clear() {
-
 	xHookListClear(x.GoPointer())
-
 }
 
 var xHookListInit func(uintptr, uint)
@@ -107,18 +103,14 @@ var xHookListInit func(uintptr, uint)
 // Initializes a #GHookList.
 // This must be called before the #GHookList is used.
 func (x *HookList) Init(HookSizeVar uint) {
-
 	xHookListInit(x.GoPointer(), HookSizeVar)
-
 }
 
 var xHookListInvoke func(uintptr, bool)
 
 // Calls all of the #GHook functions in a #GHookList.
 func (x *HookList) Invoke(MayRecurseVar bool) {
-
 	xHookListInvoke(x.GoPointer(), MayRecurseVar)
-
 }
 
 var xHookListInvokeCheck func(uintptr, bool)
@@ -126,33 +118,14 @@ var xHookListInvokeCheck func(uintptr, bool)
 // Calls all of the #GHook functions in a #GHookList.
 // Any function which returns %FALSE is removed from the #GHookList.
 func (x *HookList) InvokeCheck(MayRecurseVar bool) {
-
 	xHookListInvokeCheck(x.GoPointer(), MayRecurseVar)
-
 }
 
 var xHookListMarshal func(uintptr, bool, uintptr, uintptr)
 
 // Calls a function on each valid #GHook.
 func (x *HookList) Marshal(MayRecurseVar bool, MarshallerVar *HookMarshaller, MarshalDataVar uintptr) {
-
-	var MarshallerVarRef uintptr
-	if MarshallerVar != nil {
-		MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
-		if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
-			MarshallerVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Hook, arg1 uintptr) {
-				cbFn := *MarshallerVar
-				cbFn(arg0, arg1)
-			}
-			MarshallerVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(MarshallerVarPtr, MarshallerVarRef, MarshallerVar)
-		}
-	}
-
-	xHookListMarshal(x.GoPointer(), MayRecurseVar, MarshallerVarRef, MarshalDataVar)
-
+	xHookListMarshal(x.GoPointer(), MayRecurseVar, NewCallback(MarshallerVar), MarshalDataVar)
 }
 
 var xHookListMarshalCheck func(uintptr, bool, uintptr, uintptr)
@@ -160,24 +133,7 @@ var xHookListMarshalCheck func(uintptr, bool, uintptr, uintptr)
 // Calls a function on each valid #GHook and destroys it if the
 // function returns %FALSE.
 func (x *HookList) MarshalCheck(MayRecurseVar bool, MarshallerVar *HookCheckMarshaller, MarshalDataVar uintptr) {
-
-	var MarshallerVarRef uintptr
-	if MarshallerVar != nil {
-		MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
-		if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
-			MarshallerVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Hook, arg1 uintptr) bool {
-				cbFn := *MarshallerVar
-				return cbFn(arg0, arg1)
-			}
-			MarshallerVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(MarshallerVarPtr, MarshallerVarRef, MarshallerVar)
-		}
-	}
-
-	xHookListMarshalCheck(x.GoPointer(), MayRecurseVar, MarshallerVarRef, MarshalDataVar)
-
+	xHookListMarshalCheck(x.GoPointer(), MayRecurseVar, NewCallback(MarshallerVar), MarshalDataVar)
 }
 
 const (
@@ -197,16 +153,14 @@ const (
 	GHookFlagActiveValue HookFlagMask = 1
 	// set if the hook is currently being run
 	GHookFlagInCallValue HookFlagMask = 2
-	// A mask covering all bits reserved for
-	//   hook flags; see %G_HOOK_FLAG_USER_SHIFT
-	GHookFlagMaskValue HookFlagMask = 15
+
+	GHookFlagReserved1Value HookFlagMask = 4
 )
 
 var xHookDestroy func(*HookList, uint) bool
 
 // Destroys a #GHook, given its ID.
 func HookDestroy(HookListVar *HookList, HookIdVar uint) bool {
-
 	cret := xHookDestroy(HookListVar, HookIdVar)
 
 	return cret
@@ -217,9 +171,7 @@ var xHookDestroyLink func(*HookList, *Hook)
 // Removes one #GHook from a #GHookList, marking it
 // inactive and calling g_hook_unref() on it.
 func HookDestroyLink(HookListVar *HookList, HookVar *Hook) {
-
 	xHookDestroyLink(HookListVar, HookVar)
-
 }
 
 var xHookFree func(*HookList, *Hook)
@@ -227,51 +179,28 @@ var xHookFree func(*HookList, *Hook)
 // Calls the #GHookList @finalize_hook function if it exists,
 // and frees the memory allocated for the #GHook.
 func HookFree(HookListVar *HookList, HookVar *Hook) {
-
 	xHookFree(HookListVar, HookVar)
-
 }
 
 var xHookInsertBefore func(*HookList, *Hook, *Hook)
 
 // Inserts a #GHook into a #GHookList, before a given #GHook.
 func HookInsertBefore(HookListVar *HookList, SiblingVar *Hook, HookVar *Hook) {
-
 	xHookInsertBefore(HookListVar, SiblingVar, HookVar)
-
 }
 
 var xHookInsertSorted func(*HookList, *Hook, uintptr)
 
 // Inserts a #GHook into a #GHookList, sorted by the given function.
 func HookInsertSorted(HookListVar *HookList, HookVar *Hook, FuncVar *HookCompareFunc) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Hook, arg1 *Hook) int {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xHookInsertSorted(HookListVar, HookVar, FuncVarRef)
-
+	xHookInsertSorted(HookListVar, HookVar, NewCallback(FuncVar))
 }
 
 var xHookPrepend func(*HookList, *Hook)
 
 // Prepends a #GHook on the start of a #GHookList.
 func HookPrepend(HookListVar *HookList, HookVar *Hook) {
-
 	xHookPrepend(HookListVar, HookVar)
-
 }
 
 var xHookUnref func(*HookList, *Hook)
@@ -280,14 +209,12 @@ var xHookUnref func(*HookList, *Hook)
 // If the reference count falls to 0, the #GHook is removed
 // from the #GHookList and g_hook_free() is called to free it.
 func HookUnref(HookListVar *HookList, HookVar *Hook) {
-
 	xHookUnref(HookListVar, HookVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -313,5 +240,4 @@ func init() {
 	core.PuregoSafeRegister(&xHookListInvokeCheck, libs, "g_hook_list_invoke_check")
 	core.PuregoSafeRegister(&xHookListMarshal, libs, "g_hook_list_marshal")
 	core.PuregoSafeRegister(&xHookListMarshalCheck, libs, "g_hook_list_marshal_check")
-
 }

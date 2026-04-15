@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -204,7 +203,6 @@ var xFlapGetFlapPosition func(uintptr) gtk.PackType
 
 // Gets the flap position for @self.
 func (x *Flap) GetFlapPosition() gtk.PackType {
-
 	cret := xFlapGetFlapPosition(x.GoPointer())
 	return cret
 }
@@ -213,7 +211,6 @@ var xFlapGetFoldDuration func(uintptr) uint
 
 // Gets the fold transition animation duration for @self, in milliseconds.
 func (x *Flap) GetFoldDuration() uint {
-
 	cret := xFlapGetFoldDuration(x.GoPointer())
 	return cret
 }
@@ -222,7 +219,6 @@ var xFlapGetFoldPolicy func(uintptr) FlapFoldPolicy
 
 // Gets the fold policy for @self.
 func (x *Flap) GetFoldPolicy() FlapFoldPolicy {
-
 	cret := xFlapGetFoldPolicy(x.GoPointer())
 	return cret
 }
@@ -231,7 +227,6 @@ var xFlapGetFoldThresholdPolicy func(uintptr) FoldThresholdPolicy
 
 // Gets the fold threshold policy for @self.
 func (x *Flap) GetFoldThresholdPolicy() FoldThresholdPolicy {
-
 	cret := xFlapGetFoldThresholdPolicy(x.GoPointer())
 	return cret
 }
@@ -242,7 +237,6 @@ var xFlapGetFolded func(uintptr) bool
 //
 // See [property@Flap:fold-policy].
 func (x *Flap) GetFolded() bool {
-
 	cret := xFlapGetFolded(x.GoPointer())
 	return cret
 }
@@ -251,7 +245,6 @@ var xFlapGetLocked func(uintptr) bool
 
 // Gets whether @self is locked.
 func (x *Flap) GetLocked() bool {
-
 	cret := xFlapGetLocked(x.GoPointer())
 	return cret
 }
@@ -260,7 +253,6 @@ var xFlapGetModal func(uintptr) bool
 
 // Gets whether @self is modal.
 func (x *Flap) GetModal() bool {
-
 	cret := xFlapGetModal(x.GoPointer())
 	return cret
 }
@@ -269,18 +261,19 @@ var xFlapGetRevealFlap func(uintptr) bool
 
 // Gets whether the flap widget is revealed for @self.
 func (x *Flap) GetRevealFlap() bool {
-
 	cret := xFlapGetRevealFlap(x.GoPointer())
 	return cret
 }
 
-var xFlapGetRevealParams func(uintptr) *SpringParams
+var xFlapGetRevealParams func(uintptr) uintptr
 
 // Gets the reveal animation spring parameters for @self.
 func (x *Flap) GetRevealParams() *SpringParams {
-
 	cret := xFlapGetRevealParams(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xFlapGetRevealProgress func(uintptr) float64
@@ -291,7 +284,6 @@ var xFlapGetRevealProgress func(uintptr) float64
 //
 // See [property@Flap:reveal-flap].
 func (x *Flap) GetRevealProgress() float64 {
-
 	cret := xFlapGetRevealProgress(x.GoPointer())
 	return cret
 }
@@ -317,7 +309,6 @@ var xFlapGetSwipeToClose func(uintptr) bool
 
 // Gets whether @self can be closed with a swipe gesture.
 func (x *Flap) GetSwipeToClose() bool {
-
 	cret := xFlapGetSwipeToClose(x.GoPointer())
 	return cret
 }
@@ -326,7 +317,6 @@ var xFlapGetSwipeToOpen func(uintptr) bool
 
 // Gets whether @self can be opened with a swipe gesture.
 func (x *Flap) GetSwipeToOpen() bool {
-
 	cret := xFlapGetSwipeToOpen(x.GoPointer())
 	return cret
 }
@@ -335,7 +325,6 @@ var xFlapGetTransitionType func(uintptr) FlapTransitionType
 
 // Gets the type of animation used for reveal and fold transitions in @self.
 func (x *Flap) GetTransitionType() FlapTransitionType {
-
 	cret := xFlapGetTransitionType(x.GoPointer())
 	return cret
 }
@@ -346,14 +335,7 @@ var xFlapSetContent func(uintptr, uintptr)
 //
 // It's always displayed when unfolded, and partially visible when folded.
 func (x *Flap) SetContent(ContentVar *gtk.Widget) {
-
-	var ContentVarPtr uintptr
-	if ContentVar != nil {
-		ContentVarPtr = ContentVar.GoPointer()
-	}
-
-	xFlapSetContent(x.GoPointer(), ContentVarPtr)
-
+	xFlapSetContent(x.GoPointer(), ContentVar.GoPointer())
 }
 
 var xFlapSetFlap func(uintptr, uintptr)
@@ -362,60 +344,45 @@ var xFlapSetFlap func(uintptr, uintptr)
 //
 // It's only visible when [property@Flap:reveal-progress] is greater than 0.
 func (x *Flap) SetFlap(FlapVar *gtk.Widget) {
-
-	var FlapVarPtr uintptr
-	if FlapVar != nil {
-		FlapVarPtr = FlapVar.GoPointer()
-	}
-
-	xFlapSetFlap(x.GoPointer(), FlapVarPtr)
-
+	xFlapSetFlap(x.GoPointer(), FlapVar.GoPointer())
 }
 
 var xFlapSetFlapPosition func(uintptr, gtk.PackType)
 
 // Sets the flap position for @self.
 //
-// If it's set to `GTK_PACK_START`, the flap is displayed before the content,
-// if `GTK_PACK_END`, it's displayed after the content.
+// If it's set to [enum@Gtk.PackType.start], the flap is displayed before the
+// content, if [enum@Gtk.PackType.end], it's displayed after the content.
 func (x *Flap) SetFlapPosition(PositionVar gtk.PackType) {
-
 	xFlapSetFlapPosition(x.GoPointer(), PositionVar)
-
 }
 
 var xFlapSetFoldDuration func(uintptr, uint)
 
 // Sets the fold transition animation duration for @self, in milliseconds.
 func (x *Flap) SetFoldDuration(DurationVar uint) {
-
 	xFlapSetFoldDuration(x.GoPointer(), DurationVar)
-
 }
 
 var xFlapSetFoldPolicy func(uintptr, FlapFoldPolicy)
 
 // Sets the fold policy for @self.
 func (x *Flap) SetFoldPolicy(PolicyVar FlapFoldPolicy) {
-
 	xFlapSetFoldPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 var xFlapSetFoldThresholdPolicy func(uintptr, FoldThresholdPolicy)
 
 // Sets the fold threshold policy for @self.
 //
-// If set to `ADW_FOLD_THRESHOLD_POLICY_MINIMUM`, flap will only fold when the
-// children cannot fit anymore. With `ADW_FOLD_THRESHOLD_POLICY_NATURAL`, it
-// will fold as soon as children don't get their natural size.
+// If set to [enum@Adw.FoldThresholdPolicy.minimum], flap will only fold when
+// the children cannot fit anymore. With [enum@Adw.FoldThresholdPolicy.natural],
+// it will fold as soon as children don't get their natural size.
 //
 // This can be useful if you have a long ellipsizing label and want to let it
 // ellipsize instead of immediately folding.
 func (x *Flap) SetFoldThresholdPolicy(PolicyVar FoldThresholdPolicy) {
-
 	xFlapSetFoldThresholdPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 var xFlapSetLocked func(uintptr, bool)
@@ -426,9 +393,7 @@ var xFlapSetLocked func(uintptr, bool)
 // unfolding it when the flap is not revealed opens it. If `TRUE`,
 // [property@Flap:reveal-flap] value never changes on its own.
 func (x *Flap) SetLocked(LockedVar bool) {
-
 	xFlapSetLocked(x.GoPointer(), LockedVar)
-
 }
 
 var xFlapSetModal func(uintptr, bool)
@@ -439,18 +404,14 @@ var xFlapSetModal func(uintptr, bool)
 // pressing the &lt;kbd&gt;Esc&lt;/kbd&gt; key, will close the flap. If `FALSE`, clicks are
 // passed through to the content widget.
 func (x *Flap) SetModal(ModalVar bool) {
-
 	xFlapSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xFlapSetRevealFlap func(uintptr, bool)
 
 // Sets whether the flap widget is revealed for @self.
 func (x *Flap) SetRevealFlap(RevealFlapVar bool) {
-
 	xFlapSetRevealFlap(x.GoPointer(), RevealFlapVar)
-
 }
 
 var xFlapSetRevealParams func(uintptr, *SpringParams)
@@ -463,9 +424,7 @@ var xFlapSetRevealParams func(uintptr, *SpringParams)
 // adw_spring_params_new (1, 0.5, 500)
 // ```
 func (x *Flap) SetRevealParams(ParamsVar *SpringParams) {
-
 	xFlapSetRevealParams(x.GoPointer(), ParamsVar)
-
 }
 
 var xFlapSetSeparator func(uintptr, uintptr)
@@ -476,14 +435,7 @@ var xFlapSetSeparator func(uintptr, uintptr)
 // When exactly it's visible depends on the [property@Flap:transition-type]
 // value.
 func (x *Flap) SetSeparator(SeparatorVar *gtk.Widget) {
-
-	var SeparatorVarPtr uintptr
-	if SeparatorVar != nil {
-		SeparatorVarPtr = SeparatorVar.GoPointer()
-	}
-
-	xFlapSetSeparator(x.GoPointer(), SeparatorVarPtr)
-
+	xFlapSetSeparator(x.GoPointer(), SeparatorVar.GoPointer())
 }
 
 var xFlapSetSwipeToClose func(uintptr, bool)
@@ -493,9 +445,7 @@ var xFlapSetSwipeToClose func(uintptr, bool)
 // The area that can be swiped depends on the [property@Flap:transition-type]
 // value.
 func (x *Flap) SetSwipeToClose(SwipeToCloseVar bool) {
-
 	xFlapSetSwipeToClose(x.GoPointer(), SwipeToCloseVar)
-
 }
 
 var xFlapSetSwipeToOpen func(uintptr, bool)
@@ -505,9 +455,7 @@ var xFlapSetSwipeToOpen func(uintptr, bool)
 // The area that can be swiped depends on the [property@Flap:transition-type]
 // value.
 func (x *Flap) SetSwipeToOpen(SwipeToOpenVar bool) {
-
 	xFlapSetSwipeToOpen(x.GoPointer(), SwipeToOpenVar)
-
 }
 
 var xFlapSetTransitionType func(uintptr, FlapTransitionType)
@@ -515,13 +463,11 @@ var xFlapSetTransitionType func(uintptr, FlapTransitionType)
 // Sets the type of animation used for reveal and fold transitions in @self.
 //
 // [property@Flap:flap] is transparent by default, which means the content will
-// be seen through it with `ADW_FLAP_TRANSITION_TYPE_OVER` transitions; add the
-// [`.background`](style-classes.html#background) style class to it if this is
-// unwanted.
+// be seen through it with [enum@Adw.FlapTransitionType.over] transitions; add
+// the [`.background`](style-classes.html#background) style class to it if this
+// is unwanted.
 func (x *Flap) SetTransitionType(TransitionTypeVar FlapTransitionType) {
-
 	xFlapSetTransitionType(x.GoPointer(), TransitionTypeVar)
-
 }
 
 func (c *Flap) GoPointer() uintptr {
@@ -718,7 +664,6 @@ func (x *Flap) GetPropertySwipeToOpen() bool {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *Flap) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -727,14 +672,12 @@ func (x *Flap) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *Flap) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *Flap) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -744,7 +687,6 @@ func (x *Flap) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *Flap) GetSnapPoints(NSnapPointsVar *int) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -759,9 +701,7 @@ func (x *Flap) GetSnapPoints(NSnapPointsVar *int) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *Flap) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -774,9 +714,19 @@ func (x *Flap) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVa
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Flap) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Flap) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -797,7 +747,6 @@ func (x *Flap) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Flap) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -822,7 +771,6 @@ func (x *Flap) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Flap) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -861,30 +809,23 @@ func (x *Flap) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Flap) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Flap) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Flap) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Flap) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -897,19 +838,7 @@ func (x *Flap) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Flap) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -917,14 +846,7 @@ func (x *Flap) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Flap) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -933,9 +855,7 @@ func (x *Flap) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Flap) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -957,9 +877,7 @@ func (x *Flap) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Flap) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -969,9 +887,7 @@ func (x *Flap) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Flap) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -993,9 +909,7 @@ func (x *Flap) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Acces
 //
 // ```
 func (x *Flap) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1005,9 +919,7 @@ func (x *Flap) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Flap) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1030,9 +942,7 @@ func (x *Flap) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Accessi
 //
 // ```
 func (x *Flap) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1042,9 +952,7 @@ func (x *Flap) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *Flap) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1052,28 +960,24 @@ func (x *Flap) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Flap) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Flap) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Flap) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1121,5 +1025,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlapSetSwipeToClose, libs, "adw_flap_set_swipe_to_close")
 	core.PuregoSafeRegister(&xFlapSetSwipeToOpen, libs, "adw_flap_set_swipe_to_open")
 	core.PuregoSafeRegister(&xFlapSetTransitionType, libs, "adw_flap_set_transition_type")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -106,9 +105,7 @@ func (x *SectionModelBase) SetGoPointer(ptr uintptr) {
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SectionModelBase) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -127,17 +124,17 @@ func (x *SectionModelBase) GetSection(PositionVar uint, OutStartVar *uint, OutEn
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SectionModelBase) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
-var XGtkSectionModelGetSection func(uintptr, uint, *uint, *uint)
-var XGtkSectionModelSectionsChanged func(uintptr, uint, uint)
+var (
+	XGtkSectionModelGetSection      func(uintptr, uint, *uint, *uint)
+	XGtkSectionModelSectionsChanged func(uintptr, uint, uint)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -151,5 +148,4 @@ func init() {
 
 	core.PuregoSafeRegister(&XGtkSectionModelGetSection, libs, "gtk_section_model_get_section")
 	core.PuregoSafeRegister(&XGtkSectionModelSectionsChanged, libs, "gtk_section_model_sections_changed")
-
 }

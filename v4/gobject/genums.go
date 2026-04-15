@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -24,7 +23,7 @@ type EnumClass struct {
 
 	NValues uint
 
-	Values *EnumValue
+	Values []EnumValue
 }
 
 func (x *EnumClass) GoPointer() uintptr {
@@ -58,7 +57,7 @@ type FlagsClass struct {
 
 	NValues uint
 
-	Values *FlagsValue
+	Values []FlagsValue
 }
 
 func (x *FlagsClass) GoPointer() uintptr {
@@ -107,36 +106,40 @@ var xEnumCompleteTypeInfo func(types.GType, *TypeInfo, []EnumValue)
 //
 // ]|
 func EnumCompleteTypeInfo(GEnumTypeVar types.GType, InfoVar *TypeInfo, ConstValuesVar []EnumValue) {
-
 	xEnumCompleteTypeInfo(GEnumTypeVar, InfoVar, ConstValuesVar)
-
 }
 
-var xEnumGetValue func(*EnumClass, int) *EnumValue
+var xEnumGetValue func(*EnumClass, int) uintptr
 
 // Returns the #GEnumValue for a value.
 func EnumGetValue(EnumClassVar *EnumClass, ValueVar int) *EnumValue {
-
 	cret := xEnumGetValue(EnumClassVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
-var xEnumGetValueByName func(*EnumClass, string) *EnumValue
+var xEnumGetValueByName func(*EnumClass, string) uintptr
 
 // Looks up a #GEnumValue by name.
 func EnumGetValueByName(EnumClassVar *EnumClass, NameVar string) *EnumValue {
-
 	cret := xEnumGetValueByName(EnumClassVar, NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
-var xEnumGetValueByNick func(*EnumClass, string) *EnumValue
+var xEnumGetValueByNick func(*EnumClass, string) uintptr
 
 // Looks up a #GEnumValue by nickname.
 func EnumGetValueByNick(EnumClassVar *EnumClass, NickVar string) *EnumValue {
-
 	cret := xEnumGetValueByNick(EnumClassVar, NickVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
 var xEnumRegisterStatic func(string, []EnumValue) types.GType
@@ -147,7 +150,6 @@ var xEnumRegisterStatic func(string, []EnumValue) types.GType
 // generate a my_enum_get_type() function from a usual C enumeration
 // definition  than to write one yourself using g_enum_register_static().
 func EnumRegisterStatic(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
-
 	cret := xEnumRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -159,7 +161,6 @@ var xEnumToString func(types.GType, int) string
 // This is intended to be used for debugging purposes. The format of the output
 // may change in the future.
 func EnumToString(GEnumTypeVar types.GType, ValueVar int) string {
-
 	cret := xEnumToString(GEnumTypeVar, ValueVar)
 	return cret
 }
@@ -170,36 +171,40 @@ var xFlagsCompleteTypeInfo func(types.GType, *TypeInfo, []FlagsValue)
 // function of a #GTypePlugin implementation, see the example for
 // g_enum_complete_type_info() above.
 func FlagsCompleteTypeInfo(GFlagsTypeVar types.GType, InfoVar *TypeInfo, ConstValuesVar []FlagsValue) {
-
 	xFlagsCompleteTypeInfo(GFlagsTypeVar, InfoVar, ConstValuesVar)
-
 }
 
-var xFlagsGetFirstValue func(*FlagsClass, uint) *FlagsValue
+var xFlagsGetFirstValue func(*FlagsClass, uint) uintptr
 
 // Returns the first #GFlagsValue which is set in @value.
 func FlagsGetFirstValue(FlagsClassVar *FlagsClass, ValueVar uint) *FlagsValue {
-
 	cret := xFlagsGetFirstValue(FlagsClassVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
-var xFlagsGetValueByName func(*FlagsClass, string) *FlagsValue
+var xFlagsGetValueByName func(*FlagsClass, string) uintptr
 
 // Looks up a #GFlagsValue by name.
 func FlagsGetValueByName(FlagsClassVar *FlagsClass, NameVar string) *FlagsValue {
-
 	cret := xFlagsGetValueByName(FlagsClassVar, NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
-var xFlagsGetValueByNick func(*FlagsClass, string) *FlagsValue
+var xFlagsGetValueByNick func(*FlagsClass, string) uintptr
 
 // Looks up a #GFlagsValue by nickname.
 func FlagsGetValueByNick(FlagsClassVar *FlagsClass, NickVar string) *FlagsValue {
-
 	cret := xFlagsGetValueByNick(FlagsClassVar, NickVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
 var xFlagsRegisterStatic func(string, []FlagsValue) types.GType
@@ -210,7 +215,6 @@ var xFlagsRegisterStatic func(string, []FlagsValue) types.GType
 // generate a my_flags_get_type() function from a usual C enumeration
 // definition than to write one yourself using g_flags_register_static().
 func FlagsRegisterStatic(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
-
 	cret := xFlagsRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -223,14 +227,13 @@ var xFlagsToString func(types.GType, uint) string
 // This is intended to be used for debugging purposes. The format of the output
 // may change in the future.
 func FlagsToString(FlagsTypeVar types.GType, ValueVar uint) string {
-
 	cret := xFlagsToString(FlagsTypeVar, ValueVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -252,5 +255,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlagsGetValueByNick, libs, "g_flags_get_value_by_nick")
 	core.PuregoSafeRegister(&xFlagsRegisterStatic, libs, "g_flags_register_static")
 	core.PuregoSafeRegister(&xFlagsToString, libs, "g_flags_to_string")
-
 }

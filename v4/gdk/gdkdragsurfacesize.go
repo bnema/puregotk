@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -30,14 +29,12 @@ var xDragSurfaceSizeSetSize func(uintptr, int, int)
 
 // Sets the size the drag surface prefers to be resized to.
 func (x *DragSurfaceSize) SetSize(WidthVar int, HeightVar int) {
-
 	xDragSurfaceSizeSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -50,5 +47,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSurfaceSizeGLibType, libs, "gdk_drag_surface_size_get_type")
 
 	core.PuregoSafeRegister(&xDragSurfaceSizeSetSize, libs, "gdk_drag_surface_size_set_size")
-
 }

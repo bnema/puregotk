@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -131,8 +130,7 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(PathStringVarp))
-
+		cbFn(fa, PathStringVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -155,8 +153,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(PathStringVarp), AccelKeyVarp, AccelModsVarp, HardwareKeycodeVarp)
-
+		cbFn(fa, PathStringVarp, AccelKeyVarp, AccelModsVarp, HardwareKeycodeVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -167,7 +164,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -182,5 +179,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererAccelGLibType, libs, "gtk_cell_renderer_accel_get_type")
 
 	core.PuregoSafeRegister(&xNewCellRendererAccel, libs, "gtk_cell_renderer_accel_new")
-
 }

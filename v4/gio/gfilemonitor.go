@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -239,7 +238,6 @@ var xFileMonitorCancel func(uintptr) bool
 
 // Cancels a file monitor.
 func (x *FileMonitor) Cancel() bool {
-
 	cret := xFileMonitorCancel(x.GoPointer())
 	return cret
 }
@@ -254,21 +252,13 @@ var xFileMonitorEmitEvent func(uintptr, uintptr, uintptr, FileMonitorEvent)
 // thread-default main context (see [method@GLib.MainContext.push_thread_default])
 // of the thread that the monitor was created in.
 func (x *FileMonitor) EmitEvent(ChildVar File, OtherFileVar File, EventTypeVar FileMonitorEvent) {
-
-	var OtherFileVarPtr uintptr
-	if OtherFileVar != nil {
-		OtherFileVarPtr = OtherFileVar.GoPointer()
-	}
-
-	xFileMonitorEmitEvent(x.GoPointer(), ChildVar.GoPointer(), OtherFileVarPtr, EventTypeVar)
-
+	xFileMonitorEmitEvent(x.GoPointer(), ChildVar.GoPointer(), OtherFileVar.GoPointer(), EventTypeVar)
 }
 
 var xFileMonitorIsCancelled func(uintptr) bool
 
 // Returns whether the monitor is canceled.
 func (x *FileMonitor) IsCancelled() bool {
-
 	cret := xFileMonitorIsCancelled(x.GoPointer())
 	return cret
 }
@@ -278,9 +268,7 @@ var xFileMonitorSetRateLimit func(uintptr, int)
 // Sets the rate limit to which the @monitor will report
 // consecutive change events to the same file.
 func (x *FileMonitor) SetRateLimit(LimitMsecsVar int) {
-
 	xFileMonitorSetRateLimit(x.GoPointer(), LimitMsecsVar)
-
 }
 
 func (c *FileMonitor) GoPointer() uintptr {
@@ -361,7 +349,6 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 		cbFn := *cb
 
 		cbFn(fa, FileVarp, OtherFileVarp, EventTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -372,7 +359,7 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -388,5 +375,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileMonitorEmitEvent, libs, "g_file_monitor_emit_event")
 	core.PuregoSafeRegister(&xFileMonitorIsCancelled, libs, "g_file_monitor_is_cancelled")
 	core.PuregoSafeRegister(&xFileMonitorSetRateLimit, libs, "g_file_monitor_set_rate_limit")
-
 }

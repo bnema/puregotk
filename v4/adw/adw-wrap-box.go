@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -62,7 +61,7 @@ func (x *WrapBoxClass) GoPointer() uintptr {
 //
 // By default, `AdwWrapBox` wraps as soon as the previous line cannot fit any
 // more children without shrinking them past their natural size. Set
-// [property@WrapBox:wrap-policy] to [enum@Adw.WrapPolicy.MINIMUM] to only wrap
+// [property@WrapBox:wrap-policy] to [enum@Adw.WrapPolicy.minimum] to only wrap
 // once all the children in the previous line have been shrunk to their minimum
 // size.
 //
@@ -82,7 +81,7 @@ func (x *WrapBoxClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwWrapBox` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwWrapBox` uses the [enum@Gtk.AccessibleRole.group] role.
 type WrapBox struct {
 	gtk.Widget
 }
@@ -120,16 +119,13 @@ var xWrapBoxAppend func(uintptr, uintptr)
 
 // Adds @child as the last child to @self.
 func (x *WrapBox) Append(ChildVar *gtk.Widget) {
-
 	xWrapBoxAppend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xWrapBoxGetAlign func(uintptr) float32
 
 // Gets the alignment of the children within each line.
 func (x *WrapBox) GetAlign() float32 {
-
 	cret := xWrapBoxGetAlign(x.GoPointer())
 	return cret
 }
@@ -138,7 +134,6 @@ var xWrapBoxGetChildSpacing func(uintptr) int
 
 // Gets spacing between widgets on the same line.
 func (x *WrapBox) GetChildSpacing() int {
-
 	cret := xWrapBoxGetChildSpacing(x.GoPointer())
 	return cret
 }
@@ -147,7 +142,6 @@ var xWrapBoxGetChildSpacingUnit func(uintptr) LengthUnit
 
 // Gets the length unit for child spacing.
 func (x *WrapBox) GetChildSpacingUnit() LengthUnit {
-
 	cret := xWrapBoxGetChildSpacingUnit(x.GoPointer())
 	return cret
 }
@@ -156,7 +150,6 @@ var xWrapBoxGetJustify func(uintptr) JustifyMode
 
 // Gets whether and how each complete line is stretched to fill the entire widget.
 func (x *WrapBox) GetJustify() JustifyMode {
-
 	cret := xWrapBoxGetJustify(x.GoPointer())
 	return cret
 }
@@ -165,7 +158,6 @@ var xWrapBoxGetJustifyLastLine func(uintptr) bool
 
 // Gets whether the last line should be stretched to fill the entire widget.
 func (x *WrapBox) GetJustifyLastLine() bool {
-
 	cret := xWrapBoxGetJustifyLastLine(x.GoPointer())
 	return cret
 }
@@ -174,7 +166,6 @@ var xWrapBoxGetLineHomogeneous func(uintptr) bool
 
 // Gets whether all lines should take the same amount of space.
 func (x *WrapBox) GetLineHomogeneous() bool {
-
 	cret := xWrapBoxGetLineHomogeneous(x.GoPointer())
 	return cret
 }
@@ -185,7 +176,6 @@ var xWrapBoxGetLineSpacing func(uintptr) int
 //
 // See [property@WrapBox:line-spacing-unit].
 func (x *WrapBox) GetLineSpacing() int {
-
 	cret := xWrapBoxGetLineSpacing(x.GoPointer())
 	return cret
 }
@@ -194,7 +184,6 @@ var xWrapBoxGetLineSpacingUnit func(uintptr) LengthUnit
 
 // Gets the length unit for line spacing.
 func (x *WrapBox) GetLineSpacingUnit() LengthUnit {
-
 	cret := xWrapBoxGetLineSpacingUnit(x.GoPointer())
 	return cret
 }
@@ -203,7 +192,6 @@ var xWrapBoxGetNaturalLineLength func(uintptr) int
 
 // Gets the natural size for each line.
 func (x *WrapBox) GetNaturalLineLength() int {
-
 	cret := xWrapBoxGetNaturalLineLength(x.GoPointer())
 	return cret
 }
@@ -212,7 +200,6 @@ var xWrapBoxGetNaturalLineLengthUnit func(uintptr) LengthUnit
 
 // Gets the length unit for line spacing.
 func (x *WrapBox) GetNaturalLineLengthUnit() LengthUnit {
-
 	cret := xWrapBoxGetNaturalLineLengthUnit(x.GoPointer())
 	return cret
 }
@@ -221,7 +208,6 @@ var xWrapBoxGetPackDirection func(uintptr) PackDirection
 
 // Gets the direction children are packed in each line.
 func (x *WrapBox) GetPackDirection() PackDirection {
-
 	cret := xWrapBoxGetPackDirection(x.GoPointer())
 	return cret
 }
@@ -230,7 +216,6 @@ var xWrapBoxGetWrapPolicy func(uintptr) WrapPolicy
 
 // Gets the policy for line wrapping.
 func (x *WrapBox) GetWrapPolicy() WrapPolicy {
-
 	cret := xWrapBoxGetWrapPolicy(x.GoPointer())
 	return cret
 }
@@ -239,7 +224,6 @@ var xWrapBoxGetWrapReverse func(uintptr) bool
 
 // Gets whether wrap direction is reversed.
 func (x *WrapBox) GetWrapReverse() bool {
-
 	cret := xWrapBoxGetWrapReverse(x.GoPointer())
 	return cret
 }
@@ -250,23 +234,14 @@ var xWrapBoxInsertChildAfter func(uintptr, uintptr, uintptr)
 //
 // If @sibling is `NULL`, inserts @child at the first position.
 func (x *WrapBox) InsertChildAfter(ChildVar *gtk.Widget, SiblingVar *gtk.Widget) {
-
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	xWrapBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
-
+	xWrapBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
 }
 
 var xWrapBoxPrepend func(uintptr, uintptr)
 
 // Adds @child as the first child to @self.
 func (x *WrapBox) Prepend(ChildVar *gtk.Widget) {
-
 	xWrapBoxPrepend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xWrapBoxRemove func(uintptr, uintptr)
@@ -276,18 +251,14 @@ var xWrapBoxRemove func(uintptr, uintptr)
 // The child must have been added before with [method@Adw.WrapBox.append],
 // [method@Adw.WrapBox.prepend], or [method@Adw.WrapBox.insert_child_after].
 func (x *WrapBox) Remove(ChildVar *gtk.Widget) {
-
 	xWrapBoxRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xWrapBoxRemoveAll func(uintptr)
 
 // Removes all children from @self.
 func (x *WrapBox) RemoveAll() {
-
 	xWrapBoxRemoveAll(x.GoPointer())
-
 }
 
 var xWrapBoxReorderChildAfter func(uintptr, uintptr, uintptr)
@@ -296,14 +267,7 @@ var xWrapBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 //
 // If @sibling is `NULL`, moves @child to the first position.
 func (x *WrapBox) ReorderChildAfter(ChildVar *gtk.Widget, SiblingVar *gtk.Widget) {
-
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	xWrapBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
-
+	xWrapBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
 }
 
 var xWrapBoxSetAlign func(uintptr, float32)
@@ -315,12 +279,10 @@ var xWrapBoxSetAlign func(uintptr, float32)
 // line.
 //
 // Alignment is only used when [property@WrapBox:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapBox:justify-last-line] is `FALSE`.
 func (x *WrapBox) SetAlign(AlignVar float32) {
-
 	xWrapBoxSetAlign(x.GoPointer(), AlignVar)
-
 }
 
 var xWrapBoxSetChildSpacing func(uintptr, int)
@@ -329,9 +291,7 @@ var xWrapBoxSetChildSpacing func(uintptr, int)
 //
 // See [property@WrapBox:child-spacing-unit].
 func (x *WrapBox) SetChildSpacing(ChildSpacingVar int) {
-
 	xWrapBoxSetChildSpacing(x.GoPointer(), ChildSpacingVar)
-
 }
 
 var xWrapBoxSetChildSpacingUnit func(uintptr, LengthUnit)
@@ -342,9 +302,7 @@ var xWrapBoxSetChildSpacingUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapBox:child-spacing].
 func (x *WrapBox) SetChildSpacingUnit(UnitVar LengthUnit) {
-
 	xWrapBoxSetChildSpacingUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapBoxSetJustify func(uintptr, JustifyMode)
@@ -352,24 +310,23 @@ var xWrapBoxSetJustify func(uintptr, JustifyMode)
 // Determines whether and how each complete line should be stretched to fill
 // the entire widget.
 //
-// If set to `ADW_JUSTIFY_FILL`, each widget in the line will be stretched,
-// keeping consistent spacing, so that the line fills the entire widget.
+// If set to [enum@Adw.JustifyMode.fill], each widget in the line will be
+// stretched, keeping consistent spacing, so that the line fills the entire
+// widget.
 //
-// If set to `ADW_JUSTIFY_SPREAD`, the spacing between widgets will be
+// If set to [enum@Adw.JustifyMode.spread], the spacing between widgets will be
 // increased, keeping widget sizes intact. The first and last widget will be
 // aligned with the beginning and end of the line. If the line only contains a
 // single widget, it will be stretched regardless.
 //
-// If set to `ADW_JUSTIFY_NONE`, the line will not be stretched and the children
-// will be placed together within the line, according to
+// If set to [enum@Adw.JustifyMode.none], the line will not be stretched and the
+// children will be placed together within the line, according to
 // [property@WrapBox:align].
 //
 // By default this doesn't affect the last line, as it will be incomplete. Use
 // [property@WrapBox:justify-last-line] to justify it as well.
 func (x *WrapBox) SetJustify(JustifyVar JustifyMode) {
-
 	xWrapBoxSetJustify(x.GoPointer(), JustifyVar)
-
 }
 
 var xWrapBoxSetJustifyLastLine func(uintptr, bool)
@@ -378,27 +335,21 @@ var xWrapBoxSetJustifyLastLine func(uintptr, bool)
 //
 // See [property@WrapBox:justify].
 func (x *WrapBox) SetJustifyLastLine(JustifyLastLineVar bool) {
-
 	xWrapBoxSetJustifyLastLine(x.GoPointer(), JustifyLastLineVar)
-
 }
 
 var xWrapBoxSetLineHomogeneous func(uintptr, bool)
 
 // Sets whether all lines should take the same amount of space.
 func (x *WrapBox) SetLineHomogeneous(HomogeneousVar bool) {
-
 	xWrapBoxSetLineHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xWrapBoxSetLineSpacing func(uintptr, int)
 
 // Sets the spacing between lines.
 func (x *WrapBox) SetLineSpacing(LineSpacingVar int) {
-
 	xWrapBoxSetLineSpacing(x.GoPointer(), LineSpacingVar)
-
 }
 
 var xWrapBoxSetLineSpacingUnit func(uintptr, LengthUnit)
@@ -409,9 +360,7 @@ var xWrapBoxSetLineSpacingUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapBox:line-spacing].
 func (x *WrapBox) SetLineSpacingUnit(UnitVar LengthUnit) {
-
 	xWrapBoxSetLineSpacingUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapBoxSetNaturalLineLength func(uintptr, int)
@@ -423,9 +372,7 @@ var xWrapBoxSetNaturalLineLength func(uintptr, int)
 //
 // See [property@WrapBox:natural-line-length-unit].
 func (x *WrapBox) SetNaturalLineLength(NaturalLineLengthVar int) {
-
 	xWrapBoxSetNaturalLineLength(x.GoPointer(), NaturalLineLengthVar)
-
 }
 
 var xWrapBoxSetNaturalLineLengthUnit func(uintptr, LengthUnit)
@@ -436,35 +383,29 @@ var xWrapBoxSetNaturalLineLengthUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapBox:natural-line-length].
 func (x *WrapBox) SetNaturalLineLengthUnit(UnitVar LengthUnit) {
-
 	xWrapBoxSetNaturalLineLengthUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapBoxSetPackDirection func(uintptr, PackDirection)
 
 // Sets the direction children are packed in each line.
 func (x *WrapBox) SetPackDirection(PackDirectionVar PackDirection) {
-
 	xWrapBoxSetPackDirection(x.GoPointer(), PackDirectionVar)
-
 }
 
 var xWrapBoxSetWrapPolicy func(uintptr, WrapPolicy)
 
 // Sets the policy for line wrapping.
 //
-// If set to `ADW_WRAP_NATURAL`, the box will wrap to the next line as soon as
-// the previous line cannot fit any more children without shrinking them past
-// their natural size.
+// If set to [enum@Adw.WrapPolicy.natural], the box will wrap to the next line
+// as soon as the previous line cannot fit any more children without shrinking
+// them past their natural size.
 //
-// If set to `ADW_WRAP_MINIMUM`, the box will try to fit as many children into
-// each line as possible, shrinking them down to their minimum size before
-// wrapping to the next line.
+// If set to [enum@Adw.WrapPolicy.minimum], the box will try to fit as many
+// children into each line as possible, shrinking them down to their minimum\
+// size before wrapping to the next line.
 func (x *WrapBox) SetWrapPolicy(WrapPolicyVar WrapPolicy) {
-
 	xWrapBoxSetWrapPolicy(x.GoPointer(), WrapPolicyVar)
-
 }
 
 var xWrapBoxSetWrapReverse func(uintptr, bool)
@@ -475,9 +416,7 @@ var xWrapBoxSetWrapReverse func(uintptr, bool)
 // in a vertical box. If set to `TRUE`, they wrap upwards or towards the start
 // respectively.
 func (x *WrapBox) SetWrapReverse(WrapReverseVar bool) {
-
 	xWrapBoxSetWrapReverse(x.GoPointer(), WrapReverseVar)
-
 }
 
 func (c *WrapBox) GoPointer() uintptr {
@@ -499,7 +438,7 @@ func (c *WrapBox) SetGoPointer(ptr uintptr) {
 // the line.
 //
 // Alignment is only used when [property@WrapBox:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapBox:justify-last-line] is `FALSE`.
 func (x *WrapBox) SetPropertyAlign(value float32) {
 	var v gobject.Value
@@ -516,7 +455,7 @@ func (x *WrapBox) SetPropertyAlign(value float32) {
 // the line.
 //
 // Alignment is only used when [property@WrapBox:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapBox:justify-last-line] is `FALSE`.
 func (x *WrapBox) GetPropertyAlign() float32 {
 	var v gobject.Value
@@ -666,9 +605,19 @@ func (x *WrapBox) GetPropertyWrapReverse() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *WrapBox) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *WrapBox) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -689,7 +638,6 @@ func (x *WrapBox) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *WrapBox) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -714,7 +662,6 @@ func (x *WrapBox) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *WrapBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -753,30 +700,23 @@ func (x *WrapBox) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *WrapBox) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *WrapBox) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *WrapBox) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *WrapBox) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -789,19 +729,7 @@ func (x *WrapBox) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *WrapBox) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -809,14 +737,7 @@ func (x *WrapBox) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *WrapBox) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -825,9 +746,7 @@ func (x *WrapBox) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *WrapBox) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -849,9 +768,7 @@ func (x *WrapBox) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *WrapBox) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -861,9 +778,7 @@ func (x *WrapBox) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *WrapBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -885,9 +800,7 @@ func (x *WrapBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Ac
 //
 // ```
 func (x *WrapBox) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -897,9 +810,7 @@ func (x *WrapBox) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *WrapBox) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -922,9 +833,7 @@ func (x *WrapBox) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acce
 //
 // ```
 func (x *WrapBox) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -934,9 +843,7 @@ func (x *WrapBox) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *WrapBox) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -944,28 +851,24 @@ func (x *WrapBox) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *WrapBox) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *WrapBox) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *WrapBox) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1011,5 +914,4 @@ func init() {
 	core.PuregoSafeRegister(&xWrapBoxSetPackDirection, libs, "adw_wrap_box_set_pack_direction")
 	core.PuregoSafeRegister(&xWrapBoxSetWrapPolicy, libs, "adw_wrap_box_set_wrap_policy")
 	core.PuregoSafeRegister(&xWrapBoxSetWrapReverse, libs, "adw_wrap_box_set_wrap_reverse")
-
 }

@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -28,39 +27,7 @@ var xContentRegisterSerializer func(types.GType, string, uintptr, uintptr, uintp
 // use the last registered serializer for a given mime type,
 // so applications can override the built-in serializers.
 func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, SerializeVar *ContentSerializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
-	var SerializeVarRef uintptr
-	if SerializeVar != nil {
-		SerializeVarPtr := uintptr(unsafe.Pointer(SerializeVar))
-		if cbRefPtr, ok := glib.GetCallback(SerializeVarPtr); ok {
-			SerializeVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *SerializeVar
-				cbFn(arg0)
-			}
-			SerializeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SerializeVarPtr, SerializeVarRef, SerializeVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xContentRegisterSerializer(TypeVar, MimeTypeVar, SerializeVarRef, DataVar, NotifyVarRef)
-
+	xContentRegisterSerializer(TypeVar, MimeTypeVar, glib.NewCallback(SerializeVar), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 var xContentSerializeAsync func(uintptr, string, *gobject.Value, int, uintptr, uintptr, uintptr)
@@ -70,29 +37,7 @@ var xContentSerializeAsync func(uintptr, string, *gobject.Value, int, uintptr, u
 // The default I/O priority is %G_PRIORITY_DEFAULT (i.e. 0), and lower numbers
 // indicate a higher priority.
 func ContentSerializeAsync(StreamVar *gio.OutputStream, MimeTypeVar string, ValueVar *gobject.Value, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xContentSerializeFinish func(uintptr, **glib.Error) bool
@@ -106,7 +51,6 @@ func ContentSerializeFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Serializes content for inter-application data transfers.
@@ -159,7 +103,6 @@ var xContentSerializerGetGtype func(uintptr) types.GType
 
 // Gets the `GType` to of the object to serialize.
 func (x *ContentSerializer) GetGtype() types.GType {
-
 	cret := xContentSerializerGetGtype(x.GoPointer())
 	return cret
 }
@@ -168,7 +111,6 @@ var xContentSerializerGetMimeType func(uintptr) string
 
 // Gets the mime type to serialize to.
 func (x *ContentSerializer) GetMimeType() string {
-
 	cret := xContentSerializerGetMimeType(x.GoPointer())
 	return cret
 }
@@ -198,7 +140,6 @@ var xContentSerializerGetPriority func(uintptr) int
 //
 // This is the priority that was passed to [func@content_serialize_async].
 func (x *ContentSerializer) GetPriority() int {
-
 	cret := xContentSerializerGetPriority(x.GoPointer())
 	return cret
 }
@@ -209,7 +150,6 @@ var xContentSerializerGetTaskData func(uintptr) uintptr
 //
 // See [method@Gdk.ContentSerializer.set_task_data].
 func (x *ContentSerializer) GetTaskData() uintptr {
-
 	cret := xContentSerializerGetTaskData(x.GoPointer())
 	return cret
 }
@@ -218,18 +158,19 @@ var xContentSerializerGetUserData func(uintptr) uintptr
 
 // Gets the user data that was passed when the serializer was registered.
 func (x *ContentSerializer) GetUserData() uintptr {
-
 	cret := xContentSerializerGetUserData(x.GoPointer())
 	return cret
 }
 
-var xContentSerializerGetValue func(uintptr) *gobject.Value
+var xContentSerializerGetValue func(uintptr) uintptr
 
 // Gets the `GValue` to read the object to serialize from.
 func (x *ContentSerializer) GetValue() *gobject.Value {
-
 	cret := xContentSerializerGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 var xContentSerializerReturnError func(uintptr, *glib.Error)
@@ -238,42 +179,21 @@ var xContentSerializerReturnError func(uintptr, *glib.Error)
 //
 // This function consumes @error.
 func (x *ContentSerializer) ReturnError(ErrorVar *glib.Error) {
-
 	xContentSerializerReturnError(x.GoPointer(), ErrorVar)
-
 }
 
 var xContentSerializerReturnSuccess func(uintptr)
 
 // Indicate that the serialization has been successfully completed.
 func (x *ContentSerializer) ReturnSuccess() {
-
 	xContentSerializerReturnSuccess(x.GoPointer())
-
 }
 
 var xContentSerializerSetTaskData func(uintptr, uintptr, uintptr)
 
 // Associate data with the current serialization operation.
 func (x *ContentSerializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xContentSerializerSetTaskData(x.GoPointer(), DataVar, NotifyVarRef)
-
+	xContentSerializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 func (c *ContentSerializer) GoPointer() uintptr {
@@ -304,7 +224,6 @@ func (x *ContentSerializer) GetSourceObject() *gobject.Object {
 // Checks if @res has the given @source_tag (generally a function
 // pointer indicating the function @res was created by).
 func (x *ContentSerializer) IsTagged(SourceTagVar uintptr) bool {
-
 	cret := gio.XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
 	return cret
 }
@@ -322,17 +241,16 @@ func (x *ContentSerializer) IsTagged(SourceTagVar uintptr) bool {
 func (x *ContentSerializer) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -359,5 +277,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentSerializerReturnError, libs, "gdk_content_serializer_return_error")
 	core.PuregoSafeRegister(&xContentSerializerReturnSuccess, libs, "gdk_content_serializer_return_success")
 	core.PuregoSafeRegister(&xContentSerializerSetTaskData, libs, "gdk_content_serializer_set_task_data")
-
 }

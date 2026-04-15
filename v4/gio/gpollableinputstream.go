@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -96,8 +95,12 @@ func (x *PollableInputStreamInterface) OverrideCreateSource(cb func(PollableInpu
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source {
-			return cb(&PollableInputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&PollableInputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -108,10 +111,14 @@ func (x *PollableInputStreamInterface) GetCreateSource() func(PollableInputStrea
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(StreamVar PollableInputStream, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -191,7 +198,6 @@ func (x *PollableInputStreamBase) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *PollableInputStreamBase) CanPoll() bool {
-
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -208,14 +214,11 @@ func (x *PollableInputStreamBase) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be read.
@@ -230,7 +233,6 @@ func (x *PollableInputStreamBase) CreateSource(CancellableVar *Cancellable) *gli
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) IsReadable() bool {
-
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
 	return cret
 }
@@ -262,17 +264,18 @@ func (x *PollableInputStreamBase) ReadNonblocking(BufferVar *[]byte, CountVar ui
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGPollableInputStreamCanPoll func(uintptr) bool
-var XGPollableInputStreamCreateSource func(uintptr, uintptr) *glib.Source
-var XGPollableInputStreamIsReadable func(uintptr) bool
-var XGPollableInputStreamReadNonblocking func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
+var (
+	XGPollableInputStreamCanPoll         func(uintptr) bool
+	XGPollableInputStreamCreateSource    func(uintptr, uintptr) uintptr
+	XGPollableInputStreamIsReadable      func(uintptr) bool
+	XGPollableInputStreamReadNonblocking func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -288,5 +291,4 @@ func init() {
 	core.PuregoSafeRegister(&XGPollableInputStreamCreateSource, libs, "g_pollable_input_stream_create_source")
 	core.PuregoSafeRegister(&XGPollableInputStreamIsReadable, libs, "g_pollable_input_stream_is_readable")
 	core.PuregoSafeRegister(&XGPollableInputStreamReadNonblocking, libs, "g_pollable_input_stream_read_nonblocking")
-
 }

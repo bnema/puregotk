@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -119,7 +118,6 @@ var xEventControllerScrollGetFlags func(uintptr) EventControllerScrollFlags
 
 // Gets the flags conditioning the scroll controller behavior.
 func (x *EventControllerScroll) GetFlags() EventControllerScrollFlags {
-
 	cret := xEventControllerScrollGetFlags(x.GoPointer())
 	return cret
 }
@@ -132,7 +130,6 @@ var xEventControllerScrollGetUnit func(uintptr) gdk.ScrollUnit
 // Always returns %GDK_SCROLL_UNIT_WHEEL if the
 // %GTK_EVENT_CONTROLLER_SCROLL_DISCRETE flag is set.
 func (x *EventControllerScroll) GetUnit() gdk.ScrollUnit {
-
 	cret := xEventControllerScrollGetUnit(x.GoPointer())
 	return cret
 }
@@ -141,9 +138,7 @@ var xEventControllerScrollSetFlags func(uintptr, EventControllerScrollFlags)
 
 // Sets the flags conditioning scroll controller behavior.
 func (x *EventControllerScroll) SetFlags(FlagsVar EventControllerScrollFlags) {
-
 	xEventControllerScrollSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 func (c *EventControllerScroll) GoPointer() uintptr {
@@ -177,7 +172,6 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 		cbFn := *cb
 
 		cbFn(fa, VelXVarp, VelYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -205,7 +199,6 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 		cbFn := *cb
 
 		return cbFn(fa, DxVarp, DyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -231,7 +224,6 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -257,7 +249,6 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -268,7 +259,7 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -287,5 +278,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerScrollGetFlags, libs, "gtk_event_controller_scroll_get_flags")
 	core.PuregoSafeRegister(&xEventControllerScrollGetUnit, libs, "gtk_event_controller_scroll_get_unit")
 	core.PuregoSafeRegister(&xEventControllerScrollSetFlags, libs, "gtk_event_controller_scroll_set_flags")
-
 }

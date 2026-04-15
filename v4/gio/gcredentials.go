@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -99,12 +98,11 @@ var xCredentialsGetNative func(uintptr, CredentialsType) uintptr
 // logged) to use this method if there is no #GCredentials support for
 // the OS or if @native_type isn't supported by the OS.
 func (x *Credentials) GetNative(NativeTypeVar CredentialsType) uintptr {
-
 	cret := xCredentialsGetNative(x.GoPointer(), NativeTypeVar)
 	return cret
 }
 
-var xCredentialsGetUnixPid func(uintptr) int
+var xCredentialsGetUnixPid func(uintptr, **glib.Error) int
 
 // Tries to get the UNIX process identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -115,15 +113,14 @@ var xCredentialsGetUnixPid func(uintptr) int
 func (x *Credentials) GetUnixPid() (int, error) {
 	var cerr *glib.Error
 
-	cret := xCredentialsGetUnixPid(x.GoPointer())
+	cret := xCredentialsGetUnixPid(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xCredentialsGetUnixUser func(uintptr) uint
+var xCredentialsGetUnixUser func(uintptr, **glib.Error) uint
 
 // Tries to get the UNIX user identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -131,15 +128,18 @@ var xCredentialsGetUnixUser func(uintptr) uint
 // This operation can fail if #GCredentials is not supported on the
 // OS or if the native credentials type does not contain information
 // about the UNIX user.
+//
+// As the signedness of `uid_t` is not specified by POSIX, it is recommended to
+// check @error for failure rather than trying to check the return value,
+// particularly in language bindings.
 func (x *Credentials) GetUnixUser() (uint, error) {
 	var cerr *glib.Error
 
-	cret := xCredentialsGetUnixUser(x.GoPointer())
+	cret := xCredentialsGetUnixUser(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsIsSameUser func(uintptr, uintptr, **glib.Error) bool
@@ -156,7 +156,6 @@ func (x *Credentials) IsSameUser(OtherCredentialsVar *Credentials) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsSetNative func(uintptr, CredentialsType, uintptr)
@@ -168,9 +167,7 @@ var xCredentialsSetNative func(uintptr, CredentialsType, uintptr)
 // logged) to use this method if there is no #GCredentials support for
 // the OS or if @native_type isn't supported by the OS.
 func (x *Credentials) SetNative(NativeTypeVar CredentialsType, NativeVar uintptr) {
-
 	xCredentialsSetNative(x.GoPointer(), NativeTypeVar, NativeVar)
-
 }
 
 var xCredentialsSetUnixUser func(uintptr, uint, **glib.Error) bool
@@ -190,7 +187,6 @@ func (x *Credentials) SetUnixUser(UidVar uint) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xCredentialsToString func(uintptr) string
@@ -199,7 +195,6 @@ var xCredentialsToString func(uintptr) string
 // that can be used in logging and debug messages. The format of the
 // returned string may change in future GLib release.
 func (x *Credentials) ToString() string {
-
 	cret := xCredentialsToString(x.GoPointer())
 	return cret
 }
@@ -217,7 +212,7 @@ func (c *Credentials) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -238,5 +233,4 @@ func init() {
 	core.PuregoSafeRegister(&xCredentialsSetNative, libs, "g_credentials_set_native")
 	core.PuregoSafeRegister(&xCredentialsSetUnixUser, libs, "g_credentials_set_unix_user")
 	core.PuregoSafeRegister(&xCredentialsToString, libs, "g_credentials_to_string")
-
 }

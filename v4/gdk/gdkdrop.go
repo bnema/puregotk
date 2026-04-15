@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -50,9 +49,7 @@ var xDropFinish func(uintptr, DragAction)
 // The @action must be a single action selected from the actions
 // available via [method@Gdk.Drop.get_actions].
 func (x *Drop) Finish(ActionVar DragAction) {
-
 	xDropFinish(x.GoPointer(), ActionVar)
-
 }
 
 var xDropGetActions func(uintptr) DragAction
@@ -72,7 +69,6 @@ var xDropGetActions func(uintptr) DragAction
 // [method@Gdk.Drop.status] or [method@Gdk.Drop.finish]. The source
 // side will not change this value anymore once a drop has started.
 func (x *Drop) GetActions() DragAction {
-
 	cret := xDropGetActions(x.GoPointer())
 	return cret
 }
@@ -131,14 +127,16 @@ func (x *Drop) GetDrag() *Drag {
 	return cls
 }
 
-var xDropGetFormats func(uintptr) *ContentFormats
+var xDropGetFormats func(uintptr) uintptr
 
 // Returns the `GdkContentFormats` that the drop offers the data
 // to be read in.
 func (x *Drop) GetFormats() *ContentFormats {
-
 	cret := xDropGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDropGetSurface func(uintptr) uintptr
@@ -163,29 +161,7 @@ var xDropReadAsync func(uintptr, []string, int, uintptr, uintptr, uintptr)
 // Asynchronously read the dropped data from a `GdkDrop`
 // in a format that complies with one of the mime types.
 func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDropReadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
@@ -213,7 +189,6 @@ func (x *Drop) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string) (*g
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDropReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, uintptr)
@@ -225,32 +200,10 @@ var xDropReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, uintpt
 // `GType`, the value will be copied directly. Otherwise, GDK will
 // try to use [func@Gdk.content_deserialize_async] to convert the data.
 func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xDropReadValueFinish func(uintptr, uintptr, **glib.Error) *gobject.Value
+var xDropReadValueFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an async drop read.
 //
@@ -259,11 +212,13 @@ func (x *Drop) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, error
 	var cerr *glib.Error
 
 	cret := xDropReadValueFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret)), nil
 }
 
 var xDropStatus func(uintptr, DragAction, DragAction)
@@ -282,9 +237,7 @@ var xDropStatus func(uintptr, DragAction, DragAction)
 // not yet know the exact actions it supports, it should set any possible
 // actions first and then later call this function again.
 func (x *Drop) Status(ActionsVar DragAction, PreferredVar DragAction) {
-
 	xDropStatus(x.GoPointer(), ActionsVar, PreferredVar)
-
 }
 
 func (c *Drop) GoPointer() uintptr {
@@ -317,7 +270,7 @@ func (x *Drop) GetPropertyFormats() uintptr {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -341,5 +294,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropReadValueAsync, libs, "gdk_drop_read_value_async")
 	core.PuregoSafeRegister(&xDropReadValueFinish, libs, "gdk_drop_read_value_finish")
 	core.PuregoSafeRegister(&xDropStatus, libs, "gdk_drop_status")
-
 }

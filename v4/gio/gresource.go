@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -40,12 +39,10 @@ var xStaticResourceFini func(uintptr)
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) Fini() {
-
 	xStaticResourceFini(x.GoPointer())
-
 }
 
-var xStaticResourceGetResource func(uintptr) *Resource
+var xStaticResourceGetResource func(uintptr) uintptr
 
 // Gets the [struct@Gio.Resource] that was registered by a call to
 // [method@Gio.StaticResource.init].
@@ -54,9 +51,11 @@ var xStaticResourceGetResource func(uintptr) *Resource
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) GetResource() *Resource {
-
 	cret := xStaticResourceGetResource(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Resource)(unsafe.Pointer(cret))
 }
 
 var xStaticResourceInit func(uintptr)
@@ -68,21 +67,18 @@ var xStaticResourceInit func(uintptr)
 // [`glib-compile-resources`](glib-compile-resources.html)
 // and is not typically used by other code.
 func (x *StaticResource) Init() {
-
 	xStaticResourceInit(x.GoPointer())
-
 }
 
 var xResourceErrorQuark func() glib.Quark
 
 // Gets the [struct@Gio.Resource] Error Quark.
 func ResourceErrorQuark() glib.Quark {
-
 	cret := xResourceErrorQuark()
 	return cret
 }
 
-var xResourceLoad func(string, **glib.Error) *Resource
+var xResourceLoad func(string, **glib.Error) uintptr
 
 // Loads a binary resource bundle and creates a [struct@Gio.Resource]
 // representation of it, allowing you to query it for data.
@@ -98,11 +94,13 @@ func ResourceLoad(FilenameVar string) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xResourceLoad(FilenameVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Resource)(unsafe.Pointer(cret)), nil
 }
 
 var xResourcesEnumerateChildren func(string, ResourceLookupFlags, **glib.Error) []string
@@ -122,7 +120,6 @@ func ResourcesEnumerateChildren(PathVar string, LookupFlagsVar ResourceLookupFla
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesGetInfo func(string, ResourceLookupFlags, *uint, *uint32, **glib.Error) bool
@@ -139,7 +136,6 @@ func ResourcesGetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, SizeVa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourcesHasChildren func(string) bool
@@ -147,12 +143,11 @@ var xResourcesHasChildren func(string) bool
 // Returns whether the specified @path in the set of
 // globally registered resources has children.
 func ResourcesHasChildren(PathVar string) bool {
-
 	cret := xResourcesHasChildren(PathVar)
 	return cret
 }
 
-var xResourcesLookupData func(string, ResourceLookupFlags, **glib.Error) *glib.Bytes
+var xResourcesLookupData func(string, ResourceLookupFlags, **glib.Error) uintptr
 
 // Looks for a file at the specified @path in the set of
 // globally registered resources and returns a [struct@GLib.Bytes] that
@@ -172,11 +167,13 @@ func ResourcesLookupData(PathVar string, LookupFlagsVar ResourceLookupFlags) (*g
 	var cerr *glib.Error
 
 	cret := xResourcesLookupData(PathVar, LookupFlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xResourcesOpenStream func(string, ResourceLookupFlags, **glib.Error) uintptr
@@ -201,7 +198,6 @@ func ResourcesOpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags) (*I
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xResourcesRegister func(*Resource)
@@ -212,23 +208,19 @@ var xResourcesRegister func(*Resource)
 // with the global resource lookup functions like
 // [func@Gio.resources_lookup_data].
 func ResourcesRegister(ResourceVar *Resource) {
-
 	xResourcesRegister(ResourceVar)
-
 }
 
 var xResourcesUnregister func(*Resource)
 
 // Unregisters the resource from the process-global set of resources.
 func ResourcesUnregister(ResourceVar *Resource) {
-
 	xResourcesUnregister(ResourceVar)
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -251,5 +243,4 @@ func init() {
 	core.PuregoSafeRegister(&xStaticResourceFini, libs, "g_static_resource_fini")
 	core.PuregoSafeRegister(&xStaticResourceGetResource, libs, "g_static_resource_get_resource")
 	core.PuregoSafeRegister(&xStaticResourceInit, libs, "g_static_resource_init")
-
 }

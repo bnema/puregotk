@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -33,7 +32,7 @@ func (x *Color) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xColorCopy func(uintptr) *Color
+var xColorCopy func(uintptr) uintptr
 
 // Creates a copy of @src.
 //
@@ -42,18 +41,18 @@ var xColorCopy func(uintptr) *Color
 // otherwise (since colors can just be copied by assignment
 // in C).
 func (x *Color) Copy() *Color {
-
 	cret := xColorCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Color)(unsafe.Pointer(cret))
 }
 
 var xColorFree func(uintptr)
 
 // Frees a color allocated by [method@Pango.Color.copy].
 func (x *Color) Free() {
-
 	xColorFree(x.GoPointer())
-
 }
 
 var xColorParse func(uintptr, string) bool
@@ -68,7 +67,6 @@ var xColorParse func(uintptr, string) bool
 // of the color, respectively. (White in the four forms is
 // `#fff`, `#ffffff`, `#fffffffff` and `#ffffffffffff`.)
 func (x *Color) Parse(SpecVar string) bool {
-
 	cret := xColorParse(x.GoPointer(), SpecVar)
 	return cret
 }
@@ -91,7 +89,6 @@ var xColorParseWithAlpha func(uintptr, *uint16, string) bool
 // component is found in @spec, @alpha is set to 0xffff (for a
 // solid color).
 func (x *Color) ParseWithAlpha(AlphaVar *uint16, SpecVar string) bool {
-
 	cret := xColorParseWithAlpha(x.GoPointer(), AlphaVar, SpecVar)
 	return cret
 }
@@ -104,14 +101,13 @@ var xColorToString func(uintptr) string
 // where `r`, `g` and `b` are hex digits representing the
 // red, green, and blue components respectively.
 func (x *Color) ToString() string {
-
 	cret := xColorToString(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -128,5 +124,4 @@ func init() {
 	core.PuregoSafeRegister(&xColorParse, libs, "pango_color_parse")
 	core.PuregoSafeRegister(&xColorParseWithAlpha, libs, "pango_color_parse_with_alpha")
 	core.PuregoSafeRegister(&xColorToString, libs, "pango_color_to_string")
-
 }

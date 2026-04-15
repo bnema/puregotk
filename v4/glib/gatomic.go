@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -22,7 +21,6 @@ var xAtomicIntAdd func(uintptr, int) int
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntAdd(AtomicVar uintptr, ValVar int) int {
-
 	cret := xAtomicIntAdd(AtomicVar, ValVar)
 
 	return cret
@@ -41,7 +39,6 @@ var xAtomicIntAnd func(uintptr, uint) uint
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntAnd(AtomicVar uintptr, ValVar uint) uint {
-
 	cret := xAtomicIntAnd(AtomicVar, ValVar)
 
 	return cret
@@ -62,7 +59,6 @@ var xAtomicIntCompareAndExchange func(uintptr, int, int) bool
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntCompareAndExchange(AtomicVar uintptr, OldvalVar int, NewvalVar int) bool {
-
 	cret := xAtomicIntCompareAndExchange(AtomicVar, OldvalVar, NewvalVar)
 
 	return cret
@@ -83,7 +79,6 @@ var xAtomicIntCompareAndExchangeFull func(uintptr, int, int, *int) bool
 //
 // See also g_atomic_int_compare_and_exchange()
 func AtomicIntCompareAndExchangeFull(AtomicVar uintptr, OldvalVar int, NewvalVar int, PrevalVar *int) bool {
-
 	cret := xAtomicIntCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
 
 	return cret
@@ -101,7 +96,6 @@ var xAtomicIntDecAndTest func(uintptr) bool
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntDecAndTest(AtomicVar uintptr) bool {
-
 	cret := xAtomicIntDecAndTest(AtomicVar)
 
 	return cret
@@ -118,7 +112,6 @@ var xAtomicIntExchange func(uintptr, int) int
 //
 // This call acts as a full compiler and hardware memory barrier.
 func AtomicIntExchange(AtomicVar uintptr, NewvalVar int) int {
-
 	cret := xAtomicIntExchange(AtomicVar, NewvalVar)
 
 	return cret
@@ -130,7 +123,6 @@ var xAtomicIntExchangeAndAdd func(uintptr, int) int
 // value of the integer (which it now does).  It is retained only for
 // compatibility reasons.  Don't use this function in new code.
 func AtomicIntExchangeAndAdd(AtomicVar uintptr, ValVar int) int {
-
 	cret := xAtomicIntExchangeAndAdd(AtomicVar, ValVar)
 
 	return cret
@@ -141,12 +133,11 @@ var xAtomicIntGet func(uintptr) int
 // Gets the current value of @atomic.
 //
 // This call acts as a full compiler and hardware
-// memory barrier (before the get).
+// memory barrier.
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntGet(AtomicVar uintptr) int {
-
 	cret := xAtomicIntGet(AtomicVar)
 
 	return cret
@@ -163,9 +154,7 @@ var xAtomicIntInc func(uintptr)
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntInc(AtomicVar uintptr) {
-
 	xAtomicIntInc(AtomicVar)
-
 }
 
 var xAtomicIntOr func(uintptr, uint) uint
@@ -181,7 +170,6 @@ var xAtomicIntOr func(uintptr, uint) uint
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntOr(AtomicVar uintptr, ValVar uint) uint {
-
 	cret := xAtomicIntOr(AtomicVar, ValVar)
 
 	return cret
@@ -192,14 +180,12 @@ var xAtomicIntSet func(uintptr, int)
 // Sets the value of @atomic to @newval.
 //
 // This call acts as a full compiler and hardware
-// memory barrier (after the set).
+// memory barrier.
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntSet(AtomicVar uintptr, NewvalVar int) {
-
 	xAtomicIntSet(AtomicVar, NewvalVar)
-
 }
 
 var xAtomicIntXor func(uintptr, uint) uint
@@ -215,7 +201,6 @@ var xAtomicIntXor func(uintptr, uint) uint
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicIntXor(AtomicVar uintptr, ValVar uint) uint {
-
 	cret := xAtomicIntXor(AtomicVar, ValVar)
 
 	return cret
@@ -237,7 +222,6 @@ var xAtomicPointerAdd func(uintptr, int) int
 // support for platforms with 128-bit pointers. This should not affect existing
 // code.
 func AtomicPointerAdd(AtomicVar uintptr, ValVar int) int {
-
 	cret := xAtomicPointerAdd(AtomicVar, ValVar)
 
 	return cret
@@ -260,7 +244,6 @@ var xAtomicPointerAnd func(uintptr, uint) uintptr
 // support for platforms with 128-bit pointers. This should not affect existing
 // code.
 func AtomicPointerAnd(AtomicVar uintptr, ValVar uint) uintptr {
-
 	cret := xAtomicPointerAnd(AtomicVar, ValVar)
 
 	return cret
@@ -281,7 +264,6 @@ var xAtomicPointerCompareAndExchange func(uintptr, uintptr, uintptr) bool
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicPointerCompareAndExchange(AtomicVar uintptr, OldvalVar uintptr, NewvalVar uintptr) bool {
-
 	cret := xAtomicPointerCompareAndExchange(AtomicVar, OldvalVar, NewvalVar)
 
 	return cret
@@ -302,7 +284,6 @@ var xAtomicPointerCompareAndExchangeFull func(uintptr, uintptr, uintptr, *uintpt
 //
 // See also g_atomic_pointer_compare_and_exchange()
 func AtomicPointerCompareAndExchangeFull(AtomicVar uintptr, OldvalVar uintptr, NewvalVar uintptr, PrevalVar *uintptr) bool {
-
 	cret := xAtomicPointerCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
 
 	return cret
@@ -319,7 +300,6 @@ var xAtomicPointerExchange func(uintptr, uintptr) uintptr
 //
 // This call acts as a full compiler and hardware memory barrier.
 func AtomicPointerExchange(AtomicVar uintptr, NewvalVar uintptr) uintptr {
-
 	cret := xAtomicPointerExchange(AtomicVar, NewvalVar)
 
 	return cret
@@ -330,12 +310,11 @@ var xAtomicPointerGet func(uintptr) uintptr
 // Gets the current value of @atomic.
 //
 // This call acts as a full compiler and hardware
-// memory barrier (before the get).
+// memory barrier.
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicPointerGet(AtomicVar uintptr) uintptr {
-
 	cret := xAtomicPointerGet(AtomicVar)
 
 	return cret
@@ -358,7 +337,6 @@ var xAtomicPointerOr func(uintptr, uint) uintptr
 // support for platforms with 128-bit pointers. This should not affect existing
 // code.
 func AtomicPointerOr(AtomicVar uintptr, ValVar uint) uintptr {
-
 	cret := xAtomicPointerOr(AtomicVar, ValVar)
 
 	return cret
@@ -369,14 +347,12 @@ var xAtomicPointerSet func(uintptr, uintptr)
 // Sets the value of @atomic to @newval.
 //
 // This call acts as a full compiler and hardware
-// memory barrier (after the set).
+// memory barrier.
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
 func AtomicPointerSet(AtomicVar uintptr, NewvalVar uintptr) {
-
 	xAtomicPointerSet(AtomicVar, NewvalVar)
-
 }
 
 var xAtomicPointerXor func(uintptr, uint) uintptr
@@ -396,7 +372,6 @@ var xAtomicPointerXor func(uintptr, uint) uintptr
 // support for platforms with 128-bit pointers. This should not affect existing
 // code.
 func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uintptr {
-
 	cret := xAtomicPointerXor(AtomicVar, ValVar)
 
 	return cret
@@ -404,7 +379,7 @@ func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -435,5 +410,4 @@ func init() {
 	core.PuregoSafeRegister(&xAtomicPointerOr, libs, "g_atomic_pointer_or")
 	core.PuregoSafeRegister(&xAtomicPointerSet, libs, "g_atomic_pointer_set")
 	core.PuregoSafeRegister(&xAtomicPointerXor, libs, "g_atomic_pointer_xor")
-
 }

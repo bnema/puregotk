@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -754,14 +753,12 @@ func (x *VolumeBase) SetGoPointer(ptr uintptr) {
 
 // Checks if a volume can be ejected.
 func (x *VolumeBase) CanEject() bool {
-
 	cret := XGVolumeCanEject(x.GoPointer())
 	return cret
 }
 
 // Checks if a volume can be mounted.
 func (x *VolumeBase) CanMount() bool {
-
 	cret := XGVolumeCanMount(x.GoPointer())
 	return cret
 }
@@ -770,14 +767,7 @@ func (x *VolumeBase) CanMount() bool {
 // finished by calling g_volume_eject_finish() with the @volume
 // and #GAsyncResult returned in the @callback.
 func (x *VolumeBase) Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGVolumeEject(x.GoPointer(), FlagsVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGVolumeEject(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes ejecting a volume. If any errors occurred during the operation,
@@ -790,26 +780,13 @@ func (x *VolumeBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Ejects a volume. This is an asynchronous operation, and is
 // finished by calling g_volume_eject_with_operation_finish() with the @volume
 // and #GAsyncResult data returned in the @callback.
 func (x *VolumeBase) EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var MountOperationVarPtr uintptr
-	if MountOperationVar != nil {
-		MountOperationVarPtr = MountOperationVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGVolumeEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGVolumeEjectWithOperation(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes ejecting a volume. If any errors occurred during the operation,
@@ -822,13 +799,11 @@ func (x *VolumeBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets the kinds of [identifiers](#volume-identifiers) that @volume has.
 // Use g_volume_get_identifier() to obtain the identifiers themselves.
 func (x *VolumeBase) EnumerateIdentifiers() []string {
-
 	cret := XGVolumeEnumerateIdentifiers(x.GoPointer())
 	return cret
 }
@@ -908,7 +883,6 @@ func (x *VolumeBase) GetIcon() *IconBase {
 // See the [introduction](#volume-identifiers) for more
 // information about volume identifiers.
 func (x *VolumeBase) GetIdentifier(KindVar string) string {
-
 	cret := XGVolumeGetIdentifier(x.GoPointer(), KindVar)
 	return cret
 }
@@ -929,14 +903,12 @@ func (x *VolumeBase) GetMount() *MountBase {
 
 // Gets the name of @volume.
 func (x *VolumeBase) GetName() string {
-
 	cret := XGVolumeGetName(x.GoPointer())
 	return cret
 }
 
 // Gets the sort key for @volume, if any.
 func (x *VolumeBase) GetSortKey() string {
-
 	cret := XGVolumeGetSortKey(x.GoPointer())
 	return cret
 }
@@ -960,7 +932,6 @@ func (x *VolumeBase) GetSymbolicIcon() *IconBase {
 // considered an opaque string. Returns %NULL if there is no UUID
 // available.
 func (x *VolumeBase) GetUuid() string {
-
 	cret := XGVolumeGetUuid(x.GoPointer())
 	return cret
 }
@@ -969,19 +940,7 @@ func (x *VolumeBase) GetUuid() string {
 // finished by calling g_volume_mount_finish() with the @volume
 // and #GAsyncResult returned in the @callback.
 func (x *VolumeBase) Mount(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var MountOperationVarPtr uintptr
-	if MountOperationVar != nil {
-		MountOperationVarPtr = MountOperationVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGVolumeMount(x.GoPointer(), FlagsVar, MountOperationVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGVolumeMount(x.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes mounting a volume. If any errors occurred during the operation,
@@ -999,35 +958,35 @@ func (x *VolumeBase) MountFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Returns whether the volume should be automatically mounted.
 func (x *VolumeBase) ShouldAutomount() bool {
-
 	cret := XGVolumeShouldAutomount(x.GoPointer())
 	return cret
 }
 
-var XGVolumeCanEject func(uintptr) bool
-var XGVolumeCanMount func(uintptr) bool
-var XGVolumeEject func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr)
-var XGVolumeEjectFinish func(uintptr, uintptr, **glib.Error) bool
-var XGVolumeEjectWithOperation func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr, uintptr)
-var XGVolumeEjectWithOperationFinish func(uintptr, uintptr, **glib.Error) bool
-var XGVolumeEnumerateIdentifiers func(uintptr) []string
-var XGVolumeGetActivationRoot func(uintptr) uintptr
-var XGVolumeGetDrive func(uintptr) uintptr
-var XGVolumeGetIcon func(uintptr) uintptr
-var XGVolumeGetIdentifier func(uintptr, string) string
-var XGVolumeGetMount func(uintptr) uintptr
-var XGVolumeGetName func(uintptr) string
-var XGVolumeGetSortKey func(uintptr) string
-var XGVolumeGetSymbolicIcon func(uintptr) uintptr
-var XGVolumeGetUuid func(uintptr) string
-var XGVolumeMount func(uintptr, MountMountFlags, uintptr, uintptr, uintptr, uintptr)
-var XGVolumeMountFinish func(uintptr, uintptr, **glib.Error) bool
-var XGVolumeShouldAutomount func(uintptr) bool
+var (
+	XGVolumeCanEject                 func(uintptr) bool
+	XGVolumeCanMount                 func(uintptr) bool
+	XGVolumeEject                    func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr)
+	XGVolumeEjectFinish              func(uintptr, uintptr, **glib.Error) bool
+	XGVolumeEjectWithOperation       func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr, uintptr)
+	XGVolumeEjectWithOperationFinish func(uintptr, uintptr, **glib.Error) bool
+	XGVolumeEnumerateIdentifiers     func(uintptr) []string
+	XGVolumeGetActivationRoot        func(uintptr) uintptr
+	XGVolumeGetDrive                 func(uintptr) uintptr
+	XGVolumeGetIcon                  func(uintptr) uintptr
+	XGVolumeGetIdentifier            func(uintptr, string) string
+	XGVolumeGetMount                 func(uintptr) uintptr
+	XGVolumeGetName                  func(uintptr) string
+	XGVolumeGetSortKey               func(uintptr) string
+	XGVolumeGetSymbolicIcon          func(uintptr) uintptr
+	XGVolumeGetUuid                  func(uintptr) string
+	XGVolumeMount                    func(uintptr, MountMountFlags, uintptr, uintptr, uintptr, uintptr)
+	XGVolumeMountFinish              func(uintptr, uintptr, **glib.Error) bool
+	XGVolumeShouldAutomount          func(uintptr) bool
+)
 
 const (
 	// The string used to obtain the volume class with g_volume_get_identifier().
@@ -1054,7 +1013,7 @@ const (
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1085,5 +1044,4 @@ func init() {
 	core.PuregoSafeRegister(&XGVolumeMount, libs, "g_volume_mount")
 	core.PuregoSafeRegister(&XGVolumeMountFinish, libs, "g_volume_mount_finish")
 	core.PuregoSafeRegister(&XGVolumeShouldAutomount, libs, "g_volume_should_automount")
-
 }

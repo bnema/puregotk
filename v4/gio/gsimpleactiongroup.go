@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -73,9 +72,7 @@ var xSimpleActionGroupAddEntries func(uintptr, []ActionEntry, int, uintptr)
 // A convenience function for creating multiple #GSimpleAction instances
 // and adding them to the action group.
 func (x *SimpleActionGroup) AddEntries(EntriesVar []ActionEntry, NEntriesVar int, UserDataVar uintptr) {
-
 	xSimpleActionGroupAddEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
-
 }
 
 var xSimpleActionGroupInsert func(uintptr, uintptr)
@@ -87,9 +84,7 @@ var xSimpleActionGroupInsert func(uintptr, uintptr)
 //
 // The action group takes its own reference on @action.
 func (x *SimpleActionGroup) Insert(ActionVar Action) {
-
 	xSimpleActionGroupInsert(x.GoPointer(), ActionVar.GoPointer())
-
 }
 
 var xSimpleActionGroupLookup func(uintptr, string) uintptr
@@ -117,9 +112,7 @@ var xSimpleActionGroupRemove func(uintptr, string)
 //
 // If no action of this name is in the group then nothing happens.
 func (x *SimpleActionGroup) Remove(ActionNameVar string) {
-
 	xSimpleActionGroupRemove(x.GoPointer(), ActionNameVar)
-
 }
 
 func (c *SimpleActionGroup) GoPointer() uintptr {
@@ -137,36 +130,28 @@ func (c *SimpleActionGroup) SetGoPointer(ptr uintptr) {
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *SimpleActionGroup) ActionAdded(ActionNameVar string) {
-
 	XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *SimpleActionGroup) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
-
 	XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *SimpleActionGroup) ActionRemoved(ActionNameVar string) {
-
 	XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *SimpleActionGroup) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
-
 	XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
-
 }
 
 // Activate the named action within @action_group.
@@ -203,9 +188,7 @@ func (x *SimpleActionGroup) ActionStateChanged(ActionNameVar string, StateVar *g
 // exit (0);
 // ```
 func (x *SimpleActionGroup) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
-
 	XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
-
 }
 
 // Request for the state of the named action within @action_group to be
@@ -220,9 +203,7 @@ func (x *SimpleActionGroup) ActivateAction(ActionNameVar string, ParameterVar *g
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *SimpleActionGroup) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
-
 	XGActionGroupChangeActionState(x.GoPointer(), ActionNameVar, ValueVar)
-
 }
 
 // Checks if the named action within @action_group is currently enabled.
@@ -230,7 +211,6 @@ func (x *SimpleActionGroup) ChangeActionState(ActionNameVar string, ValueVar *gl
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *SimpleActionGroup) GetActionEnabled(ActionNameVar string) bool {
-
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -249,9 +229,11 @@ func (x *SimpleActionGroup) GetActionEnabled(ActionNameVar string) bool {
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different parameter type.
 func (x *SimpleActionGroup) GetActionParameterType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -263,9 +245,11 @@ func (x *SimpleActionGroup) GetActionParameterType(ActionNameVar string) *glib.V
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -287,9 +271,11 @@ func (x *SimpleActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -309,14 +295,15 @@ func (x *SimpleActionGroup) GetActionStateHint(ActionNameVar string) *glib.Varia
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different state type.
 func (x *SimpleActionGroup) GetActionStateType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.
 func (x *SimpleActionGroup) HasAction(ActionNameVar string) bool {
-
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -326,7 +313,6 @@ func (x *SimpleActionGroup) HasAction(ActionNameVar string) bool {
 // The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *SimpleActionGroup) ListActions() []string {
-
 	cret := XGActionGroupListActions(x.GoPointer())
 	return cret
 }
@@ -359,7 +345,6 @@ func (x *SimpleActionGroup) ListActions() []string {
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *SimpleActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
-
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
 }
@@ -371,9 +356,7 @@ func (x *SimpleActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, 
 //
 // The action map takes its own reference on @action.
 func (x *SimpleActionGroup) AddAction(ActionVar Action) {
-
 	XGActionMapAddAction(x.GoPointer(), ActionVar.GoPointer())
-
 }
 
 // A convenience function for creating multiple [class@Gio.SimpleAction]
@@ -420,9 +403,7 @@ func (x *SimpleActionGroup) AddAction(ActionVar Action) {
 //
 // ```
 func (x *SimpleActionGroup) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int, UserDataVar uintptr) {
-
 	XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
-
 }
 
 // Looks up the action with the name @action_name in @action_map.
@@ -446,9 +427,7 @@ func (x *SimpleActionGroup) LookupAction(ActionNameVar string) *ActionBase {
 //
 // If no action of this name is in the map then nothing happens.
 func (x *SimpleActionGroup) RemoveAction(ActionNameVar string) {
-
 	XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
-
 }
 
 // Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
@@ -477,14 +456,12 @@ func (x *SimpleActionGroup) RemoveAction(ActionNameVar string) {
 //
 // ```
 func (x *SimpleActionGroup) RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int) {
-
 	XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -502,5 +479,4 @@ func init() {
 	core.PuregoSafeRegister(&xSimpleActionGroupInsert, libs, "g_simple_action_group_insert")
 	core.PuregoSafeRegister(&xSimpleActionGroupLookup, libs, "g_simple_action_group_lookup")
 	core.PuregoSafeRegister(&xSimpleActionGroupRemove, libs, "g_simple_action_group_remove")
-
 }

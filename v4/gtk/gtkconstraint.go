@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -147,7 +146,6 @@ var xConstraintGetConstant func(uintptr) float64
 
 // Retrieves the constant factor added to the source attributes' value.
 func (x *Constraint) GetConstant() float64 {
-
 	cret := xConstraintGetConstant(x.GoPointer())
 	return cret
 }
@@ -157,7 +155,6 @@ var xConstraintGetMultiplier func(uintptr) float64
 // Retrieves the multiplication factor applied to the source
 // attribute's value.
 func (x *Constraint) GetMultiplier() float64 {
-
 	cret := xConstraintGetMultiplier(x.GoPointer())
 	return cret
 }
@@ -166,7 +163,6 @@ var xConstraintGetRelation func(uintptr) ConstraintRelation
 
 // The order relation between the terms of the constraint.
 func (x *Constraint) GetRelation() ConstraintRelation {
-
 	cret := xConstraintGetRelation(x.GoPointer())
 	return cret
 }
@@ -196,7 +192,6 @@ var xConstraintGetSourceAttribute func(uintptr) ConstraintAttribute
 
 // Retrieves the attribute of the source to be read by the constraint.
 func (x *Constraint) GetSourceAttribute() ConstraintAttribute {
-
 	cret := xConstraintGetSourceAttribute(x.GoPointer())
 	return cret
 }
@@ -205,7 +200,6 @@ var xConstraintGetStrength func(uintptr) int
 
 // Retrieves the strength of the constraint.
 func (x *Constraint) GetStrength() int {
-
 	cret := xConstraintGetStrength(x.GoPointer())
 	return cret
 }
@@ -235,7 +229,6 @@ var xConstraintGetTargetAttribute func(uintptr) ConstraintAttribute
 
 // Retrieves the attribute of the target to be set by the constraint.
 func (x *Constraint) GetTargetAttribute() ConstraintAttribute {
-
 	cret := xConstraintGetTargetAttribute(x.GoPointer())
 	return cret
 }
@@ -245,7 +238,6 @@ var xConstraintIsAttached func(uintptr) bool
 // Checks whether the constraint is attached to a [class@Gtk.ConstraintLayout],
 // and it is contributing to the layout.
 func (x *Constraint) IsAttached() bool {
-
 	cret := xConstraintIsAttached(x.GoPointer())
 	return cret
 }
@@ -255,7 +247,6 @@ var xConstraintIsConstant func(uintptr) bool
 // Checks whether the constraint describes a relation between an attribute
 // on the [property@Gtk.Constraint:target] and a constant value.
 func (x *Constraint) IsConstant() bool {
-
 	cret := xConstraintIsConstant(x.GoPointer())
 	return cret
 }
@@ -265,7 +256,6 @@ var xConstraintIsRequired func(uintptr) bool
 // Checks whether the constraint is a required relation for solving the
 // constraint layout.
 func (x *Constraint) IsRequired() bool {
-
 	cret := xConstraintIsRequired(x.GoPointer())
 	return cret
 }
@@ -344,7 +334,7 @@ func (x *Constraint) GetPropertyStrength() int {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -372,5 +362,4 @@ func init() {
 	core.PuregoSafeRegister(&xConstraintIsRequired, libs, "gtk_constraint_is_required")
 
 	core.PuregoSafeRegister(&xConstraintTargetGLibType, libs, "gtk_constraint_target_get_type")
-
 }

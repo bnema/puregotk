@@ -4,8 +4,7 @@
 package layershell
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -62,15 +61,12 @@ var xAutoExclusiveZoneEnable func(uintptr)
 // NOTE: you can control the auto exclusive zone by changing the margin on the non-anchored
 // edge. This behavior is specific to gtk4-layer-shell and not part of the underlying protocol
 func AutoExclusiveZoneEnable(WindowVar *gtk.Window) {
-
 	xAutoExclusiveZoneEnable(WindowVar.GoPointer())
-
 }
 
 var xAutoExclusiveZoneIsEnabled func(uintptr) bool
 
 func AutoExclusiveZoneIsEnabled(WindowVar *gtk.Window) bool {
-
 	cret := xAutoExclusiveZoneIsEnabled(WindowVar.GoPointer())
 	return cret
 }
@@ -78,7 +74,6 @@ func AutoExclusiveZoneIsEnabled(WindowVar *gtk.Window) bool {
 var xGetAnchor func(uintptr, Edge) bool
 
 func GetAnchor(WindowVar *gtk.Window, EdgeVar Edge) bool {
-
 	cret := xGetAnchor(WindowVar.GoPointer(), EdgeVar)
 	return cret
 }
@@ -86,7 +81,6 @@ func GetAnchor(WindowVar *gtk.Window, EdgeVar Edge) bool {
 var xGetExclusiveZone func(uintptr) int
 
 func GetExclusiveZone(WindowVar *gtk.Window) int {
-
 	cret := xGetExclusiveZone(WindowVar.GoPointer())
 	return cret
 }
@@ -94,7 +88,6 @@ func GetExclusiveZone(WindowVar *gtk.Window) int {
 var xGetKeyboardMode func(uintptr) KeyboardMode
 
 func GetKeyboardMode(WindowVar *gtk.Window) KeyboardMode {
-
 	cret := xGetKeyboardMode(WindowVar.GoPointer())
 	return cret
 }
@@ -102,7 +95,6 @@ func GetKeyboardMode(WindowVar *gtk.Window) KeyboardMode {
 var xGetLayer func(uintptr) Layer
 
 func GetLayer(WindowVar *gtk.Window) Layer {
-
 	cret := xGetLayer(WindowVar.GoPointer())
 	return cret
 }
@@ -110,7 +102,6 @@ func GetLayer(WindowVar *gtk.Window) Layer {
 var xGetMajorVersion func() uint
 
 func GetMajorVersion() uint {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -118,7 +109,6 @@ func GetMajorVersion() uint {
 var xGetMargin func(uintptr, Edge) int
 
 func GetMargin(WindowVar *gtk.Window, EdgeVar Edge) int {
-
 	cret := xGetMargin(WindowVar.GoPointer(), EdgeVar)
 	return cret
 }
@@ -126,7 +116,6 @@ func GetMargin(WindowVar *gtk.Window, EdgeVar Edge) int {
 var xGetMicroVersion func() uint
 
 func GetMicroVersion() uint {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -134,7 +123,6 @@ func GetMicroVersion() uint {
 var xGetMinorVersion func() uint
 
 func GetMinorVersion() uint {
-
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -162,7 +150,6 @@ var xGetNamespace func(uintptr) string
 // NOTE: this function does not return ownership of the string. Do not free the returned string.
 // Future calls into the library may invalidate the returned string.
 func GetNamespace(WindowVar *gtk.Window) string {
-
 	cret := xGetNamespace(WindowVar.GoPointer())
 	return cret
 }
@@ -171,7 +158,6 @@ var xGetProtocolVersion func() uint
 
 // May block for a Wayland roundtrip the first time it's called.
 func GetProtocolVersion() uint {
-
 	cret := xGetProtocolVersion()
 	return cret
 }
@@ -179,7 +165,6 @@ func GetProtocolVersion() uint {
 var xGetRespectClose func(uintptr) bool
 
 func GetRespectClose(WindowVar *gtk.Window) bool {
-
 	cret := xGetRespectClose(WindowVar.GoPointer())
 	return cret
 }
@@ -187,7 +172,6 @@ func GetRespectClose(WindowVar *gtk.Window) bool {
 var xGetZwlrLayerSurfaceV1 func(uintptr) uintptr
 
 func GetZwlrLayerSurfaceV1(WindowVar *gtk.Window) uintptr {
-
 	cret := xGetZwlrLayerSurfaceV1(WindowVar.GoPointer())
 	return cret
 }
@@ -197,15 +181,12 @@ var xInitForWindow func(uintptr)
 // Set the @window up to be a layer surface once it is mapped. this must be called before
 // the @window is realized.
 func InitForWindow(WindowVar *gtk.Window) {
-
 	xInitForWindow(WindowVar.GoPointer())
-
 }
 
 var xIsLayerWindow func(uintptr) bool
 
 func IsLayerWindow(WindowVar *gtk.Window) bool {
-
 	cret := xIsLayerWindow(WindowVar.GoPointer())
 	return cret
 }
@@ -214,7 +195,6 @@ var xIsSupported func() bool
 
 // May block for a Wayland roundtrip the first time it's called.
 func IsSupported() bool {
-
 	cret := xIsSupported()
 	return cret
 }
@@ -227,9 +207,7 @@ var xSetAnchor func(uintptr, Edge, bool)
 //
 // Default is %FALSE for each #GtkLayerShellEdge
 func SetAnchor(WindowVar *gtk.Window, EdgeVar Edge, AnchorToEdgeVar bool) {
-
 	xSetAnchor(WindowVar.GoPointer(), EdgeVar, AnchorToEdgeVar)
-
 }
 
 var xSetExclusiveZone func(uintptr, int)
@@ -241,9 +219,7 @@ var xSetExclusiveZone func(uintptr, int)
 //
 // Default is 0
 func SetExclusiveZone(WindowVar *gtk.Window, ExclusiveZoneVar int) {
-
 	xSetExclusiveZone(WindowVar.GoPointer(), ExclusiveZoneVar)
-
 }
 
 var xSetKeyboardMode func(uintptr, KeyboardMode)
@@ -254,9 +230,7 @@ var xSetKeyboardMode func(uintptr, KeyboardMode)
 //
 // Default is %GTK_LAYER_SHELL_KEYBOARD_MODE_NONE
 func SetKeyboardMode(WindowVar *gtk.Window, ModeVar KeyboardMode) {
-
 	xSetKeyboardMode(WindowVar.GoPointer(), ModeVar)
-
 }
 
 var xSetLayer func(uintptr, Layer)
@@ -267,9 +241,7 @@ var xSetLayer func(uintptr, Layer)
 //
 // Default is %GTK_LAYER_SHELL_LAYER_TOP
 func SetLayer(WindowVar *gtk.Window, LayerVar Layer) {
-
 	xSetLayer(WindowVar.GoPointer(), LayerVar)
-
 }
 
 var xSetMargin func(uintptr, Edge, int)
@@ -279,9 +251,7 @@ var xSetMargin func(uintptr, Edge, int)
 //
 // Default is 0 for each #GtkLayerShellEdge
 func SetMargin(WindowVar *gtk.Window, EdgeVar Edge, MarginSizeVar int) {
-
 	xSetMargin(WindowVar.GoPointer(), EdgeVar, MarginSizeVar)
-
 }
 
 var xSetMonitor func(uintptr, uintptr)
@@ -291,14 +261,7 @@ var xSetMonitor func(uintptr, uintptr)
 //
 // Default is %NULL
 func SetMonitor(WindowVar *gtk.Window, MonitorVar *gdk.Monitor) {
-
-	var MonitorVarPtr uintptr
-	if MonitorVar != nil {
-		MonitorVarPtr = MonitorVar.GoPointer()
-	}
-
-	xSetMonitor(WindowVar.GoPointer(), MonitorVarPtr)
-
+	xSetMonitor(WindowVar.GoPointer(), MonitorVar.GoPointer())
 }
 
 var xSetNamespace func(uintptr, uintptr)
@@ -312,12 +275,10 @@ var xSetNamespace func(uintptr, uintptr)
 //
 // Default is "gtk4-layer-shell" (which will be used if set to %NULL)
 func SetNamespace(WindowVar *gtk.Window, NameSpaceVar *string) {
-
 	NameSpaceVarPtr := core.GStrdupNullable(NameSpaceVar)
 	defer core.GFreeNullable(NameSpaceVarPtr)
 
 	xSetNamespace(WindowVar.GoPointer(), NameSpaceVarPtr)
-
 }
 
 var xSetRespectClose func(uintptr, bool)
@@ -329,23 +290,19 @@ var xSetRespectClose func(uintptr, bool)
 // function with %TRUE. To handle the `.closed` event without destroying your window
 // turn respect_close on and connect a `close-request` listener that returns %TRUE.
 func SetRespectClose(WindowVar *gtk.Window, RespectCloseVar bool) {
-
 	xSetRespectClose(WindowVar.GoPointer(), RespectCloseVar)
-
 }
 
 var libs []uintptr
 
 // Available reports whether the shared library was loaded successfully.
-// Check this before calling any functions in this package.
 func Available() bool {
 	return len(libs) > 0
 }
 
 func init() {
 	core.SetPackageName("LAYERSHELL", "gtk4-layer-shell-0")
-	core.SetSharedLibraries("LAYERSHELL", []string{"libgtk4-layer-shell.so.0"})
-
+	core.SetSharedLibraries("LAYERSHELL", []string{"libgtk4-layer-shell.so.0", "libgtk4-layer-shell.0.dylib"})
 	for _, libPath := range core.TryGetPaths("LAYERSHELL") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
 		if err != nil {
@@ -380,5 +337,4 @@ func init() {
 	core.PuregoSafeRegister(&xSetMonitor, libs, "gtk_layer_set_monitor")
 	core.PuregoSafeRegister(&xSetNamespace, libs, "gtk_layer_set_namespace")
 	core.PuregoSafeRegister(&xSetRespectClose, libs, "gtk_layer_set_respect_close")
-
 }

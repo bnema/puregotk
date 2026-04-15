@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -202,7 +201,6 @@ var xRangeGetFillLevel func(uintptr) float64
 
 // Gets the current position of the fill level indicator.
 func (x *Range) GetFillLevel() float64 {
-
 	cret := xRangeGetFillLevel(x.GoPointer())
 	return cret
 }
@@ -213,7 +211,6 @@ var xRangeGetFlippable func(uintptr) bool
 //
 // See [method@Gtk.Range.set_flippable].
 func (x *Range) GetFlippable() bool {
-
 	cret := xRangeGetFlippable(x.GoPointer())
 	return cret
 }
@@ -224,7 +221,6 @@ var xRangeGetInverted func(uintptr) bool
 //
 // See [method@Gtk.Range.set_inverted].
 func (x *Range) GetInverted() bool {
-
 	cret := xRangeGetInverted(x.GoPointer())
 	return cret
 }
@@ -236,16 +232,13 @@ var xRangeGetRangeRect func(uintptr, *gdk.Rectangle)
 //
 // This function is useful mainly for `GtkRange` subclasses.
 func (x *Range) GetRangeRect(RangeRectVar *gdk.Rectangle) {
-
 	xRangeGetRangeRect(x.GoPointer(), RangeRectVar)
-
 }
 
 var xRangeGetRestrictToFillLevel func(uintptr) bool
 
 // Gets whether the range is restricted to the fill level.
 func (x *Range) GetRestrictToFillLevel() bool {
-
 	cret := xRangeGetRestrictToFillLevel(x.GoPointer())
 	return cret
 }
@@ -257,7 +250,6 @@ var xRangeGetRoundDigits func(uintptr) int
 //
 // See [signal@Gtk.Range::change-value].
 func (x *Range) GetRoundDigits() int {
-
 	cret := xRangeGetRoundDigits(x.GoPointer())
 	return cret
 }
@@ -266,7 +258,6 @@ var xRangeGetShowFillLevel func(uintptr) bool
 
 // Gets whether the range displays the fill level graphically.
 func (x *Range) GetShowFillLevel() bool {
-
 	cret := xRangeGetShowFillLevel(x.GoPointer())
 	return cret
 }
@@ -278,9 +269,7 @@ var xRangeGetSliderRange func(uintptr, *int, *int)
 //
 // This function is useful mainly for `GtkRange` subclasses.
 func (x *Range) GetSliderRange(SliderStartVar *int, SliderEndVar *int) {
-
 	xRangeGetSliderRange(x.GoPointer(), SliderStartVar, SliderEndVar)
-
 }
 
 var xRangeGetSliderSizeFixed func(uintptr) bool
@@ -289,7 +278,6 @@ var xRangeGetSliderSizeFixed func(uintptr) bool
 //
 // See [method@Gtk.Range.set_slider_size_fixed].
 func (x *Range) GetSliderSizeFixed() bool {
-
 	cret := xRangeGetSliderSizeFixed(x.GoPointer())
 	return cret
 }
@@ -298,7 +286,6 @@ var xRangeGetValue func(uintptr) float64
 
 // Gets the current value of the range.
 func (x *Range) GetValue() float64 {
-
 	cret := xRangeGetValue(x.GoPointer())
 	return cret
 }
@@ -315,9 +302,7 @@ var xRangeSetAdjustment func(uintptr, uintptr)
 // and indicates the size of the visible area of the widget being scrolled.
 // The page size affects the size of the scrollbar slider.
 func (x *Range) SetAdjustment(AdjustmentVar *Adjustment) {
-
 	xRangeSetAdjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xRangeSetFillLevel func(uintptr, float64)
@@ -340,9 +325,7 @@ var xRangeSetFillLevel func(uintptr, float64)
 // by [method@Gtk.Range.set_restrict_to_fill_level] and is by default
 // enabled.
 func (x *Range) SetFillLevel(FillLevelVar float64) {
-
 	xRangeSetFillLevel(x.GoPointer(), FillLevelVar)
-
 }
 
 var xRangeSetFlippable func(uintptr, bool)
@@ -354,9 +337,7 @@ var xRangeSetFlippable func(uintptr, bool)
 //
 // See [method@Gtk.Widget.get_direction].
 func (x *Range) SetFlippable(FlippableVar bool) {
-
 	xRangeSetFlippable(x.GoPointer(), FlippableVar)
-
 }
 
 var xRangeSetIncrements func(uintptr, float64, float64)
@@ -367,9 +348,7 @@ var xRangeSetIncrements func(uintptr, float64, float64)
 // arrows or moves a `GtkScale` via arrow keys. The page size
 // is used for example when moving via Page Up or Page Down keys.
 func (x *Range) SetIncrements(StepVar float64, PageVar float64) {
-
 	xRangeSetIncrements(x.GoPointer(), StepVar, PageVar)
-
 }
 
 var xRangeSetInverted func(uintptr, bool)
@@ -381,9 +360,7 @@ var xRangeSetInverted func(uintptr, bool)
 // ranges have higher values at the top or on the right rather
 // than on the bottom or left.
 func (x *Range) SetInverted(SettingVar bool) {
-
 	xRangeSetInverted(x.GoPointer(), SettingVar)
-
 }
 
 var xRangeSetRange func(uintptr, float64, float64)
@@ -394,9 +371,7 @@ var xRangeSetRange func(uintptr, float64, float64)
 // (If the range has a non-zero page size, it is clamped
 // between @min and @max - page-size.)
 func (x *Range) SetRange(MinVar float64, MaxVar float64) {
-
 	xRangeSetRange(x.GoPointer(), MinVar, MaxVar)
-
 }
 
 var xRangeSetRestrictToFillLevel func(uintptr, bool)
@@ -406,9 +381,7 @@ var xRangeSetRestrictToFillLevel func(uintptr, bool)
 // See [method@Gtk.Range.set_fill_level] for a general description
 // of the fill level concept.
 func (x *Range) SetRestrictToFillLevel(RestrictToFillLevelVar bool) {
-
 	xRangeSetRestrictToFillLevel(x.GoPointer(), RestrictToFillLevelVar)
-
 }
 
 var xRangeSetRoundDigits func(uintptr, int)
@@ -418,9 +391,7 @@ var xRangeSetRoundDigits func(uintptr, int)
 //
 // See [signal@Gtk.Range::change-value].
 func (x *Range) SetRoundDigits(RoundDigitsVar int) {
-
 	xRangeSetRoundDigits(x.GoPointer(), RoundDigitsVar)
-
 }
 
 var xRangeSetShowFillLevel func(uintptr, bool)
@@ -430,9 +401,7 @@ var xRangeSetShowFillLevel func(uintptr, bool)
 // See [method@Gtk.Range.set_fill_level] for a general description
 // of the fill level concept.
 func (x *Range) SetShowFillLevel(ShowFillLevelVar bool) {
-
 	xRangeSetShowFillLevel(x.GoPointer(), ShowFillLevelVar)
-
 }
 
 var xRangeSetSliderSizeFixed func(uintptr, bool)
@@ -442,9 +411,7 @@ var xRangeSetSliderSizeFixed func(uintptr, bool)
 //
 // This function is useful mainly for `GtkRange` subclasses.
 func (x *Range) SetSliderSizeFixed(SizeFixedVar bool) {
-
 	xRangeSetSliderSizeFixed(x.GoPointer(), SizeFixedVar)
-
 }
 
 var xRangeSetValue func(uintptr, float64)
@@ -455,9 +422,7 @@ var xRangeSetValue func(uintptr, float64)
 // it will be clamped to fit inside them. The range emits the
 // [signal@Gtk.Range::value-changed] signal if the value changes.
 func (x *Range) SetValue(ValueVar float64) {
-
 	xRangeSetValue(x.GoPointer(), ValueVar)
-
 }
 
 func (c *Range) GoPointer() uintptr {
@@ -582,7 +547,6 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -617,7 +581,6 @@ func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) ui
 		cbFn := *cb
 
 		return cbFn(fa, ScrollVarp, ValueVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -643,7 +606,6 @@ func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint {
 		cbFn := *cb
 
 		cbFn(fa, StepVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -667,7 +629,6 @@ func (x *Range) ConnectValueChanged(cb *func(Range)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -686,9 +647,19 @@ func (x *Range) ConnectValueChanged(cb *func(Range)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Range) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Range) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -709,7 +680,6 @@ func (x *Range) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Range) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -734,7 +704,6 @@ func (x *Range) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Range) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -773,30 +742,23 @@ func (x *Range) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Range) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Range) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Range) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Range) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -809,19 +771,7 @@ func (x *Range) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Range) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -829,14 +779,7 @@ func (x *Range) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Range) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -845,9 +788,7 @@ func (x *Range) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Range) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -869,9 +810,7 @@ func (x *Range) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Range) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -881,9 +820,7 @@ func (x *Range) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Range) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -905,9 +842,7 @@ func (x *Range) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Range) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -917,9 +852,7 @@ func (x *Range) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Range) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -942,9 +875,7 @@ func (x *Range) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Range) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -954,9 +885,7 @@ func (x *Range) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Range) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -964,28 +893,24 @@ func (x *Range) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Range) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Range) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Range) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1019,5 +944,4 @@ func init() {
 	core.PuregoSafeRegister(&xRangeSetShowFillLevel, libs, "gtk_range_set_show_fill_level")
 	core.PuregoSafeRegister(&xRangeSetSliderSizeFixed, libs, "gtk_range_set_slider_size_fixed")
 	core.PuregoSafeRegister(&xRangeSetValue, libs, "gtk_range_set_value")
-
 }

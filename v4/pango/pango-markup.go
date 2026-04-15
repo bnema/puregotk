@@ -2,8 +2,9 @@
 package pango
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -24,10 +25,9 @@ func MarkupParserFinish(ContextVar *glib.MarkupParseContext, AttrListVar **AttrL
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xMarkupParserNew func(uint32) *glib.MarkupParseContext
+var xMarkupParserNew func(uint32) uintptr
 
 // Incrementally parses marked-up text to create a plain-text string
 // and an attribute list.
@@ -52,9 +52,11 @@ var xMarkupParserNew func(uint32) *glib.MarkupParseContext
 // from streams. To simply parse a string containing Pango markup,
 // the [func@Pango.parse_markup] API is recommended instead.
 func MarkupParserNew(AccelMarkerVar uint32) *glib.MarkupParseContext {
-
 	cret := xMarkupParserNew(AccelMarkerVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.MarkupParseContext)(unsafe.Pointer(cret))
 }
 
 var xParseMarkup func(string, int, uint32, **AttrList, *string, *uint32, **glib.Error) bool
@@ -84,12 +86,11 @@ func ParseMarkup(MarkupTextVar string, LengthVar int, AccelMarkerVar uint32, Att
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -102,5 +103,4 @@ func init() {
 	core.PuregoSafeRegister(&xMarkupParserFinish, libs, "pango_markup_parser_finish")
 	core.PuregoSafeRegister(&xMarkupParserNew, libs, "pango_markup_parser_new")
 	core.PuregoSafeRegister(&xParseMarkup, libs, "pango_parse_markup")
-
 }

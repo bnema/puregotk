@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -70,9 +69,7 @@ var xListStoreAppend func(uintptr, uintptr)
 // Use g_list_store_splice() to append multiple items at the same time
 // efficiently.
 func (x *ListStore) Append(ItemVar *gobject.Object) {
-
 	xListStoreAppend(x.GoPointer(), ItemVar.GoPointer())
-
 }
 
 var xListStoreFind func(uintptr, uintptr, *uint) bool
@@ -84,7 +81,6 @@ var xListStoreFind func(uintptr, uintptr, *uint) bool
 // If you need to compare the two items with a custom comparison function, use
 // g_list_store_find_with_equal_func() with a custom #GEqualFunc instead.
 func (x *ListStore) Find(ItemVar *gobject.Object, PositionVar *uint) bool {
-
 	cret := xListStoreFind(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
 	return cret
 }
@@ -100,28 +96,7 @@ var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, *uint) bool
 //
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
 func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFunc, PositionVar *uint) bool {
-
-	var EqualFuncVarRef uintptr
-	if EqualFuncVar != nil {
-		EqualFuncVarPtr := uintptr(unsafe.Pointer(EqualFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(EqualFuncVarPtr); ok {
-			EqualFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) bool {
-				cbFn := *EqualFuncVar
-				return cbFn(arg0, arg1)
-			}
-			EqualFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(EqualFuncVarPtr, EqualFuncVarRef, EqualFuncVar)
-		}
-	}
-
-	var ItemVarPtr uintptr
-	if ItemVar != nil {
-		ItemVarPtr = ItemVar.GoPointer()
-	}
-
-	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVarPtr, EqualFuncVarRef, PositionVar)
+	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), PositionVar)
 	return cret
 }
 
@@ -134,28 +109,7 @@ var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, *ui
 //
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
 func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFuncFull, UserDataVar uintptr, PositionVar *uint) bool {
-
-	var EqualFuncVarRef uintptr
-	if EqualFuncVar != nil {
-		EqualFuncVarPtr := uintptr(unsafe.Pointer(EqualFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(EqualFuncVarPtr); ok {
-			EqualFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
-				cbFn := *EqualFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			EqualFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(EqualFuncVarPtr, EqualFuncVarRef, EqualFuncVar)
-		}
-	}
-
-	var ItemVarPtr uintptr
-	if ItemVar != nil {
-		ItemVarPtr = ItemVar.GoPointer()
-	}
-
-	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVarPtr, EqualFuncVarRef, UserDataVar, PositionVar)
+	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), UserDataVar, PositionVar)
 	return cret
 }
 
@@ -170,9 +124,7 @@ var xListStoreInsert func(uintptr, uint, uintptr)
 // Use g_list_store_splice() to insert multiple items at the same time
 // efficiently.
 func (x *ListStore) Insert(PositionVar uint, ItemVar *gobject.Object) {
-
 	xListStoreInsert(x.GoPointer(), PositionVar, ItemVar.GoPointer())
-
 }
 
 var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint
@@ -186,23 +138,7 @@ var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint
 //
 // This function takes a ref on @item.
 func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) uint {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
-	}
-
-	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), CompareFuncVarRef, UserDataVar)
+	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 	return cret
 }
 
@@ -214,42 +150,21 @@ var xListStoreRemove func(uintptr, uint)
 // Use g_list_store_splice() to remove multiple items at the same time
 // efficiently.
 func (x *ListStore) Remove(PositionVar uint) {
-
 	xListStoreRemove(x.GoPointer(), PositionVar)
-
 }
 
 var xListStoreRemoveAll func(uintptr)
 
 // Removes all items from @store.
 func (x *ListStore) RemoveAll() {
-
 	xListStoreRemoveAll(x.GoPointer())
-
 }
 
 var xListStoreSort func(uintptr, uintptr, uintptr)
 
 // Sort the items in @store according to @compare_func.
 func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
-	}
-
-	xListStoreSort(x.GoPointer(), CompareFuncVarRef, UserDataVar)
-
+	xListStoreSort(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 }
 
 var xListStoreSplice func(uintptr, uint, uint, uintptr, uint)
@@ -267,10 +182,8 @@ var xListStoreSplice func(uintptr, uint, uint, uintptr, uint)
 // The parameters @position and @n_removals must be correct (ie:
 // @position + @n_removals must be less than or equal to the length of
 // the list at the time this function is called).
-func (x *ListStore) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar uintptr, NAdditionsVar uint) {
-
+func (x *ListStore) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar []gobject.Object, NAdditionsVar uint) {
 	xListStoreSplice(x.GoPointer(), PositionVar, NRemovalsVar, AdditionsVar, NAdditionsVar)
-
 }
 
 func (c *ListStore) GoPointer() uintptr {
@@ -302,7 +215,6 @@ func (x *ListStore) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *ListStore) GetItem(PositionVar uint) uintptr {
-
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -316,7 +228,6 @@ func (x *ListStore) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ListStore) GetItemType() types.GType {
-
 	cret := XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -327,7 +238,6 @@ func (x *ListStore) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ListStore) GetNItems() uint {
-
 	cret := XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -378,14 +288,12 @@ func (x *ListStore) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ListStore) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -409,5 +317,4 @@ func init() {
 	core.PuregoSafeRegister(&xListStoreRemoveAll, libs, "g_list_store_remove_all")
 	core.PuregoSafeRegister(&xListStoreSort, libs, "g_list_store_sort")
 	core.PuregoSafeRegister(&xListStoreSplice, libs, "g_list_store_splice")
-
 }

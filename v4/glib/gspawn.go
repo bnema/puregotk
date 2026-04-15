@@ -2,10 +2,7 @@
 package glib
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -159,31 +156,14 @@ var xSpawnAsync func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, 
 func SpawnAsync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid) (bool, error) {
 	var cerr *Error
 
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
 	WorkingDirectoryVarPtr := core.GStrdupNullable(WorkingDirectoryVar)
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
-	cret := xSpawnAsync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, &cerr)
-
+	cret := xSpawnAsync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithFds func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, *Pid, int, int, int, **Error) bool
@@ -195,31 +175,14 @@ var xSpawnAsyncWithFds func(uintptr, []string, []string, SpawnFlags, uintptr, ui
 func SpawnAsyncWithFds(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StdinFdVar int, StdoutFdVar int, StderrFdVar int) (bool, error) {
 	var cerr *Error
 
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
 	WorkingDirectoryVarPtr := core.GStrdupNullable(WorkingDirectoryVar)
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
-	cret := xSpawnAsyncWithFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
-
+	cret := xSpawnAsyncWithFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithPipes func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, *Pid, *int, *int, *int, **Error) bool
@@ -229,31 +192,14 @@ var xSpawnAsyncWithPipes func(uintptr, []string, []string, SpawnFlags, uintptr, 
 func SpawnAsyncWithPipes(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StandardInputVar *int, StandardOutputVar *int, StandardErrorVar *int) (bool, error) {
 	var cerr *Error
 
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
 	WorkingDirectoryVarPtr := core.GStrdupNullable(WorkingDirectoryVar)
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
-	cret := xSpawnAsyncWithPipes(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
-
+	cret := xSpawnAsyncWithPipes(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnAsyncWithPipesAndFds func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, int, int, int, []int, []int, uint, *Pid, *int, *int, *int, **Error) bool
@@ -455,31 +401,14 @@ var xSpawnAsyncWithPipesAndFds func(uintptr, []string, []string, SpawnFlags, uin
 func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StdinFdVar int, StdoutFdVar int, StderrFdVar int, SourceFdsVar []int, TargetFdsVar []int, NFdsVar uint, ChildPidOutVar *Pid, StdinPipeOutVar *int, StdoutPipeOutVar *int, StderrPipeOutVar *int) (bool, error) {
 	var cerr *Error
 
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
 	WorkingDirectoryVarPtr := core.GStrdupNullable(WorkingDirectoryVar)
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
-	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
-
+	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCheckExitStatus func(int, **Error) bool
@@ -501,7 +430,6 @@ func SpawnCheckExitStatus(WaitStatusVar int) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCheckWaitStatus func(int, **Error) bool
@@ -554,7 +482,6 @@ func SpawnCheckWaitStatus(WaitStatusVar int) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnClosePid func(Pid)
@@ -564,9 +491,7 @@ var xSpawnClosePid func(Pid)
 // is provided for this purpose. It should be used on all platforms, even
 // though it doesn't do anything under UNIX.
 func SpawnClosePid(PidVar Pid) {
-
 	xSpawnClosePid(PidVar)
-
 }
 
 var xSpawnCommandLineAsync func(string, **Error) bool
@@ -590,7 +515,6 @@ func SpawnCommandLineAsync(CommandLineVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnCommandLineSync func(string, *[]byte, *[]byte, *int, **Error) bool
@@ -633,7 +557,6 @@ func SpawnCommandLineSync(CommandLineVar string, StandardOutputVar *[]byte, Stan
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSpawnSync func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, *[]byte, *[]byte, *int, **Error) bool
@@ -664,36 +587,19 @@ var xSpawnSync func(uintptr, []string, []string, SpawnFlags, uintptr, uintptr, *
 func SpawnSync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StandardOutputVar *[]byte, StandardErrorVar *[]byte, WaitStatusVar *int) (bool, error) {
 	var cerr *Error
 
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
 	WorkingDirectoryVarPtr := core.GStrdupNullable(WorkingDirectoryVar)
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
-	cret := xSpawnSync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
-
+	cret := xSpawnSync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -713,5 +619,4 @@ func init() {
 	core.PuregoSafeRegister(&xSpawnCommandLineAsync, libs, "g_spawn_command_line_async")
 	core.PuregoSafeRegister(&xSpawnCommandLineSync, libs, "g_spawn_command_line_sync")
 	core.PuregoSafeRegister(&xSpawnSync, libs, "g_spawn_sync")
-
 }

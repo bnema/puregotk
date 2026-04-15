@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -192,7 +191,6 @@ var xTextChildAnchorGetDeleted func(uintptr) bool
 // function — otherwise all deleted child anchors will also
 // be finalized.
 func (x *TextChildAnchor) GetDeleted() bool {
-
 	cret := xTextChildAnchorGetDeleted(x.GoPointer())
 	return cret
 }
@@ -203,7 +201,6 @@ var xTextChildAnchorGetWidgets func(uintptr, *uint) uintptr
 //
 // The order in which the widgets are returned is not defined.
 func (x *TextChildAnchor) GetWidgets(OutLenVar *uint) uintptr {
-
 	cret := xTextChildAnchorGetWidgets(x.GoPointer(), OutLenVar)
 	return cret
 }
@@ -221,7 +218,7 @@ func (c *TextChildAnchor) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -238,5 +235,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTextChildAnchorGetDeleted, libs, "gtk_text_child_anchor_get_deleted")
 	core.PuregoSafeRegister(&xTextChildAnchorGetWidgets, libs, "gtk_text_child_anchor_get_widgets")
-
 }

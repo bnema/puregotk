@@ -1,11 +1,11 @@
 package gobject
 
 import (
+	"fmt"
 	"reflect"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -61,28 +61,47 @@ func (o Object) DisconnectSignal(handler uint) {
 	glib.RemoveCallbackByHandler(handler)
 }
 
+// ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
+func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, *ParamSpec)) uint {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("notify::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
+	}
+
+	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
+		fa := Object{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+		cbFn(fa, func() *ParamSpec { cls := &ParamSpec{}; cls.Ptr = PspecVarp; return cls }())
+	}
+	cbRefPtr := glib.NewCallback(&fcb)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
+}
+
 var xTypeCheckInstanceIsAPtr func(uintptr, types.GType) bool
 
-// TypeCheckInstanceIsAPtr is like TypeCheckInstanceIsA but accepts a pointer
-// returned by GoPointer, avoiding a uintptr-to-unsafe.Pointer conversion in
-// downstream code. It returns false for a nil internal pointer.
+// TypeCheckInstanceIsAPtr is like TypeCheckInstanceIsA but accepts a GoPointer().
 func TypeCheckInstanceIsAPtr(ptr uintptr, ifaceType types.GType) bool {
 	if ptr == 0 {
 		return false
 	}
-
 	return xTypeCheckInstanceIsAPtr(ptr, ifaceType)
 }
 
-// IsA reports whether o is an instance of t, one of its subtypes, or an
-// implementation of interface type t.
+// IsA reports whether o is an instance of t, one of its subtypes, or an implementation of t.
 func (o *Object) IsA(t types.GType) bool {
 	return TypeCheckInstanceIsAPtr(o.GoPointer(), t)
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -91,7 +110,6 @@ func init() {
 		}
 		libs = append(libs, lib)
 	}
-
 	core.PuregoSafeRegister(&xTypeCheckInstanceIsAPtr, libs, "g_type_check_instance_is_a")
 }
 

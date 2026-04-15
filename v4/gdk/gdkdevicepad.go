@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -69,21 +68,18 @@ func (x *DevicePadBase) SetGoPointer(ptr uintptr) {
 //
 // f the feature or index do not exist in @pad, -1 is returned.
 func (x *DevicePadBase) GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int) int {
-
 	cret := XGdkDevicePadGetFeatureGroup(x.GoPointer(), FeatureVar, FeatureIdxVar)
 	return cret
 }
 
 // Returns the number of modes that @group may have.
 func (x *DevicePadBase) GetGroupNModes(GroupIdxVar int) int {
-
 	cret := XGdkDevicePadGetGroupNModes(x.GoPointer(), GroupIdxVar)
 	return cret
 }
 
 // Returns the number of features a tablet pad has.
 func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int {
-
 	cret := XGdkDevicePadGetNFeatures(x.GoPointer(), FeatureVar)
 	return cret
 }
@@ -94,15 +90,16 @@ func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int {
 // buttons/strip/rings that is affected collectively by a same
 // current mode.
 func (x *DevicePadBase) GetNGroups() int {
-
 	cret := XGdkDevicePadGetNGroups(x.GoPointer())
 	return cret
 }
 
-var XGdkDevicePadGetFeatureGroup func(uintptr, DevicePadFeature, int) int
-var XGdkDevicePadGetGroupNModes func(uintptr, int) int
-var XGdkDevicePadGetNFeatures func(uintptr, DevicePadFeature) int
-var XGdkDevicePadGetNGroups func(uintptr) int
+var (
+	XGdkDevicePadGetFeatureGroup func(uintptr, DevicePadFeature, int) int
+	XGdkDevicePadGetGroupNModes  func(uintptr, int) int
+	XGdkDevicePadGetNFeatures    func(uintptr, DevicePadFeature) int
+	XGdkDevicePadGetNGroups      func(uintptr) int
+)
 
 // A pad feature.
 type DevicePadFeature int
@@ -125,7 +122,7 @@ const (
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -143,5 +140,4 @@ func init() {
 	core.PuregoSafeRegister(&XGdkDevicePadGetGroupNModes, libs, "gdk_device_pad_get_group_n_modes")
 	core.PuregoSafeRegister(&XGdkDevicePadGetNFeatures, libs, "gdk_device_pad_get_n_features")
 	core.PuregoSafeRegister(&XGdkDevicePadGetNGroups, libs, "gdk_device_pad_get_n_groups")
-
 }

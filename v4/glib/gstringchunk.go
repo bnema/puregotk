@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -47,9 +46,7 @@ var xStringChunkClear func(uintptr)
 // After calling g_string_chunk_clear() it is not safe to
 // access any of the strings which were contained within it.
 func (x *StringChunk) Clear() {
-
 	xStringChunkClear(x.GoPointer())
-
 }
 
 var xStringChunkFree func(uintptr)
@@ -58,9 +55,7 @@ var xStringChunkFree func(uintptr)
 // After calling g_string_chunk_free() it is not safe to
 // access any of the strings which were contained within it.
 func (x *StringChunk) Free() {
-
 	xStringChunkFree(x.GoPointer())
-
 }
 
 var xStringChunkInsert func(uintptr, string) string
@@ -77,7 +72,6 @@ var xStringChunkInsert func(uintptr, string) string
 // by g_string_chunk_insert_const() when looking for
 // duplicates.
 func (x *StringChunk) Insert(StringVar string) string {
-
 	cret := xStringChunkInsert(x.GoPointer(), StringVar)
 	return cret
 }
@@ -98,7 +92,6 @@ var xStringChunkInsertConst func(uintptr, string) string
 // pointer to a string added with g_string_chunk_insert(), even
 // if they do match.
 func (x *StringChunk) InsertConst(StringVar string) string {
-
 	cret := xStringChunkInsertConst(x.GoPointer(), StringVar)
 	return cret
 }
@@ -115,14 +108,13 @@ var xStringChunkInsertLen func(uintptr, string, int) string
 // The characters in the returned string can be changed, if necessary,
 // though you should not change anything after the end of the string.
 func (x *StringChunk) InsertLen(StringVar string, LenVar int) string {
-
 	cret := xStringChunkInsertLen(x.GoPointer(), StringVar, LenVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -137,5 +129,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringChunkInsert, libs, "g_string_chunk_insert")
 	core.PuregoSafeRegister(&xStringChunkInsertConst, libs, "g_string_chunk_insert_const")
 	core.PuregoSafeRegister(&xStringChunkInsertLen, libs, "g_string_chunk_insert_len")
-
 }

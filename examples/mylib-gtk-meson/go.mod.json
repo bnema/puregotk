@@ -1,0 +1,35 @@
+[
+  {
+    "dest": "vendor",
+    "path": "modules.txt",
+    "type": "file"
+  },
+  {
+    "dest": "vendor/github.com/bnema/purego",
+    "sha256": "b0dd74e5fdd0c4a4764271363b0baedb8db8f05601c8c57a8888984d30b96e91",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/github.com/bnema/purego/@v/v0.11.0-bnema.2.zip"
+  },
+  {
+    "dest": "vendor/github.com/dennwc/flatpak-go-mod",
+    "sha256": "f512c383d8067eca3bdb44999eb0e1ac60f59f63118793f4267517d1cce0c37d",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/github.com/dennwc/flatpak-go-mod/@v/v0.1.1-0.20251220152743-1642390bc050.zip"
+  },
+  {
+    "dest": "vendor/github.com/goccy/go-yaml",
+    "sha256": "51bf59a85a7e3e2b8e83e5f376a3229b01b673a39601c99e3a2c05931cc3e339",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/github.com/goccy/go-yaml/@v/v1.18.0.zip"
+  },
+  {
+    "dest": "vendor/golang.org/x/mod",
+    "sha256": "9b43daca51525bd50289c742999fe66336a653c90a23d2c55561b6fffd656e46",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/golang.org/x/mod/@v/v0.31.0.zip"
+  }
+]

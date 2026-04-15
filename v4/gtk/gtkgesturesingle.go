@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -56,7 +55,6 @@ var xGestureSingleGetButton func(uintptr) uint
 //
 // If this is 0, the gesture reacts to any button press.
 func (x *GestureSingle) GetButton() uint {
-
 	cret := xGestureSingleGetButton(x.GoPointer())
 	return cret
 }
@@ -66,21 +64,22 @@ var xGestureSingleGetCurrentButton func(uintptr) uint
 // Returns the button number currently interacting
 // with @gesture, or 0 if there is none.
 func (x *GestureSingle) GetCurrentButton() uint {
-
 	cret := xGestureSingleGetCurrentButton(x.GoPointer())
 	return cret
 }
 
-var xGestureSingleGetCurrentSequence func(uintptr) *gdk.EventSequence
+var xGestureSingleGetCurrentSequence func(uintptr) uintptr
 
 // Returns the event sequence currently interacting with @gesture.
 //
 // This is only meaningful if [method@Gtk.Gesture.is_active]
 // returns %TRUE.
 func (x *GestureSingle) GetCurrentSequence() *gdk.EventSequence {
-
 	cret := xGestureSingleGetCurrentSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.EventSequence)(unsafe.Pointer(cret))
 }
 
 var xGestureSingleGetExclusive func(uintptr) bool
@@ -89,7 +88,6 @@ var xGestureSingleGetExclusive func(uintptr) bool
 //
 // For more information, see [method@Gtk.GestureSingle.set_exclusive].
 func (x *GestureSingle) GetExclusive() bool {
-
 	cret := xGestureSingleGetExclusive(x.GoPointer())
 	return cret
 }
@@ -98,7 +96,6 @@ var xGestureSingleGetTouchOnly func(uintptr) bool
 
 // Returns %TRUE if the gesture is only triggered by touch events.
 func (x *GestureSingle) GetTouchOnly() bool {
-
 	cret := xGestureSingleGetTouchOnly(x.GoPointer())
 	return cret
 }
@@ -111,9 +108,7 @@ var xGestureSingleSetButton func(uintptr, uint)
 // number will be ignored. Touch events implicitly match
 // with button 1.
 func (x *GestureSingle) SetButton(ButtonVar uint) {
-
 	xGestureSingleSetButton(x.GoPointer(), ButtonVar)
-
 }
 
 var xGestureSingleSetExclusive func(uintptr, bool)
@@ -124,9 +119,7 @@ var xGestureSingleSetExclusive func(uintptr, bool)
 // touch events, so at any given time, there is only one sequence able
 // to interact with those.
 func (x *GestureSingle) SetExclusive(ExclusiveVar bool) {
-
 	xGestureSingleSetExclusive(x.GoPointer(), ExclusiveVar)
-
 }
 
 var xGestureSingleSetTouchOnly func(uintptr, bool)
@@ -137,9 +130,7 @@ var xGestureSingleSetTouchOnly func(uintptr, bool)
 // %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE or %GDK_TOUCH_END. If %FALSE,
 // mouse events will be handled too.
 func (x *GestureSingle) SetTouchOnly(TouchOnlyVar bool) {
-
 	xGestureSingleSetTouchOnly(x.GoPointer(), TouchOnlyVar)
-
 }
 
 func (c *GestureSingle) GoPointer() uintptr {
@@ -210,7 +201,7 @@ func (x *GestureSingle) GetPropertyTouchOnly() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -230,5 +221,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureSingleSetButton, libs, "gtk_gesture_single_set_button")
 	core.PuregoSafeRegister(&xGestureSingleSetExclusive, libs, "gtk_gesture_single_set_exclusive")
 	core.PuregoSafeRegister(&xGestureSingleSetTouchOnly, libs, "gtk_gesture_single_set_touch_only")
-
 }

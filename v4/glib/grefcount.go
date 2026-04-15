@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -52,7 +51,6 @@ var xAtomicRefCountCompare func(int, int) bool
 
 // Atomically compares the current value of @arc with @val.
 func AtomicRefCountCompare(ArcVar int, ValVar int) bool {
-
 	cret := xAtomicRefCountCompare(ArcVar, ValVar)
 
 	return cret
@@ -66,7 +64,6 @@ var xAtomicRefCountDec func(int) bool
 // is an undefined state and must be reinitialized with
 // g_atomic_ref_count_init() to be used again.
 func AtomicRefCountDec(ArcVar int) bool {
-
 	cret := xAtomicRefCountDec(ArcVar)
 
 	return cret
@@ -76,25 +73,20 @@ var xAtomicRefCountInc func(int)
 
 // Atomically increases the reference count.
 func AtomicRefCountInc(ArcVar int) {
-
 	xAtomicRefCountInc(ArcVar)
-
 }
 
 var xAtomicRefCountInit func(*int)
 
 // Initializes a reference count variable to 1.
 func AtomicRefCountInit(ArcVar *int) {
-
 	xAtomicRefCountInit(ArcVar)
-
 }
 
 var xRefCountCompare func(int, int) bool
 
 // Compares the current value of @rc with @val.
 func RefCountCompare(RcVar int, ValVar int) bool {
-
 	cret := xRefCountCompare(RcVar, ValVar)
 
 	return cret
@@ -108,7 +100,6 @@ var xRefCountDec func(*int) bool
 // is an undefined state and must be reinitialized with
 // g_ref_count_init() to be used again.
 func RefCountDec(RcVar *int) bool {
-
 	cret := xRefCountDec(RcVar)
 
 	return cret
@@ -118,23 +109,19 @@ var xRefCountInc func(*int)
 
 // Increases the reference count.
 func RefCountInc(RcVar *int) {
-
 	xRefCountInc(RcVar)
-
 }
 
 var xRefCountInit func(*int)
 
 // Initializes a reference count variable to 1.
 func RefCountInit(RcVar *int) {
-
 	xRefCountInit(RcVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -152,5 +139,4 @@ func init() {
 	core.PuregoSafeRegister(&xRefCountDec, libs, "g_ref_count_dec")
 	core.PuregoSafeRegister(&xRefCountInc, libs, "g_ref_count_inc")
 	core.PuregoSafeRegister(&xRefCountInit, libs, "g_ref_count_init")
-
 }

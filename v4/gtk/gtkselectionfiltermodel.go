@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -88,14 +87,7 @@ var xSelectionFilterModelSetModel func(uintptr, uintptr)
 // are doing and have set up an appropriate filter to ensure that item
 // types match.
 func (x *SelectionFilterModel) SetModel(ModelVar SelectionModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xSelectionFilterModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xSelectionFilterModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *SelectionFilterModel) GoPointer() uintptr {
@@ -127,7 +119,6 @@ func (x *SelectionFilterModel) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *SelectionFilterModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -141,7 +132,6 @@ func (x *SelectionFilterModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SelectionFilterModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -152,7 +142,6 @@ func (x *SelectionFilterModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SelectionFilterModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -203,14 +192,12 @@ func (x *SelectionFilterModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SelectionFilterModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -226,5 +213,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSelectionFilterModelGetModel, libs, "gtk_selection_filter_model_get_model")
 	core.PuregoSafeRegister(&xSelectionFilterModelSetModel, libs, "gtk_selection_filter_model_set_model")
-
 }

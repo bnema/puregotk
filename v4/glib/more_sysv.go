@@ -5,6 +5,8 @@ package glib
 import (
 	"fmt"
 	"reflect"
+
+	"github.com/bnema/purego"
 )
 
 func unrefCallback(fnPtr interface{}) error {
@@ -19,6 +21,6 @@ func unrefCallback(fnPtr interface{}) error {
 	if _, ok := GetCallback(cbPtr); !ok {
 		return fmt.Errorf("callback not found in registry")
 	}
-	RemoveCallback(cbPtr)
-	return nil
+	defer RemoveCallback(cbPtr)
+	return purego.UnrefCallback(refPtr)
 }

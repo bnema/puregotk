@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -66,7 +65,6 @@ var xListHeaderGetEnd func(uintptr) uint
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ListHeader) GetEnd() uint {
-
 	cret := xListHeaderGetEnd(x.GoPointer())
 	return cret
 }
@@ -98,7 +96,6 @@ var xListHeaderGetNItems func(uintptr) uint
 //
 // If @self is unbound, 0 is returned.
 func (x *ListHeader) GetNItems() uint {
-
 	cret := xListHeaderGetNItems(x.GoPointer())
 	return cret
 }
@@ -110,7 +107,6 @@ var xListHeaderGetStart func(uintptr) uint
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ListHeader) GetStart() uint {
-
 	cret := xListHeaderGetStart(x.GoPointer())
 	return cret
 }
@@ -123,14 +119,7 @@ var xListHeaderSetChild func(uintptr, uintptr)
 // setting up a header so that the widget can be reused when
 // binding it multiple times.
 func (x *ListHeader) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xListHeaderSetChild(x.GoPointer(), ChildVarPtr)
-
+	xListHeaderSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 func (c *ListHeader) GoPointer() uintptr {
@@ -170,7 +159,7 @@ func (x *ListHeader) GetPropertyStart() uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -188,5 +177,4 @@ func init() {
 	core.PuregoSafeRegister(&xListHeaderGetNItems, libs, "gtk_list_header_get_n_items")
 	core.PuregoSafeRegister(&xListHeaderGetStart, libs, "gtk_list_header_get_start")
 	core.PuregoSafeRegister(&xListHeaderSetChild, libs, "gtk_list_header_set_child")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -154,7 +153,6 @@ func (x *InitableBase) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var XGInitableInit func(uintptr, uintptr, **glib.Error) bool
@@ -184,12 +182,11 @@ func InitableNewv(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar 
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -204,5 +201,4 @@ func init() {
 	core.PuregoSafeRegister(&xInitableGLibType, libs, "g_initable_get_type")
 
 	core.PuregoSafeRegister(&XGInitableInit, libs, "g_initable_init")
-
 }

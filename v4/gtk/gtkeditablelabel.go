@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -107,7 +106,6 @@ var xEditableLabelGetEditing func(uintptr) bool
 
 // Returns whether the label is currently in “editing mode”.
 func (x *EditableLabel) GetEditing() bool {
-
 	cret := xEditableLabelGetEditing(x.GoPointer())
 	return cret
 }
@@ -116,9 +114,7 @@ var xEditableLabelStartEditing func(uintptr)
 
 // Switches the label into “editing mode”.
 func (x *EditableLabel) StartEditing() {
-
 	xEditableLabelStartEditing(x.GoPointer())
-
 }
 
 var xEditableLabelStopEditing func(uintptr, bool)
@@ -130,9 +126,7 @@ var xEditableLabelStopEditing func(uintptr, bool)
 // resulting text is discarded and the label will keep its
 // previous [property@Gtk.Editable:text] property value.
 func (x *EditableLabel) StopEditing(CommitVar bool) {
-
 	xEditableLabelStopEditing(x.GoPointer(), CommitVar)
-
 }
 
 func (c *EditableLabel) GoPointer() uintptr {
@@ -173,9 +167,19 @@ func (x *EditableLabel) GetPropertyEditing() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *EditableLabel) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *EditableLabel) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -196,7 +200,6 @@ func (x *EditableLabel) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *EditableLabel) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -221,7 +224,6 @@ func (x *EditableLabel) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *EditableLabel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -260,30 +262,23 @@ func (x *EditableLabel) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *EditableLabel) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *EditableLabel) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *EditableLabel) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *EditableLabel) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -296,19 +291,7 @@ func (x *EditableLabel) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *EditableLabel) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -316,14 +299,7 @@ func (x *EditableLabel) SetAccessibleParent(ParentVar Accessible, NextSiblingVar
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *EditableLabel) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -332,9 +308,7 @@ func (x *EditableLabel) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *EditableLabel) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -356,9 +330,7 @@ func (x *EditableLabel) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *EditableLabel) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -368,9 +340,7 @@ func (x *EditableLabel) UpdateProperty(FirstPropertyVar AccessibleProperty, varA
 //
 // This function is meant to be used by language bindings.
 func (x *EditableLabel) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -392,9 +362,7 @@ func (x *EditableLabel) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []
 //
 // ```
 func (x *EditableLabel) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -404,9 +372,7 @@ func (x *EditableLabel) UpdateRelation(FirstRelationVar AccessibleRelation, varA
 //
 // This function is meant to be used by language bindings.
 func (x *EditableLabel) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -429,9 +395,7 @@ func (x *EditableLabel) UpdateRelationValue(NRelationsVar int, RelationsVar []Ac
 //
 // ```
 func (x *EditableLabel) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -441,9 +405,7 @@ func (x *EditableLabel) UpdateState(FirstStateVar AccessibleState, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *EditableLabel) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -451,7 +413,6 @@ func (x *EditableLabel) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EditableLabel) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -493,7 +454,6 @@ func (x *EditableLabel) GetBuildableId() string {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *EditableLabel) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -502,9 +462,7 @@ func (x *EditableLabel) DelegateGetAccessiblePlatformState(StateVar AccessiblePl
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *EditableLabel) DeleteSelection() {
-
 	XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -516,9 +474,7 @@ func (x *EditableLabel) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *EditableLabel) DeleteText(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -526,14 +482,11 @@ func (x *EditableLabel) DeleteText(StartPosVar int, EndPosVar int) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *EditableLabel) FinishDelegate() {
-
 	XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Gets the alignment of the editable.
 func (x *EditableLabel) GetAlignment() float32 {
-
 	cret := XGtkEditableGetAlignment(x.GoPointer())
 	return cret
 }
@@ -547,7 +500,6 @@ func (x *EditableLabel) GetAlignment() float32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EditableLabel) GetChars(StartPosVar int, EndPosVar int) string {
-
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -572,21 +524,18 @@ func (x *EditableLabel) GetDelegate() *EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *EditableLabel) GetEditable() bool {
-
 	cret := XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *EditableLabel) GetEnableUndo() bool {
-
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *EditableLabel) GetMaxWidthChars() int {
-
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -596,7 +545,6 @@ func (x *EditableLabel) GetMaxWidthChars() int {
 //
 // Note that this position is in characters, not in bytes.
 func (x *EditableLabel) GetPosition() int {
-
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -609,7 +557,6 @@ func (x *EditableLabel) GetPosition() int {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EditableLabel) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
-
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -618,7 +565,6 @@ func (x *EditableLabel) GetSelectionBounds(StartPosVar *int, EndPosVar *int) boo
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *EditableLabel) GetText() string {
-
 	cret := XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -626,7 +572,6 @@ func (x *EditableLabel) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *EditableLabel) GetWidthChars() int {
-
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -639,9 +584,7 @@ func (x *EditableLabel) GetWidthChars() int {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *EditableLabel) InitDelegate() {
-
 	XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -651,9 +594,7 @@ func (x *EditableLabel) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *EditableLabel) InsertText(TextVar string, LengthVar int, PositionVar *int) {
-
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -665,9 +606,7 @@ func (x *EditableLabel) InsertText(TextVar string, LengthVar int, PositionVar *i
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EditableLabel) SelectRegion(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Sets the alignment for the contents of the editable.
@@ -675,16 +614,12 @@ func (x *EditableLabel) SelectRegion(StartPosVar int, EndPosVar int) {
 // This controls the horizontal positioning of the contents when
 // the displayed text is shorter than the width of the editable.
 func (x *EditableLabel) SetAlignment(XalignVar float32) {
-
 	XGtkEditableSetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *EditableLabel) SetEditable(IsEditableVar bool) {
-
 	XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -694,16 +629,12 @@ func (x *EditableLabel) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *EditableLabel) SetEnableUndo(EnableUndoVar bool) {
-
 	XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *EditableLabel) SetMaxWidthChars(NCharsVar int) {
-
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -714,18 +645,14 @@ func (x *EditableLabel) SetMaxWidthChars(NCharsVar int) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *EditableLabel) SetPosition(PositionVar int) {
-
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *EditableLabel) SetText(TextVar string) {
-
 	XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -735,14 +662,12 @@ func (x *EditableLabel) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *EditableLabel) SetWidthChars(NCharsVar int) {
-
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -759,5 +684,4 @@ func init() {
 	core.PuregoSafeRegister(&xEditableLabelGetEditing, libs, "gtk_editable_label_get_editing")
 	core.PuregoSafeRegister(&xEditableLabelStartEditing, libs, "gtk_editable_label_start_editing")
 	core.PuregoSafeRegister(&xEditableLabelStopEditing, libs, "gtk_editable_label_stop_editing")
-
 }

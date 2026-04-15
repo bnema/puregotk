@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -40,14 +39,16 @@ func (x *StrvBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewStrvBuilder func() *StrvBuilder
+var xNewStrvBuilder func() uintptr
 
 // Creates a new #GStrvBuilder with a reference count of 1.
 // Use g_strv_builder_unref() on the returned value when no longer needed.
 func NewStrvBuilder() *StrvBuilder {
-
 	cret := xNewStrvBuilder()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*StrvBuilder)(unsafe.Pointer(cret))
 }
 
 var xStrvBuilderAdd func(uintptr, string)
@@ -56,9 +57,7 @@ var xStrvBuilderAdd func(uintptr, string)
 //
 // Since 2.68
 func (x *StrvBuilder) Add(ValueVar string) {
-
 	xStrvBuilderAdd(x.GoPointer(), ValueVar)
-
 }
 
 var xStrvBuilderAddMany func(uintptr, ...interface{})
@@ -67,9 +66,7 @@ var xStrvBuilderAddMany func(uintptr, ...interface{})
 //
 // Since 2.70
 func (x *StrvBuilder) AddMany(varArgs ...interface{}) {
-
 	xStrvBuilderAddMany(x.GoPointer(), varArgs...)
-
 }
 
 var xStrvBuilderAddv func(uintptr, []string)
@@ -78,9 +75,7 @@ var xStrvBuilderAddv func(uintptr, []string)
 //
 // Since 2.70
 func (x *StrvBuilder) Addv(ValueVar []string) {
-
 	xStrvBuilderAddv(x.GoPointer(), ValueVar)
-
 }
 
 var xStrvBuilderEnd func(uintptr) []string
@@ -89,19 +84,20 @@ var xStrvBuilderEnd func(uintptr) []string
 // array. The returned value should be freed with g_strfreev() when no longer
 // needed.
 func (x *StrvBuilder) End() []string {
-
 	cret := xStrvBuilderEnd(x.GoPointer())
 	return cret
 }
 
-var xStrvBuilderRef func(uintptr) *StrvBuilder
+var xStrvBuilderRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @builder by one.
 // This function is thread-safe and may be called from any thread.
 func (x *StrvBuilder) Ref() *StrvBuilder {
-
 	cret := xStrvBuilderRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*StrvBuilder)(unsafe.Pointer(cret))
 }
 
 var xStrvBuilderTake func(uintptr, uintptr)
@@ -111,9 +107,7 @@ var xStrvBuilderTake func(uintptr, uintptr)
 //
 // Since 2.80
 func (x *StrvBuilder) Take(ValueVar string) {
-
-	xStrvBuilderTake(x.GoPointer(), core.GStrdup(ValueVar))
-
+	xStrvBuilderTake(x.GoPointer(), ValueVar)
 }
 
 var xStrvBuilderUnref func(uintptr)
@@ -123,9 +117,7 @@ var xStrvBuilderUnref func(uintptr)
 // In the event that there are no more references, releases all memory
 // associated with the #GStrvBuilder.
 func (x *StrvBuilder) Unref() {
-
 	xStrvBuilderUnref(x.GoPointer())
-
 }
 
 var xStrvBuilderUnrefToStrv func(uintptr) []string
@@ -148,14 +140,13 @@ var xStrvBuilderUnrefToStrv func(uintptr) []string
 // g_strfreev (array);
 // ```
 func (x *StrvBuilder) UnrefToStrv() []string {
-
 	cret := xStrvBuilderUnrefToStrv(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -177,5 +168,4 @@ func init() {
 	core.PuregoSafeRegister(&xStrvBuilderTake, libs, "g_strv_builder_take")
 	core.PuregoSafeRegister(&xStrvBuilderUnref, libs, "g_strv_builder_unref")
 	core.PuregoSafeRegister(&xStrvBuilderUnrefToStrv, libs, "g_strv_builder_unref_to_strv")
-
 }

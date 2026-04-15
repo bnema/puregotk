@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -139,7 +138,6 @@ var xSocketAddressGetFamily func(uintptr) SocketFamily
 
 // Gets the socket family type of @address.
 func (x *SocketAddress) GetFamily() SocketFamily {
-
 	cret := xSocketAddressGetFamily(x.GoPointer())
 	return cret
 }
@@ -150,7 +148,6 @@ var xSocketAddressGetNativeSize func(uintptr) int
 // You can use this to allocate memory to pass to
 // g_socket_address_to_native().
 func (x *SocketAddress) GetNativeSize() int {
-
 	cret := xSocketAddressGetNativeSize(x.GoPointer())
 	return cret
 }
@@ -171,7 +168,6 @@ func (x *SocketAddress) ToNative(DestVar uintptr, DestlenVar uint) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *SocketAddress) GoPointer() uintptr {
@@ -227,14 +223,13 @@ func (x *SocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *SocketAddress) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -251,5 +246,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketAddressGetFamily, libs, "g_socket_address_get_family")
 	core.PuregoSafeRegister(&xSocketAddressGetNativeSize, libs, "g_socket_address_get_native_size")
 	core.PuregoSafeRegister(&xSocketAddressToNative, libs, "g_socket_address_to_native")
-
 }

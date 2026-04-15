@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -92,7 +91,6 @@ var xIconPaintableGetIconName func(uintptr) string
 // If the icon was created without an icon theme, this function
 // returns %NULL.
 func (x *IconPaintable) GetIconName() string {
-
 	cret := xIconPaintableGetIconName(x.GoPointer())
 	return cret
 }
@@ -104,7 +102,6 @@ var xIconPaintableIsSymbolic func(uintptr) bool
 // This currently uses only the file name and not the file contents
 // for determining this. This behaviour may change in the future.
 func (x *IconPaintable) IsSymbolic() bool {
-
 	cret := xIconPaintableIsSymbolic(x.GoPointer())
 	return cret
 }
@@ -195,9 +192,7 @@ func (x *IconPaintable) GetPropertySize() int {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *IconPaintable) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -225,7 +220,6 @@ func (x *IconPaintable) GetCurrentImage() *gdk.PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *IconPaintable) GetFlags() gdk.PaintableFlags {
-
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -248,7 +242,6 @@ func (x *IconPaintable) GetFlags() gdk.PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *IconPaintable) GetIntrinsicAspectRatio() float64 {
-
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -264,7 +257,6 @@ func (x *IconPaintable) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *IconPaintable) GetIntrinsicHeight() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -280,7 +272,6 @@ func (x *IconPaintable) GetIntrinsicHeight() int {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *IconPaintable) GetIntrinsicWidth() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -296,9 +287,7 @@ func (x *IconPaintable) GetIntrinsicWidth() int {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *IconPaintable) InvalidateContents() {
-
 	gdk.XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -312,9 +301,7 @@ func (x *IconPaintable) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *IconPaintable) InvalidateSize() {
-
 	gdk.XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -323,24 +310,28 @@ func (x *IconPaintable) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *IconPaintable) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64) {
-
 	gdk.XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 // Snapshots the paintable with the given colors.
 //
-// If less than 4 colors are provided, GTK will pad the array with default
+// If less than 5 colors are provided, GTK will pad the array with default
 // colors.
 func (x *IconPaintable) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
-
 	XGtkSymbolicPaintableSnapshotSymbolic(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
+}
 
+// Snapshots the paintable with the given colors and weight.
+//
+// If less than 5 colors are provided, GTK will pad the array with default
+// colors.
+func (x *IconPaintable) SnapshotWithWeight(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64) {
+	XGtkSymbolicPaintableSnapshotWithWeight(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar, WeightVar)
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -357,5 +348,4 @@ func init() {
 	core.PuregoSafeRegister(&xIconPaintableGetFile, libs, "gtk_icon_paintable_get_file")
 	core.PuregoSafeRegister(&xIconPaintableGetIconName, libs, "gtk_icon_paintable_get_icon_name")
 	core.PuregoSafeRegister(&xIconPaintableIsSymbolic, libs, "gtk_icon_paintable_is_symbolic")
-
 }

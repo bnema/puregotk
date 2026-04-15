@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -240,9 +239,7 @@ var xTypeModuleAddInterface func(uintptr, types.GType, types.GType, *InterfaceIn
 // Since 2.56 if @module is %NULL this will call g_type_add_interface_static()
 // instead. This can be used when making a static build of the module.
 func (x *TypeModule) AddInterface(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InterfaceInfoVar *InterfaceInfo) {
-
 	xTypeModuleAddInterface(x.GoPointer(), InstanceTypeVar, InterfaceTypeVar, InterfaceInfoVar)
-
 }
 
 var xTypeModuleRegisterEnum func(uintptr, string, []EnumValue) types.GType
@@ -258,7 +255,6 @@ var xTypeModuleRegisterEnum func(uintptr, string, []EnumValue) types.GType
 // Since 2.56 if @module is %NULL this will call g_type_register_static()
 // instead. This can be used when making a static build of the module.
 func (x *TypeModule) RegisterEnum(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
-
 	cret := xTypeModuleRegisterEnum(x.GoPointer(), NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -276,7 +272,6 @@ var xTypeModuleRegisterFlags func(uintptr, string, []FlagsValue) types.GType
 // Since 2.56 if @module is %NULL this will call g_type_register_static()
 // instead. This can be used when making a static build of the module.
 func (x *TypeModule) RegisterFlags(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
-
 	cret := xTypeModuleRegisterFlags(x.GoPointer(), NameVar, ConstStaticValuesVar)
 	return cret
 }
@@ -298,7 +293,6 @@ var xTypeModuleRegisterType func(uintptr, types.GType, string, *TypeInfo, TypeFl
 // Since 2.56 if @module is %NULL this will call g_type_register_static()
 // instead. This can be used when making a static build of the module.
 func (x *TypeModule) RegisterType(ParentTypeVar types.GType, TypeNameVar string, TypeInfoVar *TypeInfo, FlagsVar TypeFlags) types.GType {
-
 	cret := xTypeModuleRegisterType(x.GoPointer(), ParentTypeVar, TypeNameVar, TypeInfoVar, FlagsVar)
 	return cret
 }
@@ -307,9 +301,7 @@ var xTypeModuleSetName func(uintptr, string)
 
 // Sets the name for a #GTypeModule
 func (x *TypeModule) SetName(NameVar string) {
-
 	xTypeModuleSetName(x.GoPointer(), NameVar)
-
 }
 
 var xTypeModuleUnuse func(uintptr)
@@ -320,9 +312,7 @@ var xTypeModuleUnuse func(uintptr)
 // #GTypeModule are not unregistered. Once a #GTypeModule is
 // initialized, it must exist forever.)
 func (x *TypeModule) Unuse() {
-
 	xTypeModuleUnuse(x.GoPointer())
-
 }
 
 var xTypeModuleUse func(uintptr) bool
@@ -332,7 +322,6 @@ var xTypeModuleUse func(uintptr) bool
 // If loading the plugin fails, the use count is reset to
 // its prior value.
 func (x *TypeModule) Use() bool {
-
 	cret := xTypeModuleUse(x.GoPointer())
 	return cret
 }
@@ -352,23 +341,19 @@ func (c *TypeModule) SetGoPointer(ptr uintptr) {
 // #GTypePluginClass of @plugin. There should be no need to use this
 // function outside of the GObject type system itself.
 func (x *TypeModule) CompleteInterfaceInfo(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *InterfaceInfo) {
-
 	XGTypePluginCompleteInterfaceInfo(x.GoPointer(), InstanceTypeVar, InterfaceTypeVar, InfoVar)
-
 }
 
 // Calls the @complete_type_info function from the #GTypePluginClass of @plugin.
 // There should be no need to use this function outside of the GObject
 // type system itself.
 func (x *TypeModule) CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, ValueTableVar *TypeValueTable) {
-
 	XGTypePluginCompleteTypeInfo(x.GoPointer(), GTypeVar, InfoVar, ValueTableVar)
-
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -387,5 +372,4 @@ func init() {
 	core.PuregoSafeRegister(&xTypeModuleSetName, libs, "g_type_module_set_name")
 	core.PuregoSafeRegister(&xTypeModuleUnuse, libs, "g_type_module_unuse")
 	core.PuregoSafeRegister(&xTypeModuleUse, libs, "g_type_module_use")
-
 }

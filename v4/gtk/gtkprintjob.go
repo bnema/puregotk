@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/glib"
@@ -64,7 +63,6 @@ var xPrintJobGetCollate func(uintptr) bool
 
 // Gets whether this job is printed collated.
 func (x *PrintJob) GetCollate() bool {
-
 	cret := xPrintJobGetCollate(x.GoPointer())
 	return cret
 }
@@ -73,7 +71,6 @@ var xPrintJobGetNUp func(uintptr) uint
 
 // Gets the n-up setting for this job.
 func (x *PrintJob) GetNUp() uint {
-
 	cret := xPrintJobGetNUp(x.GoPointer())
 	return cret
 }
@@ -82,7 +79,6 @@ var xPrintJobGetNUpLayout func(uintptr) NumberUpLayout
 
 // Gets the n-up layout setting for this job.
 func (x *PrintJob) GetNUpLayout() NumberUpLayout {
-
 	cret := xPrintJobGetNUpLayout(x.GoPointer())
 	return cret
 }
@@ -91,7 +87,6 @@ var xPrintJobGetNumCopies func(uintptr) int
 
 // Gets the number of copies of this job.
 func (x *PrintJob) GetNumCopies() int {
-
 	cret := xPrintJobGetNumCopies(x.GoPointer())
 	return cret
 }
@@ -100,7 +95,6 @@ var xPrintJobGetPageRanges func(uintptr, *int) uintptr
 
 // Gets the page ranges for this job.
 func (x *PrintJob) GetPageRanges(NRangesVar *int) uintptr {
-
 	cret := xPrintJobGetPageRanges(x.GoPointer(), NRangesVar)
 	return cret
 }
@@ -109,7 +103,6 @@ var xPrintJobGetPageSet func(uintptr) PageSet
 
 // Gets the `GtkPageSet` setting for this job.
 func (x *PrintJob) GetPageSet() PageSet {
-
 	cret := xPrintJobGetPageSet(x.GoPointer())
 	return cret
 }
@@ -118,7 +111,6 @@ var xPrintJobGetPages func(uintptr) PrintPages
 
 // Gets the `GtkPrintPages` setting for this job.
 func (x *PrintJob) GetPages() PrintPages {
-
 	cret := xPrintJobGetPages(x.GoPointer())
 	return cret
 }
@@ -144,7 +136,6 @@ var xPrintJobGetReverse func(uintptr) bool
 
 // Gets whether this job is printed reversed.
 func (x *PrintJob) GetReverse() bool {
-
 	cret := xPrintJobGetReverse(x.GoPointer())
 	return cret
 }
@@ -153,7 +144,6 @@ var xPrintJobGetRotate func(uintptr) bool
 
 // Gets whether the job is printed rotated.
 func (x *PrintJob) GetRotate() bool {
-
 	cret := xPrintJobGetRotate(x.GoPointer())
 	return cret
 }
@@ -162,7 +152,6 @@ var xPrintJobGetScale func(uintptr) float64
 
 // Gets the scale for this job.
 func (x *PrintJob) GetScale() float64 {
-
 	cret := xPrintJobGetScale(x.GoPointer())
 	return cret
 }
@@ -188,31 +177,31 @@ var xPrintJobGetStatus func(uintptr) PrintStatus
 
 // Gets the status of the print job.
 func (x *PrintJob) GetStatus() PrintStatus {
-
 	cret := xPrintJobGetStatus(x.GoPointer())
 	return cret
 }
 
-var xPrintJobGetSurface func(uintptr) *cairo.Surface
+var xPrintJobGetSurface func(uintptr, **glib.Error) uintptr
 
 // Gets a cairo surface onto which the pages of
 // the print job should be rendered.
 func (x *PrintJob) GetSurface() (*cairo.Surface, error) {
 	var cerr *glib.Error
 
-	cret := xPrintJobGetSurface(x.GoPointer())
-	if cerr == nil {
-		return cret, nil
+	cret := xPrintJobGetSurface(x.GoPointer(), &cerr)
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*cairo.Surface)(unsafe.Pointer(cret)), nil
 }
 
 var xPrintJobGetTitle func(uintptr) string
 
 // Gets the job title.
 func (x *PrintJob) GetTitle() string {
-
 	cret := xPrintJobGetTitle(x.GoPointer())
 	return cret
 }
@@ -223,7 +212,6 @@ var xPrintJobGetTrackPrintStatus func(uintptr) bool
 //
 // For details, see [method@Gtk.PrintJob.set_track_print_status].
 func (x *PrintJob) GetTrackPrintStatus() bool {
-
 	cret := xPrintJobGetTrackPrintStatus(x.GoPointer())
 	return cret
 }
@@ -232,120 +220,70 @@ var xPrintJobSend func(uintptr, uintptr, uintptr, uintptr)
 
 // Sends the print job off to the printer.
 func (x *PrintJob) Send(CallbackVar *PrintJobCompleteFunc, UserDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *glib.Error) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var DnotifyVarRef uintptr
-	if DnotifyVar != nil {
-		DnotifyVarPtr := uintptr(unsafe.Pointer(DnotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(DnotifyVarPtr); ok {
-			DnotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DnotifyVar
-				cbFn(arg0)
-			}
-			DnotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DnotifyVarPtr, DnotifyVarRef, DnotifyVar)
-		}
-	}
-
-	xPrintJobSend(x.GoPointer(), CallbackVarRef, UserDataVar, DnotifyVarRef)
-
+	xPrintJobSend(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DnotifyVar))
 }
 
 var xPrintJobSetCollate func(uintptr, bool)
 
 // Sets whether this job is printed collated.
 func (x *PrintJob) SetCollate(CollateVar bool) {
-
 	xPrintJobSetCollate(x.GoPointer(), CollateVar)
-
 }
 
 var xPrintJobSetNUp func(uintptr, uint)
 
 // Sets the n-up setting for this job.
 func (x *PrintJob) SetNUp(NUpVar uint) {
-
 	xPrintJobSetNUp(x.GoPointer(), NUpVar)
-
 }
 
 var xPrintJobSetNUpLayout func(uintptr, NumberUpLayout)
 
 // Sets the n-up layout setting for this job.
 func (x *PrintJob) SetNUpLayout(LayoutVar NumberUpLayout) {
-
 	xPrintJobSetNUpLayout(x.GoPointer(), LayoutVar)
-
 }
 
 var xPrintJobSetNumCopies func(uintptr, int)
 
 // Sets the number of copies for this job.
 func (x *PrintJob) SetNumCopies(NumCopiesVar int) {
-
 	xPrintJobSetNumCopies(x.GoPointer(), NumCopiesVar)
-
 }
 
 var xPrintJobSetPageRanges func(uintptr, []PageRange, int)
 
 // Sets the page ranges for this job.
 func (x *PrintJob) SetPageRanges(RangesVar []PageRange, NRangesVar int) {
-
 	xPrintJobSetPageRanges(x.GoPointer(), RangesVar, NRangesVar)
-
 }
 
 var xPrintJobSetPageSet func(uintptr, PageSet)
 
 // Sets the `GtkPageSet` setting for this job.
 func (x *PrintJob) SetPageSet(PageSetVar PageSet) {
-
 	xPrintJobSetPageSet(x.GoPointer(), PageSetVar)
-
 }
 
 var xPrintJobSetPages func(uintptr, PrintPages)
 
 // Sets the `GtkPrintPages` setting for this job.
 func (x *PrintJob) SetPages(PagesVar PrintPages) {
-
 	xPrintJobSetPages(x.GoPointer(), PagesVar)
-
 }
 
 var xPrintJobSetReverse func(uintptr, bool)
 
 // Sets whether this job is printed reversed.
 func (x *PrintJob) SetReverse(ReverseVar bool) {
-
 	xPrintJobSetReverse(x.GoPointer(), ReverseVar)
-
 }
 
 var xPrintJobSetRotate func(uintptr, bool)
 
 // Sets whether this job is printed rotated.
 func (x *PrintJob) SetRotate(RotateVar bool) {
-
 	xPrintJobSetRotate(x.GoPointer(), RotateVar)
-
 }
 
 var xPrintJobSetScale func(uintptr, float64)
@@ -354,9 +292,7 @@ var xPrintJobSetScale func(uintptr, float64)
 //
 // 1.0 means unscaled.
 func (x *PrintJob) SetScale(ScaleVar float64) {
-
 	xPrintJobSetScale(x.GoPointer(), ScaleVar)
-
 }
 
 var xPrintJobSetSourceFd func(uintptr, int, **glib.Error) bool
@@ -380,7 +316,6 @@ func (x *PrintJob) SetSourceFd(FdVar int) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPrintJobSetSourceFile func(uintptr, string, **glib.Error) bool
@@ -400,7 +335,6 @@ func (x *PrintJob) SetSourceFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPrintJobSetTrackPrintStatus func(uintptr, bool)
@@ -414,9 +348,7 @@ var xPrintJobSetTrackPrintStatus func(uintptr, bool)
 // This function is often implemented using some form of polling,
 // so it should not be enabled unless needed.
 func (x *PrintJob) SetTrackPrintStatus(TrackStatusVar bool) {
-
 	xPrintJobSetTrackPrintStatus(x.GoPointer(), TrackStatusVar)
-
 }
 
 func (c *PrintJob) GoPointer() uintptr {
@@ -484,7 +416,6 @@ func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -495,7 +426,7 @@ func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -539,5 +470,4 @@ func init() {
 	core.PuregoSafeRegister(&xPrintJobSetSourceFd, libs, "gtk_print_job_set_source_fd")
 	core.PuregoSafeRegister(&xPrintJobSetSourceFile, libs, "gtk_print_job_set_source_file")
 	core.PuregoSafeRegister(&xPrintJobSetTrackPrintStatus, libs, "gtk_print_job_set_track_print_status")
-
 }

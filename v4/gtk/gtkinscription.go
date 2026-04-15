@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -97,13 +96,15 @@ func NewInscription(TextVar *string) *Inscription {
 	return cls
 }
 
-var xInscriptionGetAttributes func(uintptr) *pango.AttrList
+var xInscriptionGetAttributes func(uintptr) uintptr
 
 // Gets the inscription's attribute list.
 func (x *Inscription) GetAttributes() *pango.AttrList {
-
 	cret := xInscriptionGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xInscriptionGetMinChars func(uintptr) uint
@@ -112,7 +113,6 @@ var xInscriptionGetMinChars func(uintptr) uint
 //
 // See the [property@Gtk.Inscription:min-chars] property.
 func (x *Inscription) GetMinChars() uint {
-
 	cret := xInscriptionGetMinChars(x.GoPointer())
 	return cret
 }
@@ -123,7 +123,6 @@ var xInscriptionGetMinLines func(uintptr) uint
 //
 // See the [property@Gtk.Inscription:min-lines] property.
 func (x *Inscription) GetMinLines() uint {
-
 	cret := xInscriptionGetMinLines(x.GoPointer())
 	return cret
 }
@@ -134,7 +133,6 @@ var xInscriptionGetNatChars func(uintptr) uint
 //
 // See the [property@Gtk.Inscription:nat-chars] property.
 func (x *Inscription) GetNatChars() uint {
-
 	cret := xInscriptionGetNatChars(x.GoPointer())
 	return cret
 }
@@ -145,7 +143,6 @@ var xInscriptionGetNatLines func(uintptr) uint
 //
 // See the [property@Gtk.Inscription:nat-lines] property.
 func (x *Inscription) GetNatLines() uint {
-
 	cret := xInscriptionGetNatLines(x.GoPointer())
 	return cret
 }
@@ -154,7 +151,6 @@ var xInscriptionGetText func(uintptr) string
 
 // Gets the text that is displayed.
 func (x *Inscription) GetText() string {
-
 	cret := xInscriptionGetText(x.GoPointer())
 	return cret
 }
@@ -163,7 +159,6 @@ var xInscriptionGetTextOverflow func(uintptr) InscriptionOverflow
 
 // Gets the inscription's overflow method.
 func (x *Inscription) GetTextOverflow() InscriptionOverflow {
-
 	cret := xInscriptionGetTextOverflow(x.GoPointer())
 	return cret
 }
@@ -174,7 +169,6 @@ var xInscriptionGetWrapMode func(uintptr) pango.WrapMode
 //
 // See [method@Gtk.Inscription.set_wrap_mode].
 func (x *Inscription) GetWrapMode() pango.WrapMode {
-
 	cret := xInscriptionGetWrapMode(x.GoPointer())
 	return cret
 }
@@ -185,7 +179,6 @@ var xInscriptionGetXalign func(uintptr) float32
 //
 // See the [property@Gtk.Inscription:xalign] property.
 func (x *Inscription) GetXalign() float32 {
-
 	cret := xInscriptionGetXalign(x.GoPointer())
 	return cret
 }
@@ -196,7 +189,6 @@ var xInscriptionGetYalign func(uintptr) float32
 //
 // See the [property@Gtk.Inscription:yalign] property.
 func (x *Inscription) GetYalign() float32 {
-
 	cret := xInscriptionGetYalign(x.GoPointer())
 	return cret
 }
@@ -207,9 +199,7 @@ var xInscriptionSetAttributes func(uintptr, *pango.AttrList)
 //
 // These attributes will not be evaluated for sizing the inscription.
 func (x *Inscription) SetAttributes(AttrsVar *pango.AttrList) {
-
 	xInscriptionSetAttributes(x.GoPointer(), AttrsVar)
-
 }
 
 var xInscriptionSetMarkup func(uintptr, uintptr)
@@ -218,12 +208,10 @@ var xInscriptionSetMarkup func(uintptr, uintptr)
 //
 // See the [property@Gtk.Inscription:markup] property.
 func (x *Inscription) SetMarkup(MarkupVar *string) {
-
 	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
 	defer core.GFreeNullable(MarkupVarPtr)
 
 	xInscriptionSetMarkup(x.GoPointer(), MarkupVarPtr)
-
 }
 
 var xInscriptionSetMinChars func(uintptr, uint)
@@ -232,9 +220,7 @@ var xInscriptionSetMinChars func(uintptr, uint)
 //
 // See the [property@Gtk.Inscription:min-chars] property.
 func (x *Inscription) SetMinChars(MinCharsVar uint) {
-
 	xInscriptionSetMinChars(x.GoPointer(), MinCharsVar)
-
 }
 
 var xInscriptionSetMinLines func(uintptr, uint)
@@ -243,9 +229,7 @@ var xInscriptionSetMinLines func(uintptr, uint)
 //
 // See the [property@Gtk.Inscription:min-lines] property.
 func (x *Inscription) SetMinLines(MinLinesVar uint) {
-
 	xInscriptionSetMinLines(x.GoPointer(), MinLinesVar)
-
 }
 
 var xInscriptionSetNatChars func(uintptr, uint)
@@ -254,9 +238,7 @@ var xInscriptionSetNatChars func(uintptr, uint)
 //
 // See the [property@Gtk.Inscription:nat-chars] property.
 func (x *Inscription) SetNatChars(NatCharsVar uint) {
-
 	xInscriptionSetNatChars(x.GoPointer(), NatCharsVar)
-
 }
 
 var xInscriptionSetNatLines func(uintptr, uint)
@@ -265,39 +247,31 @@ var xInscriptionSetNatLines func(uintptr, uint)
 //
 // See the [property@Gtk.Inscription:nat-lines] property.
 func (x *Inscription) SetNatLines(NatLinesVar uint) {
-
 	xInscriptionSetNatLines(x.GoPointer(), NatLinesVar)
-
 }
 
 var xInscriptionSetText func(uintptr, uintptr)
 
 // Sets the text to be displayed.
 func (x *Inscription) SetText(TextVar *string) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xInscriptionSetText(x.GoPointer(), TextVarPtr)
-
 }
 
 var xInscriptionSetTextOverflow func(uintptr, InscriptionOverflow)
 
 // Sets what to do when the text doesn't fit.
 func (x *Inscription) SetTextOverflow(OverflowVar InscriptionOverflow) {
-
 	xInscriptionSetTextOverflow(x.GoPointer(), OverflowVar)
-
 }
 
 var xInscriptionSetWrapMode func(uintptr, pango.WrapMode)
 
 // Controls how line wrapping is done.
 func (x *Inscription) SetWrapMode(WrapModeVar pango.WrapMode) {
-
 	xInscriptionSetWrapMode(x.GoPointer(), WrapModeVar)
-
 }
 
 var xInscriptionSetXalign func(uintptr, float32)
@@ -306,9 +280,7 @@ var xInscriptionSetXalign func(uintptr, float32)
 //
 // See the [property@Gtk.Inscription:xalign] property.
 func (x *Inscription) SetXalign(XalignVar float32) {
-
 	xInscriptionSetXalign(x.GoPointer(), XalignVar)
-
 }
 
 var xInscriptionSetYalign func(uintptr, float32)
@@ -317,9 +289,7 @@ var xInscriptionSetYalign func(uintptr, float32)
 //
 // See the [property@Gtk.Inscription:yalign] property.
 func (x *Inscription) SetYalign(YalignVar float32) {
-
 	xInscriptionSetYalign(x.GoPointer(), YalignVar)
-
 }
 
 func (c *Inscription) GoPointer() uintptr {
@@ -572,9 +542,19 @@ func (x *Inscription) GetPropertyYalign() float32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Inscription) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Inscription) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -595,7 +575,6 @@ func (x *Inscription) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Inscription) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -620,7 +599,6 @@ func (x *Inscription) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Inscription) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -659,30 +637,23 @@ func (x *Inscription) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Inscription) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Inscription) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Inscription) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Inscription) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -695,19 +666,7 @@ func (x *Inscription) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Inscription) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -715,14 +674,7 @@ func (x *Inscription) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Inscription) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -731,9 +683,7 @@ func (x *Inscription) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Inscription) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -755,9 +705,7 @@ func (x *Inscription) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Inscription) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -767,9 +715,7 @@ func (x *Inscription) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *Inscription) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -791,9 +737,7 @@ func (x *Inscription) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 //
 // ```
 func (x *Inscription) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -803,9 +747,7 @@ func (x *Inscription) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *Inscription) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -828,9 +770,7 @@ func (x *Inscription) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 //
 // ```
 func (x *Inscription) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -840,9 +780,7 @@ func (x *Inscription) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *Inscription) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Updates the position of the caret.
@@ -851,9 +789,7 @@ func (x *Inscription) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *Inscription) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -866,9 +802,7 @@ func (x *Inscription) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *Inscription) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -877,9 +811,7 @@ func (x *Inscription) UpdateContents(ChangeVar AccessibleTextContentChange, Star
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *Inscription) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -887,14 +819,13 @@ func (x *Inscription) UpdateSelectionBound() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Inscription) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -931,5 +862,4 @@ func init() {
 	core.PuregoSafeRegister(&xInscriptionSetWrapMode, libs, "gtk_inscription_set_wrap_mode")
 	core.PuregoSafeRegister(&xInscriptionSetXalign, libs, "gtk_inscription_set_xalign")
 	core.PuregoSafeRegister(&xInscriptionSetYalign, libs, "gtk_inscription_set_yalign")
-
 }

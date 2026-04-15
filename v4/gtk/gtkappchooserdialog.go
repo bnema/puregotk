@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -102,7 +101,6 @@ var xAppChooserDialogGetHeading func(uintptr) string
 
 // Returns the text to display at the top of the dialog.
 func (x *AppChooserDialog) GetHeading() string {
-
 	cret := xAppChooserDialogGetHeading(x.GoPointer())
 	return cret
 }
@@ -130,9 +128,7 @@ var xAppChooserDialogSetHeading func(uintptr, string)
 //
 // If the heading is not set, the dialog displays a default text.
 func (x *AppChooserDialog) SetHeading(HeadingVar string) {
-
 	xAppChooserDialogSetHeading(x.GoPointer(), HeadingVar)
-
 }
 
 func (c *AppChooserDialog) GoPointer() uintptr {
@@ -177,9 +173,19 @@ func (x *AppChooserDialog) GetPropertyHeading() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AppChooserDialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AppChooserDialog) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -200,7 +206,6 @@ func (x *AppChooserDialog) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AppChooserDialog) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -225,7 +230,6 @@ func (x *AppChooserDialog) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AppChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -264,30 +268,23 @@ func (x *AppChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AppChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AppChooserDialog) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AppChooserDialog) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AppChooserDialog) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -300,19 +297,7 @@ func (x *AppChooserDialog) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AppChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -320,14 +305,7 @@ func (x *AppChooserDialog) SetAccessibleParent(ParentVar Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AppChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -336,9 +314,7 @@ func (x *AppChooserDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AppChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -360,9 +336,7 @@ func (x *AppChooserDialog) UpdatePlatformState(StateVar AccessiblePlatformState)
 //
 // ```
 func (x *AppChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -372,9 +346,7 @@ func (x *AppChooserDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -396,9 +368,7 @@ func (x *AppChooserDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 //
 // ```
 func (x *AppChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -408,9 +378,7 @@ func (x *AppChooserDialog) UpdateRelation(FirstRelationVar AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -433,9 +401,7 @@ func (x *AppChooserDialog) UpdateRelationValue(NRelationsVar int, RelationsVar [
 //
 // ```
 func (x *AppChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -445,9 +411,7 @@ func (x *AppChooserDialog) UpdateState(FirstStateVar AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Returns the currently selected application.
@@ -467,16 +431,13 @@ func (x *AppChooserDialog) GetAppInfo() *gio.AppInfoBase {
 // Returns the content type for which the `GtkAppChooser`
 // shows applications.
 func (x *AppChooserDialog) GetContentType() string {
-
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
 	return cret
 }
 
 // Reloads the list of applications.
 func (x *AppChooserDialog) Refresh() {
-
 	XGtkAppChooserRefresh(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -484,7 +445,6 @@ func (x *AppChooserDialog) Refresh() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AppChooserDialog) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -524,27 +484,21 @@ func (x *AppChooserDialog) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *AppChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *AppChooserDialog) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *AppChooserDialog) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -591,19 +545,12 @@ func (x *AppChooserDialog) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *AppChooserDialog) SetFocus(FocusVar *Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
-
+	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -621,5 +568,4 @@ func init() {
 	core.PuregoSafeRegister(&xAppChooserDialogGetHeading, libs, "gtk_app_chooser_dialog_get_heading")
 	core.PuregoSafeRegister(&xAppChooserDialogGetWidget, libs, "gtk_app_chooser_dialog_get_widget")
 	core.PuregoSafeRegister(&xAppChooserDialogSetHeading, libs, "gtk_app_chooser_dialog_set_heading")
-
 }

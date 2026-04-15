@@ -69,7 +69,6 @@ func RemoveSnakePrefix(s string, prefix string) string {
 }
 
 // CamelToSnake converts a CamelCase string to snake_case.
-// e.g. "GtkLayerShell" -> "gtk_layer_shell"
 func CamelToSnake(s string) string {
 	var sb strings.Builder
 	for i, r := range s {
@@ -82,31 +81,22 @@ func CamelToSnake(s string) string {
 }
 
 // RemoveSnakePrefixMulti strips a multi-segment snake_case prefix from s.
-// The prefix is given in CamelCase (e.g. "GtkLayerShell") and converted to
-// snake_case ("gtk_layer_shell") before stripping. If the prefix is empty
-// or converts to a single segment (e.g. "G" -> "g"), it falls back to
-// RemoveSnakePrefix(s, fallbackNs) to preserve existing behavior for
-// GLib/Gio/GObject/GModule enums.
+// The prefix is given in CamelCase and converted to snake_case before stripping.
+// For single-segment prefixes, it falls back to RemoveSnakePrefix.
 func RemoveSnakePrefixMulti(s, camelPrefix, fallbackNs string) string {
 	if camelPrefix == "" {
 		return RemoveSnakePrefix(s, fallbackNs)
 	}
 	snakePrefix := CamelToSnake(camelPrefix)
 	prefixParts := strings.Split(snakePrefix, "_")
-
-	// Single-segment prefixes (like "G" -> ["g"]) are already handled
-	// correctly by RemoveSnakePrefix. Using them here would incorrectly
-	// strip the "g_" from all GLib/Gio/GObject enum identifiers.
 	if len(prefixParts) <= 1 {
 		return RemoveSnakePrefix(s, fallbackNs)
 	}
 
-	sParts := strings.Split(s, "_")
-
+	sParts := strings.Split(strings.ToLower(s), "_")
 	if len(sParts) <= len(prefixParts) {
 		return s
 	}
-
 	for i, pp := range prefixParts {
 		if sParts[i] != pp {
 			return RemoveSnakePrefix(s, fallbackNs)
@@ -299,10 +289,11 @@ func PropertyScalarSet(notGObject bool, gvalueType, setMethod string) string {
 	if notGObject {
 		prefix = "gobject."
 	}
-	if setMethod == "SetString" {
-		return prefix + gvalueType + ")\n\tv." + setMethod + "(&value"
+	arg := "value"
+	if setMethod == "SetString" || setMethod == "SetStringTakeOwnership" {
+		arg = "&value"
 	}
-	return prefix + gvalueType + ")\n\tv." + setMethod + "(value"
+	return prefix + gvalueType + ")\n\tv." + setMethod + "(" + arg
 }
 
 // PropertyScalarGet returns the code for getting a scalar property value

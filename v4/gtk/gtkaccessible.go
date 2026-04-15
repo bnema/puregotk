@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -30,6 +29,8 @@ type AccessibleInterface struct {
 	xGetNextAccessibleSibling uintptr
 
 	xGetBounds uintptr
+
+	xGetAccessibleId uintptr
 }
 
 func (x *AccessibleInterface) GoPointer() uintptr {
@@ -222,6 +223,29 @@ func (x *AccessibleInterface) GetGetBounds() func(Accessible, *int, *int, *int, 
 	}
 }
 
+// OverrideGetAccessibleId sets the "get_accessible_id" callback function.
+func (x *AccessibleInterface) OverrideGetAccessibleId(cb func(Accessible) string) {
+	if cb == nil {
+		x.xGetAccessibleId = 0
+	} else {
+		x.xGetAccessibleId = purego.NewCallback(func(SelfVarp uintptr) string {
+			return cb(&AccessibleBase{Ptr: SelfVarp})
+		})
+	}
+}
+
+// GetGetAccessibleId gets the "get_accessible_id" callback function.
+func (x *AccessibleInterface) GetGetAccessibleId() func(Accessible) string {
+	if x.xGetAccessibleId == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetAccessibleId)
+	return func(SelfVar Accessible) string {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
 // Wraps a list of references to [iface@Gtk.Accessible] objects.
 type AccessibleList struct {
 	_ structs.HostLayout
@@ -237,32 +261,38 @@ func (x *AccessibleList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewAccessibleListFromArray func(uintptr, uint) *AccessibleList
+var xNewAccessibleListFromArray func(uintptr, uint) uintptr
 
 // Allocates a new list of accessible objects.
 func NewAccessibleListFromArray(AccessiblesVar uintptr, NAccessiblesVar uint) *AccessibleList {
-
 	cret := xNewAccessibleListFromArray(AccessiblesVar, NAccessiblesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AccessibleList)(unsafe.Pointer(cret))
 }
 
-var xNewAccessibleListFromList func(*glib.List) *AccessibleList
+var xNewAccessibleListFromList func(*glib.List) uintptr
 
 // Allocates a new `GtkAccessibleList`, doing a shallow copy
 // of the passed list of accessible objects
 func NewAccessibleListFromList(ListVar *glib.List) *AccessibleList {
-
 	cret := xNewAccessibleListFromList(ListVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AccessibleList)(unsafe.Pointer(cret))
 }
 
-var xAccessibleListGetObjects func(uintptr) *glib.List
+var xAccessibleListGetObjects func(uintptr) uintptr
 
 // Gets the list of objects this boxed type holds.
 func (x *AccessibleList) GetObjects() *glib.List {
-
 	cret := xAccessibleListGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // An interface for describing UI elements for Assistive Technologies.
@@ -299,6 +329,7 @@ type Accessible interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority)
+	GetAccessibleId() string
 	GetAccessibleParent() *AccessibleBase
 	GetAccessibleRole() AccessibleRole
 	GetAtContext() *ATContext
@@ -351,9 +382,19 @@ func (x *AccessibleBase) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AccessibleBase) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AccessibleBase) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -374,7 +415,6 @@ func (x *AccessibleBase) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AccessibleBase) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -399,7 +439,6 @@ func (x *AccessibleBase) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AccessibleBase) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -438,30 +477,23 @@ func (x *AccessibleBase) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AccessibleBase) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AccessibleBase) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AccessibleBase) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AccessibleBase) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -474,19 +506,7 @@ func (x *AccessibleBase) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AccessibleBase) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -494,14 +514,7 @@ func (x *AccessibleBase) SetAccessibleParent(ParentVar Accessible, NextSiblingVa
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AccessibleBase) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -510,9 +523,7 @@ func (x *AccessibleBase) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AccessibleBase) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -534,9 +545,7 @@ func (x *AccessibleBase) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *AccessibleBase) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -546,9 +555,7 @@ func (x *AccessibleBase) UpdateProperty(FirstPropertyVar AccessibleProperty, var
 //
 // This function is meant to be used by language bindings.
 func (x *AccessibleBase) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -570,9 +577,7 @@ func (x *AccessibleBase) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 //
 // ```
 func (x *AccessibleBase) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -582,9 +587,7 @@ func (x *AccessibleBase) UpdateRelation(FirstRelationVar AccessibleRelation, var
 //
 // This function is meant to be used by language bindings.
 func (x *AccessibleBase) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -607,9 +610,7 @@ func (x *AccessibleBase) UpdateRelationValue(NRelationsVar int, RelationsVar []A
 //
 // ```
 func (x *AccessibleBase) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -619,31 +620,32 @@ func (x *AccessibleBase) UpdateState(FirstStateVar AccessibleState, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *AccessibleBase) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
-var XGtkAccessibleAnnounce func(uintptr, string, AccessibleAnnouncementPriority)
-var XGtkAccessibleGetAccessibleParent func(uintptr) uintptr
-var XGtkAccessibleGetAccessibleRole func(uintptr) AccessibleRole
-var XGtkAccessibleGetAtContext func(uintptr) uintptr
-var XGtkAccessibleGetBounds func(uintptr, *int, *int, *int, *int) bool
-var XGtkAccessibleGetFirstAccessibleChild func(uintptr) uintptr
-var XGtkAccessibleGetNextAccessibleSibling func(uintptr) uintptr
-var XGtkAccessibleGetPlatformState func(uintptr, AccessiblePlatformState) bool
-var XGtkAccessibleResetProperty func(uintptr, AccessibleProperty)
-var XGtkAccessibleResetRelation func(uintptr, AccessibleRelation)
-var XGtkAccessibleResetState func(uintptr, AccessibleState)
-var XGtkAccessibleSetAccessibleParent func(uintptr, uintptr, uintptr)
-var XGtkAccessibleUpdateNextAccessibleSibling func(uintptr, uintptr)
-var XGtkAccessibleUpdatePlatformState func(uintptr, AccessiblePlatformState)
-var XGtkAccessibleUpdateProperty func(uintptr, AccessibleProperty, ...interface{})
-var XGtkAccessibleUpdatePropertyValue func(uintptr, int, []AccessibleProperty, []gobject.Value)
-var XGtkAccessibleUpdateRelation func(uintptr, AccessibleRelation, ...interface{})
-var XGtkAccessibleUpdateRelationValue func(uintptr, int, []AccessibleRelation, []gobject.Value)
-var XGtkAccessibleUpdateState func(uintptr, AccessibleState, ...interface{})
-var XGtkAccessibleUpdateStateValue func(uintptr, int, []AccessibleState, []gobject.Value)
+var (
+	XGtkAccessibleAnnounce                    func(uintptr, string, AccessibleAnnouncementPriority)
+	XGtkAccessibleGetAccessibleId             func(uintptr) string
+	XGtkAccessibleGetAccessibleParent         func(uintptr) uintptr
+	XGtkAccessibleGetAccessibleRole           func(uintptr) AccessibleRole
+	XGtkAccessibleGetAtContext                func(uintptr) uintptr
+	XGtkAccessibleGetBounds                   func(uintptr, *int, *int, *int, *int) bool
+	XGtkAccessibleGetFirstAccessibleChild     func(uintptr) uintptr
+	XGtkAccessibleGetNextAccessibleSibling    func(uintptr) uintptr
+	XGtkAccessibleGetPlatformState            func(uintptr, AccessiblePlatformState) bool
+	XGtkAccessibleResetProperty               func(uintptr, AccessibleProperty)
+	XGtkAccessibleResetRelation               func(uintptr, AccessibleRelation)
+	XGtkAccessibleResetState                  func(uintptr, AccessibleState)
+	XGtkAccessibleSetAccessibleParent         func(uintptr, uintptr, uintptr)
+	XGtkAccessibleUpdateNextAccessibleSibling func(uintptr, uintptr)
+	XGtkAccessibleUpdatePlatformState         func(uintptr, AccessiblePlatformState)
+	XGtkAccessibleUpdateProperty              func(uintptr, AccessibleProperty, ...interface{})
+	XGtkAccessibleUpdatePropertyValue         func(uintptr, int, []AccessibleProperty, []gobject.Value)
+	XGtkAccessibleUpdateRelation              func(uintptr, AccessibleRelation, ...interface{})
+	XGtkAccessibleUpdateRelationValue         func(uintptr, int, []AccessibleRelation, []gobject.Value)
+	XGtkAccessibleUpdateState                 func(uintptr, AccessibleState, ...interface{})
+	XGtkAccessibleUpdateStateValue            func(uintptr, int, []AccessibleState, []gobject.Value)
+)
 
 // The various platform states which can be queried
 // using [method@Gtk.Accessible.get_platform_state].
@@ -672,9 +674,7 @@ var xAccessiblePropertyInitValue func(AccessibleProperty, *gobject.Value)
 // This function is mostly meant for language bindings, in conjunction
 // with gtk_accessible_update_property_value().
 func AccessiblePropertyInitValue(PropertyVar AccessibleProperty, ValueVar *gobject.Value) {
-
 	xAccessiblePropertyInitValue(PropertyVar, ValueVar)
-
 }
 
 var xAccessibleRelationInitValue func(AccessibleRelation, *gobject.Value)
@@ -684,9 +684,7 @@ var xAccessibleRelationInitValue func(AccessibleRelation, *gobject.Value)
 // This function is mostly meant for language bindings, in conjunction
 // with gtk_accessible_update_relation_value().
 func AccessibleRelationInitValue(RelationVar AccessibleRelation, ValueVar *gobject.Value) {
-
 	xAccessibleRelationInitValue(RelationVar, ValueVar)
-
 }
 
 var xAccessibleStateInitValue func(AccessibleState, *gobject.Value)
@@ -696,14 +694,12 @@ var xAccessibleStateInitValue func(AccessibleState, *gobject.Value)
 // This function is mostly meant for language bindings, in conjunction
 // with gtk_accessible_update_relation_state().
 func AccessibleStateInitValue(StateVar AccessibleState, ValueVar *gobject.Value) {
-
 	xAccessibleStateInitValue(StateVar, ValueVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -729,6 +725,7 @@ func init() {
 	core.PuregoSafeRegister(&xAccessibleGLibType, libs, "gtk_accessible_get_type")
 
 	core.PuregoSafeRegister(&XGtkAccessibleAnnounce, libs, "gtk_accessible_announce")
+	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleId, libs, "gtk_accessible_get_accessible_id")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleParent, libs, "gtk_accessible_get_accessible_parent")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleRole, libs, "gtk_accessible_get_accessible_role")
 	core.PuregoSafeRegister(&XGtkAccessibleGetAtContext, libs, "gtk_accessible_get_at_context")
@@ -748,5 +745,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkAccessibleUpdateRelationValue, libs, "gtk_accessible_update_relation_value")
 	core.PuregoSafeRegister(&XGtkAccessibleUpdateState, libs, "gtk_accessible_update_state")
 	core.PuregoSafeRegister(&XGtkAccessibleUpdateStateValue, libs, "gtk_accessible_update_state_value")
-
 }

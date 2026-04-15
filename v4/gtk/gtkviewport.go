@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -95,7 +94,6 @@ var xViewportGetScrollToFocus func(uintptr) bool
 // Gets whether the viewport is scrolling to keep the focused
 // child in view.
 func (x *Viewport) GetScrollToFocus() bool {
-
 	cret := xViewportGetScrollToFocus(x.GoPointer())
 	return cret
 }
@@ -107,23 +105,14 @@ var xViewportScrollTo func(uintptr, uintptr, *ScrollInfo)
 // The viewport and the descendant must be visible and mapped for
 // this function to work, otherwise no scrolling will be performed.
 func (x *Viewport) ScrollTo(DescendantVar *Widget, ScrollVar *ScrollInfo) {
-
 	xViewportScrollTo(x.GoPointer(), DescendantVar.GoPointer(), ScrollVar)
-
 }
 
 var xViewportSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @viewport.
 func (x *Viewport) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xViewportSetChild(x.GoPointer(), ChildVarPtr)
-
+	xViewportSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xViewportSetScrollToFocus func(uintptr, bool)
@@ -131,9 +120,7 @@ var xViewportSetScrollToFocus func(uintptr, bool)
 // Sets whether the viewport should automatically scroll
 // to keep the focused child in view.
 func (x *Viewport) SetScrollToFocus(ScrollToFocusVar bool) {
-
 	xViewportSetScrollToFocus(x.GoPointer(), ScrollToFocusVar)
-
 }
 
 func (c *Viewport) GoPointer() uintptr {
@@ -182,9 +169,19 @@ func (x *Viewport) GetPropertyScrollToFocus() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Viewport) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Viewport) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -205,7 +202,6 @@ func (x *Viewport) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Viewport) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -230,7 +226,6 @@ func (x *Viewport) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Viewport) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -269,30 +264,23 @@ func (x *Viewport) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Viewport) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Viewport) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Viewport) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Viewport) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -305,19 +293,7 @@ func (x *Viewport) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Viewport) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -325,14 +301,7 @@ func (x *Viewport) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Viewport) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -341,9 +310,7 @@ func (x *Viewport) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Viewport) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -365,9 +332,7 @@ func (x *Viewport) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Viewport) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -377,9 +342,7 @@ func (x *Viewport) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Viewport) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -401,9 +364,7 @@ func (x *Viewport) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *Viewport) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -413,9 +374,7 @@ func (x *Viewport) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Viewport) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -438,9 +397,7 @@ func (x *Viewport) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *Viewport) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -450,9 +407,7 @@ func (x *Viewport) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *Viewport) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -460,7 +415,6 @@ func (x *Viewport) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Viewport) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -472,7 +426,6 @@ func (x *Viewport) GetBuildableId() string {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *Viewport) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -494,7 +447,6 @@ func (x *Viewport) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *Viewport) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -516,21 +468,13 @@ func (x *Viewport) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *Viewport) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *Viewport) SetHadjustment(HadjustmentVar *Adjustment) {
-
-	var HadjustmentVarPtr uintptr
-	if HadjustmentVar != nil {
-		HadjustmentVarPtr = HadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
-
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -538,21 +482,12 @@ func (x *Viewport) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *Viewport) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *Viewport) SetVadjustment(VadjustmentVar *Adjustment) {
-
-	var VadjustmentVarPtr uintptr
-	if VadjustmentVar != nil {
-		VadjustmentVarPtr = VadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
-
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -560,14 +495,12 @@ func (x *Viewport) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *Viewport) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -586,5 +519,4 @@ func init() {
 	core.PuregoSafeRegister(&xViewportScrollTo, libs, "gtk_viewport_scroll_to")
 	core.PuregoSafeRegister(&xViewportSetChild, libs, "gtk_viewport_set_child")
 	core.PuregoSafeRegister(&xViewportSetScrollToFocus, libs, "gtk_viewport_set_scroll_to_focus")
-
 }

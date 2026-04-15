@@ -1,13 +1,10 @@
 package pass
 
-import (
-	"github.com/bnema/puregotk/internal/gir/pass"
-	"github.com/bnema/puregotk/internal/gir/types"
-)
+import "github.com/bnema/puregotk/internal/gir/pass"
 
 type (
 	Pass       = pass.Pass
-	Repository = types.Repository
+	Dependency = pass.Dependency
 )
 
 var (

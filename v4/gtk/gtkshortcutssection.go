@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -77,9 +76,7 @@ var xShortcutsSectionAddGroup func(uintptr, uintptr)
 // Adding children with the `GtkBox` API is not appropriate, as
 // `GtkShortcutsSection` manages its children internally.
 func (x *ShortcutsSection) AddGroup(GroupVar *ShortcutsGroup) {
-
 	xShortcutsSectionAddGroup(x.GoPointer(), GroupVar.GoPointer())
-
 }
 
 func (c *ShortcutsSection) GoPointer() uintptr {
@@ -216,7 +213,6 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 		cbFn := *cb
 
 		return cbFn(fa, OffsetVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -235,9 +231,19 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ShortcutsSection) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ShortcutsSection) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -258,7 +264,6 @@ func (x *ShortcutsSection) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ShortcutsSection) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -283,7 +288,6 @@ func (x *ShortcutsSection) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ShortcutsSection) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -322,30 +326,23 @@ func (x *ShortcutsSection) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ShortcutsSection) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ShortcutsSection) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ShortcutsSection) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ShortcutsSection) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -358,19 +355,7 @@ func (x *ShortcutsSection) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ShortcutsSection) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -378,14 +363,7 @@ func (x *ShortcutsSection) SetAccessibleParent(ParentVar Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ShortcutsSection) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -394,9 +372,7 @@ func (x *ShortcutsSection) UpdateNextAccessibleSibling(NewSiblingVar Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ShortcutsSection) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -418,9 +394,7 @@ func (x *ShortcutsSection) UpdatePlatformState(StateVar AccessiblePlatformState)
 //
 // ```
 func (x *ShortcutsSection) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -430,9 +404,7 @@ func (x *ShortcutsSection) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *ShortcutsSection) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -454,9 +426,7 @@ func (x *ShortcutsSection) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 //
 // ```
 func (x *ShortcutsSection) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -466,9 +436,7 @@ func (x *ShortcutsSection) UpdateRelation(FirstRelationVar AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *ShortcutsSection) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -491,9 +459,7 @@ func (x *ShortcutsSection) UpdateRelationValue(NRelationsVar int, RelationsVar [
 //
 // ```
 func (x *ShortcutsSection) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -503,9 +469,7 @@ func (x *ShortcutsSection) UpdateState(FirstStateVar AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *ShortcutsSection) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -513,28 +477,24 @@ func (x *ShortcutsSection) UpdateStateValue(NStatesVar int, StatesVar []Accessib
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutsSection) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ShortcutsSection) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ShortcutsSection) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -547,5 +507,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutsSectionGLibType, libs, "gtk_shortcuts_section_get_type")
 
 	core.PuregoSafeRegister(&xShortcutsSectionAddGroup, libs, "gtk_shortcuts_section_add_group")
-
 }

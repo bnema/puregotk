@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -95,7 +94,6 @@ var xRendererIsRealized func(uintptr) bool
 
 // Checks whether the renderer is realized or not.
 func (x *Renderer) IsRealized() bool {
-
 	cret := xRendererIsRealized(x.GoPointer())
 	return cret
 }
@@ -124,7 +122,6 @@ func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRendererRealizeForDisplay func(uintptr, uintptr, **glib.Error) bool
@@ -141,7 +138,6 @@ func (x *Renderer) RealizeForDisplay(DisplayVar *gdk.Display) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xRendererRender func(uintptr, uintptr, *cairo.Region)
@@ -159,9 +155,7 @@ var xRendererRender func(uintptr, uintptr, *cairo.Region)
 // The renderer will acquire a reference on the `GskRenderNode` tree while
 // the rendering is in progress.
 func (x *Renderer) Render(RootVar *RenderNode, RegionVar *cairo.Region) {
-
 	xRendererRender(x.GoPointer(), RootVar.GoPointer(), RegionVar)
-
 }
 
 var xRendererRenderTexture func(uintptr, uintptr, *graphene.Rect) uintptr
@@ -191,9 +185,7 @@ var xRendererUnrealize func(uintptr)
 
 // Releases all the resources created by [method@Gsk.Renderer.realize].
 func (x *Renderer) Unrealize() {
-
 	xRendererUnrealize(x.GoPointer())
-
 }
 
 func (c *Renderer) GoPointer() uintptr {
@@ -217,7 +209,7 @@ func (x *Renderer) GetPropertyRealized() bool {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GSK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -238,5 +230,4 @@ func init() {
 	core.PuregoSafeRegister(&xRendererRender, libs, "gsk_renderer_render")
 	core.PuregoSafeRegister(&xRendererRenderTexture, libs, "gsk_renderer_render_texture")
 	core.PuregoSafeRegister(&xRendererUnrealize, libs, "gsk_renderer_unrealize")
-
 }

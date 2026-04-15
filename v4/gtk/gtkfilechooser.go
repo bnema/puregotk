@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -111,9 +110,7 @@ func (x *FileChooserBase) SetGoPointer(ptr uintptr) {
 // [signal@Gtk.Dialog::response] signal handler using
 // [method@Gtk.FileChooser.get_choice].
 func (x *FileChooserBase) AddChoice(IdVar string, LabelVar string, OptionsVar []string, OptionLabelsVar []string) {
-
 	XGtkFileChooserAddChoice(x.GoPointer(), IdVar, LabelVar, OptionsVar, OptionLabelsVar)
-
 }
 
 // Adds @filter to the list of filters that the user can select between.
@@ -124,9 +121,7 @@ func (x *FileChooserBase) AddChoice(IdVar string, LabelVar string, OptionsVar []
 // Note that the @chooser takes ownership of the filter if it is floating,
 // so you have to ref and sink it if you want to keep a reference.
 func (x *FileChooserBase) AddFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserAddFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Adds a folder to be displayed with the shortcut folders
@@ -139,26 +134,22 @@ func (x *FileChooserBase) AddShortcutFolder(FolderVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets the type of operation that the file chooser is performing.
 func (x *FileChooserBase) GetAction() FileChooserAction {
-
 	cret := XGtkFileChooserGetAction(x.GoPointer())
 	return cret
 }
 
 // Gets the currently selected option in the 'choice' with the given ID.
 func (x *FileChooserBase) GetChoice(IdVar string) string {
-
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
 	return cret
 }
 
 // Gets whether file chooser will offer to create new folders.
 func (x *FileChooserBase) GetCreateFolders() bool {
-
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
 	return cret
 }
@@ -182,7 +173,6 @@ func (x *FileChooserBase) GetCurrentFolder() *gio.FileBase {
 // This is meant to be used in save dialogs, to get the currently typed
 // filename when the file itself does not exist yet.
 func (x *FileChooserBase) GetCurrentName() string {
-
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
 	return cret
 }
@@ -261,7 +251,6 @@ func (x *FileChooserBase) GetFilters() *gio.ListModelBase {
 // Gets whether multiple files can be selected in the file
 // chooser.
 func (x *FileChooserBase) GetSelectMultiple() bool {
-
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
 	return cret
 }
@@ -285,16 +274,12 @@ func (x *FileChooserBase) GetShortcutFolders() *gio.ListModelBase {
 
 // Removes a 'choice' that has been added with gtk_file_chooser_add_choice().
 func (x *FileChooserBase) RemoveChoice(IdVar string) {
-
 	XGtkFileChooserRemoveChoice(x.GoPointer(), IdVar)
-
 }
 
 // Removes @filter from the list of filters that the user can select between.
 func (x *FileChooserBase) RemoveFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserRemoveFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Removes a folder from the shortcut folders in a file chooser.
@@ -306,7 +291,6 @@ func (x *FileChooserBase) RemoveShortcutFolder(FolderVar gio.File) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the type of operation that the chooser is performing.
@@ -317,9 +301,7 @@ func (x *FileChooserBase) RemoveShortcutFolder(FolderVar gio.File) (bool, error)
 // if the action is %GTK_FILE_CHOOSER_ACTION_SAVE but not if the
 // action is %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserBase) SetAction(ActionVar FileChooserAction) {
-
 	XGtkFileChooserSetAction(x.GoPointer(), ActionVar)
-
 }
 
 // Selects an option in a 'choice' that has been added with
@@ -327,9 +309,7 @@ func (x *FileChooserBase) SetAction(ActionVar FileChooserAction) {
 //
 // For a boolean choice, the possible options are "true" and "false".
 func (x *FileChooserBase) SetChoice(IdVar string, OptionVar string) {
-
 	XGtkFileChooserSetChoice(x.GoPointer(), IdVar, OptionVar)
-
 }
 
 // Sets whether file chooser will offer to create new folders.
@@ -337,9 +317,7 @@ func (x *FileChooserBase) SetChoice(IdVar string, OptionVar string) {
 // This is only relevant if the action is not set to be
 // %GTK_FILE_CHOOSER_ACTION_OPEN.
 func (x *FileChooserBase) SetCreateFolders(CreateFoldersVar bool) {
-
 	XGtkFileChooserSetCreateFolders(x.GoPointer(), CreateFoldersVar)
-
 }
 
 // Sets the current folder for @chooser from a `GFile`.
@@ -356,7 +334,6 @@ func (x *FileChooserBase) SetCurrentFolder(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current name in the file selector, as if entered
@@ -373,9 +350,7 @@ func (x *FileChooserBase) SetCurrentFolder(FileVar gio.File) (bool, error) {
 // Please see the documentation for those functions for an example
 // of using [method@Gtk.FileChooser.set_current_name] as well.
 func (x *FileChooserBase) SetCurrentName(NameVar string) {
-
 	XGtkFileChooserSetCurrentName(x.GoPointer(), NameVar)
-
 }
 
 // Sets @file as the current filename for the file chooser.
@@ -431,7 +406,6 @@ func (x *FileChooserBase) SetFile(FileVar gio.File) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the current filter.
@@ -444,9 +418,7 @@ func (x *FileChooserBase) SetFile(FileVar gio.File) (bool, error) {
 // empty is useful if you want to restrict the displayed
 // set of files without letting the user change it.
 func (x *FileChooserBase) SetFilter(FilterVar *FileFilter) {
-
 	XGtkFileChooserSetFilter(x.GoPointer(), FilterVar.GoPointer())
-
 }
 
 // Sets whether multiple files can be selected in the file chooser.
@@ -455,9 +427,7 @@ func (x *FileChooserBase) SetFilter(FilterVar *FileFilter) {
 // %GTK_FILE_CHOOSER_ACTION_OPEN or
 // %GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 func (x *FileChooserBase) SetSelectMultiple(SelectMultipleVar bool) {
-
 	XGtkFileChooserSetSelectMultiple(x.GoPointer(), SelectMultipleVar)
-
 }
 
 // SetPropertyCreateFolders sets the "create-folders" property.
@@ -504,31 +474,33 @@ func (x *FileChooserBase) GetPropertySelectMultiple() bool {
 	return v.GetBoolean()
 }
 
-var XGtkFileChooserAddChoice func(uintptr, string, string, []string, []string)
-var XGtkFileChooserAddFilter func(uintptr, uintptr)
-var XGtkFileChooserAddShortcutFolder func(uintptr, uintptr, **glib.Error) bool
-var XGtkFileChooserGetAction func(uintptr) FileChooserAction
-var XGtkFileChooserGetChoice func(uintptr, string) string
-var XGtkFileChooserGetCreateFolders func(uintptr) bool
-var XGtkFileChooserGetCurrentFolder func(uintptr) uintptr
-var XGtkFileChooserGetCurrentName func(uintptr) string
-var XGtkFileChooserGetFile func(uintptr) uintptr
-var XGtkFileChooserGetFiles func(uintptr) uintptr
-var XGtkFileChooserGetFilter func(uintptr) uintptr
-var XGtkFileChooserGetFilters func(uintptr) uintptr
-var XGtkFileChooserGetSelectMultiple func(uintptr) bool
-var XGtkFileChooserGetShortcutFolders func(uintptr) uintptr
-var XGtkFileChooserRemoveChoice func(uintptr, string)
-var XGtkFileChooserRemoveFilter func(uintptr, uintptr)
-var XGtkFileChooserRemoveShortcutFolder func(uintptr, uintptr, **glib.Error) bool
-var XGtkFileChooserSetAction func(uintptr, FileChooserAction)
-var XGtkFileChooserSetChoice func(uintptr, string, string)
-var XGtkFileChooserSetCreateFolders func(uintptr, bool)
-var XGtkFileChooserSetCurrentFolder func(uintptr, uintptr, **glib.Error) bool
-var XGtkFileChooserSetCurrentName func(uintptr, string)
-var XGtkFileChooserSetFile func(uintptr, uintptr, **glib.Error) bool
-var XGtkFileChooserSetFilter func(uintptr, uintptr)
-var XGtkFileChooserSetSelectMultiple func(uintptr, bool)
+var (
+	XGtkFileChooserAddChoice            func(uintptr, string, string, []string, []string)
+	XGtkFileChooserAddFilter            func(uintptr, uintptr)
+	XGtkFileChooserAddShortcutFolder    func(uintptr, uintptr, **glib.Error) bool
+	XGtkFileChooserGetAction            func(uintptr) FileChooserAction
+	XGtkFileChooserGetChoice            func(uintptr, string) string
+	XGtkFileChooserGetCreateFolders     func(uintptr) bool
+	XGtkFileChooserGetCurrentFolder     func(uintptr) uintptr
+	XGtkFileChooserGetCurrentName       func(uintptr) string
+	XGtkFileChooserGetFile              func(uintptr) uintptr
+	XGtkFileChooserGetFiles             func(uintptr) uintptr
+	XGtkFileChooserGetFilter            func(uintptr) uintptr
+	XGtkFileChooserGetFilters           func(uintptr) uintptr
+	XGtkFileChooserGetSelectMultiple    func(uintptr) bool
+	XGtkFileChooserGetShortcutFolders   func(uintptr) uintptr
+	XGtkFileChooserRemoveChoice         func(uintptr, string)
+	XGtkFileChooserRemoveFilter         func(uintptr, uintptr)
+	XGtkFileChooserRemoveShortcutFolder func(uintptr, uintptr, **glib.Error) bool
+	XGtkFileChooserSetAction            func(uintptr, FileChooserAction)
+	XGtkFileChooserSetChoice            func(uintptr, string, string)
+	XGtkFileChooserSetCreateFolders     func(uintptr, bool)
+	XGtkFileChooserSetCurrentFolder     func(uintptr, uintptr, **glib.Error) bool
+	XGtkFileChooserSetCurrentName       func(uintptr, string)
+	XGtkFileChooserSetFile              func(uintptr, uintptr, **glib.Error) bool
+	XGtkFileChooserSetFilter            func(uintptr, uintptr)
+	XGtkFileChooserSetSelectMultiple    func(uintptr, bool)
+)
 
 // Describes whether a `GtkFileChooser` is being used to open existing files
 // or to save to a possibly new file.
@@ -583,14 +555,13 @@ var xFileChooserErrorQuark func() glib.Quark
 
 // Registers an error quark for `GtkFileChooser` errors.
 func FileChooserErrorQuark() glib.Quark {
-
 	cret := xFileChooserErrorQuark()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -633,5 +604,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkFileChooserSetFile, libs, "gtk_file_chooser_set_file")
 	core.PuregoSafeRegister(&XGtkFileChooserSetFilter, libs, "gtk_file_chooser_set_filter")
 	core.PuregoSafeRegister(&XGtkFileChooserSetSelectMultiple, libs, "gtk_file_chooser_set_select_multiple")
-
 }

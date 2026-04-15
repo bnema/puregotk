@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -28,9 +27,7 @@ var xShowAboutDialog func(uintptr, string, ...interface{})
 
 // A convenience function for showing an application’s about dialog.
 func ShowAboutDialog(ParentVar *gtk.Widget, FirstPropertyNameVar string, varArgs ...interface{}) {
-
 	xShowAboutDialog(ParentVar.GoPointer(), FirstPropertyNameVar, varArgs...)
-
 }
 
 var xShowAboutDialogFromAppdata func(uintptr, string, uintptr, string, ...interface{})
@@ -40,12 +37,10 @@ var xShowAboutDialogFromAppdata func(uintptr, string, uintptr, string, ...interf
 //
 // See [ctor@AboutDialog.new_from_appdata] for details.
 func ShowAboutDialogFromAppdata(ParentVar *gtk.Widget, ResourcePathVar string, ReleaseNotesVersionVar *string, FirstPropertyNameVar string, varArgs ...interface{}) {
-
 	ReleaseNotesVersionVarPtr := core.GStrdupNullable(ReleaseNotesVersionVar)
 	defer core.GFreeNullable(ReleaseNotesVersionVarPtr)
 
 	xShowAboutDialogFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVarPtr, FirstPropertyNameVar, varArgs...)
-
 }
 
 // A dialog showing information about the application.
@@ -274,7 +269,7 @@ var xNewAboutDialogFromAppdata func(string, uintptr) uintptr
 //   - [property@AboutDialog:issue-url] is set from the `&lt;url type="bugtracker"&gt;`
 //   - [property@AboutDialog:license-type] is set from the `&lt;project_license&gt;`.
 //     If the license type retrieved from AppStream is not listed in
-//     [enum@Gtk.License], it will be set to `GTK_LICENCE_CUSTOM`.
+//     [enum@Gtk.License], it will be set to [enum@Gtk.License.custom].
 //
 // If @release_notes_version is not `NULL`,
 // [property@AboutDialog:release-notes-version] is set to match it, while
@@ -317,12 +312,10 @@ var xAboutDialogAddAcknowledgementSection func(uintptr, uintptr, []string)
 // * [property@AboutDialog:translator-credits]
 // * [method@AboutDialog.add_credit_section]
 func (x *AboutDialog) AddAcknowledgementSection(NameVar *string, PeopleVar []string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xAboutDialogAddAcknowledgementSection(x.GoPointer(), NameVarPtr, PeopleVar)
-
 }
 
 var xAboutDialogAddCreditSection func(uintptr, uintptr, []string)
@@ -343,12 +336,10 @@ var xAboutDialogAddCreditSection func(uintptr, uintptr, []string)
 // * [property@AboutDialog:translator-credits]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) AddCreditSection(NameVar *string, PeopleVar []string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xAboutDialogAddCreditSection(x.GoPointer(), NameVarPtr, PeopleVar)
-
 }
 
 var xAboutDialogAddLegalSection func(uintptr, string, uintptr, gtk.License, uintptr)
@@ -399,7 +390,6 @@ var xAboutDialogAddLegalSection func(uintptr, string, uintptr, gtk.License, uint
 //
 // ```
 func (x *AboutDialog) AddLegalSection(TitleVar string, CopyrightVar *string, LicenseTypeVar gtk.License, LicenseVar *string) {
-
 	CopyrightVarPtr := core.GStrdupNullable(CopyrightVar)
 	defer core.GFreeNullable(CopyrightVarPtr)
 
@@ -407,7 +397,6 @@ func (x *AboutDialog) AddLegalSection(TitleVar string, CopyrightVar *string, Lic
 	defer core.GFreeNullable(LicenseVarPtr)
 
 	xAboutDialogAddLegalSection(x.GoPointer(), TitleVar, CopyrightVarPtr, LicenseTypeVar, LicenseVarPtr)
-
 }
 
 var xAboutDialogAddLink func(uintptr, string, string)
@@ -420,9 +409,7 @@ var xAboutDialogAddLink func(uintptr, string, string)
 //
 // See [property@AboutDialog:website].
 func (x *AboutDialog) AddLink(TitleVar string, UrlVar string) {
-
 	xAboutDialogAddLink(x.GoPointer(), TitleVar, UrlVar)
-
 }
 
 var xAboutDialogAddOtherApp func(uintptr, string, string, string)
@@ -447,16 +434,21 @@ var xAboutDialogAddOtherApp func(uintptr, string, string, string)
 //
 // ```
 func (x *AboutDialog) AddOtherApp(AppidVar string, NameVar string, SummaryVar string) {
-
 	xAboutDialogAddOtherApp(x.GoPointer(), AppidVar, NameVar, SummaryVar)
+}
 
+var xAboutDialogGetAppdataResourcePath func(uintptr) string
+
+// Gets the AppStream metadata resource path for @self.
+func (x *AboutDialog) GetAppdataResourcePath() string {
+	cret := xAboutDialogGetAppdataResourcePath(x.GoPointer())
+	return cret
 }
 
 var xAboutDialogGetApplicationIcon func(uintptr) string
 
 // Gets the name of the application icon for @self.
 func (x *AboutDialog) GetApplicationIcon() string {
-
 	cret := xAboutDialogGetApplicationIcon(x.GoPointer())
 	return cret
 }
@@ -465,7 +457,6 @@ var xAboutDialogGetApplicationName func(uintptr) string
 
 // Gets the application name for @self.
 func (x *AboutDialog) GetApplicationName() string {
-
 	cret := xAboutDialogGetApplicationName(x.GoPointer())
 	return cret
 }
@@ -474,7 +465,6 @@ var xAboutDialogGetArtists func(uintptr) []string
 
 // Gets the list of artists of the application.
 func (x *AboutDialog) GetArtists() []string {
-
 	cret := xAboutDialogGetArtists(x.GoPointer())
 	return cret
 }
@@ -483,7 +473,6 @@ var xAboutDialogGetComments func(uintptr) string
 
 // Gets the comments about the application.
 func (x *AboutDialog) GetComments() string {
-
 	cret := xAboutDialogGetComments(x.GoPointer())
 	return cret
 }
@@ -492,7 +481,6 @@ var xAboutDialogGetCopyright func(uintptr) string
 
 // Gets the copyright information for @self.
 func (x *AboutDialog) GetCopyright() string {
-
 	cret := xAboutDialogGetCopyright(x.GoPointer())
 	return cret
 }
@@ -501,7 +489,6 @@ var xAboutDialogGetDebugInfo func(uintptr) string
 
 // Gets the debug information for @self.
 func (x *AboutDialog) GetDebugInfo() string {
-
 	cret := xAboutDialogGetDebugInfo(x.GoPointer())
 	return cret
 }
@@ -510,7 +497,6 @@ var xAboutDialogGetDebugInfoFilename func(uintptr) string
 
 // Gets the debug information filename for @self.
 func (x *AboutDialog) GetDebugInfoFilename() string {
-
 	cret := xAboutDialogGetDebugInfoFilename(x.GoPointer())
 	return cret
 }
@@ -519,7 +505,6 @@ var xAboutDialogGetDesigners func(uintptr) []string
 
 // Gets the list of designers of the application.
 func (x *AboutDialog) GetDesigners() []string {
-
 	cret := xAboutDialogGetDesigners(x.GoPointer())
 	return cret
 }
@@ -528,7 +513,6 @@ var xAboutDialogGetDeveloperName func(uintptr) string
 
 // Gets the developer name for @self.
 func (x *AboutDialog) GetDeveloperName() string {
-
 	cret := xAboutDialogGetDeveloperName(x.GoPointer())
 	return cret
 }
@@ -537,7 +521,6 @@ var xAboutDialogGetDevelopers func(uintptr) []string
 
 // Gets the list of developers of the application.
 func (x *AboutDialog) GetDevelopers() []string {
-
 	cret := xAboutDialogGetDevelopers(x.GoPointer())
 	return cret
 }
@@ -546,7 +529,6 @@ var xAboutDialogGetDocumenters func(uintptr) []string
 
 // Gets the list of documenters of the application.
 func (x *AboutDialog) GetDocumenters() []string {
-
 	cret := xAboutDialogGetDocumenters(x.GoPointer())
 	return cret
 }
@@ -555,7 +537,6 @@ var xAboutDialogGetIssueUrl func(uintptr) string
 
 // Gets the issue tracker URL for @self.
 func (x *AboutDialog) GetIssueUrl() string {
-
 	cret := xAboutDialogGetIssueUrl(x.GoPointer())
 	return cret
 }
@@ -564,7 +545,6 @@ var xAboutDialogGetLicense func(uintptr) string
 
 // Gets the license for @self.
 func (x *AboutDialog) GetLicense() string {
-
 	cret := xAboutDialogGetLicense(x.GoPointer())
 	return cret
 }
@@ -573,7 +553,6 @@ var xAboutDialogGetLicenseType func(uintptr) gtk.License
 
 // Gets the license type for @self.
 func (x *AboutDialog) GetLicenseType() gtk.License {
-
 	cret := xAboutDialogGetLicenseType(x.GoPointer())
 	return cret
 }
@@ -582,7 +561,6 @@ var xAboutDialogGetReleaseNotes func(uintptr) string
 
 // Gets the release notes for @self.
 func (x *AboutDialog) GetReleaseNotes() string {
-
 	cret := xAboutDialogGetReleaseNotes(x.GoPointer())
 	return cret
 }
@@ -591,7 +569,6 @@ var xAboutDialogGetReleaseNotesVersion func(uintptr) string
 
 // Gets the version described by the application's release notes.
 func (x *AboutDialog) GetReleaseNotesVersion() string {
-
 	cret := xAboutDialogGetReleaseNotesVersion(x.GoPointer())
 	return cret
 }
@@ -600,7 +577,6 @@ var xAboutDialogGetSupportUrl func(uintptr) string
 
 // Gets the URL of the support page for @self.
 func (x *AboutDialog) GetSupportUrl() string {
-
 	cret := xAboutDialogGetSupportUrl(x.GoPointer())
 	return cret
 }
@@ -609,7 +585,6 @@ var xAboutDialogGetTranslatorCredits func(uintptr) string
 
 // Gets the translator credits string.
 func (x *AboutDialog) GetTranslatorCredits() string {
-
 	cret := xAboutDialogGetTranslatorCredits(x.GoPointer())
 	return cret
 }
@@ -618,7 +593,6 @@ var xAboutDialogGetVersion func(uintptr) string
 
 // Gets the version for @self.
 func (x *AboutDialog) GetVersion() string {
-
 	cret := xAboutDialogGetVersion(x.GoPointer())
 	return cret
 }
@@ -627,7 +601,6 @@ var xAboutDialogGetWebsite func(uintptr) string
 
 // Gets the application website URL for @self.
 func (x *AboutDialog) GetWebsite() string {
-
 	cret := xAboutDialogGetWebsite(x.GoPointer())
 	return cret
 }
@@ -638,9 +611,7 @@ var xAboutDialogSetApplicationIcon func(uintptr, string)
 //
 // The icon is displayed at the top of the main page.
 func (x *AboutDialog) SetApplicationIcon(ApplicationIconVar string) {
-
 	xAboutDialogSetApplicationIcon(x.GoPointer(), ApplicationIconVar)
-
 }
 
 var xAboutDialogSetApplicationName func(uintptr, string)
@@ -649,9 +620,7 @@ var xAboutDialogSetApplicationName func(uintptr, string)
 //
 // The name is displayed at the top of the main page.
 func (x *AboutDialog) SetApplicationName(ApplicationNameVar string) {
-
 	xAboutDialogSetApplicationName(x.GoPointer(), ApplicationNameVar)
-
 }
 
 var xAboutDialogSetArtists func(uintptr, []string)
@@ -672,9 +641,7 @@ var xAboutDialogSetArtists func(uintptr, []string)
 // * [method@AboutDialog.add_credit_section]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) SetArtists(ArtistsVar []string) {
-
 	xAboutDialogSetArtists(x.GoPointer(), ArtistsVar)
-
 }
 
 var xAboutDialogSetComments func(uintptr, string)
@@ -686,9 +653,7 @@ var xAboutDialogSetComments func(uintptr, string)
 // Unlike [property@Gtk.AboutDialog:comments], this string can be long and
 // detailed. It can also contain links and Pango markup.
 func (x *AboutDialog) SetComments(CommentsVar string) {
-
 	xAboutDialogSetComments(x.GoPointer(), CommentsVar)
-
 }
 
 var xAboutDialogSetCopyright func(uintptr, string)
@@ -704,9 +669,7 @@ var xAboutDialogSetCopyright func(uintptr, string)
 // [method@AboutDialog.add_legal_section] can be used to add copyright
 // information for the application dependencies or other components.
 func (x *AboutDialog) SetCopyright(CopyrightVar string) {
-
 	xAboutDialogSetCopyright(x.GoPointer(), CopyrightVar)
-
 }
 
 var xAboutDialogSetDebugInfo func(uintptr, string)
@@ -723,9 +686,7 @@ var xAboutDialogSetDebugInfo func(uintptr, string)
 //
 // Debug information cannot contain markup or links.
 func (x *AboutDialog) SetDebugInfo(DebugInfoVar string) {
-
 	xAboutDialogSetDebugInfo(x.GoPointer(), DebugInfoVar)
-
 }
 
 var xAboutDialogSetDebugInfoFilename func(uintptr, string)
@@ -737,9 +698,7 @@ var xAboutDialogSetDebugInfoFilename func(uintptr, string)
 //
 // See [property@AboutDialog:debug-info].
 func (x *AboutDialog) SetDebugInfoFilename(FilenameVar string) {
-
 	xAboutDialogSetDebugInfoFilename(x.GoPointer(), FilenameVar)
-
 }
 
 var xAboutDialogSetDesigners func(uintptr, []string)
@@ -760,9 +719,7 @@ var xAboutDialogSetDesigners func(uintptr, []string)
 // * [method@AboutDialog.add_credit_section]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) SetDesigners(DesignersVar []string) {
-
 	xAboutDialogSetDesigners(x.GoPointer(), DesignersVar)
-
 }
 
 var xAboutDialogSetDeveloperName func(uintptr, string)
@@ -776,9 +733,7 @@ var xAboutDialogSetDeveloperName func(uintptr, string)
 // "The AppName project", and the individual contributors can be listed on the
 // Credits page, with [property@AboutDialog:developers] and related properties.
 func (x *AboutDialog) SetDeveloperName(DeveloperNameVar string) {
-
 	xAboutDialogSetDeveloperName(x.GoPointer(), DeveloperNameVar)
-
 }
 
 var xAboutDialogSetDevelopers func(uintptr, []string)
@@ -799,9 +754,7 @@ var xAboutDialogSetDevelopers func(uintptr, []string)
 // * [method@AboutDialog.add_credit_section]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) SetDevelopers(DevelopersVar []string) {
-
 	xAboutDialogSetDevelopers(x.GoPointer(), DevelopersVar)
-
 }
 
 var xAboutDialogSetDocumenters func(uintptr, []string)
@@ -822,9 +775,7 @@ var xAboutDialogSetDocumenters func(uintptr, []string)
 // * [method@AboutDialog.add_credit_section]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) SetDocumenters(DocumentersVar []string) {
-
 	xAboutDialogSetDocumenters(x.GoPointer(), DocumentersVar)
-
 }
 
 var xAboutDialogSetIssueUrl func(uintptr, string)
@@ -833,9 +784,7 @@ var xAboutDialogSetIssueUrl func(uintptr, string)
 //
 // The issue tracker link is displayed on the main page.
 func (x *AboutDialog) SetIssueUrl(IssueUrlVar string) {
-
 	xAboutDialogSetIssueUrl(x.GoPointer(), IssueUrlVar)
-
 }
 
 var xAboutDialogSetLicense func(uintptr, string)
@@ -846,7 +795,7 @@ var xAboutDialogSetLicense func(uintptr, string)
 // [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -856,9 +805,7 @@ var xAboutDialogSetLicense func(uintptr, string)
 // [method@AboutDialog.add_legal_section] can be used to add license information
 // for the application dependencies or other components.
 func (x *AboutDialog) SetLicense(LicenseVar string) {
-
 	xAboutDialogSetLicense(x.GoPointer(), LicenseVar)
-
 }
 
 var xAboutDialogSetLicenseType func(uintptr, gtk.License)
@@ -867,11 +814,12 @@ var xAboutDialogSetLicenseType func(uintptr, gtk.License)
 //
 // If the application's license is not in the list,
 // [property@AboutDialog:license] can be used instead. The license type will be
-// automatically set to `GTK_LICENSE_CUSTOM` in that case.
+// automatically set to [enum@Gtk.License.custom] in that case.
 //
-// If @license_type is `GTK_LICENSE_UNKNOWN`, no information will be displayed.
+// If @license_type is [enum@Gtk.License.unknown], no information will be
+// displayed.
 //
-// If @license_type is different from `GTK_LICENSE_CUSTOM`.
+// If @license_type is different from [enum@Gtk.License.custom].
 // [property@AboutDialog:license] will be cleared out.
 //
 // The license description will be displayed on the Legal page, below the
@@ -880,9 +828,7 @@ var xAboutDialogSetLicenseType func(uintptr, gtk.License)
 // [method@AboutDialog.add_legal_section] can be used to add license information
 // for the application dependencies or other components.
 func (x *AboutDialog) SetLicenseType(LicenseTypeVar gtk.License) {
-
 	xAboutDialogSetLicenseType(x.GoPointer(), LicenseTypeVar)
-
 }
 
 var xAboutDialogSetReleaseNotes func(uintptr, string)
@@ -912,9 +858,7 @@ var xAboutDialogSetReleaseNotes func(uintptr, string)
 // [property@AboutDialog:release-notes-version] of the property will be used
 // as the version; otherwise, [property@AboutDialog:version] is used.
 func (x *AboutDialog) SetReleaseNotes(ReleaseNotesVar string) {
-
 	xAboutDialogSetReleaseNotes(x.GoPointer(), ReleaseNotesVar)
-
 }
 
 var xAboutDialogSetReleaseNotesVersion func(uintptr, string)
@@ -932,9 +876,7 @@ var xAboutDialogSetReleaseNotesVersion func(uintptr, string)
 //
 // See [property@AboutDialog:release-notes].
 func (x *AboutDialog) SetReleaseNotesVersion(VersionVar string) {
-
 	xAboutDialogSetReleaseNotesVersion(x.GoPointer(), VersionVar)
-
 }
 
 var xAboutDialogSetSupportUrl func(uintptr, string)
@@ -943,9 +885,7 @@ var xAboutDialogSetSupportUrl func(uintptr, string)
 //
 // The support page link is displayed on the main page.
 func (x *AboutDialog) SetSupportUrl(SupportUrlVar string) {
-
 	xAboutDialogSetSupportUrl(x.GoPointer(), SupportUrlVar)
-
 }
 
 var xAboutDialogSetTranslatorCredits func(uintptr, string)
@@ -970,9 +910,7 @@ var xAboutDialogSetTranslatorCredits func(uintptr, string)
 // * [method@AboutDialog.add_credit_section]
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar string) {
-
 	xAboutDialogSetTranslatorCredits(x.GoPointer(), TranslatorCreditsVar)
-
 }
 
 var xAboutDialogSetVersion func(uintptr, string)
@@ -984,9 +922,7 @@ var xAboutDialogSetVersion func(uintptr, string)
 // If [property@AboutDialog:release-notes-version] is not set, the version will
 // also be displayed above the release notes on the What's New page.
 func (x *AboutDialog) SetVersion(VersionVar string) {
-
 	xAboutDialogSetVersion(x.GoPointer(), VersionVar)
-
 }
 
 var xAboutDialogSetWebsite func(uintptr, string)
@@ -998,9 +934,7 @@ var xAboutDialogSetWebsite func(uintptr, string)
 //
 // Applications can add other links below, see [method@AboutDialog.add_link].
 func (x *AboutDialog) SetWebsite(WebsiteVar string) {
-
 	xAboutDialogSetWebsite(x.GoPointer(), WebsiteVar)
-
 }
 
 func (c *AboutDialog) GoPointer() uintptr {
@@ -1012,6 +946,37 @@ func (c *AboutDialog) GoPointer() uintptr {
 
 func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAppdataResourcePath sets the "appdata-resource-path" property.
+// The path to the Appstream metadata resource.
+//
+// If provided, the dialog will be constructed from it.
+//
+// See [ctor@AboutDialog.new_from_appdata].
+//
+// If [property@AboutDialog:release-notes-version] is set, release notes will
+// be set from the AppStream release description for that version.
+func (x *AboutDialog) SetPropertyAppdataResourcePath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(&value)
+	x.SetProperty("appdata-resource-path", &v)
+}
+
+// GetPropertyAppdataResourcePath gets the "appdata-resource-path" property.
+// The path to the Appstream metadata resource.
+//
+// If provided, the dialog will be constructed from it.
+//
+// See [ctor@AboutDialog.new_from_appdata].
+//
+// If [property@AboutDialog:release-notes-version] is set, release notes will
+// be set from the AppStream release description for that version.
+func (x *AboutDialog) GetPropertyAppdataResourcePath() string {
+	var v gobject.Value
+	x.GetProperty("appdata-resource-path", &v)
+	return v.GetString()
 }
 
 // SetPropertyApplicationIcon sets the "application-icon" property.
@@ -1425,7 +1390,7 @@ func (x *AboutDialog) GetPropertyIssueUrl() string {
 // via [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1448,7 +1413,7 @@ func (x *AboutDialog) SetPropertyLicense(value string) {
 // via [property@AboutDialog:license-type].
 //
 // When set, [property@AboutDialog:license-type] will be set to
-// `GTK_LICENSE_CUSTOM`.
+// [enum@Gtk.License.custom].
 //
 // The license text will be displayed on the Legal page, below the copyright
 // information.
@@ -1708,8 +1673,7 @@ func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) ui
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, core.GoString(UriVarp))
-
+		return cbFn(fa, UriVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1728,9 +1692,19 @@ func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) ui
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AboutDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AboutDialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1751,7 +1725,6 @@ func (x *AboutDialog) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AboutDialog) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1776,7 +1749,6 @@ func (x *AboutDialog) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1815,30 +1787,23 @@ func (x *AboutDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AboutDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AboutDialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AboutDialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AboutDialog) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1851,19 +1816,7 @@ func (x *AboutDialog) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AboutDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1871,14 +1824,7 @@ func (x *AboutDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AboutDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1887,9 +1833,7 @@ func (x *AboutDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AboutDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1911,9 +1855,7 @@ func (x *AboutDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *AboutDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1923,9 +1865,7 @@ func (x *AboutDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *AboutDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1947,9 +1887,7 @@ func (x *AboutDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gt
 //
 // ```
 func (x *AboutDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1959,9 +1897,7 @@ func (x *AboutDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *AboutDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1984,9 +1920,7 @@ func (x *AboutDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.
 //
 // ```
 func (x *AboutDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1996,9 +1930,7 @@ func (x *AboutDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -2006,14 +1938,13 @@ func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AboutDialog) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2036,6 +1967,7 @@ func init() {
 	core.PuregoSafeRegister(&xAboutDialogAddLegalSection, libs, "adw_about_dialog_add_legal_section")
 	core.PuregoSafeRegister(&xAboutDialogAddLink, libs, "adw_about_dialog_add_link")
 	core.PuregoSafeRegister(&xAboutDialogAddOtherApp, libs, "adw_about_dialog_add_other_app")
+	core.PuregoSafeRegister(&xAboutDialogGetAppdataResourcePath, libs, "adw_about_dialog_get_appdata_resource_path")
 	core.PuregoSafeRegister(&xAboutDialogGetApplicationIcon, libs, "adw_about_dialog_get_application_icon")
 	core.PuregoSafeRegister(&xAboutDialogGetApplicationName, libs, "adw_about_dialog_get_application_name")
 	core.PuregoSafeRegister(&xAboutDialogGetArtists, libs, "adw_about_dialog_get_artists")
@@ -2076,5 +2008,4 @@ func init() {
 	core.PuregoSafeRegister(&xAboutDialogSetTranslatorCredits, libs, "adw_about_dialog_set_translator_credits")
 	core.PuregoSafeRegister(&xAboutDialogSetVersion, libs, "adw_about_dialog_set_version")
 	core.PuregoSafeRegister(&xAboutDialogSetWebsite, libs, "adw_about_dialog_set_website")
-
 }

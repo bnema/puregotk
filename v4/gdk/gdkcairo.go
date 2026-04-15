@@ -2,8 +2,9 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gdkpixbuf"
@@ -30,30 +31,24 @@ var xCairoDrawFromGl func(*cairo.Context, uintptr, int, int, int, int, int, int,
 //
 // Calling this may change the current GL context.
 func CairoDrawFromGl(CrVar *cairo.Context, SurfaceVar *Surface, SourceVar int, SourceTypeVar int, BufferScaleVar int, XVar int, YVar int, WidthVar int, HeightVar int) {
-
 	xCairoDrawFromGl(CrVar, SurfaceVar.GoPointer(), SourceVar, SourceTypeVar, BufferScaleVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xCairoRectangle func(*cairo.Context, *Rectangle)
 
 // Adds the given rectangle to the current path of @cr.
 func CairoRectangle(CrVar *cairo.Context, RectangleVar *Rectangle) {
-
 	xCairoRectangle(CrVar, RectangleVar)
-
 }
 
 var xCairoRegion func(*cairo.Context, *cairo.Region)
 
 // Adds the given region to the current path of @cr.
 func CairoRegion(CrVar *cairo.Context, RegionVar *cairo.Region) {
-
 	xCairoRegion(CrVar, RegionVar)
-
 }
 
-var xCairoRegionCreateFromSurface func(*cairo.Surface) *cairo.Region
+var xCairoRegionCreateFromSurface func(*cairo.Surface) uintptr
 
 // Creates region that covers the area where the given
 // @surface is more than 50% opaque.
@@ -61,9 +56,11 @@ var xCairoRegionCreateFromSurface func(*cairo.Surface) *cairo.Region
 // This function takes into account device offsets that might be
 // set with cairo_surface_set_device_offset().
 func CairoRegionCreateFromSurface(SurfaceVar *cairo.Surface) *cairo.Region {
-
 	cret := xCairoRegionCreateFromSurface(SurfaceVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xCairoSetSourcePixbuf func(*cairo.Context, uintptr, float64, float64)
@@ -73,23 +70,19 @@ var xCairoSetSourcePixbuf func(*cairo.Context, uintptr, float64, float64)
 // The pattern has an extend mode of %CAIRO_EXTEND_NONE and is aligned
 // so that the origin of @pixbuf is @pixbuf_x, @pixbuf_y.
 func CairoSetSourcePixbuf(CrVar *cairo.Context, PixbufVar *gdkpixbuf.Pixbuf, PixbufXVar float64, PixbufYVar float64) {
-
 	xCairoSetSourcePixbuf(CrVar, PixbufVar.GoPointer(), PixbufXVar, PixbufYVar)
-
 }
 
 var xCairoSetSourceRgba func(*cairo.Context, *RGBA)
 
 // Sets the specified `GdkRGBA` as the source color of @cr.
 func CairoSetSourceRgba(CrVar *cairo.Context, RgbaVar *RGBA) {
-
 	xCairoSetSourceRgba(CrVar, RgbaVar)
-
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -105,5 +98,4 @@ func init() {
 	core.PuregoSafeRegister(&xCairoRegionCreateFromSurface, libs, "gdk_cairo_region_create_from_surface")
 	core.PuregoSafeRegister(&xCairoSetSourcePixbuf, libs, "gdk_cairo_set_source_pixbuf")
 	core.PuregoSafeRegister(&xCairoSetSourceRgba, libs, "gdk_cairo_set_source_rgba")
-
 }

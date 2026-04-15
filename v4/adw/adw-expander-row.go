@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -102,18 +101,14 @@ var xExpanderRowAddAction func(uintptr, uintptr)
 
 // Adds an action widget to @self.
 func (x *ExpanderRow) AddAction(WidgetVar *gtk.Widget) {
-
 	xExpanderRowAddAction(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xExpanderRowAddPrefix func(uintptr, uintptr)
 
 // Adds a prefix widget to @self.
 func (x *ExpanderRow) AddPrefix(WidgetVar *gtk.Widget) {
-
 	xExpanderRowAddPrefix(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xExpanderRowAddRow func(uintptr, uintptr)
@@ -122,25 +117,20 @@ var xExpanderRowAddRow func(uintptr, uintptr)
 //
 // The widget will appear in the expanding list below @self.
 func (x *ExpanderRow) AddRow(ChildVar *gtk.Widget) {
-
 	xExpanderRowAddRow(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xExpanderRowAddSuffix func(uintptr, uintptr)
 
 // Adds an suffix widget to @self.
 func (x *ExpanderRow) AddSuffix(WidgetVar *gtk.Widget) {
-
 	xExpanderRowAddSuffix(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xExpanderRowGetEnableExpansion func(uintptr) bool
 
 // Gets whether the expansion of @self is enabled.
 func (x *ExpanderRow) GetEnableExpansion() bool {
-
 	cret := xExpanderRowGetEnableExpansion(x.GoPointer())
 	return cret
 }
@@ -149,7 +139,6 @@ var xExpanderRowGetExpanded func(uintptr) bool
 
 // Gets whether @self is expanded.
 func (x *ExpanderRow) GetExpanded() bool {
-
 	cret := xExpanderRowGetExpanded(x.GoPointer())
 	return cret
 }
@@ -158,7 +147,6 @@ var xExpanderRowGetIconName func(uintptr) string
 
 // Gets the icon name for @self.
 func (x *ExpanderRow) GetIconName() string {
-
 	cret := xExpanderRowGetIconName(x.GoPointer())
 	return cret
 }
@@ -167,7 +155,6 @@ var xExpanderRowGetShowEnableSwitch func(uintptr) bool
 
 // Gets whether the switch enabling the expansion of @self is visible.
 func (x *ExpanderRow) GetShowEnableSwitch() bool {
-
 	cret := xExpanderRowGetShowEnableSwitch(x.GoPointer())
 	return cret
 }
@@ -176,7 +163,6 @@ var xExpanderRowGetSubtitle func(uintptr) string
 
 // Gets the subtitle for @self.
 func (x *ExpanderRow) GetSubtitle() string {
-
 	cret := xExpanderRowGetSubtitle(x.GoPointer())
 	return cret
 }
@@ -186,7 +172,6 @@ var xExpanderRowGetSubtitleLines func(uintptr) int
 // Gets the number of lines at the end of which the subtitle label will be
 // ellipsized.
 func (x *ExpanderRow) GetSubtitleLines() int {
-
 	cret := xExpanderRowGetSubtitleLines(x.GoPointer())
 	return cret
 }
@@ -196,7 +181,6 @@ var xExpanderRowGetTitleLines func(uintptr) int
 // Gets the number of lines at the end of which the title label will be
 // ellipsized.
 func (x *ExpanderRow) GetTitleLines() int {
-
 	cret := xExpanderRowGetTitleLines(x.GoPointer())
 	return cret
 }
@@ -205,48 +189,38 @@ var xExpanderRowRemove func(uintptr, uintptr)
 
 // Removes a child from @self.
 func (x *ExpanderRow) Remove(ChildVar *gtk.Widget) {
-
 	xExpanderRowRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xExpanderRowSetEnableExpansion func(uintptr, bool)
 
 // Sets whether the expansion of @self is enabled.
 func (x *ExpanderRow) SetEnableExpansion(EnableExpansionVar bool) {
-
 	xExpanderRowSetEnableExpansion(x.GoPointer(), EnableExpansionVar)
-
 }
 
 var xExpanderRowSetExpanded func(uintptr, bool)
 
 // Sets whether @self is expanded.
 func (x *ExpanderRow) SetExpanded(ExpandedVar bool) {
-
 	xExpanderRowSetExpanded(x.GoPointer(), ExpandedVar)
-
 }
 
 var xExpanderRowSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
 func (x *ExpanderRow) SetIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xExpanderRowSetIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xExpanderRowSetShowEnableSwitch func(uintptr, bool)
 
 // Sets whether the switch enabling the expansion of @self is visible.
 func (x *ExpanderRow) SetShowEnableSwitch(ShowEnableSwitchVar bool) {
-
 	xExpanderRowSetShowEnableSwitch(x.GoPointer(), ShowEnableSwitchVar)
-
 }
 
 var xExpanderRowSetSubtitle func(uintptr, string)
@@ -256,9 +230,7 @@ var xExpanderRowSetSubtitle func(uintptr, string)
 // The subtitle is interpreted as Pango markup unless
 // [property@PreferencesRow:use-markup] is set to `FALSE`.
 func (x *ExpanderRow) SetSubtitle(SubtitleVar string) {
-
 	xExpanderRowSetSubtitle(x.GoPointer(), SubtitleVar)
-
 }
 
 var xExpanderRowSetSubtitleLines func(uintptr, int)
@@ -268,9 +240,7 @@ var xExpanderRowSetSubtitleLines func(uintptr, int)
 //
 // If the value is 0, the number of lines won't be limited.
 func (x *ExpanderRow) SetSubtitleLines(SubtitleLinesVar int) {
-
 	xExpanderRowSetSubtitleLines(x.GoPointer(), SubtitleLinesVar)
-
 }
 
 var xExpanderRowSetTitleLines func(uintptr, int)
@@ -280,9 +250,7 @@ var xExpanderRowSetTitleLines func(uintptr, int)
 //
 // If the value is 0, the number of lines won't be limited.
 func (x *ExpanderRow) SetTitleLines(TitleLinesVar int) {
-
 	xExpanderRowSetTitleLines(x.GoPointer(), TitleLinesVar)
-
 }
 
 func (c *ExpanderRow) GoPointer() uintptr {
@@ -441,9 +409,19 @@ func (x *ExpanderRow) GetPropertyTitleLines() int {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ExpanderRow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ExpanderRow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -464,7 +442,6 @@ func (x *ExpanderRow) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ExpanderRow) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -489,7 +466,6 @@ func (x *ExpanderRow) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ExpanderRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -528,30 +504,23 @@ func (x *ExpanderRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ExpanderRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ExpanderRow) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ExpanderRow) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ExpanderRow) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -564,19 +533,7 @@ func (x *ExpanderRow) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ExpanderRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -584,14 +541,7 @@ func (x *ExpanderRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ExpanderRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -600,9 +550,7 @@ func (x *ExpanderRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ExpanderRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -624,9 +572,7 @@ func (x *ExpanderRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *ExpanderRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -636,9 +582,7 @@ func (x *ExpanderRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *ExpanderRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -660,9 +604,7 @@ func (x *ExpanderRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gt
 //
 // ```
 func (x *ExpanderRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -672,9 +614,7 @@ func (x *ExpanderRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *ExpanderRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -697,9 +637,7 @@ func (x *ExpanderRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.
 //
 // ```
 func (x *ExpanderRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -709,23 +647,22 @@ func (x *ExpanderRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *ExpanderRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *ExpanderRow) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *ExpanderRow) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be
@@ -742,12 +679,10 @@ func (x *ExpanderRow) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *ExpanderRow) SetActionName(ActionNameVar *string) {
-
 	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
 	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
 }
 
 // Sets the target of an actionable widget.
@@ -760,9 +695,7 @@ func (x *ExpanderRow) SetActionName(ActionNameVar *string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *ExpanderRow) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -784,9 +717,7 @@ func (x *ExpanderRow) SetActionTarget(FormatStringVar string, varArgs ...interfa
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *ExpanderRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -795,9 +726,7 @@ func (x *ExpanderRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *ExpanderRow) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -805,14 +734,13 @@ func (x *ExpanderRow) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ExpanderRow) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -845,5 +773,4 @@ func init() {
 	core.PuregoSafeRegister(&xExpanderRowSetSubtitle, libs, "adw_expander_row_set_subtitle")
 	core.PuregoSafeRegister(&xExpanderRowSetSubtitleLines, libs, "adw_expander_row_set_subtitle_lines")
 	core.PuregoSafeRegister(&xExpanderRowSetTitleLines, libs, "adw_expander_row_set_title_lines")
-
 }

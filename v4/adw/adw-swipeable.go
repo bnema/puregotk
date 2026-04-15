@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -198,7 +197,6 @@ func (x *SwipeableBase) SetGoPointer(ptr uintptr) {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *SwipeableBase) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -207,14 +205,12 @@ func (x *SwipeableBase) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *SwipeableBase) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *SwipeableBase) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -224,7 +220,6 @@ func (x *SwipeableBase) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *SwipeableBase) GetSnapPoints(NSnapPointsVar *int) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -239,20 +234,20 @@ func (x *SwipeableBase) GetSnapPoints(NSnapPointsVar *int) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *SwipeableBase) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
-var XAdwSwipeableGetCancelProgress func(uintptr) float64
-var XAdwSwipeableGetDistance func(uintptr) float64
-var XAdwSwipeableGetProgress func(uintptr) float64
-var XAdwSwipeableGetSnapPoints func(uintptr, *int) uintptr
-var XAdwSwipeableGetSwipeArea func(uintptr, NavigationDirection, bool, *gdk.Rectangle)
+var (
+	XAdwSwipeableGetCancelProgress func(uintptr) float64
+	XAdwSwipeableGetDistance       func(uintptr) float64
+	XAdwSwipeableGetProgress       func(uintptr) float64
+	XAdwSwipeableGetSnapPoints     func(uintptr, *int) uintptr
+	XAdwSwipeableGetSwipeArea      func(uintptr, NavigationDirection, bool, *gdk.Rectangle)
+)
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -269,5 +264,4 @@ func init() {
 	core.PuregoSafeRegister(&XAdwSwipeableGetProgress, libs, "adw_swipeable_get_progress")
 	core.PuregoSafeRegister(&XAdwSwipeableGetSnapPoints, libs, "adw_swipeable_get_snap_points")
 	core.PuregoSafeRegister(&XAdwSwipeableGetSwipeArea, libs, "adw_swipeable_get_swipe_area")
-
 }

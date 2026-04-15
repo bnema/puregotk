@@ -4,26 +4,29 @@
 package pass
 
 import (
+	"bytes"
 	"encoding/xml"
 	"fmt"
+	"iter"
 	"os"
 	"strings"
 	"text/template"
 
 	"github.com/bnema/puregotk/internal/gir/types"
 	"github.com/bnema/puregotk/internal/gir/util"
+	"mvdan.cc/gofumpt/format"
 )
 
-type Pass struct {
-	Parsed []types.Repository
-	Types  types.KindMap
+type Dependency struct {
+	Module string
+	Files  []string
 }
 
-// NamespaceConfig holds per-namespace overrides for the code generator.
+// NamespaceConfig holds per-namespace generator overrides.
 type NamespaceConfig struct {
-	PackageName     string // override auto-derived package name (empty = use default)
-	OptionalLibrary bool   // continue on dlopen failure instead of panic
-	BuildConstraint string // e.g. "//go:build linux"
+	PackageName     string
+	OptionalLibrary bool
+	BuildConstraint string
 }
 
 var namespaceConfigs = map[string]NamespaceConfig{
@@ -31,16 +34,54 @@ var namespaceConfigs = map[string]NamespaceConfig{
 	"Gtk4SessionLock": {PackageName: "sessionlock", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
 }
 
-var crossPkgNames = []string{"gio", "cairo", "pango", "pangocairo", "graphene", "gsk", "gdk", "gtk"}
-
-// New creates a new pass struct by parsing gir files in the string slice
-// This pass object will then be used to go over these files multiple times up until we have the full info to convert it to go files
-func New(files []string) (*Pass, error) {
-	p := Pass{
-		Parsed: make([]types.Repository, len(files)),
-		Types:  make(types.KindMap),
+func packageNameForNamespace(namespace string) string {
+	if cfg, ok := namespaceConfigs[namespace]; ok && cfg.PackageName != "" {
+		return cfg.PackageName
 	}
-	for i, f := range files {
+	return strings.ToLower(namespace)
+}
+
+// filterSentinelEnumMembers removes enum sentinel members such as *_ENTRY_NUMBER.
+func filterSentinelEnumMembers(members []types.Member) []types.Member {
+	filtered := make([]types.Member, 0, len(members))
+	for _, m := range members {
+		if strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
+			continue
+		}
+		filtered = append(filtered, m)
+	}
+	return filtered
+}
+
+type Pass struct {
+	Parsed []types.Repository
+	Types  types.KindMap
+
+	impModule         string
+	impPackageImports map[string]string
+}
+
+// New parses the given GIR files and associates their namespaces with module
+// for import resolution. Additional deps can override the module for specific
+// GIR files (e.g. files from a dependency). The returned Pass is then used
+// across First and Second to collect type info and generate Go source files.
+func New(files []string, module string, deps ...Dependency) (*Pass, error) {
+	fileModule := make(map[string]string)
+	allFiles := files
+	for _, d := range deps {
+		for _, f := range d.Files {
+			fileModule[f] = d.Module
+		}
+		allFiles = append(allFiles, d.Files...)
+	}
+	p := Pass{
+		Parsed: make([]types.Repository, len(allFiles)),
+		Types:  make(types.KindMap),
+
+		impModule:         module,
+		impPackageImports: make(map[string]string),
+	}
+	for i, f := range allFiles {
 		b, err := os.ReadFile(f)
 		if err != nil {
 			return nil, err
@@ -51,6 +92,15 @@ func New(files []string) (*Pass, error) {
 			return nil, err
 		}
 		p.Parsed[i] = r
+
+		namespace := r.Namespaces[0].Name
+		pkgKey := strings.ToLower(namespace)
+		pkgPath := packageNameForNamespace(namespace)
+		m := module
+		if override, ok := fileModule[f]; ok {
+			m = override
+		}
+		p.impPackageImports[pkgKey] = m + "/" + pkgPath
 	}
 	return &p, nil
 }
@@ -101,50 +151,110 @@ func (p *Pass) First() {
 	}
 }
 
-// filterSentinelEnumMembers removes _ENTRY_NUMBER sentinel values that
-// gtk4-layer-shell uses as enum entry counts — not meant for public use.
-func filterSentinelEnumMembers(members []types.Member) []types.Member {
-	for _, m := range members {
-		if strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
-			filtered := make([]types.Member, 0, len(members)-1)
-			for _, m := range members {
-				if !strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
-					filtered = append(filtered, m)
+type file struct {
+	imps *types.ImportSet
+
+	aliases    []types.AliasTemplate
+	enums      []types.EnumTemplate
+	constants  []types.ConstantTemplate
+	records    []types.RecordTemplate
+	callbacks  []types.CallbackTemplate
+	interfaces []types.InterfaceTemplate
+	functions  []types.FuncTemplate
+	classes    []types.ClassTemplate
+}
+
+func (f *file) allFuncs() iter.Seq[types.FuncTemplate] {
+	return func(yield func(types.FuncTemplate) bool) {
+		for _, fn := range f.functions {
+			if !yield(fn) {
+				return
+			}
+		}
+		for _, r := range f.records {
+			for _, fn := range r.Constructors {
+				if !yield(fn) {
+					return
 				}
 			}
-			return filtered
+			for _, fn := range r.Receivers {
+				if !yield(fn) {
+					return
+				}
+			}
+		}
+		for _, c := range f.classes {
+			for _, fn := range c.Constructors {
+				if !yield(fn) {
+					return
+				}
+			}
+			for _, fn := range c.Receivers {
+				if !yield(fn) {
+					return
+				}
+			}
+			for _, fn := range c.Functions {
+				if !yield(fn) {
+					return
+				}
+			}
+		}
+		for _, i := range f.interfaces {
+			for _, m := range i.Methods {
+				if !yield(m.FuncTemplate) {
+					return
+				}
+			}
 		}
 	}
-	return members
 }
 
 func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string) {
 	ns := r.Namespaces[0]
+	nsCfg := namespaceConfigs[ns.Name]
+	pkgName := packageNameForNamespace(ns.Name)
 
-	aliases := make(map[string][]types.AliasTemplate)
-	enums := make(map[string][]types.EnumTemplate)
-	var files []string
+	files := make(map[string]*file)
+	getFile := func(fn string) *file {
+		pf, ok := files[fn]
+		if !ok {
+			pf = &file{
+				imps: types.NewImportSet(pkgName, p.impModule, p.impPackageImports),
+			}
+			files[fn] = pf
+		}
+
+		return pf
+	}
+
 	for _, el := range ns.Bitfields {
-		el.Members = filterSentinelEnumMembers(el.Members)
-		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
-		fn := el.FilenameSafe()
-		files = append(files, fn)
-		enums[fn] = append(enums[fn], temp)
+		filtered := el
+		filtered.Members = filterSentinelEnumMembers(el.Members)
+		temp := filtered.Template(ns.Name, ns.CIdentifierPrefixes)
+		pf := getFile(el.FilenameSafe())
+		pf.enums = append(pf.enums, temp)
+		if temp.TypeGetter != "" {
+			pf.imps.AddTypes()
+		}
 	}
 
 	for _, el := range ns.Enums {
-		el.Members = filterSentinelEnumMembers(el.Members)
-		temp := el.Template(ns.Name, ns.CIdentifierPrefixes)
-		fn := el.FilenameSafe()
-		files = append(files, fn)
-		enums[fn] = append(enums[fn], temp)
+		filtered := el
+		filtered.Members = filterSentinelEnumMembers(el.Members)
+		temp := filtered.Template(ns.Name, ns.CIdentifierPrefixes)
+		pf := getFile(el.FilenameSafe())
+		pf.enums = append(pf.enums, temp)
+		if temp.TypeGetter != "" {
+			pf.imps.AddTypes()
+		}
 	}
 
-	constants := make(map[string][]types.ConstantTemplate)
 	for _, con := range ns.Constants {
-		fn := con.FilenameSafe()
-		files = append(files, fn)
-		constants[fn] = append(constants[fn], con.Template(ns.Name, p.Types))
+		pf := getFile(con.FilenameSafe())
+		ct := con.Template(ns.Name, p.Types)
+		pf.constants = append(pf.constants, ct)
+		pf.imps.TrackGoType(ct.Type)
 	}
 
 	callbackDocs := make(map[string]string)
@@ -152,23 +262,25 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		callbackDocs[cb.Name] = cb.Doc.StringSafe()
 	}
 
-	records := make(map[string][]types.RecordTemplate)
 	recordLookup := make(map[string]bool)
 	for _, rec := range ns.Records {
 		name := util.SnakeToCamel(rec.Name)
+		pf := getFile(rec.FilenameSafe())
+		imps := pf.imps
 		constructors := make([]types.FuncTemplate, len(rec.Constructors))
 		receivers := make([]types.FuncTemplate, 0, len(rec.Methods))
 		fields := make([]types.RecordField, 0, len(rec.Fields))
 		callbackAccessors := make([]types.CallbackAccessor, 0)
-		fn := rec.FilenameSafe()
-		files = append(files, fn)
+		if rec.GLibGetType != "" {
+			imps.AddTypes()
+		}
 		for i, c := range rec.Constructors {
 			constructors[i] = types.FuncTemplate{
 				Name:  util.ConstructorName(c.Name, rec.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC),
-				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC, imps),
+				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws, imps),
 			}
 		}
 		for _, f := range rec.Fields {
@@ -181,8 +293,8 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				fieldName = "x" + util.SnakeToCamel(f.Name) // Prefix callback pointer fields with `x` to make them private
 
 				callbackName := util.SnakeToCamel(f.Name)
-				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws, types.ArgsFromCToGo)
-				ret := f.Callback.ReturnValue.Template(ns.Name, "", p.Types, f.Callback.Throws)
+				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws, types.ArgsFromCToGo, imps)
+				ret := f.Callback.ReturnValue.Template(ns.Name, "", p.Types, f.Callback.Throws, imps)
 
 				apiTypes := args.API.Types
 
@@ -199,6 +311,9 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 						doc = f.Doc.StringSafe()
 					}
 				}
+
+				imps.AddPurego()
+				imps.AddUnsafe()
 
 				callbackAccessors = append(callbackAccessors, types.CallbackAccessor{
 					Name:         callbackName,
@@ -238,6 +353,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 					}
 				}
 
+				imps.TrackGoType(_type)
 				fieldName = util.SnakeToCamel(f.Name)
 			}
 
@@ -261,11 +377,11 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
-				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
+				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			})
 		}
-		records[fn] = append(records[fn], types.RecordTemplate{
+		pf.records = append(pf.records, types.RecordTemplate{
 			Name:              name,
 			Doc:               rec.Doc.StringSafe(),
 			Constructors:      constructors,
@@ -277,30 +393,30 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		recordLookup[name] = true
 	}
 
-	callbacks := make(map[string][]types.CallbackTemplate)
 	// set every callback equal to uintptr as well
 	for _, cb := range ns.Callbacks {
-		fn := cb.FilenameSafe()
-		files = append(files, fn)
+		pf := getFile(cb.FilenameSafe())
+		cbImps := types.NewImportSet(pkgName, p.impModule, p.impPackageImports)
 		cbT := types.CallbackTemplate{
 			Doc:  cb.Doc.StringSafe(),
 			Name: cb.Name,
-			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws, types.ArgsFromCToGo),
-			Ret:  cb.ReturnValue.Template(ns.Name, "", p.Types, cb.Throws),
+			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws, types.ArgsFromCToGo, cbImps),
+			Ret:  cb.ReturnValue.Template(ns.Name, "", p.Types, cb.Throws, cbImps),
 		}
-		callbacks[fn] = append(callbacks[fn], cbT)
+		for _, t := range cbT.Args.Pure.Types {
+			pf.imps.TrackGoType(t)
+		}
+		pf.imps.TrackGoType(cbT.Ret.Raw)
+		pf.callbacks = append(pf.callbacks, cbT)
 	}
 
-	interfaces := make(map[string][]types.InterfaceTemplate)
 	for _, inter := range ns.Interfaces {
-		fn := inter.FilenameSafe()
-		files = append(files, fn)
-		interfaces[fn] = append(interfaces[fn], types.ConvertInterface(ns.Name, "", inter, nil, p.Types))
+		pf := getFile(inter.FilenameSafe())
+		pf.interfaces = append(pf.interfaces, types.ConvertInterface(ns.Name, "", inter, nil, p.Types, pf.imps))
 	}
 
 	for _, union := range ns.Unions {
-		fn := union.FilenameSafe()
-		files = append(files, fn)
+		pf := getFile(union.FilenameSafe())
 		name := util.SnakeToCamel(union.Name)
 		interT := types.AliasTemplate{
 			Doc:  union.Doc.StringSafe(),
@@ -308,12 +424,11 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			// structs are not yet supported in CGO
 			Value: "uintptr",
 		}
-		aliases[fn] = append(aliases[fn], interT)
+		pf.aliases = append(pf.aliases, interT)
 	}
 
 	for _, alias := range ns.Aliases {
-		fn := alias.FilenameSafe()
-		files = append(files, fn)
+		pf := getFile(alias.FilenameSafe())
 		typeName := alias.Template(ns.Name, p.Types)
 		if typeName == "" {
 			typeName = "uintptr"
@@ -325,33 +440,34 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			// structs are not yet supported in CGO
 			Value: typeName,
 		}
-		aliases[fn] = append(aliases[fn], aliasT)
+		pf.aliases = append(pf.aliases, aliasT)
 	}
 
-	functions := make(map[string][]types.FuncTemplate)
 	for _, f := range ns.Functions {
 		name := util.SnakeToCamel(f.Name)
 		if p.Types.Kind(ns.Name, name) != types.UnknownType {
 			name = "New" + name
 		}
-		fn := f.FilenameSafe()
-		files = append(files, fn)
-		functions[fn] = append(functions[fn], types.FuncTemplate{
+		pf := getFile(f.FilenameSafe())
+		pf.functions = append(pf.functions, types.FuncTemplate{
 			Name:  name,
 			CName: f.CIdentifier,
 			Doc:   f.Doc.StringSafe(),
-			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
-			Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
+			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, pf.imps),
+			Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, pf.imps),
 		})
 	}
 
-	classes := make(map[string][]types.ClassTemplate)
 	for _, cls := range ns.Classes {
 		implemented := make(map[string]bool)
 		constructors := make([]types.FuncTemplate, len(cls.Constructors))
 		functions := make([]types.FuncTemplate, len(cls.Functions))
-		fn := cls.FilenameSafe()
-		files = append(files, fn)
+		pf := getFile(cls.FilenameSafe())
+		imps := pf.imps
+
+		if cls.GLibGetType != "" {
+			imps.AddTypes()
+		}
 
 		for i, c := range cls.Constructors {
 			c.ReturnValue.AnyType.Type.Name = cls.Name
@@ -359,19 +475,23 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  util.ConstructorName(c.Name, cls.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC),
-				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC, imps),
+				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws, imps),
 			}
 		}
 		signals := make([]types.SignalsTemplate, len(cls.Signals))
 		for i, s := range cls.Signals {
+			imps.AddPurego()
+			imps.AddUnsafe()
+			imps.AddPkg("glib")
+			imps.AddPkg("gobject")
+
 			signals[i] = types.SignalsTemplate{
-				Doc:      s.Doc.StringSafe(),
-				Name:     util.DashToCamel(s.Name),
-				CName:    s.Name,
-				Args:     s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo),
-				Ret:      s.ReturnValue.Template(ns.Name, "", p.Types, false),
-				Detailed: s.Detailed,
+				Doc:   s.Doc.StringSafe(),
+				Name:  util.DashToCamel(s.Name),
+				CName: s.Name,
+				Args:  s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo, imps),
+				Ret:   s.ReturnValue.Template(ns.Name, "", p.Types, false, imps),
 			}
 		}
 		receivers := make([]types.FuncTemplate, len(cls.Methods))
@@ -382,8 +502,8 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
-				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
+				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			}
 		}
 		var interfaces []types.InterfaceTemplate
@@ -393,26 +513,30 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  name,
 				CName: f.CIdentifier,
 				Doc:   f.Doc.StringSafe(),
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
-				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
+				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			}
 		}
 		for _, impl := range cls.Implements {
-			interfaces = append(interfaces, types.GetInterfaceFuncs(ns.Name, impl.Name, implemented, p.Types))
+			interfaces = append(interfaces, types.GetInterfaceFuncs(ns.Name, impl.Name, implemented, p.Types, imps))
 		}
 		properties := make([]types.PropertyTemplate, 0, len(cls.Properties))
 		for _, prop := range cls.Properties {
-			propTemp := prop.Template(ns.Name, p.Types)
+			propTemp := prop.Template(ns.Name, p.Types, imps)
 
 			// TODO: Implement non-primitive types, then remove this
 			if propTemp.GValueType != "" {
 				properties = append(properties, propTemp)
 			}
 		}
-		classes[fn] = append(classes[fn], types.ClassTemplate{
+
+		parent := util.NormalizeNamespace(ns.Name, cls.Parent, true)
+		imps.TrackGoType(parent)
+
+		pf.classes = append(pf.classes, types.ClassTemplate{
 			Doc:          cls.Doc.StringSafe(),
 			Name:         cls.Name,
-			Parent:       util.NormalizeNamespace(ns.Name, cls.Parent, true),
+			Parent:       parent,
 			Constructors: constructors,
 			Receivers:    receivers,
 			Interfaces:   interfaces,
@@ -421,12 +545,6 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			Signals:      signals,
 			TypeGetter:   cls.GLibGetType,
 		})
-	}
-
-	pkgName := strings.ToLower(ns.Name)
-	nsCfg := namespaceConfigs[ns.Name] // zero value if not configured
-	if nsCfg.PackageName != "" {
-		pkgName = nsCfg.PackageName
 	}
 
 	var pkgConfigName string
@@ -443,23 +561,53 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		}
 	}
 
-	for _, fn := range files {
+	// Derive macOS .dylib equivalents from .so names
+	var dylibNames []string
+	for _, soName := range sharedLibraries {
+		if strings.Contains(soName, ".so.") {
+			dylibNames = append(dylibNames, strings.Replace(soName, ".so.", ".", 1)+".dylib")
+		}
+	}
+	sharedLibraries = append(sharedLibraries, dylibNames...)
+
+	for fn, pf := range files {
 		methods := 0
-		for _, i := range interfaces[fn] {
+		for _, i := range pf.interfaces {
 			methods += len(i.Methods)
 		}
-		for _, i := range records[fn] {
+		for _, i := range pf.records {
 			methods += len(i.Constructors)
 			methods += len(i.Receivers)
 		}
-		for _, i := range classes[fn] {
+		for _, i := range pf.classes {
 			methods += len(i.Constructors)
 			methods += len(i.Receivers)
 			methods += len(i.Functions)
 		}
 		// we do not need to add the length of interfaces in here
 		// as they should only be loaded when there are classes
-		needsInit := (len(functions[fn]) + methods) > 0
+		needsInit := (len(pf.functions) + methods) > 0
+		if needsInit {
+			pf.imps.AddPurego()
+			pf.imps.AddCore()
+		}
+
+		if len(pf.records) > 0 {
+			pf.imps.AddStructs()
+			pf.imps.AddUnsafe()
+		}
+
+		for f := range pf.allFuncs() {
+			for _, t := range f.Args.Pure.Types {
+				pf.imps.TrackGoType(t)
+			}
+
+			pf.imps.TrackGoType(f.Ret.Raw)
+		}
+
+		// Packages that need to have their types manually registered
+		// See https://bugs.webkit.org/show_bug.cgi?id=175937
+		registerTypes := pkgName == "webkit"
 
 		// Check if any receiver method has callback parameters
 		// This is used to conditionally import unsafe and purego
@@ -598,42 +746,42 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		}
 
 		args := types.TemplateArg{
-			PkgName:              pkgName,
-			PkgEnv:               strings.ToUpper(pkgName),
-			PkgConfigName:        pkgConfigName,
-			SharedLibraries:      sharedLibraries,
-			NeedsInit:            needsInit,
-			NeedsCore:            needsCoreHelpers,
-			HasReceiverCallbacks: hasReceiverCallbacks,
-			HasFunctionCallbacks: hasFunctionCallbacks,
-			HasSignalStrings:     hasSignalStrings,
-			HasTypeGetters:       hasTypeGetters,
-			NeedsGLib:            needsGLib,
-			NeedsGObject:         needsGObject,
-			CrossPkgImports:      crossPkgImports,
-			OptionalLibrary:      nsCfg.OptionalLibrary,
-			BuildConstraint:      nsCfg.BuildConstraint,
-			Aliases:              aliases[fn],
-			Callbacks:            callbacks[fn],
-			Records:              records[fn],
-			Enums:                enums[fn],
-			Constants:            constants[fn],
-			Functions:            functions[fn],
-			Interfaces:           interfaces[fn],
-			Classes:              classes[fn],
+			PkgName:         pkgName,
+			PkgEnv:          strings.ToUpper(pkgName),
+			PkgConfigName:   pkgConfigName,
+			SharedLibraries: sharedLibraries,
+			NeedsInit:       needsInit,
+			OptionalLibrary: nsCfg.OptionalLibrary,
+			BuildConstraint: nsCfg.BuildConstraint,
+			RegisterTypes:   registerTypes,
+			Imports:         pf.imps.Ordered(),
+			Aliases:         pf.aliases,
+			Callbacks:       pf.callbacks,
+			Records:         pf.records,
+			Enums:           pf.enums,
+			Constants:       pf.constants,
+			Functions:       pf.functions,
+			Interfaces:      pf.interfaces,
+			Classes:         pf.classes,
+		}
+
+		var uf bytes.Buffer
+		err := gotemp.Execute(&uf, args)
+		if err != nil {
+			panic(err)
+		}
+
+		f, err := format.Source(uf.Bytes(), format.Options{})
+		if err != nil {
+			panic(err)
 		}
 
 		os.MkdirAll(fmt.Sprintf(dir+"/%s", pkgName), 0o755)
 
-		f, err := os.Create(fmt.Sprintf(dir+"/%s/%s", pkgName, fn))
+		err = os.WriteFile(fmt.Sprintf(dir+"/%s/%s", pkgName, fn), f, 0666)
 		if err != nil {
 			panic(err)
 		}
-		err = gotemp.Execute(f, args)
-		if err != nil {
-			panic(err)
-		}
-
 	}
 }
 

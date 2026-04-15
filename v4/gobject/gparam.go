@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -207,18 +206,14 @@ var xParamSpecPoolFree func(uintptr)
 
 // Frees the resources allocated by a #GParamSpecPool.
 func (x *ParamSpecPool) Free() {
-
 	xParamSpecPoolFree(x.GoPointer())
-
 }
 
 var xParamSpecPoolInsert func(uintptr, uintptr, types.GType)
 
 // Inserts a #GParamSpec in the pool.
 func (x *ParamSpecPool) Insert(PspecVar *ParamSpec, OwnerTypeVar types.GType) {
-
 	xParamSpecPoolInsert(x.GoPointer(), PspecVar.GoPointer(), OwnerTypeVar)
-
 }
 
 var xParamSpecPoolList func(uintptr, types.GType, *uint) uintptr
@@ -226,19 +221,20 @@ var xParamSpecPoolList func(uintptr, types.GType, *uint) uintptr
 // Gets an array of all #GParamSpecs owned by @owner_type in
 // the pool.
 func (x *ParamSpecPool) List(OwnerTypeVar types.GType, NPspecsPVar *uint) uintptr {
-
 	cret := xParamSpecPoolList(x.GoPointer(), OwnerTypeVar, NPspecsPVar)
 	return cret
 }
 
-var xParamSpecPoolListOwned func(uintptr, types.GType) *glib.List
+var xParamSpecPoolListOwned func(uintptr, types.GType) uintptr
 
 // Gets an #GList of all #GParamSpecs owned by @owner_type in
 // the pool.
 func (x *ParamSpecPool) ListOwned(OwnerTypeVar types.GType) *glib.List {
-
 	cret := xParamSpecPoolListOwned(x.GoPointer(), OwnerTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xParamSpecPoolLookup func(uintptr, string, types.GType, bool) uintptr
@@ -262,9 +258,7 @@ var xParamSpecPoolRemove func(uintptr, uintptr)
 
 // Removes a #GParamSpec from the pool.
 func (x *ParamSpecPool) Remove(PspecVar *ParamSpec) {
-
 	xParamSpecPoolRemove(x.GoPointer(), PspecVar.GoPointer())
-
 }
 
 // This structure is used to provide the type system with the information
@@ -533,7 +527,6 @@ var xParamTypeRegisterStatic func(string, *ParamSpecTypeInfo) types.GType
 // structure pointed to by @info to manage the #GParamSpec type and its
 // instances.
 func ParamTypeRegisterStatic(NameVar string, PspecInfoVar *ParamSpecTypeInfo) types.GType {
-
 	cret := xParamTypeRegisterStatic(NameVar, PspecInfoVar)
 	return cret
 }
@@ -548,7 +541,6 @@ var xParamValueConvert func(uintptr, *Value, *Value, bool) bool
 // See also g_value_type_transformable(), g_value_transform() and
 // g_param_value_validate().
 func ParamValueConvert(PspecVar *ParamSpec, SrcValueVar *Value, DestValueVar *Value, StrictValidationVar bool) bool {
-
 	cret := xParamValueConvert(PspecVar.GoPointer(), SrcValueVar, DestValueVar, StrictValidationVar)
 	return cret
 }
@@ -557,7 +549,6 @@ var xParamValueDefaults func(uintptr, *Value) bool
 
 // Checks whether @value contains the default value as specified in @pspec.
 func ParamValueDefaults(PspecVar *ParamSpec, ValueVar *Value) bool {
-
 	cret := xParamValueDefaults(PspecVar.GoPointer(), ValueVar)
 	return cret
 }
@@ -567,7 +558,6 @@ var xParamValueIsValid func(uintptr, *Value) bool
 // Return whether the contents of @value comply with the specifications
 // set out by @pspec.
 func ParamValueIsValid(PspecVar *ParamSpec, ValueVar *Value) bool {
-
 	cret := xParamValueIsValid(PspecVar.GoPointer(), ValueVar)
 	return cret
 }
@@ -576,9 +566,7 @@ var xParamValueSetDefault func(uintptr, *Value)
 
 // Sets @value to its default value as specified in @pspec.
 func ParamValueSetDefault(PspecVar *ParamSpec, ValueVar *Value) {
-
 	xParamValueSetDefault(PspecVar.GoPointer(), ValueVar)
-
 }
 
 var xParamValueValidate func(uintptr, *Value) bool
@@ -590,7 +578,6 @@ var xParamValueValidate func(uintptr, *Value) bool
 // it is modified accordingly, so the resulting value will fit into the
 // range -42 .. +42.
 func ParamValueValidate(PspecVar *ParamSpec, ValueVar *Value) bool {
-
 	cret := xParamValueValidate(PspecVar.GoPointer(), ValueVar)
 	return cret
 }
@@ -601,7 +588,6 @@ var xParamValuesCmp func(uintptr, *Value, *Value) int
 // if @value1 is found to be less than, equal to or greater than @value2,
 // respectively.
 func ParamValuesCmp(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int {
-
 	cret := xParamValuesCmp(PspecVar.GoPointer(), Value1Var, Value2Var)
 	return cret
 }
@@ -638,20 +624,21 @@ var xParamSpecGetBlurb func(uintptr) string
 
 // Get the short description of a #GParamSpec.
 func (x *ParamSpec) GetBlurb() string {
-
 	cret := xParamSpecGetBlurb(x.GoPointer())
 	return cret
 }
 
-var xParamSpecGetDefaultValue func(uintptr) *Value
+var xParamSpecGetDefaultValue func(uintptr) uintptr
 
 // Gets the default value of @pspec as a pointer to a #GValue.
 //
 // The #GValue will remain valid for the life of @pspec.
 func (x *ParamSpec) GetDefaultValue() *Value {
-
 	cret := xParamSpecGetDefaultValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
 var xParamSpecGetName func(uintptr) string
@@ -661,7 +648,6 @@ var xParamSpecGetName func(uintptr) string
 // The name is always an "interned" string (as per g_intern_string()).
 // This allows for pointer-value comparisons.
 func (x *ParamSpec) GetName() string {
-
 	cret := xParamSpecGetName(x.GoPointer())
 	return cret
 }
@@ -670,7 +656,6 @@ var xParamSpecGetNameQuark func(uintptr) glib.Quark
 
 // Gets the GQuark for the name.
 func (x *ParamSpec) GetNameQuark() glib.Quark {
-
 	cret := xParamSpecGetNameQuark(x.GoPointer())
 	return cret
 }
@@ -679,7 +664,6 @@ var xParamSpecGetNick func(uintptr) string
 
 // Get the nickname of a #GParamSpec.
 func (x *ParamSpec) GetNick() string {
-
 	cret := xParamSpecGetNick(x.GoPointer())
 	return cret
 }
@@ -688,7 +672,6 @@ var xParamSpecGetQdata func(uintptr, glib.Quark) uintptr
 
 // Gets back user data pointers stored via g_param_spec_set_qdata().
 func (x *ParamSpec) GetQdata(QuarkVar glib.Quark) uintptr {
-
 	cret := xParamSpecGetQdata(x.GoPointer(), QuarkVar)
 	return cret
 }
@@ -757,9 +740,7 @@ var xParamSpecSetQdata func(uintptr, glib.Quark, uintptr)
 // previously set user data pointer, overrides (frees) the old pointer
 // set, using %NULL as pointer essentially removes the data stored.
 func (x *ParamSpec) SetQdata(QuarkVar glib.Quark, DataVar uintptr) {
-
 	xParamSpecSetQdata(x.GoPointer(), QuarkVar, DataVar)
-
 }
 
 var xParamSpecSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
@@ -770,24 +751,7 @@ var xParamSpecSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // finalized, or the data is being overwritten by a call to
 // g_param_spec_set_qdata() with the same @quark.
 func (x *ParamSpec) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, DestroyVarRef)
-
+	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xParamSpecSink func(uintptr)
@@ -800,9 +764,7 @@ var xParamSpecSink func(uintptr)
 // reference count (thus ending up with a @pspec that has a reference
 // count of 1 still, but is not flagged "floating" anymore).
 func (x *ParamSpec) Sink() {
-
 	xParamSpecSink(x.GoPointer())
-
 }
 
 var xParamSpecStealQdata func(uintptr, glib.Quark) uintptr
@@ -812,7 +774,6 @@ var xParamSpecStealQdata func(uintptr, glib.Quark) uintptr
 // function (if any was set).  Usually, calling this function is only
 // required to update user data pointers with a destroy notifier.
 func (x *ParamSpec) StealQdata(QuarkVar glib.Quark) uintptr {
-
 	cret := xParamSpecStealQdata(x.GoPointer(), QuarkVar)
 	return cret
 }
@@ -821,9 +782,7 @@ var xParamSpecUnref func(uintptr)
 
 // Decrements the reference count of a @pspec.
 func (x *ParamSpec) Unref() {
-
 	xParamSpecUnref(x.GoPointer())
-
 }
 
 func (c *ParamSpec) GoPointer() uintptr {
@@ -880,14 +839,13 @@ var xParamSpecIsValidName func(string) bool
 // See [canonical parameter names][class@GObject.ParamSpec#parameter-names]
 // for details of the rules for valid names.
 func ParamSpecIsValidName(NameVar string) bool {
-
 	cret := xParamSpecIsValidName(NameVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -931,5 +889,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xParamSpecInternal, libs, "g_param_spec_internal")
 	core.PuregoSafeRegister(&xParamSpecIsValidName, libs, "g_param_spec_is_valid_name")
-
 }

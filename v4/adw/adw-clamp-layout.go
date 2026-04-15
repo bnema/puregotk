@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -86,7 +85,6 @@ var xClampLayoutGetMaximumSize func(uintptr) int
 
 // Gets the maximum size allocated to the children.
 func (x *ClampLayout) GetMaximumSize() int {
-
 	cret := xClampLayoutGetMaximumSize(x.GoPointer())
 	return cret
 }
@@ -95,7 +93,6 @@ var xClampLayoutGetTighteningThreshold func(uintptr) int
 
 // Gets the size above which the children are clamped.
 func (x *ClampLayout) GetTighteningThreshold() int {
-
 	cret := xClampLayoutGetTighteningThreshold(x.GoPointer())
 	return cret
 }
@@ -104,7 +101,6 @@ var xClampLayoutGetUnit func(uintptr) LengthUnit
 
 // Gets the length unit for maximum size and tightening threshold.
 func (x *ClampLayout) GetUnit() LengthUnit {
-
 	cret := xClampLayoutGetUnit(x.GoPointer())
 	return cret
 }
@@ -115,9 +111,7 @@ var xClampLayoutSetMaximumSize func(uintptr, int)
 //
 // It is the width if the layout is horizontal, or the height if it is vertical.
 func (x *ClampLayout) SetMaximumSize(MaximumSizeVar int) {
-
 	xClampLayoutSetMaximumSize(x.GoPointer(), MaximumSizeVar)
-
 }
 
 var xClampLayoutSetTighteningThreshold func(uintptr, int)
@@ -137,9 +131,7 @@ var xClampLayoutSetTighteningThreshold func(uintptr, int)
 // Effectively, tightening the grip on a child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
 func (x *ClampLayout) SetTighteningThreshold(TighteningThresholdVar int) {
-
 	xClampLayoutSetTighteningThreshold(x.GoPointer(), TighteningThresholdVar)
-
 }
 
 var xClampLayoutSetUnit func(uintptr, LengthUnit)
@@ -148,9 +140,7 @@ var xClampLayoutSetUnit func(uintptr, LengthUnit)
 //
 // Allows the sizes to vary depending on the text scale factor.
 func (x *ClampLayout) SetUnit(UnitVar LengthUnit) {
-
 	xClampLayoutSetUnit(x.GoPointer(), UnitVar)
-
 }
 
 func (c *ClampLayout) GoPointer() uintptr {
@@ -232,21 +222,18 @@ func (x *ClampLayout) GetPropertyTighteningThreshold() int {
 
 // Retrieves the orientation of the @orientable.
 func (x *ClampLayout) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ClampLayout) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -266,5 +253,4 @@ func init() {
 	core.PuregoSafeRegister(&xClampLayoutSetMaximumSize, libs, "adw_clamp_layout_set_maximum_size")
 	core.PuregoSafeRegister(&xClampLayoutSetTighteningThreshold, libs, "adw_clamp_layout_set_tightening_threshold")
 	core.PuregoSafeRegister(&xClampLayoutSetUnit, libs, "adw_clamp_layout_set_unit")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -74,34 +73,7 @@ var xAlertDialogChoose func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // does not have more than one button. A simpler API for
 // this case is [method@Gtk.AlertDialog.show].
 func (x *AlertDialog) Choose(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xAlertDialogChoose(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xAlertDialogChooseFinish func(uintptr, uintptr, **glib.Error) int
@@ -115,14 +87,12 @@ func (x *AlertDialog) ChooseFinish(ResultVar gio.AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xAlertDialogGetButtons func(uintptr) []string
 
 // Returns the button labels for the alert.
 func (x *AlertDialog) GetButtons() []string {
-
 	cret := xAlertDialogGetButtons(x.GoPointer())
 	return cret
 }
@@ -131,7 +101,6 @@ var xAlertDialogGetCancelButton func(uintptr) int
 
 // Returns the index of the cancel button.
 func (x *AlertDialog) GetCancelButton() int {
-
 	cret := xAlertDialogGetCancelButton(x.GoPointer())
 	return cret
 }
@@ -140,7 +109,6 @@ var xAlertDialogGetDefaultButton func(uintptr) int
 
 // Returns the index of the default button.
 func (x *AlertDialog) GetDefaultButton() int {
-
 	cret := xAlertDialogGetDefaultButton(x.GoPointer())
 	return cret
 }
@@ -149,7 +117,6 @@ var xAlertDialogGetDetail func(uintptr) string
 
 // Returns the detail text that will be shown in the alert.
 func (x *AlertDialog) GetDetail() string {
-
 	cret := xAlertDialogGetDetail(x.GoPointer())
 	return cret
 }
@@ -158,7 +125,6 @@ var xAlertDialogGetMessage func(uintptr) string
 
 // Returns the message that will be shown in the alert.
 func (x *AlertDialog) GetMessage() string {
-
 	cret := xAlertDialogGetMessage(x.GoPointer())
 	return cret
 }
@@ -168,7 +134,6 @@ var xAlertDialogGetModal func(uintptr) bool
 // Returns whether the alert blocks interaction
 // with the parent window while it is presented.
 func (x *AlertDialog) GetModal() bool {
-
 	cret := xAlertDialogGetModal(x.GoPointer())
 	return cret
 }
@@ -177,9 +142,7 @@ var xAlertDialogSetButtons func(uintptr, []string)
 
 // Sets the button labels for the alert.
 func (x *AlertDialog) SetButtons(LabelsVar []string) {
-
 	xAlertDialogSetButtons(x.GoPointer(), LabelsVar)
-
 }
 
 var xAlertDialogSetCancelButton func(uintptr, int)
@@ -189,9 +152,7 @@ var xAlertDialogSetCancelButton func(uintptr, int)
 // See [property@Gtk.AlertDialog:cancel-button] for
 // details of how this value is used.
 func (x *AlertDialog) SetCancelButton(ButtonVar int) {
-
 	xAlertDialogSetCancelButton(x.GoPointer(), ButtonVar)
-
 }
 
 var xAlertDialogSetDefaultButton func(uintptr, int)
@@ -201,27 +162,21 @@ var xAlertDialogSetDefaultButton func(uintptr, int)
 // See [property@Gtk.AlertDialog:default-button] for
 // details of how this value is used.
 func (x *AlertDialog) SetDefaultButton(ButtonVar int) {
-
 	xAlertDialogSetDefaultButton(x.GoPointer(), ButtonVar)
-
 }
 
 var xAlertDialogSetDetail func(uintptr, string)
 
 // Sets the detail text that will be shown in the alert.
 func (x *AlertDialog) SetDetail(DetailVar string) {
-
 	xAlertDialogSetDetail(x.GoPointer(), DetailVar)
-
 }
 
 var xAlertDialogSetMessage func(uintptr, string)
 
 // Sets the message that will be shown in the alert.
 func (x *AlertDialog) SetMessage(MessageVar string) {
-
 	xAlertDialogSetMessage(x.GoPointer(), MessageVar)
-
 }
 
 var xAlertDialogSetModal func(uintptr, bool)
@@ -229,9 +184,7 @@ var xAlertDialogSetModal func(uintptr, bool)
 // Sets whether the alert blocks interaction
 // with the parent window while it is presented.
 func (x *AlertDialog) SetModal(ModalVar bool) {
-
 	xAlertDialogSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xAlertDialogShow func(uintptr, uintptr)
@@ -245,14 +198,7 @@ var xAlertDialogShow func(uintptr, uintptr)
 // button, you should use that function instead and provide it with a
 // [class@Gio.Cancellable] and callback respectively.
 func (x *AlertDialog) Show(ParentVar *Window) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	xAlertDialogShow(x.GoPointer(), ParentVarPtr)
-
+	xAlertDialogShow(x.GoPointer(), ParentVar.GoPointer())
 }
 
 func (c *AlertDialog) GoPointer() uintptr {
@@ -414,7 +360,7 @@ func (x *AlertDialog) GetPropertyModal() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -443,5 +389,4 @@ func init() {
 	core.PuregoSafeRegister(&xAlertDialogSetMessage, libs, "gtk_alert_dialog_set_message")
 	core.PuregoSafeRegister(&xAlertDialogSetModal, libs, "gtk_alert_dialog_set_modal")
 	core.PuregoSafeRegister(&xAlertDialogShow, libs, "gtk_alert_dialog_show")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -29,6 +28,14 @@ type CallbackAnimationTargetClass struct {
 }
 
 func (x *CallbackAnimationTargetClass) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+type NoneAnimationTargetClass struct {
+	_ structs.HostLayout
+}
+
+func (x *NoneAnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
@@ -93,37 +100,7 @@ var xNewCallbackAnimationTarget func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAnimationTarget(CallbackVar *AnimationTargetFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAnimationTarget {
 	var cls *CallbackAnimationTarget
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 float64, arg1 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	cret := xNewCallbackAnimationTarget(CallbackVarRef, UserDataVar, DestroyVarRef)
+	cret := xNewCallbackAnimationTarget(glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -141,6 +118,50 @@ func (c *CallbackAnimationTarget) GoPointer() uintptr {
 }
 
 func (c *CallbackAnimationTarget) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
+// An [class@AnimationTarget] that doesn't do anything.
+type NoneAnimationTarget struct {
+	AnimationTarget
+}
+
+var xNoneAnimationTargetGLibType func() types.GType
+
+func NoneAnimationTargetGLibType() types.GType {
+	return xNoneAnimationTargetGLibType()
+}
+
+func NoneAnimationTargetNewFromInternalPtr(ptr uintptr) *NoneAnimationTarget {
+	cls := &NoneAnimationTarget{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewNoneAnimationTarget func() uintptr
+
+// Creates a new `AdwAnimationTarget` that doesn't do anything.
+func NewNoneAnimationTarget() *NoneAnimationTarget {
+	var cls *NoneAnimationTarget
+
+	cret := xNewNoneAnimationTarget()
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &NoneAnimationTarget{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *NoneAnimationTarget) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *NoneAnimationTarget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
@@ -247,7 +268,7 @@ func (c *PropertyAnimationTarget) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -263,6 +284,10 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewCallbackAnimationTarget, libs, "adw_callback_animation_target_new")
 
+	core.PuregoSafeRegister(&xNoneAnimationTargetGLibType, libs, "adw_none_animation_target_get_type")
+
+	core.PuregoSafeRegister(&xNewNoneAnimationTarget, libs, "adw_none_animation_target_new")
+
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGLibType, libs, "adw_property_animation_target_get_type")
 
 	core.PuregoSafeRegister(&xNewPropertyAnimationTarget, libs, "adw_property_animation_target_new")
@@ -270,5 +295,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGetObject, libs, "adw_property_animation_target_get_object")
 	core.PuregoSafeRegister(&xPropertyAnimationTargetGetPspec, libs, "adw_property_animation_target_get_pspec")
-
 }

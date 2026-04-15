@@ -2,14 +2,15 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 )
 
-var xPollableSourceNew func(uintptr) *glib.Source
+var xPollableSourceNew func(uintptr) uintptr
 
 // Utility method for #GPollableInputStream and #GPollableOutputStream
 // implementations. Creates a new #GSource that expects a callback of
@@ -17,26 +18,25 @@ var xPollableSourceNew func(uintptr) *glib.Source
 // anything on its own; use g_source_add_child_source() to add other
 // sources to it to cause it to trigger.
 func PollableSourceNew(PollableStreamVar *gobject.Object) *glib.Source {
-
 	cret := xPollableSourceNew(PollableStreamVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
-var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) *glib.Source
+var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) uintptr
 
 // Utility method for #GPollableInputStream and #GPollableOutputStream
 // implementations. Creates a new #GSource, as with
 // g_pollable_source_new(), but also attaching @child_source (with a
 // dummy callback), and @cancellable, if they are non-%NULL.
 func PollableSourceNewFull(PollableStreamVar *gobject.Object, ChildSourceVar *glib.Source, CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := xPollableSourceNewFull(PollableStreamVar.GoPointer(), ChildSourceVar, CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xPollableSourceNewFull(PollableStreamVar.GoPointer(), ChildSourceVar, CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 var xPollableStreamRead func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int
@@ -63,7 +63,6 @@ func PollableStreamRead(StreamVar *InputStream, BufferVar []byte, CountVar uint,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPollableStreamWrite func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int
@@ -91,7 +90,6 @@ func PollableStreamWrite(StreamVar *OutputStream, BufferVar []byte, CountVar uin
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPollableStreamWriteAll func(uintptr, []byte, uint, bool, *uint, uintptr, **glib.Error) bool
@@ -127,12 +125,11 @@ func PollableStreamWriteAll(StreamVar *OutputStream, BufferVar []byte, CountVar 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -147,5 +144,4 @@ func init() {
 	core.PuregoSafeRegister(&xPollableStreamRead, libs, "g_pollable_stream_read")
 	core.PuregoSafeRegister(&xPollableStreamWrite, libs, "g_pollable_stream_write")
 	core.PuregoSafeRegister(&xPollableStreamWriteAll, libs, "g_pollable_stream_write_all")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -96,7 +95,6 @@ var xEmblemGetOrigin func(uintptr) EmblemOrigin
 
 // Gets the origin of the emblem.
 func (x *Emblem) GetOrigin() EmblemOrigin {
-
 	cret := xEmblemGetOrigin(x.GoPointer())
 	return cret
 }
@@ -114,19 +112,12 @@ func (c *Emblem) SetGoPointer(ptr uintptr) {
 
 // Checks if two icons are equal.
 func (x *Emblem) Equal(Icon2Var Icon) bool {
-
-	var Icon2VarPtr uintptr
-	if Icon2Var != nil {
-		Icon2VarPtr = Icon2Var.GoPointer()
-	}
-
-	cret := XGIconEqual(x.GoPointer(), Icon2VarPtr)
+	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *Emblem) Hash() uint {
-
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }
@@ -137,9 +128,11 @@ func (x *Emblem) Hash() uint {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Emblem) Serialize() *glib.Variant {
-
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for
@@ -159,14 +152,13 @@ func (x *Emblem) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *Emblem) ToString() string {
-
 	cret := XGIconToString(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -183,5 +175,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEmblemGetIcon, libs, "g_emblem_get_icon")
 	core.PuregoSafeRegister(&xEmblemGetOrigin, libs, "g_emblem_get_origin")
-
 }

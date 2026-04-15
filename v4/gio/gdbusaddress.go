@@ -2,10 +2,7 @@
 package gio
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -20,7 +17,6 @@ var xDbusAddressEscapeValue func(string) string
 // which could be used in a D-Bus address like
 // `unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0`.
 func DbusAddressEscapeValue(StringVar string) string {
-
 	cret := xDbusAddressEscapeValue(StringVar)
 	return cret
 }
@@ -46,7 +42,6 @@ func DbusAddressGetForBusSync(BusTypeVar BusType, CancellableVar *Cancellable) (
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDbusAddressGetStream func(string, uintptr, uintptr, uintptr)
@@ -63,29 +58,7 @@ var xDbusAddressGetStream func(string, uintptr, uintptr, uintptr)
 // This is an asynchronous failable function. See
 // g_dbus_address_get_stream_sync() for the synchronous version.
 func DbusAddressGetStream(AddressVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xDbusAddressGetStream(AddressVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xDbusAddressGetStream(AddressVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDbusAddressGetStreamFinish func(uintptr, *string, **glib.Error) uintptr
@@ -109,7 +82,6 @@ func DbusAddressGetStreamFinish(ResVar AsyncResult, OutGuidVar *string) (*IOStre
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDbusAddressGetStreamSync func(string, *string, uintptr, **glib.Error) uintptr
@@ -144,7 +116,6 @@ func DbusAddressGetStreamSync(AddressVar string, OutGuidVar *string, Cancellable
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDbusIsAddress func(string) bool
@@ -156,7 +127,6 @@ var xDbusIsAddress func(string) bool
 // or #GDBusConnection - use g_dbus_is_supported_address() to do more
 // checks.
 func DbusIsAddress(StringVar string) bool {
-
 	cret := xDbusIsAddress(StringVar)
 	return cret
 }
@@ -175,12 +145,11 @@ func DbusIsSupportedAddress(StringVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -197,5 +166,4 @@ func init() {
 	core.PuregoSafeRegister(&xDbusAddressGetStreamSync, libs, "g_dbus_address_get_stream_sync")
 	core.PuregoSafeRegister(&xDbusIsAddress, libs, "g_dbus_is_address")
 	core.PuregoSafeRegister(&xDbusIsSupportedAddress, libs, "g_dbus_is_supported_address")
-
 }

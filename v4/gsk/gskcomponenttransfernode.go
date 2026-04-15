@@ -2,13 +2,17 @@
 package gsk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
+	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
 
+// A render node for applying a `GskComponentTransfer` for each color
+// component of the child node.
 type ComponentTransferNode struct {
 	RenderNode
 }
@@ -59,13 +63,15 @@ func (x *ComponentTransferNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xComponentTransferNodeGetTransfer func(uintptr, uint) *ComponentTransfer
+var xComponentTransferNodeGetTransfer func(uintptr, gdk.ColorChannel) uintptr
 
 // Gets the component transfer for one of the components.
-func (x *ComponentTransferNode) GetTransfer(ComponentVar uint) *ComponentTransfer {
-
+func (x *ComponentTransferNode) GetTransfer(ComponentVar gdk.ColorChannel) *ComponentTransfer {
 	cret := xComponentTransferNodeGetTransfer(x.GoPointer(), ComponentVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
 func (c *ComponentTransferNode) GoPointer() uintptr {
@@ -81,7 +87,7 @@ func (c *ComponentTransferNode) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GSK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -97,5 +103,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xComponentTransferNodeGetChild, libs, "gsk_component_transfer_node_get_child")
 	core.PuregoSafeRegister(&xComponentTransferNodeGetTransfer, libs, "gsk_component_transfer_node_get_transfer")
-
 }

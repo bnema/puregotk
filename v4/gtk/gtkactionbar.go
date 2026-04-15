@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -108,7 +107,6 @@ var xActionBarGetRevealed func(uintptr) bool
 
 // Gets whether the contents of the action bar are revealed.
 func (x *ActionBar) GetRevealed() bool {
-
 	cret := xActionBarGetRevealed(x.GoPointer())
 	return cret
 }
@@ -118,9 +116,7 @@ var xActionBarPackEnd func(uintptr, uintptr)
 // Adds a child to the action bar, packed with reference to the
 // end of the action bar.
 func (x *ActionBar) PackEnd(ChildVar *Widget) {
-
 	xActionBarPackEnd(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xActionBarPackStart func(uintptr, uintptr)
@@ -128,32 +124,21 @@ var xActionBarPackStart func(uintptr, uintptr)
 // Adds a child to the action, packed with reference to the
 // start of the action bar.
 func (x *ActionBar) PackStart(ChildVar *Widget) {
-
 	xActionBarPackStart(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xActionBarRemove func(uintptr, uintptr)
 
 // Removes a child from the action bar.
 func (x *ActionBar) Remove(ChildVar *Widget) {
-
 	xActionBarRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xActionBarSetCenterWidget func(uintptr, uintptr)
 
 // Sets the center widget for the action bar.
 func (x *ActionBar) SetCenterWidget(CenterWidgetVar *Widget) {
-
-	var CenterWidgetVarPtr uintptr
-	if CenterWidgetVar != nil {
-		CenterWidgetVarPtr = CenterWidgetVar.GoPointer()
-	}
-
-	xActionBarSetCenterWidget(x.GoPointer(), CenterWidgetVarPtr)
-
+	xActionBarSetCenterWidget(x.GoPointer(), CenterWidgetVar.GoPointer())
 }
 
 var xActionBarSetRevealed func(uintptr, bool)
@@ -164,9 +149,7 @@ var xActionBarSetRevealed func(uintptr, bool)
 // [property@Gtk.Widget:visible] sense, so revealing has
 // no effect if the action bar is hidden.
 func (x *ActionBar) SetRevealed(RevealedVar bool) {
-
 	xActionBarSetRevealed(x.GoPointer(), RevealedVar)
-
 }
 
 func (c *ActionBar) GoPointer() uintptr {
@@ -207,9 +190,19 @@ func (x *ActionBar) GetPropertyRevealed() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ActionBar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ActionBar) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -230,7 +223,6 @@ func (x *ActionBar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ActionBar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -255,7 +247,6 @@ func (x *ActionBar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ActionBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -294,30 +285,23 @@ func (x *ActionBar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ActionBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ActionBar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ActionBar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ActionBar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -330,19 +314,7 @@ func (x *ActionBar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ActionBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -350,14 +322,7 @@ func (x *ActionBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ActionBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -366,9 +331,7 @@ func (x *ActionBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ActionBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -390,9 +353,7 @@ func (x *ActionBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ActionBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -402,9 +363,7 @@ func (x *ActionBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *ActionBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -426,9 +385,7 @@ func (x *ActionBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acce
 //
 // ```
 func (x *ActionBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -438,9 +395,7 @@ func (x *ActionBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *ActionBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -463,9 +418,7 @@ func (x *ActionBar) UpdateRelationValue(NRelationsVar int, RelationsVar []Access
 //
 // ```
 func (x *ActionBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -475,9 +428,7 @@ func (x *ActionBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interf
 //
 // This function is meant to be used by language bindings.
 func (x *ActionBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -485,14 +436,13 @@ func (x *ActionBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ActionBar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -513,5 +463,4 @@ func init() {
 	core.PuregoSafeRegister(&xActionBarRemove, libs, "gtk_action_bar_remove")
 	core.PuregoSafeRegister(&xActionBarSetCenterWidget, libs, "gtk_action_bar_set_center_widget")
 	core.PuregoSafeRegister(&xActionBarSetRevealed, libs, "gtk_action_bar_set_revealed")
-
 }

@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -33,7 +32,6 @@ var xSliceAlloc func(uint) uintptr
 // Since GLib 2.76 this always uses the system malloc() implementation
 // internally.
 func SliceAlloc(BlockSizeVar uint) uintptr {
-
 	cret := xSliceAlloc(BlockSizeVar)
 
 	return cret
@@ -47,7 +45,6 @@ var xSliceAlloc0 func(uint) uintptr
 // Since GLib 2.76 this always uses the system malloc() implementation
 // internally.
 func SliceAlloc0(BlockSizeVar uint) uintptr {
-
 	cret := xSliceAlloc0(BlockSizeVar)
 
 	return cret
@@ -63,7 +60,6 @@ var xSliceCopy func(uint, uintptr) uintptr
 // Since GLib 2.76 this always uses the system malloc() implementation
 // internally.
 func SliceCopy(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
-
 	cret := xSliceCopy(BlockSizeVar, MemBlockVar)
 
 	return cret
@@ -84,9 +80,7 @@ var xSliceFree1 func(uint, uintptr)
 // Since GLib 2.76 this always uses the system free_sized() implementation
 // internally.
 func SliceFree1(BlockSizeVar uint, MemBlockVar uintptr) {
-
 	xSliceFree1(BlockSizeVar, MemBlockVar)
-
 }
 
 var xSliceFreeChainWithOffset func(uint, uintptr, uint)
@@ -105,15 +99,12 @@ var xSliceFreeChainWithOffset func(uint, uintptr, uint)
 // Since GLib 2.76 this always uses the system free_sized() implementation
 // internally.
 func SliceFreeChainWithOffset(BlockSizeVar uint, MemChainVar uintptr, NextOffsetVar uint) {
-
 	xSliceFreeChainWithOffset(BlockSizeVar, MemChainVar, NextOffsetVar)
-
 }
 
 var xSliceGetConfig func(SliceConfig) int64
 
 func SliceGetConfig(CkeyVar SliceConfig) int64 {
-
 	cret := xSliceGetConfig(CkeyVar)
 
 	return cret
@@ -122,7 +113,6 @@ func SliceGetConfig(CkeyVar SliceConfig) int64 {
 var xSliceGetConfigState func(SliceConfig, int64, uint) int64
 
 func SliceGetConfigState(CkeyVar SliceConfig, AddressVar int64, NValuesVar uint) int64 {
-
 	cret := xSliceGetConfigState(CkeyVar, AddressVar, NValuesVar)
 
 	return cret
@@ -131,14 +121,12 @@ func SliceGetConfigState(CkeyVar SliceConfig, AddressVar int64, NValuesVar uint)
 var xSliceSetConfig func(SliceConfig, int64)
 
 func SliceSetConfig(CkeyVar SliceConfig, ValueVar int64) {
-
 	xSliceSetConfig(CkeyVar, ValueVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -156,5 +144,4 @@ func init() {
 	core.PuregoSafeRegister(&xSliceGetConfig, libs, "g_slice_get_config")
 	core.PuregoSafeRegister(&xSliceGetConfigState, libs, "g_slice_get_config_state")
 	core.PuregoSafeRegister(&xSliceSetConfig, libs, "g_slice_set_config")
-
 }

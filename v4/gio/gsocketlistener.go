@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -291,7 +290,6 @@ func (x *SocketListener) Accept(SourceObjectVar **gobject.Object, CancellableVar
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -302,29 +300,7 @@ var xSocketListenerAcceptAsync func(uintptr, uintptr, uintptr, uintptr)
 // called. You can then call g_socket_listener_accept_finish()
 // to get the result of the operation.
 func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xSocketListenerAcceptFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
@@ -345,7 +321,6 @@ func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **g
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptSocket func(uintptr, **gobject.Object, uintptr, **glib.Error) uintptr
@@ -384,7 +359,6 @@ func (x *SocketListener) AcceptSocket(SourceObjectVar **gobject.Object, Cancella
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAcceptSocketAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -395,29 +369,7 @@ var xSocketListenerAcceptSocketAsync func(uintptr, uintptr, uintptr, uintptr)
 // called. You can then call g_socket_listener_accept_socket_finish()
 // to get the result of the operation.
 func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
@@ -438,7 +390,6 @@ func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectV
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, **SocketAddress, **glib.Error) bool
@@ -479,7 +430,6 @@ func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketTyp
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddAnyInetPort func(uintptr, uintptr, **glib.Error) uint16
@@ -515,7 +465,6 @@ func (x *SocketListener) AddAnyInetPort(SourceObjectVar *gobject.Object) (uint16
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddInetPort func(uintptr, uint16, uintptr, **glib.Error) bool
@@ -553,7 +502,6 @@ func (x *SocketListener) AddInetPort(PortVar uint16, SourceObjectVar *gobject.Ob
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerAddSocket func(uintptr, uintptr, uintptr, **glib.Error) bool
@@ -587,16 +535,13 @@ func (x *SocketListener) AddSocket(SocketVar *Socket, SourceObjectVar *gobject.O
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketListenerClose func(uintptr)
 
 // Closes all the sockets in the listener.
 func (x *SocketListener) Close() {
-
 	xSocketListenerClose(x.GoPointer())
-
 }
 
 var xSocketListenerSetBacklog func(uintptr, int)
@@ -607,9 +552,7 @@ var xSocketListenerSetBacklog func(uintptr, int)
 //
 // See g_socket_set_listen_backlog() for details
 func (x *SocketListener) SetBacklog(ListenBacklogVar int) {
-
 	xSocketListenerSetBacklog(x.GoPointer(), ListenBacklogVar)
-
 }
 
 func (c *SocketListener) GoPointer() uintptr {
@@ -644,7 +587,7 @@ func (x *SocketListener) GetPropertyListenBacklog() int {
 // Note that when @listener is used to listen on both IPv4 and
 // IPv6, a separate set of signals will be emitted for each, and
 // the order they happen in is undefined.
-func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, *Socket)) uint {
+func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -657,8 +600,7 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, EventVarp, func() *Socket { cls := &Socket{}; cls.Ptr = SocketVarp; return cls }())
-
+		cbFn(fa, EventVarp, SocketVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -669,7 +611,7 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -695,5 +637,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketListenerAddSocket, libs, "g_socket_listener_add_socket")
 	core.PuregoSafeRegister(&xSocketListenerClose, libs, "g_socket_listener_close")
 	core.PuregoSafeRegister(&xSocketListenerSetBacklog, libs, "g_socket_listener_set_backlog")
-
 }

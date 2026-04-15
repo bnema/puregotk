@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -103,7 +102,6 @@ var xOverlayLayoutChildGetClipOverlay func(uintptr) bool
 
 // Retrieves whether the child is clipped.
 func (x *OverlayLayoutChild) GetClipOverlay() bool {
-
 	cret := xOverlayLayoutChildGetClipOverlay(x.GoPointer())
 	return cret
 }
@@ -112,7 +110,6 @@ var xOverlayLayoutChildGetMeasure func(uintptr) bool
 
 // Retrieves whether the child is measured.
 func (x *OverlayLayoutChild) GetMeasure() bool {
-
 	cret := xOverlayLayoutChildGetMeasure(x.GoPointer())
 	return cret
 }
@@ -121,18 +118,14 @@ var xOverlayLayoutChildSetClipOverlay func(uintptr, bool)
 
 // Sets whether to clip this child.
 func (x *OverlayLayoutChild) SetClipOverlay(ClipOverlayVar bool) {
-
 	xOverlayLayoutChildSetClipOverlay(x.GoPointer(), ClipOverlayVar)
-
 }
 
 var xOverlayLayoutChildSetMeasure func(uintptr, bool)
 
 // Sets whether to measure this child.
 func (x *OverlayLayoutChild) SetMeasure(MeasureVar bool) {
-
 	xOverlayLayoutChildSetMeasure(x.GoPointer(), MeasureVar)
-
 }
 
 func (c *OverlayLayoutChild) GoPointer() uintptr {
@@ -184,7 +177,7 @@ func (x *OverlayLayoutChild) GetPropertyMeasure() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -204,5 +197,4 @@ func init() {
 	core.PuregoSafeRegister(&xOverlayLayoutChildGetMeasure, libs, "gtk_overlay_layout_child_get_measure")
 	core.PuregoSafeRegister(&xOverlayLayoutChildSetClipOverlay, libs, "gtk_overlay_layout_child_set_clip_overlay")
 	core.PuregoSafeRegister(&xOverlayLayoutChildSetMeasure, libs, "gtk_overlay_layout_child_set_measure")
-
 }

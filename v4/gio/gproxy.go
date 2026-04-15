@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -215,19 +214,11 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Asynchronous version of g_proxy_connect().
 func (x *ProxyBase) ConnectAsync(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // See g_proxy_connect().
@@ -246,7 +237,6 @@ func (x *ProxyBase) ConnectFinish(ResultVar AsyncResult) (*IOStream, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Some proxy protocols expect to be passed a hostname, which they
@@ -257,15 +247,16 @@ func (x *ProxyBase) ConnectFinish(ResultVar AsyncResult) (*IOStream, error) {
 // #GProxyAddress containing the stringified IP address to
 // g_proxy_connect() or g_proxy_connect_async().
 func (x *ProxyBase) SupportsHostname() bool {
-
 	cret := XGProxySupportsHostname(x.GoPointer())
 	return cret
 }
 
-var XGProxyConnect func(uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
-var XGProxyConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
-var XGProxyConnectFinish func(uintptr, uintptr, **glib.Error) uintptr
-var XGProxySupportsHostname func(uintptr) bool
+var (
+	XGProxyConnect          func(uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
+	XGProxyConnectAsync     func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGProxyConnectFinish    func(uintptr, uintptr, **glib.Error) uintptr
+	XGProxySupportsHostname func(uintptr) bool
+)
 
 const (
 	// Extension point for proxy functionality.
@@ -292,7 +283,7 @@ func ProxyGetDefaultForProtocol(ProtocolVar string) *ProxyBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -310,5 +301,4 @@ func init() {
 	core.PuregoSafeRegister(&XGProxyConnectAsync, libs, "g_proxy_connect_async")
 	core.PuregoSafeRegister(&XGProxyConnectFinish, libs, "g_proxy_connect_finish")
 	core.PuregoSafeRegister(&XGProxySupportsHostname, libs, "g_proxy_supports_hostname")
-
 }

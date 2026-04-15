@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -87,13 +86,15 @@ func (x *PrintSetup) GetPrintSettings() *PrintSettings {
 	return cls
 }
 
-var xPrintSetupRef func(uintptr) *PrintSetup
+var xPrintSetupRef func(uintptr) uintptr
 
 // Increase the reference count of @setup.
 func (x *PrintSetup) Ref() *PrintSetup {
-
 	cret := xPrintSetupRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PrintSetup)(unsafe.Pointer(cret))
 }
 
 var xPrintSetupUnref func(uintptr)
@@ -103,9 +104,7 @@ var xPrintSetupUnref func(uintptr)
 // If the reference count reaches zero,
 // the object is freed.
 func (x *PrintSetup) Unref() {
-
 	xPrintSetupUnref(x.GoPointer())
-
 }
 
 // Asynchronous API to present a print dialog to the user.
@@ -157,7 +156,6 @@ var xPrintDialogGetAcceptLabel func(uintptr) string
 // Returns the label that will be shown on the
 // accept button of the print dialog.
 func (x *PrintDialog) GetAcceptLabel() string {
-
 	cret := xPrintDialogGetAcceptLabel(x.GoPointer())
 	return cret
 }
@@ -168,7 +166,6 @@ var xPrintDialogGetModal func(uintptr) bool
 // interaction with the parent window while
 // it is presented.
 func (x *PrintDialog) GetModal() bool {
-
 	cret := xPrintDialogGetModal(x.GoPointer())
 	return cret
 }
@@ -212,7 +209,6 @@ var xPrintDialogGetTitle func(uintptr) string
 // Returns the title that will be shown on the
 // print dialog.
 func (x *PrintDialog) GetTitle() string {
-
 	cret := xPrintDialogGetTitle(x.GoPointer())
 	return cret
 }
@@ -226,34 +222,7 @@ var xPrintDialogPrint func(uintptr, uintptr, *PrintSetup, uintptr, uintptr, uint
 //
 // The @callback will be called when the printing is done.
 func (x *PrintDialog) Print(ParentVar *Window, SetupVar *PrintSetup, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPrintDialogPrint(x.GoPointer(), ParentVarPtr, SetupVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPrintDialogPrint(x.GoPointer(), ParentVar.GoPointer(), SetupVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xPrintDialogPrintFile func(uintptr, uintptr, *PrintSetup, uintptr, uintptr, uintptr, uintptr)
@@ -263,34 +232,7 @@ var xPrintDialogPrintFile func(uintptr, uintptr, *PrintSetup, uintptr, uintptr, 
 // If you pass `NULL` as @setup, then this method will present a print dialog.
 // Otherwise, it will attempt to print directly, without user interaction.
 func (x *PrintDialog) PrintFile(ParentVar *Window, SetupVar *PrintSetup, FileVar gio.File, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPrintDialogPrintFile(x.GoPointer(), ParentVarPtr, SetupVar, FileVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPrintDialogPrintFile(x.GoPointer(), ParentVar.GoPointer(), SetupVar, FileVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xPrintDialogPrintFileFinish func(uintptr, uintptr, **glib.Error) bool
@@ -308,7 +250,6 @@ func (x *PrintDialog) PrintFileFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPrintDialogPrintFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -343,7 +284,6 @@ func (x *PrintDialog) PrintFinish(ResultVar gio.AsyncResult) (*gio.OutputStream,
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xPrintDialogSetAcceptLabel func(uintptr, string)
@@ -352,9 +292,7 @@ var xPrintDialogSetAcceptLabel func(uintptr, string)
 // accept button of the print dialog shown for
 // [method@Gtk.PrintDialog.setup].
 func (x *PrintDialog) SetAcceptLabel(AcceptLabelVar string) {
-
 	xPrintDialogSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
-
 }
 
 var xPrintDialogSetModal func(uintptr, bool)
@@ -363,36 +301,28 @@ var xPrintDialogSetModal func(uintptr, bool)
 // interaction with the parent window while
 // it is presented.
 func (x *PrintDialog) SetModal(ModalVar bool) {
-
 	xPrintDialogSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xPrintDialogSetPageSetup func(uintptr, uintptr)
 
 // Set the page setup for the print dialog.
 func (x *PrintDialog) SetPageSetup(PageSetupVar *PageSetup) {
-
 	xPrintDialogSetPageSetup(x.GoPointer(), PageSetupVar.GoPointer())
-
 }
 
 var xPrintDialogSetPrintSettings func(uintptr, uintptr)
 
 // Sets the print settings for the print dialog.
 func (x *PrintDialog) SetPrintSettings(PrintSettingsVar *PrintSettings) {
-
 	xPrintDialogSetPrintSettings(x.GoPointer(), PrintSettingsVar.GoPointer())
-
 }
 
 var xPrintDialogSetTitle func(uintptr, string)
 
 // Sets the title that will be shown on the print dialog.
 func (x *PrintDialog) SetTitle(TitleVar string) {
-
 	xPrintDialogSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xPrintDialogSetup func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -409,37 +339,10 @@ var xPrintDialogSetup func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // on a page), then call [method@Gtk.PrintDialog.print] on @self
 // to do the printing without further user interaction.
 func (x *PrintDialog) Setup(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPrintDialogSetup(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPrintDialogSetup(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xPrintDialogSetupFinish func(uintptr, uintptr, **glib.Error) *PrintSetup
+var xPrintDialogSetupFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.PrintDialog.setup] call.
 //
@@ -453,11 +356,13 @@ func (x *PrintDialog) SetupFinish(ResultVar gio.AsyncResult) (*PrintSetup, error
 	var cerr *glib.Error
 
 	cret := xPrintDialogSetupFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*PrintSetup)(unsafe.Pointer(cret)), nil
 }
 
 func (c *PrintDialog) GoPointer() uintptr {
@@ -528,7 +433,7 @@ func (x *PrintDialog) GetPropertyTitle() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -565,5 +470,4 @@ func init() {
 	core.PuregoSafeRegister(&xPrintDialogSetTitle, libs, "gtk_print_dialog_set_title")
 	core.PuregoSafeRegister(&xPrintDialogSetup, libs, "gtk_print_dialog_setup")
 	core.PuregoSafeRegister(&xPrintDialogSetupFinish, libs, "gtk_print_dialog_setup_finish")
-
 }

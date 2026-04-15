@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -187,7 +186,6 @@ var xKeyvalTriggerGetKeyval func(uintptr) uint
 // Gets the keyval that must be pressed to succeed
 // triggering @self.
 func (x *KeyvalTrigger) GetKeyval() uint {
-
 	cret := xKeyvalTriggerGetKeyval(x.GoPointer())
 	return cret
 }
@@ -197,7 +195,6 @@ var xKeyvalTriggerGetModifiers func(uintptr) gdk.ModifierType
 // Gets the modifiers that must be present to succeed
 // triggering @self.
 func (x *KeyvalTrigger) GetModifiers() gdk.ModifierType {
-
 	cret := xKeyvalTriggerGetModifiers(x.GoPointer())
 	return cret
 }
@@ -274,7 +271,6 @@ var xMnemonicTriggerGetKeyval func(uintptr) uint
 
 // Gets the keyval that must be pressed to succeed triggering @self.
 func (x *MnemonicTrigger) GetKeyval() uint {
-
 	cret := xMnemonicTriggerGetKeyval(x.GoPointer())
 	return cret
 }
@@ -421,7 +417,6 @@ var xShortcutTriggerCompare func(uintptr, uintptr) int
 //
 // They must each be a `GtkShortcutTrigger`.
 func (x *ShortcutTrigger) Compare(Trigger2Var uintptr) int {
-
 	cret := xShortcutTriggerCompare(x.GoPointer(), Trigger2Var)
 	return cret
 }
@@ -433,7 +428,6 @@ var xShortcutTriggerEqual func(uintptr, uintptr) bool
 // The types of @one and @two are `gconstpointer` only to allow use of this
 // function with `GHashTable`. They must each be a `GtkShortcutTrigger`.
 func (x *ShortcutTrigger) Equal(Trigger2Var uintptr) bool {
-
 	cret := xShortcutTriggerEqual(x.GoPointer(), Trigger2Var)
 	return cret
 }
@@ -450,7 +444,6 @@ var xShortcutTriggerHash func(uintptr) uint
 // The types of @trigger is `gconstpointer` only to allow use of this
 // function with `GHashTable`. They must each be a `GtkShortcutTrigger`.
 func (x *ShortcutTrigger) Hash() uint {
-
 	cret := xShortcutTriggerHash(x.GoPointer())
 	return cret
 }
@@ -463,9 +456,7 @@ var xShortcutTriggerPrint func(uintptr, *glib.String)
 // The form of the representation may change at any time
 // and is not guaranteed to stay identical.
 func (x *ShortcutTrigger) Print(StringVar *glib.String) {
-
 	xShortcutTriggerPrint(x.GoPointer(), StringVar)
-
 }
 
 var xShortcutTriggerPrintLabel func(uintptr, uintptr, *glib.String) bool
@@ -482,7 +473,6 @@ var xShortcutTriggerPrintLabel func(uintptr, uintptr, *glib.String) bool
 // The form of the representation may change at any time and is
 // not guaranteed to stay identical.
 func (x *ShortcutTrigger) PrintLabel(DisplayVar *gdk.Display, StringVar *glib.String) bool {
-
 	cret := xShortcutTriggerPrintLabel(x.GoPointer(), DisplayVar.GoPointer(), StringVar)
 	return cret
 }
@@ -502,7 +492,6 @@ var xShortcutTriggerToLabel func(uintptr, uintptr) string
 // The form of the representation may change at any time and is
 // not guaranteed to stay identical.
 func (x *ShortcutTrigger) ToLabel(DisplayVar *gdk.Display) string {
-
 	cret := xShortcutTriggerToLabel(x.GoPointer(), DisplayVar.GoPointer())
 	return cret
 }
@@ -514,7 +503,6 @@ var xShortcutTriggerToString func(uintptr) string
 // This is a small wrapper around [method@Gtk.ShortcutTrigger.print]
 // to help when debugging.
 func (x *ShortcutTrigger) ToString() string {
-
 	cret := xShortcutTriggerToString(x.GoPointer())
 	return cret
 }
@@ -523,7 +511,6 @@ var xShortcutTriggerTrigger func(uintptr, uintptr, bool) gdk.KeyMatch
 
 // Checks if the given @event triggers @self.
 func (x *ShortcutTrigger) Trigger(EventVar *gdk.Event, EnableMnemonicsVar bool) gdk.KeyMatch {
-
 	cret := xShortcutTriggerTrigger(x.GoPointer(), EventVar.GoPointer(), EnableMnemonicsVar)
 	return cret
 }
@@ -541,7 +528,7 @@ func (c *ShortcutTrigger) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -587,5 +574,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutTriggerToLabel, libs, "gtk_shortcut_trigger_to_label")
 	core.PuregoSafeRegister(&xShortcutTriggerToString, libs, "gtk_shortcut_trigger_to_string")
 	core.PuregoSafeRegister(&xShortcutTriggerTrigger, libs, "gtk_shortcut_trigger_trigger")
-
 }

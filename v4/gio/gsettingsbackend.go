@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -52,8 +51,12 @@ func (x *SettingsBackendClass) OverrideRead(cb func(*SettingsBackend, string, *g
 	if cb == nil {
 		x.xRead = 0
 	} else {
-		x.xRead = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant {
-			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp, DefaultValueVarp)
+		x.xRead = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) uintptr {
+			ret := cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp, DefaultValueVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -64,10 +67,14 @@ func (x *SettingsBackendClass) GetRead() func(*SettingsBackend, string, *glib.Va
 	if x.xRead == 0 {
 		return nil
 	}
-	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRead)
 	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType, DefaultValueVar bool) *glib.Variant {
-		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar, DefaultValueVar)
+		rawRet := rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar, DefaultValueVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -287,8 +294,12 @@ func (x *SettingsBackendClass) OverrideReadUserValue(cb func(*SettingsBackend, s
 	if cb == nil {
 		x.xReadUserValue = 0
 	} else {
-		x.xReadUserValue = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant {
-			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp)
+		x.xReadUserValue = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) uintptr {
+			ret := cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -299,10 +310,14 @@ func (x *SettingsBackendClass) GetReadUserValue() func(*SettingsBackend, string,
 	if x.xReadUserValue == 0 {
 		return nil
 	}
-	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) uintptr
 	purego.RegisterFunc(&rawCallback, x.xReadUserValue)
 	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar)
+		rawRet := rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -489,9 +504,7 @@ var xSettingsBackendChanged func(uintptr, string, uintptr)
 // g_settings_backend_write() then @origin_tag must be set to the same
 // value that was passed to that call.
 func (x *SettingsBackend) Changed(KeyVar string, OriginTagVar uintptr) {
-
 	xSettingsBackendChanged(x.GoPointer(), KeyVar, OriginTagVar)
-
 }
 
 var xSettingsBackendChangedTree func(uintptr, *glib.Tree, uintptr)
@@ -500,9 +513,7 @@ var xSettingsBackendChangedTree func(uintptr, *glib.Tree, uintptr)
 // @tree, computes the longest common prefix and calls
 // g_settings_backend_changed().
 func (x *SettingsBackend) ChangedTree(TreeVar *glib.Tree, OriginTagVar uintptr) {
-
 	xSettingsBackendChangedTree(x.GoPointer(), TreeVar, OriginTagVar)
-
 }
 
 var xSettingsBackendKeysChanged func(uintptr, string, []string, uintptr)
@@ -529,9 +540,7 @@ var xSettingsBackendKeysChanged func(uintptr, string, []string, uintptr)
 // be as long as possible (ie: the longest common prefix of all of the
 // keys that were changed) but this is not strictly required.
 func (x *SettingsBackend) KeysChanged(PathVar string, ItemsVar []string, OriginTagVar uintptr) {
-
 	xSettingsBackendKeysChanged(x.GoPointer(), PathVar, ItemsVar, OriginTagVar)
-
 }
 
 var xSettingsBackendPathChanged func(uintptr, string, uintptr)
@@ -558,9 +567,7 @@ var xSettingsBackendPathChanged func(uintptr, string, uintptr)
 // example, if this function is called with the path of "/" then every
 // single key in the application will be notified of a possible change.
 func (x *SettingsBackend) PathChanged(PathVar string, OriginTagVar uintptr) {
-
 	xSettingsBackendPathChanged(x.GoPointer(), PathVar, OriginTagVar)
-
 }
 
 var xSettingsBackendPathWritableChanged func(uintptr, string)
@@ -571,9 +578,7 @@ var xSettingsBackendPathWritableChanged func(uintptr, string)
 // Since GSettings performs no locking operations for itself, this call
 // will always be made in response to external events.
 func (x *SettingsBackend) PathWritableChanged(PathVar string) {
-
 	xSettingsBackendPathWritableChanged(x.GoPointer(), PathVar)
-
 }
 
 var xSettingsBackendWritableChanged func(uintptr, string)
@@ -583,9 +588,7 @@ var xSettingsBackendWritableChanged func(uintptr, string)
 // Since GSettings performs no locking operations for itself, this call
 // will always be made in response to external events.
 func (x *SettingsBackend) WritableChanged(KeyVar string) {
-
 	xSettingsBackendWritableChanged(x.GoPointer(), KeyVar)
-
 }
 
 func (c *SettingsBackend) GoPointer() uintptr {
@@ -609,9 +612,7 @@ var xSettingsBackendFlattenTree func(*glib.Tree, *string, *[]string, *uintptr)
 // g_free().  You should not attempt to free or unref the contents of
 // @keys or @values.
 func SettingsBackendFlattenTree(TreeVar *glib.Tree, PathVar *string, KeysVar *[]string, ValuesVar *uintptr) {
-
 	xSettingsBackendFlattenTree(TreeVar, PathVar, KeysVar, ValuesVar)
-
 }
 
 var xSettingsBackendGetDefault func() uintptr
@@ -636,7 +637,7 @@ func SettingsBackendGetDefault() *SettingsBackend {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -661,5 +662,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSettingsBackendFlattenTree, libs, "g_settings_backend_flatten_tree")
 	core.PuregoSafeRegister(&xSettingsBackendGetDefault, libs, "g_settings_backend_get_default")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -87,7 +86,6 @@ func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int, float64, float
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -116,7 +114,6 @@ func (x *GestureClick) ConnectReleased(cb *func(GestureClick, int, float64, floa
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -140,7 +137,6 @@ func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -169,7 +165,6 @@ func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, fl
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, ButtonVarp, SequenceVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -180,7 +175,7 @@ func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, fl
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -193,5 +188,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureClickGLibType, libs, "gtk_gesture_click_get_type")
 
 	core.PuregoSafeRegister(&xNewGestureClick, libs, "gtk_gesture_click_new")
-
 }

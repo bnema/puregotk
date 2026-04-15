@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -27,7 +26,9 @@ type DBusInterfaceSkeletonClass struct {
 
 	xFlush uintptr
 
-	VfuncPadding [8]uintptr
+	xMethodDispatch uintptr
+
+	VfuncPadding [7]uintptr
 
 	xGAuthorizeMethod uintptr
 
@@ -44,8 +45,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkele
 	if cb == nil {
 		x.xGetInfo = 0
 	} else {
-		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -56,10 +61,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetInfo() func(*DBusInterfaceSkeleton) *
 	if x.xGetInfo == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetInfo)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceInfo {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceInfo)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -69,8 +78,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetVtable(cb func(*DBusInterfaceSke
 	if cb == nil {
 		x.xGetVtable = 0
 	} else {
-		x.xGetVtable = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceVTable {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetVtable = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -81,10 +94,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetVtable() func(*DBusInterfaceSkeleton)
 	if x.xGetVtable == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceVTable
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetVtable)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceVTable {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceVTable)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -94,8 +111,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetProperties(cb func(*DBusInterfac
 	if cb == nil {
 		x.xGetProperties = 0
 	} else {
-		x.xGetProperties = purego.NewCallback(func(InterfaceVarp uintptr) *glib.Variant {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetProperties = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -106,10 +127,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetProperties() func(*DBusInterfaceSkele
 	if x.xGetProperties == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *glib.Variant
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetProperties)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *glib.Variant {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -135,6 +160,31 @@ func (x *DBusInterfaceSkeletonClass) GetFlush() func(*DBusInterfaceSkeleton) {
 	purego.RegisterFunc(&rawCallback, x.xFlush)
 	return func(InterfaceVar *DBusInterfaceSkeleton) {
 		rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideMethodDispatch sets the "method_dispatch" callback function.
+// Dispatches a method invocation. (Since: 2.88)
+func (x *DBusInterfaceSkeletonClass) OverrideMethodDispatch(cb func(*DBusInterfaceSkeleton, *DBusInterfaceMethodCallFunc, *DBusMethodInvocation, DBusInterfaceSkeletonFlags, DBusObject)) {
+	if cb == nil {
+		x.xMethodDispatch = 0
+	} else {
+		x.xMethodDispatch = purego.NewCallback(func(InterfaceVarp uintptr, MethodCallFuncVarp uintptr, InvocationVarp uintptr, FlagsVarp DBusInterfaceSkeletonFlags, ObjectVarp uintptr) {
+			cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp), (*DBusInterfaceMethodCallFunc)(unsafe.Pointer(MethodCallFuncVarp)), DBusMethodInvocationNewFromInternalPtr(InvocationVarp), FlagsVarp, &DBusObjectBase{Ptr: ObjectVarp})
+		})
+	}
+}
+
+// GetMethodDispatch gets the "method_dispatch" callback function.
+// Dispatches a method invocation. (Since: 2.88)
+func (x *DBusInterfaceSkeletonClass) GetMethodDispatch() func(*DBusInterfaceSkeleton, *DBusInterfaceMethodCallFunc, *DBusMethodInvocation, DBusInterfaceSkeletonFlags, DBusObject) {
+	if x.xMethodDispatch == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr, MethodCallFuncVarp uintptr, InvocationVarp uintptr, FlagsVarp DBusInterfaceSkeletonFlags, ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMethodDispatch)
+	return func(InterfaceVar *DBusInterfaceSkeleton, MethodCallFuncVar *DBusInterfaceMethodCallFunc, InvocationVar *DBusMethodInvocation, FlagsVar DBusInterfaceSkeletonFlags, ObjectVar DBusObject) {
+		rawCallback(InterfaceVar.GoPointer(), glib.NewCallback(MethodCallFuncVar), InvocationVar.GoPointer(), FlagsVar, ObjectVar.GoPointer())
 	}
 }
 
@@ -205,7 +255,6 @@ func (x *DBusInterfaceSkeleton) Export(ConnectionVar *DBusConnection, ObjectPath
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xDBusInterfaceSkeletonFlush func(uintptr)
@@ -219,9 +268,7 @@ var xDBusInterfaceSkeletonFlush func(uintptr)
 // signal later (e.g. in an idle handler). This technique is useful
 // for collapsing multiple property changes into one.
 func (x *DBusInterfaceSkeleton) Flush() {
-
 	xDBusInterfaceSkeletonFlush(x.GoPointer())
-
 }
 
 var xDBusInterfaceSkeletonGetConnection func(uintptr) uintptr
@@ -241,13 +288,15 @@ func (x *DBusInterfaceSkeleton) GetConnection() *DBusConnection {
 	return cls
 }
 
-var xDBusInterfaceSkeletonGetConnections func(uintptr) *glib.List
+var xDBusInterfaceSkeletonGetConnections func(uintptr) uintptr
 
 // Gets a list of the connections that @interface_ is exported on.
 func (x *DBusInterfaceSkeleton) GetConnections() *glib.List {
-
 	cret := xDBusInterfaceSkeletonGetConnections(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonGetFlags func(uintptr) DBusInterfaceSkeletonFlags
@@ -255,55 +304,58 @@ var xDBusInterfaceSkeletonGetFlags func(uintptr) DBusInterfaceSkeletonFlags
 // Gets the #GDBusInterfaceSkeletonFlags that describes what the behavior
 // of @interface_
 func (x *DBusInterfaceSkeleton) GetFlags() DBusInterfaceSkeletonFlags {
-
 	cret := xDBusInterfaceSkeletonGetFlags(x.GoPointer())
 	return cret
 }
 
-var xDBusInterfaceSkeletonGetInfo func(uintptr) *DBusInterfaceInfo
+var xDBusInterfaceSkeletonGetInfo func(uintptr) uintptr
 
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
 func (x *DBusInterfaceSkeleton) GetInfo() *DBusInterfaceInfo {
-
 	cret := xDBusInterfaceSkeletonGetInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonGetObjectPath func(uintptr) string
 
 // Gets the object path that @interface_ is exported on, if any.
 func (x *DBusInterfaceSkeleton) GetObjectPath() string {
-
 	cret := xDBusInterfaceSkeletonGetObjectPath(x.GoPointer())
 	return cret
 }
 
-var xDBusInterfaceSkeletonGetProperties func(uintptr) *glib.Variant
+var xDBusInterfaceSkeletonGetProperties func(uintptr) uintptr
 
 // Gets all D-Bus properties for @interface_.
 func (x *DBusInterfaceSkeleton) GetProperties() *glib.Variant {
-
 	cret := xDBusInterfaceSkeletonGetProperties(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xDBusInterfaceSkeletonGetVtable func(uintptr) *DBusInterfaceVTable
+var xDBusInterfaceSkeletonGetVtable func(uintptr) uintptr
 
 // Gets the interface vtable for the D-Bus interface implemented by
 // @interface_. The returned function pointers should expect @interface_
 // itself to be passed as @user_data.
 func (x *DBusInterfaceSkeleton) GetVtable() *DBusInterfaceVTable {
-
 	cret := xDBusInterfaceSkeletonGetVtable(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceVTable)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonHasConnection func(uintptr, uintptr) bool
 
 // Checks if @interface_ is exported on @connection.
 func (x *DBusInterfaceSkeleton) HasConnection(ConnectionVar *DBusConnection) bool {
-
 	cret := xDBusInterfaceSkeletonHasConnection(x.GoPointer(), ConnectionVar.GoPointer())
 	return cret
 }
@@ -312,9 +364,7 @@ var xDBusInterfaceSkeletonSetFlags func(uintptr, DBusInterfaceSkeletonFlags)
 
 // Sets flags describing what the behavior of @skeleton should be.
 func (x *DBusInterfaceSkeleton) SetFlags(FlagsVar DBusInterfaceSkeletonFlags) {
-
 	xDBusInterfaceSkeletonSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xDBusInterfaceSkeletonUnexport func(uintptr)
@@ -324,9 +374,7 @@ var xDBusInterfaceSkeletonUnexport func(uintptr)
 // To unexport @interface_ from only a single connection, use
 // g_dbus_interface_skeleton_unexport_from_connection()
 func (x *DBusInterfaceSkeleton) Unexport() {
-
 	xDBusInterfaceSkeletonUnexport(x.GoPointer())
-
 }
 
 var xDBusInterfaceSkeletonUnexportFromConnection func(uintptr, uintptr)
@@ -336,9 +384,7 @@ var xDBusInterfaceSkeletonUnexportFromConnection func(uintptr, uintptr)
 // To stop exporting on all connections the interface is exported on,
 // use g_dbus_interface_skeleton_unexport().
 func (x *DBusInterfaceSkeleton) UnexportFromConnection(ConnectionVar *DBusConnection) {
-
 	xDBusInterfaceSkeletonUnexportFromConnection(x.GoPointer(), ConnectionVar.GoPointer())
-
 }
 
 func (c *DBusInterfaceSkeleton) GoPointer() uintptr {
@@ -385,7 +431,7 @@ func (c *DBusInterfaceSkeleton) SetGoPointer(ptr uintptr) {
 // flags set, no dedicated thread is ever used and the call will be
 // handled in the same thread as the object that @interface belongs
 // to was exported in.
-func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, *DBusMethodInvocation) bool) uint {
+func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "g-authorize-method", cbRefPtr)
@@ -398,8 +444,7 @@ func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSk
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
-
+		return cbFn(fa, InvocationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -445,19 +490,12 @@ func (x *DBusInterfaceSkeleton) GetObject() *DBusObjectBase {
 //
 // Note that @interface_ will hold a weak reference to @object.
 func (x *DBusInterfaceSkeleton) SetObject(ObjectVar DBusObject) {
-
-	var ObjectVarPtr uintptr
-	if ObjectVar != nil {
-		ObjectVarPtr = ObjectVar.GoPointer()
-	}
-
-	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVarPtr)
-
+	XGDbusInterfaceSetObject(x.GoPointer(), ObjectVar.GoPointer())
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -482,5 +520,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonSetFlags, libs, "g_dbus_interface_skeleton_set_flags")
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexport, libs, "g_dbus_interface_skeleton_unexport")
 	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexportFromConnection, libs, "g_dbus_interface_skeleton_unexport_from_connection")
-
 }

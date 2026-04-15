@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -114,21 +113,22 @@ func NewBuilderListItemFactoryFromResource(ScopeVar BuilderScope, ResourcePathVa
 	return cls
 }
 
-var xBuilderListItemFactoryGetBytes func(uintptr) *glib.Bytes
+var xBuilderListItemFactoryGetBytes func(uintptr) uintptr
 
 // Gets the data used as the `GtkBuilder` UI template for constructing
 // listitems.
 func (x *BuilderListItemFactory) GetBytes() *glib.Bytes {
-
 	cret := xBuilderListItemFactoryGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xBuilderListItemFactoryGetResource func(uintptr) string
 
 // If the data references a resource, gets the path of that resource.
 func (x *BuilderListItemFactory) GetResource() string {
-
 	cret := xBuilderListItemFactoryGetResource(x.GoPointer())
 	return cret
 }
@@ -197,7 +197,7 @@ func (x *BuilderListItemFactory) GetPropertyResource() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -215,5 +215,4 @@ func init() {
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetBytes, libs, "gtk_builder_list_item_factory_get_bytes")
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetResource, libs, "gtk_builder_list_item_factory_get_resource")
 	core.PuregoSafeRegister(&xBuilderListItemFactoryGetScope, libs, "gtk_builder_list_item_factory_get_scope")
-
 }

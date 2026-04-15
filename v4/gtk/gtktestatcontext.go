@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -11,9 +10,7 @@ var xTestAccessibleAssertionMessageRole func(string, string, int, string, string
 
 // Prints an assertion message for gtk_test_accessible_assert_role().
 func TestAccessibleAssertionMessageRole(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, AccessibleVar Accessible, ExpectedRoleVar AccessibleRole, ActualRoleVar AccessibleRole) {
-
 	xTestAccessibleAssertionMessageRole(DomainVar, FileVar, LineVar, FuncVar, ExprVar, AccessibleVar.GoPointer(), ExpectedRoleVar, ActualRoleVar)
-
 }
 
 var xTestAccessibleCheckProperty func(uintptr, AccessibleProperty, ...interface{}) string
@@ -21,7 +18,6 @@ var xTestAccessibleCheckProperty func(uintptr, AccessibleProperty, ...interface{
 // Checks whether the accessible @property of @accessible is set to
 // a specific value.
 func TestAccessibleCheckProperty(AccessibleVar Accessible, PropertyVar AccessibleProperty, varArgs ...interface{}) string {
-
 	cret := xTestAccessibleCheckProperty(AccessibleVar.GoPointer(), PropertyVar, varArgs...)
 	return cret
 }
@@ -31,7 +27,6 @@ var xTestAccessibleCheckRelation func(uintptr, AccessibleRelation, ...interface{
 // Checks whether the accessible @relation of @accessible is set to
 // a specific value.
 func TestAccessibleCheckRelation(AccessibleVar Accessible, RelationVar AccessibleRelation, varArgs ...interface{}) string {
-
 	cret := xTestAccessibleCheckRelation(AccessibleVar.GoPointer(), RelationVar, varArgs...)
 	return cret
 }
@@ -41,7 +36,6 @@ var xTestAccessibleCheckState func(uintptr, AccessibleState, ...interface{}) str
 // Checks whether the accessible @state of @accessible is set to
 // a specific value.
 func TestAccessibleCheckState(AccessibleVar Accessible, StateVar AccessibleState, varArgs ...interface{}) string {
-
 	cret := xTestAccessibleCheckState(AccessibleVar.GoPointer(), StateVar, varArgs...)
 	return cret
 }
@@ -50,7 +44,6 @@ var xTestAccessibleHasProperty func(uintptr, AccessibleProperty) bool
 
 // Checks whether the `GtkAccessible` has @property set.
 func TestAccessibleHasProperty(AccessibleVar Accessible, PropertyVar AccessibleProperty) bool {
-
 	cret := xTestAccessibleHasProperty(AccessibleVar.GoPointer(), PropertyVar)
 	return cret
 }
@@ -59,7 +52,6 @@ var xTestAccessibleHasRelation func(uintptr, AccessibleRelation) bool
 
 // Checks whether the `GtkAccessible` has @relation set.
 func TestAccessibleHasRelation(AccessibleVar Accessible, RelationVar AccessibleRelation) bool {
-
 	cret := xTestAccessibleHasRelation(AccessibleVar.GoPointer(), RelationVar)
 	return cret
 }
@@ -69,7 +61,6 @@ var xTestAccessibleHasRole func(uintptr, AccessibleRole) bool
 // Checks whether the `GtkAccessible:accessible-role` of the accessible
 // is @role.
 func TestAccessibleHasRole(AccessibleVar Accessible, RoleVar AccessibleRole) bool {
-
 	cret := xTestAccessibleHasRole(AccessibleVar.GoPointer(), RoleVar)
 	return cret
 }
@@ -78,14 +69,13 @@ var xTestAccessibleHasState func(uintptr, AccessibleState) bool
 
 // Checks whether the `GtkAccessible` has @state set.
 func TestAccessibleHasState(AccessibleVar Accessible, StateVar AccessibleState) bool {
-
 	cret := xTestAccessibleHasState(AccessibleVar.GoPointer(), StateVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -103,5 +93,4 @@ func init() {
 	core.PuregoSafeRegister(&xTestAccessibleHasRelation, libs, "gtk_test_accessible_has_relation")
 	core.PuregoSafeRegister(&xTestAccessibleHasRole, libs, "gtk_test_accessible_has_role")
 	core.PuregoSafeRegister(&xTestAccessibleHasState, libs, "gtk_test_accessible_has_state")
-
 }

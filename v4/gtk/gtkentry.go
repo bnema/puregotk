@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -229,7 +228,6 @@ var xEntryGetActivatesDefault func(uintptr) bool
 
 // Retrieves the value set by gtk_entry_set_activates_default().
 func (x *Entry) GetActivatesDefault() bool {
-
 	cret := xEntryGetActivatesDefault(x.GoPointer())
 	return cret
 }
@@ -240,20 +238,21 @@ var xEntryGetAlignment func(uintptr) float32
 //
 // See also: [property@Gtk.Editable:xalign]
 func (x *Entry) GetAlignment() float32 {
-
 	cret := xEntryGetAlignment(x.GoPointer())
 	return cret
 }
 
-var xEntryGetAttributes func(uintptr) *pango.AttrList
+var xEntryGetAttributes func(uintptr) uintptr
 
 // Gets the attribute list of the `GtkEntry`.
 //
 // See [method@Gtk.Entry.set_attributes].
 func (x *Entry) GetAttributes() *pango.AttrList {
-
 	cret := xEntryGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xEntryGetBuffer func(uintptr) uintptr
@@ -297,7 +296,6 @@ var xEntryGetCurrentIconDragSource func(uintptr) int
 // Returns the index of the icon which is the source of the
 // current  DND operation, or -1.
 func (x *Entry) GetCurrentIconDragSource() int {
-
 	cret := xEntryGetCurrentIconDragSource(x.GoPointer())
 	return cret
 }
@@ -323,7 +321,6 @@ var xEntryGetHasFrame func(uintptr) bool
 
 // Gets the value set by gtk_entry_set_has_frame().
 func (x *Entry) GetHasFrame() bool {
-
 	cret := xEntryGetHasFrame(x.GoPointer())
 	return cret
 }
@@ -332,7 +329,6 @@ var xEntryGetIconActivatable func(uintptr, EntryIconPosition) bool
 
 // Returns whether the icon is activatable.
 func (x *Entry) GetIconActivatable(IconPosVar EntryIconPosition) bool {
-
 	cret := xEntryGetIconActivatable(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -349,9 +345,7 @@ var xEntryGetIconArea func(uintptr, EntryIconPosition, *gdk.Rectangle)
 // @icon_area will be filled with the icon's allocation,
 // relative to @entry's allocation.
 func (x *Entry) GetIconArea(IconPosVar EntryIconPosition, IconAreaVar *gdk.Rectangle) {
-
 	xEntryGetIconArea(x.GoPointer(), IconPosVar, IconAreaVar)
-
 }
 
 var xEntryGetIconAtPos func(uintptr, int, int) int
@@ -363,7 +357,6 @@ var xEntryGetIconAtPos func(uintptr, int, int) int
 // -1 is returned. This function is intended for use in a
 // [signal@Gtk.Widget::query-tooltip] signal handler.
 func (x *Entry) GetIconAtPos(XVar int, YVar int) int {
-
 	cret := xEntryGetIconAtPos(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -395,7 +388,6 @@ var xEntryGetIconName func(uintptr, EntryIconPosition) string
 // %NULL is returned if there is no icon or if the icon was set
 // by some other method (e.g., by `GdkPaintable` or gicon).
 func (x *Entry) GetIconName(IconPosVar EntryIconPosition) string {
-
 	cret := xEntryGetIconName(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -423,7 +415,6 @@ var xEntryGetIconSensitive func(uintptr, EntryIconPosition) bool
 
 // Returns whether the icon appears sensitive or insensitive.
 func (x *Entry) GetIconSensitive(IconPosVar EntryIconPosition) bool {
-
 	cret := xEntryGetIconSensitive(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -436,7 +427,6 @@ var xEntryGetIconStorageType func(uintptr, EntryIconPosition) ImageType
 // If the icon has no image data, the return value will
 // be %GTK_IMAGE_EMPTY.
 func (x *Entry) GetIconStorageType(IconPosVar EntryIconPosition) ImageType {
-
 	cret := xEntryGetIconStorageType(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -446,7 +436,6 @@ var xEntryGetIconTooltipMarkup func(uintptr, EntryIconPosition) string
 // Gets the contents of the tooltip on the icon at the specified
 // position in @entry.
 func (x *Entry) GetIconTooltipMarkup(IconPosVar EntryIconPosition) string {
-
 	cret := xEntryGetIconTooltipMarkup(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -456,7 +445,6 @@ var xEntryGetIconTooltipText func(uintptr, EntryIconPosition) string
 // Gets the contents of the tooltip on the icon at the specified
 // position in @entry.
 func (x *Entry) GetIconTooltipText(IconPosVar EntryIconPosition) string {
-
 	cret := xEntryGetIconTooltipText(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -465,7 +453,6 @@ var xEntryGetInputHints func(uintptr) InputHints
 
 // Gets the input hints of this `GtkEntry`.
 func (x *Entry) GetInputHints() InputHints {
-
 	cret := xEntryGetInputHints(x.GoPointer())
 	return cret
 }
@@ -474,7 +461,6 @@ var xEntryGetInputPurpose func(uintptr) InputPurpose
 
 // Gets the input purpose of the `GtkEntry`.
 func (x *Entry) GetInputPurpose() InputPurpose {
-
 	cret := xEntryGetInputPurpose(x.GoPointer())
 	return cret
 }
@@ -484,7 +470,6 @@ var xEntryGetInvisibleChar func(uintptr) uint32
 // Retrieves the character displayed in place of the actual text
 // in “password mode”.
 func (x *Entry) GetInvisibleChar() uint32 {
-
 	cret := xEntryGetInvisibleChar(x.GoPointer())
 	return cret
 }
@@ -495,7 +480,6 @@ var xEntryGetMaxLength func(uintptr) int
 //
 // See [method@Gtk.Entry.set_max_length].
 func (x *Entry) GetMaxLength() int {
-
 	cret := xEntryGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -509,7 +493,6 @@ var xEntryGetMenuEntryIconText func(uintptr, EntryIconPosition) string
 // aren't focusable when using keyboard navigation. This is why Gtk recommends
 // to add the same action to the context menu.
 func (x *Entry) GetMenuEntryIconText(IconPosVar EntryIconPosition) string {
-
 	cret := xEntryGetMenuEntryIconText(x.GoPointer(), IconPosVar)
 	return cret
 }
@@ -518,7 +501,6 @@ var xEntryGetOverwriteMode func(uintptr) bool
 
 // Gets whether the `GtkEntry` is in overwrite mode.
 func (x *Entry) GetOverwriteMode() bool {
-
 	cret := xEntryGetOverwriteMode(x.GoPointer())
 	return cret
 }
@@ -528,7 +510,6 @@ var xEntryGetPlaceholderText func(uintptr) string
 // Retrieves the text that will be displayed when @entry
 // is empty and unfocused
 func (x *Entry) GetPlaceholderText() string {
-
 	cret := xEntryGetPlaceholderText(x.GoPointer())
 	return cret
 }
@@ -539,7 +520,6 @@ var xEntryGetProgressFraction func(uintptr) float64
 //
 // See [method@Gtk.Entry.set_progress_fraction].
 func (x *Entry) GetProgressFraction() float64 {
-
 	cret := xEntryGetProgressFraction(x.GoPointer())
 	return cret
 }
@@ -549,20 +529,21 @@ var xEntryGetProgressPulseStep func(uintptr) float64
 // Retrieves the pulse step set with
 // gtk_entry_set_progress_pulse_step().
 func (x *Entry) GetProgressPulseStep() float64 {
-
 	cret := xEntryGetProgressPulseStep(x.GoPointer())
 	return cret
 }
 
-var xEntryGetTabs func(uintptr) *pango.TabArray
+var xEntryGetTabs func(uintptr) uintptr
 
 // Gets the tabstops of the `GtkEntry`.
 //
 // See [method@Gtk.Entry.set_tabs].
 func (x *Entry) GetTabs() *pango.TabArray {
-
 	cret := xEntryGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xEntryGetTextLength func(uintptr) uint16
@@ -572,7 +553,6 @@ var xEntryGetTextLength func(uintptr) uint16
 // This is equivalent to getting @entry's `GtkEntryBuffer`
 // and calling [method@Gtk.EntryBuffer.get_length] on it.
 func (x *Entry) GetTextLength() uint16 {
-
 	cret := xEntryGetTextLength(x.GoPointer())
 	return cret
 }
@@ -583,7 +563,6 @@ var xEntryGetVisibility func(uintptr) bool
 //
 // See [method@Gtk.Entry.set_visibility].
 func (x *Entry) GetVisibility() bool {
-
 	cret := xEntryGetVisibility(x.GoPointer())
 	return cret
 }
@@ -597,7 +576,6 @@ var xEntryGrabFocusWithoutSelecting func(uintptr) bool
 // special entries which the user usually doesn't want to replace all text
 // in, such as search-as-you-type entries.
 func (x *Entry) GrabFocusWithoutSelecting() bool {
-
 	cret := xEntryGrabFocusWithoutSelecting(x.GoPointer())
 	return cret
 }
@@ -613,9 +591,7 @@ var xEntryProgressPulse func(uintptr)
 // little bit (the amount of movement per pulse is determined
 // by [method@Gtk.Entry.set_progress_pulse_step]).
 func (x *Entry) ProgressPulse() {
-
 	xEntryProgressPulse(x.GoPointer())
-
 }
 
 var xEntryResetImContext func(uintptr)
@@ -625,9 +601,7 @@ var xEntryResetImContext func(uintptr)
 // This can be necessary in the case where modifying the buffer
 // would confuse on-going input method behavior.
 func (x *Entry) ResetImContext() {
-
 	xEntryResetImContext(x.GoPointer())
-
 }
 
 var xEntrySetActivatesDefault func(uintptr, bool)
@@ -638,9 +612,7 @@ var xEntrySetActivatesDefault func(uintptr, bool)
 // This usually means that the dialog containing the entry will be closed,
 // since the default widget is usually one of the dialog buttons.
 func (x *Entry) SetActivatesDefault(SettingVar bool) {
-
 	xEntrySetActivatesDefault(x.GoPointer(), SettingVar)
-
 }
 
 var xEntrySetAlignment func(uintptr, float32)
@@ -652,9 +624,7 @@ var xEntrySetAlignment func(uintptr, float32)
 //
 // See also: [property@Gtk.Editable:xalign]
 func (x *Entry) SetAlignment(XalignVar float32) {
-
 	xEntrySetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 var xEntrySetAttributes func(uintptr, *pango.AttrList)
@@ -667,9 +637,7 @@ var xEntrySetAttributes func(uintptr, *pango.AttrList)
 // as the user types, it makes most sense to use attributes
 // with unlimited extent.
 func (x *Entry) SetAttributes(AttrsVar *pango.AttrList) {
-
 	xEntrySetAttributes(x.GoPointer(), AttrsVar)
-
 }
 
 var xEntrySetBuffer func(uintptr, uintptr)
@@ -677,9 +645,7 @@ var xEntrySetBuffer func(uintptr, uintptr)
 // Set the `GtkEntryBuffer` object which holds the text for
 // this widget.
 func (x *Entry) SetBuffer(BufferVar *EntryBuffer) {
-
 	xEntrySetBuffer(x.GoPointer(), BufferVar.GoPointer())
-
 }
 
 var xEntrySetCompletion func(uintptr, uintptr)
@@ -691,14 +657,7 @@ var xEntrySetCompletion func(uintptr, uintptr)
 // done on @completion using the `GtkEntryCompletion` API.
 // Completion is disabled if @completion is set to %NULL.
 func (x *Entry) SetCompletion(CompletionVar *EntryCompletion) {
-
-	var CompletionVarPtr uintptr
-	if CompletionVar != nil {
-		CompletionVarPtr = CompletionVar.GoPointer()
-	}
-
-	xEntrySetCompletion(x.GoPointer(), CompletionVarPtr)
-
+	xEntrySetCompletion(x.GoPointer(), CompletionVar.GoPointer())
 }
 
 var xEntrySetExtraMenu func(uintptr, uintptr)
@@ -706,32 +665,21 @@ var xEntrySetExtraMenu func(uintptr, uintptr)
 // Sets a menu model to add when constructing
 // the context menu for @entry.
 func (x *Entry) SetExtraMenu(ModelVar *gio.MenuModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xEntrySetExtraMenu(x.GoPointer(), ModelVarPtr)
-
+	xEntrySetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xEntrySetHasFrame func(uintptr, bool)
 
 // Sets whether the entry has a beveled frame around it.
 func (x *Entry) SetHasFrame(SettingVar bool) {
-
 	xEntrySetHasFrame(x.GoPointer(), SettingVar)
-
 }
 
 var xEntrySetIconActivatable func(uintptr, EntryIconPosition, bool)
 
 // Sets whether the icon is activatable.
 func (x *Entry) SetIconActivatable(IconPosVar EntryIconPosition, ActivatableVar bool) {
-
 	xEntrySetIconActivatable(x.GoPointer(), IconPosVar, ActivatableVar)
-
 }
 
 var xEntrySetIconDragSource func(uintptr, EntryIconPosition, uintptr, gdk.DragAction)
@@ -741,9 +689,7 @@ var xEntrySetIconDragSource func(uintptr, EntryIconPosition, uintptr, gdk.DragAc
 // This makes it so that GTK will start a drag
 // operation when the user clicks and drags the icon.
 func (x *Entry) SetIconDragSource(IconPosVar EntryIconPosition, ProviderVar *gdk.ContentProvider, ActionsVar gdk.DragAction) {
-
 	xEntrySetIconDragSource(x.GoPointer(), IconPosVar, ProviderVar.GoPointer(), ActionsVar)
-
 }
 
 var xEntrySetIconFromGicon func(uintptr, EntryIconPosition, uintptr)
@@ -757,14 +703,7 @@ var xEntrySetIconFromGicon func(uintptr, EntryIconPosition, uintptr)
 // If @icon is %NULL, no icon will be shown in the
 // specified position.
 func (x *Entry) SetIconFromGicon(IconPosVar EntryIconPosition, IconVar gio.Icon) {
-
-	var IconVarPtr uintptr
-	if IconVar != nil {
-		IconVarPtr = IconVar.GoPointer()
-	}
-
-	xEntrySetIconFromGicon(x.GoPointer(), IconPosVar, IconVarPtr)
-
+	xEntrySetIconFromGicon(x.GoPointer(), IconPosVar, IconVar.GoPointer())
 }
 
 var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, uintptr)
@@ -778,12 +717,10 @@ var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, uintptr)
 // If @icon_name is %NULL, no icon will be shown in the
 // specified position.
 func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, IconNameVarPtr)
-
 }
 
 var xEntrySetIconFromPaintable func(uintptr, EntryIconPosition, uintptr)
@@ -792,23 +729,14 @@ var xEntrySetIconFromPaintable func(uintptr, EntryIconPosition, uintptr)
 //
 // If @paintable is %NULL, no icon will be shown in the specified position.
 func (x *Entry) SetIconFromPaintable(IconPosVar EntryIconPosition, PaintableVar gdk.Paintable) {
-
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	xEntrySetIconFromPaintable(x.GoPointer(), IconPosVar, PaintableVarPtr)
-
+	xEntrySetIconFromPaintable(x.GoPointer(), IconPosVar, PaintableVar.GoPointer())
 }
 
 var xEntrySetIconSensitive func(uintptr, EntryIconPosition, bool)
 
 // Sets the sensitivity for the specified icon.
 func (x *Entry) SetIconSensitive(IconPosVar EntryIconPosition, SensitiveVar bool) {
-
 	xEntrySetIconSensitive(x.GoPointer(), IconPosVar, SensitiveVar)
-
 }
 
 var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, uintptr)
@@ -823,12 +751,10 @@ var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, uintptr)
 // See also [method@Gtk.Widget.set_tooltip_markup] and
 // [method@Gtk.Entry.set_icon_tooltip_text].
 func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar *string) {
-
 	TooltipVarPtr := core.GStrdupNullable(TooltipVar)
 	defer core.GFreeNullable(TooltipVarPtr)
 
 	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, TooltipVarPtr)
-
 }
 
 var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, uintptr)
@@ -851,12 +777,10 @@ var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, uintptr)
 // setting at least one non-empty tooltip on any icon
 // achieves the same result.
 func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar *string) {
-
 	TooltipVarPtr := core.GStrdupNullable(TooltipVar)
 	defer core.GFreeNullable(TooltipVarPtr)
 
 	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, TooltipVarPtr)
-
 }
 
 var xEntrySetInputHints func(uintptr, InputHints)
@@ -864,9 +788,7 @@ var xEntrySetInputHints func(uintptr, InputHints)
 // Set additional hints which allow input methods to
 // fine-tune their behavior.
 func (x *Entry) SetInputHints(HintsVar InputHints) {
-
 	xEntrySetInputHints(x.GoPointer(), HintsVar)
-
 }
 
 var xEntrySetInputPurpose func(uintptr, InputPurpose)
@@ -874,9 +796,7 @@ var xEntrySetInputPurpose func(uintptr, InputPurpose)
 // Sets the input purpose which can be used by input methods
 // to adjust their behavior.
 func (x *Entry) SetInputPurpose(PurposeVar InputPurpose) {
-
 	xEntrySetInputPurpose(x.GoPointer(), PurposeVar)
-
 }
 
 var xEntrySetInvisibleChar func(uintptr, uint32)
@@ -892,9 +812,7 @@ var xEntrySetInvisibleChar func(uintptr, uint32)
 // the user will get no feedback at all; there will be no text
 // on the screen as they type.
 func (x *Entry) SetInvisibleChar(ChVar uint32) {
-
 	xEntrySetInvisibleChar(x.GoPointer(), ChVar)
-
 }
 
 var xEntrySetMaxLength func(uintptr, int)
@@ -907,9 +825,7 @@ var xEntrySetMaxLength func(uintptr, int)
 // This is equivalent to getting @entry's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.set_max_length] on it.
 func (x *Entry) SetMaxLength(MaxVar int) {
-
 	xEntrySetMaxLength(x.GoPointer(), MaxVar)
-
 }
 
 var xEntrySetMenuEntryIconText func(uintptr, EntryIconPosition, string)
@@ -921,18 +837,14 @@ var xEntrySetMenuEntryIconText func(uintptr, EntryIconPosition, string)
 // aren't focusable when using keyboard navigation. This is why Gtk recommends
 // to add the same action to the context menu.
 func (x *Entry) SetMenuEntryIconText(IconPosVar EntryIconPosition, TextVar string) {
-
 	xEntrySetMenuEntryIconText(x.GoPointer(), IconPosVar, TextVar)
-
 }
 
 var xEntrySetOverwriteMode func(uintptr, bool)
 
 // Sets whether the text is overwritten when typing in the `GtkEntry`.
 func (x *Entry) SetOverwriteMode(OverwriteVar bool) {
-
 	xEntrySetOverwriteMode(x.GoPointer(), OverwriteVar)
-
 }
 
 var xEntrySetPlaceholderText func(uintptr, uintptr)
@@ -942,12 +854,10 @@ var xEntrySetPlaceholderText func(uintptr, uintptr)
 // This can be used to give a visual hint of the expected
 // contents of the `GtkEntry`.
 func (x *Entry) SetPlaceholderText(TextVar *string) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xEntrySetPlaceholderText(x.GoPointer(), TextVarPtr)
-
 }
 
 var xEntrySetProgressFraction func(uintptr, float64)
@@ -957,9 +867,7 @@ var xEntrySetProgressFraction func(uintptr, float64)
 //
 // The fraction should be between 0.0 and 1.0, inclusive.
 func (x *Entry) SetProgressFraction(FractionVar float64) {
-
 	xEntrySetProgressFraction(x.GoPointer(), FractionVar)
-
 }
 
 var xEntrySetProgressPulseStep func(uintptr, float64)
@@ -970,9 +878,7 @@ var xEntrySetProgressPulseStep func(uintptr, float64)
 // Use [method@Gtk.Entry.progress_pulse] to pulse
 // the progress.
 func (x *Entry) SetProgressPulseStep(FractionVar float64) {
-
 	xEntrySetProgressPulseStep(x.GoPointer(), FractionVar)
-
 }
 
 var xEntrySetTabs func(uintptr, *pango.TabArray)
@@ -981,9 +887,7 @@ var xEntrySetTabs func(uintptr, *pango.TabArray)
 //
 // The tabstops in the array are applied to the entry text.
 func (x *Entry) SetTabs(TabsVar *pango.TabArray) {
-
 	xEntrySetTabs(x.GoPointer(), TabsVar)
-
 }
 
 var xEntrySetVisibility func(uintptr, bool)
@@ -1003,9 +907,7 @@ var xEntrySetVisibility func(uintptr, bool)
 // inform input methods about the purpose of this entry,
 // in addition to setting visibility to %FALSE.
 func (x *Entry) SetVisibility(VisibleVar bool) {
-
 	xEntrySetVisibility(x.GoPointer(), VisibleVar)
-
 }
 
 var xEntryUnsetInvisibleChar func(uintptr)
@@ -1013,9 +915,7 @@ var xEntryUnsetInvisibleChar func(uintptr)
 // Unsets the invisible char, so that the default invisible char
 // is used again. See [method@Gtk.Entry.set_invisible_char].
 func (x *Entry) UnsetInvisibleChar() {
-
 	xEntryUnsetInvisibleChar(x.GoPointer())
-
 }
 
 func (c *Entry) GoPointer() uintptr {
@@ -1690,7 +1590,6 @@ func (x *Entry) ConnectActivate(cb *func(Entry)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1714,7 +1613,6 @@ func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint {
 		cbFn := *cb
 
 		cbFn(fa, IconPosVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1739,7 +1637,6 @@ func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint {
 		cbFn := *cb
 
 		cbFn(fa, IconPosVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1758,9 +1655,19 @@ func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Entry) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Entry) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1781,7 +1688,6 @@ func (x *Entry) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Entry) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1806,7 +1712,6 @@ func (x *Entry) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Entry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1845,30 +1750,23 @@ func (x *Entry) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Entry) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Entry) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Entry) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Entry) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1881,19 +1779,7 @@ func (x *Entry) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Entry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1901,14 +1787,7 @@ func (x *Entry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Entry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1917,9 +1796,7 @@ func (x *Entry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Entry) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1941,9 +1818,7 @@ func (x *Entry) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Entry) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1953,9 +1828,7 @@ func (x *Entry) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Entry) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1977,9 +1850,7 @@ func (x *Entry) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Entry) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1989,9 +1860,7 @@ func (x *Entry) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Entry) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -2014,9 +1883,7 @@ func (x *Entry) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Entry) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -2026,9 +1893,7 @@ func (x *Entry) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Entry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -2036,23 +1901,18 @@ func (x *Entry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Entry) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Emits the `GtkCellEditable::editing-done` signal.
 func (x *Entry) EditingDone() {
-
 	XGtkCellEditableEditingDone(x.GoPointer())
-
 }
 
 // Emits the `GtkCellEditable::remove-widget` signal.
 func (x *Entry) RemoveWidget() {
-
 	XGtkCellEditableRemoveWidget(x.GoPointer())
-
 }
 
 // Begins editing on a @cell_editable.
@@ -2066,14 +1926,7 @@ func (x *Entry) RemoveWidget() {
 // Note that the @cell_editable is created on-demand for the current edit; its
 // lifetime is temporary and does not persist across other edits and/or cells.
 func (x *Entry) StartEditing(EventVar *gdk.Event) {
-
-	var EventVarPtr uintptr
-	if EventVar != nil {
-		EventVarPtr = EventVar.GoPointer()
-	}
-
-	XGtkCellEditableStartEditing(x.GoPointer(), EventVarPtr)
-
+	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
 }
 
 // Retrieves the accessible platform state from the editable delegate.
@@ -2113,7 +1966,6 @@ func (x *Entry) StartEditing(EventVar *gdk.Event) {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *Entry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -2122,9 +1974,7 @@ func (x *Entry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformSt
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *Entry) DeleteSelection() {
-
 	XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -2136,9 +1986,7 @@ func (x *Entry) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *Entry) DeleteText(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -2146,9 +1994,7 @@ func (x *Entry) DeleteText(StartPosVar int, EndPosVar int) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *Entry) FinishDelegate() {
-
 	XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Retrieves a sequence of characters.
@@ -2160,7 +2006,6 @@ func (x *Entry) FinishDelegate() {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Entry) GetChars(StartPosVar int, EndPosVar int) string {
-
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -2185,21 +2030,18 @@ func (x *Entry) GetDelegate() *EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *Entry) GetEditable() bool {
-
 	cret := XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *Entry) GetEnableUndo() bool {
-
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *Entry) GetMaxWidthChars() int {
-
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -2209,7 +2051,6 @@ func (x *Entry) GetMaxWidthChars() int {
 //
 // Note that this position is in characters, not in bytes.
 func (x *Entry) GetPosition() int {
-
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -2222,7 +2063,6 @@ func (x *Entry) GetPosition() int {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
-
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -2231,7 +2071,6 @@ func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *Entry) GetText() string {
-
 	cret := XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -2239,7 +2078,6 @@ func (x *Entry) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *Entry) GetWidthChars() int {
-
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -2252,9 +2090,7 @@ func (x *Entry) GetWidthChars() int {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *Entry) InitDelegate() {
-
 	XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -2264,9 +2100,7 @@ func (x *Entry) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *Entry) InsertText(TextVar string, LengthVar int, PositionVar *int) {
-
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -2278,16 +2112,12 @@ func (x *Entry) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *Entry) SelectRegion(StartPosVar int, EndPosVar int) {
-
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *Entry) SetEditable(IsEditableVar bool) {
-
 	XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -2297,16 +2127,12 @@ func (x *Entry) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *Entry) SetEnableUndo(EnableUndoVar bool) {
-
 	XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *Entry) SetMaxWidthChars(NCharsVar int) {
-
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -2317,18 +2143,14 @@ func (x *Entry) SetMaxWidthChars(NCharsVar int) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *Entry) SetPosition(PositionVar int) {
-
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *Entry) SetText(TextVar string) {
-
 	XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -2338,14 +2160,12 @@ func (x *Entry) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *Entry) SetWidthChars(NCharsVar int) {
-
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2422,5 +2242,4 @@ func init() {
 	core.PuregoSafeRegister(&xEntrySetTabs, libs, "gtk_entry_set_tabs")
 	core.PuregoSafeRegister(&xEntrySetVisibility, libs, "gtk_entry_set_visibility")
 	core.PuregoSafeRegister(&xEntryUnsetInvisibleChar, libs, "gtk_entry_unset_invisible_char")
-
 }

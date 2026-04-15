@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -80,9 +79,7 @@ var xPreferencesWindowAdd func(uintptr, uintptr)
 
 // Adds a preferences page to @self.
 func (x *PreferencesWindow) Add(PageVar *PreferencesPage) {
-
 	xPreferencesWindowAdd(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesWindowAddToast func(uintptr, uintptr)
@@ -91,9 +88,7 @@ var xPreferencesWindowAddToast func(uintptr, uintptr)
 //
 // See [method@ToastOverlay.add_toast].
 func (x *PreferencesWindow) AddToast(ToastVar *Toast) {
-
 	xPreferencesWindowAddToast(x.GoPointer(), ToastVar.GoPointer())
-
 }
 
 var xPreferencesWindowCloseSubpage func(uintptr)
@@ -102,16 +97,13 @@ var xPreferencesWindowCloseSubpage func(uintptr)
 //
 // If there is no presented subpage, this does nothing.
 func (x *PreferencesWindow) CloseSubpage() {
-
 	xPreferencesWindowCloseSubpage(x.GoPointer())
-
 }
 
 var xPreferencesWindowGetCanNavigateBack func(uintptr) bool
 
 // Gets whether gestures and shortcuts for closing subpages are enabled.
 func (x *PreferencesWindow) GetCanNavigateBack() bool {
-
 	cret := xPreferencesWindowGetCanNavigateBack(x.GoPointer())
 	return cret
 }
@@ -120,7 +112,6 @@ var xPreferencesWindowGetSearchEnabled func(uintptr) bool
 
 // Gets whether search is enabled for @self.
 func (x *PreferencesWindow) GetSearchEnabled() bool {
-
 	cret := xPreferencesWindowGetSearchEnabled(x.GoPointer())
 	return cret
 }
@@ -146,7 +137,6 @@ var xPreferencesWindowGetVisiblePageName func(uintptr) string
 
 // Gets the name of currently visible page of @self.
 func (x *PreferencesWindow) GetVisiblePageName() string {
-
 	cret := xPreferencesWindowGetVisiblePageName(x.GoPointer())
 	return cret
 }
@@ -155,7 +145,6 @@ var xPreferencesWindowPopSubpage func(uintptr) bool
 
 // Pop the visible page from the subpage stack of @self.
 func (x *PreferencesWindow) PopSubpage() bool {
-
 	cret := xPreferencesWindowPopSubpage(x.GoPointer())
 	return cret
 }
@@ -167,9 +156,7 @@ var xPreferencesWindowPresentSubpage func(uintptr, uintptr)
 // The transition can be cancelled by the user, in which case visible child will
 // change back to the previously visible child.
 func (x *PreferencesWindow) PresentSubpage(SubpageVar *gtk.Widget) {
-
 	xPreferencesWindowPresentSubpage(x.GoPointer(), SubpageVar.GoPointer())
-
 }
 
 var xPreferencesWindowPushSubpage func(uintptr, uintptr)
@@ -178,18 +165,14 @@ var xPreferencesWindowPushSubpage func(uintptr, uintptr)
 //
 // The page will be automatically removed when popped.
 func (x *PreferencesWindow) PushSubpage(PageVar *NavigationPage) {
-
 	xPreferencesWindowPushSubpage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesWindowRemove func(uintptr, uintptr)
 
 // Removes a page from @self.
 func (x *PreferencesWindow) Remove(PageVar *PreferencesPage) {
-
 	xPreferencesWindowRemove(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesWindowSetCanNavigateBack func(uintptr, bool)
@@ -209,27 +192,21 @@ var xPreferencesWindowSetCanNavigateBack func(uintptr, bool)
 //
 // Has no effect for subpages added with [method@PreferencesWindow.push_subpage].
 func (x *PreferencesWindow) SetCanNavigateBack(CanNavigateBackVar bool) {
-
 	xPreferencesWindowSetCanNavigateBack(x.GoPointer(), CanNavigateBackVar)
-
 }
 
 var xPreferencesWindowSetSearchEnabled func(uintptr, bool)
 
 // Sets whether search is enabled for @self.
 func (x *PreferencesWindow) SetSearchEnabled(SearchEnabledVar bool) {
-
 	xPreferencesWindowSetSearchEnabled(x.GoPointer(), SearchEnabledVar)
-
 }
 
 var xPreferencesWindowSetVisiblePage func(uintptr, uintptr)
 
 // Makes @page the visible page of @self.
 func (x *PreferencesWindow) SetVisiblePage(PageVar *PreferencesPage) {
-
 	xPreferencesWindowSetVisiblePage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xPreferencesWindowSetVisiblePageName func(uintptr, string)
@@ -238,9 +215,7 @@ var xPreferencesWindowSetVisiblePageName func(uintptr, string)
 //
 // See [property@PreferencesWindow:visible-page].
 func (x *PreferencesWindow) SetVisiblePageName(NameVar string) {
-
 	xPreferencesWindowSetVisiblePageName(x.GoPointer(), NameVar)
-
 }
 
 func (c *PreferencesWindow) GoPointer() uintptr {
@@ -347,9 +322,19 @@ func (x *PreferencesWindow) GetPropertyVisiblePageName() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *PreferencesWindow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *PreferencesWindow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -370,7 +355,6 @@ func (x *PreferencesWindow) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *PreferencesWindow) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -395,7 +379,6 @@ func (x *PreferencesWindow) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *PreferencesWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -434,30 +417,23 @@ func (x *PreferencesWindow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *PreferencesWindow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *PreferencesWindow) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *PreferencesWindow) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *PreferencesWindow) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -470,19 +446,7 @@ func (x *PreferencesWindow) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *PreferencesWindow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -490,14 +454,7 @@ func (x *PreferencesWindow) SetAccessibleParent(ParentVar gtk.Accessible, NextSi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *PreferencesWindow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -506,9 +463,7 @@ func (x *PreferencesWindow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Access
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *PreferencesWindow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -530,9 +485,7 @@ func (x *PreferencesWindow) UpdatePlatformState(StateVar gtk.AccessiblePlatformS
 //
 // ```
 func (x *PreferencesWindow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -542,9 +495,7 @@ func (x *PreferencesWindow) UpdateProperty(FirstPropertyVar gtk.AccessibleProper
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -566,9 +517,7 @@ func (x *PreferencesWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVa
 //
 // ```
 func (x *PreferencesWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -578,9 +527,7 @@ func (x *PreferencesWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRelati
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -603,9 +550,7 @@ func (x *PreferencesWindow) UpdateRelationValue(NRelationsVar int, RelationsVar 
 //
 // ```
 func (x *PreferencesWindow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -615,9 +560,7 @@ func (x *PreferencesWindow) UpdateState(FirstStateVar gtk.AccessibleState, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -625,7 +568,6 @@ func (x *PreferencesWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acc
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *PreferencesWindow) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -665,27 +607,21 @@ func (x *PreferencesWindow) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *PreferencesWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *PreferencesWindow) Realize() {
-
 	gtk.XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *PreferencesWindow) Unrealize() {
-
 	gtk.XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -732,19 +668,12 @@ func (x *PreferencesWindow) GetFocus() *gtk.Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *PreferencesWindow) SetFocus(FocusVar *gtk.Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
-
+	gtk.XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -773,5 +702,4 @@ func init() {
 	core.PuregoSafeRegister(&xPreferencesWindowSetSearchEnabled, libs, "adw_preferences_window_set_search_enabled")
 	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePage, libs, "adw_preferences_window_set_visible_page")
 	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePageName, libs, "adw_preferences_window_set_visible_page_name")
-
 }

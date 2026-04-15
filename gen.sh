@@ -5,17 +5,5 @@ set -e
 echo "generating go files..."
 go generate
 
-tmp=$(mktemp -d)
-
-echo "making sure imports are correct..."
-GOPATH="$tmp" goimports --srcdir . -w v4 || { rm -r "$tmp"; exit 1; }
-rm -r "$tmp"
-
-echo "formatting files..."
-go fmt "github.com/bnema/puregotk/v4/..."
-
-echo "running a second pass for goimports..."
-goimports -w v4
-
 echo "running go vet..."
 go vet -unsafeptr=false -stdmethods=false ./v4/...

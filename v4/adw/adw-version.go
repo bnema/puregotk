@@ -2,8 +2,7 @@
 package adw
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -11,12 +10,12 @@ const (
 	// Adwaita major version component (e.g. 1 if the version is 1.2.3).
 	MAJOR_VERSION int = 1
 	// Adwaita micro version component (e.g. 3 if the version is 1.2.3).
-	MICRO_VERSION int = 1
+	MICRO_VERSION int = 0
 	// Adwaita minor version component (e.g. 2 if the version is 1.2.3).
-	MINOR_VERSION int = 8
+	MINOR_VERSION int = 9
 	// Adwaita version, encoded as a string, useful for printing and
 	// concatenation.
-	VERSION_S string = "1.8.1"
+	VERSION_S string = "1.9.0"
 )
 
 var xGetMajorVersion func() uint
@@ -30,7 +29,6 @@ var xGetMajorVersion func() uint
 // which represents the major version of the libadwaita headers you have
 // included when compiling your code.
 func GetMajorVersion() uint {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -46,7 +44,6 @@ var xGetMicroVersion func() uint
 // which represents the micro version of the libadwaita headers you have
 // included when compiling your code.
 func GetMicroVersion() uint {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -62,14 +59,13 @@ var xGetMinorVersion func() uint
 // which represents the minor version of the libadwaita headers you have
 // included when compiling your code.
 func GetMinorVersion() uint {
-
 	cret := xGetMinorVersion()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -82,5 +78,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "adw_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "adw_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "adw_get_minor_version")
-
 }

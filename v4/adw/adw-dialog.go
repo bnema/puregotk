@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -91,8 +90,9 @@ func DialogPresentationModeGLibType() types.GType {
 
 const (
 
-	// Switch between `ADW_DIALOG_FLOATING` and
-	//   `ADW_DIALOG_BOTTOM_SHEET` depending on available size.
+	// Switch between [enum@Adw.DialogPresentationMode.floating]
+	//   and [enum@Adw.DialogPresentationMode.bottom-sheet] depending on available
+	//   size.
 	DialogAutoValue DialogPresentationMode = 0
 	// Present dialog as a centered floating window.
 	DialogFloatingValue DialogPresentationMode = 1
@@ -198,9 +198,7 @@ var xDialogAddBreakpoint func(uintptr, uintptr)
 
 // Adds @breakpoint to @self.
 func (x *Dialog) AddBreakpoint(BreakpointVar *Breakpoint) {
-
 	xDialogAddBreakpoint(x.GoPointer(), BreakpointVar.GoPointer())
-
 }
 
 var xDialogClose func(uintptr) bool
@@ -212,7 +210,6 @@ var xDialogClose func(uintptr) bool
 //
 // See also: [method@Dialog.force_close].
 func (x *Dialog) Close() bool {
-
 	cret := xDialogClose(x.GoPointer())
 	return cret
 }
@@ -224,16 +221,13 @@ var xDialogForceClose func(uintptr)
 // Unlike [method@Dialog.close], it succeeds even if [property@Dialog:can-close]
 // is set to `FALSE`.
 func (x *Dialog) ForceClose() {
-
 	xDialogForceClose(x.GoPointer())
-
 }
 
 var xDialogGetCanClose func(uintptr) bool
 
 // Gets whether @self can be closed.
 func (x *Dialog) GetCanClose() bool {
-
 	cret := xDialogGetCanClose(x.GoPointer())
 	return cret
 }
@@ -259,7 +253,6 @@ var xDialogGetContentHeight func(uintptr) int
 
 // Gets the height of the dialog's contents.
 func (x *Dialog) GetContentHeight() int {
-
 	cret := xDialogGetContentHeight(x.GoPointer())
 	return cret
 }
@@ -268,7 +261,6 @@ var xDialogGetContentWidth func(uintptr) int
 
 // Gets the width of the dialog's contents.
 func (x *Dialog) GetContentWidth() int {
-
 	cret := xDialogGetContentWidth(x.GoPointer())
 	return cret
 }
@@ -328,7 +320,6 @@ var xDialogGetFollowsContentSize func(uintptr) bool
 
 // Gets whether to size content of @self automatically.
 func (x *Dialog) GetFollowsContentSize() bool {
-
 	cret := xDialogGetFollowsContentSize(x.GoPointer())
 	return cret
 }
@@ -337,7 +328,6 @@ var xDialogGetPresentationMode func(uintptr) DialogPresentationMode
 
 // Gets presentation mode for @self.
 func (x *Dialog) GetPresentationMode() DialogPresentationMode {
-
 	cret := xDialogGetPresentationMode(x.GoPointer())
 	return cret
 }
@@ -346,7 +336,6 @@ var xDialogGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *Dialog) GetTitle() string {
-
 	cret := xDialogGetTitle(x.GoPointer())
 	return cret
 }
@@ -360,14 +349,7 @@ var xDialogPresent func(uintptr, uintptr)
 // If the window is an [class@Window] or [class@ApplicationWindow], the dialog
 // will be shown within it. Otherwise, it will be a separate window.
 func (x *Dialog) Present(ParentVar *gtk.Widget) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	xDialogPresent(x.GoPointer(), ParentVarPtr)
-
+	xDialogPresent(x.GoPointer(), ParentVar.GoPointer())
 }
 
 var xDialogSetCanClose func(uintptr, bool)
@@ -379,23 +361,14 @@ var xDialogSetCanClose func(uintptr, bool)
 // emitted instead, and bottom sheet close swipe will be disabled.
 // [method@Dialog.force_close] still works.
 func (x *Dialog) SetCanClose(CanCloseVar bool) {
-
 	xDialogSetCanClose(x.GoPointer(), CanCloseVar)
-
 }
 
 var xDialogSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *Dialog) SetChild(ChildVar *gtk.Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xDialogSetChild(x.GoPointer(), ChildVarPtr)
-
+	xDialogSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xDialogSetContentHeight func(uintptr, int)
@@ -406,9 +379,7 @@ var xDialogSetContentHeight func(uintptr, int)
 //
 // See also: [property@Gtk.Window:default-height]
 func (x *Dialog) SetContentHeight(ContentHeightVar int) {
-
 	xDialogSetContentHeight(x.GoPointer(), ContentHeightVar)
-
 }
 
 var xDialogSetContentWidth func(uintptr, int)
@@ -419,9 +390,7 @@ var xDialogSetContentWidth func(uintptr, int)
 //
 // See also: [property@Gtk.Window:default-width]
 func (x *Dialog) SetContentWidth(ContentWidthVar int) {
-
 	xDialogSetContentWidth(x.GoPointer(), ContentWidthVar)
-
 }
 
 var xDialogSetDefaultWidget func(uintptr, uintptr)
@@ -430,14 +399,7 @@ var xDialogSetDefaultWidget func(uintptr, uintptr)
 //
 // It's activated when the user presses Enter.
 func (x *Dialog) SetDefaultWidget(DefaultWidgetVar *gtk.Widget) {
-
-	var DefaultWidgetVarPtr uintptr
-	if DefaultWidgetVar != nil {
-		DefaultWidgetVarPtr = DefaultWidgetVar.GoPointer()
-	}
-
-	xDialogSetDefaultWidget(x.GoPointer(), DefaultWidgetVarPtr)
-
+	xDialogSetDefaultWidget(x.GoPointer(), DefaultWidgetVar.GoPointer())
 }
 
 var xDialogSetFocus func(uintptr, uintptr)
@@ -451,14 +413,7 @@ var xDialogSetFocus func(uintptr, uintptr)
 // to a particular widget in the dialog, it is usually more convenient to use
 // [method@Gtk.Widget.grab_focus] instead of this function.
 func (x *Dialog) SetFocus(FocusVar *gtk.Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	xDialogSetFocus(x.GoPointer(), FocusVarPtr)
-
+	xDialogSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
 var xDialogSetFollowsContentSize func(uintptr, bool)
@@ -471,37 +426,31 @@ var xDialogSetFollowsContentSize func(uintptr, bool)
 //
 // See also: [property@Gtk.Window:resizable]
 func (x *Dialog) SetFollowsContentSize(FollowsContentSizeVar bool) {
-
 	xDialogSetFollowsContentSize(x.GoPointer(), FollowsContentSizeVar)
-
 }
 
 var xDialogSetPresentationMode func(uintptr, DialogPresentationMode)
 
 // Sets presentation mode for @self.
 //
-// When set to `ADW_DIALOG_AUTO`, the dialog appears as a bottom sheet when the
-// following condition is met: `max-width: 450px or max-height: 360px`, and as a
-// floating window otherwise.
+// When set to [enum@Adw.DialogPresentationMode.auto], the dialog appears as a
+// bottom sheet when the following condition is met:
+// `max-width: 450px or max-height: 360px`, and as a floating window otherwise.
 //
-// Set it to `ADW_DIALOG_FLOATING` or `ADW_DIALOG_BOTTOM_SHEET` to always
-// present it a floating window or a bottom sheet respectively, regardless of
-// available size.
+// Set it to [enum@Adw.DialogPresentationMode.floating] or
+// [enum@Adw.DialogPresentationMode.bottom-sheet] to always present it a
+// floating window or a bottom sheet respectively, regardless of available size.
 //
 // Presentation mode does nothing for dialogs presented as a window.
 func (x *Dialog) SetPresentationMode(PresentationModeVar DialogPresentationMode) {
-
 	xDialogSetPresentationMode(x.GoPointer(), PresentationModeVar)
-
 }
 
 var xDialogSetTitle func(uintptr, string)
 
 // Sets the title of @self.
 func (x *Dialog) SetTitle(TitleVar string) {
-
 	xDialogSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *Dialog) GoPointer() uintptr {
@@ -655,7 +604,6 @@ func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -679,7 +627,6 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -698,9 +645,19 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Dialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Dialog) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -721,7 +678,6 @@ func (x *Dialog) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Dialog) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -746,7 +702,6 @@ func (x *Dialog) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -785,30 +740,23 @@ func (x *Dialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Dialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Dialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Dialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Dialog) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -821,19 +769,7 @@ func (x *Dialog) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Dialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -841,14 +777,7 @@ func (x *Dialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -857,9 +786,7 @@ func (x *Dialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Dialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -881,9 +808,7 @@ func (x *Dialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Dialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -893,9 +818,7 @@ func (x *Dialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -917,9 +840,7 @@ func (x *Dialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Acc
 //
 // ```
 func (x *Dialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -929,9 +850,7 @@ func (x *Dialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -954,9 +873,7 @@ func (x *Dialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acces
 //
 // ```
 func (x *Dialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -966,9 +883,7 @@ func (x *Dialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *Dialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -976,14 +891,13 @@ func (x *Dialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Dialog) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1022,5 +936,4 @@ func init() {
 	core.PuregoSafeRegister(&xDialogSetFollowsContentSize, libs, "adw_dialog_set_follows_content_size")
 	core.PuregoSafeRegister(&xDialogSetPresentationMode, libs, "adw_dialog_set_presentation_mode")
 	core.PuregoSafeRegister(&xDialogSetTitle, libs, "adw_dialog_set_title")
-
 }

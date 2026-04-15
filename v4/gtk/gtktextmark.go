@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -128,7 +127,6 @@ var xTextMarkGetDeleted func(uintptr) bool
 // See [method@Gtk.TextBuffer.add_mark] for a way to add it
 // to a buffer again.
 func (x *TextMark) GetDeleted() bool {
-
 	cret := xTextMarkGetDeleted(x.GoPointer())
 	return cret
 }
@@ -137,7 +135,6 @@ var xTextMarkGetLeftGravity func(uintptr) bool
 
 // Determines whether the mark has left gravity.
 func (x *TextMark) GetLeftGravity() bool {
-
 	cret := xTextMarkGetLeftGravity(x.GoPointer())
 	return cret
 }
@@ -148,7 +145,6 @@ var xTextMarkGetName func(uintptr) string
 //
 // Returns %NULL for anonymous marks.
 func (x *TextMark) GetName() string {
-
 	cret := xTextMarkGetName(x.GoPointer())
 	return cret
 }
@@ -159,7 +155,6 @@ var xTextMarkGetVisible func(uintptr) bool
 //
 // A cursor is displayed for visible marks.
 func (x *TextMark) GetVisible() bool {
-
 	cret := xTextMarkGetVisible(x.GoPointer())
 	return cret
 }
@@ -175,9 +170,7 @@ var xTextMarkSetVisible func(uintptr, bool)
 //
 // Marks are not visible by default.
 func (x *TextMark) SetVisible(SettingVar bool) {
-
 	xTextMarkSetVisible(x.GoPointer(), SettingVar)
-
 }
 
 func (c *TextMark) GoPointer() uintptr {
@@ -235,7 +228,7 @@ func (x *TextMark) GetPropertyName() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -255,5 +248,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextMarkGetName, libs, "gtk_text_mark_get_name")
 	core.PuregoSafeRegister(&xTextMarkGetVisible, libs, "gtk_text_mark_get_visible")
 	core.PuregoSafeRegister(&xTextMarkSetVisible, libs, "gtk_text_mark_set_visible")
-
 }

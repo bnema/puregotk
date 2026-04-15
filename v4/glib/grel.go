@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -62,7 +61,6 @@ var xRelationCount func(uintptr, uintptr, int) int
 // Returns the number of tuples in a #GRelation that have the given
 // value in the given field.
 func (x *Relation) Count(KeyVar uintptr, FieldVar int) int {
-
 	cret := xRelationCount(x.GoPointer(), KeyVar, FieldVar)
 	return cret
 }
@@ -72,7 +70,6 @@ var xRelationDelete func(uintptr, uintptr, int) int
 // Deletes any records from a #GRelation that have the given key value
 // in the given field.
 func (x *Relation) Delete(KeyVar uintptr, FieldVar int) int {
-
 	cret := xRelationDelete(x.GoPointer(), KeyVar, FieldVar)
 	return cret
 }
@@ -83,9 +80,7 @@ var xRelationDestroy func(uintptr)
 // does not free memory allocated for the tuple data, so you should
 // free that first if appropriate.
 func (x *Relation) Destroy() {
-
 	xRelationDestroy(x.GoPointer())
-
 }
 
 var xRelationExists func(uintptr, ...interface{}) bool
@@ -94,7 +89,6 @@ var xRelationExists func(uintptr, ...interface{}) bool
 // #GRelation. Note that the values are compared directly, so that, for
 // example, two copies of the same string will not match.
 func (x *Relation) Exists(varArgs ...interface{}) bool {
-
 	cret := xRelationExists(x.GoPointer(), varArgs...)
 	return cret
 }
@@ -104,48 +98,14 @@ var xRelationIndex func(uintptr, int, uintptr, uintptr)
 // Creates an index on the given field. Note that this must be called
 // before any records are added to the #GRelation.
 func (x *Relation) Index(FieldVar int, HashFuncVar *HashFunc, KeyEqualFuncVar *EqualFunc) {
-
-	var HashFuncVarRef uintptr
-	if HashFuncVar != nil {
-		HashFuncVarPtr := uintptr(unsafe.Pointer(HashFuncVar))
-		if cbRefPtr, ok := GetCallback(HashFuncVarPtr); ok {
-			HashFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) uint {
-				cbFn := *HashFuncVar
-				return cbFn(arg0)
-			}
-			HashFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(HashFuncVarPtr, HashFuncVarRef, HashFuncVar)
-		}
-	}
-
-	var KeyEqualFuncVarRef uintptr
-	if KeyEqualFuncVar != nil {
-		KeyEqualFuncVarPtr := uintptr(unsafe.Pointer(KeyEqualFuncVar))
-		if cbRefPtr, ok := GetCallback(KeyEqualFuncVarPtr); ok {
-			KeyEqualFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) bool {
-				cbFn := *KeyEqualFuncVar
-				return cbFn(arg0, arg1)
-			}
-			KeyEqualFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(KeyEqualFuncVarPtr, KeyEqualFuncVarRef, KeyEqualFuncVar)
-		}
-	}
-
-	xRelationIndex(x.GoPointer(), FieldVar, HashFuncVarRef, KeyEqualFuncVarRef)
-
+	xRelationIndex(x.GoPointer(), FieldVar, NewCallback(HashFuncVar), NewCallback(KeyEqualFuncVar))
 }
 
 var xRelationInsert func(uintptr, ...interface{})
 
 // Inserts a record into a #GRelation.
 func (x *Relation) Insert(varArgs ...interface{}) {
-
 	xRelationInsert(x.GoPointer(), varArgs...)
-
 }
 
 var xRelationPrint func(uintptr)
@@ -153,20 +113,20 @@ var xRelationPrint func(uintptr)
 // Outputs information about all records in a #GRelation, as well as
 // the indexes. It is for debugging.
 func (x *Relation) Print() {
-
 	xRelationPrint(x.GoPointer())
-
 }
 
-var xRelationSelect func(uintptr, uintptr, int) *Tuples
+var xRelationSelect func(uintptr, uintptr, int) uintptr
 
 // Returns all of the tuples which have the given key in the given
 // field. Use g_tuples_index() to access the returned records. The
 // returned records should be freed with g_tuples_destroy().
 func (x *Relation) Select(KeyVar uintptr, FieldVar int) *Tuples {
-
 	cret := xRelationSelect(x.GoPointer(), KeyVar, FieldVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Tuples)(unsafe.Pointer(cret))
 }
 
 // The #GTuples struct is used to return records (or tuples) from the
@@ -190,9 +150,7 @@ var xTuplesDestroy func(uintptr)
 // finished with the records. The records are not removed from the
 // #GRelation.
 func (x *Tuples) Destroy() {
-
 	xTuplesDestroy(x.GoPointer())
-
 }
 
 var xTuplesIndex func(uintptr, int, int) uintptr
@@ -201,14 +159,13 @@ var xTuplesIndex func(uintptr, int, int) uintptr
 // returns the given field of the record at the given index. The
 // returned value should not be changed.
 func (x *Tuples) Index(IndexVar int, FieldVar int) uintptr {
-
 	cret := xTuplesIndex(x.GoPointer(), IndexVar, FieldVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -229,5 +186,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTuplesDestroy, libs, "g_tuples_destroy")
 	core.PuregoSafeRegister(&xTuplesIndex, libs, "g_tuples_index")
-
 }

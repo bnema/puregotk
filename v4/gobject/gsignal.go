@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -184,9 +183,7 @@ var xClearSignalHandler func(uint, uintptr)
 // There is also a macro version of this function so that the code
 // will be inlined.
 func ClearSignalHandler(HandlerIdPtrVar uint, InstanceVar *Object) {
-
 	xClearSignalHandler(HandlerIdPtrVar, InstanceVar.GoPointer())
-
 }
 
 var xSignalAccumulatorFirstWins func(*SignalInvocationHint, *Value, *Value, uintptr) bool
@@ -202,7 +199,6 @@ var xSignalAccumulatorFirstWins func(*SignalInvocationHint, *Value, *Value, uint
 // handler that is run as the return value for the signal and not run
 // any further handlers (ie: the first handler "wins").
 func SignalAccumulatorFirstWins(IhintVar *SignalInvocationHint, ReturnAccuVar *Value, HandlerReturnVar *Value, DummyVar uintptr) bool {
-
 	cret := xSignalAccumulatorFirstWins(IhintVar, ReturnAccuVar, HandlerReturnVar, DummyVar)
 	return cret
 }
@@ -217,7 +213,6 @@ var xSignalAccumulatorTrueHandled func(*SignalInvocationHint, *Value, *Value, ui
 // indicates that the callback handled the signal, and no further
 // handling is needed.
 func SignalAccumulatorTrueHandled(IhintVar *SignalInvocationHint, ReturnAccuVar *Value, HandlerReturnVar *Value, DummyVar uintptr) bool {
-
 	cret := xSignalAccumulatorTrueHandled(IhintVar, ReturnAccuVar, HandlerReturnVar, DummyVar)
 	return cret
 }
@@ -228,38 +223,7 @@ var xSignalAddEmissionHook func(uint, glib.Quark, uintptr, uintptr, uintptr) uin
 // of that signal, independent of the instance. This is possible only
 // for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
 func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *SignalEmissionHook, HookDataVar uintptr, DataDestroyVar *glib.DestroyNotify) uint {
-
-	var HookFuncVarRef uintptr
-	if HookFuncVar != nil {
-		HookFuncVarPtr := uintptr(unsafe.Pointer(HookFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(HookFuncVarPtr); ok {
-			HookFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SignalInvocationHint, arg1 uint, arg2 []Value, arg3 uintptr) bool {
-				cbFn := *HookFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			HookFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(HookFuncVarPtr, HookFuncVarRef, HookFuncVar)
-		}
-	}
-
-	var DataDestroyVarRef uintptr
-	if DataDestroyVar != nil {
-		DataDestroyVarPtr := uintptr(unsafe.Pointer(DataDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DataDestroyVarPtr); ok {
-			DataDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DataDestroyVar
-				cbFn(arg0)
-			}
-			DataDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DataDestroyVarPtr, DataDestroyVarRef, DataDestroyVar)
-		}
-	}
-
-	cret := xSignalAddEmissionHook(SignalIdVar, DetailVar, HookFuncVarRef, HookDataVar, DataDestroyVarRef)
+	cret := xSignalAddEmissionHook(SignalIdVar, DetailVar, glib.NewCallback(HookFuncVar), HookDataVar, glib.NewCallbackNullable(DataDestroyVar))
 	return cret
 }
 
@@ -270,9 +234,7 @@ var xSignalChainFromOverridden func([]Value, *Value)
 // g_signal_override_class_closure() and
 // g_signal_override_class_handler().
 func SignalChainFromOverridden(InstanceAndParamsVar []Value, ReturnValueVar *Value) {
-
 	xSignalChainFromOverridden(InstanceAndParamsVar, ReturnValueVar)
-
 }
 
 var xSignalChainFromOverriddenHandler func(*TypeInstance, ...interface{})
@@ -282,9 +244,7 @@ var xSignalChainFromOverriddenHandler func(*TypeInstance, ...interface{})
 // g_signal_override_class_closure() and
 // g_signal_override_class_handler().
 func SignalChainFromOverriddenHandler(InstanceVar *TypeInstance, varArgs ...interface{}) {
-
 	xSignalChainFromOverriddenHandler(InstanceVar, varArgs...)
-
 }
 
 var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint
@@ -302,7 +262,6 @@ var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint
 // Refer to the [signals documentation](signals.html) for more
 // details.
 func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) uint {
-
 	cret := xSignalConnectClosure(InstanceVar.GoPointer(), DetailedSignalVar, ClosureVar, AfterVar)
 	return cret
 }
@@ -322,7 +281,6 @@ var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) ui
 // Refer to the [signals documentation](signals.html) for more
 // details.
 func SignalConnectClosureById(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, AfterVar bool) uint {
-
 	cret := xSignalConnectClosureById(InstanceVar.GoPointer(), SignalIdVar, DetailVar, ClosureVar, AfterVar)
 	return cret
 }
@@ -343,38 +301,7 @@ var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectF
 // Refer to the [signals documentation](signals.html) for more
 // details.
 func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	var DestroyDataVarRef uintptr
-	if DestroyDataVar != nil {
-		DestroyDataVarPtr := uintptr(unsafe.Pointer(DestroyDataVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyDataVarPtr); ok {
-			DestroyDataVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *DestroyDataVar
-				cbFn(arg0, arg1)
-			}
-			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
-		}
-	}
-
-	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar, DestroyDataVarRef, ConnectFlagsVar)
+	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallbackNullable(DestroyDataVar), ConnectFlagsVar)
 	return cret
 }
 
@@ -386,9 +313,7 @@ var xSignalEmit func(uintptr, uint, glib.Quark, ...interface{})
 // Note that g_signal_emit() resets the return value to the default
 // if no handlers are connected, in contrast to g_signal_emitv().
 func SignalEmit(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, varArgs ...interface{}) {
-
 	xSignalEmit(InstanceVar.GoPointer(), SignalIdVar, DetailVar, varArgs...)
-
 }
 
 var xSignalEmitByName func(uintptr, string, ...interface{})
@@ -399,9 +324,7 @@ var xSignalEmitByName func(uintptr, string, ...interface{})
 // Note that g_signal_emit_by_name() resets the return value to the default
 // if no handlers are connected, in contrast to g_signal_emitv().
 func SignalEmitByName(InstanceVar *Object, DetailedSignalVar string, varArgs ...interface{}) {
-
 	xSignalEmitByName(InstanceVar.GoPointer(), DetailedSignalVar, varArgs...)
-
 }
 
 var xSignalEmitValist func(*TypeInstance, uint, glib.Quark, []interface{})
@@ -412,9 +335,7 @@ var xSignalEmitValist func(*TypeInstance, uint, glib.Quark, []interface{})
 // Note that g_signal_emit_valist() resets the return value to the default
 // if no handlers are connected, in contrast to g_signal_emitv().
 func SignalEmitValist(InstanceVar *TypeInstance, SignalIdVar uint, DetailVar glib.Quark, VarArgsVar []interface{}) {
-
 	xSignalEmitValist(InstanceVar, SignalIdVar, DetailVar, VarArgsVar)
-
 }
 
 var xSignalEmitv func([]Value, uint, glib.Quark, *Value)
@@ -425,18 +346,18 @@ var xSignalEmitv func([]Value, uint, glib.Quark, *Value)
 // Note that g_signal_emitv() doesn't change @return_value if no handlers are
 // connected, in contrast to g_signal_emit() and g_signal_emit_valist().
 func SignalEmitv(InstanceAndParamsVar []Value, SignalIdVar uint, DetailVar glib.Quark, ReturnValueVar *Value) {
-
 	xSignalEmitv(InstanceAndParamsVar, SignalIdVar, DetailVar, ReturnValueVar)
-
 }
 
-var xSignalGetInvocationHint func(uintptr) *SignalInvocationHint
+var xSignalGetInvocationHint func(uintptr) uintptr
 
 // Returns the invocation hint of the innermost signal emission of instance.
 func SignalGetInvocationHint(InstanceVar *Object) *SignalInvocationHint {
-
 	cret := xSignalGetInvocationHint(InstanceVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SignalInvocationHint)(unsafe.Pointer(cret))
 }
 
 var xSignalHandlerBlock func(uintptr, uint)
@@ -450,9 +371,7 @@ var xSignalHandlerBlock func(uintptr, uint)
 // The @handler_id has to be a valid signal handler id, connected to a
 // signal of @instance.
 func SignalHandlerBlock(InstanceVar *Object, HandlerIdVar uint) {
-
 	xSignalHandlerBlock(InstanceVar.GoPointer(), HandlerIdVar)
-
 }
 
 var xSignalHandlerDisconnect func(uintptr, uint)
@@ -464,9 +383,7 @@ var xSignalHandlerDisconnect func(uintptr, uint)
 // The @handler_id has to be a valid signal handler id, connected to a
 // signal of @instance.
 func SignalHandlerDisconnect(InstanceVar *Object, HandlerIdVar uint) {
-
 	xSignalHandlerDisconnect(InstanceVar.GoPointer(), HandlerIdVar)
-
 }
 
 var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
@@ -477,7 +394,6 @@ var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure
 // The match @mask has to be non-0 for successful matches.
 // If no handler was found, 0 is returned.
 func SignalHandlerFind(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
-
 	cret := xSignalHandlerFind(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
 	return cret
 }
@@ -486,7 +402,6 @@ var xSignalHandlerIsConnected func(uintptr, uint) bool
 
 // Returns whether @handler_id is the ID of a handler connected to @instance.
 func SignalHandlerIsConnected(InstanceVar *Object, HandlerIdVar uint) bool {
-
 	cret := xSignalHandlerIsConnected(InstanceVar.GoPointer(), HandlerIdVar)
 	return cret
 }
@@ -507,9 +422,7 @@ var xSignalHandlerUnblock func(uintptr, uint)
 // The @handler_id has to be a valid id of a signal handler that is
 // connected to a signal of @instance and is currently blocked.
 func SignalHandlerUnblock(InstanceVar *Object, HandlerIdVar uint) {
-
 	xSignalHandlerUnblock(InstanceVar.GoPointer(), HandlerIdVar)
-
 }
 
 var xSignalHandlersBlockMatched func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
@@ -528,7 +441,6 @@ var xSignalHandlersBlockMatched func(uintptr, SignalMatchType, uint, glib.Quark,
 //
 // Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersBlockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
-
 	cret := xSignalHandlersBlockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
 	return cret
 }
@@ -539,9 +451,7 @@ var xSignalHandlersDestroy func(uintptr)
 // an implementation detail of the #GObject dispose implementation,
 // and should not be used outside of the type system.
 func SignalHandlersDestroy(InstanceVar *Object) {
-
 	xSignalHandlersDestroy(InstanceVar.GoPointer())
-
 }
 
 var xSignalHandlersDisconnectMatched func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
@@ -561,7 +471,6 @@ var xSignalHandlersDisconnectMatched func(uintptr, SignalMatchType, uint, glib.Q
 //
 // Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersDisconnectMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
-
 	cret := xSignalHandlersDisconnectMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
 	return cret
 }
@@ -584,7 +493,6 @@ var xSignalHandlersUnblockMatched func(uintptr, SignalMatchType, uint, glib.Quar
 //
 // Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersUnblockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
-
 	cret := xSignalHandlersUnblockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
 	return cret
 }
@@ -608,7 +516,6 @@ var xSignalHasHandlerPending func(uintptr, uint, glib.Quark, bool) bool
 // emit the signal if no one is attached anyway, thus saving the cost
 // of building the arguments.
 func SignalHasHandlerPending(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, MayBeBlockedVar bool) bool {
-
 	cret := xSignalHasHandlerPending(InstanceVar.GoPointer(), SignalIdVar, DetailVar, MayBeBlockedVar)
 	return cret
 }
@@ -621,7 +528,6 @@ var xSignalIsValidName func(string) bool
 // See [func@GObject.signal_new] for details of the rules for valid names.
 // The rules for signal names are the same as those for property names.
 func SignalIsValidName(NameVar string) bool {
-
 	cret := xSignalIsValidName(NameVar)
 	return cret
 }
@@ -632,7 +538,6 @@ var xSignalListIds func(types.GType, *uint) uintptr
 // created. Further information about the signals can be acquired through
 // g_signal_query().
 func SignalListIds(ItypeVar types.GType, NIdsVar *uint) uintptr {
-
 	cret := xSignalListIds(ItypeVar, NIdsVar)
 	return cret
 }
@@ -651,7 +556,6 @@ var xSignalLookup func(string, types.GType) uint
 //
 // See g_signal_new() for details on allowed signal names.
 func SignalLookup(NameVar string, ItypeVar types.GType) uint {
-
 	cret := xSignalLookup(NameVar, ItypeVar)
 	return cret
 }
@@ -662,7 +566,6 @@ var xSignalName func(uint) string
 //
 // Two different signals may have the same name, if they have differing types.
 func SignalName(SignalIdVar uint) string {
-
 	cret := xSignalName(SignalIdVar)
 	return cret
 }
@@ -694,23 +597,7 @@ var xSignalNew func(string, types.GType, SignalFlags, uint, uintptr, uintptr, ui
 // using g_signal_set_va_marshaller() or the generic va_marshaller will
 // be used.
 func SignalNew(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassOffsetVar uint, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
-
-	var AccumulatorVarRef uintptr
-	if AccumulatorVar != nil {
-		AccumulatorVarPtr := uintptr(unsafe.Pointer(AccumulatorVar))
-		if cbRefPtr, ok := glib.GetCallback(AccumulatorVarPtr); ok {
-			AccumulatorVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SignalInvocationHint, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *AccumulatorVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
-		}
-	}
-
-	cret := xSignalNew(SignalNameVar, ItypeVar, SignalFlagsVar, ClassOffsetVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
+	cret := xSignalNew(SignalNameVar, ItypeVar, SignalFlagsVar, ClassOffsetVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
 	return cret
 }
 
@@ -733,38 +620,7 @@ var xSignalNewClassHandler func(string, types.GType, SignalFlags, uintptr, uintp
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
 func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassHandlerVar *Callback, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
-
-	var ClassHandlerVarRef uintptr
-	if ClassHandlerVar != nil {
-		ClassHandlerVarPtr := uintptr(unsafe.Pointer(ClassHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(ClassHandlerVarPtr); ok {
-			ClassHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *ClassHandlerVar
-				cbFn()
-			}
-			ClassHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ClassHandlerVarPtr, ClassHandlerVarRef, ClassHandlerVar)
-		}
-	}
-
-	var AccumulatorVarRef uintptr
-	if AccumulatorVar != nil {
-		AccumulatorVarPtr := uintptr(unsafe.Pointer(AccumulatorVar))
-		if cbRefPtr, ok := glib.GetCallback(AccumulatorVarPtr); ok {
-			AccumulatorVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SignalInvocationHint, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *AccumulatorVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
-		}
-	}
-
-	cret := xSignalNewClassHandler(SignalNameVar, ItypeVar, SignalFlagsVar, ClassHandlerVarRef, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
+	cret := xSignalNewClassHandler(SignalNameVar, ItypeVar, SignalFlagsVar, glib.NewCallbackNullable(ClassHandlerVar), glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
 	return cret
 }
 
@@ -777,23 +633,7 @@ var xSignalNewValist func(string, types.GType, SignalFlags, *Closure, uintptr, u
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
 func SignalNewValist(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ArgsVar []interface{}) uint {
-
-	var AccumulatorVarRef uintptr
-	if AccumulatorVar != nil {
-		AccumulatorVarPtr := uintptr(unsafe.Pointer(AccumulatorVar))
-		if cbRefPtr, ok := glib.GetCallback(AccumulatorVarPtr); ok {
-			AccumulatorVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SignalInvocationHint, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *AccumulatorVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
-		}
-	}
-
-	cret := xSignalNewValist(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ArgsVar)
+	cret := xSignalNewValist(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ArgsVar)
 	return cret
 }
 
@@ -806,23 +646,7 @@ var xSignalNewv func(string, types.GType, SignalFlags, *Closure, uintptr, uintpt
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
 func SignalNewv(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ParamTypesVar []types.GType) uint {
-
-	var AccumulatorVarRef uintptr
-	if AccumulatorVar != nil {
-		AccumulatorVarPtr := uintptr(unsafe.Pointer(AccumulatorVar))
-		if cbRefPtr, ok := glib.GetCallback(AccumulatorVarPtr); ok {
-			AccumulatorVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SignalInvocationHint, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *AccumulatorVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
-		}
-	}
-
-	cret := xSignalNewv(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ParamTypesVar)
+	cret := xSignalNewv(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ParamTypesVar)
 	return cret
 }
 
@@ -836,9 +660,7 @@ var xSignalOverrideClassClosure func(uint, types.GType, *Closure)
 // g_signal_chain_from_overridden_handler() for how to chain up to the
 // parent class closure from inside the overridden one.
 func SignalOverrideClassClosure(SignalIdVar uint, InstanceTypeVar types.GType, ClassClosureVar *Closure) {
-
 	xSignalOverrideClassClosure(SignalIdVar, InstanceTypeVar, ClassClosureVar)
-
 }
 
 var xSignalOverrideClassHandler func(string, types.GType, uintptr)
@@ -852,24 +674,7 @@ var xSignalOverrideClassHandler func(string, types.GType, uintptr)
 // g_signal_chain_from_overridden_handler() for how to chain up to the
 // parent class closure from inside the overridden one.
 func SignalOverrideClassHandler(SignalNameVar string, InstanceTypeVar types.GType, ClassHandlerVar *Callback) {
-
-	var ClassHandlerVarRef uintptr
-	if ClassHandlerVar != nil {
-		ClassHandlerVarPtr := uintptr(unsafe.Pointer(ClassHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(ClassHandlerVarPtr); ok {
-			ClassHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *ClassHandlerVar
-				cbFn()
-			}
-			ClassHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ClassHandlerVarPtr, ClassHandlerVarRef, ClassHandlerVar)
-		}
-	}
-
-	xSignalOverrideClassHandler(SignalNameVar, InstanceTypeVar, ClassHandlerVarRef)
-
+	xSignalOverrideClassHandler(SignalNameVar, InstanceTypeVar, glib.NewCallback(ClassHandlerVar))
 }
 
 var xSignalParseName func(string, types.GType, *uint, *glib.Quark, bool) bool
@@ -877,7 +682,6 @@ var xSignalParseName func(string, types.GType, *uint, *glib.Quark, bool) bool
 // Internal function to parse a signal name into its @signal_id
 // and @detail quark.
 func SignalParseName(DetailedSignalVar string, ItypeVar types.GType, SignalIdPVar *uint, DetailPVar *glib.Quark, ForceDetailQuarkVar bool) bool {
-
 	cret := xSignalParseName(DetailedSignalVar, ItypeVar, SignalIdPVar, DetailPVar, ForceDetailQuarkVar)
 	return cret
 }
@@ -891,18 +695,14 @@ var xNewSignalQuery func(uint, *SignalQuery)
 // is 0. All members filled into the #GSignalQuery structure should
 // be considered constant and have to be left untouched.
 func NewSignalQuery(SignalIdVar uint, QueryVar *SignalQuery) {
-
 	xNewSignalQuery(SignalIdVar, QueryVar)
-
 }
 
 var xSignalRemoveEmissionHook func(uint, uint)
 
 // Deletes an emission hook.
 func SignalRemoveEmissionHook(SignalIdVar uint, HookIdVar uint) {
-
 	xSignalRemoveEmissionHook(SignalIdVar, HookIdVar)
-
 }
 
 var xSignalSetVaMarshaller func(uint, types.GType, uintptr)
@@ -912,9 +712,7 @@ var xSignalSetVaMarshaller func(uint, types.GType, uintptr)
 // common case of a single connected signal handler and avoids the
 // overhead of #GValue.  Its use is optional.
 func SignalSetVaMarshaller(SignalIdVar uint, InstanceTypeVar types.GType, VaMarshallerVar *SignalCVaMarshaller) {
-
 	xSignalSetVaMarshaller(SignalIdVar, InstanceTypeVar, glib.NewCallback(VaMarshallerVar))
-
 }
 
 var xSignalStopEmission func(uintptr, uint, glib.Quark)
@@ -927,9 +725,7 @@ var xSignalStopEmission func(uintptr, uint, glib.Quark)
 //
 // Prints a warning if used on a signal which isn't being emitted.
 func SignalStopEmission(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark) {
-
 	xSignalStopEmission(InstanceVar.GoPointer(), SignalIdVar, DetailVar)
-
 }
 
 var xSignalStopEmissionByName func(uintptr, string)
@@ -939,14 +735,12 @@ var xSignalStopEmissionByName func(uintptr, string)
 // This is just like g_signal_stop_emission() except it will look up the
 // signal id for you.
 func SignalStopEmissionByName(InstanceVar *Object, DetailedSignalVar string) {
-
 	xSignalStopEmissionByName(InstanceVar.GoPointer(), DetailedSignalVar)
-
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -996,5 +790,4 @@ func init() {
 	core.PuregoSafeRegister(&xSignalSetVaMarshaller, libs, "g_signal_set_va_marshaller")
 	core.PuregoSafeRegister(&xSignalStopEmission, libs, "g_signal_stop_emission")
 	core.PuregoSafeRegister(&xSignalStopEmissionByName, libs, "g_signal_stop_emission_by_name")
-
 }

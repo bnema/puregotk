@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -154,7 +153,7 @@ func MemoryMonitorDupDefault() *MemoryMonitorBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -167,5 +166,4 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryMonitorDupDefault, libs, "g_memory_monitor_dup_default")
 
 	core.PuregoSafeRegister(&xMemoryMonitorGLibType, libs, "g_memory_monitor_get_type")
-
 }

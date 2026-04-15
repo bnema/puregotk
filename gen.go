@@ -25,7 +25,8 @@ func main() {
 		girs = append(girs, path)
 		return nil
 	})
-	p, err := pass.New(girs)
+
+	p, err := pass.New(girs, "github.com/bnema/puregotk/v4")
 	if err != nil {
 		panic(err)
 	}

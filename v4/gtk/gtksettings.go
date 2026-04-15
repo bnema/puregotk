@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -12,13 +11,15 @@ import (
 
 // Provides a mechanism to share global settings between applications.
 //
+// GTK relies on the platform-specific API for getting desktop-wide
+// settings.
+//
+// On Wayland, the settings are obtained via a settings portal that
+// is part of the Linux desktop APIs for application.
+//
 // On the X window system, this sharing is realized by an
 // [XSettings](http://www.freedesktop.org/wiki/Specifications/xsettings-spec)
-// manager that is usually part of the desktop environment, along with
-// utilities that let the user change these settings.
-//
-// On Wayland, the settings are obtained either via a settings portal,
-// or by reading desktop settings from [class@Gio.Settings].
+// manager.
 //
 // On macOS, the settings are obtained from `NSUserDefaults`.
 //
@@ -61,9 +62,7 @@ var xSettingsResetProperty func(uintptr, string)
 // After this call, the setting will again follow the session-wide
 // value for this setting.
 func (x *Settings) ResetProperty(NameVar string) {
-
 	xSettingsResetProperty(x.GoPointer(), NameVar)
-
 }
 
 func (c *Settings) GoPointer() uintptr {
@@ -1325,7 +1324,7 @@ func SettingsGetForDisplay(DisplayVar *gdk.Display) *Settings {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1341,5 +1340,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSettingsGetDefault, libs, "gtk_settings_get_default")
 	core.PuregoSafeRegister(&xSettingsGetForDisplay, libs, "gtk_settings_get_for_display")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -70,7 +69,6 @@ func NewInetAddressMask(AddrVar *InetAddress, LengthVar uint) (*InetAddressMask,
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewInetAddressMaskFromString func(string, **glib.Error) uintptr
@@ -94,14 +92,12 @@ func NewInetAddressMaskFromString(MaskStringVar string) (*InetAddressMask, error
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xInetAddressMaskEqual func(uintptr, uintptr) bool
 
 // Tests if @mask and @mask2 are the same mask.
 func (x *InetAddressMask) Equal(Mask2Var *InetAddressMask) bool {
-
 	cret := xInetAddressMaskEqual(x.GoPointer(), Mask2Var.GoPointer())
 	return cret
 }
@@ -127,7 +123,6 @@ var xInetAddressMaskGetFamily func(uintptr) SocketFamily
 
 // Gets the #GSocketFamily of @mask's address
 func (x *InetAddressMask) GetFamily() SocketFamily {
-
 	cret := xInetAddressMaskGetFamily(x.GoPointer())
 	return cret
 }
@@ -136,7 +131,6 @@ var xInetAddressMaskGetLength func(uintptr) uint
 
 // Gets @mask's length
 func (x *InetAddressMask) GetLength() uint {
-
 	cret := xInetAddressMaskGetLength(x.GoPointer())
 	return cret
 }
@@ -145,7 +139,6 @@ var xInetAddressMaskMatches func(uintptr, uintptr) bool
 
 // Tests if @address falls within the range described by @mask.
 func (x *InetAddressMask) Matches(AddressVar *InetAddress) bool {
-
 	cret := xInetAddressMaskMatches(x.GoPointer(), AddressVar.GoPointer())
 	return cret
 }
@@ -154,7 +147,6 @@ var xInetAddressMaskToString func(uintptr) string
 
 // Converts @mask back to its corresponding string form.
 func (x *InetAddressMask) ToString() string {
-
 	cret := xInetAddressMaskToString(x.GoPointer())
 	return cret
 }
@@ -238,12 +230,11 @@ func (x *InetAddressMask) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -264,5 +255,4 @@ func init() {
 	core.PuregoSafeRegister(&xInetAddressMaskGetLength, libs, "g_inet_address_mask_get_length")
 	core.PuregoSafeRegister(&xInetAddressMaskMatches, libs, "g_inet_address_mask_matches")
 	core.PuregoSafeRegister(&xInetAddressMaskToString, libs, "g_inet_address_mask_to_string")
-
 }

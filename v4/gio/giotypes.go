@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -118,19 +117,19 @@ func (x *FileAttributeMatcher) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
+var xNewFileAttributeMatcher func(string) uintptr
 
 // Creates a new file attribute matcher, which matches attributes
-// against a given string. #GFileAttributeMatchers are reference
+// against a given string. [GFileAttributeMatchers][struct@FileAttributeMatcher] are reference
 // counted structures, and are created with a reference count of 1. If
-// the number of references falls to 0, the #GFileAttributeMatcher is
+// the number of references falls to 0, the [struct@FileAttributeMatcher] is
 // automatically destroyed.
 //
 // The @attributes string should be formatted with specific keys separated
-// from namespaces with a double colon. Several "namespace::key" strings may be
-// concatenated with a single comma (e.g. "standard::type,standard::is-hidden").
-// The wildcard "*" may be used to match all keys and namespaces, or
-// "namespace::*" will match all keys in a given namespace.
+// from namespaces with a double colon. Several `"namespace::key"` strings may be
+// concatenated with a single comma (e.g. `"standard::type,standard::is-hidden"`).
+// The wildcard `"*"` may be used to match all keys and namespaces, or
+// `"namespace::*"` will match all keys in a given namespace.
 //
 // ## Examples of file attribute matcher strings and results
 //
@@ -140,21 +139,22 @@ var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
 //   - `"standard::type,unix::*"`: matches the type key in the standard
 //     namespace and all keys in the unix namespace.
 func NewFileAttributeMatcher(AttributesVar string) *FileAttributeMatcher {
-
 	cret := xNewFileAttributeMatcher(AttributesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeMatcherEnumerateNamespace func(uintptr, string) bool
 
 // Checks if the matcher will match all of the keys in a given namespace.
 // This will always return %TRUE if a wildcard character is in use (e.g. if
-// matcher was created with "standard::*" and @ns is "standard", or if matcher was created
+// matcher was created with "standard::\*" and @ns is "standard", or if matcher was created
 // using "*" and namespace is anything.)
 //
 // TODO: this is awkwardly worded.
 func (x *FileAttributeMatcher) EnumerateNamespace(NsVar string) bool {
-
 	cret := xFileAttributeMatcherEnumerateNamespace(x.GoPointer(), NsVar)
 	return cret
 }
@@ -163,7 +163,6 @@ var xFileAttributeMatcherEnumerateNext func(uintptr) string
 
 // Gets the next matched attribute from a #GFileAttributeMatcher.
 func (x *FileAttributeMatcher) EnumerateNext() string {
-
 	cret := xFileAttributeMatcherEnumerateNext(x.GoPointer())
 	return cret
 }
@@ -174,7 +173,6 @@ var xFileAttributeMatcherMatches func(uintptr, string) bool
 // the matcher was created with the "*" matching string, this function
 // will always return %TRUE.
 func (x *FileAttributeMatcher) Matches(AttributeVar string) bool {
-
 	cret := xFileAttributeMatcherMatches(x.GoPointer(), AttributeVar)
 	return cret
 }
@@ -184,21 +182,22 @@ var xFileAttributeMatcherMatchesOnly func(uintptr, string) bool
 // Checks if an attribute matcher only matches a given attribute. Always
 // returns %FALSE if "*" was used when creating the matcher.
 func (x *FileAttributeMatcher) MatchesOnly(AttributeVar string) bool {
-
 	cret := xFileAttributeMatcherMatchesOnly(x.GoPointer(), AttributeVar)
 	return cret
 }
 
-var xFileAttributeMatcherRef func(uintptr) *FileAttributeMatcher
+var xFileAttributeMatcherRef func(uintptr) uintptr
 
 // References a file attribute matcher.
 func (x *FileAttributeMatcher) Ref() *FileAttributeMatcher {
-
 	cret := xFileAttributeMatcherRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
-var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttributeMatcher
+var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) uintptr
 
 // Subtracts all attributes of @subtract from @matcher and returns
 // a matcher that supports those attributes.
@@ -209,9 +208,11 @@ var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttr
 // is a limitation of the current implementation, but may be fixed
 // in the future.
 func (x *FileAttributeMatcher) Subtract(SubtractVar *FileAttributeMatcher) *FileAttributeMatcher {
-
 	cret := xFileAttributeMatcherSubtract(x.GoPointer(), SubtractVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeMatcherToString func(uintptr) string
@@ -221,7 +222,6 @@ var xFileAttributeMatcherToString func(uintptr) string
 // The output however, might not be identical, as the matcher may
 // decide to use a different order or omit needless parts.
 func (x *FileAttributeMatcher) ToString() string {
-
 	cret := xFileAttributeMatcherToString(x.GoPointer())
 	return cret
 }
@@ -231,9 +231,7 @@ var xFileAttributeMatcherUnref func(uintptr)
 // Unreferences @matcher. If the reference count falls below 1,
 // the @matcher is automatically freed.
 func (x *FileAttributeMatcher) Unref() {
-
 	xFileAttributeMatcherUnref(x.GoPointer())
-
 }
 
 // #GIOExtension is an opaque data structure and can only be accessed
@@ -253,7 +251,6 @@ var xIOExtensionGetName func(uintptr) string
 // Note that the same type may be registered as extension
 // for multiple extension points, under different names.
 func (x *IOExtension) GetName() string {
-
 	cret := xIOExtensionGetName(x.GoPointer())
 	return cret
 }
@@ -262,7 +259,6 @@ var xIOExtensionGetPriority func(uintptr) int
 
 // Gets the priority with which @extension was registered.
 func (x *IOExtension) GetPriority() int {
-
 	cret := xIOExtensionGetPriority(x.GoPointer())
 	return cret
 }
@@ -271,19 +267,20 @@ var xIOExtensionGetType func(uintptr) types.GType
 
 // Gets the type associated with @extension.
 func (x *IOExtension) GetType() types.GType {
-
 	cret := xIOExtensionGetType(x.GoPointer())
 	return cret
 }
 
-var xIOExtensionRefClass func(uintptr) *gobject.TypeClass
+var xIOExtensionRefClass func(uintptr) uintptr
 
 // Gets a reference to the class for the type that is
 // associated with @extension.
 func (x *IOExtension) RefClass() *gobject.TypeClass {
-
 	cret := xIOExtensionRefClass(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.TypeClass)(unsafe.Pointer(cret))
 }
 
 // `GIOExtensionPoint` provides a mechanism for modules to extend the
@@ -347,30 +344,33 @@ func (x *IOExtensionPoint) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xIOExtensionPointGetExtensionByName func(uintptr, string) *IOExtension
+var xIOExtensionPointGetExtensionByName func(uintptr, string) uintptr
 
 // Finds a #GIOExtension for an extension point by name.
 func (x *IOExtensionPoint) GetExtensionByName(NameVar string) *IOExtension {
-
 	cret := xIOExtensionPointGetExtensionByName(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOExtension)(unsafe.Pointer(cret))
 }
 
-var xIOExtensionPointGetExtensions func(uintptr) *glib.List
+var xIOExtensionPointGetExtensions func(uintptr) uintptr
 
 // Gets a list of all extensions that implement this extension point.
 // The list is sorted by priority, beginning with the highest priority.
 func (x *IOExtensionPoint) GetExtensions() *glib.List {
-
 	cret := xIOExtensionPointGetExtensions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xIOExtensionPointGetRequiredType func(uintptr) types.GType
 
 // Gets the required type for @extension_point.
 func (x *IOExtensionPoint) GetRequiredType() types.GType {
-
 	cret := xIOExtensionPointGetRequiredType(x.GoPointer())
 	return cret
 }
@@ -380,9 +380,7 @@ var xIOExtensionPointSetRequiredType func(uintptr, types.GType)
 // Sets the required type for @extension_point to @type.
 // All implementations must henceforth have this type.
 func (x *IOExtensionPoint) SetRequiredType(TypeVar types.GType) {
-
 	xIOExtensionPointSetRequiredType(x.GoPointer(), TypeVar)
-
 }
 
 // Opaque class for defining and scheduling IO jobs.
@@ -400,38 +398,7 @@ var xIOSchedulerJobSendToMainloop func(uintptr, uintptr, uintptr, uintptr) bool
 // that the job was started from, waiting for the result (and thus
 // blocking the I/O job).
 func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) bool {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), FuncVarRef, UserDataVar, NotifyVarRef)
+	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -447,39 +414,7 @@ var xIOSchedulerJobSendToMainloopAsync func(uintptr, uintptr, uintptr, uintptr)
 // @func is called, either by passing %NULL as @notify to
 // g_io_scheduler_push_job() or by using refcounting for @user_data.
 func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), FuncVarRef, UserDataVar, NotifyVarRef)
-
+	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 type IOStreamAdapter struct {
@@ -750,9 +685,9 @@ func (x *OutputVector) GoPointer() uintptr {
 // supported.
 //
 // Substitutions must start with a slash, and must not contain a trailing slash
-// before the `=`.  The path after the slash should ideally be absolute, but
-// this is not strictly required.  It is possible to overlay the location of a
-// single resource with an individual file.
+// before the `=`.  The filesystem path after the `=` should ideally be absolute,
+// but this is not strictly required.  It is possible to overlay the location of
+// a single resource with an individual file.
 type Resource struct {
 	_ structs.HostLayout
 }
@@ -767,7 +702,7 @@ func (x *Resource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewResourceFromData func(*glib.Bytes, **glib.Error) *Resource
+var xNewResourceFromData func(*glib.Bytes, **glib.Error) uintptr
 
 // Creates a [struct@Gio.Resource] from a reference to the binary resource bundle.
 //
@@ -786,11 +721,13 @@ func NewResourceFromData(DataVar *glib.Bytes) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xNewResourceFromData(DataVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Resource)(unsafe.Pointer(cret)), nil
 }
 
 var xResourceRegister func(uintptr)
@@ -801,18 +738,14 @@ var xResourceRegister func(uintptr)
 // with the global resource lookup functions like
 // [func@Gio.resources_lookup_data].
 func (x *Resource) Register() {
-
 	xResourceRegister(x.GoPointer())
-
 }
 
 var xResourceUnregister func(uintptr)
 
 // Unregisters the resource from the process-global set of resources.
 func (x *Resource) Unregister() {
-
 	xResourceUnregister(x.GoPointer())
-
 }
 
 var xResourceEnumerateChildren func(uintptr, string, ResourceLookupFlags, **glib.Error) []string
@@ -834,7 +767,6 @@ func (x *Resource) EnumerateChildren(PathVar string, LookupFlagsVar ResourceLook
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceGetInfo func(uintptr, string, ResourceLookupFlags, *uint, *uint32, **glib.Error) bool
@@ -854,7 +786,6 @@ func (x *Resource) GetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, S
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xResourceHasChildren func(uintptr, string) bool
@@ -862,12 +793,11 @@ var xResourceHasChildren func(uintptr, string) bool
 // Returns whether the specified @path in the resource
 // has children.
 func (x *Resource) HasChildren(PathVar string) bool {
-
 	cret := xResourceHasChildren(x.GoPointer(), PathVar)
 	return cret
 }
 
-var xResourceLookupData func(uintptr, string, ResourceLookupFlags, **glib.Error) *glib.Bytes
+var xResourceLookupData func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
 
 // Looks for a file at the specified @path in the resource and
 // returns a [struct@GLib.Bytes] that lets you directly access the data in
@@ -891,11 +821,13 @@ func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags
 	var cerr *glib.Error
 
 	cret := xResourceLookupData(x.GoPointer(), PathVar, LookupFlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xResourceOpenStream func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
@@ -922,18 +854,19 @@ func (x *Resource) OpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var xResourceRef func(uintptr) *Resource
+var xResourceRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @resource by one.
 //
 // This function is threadsafe and may be called from any thread.
 func (x *Resource) Ref() *Resource {
-
 	cret := xResourceRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Resource)(unsafe.Pointer(cret))
 }
 
 var xResourceUnref func(uintptr)
@@ -944,9 +877,7 @@ var xResourceUnref func(uintptr)
 // released. This function is threadsafe and may be called from any
 // thread.
 func (x *Resource) Unref() {
-
 	xResourceUnref(x.GoPointer())
-
 }
 
 // A single target host/port that a network service is running on.
@@ -979,34 +910,36 @@ func (x *SrvTarget) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSrvTarget func(string, uint16, uint16, uint16) *SrvTarget
+var xNewSrvTarget func(string, uint16, uint16, uint16) uintptr
 
 // Creates a new #GSrvTarget with the given parameters.
 //
 // You should not need to use this; normally #GSrvTargets are
 // created by #GResolver.
 func NewSrvTarget(HostnameVar string, PortVar uint16, PriorityVar uint16, WeightVar uint16) *SrvTarget {
-
 	cret := xNewSrvTarget(HostnameVar, PortVar, PriorityVar, WeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SrvTarget)(unsafe.Pointer(cret))
 }
 
-var xSrvTargetCopy func(uintptr) *SrvTarget
+var xSrvTargetCopy func(uintptr) uintptr
 
 // Copies @target
 func (x *SrvTarget) Copy() *SrvTarget {
-
 	cret := xSrvTargetCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SrvTarget)(unsafe.Pointer(cret))
 }
 
 var xSrvTargetFree func(uintptr)
 
 // Frees @target
 func (x *SrvTarget) Free() {
-
 	xSrvTargetFree(x.GoPointer())
-
 }
 
 var xSrvTargetGetHostname func(uintptr) string
@@ -1016,7 +949,6 @@ var xSrvTargetGetHostname func(uintptr) string
 // check if it contains encoded Unicode segments, and use
 // g_hostname_to_unicode() to convert it if it does.)
 func (x *SrvTarget) GetHostname() string {
-
 	cret := xSrvTargetGetHostname(x.GoPointer())
 	return cret
 }
@@ -1025,7 +957,6 @@ var xSrvTargetGetPort func(uintptr) uint16
 
 // Gets @target's port
 func (x *SrvTarget) GetPort() uint16 {
-
 	cret := xSrvTargetGetPort(x.GoPointer())
 	return cret
 }
@@ -1036,7 +967,6 @@ var xSrvTargetGetPriority func(uintptr) uint16
 // #GResolver already sorts the targets according to the algorithm in
 // RFC 2782.
 func (x *SrvTarget) GetPriority() uint16 {
-
 	cret := xSrvTargetGetPriority(x.GoPointer())
 	return cret
 }
@@ -1047,14 +977,13 @@ var xSrvTargetGetWeight func(uintptr) uint16
 // #GResolver already sorts the targets according to the algorithm in
 // RFC 2782.
 func (x *SrvTarget) GetWeight() uint16 {
-
 	cret := xSrvTargetGetWeight(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1114,5 +1043,4 @@ func init() {
 	core.PuregoSafeRegister(&xSrvTargetGetPort, libs, "g_srv_target_get_port")
 	core.PuregoSafeRegister(&xSrvTargetGetPriority, libs, "g_srv_target_get_priority")
 	core.PuregoSafeRegister(&xSrvTargetGetWeight, libs, "g_srv_target_get_weight")
-
 }

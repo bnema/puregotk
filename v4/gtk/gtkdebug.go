@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -67,6 +66,8 @@ const (
 	DebugCssValue DebugFlags = 1048576
 	// Information about deprecated GtkBuilder features.
 	DebugBuilderValue DebugFlags = 2097152
+	// Information about session saving.
+	DebugSessionValue DebugFlags = 4194304
 )
 
 var xGetDebugFlags func() DebugFlags
@@ -76,7 +77,6 @@ var xGetDebugFlags func() DebugFlags
 // This function is intended for GTK modules that want
 // to adjust their debug output based on GTK debug flags.
 func GetDebugFlags() DebugFlags {
-
 	cret := xGetDebugFlags()
 	return cret
 }
@@ -85,14 +85,12 @@ var xSetDebugFlags func(DebugFlags)
 
 // Sets the GTK debug flags.
 func SetDebugFlags(FlagsVar DebugFlags) {
-
 	xSetDebugFlags(FlagsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -106,5 +104,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGetDebugFlags, libs, "gtk_get_debug_flags")
 	core.PuregoSafeRegister(&xSetDebugFlags, libs, "gtk_set_debug_flags")
-
 }

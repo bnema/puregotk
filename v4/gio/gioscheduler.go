@@ -2,10 +2,7 @@
 package gio
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -17,9 +14,7 @@ var xIoSchedulerCancelAllJobs func()
 // A job is cancellable if a #GCancellable was passed into
 // g_io_scheduler_push_job().
 func IoSchedulerCancelAllJobs() {
-
 	xIoSchedulerCancelAllJobs()
-
 }
 
 var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int, uintptr)
@@ -33,49 +28,12 @@ var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int, uintptr)
 // by calling g_cancellable_cancel() or by calling
 // g_io_scheduler_cancel_all_jobs().
 func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify, IoPriorityVar int, CancellableVar *Cancellable) {
-
-	var JobFuncVarRef uintptr
-	if JobFuncVar != nil {
-		JobFuncVarPtr := uintptr(unsafe.Pointer(JobFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(JobFuncVarPtr); ok {
-			JobFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *IOSchedulerJob, arg1 uintptr, arg2 uintptr) bool {
-				cbFn := *JobFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			JobFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(JobFuncVarPtr, JobFuncVarRef, JobFuncVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xIoSchedulerPushJob(JobFuncVarRef, UserDataVar, NotifyVarRef, IoPriorityVar, CancellableVarPtr)
-
+	xIoSchedulerPushJob(glib.NewCallback(JobFuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar), IoPriorityVar, CancellableVar.GoPointer())
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -87,5 +45,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xIoSchedulerCancelAllJobs, libs, "g_io_scheduler_cancel_all_jobs")
 	core.PuregoSafeRegister(&xIoSchedulerPushJob, libs, "g_io_scheduler_push_job")
-
 }

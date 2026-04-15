@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -462,7 +461,6 @@ var xCellRendererActivate func(uintptr, uintptr, uintptr, string, *gdk.Rectangle
 // Some cell renderers may use events; for example, `GtkCellRendererToggle`
 // toggles when it gets a mouse click.
 func (x *CellRenderer) Activate(EventVar *gdk.Event, WidgetVar *Widget, PathVar string, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) bool {
-
 	cret := xCellRendererActivate(x.GoPointer(), EventVar.GoPointer(), WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
 	return cret
 }
@@ -472,34 +470,27 @@ var xCellRendererGetAlignedArea func(uintptr, uintptr, CellRendererState, *gdk.R
 // Gets the aligned area used by @cell inside @cell_area. Used for finding
 // the appropriate edit and focus rectangle.
 func (x *CellRenderer) GetAlignedArea(WidgetVar *Widget, FlagsVar CellRendererState, CellAreaVar *gdk.Rectangle, AlignedAreaVar *gdk.Rectangle) {
-
 	xCellRendererGetAlignedArea(x.GoPointer(), WidgetVar.GoPointer(), FlagsVar, CellAreaVar, AlignedAreaVar)
-
 }
 
 var xCellRendererGetAlignment func(uintptr, *float32, *float32)
 
 // Fills in @xalign and @yalign with the appropriate values of @cell.
 func (x *CellRenderer) GetAlignment(XalignVar *float32, YalignVar *float32) {
-
 	xCellRendererGetAlignment(x.GoPointer(), XalignVar, YalignVar)
-
 }
 
 var xCellRendererGetFixedSize func(uintptr, *int, *int)
 
 // Fills in @width and @height with the appropriate size of @cell.
 func (x *CellRenderer) GetFixedSize(WidthVar *int, HeightVar *int) {
-
 	xCellRendererGetFixedSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xCellRendererGetIsExpanded func(uintptr) bool
 
 // Checks whether the given `GtkCellRenderer` is expanded.
 func (x *CellRenderer) GetIsExpanded() bool {
-
 	cret := xCellRendererGetIsExpanded(x.GoPointer())
 	return cret
 }
@@ -508,7 +499,6 @@ var xCellRendererGetIsExpander func(uintptr) bool
 
 // Checks whether the given `GtkCellRenderer` is an expander.
 func (x *CellRenderer) GetIsExpander() bool {
-
 	cret := xCellRendererGetIsExpander(x.GoPointer())
 	return cret
 }
@@ -517,18 +507,14 @@ var xCellRendererGetPadding func(uintptr, *int, *int)
 
 // Fills in @xpad and @ypad with the appropriate values of @cell.
 func (x *CellRenderer) GetPadding(XpadVar *int, YpadVar *int) {
-
 	xCellRendererGetPadding(x.GoPointer(), XpadVar, YpadVar)
-
 }
 
 var xCellRendererGetPreferredHeight func(uintptr, uintptr, *int, *int)
 
 // Retrieves a renderer’s natural size when rendered to @widget.
 func (x *CellRenderer) GetPreferredHeight(WidgetVar *Widget, MinimumSizeVar *int, NaturalSizeVar *int) {
-
 	xCellRendererGetPreferredHeight(x.GoPointer(), WidgetVar.GoPointer(), MinimumSizeVar, NaturalSizeVar)
-
 }
 
 var xCellRendererGetPreferredHeightForWidth func(uintptr, uintptr, int, *int, *int)
@@ -536,9 +522,7 @@ var xCellRendererGetPreferredHeightForWidth func(uintptr, uintptr, int, *int, *i
 // Retrieves a cell renderers’s minimum and natural height if it were rendered to
 // @widget with the specified @width.
 func (x *CellRenderer) GetPreferredHeightForWidth(WidgetVar *Widget, WidthVar int, MinimumHeightVar *int, NaturalHeightVar *int) {
-
 	xCellRendererGetPreferredHeightForWidth(x.GoPointer(), WidgetVar.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
-
 }
 
 var xCellRendererGetPreferredSize func(uintptr, uintptr, *Requisition, *Requisition)
@@ -546,18 +530,14 @@ var xCellRendererGetPreferredSize func(uintptr, uintptr, *Requisition, *Requisit
 // Retrieves the minimum and natural size of a cell taking
 // into account the widget’s preference for height-for-width management.
 func (x *CellRenderer) GetPreferredSize(WidgetVar *Widget, MinimumSizeVar *Requisition, NaturalSizeVar *Requisition) {
-
 	xCellRendererGetPreferredSize(x.GoPointer(), WidgetVar.GoPointer(), MinimumSizeVar, NaturalSizeVar)
-
 }
 
 var xCellRendererGetPreferredWidth func(uintptr, uintptr, *int, *int)
 
 // Retrieves a renderer’s natural size when rendered to @widget.
 func (x *CellRenderer) GetPreferredWidth(WidgetVar *Widget, MinimumSizeVar *int, NaturalSizeVar *int) {
-
 	xCellRendererGetPreferredWidth(x.GoPointer(), WidgetVar.GoPointer(), MinimumSizeVar, NaturalSizeVar)
-
 }
 
 var xCellRendererGetPreferredWidthForHeight func(uintptr, uintptr, int, *int, *int)
@@ -565,9 +545,7 @@ var xCellRendererGetPreferredWidthForHeight func(uintptr, uintptr, int, *int, *i
 // Retrieves a cell renderers’s minimum and natural width if it were rendered to
 // @widget with the specified @height.
 func (x *CellRenderer) GetPreferredWidthForHeight(WidgetVar *Widget, HeightVar int, MinimumWidthVar *int, NaturalWidthVar *int) {
-
 	xCellRendererGetPreferredWidthForHeight(x.GoPointer(), WidgetVar.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
-
 }
 
 var xCellRendererGetRequestMode func(uintptr) SizeRequestMode
@@ -575,7 +553,6 @@ var xCellRendererGetRequestMode func(uintptr) SizeRequestMode
 // Gets whether the cell renderer prefers a height-for-width layout
 // or a width-for-height layout.
 func (x *CellRenderer) GetRequestMode() SizeRequestMode {
-
 	cret := xCellRendererGetRequestMode(x.GoPointer())
 	return cret
 }
@@ -584,7 +561,6 @@ var xCellRendererGetSensitive func(uintptr) bool
 
 // Returns the cell renderer’s sensitivity.
 func (x *CellRenderer) GetSensitive() bool {
-
 	cret := xCellRendererGetSensitive(x.GoPointer())
 	return cret
 }
@@ -595,13 +571,7 @@ var xCellRendererGetState func(uintptr, uintptr, CellRendererState) StateFlags
 // based on the cell renderer and widget sensitivity, and
 // the given `GtkCellRenderer`State.
 func (x *CellRenderer) GetState(WidgetVar *Widget, CellStateVar CellRendererState) StateFlags {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	cret := xCellRendererGetState(x.GoPointer(), WidgetVarPtr, CellStateVar)
+	cret := xCellRendererGetState(x.GoPointer(), WidgetVar.GoPointer(), CellStateVar)
 	return cret
 }
 
@@ -609,7 +579,6 @@ var xCellRendererGetVisible func(uintptr) bool
 
 // Returns the cell renderer’s visibility.
 func (x *CellRenderer) GetVisible() bool {
-
 	cret := xCellRendererGetVisible(x.GoPointer())
 	return cret
 }
@@ -618,7 +587,6 @@ var xCellRendererIsActivatable func(uintptr) bool
 
 // Checks whether the cell renderer can do something when activated.
 func (x *CellRenderer) IsActivatable() bool {
-
 	cret := xCellRendererIsActivatable(x.GoPointer())
 	return cret
 }
@@ -627,63 +595,49 @@ var xCellRendererSetAlignment func(uintptr, float32, float32)
 
 // Sets the renderer’s alignment within its available space.
 func (x *CellRenderer) SetAlignment(XalignVar float32, YalignVar float32) {
-
 	xCellRendererSetAlignment(x.GoPointer(), XalignVar, YalignVar)
-
 }
 
 var xCellRendererSetFixedSize func(uintptr, int, int)
 
 // Sets the renderer size to be explicit, independent of the properties set.
 func (x *CellRenderer) SetFixedSize(WidthVar int, HeightVar int) {
-
 	xCellRendererSetFixedSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xCellRendererSetIsExpanded func(uintptr, bool)
 
 // Sets whether the given `GtkCellRenderer` is expanded.
 func (x *CellRenderer) SetIsExpanded(IsExpandedVar bool) {
-
 	xCellRendererSetIsExpanded(x.GoPointer(), IsExpandedVar)
-
 }
 
 var xCellRendererSetIsExpander func(uintptr, bool)
 
 // Sets whether the given `GtkCellRenderer` is an expander.
 func (x *CellRenderer) SetIsExpander(IsExpanderVar bool) {
-
 	xCellRendererSetIsExpander(x.GoPointer(), IsExpanderVar)
-
 }
 
 var xCellRendererSetPadding func(uintptr, int, int)
 
 // Sets the renderer’s padding.
 func (x *CellRenderer) SetPadding(XpadVar int, YpadVar int) {
-
 	xCellRendererSetPadding(x.GoPointer(), XpadVar, YpadVar)
-
 }
 
 var xCellRendererSetSensitive func(uintptr, bool)
 
 // Sets the cell renderer’s sensitivity.
 func (x *CellRenderer) SetSensitive(SensitiveVar bool) {
-
 	xCellRendererSetSensitive(x.GoPointer(), SensitiveVar)
-
 }
 
 var xCellRendererSetVisible func(uintptr, bool)
 
 // Sets the cell renderer’s visibility.
 func (x *CellRenderer) SetVisible(VisibleVar bool) {
-
 	xCellRendererSetVisible(x.GoPointer(), VisibleVar)
-
 }
 
 var xCellRendererSnapshot func(uintptr, uintptr, uintptr, *gdk.Rectangle, *gdk.Rectangle, CellRendererState)
@@ -696,9 +650,7 @@ var xCellRendererSnapshot func(uintptr, uintptr, uintptr, *gdk.Rectangle, *gdk.R
 // so the @background_area rectangles for all cells tile to cover the entire
 // @window.
 func (x *CellRenderer) Snapshot(SnapshotVar *Snapshot, WidgetVar *Widget, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) {
-
 	xCellRendererSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidgetVar.GoPointer(), BackgroundAreaVar, CellAreaVar, FlagsVar)
-
 }
 
 var xCellRendererStartEditing func(uintptr, uintptr, uintptr, string, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) uintptr
@@ -734,9 +686,7 @@ var xCellRendererStopEditing func(uintptr, bool)
 // in response to the `GtkCellEditable::editing-done` signal of
 // `GtkCellEditable`.
 func (x *CellRenderer) StopEditing(CanceledVar bool) {
-
 	xCellRendererStopEditing(x.GoPointer(), CanceledVar)
-
 }
 
 func (c *CellRenderer) GoPointer() uintptr {
@@ -966,7 +916,6 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1021,8 +970,7 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, EditableVarp, core.GoString(PathVarp))
-
+		cbFn(fa, EditableVarp, PathVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1033,7 +981,7 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1076,5 +1024,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellRendererSnapshot, libs, "gtk_cell_renderer_snapshot")
 	core.PuregoSafeRegister(&xCellRendererStartEditing, libs, "gtk_cell_renderer_start_editing")
 	core.PuregoSafeRegister(&xCellRendererStopEditing, libs, "gtk_cell_renderer_stop_editing")
-
 }

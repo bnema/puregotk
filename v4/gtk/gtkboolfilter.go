@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -82,7 +81,6 @@ var xBoolFilterGetInvert func(uintptr) bool
 
 // Returns whether the filter inverts the expression.
 func (x *BoolFilter) GetInvert() bool {
-
 	cret := xBoolFilterGetInvert(x.GoPointer())
 	return cret
 }
@@ -94,23 +92,14 @@ var xBoolFilterSetExpression func(uintptr, uintptr)
 //
 // The expression must have a value type of `G_TYPE_BOOLEAN`.
 func (x *BoolFilter) SetExpression(ExpressionVar *Expression) {
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	xBoolFilterSetExpression(x.GoPointer(), ExpressionVarPtr)
-
+	xBoolFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
 }
 
 var xBoolFilterSetInvert func(uintptr, bool)
 
 // Sets whether the filter should invert the expression.
 func (x *BoolFilter) SetInvert(InvertVar bool) {
-
 	xBoolFilterSetInvert(x.GoPointer(), InvertVar)
-
 }
 
 func (c *BoolFilter) GoPointer() uintptr {
@@ -143,7 +132,7 @@ func (x *BoolFilter) GetPropertyInvert() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -161,5 +150,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoolFilterGetInvert, libs, "gtk_bool_filter_get_invert")
 	core.PuregoSafeRegister(&xBoolFilterSetExpression, libs, "gtk_bool_filter_set_expression")
 	core.PuregoSafeRegister(&xBoolFilterSetInvert, libs, "gtk_bool_filter_set_invert")
-
 }

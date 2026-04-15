@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/glib"
@@ -181,7 +180,6 @@ var xDrawingAreaGetContentHeight func(uintptr) int
 
 // Retrieves the content height of the `GtkDrawingArea`.
 func (x *DrawingArea) GetContentHeight() int {
-
 	cret := xDrawingAreaGetContentHeight(x.GoPointer())
 	return cret
 }
@@ -190,7 +188,6 @@ var xDrawingAreaGetContentWidth func(uintptr) int
 
 // Retrieves the content width of the `GtkDrawingArea`.
 func (x *DrawingArea) GetContentWidth() int {
-
 	cret := xDrawingAreaGetContentWidth(x.GoPointer())
 	return cret
 }
@@ -206,9 +203,7 @@ var xDrawingAreaSetContentHeight func(uintptr, int)
 //
 // If the height is set to 0 (the default), the drawing area may disappear.
 func (x *DrawingArea) SetContentHeight(HeightVar int) {
-
 	xDrawingAreaSetContentHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xDrawingAreaSetContentWidth func(uintptr, int)
@@ -222,9 +217,7 @@ var xDrawingAreaSetContentWidth func(uintptr, int)
 //
 // If the width is set to 0 (the default), the drawing area may disappear.
 func (x *DrawingArea) SetContentWidth(WidthVar int) {
-
 	xDrawingAreaSetContentWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xDrawingAreaSetDrawFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -244,39 +237,7 @@ var xDrawingAreaSetDrawFunc func(uintptr, uintptr, uintptr, uintptr)
 // If what you are drawing does change, call [method@Gtk.Widget.queue_draw]
 // on the drawing area. This will cause a redraw and will call @draw_func again.
 func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var DrawFuncVarRef uintptr
-	if DrawFuncVar != nil {
-		DrawFuncVarPtr := uintptr(unsafe.Pointer(DrawFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(DrawFuncVarPtr); ok {
-			DrawFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *cairo.Context, arg2 int, arg3 int, arg4 uintptr) {
-				cbFn := *DrawFuncVar
-				cbFn(arg0, arg1, arg2, arg3, arg4)
-			}
-			DrawFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DrawFuncVarPtr, DrawFuncVarRef, DrawFuncVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xDrawingAreaSetDrawFunc(x.GoPointer(), DrawFuncVarRef, UserDataVar, DestroyVarRef)
-
+	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallbackNullable(DrawFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 func (c *DrawingArea) GoPointer() uintptr {
@@ -343,7 +304,6 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint {
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -362,9 +322,19 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *DrawingArea) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *DrawingArea) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -385,7 +355,6 @@ func (x *DrawingArea) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *DrawingArea) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -410,7 +379,6 @@ func (x *DrawingArea) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *DrawingArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -449,30 +417,23 @@ func (x *DrawingArea) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *DrawingArea) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *DrawingArea) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *DrawingArea) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *DrawingArea) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -485,19 +446,7 @@ func (x *DrawingArea) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *DrawingArea) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -505,14 +454,7 @@ func (x *DrawingArea) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *DrawingArea) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -521,9 +463,7 @@ func (x *DrawingArea) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *DrawingArea) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -545,9 +485,7 @@ func (x *DrawingArea) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *DrawingArea) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -557,9 +495,7 @@ func (x *DrawingArea) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *DrawingArea) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -581,9 +517,7 @@ func (x *DrawingArea) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 //
 // ```
 func (x *DrawingArea) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -593,9 +527,7 @@ func (x *DrawingArea) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *DrawingArea) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -618,9 +550,7 @@ func (x *DrawingArea) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 //
 // ```
 func (x *DrawingArea) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -630,9 +560,7 @@ func (x *DrawingArea) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *DrawingArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -640,14 +568,13 @@ func (x *DrawingArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *DrawingArea) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -666,5 +593,4 @@ func init() {
 	core.PuregoSafeRegister(&xDrawingAreaSetContentHeight, libs, "gtk_drawing_area_set_content_height")
 	core.PuregoSafeRegister(&xDrawingAreaSetContentWidth, libs, "gtk_drawing_area_set_content_width")
 	core.PuregoSafeRegister(&xDrawingAreaSetDrawFunc, libs, "gtk_drawing_area_set_draw_func")
-
 }

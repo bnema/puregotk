@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -24,9 +23,7 @@ var xBitLock func(uintptr, int)
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitLock(AddressVar uintptr, LockBitVar int) {
-
 	xBitLock(AddressVar, LockBitVar)
-
 }
 
 var xBitLockAndGet func(uintptr, uint, *int)
@@ -37,9 +34,7 @@ var xBitLockAndGet func(uintptr, uint, *int)
 // @address (right after obtaining the lock). Thus the value returned in @out_val
 // always has the @lock_bit set.
 func BitLockAndGet(AddressVar uintptr, LockBitVar uint, OutValVar *int) {
-
 	xBitLockAndGet(AddressVar, LockBitVar, OutValVar)
-
 }
 
 var xBitTrylock func(uintptr, int) bool
@@ -58,7 +53,6 @@ var xBitTrylock func(uintptr, int) bool
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitTrylock(AddressVar uintptr, LockBitVar int) bool {
-
 	cret := xBitTrylock(AddressVar, LockBitVar)
 
 	return cret
@@ -75,9 +69,7 @@ var xBitUnlock func(uintptr, int)
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func BitUnlock(AddressVar uintptr, LockBitVar int) {
-
 	xBitUnlock(AddressVar, LockBitVar)
-
 }
 
 var xBitUnlockAndSet func(uintptr, uint, int, int)
@@ -91,9 +83,7 @@ var xBitUnlockAndSet func(uintptr, uint, int, int)
 // Note that the @lock_bit bit will always be unset regardless of
 // @val, @preserve_mask and the currently set value in @address.
 func BitUnlockAndSet(AddressVar uintptr, LockBitVar uint, NewValVar int, PreserveMaskVar int) {
-
 	xBitUnlockAndSet(AddressVar, LockBitVar, NewValVar, PreserveMaskVar)
-
 }
 
 var xPointerBitLock func(uintptr, int)
@@ -107,9 +97,7 @@ var xPointerBitLock func(uintptr, int)
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitLock(AddressVar uintptr, LockBitVar int) {
-
 	xPointerBitLock(AddressVar, LockBitVar)
-
 }
 
 var xPointerBitLockAndGet func(uintptr, uint, *uintptr)
@@ -120,9 +108,7 @@ var xPointerBitLockAndGet func(uintptr, uint, *uintptr)
 // For portability reasons, you may only lock on the bottom 32 bits of
 // the pointer.
 func PointerBitLockAndGet(AddressVar uintptr, LockBitVar uint, OutPtrVar *uintptr) {
-
 	xPointerBitLockAndGet(AddressVar, LockBitVar, OutPtrVar)
-
 }
 
 var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
@@ -130,7 +116,6 @@ var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
 // This mangles @ptr as g_pointer_bit_lock() and g_pointer_bit_unlock()
 // do.
 func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
-
 	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
 
 	return cret
@@ -147,7 +132,6 @@ var xPointerBitTrylock func(uintptr, int) bool
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitTrylock(AddressVar uintptr, LockBitVar int) bool {
-
 	cret := xPointerBitTrylock(AddressVar, LockBitVar)
 
 	return cret
@@ -164,9 +148,7 @@ var xPointerBitUnlock func(uintptr, int)
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
 func PointerBitUnlock(AddressVar uintptr, LockBitVar int) {
-
 	xPointerBitUnlock(AddressVar, LockBitVar)
-
 }
 
 var xPointerBitUnlockAndSet func(uintptr, uint, uintptr, uintptr)
@@ -179,14 +161,12 @@ var xPointerBitUnlockAndSet func(uintptr, uint, uintptr, uintptr)
 // words, @ptr must have @lock_bit unset. This also means, you usually can
 // only use this on the lowest bits.
 func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint, PtrVar uintptr, PreserveMaskVar uintptr) {
-
 	xPointerBitUnlockAndSet(AddressVar, LockBitVar, PtrVar, PreserveMaskVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -207,5 +187,4 @@ func init() {
 	core.PuregoSafeRegister(&xPointerBitTrylock, libs, "g_pointer_bit_trylock")
 	core.PuregoSafeRegister(&xPointerBitUnlock, libs, "g_pointer_bit_unlock")
 	core.PuregoSafeRegister(&xPointerBitUnlockAndSet, libs, "g_pointer_bit_unlock_and_set")
-
 }

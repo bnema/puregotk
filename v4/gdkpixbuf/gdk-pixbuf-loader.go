@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -232,7 +231,6 @@ func NewPixbufLoaderWithMimeType(MimeTypeVar string) (*PixbufLoader, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufLoaderWithType func(string, **glib.Error) uintptr
@@ -266,10 +264,9 @@ func NewPixbufLoaderWithType(ImageTypeVar string) (*PixbufLoader, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var xPixbufLoaderClose func(uintptr) bool
+var xPixbufLoaderClose func(uintptr, **glib.Error) bool
 
 // Informs a pixbuf loader that no further writes with
 // gdk_pixbuf_loader_write() will occur, so that it can free its
@@ -289,12 +286,11 @@ var xPixbufLoaderClose func(uintptr) bool
 func (x *PixbufLoader) Close() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPixbufLoaderClose(x.GoPointer())
+	cret := xPixbufLoaderClose(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufLoaderGetAnimation func(uintptr) uintptr
@@ -321,14 +317,16 @@ func (x *PixbufLoader) GetAnimation() *PixbufAnimation {
 	return cls
 }
 
-var xPixbufLoaderGetFormat func(uintptr) *PixbufFormat
+var xPixbufLoaderGetFormat func(uintptr) uintptr
 
 // Obtains the available information about the format of the
 // currently loading image file.
 func (x *PixbufLoader) GetFormat() *PixbufFormat {
-
 	cret := xPixbufLoaderGetFormat(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufLoaderGetPixbuf func(uintptr) uintptr
@@ -373,9 +371,7 @@ var xPixbufLoaderSetSize func(uintptr, int, int)
 // Attempts to set the desired image size  are ignored after the
 // emission of the ::size-prepared signal.
 func (x *PixbufLoader) SetSize(WidthVar int, HeightVar int) {
-
 	xPixbufLoaderSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xPixbufLoaderWrite func(uintptr, []byte, uint, **glib.Error) bool
@@ -389,7 +385,6 @@ func (x *PixbufLoader) Write(BufVar []byte, CountVar uint) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufLoaderWriteBytes func(uintptr, *glib.Bytes, **glib.Error) bool
@@ -403,7 +398,6 @@ func (x *PixbufLoader) WriteBytes(BufferVar *glib.Bytes) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *PixbufLoader) GoPointer() uintptr {
@@ -437,7 +431,6 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -468,7 +461,6 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, 
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, WidthVarp, HeightVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -496,7 +488,6 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -526,7 +517,6 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uin
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -537,7 +527,7 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uin
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0", "libgdk_pixbuf-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDKPIXBUF") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -560,5 +550,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufLoaderSetSize, libs, "gdk_pixbuf_loader_set_size")
 	core.PuregoSafeRegister(&xPixbufLoaderWrite, libs, "gdk_pixbuf_loader_write")
 	core.PuregoSafeRegister(&xPixbufLoaderWriteBytes, libs, "gdk_pixbuf_loader_write_bytes")
-
 }

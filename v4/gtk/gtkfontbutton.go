@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -91,7 +90,6 @@ var xFontButtonGetModal func(uintptr) bool
 
 // Gets whether the dialog is modal.
 func (x *FontButton) GetModal() bool {
-
 	cret := xFontButtonGetModal(x.GoPointer())
 	return cret
 }
@@ -100,7 +98,6 @@ var xFontButtonGetTitle func(uintptr) string
 
 // Retrieves the title of the font chooser dialog.
 func (x *FontButton) GetTitle() string {
-
 	cret := xFontButtonGetTitle(x.GoPointer())
 	return cret
 }
@@ -109,7 +106,6 @@ var xFontButtonGetUseFont func(uintptr) bool
 
 // Returns whether the selected font is used in the label.
 func (x *FontButton) GetUseFont() bool {
-
 	cret := xFontButtonGetUseFont(x.GoPointer())
 	return cret
 }
@@ -118,7 +114,6 @@ var xFontButtonGetUseSize func(uintptr) bool
 
 // Returns whether the selected size is used in the label.
 func (x *FontButton) GetUseSize() bool {
-
 	cret := xFontButtonGetUseSize(x.GoPointer())
 	return cret
 }
@@ -127,18 +122,14 @@ var xFontButtonSetModal func(uintptr, bool)
 
 // Sets whether the dialog should be modal.
 func (x *FontButton) SetModal(ModalVar bool) {
-
 	xFontButtonSetModal(x.GoPointer(), ModalVar)
-
 }
 
 var xFontButtonSetTitle func(uintptr, string)
 
 // Sets the title for the font chooser dialog.
 func (x *FontButton) SetTitle(TitleVar string) {
-
 	xFontButtonSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xFontButtonSetUseFont func(uintptr, bool)
@@ -146,9 +137,7 @@ var xFontButtonSetUseFont func(uintptr, bool)
 // If @use_font is %TRUE, the font name will be written
 // using the selected font.
 func (x *FontButton) SetUseFont(UseFontVar bool) {
-
 	xFontButtonSetUseFont(x.GoPointer(), UseFontVar)
-
 }
 
 var xFontButtonSetUseSize func(uintptr, bool)
@@ -156,9 +145,7 @@ var xFontButtonSetUseSize func(uintptr, bool)
 // If @use_size is %TRUE, the font name will be written using
 // the selected size.
 func (x *FontButton) SetUseSize(UseSizeVar bool) {
-
 	xFontButtonSetUseSize(x.GoPointer(), UseSizeVar)
-
 }
 
 func (c *FontButton) GoPointer() uintptr {
@@ -258,7 +245,6 @@ func (x *FontButton) ConnectActivate(cb *func(FontButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -289,7 +275,6 @@ func (x *FontButton) ConnectFontSet(cb *func(FontButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -308,9 +293,19 @@ func (x *FontButton) ConnectFontSet(cb *func(FontButton)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FontButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *FontButton) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -331,7 +326,6 @@ func (x *FontButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FontButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -356,7 +350,6 @@ func (x *FontButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FontButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -395,30 +388,23 @@ func (x *FontButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FontButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FontButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FontButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FontButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -431,19 +417,7 @@ func (x *FontButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FontButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -451,14 +425,7 @@ func (x *FontButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Ac
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FontButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -467,9 +434,7 @@ func (x *FontButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FontButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -491,9 +456,7 @@ func (x *FontButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *FontButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -503,9 +466,7 @@ func (x *FontButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *FontButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -527,9 +488,7 @@ func (x *FontButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acc
 //
 // ```
 func (x *FontButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -539,9 +498,7 @@ func (x *FontButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *FontButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -564,9 +521,7 @@ func (x *FontButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acces
 //
 // ```
 func (x *FontButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -576,9 +531,7 @@ func (x *FontButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *FontButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -586,7 +539,6 @@ func (x *FontButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FontButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -602,7 +554,6 @@ func (x *FontButton) GetBuildableId() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontButton) GetFont() string {
-
 	cret := XGtkFontChooserGetFont(x.GoPointer())
 	return cret
 }
@@ -618,9 +569,11 @@ func (x *FontButton) GetFont() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontButton) GetFontDesc() *pango.FontDescription {
-
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 // Gets the `PangoFontFace` representing the selected font group
@@ -666,7 +619,6 @@ func (x *FontButton) GetFontFamily() *pango.FontFamily {
 // [CSS font-feature-settings property](https://www.w3.org/TR/css-fonts-4/#font-rend-desc).
 // It can be passed to [func@Pango.AttrFontFeatures.new].
 func (x *FontButton) GetFontFeatures() string {
-
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
 	return cret
 }
@@ -688,35 +640,30 @@ func (x *FontButton) GetFontMap() *pango.FontMap {
 
 // The selected font size.
 func (x *FontButton) GetFontSize() int {
-
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
 	return cret
 }
 
 // Gets the language that is used for font features.
 func (x *FontButton) GetLanguage() string {
-
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
 	return cret
 }
 
 // Returns the current level of granularity for selecting fonts.
 func (x *FontButton) GetLevel() FontChooserLevel {
-
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
 	return cret
 }
 
 // Gets the text displayed in the preview area.
 func (x *FontButton) GetPreviewText() string {
-
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
 	return cret
 }
 
 // Returns whether the preview entry is shown or not.
 func (x *FontButton) GetShowPreviewEntry() bool {
-
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
 	return cret
 }
@@ -724,23 +671,17 @@ func (x *FontButton) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontButton) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Sets the currently-selected font.
 func (x *FontButton) SetFont(FontnameVar string) {
-
 	XGtkFontChooserSetFont(x.GoPointer(), FontnameVar)
-
 }
 
 // Sets the currently-selected font from @font_desc.
 func (x *FontButton) SetFontDesc(FontDescVar *pango.FontDescription) {
-
 	XGtkFontChooserSetFontDesc(x.GoPointer(), FontDescVar)
-
 }
 
 // Sets a custom font map to use for this font chooser widget.
@@ -769,49 +710,34 @@ func (x *FontButton) SetFontDesc(FontDescVar *pango.FontDescription) {
 // pango_context_set_font_map (context, fontmap);
 // ```
 func (x *FontButton) SetFontMap(FontmapVar *pango.FontMap) {
-
-	var FontmapVarPtr uintptr
-	if FontmapVar != nil {
-		FontmapVarPtr = FontmapVar.GoPointer()
-	}
-
-	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVarPtr)
-
+	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
 }
 
 // Sets the language to use for font features.
 func (x *FontButton) SetLanguage(LanguageVar string) {
-
 	XGtkFontChooserSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 // Sets the desired level of granularity for selecting fonts.
 func (x *FontButton) SetLevel(LevelVar FontChooserLevel) {
-
 	XGtkFontChooserSetLevel(x.GoPointer(), LevelVar)
-
 }
 
 // Sets the text displayed in the preview area.
 //
 // The @text is used to show how the selected font looks.
 func (x *FontButton) SetPreviewText(TextVar string) {
-
 	XGtkFontChooserSetPreviewText(x.GoPointer(), TextVar)
-
 }
 
 // Shows or hides the editable preview entry.
 func (x *FontButton) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
-
 	XGtkFontChooserSetShowPreviewEntry(x.GoPointer(), ShowPreviewEntryVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -834,5 +760,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontButtonSetTitle, libs, "gtk_font_button_set_title")
 	core.PuregoSafeRegister(&xFontButtonSetUseFont, libs, "gtk_font_button_set_use_font")
 	core.PuregoSafeRegister(&xFontButtonSetUseSize, libs, "gtk_font_button_set_use_size")
-
 }

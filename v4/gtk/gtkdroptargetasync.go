@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -91,20 +90,21 @@ var xDropTargetAsyncGetActions func(uintptr) gdk.DragAction
 
 // Gets the actions that this drop target supports.
 func (x *DropTargetAsync) GetActions() gdk.DragAction {
-
 	cret := xDropTargetAsyncGetActions(x.GoPointer())
 	return cret
 }
 
-var xDropTargetAsyncGetFormats func(uintptr) *gdk.ContentFormats
+var xDropTargetAsyncGetFormats func(uintptr) uintptr
 
 // Gets the data formats that this drop target accepts.
 //
 // If the result is %NULL, all formats are expected to be supported.
 func (x *DropTargetAsync) GetFormats() *gdk.ContentFormats {
-
 	cret := xDropTargetAsyncGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDropTargetAsyncRejectDrop func(uintptr, uintptr)
@@ -115,27 +115,21 @@ var xDropTargetAsyncRejectDrop func(uintptr, uintptr)
 // on whether to accept a drag or not until after reading
 // the data.
 func (x *DropTargetAsync) RejectDrop(DropVar *gdk.Drop) {
-
 	xDropTargetAsyncRejectDrop(x.GoPointer(), DropVar.GoPointer())
-
 }
 
 var xDropTargetAsyncSetActions func(uintptr, gdk.DragAction)
 
 // Sets the actions that this drop target supports.
 func (x *DropTargetAsync) SetActions(ActionsVar gdk.DragAction) {
-
 	xDropTargetAsyncSetActions(x.GoPointer(), ActionsVar)
-
 }
 
 var xDropTargetAsyncSetFormats func(uintptr, *gdk.ContentFormats)
 
 // Sets the data formats that this drop target will accept.
 func (x *DropTargetAsync) SetFormats(FormatsVar *gdk.ContentFormats) {
-
 	xDropTargetAsyncSetFormats(x.GoPointer(), FormatsVar)
-
 }
 
 func (c *DropTargetAsync) GoPointer() uintptr {
@@ -181,7 +175,7 @@ func (x *DropTargetAsync) GetPropertyFormats() uintptr {
 // further processing, such as inspecting the data, this function should
 // return %TRUE and proceed as is @drop was accepted and if it decides to
 // reject the drop later, it should call [method@Gtk.DropTargetAsync.reject_drop].
-func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, *gdk.Drop) bool) uint {
+func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
@@ -194,8 +188,7 @@ func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, *gdk.Drop) boo
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }())
-
+		return cbFn(fa, DropVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -207,7 +200,7 @@ func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, *gdk.Drop) boo
 // Emitted on the drop site when the pointer enters the widget.
 //
 // It can be used to set up custom highlighting.
-func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, *gdk.Drop, float64, float64) gdk.DragAction) uint {
+func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-enter", cbRefPtr)
@@ -220,8 +213,7 @@ func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, *gdk.Drop, 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }(), XVarp, YVarp)
-
+		return cbFn(fa, DropVarp, XVarp, YVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -234,7 +226,7 @@ func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, *gdk.Drop, 
 //
 // Its main purpose it to undo things done in
 // `GtkDropTargetAsync`::drag-enter.
-func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, *gdk.Drop)) uint {
+func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-leave", cbRefPtr)
@@ -247,8 +239,7 @@ func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, *gdk.Drop))
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }())
-
+		cbFn(fa, DropVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -258,7 +249,7 @@ func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, *gdk.Drop))
 }
 
 // Emitted while the pointer is moving over the drop target.
-func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, *gdk.Drop, float64, float64) gdk.DragAction) uint {
+func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-motion", cbRefPtr)
@@ -271,8 +262,7 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, *gdk.Drop,
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }(), XVarp, YVarp)
-
+		return cbFn(fa, DropVarp, XVarp, YVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -295,7 +285,7 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, *gdk.Drop,
 // To receive the data, use one of the read functions provided by
 // [class@Gdk.Drop] such as [method@Gdk.Drop.read_async] or
 // [method@Gdk.Drop.read_value_async].
-func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, *gdk.Drop, float64, float64) bool) uint {
+func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
@@ -308,8 +298,7 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, *gdk.Drop, float
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Drop { cls := &gdk.Drop{}; cls.Ptr = DropVarp; return cls }(), XVarp, YVarp)
-
+		return cbFn(fa, DropVarp, XVarp, YVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -320,7 +309,7 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, *gdk.Drop, float
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -339,5 +328,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropTargetAsyncRejectDrop, libs, "gtk_drop_target_async_reject_drop")
 	core.PuregoSafeRegister(&xDropTargetAsyncSetActions, libs, "gtk_drop_target_async_set_actions")
 	core.PuregoSafeRegister(&xDropTargetAsyncSetFormats, libs, "gtk_drop_target_async_set_formats")
-
 }

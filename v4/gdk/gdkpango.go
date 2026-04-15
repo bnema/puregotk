@@ -2,14 +2,15 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/pango"
 )
 
-var xPangoLayoutGetClipRegion func(uintptr, int, int, int, int) *cairo.Region
+var xPangoLayoutGetClipRegion func(uintptr, int, int, int, int) uintptr
 
 // Obtains a clip region which contains the areas where the given ranges
 // of text would be drawn.
@@ -22,12 +23,14 @@ var xPangoLayoutGetClipRegion func(uintptr, int, int, int, int) *cairo.Region
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
 func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int, YOriginVar int, IndexRangesVar int, NRangesVar int) *cairo.Region {
-
 	cret := xPangoLayoutGetClipRegion(LayoutVar.GoPointer(), XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
-var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int, int, []int, int) *cairo.Region
+var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int, int, []int, int) uintptr
 
 // Obtains a clip region which contains the areas where the given
 // ranges of text would be drawn.
@@ -45,14 +48,16 @@ var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int, int, []int, int) 
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
 func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int, YOriginVar int, IndexRangesVar []int, NRangesVar int) *cairo.Region {
-
 	cret := xPangoLayoutLineGetClipRegion(LineVar, XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -64,5 +69,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPangoLayoutGetClipRegion, libs, "gdk_pango_layout_get_clip_region")
 	core.PuregoSafeRegister(&xPangoLayoutLineGetClipRegion, libs, "gdk_pango_layout_line_get_clip_region")
-
 }

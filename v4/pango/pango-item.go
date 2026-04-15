@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -66,13 +65,15 @@ func (x *Item) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewItem func() *Item
+var xNewItem func() uintptr
 
 // Creates a new `PangoItem` structure initialized to default values.
 func NewItem() *Item {
-
 	cret := xNewItem()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 var xItemApplyAttrs func(uintptr, *AttrIterator)
@@ -89,27 +90,25 @@ var xItemApplyAttrs func(uintptr, *AttrIterator)
 // in a loop over the items resulting from itemization, while passing
 // the iter to each call.
 func (x *Item) ApplyAttrs(IterVar *AttrIterator) {
-
 	xItemApplyAttrs(x.GoPointer(), IterVar)
-
 }
 
-var xItemCopy func(uintptr) *Item
+var xItemCopy func(uintptr) uintptr
 
 // Copy an existing `PangoItem` structure.
 func (x *Item) Copy() *Item {
-
 	cret := xItemCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 var xItemFree func(uintptr)
 
 // Free a `PangoItem` and all associated memory.
 func (x *Item) Free() {
-
 	xItemFree(x.GoPointer())
-
 }
 
 var xItemGetCharOffset func(uintptr) int
@@ -121,12 +120,11 @@ var xItemGetCharOffset func(uintptr) int
 // machinery, then the character offset is not available. In
 // that case, this function returns -1.
 func (x *Item) GetCharOffset() int {
-
 	cret := xItemGetCharOffset(x.GoPointer())
 	return cret
 }
 
-var xItemSplit func(uintptr, int, int) *Item
+var xItemSplit func(uintptr, int, int) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -141,9 +139,11 @@ var xItemSplit func(uintptr, int, int) *Item
 // so `pango_item_split()` can't count the char length of the split items
 // itself.
 func (x *Item) Split(SplitIndexVar int, SplitOffsetVar int) *Item {
-
 	cret := xItemSplit(x.GoPointer(), SplitIndexVar, SplitOffsetVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 const (
@@ -157,7 +157,7 @@ const (
 	ANALYSIS_FLAG_NEED_HYPHEN int = 4
 )
 
-var xItemize func(uintptr, string, int, int, *AttrList, *AttrIterator) *glib.List
+var xItemize func(uintptr, string, int, int, *AttrList, *AttrIterator) uintptr
 
 // Breaks a piece of text into segments with consistent directional
 // level and font.
@@ -172,12 +172,14 @@ var xItemize func(uintptr, string, int, int, *AttrList, *AttrIterator) *glib.Lis
 // @start_index + @length. (i.e. if itemizing in a loop, just keep passing
 // in the same @cached_iter).
 func Itemize(ContextVar *Context, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
-
 	cret := xItemize(ContextVar.GoPointer(), TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xItemizeWithBaseDir func(uintptr, Direction, string, int, int, *AttrList, *AttrIterator) *glib.List
+var xItemizeWithBaseDir func(uintptr, Direction, string, int, int, *AttrList, *AttrIterator) uintptr
 
 // Like `pango_itemize()`, but with an explicitly specified base direction.
 //
@@ -185,12 +187,14 @@ var xItemizeWithBaseDir func(uintptr, Direction, string, int, int, *AttrList, *A
 // [func@itemize] gets the base direction from the `PangoContext`
 // (see [method@Pango.Context.set_base_dir]).
 func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
-
 	cret := xItemizeWithBaseDir(ContextVar.GoPointer(), BaseDirVar, TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xReorderItems func(*glib.List) *glib.List
+var xReorderItems func(*glib.List) uintptr
 
 // Reorder items from logical order to visual order.
 //
@@ -202,14 +206,16 @@ var xReorderItems func(*glib.List) *glib.List
 //	It is not a particularly convenient interface, and the code
 //	is duplicated elsewhere in Pango for that reason.)
 func ReorderItems(ItemsVar *glib.List) *glib.List {
-
 	cret := xReorderItems(ItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -232,5 +238,4 @@ func init() {
 	core.PuregoSafeRegister(&xItemFree, libs, "pango_item_free")
 	core.PuregoSafeRegister(&xItemGetCharOffset, libs, "pango_item_get_char_offset")
 	core.PuregoSafeRegister(&xItemSplit, libs, "pango_item_split")
-
 }

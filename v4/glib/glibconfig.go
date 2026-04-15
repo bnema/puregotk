@@ -76,7 +76,7 @@ const (
 	// Like #gtk_minor_version, but from the headers used at
 	// application compile time, rather than from the library
 	// linked against at application run time.
-	MINOR_VERSION int = 86
+	MINOR_VERSION int = 88
 
 	MODULE_SUFFIX string = "so"
 	// A format specifier that can be used in printf()-style format strings
@@ -111,4 +111,6 @@ const (
 	SYSDEF_MSG_OOB int = 1
 
 	SYSDEF_MSG_PEEK int = 2
+
+	VA_COPY_AS_ARRAY int = 1
 )

@@ -2,11 +2,25 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 )
+
+var xAcceleratorGetAccessibleLabel func(uint, gdk.ModifierType) string
+
+// Generates an accessible description of an accelerator.
+//
+// This function is similar to [func@Gtk.accelerator_get_label] but it is meant
+// for accessibility layers labels rather than user-facing labels. The output
+// of this function is fit for [enum@Gtk.AccessibleProperty.KEY_SHORTCUTS].
+//
+// For more information, see the [WAI-ARIA](https://www.w3.org/TR/wai-aria/#aria-keyshortcuts)
+// reference.
+func AcceleratorGetAccessibleLabel(AcceleratorKeyVar uint, AcceleratorModsVar gdk.ModifierType) string {
+	cret := xAcceleratorGetAccessibleLabel(AcceleratorKeyVar, AcceleratorModsVar)
+	return cret
+}
 
 var xAcceleratorGetDefaultModMask func() gdk.ModifierType
 
@@ -16,7 +30,6 @@ var xAcceleratorGetDefaultModMask func() gdk.ModifierType
 // for keyboard accelerators. This includes all keyboard modifiers except
 // for `GDK_LOCK_MASK`.
 func AcceleratorGetDefaultModMask() gdk.ModifierType {
-
 	cret := xAcceleratorGetDefaultModMask()
 	return cret
 }
@@ -26,7 +39,6 @@ var xAcceleratorGetLabel func(uint, gdk.ModifierType) string
 // Converts an accelerator keyval and modifier mask into a string
 // which can be used to represent the accelerator to the user.
 func AcceleratorGetLabel(AcceleratorKeyVar uint, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorGetLabel(AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -43,13 +55,7 @@ var xAcceleratorGetLabelWithKeycode func(uintptr, uint, uint, gdk.ModifierType) 
 // components, applications should use [func@Gtk.accelerator_get_label]
 // instead.
 func AcceleratorGetLabelWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint, KeycodeVar uint, AcceleratorModsVar gdk.ModifierType) string {
-
-	var DisplayVarPtr uintptr
-	if DisplayVar != nil {
-		DisplayVarPtr = DisplayVar.GoPointer()
-	}
-
-	cret := xAcceleratorGetLabelWithKeycode(DisplayVarPtr, AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
+	cret := xAcceleratorGetLabelWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
 
@@ -64,7 +70,6 @@ var xAcceleratorName func(uint, gdk.ModifierType) string
 // If you need to display accelerators in the user interface,
 // see [func@Gtk.accelerator_get_label].
 func AcceleratorName(AcceleratorKeyVar uint, AcceleratorModsVar gdk.ModifierType) string {
-
 	cret := xAcceleratorName(AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -78,13 +83,7 @@ var xAcceleratorNameWithKeycode func(uintptr, uint, uint, gdk.ModifierType) stri
 // This is only useful for system-level components, applications
 // should use [func@Gtk.accelerator_name] instead.
 func AcceleratorNameWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar uint, KeycodeVar uint, AcceleratorModsVar gdk.ModifierType) string {
-
-	var DisplayVarPtr uintptr
-	if DisplayVar != nil {
-		DisplayVarPtr = DisplayVar.GoPointer()
-	}
-
-	cret := xAcceleratorNameWithKeycode(DisplayVarPtr, AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
+	cret := xAcceleratorNameWithKeycode(DisplayVar.GoPointer(), AcceleratorKeyVar, KeycodeVar, AcceleratorModsVar)
 	return cret
 }
 
@@ -114,7 +113,6 @@ var xAcceleratorParse func(string, *uint, *gdk.ModifierType) bool
 // If the parse operation fails, @accelerator_key and @accelerator_mods will
 // be set to 0 (zero).
 func AcceleratorParse(AcceleratorVar string, AcceleratorKeyVar *uint, AcceleratorModsVar *gdk.ModifierType) bool {
-
 	cret := xAcceleratorParse(AcceleratorVar, AcceleratorKeyVar, AcceleratorModsVar)
 	return cret
 }
@@ -136,13 +134,7 @@ var xAcceleratorParseWithKeycode func(string, uintptr, *uint, *[]uint, *gdk.Modi
 // If the parse fails, @accelerator_key, @accelerator_mods and
 // @accelerator_codes will be set to 0 (zero).
 func AcceleratorParseWithKeycode(AcceleratorVar string, DisplayVar *gdk.Display, AcceleratorKeyVar *uint, AcceleratorCodesVar *[]uint, AcceleratorModsVar *gdk.ModifierType) bool {
-
-	var DisplayVarPtr uintptr
-	if DisplayVar != nil {
-		DisplayVarPtr = DisplayVar.GoPointer()
-	}
-
-	cret := xAcceleratorParseWithKeycode(AcceleratorVar, DisplayVarPtr, AcceleratorKeyVar, AcceleratorCodesVar, AcceleratorModsVar)
+	cret := xAcceleratorParseWithKeycode(AcceleratorVar, DisplayVar.GoPointer(), AcceleratorKeyVar, AcceleratorCodesVar, AcceleratorModsVar)
 	return cret
 }
 
@@ -155,14 +147,13 @@ var xAcceleratorValid func(uint, gdk.ModifierType) bool
 // and matches the “Ctrl+a” accelerator. But, you can't, for instance, use
 // the `GDK_KEY_Control_L` keyval as an accelerator.
 func AcceleratorValid(KeyvalVar uint, ModifiersVar gdk.ModifierType) bool {
-
 	cret := xAcceleratorValid(KeyvalVar, ModifiersVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -172,6 +163,7 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xAcceleratorGetAccessibleLabel, libs, "gtk_accelerator_get_accessible_label")
 	core.PuregoSafeRegister(&xAcceleratorGetDefaultModMask, libs, "gtk_accelerator_get_default_mod_mask")
 	core.PuregoSafeRegister(&xAcceleratorGetLabel, libs, "gtk_accelerator_get_label")
 	core.PuregoSafeRegister(&xAcceleratorGetLabelWithKeycode, libs, "gtk_accelerator_get_label_with_keycode")
@@ -180,5 +172,4 @@ func init() {
 	core.PuregoSafeRegister(&xAcceleratorParse, libs, "gtk_accelerator_parse")
 	core.PuregoSafeRegister(&xAcceleratorParseWithKeycode, libs, "gtk_accelerator_parse_with_keycode")
 	core.PuregoSafeRegister(&xAcceleratorValid, libs, "gtk_accelerator_valid")
-
 }

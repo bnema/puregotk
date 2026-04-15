@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -78,7 +77,6 @@ var xZlibCompressorGetOs func(uintptr) int
 
 // Gets the [property@Gio.ZlibCompressor:os] property.
 func (x *ZlibCompressor) GetOs() int {
-
 	cret := xZlibCompressorGetOs(x.GoPointer())
 	return cret
 }
@@ -91,14 +89,7 @@ var xZlibCompressorSetFileInfo func(uintptr, uintptr)
 // progress; it may only be called immediately after creation of @compressor,
 // or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetFileInfo(FileInfoVar *FileInfo) {
-
-	var FileInfoVarPtr uintptr
-	if FileInfoVar != nil {
-		FileInfoVarPtr = FileInfoVar.GoPointer()
-	}
-
-	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVarPtr)
-
+	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVar.GoPointer())
 }
 
 var xZlibCompressorSetOs func(uintptr, int)
@@ -109,9 +100,7 @@ var xZlibCompressorSetOs func(uintptr, int)
 // progress; it may only be called immediately after creation of @compressor,
 // or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetOs(OsVar int) {
-
 	xZlibCompressorSetOs(x.GoPointer(), OsVar)
-
 }
 
 func (c *ZlibCompressor) GoPointer() uintptr {
@@ -273,7 +262,6 @@ func (x *ZlibCompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar [
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Applies @converter to the data in @bytes.
@@ -281,25 +269,25 @@ func (x *ZlibCompressor) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error)
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
 func (x *ZlibCompressor) Reset() {
-
 	XGConverterReset(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -317,5 +305,4 @@ func init() {
 	core.PuregoSafeRegister(&xZlibCompressorGetOs, libs, "g_zlib_compressor_get_os")
 	core.PuregoSafeRegister(&xZlibCompressorSetFileInfo, libs, "g_zlib_compressor_set_file_info")
 	core.PuregoSafeRegister(&xZlibCompressorSetOs, libs, "g_zlib_compressor_set_os")
-
 }

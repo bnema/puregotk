@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -393,9 +392,7 @@ var xFilterChanged func(uintptr, FilterChange)
 // This function is intended for implementers of `GtkFilter`
 // subclasses and should not be called from other functions.
 func (x *Filter) Changed(ChangeVar FilterChange) {
-
 	xFilterChanged(x.GoPointer(), ChangeVar)
-
 }
 
 var xFilterGetStrictness func(uintptr) FilterMatch
@@ -410,7 +407,6 @@ var xFilterGetStrictness func(uintptr) FilterMatch
 // This function is meant purely for optimization purposes. Filters can
 // choose to omit implementing it, but `GtkFilterListModel` uses it.
 func (x *Filter) GetStrictness() FilterMatch {
-
 	cret := xFilterGetStrictness(x.GoPointer())
 	return cret
 }
@@ -419,7 +415,6 @@ var xFilterMatch func(uintptr, uintptr) bool
 
 // Checks if the given @item is matched by the filter or not.
 func (x *Filter) Match(ItemVar *gobject.Object) bool {
-
 	cret := xFilterMatch(x.GoPointer(), ItemVar.GoPointer())
 	return cret
 }
@@ -459,7 +454,6 @@ func (x *Filter) ConnectChanged(cb *func(Filter, FilterChange)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ChangeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -470,7 +464,7 @@ func (x *Filter) ConnectChanged(cb *func(Filter, FilterChange)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -489,5 +483,4 @@ func init() {
 	core.PuregoSafeRegister(&xFilterChanged, libs, "gtk_filter_changed")
 	core.PuregoSafeRegister(&xFilterGetStrictness, libs, "gtk_filter_get_strictness")
 	core.PuregoSafeRegister(&xFilterMatch, libs, "gtk_filter_match")
-
 }

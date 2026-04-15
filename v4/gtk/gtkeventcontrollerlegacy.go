@@ -5,10 +5,8 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
-	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -70,7 +68,7 @@ func (c *EventControllerLegacy) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted for each GDK event delivered to @controller.
-func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, *gdk.Event) bool) uint {
+func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -83,8 +81,7 @@ func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, *gd
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Event { cls := &gdk.Event{}; cls.Ptr = EventVarp; return cls }())
-
+		return cbFn(fa, EventVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -95,7 +92,7 @@ func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, *gd
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -108,5 +105,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerLegacyGLibType, libs, "gtk_event_controller_legacy_get_type")
 
 	core.PuregoSafeRegister(&xNewEventControllerLegacy, libs, "gtk_event_controller_legacy_new")
-
 }

@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -60,9 +59,7 @@ var xOnErrorQuery func(string)
 // variable (see [Running GLib Applications](running.html)) and
 // calling g_on_error_stack_trace() instead.
 func OnErrorQuery(PrgNameVar string) {
-
 	xOnErrorQuery(PrgNameVar)
-
 }
 
 var xOnErrorStackTrace func(uintptr)
@@ -81,17 +78,15 @@ var xOnErrorStackTrace func(uintptr)
 // variable is set, a debugger will be invoked to attach and
 // handle that exception (see [Running GLib Applications](running.html)).
 func OnErrorStackTrace(PrgNameVar *string) {
-
 	PrgNameVarPtr := core.GStrdupNullable(PrgNameVar)
 	defer core.GFreeNullable(PrgNameVarPtr)
 
 	xOnErrorStackTrace(PrgNameVarPtr)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -103,5 +98,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xOnErrorQuery, libs, "g_on_error_query")
 	core.PuregoSafeRegister(&xOnErrorStackTrace, libs, "g_on_error_stack_trace")
-
 }

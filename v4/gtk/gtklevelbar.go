@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -190,16 +189,13 @@ var xLevelBarAddOffsetValue func(uintptr, string, float64)
 // If another offset marker named @name exists, its value will be
 // replaced by @value.
 func (x *LevelBar) AddOffsetValue(NameVar string, ValueVar float64) {
-
 	xLevelBarAddOffsetValue(x.GoPointer(), NameVar, ValueVar)
-
 }
 
 var xLevelBarGetInverted func(uintptr) bool
 
 // Returns whether the levelbar is inverted.
 func (x *LevelBar) GetInverted() bool {
-
 	cret := xLevelBarGetInverted(x.GoPointer())
 	return cret
 }
@@ -208,7 +204,6 @@ var xLevelBarGetMaxValue func(uintptr) float64
 
 // Returns the `max-value` of the `GtkLevelBar`.
 func (x *LevelBar) GetMaxValue() float64 {
-
 	cret := xLevelBarGetMaxValue(x.GoPointer())
 	return cret
 }
@@ -217,7 +212,6 @@ var xLevelBarGetMinValue func(uintptr) float64
 
 // Returns the `min-value` of the `GtkLevelBar`.
 func (x *LevelBar) GetMinValue() float64 {
-
 	cret := xLevelBarGetMinValue(x.GoPointer())
 	return cret
 }
@@ -226,7 +220,6 @@ var xLevelBarGetMode func(uintptr) LevelBarMode
 
 // Returns the `mode` of the `GtkLevelBar`.
 func (x *LevelBar) GetMode() LevelBarMode {
-
 	cret := xLevelBarGetMode(x.GoPointer())
 	return cret
 }
@@ -235,7 +228,6 @@ var xLevelBarGetOffsetValue func(uintptr, uintptr, *float64) bool
 
 // Fetches the value specified for the offset marker @name in @self.
 func (x *LevelBar) GetOffsetValue(NameVar *string, ValueVar *float64) bool {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
@@ -247,7 +239,6 @@ var xLevelBarGetValue func(uintptr) float64
 
 // Returns the `value` of the `GtkLevelBar`.
 func (x *LevelBar) GetValue() float64 {
-
 	cret := xLevelBarGetValue(x.GoPointer())
 	return cret
 }
@@ -259,21 +250,17 @@ var xLevelBarRemoveOffsetValue func(uintptr, uintptr)
 // The marker must have been previously added with
 // [method@Gtk.LevelBar.add_offset_value].
 func (x *LevelBar) RemoveOffsetValue(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVarPtr)
-
 }
 
 var xLevelBarSetInverted func(uintptr, bool)
 
 // Sets whether the `GtkLevelBar` is inverted.
 func (x *LevelBar) SetInverted(InvertedVar bool) {
-
 	xLevelBarSetInverted(x.GoPointer(), InvertedVar)
-
 }
 
 var xLevelBarSetMaxValue func(uintptr, float64)
@@ -283,9 +270,7 @@ var xLevelBarSetMaxValue func(uintptr, float64)
 // You probably want to update preexisting level offsets after calling
 // this function.
 func (x *LevelBar) SetMaxValue(ValueVar float64) {
-
 	xLevelBarSetMaxValue(x.GoPointer(), ValueVar)
-
 }
 
 var xLevelBarSetMinValue func(uintptr, float64)
@@ -295,27 +280,21 @@ var xLevelBarSetMinValue func(uintptr, float64)
 // You probably want to update preexisting level offsets after calling
 // this function.
 func (x *LevelBar) SetMinValue(ValueVar float64) {
-
 	xLevelBarSetMinValue(x.GoPointer(), ValueVar)
-
 }
 
 var xLevelBarSetMode func(uintptr, LevelBarMode)
 
 // Sets the `mode` of the `GtkLevelBar`.
 func (x *LevelBar) SetMode(ModeVar LevelBarMode) {
-
 	xLevelBarSetMode(x.GoPointer(), ModeVar)
-
 }
 
 var xLevelBarSetValue func(uintptr, float64)
 
 // Sets the value of the `GtkLevelBar`.
 func (x *LevelBar) SetValue(ValueVar float64) {
-
 	xLevelBarSetValue(x.GoPointer(), ValueVar)
-
 }
 
 func (c *LevelBar) GoPointer() uintptr {
@@ -424,38 +403,11 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(NameVarp))
-
+		cbFn(fa, NameVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
-	return handlerID
-}
-
-// ConnectOffsetChangedWithDetail connects to the "offset-changed" signal with a detail string.
-// The detail is appended as "offset-changed::<detail>".
-func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelBar, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	signalName := fmt.Sprintf("offset-changed::%s", detail)
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, NameVarp uintptr) {
-		fa := LevelBar{}
-		fa.Ptr = clsPtr
-		cbFn := *cb
-
-		cbFn(fa, core.GoString(NameVarp))
-
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 	glib.SaveHandlerMapping(handlerID, cbPtr)
 	return handlerID
 }
@@ -470,9 +422,19 @@ func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelB
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *LevelBar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *LevelBar) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -493,7 +455,6 @@ func (x *LevelBar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *LevelBar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -518,7 +479,6 @@ func (x *LevelBar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *LevelBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -557,30 +517,23 @@ func (x *LevelBar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *LevelBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *LevelBar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *LevelBar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *LevelBar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -593,19 +546,7 @@ func (x *LevelBar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *LevelBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -613,14 +554,7 @@ func (x *LevelBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *LevelBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -629,9 +563,7 @@ func (x *LevelBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *LevelBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -653,9 +585,7 @@ func (x *LevelBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *LevelBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -665,9 +595,7 @@ func (x *LevelBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *LevelBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -689,9 +617,7 @@ func (x *LevelBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *LevelBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -701,9 +627,7 @@ func (x *LevelBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *LevelBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -726,9 +650,7 @@ func (x *LevelBar) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *LevelBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -738,9 +660,7 @@ func (x *LevelBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *LevelBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -748,28 +668,24 @@ func (x *LevelBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *LevelBar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *LevelBar) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *LevelBar) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -797,5 +713,4 @@ func init() {
 	core.PuregoSafeRegister(&xLevelBarSetMinValue, libs, "gtk_level_bar_set_min_value")
 	core.PuregoSafeRegister(&xLevelBarSetMode, libs, "gtk_level_bar_set_mode")
 	core.PuregoSafeRegister(&xLevelBarSetValue, libs, "gtk_level_bar_set_value")
-
 }

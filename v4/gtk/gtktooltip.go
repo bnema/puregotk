@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -63,14 +62,7 @@ var xTooltipSetCustom func(uintptr, uintptr)
 // the tooltip, which can be configured using gtk_tooltip_set_markup()
 // and gtk_tooltip_set_icon().
 func (x *Tooltip) SetCustom(CustomWidgetVar *Widget) {
-
-	var CustomWidgetVarPtr uintptr
-	if CustomWidgetVar != nil {
-		CustomWidgetVarPtr = CustomWidgetVar.GoPointer()
-	}
-
-	xTooltipSetCustom(x.GoPointer(), CustomWidgetVarPtr)
-
+	xTooltipSetCustom(x.GoPointer(), CustomWidgetVar.GoPointer())
 }
 
 var xTooltipSetIcon func(uintptr, uintptr)
@@ -78,14 +70,7 @@ var xTooltipSetIcon func(uintptr, uintptr)
 // Sets the icon of the tooltip (which is in front of the text) to be
 // @paintable.  If @paintable is %NULL, the image will be hidden.
 func (x *Tooltip) SetIcon(PaintableVar gdk.Paintable) {
-
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	xTooltipSetIcon(x.GoPointer(), PaintableVarPtr)
-
+	xTooltipSetIcon(x.GoPointer(), PaintableVar.GoPointer())
 }
 
 var xTooltipSetIconFromGicon func(uintptr, uintptr)
@@ -94,14 +79,7 @@ var xTooltipSetIconFromGicon func(uintptr, uintptr)
 // to be the icon indicated by @gicon with the size indicated
 // by @size. If @gicon is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromGicon(GiconVar gio.Icon) {
-
-	var GiconVarPtr uintptr
-	if GiconVar != nil {
-		GiconVarPtr = GiconVar.GoPointer()
-	}
-
-	xTooltipSetIconFromGicon(x.GoPointer(), GiconVarPtr)
-
+	xTooltipSetIconFromGicon(x.GoPointer(), GiconVar.GoPointer())
 }
 
 var xTooltipSetIconFromIconName func(uintptr, uintptr)
@@ -110,12 +88,10 @@ var xTooltipSetIconFromIconName func(uintptr, uintptr)
 // the icon indicated by @icon_name with the size indicated
 // by @size.  If @icon_name is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xTooltipSetIconFromIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xTooltipSetMarkup func(uintptr, uintptr)
@@ -125,12 +101,10 @@ var xTooltipSetMarkup func(uintptr, uintptr)
 // The string must be marked up with Pango markup.
 // If @markup is %NULL, the label will be hidden.
 func (x *Tooltip) SetMarkup(MarkupVar *string) {
-
 	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
 	defer core.GFreeNullable(MarkupVarPtr)
 
 	xTooltipSetMarkup(x.GoPointer(), MarkupVarPtr)
-
 }
 
 var xTooltipSetText func(uintptr, uintptr)
@@ -140,12 +114,10 @@ var xTooltipSetText func(uintptr, uintptr)
 // If @text is %NULL, the label will be hidden.
 // See also [method@Gtk.Tooltip.set_markup].
 func (x *Tooltip) SetText(TextVar *string) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xTooltipSetText(x.GoPointer(), TextVarPtr)
-
 }
 
 var xTooltipSetTipArea func(uintptr, *gdk.Rectangle)
@@ -159,9 +131,7 @@ var xTooltipSetTipArea func(uintptr, *gdk.Rectangle)
 // functions for this: gtk_tree_view_set_tooltip_row() and
 // gtk_tree_view_set_tooltip_cell().
 func (x *Tooltip) SetTipArea(RectVar *gdk.Rectangle) {
-
 	xTooltipSetTipArea(x.GoPointer(), RectVar)
-
 }
 
 func (c *Tooltip) GoPointer() uintptr {
@@ -177,7 +147,7 @@ func (c *Tooltip) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -196,5 +166,4 @@ func init() {
 	core.PuregoSafeRegister(&xTooltipSetMarkup, libs, "gtk_tooltip_set_markup")
 	core.PuregoSafeRegister(&xTooltipSetText, libs, "gtk_tooltip_set_text")
 	core.PuregoSafeRegister(&xTooltipSetTipArea, libs, "gtk_tooltip_set_tip_area")
-
 }

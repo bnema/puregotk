@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -299,9 +298,7 @@ var xLayoutManagerAllocate func(uintptr, uintptr, int, int, int)
 // a @widget, and computes the position and sizes of the children of
 // the @widget using the layout management policy of @manager.
 func (x *LayoutManager) Allocate(WidgetVar *Widget, WidthVar int, HeightVar int, BaselineVar int) {
-
 	xLayoutManagerAllocate(x.GoPointer(), WidgetVar.GoPointer(), WidthVar, HeightVar, BaselineVar)
-
 }
 
 var xLayoutManagerGetLayoutChild func(uintptr, uintptr) uintptr
@@ -332,7 +329,6 @@ var xLayoutManagerGetRequestMode func(uintptr) SizeRequestMode
 
 // Retrieves the request mode of @manager.
 func (x *LayoutManager) GetRequestMode() SizeRequestMode {
-
 	cret := xLayoutManagerGetRequestMode(x.GoPointer())
 	return cret
 }
@@ -361,9 +357,7 @@ var xLayoutManagerLayoutChanged func(uintptr)
 // This function should be called by subclasses of `GtkLayoutManager`
 // in response to changes to their layout management policies.
 func (x *LayoutManager) LayoutChanged() {
-
 	xLayoutManagerLayoutChanged(x.GoPointer())
-
 }
 
 var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int, *int, *int, *int, *int)
@@ -374,9 +368,7 @@ var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int, *int, *int, *
 // See the [class@Gtk.Widget] documentation on layout management for
 // more details.
 func (x *LayoutManager) Measure(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
-
 	xLayoutManagerMeasure(x.GoPointer(), WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
-
 }
 
 func (c *LayoutManager) GoPointer() uintptr {
@@ -392,7 +384,7 @@ func (c *LayoutManager) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -410,5 +402,4 @@ func init() {
 	core.PuregoSafeRegister(&xLayoutManagerGetWidget, libs, "gtk_layout_manager_get_widget")
 	core.PuregoSafeRegister(&xLayoutManagerLayoutChanged, libs, "gtk_layout_manager_layout_changed")
 	core.PuregoSafeRegister(&xLayoutManagerMeasure, libs, "gtk_layout_manager_measure")
-
 }

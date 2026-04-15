@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -30,15 +29,17 @@ func (x *Sphere) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSphereAlloc func() *Sphere
+var xSphereAlloc func() uintptr
 
 // Allocates a new #graphene_sphere_t.
 //
 // The contents of the newly allocated structure are undefined.
 func SphereAlloc() *Sphere {
-
 	cret := xSphereAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
 var xSphereContainsPoint func(uintptr, *Point3D) bool
@@ -46,7 +47,6 @@ var xSphereContainsPoint func(uintptr, *Point3D) bool
 // Checks whether the given @point is contained in the volume
 // of a #graphene_sphere_t.
 func (x *Sphere) ContainsPoint(PointVar *Point3D) bool {
-
 	cret := xSphereContainsPoint(x.GoPointer(), PointVar)
 	return cret
 }
@@ -56,7 +56,6 @@ var xSphereDistance func(uintptr, *Point3D) float32
 // Computes the distance of the given @point from the surface of
 // a #graphene_sphere_t.
 func (x *Sphere) Distance(PointVar *Point3D) float32 {
-
 	cret := xSphereDistance(x.GoPointer(), PointVar)
 	return cret
 }
@@ -65,7 +64,6 @@ var xSphereEqual func(uintptr, *Sphere) bool
 
 // Checks whether two #graphene_sphere_t are equal.
 func (x *Sphere) Equal(BVar *Sphere) bool {
-
 	cret := xSphereEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -74,9 +72,7 @@ var xSphereFree func(uintptr)
 
 // Frees the resources allocated by graphene_sphere_alloc().
 func (x *Sphere) Free() {
-
 	xSphereFree(x.GoPointer())
-
 }
 
 var xSphereGetBoundingBox func(uintptr, *Box)
@@ -84,39 +80,36 @@ var xSphereGetBoundingBox func(uintptr, *Box)
 // Computes the bounding box capable of containing the
 // given #graphene_sphere_t.
 func (x *Sphere) GetBoundingBox(BoxVar *Box) {
-
 	xSphereGetBoundingBox(x.GoPointer(), BoxVar)
-
 }
 
 var xSphereGetCenter func(uintptr, *Point3D)
 
 // Retrieves the coordinates of the center of a #graphene_sphere_t.
 func (x *Sphere) GetCenter(CenterVar *Point3D) {
-
 	xSphereGetCenter(x.GoPointer(), CenterVar)
-
 }
 
 var xSphereGetRadius func(uintptr) float32
 
 // Retrieves the radius of a #graphene_sphere_t.
 func (x *Sphere) GetRadius() float32 {
-
 	cret := xSphereGetRadius(x.GoPointer())
 	return cret
 }
 
-var xSphereInit func(uintptr, *Point3D, float32) *Sphere
+var xSphereInit func(uintptr, *Point3D, float32) uintptr
 
 // Initializes the given #graphene_sphere_t with the given @center and @radius.
 func (x *Sphere) Init(CenterVar *Point3D, RadiusVar float32) *Sphere {
-
 	cret := xSphereInit(x.GoPointer(), CenterVar, RadiusVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromPoints func(uintptr, uint, []Point3D, *Point3D) *Sphere
+var xSphereInitFromPoints func(uintptr, uint, []Point3D, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
@@ -124,12 +117,14 @@ var xSphereInitFromPoints func(uintptr, uint, []Point3D, *Point3D) *Sphere
 // The center of the sphere can either be specified, or will be center
 // of the 3D volume that encompasses all @points.
 func (x *Sphere) InitFromPoints(NPointsVar uint, PointsVar []Point3D, CenterVar *Point3D) *Sphere {
-
 	cret := xSphereInitFromPoints(x.GoPointer(), NPointsVar, PointsVar, CenterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromVectors func(uintptr, uint, []Vec3, *Point3D) *Sphere
+var xSphereInitFromVectors func(uintptr, uint, []Vec3, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
@@ -137,16 +132,17 @@ var xSphereInitFromVectors func(uintptr, uint, []Vec3, *Point3D) *Sphere
 // The center of the sphere can either be specified, or will be center
 // of the 3D volume that encompasses all @vectors.
 func (x *Sphere) InitFromVectors(NVectorsVar uint, VectorsVar []Vec3, CenterVar *Point3D) *Sphere {
-
 	cret := xSphereInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar, CenterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
 var xSphereIsEmpty func(uintptr) bool
 
 // Checks whether the sphere has a zero radius.
 func (x *Sphere) IsEmpty() bool {
-
 	cret := xSphereIsEmpty(x.GoPointer())
 	return cret
 }
@@ -156,14 +152,12 @@ var xSphereTranslate func(uintptr, *Point3D, *Sphere)
 // Translates the center of the given #graphene_sphere_t using the @point
 // coordinates as the delta of the translation.
 func (x *Sphere) Translate(PointVar *Point3D, ResVar *Sphere) {
-
 	xSphereTranslate(x.GoPointer(), PointVar, ResVar)
-
 }
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0", "libgraphene-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GRAPHENE") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -189,5 +183,4 @@ func init() {
 	core.PuregoSafeRegister(&xSphereInitFromVectors, libs, "graphene_sphere_init_from_vectors")
 	core.PuregoSafeRegister(&xSphereIsEmpty, libs, "graphene_sphere_is_empty")
 	core.PuregoSafeRegister(&xSphereTranslate, libs, "graphene_sphere_translate")
-
 }

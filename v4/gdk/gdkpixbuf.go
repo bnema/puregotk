@@ -2,8 +2,7 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gdkpixbuf"
@@ -53,7 +52,7 @@ func PixbufGetFromTexture(TextureVar *Texture) *gdkpixbuf.Pixbuf {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -65,5 +64,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPixbufGetFromSurface, libs, "gdk_pixbuf_get_from_surface")
 	core.PuregoSafeRegister(&xPixbufGetFromTexture, libs, "gdk_pixbuf_get_from_texture")
-
 }

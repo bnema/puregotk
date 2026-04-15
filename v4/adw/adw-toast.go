@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -240,34 +239,32 @@ var xToastDismiss func(uintptr)
 // Does nothing if @self has already been dismissed, or hasn't been added to an
 // [class@ToastOverlay].
 func (x *Toast) Dismiss() {
-
 	xToastDismiss(x.GoPointer())
-
 }
 
 var xToastGetActionName func(uintptr) string
 
 // Gets the name of the associated action.
 func (x *Toast) GetActionName() string {
-
 	cret := xToastGetActionName(x.GoPointer())
 	return cret
 }
 
-var xToastGetActionTargetValue func(uintptr) *glib.Variant
+var xToastGetActionTargetValue func(uintptr) uintptr
 
 // Gets the parameter for action invocations.
 func (x *Toast) GetActionTargetValue() *glib.Variant {
-
 	cret := xToastGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xToastGetButtonLabel func(uintptr) string
 
 // Gets the label to show on the button.
 func (x *Toast) GetButtonLabel() string {
-
 	cret := xToastGetButtonLabel(x.GoPointer())
 	return cret
 }
@@ -293,7 +290,6 @@ var xToastGetPriority func(uintptr) ToastPriority
 
 // Gets priority for @self.
 func (x *Toast) GetPriority() ToastPriority {
-
 	cret := xToastGetPriority(x.GoPointer())
 	return cret
 }
@@ -302,7 +298,6 @@ var xToastGetTimeout func(uintptr) uint
 
 // Gets timeout for @self.
 func (x *Toast) GetTimeout() uint {
-
 	cret := xToastGetTimeout(x.GoPointer())
 	return cret
 }
@@ -314,7 +309,6 @@ var xToastGetTitle func(uintptr) string
 // If a custom title has been set with [method@Adw.Toast.set_custom_title]
 // the return value will be %NULL.
 func (x *Toast) GetTitle() string {
-
 	cret := xToastGetTitle(x.GoPointer())
 	return cret
 }
@@ -323,7 +317,6 @@ var xToastGetUseMarkup func(uintptr) bool
 
 // Gets whether to use Pango markup for the toast title.
 func (x *Toast) GetUseMarkup() bool {
-
 	cret := xToastGetUseMarkup(x.GoPointer())
 	return cret
 }
@@ -336,12 +329,10 @@ var xToastSetActionName func(uintptr, uintptr)
 //
 // See [property@Toast:action-target].
 func (x *Toast) SetActionName(ActionNameVar *string) {
-
 	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
 	defer core.GFreeNullable(ActionNameVarPtr)
 
 	xToastSetActionName(x.GoPointer(), ActionNameVarPtr)
-
 }
 
 var xToastSetActionTarget func(uintptr, uintptr, ...interface{})
@@ -356,12 +347,10 @@ var xToastSetActionTarget func(uintptr, uintptr, ...interface{})
 // the action name at the same time, you can use
 // [method@Toast.set_detailed_action_name].
 func (x *Toast) SetActionTarget(FormatStringVar *string, varArgs ...interface{}) {
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
 	xToastSetActionTarget(x.GoPointer(), FormatStringVarPtr, varArgs...)
-
 }
 
 var xToastSetActionTargetValue func(uintptr, *glib.Variant)
@@ -371,9 +360,7 @@ var xToastSetActionTargetValue func(uintptr, *glib.Variant)
 // If the @action_target variant has a floating reference this function
 // will sink it.
 func (x *Toast) SetActionTargetValue(ActionTargetVar *glib.Variant) {
-
 	xToastSetActionTargetValue(x.GoPointer(), ActionTargetVar)
-
 }
 
 var xToastSetButtonLabel func(uintptr, uintptr)
@@ -386,12 +373,10 @@ var xToastSetButtonLabel func(uintptr, uintptr)
 //
 // See [property@Toast:action-name].
 func (x *Toast) SetButtonLabel(ButtonLabelVar *string) {
-
 	ButtonLabelVarPtr := core.GStrdupNullable(ButtonLabelVar)
 	defer core.GFreeNullable(ButtonLabelVarPtr)
 
 	xToastSetButtonLabel(x.GoPointer(), ButtonLabelVarPtr)
-
 }
 
 var xToastSetCustomTitle func(uintptr, uintptr)
@@ -403,14 +388,7 @@ var xToastSetCustomTitle func(uintptr, uintptr)
 //
 // Setting a custom title will unset [property@Toast:title].
 func (x *Toast) SetCustomTitle(WidgetVar *gtk.Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xToastSetCustomTitle(x.GoPointer(), WidgetVarPtr)
-
+	xToastSetCustomTitle(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 var xToastSetDetailedActionName func(uintptr, uintptr)
@@ -420,12 +398,10 @@ var xToastSetDetailedActionName func(uintptr, uintptr)
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *Toast) SetDetailedActionName(DetailedActionNameVar *string) {
-
 	DetailedActionNameVarPtr := core.GStrdupNullable(DetailedActionNameVar)
 	defer core.GFreeNullable(DetailedActionNameVarPtr)
 
 	xToastSetDetailedActionName(x.GoPointer(), DetailedActionNameVarPtr)
-
 }
 
 var xToastSetPriority func(uintptr, ToastPriority)
@@ -435,14 +411,12 @@ var xToastSetPriority func(uintptr, ToastPriority)
 // Priority controls how the toast behaves when another toast is already
 // being displayed.
 //
-// If @priority is `ADW_TOAST_PRIORITY_NORMAL`, the toast will be queued.
+// If @priority is [enum@Adw.ToastPriority.normal], the toast will be queued.
 //
-// If @priority is `ADW_TOAST_PRIORITY_HIGH`, the toast will be displayed
+// If @priority is [enum@Adw.ToastPriority.high], the toast will be displayed
 // immediately, pushing the previous toast into the queue instead.
 func (x *Toast) SetPriority(PriorityVar ToastPriority) {
-
 	xToastSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 var xToastSetTimeout func(uintptr, uint)
@@ -455,9 +429,7 @@ var xToastSetTimeout func(uintptr, uint)
 // Toasts cannot disappear while being hovered, pressed (on touchscreen), or
 // have keyboard focus inside them.
 func (x *Toast) SetTimeout(TimeoutVar uint) {
-
 	xToastSetTimeout(x.GoPointer(), TimeoutVar)
-
 }
 
 var xToastSetTitle func(uintptr, string)
@@ -470,9 +442,7 @@ var xToastSetTitle func(uintptr, string)
 //
 // If [property@Toast:custom-title] is set, it will be used instead.
 func (x *Toast) SetTitle(TitleVar string) {
-
 	xToastSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xToastSetUseMarkup func(uintptr, bool)
@@ -481,9 +451,7 @@ var xToastSetUseMarkup func(uintptr, bool)
 //
 // See also [func@Pango.parse_markup].
 func (x *Toast) SetUseMarkup(UseMarkupVar bool) {
-
 	xToastSetUseMarkup(x.GoPointer(), UseMarkupVar)
-
 }
 
 func (c *Toast) GoPointer() uintptr {
@@ -664,7 +632,6 @@ func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -688,7 +655,6 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -699,7 +665,7 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -735,5 +701,4 @@ func init() {
 	core.PuregoSafeRegister(&xToastSetTimeout, libs, "adw_toast_set_timeout")
 	core.PuregoSafeRegister(&xToastSetTitle, libs, "adw_toast_set_title")
 	core.PuregoSafeRegister(&xToastSetUseMarkup, libs, "adw_toast_set_use_markup")
-
 }

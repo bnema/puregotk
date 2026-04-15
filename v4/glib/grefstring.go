@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -20,7 +19,6 @@ var xRefStringAcquire func(string) string
 
 // Acquires a reference on a string.
 func RefStringAcquire(StrVar string) string {
-
 	cret := xRefStringAcquire(StrVar)
 
 	return cret
@@ -35,7 +33,6 @@ var xRefStringEqual func(string, string) bool
 // can return slightly faster as it can check the string lengths before checking
 // all the bytes.
 func RefStringEqual(Str1Var string, Str2Var string) bool {
-
 	cret := xRefStringEqual(Str1Var, Str2Var)
 
 	return cret
@@ -45,7 +42,6 @@ var xRefStringLength func(string) uint
 
 // Retrieves the length of @str.
 func RefStringLength(StrVar string) uint {
-
 	cret := xRefStringLength(StrVar)
 
 	return cret
@@ -56,7 +52,6 @@ var xRefStringNew func(string) string
 // Creates a new reference counted string and copies the contents of @str
 // into it.
 func RefStringNew(StrVar string) string {
-
 	cret := xRefStringNew(StrVar)
 
 	return cret
@@ -71,7 +66,6 @@ var xRefStringNewIntern func(string) string
 // the same contents of @str, it will return a new reference, instead of
 // creating a new string.
 func RefStringNewIntern(StrVar string) string {
-
 	cret := xRefStringNewIntern(StrVar)
 
 	return cret
@@ -85,7 +79,6 @@ var xRefStringNewLen func(string, int) string
 // Since this function does not stop at nul bytes, it is the caller's
 // responsibility to ensure that @str has at least @len addressable bytes.
 func RefStringNewLen(StrVar string, LenVar int) string {
-
 	cret := xRefStringNewLen(StrVar, LenVar)
 
 	return cret
@@ -96,14 +89,12 @@ var xRefStringRelease func(string)
 // Releases a reference on a string; if it was the last reference, the
 // resources allocated by the string are freed as well.
 func RefStringRelease(StrVar string) {
-
 	xRefStringRelease(StrVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -120,5 +111,4 @@ func init() {
 	core.PuregoSafeRegister(&xRefStringNewIntern, libs, "g_ref_string_new_intern")
 	core.PuregoSafeRegister(&xRefStringNewLen, libs, "g_ref_string_new_len")
 	core.PuregoSafeRegister(&xRefStringRelease, libs, "g_ref_string_release")
-
 }

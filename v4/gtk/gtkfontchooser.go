@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -154,7 +153,7 @@ func (x *FontChooserIface) GetSetFilterFunc() func(FontChooser, *FontFilterFunc,
 	var rawCallback func(FontchooserVarp uintptr, FilterVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetFilterFunc)
 	return func(FontchooserVar FontChooser, FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-		rawCallback(FontchooserVar.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+		rawCallback(FontchooserVar.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 	}
 }
 
@@ -299,7 +298,6 @@ func (x *FontChooserBase) SetGoPointer(ptr uintptr) {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserBase) GetFont() string {
-
 	cret := XGtkFontChooserGetFont(x.GoPointer())
 	return cret
 }
@@ -315,9 +313,11 @@ func (x *FontChooserBase) GetFont() string {
 // Use [method@Pango.FontDescription.equal] if you want to compare two
 // font descriptions.
 func (x *FontChooserBase) GetFontDesc() *pango.FontDescription {
-
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 // Gets the `PangoFontFace` representing the selected font group
@@ -363,7 +363,6 @@ func (x *FontChooserBase) GetFontFamily() *pango.FontFamily {
 // [CSS font-feature-settings property](https://www.w3.org/TR/css-fonts-4/#font-rend-desc).
 // It can be passed to [func@Pango.AttrFontFeatures.new].
 func (x *FontChooserBase) GetFontFeatures() string {
-
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
 	return cret
 }
@@ -385,35 +384,30 @@ func (x *FontChooserBase) GetFontMap() *pango.FontMap {
 
 // The selected font size.
 func (x *FontChooserBase) GetFontSize() int {
-
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
 	return cret
 }
 
 // Gets the language that is used for font features.
 func (x *FontChooserBase) GetLanguage() string {
-
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
 	return cret
 }
 
 // Returns the current level of granularity for selecting fonts.
 func (x *FontChooserBase) GetLevel() FontChooserLevel {
-
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
 	return cret
 }
 
 // Gets the text displayed in the preview area.
 func (x *FontChooserBase) GetPreviewText() string {
-
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
 	return cret
 }
 
 // Returns whether the preview entry is shown or not.
 func (x *FontChooserBase) GetShowPreviewEntry() bool {
-
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
 	return cret
 }
@@ -421,23 +415,17 @@ func (x *FontChooserBase) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontChooserBase) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Sets the currently-selected font.
 func (x *FontChooserBase) SetFont(FontnameVar string) {
-
 	XGtkFontChooserSetFont(x.GoPointer(), FontnameVar)
-
 }
 
 // Sets the currently-selected font from @font_desc.
 func (x *FontChooserBase) SetFontDesc(FontDescVar *pango.FontDescription) {
-
 	XGtkFontChooserSetFontDesc(x.GoPointer(), FontDescVar)
-
 }
 
 // Sets a custom font map to use for this font chooser widget.
@@ -466,44 +454,29 @@ func (x *FontChooserBase) SetFontDesc(FontDescVar *pango.FontDescription) {
 // pango_context_set_font_map (context, fontmap);
 // ```
 func (x *FontChooserBase) SetFontMap(FontmapVar *pango.FontMap) {
-
-	var FontmapVarPtr uintptr
-	if FontmapVar != nil {
-		FontmapVarPtr = FontmapVar.GoPointer()
-	}
-
-	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVarPtr)
-
+	XGtkFontChooserSetFontMap(x.GoPointer(), FontmapVar.GoPointer())
 }
 
 // Sets the language to use for font features.
 func (x *FontChooserBase) SetLanguage(LanguageVar string) {
-
 	XGtkFontChooserSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 // Sets the desired level of granularity for selecting fonts.
 func (x *FontChooserBase) SetLevel(LevelVar FontChooserLevel) {
-
 	XGtkFontChooserSetLevel(x.GoPointer(), LevelVar)
-
 }
 
 // Sets the text displayed in the preview area.
 //
 // The @text is used to show how the selected font looks.
 func (x *FontChooserBase) SetPreviewText(TextVar string) {
-
 	XGtkFontChooserSetPreviewText(x.GoPointer(), TextVar)
-
 }
 
 // Shows or hides the editable preview entry.
 func (x *FontChooserBase) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
-
 	XGtkFontChooserSetShowPreviewEntry(x.GoPointer(), ShowPreviewEntryVar)
-
 }
 
 // SetPropertyFont sets the "font" property.
@@ -624,25 +597,27 @@ func (x *FontChooserBase) GetPropertyShowPreviewEntry() bool {
 	return v.GetBoolean()
 }
 
-var XGtkFontChooserGetFont func(uintptr) string
-var XGtkFontChooserGetFontDesc func(uintptr) *pango.FontDescription
-var XGtkFontChooserGetFontFace func(uintptr) uintptr
-var XGtkFontChooserGetFontFamily func(uintptr) uintptr
-var XGtkFontChooserGetFontFeatures func(uintptr) string
-var XGtkFontChooserGetFontMap func(uintptr) uintptr
-var XGtkFontChooserGetFontSize func(uintptr) int
-var XGtkFontChooserGetLanguage func(uintptr) string
-var XGtkFontChooserGetLevel func(uintptr) FontChooserLevel
-var XGtkFontChooserGetPreviewText func(uintptr) string
-var XGtkFontChooserGetShowPreviewEntry func(uintptr) bool
-var XGtkFontChooserSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
-var XGtkFontChooserSetFont func(uintptr, string)
-var XGtkFontChooserSetFontDesc func(uintptr, *pango.FontDescription)
-var XGtkFontChooserSetFontMap func(uintptr, uintptr)
-var XGtkFontChooserSetLanguage func(uintptr, string)
-var XGtkFontChooserSetLevel func(uintptr, FontChooserLevel)
-var XGtkFontChooserSetPreviewText func(uintptr, string)
-var XGtkFontChooserSetShowPreviewEntry func(uintptr, bool)
+var (
+	XGtkFontChooserGetFont             func(uintptr) string
+	XGtkFontChooserGetFontDesc         func(uintptr) uintptr
+	XGtkFontChooserGetFontFace         func(uintptr) uintptr
+	XGtkFontChooserGetFontFamily       func(uintptr) uintptr
+	XGtkFontChooserGetFontFeatures     func(uintptr) string
+	XGtkFontChooserGetFontMap          func(uintptr) uintptr
+	XGtkFontChooserGetFontSize         func(uintptr) int
+	XGtkFontChooserGetLanguage         func(uintptr) string
+	XGtkFontChooserGetLevel            func(uintptr) FontChooserLevel
+	XGtkFontChooserGetPreviewText      func(uintptr) string
+	XGtkFontChooserGetShowPreviewEntry func(uintptr) bool
+	XGtkFontChooserSetFilterFunc       func(uintptr, uintptr, uintptr, uintptr)
+	XGtkFontChooserSetFont             func(uintptr, string)
+	XGtkFontChooserSetFontDesc         func(uintptr, *pango.FontDescription)
+	XGtkFontChooserSetFontMap          func(uintptr, uintptr)
+	XGtkFontChooserSetLanguage         func(uintptr, string)
+	XGtkFontChooserSetLevel            func(uintptr, FontChooserLevel)
+	XGtkFontChooserSetPreviewText      func(uintptr, string)
+	XGtkFontChooserSetShowPreviewEntry func(uintptr, bool)
+)
 
 // Specifies the granularity of font selection
 // that is desired in a `GtkFontChooser`.
@@ -673,7 +648,7 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -706,5 +681,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkFontChooserSetLevel, libs, "gtk_font_chooser_set_level")
 	core.PuregoSafeRegister(&XGtkFontChooserSetPreviewText, libs, "gtk_font_chooser_set_preview_text")
 	core.PuregoSafeRegister(&XGtkFontChooserSetShowPreviewEntry, libs, "gtk_font_chooser_set_show_preview_entry")
-
 }

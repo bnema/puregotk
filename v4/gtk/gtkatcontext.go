@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -84,7 +83,6 @@ var xATContextGetAccessibleRole func(uintptr) AccessibleRole
 
 // Retrieves the accessible role of this context.
 func (x *ATContext) GetAccessibleRole() AccessibleRole {
-
 	cret := xATContextGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -116,7 +114,6 @@ func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -127,7 +124,7 @@ func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -143,5 +140,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xATContextGetAccessible, libs, "gtk_at_context_get_accessible")
 	core.PuregoSafeRegister(&xATContextGetAccessibleRole, libs, "gtk_at_context_get_accessible_role")
-
 }

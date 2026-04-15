@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -1117,20 +1116,17 @@ func (x *AppInfoBase) AddSupportsType(ContentTypeVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Obtains the information whether the [iface@Gio.AppInfo] can be deleted.
 // See [method@Gio.AppInfo.delete].
 func (x *AppInfoBase) CanDelete() bool {
-
 	cret := XGAppInfoCanDelete(x.GoPointer())
 	return cret
 }
 
 // Checks if a supported content type can be removed from an application.
 func (x *AppInfoBase) CanRemoveSupportsType() bool {
-
 	cret := XGAppInfoCanRemoveSupportsType(x.GoPointer())
 	return cret
 }
@@ -1141,7 +1137,6 @@ func (x *AppInfoBase) CanRemoveSupportsType() bool {
 // [iface@Gio.AppInfo]s which can be deleted, and system-wide ones which cannot.
 // See [method@Gio.AppInfo.can_delete].
 func (x *AppInfoBase) Delete() bool {
-
 	cret := XGAppInfoDelete(x.GoPointer())
 	return cret
 }
@@ -1166,7 +1161,6 @@ func (x *AppInfoBase) Dup() *AppInfoBase {
 // an identity check. In case detecting changes in the contents is needed,
 // program code must additionally compare relevant fields.
 func (x *AppInfoBase) Equal(Appinfo2Var AppInfo) bool {
-
 	cret := XGAppInfoEqual(x.GoPointer(), Appinfo2Var.GoPointer())
 	return cret
 }
@@ -1174,14 +1168,12 @@ func (x *AppInfoBase) Equal(Appinfo2Var AppInfo) bool {
 // Gets the commandline with which the application will be
 // started.
 func (x *AppInfoBase) GetCommandline() string {
-
 	cret := XGAppInfoGetCommandline(x.GoPointer())
 	return cret
 }
 
 // Gets a human-readable description of an installed application.
 func (x *AppInfoBase) GetDescription() string {
-
 	cret := XGAppInfoGetDescription(x.GoPointer())
 	return cret
 }
@@ -1189,7 +1181,6 @@ func (x *AppInfoBase) GetDescription() string {
 // Gets the display name of the application. The display name is often more
 // descriptive to the user than the name itself.
 func (x *AppInfoBase) GetDisplayName() string {
-
 	cret := XGAppInfoGetDisplayName(x.GoPointer())
 	return cret
 }
@@ -1200,7 +1191,6 @@ func (x *AppInfoBase) GetDisplayName() string {
 // to be run. To launch the executable, use [method@Gio.AppInfo.launch] and related
 // functions, rather than spawning the return value from this function.
 func (x *AppInfoBase) GetExecutable() string {
-
 	cret := XGAppInfoGetExecutable(x.GoPointer())
 	return cret
 }
@@ -1227,14 +1217,12 @@ func (x *AppInfoBase) GetIcon() *IconBase {
 // Note that the returned ID may be `NULL`, depending on how the @appinfo has
 // been constructed.
 func (x *AppInfoBase) GetId() string {
-
 	cret := XGAppInfoGetId(x.GoPointer())
 	return cret
 }
 
 // Gets the installed name of the application.
 func (x *AppInfoBase) GetName() string {
-
 	cret := XGAppInfoGetName(x.GoPointer())
 	return cret
 }
@@ -1247,7 +1235,6 @@ func (x *AppInfoBase) GetName() string {
 // [method@Gio.AppInfo.add_supports_type], but only those exported directly by
 // the application.
 func (x *AppInfoBase) GetSupportedTypes() []string {
-
 	cret := XGAppInfoGetSupportedTypes(x.GoPointer())
 	return cret
 }
@@ -1292,7 +1279,6 @@ func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Launches the application. This passes the @uris to the launched application
@@ -1320,7 +1306,6 @@ func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContex
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Async version of [method@Gio.AppInfo.launch_uris].
@@ -1330,19 +1315,7 @@ func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContex
 // extended error information for sandboxed applications, see notes for
 // [func@Gio.AppInfo.launch_default_for_uri_async].
 func (x *AppInfoBase) LaunchUrisAsync(UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVarPtr, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes a [method@Gio.AppInfo.launch_uris_async] operation.
@@ -1354,7 +1327,6 @@ func (x *AppInfoBase) LaunchUrisFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Removes a supported type from an application, if possible.
@@ -1366,7 +1338,6 @@ func (x *AppInfoBase) RemoveSupportsType(ContentTypeVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the application as the default handler for the given file extension.
@@ -1378,7 +1349,6 @@ func (x *AppInfoBase) SetAsDefaultForExtension(ExtensionVar string) (bool, error
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the application as the default handler for a given type.
@@ -1390,7 +1360,6 @@ func (x *AppInfoBase) SetAsDefaultForType(ContentTypeVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Sets the application as the last used application for a given type. This
@@ -1405,56 +1374,54 @@ func (x *AppInfoBase) SetAsLastUsedForType(ContentTypeVar string) (bool, error) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Checks if the application info should be shown in menus that
 // list available applications.
 func (x *AppInfoBase) ShouldShow() bool {
-
 	cret := XGAppInfoShouldShow(x.GoPointer())
 	return cret
 }
 
 // Checks if the application accepts files as arguments.
 func (x *AppInfoBase) SupportsFiles() bool {
-
 	cret := XGAppInfoSupportsFiles(x.GoPointer())
 	return cret
 }
 
 // Checks if the application supports reading files and directories from URIs.
 func (x *AppInfoBase) SupportsUris() bool {
-
 	cret := XGAppInfoSupportsUris(x.GoPointer())
 	return cret
 }
 
-var XGAppInfoAddSupportsType func(uintptr, string, **glib.Error) bool
-var XGAppInfoCanDelete func(uintptr) bool
-var XGAppInfoCanRemoveSupportsType func(uintptr) bool
-var XGAppInfoDelete func(uintptr) bool
-var XGAppInfoDup func(uintptr) uintptr
-var XGAppInfoEqual func(uintptr, uintptr) bool
-var XGAppInfoGetCommandline func(uintptr) string
-var XGAppInfoGetDescription func(uintptr) string
-var XGAppInfoGetDisplayName func(uintptr) string
-var XGAppInfoGetExecutable func(uintptr) string
-var XGAppInfoGetIcon func(uintptr) uintptr
-var XGAppInfoGetId func(uintptr) string
-var XGAppInfoGetName func(uintptr) string
-var XGAppInfoGetSupportedTypes func(uintptr) []string
-var XGAppInfoLaunch func(uintptr, *glib.List, uintptr, **glib.Error) bool
-var XGAppInfoLaunchUris func(uintptr, *glib.List, uintptr, **glib.Error) bool
-var XGAppInfoLaunchUrisAsync func(uintptr, *glib.List, uintptr, uintptr, uintptr, uintptr)
-var XGAppInfoLaunchUrisFinish func(uintptr, uintptr, **glib.Error) bool
-var XGAppInfoRemoveSupportsType func(uintptr, string, **glib.Error) bool
-var XGAppInfoSetAsDefaultForExtension func(uintptr, string, **glib.Error) bool
-var XGAppInfoSetAsDefaultForType func(uintptr, string, **glib.Error) bool
-var XGAppInfoSetAsLastUsedForType func(uintptr, string, **glib.Error) bool
-var XGAppInfoShouldShow func(uintptr) bool
-var XGAppInfoSupportsFiles func(uintptr) bool
-var XGAppInfoSupportsUris func(uintptr) bool
+var (
+	XGAppInfoAddSupportsType          func(uintptr, string, **glib.Error) bool
+	XGAppInfoCanDelete                func(uintptr) bool
+	XGAppInfoCanRemoveSupportsType    func(uintptr) bool
+	XGAppInfoDelete                   func(uintptr) bool
+	XGAppInfoDup                      func(uintptr) uintptr
+	XGAppInfoEqual                    func(uintptr, uintptr) bool
+	XGAppInfoGetCommandline           func(uintptr) string
+	XGAppInfoGetDescription           func(uintptr) string
+	XGAppInfoGetDisplayName           func(uintptr) string
+	XGAppInfoGetExecutable            func(uintptr) string
+	XGAppInfoGetIcon                  func(uintptr) uintptr
+	XGAppInfoGetId                    func(uintptr) string
+	XGAppInfoGetName                  func(uintptr) string
+	XGAppInfoGetSupportedTypes        func(uintptr) []string
+	XGAppInfoLaunch                   func(uintptr, *glib.List, uintptr, **glib.Error) bool
+	XGAppInfoLaunchUris               func(uintptr, *glib.List, uintptr, **glib.Error) bool
+	XGAppInfoLaunchUrisAsync          func(uintptr, *glib.List, uintptr, uintptr, uintptr, uintptr)
+	XGAppInfoLaunchUrisFinish         func(uintptr, uintptr, **glib.Error) bool
+	XGAppInfoRemoveSupportsType       func(uintptr, string, **glib.Error) bool
+	XGAppInfoSetAsDefaultForExtension func(uintptr, string, **glib.Error) bool
+	XGAppInfoSetAsDefaultForType      func(uintptr, string, **glib.Error) bool
+	XGAppInfoSetAsLastUsedForType     func(uintptr, string, **glib.Error) bool
+	XGAppInfoShouldShow               func(uintptr) bool
+	XGAppInfoSupportsFiles            func(uintptr) bool
+	XGAppInfoSupportsUris             func(uintptr) bool
+)
 
 var xAppInfoCreateFromCommandline func(string, uintptr, AppInfoCreateFlags, **glib.Error) uintptr
 
@@ -1485,10 +1452,9 @@ func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar *str
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var xAppInfoGetAll func() *glib.List
+var xAppInfoGetAll func() uintptr
 
 // Gets a list of all of the applications currently registered
 // on this system.
@@ -1504,21 +1470,25 @@ var xAppInfoGetAll func() *glib.List
 // [`Hidden` key](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html#key-hidden)
 // set.
 func AppInfoGetAll() *glib.List {
-
 	cret := xAppInfoGetAll()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xAppInfoGetAllForType func(string) *glib.List
+var xAppInfoGetAllForType func(string) uintptr
 
 // Gets a list of all [iface@Gio.AppInfo]s for a given content type,
 // including the recommended and fallback [iface@Gio.AppInfo]s. See
 // [func@Gio.AppInfo.get_recommended_for_type] and
 // [func@Gio.AppInfo.get_fallback_for_type].
 func AppInfoGetAllForType(ContentTypeVar string) *glib.List {
-
 	cret := xAppInfoGetAllForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xAppInfoGetDefaultForType func(string, bool) uintptr
@@ -1542,29 +1512,7 @@ var xAppInfoGetDefaultForTypeAsync func(string, bool, uintptr, uintptr, uintptr)
 // Asynchronously gets the default [iface@Gio.AppInfo] for a given content
 // type.
 func AppInfoGetDefaultForTypeAsync(ContentTypeVar string, MustSupportUrisVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xAppInfoGetDefaultForTypeFinish func(uintptr, **glib.Error) uintptr
@@ -1589,7 +1537,6 @@ func AppInfoGetDefaultForTypeFinish(ResultVar AsyncResult) (*AppInfoBase, error)
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xAppInfoGetDefaultForUriScheme func(string) uintptr
@@ -1618,29 +1565,7 @@ var xAppInfoGetDefaultForUriSchemeAsync func(string, uintptr, uintptr, uintptr)
 // of the URI, up to but not including the `:`, e.g. `http`,
 // `ftp` or `sip`.
 func AppInfoGetDefaultForUriSchemeAsync(UriSchemeVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xAppInfoGetDefaultForUriSchemeFinish func(uintptr, **glib.Error) uintptr
@@ -1665,21 +1590,22 @@ func AppInfoGetDefaultForUriSchemeFinish(ResultVar AsyncResult) (*AppInfoBase, e
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var xAppInfoGetFallbackForType func(string) *glib.List
+var xAppInfoGetFallbackForType func(string) uintptr
 
 // Gets a list of fallback [iface@Gio.AppInfo]s for a given content type, i.e.
 // those applications which claim to support the given content type by MIME
 // type subclassing and not directly.
 func AppInfoGetFallbackForType(ContentTypeVar string) *glib.List {
-
 	cret := xAppInfoGetFallbackForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xAppInfoGetRecommendedForType func(string) *glib.List
+var xAppInfoGetRecommendedForType func(string) uintptr
 
 // Gets a list of recommended [iface@Gio.AppInfo]s for a given content type,
 // i.e. those applications which claim to support the given content type
@@ -1689,9 +1615,11 @@ var xAppInfoGetRecommendedForType func(string) *glib.List
 // the last one for which [method@Gio.AppInfo.set_as_last_used_for_type] has
 // been called.
 func AppInfoGetRecommendedForType(ContentTypeVar string) *glib.List {
-
 	cret := xAppInfoGetRecommendedForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xAppInfoLaunchDefaultForUri func(string, uintptr, **glib.Error) bool
@@ -1716,7 +1644,6 @@ func AppInfoLaunchDefaultForUri(UriVar string, ContextVar *AppLaunchContext) (bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xAppInfoLaunchDefaultForUriAsync func(string, uintptr, uintptr, uintptr, uintptr)
@@ -1731,34 +1658,7 @@ var xAppInfoLaunchDefaultForUriAsync func(string, uintptr, uintptr, uintptr, uin
 // applications are really started before termination and if you are interested
 // in receiving error information from their activation.
 func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xAppInfoLaunchDefaultForUriFinish func(uintptr, **glib.Error) bool
@@ -1772,7 +1672,6 @@ func AppInfoLaunchDefaultForUriFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xAppInfoResetTypeAssociations func(string)
@@ -1783,9 +1682,7 @@ var xAppInfoResetTypeAssociations func(string)
 // [method@Gio.AppInfo.add_supports_type] or
 // [method@Gio.AppInfo.remove_supports_type].
 func AppInfoResetTypeAssociations(ContentTypeVar string) {
-
 	xAppInfoResetTypeAssociations(ContentTypeVar)
-
 }
 
 // `GAppInfoMonitor` monitors application information for changes.
@@ -1870,7 +1767,6 @@ func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1950,7 +1846,6 @@ var xAppLaunchContextGetDisplay func(uintptr, uintptr, *glib.List) string
 // applications are started on the same display as the launching
 // application, by setting the `DISPLAY` environment variable.
 func (x *AppLaunchContext) GetDisplay(InfoVar AppInfo, FilesVar *glib.List) string {
-
 	cret := xAppLaunchContextGetDisplay(x.GoPointer(), InfoVar.GoPointer(), FilesVar)
 	return cret
 }
@@ -1962,7 +1857,6 @@ var xAppLaunchContextGetEnvironment func(uintptr) []string
 // This is a `NULL`-terminated array of strings, where each string has
 // the form `KEY=VALUE`.
 func (x *AppLaunchContext) GetEnvironment() []string {
-
 	cret := xAppLaunchContextGetEnvironment(x.GoPointer())
 	return cret
 }
@@ -1985,13 +1879,7 @@ var xAppLaunchContextGetStartupNotifyId func(uintptr, uintptr, *glib.List) strin
 // Since GLib 2.82 @info and @files can be `NULL`. If that’s not supported by the backend,
 // the returned token will be `NULL`.
 func (x *AppLaunchContext) GetStartupNotifyId(InfoVar AppInfo, FilesVar *glib.List) string {
-
-	var InfoVarPtr uintptr
-	if InfoVar != nil {
-		InfoVarPtr = InfoVar.GoPointer()
-	}
-
-	cret := xAppLaunchContextGetStartupNotifyId(x.GoPointer(), InfoVarPtr, FilesVar)
+	cret := xAppLaunchContextGetStartupNotifyId(x.GoPointer(), InfoVar.GoPointer(), FilesVar)
 	return cret
 }
 
@@ -2001,9 +1889,7 @@ var xAppLaunchContextLaunchFailed func(uintptr, string)
 // the application startup notification started in
 // [method@Gio.AppLaunchContext.get_startup_notify_id].
 func (x *AppLaunchContext) LaunchFailed(StartupNotifyIdVar string) {
-
 	xAppLaunchContextLaunchFailed(x.GoPointer(), StartupNotifyIdVar)
-
 }
 
 var xAppLaunchContextSetenv func(uintptr, string, string)
@@ -2011,9 +1897,7 @@ var xAppLaunchContextSetenv func(uintptr, string, string)
 // Arranges for @variable to be set to @value in the child’s environment when
 // @context is used to launch an application.
 func (x *AppLaunchContext) Setenv(VariableVar string, ValueVar string) {
-
 	xAppLaunchContextSetenv(x.GoPointer(), VariableVar, ValueVar)
-
 }
 
 var xAppLaunchContextUnsetenv func(uintptr, string)
@@ -2021,9 +1905,7 @@ var xAppLaunchContextUnsetenv func(uintptr, string)
 // Arranges for @variable to be unset in the child’s environment when @context
 // is used to launch an application.
 func (x *AppLaunchContext) Unsetenv(VariableVar string) {
-
 	xAppLaunchContextUnsetenv(x.GoPointer(), VariableVar)
-
 }
 
 func (c *AppLaunchContext) GoPointer() uintptr {
@@ -2057,8 +1939,7 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(StartupNotifyIdVarp))
-
+		cbFn(fa, StartupNotifyIdVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2100,7 +1981,6 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 		cbFn := *cb
 
 		cbFn(fa, InfoVarp, PlatformDataVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2144,7 +2024,6 @@ func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, u
 		cbFn := *cb
 
 		cbFn(fa, InfoVarp, PlatformDataVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2155,7 +2034,7 @@ func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, u
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2223,5 +2102,4 @@ func init() {
 	core.PuregoSafeRegister(&XGAppInfoShouldShow, libs, "g_app_info_should_show")
 	core.PuregoSafeRegister(&XGAppInfoSupportsFiles, libs, "g_app_info_supports_files")
 	core.PuregoSafeRegister(&XGAppInfoSupportsUris, libs, "g_app_info_supports_uris")
-
 }

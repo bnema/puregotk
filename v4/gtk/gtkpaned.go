@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -149,7 +148,6 @@ var xPanedGetPosition func(uintptr) int
 
 // Obtains the position of the divider between the two panes.
 func (x *Paned) GetPosition() int {
-
 	cret := xPanedGetPosition(x.GoPointer())
 	return cret
 }
@@ -158,7 +156,6 @@ var xPanedGetResizeEndChild func(uintptr) bool
 
 // Returns whether the [property@Gtk.Paned:end-child] can be resized.
 func (x *Paned) GetResizeEndChild() bool {
-
 	cret := xPanedGetResizeEndChild(x.GoPointer())
 	return cret
 }
@@ -167,7 +164,6 @@ var xPanedGetResizeStartChild func(uintptr) bool
 
 // Returns whether the [property@Gtk.Paned:start-child] can be resized.
 func (x *Paned) GetResizeStartChild() bool {
-
 	cret := xPanedGetResizeStartChild(x.GoPointer())
 	return cret
 }
@@ -176,7 +172,6 @@ var xPanedGetShrinkEndChild func(uintptr) bool
 
 // Returns whether the [property@Gtk.Paned:end-child] can shrink.
 func (x *Paned) GetShrinkEndChild() bool {
-
 	cret := xPanedGetShrinkEndChild(x.GoPointer())
 	return cret
 }
@@ -185,7 +180,6 @@ var xPanedGetShrinkStartChild func(uintptr) bool
 
 // Returns whether the [property@Gtk.Paned:start-child] can shrink.
 func (x *Paned) GetShrinkStartChild() bool {
-
 	cret := xPanedGetShrinkStartChild(x.GoPointer())
 	return cret
 }
@@ -211,7 +205,6 @@ var xPanedGetWideHandle func(uintptr) bool
 
 // Gets whether the separator should be wide.
 func (x *Paned) GetWideHandle() bool {
-
 	cret := xPanedGetWideHandle(x.GoPointer())
 	return cret
 }
@@ -222,59 +215,42 @@ var xPanedSetEndChild func(uintptr, uintptr)
 //
 // If @child is `NULL`, the existing child will be removed.
 func (x *Paned) SetEndChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xPanedSetEndChild(x.GoPointer(), ChildVarPtr)
-
+	xPanedSetEndChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xPanedSetPosition func(uintptr, int)
 
 // Sets the position of the divider between the two panes.
 func (x *Paned) SetPosition(PositionVar int) {
-
 	xPanedSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 var xPanedSetResizeEndChild func(uintptr, bool)
 
 // Sets whether the [property@Gtk.Paned:end-child] can be resized.
 func (x *Paned) SetResizeEndChild(ResizeVar bool) {
-
 	xPanedSetResizeEndChild(x.GoPointer(), ResizeVar)
-
 }
 
 var xPanedSetResizeStartChild func(uintptr, bool)
 
 // Sets whether the [property@Gtk.Paned:start-child] can be resized.
 func (x *Paned) SetResizeStartChild(ResizeVar bool) {
-
 	xPanedSetResizeStartChild(x.GoPointer(), ResizeVar)
-
 }
 
 var xPanedSetShrinkEndChild func(uintptr, bool)
 
 // Sets whether the [property@Gtk.Paned:end-child] can shrink.
 func (x *Paned) SetShrinkEndChild(ResizeVar bool) {
-
 	xPanedSetShrinkEndChild(x.GoPointer(), ResizeVar)
-
 }
 
 var xPanedSetShrinkStartChild func(uintptr, bool)
 
 // Sets whether the [property@Gtk.Paned:start-child] can shrink.
 func (x *Paned) SetShrinkStartChild(ResizeVar bool) {
-
 	xPanedSetShrinkStartChild(x.GoPointer(), ResizeVar)
-
 }
 
 var xPanedSetStartChild func(uintptr, uintptr)
@@ -283,23 +259,14 @@ var xPanedSetStartChild func(uintptr, uintptr)
 //
 // If @child is `NULL`, the existing child will be removed.
 func (x *Paned) SetStartChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xPanedSetStartChild(x.GoPointer(), ChildVarPtr)
-
+	xPanedSetStartChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xPanedSetWideHandle func(uintptr, bool)
 
 // Sets whether the separator should be wide.
 func (x *Paned) SetWideHandle(WideVar bool) {
-
 	xPanedSetWideHandle(x.GoPointer(), WideVar)
-
 }
 
 func (c *Paned) GoPointer() uintptr {
@@ -491,7 +458,6 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -523,7 +489,6 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -551,7 +516,6 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa, ReversedVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -580,7 +544,6 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa, ReversedVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -613,7 +576,6 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa, ScrollTypeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -642,7 +604,6 @@ func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -661,9 +622,19 @@ func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Paned) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Paned) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -684,7 +655,6 @@ func (x *Paned) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Paned) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -709,7 +679,6 @@ func (x *Paned) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Paned) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -748,30 +717,23 @@ func (x *Paned) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Paned) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Paned) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Paned) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Paned) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -784,19 +746,7 @@ func (x *Paned) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Paned) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -804,14 +754,7 @@ func (x *Paned) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Paned) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -820,9 +763,7 @@ func (x *Paned) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Paned) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -844,9 +785,7 @@ func (x *Paned) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Paned) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -856,9 +795,7 @@ func (x *Paned) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Paned) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -880,9 +817,7 @@ func (x *Paned) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Paned) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -892,9 +827,7 @@ func (x *Paned) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Paned) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -917,9 +850,7 @@ func (x *Paned) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Paned) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -929,9 +860,7 @@ func (x *Paned) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Paned) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -939,28 +868,24 @@ func (x *Paned) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Paned) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Paned) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Paned) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -990,5 +915,4 @@ func init() {
 	core.PuregoSafeRegister(&xPanedSetShrinkStartChild, libs, "gtk_paned_set_shrink_start_child")
 	core.PuregoSafeRegister(&xPanedSetStartChild, libs, "gtk_paned_set_start_child")
 	core.PuregoSafeRegister(&xPanedSetWideHandle, libs, "gtk_paned_set_wide_handle")
-
 }

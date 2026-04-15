@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -214,7 +213,6 @@ func NewDebugControllerDBus(ConnectionVar *DBusConnection, CancellableVar *Cance
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDebugControllerDBusStop func(uintptr)
@@ -236,9 +234,7 @@ var xDebugControllerDBusStop func(uintptr)
 // Calling this method from within a #GDebugControllerDBus::authorize signal
 // handler will cause a deadlock and must not be done.
 func (x *DebugControllerDBus) Stop() {
-
 	xDebugControllerDBusStop(x.GoPointer())
-
 }
 
 func (c *DebugControllerDBus) GoPointer() uintptr {
@@ -269,7 +265,7 @@ func (c *DebugControllerDBus) SetGoPointer(ptr uintptr) {
 // Signal handlers must not modify @invocation, or cause it to return a value.
 //
 // The default class handler just returns %TRUE.
-func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, *DBusMethodInvocation) bool) uint {
+func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
@@ -282,8 +278,7 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, *DB
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
-
+		return cbFn(fa, InvocationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -294,16 +289,13 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, *DB
 
 // Get the value of #GDebugController:debug-enabled.
 func (x *DebugControllerDBus) GetDebugEnabled() bool {
-
 	cret := XGDebugControllerGetDebugEnabled(x.GoPointer())
 	return cret
 }
 
 // Set the value of #GDebugController:debug-enabled.
 func (x *DebugControllerDBus) SetDebugEnabled(DebugEnabledVar bool) {
-
 	XGDebugControllerSetDebugEnabled(x.GoPointer(), DebugEnabledVar)
-
 }
 
 // Initializes the object implementing the interface.
@@ -357,12 +349,11 @@ func (x *DebugControllerDBus) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -377,5 +368,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewDebugControllerDBus, libs, "g_debug_controller_dbus_new")
 
 	core.PuregoSafeRegister(&xDebugControllerDBusStop, libs, "g_debug_controller_dbus_stop")
-
 }

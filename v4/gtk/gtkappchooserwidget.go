@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -75,7 +74,6 @@ var xAppChooserWidgetGetDefaultText func(uintptr) string
 // Returns the text that is shown if there are not applications
 // that can handle the content type.
 func (x *AppChooserWidget) GetDefaultText() string {
-
 	cret := xAppChooserWidgetGetDefaultText(x.GoPointer())
 	return cret
 }
@@ -85,7 +83,6 @@ var xAppChooserWidgetGetShowAll func(uintptr) bool
 // Gets whether the app chooser should show all applications
 // in a flat list.
 func (x *AppChooserWidget) GetShowAll() bool {
-
 	cret := xAppChooserWidgetGetShowAll(x.GoPointer())
 	return cret
 }
@@ -95,7 +92,6 @@ var xAppChooserWidgetGetShowDefault func(uintptr) bool
 // Gets whether the app chooser should show the default handler
 // for the content type in a separate section.
 func (x *AppChooserWidget) GetShowDefault() bool {
-
 	cret := xAppChooserWidgetGetShowDefault(x.GoPointer())
 	return cret
 }
@@ -105,7 +101,6 @@ var xAppChooserWidgetGetShowFallback func(uintptr) bool
 // Gets whether the app chooser should show related applications
 // for the content type in a separate section.
 func (x *AppChooserWidget) GetShowFallback() bool {
-
 	cret := xAppChooserWidgetGetShowFallback(x.GoPointer())
 	return cret
 }
@@ -115,7 +110,6 @@ var xAppChooserWidgetGetShowOther func(uintptr) bool
 // Gets whether the app chooser should show applications
 // which are unrelated to the content type.
 func (x *AppChooserWidget) GetShowOther() bool {
-
 	cret := xAppChooserWidgetGetShowOther(x.GoPointer())
 	return cret
 }
@@ -125,7 +119,6 @@ var xAppChooserWidgetGetShowRecommended func(uintptr) bool
 // Gets whether the app chooser should show recommended applications
 // for the content type in a separate section.
 func (x *AppChooserWidget) GetShowRecommended() bool {
-
 	cret := xAppChooserWidgetGetShowRecommended(x.GoPointer())
 	return cret
 }
@@ -135,9 +128,7 @@ var xAppChooserWidgetSetDefaultText func(uintptr, string)
 // Sets the text that is shown if there are not applications
 // that can handle the content type.
 func (x *AppChooserWidget) SetDefaultText(TextVar string) {
-
 	xAppChooserWidgetSetDefaultText(x.GoPointer(), TextVar)
-
 }
 
 var xAppChooserWidgetSetShowAll func(uintptr, bool)
@@ -145,9 +136,7 @@ var xAppChooserWidgetSetShowAll func(uintptr, bool)
 // Sets whether the app chooser should show all applications
 // in a flat list.
 func (x *AppChooserWidget) SetShowAll(SettingVar bool) {
-
 	xAppChooserWidgetSetShowAll(x.GoPointer(), SettingVar)
-
 }
 
 var xAppChooserWidgetSetShowDefault func(uintptr, bool)
@@ -155,9 +144,7 @@ var xAppChooserWidgetSetShowDefault func(uintptr, bool)
 // Sets whether the app chooser should show the default handler
 // for the content type in a separate section.
 func (x *AppChooserWidget) SetShowDefault(SettingVar bool) {
-
 	xAppChooserWidgetSetShowDefault(x.GoPointer(), SettingVar)
-
 }
 
 var xAppChooserWidgetSetShowFallback func(uintptr, bool)
@@ -165,9 +152,7 @@ var xAppChooserWidgetSetShowFallback func(uintptr, bool)
 // Sets whether the app chooser should show related applications
 // for the content type in a separate section.
 func (x *AppChooserWidget) SetShowFallback(SettingVar bool) {
-
 	xAppChooserWidgetSetShowFallback(x.GoPointer(), SettingVar)
-
 }
 
 var xAppChooserWidgetSetShowOther func(uintptr, bool)
@@ -175,9 +160,7 @@ var xAppChooserWidgetSetShowOther func(uintptr, bool)
 // Sets whether the app chooser should show applications
 // which are unrelated to the content type.
 func (x *AppChooserWidget) SetShowOther(SettingVar bool) {
-
 	xAppChooserWidgetSetShowOther(x.GoPointer(), SettingVar)
-
 }
 
 var xAppChooserWidgetSetShowRecommended func(uintptr, bool)
@@ -185,9 +168,7 @@ var xAppChooserWidgetSetShowRecommended func(uintptr, bool)
 // Sets whether the app chooser should show recommended applications
 // for the content type in a separate section.
 func (x *AppChooserWidget) SetShowRecommended(SettingVar bool) {
-
 	xAppChooserWidgetSetShowRecommended(x.GoPointer(), SettingVar)
-
 }
 
 func (c *AppChooserWidget) GoPointer() uintptr {
@@ -354,7 +335,6 @@ func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget
 		cbFn := *cb
 
 		cbFn(fa, ApplicationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -378,7 +358,6 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 		cbFn := *cb
 
 		cbFn(fa, ApplicationVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -397,9 +376,19 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *AppChooserWidget) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *AppChooserWidget) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -420,7 +409,6 @@ func (x *AppChooserWidget) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *AppChooserWidget) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -445,7 +433,6 @@ func (x *AppChooserWidget) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *AppChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -484,30 +471,23 @@ func (x *AppChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *AppChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *AppChooserWidget) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *AppChooserWidget) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *AppChooserWidget) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -520,19 +500,7 @@ func (x *AppChooserWidget) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *AppChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -540,14 +508,7 @@ func (x *AppChooserWidget) SetAccessibleParent(ParentVar Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *AppChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -556,9 +517,7 @@ func (x *AppChooserWidget) UpdateNextAccessibleSibling(NewSiblingVar Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *AppChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -580,9 +539,7 @@ func (x *AppChooserWidget) UpdatePlatformState(StateVar AccessiblePlatformState)
 //
 // ```
 func (x *AppChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -592,9 +549,7 @@ func (x *AppChooserWidget) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserWidget) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -616,9 +571,7 @@ func (x *AppChooserWidget) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 //
 // ```
 func (x *AppChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -628,9 +581,7 @@ func (x *AppChooserWidget) UpdateRelation(FirstRelationVar AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserWidget) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -653,9 +604,7 @@ func (x *AppChooserWidget) UpdateRelationValue(NRelationsVar int, RelationsVar [
 //
 // ```
 func (x *AppChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -665,9 +614,7 @@ func (x *AppChooserWidget) UpdateState(FirstStateVar AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *AppChooserWidget) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Returns the currently selected application.
@@ -687,16 +634,13 @@ func (x *AppChooserWidget) GetAppInfo() *gio.AppInfoBase {
 // Returns the content type for which the `GtkAppChooser`
 // shows applications.
 func (x *AppChooserWidget) GetContentType() string {
-
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
 	return cret
 }
 
 // Reloads the list of applications.
 func (x *AppChooserWidget) Refresh() {
-
 	XGtkAppChooserRefresh(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -704,14 +648,13 @@ func (x *AppChooserWidget) Refresh() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AppChooserWidget) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -737,5 +680,4 @@ func init() {
 	core.PuregoSafeRegister(&xAppChooserWidgetSetShowFallback, libs, "gtk_app_chooser_widget_set_show_fallback")
 	core.PuregoSafeRegister(&xAppChooserWidgetSetShowOther, libs, "gtk_app_chooser_widget_set_show_other")
 	core.PuregoSafeRegister(&xAppChooserWidgetSetShowRecommended, libs, "gtk_app_chooser_widget_set_show_recommended")
-
 }

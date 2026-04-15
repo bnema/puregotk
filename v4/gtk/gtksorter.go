@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -382,9 +381,7 @@ var xSorterChanged func(uintptr, SorterChange)
 // This function is intended for implementers of `GtkSorter`
 // subclasses and should not be called from other functions.
 func (x *Sorter) Changed(ChangeVar SorterChange) {
-
 	xSorterChanged(x.GoPointer(), ChangeVar)
-
 }
 
 var xSorterCompare func(uintptr, uintptr, uintptr) Ordering
@@ -402,7 +399,6 @@ var xSorterCompare func(uintptr, uintptr, uintptr) Ordering
 // The sorter may signal it conforms to additional constraints
 // via the return value of [method@Gtk.Sorter.get_order].
 func (x *Sorter) Compare(Item1Var *gobject.Object, Item2Var *gobject.Object) Ordering {
-
 	cret := xSorterCompare(x.GoPointer(), Item1Var.GoPointer(), Item2Var.GoPointer())
 	return cret
 }
@@ -416,7 +412,6 @@ var xSorterGetOrder func(uintptr) SorterOrder
 //
 // This function is intended to allow optimizations.
 func (x *Sorter) GetOrder() SorterOrder {
-
 	cret := xSorterGetOrder(x.GoPointer())
 	return cret
 }
@@ -456,7 +451,6 @@ func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ChangeVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -467,7 +461,7 @@ func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -486,5 +480,4 @@ func init() {
 	core.PuregoSafeRegister(&xSorterChanged, libs, "gtk_sorter_changed")
 	core.PuregoSafeRegister(&xSorterCompare, libs, "gtk_sorter_compare")
 	core.PuregoSafeRegister(&xSorterGetOrder, libs, "gtk_sorter_get_order")
-
 }

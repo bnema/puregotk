@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -133,21 +132,22 @@ func (x *DBusObjectProxy) GetInterface(InterfaceNameVar string) *DBusInterfaceBa
 
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectProxy) GetInterfaces() *glib.List {
-
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets the object path for @object.
 func (x *DBusObjectProxy) GetObjectPath() string {
-
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -162,5 +162,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewDBusObjectProxy, libs, "g_dbus_object_proxy_new")
 
 	core.PuregoSafeRegister(&xDBusObjectProxyGetConnection, libs, "g_dbus_object_proxy_get_connection")
-
 }

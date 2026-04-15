@@ -2,8 +2,9 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -46,36 +47,28 @@ func (c *DBusActionGroup) SetGoPointer(ptr uintptr) {
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *DBusActionGroup) ActionAdded(ActionNameVar string) {
-
 	XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *DBusActionGroup) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
-
 	XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *DBusActionGroup) ActionRemoved(ActionNameVar string) {
-
 	XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
-
 }
 
 // Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *DBusActionGroup) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
-
 	XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
-
 }
 
 // Activate the named action within @action_group.
@@ -112,9 +105,7 @@ func (x *DBusActionGroup) ActionStateChanged(ActionNameVar string, StateVar *gli
 // exit (0);
 // ```
 func (x *DBusActionGroup) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
-
 	XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
-
 }
 
 // Request for the state of the named action within @action_group to be
@@ -129,9 +120,7 @@ func (x *DBusActionGroup) ActivateAction(ActionNameVar string, ParameterVar *gli
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *DBusActionGroup) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
-
 	XGActionGroupChangeActionState(x.GoPointer(), ActionNameVar, ValueVar)
-
 }
 
 // Checks if the named action within @action_group is currently enabled.
@@ -139,7 +128,6 @@ func (x *DBusActionGroup) ChangeActionState(ActionNameVar string, ValueVar *glib
 // An action must be enabled in order to be activated or in order to
 // have its state changed from outside callers.
 func (x *DBusActionGroup) GetActionEnabled(ActionNameVar string) bool {
-
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -158,9 +146,11 @@ func (x *DBusActionGroup) GetActionEnabled(ActionNameVar string) bool {
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different parameter type.
 func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -172,9 +162,11 @@ func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.Var
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -196,9 +188,11 @@ func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 // The return value (if non-`NULL`) should be freed with
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant {
-
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -218,14 +212,15 @@ func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant
 // possible for an action to be removed and for a new action to be added
 // with the same name but a different state type.
 func (x *DBusActionGroup) GetActionStateType(ActionNameVar string) *glib.VariantType {
-
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.
 func (x *DBusActionGroup) HasAction(ActionNameVar string) bool {
-
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
 	return cret
 }
@@ -235,7 +230,6 @@ func (x *DBusActionGroup) HasAction(ActionNameVar string) bool {
 // The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *DBusActionGroup) ListActions() []string {
-
 	cret := XGActionGroupListActions(x.GoPointer())
 	return cret
 }
@@ -268,7 +262,6 @@ func (x *DBusActionGroup) ListActions() []string {
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *DBusActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
-
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
 }
@@ -283,9 +276,7 @@ func (x *DBusActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, Pa
 // @platform_data must be non-%NULL and must have the type
 // %G_VARIANT_TYPE_VARDICT.  If it is floating, it will be consumed.
 func (x *DBusActionGroup) ActivateActionFull(ActionNameVar string, ParameterVar *glib.Variant, PlatformDataVar *glib.Variant) {
-
 	XGRemoteActionGroupActivateActionFull(x.GoPointer(), ActionNameVar, ParameterVar, PlatformDataVar)
-
 }
 
 // Changes the state of a remote action.
@@ -298,9 +289,7 @@ func (x *DBusActionGroup) ActivateActionFull(ActionNameVar string, ParameterVar 
 // @platform_data must be non-%NULL and must have the type
 // %G_VARIANT_TYPE_VARDICT.  If it is floating, it will be consumed.
 func (x *DBusActionGroup) ChangeActionStateFull(ActionNameVar string, ValueVar *glib.Variant, PlatformDataVar *glib.Variant) {
-
 	XGRemoteActionGroupChangeActionStateFull(x.GoPointer(), ActionNameVar, ValueVar, PlatformDataVar)
-
 }
 
 var xDBusActionGroupGet func(uintptr, uintptr, string) uintptr
@@ -336,7 +325,7 @@ func DBusActionGroupGet(ConnectionVar *DBusConnection, BusNameVar *string, Objec
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -349,5 +338,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusActionGroupGLibType, libs, "g_dbus_action_group_get_type")
 
 	core.PuregoSafeRegister(&xDBusActionGroupGet, libs, "g_dbus_action_group_get")
-
 }

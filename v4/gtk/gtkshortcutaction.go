@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -165,37 +164,7 @@ var xNewCallbackAction func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAction(CallbackVar *ShortcutFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAction {
 	var cls *CallbackAction
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *glib.Variant, arg2 uintptr) bool {
-				cbFn := *CallbackVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	cret := xNewCallbackAction(CallbackVarRef, DataVar, DestroyVarRef)
+	cret := xNewCallbackAction(glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -313,7 +282,6 @@ var xNamedActionGetActionName func(uintptr) string
 
 // Returns the name of the action that will be activated.
 func (x *NamedAction) GetActionName() string {
-
 	cret := xNamedActionGetActionName(x.GoPointer())
 	return cret
 }
@@ -473,7 +441,6 @@ var xShortcutActionActivate func(uintptr, ShortcutActionFlags, uintptr, *glib.Va
 // is not supported by the @widget, if the @args don't match the action
 // or if the activation otherwise had no effect, %FALSE will be returned.
 func (x *ShortcutAction) Activate(FlagsVar ShortcutActionFlags, WidgetVar *Widget, ArgsVar *glib.Variant) bool {
-
 	cret := xShortcutActionActivate(x.GoPointer(), FlagsVar, WidgetVar.GoPointer(), ArgsVar)
 	return cret
 }
@@ -487,9 +454,7 @@ var xShortcutActionPrint func(uintptr, *glib.String)
 // The form of the representation may change at any time and is
 // not guaranteed to stay identical.
 func (x *ShortcutAction) Print(StringVar *glib.String) {
-
 	xShortcutActionPrint(x.GoPointer(), StringVar)
-
 }
 
 var xShortcutActionToString func(uintptr) string
@@ -499,7 +464,6 @@ var xShortcutActionToString func(uintptr) string
 // This is a small wrapper around [method@Gtk.ShortcutAction.print]
 // to help when debugging.
 func (x *ShortcutAction) ToString() string {
-
 	cret := xShortcutActionToString(x.GoPointer())
 	return cret
 }
@@ -558,7 +522,6 @@ var xSignalActionGetSignalName func(uintptr) string
 
 // Returns the name of the signal that will be emitted.
 func (x *SignalAction) GetSignalName() string {
-
 	cret := xSignalActionGetSignalName(x.GoPointer())
 	return cret
 }
@@ -593,7 +556,7 @@ func (x *SignalAction) GetPropertySignalName() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -640,5 +603,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewSignalAction, libs, "gtk_signal_action_new")
 
 	core.PuregoSafeRegister(&xSignalActionGetSignalName, libs, "gtk_signal_action_get_signal_name")
-
 }

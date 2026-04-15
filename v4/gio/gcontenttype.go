@@ -2,8 +2,9 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -13,7 +14,6 @@ var xContentTypeCanBeExecutable func(string) bool
 // Checks if a content type can be executable. Note that for instance
 // things like text files can be executables (i.e. scripts and batch files).
 func ContentTypeCanBeExecutable(TypeVar string) bool {
-
 	cret := xContentTypeCanBeExecutable(TypeVar)
 	return cret
 }
@@ -22,7 +22,6 @@ var xContentTypeEquals func(string, string) bool
 
 // Compares two content types for equality.
 func ContentTypeEquals(Type1Var string, Type2Var string) bool {
-
 	cret := xContentTypeEquals(Type1Var, Type2Var)
 	return cret
 }
@@ -31,7 +30,6 @@ var xContentTypeFromMimeType func(string) string
 
 // Tries to find a content type based on the mime type name.
 func ContentTypeFromMimeType(MimeTypeVar string) string {
-
 	cret := xContentTypeFromMimeType(MimeTypeVar)
 	return cret
 }
@@ -40,7 +38,6 @@ var xContentTypeGetDescription func(string) string
 
 // Gets the human readable description of the content type.
 func ContentTypeGetDescription(TypeVar string) string {
-
 	cret := xContentTypeGetDescription(TypeVar)
 	return cret
 }
@@ -53,7 +50,6 @@ var xContentTypeGetGenericIconName func(string) string
 // [shared-mime-info](http://www.freedesktop.org/wiki/Specifications/shared-mime-info-spec)
 // specification for more on the generic icon name.
 func ContentTypeGetGenericIconName(TypeVar string) string {
-
 	cret := xContentTypeGetGenericIconName(TypeVar)
 	return cret
 }
@@ -79,7 +75,6 @@ var xContentTypeGetMimeDirs func() []string
 // Get the list of directories which MIME data is loaded from. See
 // g_content_type_set_mime_dirs() for details.
 func ContentTypeGetMimeDirs() []string {
-
 	cret := xContentTypeGetMimeDirs()
 	return cret
 }
@@ -88,7 +83,6 @@ var xContentTypeGetMimeType func(string) string
 
 // Gets the mime type for the content type, if one is registered.
 func ContentTypeGetMimeType(TypeVar string) string {
-
 	cret := xContentTypeGetMimeType(TypeVar)
 	return cret
 }
@@ -116,7 +110,6 @@ var xContentTypeGuess func(uintptr, []byte, uint, *bool) string
 // or @data may be %NULL, in which case the guess will be based solely
 // on the other argument.
 func ContentTypeGuess(FilenameVar *string, DataVar []byte, DataSizeVar uint, ResultUncertainVar *bool) string {
-
 	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
 	defer core.GFreeNullable(FilenameVarPtr)
 
@@ -139,7 +132,6 @@ var xContentTypeGuessForTree func(uintptr) []string
 // This function is useful in the implementation of
 // g_mount_guess_content_type().
 func ContentTypeGuessForTree(RootVar File) []string {
-
 	cret := xContentTypeGuessForTree(RootVar.GoPointer())
 	return cret
 }
@@ -148,7 +140,6 @@ var xContentTypeIsA func(string, string) bool
 
 // Determines if @type is a subset of @supertype.
 func ContentTypeIsA(TypeVar string, SupertypeVar string) bool {
-
 	cret := xContentTypeIsA(TypeVar, SupertypeVar)
 	return cret
 }
@@ -158,7 +149,6 @@ var xContentTypeIsMimeType func(string, string) bool
 // Determines if @type is a subset of @mime_type.
 // Convenience wrapper around g_content_type_is_a().
 func ContentTypeIsMimeType(TypeVar string, MimeTypeVar string) bool {
-
 	cret := xContentTypeIsMimeType(TypeVar, MimeTypeVar)
 	return cret
 }
@@ -170,7 +160,6 @@ var xContentTypeIsUnknown func(string) bool
 // while on win32 it is "*" and on OSX it is a dynamic type
 // or octet-stream.
 func ContentTypeIsUnknown(TypeVar string) bool {
-
 	cret := xContentTypeIsUnknown(TypeVar)
 	return cret
 }
@@ -203,25 +192,25 @@ var xContentTypeSetMimeDirs func([]string)
 //
 // ]|
 func ContentTypeSetMimeDirs(DirsVar []string) {
-
 	xContentTypeSetMimeDirs(DirsVar)
-
 }
 
-var xContentTypesGetRegistered func() *glib.List
+var xContentTypesGetRegistered func() uintptr
 
 // Gets a list of strings containing all the registered content types
 // known to the system. The list and its data should be freed using
 // `g_list_free_full (list, g_free)`.
 func ContentTypesGetRegistered() *glib.List {
-
 	cret := xContentTypesGetRegistered()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -247,5 +236,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentTypeIsUnknown, libs, "g_content_type_is_unknown")
 	core.PuregoSafeRegister(&xContentTypeSetMimeDirs, libs, "g_content_type_set_mime_dirs")
 	core.PuregoSafeRegister(&xContentTypesGetRegistered, libs, "g_content_types_get_registered")
-
 }

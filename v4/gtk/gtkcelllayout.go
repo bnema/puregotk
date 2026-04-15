@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -178,7 +177,7 @@ func (x *CellLayoutIface) GetSetCellDataFunc() func(CellLayout, *CellRenderer, *
 	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, FuncVarp uintptr, FuncDataVarp uintptr, DestroyVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetCellDataFunc)
 	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 	}
 }
 
@@ -244,8 +243,12 @@ func (x *CellLayoutIface) OverrideGetCells(cb func(CellLayout) *glib.List) {
 	if cb == nil {
 		x.xGetCells = 0
 	} else {
-		x.xGetCells = purego.NewCallback(func(CellLayoutVarp uintptr) *glib.List {
-			return cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+		x.xGetCells = purego.NewCallback(func(CellLayoutVarp uintptr) uintptr {
+			ret := cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -258,10 +261,14 @@ func (x *CellLayoutIface) GetGetCells() func(CellLayout) *glib.List {
 	if x.xGetCells == 0 {
 		return nil
 	}
-	var rawCallback func(CellLayoutVarp uintptr) *glib.List
+	var rawCallback func(CellLayoutVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetCells)
 	return func(CellLayoutVar CellLayout) *glib.List {
-		return rawCallback(CellLayoutVar.GoPointer())
+		rawRet := rawCallback(CellLayoutVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -467,25 +474,19 @@ func (x *CellLayoutBase) SetGoPointer(ptr uintptr) {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *CellLayoutBase) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *CellLayoutBase) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *CellLayoutBase) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -507,9 +508,11 @@ func (x *CellLayoutBase) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellLayoutBase) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -518,9 +521,7 @@ func (x *CellLayoutBase) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellLayoutBase) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -529,9 +530,7 @@ func (x *CellLayoutBase) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellLayoutBase) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -539,9 +538,7 @@ func (x *CellLayoutBase) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -553,9 +550,7 @@ func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *CellLayoutBase) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -566,25 +561,25 @@ func (x *CellLayoutBase) SetAttributes(CellVar *CellRenderer, varArgs ...interfa
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellLayoutBase) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
-var XGtkCellLayoutAddAttribute func(uintptr, uintptr, string, int)
-var XGtkCellLayoutClear func(uintptr)
-var XGtkCellLayoutClearAttributes func(uintptr, uintptr)
-var XGtkCellLayoutGetArea func(uintptr) uintptr
-var XGtkCellLayoutGetCells func(uintptr) *glib.List
-var XGtkCellLayoutPackEnd func(uintptr, uintptr, bool)
-var XGtkCellLayoutPackStart func(uintptr, uintptr, bool)
-var XGtkCellLayoutReorder func(uintptr, uintptr, int)
-var XGtkCellLayoutSetAttributes func(uintptr, uintptr, ...interface{})
-var XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintptr)
+var (
+	XGtkCellLayoutAddAttribute    func(uintptr, uintptr, string, int)
+	XGtkCellLayoutClear           func(uintptr)
+	XGtkCellLayoutClearAttributes func(uintptr, uintptr)
+	XGtkCellLayoutGetArea         func(uintptr) uintptr
+	XGtkCellLayoutGetCells        func(uintptr) uintptr
+	XGtkCellLayoutPackEnd         func(uintptr, uintptr, bool)
+	XGtkCellLayoutPackStart       func(uintptr, uintptr, bool)
+	XGtkCellLayoutReorder         func(uintptr, uintptr, int)
+	XGtkCellLayoutSetAttributes   func(uintptr, uintptr, ...interface{})
+	XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -606,5 +601,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkCellLayoutReorder, libs, "gtk_cell_layout_reorder")
 	core.PuregoSafeRegister(&XGtkCellLayoutSetAttributes, libs, "gtk_cell_layout_set_attributes")
 	core.PuregoSafeRegister(&XGtkCellLayoutSetCellDataFunc, libs, "gtk_cell_layout_set_cell_data_func")
-
 }

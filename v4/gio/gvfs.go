@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -559,7 +558,6 @@ var xVfsGetSupportedUriSchemes func(uintptr) []string
 
 // Gets a list of URI schemes supported by @vfs.
 func (x *Vfs) GetSupportedUriSchemes() []string {
-
 	cret := xVfsGetSupportedUriSchemes(x.GoPointer())
 	return cret
 }
@@ -568,7 +566,6 @@ var xVfsIsActive func(uintptr) bool
 
 // Checks if the VFS is active.
 func (x *Vfs) IsActive() bool {
-
 	cret := xVfsIsActive(x.GoPointer())
 	return cret
 }
@@ -614,68 +611,7 @@ var xVfsRegisterUriScheme func(uintptr, string, uintptr, uintptr, uintptr, uintp
 // It's an error to call this function twice with the same scheme. To unregister
 // a custom URI scheme, use g_vfs_unregister_uri_scheme().
 func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc, UriDataVar uintptr, UriDestroyVar *glib.DestroyNotify, ParseNameFuncVar *VfsFileLookupFunc, ParseNameDataVar uintptr, ParseNameDestroyVar *glib.DestroyNotify) bool {
-
-	var UriFuncVarRef uintptr
-	if UriFuncVar != nil {
-		UriFuncVarPtr := uintptr(unsafe.Pointer(UriFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(UriFuncVarPtr); ok {
-			UriFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) uintptr {
-				cbFn := *UriFuncVar
-				return cbFn(arg0, core.GoString(arg1), arg2)
-			}
-			UriFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UriFuncVarPtr, UriFuncVarRef, UriFuncVar)
-		}
-	}
-
-	var UriDestroyVarRef uintptr
-	if UriDestroyVar != nil {
-		UriDestroyVarPtr := uintptr(unsafe.Pointer(UriDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UriDestroyVarPtr); ok {
-			UriDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UriDestroyVar
-				cbFn(arg0)
-			}
-			UriDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UriDestroyVarPtr, UriDestroyVarRef, UriDestroyVar)
-		}
-	}
-
-	var ParseNameFuncVarRef uintptr
-	if ParseNameFuncVar != nil {
-		ParseNameFuncVarPtr := uintptr(unsafe.Pointer(ParseNameFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(ParseNameFuncVarPtr); ok {
-			ParseNameFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) uintptr {
-				cbFn := *ParseNameFuncVar
-				return cbFn(arg0, core.GoString(arg1), arg2)
-			}
-			ParseNameFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ParseNameFuncVarPtr, ParseNameFuncVarRef, ParseNameFuncVar)
-		}
-	}
-
-	var ParseNameDestroyVarRef uintptr
-	if ParseNameDestroyVar != nil {
-		ParseNameDestroyVarPtr := uintptr(unsafe.Pointer(ParseNameDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(ParseNameDestroyVarPtr); ok {
-			ParseNameDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ParseNameDestroyVar
-				cbFn(arg0)
-			}
-			ParseNameDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ParseNameDestroyVarPtr, ParseNameDestroyVarRef, ParseNameDestroyVar)
-		}
-	}
-
-	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, UriFuncVarRef, UriDataVar, UriDestroyVarRef, ParseNameFuncVarRef, ParseNameDataVar, ParseNameDestroyVarRef)
+	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallbackNullable(UriFuncVar), UriDataVar, glib.NewCallbackNullable(UriDestroyVar), glib.NewCallbackNullable(ParseNameFuncVar), ParseNameDataVar, glib.NewCallbackNullable(ParseNameDestroyVar))
 	return cret
 }
 
@@ -684,7 +620,6 @@ var xVfsUnregisterUriScheme func(uintptr, string) bool
 // Unregisters the URI handler for @scheme previously registered with
 // g_vfs_register_uri_scheme().
 func (x *Vfs) UnregisterUriScheme(SchemeVar string) bool {
-
 	cret := xVfsUnregisterUriScheme(x.GoPointer(), SchemeVar)
 	return cret
 }
@@ -736,7 +671,7 @@ func VfsGetLocal() *Vfs {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -758,5 +693,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xVfsGetDefault, libs, "g_vfs_get_default")
 	core.PuregoSafeRegister(&xVfsGetLocal, libs, "g_vfs_get_local")
-
 }

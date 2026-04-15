@@ -1,0 +1,51 @@
+{
+  "id": "page.codeberg.puregotk.MyAppGnomeMeson",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "50",
+  "sdk": "org.gnome.Sdk",
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.golang"],
+  "command": "myapp-gnome-meson",
+  "build-options": {
+    "append-path": "/usr/lib/sdk/golang/bin",
+    "build-args": ["--filesystem=home"]
+  },
+  "finish-args": [
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--share=ipc",
+    "--device=dri"
+  ],
+  "modules": [
+    {
+      "name": "mylib-gtk-meson",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "dir",
+          "path": "../..",
+          "dest": "vendor/github.com/bnema/puregotk"
+        },
+        { "type": "dir", "path": "../mylib-gtk-meson/" },
+        "mylibgtkmeson.go.mod.json"
+      ]
+    },
+    {
+      "name": "myapp-gnome-meson",
+      "buildsystem": "meson",
+      "sources": [
+        { "type": "dir", "path": "." },
+        {
+          "type": "dir",
+          "path": "../..",
+          "dest": "vendor/github.com/bnema/puregotk"
+        },
+        {
+          "type": "dir",
+          "path": "../mylib-gtk-meson-go",
+          "dest": "vendor/github.com/bnema/puregotk/examples/mylib-gtk-meson-go"
+        },
+        "go.mod.json"
+      ]
+    }
+  ]
+}

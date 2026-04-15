@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -98,43 +97,39 @@ var xEntryRowAddPrefix func(uintptr, uintptr)
 
 // Adds a prefix widget to @self.
 func (x *EntryRow) AddPrefix(WidgetVar *gtk.Widget) {
-
 	xEntryRowAddPrefix(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xEntryRowAddSuffix func(uintptr, uintptr)
 
 // Adds a suffix widget to @self.
 func (x *EntryRow) AddSuffix(WidgetVar *gtk.Widget) {
-
 	xEntryRowAddSuffix(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xEntryRowGetActivatesDefault func(uintptr) bool
 
 // Gets whether activating the embedded entry can activate the default widget.
 func (x *EntryRow) GetActivatesDefault() bool {
-
 	cret := xEntryRowGetActivatesDefault(x.GoPointer())
 	return cret
 }
 
-var xEntryRowGetAttributes func(uintptr) *pango.AttrList
+var xEntryRowGetAttributes func(uintptr) uintptr
 
 // Gets Pango attributes applied to the text of the embedded entry.
 func (x *EntryRow) GetAttributes() *pango.AttrList {
-
 	cret := xEntryRowGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xEntryRowGetEnableEmojiCompletion func(uintptr) bool
 
 // Gets whether to suggest emoji replacements on @self.
 func (x *EntryRow) GetEnableEmojiCompletion() bool {
-
 	cret := xEntryRowGetEnableEmojiCompletion(x.GoPointer())
 	return cret
 }
@@ -143,7 +138,6 @@ var xEntryRowGetInputHints func(uintptr) gtk.InputHints
 
 // Gets the additional input hints of @self.
 func (x *EntryRow) GetInputHints() gtk.InputHints {
-
 	cret := xEntryRowGetInputHints(x.GoPointer())
 	return cret
 }
@@ -152,7 +146,6 @@ var xEntryRowGetInputPurpose func(uintptr) gtk.InputPurpose
 
 // Gets the input purpose of @self.
 func (x *EntryRow) GetInputPurpose() gtk.InputPurpose {
-
 	cret := xEntryRowGetInputPurpose(x.GoPointer())
 	return cret
 }
@@ -161,7 +154,6 @@ var xEntryRowGetMaxLength func(uintptr) int
 
 // Retrieves the maximum length of the entry.
 func (x *EntryRow) GetMaxLength() int {
-
 	cret := xEntryRowGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -170,7 +162,6 @@ var xEntryRowGetShowApplyButton func(uintptr) bool
 
 // Gets whether @self can show the apply button.
 func (x *EntryRow) GetShowApplyButton() bool {
-
 	cret := xEntryRowGetShowApplyButton(x.GoPointer())
 	return cret
 }
@@ -179,7 +170,6 @@ var xEntryRowGetTextLength func(uintptr) uint
 
 // Retrieves the current length of the text in @self.
 func (x *EntryRow) GetTextLength() uint {
-
 	cret := xEntryRowGetTextLength(x.GoPointer())
 	return cret
 }
@@ -190,7 +180,6 @@ var xEntryRowGrabFocusWithoutSelecting func(uintptr) bool
 //
 // See [method@Gtk.Text.grab_focus_without_selecting] for more information.
 func (x *EntryRow) GrabFocusWithoutSelecting() bool {
-
 	cret := xEntryRowGrabFocusWithoutSelecting(x.GoPointer())
 	return cret
 }
@@ -199,18 +188,14 @@ var xEntryRowRemove func(uintptr, uintptr)
 
 // Removes a child from @self.
 func (x *EntryRow) Remove(WidgetVar *gtk.Widget) {
-
 	xEntryRowRemove(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xEntryRowSetActivatesDefault func(uintptr, bool)
 
 // Sets whether activating the embedded entry can activate the default widget.
 func (x *EntryRow) SetActivatesDefault(ActivatesVar bool) {
-
 	xEntryRowSetActivatesDefault(x.GoPointer(), ActivatesVar)
-
 }
 
 var xEntryRowSetAttributes func(uintptr, *pango.AttrList)
@@ -220,9 +205,7 @@ var xEntryRowSetAttributes func(uintptr, *pango.AttrList)
 // The [struct@Pango.Attribute]'s `start_index` and `end_index` must refer to
 // the [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
 func (x *EntryRow) SetAttributes(AttributesVar *pango.AttrList) {
-
 	xEntryRowSetAttributes(x.GoPointer(), AttributesVar)
-
 }
 
 var xEntryRowSetEnableEmojiCompletion func(uintptr, bool)
@@ -231,9 +214,7 @@ var xEntryRowSetEnableEmojiCompletion func(uintptr, bool)
 //
 // Emoji replacement is done with :-delimited names, like `:heart:`.
 func (x *EntryRow) SetEnableEmojiCompletion(EnableEmojiCompletionVar bool) {
-
 	xEntryRowSetEnableEmojiCompletion(x.GoPointer(), EnableEmojiCompletionVar)
-
 }
 
 var xEntryRowSetInputHints func(uintptr, gtk.InputHints)
@@ -244,9 +225,7 @@ var xEntryRowSetInputHints func(uintptr, gtk.InputHints)
 //
 // See also: [property@AdwEntryRow:input-purpose]
 func (x *EntryRow) SetInputHints(HintsVar gtk.InputHints) {
-
 	xEntryRowSetInputHints(x.GoPointer(), HintsVar)
-
 }
 
 var xEntryRowSetInputPurpose func(uintptr, gtk.InputPurpose)
@@ -255,18 +234,14 @@ var xEntryRowSetInputPurpose func(uintptr, gtk.InputPurpose)
 //
 // The input purpose can be used by input methods to adjust their behavior.
 func (x *EntryRow) SetInputPurpose(PurposeVar gtk.InputPurpose) {
-
 	xEntryRowSetInputPurpose(x.GoPointer(), PurposeVar)
-
 }
 
 var xEntryRowSetMaxLength func(uintptr, int)
 
 // Sets the maximum length of the entry.
 func (x *EntryRow) SetMaxLength(MaxLengthVar int) {
-
 	xEntryRowSetMaxLength(x.GoPointer(), MaxLengthVar)
-
 }
 
 var xEntryRowSetShowApplyButton func(uintptr, bool)
@@ -281,9 +256,7 @@ var xEntryRowSetShowApplyButton func(uintptr, bool)
 // operation, e.g. network activity, to avoid triggering it after typing every
 // character.
 func (x *EntryRow) SetShowApplyButton(ShowApplyButtonVar bool) {
-
 	xEntryRowSetShowApplyButton(x.GoPointer(), ShowApplyButtonVar)
-
 }
 
 func (c *EntryRow) GoPointer() uintptr {
@@ -433,7 +406,6 @@ func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -457,7 +429,6 @@ func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -476,9 +447,19 @@ func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *EntryRow) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *EntryRow) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -499,7 +480,6 @@ func (x *EntryRow) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *EntryRow) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -524,7 +504,6 @@ func (x *EntryRow) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *EntryRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -563,30 +542,23 @@ func (x *EntryRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *EntryRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *EntryRow) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *EntryRow) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *EntryRow) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -599,19 +571,7 @@ func (x *EntryRow) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *EntryRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -619,14 +579,7 @@ func (x *EntryRow) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *EntryRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -635,9 +588,7 @@ func (x *EntryRow) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *EntryRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -659,9 +610,7 @@ func (x *EntryRow) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *EntryRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -671,9 +620,7 @@ func (x *EntryRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *EntryRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -695,9 +642,7 @@ func (x *EntryRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.A
 //
 // ```
 func (x *EntryRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -707,9 +652,7 @@ func (x *EntryRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *EntryRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -732,9 +675,7 @@ func (x *EntryRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acc
 //
 // ```
 func (x *EntryRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -744,23 +685,22 @@ func (x *EntryRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *EntryRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *EntryRow) GetActionName() string {
-
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *EntryRow) GetActionTargetValue() *glib.Variant {
-
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be
@@ -777,12 +717,10 @@ func (x *EntryRow) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *EntryRow) SetActionName(ActionNameVar *string) {
-
 	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
 	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
 }
 
 // Sets the target of an actionable widget.
@@ -795,9 +733,7 @@ func (x *EntryRow) SetActionName(ActionNameVar *string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *EntryRow) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	gtk.XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -819,9 +755,7 @@ func (x *EntryRow) SetActionTarget(FormatStringVar string, varArgs ...interface{
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *EntryRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	gtk.XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -830,9 +764,7 @@ func (x *EntryRow) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *EntryRow) SetDetailedActionName(DetailedActionNameVar string) {
-
 	gtk.XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -840,7 +772,6 @@ func (x *EntryRow) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EntryRow) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -882,7 +813,6 @@ func (x *EntryRow) GetBuildableId() string {
 // delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
 // change your tree to allow this function to work.
 func (x *EntryRow) DelegateGetAccessiblePlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
@@ -891,9 +821,7 @@ func (x *EntryRow) DelegateGetAccessiblePlatformState(StateVar gtk.AccessiblePla
 //
 // This call doesn’t do anything if there is no selected text.
 func (x *EntryRow) DeleteSelection() {
-
 	gtk.XGtkEditableDeleteSelection(x.GoPointer())
-
 }
 
 // Deletes a sequence of characters.
@@ -905,9 +833,7 @@ func (x *EntryRow) DeleteSelection() {
 //
 // Note that the positions are specified in characters, not bytes.
 func (x *EntryRow) DeleteText(StartPosVar int, EndPosVar int) {
-
 	gtk.XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Undoes the setup done by [method@Gtk.Editable.init_delegate].
@@ -915,14 +841,11 @@ func (x *EntryRow) DeleteText(StartPosVar int, EndPosVar int) {
 // This is a helper function that should be called from dispose,
 // before removing the delegate object.
 func (x *EntryRow) FinishDelegate() {
-
 	gtk.XGtkEditableFinishDelegate(x.GoPointer())
-
 }
 
 // Gets the alignment of the editable.
 func (x *EntryRow) GetAlignment() float32 {
-
 	cret := gtk.XGtkEditableGetAlignment(x.GoPointer())
 	return cret
 }
@@ -936,7 +859,6 @@ func (x *EntryRow) GetAlignment() float32 {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EntryRow) GetChars(StartPosVar int, EndPosVar int) string {
-
 	cret := gtk.XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -961,21 +883,18 @@ func (x *EntryRow) GetDelegate() *gtk.EditableBase {
 
 // Retrieves whether @editable is editable.
 func (x *EntryRow) GetEditable() bool {
-
 	cret := gtk.XGtkEditableGetEditable(x.GoPointer())
 	return cret
 }
 
 // Gets if undo/redo actions are enabled for @editable
 func (x *EntryRow) GetEnableUndo() bool {
-
 	cret := gtk.XGtkEditableGetEnableUndo(x.GoPointer())
 	return cret
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
 func (x *EntryRow) GetMaxWidthChars() int {
-
 	cret := gtk.XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -985,7 +904,6 @@ func (x *EntryRow) GetMaxWidthChars() int {
 //
 // Note that this position is in characters, not in bytes.
 func (x *EntryRow) GetPosition() int {
-
 	cret := gtk.XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -998,7 +916,6 @@ func (x *EntryRow) GetPosition() int {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
-
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1007,7 +924,6 @@ func (x *EntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 //
 // The returned string is owned by GTK and must not be modified or freed.
 func (x *EntryRow) GetText() string {
-
 	cret := gtk.XGtkEditableGetText(x.GoPointer())
 	return cret
 }
@@ -1015,7 +931,6 @@ func (x *EntryRow) GetText() string {
 // Gets the number of characters of space reserved
 // for the contents of the editable.
 func (x *EntryRow) GetWidthChars() int {
-
 	cret := gtk.XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -1028,9 +943,7 @@ func (x *EntryRow) GetWidthChars() int {
 // This is a helper function that should be called in instance init,
 // after creating the delegate object.
 func (x *EntryRow) InitDelegate() {
-
 	gtk.XGtkEditableInitDelegate(x.GoPointer())
-
 }
 
 // Inserts @length bytes of @text into the contents of the
@@ -1040,9 +953,7 @@ func (x *EntryRow) InitDelegate() {
 // The function updates @position to point after the newly
 // inserted text.
 func (x *EntryRow) InsertText(TextVar string, LengthVar int, PositionVar *int) {
-
 	gtk.XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
-
 }
 
 // Selects a region of text.
@@ -1054,9 +965,7 @@ func (x *EntryRow) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 //
 // Note that positions are specified in characters, not bytes.
 func (x *EntryRow) SelectRegion(StartPosVar int, EndPosVar int) {
-
 	gtk.XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
-
 }
 
 // Sets the alignment for the contents of the editable.
@@ -1064,16 +973,12 @@ func (x *EntryRow) SelectRegion(StartPosVar int, EndPosVar int) {
 // This controls the horizontal positioning of the contents when
 // the displayed text is shorter than the width of the editable.
 func (x *EntryRow) SetAlignment(XalignVar float32) {
-
 	gtk.XGtkEditableSetAlignment(x.GoPointer(), XalignVar)
-
 }
 
 // Determines if the user can edit the text in the editable widget.
 func (x *EntryRow) SetEditable(IsEditableVar bool) {
-
 	gtk.XGtkEditableSetEditable(x.GoPointer(), IsEditableVar)
-
 }
 
 // If enabled, changes to @editable will be saved for undo/redo
@@ -1083,16 +988,12 @@ func (x *EntryRow) SetEditable(IsEditableVar bool) {
 // stored in secure memory. As such, undo is forcefully disabled
 // when [property@Gtk.Text:visibility] is set to %FALSE.
 func (x *EntryRow) SetEnableUndo(EnableUndoVar bool) {
-
 	gtk.XGtkEditableSetEnableUndo(x.GoPointer(), EnableUndoVar)
-
 }
 
 // Sets the desired maximum width in characters of @editable.
 func (x *EntryRow) SetMaxWidthChars(NCharsVar int) {
-
 	gtk.XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 // Sets the cursor position in the editable to the given value.
@@ -1103,18 +1004,14 @@ func (x *EntryRow) SetMaxWidthChars(NCharsVar int) {
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
 func (x *EntryRow) SetPosition(PositionVar int) {
-
 	gtk.XGtkEditableSetPosition(x.GoPointer(), PositionVar)
-
 }
 
 // Sets the text in the editable to the given value.
 //
 // This is replacing the current contents.
 func (x *EntryRow) SetText(TextVar string) {
-
 	gtk.XGtkEditableSetText(x.GoPointer(), TextVar)
-
 }
 
 // Changes the size request of the editable to be about the
@@ -1124,14 +1021,12 @@ func (x *EntryRow) SetText(TextVar string) {
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
 func (x *EntryRow) SetWidthChars(NCharsVar int) {
-
 	gtk.XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1164,5 +1059,4 @@ func init() {
 	core.PuregoSafeRegister(&xEntryRowSetInputPurpose, libs, "adw_entry_row_set_input_purpose")
 	core.PuregoSafeRegister(&xEntryRowSetMaxLength, libs, "adw_entry_row_set_max_length")
 	core.PuregoSafeRegister(&xEntryRowSetShowApplyButton, libs, "adw_entry_row_set_show_apply_button")
-
 }

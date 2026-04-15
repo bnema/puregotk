@@ -4,8 +4,7 @@ package gobject
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -70,9 +69,7 @@ var xSignalGroupBlock func(uintptr)
 //
 // This blocked state will be kept across changes of the target instance.
 func (x *SignalGroup) Block() {
-
 	xSignalGroupBlock(x.GoPointer())
-
 }
 
 var xSignalGroupConnect func(uintptr, string, uintptr, uintptr)
@@ -82,24 +79,7 @@ var xSignalGroupConnect func(uintptr, string, uintptr, uintptr)
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) Connect(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	xSignalGroupConnect(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)
-
+	xSignalGroupConnect(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar)
 }
 
 var xSignalGroupConnectAfter func(uintptr, string, uintptr, uintptr)
@@ -111,24 +91,7 @@ var xSignalGroupConnectAfter func(uintptr, string, uintptr, uintptr)
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectAfter(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	xSignalGroupConnectAfter(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)
-
+	xSignalGroupConnectAfter(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar)
 }
 
 var xSignalGroupConnectClosure func(uintptr, string, *Closure, bool)
@@ -137,9 +100,7 @@ var xSignalGroupConnectClosure func(uintptr, string, *Closure, bool)
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectClosure(DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) {
-
 	xSignalGroupConnectClosure(x.GoPointer(), DetailedSignalVar, ClosureVar, AfterVar)
-
 }
 
 var xSignalGroupConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectFlags)
@@ -149,39 +110,7 @@ var xSignalGroupConnectData func(uintptr, string, uintptr, uintptr, uintptr, Con
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectData(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, NotifyVar *ClosureNotify, FlagsVar ConnectFlags) {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *NotifyVar
-				cbFn(arg0, arg1)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xSignalGroupConnectData(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar, NotifyVarRef, FlagsVar)
-
+	xSignalGroupConnectData(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallbackNullable(NotifyVar), FlagsVar)
 }
 
 var xSignalGroupConnectObject func(uintptr, string, uintptr, uintptr, ConnectFlags)
@@ -194,24 +123,7 @@ var xSignalGroupConnectObject func(uintptr, string, uintptr, uintptr, ConnectFla
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectObject(DetailedSignalVar string, CHandlerVar *Callback, ObjectVar uintptr, FlagsVar ConnectFlags) {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	xSignalGroupConnectObject(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, ObjectVar, FlagsVar)
-
+	xSignalGroupConnectObject(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), ObjectVar, FlagsVar)
 }
 
 var xSignalGroupConnectSwapped func(uintptr, string, uintptr, uintptr)
@@ -224,24 +136,7 @@ var xSignalGroupConnectSwapped func(uintptr, string, uintptr, uintptr)
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectSwapped(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
-
-	var CHandlerVarRef uintptr
-	if CHandlerVar != nil {
-		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
-		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-			CHandlerVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CHandlerVar
-				cbFn()
-			}
-			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
-		}
-	}
-
-	xSignalGroupConnectSwapped(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)
-
+	xSignalGroupConnectSwapped(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar)
 }
 
 var xSignalGroupDupTarget func(uintptr) uintptr
@@ -269,14 +164,7 @@ var xSignalGroupSetTarget func(uintptr, uintptr)
 // If the target instance was previously set, signals will be
 // disconnected from that object prior to connecting to @target.
 func (x *SignalGroup) SetTarget(TargetVar *Object) {
-
-	var TargetVarPtr uintptr
-	if TargetVar != nil {
-		TargetVarPtr = TargetVar.GoPointer()
-	}
-
-	xSignalGroupSetTarget(x.GoPointer(), TargetVarPtr)
-
+	xSignalGroupSetTarget(x.GoPointer(), TargetVar.GoPointer())
 }
 
 var xSignalGroupUnblock func(uintptr)
@@ -286,9 +174,7 @@ var xSignalGroupUnblock func(uintptr)
 // again. Must be unblocked exactly the same number of times it
 // has been blocked to become active again.
 func (x *SignalGroup) Unblock() {
-
 	xSignalGroupUnblock(x.GoPointer())
-
 }
 
 func (c *SignalGroup) GoPointer() uintptr {
@@ -306,7 +192,7 @@ func (c *SignalGroup) SetGoPointer(ptr uintptr) {
 // other than %NULL. It is similar to #GObject::notify on `target` except it
 // will not emit when #GSignalGroup:target is %NULL and also allows for
 // receiving the #GObject without a data-race.
-func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, *Object)) uint {
+func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
@@ -319,8 +205,7 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, *Object)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Object { cls := &Object{}; cls.Ptr = InstanceVarp; return cls }())
-
+		cbFn(fa, InstanceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -348,7 +233,6 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -359,7 +243,7 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -383,5 +267,4 @@ func init() {
 	core.PuregoSafeRegister(&xSignalGroupDupTarget, libs, "g_signal_group_dup_target")
 	core.PuregoSafeRegister(&xSignalGroupSetTarget, libs, "g_signal_group_set_target")
 	core.PuregoSafeRegister(&xSignalGroupUnblock, libs, "g_signal_group_unblock")
-
 }

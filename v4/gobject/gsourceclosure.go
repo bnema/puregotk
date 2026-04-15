@@ -2,8 +2,7 @@
 package gobject
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -16,9 +15,7 @@ var xSourceSetClosure func(*glib.Source, *Closure)
 // and @closure_marshal fields of the #GSourceFuncs structure must have been
 // filled in with pointers to appropriate functions.
 func SourceSetClosure(SourceVar *glib.Source, ClosureVar *Closure) {
-
 	xSourceSetClosure(SourceVar, ClosureVar)
-
 }
 
 var xSourceSetDummyCallback func(*glib.Source)
@@ -34,14 +31,12 @@ var xSourceSetDummyCallback func(*glib.Source)
 // structure must have been filled in with pointers to appropriate
 // functions.
 func SourceSetDummyCallback(SourceVar *glib.Source) {
-
 	xSourceSetDummyCallback(SourceVar)
-
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -53,5 +48,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSourceSetClosure, libs, "g_source_set_closure")
 	core.PuregoSafeRegister(&xSourceSetDummyCallback, libs, "g_source_set_dummy_callback")
-
 }

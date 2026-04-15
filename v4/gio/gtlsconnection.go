@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -200,7 +199,6 @@ var xTlsChannelBindingErrorQuark func() glib.Quark
 
 // Gets the TLS channel binding error quark.
 func TlsChannelBindingErrorQuark() glib.Quark {
-
 	cret := xTlsChannelBindingErrorQuark()
 	return cret
 }
@@ -209,7 +207,6 @@ var xTlsErrorQuark func() glib.Quark
 
 // Gets the TLS error quark.
 func TlsErrorQuark() glib.Quark {
-
 	cret := xTlsErrorQuark()
 	return cret
 }
@@ -242,7 +239,6 @@ var xTlsConnectionEmitAcceptCertificate func(uintptr, uintptr, TlsCertificateFla
 // Used by #GTlsConnection implementations to emit the
 // #GTlsConnection::accept-certificate signal.
 func (x *TlsConnection) EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
-
 	cret := xTlsConnectionEmitAcceptCertificate(x.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
 	return cret
 }
@@ -288,7 +284,6 @@ func (x *TlsConnection) GetChannelBindingData(TypeVar TlsChannelBindingType, Dat
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsConnectionGetCiphersuiteName func(uintptr) string
@@ -302,7 +297,6 @@ var xTlsConnectionGetCiphersuiteName func(uintptr) string
 // displayed to the user for informative purposes only, and parsing it
 // is not recommended.
 func (x *TlsConnection) GetCiphersuiteName() string {
-
 	cret := xTlsConnectionGetCiphersuiteName(x.GoPointer())
 	return cret
 }
@@ -354,7 +348,6 @@ var xTlsConnectionGetNegotiatedProtocol func(uintptr) string
 // does not support ALPN, then this will be %NULL. See
 // g_tls_connection_set_advertised_protocols().
 func (x *TlsConnection) GetNegotiatedProtocol() string {
-
 	cret := xTlsConnectionGetNegotiatedProtocol(x.GoPointer())
 	return cret
 }
@@ -386,7 +379,6 @@ var xTlsConnectionGetPeerCertificateErrors func(uintptr) TlsCertificateFlags
 //
 // See #GTlsConnection:peer-certificate-errors for more information.
 func (x *TlsConnection) GetPeerCertificateErrors() TlsCertificateFlags {
-
 	cret := xTlsConnectionGetPeerCertificateErrors(x.GoPointer())
 	return cret
 }
@@ -398,7 +390,6 @@ var xTlsConnectionGetProtocolVersion func(uintptr) TlsProtocolVersion
 // has been closed, or if the TLS backend has implemented a protocol version
 // that is not a recognized #GTlsProtocolVersion.
 func (x *TlsConnection) GetProtocolVersion() TlsProtocolVersion {
-
 	cret := xTlsConnectionGetProtocolVersion(x.GoPointer())
 	return cret
 }
@@ -408,7 +399,6 @@ var xTlsConnectionGetRehandshakeMode func(uintptr) TlsRehandshakeMode
 // Gets @conn rehandshaking mode. See
 // g_tls_connection_set_rehandshake_mode() for details.
 func (x *TlsConnection) GetRehandshakeMode() TlsRehandshakeMode {
-
 	cret := xTlsConnectionGetRehandshakeMode(x.GoPointer())
 	return cret
 }
@@ -419,7 +409,6 @@ var xTlsConnectionGetRequireCloseNotify func(uintptr) bool
 // when the connection is closed. See
 // g_tls_connection_set_require_close_notify() for details.
 func (x *TlsConnection) GetRequireCloseNotify() bool {
-
 	cret := xTlsConnectionGetRequireCloseNotify(x.GoPointer())
 	return cret
 }
@@ -429,7 +418,6 @@ var xTlsConnectionGetUseSystemCertdb func(uintptr) bool
 // Gets whether @conn uses the system certificate database to verify
 // peer certificates. See g_tls_connection_set_use_system_certdb().
 func (x *TlsConnection) GetUseSystemCertdb() bool {
-
 	cret := xTlsConnectionGetUseSystemCertdb(x.GoPointer())
 	return cret
 }
@@ -480,7 +468,6 @@ func (x *TlsConnection) Handshake(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsConnectionHandshakeAsync func(uintptr, int, uintptr, uintptr, uintptr)
@@ -488,29 +475,7 @@ var xTlsConnectionHandshakeAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // Asynchronously performs a TLS handshake on @conn. See
 // g_tls_connection_handshake() for more information.
 func (x *TlsConnection) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xTlsConnectionHandshakeFinish func(uintptr, uintptr, **glib.Error) bool
@@ -525,7 +490,6 @@ func (x *TlsConnection) HandshakeFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsConnectionSetAdvertisedProtocols func(uintptr, []string)
@@ -541,9 +505,7 @@ var xTlsConnectionSetAdvertisedProtocols func(uintptr, []string)
 // See [IANA TLS ALPN Protocol IDs](https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids)
 // for a list of registered protocol IDs.
 func (x *TlsConnection) SetAdvertisedProtocols(ProtocolsVar []string) {
-
 	xTlsConnectionSetAdvertisedProtocols(x.GoPointer(), ProtocolsVar)
-
 }
 
 var xTlsConnectionSetCertificate func(uintptr, uintptr)
@@ -567,9 +529,7 @@ var xTlsConnectionSetCertificate func(uintptr, uintptr)
 // that g_tls_client_connection_get_accepted_cas() will return
 // non-%NULL.)
 func (x *TlsConnection) SetCertificate(CertificateVar *TlsCertificate) {
-
 	xTlsConnectionSetCertificate(x.GoPointer(), CertificateVar.GoPointer())
-
 }
 
 var xTlsConnectionSetDatabase func(uintptr, uintptr)
@@ -586,14 +546,7 @@ var xTlsConnectionSetDatabase func(uintptr, uintptr)
 // There are nonintuitive security implications when using a non-default
 // database. See #GTlsConnection:database for details.
 func (x *TlsConnection) SetDatabase(DatabaseVar *TlsDatabase) {
-
-	var DatabaseVarPtr uintptr
-	if DatabaseVar != nil {
-		DatabaseVarPtr = DatabaseVar.GoPointer()
-	}
-
-	xTlsConnectionSetDatabase(x.GoPointer(), DatabaseVarPtr)
-
+	xTlsConnectionSetDatabase(x.GoPointer(), DatabaseVar.GoPointer())
 }
 
 var xTlsConnectionSetInteraction func(uintptr, uintptr)
@@ -605,14 +558,7 @@ var xTlsConnectionSetInteraction func(uintptr, uintptr)
 // #GTlsInteraction. %NULL can also be provided if no user interaction
 // should occur for this connection.
 func (x *TlsConnection) SetInteraction(InteractionVar *TlsInteraction) {
-
-	var InteractionVarPtr uintptr
-	if InteractionVar != nil {
-		InteractionVarPtr = InteractionVar.GoPointer()
-	}
-
-	xTlsConnectionSetInteraction(x.GoPointer(), InteractionVarPtr)
-
+	xTlsConnectionSetInteraction(x.GoPointer(), InteractionVar.GoPointer())
 }
 
 var xTlsConnectionSetRehandshakeMode func(uintptr, TlsRehandshakeMode)
@@ -622,9 +568,7 @@ var xTlsConnectionSetRehandshakeMode func(uintptr, TlsRehandshakeMode)
 // the TLS protocol, replaced by separate post-handshake authentication and
 // rekey operations.
 func (x *TlsConnection) SetRehandshakeMode(ModeVar TlsRehandshakeMode) {
-
 	xTlsConnectionSetRehandshakeMode(x.GoPointer(), ModeVar)
-
 }
 
 var xTlsConnectionSetRequireCloseNotify func(uintptr, bool)
@@ -657,9 +601,7 @@ var xTlsConnectionSetRequireCloseNotify func(uintptr, bool)
 // than closing @conn itself, but note that this may only be done when no other
 // operations are pending on @conn or the base I/O stream.
 func (x *TlsConnection) SetRequireCloseNotify(RequireCloseNotifyVar bool) {
-
 	xTlsConnectionSetRequireCloseNotify(x.GoPointer(), RequireCloseNotifyVar)
-
 }
 
 var xTlsConnectionSetUseSystemCertdb func(uintptr, bool)
@@ -672,9 +614,7 @@ var xTlsConnectionSetUseSystemCertdb func(uintptr, bool)
 // client-side connections, unless that bit is not set in
 // #GTlsClientConnection:validation-flags).
 func (x *TlsConnection) SetUseSystemCertdb(UseSystemCertdbVar bool) {
-
 	xTlsConnectionSetUseSystemCertdb(x.GoPointer(), UseSystemCertdbVar)
-
 }
 
 func (c *TlsConnection) GoPointer() uintptr {
@@ -808,7 +748,7 @@ func (x *TlsConnection) GetPropertyUseSystemCertdb() bool {
 // If you are doing I/O in another thread, you do not
 // need to worry about this, and can simply block in the signal
 // handler until the UI thread returns an answer.
-func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) uint {
+func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr, TlsCertificateFlags) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
@@ -821,8 +761,7 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, *TlsCer
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TlsCertificate { cls := &TlsCertificate{}; cls.Ptr = PeerCertVarp; return cls }(), ErrorsVarp)
-
+		return cbFn(fa, PeerCertVarp, ErrorsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -833,7 +772,7 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, *TlsCer
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -871,5 +810,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsConnectionSetRehandshakeMode, libs, "g_tls_connection_set_rehandshake_mode")
 	core.PuregoSafeRegister(&xTlsConnectionSetRequireCloseNotify, libs, "g_tls_connection_set_require_close_notify")
 	core.PuregoSafeRegister(&xTlsConnectionSetUseSystemCertdb, libs, "g_tls_connection_set_use_system_certdb")
-
 }

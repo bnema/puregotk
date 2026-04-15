@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -205,7 +204,6 @@ func (x *SeekableBase) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *SeekableBase) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -213,7 +211,6 @@ func (x *SeekableBase) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *SeekableBase) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -245,12 +242,10 @@ func (x *SeekableBase) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *SeekableBase) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -277,18 +272,19 @@ func (x *SeekableBase) Truncate(OffsetVar int64, CancellableVar *Cancellable) (b
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGSeekableCanSeek func(uintptr) bool
-var XGSeekableCanTruncate func(uintptr) bool
-var XGSeekableSeek func(uintptr, int64, glib.SeekType, uintptr, **glib.Error) bool
-var XGSeekableTell func(uintptr) int64
-var XGSeekableTruncate func(uintptr, int64, uintptr, **glib.Error) bool
+var (
+	XGSeekableCanSeek     func(uintptr) bool
+	XGSeekableCanTruncate func(uintptr) bool
+	XGSeekableSeek        func(uintptr, int64, glib.SeekType, uintptr, **glib.Error) bool
+	XGSeekableTell        func(uintptr) int64
+	XGSeekableTruncate    func(uintptr, int64, uintptr, **glib.Error) bool
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -305,5 +301,4 @@ func init() {
 	core.PuregoSafeRegister(&XGSeekableSeek, libs, "g_seekable_seek")
 	core.PuregoSafeRegister(&XGSeekableTell, libs, "g_seekable_tell")
 	core.PuregoSafeRegister(&XGSeekableTruncate, libs, "g_seekable_truncate")
-
 }

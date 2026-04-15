@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -65,9 +64,11 @@ func (x *DtlsClientConnectionBase) SetGoPointer(ptr uintptr) {
 // Each item in the list is a #GByteArray which contains the complete
 // subject DN of the certificate authority.
 func (x *DtlsClientConnectionBase) GetAcceptedCas() *glib.List {
-
 	cret := XGDtlsClientConnectionGetAcceptedCas(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets @conn's expected server identity
@@ -91,7 +92,6 @@ func (x *DtlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 // to use correctly. See #GDtlsClientConnection:validation-flags for more
 // information.
 func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
-
 	cret := XGDtlsClientConnectionGetValidationFlags(x.GoPointer())
 	return cret
 }
@@ -101,9 +101,7 @@ func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 // to let @conn know what name to look for in the certificate when
 // performing %G_TLS_CERTIFICATE_BAD_IDENTITY validation, if enabled.
 func (x *DtlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectable) {
-
 	XGDtlsClientConnectionSetServerIdentity(x.GoPointer(), IdentityVar.GoPointer())
-
 }
 
 // Sets @conn's validation flags, to override the default set of
@@ -114,16 +112,16 @@ func (x *DtlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectab
 // to use correctly. See #GDtlsClientConnection:validation-flags for more
 // information.
 func (x *DtlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFlags) {
-
 	XGDtlsClientConnectionSetValidationFlags(x.GoPointer(), FlagsVar)
-
 }
 
-var XGDtlsClientConnectionGetAcceptedCas func(uintptr) *glib.List
-var XGDtlsClientConnectionGetServerIdentity func(uintptr) uintptr
-var XGDtlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
-var XGDtlsClientConnectionSetServerIdentity func(uintptr, uintptr)
-var XGDtlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+var (
+	XGDtlsClientConnectionGetAcceptedCas     func(uintptr) uintptr
+	XGDtlsClientConnectionGetServerIdentity  func(uintptr) uintptr
+	XGDtlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
+	XGDtlsClientConnectionSetServerIdentity  func(uintptr, uintptr)
+	XGDtlsClientConnectionSetValidationFlags func(uintptr, TlsCertificateFlags)
+)
 
 var xDtlsClientConnectionNew func(uintptr, uintptr, **glib.Error) uintptr
 
@@ -149,12 +147,11 @@ func DtlsClientConnectionNew(BaseSocketVar DatagramBased, ServerIdentityVar Sock
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -173,5 +170,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDtlsClientConnectionGetValidationFlags, libs, "g_dtls_client_connection_get_validation_flags")
 	core.PuregoSafeRegister(&XGDtlsClientConnectionSetServerIdentity, libs, "g_dtls_client_connection_set_server_identity")
 	core.PuregoSafeRegister(&XGDtlsClientConnectionSetValidationFlags, libs, "g_dtls_client_connection_set_validation_flags")
-
 }

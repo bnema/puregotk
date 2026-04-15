@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -115,14 +114,7 @@ var xSpinnerPaintableSetWidget func(uintptr, uintptr)
 
 // Sets the widget used for frame clock.
 func (x *SpinnerPaintable) SetWidget(WidgetVar *gtk.Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xSpinnerPaintableSetWidget(x.GoPointer(), WidgetVarPtr)
-
+	xSpinnerPaintableSetWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 func (c *SpinnerPaintable) GoPointer() uintptr {
@@ -147,9 +139,7 @@ func (c *SpinnerPaintable) SetGoPointer(ptr uintptr) {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *SpinnerPaintable) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -177,7 +167,6 @@ func (x *SpinnerPaintable) GetCurrentImage() *gdk.PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *SpinnerPaintable) GetFlags() gdk.PaintableFlags {
-
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -200,7 +189,6 @@ func (x *SpinnerPaintable) GetFlags() gdk.PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *SpinnerPaintable) GetIntrinsicAspectRatio() float64 {
-
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -216,7 +204,6 @@ func (x *SpinnerPaintable) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *SpinnerPaintable) GetIntrinsicHeight() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -232,7 +219,6 @@ func (x *SpinnerPaintable) GetIntrinsicHeight() int {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *SpinnerPaintable) GetIntrinsicWidth() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -248,9 +234,7 @@ func (x *SpinnerPaintable) GetIntrinsicWidth() int {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *SpinnerPaintable) InvalidateContents() {
-
 	gdk.XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -264,9 +248,7 @@ func (x *SpinnerPaintable) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *SpinnerPaintable) InvalidateSize() {
-
 	gdk.XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -275,24 +257,28 @@ func (x *SpinnerPaintable) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *SpinnerPaintable) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64) {
-
 	gdk.XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 // Snapshots the paintable with the given colors.
 //
-// If less than 4 colors are provided, GTK will pad the array with default
+// If less than 5 colors are provided, GTK will pad the array with default
 // colors.
 func (x *SpinnerPaintable) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
-
 	gtk.XGtkSymbolicPaintableSnapshotSymbolic(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
+}
 
+// Snapshots the paintable with the given colors and weight.
+//
+// If less than 5 colors are provided, GTK will pad the array with default
+// colors.
+func (x *SpinnerPaintable) SnapshotWithWeight(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64) {
+	gtk.XGtkSymbolicPaintableSnapshotWithWeight(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar, WeightVar)
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -308,5 +294,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSpinnerPaintableGetWidget, libs, "adw_spinner_paintable_get_widget")
 	core.PuregoSafeRegister(&xSpinnerPaintableSetWidget, libs, "adw_spinner_paintable_set_widget")
-
 }

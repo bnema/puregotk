@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -105,7 +104,6 @@ func NewTlsCertificateFromFile(FileVar string) (*TlsCertificate, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTlsCertificateFromFileWithPassword func(string, string, **glib.Error) uintptr
@@ -133,7 +131,6 @@ func NewTlsCertificateFromFileWithPassword(FileVar string, PasswordVar string) (
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTlsCertificateFromFiles func(string, string, **glib.Error) uintptr
@@ -167,7 +164,6 @@ func NewTlsCertificateFromFiles(CertFileVar string, KeyFileVar string) (*TlsCert
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTlsCertificateFromPem func(string, int, **glib.Error) uintptr
@@ -201,7 +197,6 @@ func NewTlsCertificateFromPem(DataVar string, LengthVar int) (*TlsCertificate, e
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTlsCertificateFromPkcs11Uris func(string, uintptr, **glib.Error) uintptr
@@ -251,7 +246,6 @@ func NewTlsCertificateFromPkcs11Uris(Pkcs11UriVar string, PrivateKeyPkcs11UriVar
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewTlsCertificateFromPkcs12 func([]byte, uint, uintptr, **glib.Error) uintptr
@@ -291,14 +285,12 @@ func NewTlsCertificateFromPkcs12(DataVar []byte, LengthVar uint, PasswordVar *st
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xTlsCertificateGetDnsNames func(uintptr) uintptr
 
 // Gets the value of #GTlsCertificate:dns-names.
 func (x *TlsCertificate) GetDnsNames() uintptr {
-
 	cret := xTlsCertificateGetDnsNames(x.GoPointer())
 	return cret
 }
@@ -307,7 +299,6 @@ var xTlsCertificateGetIpAddresses func(uintptr) uintptr
 
 // Gets the value of #GTlsCertificate:ip-addresses.
 func (x *TlsCertificate) GetIpAddresses() uintptr {
-
 	cret := xTlsCertificateGetIpAddresses(x.GoPointer())
 	return cret
 }
@@ -333,34 +324,36 @@ var xTlsCertificateGetIssuerName func(uintptr) string
 
 // Returns the issuer name from the certificate.
 func (x *TlsCertificate) GetIssuerName() string {
-
 	cret := xTlsCertificateGetIssuerName(x.GoPointer())
 	return cret
 }
 
-var xTlsCertificateGetNotValidAfter func(uintptr) *glib.DateTime
+var xTlsCertificateGetNotValidAfter func(uintptr) uintptr
 
 // Returns the time at which the certificate became or will become invalid.
 func (x *TlsCertificate) GetNotValidAfter() *glib.DateTime {
-
 	cret := xTlsCertificateGetNotValidAfter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
-var xTlsCertificateGetNotValidBefore func(uintptr) *glib.DateTime
+var xTlsCertificateGetNotValidBefore func(uintptr) uintptr
 
 // Returns the time at which the certificate became or will become valid.
 func (x *TlsCertificate) GetNotValidBefore() *glib.DateTime {
-
 	cret := xTlsCertificateGetNotValidBefore(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xTlsCertificateGetSubjectName func(uintptr) string
 
 // Returns the subject name from the certificate.
 func (x *TlsCertificate) GetSubjectName() string {
-
 	cret := xTlsCertificateGetSubjectName(x.GoPointer())
 	return cret
 }
@@ -373,7 +366,6 @@ var xTlsCertificateIsSame func(uintptr, uintptr) bool
 // their #GTlsCertificate:issuer, #GTlsCertificate:private-key, or
 // #GTlsCertificate:private-key-pem properties differ.
 func (x *TlsCertificate) IsSame(CertTwoVar *TlsCertificate) bool {
-
 	cret := xTlsCertificateIsSame(x.GoPointer(), CertTwoVar.GoPointer())
 	return cret
 }
@@ -414,18 +406,7 @@ var xTlsCertificateVerify func(uintptr, uintptr, uintptr) TlsCertificateFlags
 // certificates used by a TLS connection is to let #GTlsConnection
 // handle the verification.
 func (x *TlsCertificate) Verify(IdentityVar SocketConnectable, TrustedCaVar *TlsCertificate) TlsCertificateFlags {
-
-	var IdentityVarPtr uintptr
-	if IdentityVar != nil {
-		IdentityVarPtr = IdentityVar.GoPointer()
-	}
-
-	var TrustedCaVarPtr uintptr
-	if TrustedCaVar != nil {
-		TrustedCaVarPtr = TrustedCaVar.GoPointer()
-	}
-
-	cret := xTlsCertificateVerify(x.GoPointer(), IdentityVarPtr, TrustedCaVarPtr)
+	cret := xTlsCertificateVerify(x.GoPointer(), IdentityVar.GoPointer(), TrustedCaVar.GoPointer())
 	return cret
 }
 
@@ -740,7 +721,7 @@ func (x *TlsCertificate) GetPropertySubjectName() string {
 	return v.GetString()
 }
 
-var xTlsCertificateListNewFromFile func(string, **glib.Error) *glib.List
+var xTlsCertificateListNewFromFile func(string, **glib.Error) uintptr
 
 // Creates one or more #GTlsCertificates from the PEM-encoded
 // data in @file. If @file cannot be read or parsed, the function will
@@ -751,16 +732,18 @@ func TlsCertificateListNewFromFile(FileVar string) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xTlsCertificateListNewFromFile(FileVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -790,5 +773,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsCertificateVerify, libs, "g_tls_certificate_verify")
 
 	core.PuregoSafeRegister(&xTlsCertificateListNewFromFile, libs, "g_tls_certificate_list_new_from_file")
-
 }

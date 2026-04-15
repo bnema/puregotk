@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -155,9 +154,7 @@ var xGridAttach func(uintptr, uintptr, int, int, int, int)
 // The number of “cells” that @child will occupy is determined
 // by @width and @height.
 func (x *Grid) Attach(ChildVar *Widget, ColumnVar int, RowVar int, WidthVar int, HeightVar int) {
-
 	xGridAttach(x.GoPointer(), ChildVar.GoPointer(), ColumnVar, RowVar, WidthVar, HeightVar)
-
 }
 
 var xGridAttachNextTo func(uintptr, uintptr, uintptr, PositionType, int, int)
@@ -172,21 +169,13 @@ var xGridAttachNextTo func(uintptr, uintptr, uintptr, PositionType, int, int)
 // Attaching widgets labeled `[1]`, `[2]`, `[3]` with `@sibling == %NULL` and
 // `@side == %GTK_POS_LEFT` yields a layout of `[3][2][1]`.
 func (x *Grid) AttachNextTo(ChildVar *Widget, SiblingVar *Widget, SideVar PositionType, WidthVar int, HeightVar int) {
-
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	xGridAttachNextTo(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr, SideVar, WidthVar, HeightVar)
-
+	xGridAttachNextTo(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer(), SideVar, WidthVar, HeightVar)
 }
 
 var xGridGetBaselineRow func(uintptr) int
 
 // Returns which row defines the global baseline of @grid.
 func (x *Grid) GetBaselineRow() int {
-
 	cret := xGridGetBaselineRow(x.GoPointer())
 	return cret
 }
@@ -213,7 +202,6 @@ var xGridGetColumnHomogeneous func(uintptr) bool
 
 // Returns whether all columns of @grid have the same width.
 func (x *Grid) GetColumnHomogeneous() bool {
-
 	cret := xGridGetColumnHomogeneous(x.GoPointer())
 	return cret
 }
@@ -222,7 +210,6 @@ var xGridGetColumnSpacing func(uintptr) uint
 
 // Returns the amount of space between the columns of @grid.
 func (x *Grid) GetColumnSpacing() uint {
-
 	cret := xGridGetColumnSpacing(x.GoPointer())
 	return cret
 }
@@ -233,7 +220,6 @@ var xGridGetRowBaselinePosition func(uintptr, int) BaselinePosition
 //
 // See [method@Gtk.Grid.set_row_baseline_position].
 func (x *Grid) GetRowBaselinePosition(RowVar int) BaselinePosition {
-
 	cret := xGridGetRowBaselinePosition(x.GoPointer(), RowVar)
 	return cret
 }
@@ -242,7 +228,6 @@ var xGridGetRowHomogeneous func(uintptr) bool
 
 // Returns whether all rows of @grid have the same height.
 func (x *Grid) GetRowHomogeneous() bool {
-
 	cret := xGridGetRowHomogeneous(x.GoPointer())
 	return cret
 }
@@ -251,7 +236,6 @@ var xGridGetRowSpacing func(uintptr) uint
 
 // Returns the amount of space between the rows of @grid.
 func (x *Grid) GetRowSpacing() uint {
-
 	cret := xGridGetRowSpacing(x.GoPointer())
 	return cret
 }
@@ -264,9 +248,7 @@ var xGridInsertColumn func(uintptr, int)
 // are moved one column to the right. Children which span across this
 // position are grown to span the new column.
 func (x *Grid) InsertColumn(PositionVar int) {
-
 	xGridInsertColumn(x.GoPointer(), PositionVar)
-
 }
 
 var xGridInsertNextTo func(uintptr, uintptr, PositionType)
@@ -278,9 +260,7 @@ var xGridInsertNextTo func(uintptr, uintptr, PositionType)
 // a row is inserted. If @side is %GTK_POS_LEFT of %GTK_POS_RIGHT,
 // a column is inserted.
 func (x *Grid) InsertNextTo(SiblingVar *Widget, SideVar PositionType) {
-
 	xGridInsertNextTo(x.GoPointer(), SiblingVar.GoPointer(), SideVar)
-
 }
 
 var xGridInsertRow func(uintptr, int)
@@ -291,18 +271,14 @@ var xGridInsertRow func(uintptr, int)
 // are moved one row down. Children which span across this
 // position are grown to span the new row.
 func (x *Grid) InsertRow(PositionVar int) {
-
 	xGridInsertRow(x.GoPointer(), PositionVar)
-
 }
 
 var xGridQueryChild func(uintptr, uintptr, *int, *int, *int, *int)
 
 // Queries the attach points and spans of @child inside the given `GtkGrid`.
 func (x *Grid) QueryChild(ChildVar *Widget, ColumnVar *int, RowVar *int, WidthVar *int, HeightVar *int) {
-
 	xGridQueryChild(x.GoPointer(), ChildVar.GoPointer(), ColumnVar, RowVar, WidthVar, HeightVar)
-
 }
 
 var xGridRemove func(uintptr, uintptr)
@@ -312,9 +288,7 @@ var xGridRemove func(uintptr, uintptr)
 // The child must have been added with
 // [method@Gtk.Grid.attach] or [method@Gtk.Grid.attach_next_to].
 func (x *Grid) Remove(ChildVar *Widget) {
-
 	xGridRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xGridRemoveColumn func(uintptr, int)
@@ -326,9 +300,7 @@ var xGridRemoveColumn func(uintptr, int)
 // width reduced by one, and children after the column
 // are moved to the left.
 func (x *Grid) RemoveColumn(PositionVar int) {
-
 	xGridRemoveColumn(x.GoPointer(), PositionVar)
-
 }
 
 var xGridRemoveRow func(uintptr, int)
@@ -340,9 +312,7 @@ var xGridRemoveRow func(uintptr, int)
 // height reduced by one, and children below the row
 // are moved up.
 func (x *Grid) RemoveRow(PositionVar int) {
-
 	xGridRemoveRow(x.GoPointer(), PositionVar)
-
 }
 
 var xGridSetBaselineRow func(uintptr, int)
@@ -353,27 +323,21 @@ var xGridSetBaselineRow func(uintptr, int)
 // one of those is global, meaning it will be the baseline in the
 // parent of the @grid.
 func (x *Grid) SetBaselineRow(RowVar int) {
-
 	xGridSetBaselineRow(x.GoPointer(), RowVar)
-
 }
 
 var xGridSetColumnHomogeneous func(uintptr, bool)
 
 // Sets whether all columns of @grid will have the same width.
 func (x *Grid) SetColumnHomogeneous(HomogeneousVar bool) {
-
 	xGridSetColumnHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xGridSetColumnSpacing func(uintptr, uint)
 
 // Sets the amount of space between columns of @grid.
 func (x *Grid) SetColumnSpacing(SpacingVar uint) {
-
 	xGridSetColumnSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 var xGridSetRowBaselinePosition func(uintptr, int, BaselinePosition)
@@ -383,27 +347,21 @@ var xGridSetRowBaselinePosition func(uintptr, int, BaselinePosition)
 //
 // The default baseline position is %GTK_BASELINE_POSITION_CENTER.
 func (x *Grid) SetRowBaselinePosition(RowVar int, PosVar BaselinePosition) {
-
 	xGridSetRowBaselinePosition(x.GoPointer(), RowVar, PosVar)
-
 }
 
 var xGridSetRowHomogeneous func(uintptr, bool)
 
 // Sets whether all rows of @grid will have the same height.
 func (x *Grid) SetRowHomogeneous(HomogeneousVar bool) {
-
 	xGridSetRowHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xGridSetRowSpacing func(uintptr, uint)
 
 // Sets the amount of space between rows of @grid.
 func (x *Grid) SetRowSpacing(SpacingVar uint) {
-
 	xGridSetRowSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 func (c *Grid) GoPointer() uintptr {
@@ -512,9 +470,19 @@ func (x *Grid) GetPropertyRowSpacing() int {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Grid) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Grid) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -535,7 +503,6 @@ func (x *Grid) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Grid) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -560,7 +527,6 @@ func (x *Grid) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Grid) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -599,30 +565,23 @@ func (x *Grid) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Grid) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Grid) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Grid) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Grid) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -635,19 +594,7 @@ func (x *Grid) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Grid) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -655,14 +602,7 @@ func (x *Grid) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessib
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Grid) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -671,9 +611,7 @@ func (x *Grid) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Grid) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -695,9 +633,7 @@ func (x *Grid) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Grid) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -707,9 +643,7 @@ func (x *Grid) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *Grid) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -731,9 +665,7 @@ func (x *Grid) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessibl
 //
 // ```
 func (x *Grid) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -743,9 +675,7 @@ func (x *Grid) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *Grid) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -768,9 +698,7 @@ func (x *Grid) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleR
 //
 // ```
 func (x *Grid) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -780,9 +708,7 @@ func (x *Grid) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}
 //
 // This function is meant to be used by language bindings.
 func (x *Grid) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -790,28 +716,24 @@ func (x *Grid) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Val
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Grid) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Grid) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Grid) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -847,5 +769,4 @@ func init() {
 	core.PuregoSafeRegister(&xGridSetRowBaselinePosition, libs, "gtk_grid_set_row_baseline_position")
 	core.PuregoSafeRegister(&xGridSetRowHomogeneous, libs, "gtk_grid_set_row_homogeneous")
 	core.PuregoSafeRegister(&xGridSetRowSpacing, libs, "gtk_grid_set_row_spacing")
-
 }

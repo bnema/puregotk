@@ -12,7 +12,9 @@ import (
 )
 
 // convList maps the given GIR primitive type to a Go builtin type.
-// See https://github.com/diamondburned/gotk4/blob/fd960d20b525a07580938d10a214336bafb47d12/gir/girgen/types/types.go#LL483C1-L512C2
+// Based on https://github.com/diamondburned/gotk4/blob/fd960d20b525a07580938d10a214336bafb47d12/gir/girgen/types/types.go#LL483C1-L512C2
+// Keep common public APIs on Go-sized int/uint for downstream compatibility;
+// record fields that must preserve the exact C layout are handled separately.
 var convList = map[string]string{
 	"none":     "",
 	"gboolean": "bool",
@@ -200,7 +202,7 @@ type Bitfield struct {
 	InfoElements
 }
 
-func (b *Bitfield) Template(ns, cPrefix string) EnumTemplate {
+func (b *Bitfield) Template(ns string, cPrefix string) EnumTemplate {
 	els := make([]enumValues, len(b.Members))
 	for i, m := range b.Members {
 		v, err := strconv.Atoi(m.Value)
@@ -474,7 +476,7 @@ type Enum struct {
 	InfoElements
 }
 
-func (e *Enum) Template(ns, cPrefix string) EnumTemplate {
+func (e *Enum) Template(ns string, cPrefix string) EnumTemplate {
 	els := make([]enumValues, len(e.Members))
 
 	for i, m := range e.Members {
@@ -663,20 +665,15 @@ func (p *Parameter) VarName() string {
 	return snaked + "Var"
 }
 
-func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool, ctx ArgContext) funcArgsTemplate {
-	if p == nil {
-		return funcArgsTemplate{}
-	}
-	params := p.Parameters
-	if len(params) == 0 {
-		return funcArgsTemplate{}
-	}
+func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool, ctx ArgContext, imps *ImportSet) funcArgsTemplate {
 	args := funcArgsTemplate{}
-	for _, par := range params {
-		args.Add(par, ifacens, ns, kinds, ctx)
+	if p != nil {
+		for _, par := range p.Parameters {
+			args.Add(par, ifacens, ns, kinds, ctx, imps)
+		}
 	}
 	if throws {
-		args.AddThrows(ns)
+		args.AddThrows(ns, imps)
 	}
 	return args
 }
@@ -728,12 +725,34 @@ func (p Property) IsReadable() bool {
 	return p.Readable == nil || *p.Readable
 }
 
-func (p *Property) Template(ns string, kinds KindMap) PropertyTemplate {
+func (p *Property) Template(ns string, kinds KindMap, imps *ImportSet) PropertyTemplate {
 	var (
 		goType                           = p.AnyType.Translate(ns, kinds)
 		cName                            = p.Name
 		gvalueType, setMethod, getMethod = mapGoTypeToGValue(goType)
 	)
+
+	if gvalueType != "" {
+		imps.AddPkg("gobject")
+
+		switch gvalueType {
+		case "BoxedStrv":
+			if p.Writable {
+				imps.AddPkg("glib")
+			}
+
+			imps.AddCore()
+			imps.AddUnsafe()
+
+		case "BoxedByteArray", "BoxedPtrArray":
+			if p.Writable {
+				imps.AddPkg("glib")
+			}
+
+			imps.AddCore()
+			imps.AddUnsafe()
+		}
+	}
 
 	return PropertyTemplate{
 		Doc:        p.Doc.StringSafe(),
@@ -823,10 +842,11 @@ type ReturnValue struct {
 	AnyType
 }
 
-func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool) funcRetTemplate {
+func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool, imps *ImportSet) funcRetTemplate {
 	val := r.AnyType.Translate(ns, kinds)
 	raw := val
 	class := false
+	record := false
 	lns := ns
 	if ins != "" {
 		lns = ins
@@ -849,10 +869,17 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 			class = false
 			val = "uintptr"
 		}
+		imps.AddPkg(ins)
+		if r.TransferOwnership.TransferOwnership == "none" {
+			imps.AddPkg("gobject")
+		}
 	case InterfacesType:
 		raw = "uintptr"
 		val += "Base"
 		class = true
+		if r.TransferOwnership.TransferOwnership == "none" {
+			imps.AddPkg("gobject")
+		}
 	// callback returns should always be uintptr
 	// I needed this for glib.LogSetDefaultHandler
 	// Otherwise I got 'panic: reflect.MakeFunc: value of type *glib.LogFunc is not assignable to type glib.LogFunc'
@@ -865,11 +892,22 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 			raw = "uintptr"
 			val = "uintptr"
 		}
+	case RecordsType:
+		// Record/boxed pointer returns need to round-trip as uintptr and then be
+		// cast back in the generated wrapper code.
+		if stars > 0 {
+			raw = "uintptr"
+			record = true
+			imps.AddUnsafe()
+		}
 	}
+	imps.TrackGoType(val)
+	imps.TrackGoType(raw)
 	return funcRetTemplate{
 		Raw:     raw,
 		Value:   val,
 		Class:   class,
+		Record:  record,
 		RefSink: r.TransferOwnership.TransferOwnership == "none",
 		Throws:  throws,
 	}

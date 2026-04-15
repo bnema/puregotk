@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -207,7 +206,6 @@ func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Applies @converter to the data in @bytes.
@@ -215,29 +213,31 @@ func (x *ConverterBase) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) 
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
 func (x *ConverterBase) Reset() {
-
 	XGConverterReset(x.GoPointer())
-
 }
 
-var XGConverterConvert func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
-var XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
-var XGConverterReset func(uintptr)
+var (
+	XGConverterConvert      func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
+	XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) uintptr
+	XGConverterReset        func(uintptr)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -252,5 +252,4 @@ func init() {
 	core.PuregoSafeRegister(&XGConverterConvert, libs, "g_converter_convert")
 	core.PuregoSafeRegister(&XGConverterConvertBytes, libs, "g_converter_convert_bytes")
 	core.PuregoSafeRegister(&XGConverterReset, libs, "g_converter_reset")
-
 }

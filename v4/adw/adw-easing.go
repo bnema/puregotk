@@ -2,8 +2,7 @@
 package adw
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -26,78 +25,87 @@ const (
 	LinearValue Easing = 0
 	// Quadratic tweening.
 	EaseInQuadValue Easing = 1
-	// Quadratic tweening, inverse of `ADW_EASE_IN_QUAD`.
+	// Quadratic tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-quad].
 	EaseOutQuadValue Easing = 2
-	// Quadratic tweening, combining `ADW_EASE_IN_QUAD` and
-	//   `ADW_EASE_OUT_QUAD`.
+	// Quadratic tweening, combining
+	//   [enum@Adw.Easing.ease-in-quad] and [enum@Adw.Easing.ease-out-quad].
 	EaseInOutQuadValue Easing = 3
 	// Cubic tweening.
 	EaseInCubicValue Easing = 4
-	// Cubic tweening, inverse of `ADW_EASE_IN_CUBIC`.
+	// Cubic tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-cubic].
 	EaseOutCubicValue Easing = 5
-	// Cubic tweening, combining `ADW_EASE_IN_CUBIC` and
-	//   `ADW_EASE_OUT_CUBIC`.
+	// Cubic tweening, combining
+	//   [enum@Adw.Easing.ease-in-cubic] and [enum@Adw.Easing.ease-out-cubic].
 	EaseInOutCubicValue Easing = 6
 	// Quartic tweening.
 	EaseInQuartValue Easing = 7
-	// Quartic tweening, inverse of `ADW_EASE_IN_QUART`.
+	// Quartic tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-quart].
 	EaseOutQuartValue Easing = 8
-	// Quartic tweening, combining `ADW_EASE_IN_QUART` and
-	//   `ADW_EASE_OUT_QUART`.
+	// Quartic tweening, combining
+	//   [enum@Adw.Easing.ease-in-quart] and [enum@Adw.Easing.ease-out-quart].
 	EaseInOutQuartValue Easing = 9
 	// Quintic tweening.
 	EaseInQuintValue Easing = 10
-	// Quintic tweening, inverse of `ADW_EASE_IN_QUINT`.
+	// Quintic tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-quint].
 	EaseOutQuintValue Easing = 11
-	// Quintic tweening, combining `ADW_EASE_IN_QUINT` and
-	//   `ADW_EASE_OUT_QUINT`.
+	// Quintic tweening, combining
+	//   [enum@Adw.Easing.ease-in-quint] and [enum@Adw.Easing.ease-out-quint].
 	EaseInOutQuintValue Easing = 12
 	// Sine wave tweening.
 	EaseInSineValue Easing = 13
-	// Sine wave tweening, inverse of `ADW_EASE_IN_SINE`.
+	// Sine wave tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-sine].
 	EaseOutSineValue Easing = 14
-	// Sine wave tweening, combining `ADW_EASE_IN_SINE` and
-	//   `ADW_EASE_OUT_SINE`.
+	// Sine wave tweening, combining
+	//   [enum@Adw.Easing.ease-in-sine] and [enum@Adw.Easing.ease-out-sine].
 	EaseInOutSineValue Easing = 15
 	// Exponential tweening.
 	EaseInExpoValue Easing = 16
-	// Exponential tweening, inverse of `ADW_EASE_IN_EXPO`.
+	// Exponential tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-expo].
 	EaseOutExpoValue Easing = 17
-	// Exponential tweening, combining `ADW_EASE_IN_EXPO` and
-	//   `ADW_EASE_OUT_EXPO`.
+	// Exponential tweening, combining
+	//   [enum@Adw.Easing.ease-in-expo] and [enum@Adw.Easing.ease-out-expo].
 	EaseInOutExpoValue Easing = 18
 	// Circular tweening.
 	EaseInCircValue Easing = 19
-	// Circular tweening, inverse of `ADW_EASE_IN_CIRC`.
+	// Circular tweening, inverse of
+	//   [enum@Adw.Easing.ease-in-circ].
 	EaseOutCircValue Easing = 20
-	// Circular tweening, combining `ADW_EASE_IN_CIRC` and
-	//   `ADW_EASE_OUT_CIRC`.
+	// Circular tweening, combining
+	//   [enum@Adw.Easing.ease-in-circ] and [enum@Adw.Easing.ease-out-circ].
 	EaseInOutCircValue Easing = 21
 	// Elastic tweening, with offshoot on start.
 	EaseInElasticValue Easing = 22
 	// Elastic tweening, with offshoot on end, inverse of
-	//   `ADW_EASE_IN_ELASTIC`.
+	//   [enum@Adw.Easing.ease-in-elastic].
 	EaseOutElasticValue Easing = 23
 	// Elastic tweening, with offshoot on both ends,
-	//   combining `ADW_EASE_IN_ELASTIC` and `ADW_EASE_OUT_ELASTIC`.
+	//   combining [enum@Adw.Easing.ease-in-elastic] and
+	//   [enum@Adw.Easing.ease-out-elastic].
 	EaseInOutElasticValue Easing = 24
 	// Overshooting cubic tweening, with backtracking on start.
 	EaseInBackValue Easing = 25
 	// Overshooting cubic tweening, with backtracking on end,
-	//   inverse of `ADW_EASE_IN_BACK`.
+	//   inverse of [enum@Adw.Easing.ease-in-back].
 	EaseOutBackValue Easing = 26
 	// Overshooting cubic tweening, with backtracking on both
-	//   ends, combining `ADW_EASE_IN_BACK` and `ADW_EASE_OUT_BACK`.
+	//   ends, combining [enum@Adw.Easing.ease-in-back] and
+	//   [enum@Adw.Easing.ease-out-back].
 	EaseInOutBackValue Easing = 27
 	// Exponentially decaying parabolic (bounce) tweening,
 	//   on start.
 	EaseInBounceValue Easing = 28
 	// Exponentially decaying parabolic (bounce) tweening,
-	//   with bounce on end, inverse of `ADW_EASE_IN_BOUNCE`.
+	//   with bounce on end, inverse of [enum@Adw.Easing.ease-in-bounce].
 	EaseOutBounceValue Easing = 29
 	// Exponentially decaying parabolic (bounce) tweening,
-	//   with bounce on both ends, combining `ADW_EASE_IN_BOUNCE` and
-	//   `ADW_EASE_OUT_BOUNCE`.
+	//   with bounce on both ends, combining [enum@Adw.Easing.ease-in-bounce] and
+	//   [enum@Adw.Easing.ease-out-bounce].
 	EaseInOutBounceValue Easing = 30
 	// Cubic bezier tweening, with control points in (0.25, 0.1) and (0.25, 1.0).
 	//
@@ -124,14 +132,13 @@ var xEasingEase func(Easing, float64) float64
 //
 // @value should generally be in the [0, 1] range.
 func EasingEase(SelfVar Easing, ValueVar float64) float64 {
-
 	cret := xEasingEase(SelfVar, ValueVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -144,5 +151,4 @@ func init() {
 	core.PuregoSafeRegister(&xEasingGLibType, libs, "adw_easing_get_type")
 
 	core.PuregoSafeRegister(&xEasingEase, libs, "adw_easing_ease")
-
 }

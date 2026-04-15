@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -163,7 +162,7 @@ func (x *NavigationViewClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwNavigationPage` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwNavigationPage` uses the [enum@Gtk.AccessibleRole.group] role.
 type NavigationPage struct {
 	gtk.Widget
 }
@@ -218,7 +217,6 @@ var xNavigationPageGetCanPop func(uintptr) bool
 
 // Gets whether @self can be popped from navigation stack.
 func (x *NavigationPage) GetCanPop() bool {
-
 	cret := xNavigationPageGetCanPop(x.GoPointer())
 	return cret
 }
@@ -244,7 +242,6 @@ var xNavigationPageGetTag func(uintptr) string
 
 // Gets the tag of @self.
 func (x *NavigationPage) GetTag() string {
-
 	cret := xNavigationPageGetTag(x.GoPointer())
 	return cret
 }
@@ -253,7 +250,6 @@ var xNavigationPageGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *NavigationPage) GetTitle() string {
-
 	cret := xNavigationPageGetTitle(x.GoPointer())
 	return cret
 }
@@ -271,23 +267,14 @@ var xNavigationPageSetCanPop func(uintptr, bool)
 // See [property@HeaderBar:show-back-button] for removing only the back button,
 // but not shortcuts.
 func (x *NavigationPage) SetCanPop(CanPopVar bool) {
-
 	xNavigationPageSetCanPop(x.GoPointer(), CanPopVar)
-
 }
 
 var xNavigationPageSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *NavigationPage) SetChild(ChildVar *gtk.Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xNavigationPageSetChild(x.GoPointer(), ChildVarPtr)
-
+	xNavigationPageSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xNavigationPageSetTag func(uintptr, uintptr)
@@ -303,12 +290,10 @@ var xNavigationPageSetTag func(uintptr, uintptr)
 //
 // The tag also must be set to use the `navigation.push` action.
 func (x *NavigationPage) SetTag(TagVar *string) {
-
 	TagVarPtr := core.GStrdupNullable(TagVar)
 	defer core.GFreeNullable(TagVarPtr)
 
 	xNavigationPageSetTag(x.GoPointer(), TagVarPtr)
-
 }
 
 var xNavigationPageSetTitle func(uintptr, string)
@@ -318,9 +303,7 @@ var xNavigationPageSetTitle func(uintptr, string)
 // It's displayed in [class@HeaderBar] instead of the window title, and used as
 // the tooltip on the next page's back button, as well as by screen reader.
 func (x *NavigationPage) SetTitle(TitleVar string) {
-
 	xNavigationPageSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *NavigationPage) GoPointer() uintptr {
@@ -446,7 +429,6 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -474,7 +456,6 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -502,7 +483,6 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -530,7 +510,6 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -549,9 +528,19 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *NavigationPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *NavigationPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -572,7 +561,6 @@ func (x *NavigationPage) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *NavigationPage) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -597,7 +585,6 @@ func (x *NavigationPage) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *NavigationPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -636,30 +623,23 @@ func (x *NavigationPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *NavigationPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *NavigationPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *NavigationPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *NavigationPage) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -672,19 +652,7 @@ func (x *NavigationPage) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *NavigationPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -692,14 +660,7 @@ func (x *NavigationPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSibli
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -708,9 +669,7 @@ func (x *NavigationPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessibl
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *NavigationPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -732,9 +691,7 @@ func (x *NavigationPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformStat
 //
 // ```
 func (x *NavigationPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -744,9 +701,7 @@ func (x *NavigationPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty,
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -768,9 +723,7 @@ func (x *NavigationPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 //
 // ```
 func (x *NavigationPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -780,9 +733,7 @@ func (x *NavigationPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation,
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -805,9 +756,7 @@ func (x *NavigationPage) UpdateRelationValue(NRelationsVar int, RelationsVar []g
 //
 // ```
 func (x *NavigationPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -817,9 +766,7 @@ func (x *NavigationPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -827,7 +774,6 @@ func (x *NavigationPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationPage) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -994,7 +940,7 @@ func (x *NavigationPage) GetBuildableId() string {
 //
 // ## Accessibility
 //
-// `AdwNavigationView` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwNavigationView` uses the [enum@Gtk.AccessibleRole.group] role.
 type NavigationView struct {
 	gtk.Widget
 }
@@ -1040,9 +986,7 @@ var xNavigationViewAdd func(uintptr, uintptr)
 //
 // See [method@NavigationView.remove].
 func (x *NavigationView) Add(PageVar *NavigationPage) {
-
 	xNavigationViewAdd(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xNavigationViewFindPage func(uintptr, string) uintptr
@@ -1068,7 +1012,6 @@ var xNavigationViewGetAnimateTransitions func(uintptr) bool
 
 // Gets whether @self animates page transitions.
 func (x *NavigationView) GetAnimateTransitions() bool {
-
 	cret := xNavigationViewGetAnimateTransitions(x.GoPointer())
 	return cret
 }
@@ -1077,7 +1020,6 @@ var xNavigationViewGetHhomogeneous func(uintptr) bool
 
 // Gets whether @self is horizontally homogeneous.
 func (x *NavigationView) GetHhomogeneous() bool {
-
 	cret := xNavigationViewGetHhomogeneous(x.GoPointer())
 	return cret
 }
@@ -1106,7 +1048,6 @@ var xNavigationViewGetPopOnEscape func(uintptr) bool
 
 // Gets whether pressing Escape pops the current page on @self.
 func (x *NavigationView) GetPopOnEscape() bool {
-
 	cret := xNavigationViewGetPopOnEscape(x.GoPointer())
 	return cret
 }
@@ -1137,7 +1078,6 @@ var xNavigationViewGetVhomogeneous func(uintptr) bool
 
 // Gets whether @self is vertically homogeneous.
 func (x *NavigationView) GetVhomogeneous() bool {
-
 	cret := xNavigationViewGetVhomogeneous(x.GoPointer())
 	return cret
 }
@@ -1163,7 +1103,6 @@ var xNavigationViewGetVisiblePageTag func(uintptr) string
 
 // Gets the tag of the currently visible page in @self.
 func (x *NavigationView) GetVisiblePageTag() string {
-
 	cret := xNavigationViewGetVisiblePageTag(x.GoPointer())
 	return cret
 }
@@ -1182,7 +1121,6 @@ var xNavigationViewPop func(uintptr) bool
 // See [method@NavigationView.pop_to_page] and
 // [method@NavigationView.pop_to_tag].
 func (x *NavigationView) Pop() bool {
-
 	cret := xNavigationViewPop(x.GoPointer())
 	return cret
 }
@@ -1201,7 +1139,6 @@ var xNavigationViewPopToPage func(uintptr, uintptr) bool
 //
 // See [method@NavigationView.pop] and [method@NavigationView.pop_to_tag].
 func (x *NavigationView) PopToPage(PageVar *NavigationPage) bool {
-
 	cret := xNavigationViewPopToPage(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1219,7 +1156,6 @@ var xNavigationViewPopToTag func(uintptr, string) bool
 //
 // See [method@NavigationView.pop_to_page] and [property@NavigationPage:tag].
 func (x *NavigationView) PopToTag(TagVar string) bool {
-
 	cret := xNavigationViewPopToTag(x.GoPointer(), TagVar)
 	return cret
 }
@@ -1235,9 +1171,7 @@ var xNavigationViewPush func(uintptr, uintptr)
 //
 // See [method@NavigationView.push_by_tag].
 func (x *NavigationView) Push(PageVar *NavigationPage) {
-
 	xNavigationViewPush(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xNavigationViewPushByTag func(uintptr, string)
@@ -1251,9 +1185,7 @@ var xNavigationViewPushByTag func(uintptr, string)
 //
 // See [method@NavigationView.push] and [property@NavigationPage:tag].
 func (x *NavigationView) PushByTag(TagVar string) {
-
 	xNavigationViewPushByTag(x.GoPointer(), TagVar)
-
 }
 
 var xNavigationViewRemove func(uintptr, uintptr)
@@ -1265,9 +1197,7 @@ var xNavigationViewRemove func(uintptr, uintptr)
 //
 // See [method@NavigationView.add].
 func (x *NavigationView) Remove(PageVar *NavigationPage) {
-
 	xNavigationViewRemove(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xNavigationViewReplace func(uintptr, uintptr, int)
@@ -1288,9 +1218,7 @@ var xNavigationViewReplace func(uintptr, uintptr, int)
 //
 // See [method@NavigationView.replace_with_tags].
 func (x *NavigationView) Replace(PagesVar uintptr, NPagesVar int) {
-
 	xNavigationViewReplace(x.GoPointer(), PagesVar, NPagesVar)
-
 }
 
 var xNavigationViewReplaceWithTags func(uintptr, []string, int)
@@ -1311,9 +1239,7 @@ var xNavigationViewReplaceWithTags func(uintptr, []string, int)
 //
 // See [method@NavigationView.replace] and [property@NavigationPage:tag].
 func (x *NavigationView) ReplaceWithTags(TagsVar []string, NTagsVar int) {
-
 	xNavigationViewReplaceWithTags(x.GoPointer(), TagsVar, NTagsVar)
-
 }
 
 var xNavigationViewSetAnimateTransitions func(uintptr, bool)
@@ -1322,9 +1248,7 @@ var xNavigationViewSetAnimateTransitions func(uintptr, bool)
 //
 // Gesture-based transitions are always animated.
 func (x *NavigationView) SetAnimateTransitions(AnimateTransitionsVar bool) {
-
 	xNavigationViewSetAnimateTransitions(x.GoPointer(), AnimateTransitionsVar)
-
 }
 
 var xNavigationViewSetHhomogeneous func(uintptr, bool)
@@ -1336,9 +1260,7 @@ var xNavigationViewSetHhomogeneous func(uintptr, bool)
 //
 // If it's not, the view may change width when a different page becomes visible.
 func (x *NavigationView) SetHhomogeneous(HhomogeneousVar bool) {
-
 	xNavigationViewSetHhomogeneous(x.GoPointer(), HhomogeneousVar)
-
 }
 
 var xNavigationViewSetPopOnEscape func(uintptr, bool)
@@ -1348,9 +1270,7 @@ var xNavigationViewSetPopOnEscape func(uintptr, bool)
 // Applications using `AdwNavigationView` to implement a browser may want to
 // disable it.
 func (x *NavigationView) SetPopOnEscape(PopOnEscapeVar bool) {
-
 	xNavigationViewSetPopOnEscape(x.GoPointer(), PopOnEscapeVar)
-
 }
 
 var xNavigationViewSetVhomogeneous func(uintptr, bool)
@@ -1363,9 +1283,7 @@ var xNavigationViewSetVhomogeneous func(uintptr, bool)
 // If it's not, the view may change height when a different page becomes
 // visible.
 func (x *NavigationView) SetVhomogeneous(VhomogeneousVar bool) {
-
 	xNavigationViewSetVhomogeneous(x.GoPointer(), VhomogeneousVar)
-
 }
 
 func (c *NavigationView) GoPointer() uintptr {
@@ -1500,7 +1418,7 @@ func (x *NavigationView) GetPropertyVisiblePageTag() string {
 // from a forward stack.
 //
 // Instead, it should be done in the [signal@NavigationView::pushed] handler.
-func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) *NavigationPage) uint {
+func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationPage) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
@@ -1515,7 +1433,6 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) *Navigation
 
 		GetNextPageCls := cbFn(fa)
 		return GetNextPageCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1531,7 +1448,7 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) *Navigation
 // When using [method@NavigationView.pop_to_page] or
 // [method@NavigationView.pop_to_tag], this signal is emitted for each of the
 // popped pages.
-func (x *NavigationView) ConnectPopped(cb *func(NavigationView, *NavigationPage)) uint {
+func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
@@ -1544,8 +1461,7 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, *NavigationPage)
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *NavigationPage { cls := &NavigationPage{}; cls.Ptr = PageVarp; return cls }())
-
+		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1571,7 +1487,6 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1597,7 +1512,6 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1608,7 +1522,6 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *NavigationView) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -1617,14 +1530,12 @@ func (x *NavigationView) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *NavigationView) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *NavigationView) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -1634,7 +1545,6 @@ func (x *NavigationView) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -1649,9 +1559,7 @@ func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *NavigationView) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -1664,9 +1572,19 @@ func (x *NavigationView) GetSwipeArea(NavigationDirectionVar NavigationDirection
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *NavigationView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *NavigationView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1687,7 +1605,6 @@ func (x *NavigationView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *NavigationView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1712,7 +1629,6 @@ func (x *NavigationView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *NavigationView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1751,30 +1667,23 @@ func (x *NavigationView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *NavigationView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *NavigationView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *NavigationView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *NavigationView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1787,19 +1696,7 @@ func (x *NavigationView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *NavigationView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1807,14 +1704,7 @@ func (x *NavigationView) SetAccessibleParent(ParentVar gtk.Accessible, NextSibli
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *NavigationView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1823,9 +1713,7 @@ func (x *NavigationView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessibl
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *NavigationView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1847,9 +1735,7 @@ func (x *NavigationView) UpdatePlatformState(StateVar gtk.AccessiblePlatformStat
 //
 // ```
 func (x *NavigationView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1859,9 +1745,7 @@ func (x *NavigationView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty,
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1883,9 +1767,7 @@ func (x *NavigationView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 //
 // ```
 func (x *NavigationView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1895,9 +1777,7 @@ func (x *NavigationView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation,
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1920,9 +1800,7 @@ func (x *NavigationView) UpdateRelationValue(NRelationsVar int, RelationsVar []g
 //
 // ```
 func (x *NavigationView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1932,9 +1810,7 @@ func (x *NavigationView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *NavigationView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1942,14 +1818,13 @@ func (x *NavigationView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1999,5 +1874,4 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationViewSetHhomogeneous, libs, "adw_navigation_view_set_hhomogeneous")
 	core.PuregoSafeRegister(&xNavigationViewSetPopOnEscape, libs, "adw_navigation_view_set_pop_on_escape")
 	core.PuregoSafeRegister(&xNavigationViewSetVhomogeneous, libs, "adw_navigation_view_set_vhomogeneous")
-
 }

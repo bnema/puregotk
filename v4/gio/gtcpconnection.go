@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -53,7 +52,6 @@ var xTcpConnectionGetGracefulDisconnect func(uintptr) bool
 // Checks if graceful disconnects are used. See
 // g_tcp_connection_set_graceful_disconnect().
 func (x *TcpConnection) GetGracefulDisconnect() bool {
-
 	cret := xTcpConnectionGetGracefulDisconnect(x.GoPointer())
 	return cret
 }
@@ -70,9 +68,7 @@ var xTcpConnectionSetGracefulDisconnect func(uintptr, bool)
 // other side and for it to acknowledge this by closing the socket, which may
 // take a while. For this reason it is disabled by default.
 func (x *TcpConnection) SetGracefulDisconnect(GracefulDisconnectVar bool) {
-
 	xTcpConnectionSetGracefulDisconnect(x.GoPointer(), GracefulDisconnectVar)
-
 }
 
 func (c *TcpConnection) GoPointer() uintptr {
@@ -105,7 +101,7 @@ func (x *TcpConnection) GetPropertyGracefulDisconnect() bool {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -119,5 +115,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTcpConnectionGetGracefulDisconnect, libs, "g_tcp_connection_get_graceful_disconnect")
 	core.PuregoSafeRegister(&xTcpConnectionSetGracefulDisconnect, libs, "g_tcp_connection_set_graceful_disconnect")
-
 }

@@ -4,8 +4,7 @@ package gio
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -117,7 +116,6 @@ var xDBusAuthObserverAllowMechanism func(uintptr, string) bool
 
 // Emits the #GDBusAuthObserver::allow-mechanism signal on @observer.
 func (x *DBusAuthObserver) AllowMechanism(MechanismVar string) bool {
-
 	cret := xDBusAuthObserverAllowMechanism(x.GoPointer(), MechanismVar)
 	return cret
 }
@@ -126,13 +124,7 @@ var xDBusAuthObserverAuthorizeAuthenticatedPeer func(uintptr, uintptr, uintptr) 
 
 // Emits the #GDBusAuthObserver::authorize-authenticated-peer signal on @observer.
 func (x *DBusAuthObserver) AuthorizeAuthenticatedPeer(StreamVar *IOStream, CredentialsVar *Credentials) bool {
-
-	var CredentialsVarPtr uintptr
-	if CredentialsVar != nil {
-		CredentialsVarPtr = CredentialsVar.GoPointer()
-	}
-
-	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVarPtr)
+	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVar.GoPointer())
 	return cret
 }
 
@@ -161,8 +153,7 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, core.GoString(MechanismVarp))
-
+		return cbFn(fa, MechanismVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -173,7 +164,7 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 
 // Emitted to check if a peer that is successfully authenticated
 // is authorized.
-func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, *IOStream, *Credentials) bool) uint {
+func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
@@ -186,15 +177,7 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *IOStream { cls := &IOStream{}; cls.Ptr = StreamVarp; return cls }(), func() *Credentials {
-			if CredentialsVarp == 0 {
-				return nil
-			}
-			cls := &Credentials{}
-			cls.Ptr = CredentialsVarp
-			return cls
-		}())
-
+		return cbFn(fa, StreamVarp, CredentialsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -205,7 +188,7 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -221,5 +204,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDBusAuthObserverAllowMechanism, libs, "g_dbus_auth_observer_allow_mechanism")
 	core.PuregoSafeRegister(&xDBusAuthObserverAuthorizeAuthenticatedPeer, libs, "g_dbus_auth_observer_authorize_authenticated_peer")
-
 }

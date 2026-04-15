@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -180,14 +179,13 @@ var xUnixCredentialsMessageIsSupported func() bool
 
 // Checks if passing #GCredentials on a #GSocket is supported on this platform.
 func UnixCredentialsMessageIsSupported() bool {
-
 	cret := xUnixCredentialsMessageIsSupported()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -205,5 +203,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixCredentialsMessageGetCredentials, libs, "g_unix_credentials_message_get_credentials")
 
 	core.PuregoSafeRegister(&xUnixCredentialsMessageIsSupported, libs, "g_unix_credentials_message_is_supported")
-
 }

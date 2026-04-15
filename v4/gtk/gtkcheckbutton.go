@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -225,7 +224,6 @@ var xCheckButtonGetActive func(uintptr) bool
 
 // Returns whether the check button is active.
 func (x *CheckButton) GetActive() bool {
-
 	cret := xCheckButtonGetActive(x.GoPointer())
 	return cret
 }
@@ -251,7 +249,6 @@ var xCheckButtonGetInconsistent func(uintptr) bool
 
 // Returns whether the check button is in an inconsistent state.
 func (x *CheckButton) GetInconsistent() bool {
-
 	cret := xCheckButtonGetInconsistent(x.GoPointer())
 	return cret
 }
@@ -260,7 +257,6 @@ var xCheckButtonGetLabel func(uintptr) string
 
 // Returns the label of the check button or `NULL` if [property@CheckButton:child] is set.
 func (x *CheckButton) GetLabel() string {
-
 	cret := xCheckButtonGetLabel(x.GoPointer())
 	return cret
 }
@@ -269,7 +265,6 @@ var xCheckButtonGetUseUnderline func(uintptr) bool
 
 // Returns whether underlines in the label indicate mnemonics.
 func (x *CheckButton) GetUseUnderline() bool {
-
 	cret := xCheckButtonGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -278,9 +273,7 @@ var xCheckButtonSetActive func(uintptr, bool)
 
 // Changes the check buttons active state.
 func (x *CheckButton) SetActive(SettingVar bool) {
-
 	xCheckButtonSetActive(x.GoPointer(), SettingVar)
-
 }
 
 var xCheckButtonSetChild func(uintptr, uintptr)
@@ -293,14 +286,7 @@ var xCheckButtonSetChild func(uintptr, uintptr)
 // for @button explicitly, or you'll set a labelled-by or described-by
 // relations from @child to @button.
 func (x *CheckButton) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xCheckButtonSetChild(x.GoPointer(), ChildVarPtr)
-
+	xCheckButtonSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xCheckButtonSetGroup func(uintptr, uintptr)
@@ -321,14 +307,7 @@ var xCheckButtonSetGroup func(uintptr, uintptr)
 // for all buttons in the group, and giving each button its own target
 // value.
 func (x *CheckButton) SetGroup(GroupVar *CheckButton) {
-
-	var GroupVarPtr uintptr
-	if GroupVar != nil {
-		GroupVarPtr = GroupVar.GoPointer()
-	}
-
-	xCheckButtonSetGroup(x.GoPointer(), GroupVarPtr)
-
+	xCheckButtonSetGroup(x.GoPointer(), GroupVar.GoPointer())
 }
 
 var xCheckButtonSetInconsistent func(uintptr, bool)
@@ -338,9 +317,7 @@ var xCheckButtonSetInconsistent func(uintptr, bool)
 // You should turn off the inconsistent state again if the user checks
 // the check button. This has to be done manually.
 func (x *CheckButton) SetInconsistent(InconsistentVar bool) {
-
 	xCheckButtonSetInconsistent(x.GoPointer(), InconsistentVar)
-
 }
 
 var xCheckButtonSetLabel func(uintptr, uintptr)
@@ -351,12 +328,10 @@ var xCheckButtonSetLabel func(uintptr, uintptr)
 // in @label is interpreted as mnemonic indicator, see
 // [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
 func (x *CheckButton) SetLabel(LabelVar *string) {
-
 	LabelVarPtr := core.GStrdupNullable(LabelVar)
 	defer core.GFreeNullable(LabelVarPtr)
 
 	xCheckButtonSetLabel(x.GoPointer(), LabelVarPtr)
-
 }
 
 var xCheckButtonSetUseUnderline func(uintptr, bool)
@@ -367,9 +342,7 @@ var xCheckButtonSetUseUnderline func(uintptr, bool)
 // indicates a mnemonic accelerator key. This behavior is similar
 // to [property@Gtk.Label:use-underline].
 func (x *CheckButton) SetUseUnderline(SettingVar bool) {
-
 	xCheckButtonSetUseUnderline(x.GoPointer(), SettingVar)
-
 }
 
 func (c *CheckButton) GoPointer() uintptr {
@@ -489,7 +462,6 @@ func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -514,7 +486,6 @@ func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -533,9 +504,19 @@ func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *CheckButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *CheckButton) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -556,7 +537,6 @@ func (x *CheckButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *CheckButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -581,7 +561,6 @@ func (x *CheckButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *CheckButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -620,30 +599,23 @@ func (x *CheckButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *CheckButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *CheckButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *CheckButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *CheckButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -656,19 +628,7 @@ func (x *CheckButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *CheckButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -676,14 +636,7 @@ func (x *CheckButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *CheckButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -692,9 +645,7 @@ func (x *CheckButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *CheckButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -716,9 +667,7 @@ func (x *CheckButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *CheckButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -728,9 +677,7 @@ func (x *CheckButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *CheckButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -752,9 +699,7 @@ func (x *CheckButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 //
 // ```
 func (x *CheckButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -764,9 +709,7 @@ func (x *CheckButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *CheckButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -789,9 +732,7 @@ func (x *CheckButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 //
 // ```
 func (x *CheckButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -801,23 +742,22 @@ func (x *CheckButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *CheckButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *CheckButton) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *CheckButton) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be
@@ -834,12 +774,10 @@ func (x *CheckButton) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *CheckButton) SetActionName(ActionNameVar *string) {
-
 	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
 	defer core.GFreeNullable(ActionNameVarPtr)
 
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
 }
 
 // Sets the target of an actionable widget.
@@ -852,9 +790,7 @@ func (x *CheckButton) SetActionName(ActionNameVar *string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *CheckButton) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -876,9 +812,7 @@ func (x *CheckButton) SetActionTarget(FormatStringVar string, varArgs ...interfa
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *CheckButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -887,9 +821,7 @@ func (x *CheckButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *CheckButton) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -897,14 +829,13 @@ func (x *CheckButton) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CheckButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -931,5 +862,4 @@ func init() {
 	core.PuregoSafeRegister(&xCheckButtonSetInconsistent, libs, "gtk_check_button_set_inconsistent")
 	core.PuregoSafeRegister(&xCheckButtonSetLabel, libs, "gtk_check_button_set_label")
 	core.PuregoSafeRegister(&xCheckButtonSetUseUnderline, libs, "gtk_check_button_set_use_underline")
-
 }

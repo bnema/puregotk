@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -102,14 +101,7 @@ var xFlattenListModelSetModel func(uintptr, uintptr)
 
 // Sets a new model to be flattened.
 func (x *FlattenListModel) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xFlattenListModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xFlattenListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *FlattenListModel) GoPointer() uintptr {
@@ -141,7 +133,6 @@ func (x *FlattenListModel) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *FlattenListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -155,7 +146,6 @@ func (x *FlattenListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *FlattenListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -166,7 +156,6 @@ func (x *FlattenListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *FlattenListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -217,9 +206,7 @@ func (x *FlattenListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *FlattenListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -228,9 +215,7 @@ func (x *FlattenListModel) ItemsChanged(PositionVar uint, RemovedVar uint, Added
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *FlattenListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -249,14 +234,12 @@ func (x *FlattenListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEn
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *FlattenListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -273,5 +256,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlattenListModelGetModel, libs, "gtk_flatten_list_model_get_model")
 	core.PuregoSafeRegister(&xFlattenListModelGetModelForItem, libs, "gtk_flatten_list_model_get_model_for_item")
 	core.PuregoSafeRegister(&xFlattenListModelSetModel, libs, "gtk_flatten_list_model_set_model")
-
 }

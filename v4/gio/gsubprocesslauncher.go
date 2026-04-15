@@ -2,10 +2,7 @@
 package gio
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -69,9 +66,7 @@ var xSubprocessLauncherClose func(uintptr)
 // is disposed, but is provided separately so that garbage collected
 // language bindings can call it earlier to guarantee when FDs are closed.
 func (x *SubprocessLauncher) Close() {
-
 	xSubprocessLauncherClose(x.GoPointer())
-
 }
 
 var xSubprocessLauncherGetenv func(uintptr, string) string
@@ -82,7 +77,6 @@ var xSubprocessLauncherGetenv func(uintptr, string) string
 // On UNIX, the returned string can be an arbitrary byte string.
 // On Windows, it will be UTF-8.
 func (x *SubprocessLauncher) Getenv(VariableVar string) string {
-
 	cret := xSubprocessLauncherGetenv(x.GoPointer(), VariableVar)
 	return cret
 }
@@ -103,39 +97,7 @@ var xSubprocessLauncherSetChildSetup func(uintptr, uintptr, uintptr, uintptr)
 //
 // Child setup functions are only available on UNIX.
 func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
-	var ChildSetupVarRef uintptr
-	if ChildSetupVar != nil {
-		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
-		if cbRefPtr, ok := glib.GetCallback(ChildSetupVarPtr); ok {
-			ChildSetupVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ChildSetupVar
-				cbFn(arg0)
-			}
-			ChildSetupVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
-		}
-	}
-
-	var DestroyNotifyVarRef uintptr
-	if DestroyNotifyVar != nil {
-		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
-			DestroyNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyNotifyVar
-				cbFn(arg0)
-			}
-			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
-		}
-	}
-
-	xSubprocessLauncherSetChildSetup(x.GoPointer(), ChildSetupVarRef, UserDataVar, DestroyNotifyVarRef)
-
+	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 }
 
 var xSubprocessLauncherSetCwd func(uintptr, string)
@@ -146,9 +108,7 @@ var xSubprocessLauncherSetCwd func(uintptr, string)
 // By default processes are launched with the current working directory
 // of the launching process at the time of launch.
 func (x *SubprocessLauncher) SetCwd(CwdVar string) {
-
 	xSubprocessLauncherSetCwd(x.GoPointer(), CwdVar)
-
 }
 
 var xSubprocessLauncherSetEnviron func(uintptr, []string)
@@ -173,9 +133,7 @@ var xSubprocessLauncherSetEnviron func(uintptr, []string)
 // On UNIX, all strings in this array can be arbitrary byte strings.
 // On Windows, they should be in UTF-8.
 func (x *SubprocessLauncher) SetEnviron(EnvVar []string) {
-
 	xSubprocessLauncherSetEnviron(x.GoPointer(), EnvVar)
-
 }
 
 var xSubprocessLauncherSetFlags func(uintptr, SubprocessFlags)
@@ -193,9 +151,7 @@ var xSubprocessLauncherSetFlags func(uintptr, SubprocessFlags)
 // function like g_subprocess_launcher_set_stdin_file_path() or
 // g_subprocess_launcher_take_stdout_fd().
 func (x *SubprocessLauncher) SetFlags(FlagsVar SubprocessFlags) {
-
 	xSubprocessLauncherSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
@@ -215,12 +171,10 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStderrFilePath(PathVar *string) {
-
 	PathVarPtr := core.GStrdupNullable(PathVar)
 	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVarPtr)
-
 }
 
 var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
@@ -236,12 +190,10 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdinFilePath(PathVar *string) {
-
 	PathVarPtr := core.GStrdupNullable(PathVar)
 	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVarPtr)
-
 }
 
 var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
@@ -258,12 +210,10 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdoutFilePath(PathVar *string) {
-
 	PathVarPtr := core.GStrdupNullable(PathVar)
 	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVarPtr)
-
 }
 
 var xSubprocessLauncherSetenv func(uintptr, string, string, bool)
@@ -275,9 +225,7 @@ var xSubprocessLauncherSetenv func(uintptr, string, string, bool)
 // strings, except that the variable's name cannot contain '='.
 // On Windows, they should be in UTF-8.
 func (x *SubprocessLauncher) Setenv(VariableVar string, ValueVar string, OverwriteVar bool) {
-
 	xSubprocessLauncherSetenv(x.GoPointer(), VariableVar, ValueVar, OverwriteVar)
-
 }
 
 var xSubprocessLauncherSpawn func(uintptr, **glib.Error, string, ...interface{}) uintptr
@@ -314,7 +262,6 @@ func (x *SubprocessLauncher) Spawnv(ArgvVar []string) (*Subprocess, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSubprocessLauncherTakeFd func(uintptr, int, int)
@@ -332,9 +279,7 @@ var xSubprocessLauncherTakeFd func(uintptr, int, int)
 // `--passphrase-fd` providing a file descriptor number where it expects
 // the passphrase to be written.
 func (x *SubprocessLauncher) TakeFd(SourceFdVar int, TargetFdVar int) {
-
 	xSubprocessLauncherTakeFd(x.GoPointer(), SourceFdVar, TargetFdVar)
-
 }
 
 var xSubprocessLauncherTakeStderrFd func(uintptr, int)
@@ -356,9 +301,7 @@ var xSubprocessLauncherTakeStderrFd func(uintptr, int)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStderrFd(FdVar int) {
-
 	xSubprocessLauncherTakeStderrFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherTakeStdinFd func(uintptr, int)
@@ -382,9 +325,7 @@ var xSubprocessLauncherTakeStdinFd func(uintptr, int)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStdinFd(FdVar int) {
-
 	xSubprocessLauncherTakeStdinFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherTakeStdoutFd func(uintptr, int)
@@ -407,9 +348,7 @@ var xSubprocessLauncherTakeStdoutFd func(uintptr, int)
 //
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) TakeStdoutFd(FdVar int) {
-
 	xSubprocessLauncherTakeStdoutFd(x.GoPointer(), FdVar)
-
 }
 
 var xSubprocessLauncherUnsetenv func(uintptr, string)
@@ -420,9 +359,7 @@ var xSubprocessLauncherUnsetenv func(uintptr, string)
 // On UNIX, the variable's name can be an arbitrary byte string not
 // containing '='. On Windows, it should be in UTF-8.
 func (x *SubprocessLauncher) Unsetenv(VariableVar string) {
-
 	xSubprocessLauncherUnsetenv(x.GoPointer(), VariableVar)
-
 }
 
 func (c *SubprocessLauncher) GoPointer() uintptr {
@@ -438,7 +375,7 @@ func (c *SubprocessLauncher) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -469,5 +406,4 @@ func init() {
 	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdinFd, libs, "g_subprocess_launcher_take_stdin_fd")
 	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdoutFd, libs, "g_subprocess_launcher_take_stdout_fd")
 	core.PuregoSafeRegister(&xSubprocessLauncherUnsetenv, libs, "g_subprocess_launcher_unsetenv")
-
 }

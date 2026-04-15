@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -124,16 +123,13 @@ var xShortcutControllerAddShortcut func(uintptr, uintptr)
 // If this controller uses an external shortcut list, this
 // function does nothing.
 func (x *ShortcutController) AddShortcut(ShortcutVar *Shortcut) {
-
 	xShortcutControllerAddShortcut(x.GoPointer(), ShortcutVar.GoPointer())
-
 }
 
 var xShortcutControllerGetMnemonicsModifiers func(uintptr) gdk.ModifierType
 
 // Gets the mnemonics modifiers for when this controller activates its shortcuts.
 func (x *ShortcutController) GetMnemonicsModifiers() gdk.ModifierType {
-
 	cret := xShortcutControllerGetMnemonicsModifiers(x.GoPointer())
 	return cret
 }
@@ -144,7 +140,6 @@ var xShortcutControllerGetScope func(uintptr) ShortcutScope
 //
 // See [method@Gtk.ShortcutController.set_scope] for details.
 func (x *ShortcutController) GetScope() ShortcutScope {
-
 	cret := xShortcutControllerGetScope(x.GoPointer())
 	return cret
 }
@@ -156,9 +151,7 @@ var xShortcutControllerRemoveShortcut func(uintptr, uintptr)
 // If @shortcut had not been added to @controller or this controller
 // uses an external shortcut list, this function does nothing.
 func (x *ShortcutController) RemoveShortcut(ShortcutVar *Shortcut) {
-
 	xShortcutControllerRemoveShortcut(x.GoPointer(), ShortcutVar.GoPointer())
-
 }
 
 var xShortcutControllerSetMnemonicsModifiers func(uintptr, gdk.ModifierType)
@@ -177,9 +170,7 @@ var xShortcutControllerSetMnemonicsModifiers func(uintptr, gdk.ModifierType)
 // shortcut controllers will have their shortcuts activated from other places which
 // have their own modifiers for activating mnemonics.
 func (x *ShortcutController) SetMnemonicsModifiers(ModifiersVar gdk.ModifierType) {
-
 	xShortcutControllerSetMnemonicsModifiers(x.GoPointer(), ModifiersVar)
-
 }
 
 var xShortcutControllerSetScope func(uintptr, ShortcutScope)
@@ -194,9 +185,7 @@ var xShortcutControllerSetScope func(uintptr, ShortcutScope)
 // With %GTK_SHORTCUT_SCOPE_LOCAL, shortcuts will only be activated
 // when the widget has focus.
 func (x *ShortcutController) SetScope(ScopeVar ShortcutScope) {
-
 	xShortcutControllerSetScope(x.GoPointer(), ScopeVar)
-
 }
 
 func (c *ShortcutController) GoPointer() uintptr {
@@ -228,7 +217,6 @@ func (x *ShortcutController) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *ShortcutController) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -242,7 +230,6 @@ func (x *ShortcutController) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ShortcutController) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -253,7 +240,6 @@ func (x *ShortcutController) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ShortcutController) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -304,9 +290,7 @@ func (x *ShortcutController) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ShortcutController) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -314,14 +298,13 @@ func (x *ShortcutController) ItemsChanged(PositionVar uint, RemovedVar uint, Add
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutController) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -342,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutControllerRemoveShortcut, libs, "gtk_shortcut_controller_remove_shortcut")
 	core.PuregoSafeRegister(&xShortcutControllerSetMnemonicsModifiers, libs, "gtk_shortcut_controller_set_mnemonics_modifiers")
 	core.PuregoSafeRegister(&xShortcutControllerSetScope, libs, "gtk_shortcut_controller_set_scope")
-
 }

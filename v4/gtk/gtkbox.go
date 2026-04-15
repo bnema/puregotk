@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -100,16 +99,13 @@ var xBoxAppend func(uintptr, uintptr)
 
 // Adds a child at the end.
 func (x *Box) Append(ChildVar *Widget) {
-
 	xBoxAppend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xBoxGetBaselineChild func(uintptr) int
 
 // Gets the value set by [method@Gtk.Box.set_baseline_child].
 func (x *Box) GetBaselineChild() int {
-
 	cret := xBoxGetBaselineChild(x.GoPointer())
 	return cret
 }
@@ -118,7 +114,6 @@ var xBoxGetBaselinePosition func(uintptr) BaselinePosition
 
 // Gets the value set by [method@Gtk.Box.set_baseline_position].
 func (x *Box) GetBaselinePosition() BaselinePosition {
-
 	cret := xBoxGetBaselinePosition(x.GoPointer())
 	return cret
 }
@@ -129,7 +124,6 @@ var xBoxGetHomogeneous func(uintptr) bool
 //
 // In a homogeneous box all children are the same size.
 func (x *Box) GetHomogeneous() bool {
-
 	cret := xBoxGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -138,7 +132,6 @@ var xBoxGetSpacing func(uintptr) int
 
 // Gets the value set by [method@Gtk.Box.set_spacing].
 func (x *Box) GetSpacing() int {
-
 	cret := xBoxGetSpacing(x.GoPointer())
 	return cret
 }
@@ -151,23 +144,14 @@ var xBoxInsertChildAfter func(uintptr, uintptr, uintptr)
 //
 // If @sibling is `NULL`, the @child is placed at the beginning.
 func (x *Box) InsertChildAfter(ChildVar *Widget, SiblingVar *Widget) {
-
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	xBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
-
+	xBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
 }
 
 var xBoxPrepend func(uintptr, uintptr)
 
 // Adds a child at the beginning.
 func (x *Box) Prepend(ChildVar *Widget) {
-
 	xBoxPrepend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xBoxRemove func(uintptr, uintptr)
@@ -178,9 +162,7 @@ var xBoxRemove func(uintptr, uintptr)
 // [method@Gtk.Box.append], [method@Gtk.Box.prepend], or
 // [method@Gtk.Box.insert_child_after].
 func (x *Box) Remove(ChildVar *Widget) {
-
 	xBoxRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xBoxReorderChildAfter func(uintptr, uintptr, uintptr)
@@ -192,14 +174,7 @@ var xBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 //
 // If @sibling is `NULL`, the child is placed at the beginning.
 func (x *Box) ReorderChildAfter(ChildVar *Widget, SiblingVar *Widget) {
-
-	var SiblingVarPtr uintptr
-	if SiblingVar != nil {
-		SiblingVarPtr = SiblingVar.GoPointer()
-	}
-
-	xBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVarPtr)
-
+	xBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
 }
 
 var xBoxSetBaselineChild func(uintptr, int)
@@ -208,9 +183,7 @@ var xBoxSetBaselineChild func(uintptr, int)
 //
 // This affects only vertical boxes.
 func (x *Box) SetBaselineChild(ChildVar int) {
-
 	xBoxSetBaselineChild(x.GoPointer(), ChildVar)
-
 }
 
 var xBoxSetBaselinePosition func(uintptr, BaselinePosition)
@@ -223,9 +196,7 @@ var xBoxSetBaselinePosition func(uintptr, BaselinePosition)
 // @position is used to allocate the baseline with respect to the
 // extra space available.
 func (x *Box) SetBaselinePosition(PositionVar BaselinePosition) {
-
 	xBoxSetBaselinePosition(x.GoPointer(), PositionVar)
-
 }
 
 var xBoxSetHomogeneous func(uintptr, bool)
@@ -233,18 +204,14 @@ var xBoxSetHomogeneous func(uintptr, bool)
 // Sets whether or not all children are given equal space
 // in the box.
 func (x *Box) SetHomogeneous(HomogeneousVar bool) {
-
 	xBoxSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xBoxSetSpacing func(uintptr, int)
 
 // Sets the number of pixels to place between children.
 func (x *Box) SetSpacing(SpacingVar int) {
-
 	xBoxSetSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 func (c *Box) GoPointer() uintptr {
@@ -323,9 +290,19 @@ func (x *Box) GetPropertySpacing() int {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Box) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Box) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -346,7 +323,6 @@ func (x *Box) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Box) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -371,7 +347,6 @@ func (x *Box) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Box) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -410,30 +385,23 @@ func (x *Box) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Box) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Box) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Box) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Box) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -446,19 +414,7 @@ func (x *Box) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Box) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -466,14 +422,7 @@ func (x *Box) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessibl
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Box) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -482,9 +431,7 @@ func (x *Box) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Box) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -506,9 +453,7 @@ func (x *Box) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Box) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -518,9 +463,7 @@ func (x *Box) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *Box) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -542,9 +485,7 @@ func (x *Box) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessible
 //
 // ```
 func (x *Box) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -554,9 +495,7 @@ func (x *Box) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *Box) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -579,9 +518,7 @@ func (x *Box) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRe
 //
 // ```
 func (x *Box) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -591,9 +528,7 @@ func (x *Box) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{})
 //
 // This function is meant to be used by language bindings.
 func (x *Box) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -601,28 +536,24 @@ func (x *Box) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Valu
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Box) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Box) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Box) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -649,5 +580,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoxSetBaselinePosition, libs, "gtk_box_set_baseline_position")
 	core.PuregoSafeRegister(&xBoxSetHomogeneous, libs, "gtk_box_set_homogeneous")
 	core.PuregoSafeRegister(&xBoxSetSpacing, libs, "gtk_box_set_spacing")
-
 }

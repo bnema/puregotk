@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -259,18 +258,19 @@ func (x *SocketConnectableBase) ProxyEnumerate() *SocketAddressEnumerator {
 // If the #GSocketConnectable implementation does not support string formatting,
 // the implementation’s type name will be returned as a fallback.
 func (x *SocketConnectableBase) ToString() string {
-
 	cret := XGSocketConnectableToString(x.GoPointer())
 	return cret
 }
 
-var XGSocketConnectableEnumerate func(uintptr) uintptr
-var XGSocketConnectableProxyEnumerate func(uintptr) uintptr
-var XGSocketConnectableToString func(uintptr) string
+var (
+	XGSocketConnectableEnumerate      func(uintptr) uintptr
+	XGSocketConnectableProxyEnumerate func(uintptr) uintptr
+	XGSocketConnectableToString       func(uintptr) string
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -285,5 +285,4 @@ func init() {
 	core.PuregoSafeRegister(&XGSocketConnectableEnumerate, libs, "g_socket_connectable_enumerate")
 	core.PuregoSafeRegister(&XGSocketConnectableProxyEnumerate, libs, "g_socket_connectable_proxy_enumerate")
 	core.PuregoSafeRegister(&XGSocketConnectableToString, libs, "g_socket_connectable_to_string")
-
 }

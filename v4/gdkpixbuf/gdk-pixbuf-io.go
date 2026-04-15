@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gmodule"
@@ -138,13 +137,15 @@ func (x *PixbufFormat) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xPixbufFormatCopy func(uintptr) *PixbufFormat
+var xPixbufFormatCopy func(uintptr) uintptr
 
 // Creates a copy of `format`.
 func (x *PixbufFormat) Copy() *PixbufFormat {
-
 	cret := xPixbufFormatCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufFormatFree func(uintptr)
@@ -152,16 +153,13 @@ var xPixbufFormatFree func(uintptr)
 // Frees the resources allocated when copying a `GdkPixbufFormat`
 // using gdk_pixbuf_format_copy()
 func (x *PixbufFormat) Free() {
-
 	xPixbufFormatFree(x.GoPointer())
-
 }
 
 var xPixbufFormatGetDescription func(uintptr) string
 
 // Returns a description of the format.
 func (x *PixbufFormat) GetDescription() string {
-
 	cret := xPixbufFormatGetDescription(x.GoPointer())
 	return cret
 }
@@ -171,7 +169,6 @@ var xPixbufFormatGetExtensions func(uintptr) []string
 // Returns the filename extensions typically used for files in the
 // given format.
 func (x *PixbufFormat) GetExtensions() []string {
-
 	cret := xPixbufFormatGetExtensions(x.GoPointer())
 	return cret
 }
@@ -183,7 +180,6 @@ var xPixbufFormatGetLicense func(uintptr) string
 // The returned string should be a shorthand for a well known license, e.g.
 // "LGPL", "GPL", "QPL", "GPL/QPL", or "other" to indicate some other license.
 func (x *PixbufFormat) GetLicense() string {
-
 	cret := xPixbufFormatGetLicense(x.GoPointer())
 	return cret
 }
@@ -192,7 +188,6 @@ var xPixbufFormatGetMimeTypes func(uintptr) []string
 
 // Returns the mime types supported by the format.
 func (x *PixbufFormat) GetMimeTypes() []string {
-
 	cret := xPixbufFormatGetMimeTypes(x.GoPointer())
 	return cret
 }
@@ -201,7 +196,6 @@ var xPixbufFormatGetName func(uintptr) string
 
 // Returns the name of the format.
 func (x *PixbufFormat) GetName() string {
-
 	cret := xPixbufFormatGetName(x.GoPointer())
 	return cret
 }
@@ -212,7 +206,6 @@ var xPixbufFormatIsDisabled func(uintptr) bool
 //
 // See gdk_pixbuf_format_set_disabled().
 func (x *PixbufFormat) IsDisabled() bool {
-
 	cret := xPixbufFormatIsDisabled(x.GoPointer())
 	return cret
 }
@@ -224,7 +217,6 @@ var xPixbufFormatIsSaveOptionSupported func(uintptr, string) bool
 //
 // See gdk_pixbuf_save() for more information about option keys.
 func (x *PixbufFormat) IsSaveOptionSupported(OptionKeyVar string) bool {
-
 	cret := xPixbufFormatIsSaveOptionSupported(x.GoPointer(), OptionKeyVar)
 	return cret
 }
@@ -237,7 +229,6 @@ var xPixbufFormatIsScalable func(uintptr) bool
 // the desired size, rather than loading it at the default size and
 // scaling the resulting pixbuf to the desired size.
 func (x *PixbufFormat) IsScalable() bool {
-
 	cret := xPixbufFormatIsScalable(x.GoPointer())
 	return cret
 }
@@ -246,7 +237,6 @@ var xPixbufFormatIsWritable func(uintptr) bool
 
 // Returns whether pixbufs can be saved in the given format.
 func (x *PixbufFormat) IsWritable() bool {
-
 	cret := xPixbufFormatIsWritable(x.GoPointer())
 	return cret
 }
@@ -261,9 +251,7 @@ var xPixbufFormatSetDisabled func(uintptr, bool)
 // Applications can use this to avoid using image loaders with an
 // inappropriate license, see gdk_pixbuf_format_get_license().
 func (x *PixbufFormat) SetDisabled(DisabledVar bool) {
-
 	xPixbufFormatSetDisabled(x.GoPointer(), DisabledVar)
-
 }
 
 // A `GdkPixbufModule` contains the necessary functions to load and save
@@ -508,7 +496,7 @@ const (
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0", "libgdk_pixbuf-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDKPIXBUF") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -532,5 +520,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufFormatIsScalable, libs, "gdk_pixbuf_format_is_scalable")
 	core.PuregoSafeRegister(&xPixbufFormatIsWritable, libs, "gdk_pixbuf_format_is_writable")
 	core.PuregoSafeRegister(&xPixbufFormatSetDisabled, libs, "gdk_pixbuf_format_set_disabled")
-
 }

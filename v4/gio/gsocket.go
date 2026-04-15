@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -399,7 +398,6 @@ func NewSocket(FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar SocketPro
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewSocketFromFd func(int, **glib.Error) uintptr
@@ -432,7 +430,6 @@ func NewSocketFromFd(FdVar int) (*Socket, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketAccept func(uintptr, uintptr, **glib.Error) uintptr
@@ -467,7 +464,6 @@ func (x *Socket) Accept(CancellableVar *Cancellable) (*Socket, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketBind func(uintptr, uintptr, bool, **glib.Error) bool
@@ -503,10 +499,9 @@ func (x *Socket) Bind(AddressVar *SocketAddress, AllowReuseVar bool) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xSocketCheckConnectResult func(uintptr) bool
+var xSocketCheckConnectResult func(uintptr, **glib.Error) bool
 
 // Checks and resets the pending connect error for the socket.
 // This is used to check for errors when g_socket_connect() is
@@ -514,15 +509,14 @@ var xSocketCheckConnectResult func(uintptr) bool
 func (x *Socket) CheckConnectResult() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketCheckConnectResult(x.GoPointer())
+	cret := xSocketCheckConnectResult(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xSocketClose func(uintptr) bool
+var xSocketClose func(uintptr, **glib.Error) bool
 
 // Closes the socket, shutting down any active connection.
 //
@@ -556,12 +550,11 @@ var xSocketClose func(uintptr) bool
 func (x *Socket) Close() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketClose(x.GoPointer())
+	cret := xSocketClose(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConditionCheck func(uintptr, glib.IOCondition) glib.IOCondition
@@ -584,7 +577,6 @@ var xSocketConditionCheck func(uintptr, glib.IOCondition) glib.IOCondition
 //
 // This call never blocks.
 func (x *Socket) ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition {
-
 	cret := xSocketConditionCheck(x.GoPointer(), ConditionVar)
 	return cret
 }
@@ -620,7 +612,6 @@ func (x *Socket) ConditionTimedWait(ConditionVar glib.IOCondition, TimeoutUsVar 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConditionWait func(uintptr, glib.IOCondition, uintptr, **glib.Error) bool
@@ -648,7 +639,6 @@ func (x *Socket) ConditionWait(ConditionVar glib.IOCondition, CancellableVar *Ca
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConnect func(uintptr, uintptr, uintptr, **glib.Error) bool
@@ -682,7 +672,6 @@ func (x *Socket) Connect(AddressVar *SocketAddress, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConnectionFactoryCreateConnection func(uintptr) uintptr
@@ -702,7 +691,7 @@ func (x *Socket) ConnectionFactoryCreateConnection() *SocketConnection {
 	return cls
 }
 
-var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
+var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) uintptr
 
 // Creates a #GSource that can be attached to a %GMainContext to monitor
 // for the availability of the specified @condition on the socket. The #GSource
@@ -725,14 +714,11 @@ var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
 // marked as having had a timeout, and so the next #GSocket I/O method
 // you call will then fail with a %G_IO_ERROR_TIMED_OUT.
 func (x *Socket) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := xSocketCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSocketCreateSource(x.GoPointer(), ConditionVar, CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 var xSocketGetAvailableBytes func(uintptr) int
@@ -750,7 +736,6 @@ var xSocketGetAvailableBytes func(uintptr) int
 // g_socket_get_available_bytes() first and then doing a receive of
 // exactly the right size.
 func (x *Socket) GetAvailableBytes() int {
-
 	cret := xSocketGetAvailableBytes(x.GoPointer())
 	return cret
 }
@@ -760,7 +745,6 @@ var xSocketGetBlocking func(uintptr) bool
 // Gets the blocking mode of the socket. For details on blocking I/O,
 // see g_socket_set_blocking().
 func (x *Socket) GetBlocking() bool {
-
 	cret := xSocketGetBlocking(x.GoPointer())
 	return cret
 }
@@ -771,12 +755,11 @@ var xSocketGetBroadcast func(uintptr) bool
 // it is possible to send packets to broadcast
 // addresses.
 func (x *Socket) GetBroadcast() bool {
-
 	cret := xSocketGetBroadcast(x.GoPointer())
 	return cret
 }
 
-var xSocketGetCredentials func(uintptr) uintptr
+var xSocketGetCredentials func(uintptr, **glib.Error) uintptr
 
 // Returns the credentials of the foreign process connected to this
 // socket, if any (e.g. it is only supported for %G_SOCKET_FAMILY_UNIX
@@ -802,7 +785,7 @@ func (x *Socket) GetCredentials() (*Credentials, error) {
 	var cls *Credentials
 	var cerr *glib.Error
 
-	cret := xSocketGetCredentials(x.GoPointer())
+	cret := xSocketGetCredentials(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -813,14 +796,12 @@ func (x *Socket) GetCredentials() (*Credentials, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketGetFamily func(uintptr) SocketFamily
 
 // Gets the socket family of the socket.
 func (x *Socket) GetFamily() SocketFamily {
-
 	cret := xSocketGetFamily(x.GoPointer())
 	return cret
 }
@@ -833,7 +814,6 @@ var xSocketGetFd func(uintptr) int
 // doing platform specific or otherwise unusual operations
 // on the socket.
 func (x *Socket) GetFd() int {
-
 	cret := xSocketGetFd(x.GoPointer())
 	return cret
 }
@@ -843,7 +823,6 @@ var xSocketGetKeepalive func(uintptr) bool
 // Gets the keepalive mode of the socket. For details on this,
 // see g_socket_set_keepalive().
 func (x *Socket) GetKeepalive() bool {
-
 	cret := xSocketGetKeepalive(x.GoPointer())
 	return cret
 }
@@ -853,12 +832,11 @@ var xSocketGetListenBacklog func(uintptr) int
 // Gets the listen backlog setting of the socket. For details on this,
 // see g_socket_set_listen_backlog().
 func (x *Socket) GetListenBacklog() int {
-
 	cret := xSocketGetListenBacklog(x.GoPointer())
 	return cret
 }
 
-var xSocketGetLocalAddress func(uintptr) uintptr
+var xSocketGetLocalAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the local address of a bound socket. This is only
 // useful if the socket has been bound to a local address,
@@ -867,7 +845,7 @@ func (x *Socket) GetLocalAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketGetLocalAddress(x.GoPointer())
+	cret := xSocketGetLocalAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -878,7 +856,6 @@ func (x *Socket) GetLocalAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketGetMulticastLoopback func(uintptr) bool
@@ -887,7 +864,6 @@ var xSocketGetMulticastLoopback func(uintptr) bool
 // default), outgoing multicast packets will be looped back to
 // multicast listeners on the same host.
 func (x *Socket) GetMulticastLoopback() bool {
-
 	cret := xSocketGetMulticastLoopback(x.GoPointer())
 	return cret
 }
@@ -897,7 +873,6 @@ var xSocketGetMulticastTtl func(uintptr) uint
 // Gets the multicast time-to-live setting on @socket; see
 // g_socket_set_multicast_ttl() for more details.
 func (x *Socket) GetMulticastTtl() uint {
-
 	cret := xSocketGetMulticastTtl(x.GoPointer())
 	return cret
 }
@@ -925,7 +900,6 @@ func (x *Socket) GetOption(LevelVar int, OptnameVar int, ValueVar *int) (bool, e
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketGetProtocol func(uintptr) SocketProtocol
@@ -933,12 +907,11 @@ var xSocketGetProtocol func(uintptr) SocketProtocol
 // Gets the socket protocol id the socket was created with.
 // In case the protocol is unknown, -1 is returned.
 func (x *Socket) GetProtocol() SocketProtocol {
-
 	cret := xSocketGetProtocol(x.GoPointer())
 	return cret
 }
 
-var xSocketGetRemoteAddress func(uintptr) uintptr
+var xSocketGetRemoteAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the remote address of a connected socket. This is only
 // useful for connection oriented sockets that have been connected.
@@ -946,7 +919,7 @@ func (x *Socket) GetRemoteAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketGetRemoteAddress(x.GoPointer())
+	cret := xSocketGetRemoteAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -957,14 +930,12 @@ func (x *Socket) GetRemoteAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketGetSocketType func(uintptr) SocketType
 
 // Gets the socket type of the socket.
 func (x *Socket) GetSocketType() SocketType {
-
 	cret := xSocketGetSocketType(x.GoPointer())
 	return cret
 }
@@ -974,7 +945,6 @@ var xSocketGetTimeout func(uintptr) uint
 // Gets the timeout setting of the socket. For details on this, see
 // g_socket_set_timeout().
 func (x *Socket) GetTimeout() uint {
-
 	cret := xSocketGetTimeout(x.GoPointer())
 	return cret
 }
@@ -984,7 +954,6 @@ var xSocketGetTtl func(uintptr) uint
 // Gets the unicast time-to-live setting on @socket; see
 // g_socket_set_ttl() for more details.
 func (x *Socket) GetTtl() uint {
-
 	cret := xSocketGetTtl(x.GoPointer())
 	return cret
 }
@@ -993,7 +962,6 @@ var xSocketIsClosed func(uintptr) bool
 
 // Checks whether a socket is closed.
 func (x *Socket) IsClosed() bool {
-
 	cret := xSocketIsClosed(x.GoPointer())
 	return cret
 }
@@ -1008,7 +976,6 @@ var xSocketIsConnected func(uintptr) bool
 // connect, this function will not return %TRUE until after you call
 // g_socket_check_connect_result().
 func (x *Socket) IsConnected() bool {
-
 	cret := xSocketIsConnected(x.GoPointer())
 	return cret
 }
@@ -1040,7 +1007,6 @@ func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar boo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
@@ -1063,20 +1029,14 @@ var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib
 func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	var SourceSpecificVarPtr uintptr
-	if SourceSpecificVar != nil {
-		SourceSpecificVarPtr = SourceSpecificVar.GoPointer()
-	}
-
 	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
 	defer core.GFreeNullable(IfaceVarPtr)
 
-	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVarPtr, IfaceVarPtr, &cerr)
+	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error) bool
@@ -1101,7 +1061,6 @@ func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
@@ -1115,23 +1074,17 @@ var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **gli
 func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	var SourceSpecificVarPtr uintptr
-	if SourceSpecificVar != nil {
-		SourceSpecificVarPtr = SourceSpecificVar.GoPointer()
-	}
-
 	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
 	defer core.GFreeNullable(IfaceVarPtr)
 
-	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVarPtr, IfaceVarPtr, &cerr)
+	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xSocketListen func(uintptr) bool
+var xSocketListen func(uintptr, **glib.Error) bool
 
 // Marks the socket as a server socket, i.e. a socket that is used
 // to accept incoming requests using g_socket_accept().
@@ -1144,12 +1097,11 @@ var xSocketListen func(uintptr) bool
 func (x *Socket) Listen() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListen(x.GoPointer())
+	cret := xSocketListen(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketReceive func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
@@ -1190,10 +1142,9 @@ func (x *Socket) Receive(BufferVar *[]byte, SizeVar uint, CancellableVar *Cancel
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) *glib.Bytes
+var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) uintptr
 
 // Receives data (up to @size bytes) from a socket.
 //
@@ -1207,20 +1158,17 @@ var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) *glib.
 func (x *Socket) ReceiveBytes(SizeVar uint, TimeoutUsVar int64, CancellableVar *Cancellable) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := xSocketReceiveBytes(x.GoPointer(), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
+	if cerr != nil {
+		return nil, cerr
 	}
-
-	cret := xSocketReceiveBytes(x.GoPointer(), SizeVar, TimeoutUsVar, CancellableVarPtr, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cret == 0 {
+		return nil, nil
 	}
-	return cret, cerr
-
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
-var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr, **glib.Error) *glib.Bytes
+var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr, **glib.Error) uintptr
 
 // Receive data (up to @size bytes) from a socket.
 //
@@ -1239,17 +1187,14 @@ var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr,
 func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, TimeoutUsVar int64, CancellableVar *Cancellable) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := xSocketReceiveBytesFrom(x.GoPointer(), AddressVar, SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
+	if cerr != nil {
+		return nil, cerr
 	}
-
-	cret := xSocketReceiveBytesFrom(x.GoPointer(), AddressVar, SizeVar, TimeoutUsVar, CancellableVarPtr, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cret == 0 {
+		return nil, nil
 	}
-	return cret, cerr
-
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xSocketReceiveFrom func(uintptr, **SocketAddress, *[]byte, uint, uintptr, **glib.Error) int
@@ -1274,7 +1219,6 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, Size
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *uintptr, *int, *int, uintptr, **glib.Error) int
@@ -1351,7 +1295,6 @@ func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVe
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketReceiveMessages func(uintptr, []InputMessage, uint, int, uintptr, **glib.Error) int
@@ -1417,7 +1360,6 @@ func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketReceiveWithBlocking func(uintptr, *[]byte, uint, bool, uintptr, **glib.Error) int
@@ -1438,7 +1380,6 @@ func (x *Socket) ReceiveWithBlocking(BufferVar *[]byte, SizeVar uint, BlockingVa
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSend func(uintptr, []byte, uint, uintptr, **glib.Error) int
@@ -1470,7 +1411,6 @@ func (x *Socket) Send(BufferVar []byte, SizeVar uint, CancellableVar *Cancellabl
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSendMessage func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, uintptr, **glib.Error) int
@@ -1535,7 +1475,6 @@ func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVecto
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, int64, *uint, uintptr, **glib.Error) PollableReturn
@@ -1565,7 +1504,6 @@ func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSendMessages func(uintptr, []OutputMessage, uint, int, uintptr, **glib.Error) int
@@ -1617,7 +1555,6 @@ func (x *Socket) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSendTo func(uintptr, uintptr, []byte, uint, uintptr, **glib.Error) int
@@ -1645,7 +1582,6 @@ func (x *Socket) SendTo(AddressVar *SocketAddress, BufferVar []byte, SizeVar uin
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSendWithBlocking func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int
@@ -1666,7 +1602,6 @@ func (x *Socket) SendWithBlocking(BufferVar []byte, SizeVar uint, BlockingVar bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSetBlocking func(uintptr, bool)
@@ -1681,9 +1616,7 @@ var xSocketSetBlocking func(uintptr, bool)
 // platform level socket is always non-blocking, and blocking mode
 // is a GSocket level feature.
 func (x *Socket) SetBlocking(BlockingVar bool) {
-
 	xSocketSetBlocking(x.GoPointer(), BlockingVar)
-
 }
 
 var xSocketSetBroadcast func(uintptr, bool)
@@ -1691,9 +1624,7 @@ var xSocketSetBroadcast func(uintptr, bool)
 // Sets whether @socket should allow sending to broadcast addresses.
 // This is %FALSE by default.
 func (x *Socket) SetBroadcast(BroadcastVar bool) {
-
 	xSocketSetBroadcast(x.GoPointer(), BroadcastVar)
-
 }
 
 var xSocketSetKeepalive func(uintptr, bool)
@@ -1714,9 +1645,7 @@ var xSocketSetKeepalive func(uintptr, bool)
 // periods of time, but also want to ensure that connections are eventually
 // garbage-collected if clients crash or become unreachable.
 func (x *Socket) SetKeepalive(KeepaliveVar bool) {
-
 	xSocketSetKeepalive(x.GoPointer(), KeepaliveVar)
-
 }
 
 var xSocketSetListenBacklog func(uintptr, int)
@@ -1729,9 +1658,7 @@ var xSocketSetListenBacklog func(uintptr, int)
 // Note that this must be called before g_socket_listen() and has no
 // effect if called after that.
 func (x *Socket) SetListenBacklog(BacklogVar int) {
-
 	xSocketSetListenBacklog(x.GoPointer(), BacklogVar)
-
 }
 
 var xSocketSetMulticastLoopback func(uintptr, bool)
@@ -1740,9 +1667,7 @@ var xSocketSetMulticastLoopback func(uintptr, bool)
 // listening on that multicast address on the same host. This is %TRUE
 // by default.
 func (x *Socket) SetMulticastLoopback(LoopbackVar bool) {
-
 	xSocketSetMulticastLoopback(x.GoPointer(), LoopbackVar)
-
 }
 
 var xSocketSetMulticastTtl func(uintptr, uint)
@@ -1751,9 +1676,7 @@ var xSocketSetMulticastTtl func(uintptr, uint)
 // By default, this is 1, meaning that multicast packets will not leave
 // the local network.
 func (x *Socket) SetMulticastTtl(TtlVar uint) {
-
 	xSocketSetMulticastTtl(x.GoPointer(), TtlVar)
-
 }
 
 var xSocketSetOption func(uintptr, int, int, int, **glib.Error) bool
@@ -1775,7 +1698,6 @@ func (x *Socket) SetOption(LevelVar int, OptnameVar int, ValueVar int) (bool, er
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSetTimeout func(uintptr, uint)
@@ -1801,9 +1723,7 @@ var xSocketSetTimeout func(uintptr, uint)
 // Note that if an I/O operation is interrupted by a signal, this may
 // cause the timeout to be reset.
 func (x *Socket) SetTimeout(TimeoutVar uint) {
-
 	xSocketSetTimeout(x.GoPointer(), TimeoutVar)
-
 }
 
 var xSocketSetTtl func(uintptr, uint)
@@ -1811,9 +1731,7 @@ var xSocketSetTtl func(uintptr, uint)
 // Sets the time-to-live for outgoing unicast packets on @socket.
 // By default the platform-specific default value is used.
 func (x *Socket) SetTtl(TtlVar uint) {
-
 	xSocketSetTtl(x.GoPointer(), TtlVar)
-
 }
 
 var xSocketShutdown func(uintptr, bool, bool, **glib.Error) bool
@@ -1840,7 +1758,6 @@ func (x *Socket) Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool) (bool, er
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketSpeaksIpv4 func(uintptr) bool
@@ -1855,7 +1772,6 @@ var xSocketSpeaksIpv4 func(uintptr) bool
 // No other types of sockets are currently considered as being capable
 // of speaking IPv4.
 func (x *Socket) SpeaksIpv4() bool {
-
 	cret := xSocketSpeaksIpv4(x.GoPointer())
 	return cret
 }
@@ -2075,12 +1991,11 @@ func (x *Socket) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2153,5 +2068,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketSetTtl, libs, "g_socket_set_ttl")
 	core.PuregoSafeRegister(&xSocketShutdown, libs, "g_socket_shutdown")
 	core.PuregoSafeRegister(&xSocketSpeaksIpv4, libs, "g_socket_speaks_ipv4")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -27,7 +26,7 @@ func (x *Rand) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRand func() *Rand
+var xNewRand func() uintptr
 
 // Creates a new random number generator initialized with a seed taken
 // either from `/dev/urandom` (if existing) or from the current time
@@ -35,38 +34,46 @@ var xNewRand func() *Rand
 //
 // On Windows, the seed is taken from rand_s().
 func NewRand() *Rand {
-
 	cret := xNewRand()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xNewRandWithSeed func(uint32) *Rand
+var xNewRandWithSeed func(uint32) uintptr
 
 // Creates a new random number generator initialized with @seed.
 func NewRandWithSeed(SeedVar uint32) *Rand {
-
 	cret := xNewRandWithSeed(SeedVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xNewRandWithSeedArray func(uint32, uint) *Rand
+var xNewRandWithSeedArray func(uint32, uint) uintptr
 
 // Creates a new random number generator initialized with @seed.
 func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint) *Rand {
-
 	cret := xNewRandWithSeedArray(SeedVar, SeedLengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xRandCopy func(uintptr) *Rand
+var xRandCopy func(uintptr) uintptr
 
 // Copies a #GRand into a new one with the same exact state as before.
 // This way you can take a snapshot of the random number generator for
 // replaying later.
 func (x *Rand) Copy() *Rand {
-
 	cret := xRandCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
 var xRandDouble func(uintptr) float64
@@ -74,7 +81,6 @@ var xRandDouble func(uintptr) float64
 // Returns the next random #gdouble from @rand_ equally distributed over
 // the range [0..1).
 func (x *Rand) Double() float64 {
-
 	cret := xRandDouble(x.GoPointer())
 	return cret
 }
@@ -84,7 +90,6 @@ var xRandDoubleRange func(uintptr, float64, float64) float64
 // Returns the next random #gdouble from @rand_ equally distributed over
 // the range [@begin..@end).
 func (x *Rand) DoubleRange(BeginVar float64, EndVar float64) float64 {
-
 	cret := xRandDoubleRange(x.GoPointer(), BeginVar, EndVar)
 	return cret
 }
@@ -93,9 +98,7 @@ var xRandFree func(uintptr)
 
 // Frees the memory allocated for the #GRand.
 func (x *Rand) Free() {
-
 	xRandFree(x.GoPointer())
-
 }
 
 var xRandInt func(uintptr) uint32
@@ -103,7 +106,6 @@ var xRandInt func(uintptr) uint32
 // Returns the next random #guint32 from @rand_ equally distributed over
 // the range [0..2^32-1].
 func (x *Rand) Int() uint32 {
-
 	cret := xRandInt(x.GoPointer())
 	return cret
 }
@@ -113,7 +115,6 @@ var xRandIntRange func(uintptr, int32, int32) int32
 // Returns the next random #gint32 from @rand_ equally distributed over
 // the range [@begin..@end-1].
 func (x *Rand) IntRange(BeginVar int32, EndVar int32) int32 {
-
 	cret := xRandIntRange(x.GoPointer(), BeginVar, EndVar)
 	return cret
 }
@@ -122,9 +123,7 @@ var xRandSetSeed func(uintptr, uint32)
 
 // Sets the seed for the random number generator #GRand to @seed.
 func (x *Rand) SetSeed(SeedVar uint32) {
-
 	xRandSetSeed(x.GoPointer(), SeedVar)
-
 }
 
 var xRandSetSeedArray func(uintptr, uint32, uint)
@@ -135,16 +134,13 @@ var xRandSetSeedArray func(uintptr, uint32, uint)
 // seeds, or if you require more then 32 bits of actual entropy for
 // your application.
 func (x *Rand) SetSeedArray(SeedVar uint32, SeedLengthVar uint) {
-
 	xRandSetSeedArray(x.GoPointer(), SeedVar, SeedLengthVar)
-
 }
 
 var xRandomDouble func() float64
 
 // Returns a random #gdouble equally distributed over the range [0..1).
 func RandomDouble() float64 {
-
 	cret := xRandomDouble()
 
 	return cret
@@ -155,7 +151,6 @@ var xRandomDoubleRange func(float64, float64) float64
 // Returns a random #gdouble equally distributed over the range
 // [@begin..@end).
 func RandomDoubleRange(BeginVar float64, EndVar float64) float64 {
-
 	cret := xRandomDoubleRange(BeginVar, EndVar)
 
 	return cret
@@ -166,7 +161,6 @@ var xRandomInt func() uint32
 // Return a random #guint32 equally distributed over the range
 // [0..2^32-1].
 func RandomInt() uint32 {
-
 	cret := xRandomInt()
 
 	return cret
@@ -177,7 +171,6 @@ var xRandomIntRange func(int32, int32) int32
 // Returns a random #gint32 equally distributed over the range
 // [@begin..@end-1].
 func RandomIntRange(BeginVar int32, EndVar int32) int32 {
-
 	cret := xRandomIntRange(BeginVar, EndVar)
 
 	return cret
@@ -188,14 +181,12 @@ var xRandomSetSeed func(uint32)
 // Sets the seed for the global random number generator, which is used
 // by the g_random_* functions, to @seed.
 func RandomSetSeed(SeedVar uint32) {
-
 	xRandomSetSeed(SeedVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -225,5 +216,4 @@ func init() {
 	core.PuregoSafeRegister(&xRandIntRange, libs, "g_rand_int_range")
 	core.PuregoSafeRegister(&xRandSetSeed, libs, "g_rand_set_seed")
 	core.PuregoSafeRegister(&xRandSetSeedArray, libs, "g_rand_set_seed_array")
-
 }

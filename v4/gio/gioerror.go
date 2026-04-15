@@ -2,8 +2,7 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -31,7 +30,6 @@ var xIoErrorFromErrno func(int) IOErrorEnum
 //
 // ]|
 func IoErrorFromErrno(ErrNoVar int) IOErrorEnum {
-
 	cret := xIoErrorFromErrno(ErrNoVar)
 	return cret
 }
@@ -40,7 +38,6 @@ var xIoErrorFromFileError func(glib.FileError) IOErrorEnum
 
 // Converts #GFileError error codes into GIO error codes.
 func IoErrorFromFileError(FileErrorVar glib.FileError) IOErrorEnum {
-
 	cret := xIoErrorFromFileError(FileErrorVar)
 	return cret
 }
@@ -49,14 +46,13 @@ var xIoErrorQuark func() glib.Quark
 
 // Gets the GIO Error Quark.
 func IoErrorQuark() glib.Quark {
-
 	cret := xIoErrorQuark()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -69,5 +65,4 @@ func init() {
 	core.PuregoSafeRegister(&xIoErrorFromErrno, libs, "g_io_error_from_errno")
 	core.PuregoSafeRegister(&xIoErrorFromFileError, libs, "g_io_error_from_file_error")
 	core.PuregoSafeRegister(&xIoErrorQuark, libs, "g_io_error_quark")
-
 }

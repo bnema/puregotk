@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -68,7 +67,7 @@ func (x *ToastOverlayClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwToastOverlay` uses the [enum@Gtk.AccessibleRole.GROUP] role.
+// `AdwToastOverlay` uses the [enum@Gtk.AccessibleRole.group] role.
 type ToastOverlay struct {
 	gtk.Widget
 }
@@ -115,9 +114,7 @@ var xToastOverlayAddToast func(uintptr, uintptr)
 // If called on a toast currently in the queue, the toast will be bumped
 // forward to be shown as soon as possible.
 func (x *ToastOverlay) AddToast(ToastVar *Toast) {
-
 	xToastOverlayAddToast(x.GoPointer(), ToastVar.GoPointer())
-
 }
 
 var xToastOverlayDismissAll func(uintptr)
@@ -126,9 +123,7 @@ var xToastOverlayDismissAll func(uintptr)
 //
 // Use [method@Toast.dismiss] to dismiss a single toast.
 func (x *ToastOverlay) DismissAll() {
-
 	xToastOverlayDismissAll(x.GoPointer())
-
 }
 
 var xToastOverlayGetChild func(uintptr) uintptr
@@ -152,14 +147,7 @@ var xToastOverlaySetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *ToastOverlay) SetChild(ChildVar *gtk.Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xToastOverlaySetChild(x.GoPointer(), ChildVarPtr)
-
+	xToastOverlaySetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 func (c *ToastOverlay) GoPointer() uintptr {
@@ -183,9 +171,19 @@ func (c *ToastOverlay) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ToastOverlay) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ToastOverlay) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -206,7 +204,6 @@ func (x *ToastOverlay) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ToastOverlay) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -231,7 +228,6 @@ func (x *ToastOverlay) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ToastOverlay) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -270,30 +266,23 @@ func (x *ToastOverlay) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ToastOverlay) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ToastOverlay) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ToastOverlay) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ToastOverlay) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -306,19 +295,7 @@ func (x *ToastOverlay) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ToastOverlay) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -326,14 +303,7 @@ func (x *ToastOverlay) SetAccessibleParent(ParentVar gtk.Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ToastOverlay) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -342,9 +312,7 @@ func (x *ToastOverlay) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ToastOverlay) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -366,9 +334,7 @@ func (x *ToastOverlay) UpdatePlatformState(StateVar gtk.AccessiblePlatformState)
 //
 // ```
 func (x *ToastOverlay) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -378,9 +344,7 @@ func (x *ToastOverlay) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *ToastOverlay) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -402,9 +366,7 @@ func (x *ToastOverlay) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []g
 //
 // ```
 func (x *ToastOverlay) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -414,9 +376,7 @@ func (x *ToastOverlay) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *ToastOverlay) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -439,9 +399,7 @@ func (x *ToastOverlay) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk
 //
 // ```
 func (x *ToastOverlay) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -451,9 +409,7 @@ func (x *ToastOverlay) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *ToastOverlay) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -461,14 +417,13 @@ func (x *ToastOverlay) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessib
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ToastOverlay) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -486,5 +441,4 @@ func init() {
 	core.PuregoSafeRegister(&xToastOverlayDismissAll, libs, "adw_toast_overlay_dismiss_all")
 	core.PuregoSafeRegister(&xToastOverlayGetChild, libs, "adw_toast_overlay_get_child")
 	core.PuregoSafeRegister(&xToastOverlaySetChild, libs, "adw_toast_overlay_set_child")
-
 }

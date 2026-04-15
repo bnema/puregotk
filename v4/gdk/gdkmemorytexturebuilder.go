@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/glib"
@@ -87,30 +86,33 @@ func (x *MemoryTextureBuilder) Build() *Texture {
 	return cls
 }
 
-var xMemoryTextureBuilderGetBytes func(uintptr) *glib.Bytes
+var xMemoryTextureBuilderGetBytes func(uintptr) uintptr
 
 // Gets the bytes previously set via gdk_memory_texture_builder_set_bytes()
 // or %NULL if none was set.
 func (x *MemoryTextureBuilder) GetBytes() *glib.Bytes {
-
 	cret := xMemoryTextureBuilderGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xMemoryTextureBuilderGetColorState func(uintptr) *ColorState
+var xMemoryTextureBuilderGetColorState func(uintptr) uintptr
 
 // Gets the colorstate previously set via gdk_memory_texture_builder_set_color_state().
 func (x *MemoryTextureBuilder) GetColorState() *ColorState {
-
 	cret := xMemoryTextureBuilderGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xMemoryTextureBuilderGetFormat func(uintptr) MemoryFormat
 
 // Gets the format previously set via gdk_memory_texture_builder_set_format().
 func (x *MemoryTextureBuilder) GetFormat() MemoryFormat {
-
 	cret := xMemoryTextureBuilderGetFormat(x.GoPointer())
 	return cret
 }
@@ -120,7 +122,6 @@ var xMemoryTextureBuilderGetHeight func(uintptr) int
 // Gets the height previously set via gdk_memory_texture_builder_set_height()
 // or 0 if the height wasn't set.
 func (x *MemoryTextureBuilder) GetHeight() int {
-
 	cret := xMemoryTextureBuilderGetHeight(x.GoPointer())
 	return cret
 }
@@ -129,7 +130,6 @@ var xMemoryTextureBuilderGetOffset func(uintptr, uint) uint
 
 // Gets the offset previously set via gdk_memory_texture_builder_set_offset().
 func (x *MemoryTextureBuilder) GetOffset(PlaneVar uint) uint {
-
 	cret := xMemoryTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -138,7 +138,6 @@ var xMemoryTextureBuilderGetStride func(uintptr) uint
 
 // Gets the stride previously set via gdk_memory_texture_builder_set_stride().
 func (x *MemoryTextureBuilder) GetStride() uint {
-
 	cret := xMemoryTextureBuilderGetStride(x.GoPointer())
 	return cret
 }
@@ -147,19 +146,20 @@ var xMemoryTextureBuilderGetStrideForPlane func(uintptr, uint) uint
 
 // Gets the stride previously set via gdk_memory_texture_builder_set_stride_for_plane().
 func (x *MemoryTextureBuilder) GetStrideForPlane(PlaneVar uint) uint {
-
 	cret := xMemoryTextureBuilderGetStrideForPlane(x.GoPointer(), PlaneVar)
 	return cret
 }
 
-var xMemoryTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
+var xMemoryTextureBuilderGetUpdateRegion func(uintptr) uintptr
 
 // Gets the region previously set via gdk_memory_texture_builder_set_update_region()
 // or %NULL if none was set.
 func (x *MemoryTextureBuilder) GetUpdateRegion() *cairo.Region {
-
 	cret := xMemoryTextureBuilderGetUpdateRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xMemoryTextureBuilderGetUpdateTexture func(uintptr) uintptr
@@ -185,7 +185,6 @@ var xMemoryTextureBuilderGetWidth func(uintptr) int
 // Gets the width previously set via gdk_memory_texture_builder_set_width()
 // or 0 if the width wasn't set.
 func (x *MemoryTextureBuilder) GetWidth() int {
-
 	cret := xMemoryTextureBuilderGetWidth(x.GoPointer())
 	return cret
 }
@@ -196,9 +195,7 @@ var xMemoryTextureBuilderSetBytes func(uintptr, *glib.Bytes)
 //
 // The bytes must be set before calling [method@Gdk.MemoryTextureBuilder.build].
 func (x *MemoryTextureBuilder) SetBytes(BytesVar *glib.Bytes) {
-
 	xMemoryTextureBuilderSetBytes(x.GoPointer(), BytesVar)
-
 }
 
 var xMemoryTextureBuilderSetColorState func(uintptr, *ColorState)
@@ -208,9 +205,7 @@ var xMemoryTextureBuilderSetColorState func(uintptr, *ColorState)
 // By default, the sRGB colorstate is used. If you don't know
 // what colorstates are, this is probably the right thing.
 func (x *MemoryTextureBuilder) SetColorState(ColorStateVar *ColorState) {
-
 	xMemoryTextureBuilderSetColorState(x.GoPointer(), ColorStateVar)
-
 }
 
 var xMemoryTextureBuilderSetFormat func(uintptr, MemoryFormat)
@@ -219,9 +214,7 @@ var xMemoryTextureBuilderSetFormat func(uintptr, MemoryFormat)
 //
 // The default is `GDK_MEMORY_R8G8B8A8_PREMULTIPLIED`.
 func (x *MemoryTextureBuilder) SetFormat(FormatVar MemoryFormat) {
-
 	xMemoryTextureBuilderSetFormat(x.GoPointer(), FormatVar)
-
 }
 
 var xMemoryTextureBuilderSetHeight func(uintptr, int)
@@ -231,18 +224,14 @@ var xMemoryTextureBuilderSetHeight func(uintptr, int)
 // The height must be set before calling [method@Gdk.MemoryTextureBuilder.build]
 // and conform to size requirements of the provided format.
 func (x *MemoryTextureBuilder) SetHeight(HeightVar int) {
-
 	xMemoryTextureBuilderSetHeight(x.GoPointer(), HeightVar)
-
 }
 
 var xMemoryTextureBuilderSetOffset func(uintptr, uint, uint)
 
 // Sets the offset of the texture for @plane.
 func (x *MemoryTextureBuilder) SetOffset(PlaneVar uint, OffsetVar uint) {
-
 	xMemoryTextureBuilderSetOffset(x.GoPointer(), PlaneVar, OffsetVar)
-
 }
 
 var xMemoryTextureBuilderSetStride func(uintptr, uint)
@@ -251,18 +240,14 @@ var xMemoryTextureBuilderSetStride func(uintptr, uint)
 //
 // The rowstride must be set before calling [method@Gdk.MemoryTextureBuilder.build].
 func (x *MemoryTextureBuilder) SetStride(StrideVar uint) {
-
 	xMemoryTextureBuilderSetStride(x.GoPointer(), StrideVar)
-
 }
 
 var xMemoryTextureBuilderSetStrideForPlane func(uintptr, uint, uint)
 
 // Sets the stride of the texture for @plane.
 func (x *MemoryTextureBuilder) SetStrideForPlane(PlaneVar uint, StrideVar uint) {
-
 	xMemoryTextureBuilderSetStrideForPlane(x.GoPointer(), PlaneVar, StrideVar)
-
 }
 
 var xMemoryTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
@@ -279,9 +264,7 @@ var xMemoryTextureBuilderSetUpdateRegion func(uintptr, *cairo.Region)
 //
 // An example would be a screen recording where only the mouse pointer moves.
 func (x *MemoryTextureBuilder) SetUpdateRegion(RegionVar *cairo.Region) {
-
 	xMemoryTextureBuilderSetUpdateRegion(x.GoPointer(), RegionVar)
-
 }
 
 var xMemoryTextureBuilderSetUpdateTexture func(uintptr, uintptr)
@@ -290,14 +273,7 @@ var xMemoryTextureBuilderSetUpdateTexture func(uintptr, uintptr)
 //
 // See [method@Gdk.MemoryTextureBuilder.set_update_region] for an explanation.
 func (x *MemoryTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
-
-	var TextureVarPtr uintptr
-	if TextureVar != nil {
-		TextureVarPtr = TextureVar.GoPointer()
-	}
-
-	xMemoryTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVarPtr)
-
+	xMemoryTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
 }
 
 var xMemoryTextureBuilderSetWidth func(uintptr, int)
@@ -307,9 +283,7 @@ var xMemoryTextureBuilderSetWidth func(uintptr, int)
 // The width must be set before calling [method@Gdk.MemoryTextureBuilder.build]
 // and conform to size requirements of the provided format.
 func (x *MemoryTextureBuilder) SetWidth(WidthVar int) {
-
 	xMemoryTextureBuilderSetWidth(x.GoPointer(), WidthVar)
-
 }
 
 func (c *MemoryTextureBuilder) GoPointer() uintptr {
@@ -433,7 +407,7 @@ func (x *MemoryTextureBuilder) GetPropertyWidth() int {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -468,5 +442,4 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateRegion, libs, "gdk_memory_texture_builder_set_update_region")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateTexture, libs, "gdk_memory_texture_builder_set_update_texture")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetWidth, libs, "gdk_memory_texture_builder_set_width")
-
 }

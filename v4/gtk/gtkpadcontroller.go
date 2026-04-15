@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -177,9 +176,7 @@ var xPadControllerSetAction func(uintptr, PadActionType, int, int, string, strin
 // rules apply. Some windowing systems may be able to use those for user
 // feedback.
 func (x *PadController) SetAction(TypeVar PadActionType, IndexVar int, ModeVar int, LabelVar string, ActionNameVar string) {
-
 	xPadControllerSetAction(x.GoPointer(), TypeVar, IndexVar, ModeVar, LabelVar, ActionNameVar)
-
 }
 
 var xPadControllerSetActionEntries func(uintptr, []PadActionEntry, int)
@@ -189,9 +186,7 @@ var xPadControllerSetActionEntries func(uintptr, []PadActionEntry, int)
 //
 // See [struct@Gtk.PadActionEntry] and [method@Gtk.PadController.set_action].
 func (x *PadController) SetActionEntries(EntriesVar []PadActionEntry, NEntriesVar int) {
-
 	xPadControllerSetActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
-
 }
 
 func (c *PadController) GoPointer() uintptr {
@@ -207,7 +202,7 @@ func (c *PadController) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -225,5 +220,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xPadControllerSetAction, libs, "gtk_pad_controller_set_action")
 	core.PuregoSafeRegister(&xPadControllerSetActionEntries, libs, "gtk_pad_controller_set_action_entries")
-
 }

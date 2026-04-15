@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -201,7 +200,6 @@ var xInetAddressEqual func(uintptr, uintptr) bool
 
 // Checks if two #GInetAddress instances are equal, e.g. the same address.
 func (x *InetAddress) Equal(OtherAddressVar *InetAddress) bool {
-
 	cret := xInetAddressEqual(x.GoPointer(), OtherAddressVar.GoPointer())
 	return cret
 }
@@ -210,7 +208,6 @@ var xInetAddressGetFamily func(uintptr) SocketFamily
 
 // Gets @address's family
 func (x *InetAddress) GetFamily() SocketFamily {
-
 	cret := xInetAddressGetFamily(x.GoPointer())
 	return cret
 }
@@ -219,7 +216,6 @@ var xInetAddressGetFlowinfo func(uintptr) uint32
 
 // Gets the value of [property@Gio.InetAddress:flowinfo].
 func (x *InetAddress) GetFlowinfo() uint32 {
-
 	cret := xInetAddressGetFlowinfo(x.GoPointer())
 	return cret
 }
@@ -228,7 +224,6 @@ var xInetAddressGetIsAny func(uintptr) bool
 
 // Tests whether @address is the "any" address for its family.
 func (x *InetAddress) GetIsAny() bool {
-
 	cret := xInetAddressGetIsAny(x.GoPointer())
 	return cret
 }
@@ -239,7 +234,6 @@ var xInetAddressGetIsLinkLocal func(uintptr) bool
 // identifies a host on a local network that is not connected to the
 // Internet).
 func (x *InetAddress) GetIsLinkLocal() bool {
-
 	cret := xInetAddressGetIsLinkLocal(x.GoPointer())
 	return cret
 }
@@ -248,7 +242,6 @@ var xInetAddressGetIsLoopback func(uintptr) bool
 
 // Tests whether @address is the loopback address for its family.
 func (x *InetAddress) GetIsLoopback() bool {
-
 	cret := xInetAddressGetIsLoopback(x.GoPointer())
 	return cret
 }
@@ -257,7 +250,6 @@ var xInetAddressGetIsMcGlobal func(uintptr) bool
 
 // Tests whether @address is a global multicast address.
 func (x *InetAddress) GetIsMcGlobal() bool {
-
 	cret := xInetAddressGetIsMcGlobal(x.GoPointer())
 	return cret
 }
@@ -266,7 +258,6 @@ var xInetAddressGetIsMcLinkLocal func(uintptr) bool
 
 // Tests whether @address is a link-local multicast address.
 func (x *InetAddress) GetIsMcLinkLocal() bool {
-
 	cret := xInetAddressGetIsMcLinkLocal(x.GoPointer())
 	return cret
 }
@@ -275,7 +266,6 @@ var xInetAddressGetIsMcNodeLocal func(uintptr) bool
 
 // Tests whether @address is a node-local multicast address.
 func (x *InetAddress) GetIsMcNodeLocal() bool {
-
 	cret := xInetAddressGetIsMcNodeLocal(x.GoPointer())
 	return cret
 }
@@ -284,7 +274,6 @@ var xInetAddressGetIsMcOrgLocal func(uintptr) bool
 
 // Tests whether @address is an organization-local multicast address.
 func (x *InetAddress) GetIsMcOrgLocal() bool {
-
 	cret := xInetAddressGetIsMcOrgLocal(x.GoPointer())
 	return cret
 }
@@ -293,7 +282,6 @@ var xInetAddressGetIsMcSiteLocal func(uintptr) bool
 
 // Tests whether @address is a site-local multicast address.
 func (x *InetAddress) GetIsMcSiteLocal() bool {
-
 	cret := xInetAddressGetIsMcSiteLocal(x.GoPointer())
 	return cret
 }
@@ -302,7 +290,6 @@ var xInetAddressGetIsMulticast func(uintptr) bool
 
 // Tests whether @address is a multicast address.
 func (x *InetAddress) GetIsMulticast() bool {
-
 	cret := xInetAddressGetIsMulticast(x.GoPointer())
 	return cret
 }
@@ -314,7 +301,6 @@ var xInetAddressGetIsSiteLocal func(uintptr) bool
 // not be reached directly from the Internet, but which may have
 // outgoing Internet connectivity via a NAT or firewall).
 func (x *InetAddress) GetIsSiteLocal() bool {
-
 	cret := xInetAddressGetIsSiteLocal(x.GoPointer())
 	return cret
 }
@@ -324,7 +310,6 @@ var xInetAddressGetNativeSize func(uintptr) uint
 // Gets the size of the native raw binary address for @address. This
 // is the size of the data that you get from g_inet_address_to_bytes().
 func (x *InetAddress) GetNativeSize() uint {
-
 	cret := xInetAddressGetNativeSize(x.GoPointer())
 	return cret
 }
@@ -333,7 +318,6 @@ var xInetAddressGetScopeId func(uintptr) uint32
 
 // Gets the value of [property@Gio.InetAddress:scope-id].
 func (x *InetAddress) GetScopeId() uint32 {
-
 	cret := xInetAddressGetScopeId(x.GoPointer())
 	return cret
 }
@@ -342,7 +326,6 @@ var xInetAddressToBytes func(uintptr) byte
 
 // Gets the raw binary address data from @address.
 func (x *InetAddress) ToBytes() byte {
-
 	cret := xInetAddressToBytes(x.GoPointer())
 	return cret
 }
@@ -351,7 +334,6 @@ var xInetAddressToString func(uintptr) string
 
 // Converts @address to string form.
 func (x *InetAddress) ToString() string {
-
 	cret := xInetAddressToString(x.GoPointer())
 	return cret
 }
@@ -514,7 +496,7 @@ func (x *InetAddress) GetPropertyScopeId() uint {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -549,5 +531,4 @@ func init() {
 	core.PuregoSafeRegister(&xInetAddressGetScopeId, libs, "g_inet_address_get_scope_id")
 	core.PuregoSafeRegister(&xInetAddressToBytes, libs, "g_inet_address_to_bytes")
 	core.PuregoSafeRegister(&xInetAddressToString, libs, "g_inet_address_to_string")
-
 }

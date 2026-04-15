@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -142,9 +141,7 @@ var xMultiLayoutViewAddLayout func(uintptr, uintptr)
 
 // Adds @layout to @self.
 func (x *MultiLayoutView) AddLayout(LayoutVar *Layout) {
-
 	xMultiLayoutViewAddLayout(x.GoPointer(), LayoutVar.GoPointer())
-
 }
 
 var xMultiLayoutViewGetChild func(uintptr, string) uintptr
@@ -204,7 +201,6 @@ var xMultiLayoutViewGetLayoutName func(uintptr) string
 
 // Returns the name of the currently used layout of @self.
 func (x *MultiLayoutView) GetLayoutName() string {
-
 	cret := xMultiLayoutViewGetLayoutName(x.GoPointer())
 	return cret
 }
@@ -213,9 +209,7 @@ var xMultiLayoutViewRemoveLayout func(uintptr, uintptr)
 
 // Removes @layout from @self.
 func (x *MultiLayoutView) RemoveLayout(LayoutVar *Layout) {
-
 	xMultiLayoutViewRemoveLayout(x.GoPointer(), LayoutVar.GoPointer())
-
 }
 
 var xMultiLayoutViewSetChild func(uintptr, string, uintptr)
@@ -224,18 +218,14 @@ var xMultiLayoutViewSetChild func(uintptr, string, uintptr)
 //
 // When changing layouts, it will be inserted into the slot with @id.
 func (x *MultiLayoutView) SetChild(IdVar string, ChildVar *gtk.Widget) {
-
 	xMultiLayoutViewSetChild(x.GoPointer(), IdVar, ChildVar.GoPointer())
-
 }
 
 var xMultiLayoutViewSetLayout func(uintptr, uintptr)
 
 // Makes @layout the current layout of @self.
 func (x *MultiLayoutView) SetLayout(LayoutVar *Layout) {
-
 	xMultiLayoutViewSetLayout(x.GoPointer(), LayoutVar.GoPointer())
-
 }
 
 var xMultiLayoutViewSetLayoutName func(uintptr, string)
@@ -244,9 +234,7 @@ var xMultiLayoutViewSetLayoutName func(uintptr, string)
 //
 // See [property@Layout:name].
 func (x *MultiLayoutView) SetLayoutName(NameVar string) {
-
 	xMultiLayoutViewSetLayoutName(x.GoPointer(), NameVar)
-
 }
 
 func (c *MultiLayoutView) GoPointer() uintptr {
@@ -291,9 +279,19 @@ func (x *MultiLayoutView) GetPropertyLayoutName() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *MultiLayoutView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *MultiLayoutView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -314,7 +312,6 @@ func (x *MultiLayoutView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *MultiLayoutView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -339,7 +336,6 @@ func (x *MultiLayoutView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *MultiLayoutView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -378,30 +374,23 @@ func (x *MultiLayoutView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *MultiLayoutView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *MultiLayoutView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *MultiLayoutView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *MultiLayoutView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -414,19 +403,7 @@ func (x *MultiLayoutView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *MultiLayoutView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -434,14 +411,7 @@ func (x *MultiLayoutView) SetAccessibleParent(ParentVar gtk.Accessible, NextSibl
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *MultiLayoutView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -450,9 +420,7 @@ func (x *MultiLayoutView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessib
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *MultiLayoutView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -474,9 +442,7 @@ func (x *MultiLayoutView) UpdatePlatformState(StateVar gtk.AccessiblePlatformSta
 //
 // ```
 func (x *MultiLayoutView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -486,9 +452,7 @@ func (x *MultiLayoutView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty
 //
 // This function is meant to be used by language bindings.
 func (x *MultiLayoutView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -510,9 +474,7 @@ func (x *MultiLayoutView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar 
 //
 // ```
 func (x *MultiLayoutView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -522,9 +484,7 @@ func (x *MultiLayoutView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation
 //
 // This function is meant to be used by language bindings.
 func (x *MultiLayoutView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -547,9 +507,7 @@ func (x *MultiLayoutView) UpdateRelationValue(NRelationsVar int, RelationsVar []
 //
 // ```
 func (x *MultiLayoutView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -559,9 +517,7 @@ func (x *MultiLayoutView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *MultiLayoutView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -569,14 +525,13 @@ func (x *MultiLayoutView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MultiLayoutView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -599,5 +554,4 @@ func init() {
 	core.PuregoSafeRegister(&xMultiLayoutViewSetChild, libs, "adw_multi_layout_view_set_child")
 	core.PuregoSafeRegister(&xMultiLayoutViewSetLayout, libs, "adw_multi_layout_view_set_layout")
 	core.PuregoSafeRegister(&xMultiLayoutViewSetLayoutName, libs, "adw_multi_layout_view_set_layout_name")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -36,9 +35,7 @@ var xToplevelSizeGetBounds func(uintptr, *int, *int)
 // window is being presented on, or something else that limits the way a
 // toplevel can be presented.
 func (x *ToplevelSize) GetBounds(BoundsWidthVar *int, BoundsHeightVar *int) {
-
 	xToplevelSizeGetBounds(x.GoPointer(), BoundsWidthVar, BoundsHeightVar)
-
 }
 
 var xToplevelSizeSetMinSize func(uintptr, int, int)
@@ -53,9 +50,7 @@ var xToplevelSizeSetMinSize func(uintptr, int, int)
 // The minimum size should be within the bounds (see
 // [method@Gdk.ToplevelSize.get_bounds]).
 func (x *ToplevelSize) SetMinSize(MinWidthVar int, MinHeightVar int) {
-
 	xToplevelSizeSetMinSize(x.GoPointer(), MinWidthVar, MinHeightVar)
-
 }
 
 var xToplevelSizeSetShadowWidth func(uintptr, int, int, int, int)
@@ -69,9 +64,7 @@ var xToplevelSizeSetShadowWidth func(uintptr, int, int, int, int)
 // Shadow width should only be set if
 // [method@Gtk.Display.supports_shadow_width] is %TRUE.
 func (x *ToplevelSize) SetShadowWidth(LeftVar int, RightVar int, TopVar int, BottomVar int) {
-
 	xToplevelSizeSetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
-
 }
 
 var xToplevelSizeSetSize func(uintptr, int, int)
@@ -83,14 +76,12 @@ var xToplevelSizeSetSize func(uintptr, int, int)
 // be considered as a hint, and should not be assumed to be
 // respected by the windowing system, or backend.
 func (x *ToplevelSize) SetSize(WidthVar int, HeightVar int) {
-
 	xToplevelSizeSetSize(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -106,5 +97,4 @@ func init() {
 	core.PuregoSafeRegister(&xToplevelSizeSetMinSize, libs, "gdk_toplevel_size_set_min_size")
 	core.PuregoSafeRegister(&xToplevelSizeSetShadowWidth, libs, "gdk_toplevel_size_set_shadow_width")
 	core.PuregoSafeRegister(&xToplevelSizeSetSize, libs, "gdk_toplevel_size_set_size")
-
 }

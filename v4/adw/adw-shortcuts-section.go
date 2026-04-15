@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -74,16 +73,13 @@ var xShortcutsSectionAdd func(uintptr, uintptr)
 
 // Adds @item to @self.
 func (x *ShortcutsSection) Add(ItemVar *ShortcutsItem) {
-
 	xShortcutsSectionAdd(x.GoPointer(), ItemVar.GoPointer())
-
 }
 
 var xShortcutsSectionGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *ShortcutsSection) GetTitle() string {
-
 	cret := xShortcutsSectionGetTitle(x.GoPointer())
 	return cret
 }
@@ -92,12 +88,10 @@ var xShortcutsSectionSetTitle func(uintptr, uintptr)
 
 // Sets the title of @self.
 func (x *ShortcutsSection) SetTitle(TitleVar *string) {
-
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
 	xShortcutsSectionSetTitle(x.GoPointer(), TitleVarPtr)
-
 }
 
 func (c *ShortcutsSection) GoPointer() uintptr {
@@ -109,6 +103,14 @@ func (c *ShortcutsSection) GoPointer() uintptr {
 
 func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *ShortcutsSection) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
 }
 
 // SetPropertyTitle sets the "title" property.
@@ -138,7 +140,6 @@ func (x *ShortcutsSection) GetPropertyTitle() string {
 //
 // See also: g_list_model_get_n_items()
 func (x *ShortcutsSection) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -152,7 +153,6 @@ func (x *ShortcutsSection) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ShortcutsSection) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -163,7 +163,6 @@ func (x *ShortcutsSection) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ShortcutsSection) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -214,9 +213,7 @@ func (x *ShortcutsSection) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ShortcutsSection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -224,14 +221,13 @@ func (x *ShortcutsSection) ItemsChanged(PositionVar uint, RemovedVar uint, Added
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutsSection) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -248,5 +244,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutsSectionAdd, libs, "adw_shortcuts_section_add")
 	core.PuregoSafeRegister(&xShortcutsSectionGetTitle, libs, "adw_shortcuts_section_get_title")
 	core.PuregoSafeRegister(&xShortcutsSectionSetTitle, libs, "adw_shortcuts_section_set_title")
-
 }

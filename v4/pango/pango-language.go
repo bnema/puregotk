@@ -2,12 +2,13 @@
 package pango
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xLanguageFromString func(uintptr) *Language
+var xLanguageFromString func(uintptr) uintptr
 
 // Convert a language tag to a `PangoLanguage`.
 //
@@ -22,15 +23,17 @@ var xLanguageFromString func(uintptr) *Language
 // Use [func@Pango.Language.get_default] if you want to get the
 // `PangoLanguage` for the current locale of the process.
 func LanguageFromString(LanguageVar *string) *Language {
-
 	LanguageVarPtr := core.GStrdupNullable(LanguageVar)
 	defer core.GFreeNullable(LanguageVarPtr)
 
 	cret := xLanguageFromString(LanguageVarPtr)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
-var xLanguageGetDefault func() *Language
+var xLanguageGetDefault func() uintptr
 
 // Returns the `PangoLanguage` for the current locale of the process.
 //
@@ -64,9 +67,11 @@ var xLanguageGetDefault func() *Language
 // use per-thread locales with uselocale(). In that case, you should
 // just call pango_language_from_string() yourself.
 func LanguageGetDefault() *Language {
-
 	cret := xLanguageGetDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
 var xLanguageGetPreferred func() uintptr
@@ -83,14 +88,13 @@ var xLanguageGetPreferred func() uintptr
 // you should first try the default language, followed by the
 // languages returned by this function.
 func LanguageGetPreferred() uintptr {
-
 	cret := xLanguageGetPreferred()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -103,5 +107,4 @@ func init() {
 	core.PuregoSafeRegister(&xLanguageFromString, libs, "pango_language_from_string")
 	core.PuregoSafeRegister(&xLanguageGetDefault, libs, "pango_language_get_default")
 	core.PuregoSafeRegister(&xLanguageGetPreferred, libs, "pango_language_get_preferred")
-
 }

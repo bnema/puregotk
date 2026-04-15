@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -215,7 +214,6 @@ var xPopoverMenuAddChild func(uintptr, uintptr, string) bool
 // For this to work, the menu model of @popover must have
 // an item with a `custom` attribute that matches @id.
 func (x *PopoverMenu) AddChild(ChildVar *Widget, IdVar string) bool {
-
 	cret := xPopoverMenuAddChild(x.GoPointer(), ChildVar.GoPointer(), IdVar)
 	return cret
 }
@@ -224,7 +222,6 @@ var xPopoverMenuGetFlags func(uintptr) PopoverMenuFlags
 
 // Returns the flags that @popover uses to create/display a menu from its model.
 func (x *PopoverMenu) GetFlags() PopoverMenuFlags {
-
 	cret := xPopoverMenuGetFlags(x.GoPointer())
 	return cret
 }
@@ -251,7 +248,6 @@ var xPopoverMenuRemoveChild func(uintptr, uintptr) bool
 // Removes a widget that has previously been added with
 // [method@Gtk.PopoverMenu.add_child]
 func (x *PopoverMenu) RemoveChild(ChildVar *Widget) bool {
-
 	cret := xPopoverMenuRemoveChild(x.GoPointer(), ChildVar.GoPointer())
 	return cret
 }
@@ -263,9 +259,7 @@ var xPopoverMenuSetFlags func(uintptr, PopoverMenuFlags)
 // If a model is set and the flags change, contents are rebuilt, so if setting
 // properties individually, set flags before model to avoid a redundant rebuild.
 func (x *PopoverMenu) SetFlags(FlagsVar PopoverMenuFlags) {
-
 	xPopoverMenuSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xPopoverMenuSetMenuModel func(uintptr, uintptr)
@@ -276,14 +270,7 @@ var xPopoverMenuSetMenuModel func(uintptr, uintptr)
 // the @popover is populated with new contents according
 // to @model.
 func (x *PopoverMenu) SetMenuModel(ModelVar *gio.MenuModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xPopoverMenuSetMenuModel(x.GoPointer(), ModelVarPtr)
-
+	xPopoverMenuSetMenuModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *PopoverMenu) GoPointer() uintptr {
@@ -324,9 +311,19 @@ func (x *PopoverMenu) GetPropertyVisibleSubmenu() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *PopoverMenu) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *PopoverMenu) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -347,7 +344,6 @@ func (x *PopoverMenu) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *PopoverMenu) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -372,7 +368,6 @@ func (x *PopoverMenu) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *PopoverMenu) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -411,30 +406,23 @@ func (x *PopoverMenu) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *PopoverMenu) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *PopoverMenu) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *PopoverMenu) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *PopoverMenu) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -447,19 +435,7 @@ func (x *PopoverMenu) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *PopoverMenu) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -467,14 +443,7 @@ func (x *PopoverMenu) SetAccessibleParent(ParentVar Accessible, NextSiblingVar A
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *PopoverMenu) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -483,9 +452,7 @@ func (x *PopoverMenu) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *PopoverMenu) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -507,9 +474,7 @@ func (x *PopoverMenu) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *PopoverMenu) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -519,9 +484,7 @@ func (x *PopoverMenu) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *PopoverMenu) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -543,9 +506,7 @@ func (x *PopoverMenu) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 //
 // ```
 func (x *PopoverMenu) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -555,9 +516,7 @@ func (x *PopoverMenu) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *PopoverMenu) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -580,9 +539,7 @@ func (x *PopoverMenu) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 //
 // ```
 func (x *PopoverMenu) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -592,9 +549,7 @@ func (x *PopoverMenu) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *PopoverMenu) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -602,7 +557,6 @@ func (x *PopoverMenu) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *PopoverMenu) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -642,32 +596,26 @@ func (x *PopoverMenu) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *PopoverMenu) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *PopoverMenu) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *PopoverMenu) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -688,5 +636,4 @@ func init() {
 	core.PuregoSafeRegister(&xPopoverMenuRemoveChild, libs, "gtk_popover_menu_remove_child")
 	core.PuregoSafeRegister(&xPopoverMenuSetFlags, libs, "gtk_popover_menu_set_flags")
 	core.PuregoSafeRegister(&xPopoverMenuSetMenuModel, libs, "gtk_popover_menu_set_menu_model")
-
 }

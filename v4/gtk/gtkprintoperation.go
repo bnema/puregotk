@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -491,7 +490,6 @@ var xPrintErrorQuark func() glib.Quark
 
 // Registers an error quark for `GtkPrintOperation` if necessary.
 func PrintErrorQuark() glib.Quark {
-
 	cret := xPrintErrorQuark()
 	return cret
 }
@@ -538,34 +536,7 @@ var xPrintRunPageSetupDialogAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // after showing the page setup dialog on platforms that support this, and calls
 // @done_cb from a signal handler for the ::response signal of the dialog.
 func PrintRunPageSetupDialogAsync(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings, DoneCbVar *PageSetupDoneFunc, DataVar uintptr) {
-
-	var DoneCbVarRef uintptr
-	if DoneCbVar != nil {
-		DoneCbVarPtr := uintptr(unsafe.Pointer(DoneCbVar))
-		if cbRefPtr, ok := glib.GetCallback(DoneCbVarPtr); ok {
-			DoneCbVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *DoneCbVar
-				cbFn(arg0, arg1)
-			}
-			DoneCbVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DoneCbVarPtr, DoneCbVarRef, DoneCbVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var PageSetupVarPtr uintptr
-	if PageSetupVar != nil {
-		PageSetupVarPtr = PageSetupVar.GoPointer()
-	}
-
-	xPrintRunPageSetupDialogAsync(ParentVarPtr, PageSetupVarPtr, SettingsVar.GoPointer(), DoneCbVarRef, DataVar)
-
+	xPrintRunPageSetupDialogAsync(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer(), glib.NewCallback(DoneCbVar), DataVar)
 }
 
 // High-level, portable printing API.
@@ -672,9 +643,7 @@ var xPrintOperationCancel func(uintptr)
 // [signal@Gtk.PrintOperation::paginate] or [signal@Gtk.PrintOperation::draw-page]
 // signal handler to stop the currently running print operation.
 func (x *PrintOperation) Cancel() {
-
 	xPrintOperationCancel(x.GoPointer())
-
 }
 
 var xPrintOperationDrawPageFinish func(uintptr)
@@ -686,9 +655,7 @@ var xPrintOperationDrawPageFinish func(uintptr)
 // was called before, then this function has to be called by application.
 // Otherwise it is called by GTK itself.
 func (x *PrintOperation) DrawPageFinish() {
-
 	xPrintOperationDrawPageFinish(x.GoPointer())
-
 }
 
 var xPrintOperationGetDefaultPageSetup func(uintptr) uintptr
@@ -712,12 +679,11 @@ var xPrintOperationGetEmbedPageSetup func(uintptr) bool
 
 // Gets whether page setup selection combos are embedded
 func (x *PrintOperation) GetEmbedPageSetup() bool {
-
 	cret := xPrintOperationGetEmbedPageSetup(x.GoPointer())
 	return cret
 }
 
-var xPrintOperationGetError func(uintptr)
+var xPrintOperationGetError func(uintptr, **glib.Error)
 
 // Call this when the result of a print operation is
 // %GTK_PRINT_OPERATION_RESULT_ERROR.
@@ -730,19 +696,17 @@ var xPrintOperationGetError func(uintptr)
 func (x *PrintOperation) GetError() error {
 	var cerr *glib.Error
 
-	xPrintOperationGetError(x.GoPointer())
+	xPrintOperationGetError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return nil
 	}
 	return cerr
-
 }
 
 var xPrintOperationGetHasSelection func(uintptr) bool
 
 // Gets whether there is a selection.
 func (x *PrintOperation) GetHasSelection() bool {
-
 	cret := xPrintOperationGetHasSelection(x.GoPointer())
 	return cret
 }
@@ -760,7 +724,6 @@ var xPrintOperationGetNPagesToPrint func(uintptr) int
 //
 // This is typically used to track the progress of print operation.
 func (x *PrintOperation) GetNPagesToPrint() int {
-
 	cret := xPrintOperationGetNPagesToPrint(x.GoPointer())
 	return cret
 }
@@ -792,7 +755,6 @@ var xPrintOperationGetStatus func(uintptr) PrintStatus
 //
 // Also see [method@Gtk.PrintOperation.get_status_string].
 func (x *PrintOperation) GetStatus() PrintStatus {
-
 	cret := xPrintOperationGetStatus(x.GoPointer())
 	return cret
 }
@@ -808,7 +770,6 @@ var xPrintOperationGetStatusString func(uintptr) string
 // Use [method@Gtk.PrintOperation.get_status] to obtain
 // a status value that is suitable for programmatic use.
 func (x *PrintOperation) GetStatusString() string {
-
 	cret := xPrintOperationGetStatusString(x.GoPointer())
 	return cret
 }
@@ -817,7 +778,6 @@ var xPrintOperationGetSupportSelection func(uintptr) bool
 
 // Gets whether the application supports print of selection
 func (x *PrintOperation) GetSupportSelection() bool {
-
 	cret := xPrintOperationGetSupportSelection(x.GoPointer())
 	return cret
 }
@@ -834,7 +794,6 @@ var xPrintOperationIsFinished func(uintptr) bool
 // can be in a non-finished state even after done has been called, as
 // the operation status then tracks the print job status on the printer.
 func (x *PrintOperation) IsFinished() bool {
-
 	cret := xPrintOperationIsFinished(x.GoPointer())
 	return cret
 }
@@ -921,7 +880,6 @@ func (x *PrintOperation) Run(ActionVar PrintOperationAction, ParentVar *Window) 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPrintOperationSetAllowAsync func(uintptr, bool)
@@ -932,9 +890,7 @@ var xPrintOperationSetAllowAsync func(uintptr, bool)
 // Note that some platforms may not allow asynchronous
 // operation.
 func (x *PrintOperation) SetAllowAsync(AllowAsyncVar bool) {
-
 	xPrintOperationSetAllowAsync(x.GoPointer(), AllowAsyncVar)
-
 }
 
 var xPrintOperationSetCurrentPage func(uintptr, int)
@@ -946,21 +902,17 @@ var xPrintOperationSetCurrentPage func(uintptr, int)
 //
 // Note that this only makes sense for pre-paginated documents.
 func (x *PrintOperation) SetCurrentPage(CurrentPageVar int) {
-
 	xPrintOperationSetCurrentPage(x.GoPointer(), CurrentPageVar)
-
 }
 
 var xPrintOperationSetCustomTabLabel func(uintptr, uintptr)
 
 // Sets the label for the tab holding custom widgets.
 func (x *PrintOperation) SetCustomTabLabel(LabelVar *string) {
-
 	LabelVarPtr := core.GStrdupNullable(LabelVar)
 	defer core.GFreeNullable(LabelVarPtr)
 
 	xPrintOperationSetCustomTabLabel(x.GoPointer(), LabelVarPtr)
-
 }
 
 var xPrintOperationSetDefaultPageSetup func(uintptr, uintptr)
@@ -971,14 +923,7 @@ var xPrintOperationSetDefaultPageSetup func(uintptr, uintptr)
 // but it can be overridden on a per-page basis by connecting
 // to the [signal@Gtk.PrintOperation::request-page-setup] signal.
 func (x *PrintOperation) SetDefaultPageSetup(DefaultPageSetupVar *PageSetup) {
-
-	var DefaultPageSetupVarPtr uintptr
-	if DefaultPageSetupVar != nil {
-		DefaultPageSetupVarPtr = DefaultPageSetupVar.GoPointer()
-	}
-
-	xPrintOperationSetDefaultPageSetup(x.GoPointer(), DefaultPageSetupVarPtr)
-
+	xPrintOperationSetDefaultPageSetup(x.GoPointer(), DefaultPageSetupVar.GoPointer())
 }
 
 var xPrintOperationSetDeferDrawing func(uintptr)
@@ -991,9 +936,7 @@ var xPrintOperationSetDeferDrawing func(uintptr)
 // This function must be called in the callback of the
 // [signal@Gtk.PrintOperation::draw-page] signal.
 func (x *PrintOperation) SetDeferDrawing() {
-
 	xPrintOperationSetDeferDrawing(x.GoPointer())
-
 }
 
 var xPrintOperationSetEmbedPageSetup func(uintptr, bool)
@@ -1002,9 +945,7 @@ var xPrintOperationSetEmbedPageSetup func(uintptr, bool)
 //
 // Selected page setup is stored as default page setup in `GtkPrintOperation`.
 func (x *PrintOperation) SetEmbedPageSetup(EmbedVar bool) {
-
 	xPrintOperationSetEmbedPageSetup(x.GoPointer(), EmbedVar)
-
 }
 
 var xPrintOperationSetExportFilename func(uintptr, string)
@@ -1020,9 +961,7 @@ var xPrintOperationSetExportFilename func(uintptr, string)
 // by letting the user pick the “Print to PDF” item from the list
 // of printers in the print dialog.
 func (x *PrintOperation) SetExportFilename(FilenameVar string) {
-
 	xPrintOperationSetExportFilename(x.GoPointer(), FilenameVar)
-
 }
 
 var xPrintOperationSetHasSelection func(uintptr, bool)
@@ -1033,9 +972,7 @@ var xPrintOperationSetHasSelection func(uintptr, bool)
 // will draw by [method@Gtk.PrintOperation.set_n_pages] in a handler
 // for the [signal@Gtk.PrintOperation::begin-print] signal.
 func (x *PrintOperation) SetHasSelection(HasSelectionVar bool) {
-
 	xPrintOperationSetHasSelection(x.GoPointer(), HasSelectionVar)
-
 }
 
 var xPrintOperationSetJobName func(uintptr, string)
@@ -1048,9 +985,7 @@ var xPrintOperationSetJobName func(uintptr, string)
 // If you don’t set a job name, GTK picks a default one by
 // numbering successive print jobs.
 func (x *PrintOperation) SetJobName(JobNameVar string) {
-
 	xPrintOperationSetJobName(x.GoPointer(), JobNameVar)
-
 }
 
 var xPrintOperationSetNPages func(uintptr, int)
@@ -1067,9 +1002,7 @@ var xPrintOperationSetNPages func(uintptr, int)
 // if the user chooses to print all pages, the last ::draw-page signal
 // will be for page @n_pages - 1.
 func (x *PrintOperation) SetNPages(NPagesVar int) {
-
 	xPrintOperationSetNPages(x.GoPointer(), NPagesVar)
-
 }
 
 var xPrintOperationSetPrintSettings func(uintptr, uintptr)
@@ -1079,14 +1012,7 @@ var xPrintOperationSetPrintSettings func(uintptr, uintptr)
 // This is typically used to re-establish print settings
 // from a previous print operation, see [method@Gtk.PrintOperation.run].
 func (x *PrintOperation) SetPrintSettings(PrintSettingsVar *PrintSettings) {
-
-	var PrintSettingsVarPtr uintptr
-	if PrintSettingsVar != nil {
-		PrintSettingsVarPtr = PrintSettingsVar.GoPointer()
-	}
-
-	xPrintOperationSetPrintSettings(x.GoPointer(), PrintSettingsVarPtr)
-
+	xPrintOperationSetPrintSettings(x.GoPointer(), PrintSettingsVar.GoPointer())
 }
 
 var xPrintOperationSetShowProgress func(uintptr, bool)
@@ -1094,18 +1020,14 @@ var xPrintOperationSetShowProgress func(uintptr, bool)
 // If @show_progress is %TRUE, the print operation will show
 // a progress dialog during the print operation.
 func (x *PrintOperation) SetShowProgress(ShowProgressVar bool) {
-
 	xPrintOperationSetShowProgress(x.GoPointer(), ShowProgressVar)
-
 }
 
 var xPrintOperationSetSupportSelection func(uintptr, bool)
 
 // Sets whether selection is supported by `GtkPrintOperation`.
 func (x *PrintOperation) SetSupportSelection(SupportSelectionVar bool) {
-
 	xPrintOperationSetSupportSelection(x.GoPointer(), SupportSelectionVar)
-
 }
 
 var xPrintOperationSetTrackPrintStatus func(uintptr, bool)
@@ -1119,9 +1041,7 @@ var xPrintOperationSetTrackPrintStatus func(uintptr, bool)
 // This function is often implemented using some form of polling,
 // so it should not be enabled unless needed.
 func (x *PrintOperation) SetTrackPrintStatus(TrackStatusVar bool) {
-
 	xPrintOperationSetTrackPrintStatus(x.GoPointer(), TrackStatusVar)
-
 }
 
 var xPrintOperationSetUnit func(uintptr, Unit)
@@ -1130,9 +1050,7 @@ var xPrintOperationSetUnit func(uintptr, Unit)
 // `GtkPrintContext` in such a way that distances are measured in
 // units of @unit.
 func (x *PrintOperation) SetUnit(UnitVar Unit) {
-
 	xPrintOperationSetUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xPrintOperationSetUseFullPage func(uintptr, bool)
@@ -1145,9 +1063,7 @@ var xPrintOperationSetUseFullPage func(uintptr, bool)
 // orientation and the number of pages per sheet). Otherwise, the origin
 // is at the top left corner of the imageable area (i.e. inside the margins).
 func (x *PrintOperation) SetUseFullPage(FullPageVar bool) {
-
 	xPrintOperationSetUseFullPage(x.GoPointer(), FullPageVar)
-
 }
 
 func (c *PrintOperation) GoPointer() uintptr {
@@ -1525,7 +1441,7 @@ func (x *PrintOperation) GetPropertyUseFullPage() bool {
 // [class@Gtk.PrintContext] and paginate the document accordingly,
 // and then set the number of pages with
 // [method@Gtk.PrintOperation.set_n_pages].
-func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, *PrintContext)) uint {
+func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
@@ -1538,8 +1454,7 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, *PrintContex
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }())
-
+		cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1559,7 +1474,7 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, *PrintContex
 // to stay around until the [signal@Gtk.PrintOperation::custom-widget-apply]
 // signal is emitted on the operation. Then you can read out any
 // information you need from the widgets.
-func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) *gobject.Object) uint {
+func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobject.Object) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
@@ -1574,7 +1489,6 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) *gob
 
 		CreateCustomWidgetCls := cbFn(fa)
 		return CreateCustomWidgetCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1589,7 +1503,7 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) *gob
 // When you get this signal you should read the information from the
 // custom widgets, as the widgets are not guaranteed to be around at a
 // later time.
-func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, *Widget)) uint {
+func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
@@ -1602,8 +1516,7 @@ func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, *Widg
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = WidgetVarp; return cls }())
-
+		cbFn(fa, WidgetVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1636,7 +1549,6 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 		cbFn := *cb
 
 		cbFn(fa, ResultVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1699,7 +1611,7 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 // [method@Gtk.PrintOperation.set_unit] before starting the print
 // operation to set up the transformation of the cairo context
 // according to your needs.
-func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, *PrintContext, int)) uint {
+func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
@@ -1712,8 +1624,7 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, *PrintContext,
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }(), PageNrVarp)
-
+		cbFn(fa, ContextVarp, PageNrVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1726,7 +1637,7 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, *PrintContext,
 //
 // A handler for this signal can clean up any resources that have
 // been allocated in the [signal@Gtk.PrintOperation::begin-print] handler.
-func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, *PrintContext)) uint {
+func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
@@ -1739,8 +1650,7 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, *PrintContext)
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }())
-
+		cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1763,7 +1673,7 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, *PrintContext)
 // If you don't need to do pagination in chunks, you can simply do
 // it all in the ::begin-print handler, and set the number of pages
 // from there.
-func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, *PrintContext) bool) uint {
+func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
@@ -1776,8 +1686,7 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, *PrintContext)
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }())
-
+		return cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1803,7 +1712,7 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, *PrintContext)
 // are selected for print and render them. The preview must be
 // finished by calling [method@Gtk.PrintOperationPreview.end_preview]
 // (typically in response to the user clicking a close button).
-func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, *PrintContext, *Window) bool) uint {
+func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
@@ -1816,15 +1725,7 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, *Print
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, PreviewVarp, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }(), func() *Window {
-			if ParentVarp == 0 {
-				return nil
-			}
-			cls := &Window{}
-			cls.Ptr = ParentVarp
-			return cls
-		}())
-
+		return cbFn(fa, PreviewVarp, ContextVarp, ParentVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1838,7 +1739,7 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, *Print
 // This gives the application a chance to modify the page setup.
 // Any changes done to @setup will be in force only for printing
 // this page.
-func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, *PrintContext, int, *PageSetup)) uint {
+func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintptr, int, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
@@ -1851,8 +1752,7 @@ func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, *Print
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *PrintContext { cls := &PrintContext{}; cls.Ptr = ContextVarp; return cls }(), PageNrVarp, func() *PageSetup { cls := &PageSetup{}; cls.Ptr = SetupVarp; return cls }())
-
+		cbFn(fa, ContextVarp, PageNrVarp, SetupVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1880,7 +1780,6 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1893,7 +1792,7 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint {
 //
 // The actual page setup and print settings are passed to the custom
 // widget, which can actualize itself according to this change.
-func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, *Widget, *PageSetup, *PrintSettings)) uint {
+func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, uintptr, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
@@ -1906,8 +1805,7 @@ func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, *Wid
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = WidgetVarp; return cls }(), func() *PageSetup { cls := &PageSetup{}; cls.Ptr = SetupVarp; return cls }(), func() *PrintSettings { cls := &PrintSettings{}; cls.Ptr = SettingsVarp; return cls }())
-
+		cbFn(fa, WidgetVarp, SetupVarp, SettingsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1920,15 +1818,12 @@ func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, *Wid
 //
 // This function must be called to finish a custom print preview.
 func (x *PrintOperation) EndPreview() {
-
 	XGtkPrintOperationPreviewEndPreview(x.GoPointer())
-
 }
 
 // Returns whether the given page is included in the set of pages that
 // have been selected for printing.
 func (x *PrintOperation) IsSelected(PageNrVar int) bool {
-
 	cret := XGtkPrintOperationPreviewIsSelected(x.GoPointer(), PageNrVar)
 	return cret
 }
@@ -1945,14 +1840,12 @@ func (x *PrintOperation) IsSelected(PageNrVar int) bool {
 // Note that this function requires a suitable cairo context to
 // be associated with the print context.
 func (x *PrintOperation) RenderPage(PageNrVar int) {
-
 	XGtkPrintOperationPreviewRenderPage(x.GoPointer(), PageNrVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2007,5 +1900,4 @@ func init() {
 	core.PuregoSafeRegister(&xPrintOperationSetTrackPrintStatus, libs, "gtk_print_operation_set_track_print_status")
 	core.PuregoSafeRegister(&xPrintOperationSetUnit, libs, "gtk_print_operation_set_unit")
 	core.PuregoSafeRegister(&xPrintOperationSetUseFullPage, libs, "gtk_print_operation_set_use_full_page")
-
 }

@@ -2,8 +2,9 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -30,7 +31,7 @@ func CairoContextNewFromInternalPtr(ptr uintptr) *CairoContext {
 	return cls
 }
 
-var xCairoContextCairoCreate func(uintptr) *cairo.Context
+var xCairoContextCairoCreate func(uintptr) uintptr
 
 // Retrieves a Cairo context to be used to draw on the `GdkSurface`
 // of @context.
@@ -41,9 +42,11 @@ var xCairoContextCairoCreate func(uintptr) *cairo.Context
 // The returned context is guaranteed to be valid until
 // [method@Gdk.DrawContext.end_frame] is called.
 func (x *CairoContext) CairoCreate() *cairo.Context {
-
 	cret := xCairoContextCairoCreate(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 func (c *CairoContext) GoPointer() uintptr {
@@ -59,7 +62,7 @@ func (c *CairoContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -72,5 +75,4 @@ func init() {
 	core.PuregoSafeRegister(&xCairoContextGLibType, libs, "gdk_cairo_context_get_type")
 
 	core.PuregoSafeRegister(&xCairoContextCairoCreate, libs, "gdk_cairo_context_cairo_create")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -490,9 +489,7 @@ var xRendererActivate func(uintptr)
 // [method@Pango.Renderer.deactivate] can be nested and the
 // renderer will only be initialized and deinitialized once.
 func (x *Renderer) Activate() {
-
 	xRendererActivate(x.GoPointer())
-
 }
 
 var xRendererDeactivate func(uintptr)
@@ -501,9 +498,7 @@ var xRendererDeactivate func(uintptr)
 //
 // See docs for [method@Pango.Renderer.activate].
 func (x *Renderer) Deactivate() {
-
 	xRendererDeactivate(x.GoPointer())
-
 }
 
 var xRendererDrawErrorUnderline func(uintptr, int, int, int, int)
@@ -518,18 +513,14 @@ var xRendererDrawErrorUnderline func(uintptr, int, int, int, int)
 // This should be called while @renderer is already active.
 // Use [method@Pango.Renderer.activate] to activate a renderer.
 func (x *Renderer) DrawErrorUnderline(XVar int, YVar int, WidthVar int, HeightVar int) {
-
 	xRendererDrawErrorUnderline(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRendererDrawGlyph func(uintptr, uintptr, Glyph, float64, float64)
 
 // Draws a single glyph with coordinates in device space.
 func (x *Renderer) DrawGlyph(FontVar *Font, GlyphVar Glyph, XVar float64, YVar float64) {
-
 	xRendererDrawGlyph(x.GoPointer(), FontVar.GoPointer(), GlyphVar, XVar, YVar)
-
 }
 
 var xRendererDrawGlyphItem func(uintptr, uintptr, *GlyphItem, int, int)
@@ -553,21 +544,17 @@ var xRendererDrawGlyphItem func(uintptr, uintptr, *GlyphItem, int, int)
 // The default implementation of this method simply falls back to
 // [method@Pango.Renderer.draw_glyphs].
 func (x *Renderer) DrawGlyphItem(TextVar *string, GlyphItemVar *GlyphItem, XVar int, YVar int) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xRendererDrawGlyphItem(x.GoPointer(), TextVarPtr, GlyphItemVar, XVar, YVar)
-
 }
 
 var xRendererDrawGlyphs func(uintptr, uintptr, *GlyphString, int, int)
 
 // Draws the glyphs in @glyphs with the specified `PangoRenderer`.
 func (x *Renderer) DrawGlyphs(FontVar *Font, GlyphsVar *GlyphString, XVar int, YVar int) {
-
 	xRendererDrawGlyphs(x.GoPointer(), FontVar.GoPointer(), GlyphsVar, XVar, YVar)
-
 }
 
 var xRendererDrawLayout func(uintptr, uintptr, int, int)
@@ -577,9 +564,7 @@ var xRendererDrawLayout func(uintptr, uintptr, int, int)
 // This is equivalent to drawing the lines of the layout, at their
 // respective positions relative to @x, @y.
 func (x *Renderer) DrawLayout(LayoutVar *Layout, XVar int, YVar int) {
-
 	xRendererDrawLayout(x.GoPointer(), LayoutVar.GoPointer(), XVar, YVar)
-
 }
 
 var xRendererDrawLayoutLine func(uintptr, *LayoutLine, int, int)
@@ -590,9 +575,7 @@ var xRendererDrawLayoutLine func(uintptr, *LayoutLine, int, int)
 // shapes, backgrounds and lines that are specified by the attributes
 // of those items.
 func (x *Renderer) DrawLayoutLine(LineVar *LayoutLine, XVar int, YVar int) {
-
 	xRendererDrawLayoutLine(x.GoPointer(), LineVar, XVar, YVar)
-
 }
 
 var xRendererDrawRectangle func(uintptr, RenderPart, int, int, int, int)
@@ -603,9 +586,7 @@ var xRendererDrawRectangle func(uintptr, RenderPart, int, int, int, int)
 // This should be called while @renderer is already active.
 // Use [method@Pango.Renderer.activate] to activate a renderer.
 func (x *Renderer) DrawRectangle(PartVar RenderPart, XVar int, YVar int, WidthVar int, HeightVar int) {
-
 	xRendererDrawRectangle(x.GoPointer(), PartVar, XVar, YVar, WidthVar, HeightVar)
-
 }
 
 var xRendererDrawTrapezoid func(uintptr, RenderPart, float64, float64, float64, float64, float64, float64)
@@ -613,27 +594,26 @@ var xRendererDrawTrapezoid func(uintptr, RenderPart, float64, float64, float64, 
 // Draws a trapezoid with the parallel sides aligned with the X axis
 // using the given `PangoRenderer`; coordinates are in device space.
 func (x *Renderer) DrawTrapezoid(PartVar RenderPart, Y1Var float64, X11Var float64, X21Var float64, Y2Var float64, X12Var float64, X22Var float64) {
-
 	xRendererDrawTrapezoid(x.GoPointer(), PartVar, Y1Var, X11Var, X21Var, Y2Var, X12Var, X22Var)
-
 }
 
 var xRendererGetAlpha func(uintptr, RenderPart) uint16
 
 // Gets the current alpha for the specified part.
 func (x *Renderer) GetAlpha(PartVar RenderPart) uint16 {
-
 	cret := xRendererGetAlpha(x.GoPointer(), PartVar)
 	return cret
 }
 
-var xRendererGetColor func(uintptr, RenderPart) *Color
+var xRendererGetColor func(uintptr, RenderPart) uintptr
 
 // Gets the current rendering color for the specified part.
 func (x *Renderer) GetColor(PartVar RenderPart) *Color {
-
 	cret := xRendererGetColor(x.GoPointer(), PartVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Color)(unsafe.Pointer(cret))
 }
 
 var xRendererGetLayout func(uintptr) uintptr
@@ -659,7 +639,7 @@ func (x *Renderer) GetLayout() *Layout {
 	return cls
 }
 
-var xRendererGetLayoutLine func(uintptr) *LayoutLine
+var xRendererGetLayoutLine func(uintptr) uintptr
 
 // Gets the layout line currently being rendered using @renderer.
 //
@@ -669,21 +649,25 @@ var xRendererGetLayoutLine func(uintptr) *LayoutLine
 // The returned layout line should not be modified while still being
 // rendered.
 func (x *Renderer) GetLayoutLine() *LayoutLine {
-
 	cret := xRendererGetLayoutLine(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
-var xRendererGetMatrix func(uintptr) *Matrix
+var xRendererGetMatrix func(uintptr) uintptr
 
 // Gets the transformation matrix that will be applied when
 // rendering.
 //
 // See [method@Pango.Renderer.set_matrix].
 func (x *Renderer) GetMatrix() *Matrix {
-
 	cret := xRendererGetMatrix(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
 var xRendererPartChanged func(uintptr, RenderPart)
@@ -704,9 +688,7 @@ var xRendererPartChanged func(uintptr, RenderPart)
 // might be joined together. Pango automatically calls this for
 // changes to colors. (See [method@Pango.Renderer.set_color])
 func (x *Renderer) PartChanged(PartVar RenderPart) {
-
 	xRendererPartChanged(x.GoPointer(), PartVar)
-
 }
 
 var xRendererSetAlpha func(uintptr, RenderPart, uint16)
@@ -716,9 +698,7 @@ var xRendererSetAlpha func(uintptr, RenderPart, uint16)
 // Note that the alpha may only be used if a color is
 // specified for @part as well.
 func (x *Renderer) SetAlpha(PartVar RenderPart, AlphaVar uint16) {
-
 	xRendererSetAlpha(x.GoPointer(), PartVar, AlphaVar)
-
 }
 
 var xRendererSetColor func(uintptr, RenderPart, *Color)
@@ -727,18 +707,14 @@ var xRendererSetColor func(uintptr, RenderPart, *Color)
 //
 // Also see [method@Pango.Renderer.set_alpha].
 func (x *Renderer) SetColor(PartVar RenderPart, ColorVar *Color) {
-
 	xRendererSetColor(x.GoPointer(), PartVar, ColorVar)
-
 }
 
 var xRendererSetMatrix func(uintptr, *Matrix)
 
 // Sets the transformation matrix that will be applied when rendering.
 func (x *Renderer) SetMatrix(MatrixVar *Matrix) {
-
 	xRendererSetMatrix(x.GoPointer(), MatrixVar)
-
 }
 
 func (c *Renderer) GoPointer() uintptr {
@@ -754,7 +730,7 @@ func (c *Renderer) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -787,5 +763,4 @@ func init() {
 	core.PuregoSafeRegister(&xRendererSetAlpha, libs, "pango_renderer_set_alpha")
 	core.PuregoSafeRegister(&xRendererSetColor, libs, "pango_renderer_set_color")
 	core.PuregoSafeRegister(&xRendererSetMatrix, libs, "pango_renderer_set_matrix")
-
 }

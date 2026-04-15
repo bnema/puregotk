@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -178,27 +177,25 @@ var xWindowGroupAddWindow func(uintptr, uintptr)
 
 // Adds a window to a `GtkWindowGroup`.
 func (x *WindowGroup) AddWindow(WindowVar *Window) {
-
 	xWindowGroupAddWindow(x.GoPointer(), WindowVar.GoPointer())
-
 }
 
-var xWindowGroupListWindows func(uintptr) *glib.List
+var xWindowGroupListWindows func(uintptr) uintptr
 
 // Returns a list of the `GtkWindows` that belong to @window_group.
 func (x *WindowGroup) ListWindows() *glib.List {
-
 	cret := xWindowGroupListWindows(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWindowGroupRemoveWindow func(uintptr, uintptr)
 
 // Removes a window from a `GtkWindowGroup`.
 func (x *WindowGroup) RemoveWindow(WindowVar *Window) {
-
 	xWindowGroupRemoveWindow(x.GoPointer(), WindowVar.GoPointer())
-
 }
 
 func (c *WindowGroup) GoPointer() uintptr {
@@ -214,7 +211,7 @@ func (c *WindowGroup) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -231,5 +228,4 @@ func init() {
 	core.PuregoSafeRegister(&xWindowGroupAddWindow, libs, "gtk_window_group_add_window")
 	core.PuregoSafeRegister(&xWindowGroupListWindows, libs, "gtk_window_group_list_windows")
 	core.PuregoSafeRegister(&xWindowGroupRemoveWindow, libs, "gtk_window_group_remove_window")
-
 }

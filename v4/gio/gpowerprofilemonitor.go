@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -80,7 +79,6 @@ func (x *PowerProfileMonitorBase) SetGoPointer(ptr uintptr) {
 // #GPowerProfileMonitor::notify::power-saver-enabled signal to know when the profile has
 // changed.
 func (x *PowerProfileMonitorBase) GetPowerSaverEnabled() bool {
-
 	cret := XGPowerProfileMonitorGetPowerSaverEnabled(x.GoPointer())
 	return cret
 }
@@ -121,7 +119,7 @@ func PowerProfileMonitorDupDefault() *PowerProfileMonitorBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -136,5 +134,4 @@ func init() {
 	core.PuregoSafeRegister(&xPowerProfileMonitorGLibType, libs, "g_power_profile_monitor_get_type")
 
 	core.PuregoSafeRegister(&XGPowerProfileMonitorGetPowerSaverEnabled, libs, "g_power_profile_monitor_get_power_saver_enabled")
-
 }

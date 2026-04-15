@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -255,14 +254,7 @@ func (x *AsyncInitableBase) SetGoPointer(ptr uintptr) {
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
 func (x *AsyncInitableBase) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes asynchronous initialization and returns the result.
@@ -275,7 +267,6 @@ func (x *AsyncInitableBase) InitFinish(ResVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Finishes the async construction for the various g_async_initable_new
@@ -295,12 +286,13 @@ func (x *AsyncInitableBase) NewFinish(ResVar AsyncResult) (*gobject.Object, erro
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var XGAsyncInitableInitAsync func(uintptr, int, uintptr, uintptr, uintptr)
-var XGAsyncInitableInitFinish func(uintptr, uintptr, **glib.Error) bool
-var XGAsyncInitableNewFinish func(uintptr, uintptr, **glib.Error) uintptr
+var (
+	XGAsyncInitableInitAsync  func(uintptr, int, uintptr, uintptr, uintptr)
+	XGAsyncInitableInitFinish func(uintptr, uintptr, **glib.Error) bool
+	XGAsyncInitableNewFinish  func(uintptr, uintptr, **glib.Error) uintptr
+)
 
 var xAsyncInitableNewvAsync func(types.GType, uint, *gobject.Parameter, int, uintptr, uintptr, uintptr)
 
@@ -311,34 +303,12 @@ var xAsyncInitableNewvAsync func(types.GType, uint, *gobject.Parameter, int, uin
 // then call g_async_initable_new_finish() to get the new object and check
 // for any errors.
 func AsyncInitableNewvAsync(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar *gobject.Parameter, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xAsyncInitableNewvAsync(ObjectTypeVar, NParametersVar, ParametersVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xAsyncInitableNewvAsync(ObjectTypeVar, NParametersVar, ParametersVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -355,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&XGAsyncInitableInitAsync, libs, "g_async_initable_init_async")
 	core.PuregoSafeRegister(&XGAsyncInitableInitFinish, libs, "g_async_initable_init_finish")
 	core.PuregoSafeRegister(&XGAsyncInitableNewFinish, libs, "g_async_initable_new_finish")
-
 }

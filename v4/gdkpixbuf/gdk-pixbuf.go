@@ -4,8 +4,7 @@ package gdkpixbuf
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -276,7 +275,6 @@ func NewPixbufFromFile(FilenameVar string) (*Pixbuf, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromFileAtScale func(string, int, int, bool, **glib.Error) uintptr
@@ -318,7 +316,6 @@ func NewPixbufFromFileAtScale(FilenameVar string, WidthVar int, HeightVar int, P
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromFileAtSize func(string, int, int, **glib.Error) uintptr
@@ -356,7 +353,6 @@ func NewPixbufFromFileAtSize(FilenameVar string, WidthVar int, HeightVar int) (*
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromInline func(int, []byte, bool, **glib.Error) uintptr
@@ -409,7 +405,6 @@ func NewPixbufFromInline(DataLengthVar int, DataVar []byte, CopyPixelsVar bool) 
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromResource func(string, **glib.Error) uintptr
@@ -433,7 +428,6 @@ func NewPixbufFromResource(ResourcePathVar string) (*Pixbuf, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromResourceAtScale func(string, int, int, bool, **glib.Error) uintptr
@@ -466,7 +460,6 @@ func NewPixbufFromResourceAtScale(ResourcePathVar string, WidthVar int, HeightVa
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromStream func(uintptr, uintptr, **glib.Error) uintptr
@@ -503,7 +496,6 @@ func NewPixbufFromStream(StreamVar *gio.InputStream, CancellableVar *gio.Cancell
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromStreamAtScale func(uintptr, int, int, bool, uintptr, **glib.Error) uintptr
@@ -549,7 +541,6 @@ func NewPixbufFromStreamAtScale(StreamVar *gio.InputStream, WidthVar int, Height
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromStreamFinish func(uintptr, **glib.Error) uintptr
@@ -571,7 +562,6 @@ func NewPixbufFromStreamFinish(AsyncResultVar gio.AsyncResult) (*Pixbuf, error) 
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewPixbufFromXpmData func([]string) uintptr
@@ -662,9 +652,7 @@ var xPixbufComposite func(uintptr, uintptr, int, int, int, int, float64, float64
 //
 // ![](composite.png)
 func (x *Pixbuf) Composite(DestVar *Pixbuf, DestXVar int, DestYVar int, DestWidthVar int, DestHeightVar int, OffsetXVar float64, OffsetYVar float64, ScaleXVar float64, ScaleYVar float64, InterpTypeVar InterpType, OverallAlphaVar int) {
-
 	xPixbufComposite(x.GoPointer(), DestVar.GoPointer(), DestXVar, DestYVar, DestWidthVar, DestHeightVar, OffsetXVar, OffsetYVar, ScaleXVar, ScaleYVar, InterpTypeVar, OverallAlphaVar)
-
 }
 
 var xPixbufCompositeColor func(uintptr, uintptr, int, int, int, int, float64, float64, float64, float64, InterpType, int, int, int, int, uint32, uint32)
@@ -682,9 +670,7 @@ var xPixbufCompositeColor func(uintptr, uintptr, int, int, int, int, float64, fl
 // See gdk_pixbuf_composite_color_simple() for a simpler variant of this
 // function suitable for many tasks.
 func (x *Pixbuf) CompositeColor(DestVar *Pixbuf, DestXVar int, DestYVar int, DestWidthVar int, DestHeightVar int, OffsetXVar float64, OffsetYVar float64, ScaleXVar float64, ScaleYVar float64, InterpTypeVar InterpType, OverallAlphaVar int, CheckXVar int, CheckYVar int, CheckSizeVar int, Color1Var uint32, Color2Var uint32) {
-
 	xPixbufCompositeColor(x.GoPointer(), DestVar.GoPointer(), DestXVar, DestYVar, DestWidthVar, DestHeightVar, OffsetXVar, OffsetYVar, ScaleXVar, ScaleYVar, InterpTypeVar, OverallAlphaVar, CheckXVar, CheckYVar, CheckSizeVar, Color1Var, Color2Var)
-
 }
 
 var xPixbufCompositeColorSimple func(uintptr, int, int, InterpType, int, int, uint32, uint32) uintptr
@@ -735,9 +721,7 @@ var xPixbufCopyArea func(uintptr, int, int, int, int, uintptr, int, int)
 // same pixbuf, it will be overwritten during the copy operation.
 // Therefore, you can not use this function to scroll a pixbuf.
 func (x *Pixbuf) CopyArea(SrcXVar int, SrcYVar int, WidthVar int, HeightVar int, DestPixbufVar *Pixbuf, DestXVar int, DestYVar int) {
-
 	xPixbufCopyArea(x.GoPointer(), SrcXVar, SrcYVar, WidthVar, HeightVar, DestPixbufVar.GoPointer(), DestXVar, DestYVar)
-
 }
 
 var xPixbufCopyOptions func(uintptr, uintptr) bool
@@ -749,7 +733,6 @@ var xPixbufCopyOptions func(uintptr, uintptr) bool
 // a file. However be careful to remove metadata which you've already
 // applied, such as the "orientation" option after rotating the image.
 func (x *Pixbuf) CopyOptions(DestPixbufVar *Pixbuf) bool {
-
 	cret := xPixbufCopyOptions(x.GoPointer(), DestPixbufVar.GoPointer())
 	return cret
 }
@@ -762,9 +745,7 @@ var xPixbufFill func(uintptr, uint32)
 // The alpha component will be ignored if the pixbuf doesn't have an alpha
 // channel.
 func (x *Pixbuf) Fill(PixelVar uint32) {
-
 	xPixbufFill(x.GoPointer(), PixelVar)
-
 }
 
 var xPixbufFlip func(uintptr, bool) uintptr
@@ -788,7 +769,6 @@ var xPixbufGetBitsPerSample func(uintptr) int
 
 // Queries the number of bits per color sample in a pixbuf.
 func (x *Pixbuf) GetBitsPerSample() int {
-
 	cret := xPixbufGetBitsPerSample(x.GoPointer())
 	return cret
 }
@@ -797,7 +777,6 @@ var xPixbufGetByteLength func(uintptr) uint
 
 // Returns the length of the pixel data, in bytes.
 func (x *Pixbuf) GetByteLength() uint {
-
 	cret := xPixbufGetByteLength(x.GoPointer())
 	return cret
 }
@@ -806,7 +785,6 @@ var xPixbufGetColorspace func(uintptr) Colorspace
 
 // Queries the color space of a pixbuf.
 func (x *Pixbuf) GetColorspace() Colorspace {
-
 	cret := xPixbufGetColorspace(x.GoPointer())
 	return cret
 }
@@ -815,7 +793,6 @@ var xPixbufGetHasAlpha func(uintptr) bool
 
 // Queries whether a pixbuf has an alpha channel (opacity information).
 func (x *Pixbuf) GetHasAlpha() bool {
-
 	cret := xPixbufGetHasAlpha(x.GoPointer())
 	return cret
 }
@@ -824,7 +801,6 @@ var xPixbufGetHeight func(uintptr) int
 
 // Queries the height of a pixbuf.
 func (x *Pixbuf) GetHeight() int {
-
 	cret := xPixbufGetHeight(x.GoPointer())
 	return cret
 }
@@ -833,7 +809,6 @@ var xPixbufGetNChannels func(uintptr) int
 
 // Queries the number of channels of a pixbuf.
 func (x *Pixbuf) GetNChannels() int {
-
 	cret := xPixbufGetNChannels(x.GoPointer())
 	return cret
 }
@@ -856,20 +831,21 @@ var xPixbufGetOption func(uintptr, string) string
 // Since 2.36.6, the JPEG loader sets the "comment" option with the comment
 // EXIF tag.
 func (x *Pixbuf) GetOption(KeyVar string) string {
-
 	cret := xPixbufGetOption(x.GoPointer(), KeyVar)
 	return cret
 }
 
-var xPixbufGetOptions func(uintptr) *glib.HashTable
+var xPixbufGetOptions func(uintptr) uintptr
 
 // Returns a `GHashTable` with a list of all the options that may have been
 // attached to the `pixbuf` when it was loaded, or that may have been
 // attached by another function using [method@GdkPixbuf.Pixbuf.set_option].
 func (x *Pixbuf) GetOptions() *glib.HashTable {
-
 	cret := xPixbufGetOptions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
 var xPixbufGetPixels func(uintptr) uintptr
@@ -882,7 +858,6 @@ var xPixbufGetPixels func(uintptr) uintptr
 // Please see the section on [image data](class.Pixbuf.html#image-data) for information
 // about how the pixel data is stored in memory.
 func (x *Pixbuf) GetPixels() uintptr {
-
 	cret := xPixbufGetPixels(x.GoPointer())
 	return cret
 }
@@ -897,7 +872,6 @@ var xPixbufGetPixelsWithLength func(uintptr, *uint) uintptr
 // Please see the section on [image data](class.Pixbuf.html#image-data) for information
 // about how the pixel data is stored in memory.
 func (x *Pixbuf) GetPixelsWithLength(LengthVar *uint) uintptr {
-
 	cret := xPixbufGetPixelsWithLength(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -907,7 +881,6 @@ var xPixbufGetRowstride func(uintptr) int
 // Queries the rowstride of a pixbuf, which is the number of bytes between
 // the start of a row and the start of the next row.
 func (x *Pixbuf) GetRowstride() int {
-
 	cret := xPixbufGetRowstride(x.GoPointer())
 	return cret
 }
@@ -916,7 +889,6 @@ var xPixbufGetWidth func(uintptr) int
 
 // Queries the width of a pixbuf.
 func (x *Pixbuf) GetWidth() int {
-
 	cret := xPixbufGetWidth(x.GoPointer())
 	return cret
 }
@@ -945,7 +917,7 @@ func (x *Pixbuf) NewSubpixbuf(SrcXVar int, SrcYVar int, WidthVar int, HeightVar 
 	return cls
 }
 
-var xPixbufReadPixelBytes func(uintptr) *glib.Bytes
+var xPixbufReadPixelBytes func(uintptr) uintptr
 
 // Provides a #GBytes buffer containing the raw pixel data; the data
 // must not be modified.
@@ -953,9 +925,11 @@ var xPixbufReadPixelBytes func(uintptr) *glib.Bytes
 // This function allows skipping the implicit copy that must be made
 // if gdk_pixbuf_get_pixels() is called on a read-only pixbuf.
 func (x *Pixbuf) ReadPixelBytes() *glib.Bytes {
-
 	cret := xPixbufReadPixelBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xPixbufReadPixels func(uintptr) byte
@@ -965,7 +939,6 @@ var xPixbufReadPixels func(uintptr) byte
 // This function allows skipping the implicit copy that must be made
 // if gdk_pixbuf_get_pixels() is called on a read-only pixbuf.
 func (x *Pixbuf) ReadPixels() byte {
-
 	cret := xPixbufReadPixels(x.GoPointer())
 	return cret
 }
@@ -990,7 +963,6 @@ var xPixbufRemoveOption func(uintptr, string) bool
 
 // Removes the key/value pair option attached to a `GdkPixbuf`.
 func (x *Pixbuf) RemoveOption(KeyVar string) bool {
-
 	cret := xPixbufRemoveOption(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1031,9 +1003,7 @@ var xPixbufSaturateAndPixelate func(uintptr, uintptr, float32, bool)
 // If `pixelate` is `TRUE`, then pixels are faded in a checkerboard pattern to
 // create a pixelated image.
 func (x *Pixbuf) SaturateAndPixelate(DestVar *Pixbuf, SaturationVar float32, PixelateVar bool) {
-
 	xPixbufSaturateAndPixelate(x.GoPointer(), DestVar.GoPointer(), SaturationVar, PixelateVar)
-
 }
 
 var xPixbufSave func(uintptr, string, string, **glib.Error, ...interface{}) bool
@@ -1111,7 +1081,6 @@ var xPixbufSave func(uintptr, string, string, **glib.Error, ...interface{}) bool
 // parameter. When the ICO saver is given "x_hot" and "y_hot" parameters,
 // it produces a CUR instead of an ICO.
 func (x *Pixbuf) Save(FilenameVar string, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
-
 	cret := xPixbufSave(x.GoPointer(), FilenameVar, TypeVar, ErrorVar, varArgs...)
 	return cret
 }
@@ -1133,7 +1102,6 @@ var xPixbufSaveToBuffer func(uintptr, *[]byte, *uint, string, **glib.Error, ...i
 //
 // See `gdk_pixbuf_save()` for more details.
 func (x *Pixbuf) SaveToBuffer(BufferVar *[]byte, BufferSizeVar *uint, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
-
 	cret := xPixbufSaveToBuffer(x.GoPointer(), BufferVar, BufferSizeVar, TypeVar, ErrorVar, varArgs...)
 	return cret
 }
@@ -1154,7 +1122,6 @@ func (x *Pixbuf) SaveToBufferv(BufferVar *[]byte, BufferSizeVar *uint, TypeVar s
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufSaveToCallback func(uintptr, uintptr, uintptr, string, **glib.Error, ...interface{}) bool
@@ -1171,23 +1138,7 @@ var xPixbufSaveToCallback func(uintptr, uintptr, uintptr, string, **glib.Error, 
 //
 // See [method@GdkPixbuf.Pixbuf.save] for more details.
 func (x *Pixbuf) SaveToCallback(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
-
-	var SaveFuncVarRef uintptr
-	if SaveFuncVar != nil {
-		SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
-			SaveFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
-				cbFn := *SaveFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			SaveFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SaveFuncVarPtr, SaveFuncVarRef, SaveFuncVar)
-		}
-	}
-
-	cret := xPixbufSaveToCallback(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, ErrorVar, varArgs...)
+	cret := xPixbufSaveToCallback(x.GoPointer(), glib.NewCallback(SaveFuncVar), UserDataVar, TypeVar, ErrorVar, varArgs...)
 	return cret
 }
 
@@ -1224,7 +1175,6 @@ func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintpt
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufSaveToStream func(uintptr, uintptr, string, uintptr, **glib.Error, ...interface{}) bool
@@ -1241,13 +1191,7 @@ var xPixbufSaveToStream func(uintptr, uintptr, string, uintptr, **glib.Error, ..
 //
 // The stream is not closed at the end of this call.
 func (x *Pixbuf) SaveToStream(StreamVar *gio.OutputStream, TypeVar string, CancellableVar *gio.Cancellable, ErrorVar **glib.Error, varArgs ...interface{}) bool {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	cret := xPixbufSaveToStream(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVarPtr, ErrorVar, varArgs...)
+	cret := xPixbufSaveToStream(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), ErrorVar, varArgs...)
 	return cret
 }
 
@@ -1263,29 +1207,7 @@ var xPixbufSaveToStreamAsync func(uintptr, uintptr, string, uintptr, uintptr, ui
 // You can then call gdk_pixbuf_save_to_stream_finish() to get the result of
 // the operation.
 func (x *Pixbuf) SaveToStreamAsync(StreamVar *gio.OutputStream, TypeVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr, varArgs ...interface{}) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVarPtr, CallbackVarRef, UserDataVar, varArgs...)
-
+	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, varArgs...)
 }
 
 var xPixbufSaveToStreamv func(uintptr, uintptr, string, []string, []string, uintptr, **glib.Error) bool
@@ -1309,7 +1231,6 @@ func (x *Pixbuf) SaveToStreamv(StreamVar *gio.OutputStream, TypeVar string, Opti
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufSaveToStreamvAsync func(uintptr, uintptr, string, []string, []string, uintptr, uintptr, uintptr)
@@ -1324,29 +1245,7 @@ var xPixbufSaveToStreamvAsync func(uintptr, uintptr, string, []string, []string,
 // You can then call gdk_pixbuf_save_to_stream_finish() to get the result of
 // the operation.
 func (x *Pixbuf) SaveToStreamvAsync(StreamVar *gio.OutputStream, TypeVar string, OptionKeysVar []string, OptionValuesVar []string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xPixbufSavev func(uintptr, string, string, []string, []string, **glib.Error) bool
@@ -1366,7 +1265,6 @@ func (x *Pixbuf) Savev(FilenameVar string, TypeVar string, OptionKeysVar []strin
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufScale func(uintptr, uintptr, int, int, int, int, float64, float64, float64, float64, InterpType)
@@ -1385,9 +1283,7 @@ var xPixbufScale func(uintptr, uintptr, int, int, int, int, float64, float64, fl
 // same pixbuf, it will be overwritten during the scaling which
 // results in rendering artifacts.
 func (x *Pixbuf) Scale(DestVar *Pixbuf, DestXVar int, DestYVar int, DestWidthVar int, DestHeightVar int, OffsetXVar float64, OffsetYVar float64, ScaleXVar float64, ScaleYVar float64, InterpTypeVar InterpType) {
-
 	xPixbufScale(x.GoPointer(), DestVar.GoPointer(), DestXVar, DestYVar, DestWidthVar, DestHeightVar, OffsetXVar, OffsetYVar, ScaleXVar, ScaleYVar, InterpTypeVar)
-
 }
 
 var xPixbufScaleSimple func(uintptr, int, int, InterpType) uintptr
@@ -1430,7 +1326,6 @@ var xPixbufSetOption func(uintptr, string, string) bool
 // If `key` already exists in the list of options attached to the `pixbuf`,
 // the new value is ignored and `FALSE` is returned.
 func (x *Pixbuf) SetOption(KeyVar string, ValueVar string) bool {
-
 	cret := xPixbufSetOption(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
@@ -1439,9 +1334,7 @@ var xPixbufUnref func(uintptr)
 
 // Removes a reference from a pixbuf.
 func (x *Pixbuf) Unref() {
-
 	xPixbufUnref(x.GoPointer())
-
 }
 
 func (c *Pixbuf) GoPointer() uintptr {
@@ -1607,19 +1500,12 @@ func (x *Pixbuf) GetPropertyWidth() int {
 
 // Checks if two icons are equal.
 func (x *Pixbuf) Equal(Icon2Var gio.Icon) bool {
-
-	var Icon2VarPtr uintptr
-	if Icon2Var != nil {
-		Icon2VarPtr = Icon2Var.GoPointer()
-	}
-
-	cret := gio.XGIconEqual(x.GoPointer(), Icon2VarPtr)
+	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
 	return cret
 }
 
 // Gets a hash for an icon.
 func (x *Pixbuf) Hash() uint {
-
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -1630,9 +1516,11 @@ func (x *Pixbuf) Hash() uint {
 // makes sense to transfer the #GVariant between processes on the same machine,
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Pixbuf) Serialize() *glib.Variant {
-
 	cret := gio.XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for
@@ -1652,7 +1540,6 @@ func (x *Pixbuf) Serialize() *glib.Variant {
 //   - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
 //     the encoding is simply the name (such as `network-server`).
 func (x *Pixbuf) ToString() string {
-
 	cret := gio.XGIconToString(x.GoPointer())
 	return cret
 }
@@ -1679,21 +1566,13 @@ func (x *Pixbuf) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancella
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *Pixbuf) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -1712,7 +1591,6 @@ func (x *Pixbuf) LoadFinish(ResVar gio.AsyncResult, TypeVar *string) (*gio.Input
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xPixbufCalculateRowstride func(Colorspace, bool, int, int, int) int
@@ -1723,18 +1601,19 @@ var xPixbufCalculateRowstride func(Colorspace, bool, int, int, int) int
 // This function is useful for front-ends and backends that want to check
 // image values without needing to create a `GdkPixbuf`.
 func PixbufCalculateRowstride(ColorspaceVar Colorspace, HasAlphaVar bool, BitsPerSampleVar int, WidthVar int, HeightVar int) int {
-
 	cret := xPixbufCalculateRowstride(ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar)
 	return cret
 }
 
-var xPixbufGetFileInfo func(string, *int, *int) *PixbufFormat
+var xPixbufGetFileInfo func(string, *int, *int) uintptr
 
 // Parses an image file far enough to determine its format and size.
 func PixbufGetFileInfo(FilenameVar string, WidthVar *int, HeightVar *int) *PixbufFormat {
-
 	cret := xPixbufGetFileInfo(FilenameVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufGetFileInfoAsync func(string, uintptr, uintptr, uintptr)
@@ -1749,32 +1628,10 @@ var xPixbufGetFileInfoAsync func(string, uintptr, uintptr, uintptr)
 // main thread. You can then call gdk_pixbuf_get_file_info_finish() to
 // get the result of the operation.
 func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPixbufGetFileInfoAsync(FilenameVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPixbufGetFileInfoAsync(FilenameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xPixbufGetFileInfoFinish func(uintptr, *int, *int, **glib.Error) *PixbufFormat
+var xPixbufGetFileInfoFinish func(uintptr, *int, *int, **glib.Error) uintptr
 
 // Finishes an asynchronous pixbuf parsing operation started with
 // gdk_pixbuf_get_file_info_async().
@@ -1782,21 +1639,25 @@ func PixbufGetFileInfoFinish(AsyncResultVar gio.AsyncResult, WidthVar *int, Heig
 	var cerr *glib.Error
 
 	cret := xPixbufGetFileInfoFinish(AsyncResultVar.GoPointer(), WidthVar, HeightVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret)), nil
 }
 
-var xPixbufGetFormats func() *glib.SList
+var xPixbufGetFormats func() uintptr
 
 // Obtains the available information about the image formats supported
 // by GdkPixbuf.
 func PixbufGetFormats() *glib.SList {
-
 	cret := xPixbufGetFormats()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xPixbufInitModules func(string, **glib.Error) bool
@@ -1822,7 +1683,6 @@ func PixbufInitModules(PathVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xPixbufNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -1836,29 +1696,7 @@ var xPixbufNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
 // You can then call gdk_pixbuf_new_from_stream_finish() to get the result of
 // the operation.
 func PixbufNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xPixbufNewFromStreamAtScaleAsync func(uintptr, int, int, bool, uintptr, uintptr, uintptr)
@@ -1871,29 +1709,7 @@ var xPixbufNewFromStreamAtScaleAsync func(uintptr, int, int, bool, uintptr, uint
 // When the operation is finished, @callback will be called in the main thread.
 // You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
 func PixbufNewFromStreamAtScaleAsync(StreamVar *gio.InputStream, WidthVar int, HeightVar int, PreserveAspectRatioVar bool, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xPixbufSaveToStreamFinish func(uintptr, **glib.Error) bool
@@ -1908,12 +1724,11 @@ func PixbufSaveToStreamFinish(AsyncResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0", "libgdk_pixbuf-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDKPIXBUF") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1992,5 +1807,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufNewFromStreamAsync, libs, "gdk_pixbuf_new_from_stream_async")
 	core.PuregoSafeRegister(&xPixbufNewFromStreamAtScaleAsync, libs, "gdk_pixbuf_new_from_stream_at_scale_async")
 	core.PuregoSafeRegister(&xPixbufSaveToStreamFinish, libs, "gdk_pixbuf_save_to_stream_finish")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -93,16 +92,13 @@ var xTextTagChanged func(uintptr, bool)
 // The signal is already emitted when setting a `GtkTextTag` property.
 // This function is useful for a `GtkTextTag` subclass.
 func (x *TextTag) Changed(SizeChangedVar bool) {
-
 	xTextTagChanged(x.GoPointer(), SizeChangedVar)
-
 }
 
 var xTextTagGetPriority func(uintptr) int
 
 // Get the tag priority.
 func (x *TextTag) GetPriority() int {
-
 	cret := xTextTagGetPriority(x.GoPointer())
 	return cret
 }
@@ -124,9 +120,7 @@ var xTextTagSetPriority func(uintptr, int)
 // to the table, or created with [method@Gtk.TextBuffer.create_tag],
 // which adds the tag to the buffer’s table automatically.
 func (x *TextTag) SetPriority(PriorityVar int) {
-
 	xTextTagSetPriority(x.GoPointer(), PriorityVar)
-
 }
 
 func (c *TextTag) GoPointer() uintptr {
@@ -1553,7 +1547,7 @@ func (x *TextTag) GetPropertyWrapModeSet() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1570,5 +1564,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextTagChanged, libs, "gtk_text_tag_changed")
 	core.PuregoSafeRegister(&xTextTagGetPriority, libs, "gtk_text_tag_get_priority")
 	core.PuregoSafeRegister(&xTextTagSetPriority, libs, "gtk_text_tag_set_priority")
-
 }

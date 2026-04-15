@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -68,7 +67,6 @@ var xGestureZoomGetScaleDelta func(uintptr) float64
 // starting point is considered 1:1). If @gesture is not
 // active, 1 is returned.
 func (x *GestureZoom) GetScaleDelta() float64 {
-
 	cret := xGestureZoomGetScaleDelta(x.GoPointer())
 	return cret
 }
@@ -99,7 +97,6 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ScaleVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -110,7 +107,7 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -125,5 +122,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureZoom, libs, "gtk_gesture_zoom_new")
 
 	core.PuregoSafeRegister(&xGestureZoomGetScaleDelta, libs, "gtk_gesture_zoom_get_scale_delta")
-
 }

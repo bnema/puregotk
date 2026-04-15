@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -146,7 +145,6 @@ var xBufferedOutputStreamGetAutoGrow func(uintptr) bool
 
 // Checks if the buffer automatically grows as data is added.
 func (x *BufferedOutputStream) GetAutoGrow() bool {
-
 	cret := xBufferedOutputStreamGetAutoGrow(x.GoPointer())
 	return cret
 }
@@ -155,7 +153,6 @@ var xBufferedOutputStreamGetBufferSize func(uintptr) uint
 
 // Gets the size of the buffer in the @stream.
 func (x *BufferedOutputStream) GetBufferSize() uint {
-
 	cret := xBufferedOutputStreamGetBufferSize(x.GoPointer())
 	return cret
 }
@@ -167,18 +164,14 @@ var xBufferedOutputStreamSetAutoGrow func(uintptr, bool)
 // larger, and you must manually flush the buffer to actually write out
 // the data to the underlying stream.
 func (x *BufferedOutputStream) SetAutoGrow(AutoGrowVar bool) {
-
 	xBufferedOutputStreamSetAutoGrow(x.GoPointer(), AutoGrowVar)
-
 }
 
 var xBufferedOutputStreamSetBufferSize func(uintptr, uint)
 
 // Sets the size of the internal buffer to @size.
 func (x *BufferedOutputStream) SetBufferSize(SizeVar uint) {
-
 	xBufferedOutputStreamSetBufferSize(x.GoPointer(), SizeVar)
-
 }
 
 func (c *BufferedOutputStream) GoPointer() uintptr {
@@ -228,7 +221,6 @@ func (x *BufferedOutputStream) GetPropertyBufferSize() uint {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *BufferedOutputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -236,7 +228,6 @@ func (x *BufferedOutputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *BufferedOutputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -268,12 +259,10 @@ func (x *BufferedOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Canc
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *BufferedOutputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -300,12 +289,11 @@ func (x *BufferedOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancell
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -324,5 +312,4 @@ func init() {
 	core.PuregoSafeRegister(&xBufferedOutputStreamGetBufferSize, libs, "g_buffered_output_stream_get_buffer_size")
 	core.PuregoSafeRegister(&xBufferedOutputStreamSetAutoGrow, libs, "g_buffered_output_stream_set_auto_grow")
 	core.PuregoSafeRegister(&xBufferedOutputStreamSetBufferSize, libs, "g_buffered_output_stream_set_buffer_size")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -27,7 +26,7 @@ func (x *ScriptIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewScriptIter func(string, int) *ScriptIter
+var xNewScriptIter func(string, int) uintptr
 
 // Create a new `PangoScriptIter`, used to break a string of
 // Unicode text into runs by Unicode script.
@@ -36,18 +35,18 @@ var xNewScriptIter func(string, int) *ScriptIter
 // sure it remains valid until the iterator is freed with
 // [method@Pango.ScriptIter.free].
 func NewScriptIter(TextVar string, LengthVar int) *ScriptIter {
-
 	cret := xNewScriptIter(TextVar, LengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ScriptIter)(unsafe.Pointer(cret))
 }
 
 var xScriptIterFree func(uintptr)
 
 // Frees a `PangoScriptIter`.
 func (x *ScriptIter) Free() {
-
 	xScriptIterFree(x.GoPointer())
-
 }
 
 var xScriptIterGetRange func(uintptr, *string, *string, *Script)
@@ -62,9 +61,7 @@ var xScriptIterGetRange func(uintptr, *string, *string, *Script)
 // `GUnicodeScript` values. Callers must be prepared to handle unknown
 // values.
 func (x *ScriptIter) GetRange(StartVar *string, EndVar *string, ScriptVar *Script) {
-
 	xScriptIterGetRange(x.GoPointer(), StartVar, EndVar, ScriptVar)
-
 }
 
 var xScriptIterNext func(uintptr) bool
@@ -74,7 +71,6 @@ var xScriptIterNext func(uintptr) bool
 // If @iter is already at the end, it is left unchanged
 // and %FALSE is returned.
 func (x *ScriptIter) Next() bool {
-
 	cret := xScriptIterNext(x.GoPointer())
 	return cret
 }
@@ -353,12 +349,11 @@ var xScriptForUnichar func(uint32) Script
 // the return value of [func@GLib.unichar_get_script]. Callers must be
 // prepared to handle unknown values.
 func ScriptForUnichar(ChVar uint32) Script {
-
 	cret := xScriptForUnichar(ChVar)
 	return cret
 }
 
-var xScriptGetSampleLanguage func(Script) *Language
+var xScriptGetSampleLanguage func(Script) uintptr
 
 // Finds a language tag that is reasonably representative of @script.
 //
@@ -390,14 +385,16 @@ var xScriptGetSampleLanguage func(Script) *Language
 // choose a default language for %PANGO_SCRIPT_HAN when setting
 // context language is not feasible.
 func ScriptGetSampleLanguage(ScriptVar Script) *Language {
-
 	cret := xScriptGetSampleLanguage(ScriptVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -419,5 +416,4 @@ func init() {
 	core.PuregoSafeRegister(&xScriptIterFree, libs, "pango_script_iter_free")
 	core.PuregoSafeRegister(&xScriptIterGetRange, libs, "pango_script_iter_get_range")
 	core.PuregoSafeRegister(&xScriptIterNext, libs, "pango_script_iter_next")
-
 }

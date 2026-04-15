@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -56,37 +55,7 @@ var xNewCustomFilter func(uintptr, uintptr, uintptr) uintptr
 func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *CustomFilter {
 	var cls *CustomFilter
 
-	var MatchFuncVarRef uintptr
-	if MatchFuncVar != nil {
-		MatchFuncVarPtr := uintptr(unsafe.Pointer(MatchFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(MatchFuncVarPtr); ok {
-			MatchFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) bool {
-				cbFn := *MatchFuncVar
-				return cbFn(arg0, arg1)
-			}
-			MatchFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MatchFuncVarPtr, MatchFuncVarRef, MatchFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	cret := xNewCustomFilter(MatchFuncVarRef, UserDataVar, UserDestroyVarRef)
+	cret := xNewCustomFilter(glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -108,39 +77,7 @@ var xCustomFilterSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // If a previous function was set, its @user_destroy
 // will be called.
 func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-
-	var MatchFuncVarRef uintptr
-	if MatchFuncVar != nil {
-		MatchFuncVarPtr := uintptr(unsafe.Pointer(MatchFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(MatchFuncVarPtr); ok {
-			MatchFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) bool {
-				cbFn := *MatchFuncVar
-				return cbFn(arg0, arg1)
-			}
-			MatchFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MatchFuncVarPtr, MatchFuncVarRef, MatchFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	xCustomFilterSetFilterFunc(x.GoPointer(), MatchFuncVarRef, UserDataVar, UserDestroyVarRef)
-
+	xCustomFilterSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 func (c *CustomFilter) GoPointer() uintptr {
@@ -156,7 +93,7 @@ func (c *CustomFilter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -171,5 +108,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewCustomFilter, libs, "gtk_custom_filter_new")
 
 	core.PuregoSafeRegister(&xCustomFilterSetFilterFunc, libs, "gtk_custom_filter_set_filter_func")
-
 }

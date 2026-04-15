@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -262,7 +261,7 @@ func (x *ThreadedSocketService) GetPropertyMaxThreads() int {
 // incoming connection. This thread is dedicated to handling
 // @connection and may perform blocking IO. The signal handler need
 // not return until the connection is closed.
-func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, *SocketConnection, *gobject.Object) bool) uint {
+func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
@@ -275,15 +274,7 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, *Sock
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *SocketConnection { cls := &SocketConnection{}; cls.Ptr = ConnectionVarp; return cls }(), func() *gobject.Object {
-			if SourceObjectVarp == 0 {
-				return nil
-			}
-			cls := &gobject.Object{}
-			cls.Ptr = SourceObjectVarp
-			return cls
-		}())
-
+		return cbFn(fa, ConnectionVarp, SourceObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -294,7 +285,7 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, *Sock
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -307,5 +298,4 @@ func init() {
 	core.PuregoSafeRegister(&xThreadedSocketServiceGLibType, libs, "g_threaded_socket_service_get_type")
 
 	core.PuregoSafeRegister(&xNewThreadedSocketService, libs, "g_threaded_socket_service_new")
-
 }

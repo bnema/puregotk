@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -142,7 +141,6 @@ var xTabPageGetIndicatorActivatable func(uintptr) bool
 
 // Gets whether the indicator of @self is activatable.
 func (x *TabPage) GetIndicatorActivatable() bool {
-
 	cret := xTabPageGetIndicatorActivatable(x.GoPointer())
 	return cret
 }
@@ -168,7 +166,6 @@ var xTabPageGetIndicatorTooltip func(uintptr) string
 
 // Gets the tooltip of the indicator icon of @self.
 func (x *TabPage) GetIndicatorTooltip() string {
-
 	cret := xTabPageGetIndicatorTooltip(x.GoPointer())
 	return cret
 }
@@ -177,7 +174,6 @@ var xTabPageGetKeyword func(uintptr) string
 
 // Gets the search keyword of @self.
 func (x *TabPage) GetKeyword() string {
-
 	cret := xTabPageGetKeyword(x.GoPointer())
 	return cret
 }
@@ -186,7 +182,6 @@ var xTabPageGetLiveThumbnail func(uintptr) bool
 
 // Gets whether to live thumbnail is enabled @self.
 func (x *TabPage) GetLiveThumbnail() bool {
-
 	cret := xTabPageGetLiveThumbnail(x.GoPointer())
 	return cret
 }
@@ -195,7 +190,6 @@ var xTabPageGetLoading func(uintptr) bool
 
 // Gets whether @self is loading.
 func (x *TabPage) GetLoading() bool {
-
 	cret := xTabPageGetLoading(x.GoPointer())
 	return cret
 }
@@ -204,7 +198,6 @@ var xTabPageGetNeedsAttention func(uintptr) bool
 
 // Gets whether @self needs attention.
 func (x *TabPage) GetNeedsAttention() bool {
-
 	cret := xTabPageGetNeedsAttention(x.GoPointer())
 	return cret
 }
@@ -234,7 +227,6 @@ var xTabPageGetPinned func(uintptr) bool
 //
 // See [method@TabView.set_page_pinned].
 func (x *TabPage) GetPinned() bool {
-
 	cret := xTabPageGetPinned(x.GoPointer())
 	return cret
 }
@@ -243,7 +235,6 @@ var xTabPageGetSelected func(uintptr) bool
 
 // Gets whether @self is selected.
 func (x *TabPage) GetSelected() bool {
-
 	cret := xTabPageGetSelected(x.GoPointer())
 	return cret
 }
@@ -252,7 +243,6 @@ var xTabPageGetThumbnailXalign func(uintptr) float32
 
 // Gets the horizontal alignment of the thumbnail for @self.
 func (x *TabPage) GetThumbnailXalign() float32 {
-
 	cret := xTabPageGetThumbnailXalign(x.GoPointer())
 	return cret
 }
@@ -261,7 +251,6 @@ var xTabPageGetThumbnailYalign func(uintptr) float32
 
 // Gets the vertical alignment of the thumbnail for @self.
 func (x *TabPage) GetThumbnailYalign() float32 {
-
 	cret := xTabPageGetThumbnailYalign(x.GoPointer())
 	return cret
 }
@@ -270,7 +259,6 @@ var xTabPageGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *TabPage) GetTitle() string {
-
 	cret := xTabPageGetTitle(x.GoPointer())
 	return cret
 }
@@ -279,7 +267,6 @@ var xTabPageGetTooltip func(uintptr) string
 
 // Gets the tooltip of @self.
 func (x *TabPage) GetTooltip() string {
-
 	cret := xTabPageGetTooltip(x.GoPointer())
 	return cret
 }
@@ -295,9 +282,7 @@ var xTabPageInvalidateThumbnail func(uintptr)
 //
 // See also [method@TabView.invalidate_thumbnails].
 func (x *TabPage) InvalidateThumbnail() {
-
 	xTabPageInvalidateThumbnail(x.GoPointer())
-
 }
 
 var xTabPageSetIcon func(uintptr, uintptr)
@@ -310,14 +295,7 @@ var xTabPageSetIcon func(uintptr, uintptr)
 // `AdwTabBar` also won't show the icon if the page is pinned and
 // [propertyTabPage:indicator-icon] is set.
 func (x *TabPage) SetIcon(IconVar gio.Icon) {
-
-	var IconVarPtr uintptr
-	if IconVar != nil {
-		IconVarPtr = IconVar.GoPointer()
-	}
-
-	xTabPageSetIcon(x.GoPointer(), IconVarPtr)
-
+	xTabPageSetIcon(x.GoPointer(), IconVar.GoPointer())
 }
 
 var xTabPageSetIndicatorActivatable func(uintptr, bool)
@@ -329,9 +307,7 @@ var xTabPageSetIndicatorActivatable func(uintptr, bool)
 //
 // If [property@TabPage:indicator-icon] is not set, does nothing.
 func (x *TabPage) SetIndicatorActivatable(ActivatableVar bool) {
-
 	xTabPageSetIndicatorActivatable(x.GoPointer(), ActivatableVar)
-
 }
 
 var xTabPageSetIndicatorIcon func(uintptr, uintptr)
@@ -354,14 +330,7 @@ var xTabPageSetIndicatorIcon func(uintptr, uintptr)
 // If [property@TabPage:indicator-activatable] is set to `TRUE`, the
 // indicator icon can act as a button.
 func (x *TabPage) SetIndicatorIcon(IndicatorIconVar gio.Icon) {
-
-	var IndicatorIconVarPtr uintptr
-	if IndicatorIconVar != nil {
-		IndicatorIconVarPtr = IndicatorIconVar.GoPointer()
-	}
-
-	xTabPageSetIndicatorIcon(x.GoPointer(), IndicatorIconVarPtr)
-
+	xTabPageSetIndicatorIcon(x.GoPointer(), IndicatorIconVar.GoPointer())
 }
 
 var xTabPageSetIndicatorTooltip func(uintptr, string)
@@ -372,9 +341,7 @@ var xTabPageSetIndicatorTooltip func(uintptr, string)
 //
 // See [property@TabPage:indicator-icon].
 func (x *TabPage) SetIndicatorTooltip(TooltipVar string) {
-
 	xTabPageSetIndicatorTooltip(x.GoPointer(), TooltipVar)
-
 }
 
 var xTabPageSetKeyword func(uintptr, string)
@@ -386,9 +353,7 @@ var xTabPageSetKeyword func(uintptr, string)
 //
 // Keywords allow to include e.g. page URLs into tab search in a web browser.
 func (x *TabPage) SetKeyword(KeywordVar string) {
-
 	xTabPageSetKeyword(x.GoPointer(), KeywordVar)
-
 }
 
 var xTabPageSetLiveThumbnail func(uintptr, bool)
@@ -403,9 +368,7 @@ var xTabPageSetLiveThumbnail func(uintptr, bool)
 // [method@TabPage.invalidate_thumbnail] or
 // [method@TabView.invalidate_thumbnails] is called.
 func (x *TabPage) SetLiveThumbnail(LiveThumbnailVar bool) {
-
 	xTabPageSetLiveThumbnail(x.GoPointer(), LiveThumbnailVar)
-
 }
 
 var xTabPageSetLoading func(uintptr, bool)
@@ -418,9 +381,7 @@ var xTabPageSetLoading func(uintptr, bool)
 // If the page is pinned and [property@TabPage:indicator-icon] is set, loading
 // status will not be visible with `AdwTabBar`.
 func (x *TabPage) SetLoading(LoadingVar bool) {
-
 	xTabPageSetLoading(x.GoPointer(), LoadingVar)
-
 }
 
 var xTabPageSetNeedsAttention func(uintptr, bool)
@@ -437,9 +398,7 @@ var xTabPageSetNeedsAttention func(uintptr, bool)
 // [class@TabButton] will display a dot if any of the pages that aren't
 // selected have [property@TabPage:needs-attention] set to `TRUE`.
 func (x *TabPage) SetNeedsAttention(NeedsAttentionVar bool) {
-
 	xTabPageSetNeedsAttention(x.GoPointer(), NeedsAttentionVar)
-
 }
 
 var xTabPageSetThumbnailXalign func(uintptr, float32)
@@ -455,9 +414,7 @@ var xTabPageSetThumbnailXalign func(uintptr, float32)
 //
 // The default horizontal alignment is 0.
 func (x *TabPage) SetThumbnailXalign(XalignVar float32) {
-
 	xTabPageSetThumbnailXalign(x.GoPointer(), XalignVar)
-
 }
 
 var xTabPageSetThumbnailYalign func(uintptr, float32)
@@ -473,9 +430,7 @@ var xTabPageSetThumbnailYalign func(uintptr, float32)
 //
 // The default vertical alignment is 0.
 func (x *TabPage) SetThumbnailYalign(YalignVar float32) {
-
 	xTabPageSetThumbnailYalign(x.GoPointer(), YalignVar)
-
 }
 
 var xTabPageSetTitle func(uintptr, string)
@@ -489,9 +444,7 @@ var xTabPageSetTitle func(uintptr, string)
 //
 // Sets the title of @self.
 func (x *TabPage) SetTitle(TitleVar string) {
-
 	xTabPageSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xTabPageSetTooltip func(uintptr, string)
@@ -503,9 +456,7 @@ var xTabPageSetTooltip func(uintptr, string)
 // If not set, [class@TabBar] and [class@TabOverview] will use
 // [property@TabPage:title] as a tooltip instead.
 func (x *TabPage) SetTooltip(TooltipVar string) {
-
 	xTabPageSetTooltip(x.GoPointer(), TooltipVar)
-
 }
 
 func (c *TabPage) GoPointer() uintptr {
@@ -853,9 +804,19 @@ func (x *TabPage) GetPropertyTooltip() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TabPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -876,7 +837,6 @@ func (x *TabPage) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TabPage) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -901,7 +861,6 @@ func (x *TabPage) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TabPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -940,30 +899,23 @@ func (x *TabPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TabPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TabPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TabPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TabPage) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -976,19 +928,7 @@ func (x *TabPage) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TabPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -996,14 +936,7 @@ func (x *TabPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TabPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1012,9 +945,7 @@ func (x *TabPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TabPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1036,9 +967,7 @@ func (x *TabPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *TabPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1048,9 +977,7 @@ func (x *TabPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *TabPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1072,9 +999,7 @@ func (x *TabPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Ac
 //
 // ```
 func (x *TabPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1084,9 +1009,7 @@ func (x *TabPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *TabPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1109,9 +1032,7 @@ func (x *TabPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acce
 //
 // ```
 func (x *TabPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1121,9 +1042,7 @@ func (x *TabPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *TabPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // A dynamic tabbed container.
@@ -1167,8 +1086,8 @@ func (x *TabPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 //
 // ## Accessibility
 //
-// `AdwTabView` uses the `GTK_ACCESSIBLE_ROLE_TAB_PANEL` for the tab pages which
-// are the accessible parent objects of the child widgets.
+// `AdwTabView` uses the [enum@Gtk.AccessibleRole.tab-panel] role for the tab
+// pages which are the accessible parent objects of the child widgets.
 type TabView struct {
 	gtk.Widget
 }
@@ -1236,9 +1155,7 @@ var xTabViewAddShortcuts func(uintptr, TabViewShortcuts)
 //
 // See [property@TabView:shortcuts] for details.
 func (x *TabView) AddShortcuts(ShortcutsVar TabViewShortcuts) {
-
 	xTabViewAddShortcuts(x.GoPointer(), ShortcutsVar)
-
 }
 
 var xTabViewAppend func(uintptr, uintptr) uintptr
@@ -1279,9 +1196,7 @@ var xTabViewCloseOtherPages func(uintptr, uintptr)
 
 // Requests to close all pages other than @page.
 func (x *TabView) CloseOtherPages(PageVar *TabPage) {
-
 	xTabViewCloseOtherPages(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xTabViewClosePage func(uintptr, uintptr)
@@ -1309,9 +1224,7 @@ var xTabViewClosePage func(uintptr, uintptr)
 // (possibly indirect) of the parent. If both the previous page and the parent
 // are pinned, the parent will be selected instead.
 func (x *TabView) ClosePage(PageVar *TabPage) {
-
 	xTabViewClosePage(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xTabViewClosePageFinish func(uintptr, uintptr, bool)
@@ -1325,27 +1238,21 @@ var xTabViewClosePageFinish func(uintptr, uintptr, bool)
 // This function should not be called unless a custom handler for
 // [signal@TabView::close-page] is used.
 func (x *TabView) ClosePageFinish(PageVar *TabPage, ConfirmVar bool) {
-
 	xTabViewClosePageFinish(x.GoPointer(), PageVar.GoPointer(), ConfirmVar)
-
 }
 
 var xTabViewClosePagesAfter func(uintptr, uintptr)
 
 // Requests to close all pages after @page.
 func (x *TabView) ClosePagesAfter(PageVar *TabPage) {
-
 	xTabViewClosePagesAfter(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xTabViewClosePagesBefore func(uintptr, uintptr)
 
 // Requests to close all pages before @page.
 func (x *TabView) ClosePagesBefore(PageVar *TabPage) {
-
 	xTabViewClosePagesBefore(x.GoPointer(), PageVar.GoPointer())
-
 }
 
 var xTabViewGetDefaultIcon func(uintptr) uintptr
@@ -1375,7 +1282,6 @@ var xTabViewGetIsTransferringPage func(uintptr) bool
 // During the transfer, children cannot receive pointer input and a tab can
 // be safely dropped on the tab view.
 func (x *TabView) GetIsTransferringPage() bool {
-
 	cret := xTabViewGetIsTransferringPage(x.GoPointer())
 	return cret
 }
@@ -1401,7 +1307,6 @@ var xTabViewGetNPages func(uintptr) int
 
 // Gets the number of pages in @self.
 func (x *TabView) GetNPages() int {
-
 	cret := xTabViewGetNPages(x.GoPointer())
 	return cret
 }
@@ -1412,7 +1317,6 @@ var xTabViewGetNPinnedPages func(uintptr) int
 //
 // See [method@TabView.set_page_pinned].
 func (x *TabView) GetNPinnedPages() int {
-
 	cret := xTabViewGetNPinnedPages(x.GoPointer())
 	return cret
 }
@@ -1455,7 +1359,6 @@ var xTabViewGetPagePosition func(uintptr, uintptr) int
 
 // Finds the position of @page in @self, starting from 0.
 func (x *TabView) GetPagePosition(PageVar *TabPage) int {
-
 	cret := xTabViewGetPagePosition(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1464,9 +1367,13 @@ var xTabViewGetPages func(uintptr) uintptr
 
 // Returns a [iface@Gio.ListModel] that contains the pages of @self.
 //
-// This can be used to keep an up-to-date view. The model also implements
-// [iface@Gtk.SelectionModel] and can be used to track and change the selected
-// page.
+// This can be used to keep an up-to-date view.
+//
+// The model implements [iface@Gtk.SectionModel], with one section for pinned
+// pages and one for the rest of the pages.
+//
+// It also implements [iface@Gtk.SelectionModel] and can be used to track and
+// change the selected page.
 func (x *TabView) GetPages() *gtk.SelectionModelBase {
 	var cls *gtk.SelectionModelBase
 
@@ -1501,7 +1408,6 @@ var xTabViewGetShortcuts func(uintptr) TabViewShortcuts
 
 // Gets the enabled shortcuts for @self.
 func (x *TabView) GetShortcuts() TabViewShortcuts {
-
 	cret := xTabViewGetShortcuts(x.GoPointer())
 	return cret
 }
@@ -1553,9 +1459,7 @@ var xTabViewInvalidateThumbnails func(uintptr)
 // This is a convenience method, equivalent to calling
 // [method@TabPage.invalidate_thumbnail] on each page.
 func (x *TabView) InvalidateThumbnails() {
-
 	xTabViewInvalidateThumbnails(x.GoPointer())
-
 }
 
 var xTabViewPrepend func(uintptr, uintptr) uintptr
@@ -1598,16 +1502,13 @@ var xTabViewRemoveShortcuts func(uintptr, TabViewShortcuts)
 //
 // See [property@TabView:shortcuts] for details.
 func (x *TabView) RemoveShortcuts(ShortcutsVar TabViewShortcuts) {
-
 	xTabViewRemoveShortcuts(x.GoPointer(), ShortcutsVar)
-
 }
 
 var xTabViewReorderBackward func(uintptr, uintptr) bool
 
 // Reorders @page to before its previous page if possible.
 func (x *TabView) ReorderBackward(PageVar *TabPage) bool {
-
 	cret := xTabViewReorderBackward(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1616,7 +1517,6 @@ var xTabViewReorderFirst func(uintptr, uintptr) bool
 
 // Reorders @page to the first possible position.
 func (x *TabView) ReorderFirst(PageVar *TabPage) bool {
-
 	cret := xTabViewReorderFirst(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1625,7 +1525,6 @@ var xTabViewReorderForward func(uintptr, uintptr) bool
 
 // Reorders @page to after its next page if possible.
 func (x *TabView) ReorderForward(PageVar *TabPage) bool {
-
 	cret := xTabViewReorderForward(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1634,7 +1533,6 @@ var xTabViewReorderLast func(uintptr, uintptr) bool
 
 // Reorders @page to the last possible position.
 func (x *TabView) ReorderLast(PageVar *TabPage) bool {
-
 	cret := xTabViewReorderLast(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1646,7 +1544,6 @@ var xTabViewReorderPage func(uintptr, uintptr, int) bool
 // It's a programmer error to try to reorder a pinned page after a non-pinned
 // one, or a non-pinned page before a pinned one.
 func (x *TabView) ReorderPage(PageVar *TabPage, PositionVar int) bool {
-
 	cret := xTabViewReorderPage(x.GoPointer(), PageVar.GoPointer(), PositionVar)
 	return cret
 }
@@ -1657,7 +1554,6 @@ var xTabViewSelectNextPage func(uintptr) bool
 //
 // If the last page was already selected, this function does nothing.
 func (x *TabView) SelectNextPage() bool {
-
 	cret := xTabViewSelectNextPage(x.GoPointer())
 	return cret
 }
@@ -1668,7 +1564,6 @@ var xTabViewSelectPreviousPage func(uintptr) bool
 //
 // If the first page was already selected, this function does nothing.
 func (x *TabView) SelectPreviousPage() bool {
-
 	cret := xTabViewSelectPreviousPage(x.GoPointer())
 	return cret
 }
@@ -1688,9 +1583,7 @@ var xTabViewSetDefaultIcon func(uintptr, uintptr)
 //
 // By default, the `adw-tab-icon-missing-symbolic` icon is used.
 func (x *TabView) SetDefaultIcon(DefaultIconVar gio.Icon) {
-
 	xTabViewSetDefaultIcon(x.GoPointer(), DefaultIconVar.GoPointer())
-
 }
 
 var xTabViewSetMenuModel func(uintptr, uintptr)
@@ -1701,14 +1594,7 @@ var xTabViewSetMenuModel func(uintptr, uintptr)
 // provided menu model. Use the [signal@TabView::setup-menu] signal to set up
 // the menu actions for the particular tab.
 func (x *TabView) SetMenuModel(MenuModelVar *gio.MenuModel) {
-
-	var MenuModelVarPtr uintptr
-	if MenuModelVar != nil {
-		MenuModelVarPtr = MenuModelVar.GoPointer()
-	}
-
-	xTabViewSetMenuModel(x.GoPointer(), MenuModelVarPtr)
-
+	xTabViewSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
 }
 
 var xTabViewSetPagePinned func(uintptr, uintptr, bool)
@@ -1743,18 +1629,14 @@ var xTabViewSetPagePinned func(uintptr, uintptr, bool)
 //
 // Changes the value of the [property@TabPage:pinned] property.
 func (x *TabView) SetPagePinned(PageVar *TabPage, PinnedVar bool) {
-
 	xTabViewSetPagePinned(x.GoPointer(), PageVar.GoPointer(), PinnedVar)
-
 }
 
 var xTabViewSetSelectedPage func(uintptr, uintptr)
 
 // Sets the currently selected page in @self.
 func (x *TabView) SetSelectedPage(SelectedPageVar *TabPage) {
-
 	xTabViewSetSelectedPage(x.GoPointer(), SelectedPageVar.GoPointer())
-
 }
 
 var xTabViewSetShortcuts func(uintptr, TabViewShortcuts)
@@ -1767,9 +1649,7 @@ var xTabViewSetShortcuts func(uintptr, TabViewShortcuts)
 // [method@TabView.add_shortcuts] and [method@TabView.remove_shortcuts] provide
 // a convenient way to manage individual shortcuts.
 func (x *TabView) SetShortcuts(ShortcutsVar TabViewShortcuts) {
-
 	xTabViewSetShortcuts(x.GoPointer(), ShortcutsVar)
-
 }
 
 var xTabViewTransferPage func(uintptr, uintptr, uintptr, int)
@@ -1781,9 +1661,7 @@ var xTabViewTransferPage func(uintptr, uintptr, uintptr, int)
 // It's a programmer error to try to insert a pinned page after a non-pinned
 // one, or a non-pinned page before a pinned one.
 func (x *TabView) TransferPage(PageVar *TabPage, OtherViewVar *TabView, PositionVar int) {
-
 	xTabViewTransferPage(x.GoPointer(), PageVar.GoPointer(), OtherViewVar.GoPointer(), PositionVar)
-
 }
 
 func (c *TabView) GoPointer() uintptr {
@@ -1859,9 +1737,9 @@ func (x *TabView) GetPropertyNPinnedPages() int {
 // A typical reason to connect to this signal is to show a confirmation dialog
 // for closing a tab.
 //
-// The signal handler should return `GDK_EVENT_STOP` to stop propagation or
-// `GDK_EVENT_CONTINUE` to invoke the default handler.
-func (x *TabView) ConnectClosePage(cb *func(TabView, *TabPage) bool) uint {
+// The signal handler should return [const@Gdk.EVENT_STOP] to stop propagation
+// or [const@Gdk.EVENT_PROPAGATE] to invoke the default handler.
+func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
@@ -1874,8 +1752,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, *TabPage) bool) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
-
+		return cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1890,7 +1767,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, *TabPage) bool) uint {
 //
 // The signal handler is expected to create a new window, position it as
 // needed and return its `AdwTabView` that the page will be transferred into.
-func (x *TabView) ConnectCreateWindow(cb *func(TabView) *TabView) uint {
+func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
@@ -1905,7 +1782,6 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) *TabView) uint {
 
 		CreateWindowCls := cbFn(fa)
 		return CreateWindowCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1918,7 +1794,7 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) *TabView) uint {
 //
 // See [property@TabPage:indicator-icon] and
 // [property@TabPage:indicator-activatable].
-func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, *TabPage)) uint {
+func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
@@ -1931,8 +1807,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, *TabPage)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }())
-
+		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1945,7 +1820,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, *TabPage)) uint {
 //
 // A typical reason to connect to this signal would be to connect to page
 // signals for things such as updating window title.
-func (x *TabView) ConnectPageAttached(cb *func(TabView, *TabPage, int)) uint {
+func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
@@ -1958,8 +1833,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, *TabPage, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
-
+		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1977,7 +1851,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, *TabPage, int)) uint {
 // this function as the child might merely be moved to another window; use
 // child dispose handler for that or do it in sync with your
 // [method@TabView.close_page_finish] calls.
-func (x *TabView) ConnectPageDetached(cb *func(TabView, *TabPage, int)) uint {
+func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
@@ -1990,8 +1864,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, *TabPage, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
-
+		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2001,7 +1874,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, *TabPage, int)) uint {
 }
 
 // Emitted after @page has been reordered to @position.
-func (x *TabView) ConnectPageReordered(cb *func(TabView, *TabPage, int)) uint {
+func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
@@ -2014,8 +1887,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, *TabPage, int)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), PositionVarp)
-
+		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2030,7 +1902,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, *TabPage, int)) uint {
 //
 // It can be used to set up menu actions before showing the menu, for example
 // disable actions not applicable to @page.
-func (x *TabView) ConnectSetupMenu(cb *func(TabView, *TabPage)) uint {
+func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
@@ -2043,15 +1915,7 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, *TabPage)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TabPage {
-			if PageVarp == 0 {
-				return nil
-			}
-			cls := &TabPage{}
-			cls.Ptr = PageVarp
-			return cls
-		}())
-
+		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2070,9 +1934,19 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, *TabPage)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TabView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -2093,7 +1967,6 @@ func (x *TabView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TabView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -2118,7 +1991,6 @@ func (x *TabView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TabView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -2157,30 +2029,23 @@ func (x *TabView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TabView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TabView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TabView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TabView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -2193,19 +2058,7 @@ func (x *TabView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TabView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -2213,14 +2066,7 @@ func (x *TabView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar g
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TabView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -2229,9 +2075,7 @@ func (x *TabView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TabView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -2253,9 +2097,7 @@ func (x *TabView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *TabView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -2265,9 +2107,7 @@ func (x *TabView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *TabView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -2289,9 +2129,7 @@ func (x *TabView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Ac
 //
 // ```
 func (x *TabView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -2301,9 +2139,7 @@ func (x *TabView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *TabView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -2326,9 +2162,7 @@ func (x *TabView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acce
 //
 // ```
 func (x *TabView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -2338,9 +2172,7 @@ func (x *TabView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 //
 // This function is meant to be used by language bindings.
 func (x *TabView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -2348,14 +2180,13 @@ func (x *TabView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TabView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2442,5 +2273,4 @@ func init() {
 	core.PuregoSafeRegister(&xTabViewSetSelectedPage, libs, "adw_tab_view_set_selected_page")
 	core.PuregoSafeRegister(&xTabViewSetShortcuts, libs, "adw_tab_view_set_shortcuts")
 	core.PuregoSafeRegister(&xTabViewTransferPage, libs, "adw_tab_view_transfer_page")
-
 }

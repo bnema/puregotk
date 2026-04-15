@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -31,9 +30,7 @@ var xQueueClear func(uintptr)
 // Removes all the elements in @queue. If queue elements contain
 // dynamically-allocated memory, they should be freed first.
 func (x *Queue) Clear() {
-
 	xQueueClear(x.GoPointer())
-
 }
 
 var xQueueClearFull func(uintptr, uintptr)
@@ -41,35 +38,20 @@ var xQueueClearFull func(uintptr, uintptr)
 // Convenience method, which frees all the memory used by a #GQueue,
 // and calls the provided @free_func on each item in the #GQueue.
 func (x *Queue) ClearFull(FreeFuncVar *DestroyNotify) {
-
-	var FreeFuncVarRef uintptr
-	if FreeFuncVar != nil {
-		FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
-		if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
-			FreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FreeFuncVar
-				cbFn(arg0)
-			}
-			FreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FreeFuncVarPtr, FreeFuncVarRef, FreeFuncVar)
-		}
-	}
-
-	xQueueClearFull(x.GoPointer(), FreeFuncVarRef)
-
+	xQueueClearFull(x.GoPointer(), NewCallbackNullable(FreeFuncVar))
 }
 
-var xQueueCopy func(uintptr) *Queue
+var xQueueCopy func(uintptr) uintptr
 
 // Copies a @queue. Note that is a shallow copy. If the elements in the
 // queue consist of pointers to data, the pointers are copied, but the
 // actual data is not.
 func (x *Queue) Copy() *Queue {
-
 	cret := xQueueCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Queue)(unsafe.Pointer(cret))
 }
 
 var xQueueDeleteLink func(uintptr, *List)
@@ -78,21 +60,21 @@ var xQueueDeleteLink func(uintptr, *List)
 //
 // @link_ must be part of @queue.
 func (x *Queue) DeleteLink(LinkVar *List) {
-
 	xQueueDeleteLink(x.GoPointer(), LinkVar)
-
 }
 
-var xQueueFind func(uintptr, uintptr) *List
+var xQueueFind func(uintptr, uintptr) uintptr
 
 // Finds the first link in @queue which contains @data.
 func (x *Queue) Find(DataVar uintptr) *List {
-
 	cret := xQueueFind(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
-var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
+var xQueueFindCustom func(uintptr, uintptr, uintptr) uintptr
 
 // Finds an element in a #GQueue, using a supplied function to find the
 // desired element. It iterates over the queue, calling the given function
@@ -100,24 +82,11 @@ var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
 // takes two gconstpointer arguments, the #GQueue element's data as the
 // first argument and the given user data as the second argument.
 func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) int {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
+	cret := xQueueFindCustom(x.GoPointer(), DataVar, NewCallback(FuncVar))
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xQueueFindCustom(x.GoPointer(), DataVar, FuncVarRef)
-	return cret
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueueForeach func(uintptr, uintptr, uintptr)
@@ -128,24 +97,7 @@ var xQueueForeach func(uintptr, uintptr, uintptr)
 // It is safe for @func to remove the element from @queue, but it must
 // not modify any part of the queue after that element.
 func (x *Queue) Foreach(FuncVar *Func, UserDataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xQueueForeach(x.GoPointer(), FuncVarRef, UserDataVar)
-
+	xQueueForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
 }
 
 var xQueueFree func(uintptr)
@@ -157,9 +109,7 @@ var xQueueFree func(uintptr)
 // If queue elements contain dynamically-allocated memory, you should
 // either use g_queue_free_full() or free them manually first.
 func (x *Queue) Free() {
-
 	xQueueFree(x.GoPointer())
-
 }
 
 var xQueueFreeFull func(uintptr, uintptr)
@@ -170,31 +120,13 @@ var xQueueFreeFull func(uintptr, uintptr)
 // @free_func should not modify the queue (eg, by removing the freed
 // element from it).
 func (x *Queue) FreeFull(FreeFuncVar *DestroyNotify) {
-
-	var FreeFuncVarRef uintptr
-	if FreeFuncVar != nil {
-		FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
-		if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
-			FreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FreeFuncVar
-				cbFn(arg0)
-			}
-			FreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FreeFuncVarPtr, FreeFuncVarRef, FreeFuncVar)
-		}
-	}
-
-	xQueueFreeFull(x.GoPointer(), FreeFuncVarRef)
-
+	xQueueFreeFull(x.GoPointer(), NewCallback(FreeFuncVar))
 }
 
 var xQueueGetLength func(uintptr) uint
 
 // Returns the number of items in @queue.
 func (x *Queue) GetLength() uint {
-
 	cret := xQueueGetLength(x.GoPointer())
 	return cret
 }
@@ -203,7 +135,6 @@ var xQueueIndex func(uintptr, uintptr) int
 
 // Returns the position of the first element in @queue which contains @data.
 func (x *Queue) Index(DataVar uintptr) int {
-
 	cret := xQueueIndex(x.GoPointer(), DataVar)
 	return cret
 }
@@ -215,9 +146,7 @@ var xQueueInit func(uintptr)
 // %G_QUEUE_INIT. It is not necessary to initialize queues created with
 // g_queue_new().
 func (x *Queue) Init() {
-
 	xQueueInit(x.GoPointer())
-
 }
 
 var xQueueInsertAfter func(uintptr, *List, uintptr)
@@ -227,9 +156,7 @@ var xQueueInsertAfter func(uintptr, *List, uintptr)
 // @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
 // data at the head of the queue.
 func (x *Queue) InsertAfter(SiblingVar *List, DataVar uintptr) {
-
 	xQueueInsertAfter(x.GoPointer(), SiblingVar, DataVar)
-
 }
 
 var xQueueInsertAfterLink func(uintptr, *List, *List)
@@ -238,9 +165,7 @@ var xQueueInsertAfterLink func(uintptr, *List, *List)
 //
 // @sibling must be part of @queue.
 func (x *Queue) InsertAfterLink(SiblingVar *List, LinkVar *List) {
-
 	xQueueInsertAfterLink(x.GoPointer(), SiblingVar, LinkVar)
-
 }
 
 var xQueueInsertBefore func(uintptr, *List, uintptr)
@@ -250,9 +175,7 @@ var xQueueInsertBefore func(uintptr, *List, uintptr)
 // @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
 // data at the tail of the queue.
 func (x *Queue) InsertBefore(SiblingVar *List, DataVar uintptr) {
-
 	xQueueInsertBefore(x.GoPointer(), SiblingVar, DataVar)
-
 }
 
 var xQueueInsertBeforeLink func(uintptr, *List, *List)
@@ -261,40 +184,20 @@ var xQueueInsertBeforeLink func(uintptr, *List, *List)
 //
 // @sibling must be part of @queue.
 func (x *Queue) InsertBeforeLink(SiblingVar *List, LinkVar *List) {
-
 	xQueueInsertBeforeLink(x.GoPointer(), SiblingVar, LinkVar)
-
 }
 
 var xQueueInsertSorted func(uintptr, uintptr, uintptr, uintptr)
 
 // Inserts @data into @queue using @func to determine the new position.
 func (x *Queue) InsertSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xQueueInsertSorted(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
-
+	xQueueInsertSorted(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
 }
 
 var xQueueIsEmpty func(uintptr) bool
 
 // Returns %TRUE if the queue is empty.
 func (x *Queue) IsEmpty() bool {
-
 	cret := xQueueIsEmpty(x.GoPointer())
 	return cret
 }
@@ -303,7 +206,6 @@ var xQueueLinkIndex func(uintptr, *List) int
 
 // Returns the position of @link_ in @queue.
 func (x *Queue) LinkIndex(LinkVar *List) int {
-
 	cret := xQueueLinkIndex(x.GoPointer(), LinkVar)
 	return cret
 }
@@ -312,169 +214,162 @@ var xQueuePeekHead func(uintptr) uintptr
 
 // Returns the first element of the queue.
 func (x *Queue) PeekHead() uintptr {
-
 	cret := xQueuePeekHead(x.GoPointer())
 	return cret
 }
 
-var xQueuePeekHeadLink func(uintptr) *List
+var xQueuePeekHeadLink func(uintptr) uintptr
 
 // Returns the first link in @queue.
 func (x *Queue) PeekHeadLink() *List {
-
 	cret := xQueuePeekHeadLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePeekNth func(uintptr, uint) uintptr
 
 // Returns the @n'th element of @queue.
 func (x *Queue) PeekNth(NVar uint) uintptr {
-
 	cret := xQueuePeekNth(x.GoPointer(), NVar)
 	return cret
 }
 
-var xQueuePeekNthLink func(uintptr, uint) *List
+var xQueuePeekNthLink func(uintptr, uint) uintptr
 
 // Returns the link at the given position
 func (x *Queue) PeekNthLink(NVar uint) *List {
-
 	cret := xQueuePeekNthLink(x.GoPointer(), NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePeekTail func(uintptr) uintptr
 
 // Returns the last element of the queue.
 func (x *Queue) PeekTail() uintptr {
-
 	cret := xQueuePeekTail(x.GoPointer())
 	return cret
 }
 
-var xQueuePeekTailLink func(uintptr) *List
+var xQueuePeekTailLink func(uintptr) uintptr
 
 // Returns the last link in @queue.
 func (x *Queue) PeekTailLink() *List {
-
 	cret := xQueuePeekTailLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopHead func(uintptr) uintptr
 
 // Removes the first element of the queue and returns its data.
 func (x *Queue) PopHead() uintptr {
-
 	cret := xQueuePopHead(x.GoPointer())
 	return cret
 }
 
-var xQueuePopHeadLink func(uintptr) *List
+var xQueuePopHeadLink func(uintptr) uintptr
 
 // Removes and returns the first element of the queue.
 func (x *Queue) PopHeadLink() *List {
-
 	cret := xQueuePopHeadLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopNth func(uintptr, uint) uintptr
 
 // Removes the @n'th element of @queue and returns its data.
 func (x *Queue) PopNth(NVar uint) uintptr {
-
 	cret := xQueuePopNth(x.GoPointer(), NVar)
 	return cret
 }
 
-var xQueuePopNthLink func(uintptr, uint) *List
+var xQueuePopNthLink func(uintptr, uint) uintptr
 
 // Removes and returns the link at the given position.
 func (x *Queue) PopNthLink(NVar uint) *List {
-
 	cret := xQueuePopNthLink(x.GoPointer(), NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopTail func(uintptr) uintptr
 
 // Removes the last element of the queue and returns its data.
 func (x *Queue) PopTail() uintptr {
-
 	cret := xQueuePopTail(x.GoPointer())
 	return cret
 }
 
-var xQueuePopTailLink func(uintptr) *List
+var xQueuePopTailLink func(uintptr) uintptr
 
 // Removes and returns the last element of the queue.
 func (x *Queue) PopTailLink() *List {
-
 	cret := xQueuePopTailLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePushHead func(uintptr, uintptr)
 
 // Adds a new element at the head of the queue.
 func (x *Queue) PushHead(DataVar uintptr) {
-
 	xQueuePushHead(x.GoPointer(), DataVar)
-
 }
 
 var xQueuePushHeadLink func(uintptr, *List)
 
 // Adds a new element at the head of the queue.
 func (x *Queue) PushHeadLink(LinkVar *List) {
-
 	xQueuePushHeadLink(x.GoPointer(), LinkVar)
-
 }
 
 var xQueuePushNth func(uintptr, uintptr, int)
 
 // Inserts a new element into @queue at the given position.
 func (x *Queue) PushNth(DataVar uintptr, NVar int) {
-
 	xQueuePushNth(x.GoPointer(), DataVar, NVar)
-
 }
 
 var xQueuePushNthLink func(uintptr, int, *List)
 
 // Inserts @link into @queue at the given position.
 func (x *Queue) PushNthLink(NVar int, LinkVar *List) {
-
 	xQueuePushNthLink(x.GoPointer(), NVar, LinkVar)
-
 }
 
 var xQueuePushTail func(uintptr, uintptr)
 
 // Adds a new element at the tail of the queue.
 func (x *Queue) PushTail(DataVar uintptr) {
-
 	xQueuePushTail(x.GoPointer(), DataVar)
-
 }
 
 var xQueuePushTailLink func(uintptr, *List)
 
 // Adds a new element at the tail of the queue.
 func (x *Queue) PushTailLink(LinkVar *List) {
-
 	xQueuePushTailLink(x.GoPointer(), LinkVar)
-
 }
 
 var xQueueRemove func(uintptr, uintptr) bool
 
 // Removes the first element in @queue that contains @data.
 func (x *Queue) Remove(DataVar uintptr) bool {
-
 	cret := xQueueRemove(x.GoPointer(), DataVar)
 	return cret
 }
@@ -483,7 +378,6 @@ var xQueueRemoveAll func(uintptr, uintptr) uint
 
 // Remove all elements whose data equals @data from @queue.
 func (x *Queue) RemoveAll(DataVar uintptr) uint {
-
 	cret := xQueueRemoveAll(x.GoPointer(), DataVar)
 	return cret
 }
@@ -492,33 +386,14 @@ var xQueueReverse func(uintptr)
 
 // Reverses the order of the items in @queue.
 func (x *Queue) Reverse() {
-
 	xQueueReverse(x.GoPointer())
-
 }
 
 var xQueueSort func(uintptr, uintptr, uintptr)
 
 // Sorts @queue using @compare_func.
 func (x *Queue) Sort(CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
-	}
-
-	xQueueSort(x.GoPointer(), CompareFuncVarRef, UserDataVar)
-
+	xQueueSort(x.GoPointer(), NewCallback(CompareFuncVar), UserDataVar)
 }
 
 var xQueueUnlink func(uintptr, *List)
@@ -528,14 +403,12 @@ var xQueueUnlink func(uintptr, *List)
 //
 // @link_ must be part of @queue.
 func (x *Queue) Unlink(LinkVar *List) {
-
 	xQueueUnlink(x.GoPointer(), LinkVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -587,5 +460,4 @@ func init() {
 	core.PuregoSafeRegister(&xQueueReverse, libs, "g_queue_reverse")
 	core.PuregoSafeRegister(&xQueueSort, libs, "g_queue_sort")
 	core.PuregoSafeRegister(&xQueueUnlink, libs, "g_queue_unlink")
-
 }

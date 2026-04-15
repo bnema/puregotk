@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -33,22 +32,23 @@ func (x *Euler) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xEulerAlloc func() *Euler
+var xEulerAlloc func() uintptr
 
 // Allocates a new #graphene_euler_t.
 //
 // The contents of the returned structure are undefined.
 func EulerAlloc() *Euler {
-
 	cret := xEulerAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
 var xEulerEqual func(uintptr, *Euler) bool
 
 // Checks if two #graphene_euler_t are equal.
 func (x *Euler) Equal(BVar *Euler) bool {
-
 	cret := xEulerEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -57,9 +57,7 @@ var xEulerFree func(uintptr)
 
 // Frees the resources allocated by graphene_euler_alloc().
 func (x *Euler) Free() {
-
 	xEulerFree(x.GoPointer())
-
 }
 
 var xEulerGetAlpha func(uintptr) float32
@@ -69,7 +67,6 @@ var xEulerGetAlpha func(uintptr) float32
 //
 // See also: graphene_euler_get_x()
 func (x *Euler) GetAlpha() float32 {
-
 	cret := xEulerGetAlpha(x.GoPointer())
 	return cret
 }
@@ -81,7 +78,6 @@ var xEulerGetBeta func(uintptr) float32
 //
 // See also: graphene_euler_get_y()
 func (x *Euler) GetBeta() float32 {
-
 	cret := xEulerGetBeta(x.GoPointer())
 	return cret
 }
@@ -93,7 +89,6 @@ var xEulerGetGamma func(uintptr) float32
 //
 // See also: graphene_euler_get_z()
 func (x *Euler) GetGamma() float32 {
-
 	cret := xEulerGetGamma(x.GoPointer())
 	return cret
 }
@@ -108,7 +103,6 @@ var xEulerGetOrder func(uintptr) EulerOrder
 // enumeration value; it will return the effective order of rotation
 // instead.
 func (x *Euler) GetOrder() EulerOrder {
-
 	cret := xEulerGetOrder(x.GoPointer())
 	return cret
 }
@@ -117,7 +111,6 @@ var xEulerGetX func(uintptr) float32
 
 // Retrieves the rotation angle on the X axis, in degrees.
 func (x *Euler) GetX() float32 {
-
 	cret := xEulerGetX(x.GoPointer())
 	return cret
 }
@@ -126,7 +119,6 @@ var xEulerGetY func(uintptr) float32
 
 // Retrieves the rotation angle on the Y axis, in degrees.
 func (x *Euler) GetY() float32 {
-
 	cret := xEulerGetY(x.GoPointer())
 	return cret
 }
@@ -135,23 +127,24 @@ var xEulerGetZ func(uintptr) float32
 
 // Retrieves the rotation angle on the Z axis, in degrees.
 func (x *Euler) GetZ() float32 {
-
 	cret := xEulerGetZ(x.GoPointer())
 	return cret
 }
 
-var xEulerInit func(uintptr, float32, float32, float32) *Euler
+var xEulerInit func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_euler_t using the given angles.
 //
 // The order of the rotations is %GRAPHENE_EULER_ORDER_DEFAULT.
 func (x *Euler) Init(XVar float32, YVar float32, ZVar float32) *Euler {
-
 	cret := xEulerInit(x.GoPointer(), XVar, YVar, ZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromEuler func(uintptr, *Euler) *Euler
+var xEulerInitFromEuler func(uintptr, *Euler) uintptr
 
 // Initializes a #graphene_euler_t using the angles and order of
 // another #graphene_euler_t.
@@ -159,46 +152,54 @@ var xEulerInitFromEuler func(uintptr, *Euler) *Euler
 // If the #graphene_euler_t @src is %NULL, this function is equivalent
 // to calling graphene_euler_init() with all angles set to 0.
 func (x *Euler) InitFromEuler(SrcVar *Euler) *Euler {
-
 	cret := xEulerInitFromEuler(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) *Euler
+var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given rotation matrix.
 //
 // If the #graphene_matrix_t @m is %NULL, the #graphene_euler_t will
 // be initialized with all angles set to 0.
 func (x *Euler) InitFromMatrix(MVar *Matrix, OrderVar EulerOrder) *Euler {
-
 	cret := xEulerInitFromMatrix(x.GoPointer(), MVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) *Euler
+var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given normalized quaternion.
 //
 // If the #graphene_quaternion_t @q is %NULL, the #graphene_euler_t will
 // be initialized with all angles set to 0.
 func (x *Euler) InitFromQuaternion(QVar *Quaternion, OrderVar EulerOrder) *Euler {
-
 	cret := xEulerInitFromQuaternion(x.GoPointer(), QVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromRadians func(uintptr, float32, float32, float32, EulerOrder) *Euler
+var xEulerInitFromRadians func(uintptr, float32, float32, float32, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given angles
 // and order of rotation.
 func (x *Euler) InitFromRadians(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
-
 	cret := xEulerInitFromRadians(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) *Euler
+var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the angles contained in a
 // #graphene_vec3_t.
@@ -206,18 +207,22 @@ var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) *Euler
 // If the #graphene_vec3_t @v is %NULL, the #graphene_euler_t will be
 // initialized with all angles set to 0.
 func (x *Euler) InitFromVec3(VVar *Vec3, OrderVar EulerOrder) *Euler {
-
 	cret := xEulerInitFromVec3(x.GoPointer(), VVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitWithOrder func(uintptr, float32, float32, float32, EulerOrder) *Euler
+var xEulerInitWithOrder func(uintptr, float32, float32, float32, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t with the given angles and @order.
 func (x *Euler) InitWithOrder(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
-
 	cret := xEulerInitWithOrder(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
 var xEulerReorder func(uintptr, EulerOrder, *Euler)
@@ -228,9 +233,7 @@ var xEulerReorder func(uintptr, EulerOrder, *Euler)
 // given #graphene_euler_t, and then converting the quaternion into another
 // #graphene_euler_t.
 func (x *Euler) Reorder(OrderVar EulerOrder, ResVar *Euler) {
-
 	xEulerReorder(x.GoPointer(), OrderVar, ResVar)
-
 }
 
 var xEulerToMatrix func(uintptr, *Matrix)
@@ -252,18 +255,14 @@ var xEulerToMatrix func(uintptr, *Matrix)
 // The rotation sign convention is right-handed, to preserve compatibility
 // between Euler-based, quaternion-based, and angle-axis-based rotations.
 func (x *Euler) ToMatrix(ResVar *Matrix) {
-
 	xEulerToMatrix(x.GoPointer(), ResVar)
-
 }
 
 var xEulerToQuaternion func(uintptr, *Quaternion)
 
 // Converts a #graphene_euler_t into a #graphene_quaternion_t.
 func (x *Euler) ToQuaternion(ResVar *Quaternion) {
-
 	xEulerToQuaternion(x.GoPointer(), ResVar)
-
 }
 
 var xEulerToVec3 func(uintptr, *Vec3)
@@ -271,9 +270,7 @@ var xEulerToVec3 func(uintptr, *Vec3)
 // Retrieves the angles of a #graphene_euler_t and initializes a
 // #graphene_vec3_t with them.
 func (x *Euler) ToVec3(ResVar *Vec3) {
-
 	xEulerToVec3(x.GoPointer(), ResVar)
-
 }
 
 // Specify the order of the rotations on each axis.
@@ -357,7 +354,7 @@ const (
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0", "libgraphene-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GRAPHENE") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -391,5 +388,4 @@ func init() {
 	core.PuregoSafeRegister(&xEulerToMatrix, libs, "graphene_euler_to_matrix")
 	core.PuregoSafeRegister(&xEulerToQuaternion, libs, "graphene_euler_to_quaternion")
 	core.PuregoSafeRegister(&xEulerToVec3, libs, "graphene_euler_to_vec3")
-
 }

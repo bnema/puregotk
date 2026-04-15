@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -11,11 +10,11 @@ const (
 	// Like [func@get_binary_age], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	BINARY_AGE int = 2002
+	BINARY_AGE int = 2201
 	// Like [func@get_interface_age], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	INTERFACE_AGE int = 2
+	INTERFACE_AGE int = 1
 	// Like [func@get_major_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
@@ -23,11 +22,11 @@ const (
 	// Like [func@get_micro_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int = 2
+	MICRO_VERSION int = 1
 	// Like [func@get_minor_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MINOR_VERSION int = 20
+	MINOR_VERSION int = 22
 )
 
 var xCheckVersion func(uint, uint, uint) string
@@ -56,7 +55,6 @@ var xCheckVersion func(uint, uint, uint) string
 // old version of gtk_check_version(), but still get loaded
 // into an application using a newer version of GTK.
 func CheckVersion(RequiredMajorVar uint, RequiredMinorVar uint, RequiredMicroVar uint) string {
-
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
 	return cret
 }
@@ -67,7 +65,6 @@ var xGetBinaryAge func() uint
 //
 // If `libtool` means nothing to you, don't worry about it.
 func GetBinaryAge() uint {
-
 	cret := xGetBinaryAge()
 	return cret
 }
@@ -78,7 +75,6 @@ var xGetInterfaceAge func() uint
 //
 // If `libtool` means nothing to you, don't worry about it.
 func GetInterfaceAge() uint {
-
 	cret := xGetInterfaceAge()
 	return cret
 }
@@ -94,7 +90,6 @@ var xGetMajorVersion func() uint
 // macro, which represents the major version of the GTK headers you
 // have included when compiling your code.
 func GetMajorVersion() uint {
-
 	cret := xGetMajorVersion()
 	return cret
 }
@@ -110,7 +105,6 @@ var xGetMicroVersion func() uint
 // %GTK_MICRO_VERSION macro, which represents the micro version of the
 // GTK headers you have included when compiling your code.
 func GetMicroVersion() uint {
-
 	cret := xGetMicroVersion()
 	return cret
 }
@@ -126,14 +120,13 @@ var xGetMinorVersion func() uint
 // %GTK_MINOR_VERSION macro, which represents the minor version of the
 // GTK headers you have included when compiling your code.
 func GetMinorVersion() uint {
-
 	cret := xGetMinorVersion()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -149,5 +142,4 @@ func init() {
 	core.PuregoSafeRegister(&xGetMajorVersion, libs, "gtk_get_major_version")
 	core.PuregoSafeRegister(&xGetMicroVersion, libs, "gtk_get_micro_version")
 	core.PuregoSafeRegister(&xGetMinorVersion, libs, "gtk_get_minor_version")
-
 }

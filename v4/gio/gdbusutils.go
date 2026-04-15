@@ -2,8 +2,9 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -13,7 +14,6 @@ var xDbusEscapeObjectPath func(string) string
 
 // This is a language binding friendly version of g_dbus_escape_object_path_bytestring().
 func DbusEscapeObjectPath(SVar string) string {
-
 	cret := xDbusEscapeObjectPath(SVar)
 	return cret
 }
@@ -37,7 +37,6 @@ var xDbusEscapeObjectPathBytestring func([]byte) string
 //
 // This can be reversed with g_dbus_unescape_object_path().
 func DbusEscapeObjectPathBytestring(BytesVar []byte) string {
-
 	cret := xDbusEscapeObjectPathBytestring(BytesVar)
 	return cret
 }
@@ -56,12 +55,11 @@ var xDbusGenerateGuid func() string
 // Note that D-Bus GUIDs do not follow
 // [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122).
 func DbusGenerateGuid() string {
-
 	cret := xDbusGenerateGuid()
 	return cret
 }
 
-var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) *glib.Variant
+var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) uintptr
 
 // Converts a #GValue to a #GVariant of the type indicated by the @type
 // parameter.
@@ -92,9 +90,11 @@ var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) *glib.Variant
 // See the g_dbus_gvariant_to_gvalue() function for how to convert a
 // #GVariant to a #GValue.
 func DbusGvalueToGvariant(GvalueVar *gobject.Value, TypeVar *glib.VariantType) *glib.Variant {
-
 	cret := xDbusGvalueToGvariant(GvalueVar, TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDbusGvariantToGvalue func(*glib.Variant, *gobject.Value)
@@ -111,9 +111,7 @@ var xDbusGvariantToGvalue func(*glib.Variant, *gobject.Value)
 // The conversion never fails - a valid #GValue is always returned in
 // @out_gvalue.
 func DbusGvariantToGvalue(ValueVar *glib.Variant, OutGvalueVar *gobject.Value) {
-
 	xDbusGvariantToGvalue(ValueVar, OutGvalueVar)
-
 }
 
 var xDbusIsErrorName func(string) bool
@@ -124,7 +122,6 @@ var xDbusIsErrorName func(string) bool
 // because D-Bus error names are defined to have exactly the
 // same syntax as interface names.
 func DbusIsErrorName(StringVar string) bool {
-
 	cret := xDbusIsErrorName(StringVar)
 	return cret
 }
@@ -136,7 +133,6 @@ var xDbusIsGuid func(string) bool
 // See the documentation for g_dbus_generate_guid() for more information about
 // the format of a GUID.
 func DbusIsGuid(StringVar string) bool {
-
 	cret := xDbusIsGuid(StringVar)
 	return cret
 }
@@ -145,7 +141,6 @@ var xDbusIsInterfaceName func(string) bool
 
 // Checks if @string is a valid D-Bus interface name.
 func DbusIsInterfaceName(StringVar string) bool {
-
 	cret := xDbusIsInterfaceName(StringVar)
 	return cret
 }
@@ -154,7 +149,6 @@ var xDbusIsMemberName func(string) bool
 
 // Checks if @string is a valid D-Bus member (e.g. signal or method) name.
 func DbusIsMemberName(StringVar string) bool {
-
 	cret := xDbusIsMemberName(StringVar)
 	return cret
 }
@@ -163,7 +157,6 @@ var xDbusIsName func(string) bool
 
 // Checks if @string is a valid D-Bus bus name (either unique or well-known).
 func DbusIsName(StringVar string) bool {
-
 	cret := xDbusIsName(StringVar)
 	return cret
 }
@@ -172,7 +165,6 @@ var xDbusIsUniqueName func(string) bool
 
 // Checks if @string is a valid D-Bus unique bus name.
 func DbusIsUniqueName(StringVar string) bool {
-
 	cret := xDbusIsUniqueName(StringVar)
 	return cret
 }
@@ -188,14 +180,13 @@ var xDbusUnescapeObjectPath func(string) uintptr
 // encoded is not allowed (e.g `_63` is not valid, the string
 // should contain `c` instead).
 func DbusUnescapeObjectPath(SVar string) uintptr {
-
 	cret := xDbusUnescapeObjectPath(SVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -217,5 +208,4 @@ func init() {
 	core.PuregoSafeRegister(&xDbusIsName, libs, "g_dbus_is_name")
 	core.PuregoSafeRegister(&xDbusIsUniqueName, libs, "g_dbus_is_unique_name")
 	core.PuregoSafeRegister(&xDbusUnescapeObjectPath, libs, "g_dbus_unescape_object_path")
-
 }

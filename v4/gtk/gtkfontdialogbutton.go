@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -131,7 +130,7 @@ func (x *FontDialogButton) GetDialog() *FontDialog {
 	return cls
 }
 
-var xFontDialogButtonGetFontDesc func(uintptr) *pango.FontDescription
+var xFontDialogButtonGetFontDesc func(uintptr) uintptr
 
 // Returns the font of the button.
 //
@@ -139,9 +138,11 @@ var xFontDialogButtonGetFontDesc func(uintptr) *pango.FontDescription
 // the font that was chosen by the user. To get
 // informed about changes, listen to "notify::font-desc".
 func (x *FontDialogButton) GetFontDesc() *pango.FontDescription {
-
 	cret := xFontDialogButtonGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontDialogButtonGetFontFeatures func(uintptr) string
@@ -156,18 +157,19 @@ var xFontDialogButtonGetFontFeatures func(uintptr) string
 // if [property@Gtk.FontDialogButton:level] is set to
 // `GTK_FONT_LEVEL_FEATURES`.
 func (x *FontDialogButton) GetFontFeatures() string {
-
 	cret := xFontDialogButtonGetFontFeatures(x.GoPointer())
 	return cret
 }
 
-var xFontDialogButtonGetLanguage func(uintptr) *pango.Language
+var xFontDialogButtonGetLanguage func(uintptr) uintptr
 
 // Returns the language that is used for font features.
 func (x *FontDialogButton) GetLanguage() *pango.Language {
-
 	cret := xFontDialogButtonGetLanguage(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
 var xFontDialogButtonGetLevel func(uintptr) FontLevel
@@ -175,7 +177,6 @@ var xFontDialogButtonGetLevel func(uintptr) FontLevel
 // Returns the level of detail at which this dialog
 // lets the user select fonts.
 func (x *FontDialogButton) GetLevel() FontLevel {
-
 	cret := xFontDialogButtonGetLevel(x.GoPointer())
 	return cret
 }
@@ -184,7 +185,6 @@ var xFontDialogButtonGetUseFont func(uintptr) bool
 
 // Returns whether the selected font is used in the label.
 func (x *FontDialogButton) GetUseFont() bool {
-
 	cret := xFontDialogButtonGetUseFont(x.GoPointer())
 	return cret
 }
@@ -193,7 +193,6 @@ var xFontDialogButtonGetUseSize func(uintptr) bool
 
 // Returns whether the selected font size is used in the label.
 func (x *FontDialogButton) GetUseSize() bool {
-
 	cret := xFontDialogButtonGetUseSize(x.GoPointer())
 	return cret
 }
@@ -204,39 +203,31 @@ var xFontDialogButtonSetDialog func(uintptr, uintptr)
 // creating the font chooser dialog that is
 // presented when the user clicks the button.
 func (x *FontDialogButton) SetDialog(DialogVar *FontDialog) {
-
 	xFontDialogButtonSetDialog(x.GoPointer(), DialogVar.GoPointer())
-
 }
 
 var xFontDialogButtonSetFontDesc func(uintptr, *pango.FontDescription)
 
 // Sets the font of the button.
 func (x *FontDialogButton) SetFontDesc(FontDescVar *pango.FontDescription) {
-
 	xFontDialogButtonSetFontDesc(x.GoPointer(), FontDescVar)
-
 }
 
 var xFontDialogButtonSetFontFeatures func(uintptr, uintptr)
 
 // Sets the font features of the button.
 func (x *FontDialogButton) SetFontFeatures(FontFeaturesVar *string) {
-
 	FontFeaturesVarPtr := core.GStrdupNullable(FontFeaturesVar)
 	defer core.GFreeNullable(FontFeaturesVarPtr)
 
 	xFontDialogButtonSetFontFeatures(x.GoPointer(), FontFeaturesVarPtr)
-
 }
 
 var xFontDialogButtonSetLanguage func(uintptr, *pango.Language)
 
 // Sets the language to use for font features.
 func (x *FontDialogButton) SetLanguage(LanguageVar *pango.Language) {
-
 	xFontDialogButtonSetLanguage(x.GoPointer(), LanguageVar)
-
 }
 
 var xFontDialogButtonSetLevel func(uintptr, FontLevel)
@@ -244,9 +235,7 @@ var xFontDialogButtonSetLevel func(uintptr, FontLevel)
 // Sets the level of detail at which this dialog
 // lets the user select fonts.
 func (x *FontDialogButton) SetLevel(LevelVar FontLevel) {
-
 	xFontDialogButtonSetLevel(x.GoPointer(), LevelVar)
-
 }
 
 var xFontDialogButtonSetUseFont func(uintptr, bool)
@@ -254,9 +243,7 @@ var xFontDialogButtonSetUseFont func(uintptr, bool)
 // If @use_font is `TRUE`, the font name will be written
 // using the selected font.
 func (x *FontDialogButton) SetUseFont(UseFontVar bool) {
-
 	xFontDialogButtonSetUseFont(x.GoPointer(), UseFontVar)
-
 }
 
 var xFontDialogButtonSetUseSize func(uintptr, bool)
@@ -264,9 +251,7 @@ var xFontDialogButtonSetUseSize func(uintptr, bool)
 // If @use_size is `TRUE`, the font name will be written
 // using the selected font size.
 func (x *FontDialogButton) SetUseSize(UseSizeVar bool) {
-
 	xFontDialogButtonSetUseSize(x.GoPointer(), UseSizeVar)
-
 }
 
 func (c *FontDialogButton) GoPointer() uintptr {
@@ -421,7 +406,6 @@ func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -440,9 +424,19 @@ func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FontDialogButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *FontDialogButton) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -463,7 +457,6 @@ func (x *FontDialogButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FontDialogButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -488,7 +481,6 @@ func (x *FontDialogButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FontDialogButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -527,30 +519,23 @@ func (x *FontDialogButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FontDialogButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FontDialogButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FontDialogButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FontDialogButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -563,19 +548,7 @@ func (x *FontDialogButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FontDialogButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -583,14 +556,7 @@ func (x *FontDialogButton) SetAccessibleParent(ParentVar Accessible, NextSibling
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FontDialogButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -599,9 +565,7 @@ func (x *FontDialogButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible)
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FontDialogButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -623,9 +587,7 @@ func (x *FontDialogButton) UpdatePlatformState(StateVar AccessiblePlatformState)
 //
 // ```
 func (x *FontDialogButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -635,9 +597,7 @@ func (x *FontDialogButton) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 //
 // This function is meant to be used by language bindings.
 func (x *FontDialogButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -659,9 +619,7 @@ func (x *FontDialogButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 //
 // ```
 func (x *FontDialogButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -671,9 +629,7 @@ func (x *FontDialogButton) UpdateRelation(FirstRelationVar AccessibleRelation, v
 //
 // This function is meant to be used by language bindings.
 func (x *FontDialogButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -696,9 +652,7 @@ func (x *FontDialogButton) UpdateRelationValue(NRelationsVar int, RelationsVar [
 //
 // ```
 func (x *FontDialogButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -708,9 +662,7 @@ func (x *FontDialogButton) UpdateState(FirstStateVar AccessibleState, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *FontDialogButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -718,14 +670,13 @@ func (x *FontDialogButton) UpdateStateValue(NStatesVar int, StatesVar []Accessib
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FontDialogButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -755,5 +706,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontDialogButtonSetLevel, libs, "gtk_font_dialog_button_set_level")
 	core.PuregoSafeRegister(&xFontDialogButtonSetUseFont, libs, "gtk_font_dialog_button_set_use_font")
 	core.PuregoSafeRegister(&xFontDialogButtonSetUseSize, libs, "gtk_font_dialog_button_set_use_size")
-
 }

@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -49,7 +48,6 @@ func ShellParseArgv(CommandLineVar string, ArgcpVar *int, ArgvpVar *[]string) (b
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xShellQuote func(string) string
@@ -65,7 +63,6 @@ var xShellQuote func(string) string
 // The quoting style used is undefined (single or double quotes may be
 // used).
 func ShellQuote(UnquotedStringVar string) string {
-
 	cret := xShellQuote(UnquotedStringVar)
 
 	return cret
@@ -109,12 +106,11 @@ func ShellUnquote(QuotedStringVar string) (string, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -127,5 +123,4 @@ func init() {
 	core.PuregoSafeRegister(&xShellParseArgv, libs, "g_shell_parse_argv")
 	core.PuregoSafeRegister(&xShellQuote, libs, "g_shell_quote")
 	core.PuregoSafeRegister(&xShellUnquote, libs, "g_shell_unquote")
-
 }

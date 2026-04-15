@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -36,7 +35,7 @@ const (
 
 	// Inherit the parent color-scheme. When set on the
 	//   `AdwStyleManager` returned by [func@StyleManager.get_default], it's
-	//   equivalent to `ADW_COLOR_SCHEME_PREFER_LIGHT`.
+	//   equivalent to [enum@Adw.ColorScheme.prefer-light].
 	ColorSchemeDefaultValue ColorScheme = 0
 	// Always use light appearance.
 	ColorSchemeForceLightValue ColorScheme = 1
@@ -82,12 +81,11 @@ var xStyleManagerGetAccentColor func(uintptr) AccentColor
 //
 // See also [property@StyleManager:accent-color-rgba].
 func (x *StyleManager) GetAccentColor() AccentColor {
-
 	cret := xStyleManagerGetAccentColor(x.GoPointer())
 	return cret
 }
 
-var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
+var xStyleManagerGetAccentColorRgba func(uintptr) uintptr
 
 // Gets the current system accent color as a `GdkRGBA`.
 //
@@ -96,16 +94,17 @@ var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
 //
 // This is a background color. The matching foreground color is white.
 func (x *StyleManager) GetAccentColorRgba() *gdk.RGBA {
-
 	cret := xStyleManagerGetAccentColorRgba(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 var xStyleManagerGetColorScheme func(uintptr) ColorScheme
 
 // Gets the requested application color scheme.
 func (x *StyleManager) GetColorScheme() ColorScheme {
-
 	cret := xStyleManagerGetColorScheme(x.GoPointer())
 	return cret
 }
@@ -117,7 +116,6 @@ var xStyleManagerGetDark func(uintptr) bool
 // This can be used to query the current appearance, as requested via
 // [property@StyleManager:color-scheme].
 func (x *StyleManager) GetDark() bool {
-
 	cret := xStyleManagerGetDark(x.GoPointer())
 	return cret
 }
@@ -151,7 +149,6 @@ var xStyleManagerGetDocumentFontName func(uintptr) string
 //
 // Use [func@Pango.FontDescription.from_string] to parse it.
 func (x *StyleManager) GetDocumentFontName() string {
-
 	cret := xStyleManagerGetDocumentFontName(x.GoPointer())
 	return cret
 }
@@ -162,7 +159,6 @@ var xStyleManagerGetHighContrast func(uintptr) bool
 //
 // This cannot be overridden by applications.
 func (x *StyleManager) GetHighContrast() bool {
-
 	cret := xStyleManagerGetHighContrast(x.GoPointer())
 	return cret
 }
@@ -176,7 +172,6 @@ var xStyleManagerGetMonospaceFontName func(uintptr) string
 //
 // Use [func@Pango.FontDescription.from_string] to parse it.
 func (x *StyleManager) GetMonospaceFontName() string {
-
 	cret := xStyleManagerGetMonospaceFontName(x.GoPointer())
 	return cret
 }
@@ -191,7 +186,6 @@ var xStyleManagerGetSystemSupportsAccentColors func(uintptr) bool
 //
 // See [property@StyleManager:accent-color].
 func (x *StyleManager) GetSystemSupportsAccentColors() bool {
-
 	cret := xStyleManagerGetSystemSupportsAccentColors(x.GoPointer())
 	return cret
 }
@@ -204,7 +198,6 @@ var xStyleManagerGetSystemSupportsColorSchemes func(uintptr) bool
 // preference. For example, applications might want to show a separate
 // appearance switcher if it's set to `FALSE`.
 func (x *StyleManager) GetSystemSupportsColorSchemes() bool {
-
 	cret := xStyleManagerGetSystemSupportsColorSchemes(x.GoPointer())
 	return cret
 }
@@ -218,34 +211,32 @@ var xStyleManagerSetColorScheme func(uintptr, ColorScheme)
 // [property@StyleManager:dark] property can be used to query the current
 // effective appearance.
 //
-// The `ADW_COLOR_SCHEME_PREFER_LIGHT` color scheme results in the application
-// using light appearance unless the system prefers dark colors. This is the
-// default value.
+// The [enum@Adw.ColorScheme.prefer-light] color scheme results in the
+// application using light appearance unless the system prefers dark colors.
+// This is the default value.
 //
-// The `ADW_COLOR_SCHEME_PREFER_DARK` color scheme results in the application
-// using dark appearance, but can still switch to the light appearance if the
-// system can prefers it, for example, when the high contrast preference is
-// enabled.
+// The [enum@Adw.ColorScheme.prefer-dark] color scheme results in the
+// application using dark appearance, but can still switch to the light
+// appearance if the system can prefers it, for example, when the high contrast
+// preference is enabled.
 //
-// The `ADW_COLOR_SCHEME_FORCE_LIGHT` and `ADW_COLOR_SCHEME_FORCE_DARK` values
-// ignore the system preference entirely. They are useful if the application
-// wants to match its UI to its content or to provide a separate color scheme
-// switcher.
+// The [enum@Adw.ColorScheme.force-light] and [enum@Adw.ColorScheme.force-dark]
+// values ignore the system preference entirely. They are useful if the
+// application wants to match its UI to its content or to provide a separate
+// color scheme switcher.
 //
 // If a per-[class@Gdk.Display] style manager has its color scheme set to
-// `ADW_COLOR_SCHEME_DEFAULT`, it will inherit the color scheme from the
+// [enum@Adw.ColorScheme.default], it will inherit the color scheme from the
 // default style manager.
 //
-// For the default style manager, `ADW_COLOR_SCHEME_DEFAULT` is equivalent to
-// `ADW_COLOR_SCHEME_PREFER_LIGHT`.
+// For the default style manager, [enum@Adw.ColorScheme.default] is equivalent
+// to [enum@Adw.ColorScheme.prefer-light].
 //
 // The [property@StyleManager:system-supports-color-schemes] property can be
 // used to check if the current environment provides a color scheme
 // preference.
 func (x *StyleManager) SetColorScheme(ColorSchemeVar ColorScheme) {
-
 	xStyleManagerSetColorScheme(x.GoPointer(), ColorSchemeVar)
-
 }
 
 func (c *StyleManager) GoPointer() uintptr {
@@ -393,7 +384,7 @@ func StyleManagerGetForDisplay(DisplayVar *gdk.Display) *StyleManager {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -421,5 +412,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xStyleManagerGetDefault, libs, "adw_style_manager_get_default")
 	core.PuregoSafeRegister(&xStyleManagerGetForDisplay, libs, "adw_style_manager_get_for_display")
-
 }

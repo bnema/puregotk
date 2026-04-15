@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -121,24 +120,7 @@ var xAtexit func(uintptr)
 // calling g_atexit() (or atexit()) except in the main executable of a
 // program.
 func Atexit(FuncVar *VoidFunc) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *FuncVar
-				cbFn()
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xAtexit(FuncVarRef)
-
+	xAtexit(NewCallback(FuncVar))
 }
 
 var xBitNthLsf func(uint, int) int
@@ -148,7 +130,6 @@ var xBitNthLsf func(uint, int) int
 // from 0 (least significant) to sizeof(#gulong) * 8 - 1 (31 or 63,
 // usually). To start searching from the 0th bit, set @nth_bit to -1.
 func BitNthLsf(MaskVar uint, NthBitVar int) int {
-
 	cret := xBitNthLsf(MaskVar, NthBitVar)
 
 	return cret
@@ -162,7 +143,6 @@ var xBitNthMsf func(uint, int) int
 // usually). To start searching from the last bit, set @nth_bit to
 // -1 or GLIB_SIZEOF_LONG * 8.
 func BitNthMsf(MaskVar uint, NthBitVar int) int {
-
 	cret := xBitNthMsf(MaskVar, NthBitVar)
 
 	return cret
@@ -173,7 +153,6 @@ var xBitStorage func(uint) uint
 // Gets the number of bits used to hold @number,
 // e.g. if @number is 4, 3 bits are needed.
 func BitStorage(NumberVar uint) uint {
-
 	cret := xBitStorage(NumberVar)
 
 	return cret
@@ -199,7 +178,6 @@ var xFindProgramInPath func(string) string
 // the program is found, the return value contains the full name
 // including the type suffix.
 func FindProgramInPath(ProgramVar string) string {
-
 	cret := xFindProgramInPath(ProgramVar)
 
 	return cret
@@ -221,7 +199,6 @@ var xFormatSize func(uint64) string
 // See g_format_size_full() for more options about how the size might be
 // formatted.
 func FormatSize(SizeVar uint64) string {
-
 	cret := xFormatSize(SizeVar)
 
 	return cret
@@ -239,7 +216,6 @@ var xFormatSizeForDisplay func(int64) string
 //
 // This string should be freed with g_free() when not needed any longer.
 func FormatSizeForDisplay(SizeVar int64) string {
-
 	cret := xFormatSizeForDisplay(SizeVar)
 
 	return cret
@@ -252,7 +228,6 @@ var xFormatSizeFull func(uint64, FormatSizeFlags) string
 // This function is similar to g_format_size() but allows for flags
 // that modify the output. See #GFormatSizeFlags.
 func FormatSizeFull(SizeVar uint64, FlagsVar FormatSizeFlags) string {
-
 	cret := xFormatSizeFull(SizeVar, FlagsVar)
 
 	return cret
@@ -268,7 +243,6 @@ var xGetApplicationName func() string
 // g_get_prgname() (which may be %NULL if g_set_prgname() has also not
 // been called).
 func GetApplicationName() string {
-
 	cret := xGetApplicationName()
 
 	return cret
@@ -297,7 +271,6 @@ var xGetHomeDir func() string
 // should either directly check the `HOME` environment variable yourself
 // or unset it before calling any functions in GLib.
 func GetHomeDir() string {
-
 	cret := xGetHomeDir()
 
 	return cret
@@ -320,7 +293,6 @@ var xGetHostName func() string
 //
 // The encoding of the returned string is UTF-8.
 func GetHostName() string {
-
 	cret := xGetHostName()
 
 	return cret
@@ -337,7 +309,6 @@ var xGetOsInfo func(string) string
 // be useful. No key is guaranteed to be provided, so the caller should always
 // check if the result is %NULL.
 func GetOsInfo(KeyNameVar string) string {
-
 	cret := xGetOsInfo(KeyNameVar)
 
 	return cret
@@ -354,7 +325,6 @@ var xGetPrgname func() string
 // #GtkApplication::startup handler. The program name is found by
 // taking the last component of @argv[0].
 func GetPrgname() string {
-
 	cret := xGetPrgname()
 
 	return cret
@@ -368,7 +338,6 @@ var xGetRealName func() string
 // real user name cannot be determined, the string "Unknown" is
 // returned.
 func GetRealName() string {
-
 	cret := xGetRealName()
 
 	return cret
@@ -397,7 +366,6 @@ var xGetSystemConfigDirs func() []string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetSystemConfigDirs() []string {
-
 	cret := xGetSystemConfigDirs()
 
 	return cret
@@ -440,7 +408,6 @@ var xGetSystemDataDirs func() []string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetSystemDataDirs() []string {
-
 	cret := xGetSystemDataDirs()
 
 	return cret
@@ -463,7 +430,6 @@ var xGetTmpDir func() string
 // it is always UTF-8. The return value is never %NULL or the empty
 // string.
 func GetTmpDir() string {
-
 	cret := xGetTmpDir()
 
 	return cret
@@ -488,7 +454,6 @@ var xGetUserCacheDir func() string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetUserCacheDir() string {
-
 	cret := xGetUserCacheDir()
 
 	return cret
@@ -514,7 +479,6 @@ var xGetUserConfigDir func() string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetUserConfigDir() string {
-
 	cret := xGetUserConfigDir()
 
 	return cret
@@ -540,7 +504,6 @@ var xGetUserDataDir func() string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetUserDataDir() string {
-
 	cret := xGetUserDataDir()
 
 	return cret
@@ -553,7 +516,6 @@ var xGetUserName func() string
 // encoding, or something else, and there is no guarantee that it is even
 // consistent on a machine. On Windows, it is always UTF-8.
 func GetUserName() string {
-
 	cret := xGetUserName()
 
 	return cret
@@ -575,7 +537,6 @@ var xGetUserRuntimeDir func() string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetUserRuntimeDir() string {
-
 	cret := xGetUserRuntimeDir()
 
 	return cret
@@ -594,7 +555,6 @@ var xGetUserSpecialDir func(UserDirectory) string
 // of the special directory without requiring the session to restart; GLib
 // will not reflect any change once the special directories are loaded.
 func GetUserSpecialDir(DirectoryVar UserDirectory) string {
-
 	cret := xGetUserSpecialDir(DirectoryVar)
 
 	return cret
@@ -620,7 +580,6 @@ var xGetUserStateDir func() string
 // The return value is cached and modifying it at runtime is not supported, as
 // it’s not thread-safe to modify environment variables at runtime.
 func GetUserStateDir() string {
-
 	cret := xGetUserStateDir()
 
 	return cret
@@ -630,9 +589,7 @@ var xNullifyPointer func(uintptr)
 
 // Set the pointer at the specified location to %NULL.
 func NullifyPointer(NullifyLocationVar uintptr) {
-
 	xNullifyPointer(NullifyLocationVar)
-
 }
 
 var xParseDebugString func(uintptr, []DebugKey, uint) uint
@@ -650,12 +607,10 @@ var xParseDebugString func(uintptr, []DebugKey, uint) uint
 // If @string is equal to "help", all the available keys in @keys
 // are printed out to standard error.
 func ParseDebugString(StringVar *string, KeysVar []DebugKey, NkeysVar uint) uint {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xParseDebugString(StringVarPtr, KeysVar, NkeysVar)
-
 	return cret
 }
 
@@ -670,9 +625,7 @@ var xReloadUserSpecialDirsCache func()
 // that can't be freed. We ensure to only leak the data for
 // the directories that actually changed value though.
 func ReloadUserSpecialDirsCache() {
-
 	xReloadUserSpecialDirsCache()
-
 }
 
 var xSetApplicationName func(string)
@@ -689,9 +642,7 @@ var xSetApplicationName func(string)
 // The application name will be used in contexts such as error messages,
 // or when displaying an application's name in the task list.
 func SetApplicationName(ApplicationNameVar string) {
-
 	xSetApplicationName(ApplicationNameVar)
-
 }
 
 var xSetPrgname func(string)
@@ -712,9 +663,7 @@ var xSetPrgname func(string)
 // See the [GTK documentation](https://docs.gtk.org/gtk4/migrating-3to4.html#set-a-proper-application-id)
 // for requirements on integrating g_set_prgname() with GTK applications.
 func SetPrgname(PrgnameVar string) {
-
 	xSetPrgname(PrgnameVar)
-
 }
 
 var xSnprintf func(string, uint, string, ...interface{}) int
@@ -737,7 +686,6 @@ var xSnprintf func(string, uint, string, ...interface{}) int
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
 func Snprintf(StringVar string, NVar uint, FormatVar string, varArgs ...interface{}) int {
-
 	cret := xSnprintf(StringVar, NVar, FormatVar, varArgs...)
 
 	return cret
@@ -763,7 +711,6 @@ var xVsnprintf func(string, uint, string, []interface{}) int
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
 func Vsnprintf(StringVar string, NVar uint, FormatVar string, ArgsVar []interface{}) int {
-
 	cret := xVsnprintf(StringVar, NVar, FormatVar, ArgsVar)
 
 	return cret
@@ -771,7 +718,7 @@ func Vsnprintf(StringVar string, NVar uint, FormatVar string, ArgsVar []interfac
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -812,5 +759,4 @@ func init() {
 	core.PuregoSafeRegister(&xSetPrgname, libs, "g_set_prgname")
 	core.PuregoSafeRegister(&xSnprintf, libs, "g_snprintf")
 	core.PuregoSafeRegister(&xVsnprintf, libs, "g_vsnprintf")
-
 }

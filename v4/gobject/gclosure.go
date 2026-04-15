@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -51,31 +50,31 @@ func (x *CClosure) GoPointer() uintptr {
 //
 // It will generally comprise a function of some kind and a marshaller
 // used to call it. It is the responsibility of the marshaller to
-// convert the arguments for the invocation from #GValues into
+// convert the arguments for the invocation from [GValues][struct@Value] into
 // a suitable form, perform the callback on the converted arguments,
-// and transform the return value back into a #GValue.
+// and transform the return value back into a [struct@Value].
 //
 // In the case of C programs, a closure usually just holds a pointer
 // to a function and maybe a data argument, and the marshaller
-// converts between #GValue and native C types. The GObject
-// library provides the #GCClosure type for this purpose. Bindings for
-// other languages need marshallers which convert between #GValues
+// converts between [struct@Value] and native C types. The GObject
+// library provides the [struct@CClosure] type for this purpose. Bindings for
+// other languages need marshallers which convert between [GValues][struct@Value]
 // and suitable representations in the runtime of the language in
 // order to use functions written in that language as callbacks. Use
-// g_closure_set_marshal() to set the marshaller on such a custom
+// [method@Closure.set_marshal] to set the marshaller on such a custom
 // closure implementation.
 //
 // Within GObject, closures play an important role in the
 // implementation of signals. When a signal is registered, the
-// @c_marshaller argument to g_signal_new() specifies the default C
+// @c_marshaller argument to [func@signal_new] specifies the default C
 // marshaller for any closure which is connected to this
 // signal. GObject provides a number of C marshallers for this
-// purpose, see the g_cclosure_marshal_*() functions. Additional C
+// purpose, see the `g_cclosure_marshal_*()` functions. Additional C
 // marshallers can be generated with the [glib-genmarshal][glib-genmarshal]
 // utility.  Closures can be explicitly connected to signals with
-// g_signal_connect_closure(), but it usually more convenient to let
+// [func@signal_connect_closure], but it usually more convenient to let
 // GObject create a closure automatically by using one of the
-// g_signal_connect_*() functions which take a callback function/user
+// `g_signal_connect_*()` functions which take a callback function/user
 // data pair.
 //
 // Using closures has a number of important advantages over a simple
@@ -85,11 +84,11 @@ func (x *CClosure) GoPointer() uintptr {
 //     which means that language bindings don't have to write individual glue
 //     for each callback type.
 //
-//   - The reference counting of #GClosure makes it easy to handle reentrancy
+//   - The reference counting of [struct@Closure] makes it easy to handle reentrancy
 //     right; if a callback is removed while it is being invoked, the closure
 //     and its parameters won't be freed until the invocation finishes.
 //
-//   - g_closure_invalidate() and invalidation notifiers allow callbacks to be
+//   - [method@Closure.invalidate] and invalidation notifiers allow callbacks to be
 //     automatically removed when the objects they point to go away.
 type Closure struct {
 	_ structs.HostLayout
@@ -131,19 +130,21 @@ func (x *Closure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewClosureObject func(uint, uintptr) *Closure
+var xNewClosureObject func(uint, uintptr) uintptr
 
 // A variant of g_closure_new_simple() which stores @object in the
 // @data field of the closure and calls g_object_watch_closure() on
 // @object and the created closure. This function is mainly useful
 // when implementing new types of closures.
 func NewClosureObject(SizeofClosureVar uint, ObjectVar *Object) *Closure {
-
 	cret := xNewClosureObject(SizeofClosureVar, ObjectVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xNewClosureSimple func(uint, uintptr) *Closure
+var xNewClosureSimple func(uint, uintptr) uintptr
 
 // Allocates a struct of the given size and initializes the initial
 // part as a #GClosure.
@@ -188,9 +189,11 @@ var xNewClosureSimple func(uint, uintptr) *Closure
 //
 // ]|
 func NewClosureSimple(SizeofClosureVar uint, DataVar uintptr) *Closure {
-
 	cret := xNewClosureSimple(SizeofClosureVar, DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
@@ -203,24 +206,7 @@ var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
 // the closure being both invalidated and finalized, then the invalidate
 // notifiers will be run before the finalize notifiers.
 func (x *Closure) AddFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-
-	var NotifyFuncVarRef uintptr
-	if NotifyFuncVar != nil {
-		NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
-			NotifyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *NotifyFuncVar
-				cbFn(arg0, arg1)
-			}
-			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
-		}
-	}
-
-	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
-
+	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
@@ -231,24 +217,7 @@ var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
 // Invalidation notifiers are invoked before finalization notifiers,
 // in an unspecified order.
 func (x *Closure) AddInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-
-	var NotifyFuncVarRef uintptr
-	if NotifyFuncVar != nil {
-		NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
-			NotifyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *NotifyFuncVar
-				cbFn(arg0, arg1)
-			}
-			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
-		}
-	}
-
-	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
-
+	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -260,39 +229,7 @@ var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // duration of the callback. See g_object_watch_closure() for an
 // example of marshal guards.
 func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVar *ClosureNotify, PostMarshalDataVar uintptr, PostMarshalNotifyVar *ClosureNotify) {
-
-	var PreMarshalNotifyVarRef uintptr
-	if PreMarshalNotifyVar != nil {
-		PreMarshalNotifyVarPtr := uintptr(unsafe.Pointer(PreMarshalNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(PreMarshalNotifyVarPtr); ok {
-			PreMarshalNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *PreMarshalNotifyVar
-				cbFn(arg0, arg1)
-			}
-			PreMarshalNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(PreMarshalNotifyVarPtr, PreMarshalNotifyVarRef, PreMarshalNotifyVar)
-		}
-	}
-
-	var PostMarshalNotifyVarRef uintptr
-	if PostMarshalNotifyVar != nil {
-		PostMarshalNotifyVarPtr := uintptr(unsafe.Pointer(PostMarshalNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(PostMarshalNotifyVarPtr); ok {
-			PostMarshalNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *PostMarshalNotifyVar
-				cbFn(arg0, arg1)
-			}
-			PostMarshalNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(PostMarshalNotifyVarPtr, PostMarshalNotifyVarRef, PostMarshalNotifyVar)
-		}
-	}
-
-	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, PreMarshalNotifyVarRef, PostMarshalDataVar, PostMarshalNotifyVarRef)
-
+	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallbackNullable(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallbackNullable(PostMarshalNotifyVar))
 }
 
 var xClosureInvalidate func(uintptr)
@@ -313,28 +250,26 @@ var xClosureInvalidate func(uintptr)
 // reference count of a closure drops to zero (unless it has already
 // been invalidated before).
 func (x *Closure) Invalidate() {
-
 	xClosureInvalidate(x.GoPointer())
-
 }
 
 var xClosureInvoke func(uintptr, *Value, uint, []Value, uintptr)
 
 // Invokes the closure, i.e. executes the callback represented by the @closure.
 func (x *Closure) Invoke(ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar []Value, InvocationHintVar uintptr) {
-
 	xClosureInvoke(x.GoPointer(), ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar)
-
 }
 
-var xClosureRef func(uintptr) *Closure
+var xClosureRef func(uintptr) uintptr
 
 // Increments the reference count on a closure to force it staying
 // alive while the caller holds a pointer to it.
 func (x *Closure) Ref() *Closure {
-
 	cret := xClosureRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 var xClosureRemoveFinalizeNotifier func(uintptr, uintptr, uintptr)
@@ -343,24 +278,7 @@ var xClosureRemoveFinalizeNotifier func(uintptr, uintptr, uintptr)
 //
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-
-	var NotifyFuncVarRef uintptr
-	if NotifyFuncVar != nil {
-		NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
-			NotifyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *NotifyFuncVar
-				cbFn(arg0, arg1)
-			}
-			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
-		}
-	}
-
-	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
-
+	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureRemoveInvalidateNotifier func(uintptr, uintptr, uintptr)
@@ -369,24 +287,7 @@ var xClosureRemoveInvalidateNotifier func(uintptr, uintptr, uintptr)
 //
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-
-	var NotifyFuncVarRef uintptr
-	if NotifyFuncVar != nil {
-		NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
-			NotifyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *NotifyFuncVar
-				cbFn(arg0, arg1)
-			}
-			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
-		}
-	}
-
-	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
-
+	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureSetMarshal func(uintptr, uintptr)
@@ -402,24 +303,7 @@ var xClosureSetMarshal func(uintptr, uintptr)
 //
 // See also: g_closure_set_meta_marshal()
 func (x *Closure) SetMarshal(MarshalVar *ClosureMarshal) {
-
-	var MarshalVarRef uintptr
-	if MarshalVar != nil {
-		MarshalVarPtr := uintptr(unsafe.Pointer(MarshalVar))
-		if cbRefPtr, ok := glib.GetCallback(MarshalVarPtr); ok {
-			MarshalVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Closure, arg1 *Value, arg2 uint, arg3 []Value, arg4 uintptr, arg5 uintptr) {
-				cbFn := *MarshalVar
-				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
-			}
-			MarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MarshalVarPtr, MarshalVarRef, MarshalVar)
-		}
-	}
-
-	xClosureSetMarshal(x.GoPointer(), MarshalVarRef)
-
+	xClosureSetMarshal(x.GoPointer(), glib.NewCallback(MarshalVar))
 }
 
 var xClosureSetMetaMarshal func(uintptr, uintptr, uintptr)
@@ -442,24 +326,7 @@ var xClosureSetMetaMarshal func(uintptr, uintptr, uintptr)
 // the right callback and passes it to the marshaller as the
 // @marshal_data argument.
 func (x *Closure) SetMetaMarshal(MarshalDataVar uintptr, MetaMarshalVar *ClosureMarshal) {
-
-	var MetaMarshalVarRef uintptr
-	if MetaMarshalVar != nil {
-		MetaMarshalVarPtr := uintptr(unsafe.Pointer(MetaMarshalVar))
-		if cbRefPtr, ok := glib.GetCallback(MetaMarshalVarPtr); ok {
-			MetaMarshalVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Closure, arg1 *Value, arg2 uint, arg3 []Value, arg4 uintptr, arg5 uintptr) {
-				cbFn := *MetaMarshalVar
-				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
-			}
-			MetaMarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(MetaMarshalVarPtr, MetaMarshalVarRef, MetaMarshalVar)
-		}
-	}
-
-	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, MetaMarshalVarRef)
-
+	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, glib.NewCallback(MetaMarshalVar))
 }
 
 var xClosureSink func(uintptr)
@@ -514,9 +381,7 @@ var xClosureSink func(uintptr)
 // (if it hasn't been called on @closure yet) just like g_closure_unref(),
 // g_closure_ref() should be called prior to this function.
 func (x *Closure) Sink() {
-
 	xClosureSink(x.GoPointer())
-
 }
 
 var xClosureUnref func(uintptr)
@@ -527,9 +392,7 @@ var xClosureUnref func(uintptr)
 // If no other callers are using the closure, then the closure will be
 // destroyed and freed.
 func (x *Closure) Unref() {
-
 	xClosureUnref(x.GoPointer())
-
 }
 
 // OverrideMarshal sets the "marshal" callback function.
@@ -575,109 +438,53 @@ var xCclosureMarshalGeneric func(*Closure, *Value, uint, *Value, uintptr, uintpt
 // Normally this function is not passed explicitly to g_signal_new(),
 // but used automatically by GLib when specifying a %NULL marshaller.
 func CclosureMarshalGeneric(ClosureVar *Closure, ReturnGvalueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
-
 	xCclosureMarshalGeneric(ClosureVar, ReturnGvalueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
-
 }
 
-var xCclosureNew func(uintptr, uintptr, uintptr) *Closure
+var xCclosureNew func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new closure which invokes @callback_func with @user_data as
 // the last parameter.
 //
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
-
-	var CallbackFuncVarRef uintptr
-	if CallbackFuncVar != nil {
-		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
-			CallbackFuncVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CallbackFuncVar
-				cbFn()
-			}
-			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
-		}
+	cret := xCclosureNew(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyDataVar))
+	if cret == 0 {
+		return nil
 	}
-
-	var DestroyDataVarRef uintptr
-	if DestroyDataVar != nil {
-		DestroyDataVarPtr := uintptr(unsafe.Pointer(DestroyDataVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyDataVarPtr); ok {
-			DestroyDataVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *DestroyDataVar
-				cbFn(arg0, arg1)
-			}
-			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
-		}
-	}
-
-	cret := xCclosureNew(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
-	return cret
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xCclosureNewSwap func(uintptr, uintptr, uintptr) *Closure
+var xCclosureNewSwap func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new closure which invokes @callback_func with @user_data as
 // the first parameter.
 //
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
-
-	var CallbackFuncVarRef uintptr
-	if CallbackFuncVar != nil {
-		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
-			CallbackFuncVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CallbackFuncVar
-				cbFn()
-			}
-			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
-		}
+	cret := xCclosureNewSwap(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyDataVar))
+	if cret == 0 {
+		return nil
 	}
-
-	var DestroyDataVarRef uintptr
-	if DestroyDataVar != nil {
-		DestroyDataVarPtr := uintptr(unsafe.Pointer(DestroyDataVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyDataVarPtr); ok {
-			DestroyDataVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
-				cbFn := *DestroyDataVar
-				cbFn(arg0, arg1)
-			}
-			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
-		}
-	}
-
-	cret := xCclosureNewSwap(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
-	return cret
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xSignalTypeCclosureNew func(types.GType, uint) *Closure
+var xSignalTypeCclosureNew func(types.GType, uint) uintptr
 
 // Creates a new closure which invokes the function found at the offset
 // @struct_offset in the class structure of the interface or classed type
 // identified by @itype.
 func SignalTypeCclosureNew(ItypeVar types.GType, StructOffsetVar uint) *Closure {
-
 	cret := xSignalTypeCclosureNew(ItypeVar, StructOffsetVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -709,5 +516,4 @@ func init() {
 	core.PuregoSafeRegister(&xClosureSetMetaMarshal, libs, "g_closure_set_meta_marshal")
 	core.PuregoSafeRegister(&xClosureSink, libs, "g_closure_sink")
 	core.PuregoSafeRegister(&xClosureUnref, libs, "g_closure_unref")
-
 }

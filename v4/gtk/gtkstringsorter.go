@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -98,7 +97,6 @@ var xStringSorterGetCollation func(uintptr) Collation
 
 // Gets which collation method the sorter uses.
 func (x *StringSorter) GetCollation() Collation {
-
 	cret := xStringSorterGetCollation(x.GoPointer())
 	return cret
 }
@@ -124,7 +122,6 @@ var xStringSorterGetIgnoreCase func(uintptr) bool
 
 // Gets whether the sorter ignores case differences.
 func (x *StringSorter) GetIgnoreCase() bool {
-
 	cret := xStringSorterGetIgnoreCase(x.GoPointer())
 	return cret
 }
@@ -133,9 +130,7 @@ var xStringSorterSetCollation func(uintptr, Collation)
 
 // Sets the collation method to use for sorting.
 func (x *StringSorter) SetCollation(CollationVar Collation) {
-
 	xStringSorterSetCollation(x.GoPointer(), CollationVar)
-
 }
 
 var xStringSorterSetExpression func(uintptr, uintptr)
@@ -144,23 +139,14 @@ var xStringSorterSetExpression func(uintptr, uintptr)
 //
 // The expression must have the type %G_TYPE_STRING.
 func (x *StringSorter) SetExpression(ExpressionVar *Expression) {
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	xStringSorterSetExpression(x.GoPointer(), ExpressionVarPtr)
-
+	xStringSorterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
 }
 
 var xStringSorterSetIgnoreCase func(uintptr, bool)
 
 // Sets whether the sorter will ignore case differences.
 func (x *StringSorter) SetIgnoreCase(IgnoreCaseVar bool) {
-
 	xStringSorterSetIgnoreCase(x.GoPointer(), IgnoreCaseVar)
-
 }
 
 func (c *StringSorter) GoPointer() uintptr {
@@ -193,7 +179,7 @@ func (x *StringSorter) GetPropertyIgnoreCase() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -215,5 +201,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringSorterSetCollation, libs, "gtk_string_sorter_set_collation")
 	core.PuregoSafeRegister(&xStringSorterSetExpression, libs, "gtk_string_sorter_set_expression")
 	core.PuregoSafeRegister(&xStringSorterSetIgnoreCase, libs, "gtk_string_sorter_set_ignore_case")
-
 }

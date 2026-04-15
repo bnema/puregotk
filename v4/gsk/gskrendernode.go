@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/glib"
@@ -51,28 +50,10 @@ func (x *ParseLocation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The shadow parameters in a shadow node.
-type Shadow struct {
-	_ structs.HostLayout
-
-	Color uintptr
-
-	Dx float32
-
-	Dy float32
-
-	Radius float32
-}
-
-func (x *Shadow) GoPointer() uintptr {
-	return uintptr(unsafe.Pointer(x))
-}
-
 var xSerializationErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gsk.RenderNode] errors.
 func SerializationErrorQuark() glib.Quark {
-
 	cret := xSerializationErrorQuark()
 	return cret
 }
@@ -118,9 +99,7 @@ var xValueSetRenderNode func(*gobject.Value, uintptr)
 // The [struct@GObject.Value] will acquire a reference
 // to the render node.
 func ValueSetRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
-
 	xValueSetRenderNode(ValueVar, NodeVar.GoPointer())
-
 }
 
 var xValueTakeRenderNode func(*gobject.Value, uintptr)
@@ -130,14 +109,7 @@ var xValueTakeRenderNode func(*gobject.Value, uintptr)
 // This function transfers the ownership of the
 // render node to the `GValue`.
 func ValueTakeRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
-
-	var NodeVarPtr uintptr
-	if NodeVar != nil {
-		NodeVarPtr = NodeVar.GoPointer()
-	}
-
-	xValueTakeRenderNode(ValueVar, NodeVarPtr)
-
+	xValueTakeRenderNode(ValueVar, NodeVar.GoPointer())
 }
 
 // The basic block in a scene graph to be rendered using [class@Gsk.Renderer].
@@ -179,9 +151,7 @@ var xRenderNodeDraw func(uintptr, *cairo.Context)
 // For advanced nodes that cannot be supported using Cairo, in particular
 // for nodes doing 3D operations, this function may fail.
 func (x *RenderNode) Draw(CrVar *cairo.Context) {
-
 	xRenderNodeDraw(x.GoPointer(), CrVar)
-
 }
 
 var xRenderNodeGetBounds func(uintptr, *graphene.Rect)
@@ -190,16 +160,25 @@ var xRenderNodeGetBounds func(uintptr, *graphene.Rect)
 //
 // The node will not draw outside of its boundaries.
 func (x *RenderNode) GetBounds(BoundsVar *graphene.Rect) {
-
 	xRenderNodeGetBounds(x.GoPointer(), BoundsVar)
+}
 
+var xRenderNodeGetChildren func(uintptr, *uint) uintptr
+
+// Gets a list of all children nodes of the rendernode.
+//
+// Keep in mind that for various rendernodes, their children have different
+// semantics, like the mask vs the source of a mask node. If you care about
+// thse semantics, don't use this function, use the specific getters instead.
+func (x *RenderNode) GetChildren(NChildrenVar *uint) uintptr {
+	cret := xRenderNodeGetChildren(x.GoPointer(), NChildrenVar)
+	return cret
 }
 
 var xRenderNodeGetNodeType func(uintptr) RenderNodeType
 
 // Returns the type of the render node.
 func (x *RenderNode) GetNodeType() RenderNodeType {
-
 	cret := xRenderNodeGetNodeType(x.GoPointer())
 	return cret
 }
@@ -215,7 +194,6 @@ var xRenderNodeGetOpaqueRect func(uintptr, *graphene.Rect) bool
 //
 // The rectangle will be fully contained in the bounds of the node.
 func (x *RenderNode) GetOpaqueRect(OutOpaqueVar *graphene.Rect) bool {
-
 	cret := xRenderNodeGetOpaqueRect(x.GoPointer(), OutOpaqueVar)
 	return cret
 }
@@ -236,7 +214,7 @@ func (x *RenderNode) Ref() *RenderNode {
 	return cls
 }
 
-var xRenderNodeSerialize func(uintptr) *glib.Bytes
+var xRenderNodeSerialize func(uintptr) uintptr
 
 // Serializes the @node for later deserialization via
 // gsk_render_node_deserialize(). No guarantees are made about the format
@@ -248,9 +226,11 @@ var xRenderNodeSerialize func(uintptr) *glib.Bytes
 // The intended use of this functions is testing, benchmarking and debugging.
 // The format is not meant as a permanent storage format.
 func (x *RenderNode) Serialize() *glib.Bytes {
-
 	cret := xRenderNodeSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xRenderNodeUnref func(uintptr)
@@ -260,9 +240,7 @@ var xRenderNodeUnref func(uintptr)
 // If the reference was the last, the resources associated to the @node are
 // freed.
 func (x *RenderNode) Unref() {
-
 	xRenderNodeUnref(x.GoPointer())
-
 }
 
 var xRenderNodeWriteToFile func(uintptr, string, **glib.Error) bool
@@ -282,7 +260,6 @@ func (x *RenderNode) WriteToFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *RenderNode) GoPointer() uintptr {
@@ -331,7 +308,7 @@ func RenderNodeDeserialize(BytesVar *glib.Bytes, ErrorFuncVar *ParseErrorFunc, U
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GSK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -351,6 +328,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xRenderNodeDraw, libs, "gsk_render_node_draw")
 	core.PuregoSafeRegister(&xRenderNodeGetBounds, libs, "gsk_render_node_get_bounds")
+	core.PuregoSafeRegister(&xRenderNodeGetChildren, libs, "gsk_render_node_get_children")
 	core.PuregoSafeRegister(&xRenderNodeGetNodeType, libs, "gsk_render_node_get_node_type")
 	core.PuregoSafeRegister(&xRenderNodeGetOpaqueRect, libs, "gsk_render_node_get_opaque_rect")
 	core.PuregoSafeRegister(&xRenderNodeRef, libs, "gsk_render_node_ref")
@@ -359,5 +337,4 @@ func init() {
 	core.PuregoSafeRegister(&xRenderNodeWriteToFile, libs, "gsk_render_node_write_to_file")
 
 	core.PuregoSafeRegister(&xRenderNodeDeserialize, libs, "gsk_render_node_deserialize")
-
 }

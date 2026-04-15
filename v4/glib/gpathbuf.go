@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -58,9 +57,7 @@ var xPathBufClear func(uintptr)
 // `GPathBuf` initialized using g_path_buf_init() or
 // g_path_buf_init_from_path().
 func (x *PathBuf) Clear() {
-
 	xPathBufClear(x.GoPointer())
-
 }
 
 var xPathBufClearToPath func(uintptr) string
@@ -71,27 +68,26 @@ var xPathBufClearToPath func(uintptr) string
 //
 // See also: g_path_buf_to_path()
 func (x *PathBuf) ClearToPath() string {
-
 	cret := xPathBufClearToPath(x.GoPointer())
 	return cret
 }
 
-var xPathBufCopy func(uintptr) *PathBuf
+var xPathBufCopy func(uintptr) uintptr
 
 // Copies the contents of a path buffer into a new `GPathBuf`.
 func (x *PathBuf) Copy() *PathBuf {
-
 	cret := xPathBufCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufFree func(uintptr)
 
 // Frees a `GPathBuf` allocated by g_path_buf_new().
 func (x *PathBuf) Free() {
-
 	xPathBufFree(x.GoPointer())
-
 }
 
 var xPathBufFreeToPath func(uintptr) string
@@ -103,30 +99,33 @@ var xPathBufFreeToPath func(uintptr) string
 //
 // See also: g_path_buf_to_path()
 func (x *PathBuf) FreeToPath() string {
-
 	cret := xPathBufFreeToPath(x.GoPointer())
 	return cret
 }
 
-var xPathBufInit func(uintptr) *PathBuf
+var xPathBufInit func(uintptr) uintptr
 
 // Initializes a `GPathBuf` instance.
 func (x *PathBuf) Init() *PathBuf {
-
 	cret := xPathBufInit(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
-var xPathBufInitFromPath func(uintptr, uintptr) *PathBuf
+var xPathBufInitFromPath func(uintptr, uintptr) uintptr
 
 // Initializes a `GPathBuf` instance with the given path.
 func (x *PathBuf) InitFromPath(PathVar *string) *PathBuf {
-
 	PathVarPtr := core.GStrdupNullable(PathVar)
 	defer core.GFreeNullable(PathVarPtr)
 
 	cret := xPathBufInitFromPath(x.GoPointer(), PathVarPtr)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufPop func(uintptr) bool
@@ -155,12 +154,11 @@ var xPathBufPop func(uintptr) bool
 // g_path_buf_clear (&amp;buf);
 // ]|
 func (x *PathBuf) Pop() bool {
-
 	cret := xPathBufPop(x.GoPointer())
 	return cret
 }
 
-var xPathBufPush func(uintptr, string) *PathBuf
+var xPathBufPush func(uintptr, string) uintptr
 
 // Extends the given path buffer with @path.
 //
@@ -190,9 +188,11 @@ var xPathBufPush func(uintptr, string) *PathBuf
 // g_path_buf_clear (&amp;buf);
 // ]|
 func (x *PathBuf) Push(PathVar string) *PathBuf {
-
 	cret := xPathBufPush(x.GoPointer(), PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufSetExtension func(uintptr, uintptr) bool
@@ -204,7 +204,6 @@ var xPathBufSetExtension func(uintptr, uintptr) bool
 // If the path buffer does not have a file name set, this function returns
 // `FALSE` and leaves the path buffer unmodified.
 func (x *PathBuf) SetExtension(ExtensionVar *string) bool {
-
 	ExtensionVarPtr := core.GStrdupNullable(ExtensionVar)
 	defer core.GFreeNullable(ExtensionVarPtr)
 
@@ -245,7 +244,6 @@ var xPathBufSetFilename func(uintptr, string) bool
 // g_path_buf_clear (&amp;buf);
 // ]|
 func (x *PathBuf) SetFilename(FileNameVar string) bool {
-
 	cret := xPathBufSetFilename(x.GoPointer(), FileNameVar)
 	return cret
 }
@@ -259,7 +257,6 @@ var xPathBufToPath func(uintptr) string
 //
 // If the path buffer is empty, this function returns `NULL`.
 func (x *PathBuf) ToPath() string {
-
 	cret := xPathBufToPath(x.GoPointer())
 	return cret
 }
@@ -276,7 +273,6 @@ var xPathBufEqual func(uintptr, uintptr) bool
 // This function can be passed to g_hash_table_new() as the
 // `key_equal_func` parameter.
 func PathBufEqual(V1Var uintptr, V2Var uintptr) bool {
-
 	cret := xPathBufEqual(V1Var, V2Var)
 
 	return cret
@@ -284,7 +280,7 @@ func PathBufEqual(V1Var uintptr, V2Var uintptr) bool {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -308,5 +304,4 @@ func init() {
 	core.PuregoSafeRegister(&xPathBufSetExtension, libs, "g_path_buf_set_extension")
 	core.PuregoSafeRegister(&xPathBufSetFilename, libs, "g_path_buf_set_filename")
 	core.PuregoSafeRegister(&xPathBufToPath, libs, "g_path_buf_to_path")
-
 }

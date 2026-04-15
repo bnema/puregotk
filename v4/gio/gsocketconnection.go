@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -229,7 +228,6 @@ func (x *SocketConnection) Connect(AddressVar *SocketAddress, CancellableVar *Ca
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSocketConnectionConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -245,29 +243,7 @@ var xSocketConnectionConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 //
 // Use g_socket_connection_connect_finish() to retrieve the result.
 func (x *SocketConnection) ConnectAsync(AddressVar *SocketAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xSocketConnectionConnectFinish func(uintptr, uintptr, **glib.Error) bool
@@ -281,17 +257,16 @@ func (x *SocketConnection) ConnectFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xSocketConnectionGetLocalAddress func(uintptr) uintptr
+var xSocketConnectionGetLocalAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the local address of a socket connection.
 func (x *SocketConnection) GetLocalAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketConnectionGetLocalAddress(x.GoPointer())
+	cret := xSocketConnectionGetLocalAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -302,10 +277,9 @@ func (x *SocketConnection) GetLocalAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var xSocketConnectionGetRemoteAddress func(uintptr) uintptr
+var xSocketConnectionGetRemoteAddress func(uintptr, **glib.Error) uintptr
 
 // Try to get the remote address of a socket connection.
 //
@@ -319,7 +293,7 @@ func (x *SocketConnection) GetRemoteAddress() (*SocketAddress, error) {
 	var cls *SocketAddress
 	var cerr *glib.Error
 
-	cret := xSocketConnectionGetRemoteAddress(x.GoPointer())
+	cret := xSocketConnectionGetRemoteAddress(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -330,7 +304,6 @@ func (x *SocketConnection) GetRemoteAddress() (*SocketAddress, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketConnectionGetSocket func(uintptr) uintptr
@@ -357,7 +330,6 @@ var xSocketConnectionIsConnected func(uintptr) bool
 // Checks if @connection is connected. This is equivalent to calling
 // g_socket_is_connected() on @connection's underlying #GSocket.
 func (x *SocketConnection) IsConnected() bool {
-
 	cret := xSocketConnectionIsConnected(x.GoPointer())
 	return cret
 }
@@ -380,7 +352,6 @@ var xSocketConnectionFactoryLookupType func(SocketFamily, SocketType, int) types
 //
 // If no type is registered, the #GSocketConnection base type is returned.
 func SocketConnectionFactoryLookupType(FamilyVar SocketFamily, TypeVar SocketType, ProtocolIdVar int) types.GType {
-
 	cret := xSocketConnectionFactoryLookupType(FamilyVar, TypeVar, ProtocolIdVar)
 	return cret
 }
@@ -392,14 +363,12 @@ var xSocketConnectionFactoryRegisterType func(types.GType, SocketFamily, SocketT
 //
 // If no type is registered, the #GSocketConnection base type is returned.
 func SocketConnectionFactoryRegisterType(GTypeVar types.GType, FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar int) {
-
 	xSocketConnectionFactoryRegisterType(GTypeVar, FamilyVar, TypeVar, ProtocolVar)
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -421,5 +390,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xSocketConnectionFactoryLookupType, libs, "g_socket_connection_factory_lookup_type")
 	core.PuregoSafeRegister(&xSocketConnectionFactoryRegisterType, libs, "g_socket_connection_factory_register_type")
-
 }

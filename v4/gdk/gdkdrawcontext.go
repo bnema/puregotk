@@ -2,8 +2,9 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -62,9 +63,7 @@ var xDrawContextBeginFrame func(uintptr, *cairo.Region)
 // use of [GskRenderer](../gsk4/class.Renderer.html)s, so application code
 // does not need to call these functions explicitly.
 func (x *DrawContext) BeginFrame(RegionVar *cairo.Region) {
-
 	xDrawContextBeginFrame(x.GoPointer(), RegionVar)
-
 }
 
 var xDrawContextEndFrame func(uintptr)
@@ -78,9 +77,7 @@ var xDrawContextEndFrame func(uintptr)
 // implicitly before returning; it is not recommended to call `glFlush()`
 // explicitly before calling this function.
 func (x *DrawContext) EndFrame() {
-
 	xDrawContextEndFrame(x.GoPointer())
-
 }
 
 var xDrawContextGetDisplay func(uintptr) uintptr
@@ -100,7 +97,7 @@ func (x *DrawContext) GetDisplay() *Display {
 	return cls
 }
 
-var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
+var xDrawContextGetFrameRegion func(uintptr) uintptr
 
 // Retrieves the region that is currently being repainted.
 //
@@ -111,9 +108,11 @@ var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
 // If @context is not in between calls to [method@Gdk.DrawContext.begin_frame]
 // and [method@Gdk.DrawContext.end_frame], %NULL will be returned.
 func (x *DrawContext) GetFrameRegion() *cairo.Region {
-
 	cret := xDrawContextGetFrameRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xDrawContextGetSurface func(uintptr) uintptr
@@ -141,7 +140,6 @@ var xDrawContextIsInFrame func(uintptr) bool
 // and [method@Gdk.DrawContext.end_frame]. In this situation, drawing commands
 // may be effecting the contents of the @context's surface.
 func (x *DrawContext) IsInFrame() bool {
-
 	cret := xDrawContextIsInFrame(x.GoPointer())
 	return cret
 }
@@ -159,7 +157,7 @@ func (c *DrawContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -177,5 +175,4 @@ func init() {
 	core.PuregoSafeRegister(&xDrawContextGetFrameRegion, libs, "gdk_draw_context_get_frame_region")
 	core.PuregoSafeRegister(&xDrawContextGetSurface, libs, "gdk_draw_context_get_surface")
 	core.PuregoSafeRegister(&xDrawContextIsInFrame, libs, "gdk_draw_context_is_in_frame")
-
 }

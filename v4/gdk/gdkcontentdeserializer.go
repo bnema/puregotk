@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -27,29 +26,7 @@ var xContentDeserializeAsync func(uintptr, string, types.GType, int, uintptr, ui
 // The default I/O priority is `G_PRIORITY_DEFAULT` (i.e. 0), and lower numbers
 // indicate a higher priority.
 func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xContentDeserializeFinish func(uintptr, *gobject.Value, **glib.Error) bool
@@ -63,7 +40,6 @@ func ContentDeserializeFinish(ResultVar gio.AsyncResult, ValueVar *gobject.Value
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uintptr)
@@ -74,39 +50,7 @@ var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uin
 // use the last registered deserializer for a given mime type,
 // so applications can override the built-in deserializers.
 func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, DeserializeVar *ContentDeserializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
-	var DeserializeVarRef uintptr
-	if DeserializeVar != nil {
-		DeserializeVarPtr := uintptr(unsafe.Pointer(DeserializeVar))
-		if cbRefPtr, ok := glib.GetCallback(DeserializeVarPtr); ok {
-			DeserializeVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DeserializeVar
-				cbFn(arg0)
-			}
-			DeserializeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DeserializeVarPtr, DeserializeVarRef, DeserializeVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xContentRegisterDeserializer(MimeTypeVar, TypeVar, DeserializeVarRef, DataVar, NotifyVarRef)
-
+	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 // Deserializes content received via inter-application data transfers.
@@ -158,7 +102,6 @@ var xContentDeserializerGetGtype func(uintptr) types.GType
 
 // Gets the `GType` to create an instance of.
 func (x *ContentDeserializer) GetGtype() types.GType {
-
 	cret := xContentDeserializerGetGtype(x.GoPointer())
 	return cret
 }
@@ -186,7 +129,6 @@ var xContentDeserializerGetMimeType func(uintptr) string
 
 // Gets the mime type to deserialize from.
 func (x *ContentDeserializer) GetMimeType() string {
-
 	cret := xContentDeserializerGetMimeType(x.GoPointer())
 	return cret
 }
@@ -197,7 +139,6 @@ var xContentDeserializerGetPriority func(uintptr) int
 //
 // This is the priority that was passed to [func@Gdk.content_deserialize_async].
 func (x *ContentDeserializer) GetPriority() int {
-
 	cret := xContentDeserializerGetPriority(x.GoPointer())
 	return cret
 }
@@ -208,7 +149,6 @@ var xContentDeserializerGetTaskData func(uintptr) uintptr
 //
 // See [method@Gdk.ContentDeserializer.set_task_data].
 func (x *ContentDeserializer) GetTaskData() uintptr {
-
 	cret := xContentDeserializerGetTaskData(x.GoPointer())
 	return cret
 }
@@ -217,18 +157,19 @@ var xContentDeserializerGetUserData func(uintptr) uintptr
 
 // Gets the user data that was passed when the deserializer was registered.
 func (x *ContentDeserializer) GetUserData() uintptr {
-
 	cret := xContentDeserializerGetUserData(x.GoPointer())
 	return cret
 }
 
-var xContentDeserializerGetValue func(uintptr) *gobject.Value
+var xContentDeserializerGetValue func(uintptr) uintptr
 
 // Gets the `GValue` to store the deserialized object in.
 func (x *ContentDeserializer) GetValue() *gobject.Value {
-
 	cret := xContentDeserializerGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 var xContentDeserializerReturnError func(uintptr, *glib.Error)
@@ -237,42 +178,21 @@ var xContentDeserializerReturnError func(uintptr, *glib.Error)
 //
 // This function consumes @error.
 func (x *ContentDeserializer) ReturnError(ErrorVar *glib.Error) {
-
 	xContentDeserializerReturnError(x.GoPointer(), ErrorVar)
-
 }
 
 var xContentDeserializerReturnSuccess func(uintptr)
 
 // Indicate that the deserialization has been successfully completed.
 func (x *ContentDeserializer) ReturnSuccess() {
-
 	xContentDeserializerReturnSuccess(x.GoPointer())
-
 }
 
 var xContentDeserializerSetTaskData func(uintptr, uintptr, uintptr)
 
 // Associate data with the current deserialization operation.
 func (x *ContentDeserializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, NotifyVarRef)
-
+	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 func (c *ContentDeserializer) GoPointer() uintptr {
@@ -303,7 +223,6 @@ func (x *ContentDeserializer) GetSourceObject() *gobject.Object {
 // Checks if @res has the given @source_tag (generally a function
 // pointer indicating the function @res was created by).
 func (x *ContentDeserializer) IsTagged(SourceTagVar uintptr) bool {
-
 	cret := gio.XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
 	return cret
 }
@@ -321,17 +240,16 @@ func (x *ContentDeserializer) IsTagged(SourceTagVar uintptr) bool {
 func (x *ContentDeserializer) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
-	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer())
+	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -358,5 +276,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentDeserializerReturnError, libs, "gdk_content_deserializer_return_error")
 	core.PuregoSafeRegister(&xContentDeserializerReturnSuccess, libs, "gdk_content_deserializer_return_success")
 	core.PuregoSafeRegister(&xContentDeserializerSetTaskData, libs, "gdk_content_deserializer_set_task_data")
-
 }

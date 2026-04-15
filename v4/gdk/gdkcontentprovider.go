@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -119,8 +118,12 @@ func (x *ContentProviderClass) OverrideRefFormats(cb func(*ContentProvider) *Con
 	if cb == nil {
 		x.xRefFormats = 0
 	} else {
-		x.xRefFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
-			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		x.xRefFormats = purego.NewCallback(func(ProviderVarp uintptr) uintptr {
+			ret := cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -130,10 +133,14 @@ func (x *ContentProviderClass) GetRefFormats() func(*ContentProvider) *ContentFo
 	if x.xRefFormats == 0 {
 		return nil
 	}
-	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	var rawCallback func(ProviderVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRefFormats)
 	return func(ProviderVar *ContentProvider) *ContentFormats {
-		return rawCallback(ProviderVar.GoPointer())
+		rawRet := rawCallback(ProviderVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*ContentFormats)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -142,8 +149,12 @@ func (x *ContentProviderClass) OverrideRefStorableFormats(cb func(*ContentProvid
 	if cb == nil {
 		x.xRefStorableFormats = 0
 	} else {
-		x.xRefStorableFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
-			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		x.xRefStorableFormats = purego.NewCallback(func(ProviderVarp uintptr) uintptr {
+			ret := cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -153,10 +164,14 @@ func (x *ContentProviderClass) GetRefStorableFormats() func(*ContentProvider) *C
 	if x.xRefStorableFormats == 0 {
 		return nil
 	}
-	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	var rawCallback func(ProviderVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRefStorableFormats)
 	return func(ProviderVar *ContentProvider) *ContentFormats {
-		return rawCallback(ProviderVar.GoPointer())
+		rawRet := rawCallback(ProviderVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*ContentFormats)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -343,9 +358,7 @@ var xContentProviderContentChanged func(uintptr)
 
 // Emits the ::content-changed signal.
 func (x *ContentProvider) ContentChanged() {
-
 	xContentProviderContentChanged(x.GoPointer())
-
 }
 
 var xContentProviderGetValue func(uintptr, *gobject.Value, **glib.Error) bool
@@ -365,19 +378,20 @@ func (x *ContentProvider) GetValue(ValueVar *gobject.Value) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xContentProviderRefFormats func(uintptr) *ContentFormats
+var xContentProviderRefFormats func(uintptr) uintptr
 
 // Gets the formats that the provider can provide its current contents in.
 func (x *ContentProvider) RefFormats() *ContentFormats {
-
 	cret := xContentProviderRefFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
+var xContentProviderRefStorableFormats func(uintptr) uintptr
 
 // Gets the formats that the provider suggests other applications to store
 // the data in.
@@ -386,9 +400,11 @@ var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
 //
 // This can be assumed to be a subset of [method@Gdk.ContentProvider.ref_formats].
 func (x *ContentProvider) RefStorableFormats() *ContentFormats {
-
 	cret := xContentProviderRefStorableFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int, uintptr, uintptr, uintptr)
@@ -402,29 +418,7 @@ var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int, uintp
 //
 // The given @stream will not be closed.
 func (x *ContentProvider) WriteMimeTypeAsync(MimeTypeVar string, StreamVar *gio.OutputStream, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xContentProviderWriteMimeTypeAsync(x.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xContentProviderWriteMimeTypeAsync(x.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xContentProviderWriteMimeTypeFinish func(uintptr, uintptr, **glib.Error) bool
@@ -440,7 +434,6 @@ func (x *ContentProvider) WriteMimeTypeFinish(ResultVar gio.AsyncResult) (bool, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *ContentProvider) GoPointer() uintptr {
@@ -485,7 +478,6 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint 
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -496,7 +488,7 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint 
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -519,5 +511,4 @@ func init() {
 	core.PuregoSafeRegister(&xContentProviderRefStorableFormats, libs, "gdk_content_provider_ref_storable_formats")
 	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeAsync, libs, "gdk_content_provider_write_mime_type_async")
 	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeFinish, libs, "gdk_content_provider_write_mime_type_finish")
-
 }

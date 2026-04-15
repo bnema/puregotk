@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -90,8 +89,11 @@ const (
 //
 // ## Accessibility
 //
-// The internal toggle group uses the `GTK_ACCESSIBLE_ROLE_TAB_LIST` role. Its
-// toggles use the `GTK_ACCESSIBLE_ROLE_TAB` role.
+// The internal toggle group uses the [enum@Gtk.AccessibleRole.tab-list] role.
+// Its toggles use the [enum@Gtk.AccessibleRole.tab] role.
+//
+// See also: [class@ViewSwitcher], [class@ViewSwitcherBar],
+// [class@ViewSwitcherSidebar].
 type InlineViewSwitcher struct {
 	gtk.Widget
 }
@@ -130,7 +132,6 @@ var xInlineViewSwitcherGetCanShrink func(uintptr) bool
 // Gets whether the toggles can be smaller than the natural size of their
 // contents.
 func (x *InlineViewSwitcher) GetCanShrink() bool {
-
 	cret := xInlineViewSwitcherGetCanShrink(x.GoPointer())
 	return cret
 }
@@ -139,7 +140,6 @@ var xInlineViewSwitcherGetDisplayMode func(uintptr) InlineViewSwitcherDisplayMod
 
 // Gets the display mode of @self.
 func (x *InlineViewSwitcher) GetDisplayMode() InlineViewSwitcherDisplayMode {
-
 	cret := xInlineViewSwitcherGetDisplayMode(x.GoPointer())
 	return cret
 }
@@ -148,7 +148,6 @@ var xInlineViewSwitcherGetHomogeneous func(uintptr) bool
 
 // Gets whether all toggles within @self take the same size.
 func (x *InlineViewSwitcher) GetHomogeneous() bool {
-
 	cret := xInlineViewSwitcherGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -179,9 +178,7 @@ var xInlineViewSwitcherSetCanShrink func(uintptr, bool)
 //
 // See [property@ToggleGroup:can-shrink].
 func (x *InlineViewSwitcher) SetCanShrink(CanShrinkVar bool) {
-
 	xInlineViewSwitcherSetCanShrink(x.GoPointer(), CanShrinkVar)
-
 }
 
 var xInlineViewSwitcherSetDisplayMode func(uintptr, InlineViewSwitcherDisplayMode)
@@ -197,32 +194,21 @@ var xInlineViewSwitcherSetDisplayMode func(uintptr, InlineViewSwitcherDisplayMod
 //
 // &lt;/picture&gt;
 func (x *InlineViewSwitcher) SetDisplayMode(ModeVar InlineViewSwitcherDisplayMode) {
-
 	xInlineViewSwitcherSetDisplayMode(x.GoPointer(), ModeVar)
-
 }
 
 var xInlineViewSwitcherSetHomogeneous func(uintptr, bool)
 
 // Sets whether all toggles within @self take the same size.
 func (x *InlineViewSwitcher) SetHomogeneous(HomogeneousVar bool) {
-
 	xInlineViewSwitcherSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xInlineViewSwitcherSetStack func(uintptr, uintptr)
 
 // Sets the stack to control.
 func (x *InlineViewSwitcher) SetStack(StackVar *ViewStack) {
-
-	var StackVarPtr uintptr
-	if StackVar != nil {
-		StackVarPtr = StackVar.GoPointer()
-	}
-
-	xInlineViewSwitcherSetStack(x.GoPointer(), StackVarPtr)
-
+	xInlineViewSwitcherSetStack(x.GoPointer(), StackVar.GoPointer())
 }
 
 func (c *InlineViewSwitcher) GoPointer() uintptr {
@@ -288,9 +274,19 @@ func (x *InlineViewSwitcher) GetPropertyHomogeneous() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *InlineViewSwitcher) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *InlineViewSwitcher) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -311,7 +307,6 @@ func (x *InlineViewSwitcher) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *InlineViewSwitcher) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -336,7 +331,6 @@ func (x *InlineViewSwitcher) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *InlineViewSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -375,30 +369,23 @@ func (x *InlineViewSwitcher) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *InlineViewSwitcher) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *InlineViewSwitcher) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *InlineViewSwitcher) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *InlineViewSwitcher) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -411,19 +398,7 @@ func (x *InlineViewSwitcher) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *InlineViewSwitcher) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -431,14 +406,7 @@ func (x *InlineViewSwitcher) SetAccessibleParent(ParentVar gtk.Accessible, NextS
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *InlineViewSwitcher) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -447,9 +415,7 @@ func (x *InlineViewSwitcher) UpdateNextAccessibleSibling(NewSiblingVar gtk.Acces
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *InlineViewSwitcher) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -471,9 +437,7 @@ func (x *InlineViewSwitcher) UpdatePlatformState(StateVar gtk.AccessiblePlatform
 //
 // ```
 func (x *InlineViewSwitcher) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -483,9 +447,7 @@ func (x *InlineViewSwitcher) UpdateProperty(FirstPropertyVar gtk.AccessiblePrope
 //
 // This function is meant to be used by language bindings.
 func (x *InlineViewSwitcher) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -507,9 +469,7 @@ func (x *InlineViewSwitcher) UpdatePropertyValue(NPropertiesVar int, PropertiesV
 //
 // ```
 func (x *InlineViewSwitcher) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -519,9 +479,7 @@ func (x *InlineViewSwitcher) UpdateRelation(FirstRelationVar gtk.AccessibleRelat
 //
 // This function is meant to be used by language bindings.
 func (x *InlineViewSwitcher) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -544,9 +502,7 @@ func (x *InlineViewSwitcher) UpdateRelationValue(NRelationsVar int, RelationsVar
 //
 // ```
 func (x *InlineViewSwitcher) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -556,9 +512,7 @@ func (x *InlineViewSwitcher) UpdateState(FirstStateVar gtk.AccessibleState, varA
 //
 // This function is meant to be used by language bindings.
 func (x *InlineViewSwitcher) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -566,28 +520,24 @@ func (x *InlineViewSwitcher) UpdateStateValue(NStatesVar int, StatesVar []gtk.Ac
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *InlineViewSwitcher) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *InlineViewSwitcher) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *InlineViewSwitcher) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -611,5 +561,4 @@ func init() {
 	core.PuregoSafeRegister(&xInlineViewSwitcherSetDisplayMode, libs, "adw_inline_view_switcher_set_display_mode")
 	core.PuregoSafeRegister(&xInlineViewSwitcherSetHomogeneous, libs, "adw_inline_view_switcher_set_homogeneous")
 	core.PuregoSafeRegister(&xInlineViewSwitcherSetStack, libs, "adw_inline_view_switcher_set_stack")
-
 }

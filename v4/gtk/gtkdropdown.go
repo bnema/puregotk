@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -154,7 +153,6 @@ var xDropDownGetEnableSearch func(uintptr) bool
 
 // Returns whether search is enabled.
 func (x *DropDown) GetEnableSearch() bool {
-
 	cret := xDropDownGetEnableSearch(x.GoPointer())
 	return cret
 }
@@ -254,7 +252,6 @@ var xDropDownGetSearchMatchMode func(uintptr) StringFilterMatchMode
 
 // Returns the match mode that the search filter is using.
 func (x *DropDown) GetSearchMatchMode() StringFilterMatchMode {
-
 	cret := xDropDownGetSearchMatchMode(x.GoPointer())
 	return cret
 }
@@ -263,7 +260,6 @@ var xDropDownGetSelected func(uintptr) uint
 
 // Gets the position of the selected item.
 func (x *DropDown) GetSelected() uint {
-
 	cret := xDropDownGetSelected(x.GoPointer())
 	return cret
 }
@@ -289,7 +285,6 @@ var xDropDownGetShowArrow func(uintptr) bool
 
 // Returns whether to show an arrow within the widget.
 func (x *DropDown) GetShowArrow() bool {
-
 	cret := xDropDownGetShowArrow(x.GoPointer())
 	return cret
 }
@@ -302,9 +297,7 @@ var xDropDownSetEnableSearch func(uintptr, bool)
 // Note that [property@Gtk.DropDown:expression] must be set for
 // search to work.
 func (x *DropDown) SetEnableSearch(EnableSearchVar bool) {
-
 	xDropDownSetEnableSearch(x.GoPointer(), EnableSearchVar)
-
 }
 
 var xDropDownSetExpression func(uintptr, uintptr)
@@ -314,97 +307,56 @@ var xDropDownSetExpression func(uintptr, uintptr)
 // This is used for search in the popup. The expression must have
 // a value type of %G_TYPE_STRING.
 func (x *DropDown) SetExpression(ExpressionVar *Expression) {
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	xDropDownSetExpression(x.GoPointer(), ExpressionVarPtr)
-
+	xDropDownSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
 }
 
 var xDropDownSetFactory func(uintptr, uintptr)
 
 // Sets the `GtkListItemFactory` to use for populating list items.
 func (x *DropDown) SetFactory(FactoryVar *ListItemFactory) {
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	xDropDownSetFactory(x.GoPointer(), FactoryVarPtr)
-
+	xDropDownSetFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
 var xDropDownSetHeaderFactory func(uintptr, uintptr)
 
 // Sets the `GtkListItemFactory` to use for creating header widgets for the popup.
 func (x *DropDown) SetHeaderFactory(FactoryVar *ListItemFactory) {
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	xDropDownSetHeaderFactory(x.GoPointer(), FactoryVarPtr)
-
+	xDropDownSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
 var xDropDownSetListFactory func(uintptr, uintptr)
 
 // Sets the `GtkListItemFactory` to use for populating list items in the popup.
 func (x *DropDown) SetListFactory(FactoryVar *ListItemFactory) {
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	xDropDownSetListFactory(x.GoPointer(), FactoryVarPtr)
-
+	xDropDownSetListFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
 var xDropDownSetModel func(uintptr, uintptr)
 
 // Sets the `GListModel` to use.
 func (x *DropDown) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xDropDownSetModel(x.GoPointer(), ModelVarPtr)
-
+	xDropDownSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xDropDownSetSearchMatchMode func(uintptr, StringFilterMatchMode)
 
 // Sets the match mode for the search filter.
 func (x *DropDown) SetSearchMatchMode(SearchMatchModeVar StringFilterMatchMode) {
-
 	xDropDownSetSearchMatchMode(x.GoPointer(), SearchMatchModeVar)
-
 }
 
 var xDropDownSetSelected func(uintptr, uint)
 
 // Selects the item at the given position.
 func (x *DropDown) SetSelected(PositionVar uint) {
-
 	xDropDownSetSelected(x.GoPointer(), PositionVar)
-
 }
 
 var xDropDownSetShowArrow func(uintptr, bool)
 
 // Sets whether an arrow will be displayed within the widget.
 func (x *DropDown) SetShowArrow(ShowArrowVar bool) {
-
 	xDropDownSetShowArrow(x.GoPointer(), ShowArrowVar)
-
 }
 
 func (c *DropDown) GoPointer() uintptr {
@@ -499,7 +451,6 @@ func (x *DropDown) ConnectActivate(cb *func(DropDown)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -518,9 +469,19 @@ func (x *DropDown) ConnectActivate(cb *func(DropDown)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *DropDown) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *DropDown) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -541,7 +502,6 @@ func (x *DropDown) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *DropDown) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -566,7 +526,6 @@ func (x *DropDown) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *DropDown) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -605,30 +564,23 @@ func (x *DropDown) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *DropDown) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *DropDown) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *DropDown) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *DropDown) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -641,19 +593,7 @@ func (x *DropDown) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *DropDown) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -661,14 +601,7 @@ func (x *DropDown) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *DropDown) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -677,9 +610,7 @@ func (x *DropDown) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *DropDown) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -701,9 +632,7 @@ func (x *DropDown) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *DropDown) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -713,9 +642,7 @@ func (x *DropDown) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *DropDown) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -737,9 +664,7 @@ func (x *DropDown) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *DropDown) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -749,9 +674,7 @@ func (x *DropDown) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *DropDown) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -774,9 +697,7 @@ func (x *DropDown) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *DropDown) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -786,9 +707,7 @@ func (x *DropDown) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *DropDown) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -796,14 +715,13 @@ func (x *DropDown) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *DropDown) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -837,5 +755,4 @@ func init() {
 	core.PuregoSafeRegister(&xDropDownSetSearchMatchMode, libs, "gtk_drop_down_set_search_match_mode")
 	core.PuregoSafeRegister(&xDropDownSetSelected, libs, "gtk_drop_down_set_selected")
 	core.PuregoSafeRegister(&xDropDownSetShowArrow, libs, "gtk_drop_down_set_show_arrow")
-
 }

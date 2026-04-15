@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -59,14 +58,12 @@ func NewCharsetConverter(ToCharsetVar string, FromCharsetVar string) (*CharsetCo
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xCharsetConverterGetNumFallbacks func(uintptr) uint
 
 // Gets the number of fallbacks that @converter has applied so far.
 func (x *CharsetConverter) GetNumFallbacks() uint {
-
 	cret := xCharsetConverterGetNumFallbacks(x.GoPointer())
 	return cret
 }
@@ -75,7 +72,6 @@ var xCharsetConverterGetUseFallback func(uintptr) bool
 
 // Gets the #GCharsetConverter:use-fallback property.
 func (x *CharsetConverter) GetUseFallback() bool {
-
 	cret := xCharsetConverterGetUseFallback(x.GoPointer())
 	return cret
 }
@@ -84,9 +80,7 @@ var xCharsetConverterSetUseFallback func(uintptr, bool)
 
 // Sets the #GCharsetConverter:use-fallback property.
 func (x *CharsetConverter) SetUseFallback(UseFallbackVar bool) {
-
 	xCharsetConverterSetUseFallback(x.GoPointer(), UseFallbackVar)
-
 }
 
 func (c *CharsetConverter) GoPointer() uintptr {
@@ -241,7 +235,6 @@ func (x *CharsetConverter) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Applies @converter to the data in @bytes.
@@ -249,20 +242,20 @@ func (x *CharsetConverter) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, erro
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
 func (x *CharsetConverter) Reset() {
-
 	XGConverterReset(x.GoPointer())
-
 }
 
 // Initializes the object implementing the interface.
@@ -316,12 +309,11 @@ func (x *CharsetConverter) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -338,5 +330,4 @@ func init() {
 	core.PuregoSafeRegister(&xCharsetConverterGetNumFallbacks, libs, "g_charset_converter_get_num_fallbacks")
 	core.PuregoSafeRegister(&xCharsetConverterGetUseFallback, libs, "g_charset_converter_get_use_fallback")
 	core.PuregoSafeRegister(&xCharsetConverterSetUseFallback, libs, "g_charset_converter_set_use_fallback")
-
 }

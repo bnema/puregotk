@@ -7,8 +7,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -31,7 +30,6 @@ var xIsSupported func() bool
 
 // May block for a Wayland roundtrip the first time it's called.
 func IsSupported() bool {
-
 	cret := xIsSupported()
 	return cret
 }
@@ -76,16 +74,13 @@ var xInstanceAssignWindowToMonitor func(uintptr, uintptr, uintptr)
 // library is not allowed (may result in a Wayland protocol error). The window will be unmapped and gtk_window_destroy()
 // called on it when the current lock ends.
 func (x *Instance) AssignWindowToMonitor(WindowVar *gtk.Window, MonitorVar *gdk.Monitor) {
-
 	xInstanceAssignWindowToMonitor(x.GoPointer(), WindowVar.GoPointer(), MonitorVar.GoPointer())
-
 }
 
 var xInstanceIsLocked func(uintptr) bool
 
 // Returns if this instance currently holds a lock.
 func (x *Instance) IsLocked() bool {
-
 	cret := xInstanceIsLocked(x.GoPointer())
 	return cret
 }
@@ -97,7 +92,6 @@ var xInstanceLock func(uintptr) bool
 // function returns (for example, if another #GtkSessionLockInstance holds a lock) or later (if another process holds a
 // lock). The only case where neither signal is triggered is if the instance is already locked.
 func (x *Instance) Lock() bool {
-
 	cret := xInstanceLock(x.GoPointer())
 	return cret
 }
@@ -106,9 +100,7 @@ var xInstanceUnlock func(uintptr)
 
 // If the screen is locked by this instance unlocks it and fires ::unlocked. Otherwise has no effect
 func (x *Instance) Unlock() {
-
 	xInstanceUnlock(x.GoPointer())
-
 }
 
 func (c *Instance) GoPointer() uintptr {
@@ -137,7 +129,6 @@ func (x *Instance) ConnectFailed(cb *func(Instance)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -161,7 +152,6 @@ func (x *Instance) ConnectLocked(cb *func(Instance)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -177,7 +167,7 @@ func (x *Instance) ConnectLocked(cb *func(Instance)) uint {
 // This API does not directly tell you when a monitor is removed (GTK APIs can be used for that), however the window you
 // send to gtk_session_lock_instance_assign_window_to_monitor() will be automatically unmapped and dereferenced when its
 // monitor is removed or the screen is unlocked.
-func (x *Instance) ConnectMonitor(cb *func(Instance, *gdk.Monitor)) uint {
+func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "monitor", cbRefPtr)
@@ -190,8 +180,7 @@ func (x *Instance) ConnectMonitor(cb *func(Instance, *gdk.Monitor)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *gdk.Monitor { cls := &gdk.Monitor{}; cls.Ptr = MonitorVarp; return cls }())
-
+		cbFn(fa, MonitorVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -216,7 +205,6 @@ func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -228,15 +216,13 @@ func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint {
 var libs []uintptr
 
 // Available reports whether the shared library was loaded successfully.
-// Check this before calling any functions in this package.
 func Available() bool {
 	return len(libs) > 0
 }
 
 func init() {
 	core.SetPackageName("SESSIONLOCK", "gtk4-layer-shell-0")
-	core.SetSharedLibraries("SESSIONLOCK", []string{"libgtk4-layer-shell.so.0"})
-
+	core.SetSharedLibraries("SESSIONLOCK", []string{"libgtk4-layer-shell.so.0", "libgtk4-layer-shell.0.dylib"})
 	for _, libPath := range core.TryGetPaths("SESSIONLOCK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
 		if err != nil {
@@ -255,5 +241,4 @@ func init() {
 	core.PuregoSafeRegister(&xInstanceIsLocked, libs, "gtk_session_lock_instance_is_locked")
 	core.PuregoSafeRegister(&xInstanceLock, libs, "gtk_session_lock_instance_lock")
 	core.PuregoSafeRegister(&xInstanceUnlock, libs, "gtk_session_lock_instance_unlock")
-
 }

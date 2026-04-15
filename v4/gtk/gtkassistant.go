@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -144,16 +143,13 @@ var xAssistantAddActionWidget func(uintptr, uintptr)
 
 // Adds a widget to the action area of a `GtkAssistant`.
 func (x *Assistant) AddActionWidget(ChildVar *Widget) {
-
 	xAssistantAddActionWidget(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xAssistantAppendPage func(uintptr, uintptr) int
 
 // Appends a page to the @assistant.
 func (x *Assistant) AppendPage(PageVar *Widget) int {
-
 	cret := xAssistantAppendPage(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -171,16 +167,13 @@ var xAssistantCommit func(uintptr)
 // a long-running, unreversible operation after the user has
 // clicked apply on a confirmation page.
 func (x *Assistant) Commit() {
-
 	xAssistantCommit(x.GoPointer())
-
 }
 
 var xAssistantGetCurrentPage func(uintptr) int
 
 // Returns the page number of the current page.
 func (x *Assistant) GetCurrentPage() int {
-
 	cret := xAssistantGetCurrentPage(x.GoPointer())
 	return cret
 }
@@ -189,7 +182,6 @@ var xAssistantGetNPages func(uintptr) int
 
 // Returns the number of pages in the @assistant
 func (x *Assistant) GetNPages() int {
-
 	cret := xAssistantGetNPages(x.GoPointer())
 	return cret
 }
@@ -232,7 +224,6 @@ var xAssistantGetPageComplete func(uintptr, uintptr) bool
 
 // Gets whether @page is complete.
 func (x *Assistant) GetPageComplete(PageVar *Widget) bool {
-
 	cret := xAssistantGetPageComplete(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -241,7 +232,6 @@ var xAssistantGetPageTitle func(uintptr, uintptr) string
 
 // Gets the title for @page.
 func (x *Assistant) GetPageTitle(PageVar *Widget) string {
-
 	cret := xAssistantGetPageTitle(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -250,7 +240,6 @@ var xAssistantGetPageType func(uintptr, uintptr) AssistantPageType
 
 // Gets the page type of @page.
 func (x *Assistant) GetPageType(PageVar *Widget) AssistantPageType {
-
 	cret := xAssistantGetPageType(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -275,7 +264,6 @@ var xAssistantInsertPage func(uintptr, uintptr, int) int
 
 // Inserts a page in the @assistant at a given position.
 func (x *Assistant) InsertPage(PageVar *Widget, PositionVar int) int {
-
 	cret := xAssistantInsertPage(x.GoPointer(), PageVar.GoPointer(), PositionVar)
 	return cret
 }
@@ -290,16 +278,13 @@ var xAssistantNextPage func(uintptr)
 // This function is for use when creating pages of the
 // %GTK_ASSISTANT_PAGE_CUSTOM type.
 func (x *Assistant) NextPage() {
-
 	xAssistantNextPage(x.GoPointer())
-
 }
 
 var xAssistantPrependPage func(uintptr, uintptr) int
 
 // Prepends a page to the @assistant.
 func (x *Assistant) PrependPage(PageVar *Widget) int {
-
 	cret := xAssistantPrependPage(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -314,27 +299,21 @@ var xAssistantPreviousPage func(uintptr)
 // This function is for use when creating pages of the
 // %GTK_ASSISTANT_PAGE_CUSTOM type.
 func (x *Assistant) PreviousPage() {
-
 	xAssistantPreviousPage(x.GoPointer())
-
 }
 
 var xAssistantRemoveActionWidget func(uintptr, uintptr)
 
 // Removes a widget from the action area of a `GtkAssistant`.
 func (x *Assistant) RemoveActionWidget(ChildVar *Widget) {
-
 	xAssistantRemoveActionWidget(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xAssistantRemovePage func(uintptr, int)
 
 // Removes the @page_num’s page from @assistant.
 func (x *Assistant) RemovePage(PageNumVar int) {
-
 	xAssistantRemovePage(x.GoPointer(), PageNumVar)
-
 }
 
 var xAssistantSetCurrentPage func(uintptr, int)
@@ -345,9 +324,7 @@ var xAssistantSetCurrentPage func(uintptr, int)
 // as the @assistant flow can be set with
 // gtk_assistant_set_forward_page_func().
 func (x *Assistant) SetCurrentPage(PageNumVar int) {
-
 	xAssistantSetCurrentPage(x.GoPointer(), PageNumVar)
-
 }
 
 var xAssistantSetForwardPageFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -360,39 +337,7 @@ var xAssistantSetForwardPageFunc func(uintptr, uintptr, uintptr, uintptr)
 // use the default forward function, which just goes to the
 // next visible page.
 func (x *Assistant) SetForwardPageFunc(PageFuncVar *AssistantPageFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var PageFuncVarRef uintptr
-	if PageFuncVar != nil {
-		PageFuncVarPtr := uintptr(unsafe.Pointer(PageFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(PageFuncVarPtr); ok {
-			PageFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 int, arg1 uintptr) int {
-				cbFn := *PageFuncVar
-				return cbFn(arg0, arg1)
-			}
-			PageFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(PageFuncVarPtr, PageFuncVarRef, PageFuncVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xAssistantSetForwardPageFunc(x.GoPointer(), PageFuncVarRef, DataVar, DestroyVarRef)
-
+	xAssistantSetForwardPageFunc(x.GoPointer(), glib.NewCallbackNullable(PageFuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xAssistantSetPageComplete func(uintptr, uintptr, bool)
@@ -402,9 +347,7 @@ var xAssistantSetPageComplete func(uintptr, uintptr, bool)
 // This will make @assistant update the buttons state
 // to be able to continue the task.
 func (x *Assistant) SetPageComplete(PageVar *Widget, CompleteVar bool) {
-
 	xAssistantSetPageComplete(x.GoPointer(), PageVar.GoPointer(), CompleteVar)
-
 }
 
 var xAssistantSetPageTitle func(uintptr, uintptr, string)
@@ -414,9 +357,7 @@ var xAssistantSetPageTitle func(uintptr, uintptr, string)
 // The title is displayed in the header area of the assistant
 // when @page is the current page.
 func (x *Assistant) SetPageTitle(PageVar *Widget, TitleVar string) {
-
 	xAssistantSetPageTitle(x.GoPointer(), PageVar.GoPointer(), TitleVar)
-
 }
 
 var xAssistantSetPageType func(uintptr, uintptr, AssistantPageType)
@@ -425,9 +366,7 @@ var xAssistantSetPageType func(uintptr, uintptr, AssistantPageType)
 //
 // The page type determines the page behavior in the @assistant.
 func (x *Assistant) SetPageType(PageVar *Widget, TypeVar AssistantPageType) {
-
 	xAssistantSetPageType(x.GoPointer(), PageVar.GoPointer(), TypeVar)
-
 }
 
 var xAssistantUpdateButtonsState func(uintptr)
@@ -442,9 +381,7 @@ var xAssistantUpdateButtonsState func(uintptr)
 // function is when changing a value on the current page
 // affects the future page flow of the assistant.
 func (x *Assistant) UpdateButtonsState() {
-
 	xAssistantUpdateButtonsState(x.GoPointer())
-
 }
 
 func (c *Assistant) GoPointer() uintptr {
@@ -508,7 +445,6 @@ func (x *Assistant) ConnectApply(cb *func(Assistant)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -532,7 +468,6 @@ func (x *Assistant) ConnectCancel(cb *func(Assistant)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -558,7 +493,6 @@ func (x *Assistant) ConnectClose(cb *func(Assistant)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -582,7 +516,6 @@ func (x *Assistant) ConnectEscape(cb *func(Assistant)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -596,7 +529,7 @@ func (x *Assistant) ConnectEscape(cb *func(Assistant)) uint {
 //
 // A handler for this signal can do any preparations which are
 // necessary before showing @page.
-func (x *Assistant) ConnectPrepare(cb *func(Assistant, *Widget)) uint {
+func (x *Assistant) ConnectPrepare(cb *func(Assistant, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
@@ -609,8 +542,7 @@ func (x *Assistant) ConnectPrepare(cb *func(Assistant, *Widget)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Widget { cls := &Widget{}; cls.Ptr = PageVarp; return cls }())
-
+		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -629,9 +561,19 @@ func (x *Assistant) ConnectPrepare(cb *func(Assistant, *Widget)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Assistant) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Assistant) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -652,7 +594,6 @@ func (x *Assistant) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Assistant) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -677,7 +618,6 @@ func (x *Assistant) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Assistant) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -716,30 +656,23 @@ func (x *Assistant) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Assistant) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Assistant) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Assistant) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Assistant) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -752,19 +685,7 @@ func (x *Assistant) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Assistant) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -772,14 +693,7 @@ func (x *Assistant) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Assistant) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -788,9 +702,7 @@ func (x *Assistant) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Assistant) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -812,9 +724,7 @@ func (x *Assistant) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Assistant) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -824,9 +734,7 @@ func (x *Assistant) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Assistant) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -848,9 +756,7 @@ func (x *Assistant) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acce
 //
 // ```
 func (x *Assistant) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -860,9 +766,7 @@ func (x *Assistant) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Assistant) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -885,9 +789,7 @@ func (x *Assistant) UpdateRelationValue(NRelationsVar int, RelationsVar []Access
 //
 // ```
 func (x *Assistant) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -897,9 +799,7 @@ func (x *Assistant) UpdateState(FirstStateVar AccessibleState, varArgs ...interf
 //
 // This function is meant to be used by language bindings.
 func (x *Assistant) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -907,7 +807,6 @@ func (x *Assistant) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Assistant) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -947,27 +846,21 @@ func (x *Assistant) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *Assistant) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Assistant) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *Assistant) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
 // Returns the display that this `GtkRoot` is on.
@@ -1014,14 +907,7 @@ func (x *Assistant) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *Assistant) SetFocus(FocusVar *Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
-
+	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
 // `GtkAssistantPage` is an auxiliary object used by `GtkAssistant`.
@@ -1111,7 +997,7 @@ func (x *AssistantPage) GetPropertyTitle() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1154,5 +1040,4 @@ func init() {
 	core.PuregoSafeRegister(&xAssistantPageGLibType, libs, "gtk_assistant_page_get_type")
 
 	core.PuregoSafeRegister(&xAssistantPageGetChild, libs, "gtk_assistant_page_get_child")
-
 }

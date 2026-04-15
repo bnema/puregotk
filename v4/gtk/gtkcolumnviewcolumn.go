@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -67,15 +66,10 @@ var xNewColumnViewColumn func(uintptr, uintptr) uintptr
 func NewColumnViewColumn(TitleVar *string, FactoryVar *ListItemFactory) *ColumnViewColumn {
 	var cls *ColumnViewColumn
 
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
-	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVarPtr)
+	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -108,7 +102,6 @@ var xColumnViewColumnGetExpand func(uintptr) bool
 
 // Returns whether this column should expand.
 func (x *ColumnViewColumn) GetExpand() bool {
-
 	cret := xColumnViewColumnGetExpand(x.GoPointer())
 	return cret
 }
@@ -135,7 +128,6 @@ var xColumnViewColumnGetFixedWidth func(uintptr) int
 
 // Gets the fixed width of the column.
 func (x *ColumnViewColumn) GetFixedWidth() int {
-
 	cret := xColumnViewColumnGetFixedWidth(x.GoPointer())
 	return cret
 }
@@ -162,7 +154,6 @@ var xColumnViewColumnGetId func(uintptr) string
 
 // Returns the ID set with [method@Gtk.ColumnViewColumn.set_id].
 func (x *ColumnViewColumn) GetId() string {
-
 	cret := xColumnViewColumnGetId(x.GoPointer())
 	return cret
 }
@@ -171,7 +162,6 @@ var xColumnViewColumnGetResizable func(uintptr) bool
 
 // Returns whether this column is resizable.
 func (x *ColumnViewColumn) GetResizable() bool {
-
 	cret := xColumnViewColumnGetResizable(x.GoPointer())
 	return cret
 }
@@ -197,7 +187,6 @@ var xColumnViewColumnGetTitle func(uintptr) string
 
 // Returns the title set with [method@Gtk.ColumnViewColumn.set_title].
 func (x *ColumnViewColumn) GetTitle() string {
-
 	cret := xColumnViewColumnGetTitle(x.GoPointer())
 	return cret
 }
@@ -206,7 +195,6 @@ var xColumnViewColumnGetVisible func(uintptr) bool
 
 // Returns whether this column is visible.
 func (x *ColumnViewColumn) GetVisible() bool {
-
 	cret := xColumnViewColumnGetVisible(x.GoPointer())
 	return cret
 }
@@ -218,9 +206,7 @@ var xColumnViewColumnSetExpand func(uintptr, bool)
 // The extra space is shared equally amongst all columns that
 // have are set to expand.
 func (x *ColumnViewColumn) SetExpand(ExpandVar bool) {
-
 	xColumnViewColumnSetExpand(x.GoPointer(), ExpandVar)
-
 }
 
 var xColumnViewColumnSetFactory func(uintptr, uintptr)
@@ -228,14 +214,7 @@ var xColumnViewColumnSetFactory func(uintptr, uintptr)
 // Sets the `GtkListItemFactory` to use for populating list items
 // for this column.
 func (x *ColumnViewColumn) SetFactory(FactoryVar *ListItemFactory) {
-
-	var FactoryVarPtr uintptr
-	if FactoryVar != nil {
-		FactoryVarPtr = FactoryVar.GoPointer()
-	}
-
-	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVarPtr)
-
+	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
 var xColumnViewColumnSetFixedWidth func(uintptr, int)
@@ -247,9 +226,7 @@ var xColumnViewColumnSetFixedWidth func(uintptr, int)
 // Setting a fixed width overrides the automatically calculated
 // width. Interactive resizing also sets the “fixed-width” property.
 func (x *ColumnViewColumn) SetFixedWidth(FixedWidthVar int) {
-
 	xColumnViewColumnSetFixedWidth(x.GoPointer(), FixedWidthVar)
-
 }
 
 var xColumnViewColumnSetHeaderMenu func(uintptr, uintptr)
@@ -257,14 +234,7 @@ var xColumnViewColumnSetHeaderMenu func(uintptr, uintptr)
 // Sets the menu model that is used to create the context menu
 // for the column header.
 func (x *ColumnViewColumn) SetHeaderMenu(MenuVar *gio.MenuModel) {
-
-	var MenuVarPtr uintptr
-	if MenuVar != nil {
-		MenuVarPtr = MenuVar.GoPointer()
-	}
-
-	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVarPtr)
-
+	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVar.GoPointer())
 }
 
 var xColumnViewColumnSetId func(uintptr, uintptr)
@@ -276,21 +246,17 @@ var xColumnViewColumnSetId func(uintptr, uintptr)
 //
 // It is up to callers to ensure uniqueness of IDs.
 func (x *ColumnViewColumn) SetId(IdVar *string) {
-
 	IdVarPtr := core.GStrdupNullable(IdVar)
 	defer core.GFreeNullable(IdVarPtr)
 
 	xColumnViewColumnSetId(x.GoPointer(), IdVarPtr)
-
 }
 
 var xColumnViewColumnSetResizable func(uintptr, bool)
 
 // Sets whether this column should be resizable by dragging.
 func (x *ColumnViewColumn) SetResizable(ResizableVar bool) {
-
 	xColumnViewColumnSetResizable(x.GoPointer(), ResizableVar)
-
 }
 
 var xColumnViewColumnSetSorter func(uintptr, uintptr)
@@ -306,14 +272,7 @@ var xColumnViewColumnSetSorter func(uintptr, uintptr)
 // See [method@Gtk.ColumnView.get_sorter] for the necessary steps
 // for setting up customizable sorting for [class@Gtk.ColumnView].
 func (x *ColumnViewColumn) SetSorter(SorterVar *Sorter) {
-
-	var SorterVarPtr uintptr
-	if SorterVar != nil {
-		SorterVarPtr = SorterVar.GoPointer()
-	}
-
-	xColumnViewColumnSetSorter(x.GoPointer(), SorterVarPtr)
-
+	xColumnViewColumnSetSorter(x.GoPointer(), SorterVar.GoPointer())
 }
 
 var xColumnViewColumnSetTitle func(uintptr, uintptr)
@@ -324,21 +283,17 @@ var xColumnViewColumnSetTitle func(uintptr, uintptr)
 // for this column and is therefore user-facing text that should
 // be translated.
 func (x *ColumnViewColumn) SetTitle(TitleVar *string) {
-
 	TitleVarPtr := core.GStrdupNullable(TitleVar)
 	defer core.GFreeNullable(TitleVarPtr)
 
 	xColumnViewColumnSetTitle(x.GoPointer(), TitleVarPtr)
-
 }
 
 var xColumnViewColumnSetVisible func(uintptr, bool)
 
 // Sets whether this column should be visible in views.
 func (x *ColumnViewColumn) SetVisible(VisibleVar bool) {
-
 	xColumnViewColumnSetVisible(x.GoPointer(), VisibleVar)
-
 }
 
 func (c *ColumnViewColumn) GoPointer() uintptr {
@@ -470,7 +425,7 @@ func (x *ColumnViewColumn) GetPropertyVisible() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -503,5 +458,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewColumnSetSorter, libs, "gtk_column_view_column_set_sorter")
 	core.PuregoSafeRegister(&xColumnViewColumnSetTitle, libs, "gtk_column_view_column_set_title")
 	core.PuregoSafeRegister(&xColumnViewColumnSetVisible, libs, "gtk_column_view_column_set_visible")
-
 }

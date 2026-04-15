@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -660,9 +659,7 @@ var xTextViewAddChildAtAnchor func(uintptr, uintptr, uintptr)
 
 // Adds a child widget in the text buffer, at the given @anchor.
 func (x *TextView) AddChildAtAnchor(ChildVar *Widget, AnchorVar *TextChildAnchor) {
-
 	xTextViewAddChildAtAnchor(x.GoPointer(), ChildVar.GoPointer(), AnchorVar.GoPointer())
-
 }
 
 var xTextViewAddOverlay func(uintptr, uintptr, int, int)
@@ -678,9 +675,7 @@ var xTextViewAddOverlay func(uintptr, uintptr, int, int)
 // If instead you want a widget that will not move with the
 // `GtkTextView` contents see `GtkOverlay`.
 func (x *TextView) AddOverlay(ChildVar *Widget, XposVar int, YposVar int) {
-
 	xTextViewAddOverlay(x.GoPointer(), ChildVar.GoPointer(), XposVar, YposVar)
-
 }
 
 var xTextViewBackwardDisplayLine func(uintptr, *TextIter) bool
@@ -695,7 +690,6 @@ var xTextViewBackwardDisplayLine func(uintptr, *TextIter) bool
 // they depend on the view’s width; paragraphs are the same in all
 // views, since they depend on the contents of the `GtkTextBuffer`.
 func (x *TextView) BackwardDisplayLine(IterVar *TextIter) bool {
-
 	cret := xTextViewBackwardDisplayLine(x.GoPointer(), IterVar)
 	return cret
 }
@@ -712,7 +706,6 @@ var xTextViewBackwardDisplayLineStart func(uintptr, *TextIter) bool
 // they depend on the view’s width; paragraphs are the same in all
 // views, since they depend on the contents of the `GtkTextBuffer`.
 func (x *TextView) BackwardDisplayLineStart(IterVar *TextIter) bool {
-
 	cret := xTextViewBackwardDisplayLineStart(x.GoPointer(), IterVar)
 	return cret
 }
@@ -721,9 +714,7 @@ var xTextViewBufferToWindowCoords func(uintptr, TextWindowType, int, int, *int, 
 
 // Converts buffer coordinates to window coordinates.
 func (x *TextView) BufferToWindowCoords(WinVar TextWindowType, BufferXVar int, BufferYVar int, WindowXVar *int, WindowYVar *int) {
-
 	xTextViewBufferToWindowCoords(x.GoPointer(), WinVar, BufferXVar, BufferYVar, WindowXVar, WindowYVar)
-
 }
 
 var xTextViewForwardDisplayLine func(uintptr, *TextIter) bool
@@ -738,7 +729,6 @@ var xTextViewForwardDisplayLine func(uintptr, *TextIter) bool
 // they depend on the view’s width; paragraphs are the same in all
 // views, since they depend on the contents of the `GtkTextBuffer`.
 func (x *TextView) ForwardDisplayLine(IterVar *TextIter) bool {
-
 	cret := xTextViewForwardDisplayLine(x.GoPointer(), IterVar)
 	return cret
 }
@@ -755,7 +745,6 @@ var xTextViewForwardDisplayLineEnd func(uintptr, *TextIter) bool
 // they depend on the view’s width; paragraphs are the same in all
 // views, since they depend on the contents of the `GtkTextBuffer`.
 func (x *TextView) ForwardDisplayLineEnd(IterVar *TextIter) bool {
-
 	cret := xTextViewForwardDisplayLineEnd(x.GoPointer(), IterVar)
 	return cret
 }
@@ -766,7 +755,6 @@ var xTextViewGetAcceptsTab func(uintptr) bool
 //
 // See [method@Gtk.TextView.set_accepts_tab].
 func (x *TextView) GetAcceptsTab() bool {
-
 	cret := xTextViewGetAcceptsTab(x.GoPointer())
 	return cret
 }
@@ -775,7 +763,6 @@ var xTextViewGetBottomMargin func(uintptr) int
 
 // Gets the bottom margin for text in the @text_view.
 func (x *TextView) GetBottomMargin() int {
-
 	cret := xTextViewGetBottomMargin(x.GoPointer())
 	return cret
 }
@@ -823,16 +810,13 @@ var xTextViewGetCursorLocations func(uintptr, *TextIter, *gdk.Rectangle, *gdk.Re
 // [method@Gtk.TextView.buffer_to_window_coords] to convert these
 // coordinates to coordinates for one of the windows in the text view.
 func (x *TextView) GetCursorLocations(IterVar *TextIter, StrongVar *gdk.Rectangle, WeakVar *gdk.Rectangle) {
-
 	xTextViewGetCursorLocations(x.GoPointer(), IterVar, StrongVar, WeakVar)
-
 }
 
 var xTextViewGetCursorVisible func(uintptr) bool
 
 // Find out whether the cursor should be displayed.
 func (x *TextView) GetCursorVisible() bool {
-
 	cret := xTextViewGetCursorVisible(x.GoPointer())
 	return cret
 }
@@ -843,7 +827,6 @@ var xTextViewGetEditable func(uintptr) bool
 //
 // Tags in the buffer may override this setting for some ranges of text.
 func (x *TextView) GetEditable() bool {
-
 	cret := xTextViewGetEditable(x.GoPointer())
 	return cret
 }
@@ -895,7 +878,6 @@ var xTextViewGetIndent func(uintptr) int
 // Tags in the view’s buffer may override the default.
 // The indentation may be negative.
 func (x *TextView) GetIndent() int {
-
 	cret := xTextViewGetIndent(x.GoPointer())
 	return cret
 }
@@ -904,7 +886,6 @@ var xTextViewGetInputHints func(uintptr) InputHints
 
 // Gets the `input-hints` of the `GtkTextView`.
 func (x *TextView) GetInputHints() InputHints {
-
 	cret := xTextViewGetInputHints(x.GoPointer())
 	return cret
 }
@@ -913,7 +894,6 @@ var xTextViewGetInputPurpose func(uintptr) InputPurpose
 
 // Gets the `input-purpose` of the `GtkTextView`.
 func (x *TextView) GetInputPurpose() InputPurpose {
-
 	cret := xTextViewGetInputPurpose(x.GoPointer())
 	return cret
 }
@@ -927,7 +907,6 @@ var xTextViewGetIterAtLocation func(uintptr, *TextIter, int, int) bool
 // event, you have to convert those to buffer coordinates with
 // [method@Gtk.TextView.window_to_buffer_coords].
 func (x *TextView) GetIterAtLocation(IterVar *TextIter, XVar int, YVar int) bool {
-
 	cret := xTextViewGetIterAtLocation(x.GoPointer(), IterVar, XVar, YVar)
 	return cret
 }
@@ -945,7 +924,6 @@ var xTextViewGetIterAtPosition func(uintptr, *TextIter, *int, int, int) bool
 // Note that this is different from [method@Gtk.TextView.get_iter_at_location],
 // which returns cursor locations, i.e. positions between characters.
 func (x *TextView) GetIterAtPosition(IterVar *TextIter, TrailingVar *int, XVar int, YVar int) bool {
-
 	cret := xTextViewGetIterAtPosition(x.GoPointer(), IterVar, TrailingVar, XVar, YVar)
 	return cret
 }
@@ -958,9 +936,7 @@ var xTextViewGetIterLocation func(uintptr, *TextIter, *gdk.Rectangle)
 // [method@Gtk.TextView.buffer_to_window_coords] to convert these
 // coordinates to coordinates for one of the windows in the text view.
 func (x *TextView) GetIterLocation(IterVar *TextIter, LocationVar *gdk.Rectangle) {
-
 	xTextViewGetIterLocation(x.GoPointer(), IterVar, LocationVar)
-
 }
 
 var xTextViewGetJustification func(uintptr) Justification
@@ -969,7 +945,6 @@ var xTextViewGetJustification func(uintptr) Justification
 //
 // Tags in the buffer may override the default.
 func (x *TextView) GetJustification() Justification {
-
 	cret := xTextViewGetJustification(x.GoPointer())
 	return cret
 }
@@ -980,7 +955,6 @@ var xTextViewGetLeftMargin func(uintptr) int
 //
 // Tags in the buffer may override the default.
 func (x *TextView) GetLeftMargin() int {
-
 	cret := xTextViewGetLeftMargin(x.GoPointer())
 	return cret
 }
@@ -995,9 +969,7 @@ var xTextViewGetLineAtY func(uintptr, *TextIter, int, *int)
 // @line_top will be filled with the coordinate of the top edge
 // of the line.
 func (x *TextView) GetLineAtY(TargetIterVar *TextIter, YVar int, LineTopVar *int) {
-
 	xTextViewGetLineAtY(x.GoPointer(), TargetIterVar, YVar, LineTopVar)
-
 }
 
 var xTextViewGetLineYrange func(uintptr, *TextIter, *int, *int)
@@ -1008,9 +980,7 @@ var xTextViewGetLineYrange func(uintptr, *TextIter, *int, *int)
 // The coordinate is a buffer coordinate; convert to window
 // coordinates with [method@Gtk.TextView.buffer_to_window_coords].
 func (x *TextView) GetLineYrange(IterVar *TextIter, YVar *int, HeightVar *int) {
-
 	xTextViewGetLineYrange(x.GoPointer(), IterVar, YVar, HeightVar)
-
 }
 
 var xTextViewGetLtrContext func(uintptr) uintptr
@@ -1037,7 +1007,6 @@ var xTextViewGetMonospace func(uintptr) bool
 
 // Gets whether the `GtkTextView` uses monospace styling.
 func (x *TextView) GetMonospace() bool {
-
 	cret := xTextViewGetMonospace(x.GoPointer())
 	return cret
 }
@@ -1046,7 +1015,6 @@ var xTextViewGetOverwrite func(uintptr) bool
 
 // Returns whether the `GtkTextView` is in overwrite mode or not.
 func (x *TextView) GetOverwrite() bool {
-
 	cret := xTextViewGetOverwrite(x.GoPointer())
 	return cret
 }
@@ -1058,7 +1026,6 @@ var xTextViewGetPixelsAboveLines func(uintptr) int
 // Adding this function with [method@Gtk.TextView.get_pixels_below_lines]
 // is equal to the line space between each paragraph.
 func (x *TextView) GetPixelsAboveLines() int {
-
 	cret := xTextViewGetPixelsAboveLines(x.GoPointer())
 	return cret
 }
@@ -1070,7 +1037,6 @@ var xTextViewGetPixelsBelowLines func(uintptr) int
 // The line space is the sum of the value returned by this function and
 // the value returned by [method@Gtk.TextView.get_pixels_above_lines].
 func (x *TextView) GetPixelsBelowLines() int {
-
 	cret := xTextViewGetPixelsBelowLines(x.GoPointer())
 	return cret
 }
@@ -1080,7 +1046,6 @@ var xTextViewGetPixelsInsideWrap func(uintptr) int
 // Gets the default number of pixels to put between wrapped lines
 // inside a paragraph.
 func (x *TextView) GetPixelsInsideWrap() int {
-
 	cret := xTextViewGetPixelsInsideWrap(x.GoPointer())
 	return cret
 }
@@ -1091,7 +1056,6 @@ var xTextViewGetRightMargin func(uintptr) int
 //
 // Tags in the buffer may override the default.
 func (x *TextView) GetRightMargin() int {
-
 	cret := xTextViewGetRightMargin(x.GoPointer())
 	return cret
 }
@@ -1116,7 +1080,7 @@ func (x *TextView) GetRtlContext() *pango.Context {
 	return cls
 }
 
-var xTextViewGetTabs func(uintptr) *pango.TabArray
+var xTextViewGetTabs func(uintptr) uintptr
 
 // Gets the default tabs for @text_view.
 //
@@ -1124,16 +1088,17 @@ var xTextViewGetTabs func(uintptr) *pango.TabArray
 // will be %NULL if “standard” (8-space) tabs are used. Free the
 // return value with [method@Pango.TabArray.free].
 func (x *TextView) GetTabs() *pango.TabArray {
-
 	cret := xTextViewGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xTextViewGetTopMargin func(uintptr) int
 
 // Gets the top margin for text in the @text_view.
 func (x *TextView) GetTopMargin() int {
-
 	cret := xTextViewGetTopMargin(x.GoPointer())
 	return cret
 }
@@ -1150,9 +1115,7 @@ var xTextViewGetVisibleOffset func(uintptr, *float64, *float64)
 // You might want this when making ulterior widgets align with quantized
 // device pixels of the textview contents such as line numbers.
 func (x *TextView) GetVisibleOffset(XOffsetVar *float64, YOffsetVar *float64) {
-
 	xTextViewGetVisibleOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
-
 }
 
 var xTextViewGetVisibleRect func(uintptr, *gdk.Rectangle)
@@ -1163,16 +1126,13 @@ var xTextViewGetVisibleRect func(uintptr, *gdk.Rectangle)
 // Convert to window coordinates with
 // [method@Gtk.TextView.buffer_to_window_coords].
 func (x *TextView) GetVisibleRect(VisibleRectVar *gdk.Rectangle) {
-
 	xTextViewGetVisibleRect(x.GoPointer(), VisibleRectVar)
-
 }
 
 var xTextViewGetWrapMode func(uintptr) WrapMode
 
 // Gets the line wrapping for the view.
 func (x *TextView) GetWrapMode() WrapMode {
-
 	cret := xTextViewGetWrapMode(x.GoPointer())
 	return cret
 }
@@ -1214,7 +1174,6 @@ var xTextViewImContextFilterKeypress func(uintptr, uintptr) bool
 //
 // ```
 func (x *TextView) ImContextFilterKeypress(EventVar *gdk.Event) bool {
-
 	cret := xTextViewImContextFilterKeypress(x.GoPointer(), EventVar.GoPointer())
 	return cret
 }
@@ -1224,7 +1183,6 @@ var xTextViewMoveMarkOnscreen func(uintptr, uintptr) bool
 // Moves a mark within the buffer so that it's
 // located within the currently-visible text area.
 func (x *TextView) MoveMarkOnscreen(MarkVar *TextMark) bool {
-
 	cret := xTextViewMoveMarkOnscreen(x.GoPointer(), MarkVar.GoPointer())
 	return cret
 }
@@ -1235,9 +1193,7 @@ var xTextViewMoveOverlay func(uintptr, uintptr, int, int)
 //
 // See [method@Gtk.TextView.add_overlay].
 func (x *TextView) MoveOverlay(ChildVar *Widget, XposVar int, YposVar int) {
-
 	xTextViewMoveOverlay(x.GoPointer(), ChildVar.GoPointer(), XposVar, YposVar)
-
 }
 
 var xTextViewMoveVisually func(uintptr, *TextIter, int) bool
@@ -1255,7 +1211,6 @@ var xTextViewMoveVisually func(uintptr, *TextIter, int) bool
 // of the current run, and there may be jumps when the cursor
 // is moved off of the end of a run.
 func (x *TextView) MoveVisually(IterVar *TextIter, CountVar int) bool {
-
 	cret := xTextViewMoveVisually(x.GoPointer(), IterVar, CountVar)
 	return cret
 }
@@ -1265,7 +1220,6 @@ var xTextViewPlaceCursorOnscreen func(uintptr) bool
 // Moves the cursor to the currently visible region of the
 // buffer.
 func (x *TextView) PlaceCursorOnscreen() bool {
-
 	cret := xTextViewPlaceCursorOnscreen(x.GoPointer())
 	return cret
 }
@@ -1274,9 +1228,7 @@ var xTextViewRemove func(uintptr, uintptr)
 
 // Removes a child widget from @text_view.
 func (x *TextView) Remove(ChildVar *Widget) {
-
 	xTextViewRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xTextViewResetCursorBlink func(uintptr)
@@ -1290,9 +1242,7 @@ var xTextViewResetCursorBlink func(uintptr)
 // (e.g. from derived classes that override the textview's
 // event handlers).
 func (x *TextView) ResetCursorBlink() {
-
 	xTextViewResetCursorBlink(x.GoPointer())
-
 }
 
 var xTextViewResetImContext func(uintptr)
@@ -1302,9 +1252,7 @@ var xTextViewResetImContext func(uintptr)
 // This can be necessary in the case where modifying the buffer
 // would confuse on-going input method behavior.
 func (x *TextView) ResetImContext() {
-
 	xTextViewResetImContext(x.GoPointer())
-
 }
 
 var xTextViewScrollMarkOnscreen func(uintptr, uintptr)
@@ -1312,9 +1260,7 @@ var xTextViewScrollMarkOnscreen func(uintptr, uintptr)
 // Scrolls @text_view the minimum distance such that @mark is contained
 // within the visible area of the widget.
 func (x *TextView) ScrollMarkOnscreen(MarkVar *TextMark) {
-
 	xTextViewScrollMarkOnscreen(x.GoPointer(), MarkVar.GoPointer())
-
 }
 
 var xTextViewScrollToIter func(uintptr, *TextIter, float64, bool, float64, float64) bool
@@ -1335,7 +1281,6 @@ var xTextViewScrollToIter func(uintptr, *TextIter, float64, bool, float64, float
 // using [method@Gtk.TextView.scroll_to_mark] which saves a point to be
 // scrolled to after line validation.
 func (x *TextView) ScrollToIter(IterVar *TextIter, WithinMarginVar float64, UseAlignVar bool, XalignVar float64, YalignVar float64) bool {
-
 	cret := xTextViewScrollToIter(x.GoPointer(), IterVar, WithinMarginVar, UseAlignVar, XalignVar, YalignVar)
 	return cret
 }
@@ -1351,9 +1296,7 @@ var xTextViewScrollToMark func(uintptr, uintptr, float64, bool, float64, float64
 // at all. The effective screen for purposes of this function is reduced
 // by a margin of size @within_margin.
 func (x *TextView) ScrollToMark(MarkVar *TextMark, WithinMarginVar float64, UseAlignVar bool, XalignVar float64, YalignVar float64) {
-
 	xTextViewScrollToMark(x.GoPointer(), MarkVar.GoPointer(), WithinMarginVar, UseAlignVar, XalignVar, YalignVar)
-
 }
 
 var xTextViewSetAcceptsTab func(uintptr, bool)
@@ -1366,9 +1309,7 @@ var xTextViewSetAcceptsTab func(uintptr, bool)
 //
 // Focus can always be moved using &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;.
 func (x *TextView) SetAcceptsTab(AcceptsTabVar bool) {
-
 	xTextViewSetAcceptsTab(x.GoPointer(), AcceptsTabVar)
-
 }
 
 var xTextViewSetBottomMargin func(uintptr, int)
@@ -1378,9 +1319,7 @@ var xTextViewSetBottomMargin func(uintptr, int)
 // Note that this function is confusingly named.
 // In CSS terms, the value set here is padding.
 func (x *TextView) SetBottomMargin(BottomMarginVar int) {
-
 	xTextViewSetBottomMargin(x.GoPointer(), BottomMarginVar)
-
 }
 
 var xTextViewSetBuffer func(uintptr, uintptr)
@@ -1392,14 +1331,7 @@ var xTextViewSetBuffer func(uintptr, uintptr)
 // before passing it to this function, you must remove that reference
 // yourself; `GtkTextView` will not “adopt” it.
 func (x *TextView) SetBuffer(BufferVar *TextBuffer) {
-
-	var BufferVarPtr uintptr
-	if BufferVar != nil {
-		BufferVarPtr = BufferVar.GoPointer()
-	}
-
-	xTextViewSetBuffer(x.GoPointer(), BufferVarPtr)
-
+	xTextViewSetBuffer(x.GoPointer(), BufferVar.GoPointer())
 }
 
 var xTextViewSetCursorVisible func(uintptr, bool)
@@ -1412,9 +1344,7 @@ var xTextViewSetCursorVisible func(uintptr, bool)
 // Note that this property may be overridden by the
 // [property@Gtk.Settings:gtk-keynav-use-caret] setting.
 func (x *TextView) SetCursorVisible(SettingVar bool) {
-
 	xTextViewSetCursorVisible(x.GoPointer(), SettingVar)
-
 }
 
 var xTextViewSetEditable func(uintptr, bool)
@@ -1424,9 +1354,7 @@ var xTextViewSetEditable func(uintptr, bool)
 // You can override this default setting with tags in the buffer,
 // using the “editable” attribute of tags.
 func (x *TextView) SetEditable(SettingVar bool) {
-
 	xTextViewSetEditable(x.GoPointer(), SettingVar)
-
 }
 
 var xTextViewSetExtraMenu func(uintptr, uintptr)
@@ -1436,14 +1364,7 @@ var xTextViewSetExtraMenu func(uintptr, uintptr)
 //
 // You can pass %NULL to remove a previously set extra menu.
 func (x *TextView) SetExtraMenu(ModelVar *gio.MenuModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xTextViewSetExtraMenu(x.GoPointer(), ModelVarPtr)
-
+	xTextViewSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xTextViewSetGutter func(uintptr, TextWindowType, uintptr)
@@ -1453,14 +1374,7 @@ var xTextViewSetGutter func(uintptr, TextWindowType, uintptr)
 // @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
 // %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
 func (x *TextView) SetGutter(WinVar TextWindowType, WidgetVar *Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xTextViewSetGutter(x.GoPointer(), WinVar, WidgetVarPtr)
-
+	xTextViewSetGutter(x.GoPointer(), WinVar, WidgetVar.GoPointer())
 }
 
 var xTextViewSetIndent func(uintptr, int)
@@ -1469,9 +1383,7 @@ var xTextViewSetIndent func(uintptr, int)
 //
 // Tags in the buffer may override the default.
 func (x *TextView) SetIndent(IndentVar int) {
-
 	xTextViewSetIndent(x.GoPointer(), IndentVar)
-
 }
 
 var xTextViewSetInputHints func(uintptr, InputHints)
@@ -1481,9 +1393,7 @@ var xTextViewSetInputHints func(uintptr, InputHints)
 // The `input-hints` allow input methods to fine-tune
 // their behaviour.
 func (x *TextView) SetInputHints(HintsVar InputHints) {
-
 	xTextViewSetInputHints(x.GoPointer(), HintsVar)
-
 }
 
 var xTextViewSetInputPurpose func(uintptr, InputPurpose)
@@ -1493,9 +1403,7 @@ var xTextViewSetInputPurpose func(uintptr, InputPurpose)
 // The `input-purpose` can be used by on-screen keyboards
 // and other input methods to adjust their behaviour.
 func (x *TextView) SetInputPurpose(PurposeVar InputPurpose) {
-
 	xTextViewSetInputPurpose(x.GoPointer(), PurposeVar)
-
 }
 
 var xTextViewSetJustification func(uintptr, Justification)
@@ -1504,9 +1412,7 @@ var xTextViewSetJustification func(uintptr, Justification)
 //
 // Tags in the view’s buffer may override the default.
 func (x *TextView) SetJustification(JustificationVar Justification) {
-
 	xTextViewSetJustification(x.GoPointer(), JustificationVar)
-
 }
 
 var xTextViewSetLeftMargin func(uintptr, int)
@@ -1518,9 +1424,7 @@ var xTextViewSetLeftMargin func(uintptr, int)
 // Note that this function is confusingly named.
 // In CSS terms, the value set here is padding.
 func (x *TextView) SetLeftMargin(LeftMarginVar int) {
-
 	xTextViewSetLeftMargin(x.GoPointer(), LeftMarginVar)
-
 }
 
 var xTextViewSetMonospace func(uintptr, bool)
@@ -1528,18 +1432,14 @@ var xTextViewSetMonospace func(uintptr, bool)
 // Sets whether the `GtkTextView` should display text in
 // monospace styling.
 func (x *TextView) SetMonospace(MonospaceVar bool) {
-
 	xTextViewSetMonospace(x.GoPointer(), MonospaceVar)
-
 }
 
 var xTextViewSetOverwrite func(uintptr, bool)
 
 // Changes the `GtkTextView` overwrite mode.
 func (x *TextView) SetOverwrite(OverwriteVar bool) {
-
 	xTextViewSetOverwrite(x.GoPointer(), OverwriteVar)
-
 }
 
 var xTextViewSetPixelsAboveLines func(uintptr, int)
@@ -1548,9 +1448,7 @@ var xTextViewSetPixelsAboveLines func(uintptr, int)
 //
 // Tags in the buffer for @text_view may override the defaults.
 func (x *TextView) SetPixelsAboveLines(PixelsAboveLinesVar int) {
-
 	xTextViewSetPixelsAboveLines(x.GoPointer(), PixelsAboveLinesVar)
-
 }
 
 var xTextViewSetPixelsBelowLines func(uintptr, int)
@@ -1560,9 +1458,7 @@ var xTextViewSetPixelsBelowLines func(uintptr, int)
 //
 // May be overridden by tags applied to @text_view’s buffer.
 func (x *TextView) SetPixelsBelowLines(PixelsBelowLinesVar int) {
-
 	xTextViewSetPixelsBelowLines(x.GoPointer(), PixelsBelowLinesVar)
-
 }
 
 var xTextViewSetPixelsInsideWrap func(uintptr, int)
@@ -1572,9 +1468,7 @@ var xTextViewSetPixelsInsideWrap func(uintptr, int)
 //
 // May be overridden by tags in @text_view’s buffer.
 func (x *TextView) SetPixelsInsideWrap(PixelsInsideWrapVar int) {
-
 	xTextViewSetPixelsInsideWrap(x.GoPointer(), PixelsInsideWrapVar)
-
 }
 
 var xTextViewSetRightMargin func(uintptr, int)
@@ -1586,9 +1480,7 @@ var xTextViewSetRightMargin func(uintptr, int)
 // Note that this function is confusingly named.
 // In CSS terms, the value set here is padding.
 func (x *TextView) SetRightMargin(RightMarginVar int) {
-
 	xTextViewSetRightMargin(x.GoPointer(), RightMarginVar)
-
 }
 
 var xTextViewSetTabs func(uintptr, *pango.TabArray)
@@ -1597,9 +1489,7 @@ var xTextViewSetTabs func(uintptr, *pango.TabArray)
 //
 // Tags in the buffer may override the default.
 func (x *TextView) SetTabs(TabsVar *pango.TabArray) {
-
 	xTextViewSetTabs(x.GoPointer(), TabsVar)
-
 }
 
 var xTextViewSetTopMargin func(uintptr, int)
@@ -1609,18 +1499,14 @@ var xTextViewSetTopMargin func(uintptr, int)
 // Note that this function is confusingly named.
 // In CSS terms, the value set here is padding.
 func (x *TextView) SetTopMargin(TopMarginVar int) {
-
 	xTextViewSetTopMargin(x.GoPointer(), TopMarginVar)
-
 }
 
 var xTextViewSetWrapMode func(uintptr, WrapMode)
 
 // Sets the line wrapping for the view.
 func (x *TextView) SetWrapMode(WrapModeVar WrapMode) {
-
 	xTextViewSetWrapMode(x.GoPointer(), WrapModeVar)
-
 }
 
 var xTextViewStartsDisplayLine func(uintptr, *TextIter) bool
@@ -1630,7 +1516,6 @@ var xTextViewStartsDisplayLine func(uintptr, *TextIter) bool
 // See [method@Gtk.TextView.forward_display_line] for an
 // explanation of display lines vs. paragraphs.
 func (x *TextView) StartsDisplayLine(IterVar *TextIter) bool {
-
 	cret := xTextViewStartsDisplayLine(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1640,9 +1525,7 @@ var xTextViewWindowToBufferCoords func(uintptr, TextWindowType, int, int, *int, 
 // Converts coordinates on the window identified by @win to buffer
 // coordinates.
 func (x *TextView) WindowToBufferCoords(WinVar TextWindowType, WindowXVar int, WindowYVar int, BufferXVar *int, BufferYVar *int) {
-
 	xTextViewWindowToBufferCoords(x.GoPointer(), WinVar, WindowXVar, WindowYVar, BufferXVar, BufferYVar)
-
 }
 
 func (c *TextView) GoPointer() uintptr {
@@ -2003,7 +1886,6 @@ func (x *TextView) ConnectBackspace(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2033,7 +1915,6 @@ func (x *TextView) ConnectCopyClipboard(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2063,7 +1944,6 @@ func (x *TextView) ConnectCutClipboard(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2098,7 +1978,6 @@ func (x *TextView) ConnectDeleteFromCursor(cb *func(TextView, DeleteType, int)) 
 		cbFn := *cb
 
 		cbFn(fa, TypeVarp, CountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2122,7 +2001,6 @@ func (x *TextView) ConnectExtendSelection(cb *func(TextView, TextExtendSelection
 		cbFn := *cb
 
 		return cbFn(fa, GranularityVarp, LocationVarp, StartVarp, EndVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2150,8 +2028,7 @@ func (x *TextView) ConnectInsertAtCursor(cb *func(TextView, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(StringVarp))
-
+		cbFn(fa, StringVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2181,7 +2058,6 @@ func (x *TextView) ConnectInsertEmoji(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2226,7 +2102,6 @@ func (x *TextView) ConnectMoveCursor(cb *func(TextView, MovementStep, int, bool)
 		cbFn := *cb
 
 		cbFn(fa, StepVarp, CountVarp, ExtendSelectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2257,7 +2132,6 @@ func (x *TextView) ConnectMoveViewport(cb *func(TextView, ScrollStep, int)) uint
 		cbFn := *cb
 
 		cbFn(fa, StepVarp, CountVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2288,7 +2162,6 @@ func (x *TextView) ConnectPasteClipboard(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2318,8 +2191,7 @@ func (x *TextView) ConnectPreeditChanged(cb *func(TextView, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, core.GoString(PreeditVarp))
-
+		cbFn(fa, PreeditVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2351,7 +2223,6 @@ func (x *TextView) ConnectSelectAll(cb *func(TextView, bool)) uint {
 		cbFn := *cb
 
 		cbFn(fa, SelectVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2382,7 +2253,6 @@ func (x *TextView) ConnectSetAnchor(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2411,7 +2281,6 @@ func (x *TextView) ConnectToggleCursorVisible(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2439,7 +2308,6 @@ func (x *TextView) ConnectToggleOverwrite(cb *func(TextView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -2458,9 +2326,19 @@ func (x *TextView) ConnectToggleOverwrite(cb *func(TextView)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TextView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TextView) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -2481,7 +2359,6 @@ func (x *TextView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TextView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -2506,7 +2383,6 @@ func (x *TextView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TextView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -2545,30 +2421,23 @@ func (x *TextView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TextView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TextView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TextView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TextView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -2581,19 +2450,7 @@ func (x *TextView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TextView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -2601,14 +2458,7 @@ func (x *TextView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TextView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -2617,9 +2467,7 @@ func (x *TextView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TextView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -2641,9 +2489,7 @@ func (x *TextView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *TextView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -2653,9 +2499,7 @@ func (x *TextView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *TextView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -2677,9 +2521,7 @@ func (x *TextView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *TextView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -2689,9 +2531,7 @@ func (x *TextView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *TextView) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -2714,9 +2554,7 @@ func (x *TextView) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *TextView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -2726,9 +2564,7 @@ func (x *TextView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *TextView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Updates the position of the caret.
@@ -2737,9 +2573,7 @@ func (x *TextView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *TextView) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -2752,9 +2586,7 @@ func (x *TextView) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *TextView) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -2763,9 +2595,7 @@ func (x *TextView) UpdateContents(ChangeVar AccessibleTextContentChange, StartVa
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *TextView) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
 // Gets the ID of the @buildable object.
@@ -2773,7 +2603,6 @@ func (x *TextView) UpdateSelectionBound() {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TextView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -2785,7 +2614,6 @@ func (x *TextView) GetBuildableId() string {
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *TextView) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -2807,7 +2635,6 @@ func (x *TextView) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *TextView) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -2829,21 +2656,13 @@ func (x *TextView) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *TextView) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *TextView) SetHadjustment(HadjustmentVar *Adjustment) {
-
-	var HadjustmentVarPtr uintptr
-	if HadjustmentVar != nil {
-		HadjustmentVarPtr = HadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
-
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -2851,21 +2670,12 @@ func (x *TextView) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *TextView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *TextView) SetVadjustment(VadjustmentVar *Adjustment) {
-
-	var VadjustmentVarPtr uintptr
-	if VadjustmentVar != nil {
-		VadjustmentVarPtr = VadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
-
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -2873,14 +2683,12 @@ func (x *TextView) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *TextView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -2973,5 +2781,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextViewSetWrapMode, libs, "gtk_text_view_set_wrap_mode")
 	core.PuregoSafeRegister(&xTextViewStartsDisplayLine, libs, "gtk_text_view_starts_display_line")
 	core.PuregoSafeRegister(&xTextViewWindowToBufferCoords, libs, "gtk_text_view_window_to_buffer_coords")
-
 }

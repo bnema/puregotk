@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -198,7 +197,6 @@ var xAlignedAlloc func(uint, uint, uint) uintptr
 // Aligned memory allocations returned by this function can only be
 // freed using g_aligned_free_sized() or g_aligned_free().
 func AlignedAlloc(NBlocksVar uint, NBlockBytesVar uint, AlignmentVar uint) uintptr {
-
 	cret := xAlignedAlloc(NBlocksVar, NBlockBytesVar, AlignmentVar)
 
 	return cret
@@ -209,7 +207,6 @@ var xAlignedAlloc0 func(uint, uint, uint) uintptr
 // This function is similar to g_aligned_alloc(), but it will
 // also clear the allocated memory before returning it.
 func AlignedAlloc0(NBlocksVar uint, NBlockBytesVar uint, AlignmentVar uint) uintptr {
-
 	cret := xAlignedAlloc0(NBlocksVar, NBlockBytesVar, AlignmentVar)
 
 	return cret
@@ -219,9 +216,7 @@ var xAlignedFree func(uintptr)
 
 // Frees the memory allocated by g_aligned_alloc().
 func AlignedFree(MemVar uintptr) {
-
 	xAlignedFree(MemVar)
-
 }
 
 var xAlignedFreeSized func(uintptr, uint, uint)
@@ -236,9 +231,7 @@ var xAlignedFreeSized func(uintptr, uint, uint)
 // passed to this function to allow optimizations in the allocator. If you
 // don’t know either of them, use g_aligned_free() instead.
 func AlignedFreeSized(MemVar uintptr, AlignmentVar uint, SizeVar uint) {
-
 	xAlignedFreeSized(MemVar, AlignmentVar, SizeVar)
-
 }
 
 var xClearPointer func(*uintptr, uintptr)
@@ -281,24 +274,7 @@ var xClearPointer func(*uintptr, uintptr)
 // g_clear_pointer (&amp;sync, destroy_sync);
 // ```
 func ClearPointer(PpVar *uintptr, DestroyVar *DestroyNotify) {
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xClearPointer(PpVar, DestroyVarRef)
-
+	xClearPointer(PpVar, NewCallbackNullable(DestroyVar))
 }
 
 var xFree func(uintptr)
@@ -317,9 +293,7 @@ var xFree func(uintptr)
 // If @mem is %NULL it simply returns, so there is no need to check @mem
 // against %NULL before calling this function.
 func Free(MemVar uintptr) {
-
 	xFree(MemVar)
-
 }
 
 var xFreeSized func(uintptr, uint)
@@ -336,9 +310,7 @@ var xFreeSized func(uintptr, uint)
 // automatically via g_free() if the allocated size is known at compile time,
 // since GLib 2.78.
 func FreeSized(MemVar uintptr, SizeVar uint) {
-
 	xFreeSized(MemVar, SizeVar)
-
 }
 
 var xMalloc func(uint) uintptr
@@ -349,7 +321,6 @@ var xMalloc func(uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func Malloc(NBytesVar uint) uintptr {
-
 	cret := xMalloc(NBytesVar)
 
 	return cret
@@ -363,7 +334,6 @@ var xMalloc0 func(uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func Malloc0(NBytesVar uint) uintptr {
-
 	cret := xMalloc0(NBytesVar)
 
 	return cret
@@ -377,7 +347,6 @@ var xMalloc0N func(uint, uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func Malloc0N(NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xMalloc0N(NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -391,7 +360,6 @@ var xMallocN func(uint, uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func MallocN(NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xMallocN(NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -405,7 +373,6 @@ var xMemIsSystemMalloc func() bool
 // This function is useful for avoiding an extra copy of allocated memory returned
 // by a non-GLib-based API.
 func MemIsSystemMalloc() bool {
-
 	cret := xMemIsSystemMalloc()
 
 	return cret
@@ -417,9 +384,7 @@ var xMemProfile func()
 // no longer works. There are many other useful tools for memory
 // profiling these days which can be used instead.
 func MemProfile() {
-
 	xMemProfile()
-
 }
 
 var xMemSetVtable func(*MemVTable)
@@ -429,9 +394,7 @@ var xMemSetVtable func(*MemVTable)
 // in GLib and GIO, because those use the GLib allocators before main is
 // reached. Therefore this function is now deprecated and is just a stub.
 func MemSetVtable(VtableVar *MemVTable) {
-
 	xMemSetVtable(VtableVar)
-
 }
 
 var xRealloc func(uintptr, uint) uintptr
@@ -445,7 +408,6 @@ var xRealloc func(uintptr, uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func Realloc(MemVar uintptr, NBytesVar uint) uintptr {
-
 	cret := xRealloc(MemVar, NBytesVar)
 
 	return cret
@@ -459,7 +421,6 @@ var xReallocN func(uintptr, uint, uint) uintptr
 // If the allocation fails (because the system is out of memory),
 // the program is terminated.
 func ReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xReallocN(MemVar, NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -470,7 +431,6 @@ var xTryMalloc func(uint) uintptr
 // Attempts to allocate @n_bytes, and returns %NULL on failure.
 // Contrast with g_malloc(), which aborts the program on failure.
 func TryMalloc(NBytesVar uint) uintptr {
-
 	cret := xTryMalloc(NBytesVar)
 
 	return cret
@@ -481,7 +441,6 @@ var xTryMalloc0 func(uint) uintptr
 // Attempts to allocate @n_bytes, initialized to 0's, and returns %NULL on
 // failure. Contrast with g_malloc0(), which aborts the program on failure.
 func TryMalloc0(NBytesVar uint) uintptr {
-
 	cret := xTryMalloc0(NBytesVar)
 
 	return cret
@@ -492,7 +451,6 @@ var xTryMalloc0N func(uint, uint) uintptr
 // This function is similar to g_try_malloc0(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
 func TryMalloc0N(NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xTryMalloc0N(NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -503,7 +461,6 @@ var xTryMallocN func(uint, uint) uintptr
 // This function is similar to g_try_malloc(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
 func TryMallocN(NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xTryMallocN(NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -517,7 +474,6 @@ var xTryRealloc func(uintptr, uint) uintptr
 //
 // If @mem is %NULL, behaves the same as g_try_malloc().
 func TryRealloc(MemVar uintptr, NBytesVar uint) uintptr {
-
 	cret := xTryRealloc(MemVar, NBytesVar)
 
 	return cret
@@ -528,7 +484,6 @@ var xTryReallocN func(uintptr, uint, uint) uintptr
 // This function is similar to g_try_realloc(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
 func TryReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
-
 	cret := xTryReallocN(MemVar, NBlocksVar, NBlockBytesVar)
 
 	return cret
@@ -536,7 +491,7 @@ func TryReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -568,5 +523,4 @@ func init() {
 	core.PuregoSafeRegister(&xTryMallocN, libs, "g_try_malloc_n")
 	core.PuregoSafeRegister(&xTryRealloc, libs, "g_try_realloc")
 	core.PuregoSafeRegister(&xTryReallocN, libs, "g_try_realloc_n")
-
 }

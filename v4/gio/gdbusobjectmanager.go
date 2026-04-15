@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -70,8 +69,12 @@ func (x *DBusObjectManagerIface) OverrideGetObjects(cb func(DBusObjectManager) *
 	if cb == nil {
 		x.xGetObjects = 0
 	} else {
-		x.xGetObjects = purego.NewCallback(func(ManagerVarp uintptr) *glib.List {
-			return cb(&DBusObjectManagerBase{Ptr: ManagerVarp})
+		x.xGetObjects = purego.NewCallback(func(ManagerVarp uintptr) uintptr {
+			ret := cb(&DBusObjectManagerBase{Ptr: ManagerVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -82,10 +85,14 @@ func (x *DBusObjectManagerIface) GetGetObjects() func(DBusObjectManager) *glib.L
 	if x.xGetObjects == 0 {
 		return nil
 	}
-	var rawCallback func(ManagerVarp uintptr) *glib.List
+	var rawCallback func(ManagerVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetObjects)
 	return func(ManagerVar DBusObjectManager) *glib.List {
-		return rawCallback(ManagerVar.GoPointer())
+		rawRet := rawCallback(ManagerVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -327,26 +334,29 @@ func (x *DBusObjectManagerBase) GetObject(ObjectPathVar string) *DBusObjectBase 
 
 // Gets the object path that @manager is for.
 func (x *DBusObjectManagerBase) GetObjectPath() string {
-
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
 	return cret
 }
 
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerBase) GetObjects() *glib.List {
-
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var XGDbusObjectManagerGetInterface func(uintptr, string, string) uintptr
-var XGDbusObjectManagerGetObject func(uintptr, string) uintptr
-var XGDbusObjectManagerGetObjectPath func(uintptr) string
-var XGDbusObjectManagerGetObjects func(uintptr) *glib.List
+var (
+	XGDbusObjectManagerGetInterface  func(uintptr, string, string) uintptr
+	XGDbusObjectManagerGetObject     func(uintptr, string) uintptr
+	XGDbusObjectManagerGetObjectPath func(uintptr) string
+	XGDbusObjectManagerGetObjects    func(uintptr) uintptr
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -362,5 +372,4 @@ func init() {
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObject, libs, "g_dbus_object_manager_get_object")
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObjectPath, libs, "g_dbus_object_manager_get_object_path")
 	core.PuregoSafeRegister(&XGDbusObjectManagerGetObjects, libs, "g_dbus_object_manager_get_objects")
-
 }

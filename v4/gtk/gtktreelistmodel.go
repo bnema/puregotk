@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -67,37 +66,7 @@ var xNewTreeListModel func(uintptr, bool, bool, uintptr, uintptr, uintptr) uintp
 func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar bool, CreateFuncVar *TreeListModelCreateModelFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *TreeListModel {
 	var cls *TreeListModel
 
-	var CreateFuncVarRef uintptr
-	if CreateFuncVar != nil {
-		CreateFuncVarPtr := uintptr(unsafe.Pointer(CreateFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CreateFuncVarPtr); ok {
-			CreateFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-				cbFn := *CreateFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CreateFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CreateFuncVarPtr, CreateFuncVarRef, CreateFuncVar)
-		}
-	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, CreateFuncVarRef, UserDataVar, UserDestroyVarRef)
+	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, glib.NewCallback(CreateFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -115,7 +84,6 @@ var xTreeListModelGetAutoexpand func(uintptr) bool
 // This can be either rows added by changes to the underlying
 // models or via [method@Gtk.TreeListRow.set_expanded].
 func (x *TreeListModel) GetAutoexpand() bool {
-
 	cret := xTreeListModelGetAutoexpand(x.GoPointer())
 	return cret
 }
@@ -172,7 +140,6 @@ var xTreeListModelGetPassthrough func(uintptr) bool
 // original state. You then need to call [method@Gtk.TreeListModel.get_row]
 // to get the custom `GtkTreeListRow`s.
 func (x *TreeListModel) GetPassthrough() bool {
-
 	cret := xTreeListModelGetPassthrough(x.GoPointer())
 	return cret
 }
@@ -217,9 +184,7 @@ var xTreeListModelSetAutoexpand func(uintptr, bool)
 // get added to the model. This can be either rows added by changes
 // to the underlying models or via [method@Gtk.TreeListRow.set_expanded].
 func (x *TreeListModel) SetAutoexpand(AutoexpandVar bool) {
-
 	xTreeListModelSetAutoexpand(x.GoPointer(), AutoexpandVar)
-
 }
 
 func (c *TreeListModel) GoPointer() uintptr {
@@ -293,7 +258,6 @@ func (x *TreeListModel) GetPropertyPassthrough() bool {
 //
 // See also: g_list_model_get_n_items()
 func (x *TreeListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -307,7 +271,6 @@ func (x *TreeListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *TreeListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -318,7 +281,6 @@ func (x *TreeListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *TreeListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -369,9 +331,7 @@ func (x *TreeListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *TreeListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // The type of item used by `GtkTreeListModel`.
@@ -451,7 +411,6 @@ var xTreeListRowGetDepth func(uintptr) uint
 // The depth of a row never changes until the row is removed from its model
 // at which point it will forever return 0.
 func (x *TreeListRow) GetDepth() uint {
-
 	cret := xTreeListRowGetDepth(x.GoPointer())
 	return cret
 }
@@ -460,7 +419,6 @@ var xTreeListRowGetExpanded func(uintptr) bool
 
 // Gets if a row is currently expanded.
 func (x *TreeListRow) GetExpanded() bool {
-
 	cret := xTreeListRowGetExpanded(x.GoPointer())
 	return cret
 }
@@ -512,7 +470,6 @@ var xTreeListRowGetPosition func(uintptr) uint
 // Returns the position in the `GtkTreeListModel` that @self occupies
 // at the moment.
 func (x *TreeListRow) GetPosition() uint {
-
 	cret := xTreeListRowGetPosition(x.GoPointer())
 	return cret
 }
@@ -527,7 +484,6 @@ var xTreeListRowIsExpandable func(uintptr) bool
 // If a row is expandable never changes until the row is removed
 // from its model at which point it will forever return %FALSE.
 func (x *TreeListRow) IsExpandable() bool {
-
 	cret := xTreeListRowIsExpandable(x.GoPointer())
 	return cret
 }
@@ -543,9 +499,7 @@ var xTreeListRowSetExpanded func(uintptr, bool)
 //
 // If the row is not expandable, this function does nothing.
 func (x *TreeListRow) SetExpanded(ExpandedVar bool) {
-
 	xTreeListRowSetExpanded(x.GoPointer(), ExpandedVar)
-
 }
 
 func (c *TreeListRow) GoPointer() uintptr {
@@ -594,7 +548,7 @@ func (x *TreeListRow) GetPropertyExpanded() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -626,5 +580,4 @@ func init() {
 	core.PuregoSafeRegister(&xTreeListRowGetPosition, libs, "gtk_tree_list_row_get_position")
 	core.PuregoSafeRegister(&xTreeListRowIsExpandable, libs, "gtk_tree_list_row_is_expandable")
 	core.PuregoSafeRegister(&xTreeListRowSetExpanded, libs, "gtk_tree_list_row_set_expanded")
-
 }

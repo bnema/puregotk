@@ -2,10 +2,7 @@
 package gtk
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -16,14 +13,7 @@ var xShowUri func(uintptr, string, uint32)
 // This function launches the default application for showing
 // a given uri, or shows an error dialog if that fails.
 func ShowUri(ParentVar *Window, UriVar string, TimestampVar uint32) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	xShowUri(ParentVarPtr, UriVar, TimestampVar)
-
+	xShowUri(ParentVar.GoPointer(), UriVar, TimestampVar)
 }
 
 var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
@@ -36,34 +26,7 @@ var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
 // This is the recommended call to be used as it passes information
 // necessary for sandbox helpers to parent their dialogs properly.
 func ShowUriFull(ParentVar *Window, UriVar string, TimestampVar uint32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xShowUriFull(ParentVarPtr, UriVar, TimestampVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xShowUriFullFinish func(uintptr, uintptr, **glib.Error) bool
@@ -78,12 +41,11 @@ func ShowUriFullFinish(ParentVar *Window, ResultVar gio.AsyncResult) (bool, erro
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -96,5 +58,4 @@ func init() {
 	core.PuregoSafeRegister(&xShowUri, libs, "gtk_show_uri")
 	core.PuregoSafeRegister(&xShowUriFull, libs, "gtk_show_uri_full")
 	core.PuregoSafeRegister(&xShowUriFullFinish, libs, "gtk_show_uri_full_finish")
-
 }

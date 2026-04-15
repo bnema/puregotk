@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -20,6 +19,8 @@ type SymbolicPaintableInterface struct {
 	GIface uintptr
 
 	xSnapshotSymbolic uintptr
+
+	xSnapshotWithWeight uintptr
 }
 
 func (x *SymbolicPaintableInterface) GoPointer() uintptr {
@@ -59,21 +60,52 @@ func (x *SymbolicPaintableInterface) GetSnapshotSymbolic() func(SymbolicPaintabl
 	}
 }
 
+// OverrideSnapshotWithWeight sets the "snapshot_with_weight" callback function.
+// Like @snapshot_symbolic, but additionally takes
+//
+//	a font weight argument. Since: 4.22
+func (x *SymbolicPaintableInterface) OverrideSnapshotWithWeight(cb func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint, float64)) {
+	if cb == nil {
+		x.xSnapshotWithWeight = 0
+	} else {
+		x.xSnapshotWithWeight = purego.NewCallback(func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64, ColorsVarp []gdk.RGBA, NColorsVarp uint, WeightVarp float64) {
+			cb(&SymbolicPaintableBase{Ptr: PaintableVarp}, gdk.SnapshotNewFromInternalPtr(SnapshotVarp), WidthVarp, HeightVarp, ColorsVarp, NColorsVarp, WeightVarp)
+		})
+	}
+}
+
+// GetSnapshotWithWeight gets the "snapshot_with_weight" callback function.
+// Like @snapshot_symbolic, but additionally takes
+//
+//	a font weight argument. Since: 4.22
+func (x *SymbolicPaintableInterface) GetSnapshotWithWeight() func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint, float64) {
+	if x.xSnapshotWithWeight == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64, ColorsVarp []gdk.RGBA, NColorsVarp uint, WeightVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xSnapshotWithWeight)
+	return func(PaintableVar SymbolicPaintable, SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64) {
+		rawCallback(PaintableVar.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar, WeightVar)
+	}
+}
+
 // An interface that supports symbolic colors in paintables.
 //
 // `GdkPaintable`s implementing the interface will have the
 // [vfunc@Gtk.SymbolicPaintable.snapshot_symbolic] function called and
-// have the colors for drawing symbolic icons passed. At least 4 colors are guaranteed
-// to be passed every time.
+// have the colors for drawing symbolic icons passed. At least 5 colors
+// are guaranteed to be passed every time. These 5 colors are the
+// foreground color, and the colors to use for errors, warnings
+// and success information in that order, followed by the system
+// accent color.
 //
-// These 4 colors are the foreground color, and the colors to use for errors, warnings
-// and success information in that order.
-//
+// The system accent color has been added in GTK 4.22.
 // More colors may be added in the future.
 type SymbolicPaintable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint)
+	SnapshotWithWeight(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64)
 }
 
 var xSymbolicPaintableGLibType func() types.GType
@@ -99,19 +131,28 @@ func (x *SymbolicPaintableBase) SetGoPointer(ptr uintptr) {
 
 // Snapshots the paintable with the given colors.
 //
-// If less than 4 colors are provided, GTK will pad the array with default
+// If less than 5 colors are provided, GTK will pad the array with default
 // colors.
 func (x *SymbolicPaintableBase) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
-
 	XGtkSymbolicPaintableSnapshotSymbolic(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
-
 }
 
-var XGtkSymbolicPaintableSnapshotSymbolic func(uintptr, uintptr, float64, float64, []gdk.RGBA, uint)
+// Snapshots the paintable with the given colors and weight.
+//
+// If less than 5 colors are provided, GTK will pad the array with default
+// colors.
+func (x *SymbolicPaintableBase) SnapshotWithWeight(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint, WeightVar float64) {
+	XGtkSymbolicPaintableSnapshotWithWeight(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar, WeightVar)
+}
+
+var (
+	XGtkSymbolicPaintableSnapshotSymbolic   func(uintptr, uintptr, float64, float64, []gdk.RGBA, uint)
+	XGtkSymbolicPaintableSnapshotWithWeight func(uintptr, uintptr, float64, float64, []gdk.RGBA, uint, float64)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -124,5 +165,5 @@ func init() {
 	core.PuregoSafeRegister(&xSymbolicPaintableGLibType, libs, "gtk_symbolic_paintable_get_type")
 
 	core.PuregoSafeRegister(&XGtkSymbolicPaintableSnapshotSymbolic, libs, "gtk_symbolic_paintable_snapshot_symbolic")
-
+	core.PuregoSafeRegister(&XGtkSymbolicPaintableSnapshotWithWeight, libs, "gtk_symbolic_paintable_snapshot_with_weight")
 }

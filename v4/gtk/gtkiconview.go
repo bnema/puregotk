@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -164,9 +163,7 @@ var xIconViewEnableModelDragDest func(uintptr, *gdk.ContentFormats, gdk.DragActi
 // Turns @icon_view into a drop destination for automatic DND. Calling this
 // method sets `GtkIconView`:reorderable to %FALSE.
 func (x *IconView) EnableModelDragDest(FormatsVar *gdk.ContentFormats, ActionsVar gdk.DragAction) {
-
 	xIconViewEnableModelDragDest(x.GoPointer(), FormatsVar, ActionsVar)
-
 }
 
 var xIconViewEnableModelDragSource func(uintptr, gdk.ModifierType, *gdk.ContentFormats, gdk.DragAction)
@@ -174,16 +171,13 @@ var xIconViewEnableModelDragSource func(uintptr, gdk.ModifierType, *gdk.ContentF
 // Turns @icon_view into a drag source for automatic DND. Calling this
 // method sets `GtkIconView`:reorderable to %FALSE.
 func (x *IconView) EnableModelDragSource(StartButtonMaskVar gdk.ModifierType, FormatsVar *gdk.ContentFormats, ActionsVar gdk.DragAction) {
-
 	xIconViewEnableModelDragSource(x.GoPointer(), StartButtonMaskVar, FormatsVar, ActionsVar)
-
 }
 
 var xIconViewGetActivateOnSingleClick func(uintptr) bool
 
 // Gets the setting set by gtk_icon_view_set_activate_on_single_click().
 func (x *IconView) GetActivateOnSingleClick() bool {
-
 	cret := xIconViewGetActivateOnSingleClick(x.GoPointer())
 	return cret
 }
@@ -195,13 +189,7 @@ var xIconViewGetCellRect func(uintptr, *TreePath, uintptr, *gdk.Rectangle) bool
 //
 // This function is only valid if @icon_view is realized.
 func (x *IconView) GetCellRect(PathVar *TreePath, CellVar *CellRenderer, RectVar *gdk.Rectangle) bool {
-
-	var CellVarPtr uintptr
-	if CellVar != nil {
-		CellVarPtr = CellVar.GoPointer()
-	}
-
-	cret := xIconViewGetCellRect(x.GoPointer(), PathVar, CellVarPtr, RectVar)
+	cret := xIconViewGetCellRect(x.GoPointer(), PathVar, CellVar.GoPointer(), RectVar)
 	return cret
 }
 
@@ -209,7 +197,6 @@ var xIconViewGetColumnSpacing func(uintptr) int
 
 // Returns the value of the ::column-spacing property.
 func (x *IconView) GetColumnSpacing() int {
-
 	cret := xIconViewGetColumnSpacing(x.GoPointer())
 	return cret
 }
@@ -218,7 +205,6 @@ var xIconViewGetColumns func(uintptr) int
 
 // Returns the value of the ::columns property.
 func (x *IconView) GetColumns() int {
-
 	cret := xIconViewGetColumns(x.GoPointer())
 	return cret
 }
@@ -231,7 +217,6 @@ var xIconViewGetCursor func(uintptr, **TreePath, **CellRenderer) bool
 //
 // The returned `GtkTreePath` must be freed with gtk_tree_path_free().
 func (x *IconView) GetCursor(PathVar **TreePath, CellVar **CellRenderer) bool {
-
 	cret := xIconViewGetCursor(x.GoPointer(), PathVar, CellVar)
 	return cret
 }
@@ -240,7 +225,6 @@ var xIconViewGetDestItemAtPos func(uintptr, int, int, **TreePath, *IconViewDropP
 
 // Determines the destination item for a given position.
 func (x *IconView) GetDestItemAtPos(DragXVar int, DragYVar int, PathVar **TreePath, PosVar *IconViewDropPosition) bool {
-
 	cret := xIconViewGetDestItemAtPos(x.GoPointer(), DragXVar, DragYVar, PathVar, PosVar)
 	return cret
 }
@@ -249,16 +233,13 @@ var xIconViewGetDragDestItem func(uintptr, **TreePath, *IconViewDropPosition)
 
 // Gets information about the item that is highlighted for feedback.
 func (x *IconView) GetDragDestItem(PathVar **TreePath, PosVar *IconViewDropPosition) {
-
 	xIconViewGetDragDestItem(x.GoPointer(), PathVar, PosVar)
-
 }
 
 var xIconViewGetItemAtPos func(uintptr, int, int, **TreePath, **CellRenderer) bool
 
 // Gets the path and cell for the icon at the given position.
 func (x *IconView) GetItemAtPos(XVar int, YVar int, PathVar **TreePath, CellVar **CellRenderer) bool {
-
 	cret := xIconViewGetItemAtPos(x.GoPointer(), XVar, YVar, PathVar, CellVar)
 	return cret
 }
@@ -268,7 +249,6 @@ var xIconViewGetItemColumn func(uintptr, *TreePath) int
 // Gets the column in which the item @path is currently
 // displayed. Column numbers start at 0.
 func (x *IconView) GetItemColumn(PathVar *TreePath) int {
-
 	cret := xIconViewGetItemColumn(x.GoPointer(), PathVar)
 	return cret
 }
@@ -278,7 +258,6 @@ var xIconViewGetItemOrientation func(uintptr) Orientation
 // Returns the value of the ::item-orientation property which determines
 // whether the labels are drawn beside the icons instead of below.
 func (x *IconView) GetItemOrientation() Orientation {
-
 	cret := xIconViewGetItemOrientation(x.GoPointer())
 	return cret
 }
@@ -287,7 +266,6 @@ var xIconViewGetItemPadding func(uintptr) int
 
 // Returns the value of the ::item-padding property.
 func (x *IconView) GetItemPadding() int {
-
 	cret := xIconViewGetItemPadding(x.GoPointer())
 	return cret
 }
@@ -297,7 +275,6 @@ var xIconViewGetItemRow func(uintptr, *TreePath) int
 // Gets the row in which the item @path is currently
 // displayed. Row numbers start at 0.
 func (x *IconView) GetItemRow(PathVar *TreePath) int {
-
 	cret := xIconViewGetItemRow(x.GoPointer(), PathVar)
 	return cret
 }
@@ -306,7 +283,6 @@ var xIconViewGetItemWidth func(uintptr) int
 
 // Returns the value of the ::item-width property.
 func (x *IconView) GetItemWidth() int {
-
 	cret := xIconViewGetItemWidth(x.GoPointer())
 	return cret
 }
@@ -315,7 +291,6 @@ var xIconViewGetMargin func(uintptr) int
 
 // Returns the value of the ::margin property.
 func (x *IconView) GetMargin() int {
-
 	cret := xIconViewGetMargin(x.GoPointer())
 	return cret
 }
@@ -324,7 +299,6 @@ var xIconViewGetMarkupColumn func(uintptr) int
 
 // Returns the column with markup text for @icon_view.
 func (x *IconView) GetMarkupColumn() int {
-
 	cret := xIconViewGetMarkupColumn(x.GoPointer())
 	return cret
 }
@@ -347,20 +321,21 @@ func (x *IconView) GetModel() *TreeModelBase {
 	return cls
 }
 
-var xIconViewGetPathAtPos func(uintptr, int, int) *TreePath
+var xIconViewGetPathAtPos func(uintptr, int, int) uintptr
 
 // Gets the path for the icon at the given position.
 func (x *IconView) GetPathAtPos(XVar int, YVar int) *TreePath {
-
 	cret := xIconViewGetPathAtPos(x.GoPointer(), XVar, YVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xIconViewGetPixbufColumn func(uintptr) int
 
 // Returns the column with pixbufs for @icon_view.
 func (x *IconView) GetPixbufColumn() int {
-
 	cret := xIconViewGetPixbufColumn(x.GoPointer())
 	return cret
 }
@@ -370,7 +345,6 @@ var xIconViewGetReorderable func(uintptr) bool
 // Retrieves whether the user can reorder the list via drag-and-drop.
 // See gtk_icon_view_set_reorderable().
 func (x *IconView) GetReorderable() bool {
-
 	cret := xIconViewGetReorderable(x.GoPointer())
 	return cret
 }
@@ -379,12 +353,11 @@ var xIconViewGetRowSpacing func(uintptr) int
 
 // Returns the value of the ::row-spacing property.
 func (x *IconView) GetRowSpacing() int {
-
 	cret := xIconViewGetRowSpacing(x.GoPointer())
 	return cret
 }
 
-var xIconViewGetSelectedItems func(uintptr) *glib.List
+var xIconViewGetSelectedItems func(uintptr) uintptr
 
 // Creates a list of paths of all selected items. Additionally, if you are
 // planning on modifying the model after calling this function, you may
@@ -404,16 +377,17 @@ var xIconViewGetSelectedItems func(uintptr) *glib.List
 // g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 // ```
 func (x *IconView) GetSelectedItems() *glib.List {
-
 	cret := xIconViewGetSelectedItems(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xIconViewGetSelectionMode func(uintptr) SelectionMode
 
 // Gets the selection mode of the @icon_view.
 func (x *IconView) GetSelectionMode() SelectionMode {
-
 	cret := xIconViewGetSelectionMode(x.GoPointer())
 	return cret
 }
@@ -422,7 +396,6 @@ var xIconViewGetSpacing func(uintptr) int
 
 // Returns the value of the ::spacing property.
 func (x *IconView) GetSpacing() int {
-
 	cret := xIconViewGetSpacing(x.GoPointer())
 	return cret
 }
@@ -431,7 +404,6 @@ var xIconViewGetTextColumn func(uintptr) int
 
 // Returns the column with text for @icon_view.
 func (x *IconView) GetTextColumn() int {
-
 	cret := xIconViewGetTextColumn(x.GoPointer())
 	return cret
 }
@@ -441,7 +413,6 @@ var xIconViewGetTooltipColumn func(uintptr) int
 // Returns the column of @icon_view’s model which is being used for
 // displaying tooltips on @icon_view’s rows.
 func (x *IconView) GetTooltipColumn() int {
-
 	cret := xIconViewGetTooltipColumn(x.GoPointer())
 	return cret
 }
@@ -459,7 +430,6 @@ var xIconViewGetTooltipContext func(uintptr, int, int, bool, **TreeModel, **Tree
 // @model, @path and @iter which have been provided will be set to point to
 // that row and the corresponding model.
 func (x *IconView) GetTooltipContext(XVar int, YVar int, KeyboardTipVar bool, ModelVar **TreeModel, PathVar **TreePath, IterVar *TreeIter) bool {
-
 	cret := xIconViewGetTooltipContext(x.GoPointer(), XVar, YVar, KeyboardTipVar, ModelVar, PathVar, IterVar)
 	return cret
 }
@@ -471,7 +441,6 @@ var xIconViewGetVisibleRange func(uintptr, **TreePath, **TreePath) bool
 //
 // Both paths should be freed with gtk_tree_path_free() after use.
 func (x *IconView) GetVisibleRange(StartPathVar **TreePath, EndPathVar **TreePath) bool {
-
 	cret := xIconViewGetVisibleRange(x.GoPointer(), StartPathVar, EndPathVar)
 	return cret
 }
@@ -480,9 +449,7 @@ var xIconViewItemActivated func(uintptr, *TreePath)
 
 // Activates the item determined by @path.
 func (x *IconView) ItemActivated(PathVar *TreePath) {
-
 	xIconViewItemActivated(x.GoPointer(), PathVar)
-
 }
 
 var xIconViewPathIsSelected func(uintptr, *TreePath) bool
@@ -490,7 +457,6 @@ var xIconViewPathIsSelected func(uintptr, *TreePath) bool
 // Returns %TRUE if the icon pointed to by @path is currently
 // selected. If @path does not point to a valid location, %FALSE is returned.
 func (x *IconView) PathIsSelected(PathVar *TreePath) bool {
-
 	cret := xIconViewPathIsSelected(x.GoPointer(), PathVar)
 	return cret
 }
@@ -512,9 +478,7 @@ var xIconViewScrollToPath func(uintptr, *TreePath, bool, float32, float32)
 // the model. If the model changes before the @icon_view is realized, the
 // centered path will be modified to reflect this change.
 func (x *IconView) ScrollToPath(PathVar *TreePath, UseAlignVar bool, RowAlignVar float32, ColAlignVar float32) {
-
 	xIconViewScrollToPath(x.GoPointer(), PathVar, UseAlignVar, RowAlignVar, ColAlignVar)
-
 }
 
 var xIconViewSelectAll func(uintptr)
@@ -522,18 +486,14 @@ var xIconViewSelectAll func(uintptr)
 // Selects all the icons. @icon_view must has its selection mode set
 // to %GTK_SELECTION_MULTIPLE.
 func (x *IconView) SelectAll() {
-
 	xIconViewSelectAll(x.GoPointer())
-
 }
 
 var xIconViewSelectPath func(uintptr, *TreePath)
 
 // Selects the row at @path.
 func (x *IconView) SelectPath(PathVar *TreePath) {
-
 	xIconViewSelectPath(x.GoPointer(), PathVar)
-
 }
 
 var xIconViewSelectedForeach func(uintptr, uintptr, uintptr)
@@ -541,24 +501,7 @@ var xIconViewSelectedForeach func(uintptr, uintptr, uintptr)
 // Calls a function for each selected icon. Note that the model or
 // selection cannot be modified from within this function.
 func (x *IconView) SelectedForeach(FuncVar *IconViewForeachFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TreePath, arg2 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xIconViewSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
-
+	xIconViewSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
 var xIconViewSetActivateOnSingleClick func(uintptr, bool)
@@ -566,9 +509,7 @@ var xIconViewSetActivateOnSingleClick func(uintptr, bool)
 // Causes the `GtkIconView`::item-activated signal to be emitted on
 // a single click instead of a double click.
 func (x *IconView) SetActivateOnSingleClick(SingleVar bool) {
-
 	xIconViewSetActivateOnSingleClick(x.GoPointer(), SingleVar)
-
 }
 
 var xIconViewSetColumnSpacing func(uintptr, int)
@@ -576,9 +517,7 @@ var xIconViewSetColumnSpacing func(uintptr, int)
 // Sets the ::column-spacing property which specifies the space
 // which is inserted between the columns of the icon view.
 func (x *IconView) SetColumnSpacing(ColumnSpacingVar int) {
-
 	xIconViewSetColumnSpacing(x.GoPointer(), ColumnSpacingVar)
-
 }
 
 var xIconViewSetColumns func(uintptr, int)
@@ -588,9 +527,7 @@ var xIconViewSetColumns func(uintptr, int)
 // -1, the number of columns will be chosen automatically
 // to fill the available area.
 func (x *IconView) SetColumns(ColumnsVar int) {
-
 	xIconViewSetColumns(x.GoPointer(), ColumnsVar)
-
 }
 
 var xIconViewSetCursor func(uintptr, *TreePath, uintptr, bool)
@@ -605,23 +542,14 @@ var xIconViewSetCursor func(uintptr, *TreePath, uintptr, bool)
 // (icon_view)` in order to give keyboard focus to the widget.
 // Please note that editing can only happen when the widget is realized.
 func (x *IconView) SetCursor(PathVar *TreePath, CellVar *CellRenderer, StartEditingVar bool) {
-
-	var CellVarPtr uintptr
-	if CellVar != nil {
-		CellVarPtr = CellVar.GoPointer()
-	}
-
-	xIconViewSetCursor(x.GoPointer(), PathVar, CellVarPtr, StartEditingVar)
-
+	xIconViewSetCursor(x.GoPointer(), PathVar, CellVar.GoPointer(), StartEditingVar)
 }
 
 var xIconViewSetDragDestItem func(uintptr, *TreePath, IconViewDropPosition)
 
 // Sets the item that is highlighted for feedback.
 func (x *IconView) SetDragDestItem(PathVar *TreePath, PosVar IconViewDropPosition) {
-
 	xIconViewSetDragDestItem(x.GoPointer(), PathVar, PosVar)
-
 }
 
 var xIconViewSetItemOrientation func(uintptr, Orientation)
@@ -629,9 +557,7 @@ var xIconViewSetItemOrientation func(uintptr, Orientation)
 // Sets the ::item-orientation property which determines whether the labels
 // are drawn beside the icons instead of below.
 func (x *IconView) SetItemOrientation(OrientationVar Orientation) {
-
 	xIconViewSetItemOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 var xIconViewSetItemPadding func(uintptr, int)
@@ -639,9 +565,7 @@ var xIconViewSetItemPadding func(uintptr, int)
 // Sets the `GtkIconView`:item-padding property which specifies the padding
 // around each of the icon view’s items.
 func (x *IconView) SetItemPadding(ItemPaddingVar int) {
-
 	xIconViewSetItemPadding(x.GoPointer(), ItemPaddingVar)
-
 }
 
 var xIconViewSetItemWidth func(uintptr, int)
@@ -650,9 +574,7 @@ var xIconViewSetItemWidth func(uintptr, int)
 // to use for each item. If it is set to -1, the icon view will
 // automatically determine a suitable item size.
 func (x *IconView) SetItemWidth(ItemWidthVar int) {
-
 	xIconViewSetItemWidth(x.GoPointer(), ItemWidthVar)
-
 }
 
 var xIconViewSetMargin func(uintptr, int)
@@ -661,9 +583,7 @@ var xIconViewSetMargin func(uintptr, int)
 // which is inserted at the top, bottom, left and right
 // of the icon view.
 func (x *IconView) SetMargin(MarginVar int) {
-
 	xIconViewSetMargin(x.GoPointer(), MarginVar)
-
 }
 
 var xIconViewSetMarkupColumn func(uintptr, int)
@@ -673,9 +593,7 @@ var xIconViewSetMarkupColumn func(uintptr, int)
 // If the markup column is set to something, it overrides
 // the text column set by gtk_icon_view_set_text_column().
 func (x *IconView) SetMarkupColumn(ColumnVar int) {
-
 	xIconViewSetMarkupColumn(x.GoPointer(), ColumnVar)
-
 }
 
 var xIconViewSetModel func(uintptr, uintptr)
@@ -685,14 +603,7 @@ var xIconViewSetModel func(uintptr, uintptr)
 // it before setting the new model.  If @model is %NULL, then
 // it will unset the old model.
 func (x *IconView) SetModel(ModelVar TreeModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xIconViewSetModel(x.GoPointer(), ModelVarPtr)
-
+	xIconViewSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xIconViewSetPixbufColumn func(uintptr, int)
@@ -700,9 +611,7 @@ var xIconViewSetPixbufColumn func(uintptr, int)
 // Sets the column with pixbufs for @icon_view to be @column. The pixbuf
 // column must be of type `GDK_TYPE_PIXBUF`
 func (x *IconView) SetPixbufColumn(ColumnVar int) {
-
 	xIconViewSetPixbufColumn(x.GoPointer(), ColumnVar)
-
 }
 
 var xIconViewSetReorderable func(uintptr, bool)
@@ -720,9 +629,7 @@ var xIconViewSetReorderable func(uintptr, bool)
 // reordering is allowed.  If more control is needed, you should probably
 // handle drag and drop manually.
 func (x *IconView) SetReorderable(ReorderableVar bool) {
-
 	xIconViewSetReorderable(x.GoPointer(), ReorderableVar)
-
 }
 
 var xIconViewSetRowSpacing func(uintptr, int)
@@ -730,18 +637,14 @@ var xIconViewSetRowSpacing func(uintptr, int)
 // Sets the ::row-spacing property which specifies the space
 // which is inserted between the rows of the icon view.
 func (x *IconView) SetRowSpacing(RowSpacingVar int) {
-
 	xIconViewSetRowSpacing(x.GoPointer(), RowSpacingVar)
-
 }
 
 var xIconViewSetSelectionMode func(uintptr, SelectionMode)
 
 // Sets the selection mode of the @icon_view.
 func (x *IconView) SetSelectionMode(ModeVar SelectionMode) {
-
 	xIconViewSetSelectionMode(x.GoPointer(), ModeVar)
-
 }
 
 var xIconViewSetSpacing func(uintptr, int)
@@ -750,9 +653,7 @@ var xIconViewSetSpacing func(uintptr, int)
 // which is inserted between the cells (i.e. the icon and
 // the text) of an item.
 func (x *IconView) SetSpacing(SpacingVar int) {
-
 	xIconViewSetSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 var xIconViewSetTextColumn func(uintptr, int)
@@ -760,9 +661,7 @@ var xIconViewSetTextColumn func(uintptr, int)
 // Sets the column with text for @icon_view to be @column. The text
 // column must be of type `G_TYPE_STRING`.
 func (x *IconView) SetTextColumn(ColumnVar int) {
-
 	xIconViewSetTextColumn(x.GoPointer(), ColumnVar)
-
 }
 
 var xIconViewSetTooltipCell func(uintptr, uintptr, *TreePath, uintptr)
@@ -772,14 +671,7 @@ var xIconViewSetTooltipCell func(uintptr, uintptr, *TreePath, uintptr)
 //
 // See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 func (x *IconView) SetTooltipCell(TooltipVar *Tooltip, PathVar *TreePath, CellVar *CellRenderer) {
-
-	var CellVarPtr uintptr
-	if CellVar != nil {
-		CellVarPtr = CellVar.GoPointer()
-	}
-
-	xIconViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, CellVarPtr)
-
+	xIconViewSetTooltipCell(x.GoPointer(), TooltipVar.GoPointer(), PathVar, CellVar.GoPointer())
 }
 
 var xIconViewSetTooltipColumn func(uintptr, int)
@@ -795,9 +687,7 @@ var xIconViewSetTooltipColumn func(uintptr, int)
 // Note that the signal handler sets the text with gtk_tooltip_set_markup(),
 // so &amp;, &lt;, etc have to be escaped in the text.
 func (x *IconView) SetTooltipColumn(ColumnVar int) {
-
 	xIconViewSetTooltipColumn(x.GoPointer(), ColumnVar)
-
 }
 
 var xIconViewSetTooltipItem func(uintptr, uintptr, *TreePath)
@@ -806,27 +696,21 @@ var xIconViewSetTooltipItem func(uintptr, uintptr, *TreePath)
 // See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 // See also gtk_tooltip_set_tip_area().
 func (x *IconView) SetTooltipItem(TooltipVar *Tooltip, PathVar *TreePath) {
-
 	xIconViewSetTooltipItem(x.GoPointer(), TooltipVar.GoPointer(), PathVar)
-
 }
 
 var xIconViewUnselectAll func(uintptr)
 
 // Unselects all the icons.
 func (x *IconView) UnselectAll() {
-
 	xIconViewUnselectAll(x.GoPointer())
-
 }
 
 var xIconViewUnselectPath func(uintptr, *TreePath)
 
 // Unselects the row at @path.
 func (x *IconView) UnselectPath(PathVar *TreePath) {
-
 	xIconViewUnselectPath(x.GoPointer(), PathVar)
-
 }
 
 var xIconViewUnsetModelDragDest func(uintptr)
@@ -834,9 +718,7 @@ var xIconViewUnsetModelDragDest func(uintptr)
 // Undoes the effect of gtk_icon_view_enable_model_drag_dest(). Calling this
 // method sets `GtkIconView`:reorderable to %FALSE.
 func (x *IconView) UnsetModelDragDest() {
-
 	xIconViewUnsetModelDragDest(x.GoPointer())
-
 }
 
 var xIconViewUnsetModelDragSource func(uintptr)
@@ -844,9 +726,7 @@ var xIconViewUnsetModelDragSource func(uintptr)
 // Undoes the effect of gtk_icon_view_enable_model_drag_source(). Calling this
 // method sets `GtkIconView`:reorderable to %FALSE.
 func (x *IconView) UnsetModelDragSource() {
-
 	xIconViewUnsetModelDragSource(x.GoPointer())
-
 }
 
 func (c *IconView) GoPointer() uintptr {
@@ -1148,7 +1028,6 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1178,7 +1057,6 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint {
 		cbFn := *cb
 
 		cbFn(fa, PathVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1215,7 +1093,6 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool,
 		cbFn := *cb
 
 		return cbFn(fa, StepVarp, CountVarp, ExtendVarp, ModifyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1246,7 +1123,6 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1278,7 +1154,6 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1303,7 +1178,6 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1336,7 +1210,6 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1367,7 +1240,6 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1386,9 +1258,19 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *IconView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *IconView) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1409,7 +1291,6 @@ func (x *IconView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *IconView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1434,7 +1315,6 @@ func (x *IconView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *IconView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1473,30 +1353,23 @@ func (x *IconView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *IconView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *IconView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *IconView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *IconView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1509,19 +1382,7 @@ func (x *IconView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *IconView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1529,14 +1390,7 @@ func (x *IconView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *IconView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1545,9 +1399,7 @@ func (x *IconView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *IconView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1569,9 +1421,7 @@ func (x *IconView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *IconView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1581,9 +1431,7 @@ func (x *IconView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *IconView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1605,9 +1453,7 @@ func (x *IconView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *IconView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1617,9 +1463,7 @@ func (x *IconView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *IconView) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1642,9 +1486,7 @@ func (x *IconView) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *IconView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1654,9 +1496,7 @@ func (x *IconView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *IconView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1664,7 +1504,6 @@ func (x *IconView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *IconView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -1677,25 +1516,19 @@ func (x *IconView) GetBuildableId() string {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *IconView) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *IconView) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *IconView) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -1717,9 +1550,11 @@ func (x *IconView) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *IconView) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -1728,9 +1563,7 @@ func (x *IconView) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *IconView) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -1739,9 +1572,7 @@ func (x *IconView) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *IconView) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -1749,9 +1580,7 @@ func (x *IconView) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *IconView) Reorder(CellVar *CellRenderer, PositionVar int) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -1763,9 +1592,7 @@ func (x *IconView) Reorder(CellVar *CellRenderer, PositionVar int) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *IconView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -1776,9 +1603,7 @@ func (x *IconView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *IconView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Returns the size of a non-scrolling border around the
@@ -1788,7 +1613,6 @@ func (x *IconView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDat
 // this information to display overlaid graphics, like the
 // overshoot indication, at the right position.
 func (x *IconView) GetBorder(BorderVar *Border) bool {
-
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
 	return cret
 }
@@ -1810,7 +1634,6 @@ func (x *IconView) GetHadjustment() *Adjustment {
 
 // Gets the horizontal `GtkScrollablePolicy`.
 func (x *IconView) GetHscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
 	return cret
 }
@@ -1832,21 +1655,13 @@ func (x *IconView) GetVadjustment() *Adjustment {
 
 // Gets the vertical `GtkScrollablePolicy`.
 func (x *IconView) GetVscrollPolicy() ScrollablePolicy {
-
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
 	return cret
 }
 
 // Sets the horizontal adjustment of the `GtkScrollable`.
 func (x *IconView) SetHadjustment(HadjustmentVar *Adjustment) {
-
-	var HadjustmentVarPtr uintptr
-	if HadjustmentVar != nil {
-		HadjustmentVarPtr = HadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVarPtr)
-
+	XGtkScrollableSetHadjustment(x.GoPointer(), HadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -1854,21 +1669,12 @@ func (x *IconView) SetHadjustment(HadjustmentVar *Adjustment) {
 // The policy determines whether horizontal scrolling should start
 // below the minimum width or below the natural width.
 func (x *IconView) SetHscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetHscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 // Sets the vertical adjustment of the `GtkScrollable`.
 func (x *IconView) SetVadjustment(VadjustmentVar *Adjustment) {
-
-	var VadjustmentVarPtr uintptr
-	if VadjustmentVar != nil {
-		VadjustmentVarPtr = VadjustmentVar.GoPointer()
-	}
-
-	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVarPtr)
-
+	XGtkScrollableSetVadjustment(x.GoPointer(), VadjustmentVar.GoPointer())
 }
 
 // Sets the `GtkScrollablePolicy`.
@@ -1876,14 +1682,12 @@ func (x *IconView) SetVadjustment(VadjustmentVar *Adjustment) {
 // The policy determines whether vertical scrolling should start
 // below the minimum height or below the natural height.
 func (x *IconView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
-
 	XGtkScrollableSetVscrollPolicy(x.GoPointer(), PolicyVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1961,5 +1765,4 @@ func init() {
 	core.PuregoSafeRegister(&xIconViewUnselectPath, libs, "gtk_icon_view_unselect_path")
 	core.PuregoSafeRegister(&xIconViewUnsetModelDragDest, libs, "gtk_icon_view_unset_model_drag_dest")
 	core.PuregoSafeRegister(&xIconViewUnsetModelDragSource, libs, "gtk_icon_view_unset_model_drag_source")
-
 }

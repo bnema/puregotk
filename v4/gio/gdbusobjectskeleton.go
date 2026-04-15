@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -108,9 +107,7 @@ var xDBusObjectSkeletonAddInterface func(uintptr, uintptr)
 // Note that @object takes its own reference on @interface_ and holds
 // it until removed.
 func (x *DBusObjectSkeleton) AddInterface(InterfaceVar *DBusInterfaceSkeleton) {
-
 	xDBusObjectSkeletonAddInterface(x.GoPointer(), InterfaceVar.GoPointer())
-
 }
 
 var xDBusObjectSkeletonFlush func(uintptr)
@@ -119,18 +116,14 @@ var xDBusObjectSkeletonFlush func(uintptr)
 // interfaces belonging to @object. See that method for when flushing
 // is useful.
 func (x *DBusObjectSkeleton) Flush() {
-
 	xDBusObjectSkeletonFlush(x.GoPointer())
-
 }
 
 var xDBusObjectSkeletonRemoveInterface func(uintptr, uintptr)
 
 // Removes @interface_ from @object.
 func (x *DBusObjectSkeleton) RemoveInterface(InterfaceVar *DBusInterfaceSkeleton) {
-
 	xDBusObjectSkeletonRemoveInterface(x.GoPointer(), InterfaceVar.GoPointer())
-
 }
 
 var xDBusObjectSkeletonRemoveInterfaceByName func(uintptr, string)
@@ -140,18 +133,14 @@ var xDBusObjectSkeletonRemoveInterfaceByName func(uintptr, string)
 // If no D-Bus interface of the given interface exists, this function
 // does nothing.
 func (x *DBusObjectSkeleton) RemoveInterfaceByName(InterfaceNameVar string) {
-
 	xDBusObjectSkeletonRemoveInterfaceByName(x.GoPointer(), InterfaceNameVar)
-
 }
 
 var xDBusObjectSkeletonSetObjectPath func(uintptr, string)
 
 // Sets the object path for @object.
 func (x *DBusObjectSkeleton) SetObjectPath(ObjectPathVar string) {
-
 	xDBusObjectSkeletonSetObjectPath(x.GoPointer(), ObjectPathVar)
-
 }
 
 func (c *DBusObjectSkeleton) GoPointer() uintptr {
@@ -190,7 +179,7 @@ func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
 // except that it is for the enclosing object.
 //
 // The default class handler just returns %TRUE.
-func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool) uint {
+func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
@@ -203,8 +192,7 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *DBusInterfaceSkeleton { cls := &DBusInterfaceSkeleton{}; cls.Ptr = InterfaceVarp; return cls }(), func() *DBusMethodInvocation { cls := &DBusMethodInvocation{}; cls.Ptr = InvocationVarp; return cls }())
-
+		return cbFn(fa, InterfaceVarp, InvocationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -230,21 +218,22 @@ func (x *DBusObjectSkeleton) GetInterface(InterfaceNameVar string) *DBusInterfac
 
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectSkeleton) GetInterfaces() *glib.List {
-
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets the object path for @object.
 func (x *DBusObjectSkeleton) GetObjectPath() string {
-
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -263,5 +252,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterface, libs, "g_dbus_object_skeleton_remove_interface")
 	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterfaceByName, libs, "g_dbus_object_skeleton_remove_interface_by_name")
 	core.PuregoSafeRegister(&xDBusObjectSkeletonSetObjectPath, libs, "g_dbus_object_skeleton_set_object_path")
-
 }

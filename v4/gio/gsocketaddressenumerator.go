@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -191,7 +190,6 @@ func (x *SocketAddressEnumerator) Next(CancellableVar *Cancellable) (*SocketAddr
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xSocketAddressEnumeratorNextAsync func(uintptr, uintptr, uintptr, uintptr)
@@ -202,29 +200,7 @@ var xSocketAddressEnumeratorNextAsync func(uintptr, uintptr, uintptr, uintptr)
 //
 // It is an error to call this multiple times before the previous callback has finished.
 func (x *SocketAddressEnumerator) NextAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xSocketAddressEnumeratorNextAsync(x.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xSocketAddressEnumeratorNextAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xSocketAddressEnumeratorNextFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -248,7 +224,6 @@ func (x *SocketAddressEnumerator) NextFinish(ResultVar AsyncResult) (*SocketAddr
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *SocketAddressEnumerator) GoPointer() uintptr {
@@ -264,7 +239,7 @@ func (c *SocketAddressEnumerator) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -279,5 +254,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNext, libs, "g_socket_address_enumerator_next")
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextAsync, libs, "g_socket_address_enumerator_next_async")
 	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextFinish, libs, "g_socket_address_enumerator_next_finish")
-
 }

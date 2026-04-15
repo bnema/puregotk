@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -71,7 +70,6 @@ var xSingleSelectionGetAutoselect func(uintptr) bool
 // Checks if autoselect has been enabled or disabled via
 // gtk_single_selection_set_autoselect().
 func (x *SingleSelection) GetAutoselect() bool {
-
 	cret := xSingleSelectionGetAutoselect(x.GoPointer())
 	return cret
 }
@@ -81,7 +79,6 @@ var xSingleSelectionGetCanUnselect func(uintptr) bool
 // If %TRUE, gtk_selection_model_unselect_item() is supported and allows
 // unselecting the selected item.
 func (x *SingleSelection) GetCanUnselect() bool {
-
 	cret := xSingleSelectionGetCanUnselect(x.GoPointer())
 	return cret
 }
@@ -109,7 +106,6 @@ var xSingleSelectionGetSelected func(uintptr) uint
 //
 // If no item is selected, %GTK_INVALID_LIST_POSITION is returned.
 func (x *SingleSelection) GetSelected() uint {
-
 	cret := xSingleSelectionGetSelected(x.GoPointer())
 	return cret
 }
@@ -141,9 +137,7 @@ var xSingleSelectionSetAutoselect func(uintptr, bool)
 // selected. It will select a new item when the currently selected
 // item is deleted and it will disallow unselecting the current item.
 func (x *SingleSelection) SetAutoselect(AutoselectVar bool) {
-
 	xSingleSelectionSetAutoselect(x.GoPointer(), AutoselectVar)
-
 }
 
 var xSingleSelectionSetCanUnselect func(uintptr, bool)
@@ -155,9 +149,7 @@ var xSingleSelectionSetCanUnselect func(uintptr, bool)
 // cause unselecting to not work, so it practically makes no sense
 // to set both at the same time.
 func (x *SingleSelection) SetCanUnselect(CanUnselectVar bool) {
-
 	xSingleSelectionSetCanUnselect(x.GoPointer(), CanUnselectVar)
-
 }
 
 var xSingleSelectionSetModel func(uintptr, uintptr)
@@ -166,14 +158,7 @@ var xSingleSelectionSetModel func(uintptr, uintptr)
 //
 // If @model is %NULL, @self will be empty.
 func (x *SingleSelection) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xSingleSelectionSetModel(x.GoPointer(), ModelVarPtr)
-
+	xSingleSelectionSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xSingleSelectionSetSelected func(uintptr, uint)
@@ -188,9 +173,7 @@ var xSingleSelectionSetSelected func(uintptr, uint)
 // will be selected. This also applies if [property@Gtk.SingleSelection:can-unselect]
 // is set to %FALSE.
 func (x *SingleSelection) SetSelected(PositionVar uint) {
-
 	xSingleSelectionSetSelected(x.GoPointer(), PositionVar)
-
 }
 
 func (c *SingleSelection) GoPointer() uintptr {
@@ -273,7 +256,6 @@ func (x *SingleSelection) GetPropertySelected() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *SingleSelection) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -287,7 +269,6 @@ func (x *SingleSelection) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SingleSelection) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -298,7 +279,6 @@ func (x *SingleSelection) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SingleSelection) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -349,9 +329,7 @@ func (x *SingleSelection) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SingleSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -360,9 +338,7 @@ func (x *SingleSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedV
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SingleSelection) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -381,9 +357,7 @@ func (x *SingleSelection) GetSection(PositionVar uint, OutStartVar *uint, OutEnd
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SingleSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Gets the set containing all currently selected items in the model.
@@ -392,9 +366,11 @@ func (x *SingleSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
 // consider using [method@Gtk.SelectionModel.is_selected] or if you are only
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *SingleSelection) GetSelection() *Bitset {
-
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -405,35 +381,33 @@ func (x *SingleSelection) GetSelection() *Bitset {
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
 func (x *SingleSelection) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
-
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.
 func (x *SingleSelection) IsSelected(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to select all items in the model.
 func (x *SingleSelection) SelectAll() bool {
-
 	cret := XGtkSelectionModelSelectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to select an item in the model.
 func (x *SingleSelection) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
 func (x *SingleSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -443,9 +417,7 @@ func (x *SingleSelection) SelectRange(PositionVar uint, NItemsVar uint, Unselect
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *SingleSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Make selection changes.
@@ -485,35 +457,31 @@ func (x *SingleSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 // same bitset, which would mean that every item in the set should
 // be selected.
 func (x *SingleSelection) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
-
 	cret := XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
 	return cret
 }
 
 // Requests to unselect all items in the model.
 func (x *SingleSelection) UnselectAll() bool {
-
 	cret := XGtkSelectionModelUnselectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to unselect an item in the model.
 func (x *SingleSelection) UnselectItem(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
 func (x *SingleSelection) UnselectRange(PositionVar uint, NItemsVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -536,5 +504,4 @@ func init() {
 	core.PuregoSafeRegister(&xSingleSelectionSetCanUnselect, libs, "gtk_single_selection_set_can_unselect")
 	core.PuregoSafeRegister(&xSingleSelectionSetModel, libs, "gtk_single_selection_set_model")
 	core.PuregoSafeRegister(&xSingleSelectionSetSelected, libs, "gtk_single_selection_set_selected")
-
 }

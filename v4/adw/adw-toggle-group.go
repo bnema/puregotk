@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -87,11 +86,18 @@ func (x *Toggle) GetChild() *gtk.Widget {
 	return cls
 }
 
+var xToggleGetDescription func(uintptr) string
+
+// Gets the description of @self.
+func (x *Toggle) GetDescription() string {
+	cret := xToggleGetDescription(x.GoPointer())
+	return cret
+}
+
 var xToggleGetEnabled func(uintptr) bool
 
 // Gets whether @self is enabled.
 func (x *Toggle) GetEnabled() bool {
-
 	cret := xToggleGetEnabled(x.GoPointer())
 	return cret
 }
@@ -100,7 +106,6 @@ var xToggleGetIconName func(uintptr) string
 
 // Gets the icon name of @self.
 func (x *Toggle) GetIconName() string {
-
 	cret := xToggleGetIconName(x.GoPointer())
 	return cret
 }
@@ -109,7 +114,6 @@ var xToggleGetIndex func(uintptr) uint
 
 // Gets the index of @self within its toggle group.
 func (x *Toggle) GetIndex() uint {
-
 	cret := xToggleGetIndex(x.GoPointer())
 	return cret
 }
@@ -118,7 +122,6 @@ var xToggleGetLabel func(uintptr) string
 
 // Gets the label of @self.
 func (x *Toggle) GetLabel() string {
-
 	cret := xToggleGetLabel(x.GoPointer())
 	return cret
 }
@@ -127,7 +130,6 @@ var xToggleGetName func(uintptr) string
 
 // Gets the name of @self.
 func (x *Toggle) GetName() string {
-
 	cret := xToggleGetName(x.GoPointer())
 	return cret
 }
@@ -136,7 +138,6 @@ var xToggleGetTooltip func(uintptr) string
 
 // Gets the tooltip of @self.
 func (x *Toggle) GetTooltip() string {
-
 	cret := xToggleGetTooltip(x.GoPointer())
 	return cret
 }
@@ -145,7 +146,6 @@ var xToggleGetUseUnderline func(uintptr) bool
 
 // Gets whether @self uses underlines.
 func (x *Toggle) GetUseUnderline() bool {
-
 	cret := xToggleGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -159,23 +159,26 @@ var xToggleSetChild func(uintptr, uintptr)
 // It's recommended to still set the label, as it can still be used by the
 // screen reader.
 func (x *Toggle) SetChild(ChildVar *gtk.Widget) {
+	xToggleSetChild(x.GoPointer(), ChildVar.GoPointer())
+}
 
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
+var xToggleSetDescription func(uintptr, string)
 
-	xToggleSetChild(x.GoPointer(), ChildVarPtr)
-
+// Sets the description of @self to @description.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) SetDescription(DescriptionVar string) {
+	xToggleSetDescription(x.GoPointer(), DescriptionVar)
 }
 
 var xToggleSetEnabled func(uintptr, bool)
 
 // Sets whether @self is enabled.
 func (x *Toggle) SetEnabled(EnabledVar bool) {
-
 	xToggleSetEnabled(x.GoPointer(), EnabledVar)
-
 }
 
 var xToggleSetIconName func(uintptr, uintptr)
@@ -185,12 +188,10 @@ var xToggleSetIconName func(uintptr, uintptr)
 // The icon will be displayed alone or next to the label, unless
 // [property@Toggle:child] is set.
 func (x *Toggle) SetIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xToggleSetIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xToggleSetLabel func(uintptr, uintptr)
@@ -201,12 +202,10 @@ var xToggleSetLabel func(uintptr, uintptr)
 // [property@Toggle:child] is set, but will still be read out by the screen
 // reader.
 func (x *Toggle) SetLabel(LabelVar *string) {
-
 	LabelVarPtr := core.GStrdupNullable(LabelVar)
 	defer core.GFreeNullable(LabelVarPtr)
 
 	xToggleSetLabel(x.GoPointer(), LabelVarPtr)
-
 }
 
 var xToggleSetName func(uintptr, uintptr)
@@ -217,12 +216,10 @@ var xToggleSetName func(uintptr, uintptr)
 //
 // See [property@ToggleGroup:active-name].
 func (x *Toggle) SetName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xToggleSetName(x.GoPointer(), NameVarPtr)
-
 }
 
 var xToggleSetTooltip func(uintptr, string)
@@ -230,10 +227,11 @@ var xToggleSetTooltip func(uintptr, string)
 // Sets the tooltip of @self to @tooltip.
 //
 // @tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) SetTooltip(TooltipVar string) {
-
 	xToggleSetTooltip(x.GoPointer(), TooltipVar)
-
 }
 
 var xToggleSetUseUnderline func(uintptr, bool)
@@ -242,9 +240,7 @@ var xToggleSetUseUnderline func(uintptr, bool)
 //
 // See [property@Toggle:label].
 func (x *Toggle) SetUseUnderline(UseUnderlineVar bool) {
-
 	xToggleSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 func (c *Toggle) GoPointer() uintptr {
@@ -256,6 +252,33 @@ func (c *Toggle) GoPointer() uintptr {
 
 func (c *Toggle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDescription sets the "description" property.
+// The description of the toggle.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(&value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// The description of the toggle.
+//
+// The description will be read out when using screen reader. If not set,
+// [property@Toggle:tooltip] will be used instead.
+//
+// See [enum@Gtk.AccessibleProperty.description].
+func (x *Toggle) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
 }
 
 // SetPropertyEnabled sets the "enabled" property.
@@ -352,6 +375,9 @@ func (x *Toggle) GetPropertyName() string {
 // The tooltip of the toggle.
 //
 // The tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
@@ -363,6 +389,9 @@ func (x *Toggle) SetPropertyTooltip(value string) {
 // The tooltip of the toggle.
 //
 // The tooltip can be marked up with the Pango text markup language.
+//
+// Tooltip text will also be used as accessible description. Use
+// [property@Toggle:description] to set it separately.
 func (x *Toggle) GetPropertyTooltip() string {
 	var v gobject.Value
 	x.GetProperty("tooltip", &v)
@@ -494,8 +523,8 @@ func (x *Toggle) GetPropertyUseUnderline() bool {
 //
 // ## Accessibility
 //
-// `AdwToggleGroup` uses the `GTK_ACCESSIBLE_ROLE_RADIO_GROUP` role. Its toggles
-// use the `GTK_ACCESSIBLE_ROLE_RADIO` role.
+// `AdwToggleGroup` uses the [enum@Gtk.AccessibleRole.radio-group] role. Its
+// toggles use the [enum@Gtk.AccessibleRole.radio] role.
 type ToggleGroup struct {
 	gtk.Widget
 }
@@ -533,18 +562,15 @@ var xToggleGroupAdd func(uintptr, uintptr)
 
 // Adds a toggle to @self.
 func (x *ToggleGroup) Add(ToggleVar *Toggle) {
-
 	xToggleGroupAdd(x.GoPointer(), ToggleVar.GoPointer())
-
 }
 
 var xToggleGroupGetActive func(uintptr) uint
 
 // Gets the index of the active toggle in @self.
 //
-// Returns `GTK_INVALID_LIST_POSITION` if no toggle is active.
+// Returns [const@Gtk.INVALID_LIST_POSITION] if no toggle is active.
 func (x *ToggleGroup) GetActive() uint {
-
 	cret := xToggleGroupGetActive(x.GoPointer())
 	return cret
 }
@@ -557,7 +583,6 @@ var xToggleGroupGetActiveName func(uintptr) string
 //
 // See [property@Toggle:name].
 func (x *ToggleGroup) GetActiveName() string {
-
 	cret := xToggleGroupGetActiveName(x.GoPointer())
 	return cret
 }
@@ -567,7 +592,6 @@ var xToggleGroupGetCanShrink func(uintptr) bool
 // Gets whether the toggles can be smaller than the natural size of their
 // contents.
 func (x *ToggleGroup) GetCanShrink() bool {
-
 	cret := xToggleGroupGetCanShrink(x.GoPointer())
 	return cret
 }
@@ -576,7 +600,6 @@ var xToggleGroupGetHomogeneous func(uintptr) bool
 
 // Gets whether all toggles take the same size.
 func (x *ToggleGroup) GetHomogeneous() bool {
-
 	cret := xToggleGroupGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -585,7 +608,6 @@ var xToggleGroupGetNToggles func(uintptr) uint
 
 // Gets the number of toggles within @self.
 func (x *ToggleGroup) GetNToggles() uint {
-
 	cret := xToggleGroupGetNToggles(x.GoPointer())
 	return cret
 }
@@ -648,18 +670,14 @@ var xToggleGroupRemove func(uintptr, uintptr)
 
 // Removes @toggle from @self.
 func (x *ToggleGroup) Remove(ToggleVar *Toggle) {
-
 	xToggleGroupRemove(x.GoPointer(), ToggleVar.GoPointer())
-
 }
 
 var xToggleGroupRemoveAll func(uintptr)
 
 // Removes all toggles from @self.
 func (x *ToggleGroup) RemoveAll() {
-
 	xToggleGroupRemoveAll(x.GoPointer())
-
 }
 
 var xToggleGroupSetActive func(uintptr, uint)
@@ -669,9 +687,7 @@ var xToggleGroupSetActive func(uintptr, uint)
 // If the index is larger than the number of toggles in @self, unsets the
 // current active toggle.
 func (x *ToggleGroup) SetActive(ActiveVar uint) {
-
 	xToggleGroupSetActive(x.GoPointer(), ActiveVar)
-
 }
 
 var xToggleGroupSetActiveName func(uintptr, uintptr)
@@ -682,12 +698,10 @@ var xToggleGroupSetActiveName func(uintptr, uintptr)
 //
 // If @name is `NULL`, unset the current active toggle instead.
 func (x *ToggleGroup) SetActiveName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xToggleGroupSetActiveName(x.GoPointer(), NameVarPtr)
-
 }
 
 var xToggleGroupSetCanShrink func(uintptr, bool)
@@ -699,18 +713,14 @@ var xToggleGroupSetCanShrink func(uintptr, bool)
 //
 // See [property@Gtk.Button:can-shrink].
 func (x *ToggleGroup) SetCanShrink(CanShrinkVar bool) {
-
 	xToggleGroupSetCanShrink(x.GoPointer(), CanShrinkVar)
-
 }
 
 var xToggleGroupSetHomogeneous func(uintptr, bool)
 
 // Sets whether all toggles take the same size.
 func (x *ToggleGroup) SetHomogeneous(HomogeneousVar bool) {
-
 	xToggleGroupSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 func (c *ToggleGroup) GoPointer() uintptr {
@@ -840,9 +850,19 @@ func (x *ToggleGroup) GetPropertyNToggles() uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ToggleGroup) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ToggleGroup) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -863,7 +883,6 @@ func (x *ToggleGroup) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ToggleGroup) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -888,7 +907,6 @@ func (x *ToggleGroup) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ToggleGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -927,30 +945,23 @@ func (x *ToggleGroup) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ToggleGroup) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ToggleGroup) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ToggleGroup) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ToggleGroup) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -963,19 +974,7 @@ func (x *ToggleGroup) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ToggleGroup) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -983,14 +982,7 @@ func (x *ToggleGroup) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ToggleGroup) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -999,9 +991,7 @@ func (x *ToggleGroup) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ToggleGroup) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1023,9 +1013,7 @@ func (x *ToggleGroup) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *ToggleGroup) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1035,9 +1023,7 @@ func (x *ToggleGroup) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleGroup) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1059,9 +1045,7 @@ func (x *ToggleGroup) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gt
 //
 // ```
 func (x *ToggleGroup) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1071,9 +1055,7 @@ func (x *ToggleGroup) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleGroup) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1096,9 +1078,7 @@ func (x *ToggleGroup) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.
 //
 // ```
 func (x *ToggleGroup) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1108,9 +1088,7 @@ func (x *ToggleGroup) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleGroup) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1118,28 +1096,24 @@ func (x *ToggleGroup) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ToggleGroup) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *ToggleGroup) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *ToggleGroup) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1154,6 +1128,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewToggle, libs, "adw_toggle_new")
 
 	core.PuregoSafeRegister(&xToggleGetChild, libs, "adw_toggle_get_child")
+	core.PuregoSafeRegister(&xToggleGetDescription, libs, "adw_toggle_get_description")
 	core.PuregoSafeRegister(&xToggleGetEnabled, libs, "adw_toggle_get_enabled")
 	core.PuregoSafeRegister(&xToggleGetIconName, libs, "adw_toggle_get_icon_name")
 	core.PuregoSafeRegister(&xToggleGetIndex, libs, "adw_toggle_get_index")
@@ -1162,6 +1137,7 @@ func init() {
 	core.PuregoSafeRegister(&xToggleGetTooltip, libs, "adw_toggle_get_tooltip")
 	core.PuregoSafeRegister(&xToggleGetUseUnderline, libs, "adw_toggle_get_use_underline")
 	core.PuregoSafeRegister(&xToggleSetChild, libs, "adw_toggle_set_child")
+	core.PuregoSafeRegister(&xToggleSetDescription, libs, "adw_toggle_set_description")
 	core.PuregoSafeRegister(&xToggleSetEnabled, libs, "adw_toggle_set_enabled")
 	core.PuregoSafeRegister(&xToggleSetIconName, libs, "adw_toggle_set_icon_name")
 	core.PuregoSafeRegister(&xToggleSetLabel, libs, "adw_toggle_set_label")
@@ -1188,5 +1164,4 @@ func init() {
 	core.PuregoSafeRegister(&xToggleGroupSetActiveName, libs, "adw_toggle_group_set_active_name")
 	core.PuregoSafeRegister(&xToggleGroupSetCanShrink, libs, "adw_toggle_group_set_can_shrink")
 	core.PuregoSafeRegister(&xToggleGroupSetHomogeneous, libs, "adw_toggle_group_set_homogeneous")
-
 }

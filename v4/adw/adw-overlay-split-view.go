@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -164,7 +163,7 @@ func (x *OverlaySplitViewClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwOverlaySplitView` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwOverlaySplitView` uses the [enum@Gtk.AccessibleRole.group] role.
 type OverlaySplitView struct {
 	gtk.Widget
 }
@@ -202,7 +201,6 @@ var xOverlaySplitViewGetCollapsed func(uintptr) bool
 
 // Gets whether @self is collapsed.
 func (x *OverlaySplitView) GetCollapsed() bool {
-
 	cret := xOverlaySplitViewGetCollapsed(x.GoPointer())
 	return cret
 }
@@ -228,7 +226,6 @@ var xOverlaySplitViewGetEnableHideGesture func(uintptr) bool
 
 // Gets whether @self can be closed with a swipe gesture.
 func (x *OverlaySplitView) GetEnableHideGesture() bool {
-
 	cret := xOverlaySplitViewGetEnableHideGesture(x.GoPointer())
 	return cret
 }
@@ -237,7 +234,6 @@ var xOverlaySplitViewGetEnableShowGesture func(uintptr) bool
 
 // Gets whether @self can be opened with an edge swipe gesture.
 func (x *OverlaySplitView) GetEnableShowGesture() bool {
-
 	cret := xOverlaySplitViewGetEnableShowGesture(x.GoPointer())
 	return cret
 }
@@ -246,7 +242,6 @@ var xOverlaySplitViewGetMaxSidebarWidth func(uintptr) float64
 
 // Gets the maximum sidebar width for @self.
 func (x *OverlaySplitView) GetMaxSidebarWidth() float64 {
-
 	cret := xOverlaySplitViewGetMaxSidebarWidth(x.GoPointer())
 	return cret
 }
@@ -255,7 +250,6 @@ var xOverlaySplitViewGetMinSidebarWidth func(uintptr) float64
 
 // Gets the minimum sidebar width for @self.
 func (x *OverlaySplitView) GetMinSidebarWidth() float64 {
-
 	cret := xOverlaySplitViewGetMinSidebarWidth(x.GoPointer())
 	return cret
 }
@@ -264,7 +258,6 @@ var xOverlaySplitViewGetPinSidebar func(uintptr) bool
 
 // Gets whether the sidebar widget is pinned for @self.
 func (x *OverlaySplitView) GetPinSidebar() bool {
-
 	cret := xOverlaySplitViewGetPinSidebar(x.GoPointer())
 	return cret
 }
@@ -273,7 +266,6 @@ var xOverlaySplitViewGetShowSidebar func(uintptr) bool
 
 // Gets whether the sidebar widget is shown for @self.
 func (x *OverlaySplitView) GetShowSidebar() bool {
-
 	cret := xOverlaySplitViewGetShowSidebar(x.GoPointer())
 	return cret
 }
@@ -299,7 +291,6 @@ var xOverlaySplitViewGetSidebarPosition func(uintptr) gtk.PackType
 
 // Gets the sidebar position for @self.
 func (x *OverlaySplitView) GetSidebarPosition() gtk.PackType {
-
 	cret := xOverlaySplitViewGetSidebarPosition(x.GoPointer())
 	return cret
 }
@@ -308,7 +299,6 @@ var xOverlaySplitViewGetSidebarWidthFraction func(uintptr) float64
 
 // Gets the preferred sidebar width fraction for @self.
 func (x *OverlaySplitView) GetSidebarWidthFraction() float64 {
-
 	cret := xOverlaySplitViewGetSidebarWidthFraction(x.GoPointer())
 	return cret
 }
@@ -317,7 +307,6 @@ var xOverlaySplitViewGetSidebarWidthUnit func(uintptr) LengthUnit
 
 // Gets the length unit for minimum and maximum sidebar widths.
 func (x *OverlaySplitView) GetSidebarWidthUnit() LengthUnit {
-
 	cret := xOverlaySplitViewGetSidebarWidthUnit(x.GoPointer())
 	return cret
 }
@@ -329,23 +318,14 @@ var xOverlaySplitViewSetCollapsed func(uintptr, bool)
 // When collapsed, the sidebar widget is presented as an overlay above the
 // content widget, otherwise they are displayed side by side.
 func (x *OverlaySplitView) SetCollapsed(CollapsedVar bool) {
-
 	xOverlaySplitViewSetCollapsed(x.GoPointer(), CollapsedVar)
-
 }
 
 var xOverlaySplitViewSetContent func(uintptr, uintptr)
 
 // Sets the content widget for @self.
 func (x *OverlaySplitView) SetContent(ContentVar *gtk.Widget) {
-
-	var ContentVarPtr uintptr
-	if ContentVar != nil {
-		ContentVarPtr = ContentVar.GoPointer()
-	}
-
-	xOverlaySplitViewSetContent(x.GoPointer(), ContentVarPtr)
-
+	xOverlaySplitViewSetContent(x.GoPointer(), ContentVar.GoPointer())
 }
 
 var xOverlaySplitViewSetEnableHideGesture func(uintptr, bool)
@@ -354,9 +334,7 @@ var xOverlaySplitViewSetEnableHideGesture func(uintptr, bool)
 //
 // Only touchscreen swipes are supported.
 func (x *OverlaySplitView) SetEnableHideGesture(EnableHideGestureVar bool) {
-
 	xOverlaySplitViewSetEnableHideGesture(x.GoPointer(), EnableHideGestureVar)
-
 }
 
 var xOverlaySplitViewSetEnableShowGesture func(uintptr, bool)
@@ -365,9 +343,7 @@ var xOverlaySplitViewSetEnableShowGesture func(uintptr, bool)
 //
 // Only touchscreen swipes are supported.
 func (x *OverlaySplitView) SetEnableShowGesture(EnableShowGestureVar bool) {
-
 	xOverlaySplitViewSetEnableShowGesture(x.GoPointer(), EnableShowGestureVar)
-
 }
 
 var xOverlaySplitViewSetMaxSidebarWidth func(uintptr, float64)
@@ -379,9 +355,7 @@ var xOverlaySplitViewSetMaxSidebarWidth func(uintptr, float64)
 // The sidebar widget can still be allocated with larger width if its own
 // minimum width exceeds it.
 func (x *OverlaySplitView) SetMaxSidebarWidth(WidthVar float64) {
-
 	xOverlaySplitViewSetMaxSidebarWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xOverlaySplitViewSetMinSidebarWidth func(uintptr, float64)
@@ -393,9 +367,7 @@ var xOverlaySplitViewSetMinSidebarWidth func(uintptr, float64)
 // The sidebar widget can still be allocated with larger width if its own
 // minimum width exceeds it.
 func (x *OverlaySplitView) SetMinSidebarWidth(WidthVar float64) {
-
 	xOverlaySplitViewSetMinSidebarWidth(x.GoPointer(), WidthVar)
-
 }
 
 var xOverlaySplitViewSetPinSidebar func(uintptr, bool)
@@ -406,44 +378,31 @@ var xOverlaySplitViewSetPinSidebar func(uintptr, bool)
 // uncollapsing it shows the sidebar. If set to `TRUE`, sidebar visibility never
 // changes on its own.
 func (x *OverlaySplitView) SetPinSidebar(PinSidebarVar bool) {
-
 	xOverlaySplitViewSetPinSidebar(x.GoPointer(), PinSidebarVar)
-
 }
 
 var xOverlaySplitViewSetShowSidebar func(uintptr, bool)
 
 // Sets whether the sidebar widget is shown for @self.
 func (x *OverlaySplitView) SetShowSidebar(ShowSidebarVar bool) {
-
 	xOverlaySplitViewSetShowSidebar(x.GoPointer(), ShowSidebarVar)
-
 }
 
 var xOverlaySplitViewSetSidebar func(uintptr, uintptr)
 
 // Sets the sidebar widget for @self.
 func (x *OverlaySplitView) SetSidebar(SidebarVar *gtk.Widget) {
-
-	var SidebarVarPtr uintptr
-	if SidebarVar != nil {
-		SidebarVarPtr = SidebarVar.GoPointer()
-	}
-
-	xOverlaySplitViewSetSidebar(x.GoPointer(), SidebarVarPtr)
-
+	xOverlaySplitViewSetSidebar(x.GoPointer(), SidebarVar.GoPointer())
 }
 
 var xOverlaySplitViewSetSidebarPosition func(uintptr, gtk.PackType)
 
 // Sets the sidebar position for @self.
 //
-// If it's set to `GTK_PACK_START`, the sidebar is displayed before the content,
-// if `GTK_PACK_END`, it's displayed after the content.
+// If it's set to [enum@Gtk.PackType.start], the sidebar is displayed before the
+// content; if [enum@Gtk.PackType.end], it's displayed after the content.
 func (x *OverlaySplitView) SetSidebarPosition(PositionVar gtk.PackType) {
-
 	xOverlaySplitViewSetSidebarPosition(x.GoPointer(), PositionVar)
-
 }
 
 var xOverlaySplitViewSetSidebarWidthFraction func(uintptr, float64)
@@ -457,9 +416,7 @@ var xOverlaySplitViewSetSidebarWidthFraction func(uintptr, float64)
 // The sidebar widget can be allocated with larger width if its own minimum
 // width exceeds the preferred width.
 func (x *OverlaySplitView) SetSidebarWidthFraction(FractionVar float64) {
-
 	xOverlaySplitViewSetSidebarWidthFraction(x.GoPointer(), FractionVar)
-
 }
 
 var xOverlaySplitViewSetSidebarWidthUnit func(uintptr, LengthUnit)
@@ -469,9 +426,7 @@ var xOverlaySplitViewSetSidebarWidthUnit func(uintptr, LengthUnit)
 // See [property@OverlaySplitView:min-sidebar-width] and
 // [property@OverlaySplitView:max-sidebar-width].
 func (x *OverlaySplitView) SetSidebarWidthUnit(UnitVar LengthUnit) {
-
 	xOverlaySplitViewSetSidebarWidthUnit(x.GoPointer(), UnitVar)
-
 }
 
 func (c *OverlaySplitView) GoPointer() uintptr {
@@ -683,7 +638,6 @@ func (x *OverlaySplitView) GetPropertySidebarWidthFraction() float64 {
 
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *OverlaySplitView) GetCancelProgress() float64 {
-
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
 	return cret
 }
@@ -692,14 +646,12 @@ func (x *OverlaySplitView) GetCancelProgress() float64 {
 //
 // This corresponds to how many pixels 1 unit represents.
 func (x *OverlaySplitView) GetDistance() float64 {
-
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
 	return cret
 }
 
 // Gets the current progress of @self.
 func (x *OverlaySplitView) GetProgress() float64 {
-
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
 	return cret
 }
@@ -709,7 +661,6 @@ func (x *OverlaySplitView) GetProgress() float64 {
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
 func (x *OverlaySplitView) GetSnapPoints(NSnapPointsVar *int) uintptr {
-
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -724,9 +675,7 @@ func (x *OverlaySplitView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 // If not implemented, the default implementation returns the allocation of
 // @self, allowing swipes from anywhere.
 func (x *OverlaySplitView) GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
-
 	XAdwSwipeableGetSwipeArea(x.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
-
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -739,9 +688,19 @@ func (x *OverlaySplitView) GetSwipeArea(NavigationDirectionVar NavigationDirecti
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *OverlaySplitView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *OverlaySplitView) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -762,7 +721,6 @@ func (x *OverlaySplitView) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *OverlaySplitView) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -787,7 +745,6 @@ func (x *OverlaySplitView) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *OverlaySplitView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -826,30 +783,23 @@ func (x *OverlaySplitView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *OverlaySplitView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *OverlaySplitView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *OverlaySplitView) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *OverlaySplitView) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -862,19 +812,7 @@ func (x *OverlaySplitView) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *OverlaySplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -882,14 +820,7 @@ func (x *OverlaySplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSib
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *OverlaySplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -898,9 +829,7 @@ func (x *OverlaySplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessi
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *OverlaySplitView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -922,9 +851,7 @@ func (x *OverlaySplitView) UpdatePlatformState(StateVar gtk.AccessiblePlatformSt
 //
 // ```
 func (x *OverlaySplitView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -934,9 +861,7 @@ func (x *OverlaySplitView) UpdateProperty(FirstPropertyVar gtk.AccessiblePropert
 //
 // This function is meant to be used by language bindings.
 func (x *OverlaySplitView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -958,9 +883,7 @@ func (x *OverlaySplitView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 //
 // ```
 func (x *OverlaySplitView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -970,9 +893,7 @@ func (x *OverlaySplitView) UpdateRelation(FirstRelationVar gtk.AccessibleRelatio
 //
 // This function is meant to be used by language bindings.
 func (x *OverlaySplitView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -995,9 +916,7 @@ func (x *OverlaySplitView) UpdateRelationValue(NRelationsVar int, RelationsVar [
 //
 // ```
 func (x *OverlaySplitView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1007,9 +926,7 @@ func (x *OverlaySplitView) UpdateState(FirstStateVar gtk.AccessibleState, varArg
 //
 // This function is meant to be used by language bindings.
 func (x *OverlaySplitView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1017,14 +934,13 @@ func (x *OverlaySplitView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acce
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *OverlaySplitView) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1062,5 +978,4 @@ func init() {
 	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarPosition, libs, "adw_overlay_split_view_set_sidebar_position")
 	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthFraction, libs, "adw_overlay_split_view_set_sidebar_width_fraction")
 	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthUnit, libs, "adw_overlay_split_view_set_sidebar_width_unit")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -65,7 +64,6 @@ var xCenterLayoutGetBaselinePosition func(uintptr) BaselinePosition
 
 // Returns the baseline position of the layout.
 func (x *CenterLayout) GetBaselinePosition() BaselinePosition {
-
 	cret := xCenterLayoutGetBaselinePosition(x.GoPointer())
 	return cret
 }
@@ -108,7 +106,6 @@ var xCenterLayoutGetOrientation func(uintptr) Orientation
 
 // Gets the current orienration of the layout manager.
 func (x *CenterLayout) GetOrientation() Orientation {
-
 	cret := xCenterLayoutGetOrientation(x.GoPointer())
 	return cret
 }
@@ -117,7 +114,6 @@ var xCenterLayoutGetShrinkCenterLast func(uintptr) bool
 
 // Gets whether @self shrinks the center widget after other children.
 func (x *CenterLayout) GetShrinkCenterLast() bool {
-
 	cret := xCenterLayoutGetShrinkCenterLast(x.GoPointer())
 	return cret
 }
@@ -143,9 +139,7 @@ var xCenterLayoutSetBaselinePosition func(uintptr, BaselinePosition)
 
 // Sets the new baseline position of @self
 func (x *CenterLayout) SetBaselinePosition(BaselinePositionVar BaselinePosition) {
-
 	xCenterLayoutSetBaselinePosition(x.GoPointer(), BaselinePositionVar)
-
 }
 
 var xCenterLayoutSetCenterWidget func(uintptr, uintptr)
@@ -154,14 +148,7 @@ var xCenterLayoutSetCenterWidget func(uintptr, uintptr)
 //
 // To remove the existing center widget, pass %NULL.
 func (x *CenterLayout) SetCenterWidget(WidgetVar *Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xCenterLayoutSetCenterWidget(x.GoPointer(), WidgetVarPtr)
-
+	xCenterLayoutSetCenterWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 var xCenterLayoutSetEndWidget func(uintptr, uintptr)
@@ -170,23 +157,14 @@ var xCenterLayoutSetEndWidget func(uintptr, uintptr)
 //
 // To remove the existing center widget, pass %NULL.
 func (x *CenterLayout) SetEndWidget(WidgetVar *Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xCenterLayoutSetEndWidget(x.GoPointer(), WidgetVarPtr)
-
+	xCenterLayoutSetEndWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 var xCenterLayoutSetOrientation func(uintptr, Orientation)
 
 // Sets the orientation of @self.
 func (x *CenterLayout) SetOrientation(OrientationVar Orientation) {
-
 	xCenterLayoutSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 var xCenterLayoutSetShrinkCenterLast func(uintptr, bool)
@@ -200,9 +178,7 @@ var xCenterLayoutSetShrinkCenterLast func(uintptr, bool)
 // If set to `FALSE`, start and end widgets keep natural width and the
 // center widget starts shrinking instead.
 func (x *CenterLayout) SetShrinkCenterLast(ShrinkCenterLastVar bool) {
-
 	xCenterLayoutSetShrinkCenterLast(x.GoPointer(), ShrinkCenterLastVar)
-
 }
 
 var xCenterLayoutSetStartWidget func(uintptr, uintptr)
@@ -211,14 +187,7 @@ var xCenterLayoutSetStartWidget func(uintptr, uintptr)
 //
 // To remove the existing start widget, pass %NULL.
 func (x *CenterLayout) SetStartWidget(WidgetVar *Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xCenterLayoutSetStartWidget(x.GoPointer(), WidgetVarPtr)
-
+	xCenterLayoutSetStartWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 func (c *CenterLayout) GoPointer() uintptr {
@@ -265,7 +234,7 @@ func (x *CenterLayout) GetPropertyShrinkCenterLast() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -291,5 +260,4 @@ func init() {
 	core.PuregoSafeRegister(&xCenterLayoutSetOrientation, libs, "gtk_center_layout_set_orientation")
 	core.PuregoSafeRegister(&xCenterLayoutSetShrinkCenterLast, libs, "gtk_center_layout_set_shrink_center_last")
 	core.PuregoSafeRegister(&xCenterLayoutSetStartWidget, libs, "gtk_center_layout_set_start_widget")
-
 }

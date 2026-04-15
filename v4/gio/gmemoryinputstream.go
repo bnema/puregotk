@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -243,33 +242,14 @@ var xMemoryInputStreamAddBytes func(uintptr, *glib.Bytes)
 
 // Appends @bytes to data that can be read from the input stream.
 func (x *MemoryInputStream) AddBytes(BytesVar *glib.Bytes) {
-
 	xMemoryInputStreamAddBytes(x.GoPointer(), BytesVar)
-
 }
 
 var xMemoryInputStreamAddData func(uintptr, []byte, int, uintptr)
 
 // Appends @data to data that can be read from the input stream
 func (x *MemoryInputStream) AddData(DataVar []byte, LenVar int, DestroyVar *glib.DestroyNotify) {
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xMemoryInputStreamAddData(x.GoPointer(), DataVar, LenVar, DestroyVarRef)
-
+	xMemoryInputStreamAddData(x.GoPointer(), DataVar, LenVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 func (c *MemoryInputStream) GoPointer() uintptr {
@@ -291,7 +271,6 @@ func (c *MemoryInputStream) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *MemoryInputStream) CanPoll() bool {
-
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -308,14 +287,11 @@ func (x *MemoryInputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be read.
@@ -330,7 +306,6 @@ func (x *MemoryInputStream) CreateSource(CancellableVar *Cancellable) *glib.Sour
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryInputStream) IsReadable() bool {
-
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
 	return cret
 }
@@ -362,12 +337,10 @@ func (x *MemoryInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint, Ca
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *MemoryInputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -375,7 +348,6 @@ func (x *MemoryInputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *MemoryInputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -407,12 +379,10 @@ func (x *MemoryInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancell
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *MemoryInputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -439,12 +409,11 @@ func (x *MemoryInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellabl
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -462,5 +431,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xMemoryInputStreamAddBytes, libs, "g_memory_input_stream_add_bytes")
 	core.PuregoSafeRegister(&xMemoryInputStreamAddData, libs, "g_memory_input_stream_add_data")
-
 }

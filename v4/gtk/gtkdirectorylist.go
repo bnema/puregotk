@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -71,15 +70,10 @@ var xNewDirectoryList func(uintptr, uintptr) uintptr
 func NewDirectoryList(AttributesVar *string, FileVar gio.File) *DirectoryList {
 	var cls *DirectoryList
 
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
 	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
 	defer core.GFreeNullable(AttributesVarPtr)
 
-	cret := xNewDirectoryList(AttributesVarPtr, FileVarPtr)
+	cret := xNewDirectoryList(AttributesVarPtr, FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -93,12 +87,11 @@ var xDirectoryListGetAttributes func(uintptr) string
 
 // Gets the attributes queried on the children.
 func (x *DirectoryList) GetAttributes() string {
-
 	cret := xDirectoryListGetAttributes(x.GoPointer())
 	return cret
 }
 
-var xDirectoryListGetError func(uintptr) *glib.Error
+var xDirectoryListGetError func(uintptr) uintptr
 
 // Gets the loading error, if any.
 //
@@ -109,9 +102,11 @@ var xDirectoryListGetError func(uintptr) *glib.Error
 // An error being set does not mean that no files were loaded, and all
 // successfully queried files will remain in the list.
 func (x *DirectoryList) GetError() *glib.Error {
-
 	cret := xDirectoryListGetError(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Error)(unsafe.Pointer(cret))
 }
 
 var xDirectoryListGetFile func(uintptr) uintptr
@@ -135,7 +130,6 @@ var xDirectoryListGetIoPriority func(uintptr) int
 
 // Gets the IO priority set via gtk_directory_list_set_io_priority().
 func (x *DirectoryList) GetIoPriority() int {
-
 	cret := xDirectoryListGetIoPriority(x.GoPointer())
 	return cret
 }
@@ -145,7 +139,6 @@ var xDirectoryListGetMonitored func(uintptr) bool
 // Returns whether the directory list is monitoring
 // the directory for changes.
 func (x *DirectoryList) GetMonitored() bool {
-
 	cret := xDirectoryListGetMonitored(x.GoPointer())
 	return cret
 }
@@ -159,7 +152,6 @@ var xDirectoryListIsLoading func(uintptr) bool
 // going on. The order in which are added is undefined and may change
 // in between runs.
 func (x *DirectoryList) IsLoading() bool {
-
 	cret := xDirectoryListIsLoading(x.GoPointer())
 	return cret
 }
@@ -171,12 +163,10 @@ var xDirectoryListSetAttributes func(uintptr, uintptr)
 // If @attributes is %NULL, the list of file infos will still be created, it will just
 // not contain any extra attributes.
 func (x *DirectoryList) SetAttributes(AttributesVar *string) {
-
 	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
 	defer core.GFreeNullable(AttributesVarPtr)
 
 	xDirectoryListSetAttributes(x.GoPointer(), AttributesVarPtr)
-
 }
 
 var xDirectoryListSetFile func(uintptr, uintptr)
@@ -185,14 +175,7 @@ var xDirectoryListSetFile func(uintptr, uintptr)
 //
 // If @file is %NULL, the result will be an empty list.
 func (x *DirectoryList) SetFile(FileVar gio.File) {
-
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	xDirectoryListSetFile(x.GoPointer(), FileVarPtr)
-
+	xDirectoryListSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
 var xDirectoryListSetIoPriority func(uintptr, int)
@@ -207,9 +190,7 @@ var xDirectoryListSetIoPriority func(uintptr, int)
 // parallel, lowering it to something like %G_PRIORITY_DEFAULT_IDLE
 // may increase responsiveness.
 func (x *DirectoryList) SetIoPriority(IoPriorityVar int) {
-
 	xDirectoryListSetIoPriority(x.GoPointer(), IoPriorityVar)
-
 }
 
 var xDirectoryListSetMonitored func(uintptr, bool)
@@ -225,9 +206,7 @@ var xDirectoryListSetMonitored func(uintptr, bool)
 // missing files that appeared between the initial loading
 // and when monitoring was turned on.
 func (x *DirectoryList) SetMonitored(MonitoredVar bool) {
-
 	xDirectoryListSetMonitored(x.GoPointer(), MonitoredVar)
-
 }
 
 func (c *DirectoryList) GoPointer() uintptr {
@@ -326,7 +305,6 @@ func (x *DirectoryList) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *DirectoryList) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -340,7 +318,6 @@ func (x *DirectoryList) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *DirectoryList) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -351,7 +328,6 @@ func (x *DirectoryList) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *DirectoryList) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -402,14 +378,12 @@ func (x *DirectoryList) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *DirectoryList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -433,5 +407,4 @@ func init() {
 	core.PuregoSafeRegister(&xDirectoryListSetFile, libs, "gtk_directory_list_set_file")
 	core.PuregoSafeRegister(&xDirectoryListSetIoPriority, libs, "gtk_directory_list_set_io_priority")
 	core.PuregoSafeRegister(&xDirectoryListSetMonitored, libs, "gtk_directory_list_set_monitored")
-
 }

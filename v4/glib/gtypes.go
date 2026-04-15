@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -59,15 +58,16 @@ type Func func(uintptr, uintptr)
 type HFunc func(uintptr, uintptr, uintptr)
 
 // Specifies the type of the hash function which is passed to
-// g_hash_table_new() when a #GHashTable is created.
+// [func@HashTable.new] when a [struct@HashTable] is created.
 //
-// The function is passed a key and should return a #guint hash value.
-// The functions g_direct_hash(), g_int_hash() and g_str_hash() provide
-// hash functions which can be used when the key is a #gpointer, #gint*,
-// and #gchar* respectively.
+// The function is passed a key and should return an `unsigned int` hash value.
+// The functions [func@direct_hash], [func@int_hash] and [func@str_hash] provide
+// hash functions which can be used when the key is a `void*`, `int*`,
+// and `char*` respectively.
 //
-// g_direct_hash() is also the appropriate hash function for keys
-// of the form `GINT_TO_POINTER (n)` (or similar macros).
+// [func@direct_hash] is also the appropriate hash function for keys
+// of the form [`GINT_TO_POINTER (n)`](conversion-macros.html#gint-to-pointer)
+// (or similar macros).
 //
 // A good hash functions should produce
 // hash values that are evenly distributed over a fairly large range.
@@ -78,9 +78,9 @@ type HFunc func(uintptr, uintptr, uintptr)
 // Note that the hash functions provided by GLib have these qualities,
 // but are not particularly robust against manufactured keys that
 // cause hash collisions. Therefore, you should consider choosing
-// a more secure hash function when using a GHashTable with keys
+// a more secure hash function when using a [struct@HashTable] with keys
 // that originate in untrusted data (such as HTTP requests).
-// Using g_str_hash() in that situation might make your application
+// Using [func@str_hash] in that situation might make your application
 // vulnerable to
 // [Algorithmic Complexity Attacks](https://lwn.net/Articles/474912/).
 //
@@ -121,9 +121,7 @@ var xTimeValAdd func(uintptr, int)
 // Adds the given number of microseconds to @time_. @microseconds can
 // also be negative to decrease the value of @time_.
 func (x *TimeVal) Add(MicrosecondsVar int) {
-
 	xTimeValAdd(x.GoPointer(), MicrosecondsVar)
-
 }
 
 var xTimeValToIso8601 func(uintptr) string
@@ -163,7 +161,6 @@ var xTimeValToIso8601 func(uintptr) string
 // The return value of g_time_val_to_iso8601() has been nullable since GLib
 // 2.54; before then, GLib would crash under the same conditions.
 func (x *TimeVal) ToIso8601() string {
-
 	cret := xTimeValToIso8601(x.GoPointer())
 	return cret
 }
@@ -238,7 +235,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -250,5 +247,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xTimeValAdd, libs, "g_time_val_add")
 	core.PuregoSafeRegister(&xTimeValToIso8601, libs, "g_time_val_to_iso8601")
-
 }

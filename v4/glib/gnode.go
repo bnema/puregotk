@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -45,7 +44,6 @@ var xNodeChildIndex func(uintptr, uintptr) int
 // Gets the position of the first child of a #GNode
 // which contains the given data.
 func (x *Node) ChildIndex(DataVar uintptr) int {
-
 	cret := xNodeChildIndex(x.GoPointer(), DataVar)
 	return cret
 }
@@ -56,7 +54,6 @@ var xNodeChildPosition func(uintptr, *Node) int
 // @child must be a child of @node. The first child is numbered 0,
 // the second 1, and so on.
 func (x *Node) ChildPosition(ChildVar *Node) int {
-
 	cret := xNodeChildPosition(x.GoPointer(), ChildVar)
 	return cret
 }
@@ -67,58 +64,30 @@ var xNodeChildrenForeach func(uintptr, TraverseFlags, uintptr, uintptr)
 // doesn't descend beneath the child nodes. @func must not do anything
 // that would modify the structure of the tree.
 func (x *Node) ChildrenForeach(FlagsVar TraverseFlags, FuncVar *NodeForeachFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Node, arg1 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xNodeChildrenForeach(x.GoPointer(), FlagsVar, FuncVarRef, DataVar)
-
+	xNodeChildrenForeach(x.GoPointer(), FlagsVar, NewCallback(FuncVar), DataVar)
 }
 
-var xNodeCopy func(uintptr) *Node
+var xNodeCopy func(uintptr) uintptr
 
 // Recursively copies a #GNode (but does not deep-copy the data inside the
 // nodes, see g_node_copy_deep() if you need that).
 func (x *Node) Copy() *Node {
-
 	cret := xNodeCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeCopyDeep func(uintptr, uintptr, uintptr) *Node
+var xNodeCopyDeep func(uintptr, uintptr, uintptr) uintptr
 
 // Recursively copies a #GNode and its data.
 func (x *Node) CopyDeep(CopyFuncVar *CopyFunc, DataVar uintptr) *Node {
-
-	var CopyFuncVarRef uintptr
-	if CopyFuncVar != nil {
-		CopyFuncVarPtr := uintptr(unsafe.Pointer(CopyFuncVar))
-		if cbRefPtr, ok := GetCallback(CopyFuncVarPtr); ok {
-			CopyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-				cbFn := *CopyFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CopyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CopyFuncVarPtr, CopyFuncVarRef, CopyFuncVar)
-		}
+	cret := xNodeCopyDeep(x.GoPointer(), NewCallback(CopyFuncVar), DataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xNodeCopyDeep(x.GoPointer(), CopyFuncVarRef, DataVar)
-	return cret
+	return (*Node)(unsafe.Pointer(cret))
 }
 
 var xNodeDepth func(uintptr) uint
@@ -128,7 +97,6 @@ var xNodeDepth func(uintptr) uint
 // If @node is %NULL the depth is 0. The root node has a depth of 1.
 // For the children of the root node the depth is 2. And so on.
 func (x *Node) Depth() uint {
-
 	cret := xNodeDepth(x.GoPointer())
 	return cret
 }
@@ -138,73 +106,85 @@ var xNodeDestroy func(uintptr)
 // Removes @root and its children from the tree, freeing any memory
 // allocated.
 func (x *Node) Destroy() {
-
 	xNodeDestroy(x.GoPointer())
-
 }
 
-var xNodeFind func(uintptr, TraverseType, TraverseFlags, uintptr) *Node
+var xNodeFind func(uintptr, TraverseType, TraverseFlags, uintptr) uintptr
 
 // Finds a #GNode in a tree.
 func (x *Node) Find(OrderVar TraverseType, FlagsVar TraverseFlags, DataVar uintptr) *Node {
-
 	cret := xNodeFind(x.GoPointer(), OrderVar, FlagsVar, DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeFindChild func(uintptr, TraverseFlags, uintptr) *Node
+var xNodeFindChild func(uintptr, TraverseFlags, uintptr) uintptr
 
 // Finds the first child of a #GNode with the given data.
 func (x *Node) FindChild(FlagsVar TraverseFlags, DataVar uintptr) *Node {
-
 	cret := xNodeFindChild(x.GoPointer(), FlagsVar, DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeFirstSibling func(uintptr) *Node
+var xNodeFirstSibling func(uintptr) uintptr
 
 // Gets the first sibling of a #GNode.
 // This could possibly be the node itself.
 func (x *Node) FirstSibling() *Node {
-
 	cret := xNodeFirstSibling(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeGetRoot func(uintptr) *Node
+var xNodeGetRoot func(uintptr) uintptr
 
 // Gets the root of a tree.
 func (x *Node) GetRoot() *Node {
-
 	cret := xNodeGetRoot(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeInsert func(uintptr, int, *Node) *Node
+var xNodeInsert func(uintptr, int, *Node) uintptr
 
 // Inserts a #GNode beneath the parent at the given position.
 func (x *Node) Insert(PositionVar int, NodeVar *Node) *Node {
-
 	cret := xNodeInsert(x.GoPointer(), PositionVar, NodeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeInsertAfter func(uintptr, *Node, *Node) *Node
+var xNodeInsertAfter func(uintptr, *Node, *Node) uintptr
 
 // Inserts a #GNode beneath the parent after the given sibling.
 func (x *Node) InsertAfter(SiblingVar *Node, NodeVar *Node) *Node {
-
 	cret := xNodeInsertAfter(x.GoPointer(), SiblingVar, NodeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeInsertBefore func(uintptr, *Node, *Node) *Node
+var xNodeInsertBefore func(uintptr, *Node, *Node) uintptr
 
 // Inserts a #GNode beneath the parent before the given sibling.
 func (x *Node) InsertBefore(SiblingVar *Node, NodeVar *Node) *Node {
-
 	cret := xNodeInsertBefore(x.GoPointer(), SiblingVar, NodeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
 var xNodeIsAncestor func(uintptr, *Node) bool
@@ -213,28 +193,31 @@ var xNodeIsAncestor func(uintptr, *Node) bool
 // This is true if node is the parent of @descendant,
 // or if node is the grandparent of @descendant etc.
 func (x *Node) IsAncestor(DescendantVar *Node) bool {
-
 	cret := xNodeIsAncestor(x.GoPointer(), DescendantVar)
 	return cret
 }
 
-var xNodeLastChild func(uintptr) *Node
+var xNodeLastChild func(uintptr) uintptr
 
 // Gets the last child of a #GNode.
 func (x *Node) LastChild() *Node {
-
 	cret := xNodeLastChild(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodeLastSibling func(uintptr) *Node
+var xNodeLastSibling func(uintptr) uintptr
 
 // Gets the last sibling of a #GNode.
 // This could possibly be the node itself.
 func (x *Node) LastSibling() *Node {
-
 	cret := xNodeLastSibling(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
 var xNodeMaxHeight func(uintptr) uint
@@ -245,7 +228,6 @@ var xNodeMaxHeight func(uintptr) uint
 // If @root is %NULL, 0 is returned. If @root has no children,
 // 1 is returned. If @root has children, 2 is returned. And so on.
 func (x *Node) MaxHeight() uint {
-
 	cret := xNodeMaxHeight(x.GoPointer())
 	return cret
 }
@@ -254,7 +236,6 @@ var xNodeNChildren func(uintptr) uint
 
 // Gets the number of children of a #GNode.
 func (x *Node) NChildren() uint {
-
 	cret := xNodeNChildren(x.GoPointer())
 	return cret
 }
@@ -263,29 +244,32 @@ var xNodeNNodes func(uintptr, TraverseFlags) uint
 
 // Gets the number of nodes in a tree.
 func (x *Node) NNodes(FlagsVar TraverseFlags) uint {
-
 	cret := xNodeNNodes(x.GoPointer(), FlagsVar)
 	return cret
 }
 
-var xNodeNthChild func(uintptr, uint) *Node
+var xNodeNthChild func(uintptr, uint) uintptr
 
 // Gets a child of a #GNode, using the given index.
 // The first child is at index 0. If the index is
 // too big, %NULL is returned.
 func (x *Node) NthChild(NVar uint) *Node {
-
 	cret := xNodeNthChild(x.GoPointer(), NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
-var xNodePrepend func(uintptr, *Node) *Node
+var xNodePrepend func(uintptr, *Node) uintptr
 
 // Inserts a #GNode as the first child of the given parent.
 func (x *Node) Prepend(NodeVar *Node) *Node {
-
 	cret := xNodePrepend(x.GoPointer(), NodeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Node)(unsafe.Pointer(cret))
 }
 
 var xNodeReverseChildren func(uintptr)
@@ -293,9 +277,7 @@ var xNodeReverseChildren func(uintptr)
 // Reverses the order of the children of a #GNode.
 // (It doesn't change the order of the grandchildren.)
 func (x *Node) ReverseChildren() {
-
 	xNodeReverseChildren(x.GoPointer())
-
 }
 
 var xNodeTraverse func(uintptr, TraverseType, TraverseFlags, int, uintptr, uintptr)
@@ -305,33 +287,14 @@ var xNodeTraverse func(uintptr, TraverseType, TraverseFlags, int, uintptr, uintp
 // The traversal can be halted at any point by returning %TRUE from @func.
 // @func must not do anything that would modify the structure of the tree.
 func (x *Node) Traverse(OrderVar TraverseType, FlagsVar TraverseFlags, MaxDepthVar int, FuncVar *NodeTraverseFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *Node, arg1 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xNodeTraverse(x.GoPointer(), OrderVar, FlagsVar, MaxDepthVar, FuncVarRef, DataVar)
-
+	xNodeTraverse(x.GoPointer(), OrderVar, FlagsVar, MaxDepthVar, NewCallback(FuncVar), DataVar)
 }
 
 var xNodeUnlink func(uintptr)
 
 // Unlinks a #GNode from a tree, resulting in two separate trees.
 func (x *Node) Unlink() {
-
 	xNodeUnlink(x.GoPointer())
-
 }
 
 // Specifies which nodes are visited during several of the tree
@@ -415,7 +378,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -450,5 +413,4 @@ func init() {
 	core.PuregoSafeRegister(&xNodeReverseChildren, libs, "g_node_reverse_children")
 	core.PuregoSafeRegister(&xNodeTraverse, libs, "g_node_traverse")
 	core.PuregoSafeRegister(&xNodeUnlink, libs, "g_node_unlink")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -169,7 +168,6 @@ var xVideoGetAutoplay func(uintptr) bool
 
 // Returns %TRUE if videos have been set to loop.
 func (x *Video) GetAutoplay() bool {
-
 	cret := xVideoGetAutoplay(x.GoPointer())
 	return cret
 }
@@ -198,7 +196,6 @@ var xVideoGetGraphicsOffload func(uintptr) GraphicsOffloadEnabled
 //
 // See [class@Gtk.GraphicsOffload] for more information on graphics offload.
 func (x *Video) GetGraphicsOffload() GraphicsOffloadEnabled {
-
 	cret := xVideoGetGraphicsOffload(x.GoPointer())
 	return cret
 }
@@ -207,7 +204,6 @@ var xVideoGetLoop func(uintptr) bool
 
 // Returns %TRUE if videos have been set to loop.
 func (x *Video) GetLoop() bool {
-
 	cret := xVideoGetLoop(x.GoPointer())
 	return cret
 }
@@ -234,23 +230,14 @@ var xVideoSetAutoplay func(uintptr, bool)
 // Sets whether @self automatically starts playback when it
 // becomes visible or when a new file gets loaded.
 func (x *Video) SetAutoplay(AutoplayVar bool) {
-
 	xVideoSetAutoplay(x.GoPointer(), AutoplayVar)
-
 }
 
 var xVideoSetFile func(uintptr, uintptr)
 
 // Makes @self play the given @file.
 func (x *Video) SetFile(FileVar gio.File) {
-
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	xVideoSetFile(x.GoPointer(), FileVarPtr)
-
+	xVideoSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
 var xVideoSetFilename func(uintptr, uintptr)
@@ -259,12 +246,10 @@ var xVideoSetFilename func(uintptr, uintptr)
 //
 // This is a utility function that calls gtk_video_set_file(),
 func (x *Video) SetFilename(FilenameVar *string) {
-
 	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
 	defer core.GFreeNullable(FilenameVarPtr)
 
 	xVideoSetFilename(x.GoPointer(), FilenameVarPtr)
-
 }
 
 var xVideoSetGraphicsOffload func(uintptr, GraphicsOffloadEnabled)
@@ -273,18 +258,14 @@ var xVideoSetGraphicsOffload func(uintptr, GraphicsOffloadEnabled)
 //
 // See [class@Gtk.GraphicsOffload] for more information on graphics offload.
 func (x *Video) SetGraphicsOffload(EnabledVar GraphicsOffloadEnabled) {
-
 	xVideoSetGraphicsOffload(x.GoPointer(), EnabledVar)
-
 }
 
 var xVideoSetLoop func(uintptr, bool)
 
 // Sets whether new files loaded by @self should be set to loop.
 func (x *Video) SetLoop(LoopVar bool) {
-
 	xVideoSetLoop(x.GoPointer(), LoopVar)
-
 }
 
 var xVideoSetMediaStream func(uintptr, uintptr)
@@ -298,14 +279,7 @@ var xVideoSetMediaStream func(uintptr, uintptr)
 // If you want to display a file, consider using [method@Gtk.Video.set_file]
 // instead.
 func (x *Video) SetMediaStream(StreamVar *MediaStream) {
-
-	var StreamVarPtr uintptr
-	if StreamVar != nil {
-		StreamVarPtr = StreamVar.GoPointer()
-	}
-
-	xVideoSetMediaStream(x.GoPointer(), StreamVarPtr)
-
+	xVideoSetMediaStream(x.GoPointer(), StreamVar.GoPointer())
 }
 
 var xVideoSetResource func(uintptr, uintptr)
@@ -314,12 +288,10 @@ var xVideoSetResource func(uintptr, uintptr)
 //
 // This is a utility function that calls [method@Gtk.Video.set_file].
 func (x *Video) SetResource(ResourcePathVar *string) {
-
 	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
 	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xVideoSetResource(x.GoPointer(), ResourcePathVarPtr)
-
 }
 
 func (c *Video) GoPointer() uintptr {
@@ -377,9 +349,19 @@ func (x *Video) GetPropertyLoop() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Video) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Video) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -400,7 +382,6 @@ func (x *Video) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Video) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -425,7 +406,6 @@ func (x *Video) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Video) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -464,30 +444,23 @@ func (x *Video) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Video) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Video) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Video) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Video) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -500,19 +473,7 @@ func (x *Video) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Video) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -520,14 +481,7 @@ func (x *Video) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Video) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -536,9 +490,7 @@ func (x *Video) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Video) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -560,9 +512,7 @@ func (x *Video) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Video) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -572,9 +522,7 @@ func (x *Video) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Video) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -596,9 +544,7 @@ func (x *Video) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Video) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -608,9 +554,7 @@ func (x *Video) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Video) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -633,9 +577,7 @@ func (x *Video) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Video) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -645,9 +587,7 @@ func (x *Video) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Video) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -655,14 +595,13 @@ func (x *Video) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Video) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -692,5 +631,4 @@ func init() {
 	core.PuregoSafeRegister(&xVideoSetLoop, libs, "gtk_video_set_loop")
 	core.PuregoSafeRegister(&xVideoSetMediaStream, libs, "gtk_video_set_media_stream")
 	core.PuregoSafeRegister(&xVideoSetResource, libs, "gtk_video_set_resource")
-
 }

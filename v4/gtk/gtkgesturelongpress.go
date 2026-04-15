@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -72,7 +71,6 @@ var xGestureLongPressGetDelayFactor func(uintptr) float64
 
 // Returns the delay factor.
 func (x *GestureLongPress) GetDelayFactor() float64 {
-
 	cret := xGestureLongPressGetDelayFactor(x.GoPointer())
 	return cret
 }
@@ -84,9 +82,7 @@ var xGestureLongPressSetDelayFactor func(uintptr, float64)
 // The default long press time will be multiplied by this value.
 // Valid values are in the range [0.5..2.0].
 func (x *GestureLongPress) SetDelayFactor(DelayFactorVar float64) {
-
 	xGestureLongPressSetDelayFactor(x.GoPointer(), DelayFactorVar)
-
 }
 
 func (c *GestureLongPress) GoPointer() uintptr {
@@ -133,7 +129,6 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -158,7 +153,6 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -169,7 +163,7 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -185,5 +179,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGestureLongPressGetDelayFactor, libs, "gtk_gesture_long_press_get_delay_factor")
 	core.PuregoSafeRegister(&xGestureLongPressSetDelayFactor, libs, "gtk_gesture_long_press_set_delay_factor")
-
 }

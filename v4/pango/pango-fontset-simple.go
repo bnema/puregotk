@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -62,16 +61,13 @@ var xFontsetSimpleAppend func(uintptr, uintptr)
 //
 // The fontset takes ownership of @font.
 func (x *FontsetSimple) Append(FontVar *Font) {
-
 	xFontsetSimpleAppend(x.GoPointer(), FontVar.GoPointer())
-
 }
 
 var xFontsetSimpleSize func(uintptr) int
 
 // Returns the number of fonts in the fontset.
 func (x *FontsetSimple) Size() int {
-
 	cret := xFontsetSimpleSize(x.GoPointer())
 	return cret
 }
@@ -89,7 +85,7 @@ func (c *FontsetSimple) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -105,5 +101,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xFontsetSimpleAppend, libs, "pango_fontset_simple_append")
 	core.PuregoSafeRegister(&xFontsetSimpleSize, libs, "pango_fontset_simple_size")
-
 }

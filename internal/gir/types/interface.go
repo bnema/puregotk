@@ -6,8 +6,12 @@ import (
 	"github.com/bnema/puregotk/internal/gir/util"
 )
 
-func ConvertInterface(currns string, ins string, inter Interface, implemented map[string]bool, kinds KindMap) InterfaceTemplate {
+func ConvertInterface(currns string, ins string, inter Interface, implemented map[string]bool, kinds KindMap, imps *ImportSet) InterfaceTemplate {
 	var methods []InterfaceFuncTemplate
+
+	if inter.GLibGetType != "" {
+		imps.AddTypes()
+	}
 
 	for _, m := range inter.Methods {
 		name := util.SnakeToCamel(m.Name)
@@ -20,6 +24,7 @@ func ConvertInterface(currns string, ins string, inter Interface, implemented ma
 		var newns string
 		if ins != "" {
 			newns = ins + "."
+			imps.AddPkg(ins)
 		}
 		methods = append(methods, InterfaceFuncTemplate{
 			Namespace: newns,
@@ -28,15 +33,15 @@ func ConvertInterface(currns string, ins string, inter Interface, implemented ma
 				Doc:   m.Doc.StringSafe(),
 				CName: m.CIdentifier,
 				Name:  name,
-				Args:  m.Parameters.Template(currns, ins, kinds, m.Throws, ArgsFromGoToC),
-				Ret:   m.ReturnValue.Template(currns, ins, kinds, m.Throws),
+				Args:  m.Parameters.Template(currns, ins, kinds, m.Throws, ArgsFromGoToC, imps),
+				Ret:   m.ReturnValue.Template(currns, ins, kinds, m.Throws, imps),
 			},
 		})
 	}
 
 	properties := make([]PropertyTemplate, 0, len(inter.Properties))
 	for _, prop := range inter.Properties {
-		propTemp := prop.Template(currns, kinds)
+		propTemp := prop.Template(currns, kinds, imps)
 
 		// TODO: Implement non-primitive types, then remove this
 		if propTemp.GValueType != "" {
@@ -54,12 +59,12 @@ func ConvertInterface(currns string, ins string, inter Interface, implemented ma
 	}
 }
 
-func GetInterfaceFuncs(ns string, name string, implemented map[string]bool, kinds KindMap) InterfaceTemplate {
+func GetInterfaceFuncs(ns string, name string, implemented map[string]bool, kinds KindMap, imps *ImportSet) InterfaceTemplate {
 	inter := kinds.MustInterface(ns, name)
 	parts := strings.Split(name, ".")
 	var ins string
 	if len(parts) > 1 {
 		ins = strings.ToLower(parts[0])
 	}
-	return ConvertInterface(ns, ins, inter, implemented, kinds)
+	return ConvertInterface(ns, ins, inter, implemented, kinds, imps)
 }

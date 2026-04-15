@@ -2,8 +2,7 @@
 package gobject
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -15,14 +14,13 @@ type Type = types.GType
 var xVariantGetGtype func() types.GType
 
 func VariantGetGtype() types.GType {
-
 	cret := xVariantGetGtype()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -33,5 +31,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xVariantGetGtype, libs, "g_variant_get_gtype")
-
 }

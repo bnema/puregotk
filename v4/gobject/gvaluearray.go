@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -59,85 +58,97 @@ func (x *ValueArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewValueArray func(uint) *ValueArray
+var xNewValueArray func(uint) uintptr
 
 // Allocate and initialize a new #GValueArray, optionally preserve space
 // for @n_prealloced elements. New arrays always contain 0 elements,
 // regardless of the value of @n_prealloced.
 func NewValueArray(NPreallocedVar uint) *ValueArray {
-
 	cret := xNewValueArray(NPreallocedVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayAppend func(uintptr, *Value) *ValueArray
+var xValueArrayAppend func(uintptr, *Value) uintptr
 
 // Insert a copy of @value as last element of @value_array. If @value is
 // %NULL, an uninitialized value is appended.
 func (x *ValueArray) Append(ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayAppend(x.GoPointer(), ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayCopy func(uintptr) *ValueArray
+var xValueArrayCopy func(uintptr) uintptr
 
 // Construct an exact copy of a #GValueArray by duplicating all its
 // contents.
 func (x *ValueArray) Copy() *ValueArray {
-
 	cret := xValueArrayCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
 var xValueArrayFree func(uintptr)
 
 // Free a #GValueArray including its contents.
 func (x *ValueArray) Free() {
-
 	xValueArrayFree(x.GoPointer())
-
 }
 
-var xValueArrayGetNth func(uintptr, uint) *Value
+var xValueArrayGetNth func(uintptr, uint) uintptr
 
 // Return a pointer to the value at @index_ contained in @value_array.
 func (x *ValueArray) GetNth(IndexVar uint) *Value {
-
 	cret := xValueArrayGetNth(x.GoPointer(), IndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
-var xValueArrayInsert func(uintptr, uint, *Value) *ValueArray
+var xValueArrayInsert func(uintptr, uint, *Value) uintptr
 
 // Insert a copy of @value at specified position into @value_array. If @value
 // is %NULL, an uninitialized value is inserted.
 func (x *ValueArray) Insert(IndexVar uint, ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayInsert(x.GoPointer(), IndexVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayPrepend func(uintptr, *Value) *ValueArray
+var xValueArrayPrepend func(uintptr, *Value) uintptr
 
 // Insert a copy of @value as first element of @value_array. If @value is
 // %NULL, an uninitialized value is prepended.
 func (x *ValueArray) Prepend(ValueVar *Value) *ValueArray {
-
 	cret := xValueArrayPrepend(x.GoPointer(), ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayRemove func(uintptr, uint) *ValueArray
+var xValueArrayRemove func(uintptr, uint) uintptr
 
 // Remove the value at position @index_ from @value_array.
 func (x *ValueArray) Remove(IndexVar uint) *ValueArray {
-
 	cret := xValueArrayRemove(x.GoPointer(), IndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArraySort func(uintptr, uintptr) *ValueArray
+var xValueArraySort func(uintptr, uintptr) uintptr
 
 // Sort @value_array using @compare_func to compare the elements according to
 // the semantics of #GCompareFunc.
@@ -145,27 +156,14 @@ var xValueArraySort func(uintptr, uintptr) *ValueArray
 // The current implementation uses the same sorting algorithm as standard
 // C qsort() function.
 func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
+	cret := xValueArraySort(x.GoPointer(), glib.NewCallback(CompareFuncVar))
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xValueArraySort(x.GoPointer(), CompareFuncVarRef)
-	return cret
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
+var xValueArraySortWithData func(uintptr, uintptr, uintptr) uintptr
 
 // Sort @value_array using @compare_func to compare the elements according
 // to the semantics of #GCompareDataFunc.
@@ -173,29 +171,16 @@ var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
 // The current implementation uses the same sorting algorithm as standard
 // C qsort() function.
 func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) *ValueArray {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
+	cret := xValueArraySortWithData(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xValueArraySortWithData(x.GoPointer(), CompareFuncVarRef, UserDataVar)
-	return cret
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -218,5 +203,4 @@ func init() {
 	core.PuregoSafeRegister(&xValueArrayRemove, libs, "g_value_array_remove")
 	core.PuregoSafeRegister(&xValueArraySort, libs, "g_value_array_sort")
 	core.PuregoSafeRegister(&xValueArraySortWithData, libs, "g_value_array_sort_with_data")
-
 }

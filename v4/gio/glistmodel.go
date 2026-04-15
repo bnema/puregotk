@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -223,7 +222,6 @@ func (x *ListModelBase) SetGoPointer(ptr uintptr) {
 //
 // See also: g_list_model_get_n_items()
 func (x *ListModelBase) GetItem(PositionVar uint) uintptr {
-
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -237,7 +235,6 @@ func (x *ListModelBase) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *ListModelBase) GetItemType() types.GType {
-
 	cret := XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -248,7 +245,6 @@ func (x *ListModelBase) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *ListModelBase) GetNItems() uint {
-
 	cret := XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -299,20 +295,20 @@ func (x *ListModelBase) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *ListModelBase) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
-var XGListModelGetItem func(uintptr, uint) uintptr
-var XGListModelGetItemType func(uintptr) types.GType
-var XGListModelGetNItems func(uintptr) uint
-var XGListModelGetObject func(uintptr, uint) uintptr
-var XGListModelItemsChanged func(uintptr, uint, uint, uint)
+var (
+	XGListModelGetItem      func(uintptr, uint) uintptr
+	XGListModelGetItemType  func(uintptr) types.GType
+	XGListModelGetNItems    func(uintptr) uint
+	XGListModelGetObject    func(uintptr, uint) uintptr
+	XGListModelItemsChanged func(uintptr, uint, uint, uint)
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -329,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&XGListModelGetNItems, libs, "g_list_model_get_n_items")
 	core.PuregoSafeRegister(&XGListModelGetObject, libs, "g_list_model_get_object")
 	core.PuregoSafeRegister(&XGListModelItemsChanged, libs, "g_list_model_items_changed")
-
 }

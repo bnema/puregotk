@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -102,19 +101,19 @@ var xFixedGetChildPosition func(uintptr, uintptr, *float64, *float64)
 //
 // See also: [method@Gtk.Fixed.get_child_transform].
 func (x *Fixed) GetChildPosition(WidgetVar *Widget, XVar *float64, YVar *float64) {
-
 	xFixedGetChildPosition(x.GoPointer(), WidgetVar.GoPointer(), XVar, YVar)
-
 }
 
-var xFixedGetChildTransform func(uintptr, uintptr) *gsk.Transform
+var xFixedGetChildTransform func(uintptr, uintptr) uintptr
 
 // Retrieves the transformation for @widget set using
 // gtk_fixed_set_child_transform().
 func (x *Fixed) GetChildTransform(WidgetVar *Widget) *gsk.Transform {
-
 	cret := xFixedGetChildTransform(x.GoPointer(), WidgetVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gsk.Transform)(unsafe.Pointer(cret))
 }
 
 var xFixedMove func(uintptr, uintptr, float64, float64)
@@ -122,27 +121,21 @@ var xFixedMove func(uintptr, uintptr, float64, float64)
 // Sets a translation transformation to the given @x and @y
 // coordinates to the child @widget of the `GtkFixed`.
 func (x *Fixed) Move(WidgetVar *Widget, XVar float64, YVar float64) {
-
 	xFixedMove(x.GoPointer(), WidgetVar.GoPointer(), XVar, YVar)
-
 }
 
 var xFixedPut func(uintptr, uintptr, float64, float64)
 
 // Adds a widget to a `GtkFixed` at the given position.
 func (x *Fixed) Put(WidgetVar *Widget, XVar float64, YVar float64) {
-
 	xFixedPut(x.GoPointer(), WidgetVar.GoPointer(), XVar, YVar)
-
 }
 
 var xFixedRemove func(uintptr, uintptr)
 
 // Removes a child from @fixed.
 func (x *Fixed) Remove(WidgetVar *Widget) {
-
 	xFixedRemove(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xFixedSetChildTransform func(uintptr, uintptr, *gsk.Transform)
@@ -153,9 +146,7 @@ var xFixedSetChildTransform func(uintptr, uintptr, *gsk.Transform)
 // [class@Gtk.FixedLayoutChild] instance associated to
 // @widget and calls [method@Gtk.FixedLayoutChild.set_transform].
 func (x *Fixed) SetChildTransform(WidgetVar *Widget, TransformVar *gsk.Transform) {
-
 	xFixedSetChildTransform(x.GoPointer(), WidgetVar.GoPointer(), TransformVar)
-
 }
 
 func (c *Fixed) GoPointer() uintptr {
@@ -179,9 +170,19 @@ func (c *Fixed) SetGoPointer(ptr uintptr) {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Fixed) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Fixed) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -202,7 +203,6 @@ func (x *Fixed) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Fixed) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -227,7 +227,6 @@ func (x *Fixed) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Fixed) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -266,30 +265,23 @@ func (x *Fixed) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Fixed) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Fixed) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Fixed) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Fixed) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -302,19 +294,7 @@ func (x *Fixed) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Fixed) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -322,14 +302,7 @@ func (x *Fixed) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Fixed) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -338,9 +311,7 @@ func (x *Fixed) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Fixed) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -362,9 +333,7 @@ func (x *Fixed) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Fixed) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -374,9 +343,7 @@ func (x *Fixed) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Fixed) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -398,9 +365,7 @@ func (x *Fixed) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Fixed) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -410,9 +375,7 @@ func (x *Fixed) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Fixed) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -435,9 +398,7 @@ func (x *Fixed) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Fixed) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -447,9 +408,7 @@ func (x *Fixed) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Fixed) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -457,14 +416,13 @@ func (x *Fixed) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Fixed) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -484,5 +442,4 @@ func init() {
 	core.PuregoSafeRegister(&xFixedPut, libs, "gtk_fixed_put")
 	core.PuregoSafeRegister(&xFixedRemove, libs, "gtk_fixed_remove")
 	core.PuregoSafeRegister(&xFixedSetChildTransform, libs, "gtk_fixed_set_child_transform")
-
 }

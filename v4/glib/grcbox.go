@@ -2,10 +2,7 @@
 package glib
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -13,7 +10,6 @@ var xAtomicRcBoxAcquire func(uintptr) uintptr
 
 // Atomically acquires a reference on the data pointed by @mem_block.
 func AtomicRcBoxAcquire(MemBlockVar uintptr) uintptr {
-
 	cret := xAtomicRcBoxAcquire(MemBlockVar)
 
 	return cret
@@ -30,7 +26,6 @@ var xAtomicRcBoxAlloc func(uint) uintptr
 // The allocated data is guaranteed to be suitably aligned for any
 // built-in type.
 func AtomicRcBoxAlloc(BlockSizeVar uint) uintptr {
-
 	cret := xAtomicRcBoxAlloc(BlockSizeVar)
 
 	return cret
@@ -49,7 +44,6 @@ var xAtomicRcBoxAlloc0 func(uint) uintptr
 // The allocated data is guaranteed to be suitably aligned for any
 // built-in type.
 func AtomicRcBoxAlloc0(BlockSizeVar uint) uintptr {
-
 	cret := xAtomicRcBoxAlloc0(BlockSizeVar)
 
 	return cret
@@ -61,7 +55,6 @@ var xAtomicRcBoxDup func(uint, uintptr) uintptr
 // semantics, and copies @block_size bytes of @mem_block
 // into it.
 func AtomicRcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
-
 	cret := xAtomicRcBoxDup(BlockSizeVar, MemBlockVar)
 
 	return cret
@@ -71,7 +64,6 @@ var xAtomicRcBoxGetSize func(uintptr) uint
 
 // Retrieves the size of the reference counted data pointed by @mem_block.
 func AtomicRcBoxGetSize(MemBlockVar uintptr) uint {
-
 	cret := xAtomicRcBoxGetSize(MemBlockVar)
 
 	return cret
@@ -84,9 +76,7 @@ var xAtomicRcBoxRelease func(uintptr)
 // If the reference was the last one, it will free the
 // resources allocated for @mem_block.
 func AtomicRcBoxRelease(MemBlockVar uintptr) {
-
 	xAtomicRcBoxRelease(MemBlockVar)
-
 }
 
 var xAtomicRcBoxReleaseFull func(uintptr, uintptr)
@@ -102,31 +92,13 @@ var xAtomicRcBoxReleaseFull func(uintptr, uintptr)
 // thread trying to access it as @mem_block already has a reference count of 0
 // when the callback is called and will be freed.
 func AtomicRcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
-
-	var ClearFuncVarRef uintptr
-	if ClearFuncVar != nil {
-		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
-		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
-			ClearFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ClearFuncVar
-				cbFn(arg0)
-			}
-			ClearFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ClearFuncVarPtr, ClearFuncVarRef, ClearFuncVar)
-		}
-	}
-
-	xAtomicRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)
-
+	xAtomicRcBoxReleaseFull(MemBlockVar, NewCallback(ClearFuncVar))
 }
 
 var xRcBoxAcquire func(uintptr) uintptr
 
 // Acquires a reference on the data pointed by @mem_block.
 func RcBoxAcquire(MemBlockVar uintptr) uintptr {
-
 	cret := xRcBoxAcquire(MemBlockVar)
 
 	return cret
@@ -143,7 +115,6 @@ var xRcBoxAlloc func(uint) uintptr
 // The allocated data is guaranteed to be suitably aligned for any
 // built-in type.
 func RcBoxAlloc(BlockSizeVar uint) uintptr {
-
 	cret := xRcBoxAlloc(BlockSizeVar)
 
 	return cret
@@ -162,7 +133,6 @@ var xRcBoxAlloc0 func(uint) uintptr
 // The allocated data is guaranteed to be suitably aligned for any
 // built-in type.
 func RcBoxAlloc0(BlockSizeVar uint) uintptr {
-
 	cret := xRcBoxAlloc0(BlockSizeVar)
 
 	return cret
@@ -174,7 +144,6 @@ var xRcBoxDup func(uint, uintptr) uintptr
 // semantics, and copies @block_size bytes of @mem_block
 // into it.
 func RcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
-
 	cret := xRcBoxDup(BlockSizeVar, MemBlockVar)
 
 	return cret
@@ -184,7 +153,6 @@ var xRcBoxGetSize func(uintptr) uint
 
 // Retrieves the size of the reference counted data pointed by @mem_block.
 func RcBoxGetSize(MemBlockVar uintptr) uint {
-
 	cret := xRcBoxGetSize(MemBlockVar)
 
 	return cret
@@ -197,9 +165,7 @@ var xRcBoxRelease func(uintptr)
 // If the reference was the last one, it will free the
 // resources allocated for @mem_block.
 func RcBoxRelease(MemBlockVar uintptr) {
-
 	xRcBoxRelease(MemBlockVar)
-
 }
 
 var xRcBoxReleaseFull func(uintptr, uintptr)
@@ -210,29 +176,12 @@ var xRcBoxReleaseFull func(uintptr, uintptr)
 // to clear the contents of @mem_block, and then will free the
 // resources allocated for @mem_block.
 func RcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
-
-	var ClearFuncVarRef uintptr
-	if ClearFuncVar != nil {
-		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
-		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
-			ClearFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *ClearFuncVar
-				cbFn(arg0)
-			}
-			ClearFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(ClearFuncVarPtr, ClearFuncVarRef, ClearFuncVar)
-		}
-	}
-
-	xRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)
-
+	xRcBoxReleaseFull(MemBlockVar, NewCallback(ClearFuncVar))
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -256,5 +205,4 @@ func init() {
 	core.PuregoSafeRegister(&xRcBoxGetSize, libs, "g_rc_box_get_size")
 	core.PuregoSafeRegister(&xRcBoxRelease, libs, "g_rc_box_release")
 	core.PuregoSafeRegister(&xRcBoxReleaseFull, libs, "g_rc_box_release_full")
-
 }

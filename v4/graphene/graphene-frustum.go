@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -31,15 +30,17 @@ func (x *Frustum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xFrustumAlloc func() *Frustum
+var xFrustumAlloc func() uintptr
 
 // Allocates a new #graphene_frustum_t structure.
 //
 // The contents of the returned structure are undefined.
 func FrustumAlloc() *Frustum {
-
 	cret := xFrustumAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
 var xFrustumContainsPoint func(uintptr, *Point3D) bool
@@ -47,7 +48,6 @@ var xFrustumContainsPoint func(uintptr, *Point3D) bool
 // Checks whether a point is inside the volume defined by the given
 // #graphene_frustum_t.
 func (x *Frustum) ContainsPoint(PointVar *Point3D) bool {
-
 	cret := xFrustumContainsPoint(x.GoPointer(), PointVar)
 	return cret
 }
@@ -56,7 +56,6 @@ var xFrustumEqual func(uintptr, *Frustum) bool
 
 // Checks whether the two given #graphene_frustum_t are equal.
 func (x *Frustum) Equal(BVar *Frustum) bool {
-
 	cret := xFrustumEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -65,47 +64,49 @@ var xFrustumFree func(uintptr)
 
 // Frees the resources allocated by graphene_frustum_alloc().
 func (x *Frustum) Free() {
-
 	xFrustumFree(x.GoPointer())
-
 }
 
 var xFrustumGetPlanes func(uintptr, *[6]Plane)
 
 // Retrieves the planes that define the given #graphene_frustum_t.
 func (x *Frustum) GetPlanes(PlanesVar *[6]Plane) {
-
 	xFrustumGetPlanes(x.GoPointer(), PlanesVar)
-
 }
 
-var xFrustumInit func(uintptr, *Plane, *Plane, *Plane, *Plane, *Plane, *Plane) *Frustum
+var xFrustumInit func(uintptr, *Plane, *Plane, *Plane, *Plane, *Plane, *Plane) uintptr
 
 // Initializes the given #graphene_frustum_t using the provided
 // clipping planes.
 func (x *Frustum) Init(P0Var *Plane, P1Var *Plane, P2Var *Plane, P3Var *Plane, P4Var *Plane, P5Var *Plane) *Frustum {
-
 	cret := xFrustumInit(x.GoPointer(), P0Var, P1Var, P2Var, P3Var, P4Var, P5Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
-var xFrustumInitFromFrustum func(uintptr, *Frustum) *Frustum
+var xFrustumInitFromFrustum func(uintptr, *Frustum) uintptr
 
 // Initializes the given #graphene_frustum_t using the clipping
 // planes of another #graphene_frustum_t.
 func (x *Frustum) InitFromFrustum(SrcVar *Frustum) *Frustum {
-
 	cret := xFrustumInitFromFrustum(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
-var xFrustumInitFromMatrix func(uintptr, *Matrix) *Frustum
+var xFrustumInitFromMatrix func(uintptr, *Matrix) uintptr
 
 // Initializes a #graphene_frustum_t using the given @matrix.
 func (x *Frustum) InitFromMatrix(MatrixVar *Matrix) *Frustum {
-
 	cret := xFrustumInitFromMatrix(x.GoPointer(), MatrixVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
 var xFrustumIntersectsBox func(uintptr, *Box) bool
@@ -113,7 +114,6 @@ var xFrustumIntersectsBox func(uintptr, *Box) bool
 // Checks whether the given @box intersects a plane of
 // a #graphene_frustum_t.
 func (x *Frustum) IntersectsBox(BoxVar *Box) bool {
-
 	cret := xFrustumIntersectsBox(x.GoPointer(), BoxVar)
 	return cret
 }
@@ -123,14 +123,13 @@ var xFrustumIntersectsSphere func(uintptr, *Sphere) bool
 // Checks whether the given @sphere intersects a plane of
 // a #graphene_frustum_t.
 func (x *Frustum) IntersectsSphere(SphereVar *Sphere) bool {
-
 	cret := xFrustumIntersectsSphere(x.GoPointer(), SphereVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0", "libgraphene-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GRAPHENE") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -153,5 +152,4 @@ func init() {
 	core.PuregoSafeRegister(&xFrustumInitFromMatrix, libs, "graphene_frustum_init_from_matrix")
 	core.PuregoSafeRegister(&xFrustumIntersectsBox, libs, "graphene_frustum_intersects_box")
 	core.PuregoSafeRegister(&xFrustumIntersectsSphere, libs, "graphene_frustum_intersects_sphere")
-
 }

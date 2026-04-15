@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -46,12 +45,10 @@ var xInternStaticString func(uintptr) string
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func InternStaticString(StringVar *string) string {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternStaticString(StringVarPtr)
-
 	return cret
 }
 
@@ -65,12 +62,10 @@ var xInternString func(uintptr) string
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func InternString(StringVar *string) string {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternString(StringVarPtr)
-
 	return cret
 }
 
@@ -93,12 +88,10 @@ var xQuarkFromStaticString func(uintptr) Quark
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func QuarkFromStaticString(StringVar *string) Quark {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromStaticString(StringVarPtr)
-
 	return cret
 }
 
@@ -112,12 +105,10 @@ var xQuarkFromString func(uintptr) Quark
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
 func QuarkFromString(StringVar *string) Quark {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromString(StringVarPtr)
-
 	return cret
 }
 
@@ -125,7 +116,6 @@ var xQuarkToString func(Quark) string
 
 // Gets the string associated with the given #GQuark.
 func QuarkToString(QuarkVar Quark) string {
-
 	cret := xQuarkToString(QuarkVar)
 
 	return cret
@@ -142,18 +132,16 @@ var xQuarkTryString func(uintptr) Quark
 // This function must not be used before library constructors have finished
 // running.
 func QuarkTryString(StringVar *string) Quark {
-
 	StringVarPtr := core.GStrdupNullable(StringVar)
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkTryString(StringVarPtr)
-
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -169,5 +157,4 @@ func init() {
 	core.PuregoSafeRegister(&xQuarkFromString, libs, "g_quark_from_string")
 	core.PuregoSafeRegister(&xQuarkToString, libs, "g_quark_to_string")
 	core.PuregoSafeRegister(&xQuarkTryString, libs, "g_quark_try_string")
-
 }

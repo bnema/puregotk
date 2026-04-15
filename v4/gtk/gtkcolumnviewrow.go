@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -44,7 +43,6 @@ var xColumnViewRowGetAccessibleDescription func(uintptr) string
 
 // Gets the accessible description of @self.
 func (x *ColumnViewRow) GetAccessibleDescription() string {
-
 	cret := xColumnViewRowGetAccessibleDescription(x.GoPointer())
 	return cret
 }
@@ -53,7 +51,6 @@ var xColumnViewRowGetAccessibleLabel func(uintptr) string
 
 // Gets the accessible label of @self.
 func (x *ColumnViewRow) GetAccessibleLabel() string {
-
 	cret := xColumnViewRowGetAccessibleLabel(x.GoPointer())
 	return cret
 }
@@ -63,7 +60,6 @@ var xColumnViewRowGetActivatable func(uintptr) bool
 // Checks if the row has been set to be activatable via
 // gtk_column_view_row_set_activatable().
 func (x *ColumnViewRow) GetActivatable() bool {
-
 	cret := xColumnViewRowGetActivatable(x.GoPointer())
 	return cret
 }
@@ -73,7 +69,6 @@ var xColumnViewRowGetFocusable func(uintptr) bool
 // Checks if a row item has been set to be focusable via
 // gtk_column_view_row_set_focusable().
 func (x *ColumnViewRow) GetFocusable() bool {
-
 	cret := xColumnViewRowGetFocusable(x.GoPointer())
 	return cret
 }
@@ -103,7 +98,6 @@ var xColumnViewRowGetPosition func(uintptr) uint
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
 func (x *ColumnViewRow) GetPosition() uint {
-
 	cret := xColumnViewRowGetPosition(x.GoPointer())
 	return cret
 }
@@ -115,7 +109,6 @@ var xColumnViewRowGetSelectable func(uintptr) bool
 //
 // Do not confuse this function with [method@Gtk.ColumnViewRow.get_selected].
 func (x *ColumnViewRow) GetSelectable() bool {
-
 	cret := xColumnViewRowGetSelectable(x.GoPointer())
 	return cret
 }
@@ -127,7 +120,6 @@ var xColumnViewRowGetSelected func(uintptr) bool
 // The selected state is maintained by the list widget and its model
 // and cannot be set otherwise.
 func (x *ColumnViewRow) GetSelected() bool {
-
 	cret := xColumnViewRowGetSelected(x.GoPointer())
 	return cret
 }
@@ -137,9 +129,7 @@ var xColumnViewRowSetAccessibleDescription func(uintptr, string)
 // Sets the accessible description for the row,
 // which may be used by e.g. screen readers.
 func (x *ColumnViewRow) SetAccessibleDescription(DescriptionVar string) {
-
 	xColumnViewRowSetAccessibleDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xColumnViewRowSetAccessibleLabel func(uintptr, string)
@@ -147,9 +137,7 @@ var xColumnViewRowSetAccessibleLabel func(uintptr, string)
 // Sets the accessible label for the row,
 // which may be used by e.g. screen readers.
 func (x *ColumnViewRow) SetAccessibleLabel(LabelVar string) {
-
 	xColumnViewRowSetAccessibleLabel(x.GoPointer(), LabelVar)
-
 }
 
 var xColumnViewRowSetActivatable func(uintptr, bool)
@@ -163,9 +151,7 @@ var xColumnViewRowSetActivatable func(uintptr, bool)
 //
 // By default, row are activatable.
 func (x *ColumnViewRow) SetActivatable(ActivatableVar bool) {
-
 	xColumnViewRowSetActivatable(x.GoPointer(), ActivatableVar)
-
 }
 
 var xColumnViewRowSetFocusable func(uintptr, bool)
@@ -180,9 +166,7 @@ var xColumnViewRowSetFocusable func(uintptr, bool)
 //
 // By default, rows are focusable.
 func (x *ColumnViewRow) SetFocusable(FocusableVar bool) {
-
 	xColumnViewRowSetFocusable(x.GoPointer(), FocusableVar)
-
 }
 
 var xColumnViewRowSetSelectable func(uintptr, bool)
@@ -199,9 +183,7 @@ var xColumnViewRowSetSelectable func(uintptr, bool)
 //
 // By default, rows are selectable.
 func (x *ColumnViewRow) SetSelectable(SelectableVar bool) {
-
 	xColumnViewRowSetSelectable(x.GoPointer(), SelectableVar)
-
 }
 
 func (c *ColumnViewRow) GoPointer() uintptr {
@@ -318,7 +300,7 @@ func (x *ColumnViewRow) GetPropertySelected() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -343,5 +325,4 @@ func init() {
 	core.PuregoSafeRegister(&xColumnViewRowSetActivatable, libs, "gtk_column_view_row_set_activatable")
 	core.PuregoSafeRegister(&xColumnViewRowSetFocusable, libs, "gtk_column_view_row_set_focusable")
 	core.PuregoSafeRegister(&xColumnViewRowSetSelectable, libs, "gtk_column_view_row_set_selectable")
-
 }

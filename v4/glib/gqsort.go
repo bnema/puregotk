@@ -2,10 +2,7 @@
 package glib
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -17,24 +14,7 @@ var xQsortWithData func(uintptr, int, uint, uintptr, uintptr)
 //
 // Unlike `qsort()`, this is guaranteed to be a stable sort (since GLib 2.32).
 func QsortWithData(PbaseVar uintptr, TotalElemsVar int, SizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
-	}
-
-	xQsortWithData(PbaseVar, TotalElemsVar, SizeVar, CompareFuncVarRef, UserDataVar)
-
+	xQsortWithData(PbaseVar, TotalElemsVar, SizeVar, NewCallback(CompareFuncVar), UserDataVar)
 }
 
 var xSortArray func([]uintptr, uint, uint, uintptr, uintptr)
@@ -45,29 +25,12 @@ var xSortArray func([]uintptr, uint, uint, uintptr, uintptr)
 //
 // Unlike `qsort()`, this is guaranteed to be a stable sort.
 func SortArray(ArrayVar []uintptr, NElementsVar uint, ElementSizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
-
-	var CompareFuncVarRef uintptr
-	if CompareFuncVar != nil {
-		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
-		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-			CompareFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CompareFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
-		}
-	}
-
-	xSortArray(ArrayVar, NElementsVar, ElementSizeVar, CompareFuncVarRef, UserDataVar)
-
+	xSortArray(ArrayVar, NElementsVar, ElementSizeVar, NewCallback(CompareFuncVar), UserDataVar)
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -79,5 +42,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xQsortWithData, libs, "g_qsort_with_data")
 	core.PuregoSafeRegister(&xSortArray, libs, "g_sort_array")
-
 }

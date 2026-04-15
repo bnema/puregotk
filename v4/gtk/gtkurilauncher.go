@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -78,13 +77,7 @@ var xUriLauncherCanLaunch func(uintptr, uintptr) bool
 // This can be used to disable controls that trigger
 // the launcher when they are known not to work.
 func (x *UriLauncher) CanLaunch(ParentVar *Window) bool {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVarPtr)
+	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVar.GoPointer())
 	return cret
 }
 
@@ -92,7 +85,6 @@ var xUriLauncherGetUri func(uintptr) string
 
 // Gets the uri that will be opened.
 func (x *UriLauncher) GetUri() string {
-
 	cret := xUriLauncherGetUri(x.GoPointer())
 	return cret
 }
@@ -103,34 +95,7 @@ var xUriLauncherLaunch func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // This may present an app chooser dialog to the user.
 func (x *UriLauncher) Launch(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xUriLauncherLaunch(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xUriLauncherLaunch(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xUriLauncherLaunchFinish func(uintptr, uintptr, **glib.Error) bool
@@ -145,19 +110,16 @@ func (x *UriLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUriLauncherSetUri func(uintptr, uintptr)
 
 // Sets the uri that will be opened.
 func (x *UriLauncher) SetUri(UriVar *string) {
-
 	UriVarPtr := core.GStrdupNullable(UriVar)
 	defer core.GFreeNullable(UriVarPtr)
 
 	xUriLauncherSetUri(x.GoPointer(), UriVarPtr)
-
 }
 
 func (c *UriLauncher) GoPointer() uintptr {
@@ -190,7 +152,7 @@ func (x *UriLauncher) GetPropertyUri() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -209,5 +171,4 @@ func init() {
 	core.PuregoSafeRegister(&xUriLauncherLaunch, libs, "gtk_uri_launcher_launch")
 	core.PuregoSafeRegister(&xUriLauncherLaunchFinish, libs, "gtk_uri_launcher_launch_finish")
 	core.PuregoSafeRegister(&xUriLauncherSetUri, libs, "gtk_uri_launcher_set_uri")
-
 }

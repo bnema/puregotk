@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -212,7 +211,6 @@ func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, Cancella
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronously attempts to determine whether or not the host
@@ -225,14 +223,7 @@ func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, Cancella
 // You can then call g_network_monitor_can_reach_finish()
 // to get the result of the operation.
 func (x *NetworkMonitorBase) CanReachAsync(ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes an async network connectivity test.
@@ -245,7 +236,6 @@ func (x *NetworkMonitorBase) CanReachFinish(ResultVar AsyncResult) (bool, error)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Gets a more detailed networking state than
@@ -268,7 +258,6 @@ func (x *NetworkMonitorBase) CanReachFinish(ResultVar AsyncResult) (bool, error)
 // attempt to connect to remote servers, but should gracefully fall
 // back to their "offline" behavior if the connection attempt fails.
 func (x *NetworkMonitorBase) GetConnectivity() NetworkConnectivity {
-
 	cret := XGNetworkMonitorGetConnectivity(x.GoPointer())
 	return cret
 }
@@ -278,7 +267,6 @@ func (x *NetworkMonitorBase) GetConnectivity() NetworkConnectivity {
 // IPv6. It does not necessarily imply that the public Internet is
 // reachable. See #GNetworkMonitor:network-available for more details.
 func (x *NetworkMonitorBase) GetNetworkAvailable() bool {
-
 	cret := XGNetworkMonitorGetNetworkAvailable(x.GoPointer())
 	return cret
 }
@@ -286,7 +274,6 @@ func (x *NetworkMonitorBase) GetNetworkAvailable() bool {
 // Checks if the network is metered.
 // See #GNetworkMonitor:network-metered for more details.
 func (x *NetworkMonitorBase) GetNetworkMetered() bool {
-
 	cret := XGNetworkMonitorGetNetworkMetered(x.GoPointer())
 	return cret
 }
@@ -347,12 +334,14 @@ func (x *NetworkMonitorBase) GetPropertyNetworkMetered() bool {
 	return v.GetBoolean()
 }
 
-var XGNetworkMonitorCanReach func(uintptr, uintptr, uintptr, **glib.Error) bool
-var XGNetworkMonitorCanReachAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
-var XGNetworkMonitorCanReachFinish func(uintptr, uintptr, **glib.Error) bool
-var XGNetworkMonitorGetConnectivity func(uintptr) NetworkConnectivity
-var XGNetworkMonitorGetNetworkAvailable func(uintptr) bool
-var XGNetworkMonitorGetNetworkMetered func(uintptr) bool
+var (
+	XGNetworkMonitorCanReach            func(uintptr, uintptr, uintptr, **glib.Error) bool
+	XGNetworkMonitorCanReachAsync       func(uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGNetworkMonitorCanReachFinish      func(uintptr, uintptr, **glib.Error) bool
+	XGNetworkMonitorGetConnectivity     func(uintptr) NetworkConnectivity
+	XGNetworkMonitorGetNetworkAvailable func(uintptr) bool
+	XGNetworkMonitorGetNetworkMetered   func(uintptr) bool
+)
 
 const (
 	// Extension point for network status monitoring functionality.
@@ -379,7 +368,7 @@ func NetworkMonitorGetDefault() *NetworkMonitorBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -399,5 +388,4 @@ func init() {
 	core.PuregoSafeRegister(&XGNetworkMonitorGetConnectivity, libs, "g_network_monitor_get_connectivity")
 	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkAvailable, libs, "g_network_monitor_get_network_available")
 	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkMetered, libs, "g_network_monitor_get_network_metered")
-
 }

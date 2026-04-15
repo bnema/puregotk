@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -16,7 +15,6 @@ var xSpacedPrimesClosest func(uint) uint
 // The built-in array of primes ranges from 11 to 13845163 such that
 // each prime is approximately 1.5-2 times the previous prime.
 func SpacedPrimesClosest(NumVar uint) uint {
-
 	cret := xSpacedPrimesClosest(NumVar)
 
 	return cret
@@ -24,7 +22,7 @@ func SpacedPrimesClosest(NumVar uint) uint {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -35,5 +33,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xSpacedPrimesClosest, libs, "g_spaced_primes_closest")
-
 }

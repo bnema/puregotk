@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -414,9 +413,7 @@ var xInputStreamClearPending func(uintptr)
 
 // Clears the pending flag on @stream.
 func (x *InputStream) ClearPending() {
-
 	xInputStreamClearPending(x.GoPointer())
-
 }
 
 var xInputStreamClose func(uintptr, uintptr, **glib.Error) bool
@@ -457,7 +454,6 @@ func (x *InputStream) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
@@ -473,29 +469,7 @@ var xInputStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // asynchronicity, so they are optional for inheriting classes. However, if you
 // override one you must override all.
 func (x *InputStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xInputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xInputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xInputStreamCloseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -509,14 +483,12 @@ func (x *InputStream) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamHasPending func(uintptr) bool
 
 // Checks if an input stream has pending actions.
 func (x *InputStream) HasPending() bool {
-
 	cret := xInputStreamHasPending(x.GoPointer())
 	return cret
 }
@@ -525,7 +497,6 @@ var xInputStreamIsClosed func(uintptr) bool
 
 // Checks if an input stream is closed.
 func (x *InputStream) IsClosed() bool {
-
 	cret := xInputStreamIsClosed(x.GoPointer())
 	return cret
 }
@@ -566,7 +537,6 @@ func (x *InputStream) Read(BufferVar *[]byte, CountVar uint, CancellableVar *Can
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAll func(uintptr, *[]byte, uint, *uint, uintptr, **glib.Error) bool
@@ -603,7 +573,6 @@ func (x *InputStream) ReadAll(BufferVar *[]byte, CountVar uint, BytesReadVar *ui
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAllAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr, uintptr)
@@ -619,29 +588,7 @@ var xInputStreamReadAllAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr,
 // value) will be executed before an outstanding request with lower
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadAllAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xInputStreamReadAllFinish func(uintptr, uintptr, *uint, **glib.Error) bool
@@ -663,7 +610,6 @@ func (x *InputStream) ReadAllFinish(ResultVar AsyncResult, BytesReadVar *uint) (
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamReadAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr, uintptr)
@@ -692,32 +638,10 @@ var xInputStreamReadAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr, ui
 // asynchronicity, so they are optional for inheriting classes. However, if you
 // override one you must override all.
 func (x *InputStream) ReadAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) *glib.Bytes
+var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) uintptr
 
 // Like g_input_stream_read(), this tries to read @count bytes from
 // the stream in a blocking fashion. However, rather than reading into
@@ -745,17 +669,14 @@ var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) *glib.Bytes
 func (x *InputStream) ReadBytes(CountVar uint, CancellableVar *Cancellable) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := xInputStreamReadBytes(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
+	if cerr != nil {
+		return nil, cerr
 	}
-
-	cret := xInputStreamReadBytes(x.GoPointer(), CountVar, CancellableVarPtr, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cret == 0 {
+		return nil, nil
 	}
-	return cret, cerr
-
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xInputStreamReadBytesAsync func(uintptr, uint, int, uintptr, uintptr, uintptr)
@@ -781,43 +702,23 @@ var xInputStreamReadBytesAsync func(uintptr, uint, int, uintptr, uintptr, uintpt
 // value) will be executed before an outstanding request with lower
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadBytesAsync(CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xInputStreamReadBytesFinish func(uintptr, uintptr, **glib.Error) *glib.Bytes
+var xInputStreamReadBytesFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an asynchronous stream read-into-#GBytes operation.
 func (x *InputStream) ReadBytesFinish(ResultVar AsyncResult) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
 	cret := xInputStreamReadBytesFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xInputStreamReadFinish func(uintptr, uintptr, **glib.Error) int
@@ -831,10 +732,9 @@ func (x *InputStream) ReadFinish(ResultVar AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xInputStreamSetPending func(uintptr) bool
+var xInputStreamSetPending func(uintptr, **glib.Error) bool
 
 // Sets @stream to have actions pending. If the pending flag is
 // already set or @stream is closed, it will return %FALSE and set
@@ -842,12 +742,11 @@ var xInputStreamSetPending func(uintptr) bool
 func (x *InputStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xInputStreamSetPending(x.GoPointer())
+	cret := xInputStreamSetPending(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamSkip func(uintptr, uint, uintptr, **glib.Error) int
@@ -879,7 +778,6 @@ func (x *InputStream) Skip(CountVar uint, CancellableVar *Cancellable) (int, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xInputStreamSkipAsync func(uintptr, uint, int, uintptr, uintptr, uintptr)
@@ -908,29 +806,7 @@ var xInputStreamSkipAsync func(uintptr, uint, int, uintptr, uintptr, uintptr)
 // implement asynchronicity, so they are optional for inheriting classes.
 // However, if you override one, you must override all.
 func (x *InputStream) SkipAsync(CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xInputStreamSkipAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xInputStreamSkipAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xInputStreamSkipFinish func(uintptr, uintptr, **glib.Error) int
@@ -944,7 +820,6 @@ func (x *InputStream) SkipFinish(ResultVar AsyncResult) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *InputStream) GoPointer() uintptr {
@@ -960,7 +835,7 @@ func (c *InputStream) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -991,5 +866,4 @@ func init() {
 	core.PuregoSafeRegister(&xInputStreamSkip, libs, "g_input_stream_skip")
 	core.PuregoSafeRegister(&xInputStreamSkipAsync, libs, "g_input_stream_skip_async")
 	core.PuregoSafeRegister(&xInputStreamSkipFinish, libs, "g_input_stream_skip_finish")
-
 }

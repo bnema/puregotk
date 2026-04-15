@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -247,7 +246,6 @@ func (x *UnixFDList) Append(FdVar int) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixFDListGet func(uintptr, int, **glib.Error) int
@@ -272,7 +270,6 @@ func (x *UnixFDList) Get(IndexVar int) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xUnixFDListGetLength func(uintptr) int
@@ -280,7 +277,6 @@ var xUnixFDListGetLength func(uintptr) int
 // Gets the length of @list (ie: the number of file descriptors
 // contained within).
 func (x *UnixFDList) GetLength() int {
-
 	cret := xUnixFDListGetLength(x.GoPointer())
 	return cret
 }
@@ -301,7 +297,6 @@ var xUnixFDListPeekFds func(uintptr, *int) uintptr
 // This function never returns %NULL. In case there are no file
 // descriptors contained in @list, an empty array is returned.
 func (x *UnixFDList) PeekFds(LengthVar *int) uintptr {
-
 	cret := xUnixFDListPeekFds(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -327,7 +322,6 @@ var xUnixFDListStealFds func(uintptr, *int) uintptr
 // This function never returns %NULL. In case there are no file
 // descriptors contained in @list, an empty array is returned.
 func (x *UnixFDList) StealFds(LengthVar *int) uintptr {
-
 	cret := xUnixFDListStealFds(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -345,7 +339,7 @@ func (c *UnixFDList) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -365,5 +359,4 @@ func init() {
 	core.PuregoSafeRegister(&xUnixFDListGetLength, libs, "g_unix_fd_list_get_length")
 	core.PuregoSafeRegister(&xUnixFDListPeekFds, libs, "g_unix_fd_list_peek_fds")
 	core.PuregoSafeRegister(&xUnixFDListStealFds, libs, "g_unix_fd_list_steal_fds")
-
 }

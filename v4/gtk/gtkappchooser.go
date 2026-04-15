@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -75,16 +74,13 @@ func (x *AppChooserBase) GetAppInfo() *gio.AppInfoBase {
 // Returns the content type for which the `GtkAppChooser`
 // shows applications.
 func (x *AppChooserBase) GetContentType() string {
-
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
 	return cret
 }
 
 // Reloads the list of applications.
 func (x *AppChooserBase) Refresh() {
-
 	XGtkAppChooserRefresh(x.GoPointer())
-
 }
 
 // SetPropertyContentType sets the "content-type" property.
@@ -112,13 +108,15 @@ func (x *AppChooserBase) GetPropertyContentType() string {
 	return v.GetString()
 }
 
-var XGtkAppChooserGetAppInfo func(uintptr) uintptr
-var XGtkAppChooserGetContentType func(uintptr) string
-var XGtkAppChooserRefresh func(uintptr)
+var (
+	XGtkAppChooserGetAppInfo     func(uintptr) uintptr
+	XGtkAppChooserGetContentType func(uintptr) string
+	XGtkAppChooserRefresh        func(uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -133,5 +131,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkAppChooserGetAppInfo, libs, "gtk_app_chooser_get_app_info")
 	core.PuregoSafeRegister(&XGtkAppChooserGetContentType, libs, "gtk_app_chooser_get_content_type")
 	core.PuregoSafeRegister(&XGtkAppChooserRefresh, libs, "gtk_app_chooser_refresh")
-
 }

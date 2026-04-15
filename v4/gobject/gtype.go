@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -491,9 +490,7 @@ var xTypeClassAddPrivate func(uintptr, uint)
 //
 // ]|
 func (x *TypeClass) AddPrivate(PrivateSizeVar uint) {
-
 	xTypeClassAddPrivate(x.GoPointer(), PrivateSizeVar)
-
 }
 
 var xTypeClassGetInstancePrivateOffset func(uintptr) int
@@ -507,7 +504,6 @@ var xTypeClassGetInstancePrivateOffset func(uintptr) int
 // You can only call this function after you have registered a private
 // data area for @g_class using g_type_class_add_private().
 func (x *TypeClass) GetInstancePrivateOffset() int {
-
 	cret := xTypeClassGetInstancePrivateOffset(x.GoPointer())
 	return cret
 }
@@ -515,12 +511,11 @@ func (x *TypeClass) GetInstancePrivateOffset() int {
 var xTypeClassGetPrivate func(uintptr, types.GType) uintptr
 
 func (x *TypeClass) GetPrivate(PrivateTypeVar types.GType) uintptr {
-
 	cret := xTypeClassGetPrivate(x.GoPointer(), PrivateTypeVar)
 	return cret
 }
 
-var xTypeClassPeekParent func(uintptr) *TypeClass
+var xTypeClassPeekParent func(uintptr) uintptr
 
 // Retrieves the class structure of the immediate parent type of the
 // class passed in.
@@ -533,9 +528,11 @@ var xTypeClassPeekParent func(uintptr) *TypeClass
 // This function is essentially equivalent to:
 // g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)))
 func (x *TypeClass) PeekParent() *TypeClass {
-
 	cret := xTypeClassPeekParent(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
 }
 
 var xTypeClassUnref func(uintptr)
@@ -546,9 +543,7 @@ var xTypeClassUnref func(uintptr)
 // may be finalized by the type system, so further dereferencing of a
 // class pointer after g_type_class_unref() are invalid.
 func (x *TypeClass) Unref() {
-
 	xTypeClassUnref(x.GoPointer())
-
 }
 
 var xTypeClassUnrefUncached func(uintptr)
@@ -560,9 +555,7 @@ var xTypeClassUnrefUncached func(uintptr)
 // of #GTypeClassCacheFuncs, avoiding the recursion which would occur
 // otherwise.
 func (x *TypeClass) UnrefUncached() {
-
 	xTypeClassUnrefUncached(x.GoPointer())
-
 }
 
 // A structure that provides information to the type system which is
@@ -628,7 +621,6 @@ func (x *TypeInstance) GoPointer() uintptr {
 var xTypeInstanceGetPrivate func(uintptr, types.GType) uintptr
 
 func (x *TypeInstance) GetPrivate(PrivateTypeVar types.GType) uintptr {
-
 	cret := xTypeInstanceGetPrivate(x.GoPointer(), PrivateTypeVar)
 	return cret
 }
@@ -646,7 +638,7 @@ func (x *TypeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xTypeInterfacePeekParent func(uintptr) *TypeInterface
+var xTypeInterfacePeekParent func(uintptr) uintptr
 
 // Returns the corresponding #GTypeInterface structure of the parent type
 // of the instance type to which @g_iface belongs.
@@ -654,9 +646,11 @@ var xTypeInterfacePeekParent func(uintptr) *TypeInterface
 // This is useful when deriving the implementation of an interface from the
 // parent type and then possibly overriding some methods.
 func (x *TypeInterface) PeekParent() *TypeInterface {
-
 	cret := xTypeInterfacePeekParent(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInterface)(unsafe.Pointer(cret))
 }
 
 // A structure holding information for a specific type.
@@ -810,24 +804,7 @@ var xTypeAddClassCacheFunc func(uintptr, uintptr)
 // type, since all classes are routed through the same #GTypeClassCacheFunc
 // chain.
 func TypeAddClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCacheFunc) {
-
-	var CacheFuncVarRef uintptr
-	if CacheFuncVar != nil {
-		CacheFuncVarPtr := uintptr(unsafe.Pointer(CacheFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CacheFuncVarPtr); ok {
-			CacheFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TypeClass) bool {
-				cbFn := *CacheFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CacheFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CacheFuncVarPtr, CacheFuncVarRef, CacheFuncVar)
-		}
-	}
-
-	xTypeAddClassCacheFunc(CacheDataVar, CacheFuncVarRef)
-
+	xTypeAddClassCacheFunc(CacheDataVar, glib.NewCallback(CacheFuncVar))
 }
 
 var xTypeAddClassPrivate func(types.GType, uint)
@@ -843,15 +820,12 @@ var xTypeAddClassPrivate func(types.GType, uint)
 // The private structure can be retrieved using the
 // G_TYPE_CLASS_GET_PRIVATE() macro.
 func TypeAddClassPrivate(ClassTypeVar types.GType, PrivateSizeVar uint) {
-
 	xTypeAddClassPrivate(ClassTypeVar, PrivateSizeVar)
-
 }
 
 var xTypeAddInstancePrivate func(types.GType, uint) int
 
 func TypeAddInstancePrivate(ClassTypeVar types.GType, PrivateSizeVar uint) int {
-
 	cret := xTypeAddInstancePrivate(ClassTypeVar, PrivateSizeVar)
 	return cret
 }
@@ -868,24 +842,7 @@ var xTypeAddInterfaceCheck func(uintptr, uintptr)
 // object implements all of the properties that are defined on its
 // interfaces.
 func TypeAddInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceCheckFunc) {
-
-	var CheckFuncVarRef uintptr
-	if CheckFuncVar != nil {
-		CheckFuncVarPtr := uintptr(unsafe.Pointer(CheckFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CheckFuncVarPtr); ok {
-			CheckFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TypeInterface) {
-				cbFn := *CheckFuncVar
-				cbFn(arg0, arg1)
-			}
-			CheckFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CheckFuncVarPtr, CheckFuncVarRef, CheckFuncVar)
-		}
-	}
-
-	xTypeAddInterfaceCheck(CheckDataVar, CheckFuncVarRef)
-
+	xTypeAddInterfaceCheck(CheckDataVar, glib.NewCallback(CheckFuncVar))
 }
 
 var xTypeAddInterfaceDynamic func(types.GType, types.GType, uintptr)
@@ -894,9 +851,7 @@ var xTypeAddInterfaceDynamic func(types.GType, types.GType, uintptr)
 // contained in the #GTypePlugin structure pointed to by @plugin
 // is used to manage the relationship.
 func TypeAddInterfaceDynamic(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, PluginVar TypePlugin) {
-
 	xTypeAddInterfaceDynamic(InstanceTypeVar, InterfaceTypeVar, PluginVar.GoPointer())
-
 }
 
 var xTypeAddInterfaceStatic func(types.GType, types.GType, *InterfaceInfo)
@@ -905,23 +860,22 @@ var xTypeAddInterfaceStatic func(types.GType, types.GType, *InterfaceInfo)
 // The information contained in the #GInterfaceInfo structure
 // pointed to by @info is used to manage the relationship.
 func TypeAddInterfaceStatic(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *InterfaceInfo) {
-
 	xTypeAddInterfaceStatic(InstanceTypeVar, InterfaceTypeVar, InfoVar)
-
 }
 
-var xTypeCheckClassCast func(*TypeClass, types.GType) *TypeClass
+var xTypeCheckClassCast func(*TypeClass, types.GType) uintptr
 
 func TypeCheckClassCast(GClassVar *TypeClass, IsATypeVar types.GType) *TypeClass {
-
 	cret := xTypeCheckClassCast(GClassVar, IsATypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
 }
 
 var xTypeCheckClassIsA func(*TypeClass, types.GType) bool
 
 func TypeCheckClassIsA(GClassVar *TypeClass, IsATypeVar types.GType) bool {
-
 	cret := xTypeCheckClassIsA(GClassVar, IsATypeVar)
 	return cret
 }
@@ -931,23 +885,23 @@ var xTypeCheckInstance func(*TypeInstance) bool
 // Private helper function to aid implementation of the
 // G_TYPE_CHECK_INSTANCE() macro.
 func TypeCheckInstance(InstanceVar *TypeInstance) bool {
-
 	cret := xTypeCheckInstance(InstanceVar)
 	return cret
 }
 
-var xTypeCheckInstanceCast func(*TypeInstance, types.GType) *TypeInstance
+var xTypeCheckInstanceCast func(*TypeInstance, types.GType) uintptr
 
 func TypeCheckInstanceCast(InstanceVar *TypeInstance, IfaceTypeVar types.GType) *TypeInstance {
-
 	cret := xTypeCheckInstanceCast(InstanceVar, IfaceTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInstance)(unsafe.Pointer(cret))
 }
 
 var xTypeCheckInstanceIsA func(*TypeInstance, types.GType) bool
 
 func TypeCheckInstanceIsA(InstanceVar *TypeInstance, IfaceTypeVar types.GType) bool {
-
 	cret := xTypeCheckInstanceIsA(InstanceVar, IfaceTypeVar)
 	return cret
 }
@@ -955,7 +909,6 @@ func TypeCheckInstanceIsA(InstanceVar *TypeInstance, IfaceTypeVar types.GType) b
 var xTypeCheckInstanceIsFundamentallyA func(*TypeInstance, types.GType) bool
 
 func TypeCheckInstanceIsFundamentallyA(InstanceVar *TypeInstance, FundamentalTypeVar types.GType) bool {
-
 	cret := xTypeCheckInstanceIsFundamentallyA(InstanceVar, FundamentalTypeVar)
 	return cret
 }
@@ -963,7 +916,6 @@ func TypeCheckInstanceIsFundamentallyA(InstanceVar *TypeInstance, FundamentalTyp
 var xTypeCheckIsValueType func(types.GType) bool
 
 func TypeCheckIsValueType(TypeVar types.GType) bool {
-
 	cret := xTypeCheckIsValueType(TypeVar)
 	return cret
 }
@@ -971,7 +923,6 @@ func TypeCheckIsValueType(TypeVar types.GType) bool {
 var xTypeCheckValue func(*Value) bool
 
 func TypeCheckValue(ValueVar *Value) bool {
-
 	cret := xTypeCheckValue(ValueVar)
 	return cret
 }
@@ -979,7 +930,6 @@ func TypeCheckValue(ValueVar *Value) bool {
 var xTypeCheckValueHolds func(*Value, types.GType) bool
 
 func TypeCheckValueHolds(ValueVar *Value, TypeVar types.GType) bool {
-
 	cret := xTypeCheckValueHolds(ValueVar, TypeVar)
 	return cret
 }
@@ -989,7 +939,6 @@ var xTypeChildren func(types.GType, *uint) uintptr
 // Return a newly allocated and 0-terminated array of type IDs, listing
 // the child types of @type.
 func TypeChildren(TypeVar types.GType, NChildrenVar *uint) uintptr {
-
 	cret := xTypeChildren(TypeVar, NChildrenVar)
 	return cret
 }
@@ -997,12 +946,10 @@ func TypeChildren(TypeVar types.GType, NChildrenVar *uint) uintptr {
 var xTypeClassAdjustPrivateOffset func(uintptr, int)
 
 func TypeClassAdjustPrivateOffset(GClassVar uintptr, PrivateSizeOrOffsetVar int) {
-
 	xTypeClassAdjustPrivateOffset(GClassVar, PrivateSizeOrOffsetVar)
-
 }
 
-var xTypeClassGet func(types.GType) *TypeClass
+var xTypeClassGet func(types.GType) uintptr
 
 // Retrieves the type class of the given @type.
 //
@@ -1011,12 +958,14 @@ var xTypeClassGet func(types.GType) *TypeClass
 //
 // If you don't want to create the class, use g_type_class_peek() instead.
 func TypeClassGet(TypeVar types.GType) *TypeClass {
-
 	cret := xTypeClassGet(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
 }
 
-var xTypeClassPeek func(types.GType) *TypeClass
+var xTypeClassPeek func(types.GType) uintptr
 
 // Retrieves the class for a give type.
 //
@@ -1027,22 +976,40 @@ var xTypeClassPeek func(types.GType) *TypeClass
 // of the type passed in does not currently exist (hasn't been
 // referenced before).
 func TypeClassPeek(TypeVar types.GType) *TypeClass {
-
 	cret := xTypeClassPeek(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
 }
 
-var xTypeClassPeekStatic func(types.GType) *TypeClass
+var xTypeClassPeekStatic func(types.GType) uintptr
 
 // A more efficient version of g_type_class_peek() which works only for
 // static types.
 func TypeClassPeekStatic(TypeVar types.GType) *TypeClass {
-
 	cret := xTypeClassPeekStatic(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
 }
 
-var xTypeCreateInstance func(types.GType) *TypeInstance
+var xTypeClassRef func(types.GType) uintptr
+
+// Increments the reference count of the class structure belonging to
+// @type.
+//
+// This function will demand-create the class if it doesn't exist already.
+func TypeClassRef(TypeVar types.GType) *TypeClass {
+	cret := xTypeClassRef(TypeVar)
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeClass)(unsafe.Pointer(cret))
+}
+
+var xTypeCreateInstance func(types.GType) uintptr
 
 // Creates and initializes an instance of @type if @type is valid and
 // can be instantiated. The type system only performs basic allocation
@@ -1061,12 +1028,14 @@ var xTypeCreateInstance func(types.GType) *TypeInstance
 // fundamental type. Also language bindings should not use this
 // function, but g_object_new() instead.
 func TypeCreateInstance(TypeVar types.GType) *TypeInstance {
-
 	cret := xTypeCreateInstance(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInstance)(unsafe.Pointer(cret))
 }
 
-var xTypeDefaultInterfaceGet func(types.GType) *TypeInterface
+var xTypeDefaultInterfaceGet func(types.GType) uintptr
 
 // Returns the default interface vtable for the given @g_type.
 //
@@ -1082,22 +1051,26 @@ var xTypeDefaultInterfaceGet func(types.GType) *TypeInterface
 // want to make sure that signals and properties for an interface
 // have been installed.
 func TypeDefaultInterfaceGet(GTypeVar types.GType) *TypeInterface {
-
 	cret := xTypeDefaultInterfaceGet(GTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInterface)(unsafe.Pointer(cret))
 }
 
-var xTypeDefaultInterfacePeek func(types.GType) *TypeInterface
+var xTypeDefaultInterfacePeek func(types.GType) uintptr
 
 // If the interface type @g_type is currently in use, returns its
 // default interface vtable.
 func TypeDefaultInterfacePeek(GTypeVar types.GType) *TypeInterface {
-
 	cret := xTypeDefaultInterfacePeek(GTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInterface)(unsafe.Pointer(cret))
 }
 
-var xTypeDefaultInterfaceRef func(types.GType) *TypeInterface
+var xTypeDefaultInterfaceRef func(types.GType) uintptr
 
 // Increments the reference count for the interface type @g_type,
 // and returns the default interface vtable for the type.
@@ -1110,9 +1083,11 @@ var xTypeDefaultInterfaceRef func(types.GType) *TypeInterface
 // want to make sure that signals and properties for an interface
 // have been installed.
 func TypeDefaultInterfaceRef(GTypeVar types.GType) *TypeInterface {
-
 	cret := xTypeDefaultInterfaceRef(GTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInterface)(unsafe.Pointer(cret))
 }
 
 var xTypeDefaultInterfaceUnref func(*TypeInterface)
@@ -1124,9 +1099,7 @@ var xTypeDefaultInterfaceUnref func(*TypeInterface)
 // references have been released, the finalize function for the interface's
 // default vtable (the @class_finalize member of #GTypeInfo) will be called.
 func TypeDefaultInterfaceUnref(GIfaceVar *TypeInterface) {
-
 	xTypeDefaultInterfaceUnref(GIfaceVar)
-
 }
 
 var xTypeDepth func(types.GType) uint
@@ -1134,7 +1107,6 @@ var xTypeDepth func(types.GType) uint
 // Returns the length of the ancestry of the passed in type. This
 // includes the type itself, so that e.g. a fundamental type has depth 1.
 func TypeDepth(TypeVar types.GType) uint {
-
 	cret := xTypeDepth(TypeVar)
 	return cret
 }
@@ -1154,9 +1126,7 @@ var xTypeEnsure func(types.GType)
 // out by the compiler. Using g_type_ensure() guarantees that the
 // type's _get_type() method is called.
 func TypeEnsure(TypeVar types.GType) {
-
 	xTypeEnsure(TypeVar)
-
 }
 
 var xTypeFreeInstance func(*TypeInstance)
@@ -1167,9 +1137,7 @@ var xTypeFreeInstance func(*TypeInstance)
 // Like g_type_create_instance(), this function is reserved for
 // implementors of fundamental types.
 func TypeFreeInstance(InstanceVar *TypeInstance) {
-
 	xTypeFreeInstance(InstanceVar)
-
 }
 
 var xTypeFromName func(string) types.GType
@@ -1179,7 +1147,6 @@ var xTypeFromName func(string) types.GType
 // to find out by name whether a specific type has been registered
 // yet).
 func TypeFromName(NameVar string) types.GType {
-
 	cret := xTypeFromName(NameVar)
 	return cret
 }
@@ -1189,7 +1156,6 @@ var xTypeFundamental func(types.GType) types.GType
 // Internal function, used to extract the fundamental type ID portion.
 // Use G_TYPE_FUNDAMENTAL() instead.
 func TypeFundamental(TypeIdVar types.GType) types.GType {
-
 	cret := xTypeFundamental(TypeIdVar)
 	return cret
 }
@@ -1201,7 +1167,6 @@ var xTypeFundamentalNext func() types.GType
 // The returned type ID represents the highest currently registered
 // fundamental type identifier.
 func TypeFundamentalNext() types.GType {
-
 	cret := xTypeFundamentalNext()
 	return cret
 }
@@ -1213,7 +1178,6 @@ var xTypeGetInstanceCount func(types.GType) int
 // the `instance-count` debug flag is set (by setting the `GOBJECT_DEBUG`
 // variable to include `instance-count`).
 func TypeGetInstanceCount(TypeVar types.GType) int {
-
 	cret := xTypeGetInstanceCount(TypeVar)
 	return cret
 }
@@ -1244,7 +1208,6 @@ var xTypeGetQdata func(types.GType, glib.Quark) uintptr
 // attached to one type with g_type_set_qdata() cannot
 // be retrieved from a subtype using g_type_get_qdata().
 func TypeGetQdata(TypeVar types.GType, QuarkVar glib.Quark) uintptr {
-
 	cret := xTypeGetQdata(TypeVar, QuarkVar)
 	return cret
 }
@@ -1257,7 +1220,6 @@ var xTypeGetTypeRegistrationSerial func() uint
 // g_type_from_name()) and know if the cache is still valid at a later
 // time by comparing the current serial with the one at the type lookup.
 func TypeGetTypeRegistrationSerial() uint {
-
 	cret := xTypeGetTypeRegistrationSerial()
 	return cret
 }
@@ -1268,9 +1230,7 @@ var xTypeInit func()
 // the type system is initialised automatically and this function does
 // nothing.
 func TypeInit() {
-
 	xTypeInit()
-
 }
 
 var xTypeInitWithDebugFlags func(TypeDebugFlags)
@@ -1282,9 +1242,7 @@ var xTypeInitWithDebugFlags func(TypeDebugFlags)
 // If you need to enable debugging features, use the `GOBJECT_DEBUG`
 // environment variable.
 func TypeInitWithDebugFlags(DebugFlagsVar TypeDebugFlags) {
-
 	xTypeInitWithDebugFlags(DebugFlagsVar)
-
 }
 
 var xTypeInterfaceAddPrerequisite func(types.GType, types.GType)
@@ -1295,9 +1253,7 @@ var xTypeInterfaceAddPrerequisite func(types.GType, types.GType)
 // interface derivation (which GType doesn't support). An interface can have
 // at most one instantiatable prerequisite type.
 func TypeInterfaceAddPrerequisite(InterfaceTypeVar types.GType, PrerequisiteTypeVar types.GType) {
-
 	xTypeInterfaceAddPrerequisite(InterfaceTypeVar, PrerequisiteTypeVar)
-
 }
 
 var xTypeInterfaceGetPlugin func(types.GType, types.GType) uintptr
@@ -1329,26 +1285,26 @@ var xTypeInterfaceInstantiatablePrerequisite func(types.GType) types.GType
 // See g_type_interface_add_prerequisite() for more information
 // about prerequisites.
 func TypeInterfaceInstantiatablePrerequisite(InterfaceTypeVar types.GType) types.GType {
-
 	cret := xTypeInterfaceInstantiatablePrerequisite(InterfaceTypeVar)
 	return cret
 }
 
-var xTypeInterfacePeek func(*TypeClass, types.GType) *TypeInterface
+var xTypeInterfacePeek func(*TypeClass, types.GType) uintptr
 
 // Returns the #GTypeInterface structure of an interface to which the
 // passed in class conforms.
 func TypeInterfacePeek(InstanceClassVar *TypeClass, IfaceTypeVar types.GType) *TypeInterface {
-
 	cret := xTypeInterfacePeek(InstanceClassVar, IfaceTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeInterface)(unsafe.Pointer(cret))
 }
 
 var xTypeInterfacePrerequisites func(types.GType, *uint) uintptr
 
 // Returns the prerequisites of an interfaces type.
 func TypeInterfacePrerequisites(InterfaceTypeVar types.GType, NPrerequisitesVar *uint) uintptr {
-
 	cret := xTypeInterfacePrerequisites(InterfaceTypeVar, NPrerequisitesVar)
 	return cret
 }
@@ -1358,7 +1314,6 @@ var xTypeInterfaces func(types.GType, *uint) uintptr
 // Return a newly allocated and 0-terminated array of type IDs, listing
 // the interface types that @type conforms to.
 func TypeInterfaces(TypeVar types.GType, NInterfacesVar *uint) uintptr {
-
 	cret := xTypeInterfaces(TypeVar, NInterfacesVar)
 	return cret
 }
@@ -1369,7 +1324,6 @@ var xTypeIsA func(types.GType, types.GType) bool
 // descendant of @is_a_type. If @is_a_type is an interface, check
 // whether @type conforms to it.
 func TypeIsA(TypeVar types.GType, IsATypeVar types.GType) bool {
-
 	cret := xTypeIsA(TypeVar, IsATypeVar)
 	return cret
 }
@@ -1383,7 +1337,6 @@ var xTypeName func(types.GType) string
 // may be any other validly registered type ID, but randomized type IDs
 // should not be passed in and will most likely lead to a crash.
 func TypeName(TypeVar types.GType) string {
-
 	cret := xTypeName(TypeVar)
 	return cret
 }
@@ -1391,7 +1344,6 @@ func TypeName(TypeVar types.GType) string {
 var xTypeNameFromClass func(*TypeClass) string
 
 func TypeNameFromClass(GClassVar *TypeClass) string {
-
 	cret := xTypeNameFromClass(GClassVar)
 	return cret
 }
@@ -1399,7 +1351,6 @@ func TypeNameFromClass(GClassVar *TypeClass) string {
 var xTypeNameFromInstance func(*TypeInstance) string
 
 func TypeNameFromInstance(InstanceVar *TypeInstance) string {
-
 	cret := xTypeNameFromInstance(InstanceVar)
 	return cret
 }
@@ -1414,7 +1365,6 @@ var xTypeNextBase func(types.GType, types.GType) types.GType
 // be used to determine the types and order in which the leaf type is
 // descended from the root type.
 func TypeNextBase(LeafTypeVar types.GType, RootTypeVar types.GType) types.GType {
-
 	cret := xTypeNextBase(LeafTypeVar, RootTypeVar)
 	return cret
 }
@@ -1424,7 +1374,6 @@ var xTypeParent func(types.GType) types.GType
 // Return the direct parent type of the passed in type. If the passed
 // in type has no parent, i.e. is a fundamental type, 0 is returned.
 func TypeParent(TypeVar types.GType) types.GType {
-
 	cret := xTypeParent(TypeVar)
 	return cret
 }
@@ -1433,7 +1382,6 @@ var xTypeQname func(types.GType) glib.Quark
 
 // Get the corresponding quark of the type IDs name.
 func TypeQname(TypeVar types.GType) glib.Quark {
-
 	cret := xTypeQname(TypeVar)
 	return cret
 }
@@ -1451,9 +1399,7 @@ var xNewTypeQuery func(types.GType, *TypeQuery)
 // Since GLib 2.78, this function allows queries on dynamic types. Previously
 // it only supported static types.
 func NewTypeQuery(TypeVar types.GType, QueryVar *TypeQuery) {
-
 	xNewTypeQuery(TypeVar, QueryVar)
-
 }
 
 var xTypeRegisterDynamic func(types.GType, string, uintptr, TypeFlags) types.GType
@@ -1464,7 +1410,6 @@ var xTypeRegisterDynamic func(types.GType, string, uintptr, TypeFlags) types.GTy
 // instances (if not abstract).  The value of @flags determines the nature
 // (e.g. abstract or not) of the type.
 func TypeRegisterDynamic(ParentTypeVar types.GType, TypeNameVar string, PluginVar TypePlugin, FlagsVar TypeFlags) types.GType {
-
 	cret := xTypeRegisterDynamic(ParentTypeVar, TypeNameVar, PluginVar.GoPointer(), FlagsVar)
 	return cret
 }
@@ -1479,7 +1424,6 @@ var xTypeRegisterFundamental func(types.GType, string, *TypeInfo, *TypeFundament
 // @finfo to manage the type and its instances. The value of @flags determines
 // additional characteristics of the fundamental type.
 func TypeRegisterFundamental(TypeIdVar types.GType, TypeNameVar string, InfoVar *TypeInfo, FinfoVar *TypeFundamentalInfo, FlagsVar TypeFlags) types.GType {
-
 	cret := xTypeRegisterFundamental(TypeIdVar, TypeNameVar, InfoVar, FinfoVar, FlagsVar)
 	return cret
 }
@@ -1492,7 +1436,6 @@ var xTypeRegisterStatic func(types.GType, string, *TypeInfo, TypeFlags) types.GT
 // instances (if not abstract). The value of @flags determines the nature
 // (e.g. abstract or not) of the type.
 func TypeRegisterStatic(ParentTypeVar types.GType, TypeNameVar string, InfoVar *TypeInfo, FlagsVar TypeFlags) types.GType {
-
 	cret := xTypeRegisterStatic(ParentTypeVar, TypeNameVar, InfoVar, FlagsVar)
 	return cret
 }
@@ -1504,38 +1447,7 @@ var xTypeRegisterStaticSimple func(types.GType, string, uint, uintptr, uint, uin
 // abstract or not) of the type. It works by filling a #GTypeInfo
 // struct and calling g_type_register_static().
 func TypeRegisterStaticSimple(ParentTypeVar types.GType, TypeNameVar string, ClassSizeVar uint, ClassInitVar *ClassInitFunc, InstanceSizeVar uint, InstanceInitVar *InstanceInitFunc, FlagsVar TypeFlags) types.GType {
-
-	var ClassInitVarRef uintptr
-	if ClassInitVar != nil {
-		ClassInitVarPtr := uintptr(unsafe.Pointer(ClassInitVar))
-		if cbRefPtr, ok := glib.GetCallback(ClassInitVarPtr); ok {
-			ClassInitVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *TypeClass, arg1 uintptr) {
-				cbFn := *ClassInitVar
-				cbFn(arg0, arg1)
-			}
-			ClassInitVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ClassInitVarPtr, ClassInitVarRef, ClassInitVar)
-		}
-	}
-
-	var InstanceInitVarRef uintptr
-	if InstanceInitVar != nil {
-		InstanceInitVarPtr := uintptr(unsafe.Pointer(InstanceInitVar))
-		if cbRefPtr, ok := glib.GetCallback(InstanceInitVarPtr); ok {
-			InstanceInitVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *TypeInstance, arg1 *TypeClass) {
-				cbFn := *InstanceInitVar
-				cbFn(arg0, arg1)
-			}
-			InstanceInitVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(InstanceInitVarPtr, InstanceInitVarRef, InstanceInitVar)
-		}
-	}
-
-	cret := xTypeRegisterStaticSimple(ParentTypeVar, TypeNameVar, ClassSizeVar, ClassInitVarRef, InstanceSizeVar, InstanceInitVarRef, FlagsVar)
+	cret := xTypeRegisterStaticSimple(ParentTypeVar, TypeNameVar, ClassSizeVar, glib.NewCallback(ClassInitVar), InstanceSizeVar, glib.NewCallback(InstanceInitVar), FlagsVar)
 	return cret
 }
 
@@ -1545,24 +1457,7 @@ var xTypeRemoveClassCacheFunc func(uintptr, uintptr)
 // maintained by @cache_func has to be empty when calling
 // g_type_remove_class_cache_func() to avoid leaks.
 func TypeRemoveClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCacheFunc) {
-
-	var CacheFuncVarRef uintptr
-	if CacheFuncVar != nil {
-		CacheFuncVarPtr := uintptr(unsafe.Pointer(CacheFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CacheFuncVarPtr); ok {
-			CacheFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TypeClass) bool {
-				cbFn := *CacheFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CacheFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CacheFuncVarPtr, CacheFuncVarRef, CacheFuncVar)
-		}
-	}
-
-	xTypeRemoveClassCacheFunc(CacheDataVar, CacheFuncVarRef)
-
+	xTypeRemoveClassCacheFunc(CacheDataVar, glib.NewCallback(CacheFuncVar))
 }
 
 var xTypeRemoveInterfaceCheck func(uintptr, uintptr)
@@ -1570,44 +1465,24 @@ var xTypeRemoveInterfaceCheck func(uintptr, uintptr)
 // Removes an interface check function added with
 // g_type_add_interface_check().
 func TypeRemoveInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceCheckFunc) {
-
-	var CheckFuncVarRef uintptr
-	if CheckFuncVar != nil {
-		CheckFuncVarPtr := uintptr(unsafe.Pointer(CheckFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CheckFuncVarPtr); ok {
-			CheckFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *TypeInterface) {
-				cbFn := *CheckFuncVar
-				cbFn(arg0, arg1)
-			}
-			CheckFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CheckFuncVarPtr, CheckFuncVarRef, CheckFuncVar)
-		}
-	}
-
-	xTypeRemoveInterfaceCheck(CheckDataVar, CheckFuncVarRef)
-
+	xTypeRemoveInterfaceCheck(CheckDataVar, glib.NewCallback(CheckFuncVar))
 }
 
 var xTypeSetQdata func(types.GType, glib.Quark, uintptr)
 
 // Attaches arbitrary data to a type.
 func TypeSetQdata(TypeVar types.GType, QuarkVar glib.Quark, DataVar uintptr) {
-
 	xTypeSetQdata(TypeVar, QuarkVar, DataVar)
-
 }
 
 var xTypeTestFlags func(types.GType, uint) bool
 
 func TypeTestFlags(TypeVar types.GType, FlagsVar uint) bool {
-
 	cret := xTypeTestFlags(TypeVar, FlagsVar)
 	return cret
 }
 
-var xTypeValueTablePeek func(types.GType) *TypeValueTable
+var xTypeValueTablePeek func(types.GType) uintptr
 
 // Returns the location of the #GTypeValueTable associated with @type.
 //
@@ -1615,14 +1490,16 @@ var xTypeValueTablePeek func(types.GType) *TypeValueTable
 // that implements or has internal knowledge of the implementation of
 // @type.
 func TypeValueTablePeek(TypeVar types.GType) *TypeValueTable {
-
 	cret := xTypeValueTablePeek(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TypeValueTable)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1652,6 +1529,7 @@ func init() {
 	core.PuregoSafeRegister(&xTypeClassGet, libs, "g_type_class_get")
 	core.PuregoSafeRegister(&xTypeClassPeek, libs, "g_type_class_peek")
 	core.PuregoSafeRegister(&xTypeClassPeekStatic, libs, "g_type_class_peek_static")
+	core.PuregoSafeRegister(&xTypeClassRef, libs, "g_type_class_ref")
 	core.PuregoSafeRegister(&xTypeCreateInstance, libs, "g_type_create_instance")
 	core.PuregoSafeRegister(&xTypeDefaultInterfaceGet, libs, "g_type_default_interface_get")
 	core.PuregoSafeRegister(&xTypeDefaultInterfacePeek, libs, "g_type_default_interface_peek")
@@ -1703,5 +1581,4 @@ func init() {
 	core.PuregoSafeRegister(&xTypeInstanceGetPrivate, libs, "g_type_instance_get_private")
 
 	core.PuregoSafeRegister(&xTypeInterfacePeekParent, libs, "g_type_interface_peek_parent")
-
 }

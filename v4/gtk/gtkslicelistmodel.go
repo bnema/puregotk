@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -91,7 +90,6 @@ var xSliceListModelGetOffset func(uintptr) uint
 
 // Gets the offset set via gtk_slice_list_model_set_offset().
 func (x *SliceListModel) GetOffset() uint {
-
 	cret := xSliceListModelGetOffset(x.GoPointer())
 	return cret
 }
@@ -100,7 +98,6 @@ var xSliceListModelGetSize func(uintptr) uint
 
 // Gets the size set via gtk_slice_list_model_set_size().
 func (x *SliceListModel) GetSize() uint {
-
 	cret := xSliceListModelGetSize(x.GoPointer())
 	return cret
 }
@@ -111,14 +108,7 @@ var xSliceListModelSetModel func(uintptr, uintptr)
 //
 // The model's item type must conform to @self's item type.
 func (x *SliceListModel) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xSliceListModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xSliceListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xSliceListModelSetOffset func(uintptr, uint)
@@ -128,9 +118,7 @@ var xSliceListModelSetOffset func(uintptr, uint)
 // If the offset is too large for the sliced model,
 // @self will end up empty.
 func (x *SliceListModel) SetOffset(OffsetVar uint) {
-
 	xSliceListModelSetOffset(x.GoPointer(), OffsetVar)
-
 }
 
 var xSliceListModelSetSize func(uintptr, uint)
@@ -141,9 +129,7 @@ var xSliceListModelSetSize func(uintptr, uint)
 // It can however have fewer items if the offset is too large
 // or the model sliced from doesn't have enough items.
 func (x *SliceListModel) SetSize(SizeVar uint) {
-
 	xSliceListModelSetSize(x.GoPointer(), SizeVar)
-
 }
 
 func (c *SliceListModel) GoPointer() uintptr {
@@ -209,7 +195,6 @@ func (x *SliceListModel) GetPropertySize() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *SliceListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -223,7 +208,6 @@ func (x *SliceListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *SliceListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -234,7 +218,6 @@ func (x *SliceListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *SliceListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -285,9 +268,7 @@ func (x *SliceListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *SliceListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -296,9 +277,7 @@ func (x *SliceListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVa
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *SliceListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -317,14 +296,12 @@ func (x *SliceListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndV
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *SliceListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -344,5 +321,4 @@ func init() {
 	core.PuregoSafeRegister(&xSliceListModelSetModel, libs, "gtk_slice_list_model_set_model")
 	core.PuregoSafeRegister(&xSliceListModelSetOffset, libs, "gtk_slice_list_model_set_offset")
 	core.PuregoSafeRegister(&xSliceListModelSetSize, libs, "gtk_slice_list_model_set_size")
-
 }

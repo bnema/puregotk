@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -65,7 +64,6 @@ var xEventControllerFocusContainsFocus func(uintptr) bool
 
 // Returns %TRUE if focus is within @self or one of its children.
 func (x *EventControllerFocus) ContainsFocus() bool {
-
 	cret := xEventControllerFocusContainsFocus(x.GoPointer())
 	return cret
 }
@@ -74,7 +72,6 @@ var xEventControllerFocusIsFocus func(uintptr) bool
 
 // Returns %TRUE if focus is within @self, but not one of its children.
 func (x *EventControllerFocus) IsFocus() bool {
-
 	cret := xEventControllerFocusIsFocus(x.GoPointer())
 	return cret
 }
@@ -144,7 +141,6 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -176,7 +172,6 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -187,7 +182,7 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -203,5 +198,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEventControllerFocusContainsFocus, libs, "gtk_event_controller_focus_contains_focus")
 	core.PuregoSafeRegister(&xEventControllerFocusIsFocus, libs, "gtk_event_controller_focus_is_focus")
-
 }

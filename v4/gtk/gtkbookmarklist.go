@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -73,7 +72,6 @@ var xBookmarkListGetAttributes func(uintptr) string
 
 // Gets the attributes queried on the children.
 func (x *BookmarkList) GetAttributes() string {
-
 	cret := xBookmarkListGetAttributes(x.GoPointer())
 	return cret
 }
@@ -83,7 +81,6 @@ var xBookmarkListGetFilename func(uintptr) string
 // Returns the filename of the bookmark file that
 // this list is loading.
 func (x *BookmarkList) GetFilename() string {
-
 	cret := xBookmarkListGetFilename(x.GoPointer())
 	return cret
 }
@@ -92,7 +89,6 @@ var xBookmarkListGetIoPriority func(uintptr) int
 
 // Gets the IO priority to use while loading file.
 func (x *BookmarkList) GetIoPriority() int {
-
 	cret := xBookmarkListGetIoPriority(x.GoPointer())
 	return cret
 }
@@ -105,7 +101,6 @@ var xBookmarkListIsLoading func(uintptr) bool
 // going on. The order in which are added is undefined and may change
 // in between runs.
 func (x *BookmarkList) IsLoading() bool {
-
 	cret := xBookmarkListIsLoading(x.GoPointer())
 	return cret
 }
@@ -117,12 +112,10 @@ var xBookmarkListSetAttributes func(uintptr, uintptr)
 // If @attributes is %NULL, no attributes will be queried, but a list
 // of `GFileInfo`s will still be created.
 func (x *BookmarkList) SetAttributes(AttributesVar *string) {
-
 	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
 	defer core.GFreeNullable(AttributesVarPtr)
 
 	xBookmarkListSetAttributes(x.GoPointer(), AttributesVarPtr)
-
 }
 
 var xBookmarkListSetIoPriority func(uintptr, int)
@@ -131,9 +124,7 @@ var xBookmarkListSetIoPriority func(uintptr, int)
 //
 // The default IO priority is %G_PRIORITY_DEFAULT.
 func (x *BookmarkList) SetIoPriority(IoPriorityVar int) {
-
 	xBookmarkListSetIoPriority(x.GoPointer(), IoPriorityVar)
-
 }
 
 func (c *BookmarkList) GoPointer() uintptr {
@@ -224,7 +215,6 @@ func (x *BookmarkList) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *BookmarkList) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -238,7 +228,6 @@ func (x *BookmarkList) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *BookmarkList) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -249,7 +238,6 @@ func (x *BookmarkList) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *BookmarkList) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -300,14 +288,12 @@ func (x *BookmarkList) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *BookmarkList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -327,5 +313,4 @@ func init() {
 	core.PuregoSafeRegister(&xBookmarkListIsLoading, libs, "gtk_bookmark_list_is_loading")
 	core.PuregoSafeRegister(&xBookmarkListSetAttributes, libs, "gtk_bookmark_list_set_attributes")
 	core.PuregoSafeRegister(&xBookmarkListSetIoPriority, libs, "gtk_bookmark_list_set_io_priority")
-
 }

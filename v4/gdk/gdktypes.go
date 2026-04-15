@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -64,7 +63,6 @@ var xColorStateEqual func(uintptr, *ColorState) bool
 // describing the same color state may compare not equal. However, different
 // color states will never compare equal.
 func (x *ColorState) Equal(OtherVar *ColorState) bool {
-
 	cret := xColorStateEqual(x.GoPointer(), OtherVar)
 	return cret
 }
@@ -76,18 +74,19 @@ var xColorStateEquivalent func(uintptr, *ColorState) bool
 // Two objects that represent the same color state should be equivalent,
 // even though they may not be equal in the sense of [method@Gdk.ColorState.equal].
 func (x *ColorState) Equivalent(OtherVar *ColorState) bool {
-
 	cret := xColorStateEquivalent(x.GoPointer(), OtherVar)
 	return cret
 }
 
-var xColorStateRef func(uintptr) *ColorState
+var xColorStateRef func(uintptr) uintptr
 
 // Increase the reference count of @self.
 func (x *ColorState) Ref() *ColorState {
-
 	cret := xColorStateRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xColorStateUnref func(uintptr)
@@ -97,9 +96,7 @@ var xColorStateUnref func(uintptr)
 // Unless @self is static, it will be freed
 // when the reference count reaches zero.
 func (x *ColorState) Unref() {
-
 	xColorStateUnref(x.GoPointer())
-
 }
 
 // Used to advertise and negotiate the format of content.
@@ -147,7 +144,7 @@ func (x *ContentFormats) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewContentFormats func([]string, uint) *ContentFormats
+var xNewContentFormats func([]string, uint) uintptr
 
 // Creates a new `GdkContentFormats` from an array of mime types.
 //
@@ -155,25 +152,28 @@ var xNewContentFormats func([]string, uint) *ContentFormats
 // behavior of the return value is undefined. If you cannot guarantee
 // this, use [struct@Gdk.ContentFormatsBuilder] instead.
 func NewContentFormats(MimeTypesVar []string, NMimeTypesVar uint) *ContentFormats {
-
 	cret := xNewContentFormats(MimeTypesVar, NMimeTypesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xNewContentFormatsForGtype func(types.GType) *ContentFormats
+var xNewContentFormatsForGtype func(types.GType) uintptr
 
 // Creates a new `GdkContentFormats` for a given `GType`.
 func NewContentFormatsForGtype(TypeVar types.GType) *ContentFormats {
-
 	cret := xNewContentFormatsForGtype(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xContentFormatsContainGtype func(uintptr, types.GType) bool
 
 // Checks if a given `GType` is part of the given @formats.
 func (x *ContentFormats) ContainGtype(TypeVar types.GType) bool {
-
 	cret := xContentFormatsContainGtype(x.GoPointer(), TypeVar)
 	return cret
 }
@@ -182,7 +182,6 @@ var xContentFormatsContainMimeType func(uintptr, string) bool
 
 // Checks if a given mime type is part of the given @formats.
 func (x *ContentFormats) ContainMimeType(MimeTypeVar string) bool {
-
 	cret := xContentFormatsContainMimeType(x.GoPointer(), MimeTypeVar)
 	return cret
 }
@@ -194,7 +193,6 @@ var xContentFormatsGetGtypes func(uintptr, *uint) uintptr
 // Note that @formats may not contain any `GType`s, in particular when
 // they are empty. In that case %NULL will be returned.
 func (x *ContentFormats) GetGtypes(NGtypesVar *uint) uintptr {
-
 	cret := xContentFormatsGetGtypes(x.GoPointer(), NGtypesVar)
 	return cret
 }
@@ -206,7 +204,6 @@ var xContentFormatsGetMimeTypes func(uintptr, *uint) []string
 // Note that @formats may not contain any mime types, in particular
 // when they are empty. In that case %NULL will be returned.
 func (x *ContentFormats) GetMimeTypes(NMimeTypesVar *uint) []string {
-
 	cret := xContentFormatsGetMimeTypes(x.GoPointer(), NMimeTypesVar)
 	return cret
 }
@@ -215,7 +212,6 @@ var xContentFormatsIsEmpty func(uintptr) bool
 
 // Returns whether the content formats contain any formats.
 func (x *ContentFormats) IsEmpty() bool {
-
 	cret := xContentFormatsIsEmpty(x.GoPointer())
 	return cret
 }
@@ -224,7 +220,6 @@ var xContentFormatsMatch func(uintptr, *ContentFormats) bool
 
 // Checks if @first and @second have any matching formats.
 func (x *ContentFormats) Match(SecondVar *ContentFormats) bool {
-
 	cret := xContentFormatsMatch(x.GoPointer(), SecondVar)
 	return cret
 }
@@ -236,7 +231,6 @@ var xContentFormatsMatchGtype func(uintptr, *ContentFormats) types.GType
 //
 // If no matching `GType` is found, %G_TYPE_INVALID is returned.
 func (x *ContentFormats) MatchGtype(SecondVar *ContentFormats) types.GType {
-
 	cret := xContentFormatsMatchGtype(x.GoPointer(), SecondVar)
 	return cret
 }
@@ -248,7 +242,6 @@ var xContentFormatsMatchMimeType func(uintptr, *ContentFormats) string
 //
 // If no matching mime type is found, %NULL is returned.
 func (x *ContentFormats) MatchMimeType(SecondVar *ContentFormats) string {
-
 	cret := xContentFormatsMatchMimeType(x.GoPointer(), SecondVar)
 	return cret
 }
@@ -260,18 +253,18 @@ var xContentFormatsPrint func(uintptr, *glib.String)
 // The result of this function can later be parsed with
 // [func@Gdk.ContentFormats.parse].
 func (x *ContentFormats) Print(StringVar *glib.String) {
-
 	xContentFormatsPrint(x.GoPointer(), StringVar)
-
 }
 
-var xContentFormatsRef func(uintptr) *ContentFormats
+var xContentFormatsRef func(uintptr) uintptr
 
 // Increases the reference count of a `GdkContentFormats` by one.
 func (x *ContentFormats) Ref() *ContentFormats {
-
 	cret := xContentFormatsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xContentFormatsToString func(uintptr) string
@@ -283,59 +276,68 @@ var xContentFormatsToString func(uintptr) string
 // This is a small wrapper around [method@Gdk.ContentFormats.print]
 // to help when debugging.
 func (x *ContentFormats) ToString() string {
-
 	cret := xContentFormatsToString(x.GoPointer())
 	return cret
 }
 
-var xContentFormatsUnion func(uintptr, *ContentFormats) *ContentFormats
+var xContentFormatsUnion func(uintptr, *ContentFormats) uintptr
 
 // Append all missing types from @second to @first, in the order
 // they had in @second.
 func (x *ContentFormats) Union(SecondVar *ContentFormats) *ContentFormats {
-
 	cret := xContentFormatsUnion(x.GoPointer(), SecondVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentFormatsUnionDeserializeGtypes func(uintptr) *ContentFormats
+var xContentFormatsUnionDeserializeGtypes func(uintptr) uintptr
 
 // Add GTypes for mime types in @formats for which deserializers are
 // registered.
 func (x *ContentFormats) UnionDeserializeGtypes() *ContentFormats {
-
 	cret := xContentFormatsUnionDeserializeGtypes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentFormatsUnionDeserializeMimeTypes func(uintptr) *ContentFormats
+var xContentFormatsUnionDeserializeMimeTypes func(uintptr) uintptr
 
 // Add mime types for GTypes in @formats for which deserializers are
 // registered.
 func (x *ContentFormats) UnionDeserializeMimeTypes() *ContentFormats {
-
 	cret := xContentFormatsUnionDeserializeMimeTypes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentFormatsUnionSerializeGtypes func(uintptr) *ContentFormats
+var xContentFormatsUnionSerializeGtypes func(uintptr) uintptr
 
 // Add GTypes for the mime types in @formats for which serializers are
 // registered.
 func (x *ContentFormats) UnionSerializeGtypes() *ContentFormats {
-
 	cret := xContentFormatsUnionSerializeGtypes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentFormatsUnionSerializeMimeTypes func(uintptr) *ContentFormats
+var xContentFormatsUnionSerializeMimeTypes func(uintptr) uintptr
 
 // Add mime types for GTypes in @formats for which serializers are
 // registered.
 func (x *ContentFormats) UnionSerializeMimeTypes() *ContentFormats {
-
 	cret := xContentFormatsUnionSerializeMimeTypes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xContentFormatsUnref func(uintptr)
@@ -344,9 +346,7 @@ var xContentFormatsUnref func(uintptr)
 //
 // If the resulting reference count is zero, frees the formats.
 func (x *ContentFormats) Unref() {
-
 	xContentFormatsUnref(x.GoPointer())
-
 }
 
 // Provides information about supported DMA buffer formats.
@@ -386,7 +386,6 @@ var xDmabufFormatsContains func(uintptr, uint32, uint64) bool
 
 // Returns whether a given format is contained in @formats.
 func (x *DmabufFormats) Contains(FourccVar uint32, ModifierVar uint64) bool {
-
 	cret := xDmabufFormatsContains(x.GoPointer(), FourccVar, ModifierVar)
 	return cret
 }
@@ -396,7 +395,6 @@ var xDmabufFormatsEqual func(uintptr, *DmabufFormats) bool
 // Returns whether @formats1 and @formats2 contain the
 // same dmabuf formats, in the same order.
 func (x *DmabufFormats) Equal(Formats2Var *DmabufFormats) bool {
-
 	cret := xDmabufFormatsEqual(x.GoPointer(), Formats2Var)
 	return cret
 }
@@ -406,9 +404,7 @@ var xDmabufFormatsGetFormat func(uintptr, uint, *uint32, *uint64)
 // Gets the fourcc code and modifier for a format
 // that is contained in @formats.
 func (x *DmabufFormats) GetFormat(IdxVar uint, FourccVar *uint32, ModifierVar *uint64) {
-
 	xDmabufFormatsGetFormat(x.GoPointer(), IdxVar, FourccVar, ModifierVar)
-
 }
 
 var xDmabufFormatsGetNFormats func(uintptr) uint
@@ -420,18 +416,19 @@ var xDmabufFormatsGetNFormats func(uintptr) uint
 // platforms, [method@Gdk.DmabufFormats.get_n_formats] will
 // always return zero.
 func (x *DmabufFormats) GetNFormats() uint {
-
 	cret := xDmabufFormatsGetNFormats(x.GoPointer())
 	return cret
 }
 
-var xDmabufFormatsRef func(uintptr) *DmabufFormats
+var xDmabufFormatsRef func(uintptr) uintptr
 
 // Increases the reference count of @formats.
 func (x *DmabufFormats) Ref() *DmabufFormats {
-
 	cret := xDmabufFormatsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DmabufFormats)(unsafe.Pointer(cret))
 }
 
 var xDmabufFormatsUnref func(uintptr)
@@ -441,9 +438,7 @@ var xDmabufFormatsUnref func(uintptr)
 // When the reference count reaches zero,
 // the object is freed.
 func (x *DmabufFormats) Unref() {
-
 	xDmabufFormatsUnref(x.GoPointer())
-
 }
 
 // Represents a hardware key that can be mapped to a keyval.
@@ -502,7 +497,6 @@ var xRectangleContainsPoint func(uintptr, int, int) bool
 
 // Returns %TRUE if @rect contains the point described by @x and @y.
 func (x *Rectangle) ContainsPoint(XVar int, YVar int) bool {
-
 	cret := xRectangleContainsPoint(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -511,7 +505,6 @@ var xRectangleEqual func(uintptr, *Rectangle) bool
 
 // Checks if the two given rectangles are equal.
 func (x *Rectangle) Equal(Rect2Var *Rectangle) bool {
-
 	cret := xRectangleEqual(x.GoPointer(), Rect2Var)
 	return cret
 }
@@ -526,7 +519,6 @@ var xRectangleIntersect func(uintptr, *Rectangle, *Rectangle) bool
 // in whether the rectangles intersect, but not in the intersecting area
 // itself, pass %NULL for @dest.
 func (x *Rectangle) Intersect(Src2Var *Rectangle, DestVar *Rectangle) bool {
-
 	cret := xRectangleIntersect(x.GoPointer(), Src2Var, DestVar)
 	return cret
 }
@@ -542,9 +534,7 @@ var xRectangleUnion func(uintptr, *Rectangle, *Rectangle)
 // Note that this function does not ignore 'empty' rectangles (ie. with
 // zero width or height).
 func (x *Rectangle) Union(Src2Var *Rectangle, DestVar *Rectangle) {
-
 	xRectangleUnion(x.GoPointer(), Src2Var, DestVar)
-
 }
 
 // Used to download the contents of a [class@Gdk.Texture].
@@ -570,30 +560,34 @@ func (x *TextureDownloader) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTextureDownloader func(uintptr) *TextureDownloader
+var xNewTextureDownloader func(uintptr) uintptr
 
 // Creates a new texture downloader for @texture.
 //
 // By default, the downloader will convert the data to
 // the default memory format, and to the sRGB color state.
 func NewTextureDownloader(TextureVar *Texture) *TextureDownloader {
-
 	cret := xNewTextureDownloader(TextureVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TextureDownloader)(unsafe.Pointer(cret))
 }
 
-var xTextureDownloaderCopy func(uintptr) *TextureDownloader
+var xTextureDownloaderCopy func(uintptr) uintptr
 
 // Creates a copy of the downloader.
 //
 // This function is meant for language bindings.
 func (x *TextureDownloader) Copy() *TextureDownloader {
-
 	cret := xTextureDownloaderCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TextureDownloader)(unsafe.Pointer(cret))
 }
 
-var xTextureDownloaderDownloadBytes func(uintptr, *uint) *glib.Bytes
+var xTextureDownloaderDownloadBytes func(uintptr, *uint) uintptr
 
 // Downloads the given texture pixels into a `GBytes`. The rowstride will
 // be stored in the stride value.
@@ -606,12 +600,14 @@ var xTextureDownloaderDownloadBytes func(uintptr, *uint) *glib.Bytes
 // This function cannot be used with a multiplanar format. Use
 // [method@Gdk.TextureDownloader.download_bytes_with_planes] for that purpose.
 func (x *TextureDownloader) DownloadBytes(OutStrideVar *uint) *glib.Bytes {
-
 	cret := xTextureDownloaderDownloadBytes(x.GoPointer(), OutStrideVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, *[4]uint, *[4]uint) *glib.Bytes
+var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, *[4]uint, *[4]uint) uintptr
 
 // Downloads the given texture pixels into a `GBytes`. The offsets and
 // strides of the resulting buffer will be stored in the respective values.
@@ -619,9 +615,11 @@ var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, *[4]uint, *[4]uint) 
 // If the format does have less than 4 planes, the remaining offsets and strides will be
 // set to `0`.
 func (x *TextureDownloader) DownloadBytesWithPlanes(OutOffsetsVar *[4]uint, OutStridesVar *[4]uint) *glib.Bytes {
-
 	cret := xTextureDownloaderDownloadBytesWithPlanes(x.GoPointer(), OutOffsetsVar, OutStridesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xTextureDownloaderDownloadInto func(uintptr, []byte, uint)
@@ -630,34 +628,31 @@ var xTextureDownloaderDownloadInto func(uintptr, []byte, uint)
 //
 // This function cannot be used with a multiplanar format.
 func (x *TextureDownloader) DownloadInto(DataVar []byte, StrideVar uint) {
-
 	xTextureDownloaderDownloadInto(x.GoPointer(), DataVar, StrideVar)
-
 }
 
 var xTextureDownloaderFree func(uintptr)
 
 // Frees the given downloader and all its associated resources.
 func (x *TextureDownloader) Free() {
-
 	xTextureDownloaderFree(x.GoPointer())
-
 }
 
-var xTextureDownloaderGetColorState func(uintptr) *ColorState
+var xTextureDownloaderGetColorState func(uintptr) uintptr
 
 // Gets the color state that the data will be downloaded in.
 func (x *TextureDownloader) GetColorState() *ColorState {
-
 	cret := xTextureDownloaderGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xTextureDownloaderGetFormat func(uintptr) MemoryFormat
 
 // Gets the format that the data will be downloaded in.
 func (x *TextureDownloader) GetFormat() MemoryFormat {
-
 	cret := xTextureDownloaderGetFormat(x.GoPointer())
 	return cret
 }
@@ -686,9 +681,7 @@ var xTextureDownloaderSetColorState func(uintptr, *ColorState)
 // By default, the sRGB colorstate returned by [func@ColorState.get_srgb]
 // is used.
 func (x *TextureDownloader) SetColorState(ColorStateVar *ColorState) {
-
 	xTextureDownloaderSetColorState(x.GoPointer(), ColorStateVar)
-
 }
 
 var xTextureDownloaderSetFormat func(uintptr, MemoryFormat)
@@ -697,18 +690,14 @@ var xTextureDownloaderSetFormat func(uintptr, MemoryFormat)
 //
 // By default, GDK_MEMORY_DEFAULT is set.
 func (x *TextureDownloader) SetFormat(FormatVar MemoryFormat) {
-
 	xTextureDownloaderSetFormat(x.GoPointer(), FormatVar)
-
 }
 
 var xTextureDownloaderSetTexture func(uintptr, uintptr)
 
 // Changes the texture the downloader will download.
 func (x *TextureDownloader) SetTexture(TextureVar *Texture) {
-
 	xTextureDownloaderSetTexture(x.GoPointer(), TextureVar.GoPointer())
-
 }
 
 const (
@@ -718,7 +707,7 @@ const (
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -790,5 +779,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextureDownloaderSetColorState, libs, "gdk_texture_downloader_set_color_state")
 	core.PuregoSafeRegister(&xTextureDownloaderSetFormat, libs, "gdk_texture_downloader_set_format")
 	core.PuregoSafeRegister(&xTextureDownloaderSetTexture, libs, "gdk_texture_downloader_set_texture")
-
 }

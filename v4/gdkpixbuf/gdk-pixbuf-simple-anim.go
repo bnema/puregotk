@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -59,16 +58,13 @@ var xPixbufSimpleAnimAddFrame func(uintptr, uintptr)
 // have the dimensions specified when the animation
 // was constructed.
 func (x *PixbufSimpleAnim) AddFrame(PixbufVar *Pixbuf) {
-
 	xPixbufSimpleAnimAddFrame(x.GoPointer(), PixbufVar.GoPointer())
-
 }
 
 var xPixbufSimpleAnimGetLoop func(uintptr) bool
 
 // Gets whether @animation should loop indefinitely when it reaches the end.
 func (x *PixbufSimpleAnim) GetLoop() bool {
-
 	cret := xPixbufSimpleAnimGetLoop(x.GoPointer())
 	return cret
 }
@@ -77,9 +73,7 @@ var xPixbufSimpleAnimSetLoop func(uintptr, bool)
 
 // Sets whether @animation should loop indefinitely when it reaches the end.
 func (x *PixbufSimpleAnim) SetLoop(LoopVar bool) {
-
 	xPixbufSimpleAnimSetLoop(x.GoPointer(), LoopVar)
-
 }
 
 func (c *PixbufSimpleAnim) GoPointer() uintptr {
@@ -112,7 +106,7 @@ func (x *PixbufSimpleAnim) GetPropertyLoop() bool {
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0", "libgdk_pixbuf-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDKPIXBUF") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -129,5 +123,4 @@ func init() {
 	core.PuregoSafeRegister(&xPixbufSimpleAnimAddFrame, libs, "gdk_pixbuf_simple_anim_add_frame")
 	core.PuregoSafeRegister(&xPixbufSimpleAnimGetLoop, libs, "gdk_pixbuf_simple_anim_get_loop")
 	core.PuregoSafeRegister(&xPixbufSimpleAnimSetLoop, libs, "gdk_pixbuf_simple_anim_set_loop")
-
 }

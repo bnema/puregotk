@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -70,7 +69,7 @@ func (c *PasswordEntryBuffer) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -83,5 +82,4 @@ func init() {
 	core.PuregoSafeRegister(&xPasswordEntryBufferGLibType, libs, "gtk_password_entry_buffer_get_type")
 
 	core.PuregoSafeRegister(&xNewPasswordEntryBuffer, libs, "gtk_password_entry_buffer_new")
-
 }

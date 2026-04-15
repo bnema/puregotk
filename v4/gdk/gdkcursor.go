@@ -2,10 +2,7 @@
 package gdk
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -85,42 +82,7 @@ var xNewCursorFromCallback func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintptr, DestroyVar *glib.DestroyNotify, FallbackVar *Cursor) *Cursor {
 	var cls *Cursor
 
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 int, arg2 float64, arg3 *int, arg4 *int, arg5 *int, arg6 *int, arg7 uintptr) uintptr {
-				cbFn := *CallbackVar
-				return cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	var FallbackVarPtr uintptr
-	if FallbackVar != nil {
-		FallbackVarPtr = FallbackVar.GoPointer()
-	}
-
-	cret := xNewCursorFromCallback(CallbackVarRef, DataVar, DestroyVarRef, FallbackVarPtr)
+	cret := xNewCursorFromCallback(glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DestroyVar), FallbackVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -249,7 +211,6 @@ var xCursorGetHotspotX func(uintptr) int
 // will only return the hotspot position for cursors created with
 // [ctor@Gdk.Cursor.new_from_texture].
 func (x *Cursor) GetHotspotX() int {
-
 	cret := xCursorGetHotspotX(x.GoPointer())
 	return cret
 }
@@ -264,7 +225,6 @@ var xCursorGetHotspotY func(uintptr) int
 // will only return the hotspot position for cursors created with
 // [ctor@Gdk.Cursor.new_from_texture].
 func (x *Cursor) GetHotspotY() int {
-
 	cret := xCursorGetHotspotY(x.GoPointer())
 	return cret
 }
@@ -275,7 +235,6 @@ var xCursorGetName func(uintptr) string
 //
 // If the cursor is not a named cursor, %NULL will be returned.
 func (x *Cursor) GetName() string {
-
 	cret := xCursorGetName(x.GoPointer())
 	return cret
 }
@@ -367,7 +326,7 @@ func (x *Cursor) GetPropertyName() string {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -388,5 +347,4 @@ func init() {
 	core.PuregoSafeRegister(&xCursorGetHotspotY, libs, "gdk_cursor_get_hotspot_y")
 	core.PuregoSafeRegister(&xCursorGetName, libs, "gdk_cursor_get_name")
 	core.PuregoSafeRegister(&xCursorGetTexture, libs, "gdk_cursor_get_texture")
-
 }

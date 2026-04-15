@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -82,7 +81,6 @@ var xTextTagTableAdd func(uintptr, uintptr) bool
 // @tag must not be in a tag table already, and may not have
 // the same name as an already-added tag.
 func (x *TextTagTable) Add(TagVar *TextTag) bool {
-
 	cret := xTextTagTableAdd(x.GoPointer(), TagVar.GoPointer())
 	return cret
 }
@@ -94,31 +92,13 @@ var xTextTagTableForeach func(uintptr, uintptr, uintptr)
 // Note that the table may not be modified while iterating
 // over it (you can’t add/remove tags).
 func (x *TextTagTable) Foreach(FuncVar *TextTagTableForeach, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xTextTagTableForeach(x.GoPointer(), FuncVarRef, DataVar)
-
+	xTextTagTableForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
 var xTextTagTableGetSize func(uintptr) int
 
 // Returns the size of the table (number of tags)
 func (x *TextTagTable) GetSize() int {
-
 	cret := xTextTagTableGetSize(x.GoPointer())
 	return cret
 }
@@ -149,9 +129,7 @@ var xTextTagTableRemove func(uintptr, uintptr)
 // removed, so the tag will end up destroyed if you don’t have
 // a reference to it.
 func (x *TextTagTable) Remove(TagVar *TextTag) {
-
 	xTextTagTableRemove(x.GoPointer(), TagVar.GoPointer())
-
 }
 
 func (c *TextTagTable) GoPointer() uintptr {
@@ -166,7 +144,7 @@ func (c *TextTagTable) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted every time a new tag is added in the `GtkTextTagTable`.
-func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, *TextTag)) uint {
+func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
@@ -179,8 +157,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, *TextTag)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }())
-
+		cbFn(fa, TagVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -190,7 +167,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, *TextTag)) uint {
 }
 
 // Emitted every time a tag in the `GtkTextTagTable` changes.
-func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, *TextTag, bool)) uint {
+func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
@@ -203,8 +180,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, *TextTag, bool))
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }(), SizeChangedVarp)
-
+		cbFn(fa, TagVarp, SizeChangedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -217,7 +193,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, *TextTag, bool))
 //
 // The @tag is still valid by the time the signal is emitted, but
 // it is not associated with a tag table any more.
-func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, *TextTag)) uint {
+func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
@@ -230,8 +206,7 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, *TextTag)) uint 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *TextTag { cls := &TextTag{}; cls.Ptr = TagVarp; return cls }())
-
+		cbFn(fa, TagVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -245,14 +220,13 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, *TextTag)) uint 
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TextTagTable) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -271,5 +245,4 @@ func init() {
 	core.PuregoSafeRegister(&xTextTagTableGetSize, libs, "gtk_text_tag_table_get_size")
 	core.PuregoSafeRegister(&xTextTagTableLookup, libs, "gtk_text_tag_table_lookup")
 	core.PuregoSafeRegister(&xTextTagTableRemove, libs, "gtk_text_tag_table_remove")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -313,7 +312,7 @@ func (x *SocketControlMessagePrivate) GoPointer() uintptr {
 // These messages are sent with [method@Gio.Socket.send_message] and received
 // with [method@Gio.Socket.receive_message].
 //
-// To extend the set of control message that can be sent, subclass this
+// To extend the set of control messages that can be sent, subclass this
 // class and override the `get_size`, `get_level`, `get_type` and `serialize`
 // methods.
 //
@@ -342,7 +341,6 @@ var xSocketControlMessageGetLevel func(uintptr) int
 // Returns the "level" (i.e. the originating protocol) of the control message.
 // This is often SOL_SOCKET.
 func (x *SocketControlMessage) GetLevel() int {
-
 	cret := xSocketControlMessageGetLevel(x.GoPointer())
 	return cret
 }
@@ -352,7 +350,6 @@ var xSocketControlMessageGetMsgType func(uintptr) int
 // Returns the protocol specific type of the control message.
 // For instance, for UNIX fd passing this would be SCM_RIGHTS.
 func (x *SocketControlMessage) GetMsgType() int {
-
 	cret := xSocketControlMessageGetMsgType(x.GoPointer())
 	return cret
 }
@@ -362,7 +359,6 @@ var xSocketControlMessageGetSize func(uintptr) uint
 // Returns the space required for the control message, not including
 // headers or alignment.
 func (x *SocketControlMessage) GetSize() uint {
-
 	cret := xSocketControlMessageGetSize(x.GoPointer())
 	return cret
 }
@@ -376,9 +372,7 @@ var xSocketControlMessageSerialize func(uintptr, uintptr)
 // returned by g_socket_control_message_get_size() on this
 // object.
 func (x *SocketControlMessage) Serialize(DataVar uintptr) {
-
 	xSocketControlMessageSerialize(x.GoPointer(), DataVar)
-
 }
 
 func (c *SocketControlMessage) GoPointer() uintptr {
@@ -416,7 +410,7 @@ func SocketControlMessageDeserialize(LevelVar int, TypeVar int, SizeVar uint, Da
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -434,5 +428,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketControlMessageSerialize, libs, "g_socket_control_message_serialize")
 
 	core.PuregoSafeRegister(&xSocketControlMessageDeserialize, libs, "g_socket_control_message_deserialize")
-
 }

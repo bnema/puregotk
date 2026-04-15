@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -62,18 +61,19 @@ var xSeatGetCapabilities func(uintptr) SeatCapabilities
 
 // Returns the capabilities this `GdkSeat` currently has.
 func (x *Seat) GetCapabilities() SeatCapabilities {
-
 	cret := xSeatGetCapabilities(x.GoPointer())
 	return cret
 }
 
-var xSeatGetDevices func(uintptr, SeatCapabilities) *glib.List
+var xSeatGetDevices func(uintptr, SeatCapabilities) uintptr
 
 // Returns the devices that match the given capabilities.
 func (x *Seat) GetDevices(CapabilitiesVar SeatCapabilities) *glib.List {
-
 	cret := xSeatGetDevices(x.GoPointer(), CapabilitiesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xSeatGetDisplay func(uintptr) uintptr
@@ -127,13 +127,15 @@ func (x *Seat) GetPointer() *Device {
 	return cls
 }
 
-var xSeatGetTools func(uintptr) *glib.List
+var xSeatGetTools func(uintptr) uintptr
 
 // Returns all `GdkDeviceTools` that are known to the application.
 func (x *Seat) GetTools() *glib.List {
-
 	cret := xSeatGetTools(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func (c *Seat) GoPointer() uintptr {
@@ -148,7 +150,7 @@ func (c *Seat) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a new input device is related to this seat.
-func (x *Seat) ConnectDeviceAdded(cb *func(Seat, *Device)) uint {
+func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
@@ -161,8 +163,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, *Device)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Device { cls := &Device{}; cls.Ptr = DeviceVarp; return cls }())
-
+		cbFn(fa, DeviceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -172,7 +173,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, *Device)) uint {
 }
 
 // Emitted when an input device is removed (e.g. unplugged).
-func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, *Device)) uint {
+func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
@@ -185,8 +186,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, *Device)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *Device { cls := &Device{}; cls.Ptr = DeviceVarp; return cls }())
-
+		cbFn(fa, DeviceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -202,7 +202,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, *Device)) uint {
 // [signal@Gdk.Device::tool-changed] signal accordingly.
 //
 // A same tool may be used by several devices.
-func (x *Seat) ConnectToolAdded(cb *func(Seat, *DeviceTool)) uint {
+func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
@@ -215,8 +215,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, *DeviceTool)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
-
+		cbFn(fa, ToolVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -226,7 +225,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, *DeviceTool)) uint {
 }
 
 // Emitted whenever a tool is no longer known to this @seat.
-func (x *Seat) ConnectToolRemoved(cb *func(Seat, *DeviceTool)) uint {
+func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
@@ -239,8 +238,7 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, *DeviceTool)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *DeviceTool { cls := &DeviceTool{}; cls.Ptr = ToolVarp; return cls }())
-
+		cbFn(fa, ToolVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -251,7 +249,7 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, *DeviceTool)) uint {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -271,5 +269,4 @@ func init() {
 	core.PuregoSafeRegister(&xSeatGetKeyboard, libs, "gdk_seat_get_keyboard")
 	core.PuregoSafeRegister(&xSeatGetPointer, libs, "gdk_seat_get_pointer")
 	core.PuregoSafeRegister(&xSeatGetTools, libs, "gdk_seat_get_tools")
-
 }

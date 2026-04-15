@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -25,7 +24,6 @@ var xCheckVersion func(uint, uint, uint) string
 // version `@required_major.@required_minor.@required_micro`
 // (same major version.)
 func CheckVersion(RequiredMajorVar uint, RequiredMinorVar uint, RequiredMicroVar uint) string {
-
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
 
 	return cret
@@ -33,7 +31,7 @@ func CheckVersion(RequiredMajorVar uint, RequiredMinorVar uint, RequiredMicroVar
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -44,5 +42,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xCheckVersion, libs, "glib_check_version")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -88,20 +87,10 @@ var xNewShortcutWithArguments func(uintptr, uintptr, uintptr, ...interface{}) ui
 func NewShortcutWithArguments(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction, FormatStringVar *string, varArgs ...interface{}) *Shortcut {
 	var cls *Shortcut
 
-	var TriggerVarPtr uintptr
-	if TriggerVar != nil {
-		TriggerVarPtr = TriggerVar.GoPointer()
-	}
-
-	var ActionVarPtr uintptr
-	if ActionVar != nil {
-		ActionVarPtr = ActionVar.GoPointer()
-	}
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
-	cret := xNewShortcutWithArguments(TriggerVarPtr, ActionVarPtr, FormatStringVarPtr, varArgs...)
+	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), FormatStringVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -128,13 +117,15 @@ func (x *Shortcut) GetAction() *ShortcutAction {
 	return cls
 }
 
-var xShortcutGetArguments func(uintptr) *glib.Variant
+var xShortcutGetArguments func(uintptr) uintptr
 
 // Gets the arguments that are passed when activating the shortcut.
 func (x *Shortcut) GetArguments() *glib.Variant {
-
 	cret := xShortcutGetArguments(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xShortcutGetTrigger func(uintptr) uintptr
@@ -158,37 +149,21 @@ var xShortcutSetAction func(uintptr, uintptr)
 
 // Sets the new action for @self to be @action.
 func (x *Shortcut) SetAction(ActionVar *ShortcutAction) {
-
-	var ActionVarPtr uintptr
-	if ActionVar != nil {
-		ActionVarPtr = ActionVar.GoPointer()
-	}
-
-	xShortcutSetAction(x.GoPointer(), ActionVarPtr)
-
+	xShortcutSetAction(x.GoPointer(), ActionVar.GoPointer())
 }
 
 var xShortcutSetArguments func(uintptr, *glib.Variant)
 
 // Sets the arguments to pass when activating the shortcut.
 func (x *Shortcut) SetArguments(ArgsVar *glib.Variant) {
-
 	xShortcutSetArguments(x.GoPointer(), ArgsVar)
-
 }
 
 var xShortcutSetTrigger func(uintptr, uintptr)
 
 // Sets the new trigger for @self to be @trigger.
 func (x *Shortcut) SetTrigger(TriggerVar *ShortcutTrigger) {
-
-	var TriggerVarPtr uintptr
-	if TriggerVar != nil {
-		TriggerVarPtr = TriggerVar.GoPointer()
-	}
-
-	xShortcutSetTrigger(x.GoPointer(), TriggerVarPtr)
-
+	xShortcutSetTrigger(x.GoPointer(), TriggerVar.GoPointer())
 }
 
 func (c *Shortcut) GoPointer() uintptr {
@@ -221,7 +196,7 @@ func (x *Shortcut) GetPropertyArguments() uintptr {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -242,5 +217,4 @@ func init() {
 	core.PuregoSafeRegister(&xShortcutSetAction, libs, "gtk_shortcut_set_action")
 	core.PuregoSafeRegister(&xShortcutSetArguments, libs, "gtk_shortcut_set_arguments")
 	core.PuregoSafeRegister(&xShortcutSetTrigger, libs, "gtk_shortcut_set_trigger")
-
 }

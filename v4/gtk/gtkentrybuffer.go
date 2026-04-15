@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -434,7 +433,6 @@ var xEntryBufferDeleteText func(uintptr, uint, int) uint
 // Note that the positions are specified in characters,
 // not bytes.
 func (x *EntryBuffer) DeleteText(PositionVar uint, NCharsVar int) uint {
-
 	cret := xEntryBufferDeleteText(x.GoPointer(), PositionVar, NCharsVar)
 	return cret
 }
@@ -443,18 +441,14 @@ var xEntryBufferEmitDeletedText func(uintptr, uint, uint)
 
 // Used when subclassing `GtkEntryBuffer`.
 func (x *EntryBuffer) EmitDeletedText(PositionVar uint, NCharsVar uint) {
-
 	xEntryBufferEmitDeletedText(x.GoPointer(), PositionVar, NCharsVar)
-
 }
 
 var xEntryBufferEmitInsertedText func(uintptr, uint, string, uint)
 
 // Used when subclassing `GtkEntryBuffer`.
 func (x *EntryBuffer) EmitInsertedText(PositionVar uint, CharsVar string, NCharsVar uint) {
-
 	xEntryBufferEmitInsertedText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
-
 }
 
 var xEntryBufferGetBytes func(uintptr) uint
@@ -463,7 +457,6 @@ var xEntryBufferGetBytes func(uintptr) uint
 //
 // See [method@Gtk.EntryBuffer.get_length].
 func (x *EntryBuffer) GetBytes() uint {
-
 	cret := xEntryBufferGetBytes(x.GoPointer())
 	return cret
 }
@@ -472,7 +465,6 @@ var xEntryBufferGetLength func(uintptr) uint
 
 // Retrieves the length in characters of the buffer.
 func (x *EntryBuffer) GetLength() uint {
-
 	cret := xEntryBufferGetLength(x.GoPointer())
 	return cret
 }
@@ -481,7 +473,6 @@ var xEntryBufferGetMaxLength func(uintptr) int
 
 // Retrieves the maximum allowed length of the text in @buffer.
 func (x *EntryBuffer) GetMaxLength() int {
-
 	cret := xEntryBufferGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -493,7 +484,6 @@ var xEntryBufferGetText func(uintptr) string
 // The memory pointer returned by this call will not change
 // unless this object emits a signal, or is finalized.
 func (x *EntryBuffer) GetText() string {
-
 	cret := xEntryBufferGetText(x.GoPointer())
 	return cret
 }
@@ -510,7 +500,6 @@ var xEntryBufferInsertText func(uintptr, uint, string, int) uint
 //
 // Note that the position and length are in characters, not in bytes.
 func (x *EntryBuffer) InsertText(PositionVar uint, CharsVar string, NCharsVar int) uint {
-
 	cret := xEntryBufferInsertText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
 	return cret
 }
@@ -522,9 +511,7 @@ var xEntryBufferSetMaxLength func(uintptr, int)
 // If the current contents are longer than the given length, then
 // they will be truncated to fit.
 func (x *EntryBuffer) SetMaxLength(MaxLengthVar int) {
-
 	xEntryBufferSetMaxLength(x.GoPointer(), MaxLengthVar)
-
 }
 
 var xEntryBufferSetText func(uintptr, string, int)
@@ -537,9 +524,7 @@ var xEntryBufferSetText func(uintptr, string, int)
 //
 // Note that @n_chars is in characters, not in bytes.
 func (x *EntryBuffer) SetText(CharsVar string, NCharsVar int) {
-
 	xEntryBufferSetText(x.GoPointer(), CharsVar, NCharsVar)
-
 }
 
 func (c *EntryBuffer) GoPointer() uintptr {
@@ -613,7 +598,6 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp, NCharsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -636,8 +620,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, PositionVarp, core.GoString(CharsVarp), NCharsVarp)
-
+		cbFn(fa, PositionVarp, CharsVarp, NCharsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -648,7 +631,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -672,5 +655,4 @@ func init() {
 	core.PuregoSafeRegister(&xEntryBufferInsertText, libs, "gtk_entry_buffer_insert_text")
 	core.PuregoSafeRegister(&xEntryBufferSetMaxLength, libs, "gtk_entry_buffer_set_max_length")
 	core.PuregoSafeRegister(&xEntryBufferSetText, libs, "gtk_entry_buffer_set_text")
-
 }

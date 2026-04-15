@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -164,9 +163,7 @@ var xInfoBarAddActionWidget func(uintptr, uintptr, int)
 // when the widget is activated. The widget is appended to the
 // end of the message areas action area.
 func (x *InfoBar) AddActionWidget(ChildVar *Widget, ResponseIdVar int) {
-
 	xInfoBarAddActionWidget(x.GoPointer(), ChildVar.GoPointer(), ResponseIdVar)
-
 }
 
 var xInfoBarAddButton func(uintptr, string, int) uintptr
@@ -200,25 +197,20 @@ var xInfoBarAddButtons func(uintptr, string, ...interface{})
 // as with [ctor@Gtk.InfoBar.new_with_buttons]. Each button must have both
 // text and response ID.
 func (x *InfoBar) AddButtons(FirstButtonTextVar string, varArgs ...interface{}) {
-
 	xInfoBarAddButtons(x.GoPointer(), FirstButtonTextVar, varArgs...)
-
 }
 
 var xInfoBarAddChild func(uintptr, uintptr)
 
 // Adds a widget to the content area of the info bar.
 func (x *InfoBar) AddChild(WidgetVar *Widget) {
-
 	xInfoBarAddChild(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xInfoBarGetMessageType func(uintptr) MessageType
 
 // Returns the message type of the message area.
 func (x *InfoBar) GetMessageType() MessageType {
-
 	cret := xInfoBarGetMessageType(x.GoPointer())
 	return cret
 }
@@ -227,7 +219,6 @@ var xInfoBarGetRevealed func(uintptr) bool
 
 // Returns whether the info bar is currently revealed.
 func (x *InfoBar) GetRevealed() bool {
-
 	cret := xInfoBarGetRevealed(x.GoPointer())
 	return cret
 }
@@ -236,7 +227,6 @@ var xInfoBarGetShowCloseButton func(uintptr) bool
 
 // Returns whether the widget will display a standard close button.
 func (x *InfoBar) GetShowCloseButton() bool {
-
 	cret := xInfoBarGetShowCloseButton(x.GoPointer())
 	return cret
 }
@@ -248,27 +238,21 @@ var xInfoBarRemoveActionWidget func(uintptr, uintptr)
 // The widget must have been put there by a call to
 // [method@Gtk.InfoBar.add_action_widget] or [method@Gtk.InfoBar.add_button].
 func (x *InfoBar) RemoveActionWidget(WidgetVar *Widget) {
-
 	xInfoBarRemoveActionWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xInfoBarRemoveChild func(uintptr, uintptr)
 
 // Removes a widget from the content area of the info bar.
 func (x *InfoBar) RemoveChild(WidgetVar *Widget) {
-
 	xInfoBarRemoveChild(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xInfoBarResponse func(uintptr, int)
 
 // Emits the “response” signal with the given @response_id.
 func (x *InfoBar) Response(ResponseIdVar int) {
-
 	xInfoBarResponse(x.GoPointer(), ResponseIdVar)
-
 }
 
 var xInfoBarSetDefaultResponse func(uintptr, int)
@@ -281,9 +265,7 @@ var xInfoBarSetDefaultResponse func(uintptr, int)
 // Note that this function currently requires @info_bar to
 // be added to a widget hierarchy.
 func (x *InfoBar) SetDefaultResponse(ResponseIdVar int) {
-
 	xInfoBarSetDefaultResponse(x.GoPointer(), ResponseIdVar)
-
 }
 
 var xInfoBarSetMessageType func(uintptr, MessageType)
@@ -292,9 +274,7 @@ var xInfoBarSetMessageType func(uintptr, MessageType)
 //
 // GTK uses this type to determine how the message is displayed.
 func (x *InfoBar) SetMessageType(MessageTypeVar MessageType) {
-
 	xInfoBarSetMessageType(x.GoPointer(), MessageTypeVar)
-
 }
 
 var xInfoBarSetResponseSensitive func(uintptr, int, bool)
@@ -305,9 +285,7 @@ var xInfoBarSetResponseSensitive func(uintptr, int, bool)
 // widget in the info bars’s action area with the given @response_id.
 // A convenient way to sensitize/desensitize buttons.
 func (x *InfoBar) SetResponseSensitive(ResponseIdVar int, SettingVar bool) {
-
 	xInfoBarSetResponseSensitive(x.GoPointer(), ResponseIdVar, SettingVar)
-
 }
 
 var xInfoBarSetRevealed func(uintptr, bool)
@@ -321,9 +299,7 @@ var xInfoBarSetRevealed func(uintptr, bool)
 // [property@Gtk.Widget:visible] sense, so revealing has no effect
 // if [property@Gtk.Widget:visible] is %FALSE.
 func (x *InfoBar) SetRevealed(RevealedVar bool) {
-
 	xInfoBarSetRevealed(x.GoPointer(), RevealedVar)
-
 }
 
 var xInfoBarSetShowCloseButton func(uintptr, bool)
@@ -332,9 +308,7 @@ var xInfoBarSetShowCloseButton func(uintptr, bool)
 //
 // When clicked it emits the response %GTK_RESPONSE_CLOSE.
 func (x *InfoBar) SetShowCloseButton(SettingVar bool) {
-
 	xInfoBarSetShowCloseButton(x.GoPointer(), SettingVar)
-
 }
 
 func (c *InfoBar) GoPointer() uintptr {
@@ -401,7 +375,6 @@ func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -429,7 +402,6 @@ func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ResponseIdVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -448,9 +420,19 @@ func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *InfoBar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *InfoBar) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -471,7 +453,6 @@ func (x *InfoBar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *InfoBar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -496,7 +477,6 @@ func (x *InfoBar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *InfoBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -535,30 +515,23 @@ func (x *InfoBar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *InfoBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *InfoBar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *InfoBar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *InfoBar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -571,19 +544,7 @@ func (x *InfoBar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *InfoBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -591,14 +552,7 @@ func (x *InfoBar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *InfoBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -607,9 +561,7 @@ func (x *InfoBar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *InfoBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -631,9 +583,7 @@ func (x *InfoBar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *InfoBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -643,9 +593,7 @@ func (x *InfoBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *InfoBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -667,9 +615,7 @@ func (x *InfoBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Access
 //
 // ```
 func (x *InfoBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -679,9 +625,7 @@ func (x *InfoBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *InfoBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -704,9 +648,7 @@ func (x *InfoBar) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessib
 //
 // ```
 func (x *InfoBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -716,9 +658,7 @@ func (x *InfoBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 //
 // This function is meant to be used by language bindings.
 func (x *InfoBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -726,14 +666,13 @@ func (x *InfoBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *InfoBar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -763,5 +702,4 @@ func init() {
 	core.PuregoSafeRegister(&xInfoBarSetResponseSensitive, libs, "gtk_info_bar_set_response_sensitive")
 	core.PuregoSafeRegister(&xInfoBarSetRevealed, libs, "gtk_info_bar_set_revealed")
 	core.PuregoSafeRegister(&xInfoBarSetShowCloseButton, libs, "gtk_info_bar_set_show_close_button")
-
 }

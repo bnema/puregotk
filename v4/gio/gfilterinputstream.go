@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -139,7 +138,6 @@ var xFilterInputStreamGetCloseBaseStream func(uintptr) bool
 // Returns whether the base stream will be closed when @stream is
 // closed.
 func (x *FilterInputStream) GetCloseBaseStream() bool {
-
 	cret := xFilterInputStreamGetCloseBaseStream(x.GoPointer())
 	return cret
 }
@@ -148,9 +146,7 @@ var xFilterInputStreamSetCloseBaseStream func(uintptr, bool)
 
 // Sets whether the base stream will be closed when @stream is closed.
 func (x *FilterInputStream) SetCloseBaseStream(CloseBaseVar bool) {
-
 	xFilterInputStreamSetCloseBaseStream(x.GoPointer(), CloseBaseVar)
-
 }
 
 func (c *FilterInputStream) GoPointer() uintptr {
@@ -183,7 +179,7 @@ func (x *FilterInputStream) GetPropertyCloseBaseStream() bool {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -198,5 +194,4 @@ func init() {
 	core.PuregoSafeRegister(&xFilterInputStreamGetBaseStream, libs, "g_filter_input_stream_get_base_stream")
 	core.PuregoSafeRegister(&xFilterInputStreamGetCloseBaseStream, libs, "g_filter_input_stream_get_close_base_stream")
 	core.PuregoSafeRegister(&xFilterInputStreamSetCloseBaseStream, libs, "g_filter_input_stream_set_close_base_stream")
-
 }

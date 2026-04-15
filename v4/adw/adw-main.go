@@ -2,8 +2,7 @@
 package adw
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -21,9 +20,7 @@ var xInit func()
 // This makes sure translations, types, themes, and icons for the Adwaita
 // library are set up properly.
 func Init() {
-
 	xInit()
-
 }
 
 var xIsInitialized func() bool
@@ -31,14 +28,13 @@ var xIsInitialized func() bool
 // Use this function to check if libadwaita has been initialized with
 // [func@init].
 func IsInitialized() bool {
-
 	cret := xIsInitialized()
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -50,5 +46,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xInit, libs, "adw_init")
 	core.PuregoSafeRegister(&xIsInitialized, libs, "adw_is_initialized")
-
 }

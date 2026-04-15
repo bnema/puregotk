@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -70,7 +69,6 @@ var xGestureDragGetOffset func(uintptr, *float64, *float64) bool
 // fills in @x and @y with the coordinates of the current point,
 // as an offset to the starting drag point.
 func (x *GestureDrag) GetOffset(XVar *float64, YVar *float64) bool {
-
 	cret := xGestureDragGetOffset(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -83,7 +81,6 @@ var xGestureDragGetStartPoint func(uintptr, *float64, *float64) bool
 // and fills in @x and @y with the drag start coordinates,
 // in widget-relative coordinates.
 func (x *GestureDrag) GetStartPoint(XVar *float64, YVar *float64) bool {
-
 	cret := xGestureDragGetStartPoint(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -114,7 +111,6 @@ func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) 
 		cbFn := *cb
 
 		cbFn(fa, StartXVarp, StartYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -138,7 +134,6 @@ func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) ui
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -162,7 +157,6 @@ func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64))
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -173,7 +167,7 @@ func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64))
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -189,5 +183,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGestureDragGetOffset, libs, "gtk_gesture_drag_get_offset")
 	core.PuregoSafeRegister(&xGestureDragGetStartPoint, libs, "gtk_gesture_drag_get_start_point")
-
 }

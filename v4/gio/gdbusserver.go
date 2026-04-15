@@ -4,8 +4,7 @@ package gio
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -95,7 +94,6 @@ func NewDBusServerSync(AddressVar string, FlagsVar DBusServerFlags, GuidVar stri
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDBusServerGetClientAddress func(uintptr) string
@@ -106,7 +104,6 @@ var xDBusServerGetClientAddress func(uintptr) string
 //
 // This is valid and non-empty if initializing the #GDBusServer succeeded.
 func (x *DBusServer) GetClientAddress() string {
-
 	cret := xDBusServerGetClientAddress(x.GoPointer())
 	return cret
 }
@@ -115,7 +112,6 @@ var xDBusServerGetFlags func(uintptr) DBusServerFlags
 
 // Gets the flags for @server.
 func (x *DBusServer) GetFlags() DBusServerFlags {
-
 	cret := xDBusServerGetFlags(x.GoPointer())
 	return cret
 }
@@ -124,7 +120,6 @@ var xDBusServerGetGuid func(uintptr) string
 
 // Gets the GUID for @server, as provided to g_dbus_server_new_sync().
 func (x *DBusServer) GetGuid() string {
-
 	cret := xDBusServerGetGuid(x.GoPointer())
 	return cret
 }
@@ -133,7 +128,6 @@ var xDBusServerIsActive func(uintptr) bool
 
 // Gets whether @server is active.
 func (x *DBusServer) IsActive() bool {
-
 	cret := xDBusServerIsActive(x.GoPointer())
 	return cret
 }
@@ -142,18 +136,14 @@ var xDBusServerStart func(uintptr)
 
 // Starts @server.
 func (x *DBusServer) Start() {
-
 	xDBusServerStart(x.GoPointer())
-
 }
 
 var xDBusServerStop func(uintptr)
 
 // Stops @server.
 func (x *DBusServer) Stop() {
-
 	xDBusServerStop(x.GoPointer())
-
 }
 
 func (c *DBusServer) GoPointer() uintptr {
@@ -242,7 +232,7 @@ func (x *DBusServer) GetPropertyGuid() string {
 // before incoming messages on @connection are processed. This means
 // that it's suitable to call g_dbus_connection_register_object() or
 // similar from the signal handler.
-func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, *DBusConnection) bool) uint {
+func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
@@ -255,8 +245,7 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, *DBusConnection) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *DBusConnection { cls := &DBusConnection{}; cls.Ptr = ConnectionVarp; return cls }())
-
+		return cbFn(fa, ConnectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -316,12 +305,11 @@ func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -341,5 +329,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusServerIsActive, libs, "g_dbus_server_is_active")
 	core.PuregoSafeRegister(&xDBusServerStart, libs, "g_dbus_server_start")
 	core.PuregoSafeRegister(&xDBusServerStop, libs, "g_dbus_server_stop")
-
 }

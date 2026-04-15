@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -137,7 +136,7 @@ const (
 //
 // ## Accessibility
 //
-// `AdwHeaderBar` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwHeaderBar` uses the [enum@Gtk.AccessibleRole.group] role.
 type HeaderBar struct {
 	gtk.Widget
 }
@@ -175,7 +174,6 @@ var xHeaderBarGetCenteringPolicy func(uintptr) CenteringPolicy
 
 // Gets the policy for aligning the center widget.
 func (x *HeaderBar) GetCenteringPolicy() CenteringPolicy {
-
 	cret := xHeaderBarGetCenteringPolicy(x.GoPointer())
 	return cret
 }
@@ -184,7 +182,6 @@ var xHeaderBarGetDecorationLayout func(uintptr) string
 
 // Gets the decoration layout for @self.
 func (x *HeaderBar) GetDecorationLayout() string {
-
 	cret := xHeaderBarGetDecorationLayout(x.GoPointer())
 	return cret
 }
@@ -193,7 +190,6 @@ var xHeaderBarGetShowBackButton func(uintptr) bool
 
 // Gets whether @self can show the back button.
 func (x *HeaderBar) GetShowBackButton() bool {
-
 	cret := xHeaderBarGetShowBackButton(x.GoPointer())
 	return cret
 }
@@ -202,7 +198,6 @@ var xHeaderBarGetShowEndTitleButtons func(uintptr) bool
 
 // Gets whether to show title buttons at the end of @self.
 func (x *HeaderBar) GetShowEndTitleButtons() bool {
-
 	cret := xHeaderBarGetShowEndTitleButtons(x.GoPointer())
 	return cret
 }
@@ -211,7 +206,6 @@ var xHeaderBarGetShowStartTitleButtons func(uintptr) bool
 
 // Gets whether to show title buttons at the start of @self.
 func (x *HeaderBar) GetShowStartTitleButtons() bool {
-
 	cret := xHeaderBarGetShowStartTitleButtons(x.GoPointer())
 	return cret
 }
@@ -220,7 +214,6 @@ var xHeaderBarGetShowTitle func(uintptr) bool
 
 // Gets whether the title widget should be shown.
 func (x *HeaderBar) GetShowTitle() bool {
-
 	cret := xHeaderBarGetShowTitle(x.GoPointer())
 	return cret
 }
@@ -246,18 +239,14 @@ var xHeaderBarPackEnd func(uintptr, uintptr)
 
 // Adds @child to @self, packed with reference to the end of @self.
 func (x *HeaderBar) PackEnd(ChildVar *gtk.Widget) {
-
 	xHeaderBarPackEnd(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xHeaderBarPackStart func(uintptr, uintptr)
 
 // Adds @child to @self, packed with reference to the start of the @self.
 func (x *HeaderBar) PackStart(ChildVar *gtk.Widget) {
-
 	xHeaderBarPackStart(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xHeaderBarRemove func(uintptr, uintptr)
@@ -267,18 +256,14 @@ var xHeaderBarRemove func(uintptr, uintptr)
 // The child must have been added with [method@HeaderBar.pack_start],
 // [method@HeaderBar.pack_end] or [property@HeaderBar:title-widget].
 func (x *HeaderBar) Remove(ChildVar *gtk.Widget) {
-
 	xHeaderBarRemove(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xHeaderBarSetCenteringPolicy func(uintptr, CenteringPolicy)
 
 // Sets the policy for aligning the center widget.
 func (x *HeaderBar) SetCenteringPolicy(CenteringPolicyVar CenteringPolicy) {
-
 	xHeaderBarSetCenteringPolicy(x.GoPointer(), CenteringPolicyVar)
-
 }
 
 var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
@@ -296,12 +281,10 @@ var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
 // For example, “icon:minimize,maximize,close” specifies an icon at the start,
 // and minimize, maximize and close buttons at the end.
 func (x *HeaderBar) SetDecorationLayout(LayoutVar *string) {
-
 	LayoutVarPtr := core.GStrdupNullable(LayoutVar)
 	defer core.GFreeNullable(LayoutVarPtr)
 
 	xHeaderBarSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
-
 }
 
 var xHeaderBarSetShowBackButton func(uintptr, bool)
@@ -311,9 +294,7 @@ var xHeaderBarSetShowBackButton func(uintptr, bool)
 // The back button will never be shown unless the header bar is placed inside an
 // [class@NavigationView]. Usually, there is no reason to set it to `FALSE`.
 func (x *HeaderBar) SetShowBackButton(ShowBackButtonVar bool) {
-
 	xHeaderBarSetShowBackButton(x.GoPointer(), ShowBackButtonVar)
-
 }
 
 var xHeaderBarSetShowEndTitleButtons func(uintptr, bool)
@@ -326,9 +307,7 @@ var xHeaderBarSetShowEndTitleButtons func(uintptr, bool)
 // [property@HeaderBar:decoration-layout] property, and by the state of the
 // window (e.g. a close button will not be shown if the window can't be closed).
 func (x *HeaderBar) SetShowEndTitleButtons(SettingVar bool) {
-
 	xHeaderBarSetShowEndTitleButtons(x.GoPointer(), SettingVar)
-
 }
 
 var xHeaderBarSetShowStartTitleButtons func(uintptr, bool)
@@ -341,18 +320,14 @@ var xHeaderBarSetShowStartTitleButtons func(uintptr, bool)
 // [property@HeaderBar:decoration-layout] property, and by the state of the
 // window (e.g. a close button will not be shown if the window can't be closed).
 func (x *HeaderBar) SetShowStartTitleButtons(SettingVar bool) {
-
 	xHeaderBarSetShowStartTitleButtons(x.GoPointer(), SettingVar)
-
 }
 
 var xHeaderBarSetShowTitle func(uintptr, bool)
 
 // Sets whether the title widget should be shown.
 func (x *HeaderBar) SetShowTitle(ShowTitleVar bool) {
-
 	xHeaderBarSetShowTitle(x.GoPointer(), ShowTitleVar)
-
 }
 
 var xHeaderBarSetTitleWidget func(uintptr, uintptr)
@@ -376,14 +351,7 @@ var xHeaderBarSetTitleWidget func(uintptr, uintptr)
 // &lt;/object&gt;
 // ```
 func (x *HeaderBar) SetTitleWidget(TitleWidgetVar *gtk.Widget) {
-
-	var TitleWidgetVarPtr uintptr
-	if TitleWidgetVar != nil {
-		TitleWidgetVarPtr = TitleWidgetVar.GoPointer()
-	}
-
-	xHeaderBarSetTitleWidget(x.GoPointer(), TitleWidgetVarPtr)
-
+	xHeaderBarSetTitleWidget(x.GoPointer(), TitleWidgetVar.GoPointer())
 }
 
 func (c *HeaderBar) GoPointer() uintptr {
@@ -548,9 +516,19 @@ func (x *HeaderBar) GetPropertyShowTitle() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *HeaderBar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *HeaderBar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -571,7 +549,6 @@ func (x *HeaderBar) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *HeaderBar) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -596,7 +573,6 @@ func (x *HeaderBar) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *HeaderBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -635,30 +611,23 @@ func (x *HeaderBar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *HeaderBar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *HeaderBar) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *HeaderBar) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *HeaderBar) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -671,19 +640,7 @@ func (x *HeaderBar) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *HeaderBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -691,14 +648,7 @@ func (x *HeaderBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *HeaderBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -707,9 +657,7 @@ func (x *HeaderBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *HeaderBar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -731,9 +679,7 @@ func (x *HeaderBar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *HeaderBar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -743,9 +689,7 @@ func (x *HeaderBar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 //
 // This function is meant to be used by language bindings.
 func (x *HeaderBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -767,9 +711,7 @@ func (x *HeaderBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.
 //
 // ```
 func (x *HeaderBar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -779,9 +721,7 @@ func (x *HeaderBar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 //
 // This function is meant to be used by language bindings.
 func (x *HeaderBar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -804,9 +744,7 @@ func (x *HeaderBar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Ac
 //
 // ```
 func (x *HeaderBar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -816,9 +754,7 @@ func (x *HeaderBar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 //
 // This function is meant to be used by language bindings.
 func (x *HeaderBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -826,14 +762,13 @@ func (x *HeaderBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *HeaderBar) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -866,5 +801,4 @@ func init() {
 	core.PuregoSafeRegister(&xHeaderBarSetShowStartTitleButtons, libs, "adw_header_bar_set_show_start_title_buttons")
 	core.PuregoSafeRegister(&xHeaderBarSetShowTitle, libs, "adw_header_bar_set_show_title")
 	core.PuregoSafeRegister(&xHeaderBarSetTitleWidget, libs, "adw_header_bar_set_title_widget")
-
 }

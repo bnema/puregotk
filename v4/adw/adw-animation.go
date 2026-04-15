@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -123,7 +122,6 @@ var xAnimationGetFollowEnableAnimationsSetting func(uintptr) bool
 
 // Gets whether @self should be skipped when animations are globally disabled.
 func (x *Animation) GetFollowEnableAnimationsSetting() bool {
-
 	cret := xAnimationGetFollowEnableAnimationsSetting(x.GoPointer())
 	return cret
 }
@@ -135,7 +133,6 @@ var xAnimationGetState func(uintptr) AnimationState
 // The state indicates whether @self is currently playing, paused, finished or
 // hasn't been started yet.
 func (x *Animation) GetState() AnimationState {
-
 	cret := xAnimationGetState(x.GoPointer())
 	return cret
 }
@@ -161,7 +158,6 @@ var xAnimationGetValue func(uintptr) float64
 
 // Gets the current value of @self.
 func (x *Animation) GetValue() float64 {
-
 	cret := xAnimationGetValue(x.GoPointer())
 	return cret
 }
@@ -194,13 +190,12 @@ var xAnimationPause func(uintptr)
 
 // Pauses a playing animation for @self.
 //
-// Does nothing if the current state of @self isn't `ADW_ANIMATION_PLAYING`.
+// Does nothing if the current state of @self isn't
+// [enum@Adw.AnimationState.playing].
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PAUSED`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.paused].
 func (x *Animation) Pause() {
-
 	xAnimationPause(x.GoPointer())
-
 }
 
 var xAnimationPlay func(uintptr)
@@ -211,7 +206,7 @@ var xAnimationPlay func(uintptr)
 // the beginning. This allows to easily play an animation regardless of whether
 // it's already playing or not.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PLAYING`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.playing].
 //
 // The animation will be automatically skipped if [property@Animation:widget] is
 // unmapped, or if [property@Gtk.Settings:gtk-enable-animations] is `FALSE`.
@@ -221,20 +216,16 @@ var xAnimationPlay func(uintptr)
 // immediately afterwards, it's entirely possible that the idle callback will
 // run after the animation has already finished, and not while it's playing.
 func (x *Animation) Play() {
-
 	xAnimationPlay(x.GoPointer())
-
 }
 
 var xAnimationReset func(uintptr)
 
 // Resets the animation for @self.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_IDLE`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.idle].
 func (x *Animation) Reset() {
-
 	xAnimationReset(x.GoPointer())
-
 }
 
 var xAnimationResume func(uintptr)
@@ -244,11 +235,9 @@ var xAnimationResume func(uintptr)
 // This function must only be used if the animation has been paused with
 // [method@Animation.pause].
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_PLAYING`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.playing].
 func (x *Animation) Resume() {
-
 	xAnimationResume(x.GoPointer())
-
 }
 
 var xAnimationSetFollowEnableAnimationsSetting func(uintptr, bool)
@@ -263,18 +252,14 @@ var xAnimationSetFollowEnableAnimationsSetting func(uintptr, bool)
 //
 // See [property@Gtk.Settings:gtk-enable-animations].
 func (x *Animation) SetFollowEnableAnimationsSetting(SettingVar bool) {
-
 	xAnimationSetFollowEnableAnimationsSetting(x.GoPointer(), SettingVar)
-
 }
 
 var xAnimationSetTarget func(uintptr, uintptr)
 
 // Sets the target @self animates to @target.
 func (x *Animation) SetTarget(TargetVar *AnimationTarget) {
-
 	xAnimationSetTarget(x.GoPointer(), TargetVar.GoPointer())
-
 }
 
 var xAnimationSkip func(uintptr)
@@ -285,11 +270,9 @@ var xAnimationSkip func(uintptr)
 // skips the animation to the end and causes [signal@Animation::done] to be
 // emitted.
 //
-// Sets [property@Animation:state] to `ADW_ANIMATION_FINISHED`.
+// Sets [property@Animation:state] to [enum@Adw.AnimationState.finished].
 func (x *Animation) Skip() {
-
 	xAnimationSkip(x.GoPointer())
-
 }
 
 func (c *Animation) GoPointer() uintptr {
@@ -360,7 +343,6 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -371,7 +353,7 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -397,5 +379,4 @@ func init() {
 	core.PuregoSafeRegister(&xAnimationSetFollowEnableAnimationsSetting, libs, "adw_animation_set_follow_enable_animations_setting")
 	core.PuregoSafeRegister(&xAnimationSetTarget, libs, "adw_animation_set_target")
 	core.PuregoSafeRegister(&xAnimationSkip, libs, "adw_animation_skip")
-
 }

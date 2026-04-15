@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -99,7 +98,6 @@ var xFilterListModelGetIncremental func(uintptr) bool
 //
 // See [method@Gtk.FilterListModel.set_incremental].
 func (x *FilterListModel) GetIncremental() bool {
-
 	cret := xFilterListModelGetIncremental(x.GoPointer())
 	return cret
 }
@@ -140,7 +138,6 @@ var xFilterListModelGetPending func(uintptr) uint
 // [property@Gtk.FilterListModel:incremental] is %FALSE - this
 // function returns 0.
 func (x *FilterListModel) GetPending() uint {
-
 	cret := xFilterListModelGetPending(x.GoPointer())
 	return cret
 }
@@ -151,7 +148,6 @@ var xFilterListModelGetWatchItems func(uintptr) bool
 //
 // See [method@Gtk.FilterListModel.set_watch_items].
 func (x *FilterListModel) GetWatchItems() bool {
-
 	cret := xFilterListModelGetWatchItems(x.GoPointer())
 	return cret
 }
@@ -160,14 +156,7 @@ var xFilterListModelSetFilter func(uintptr, uintptr)
 
 // Sets the filter used to filter items.
 func (x *FilterListModel) SetFilter(FilterVar *Filter) {
-
-	var FilterVarPtr uintptr
-	if FilterVar != nil {
-		FilterVarPtr = FilterVar.GoPointer()
-	}
-
-	xFilterListModelSetFilter(x.GoPointer(), FilterVarPtr)
-
+	xFilterListModelSetFilter(x.GoPointer(), FilterVar.GoPointer())
 }
 
 var xFilterListModelSetIncremental func(uintptr, bool)
@@ -189,9 +178,7 @@ var xFilterListModelSetIncremental func(uintptr, bool)
 // See [method@Gtk.FilterListModel.get_pending] for progress information
 // about an ongoing incremental filtering operation.
 func (x *FilterListModel) SetIncremental(IncrementalVar bool) {
-
 	xFilterListModelSetIncremental(x.GoPointer(), IncrementalVar)
-
 }
 
 var xFilterListModelSetModel func(uintptr, uintptr)
@@ -203,14 +190,7 @@ var xFilterListModelSetModel func(uintptr, uintptr)
 // are doing and have set up an appropriate filter to ensure that item
 // types match.
 func (x *FilterListModel) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xFilterListModelSetModel(x.GoPointer(), ModelVarPtr)
-
+	xFilterListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xFilterListModelSetWatchItems func(uintptr, bool)
@@ -223,9 +203,7 @@ var xFilterListModelSetWatchItems func(uintptr, bool)
 //
 // By default, watching items is disabled.
 func (x *FilterListModel) SetWatchItems(WatchItemsVar bool) {
-
 	xFilterListModelSetWatchItems(x.GoPointer(), WatchItemsVar)
-
 }
 
 func (c *FilterListModel) GoPointer() uintptr {
@@ -299,7 +277,6 @@ func (x *FilterListModel) GetPropertyWatchItems() bool {
 //
 // See also: g_list_model_get_n_items()
 func (x *FilterListModel) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -313,7 +290,6 @@ func (x *FilterListModel) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *FilterListModel) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -324,7 +300,6 @@ func (x *FilterListModel) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *FilterListModel) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -375,9 +350,7 @@ func (x *FilterListModel) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *FilterListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -386,9 +359,7 @@ func (x *FilterListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedV
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *FilterListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -407,14 +378,12 @@ func (x *FilterListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEnd
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *FilterListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -437,5 +406,4 @@ func init() {
 	core.PuregoSafeRegister(&xFilterListModelSetIncremental, libs, "gtk_filter_list_model_set_incremental")
 	core.PuregoSafeRegister(&xFilterListModelSetModel, libs, "gtk_filter_list_model_set_model")
 	core.PuregoSafeRegister(&xFilterListModelSetWatchItems, libs, "gtk_filter_list_model_set_watch_items")
-
 }

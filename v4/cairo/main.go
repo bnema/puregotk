@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -792,14 +791,12 @@ const (
 var xImageSurfaceCreate func()
 
 func ImageSurfaceCreate() {
-
 	xImageSurfaceCreate()
-
 }
 
 func init() {
 	core.SetPackageName("CAIRO", "cairo-gobject")
-	core.SetSharedLibraries("CAIRO", []string{"libcairo-gobject.so.2"})
+	core.SetSharedLibraries("CAIRO", []string{"libcairo-gobject.so.2", "libcairo-gobject.2.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("CAIRO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -878,5 +875,4 @@ func init() {
 	core.PuregoSafeRegister(&xGlyphGLibType, libs, "cairo_gobject_glyph_get_type")
 
 	core.PuregoSafeRegister(&xTextClusterGLibType, libs, "cairo_gobject_text_cluster_get_type")
-
 }

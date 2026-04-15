@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -232,8 +231,12 @@ func (x *MenuModelClass) OverrideGetItemAttributeValue(cb func(*MenuModel, int, 
 	if cb == nil {
 		x.xGetItemAttributeValue = 0
 	} else {
-		x.xGetItemAttributeValue = purego.NewCallback(func(ModelVarp uintptr, ItemIndexVarp int, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant {
-			return cb(MenuModelNewFromInternalPtr(ModelVarp), ItemIndexVarp, AttributeVarp, ExpectedTypeVarp)
+		x.xGetItemAttributeValue = purego.NewCallback(func(ModelVarp uintptr, ItemIndexVarp int, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) uintptr {
+			ret := cb(MenuModelNewFromInternalPtr(ModelVarp), ItemIndexVarp, AttributeVarp, ExpectedTypeVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -243,10 +246,14 @@ func (x *MenuModelClass) GetGetItemAttributeValue() func(*MenuModel, int, string
 	if x.xGetItemAttributeValue == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, ItemIndexVarp int, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant
+	var rawCallback func(ModelVarp uintptr, ItemIndexVarp int, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetItemAttributeValue)
 	return func(ModelVar *MenuModel, ItemIndexVar int, AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-		return rawCallback(ModelVar.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
+		rawRet := rawCallback(ModelVar.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -410,7 +417,6 @@ var xMenuAttributeIterGetName func(uintptr) string
 //
 // The iterator is not advanced.
 func (x *MenuAttributeIter) GetName() string {
-
 	cret := xMenuAttributeIterGetName(x.GoPointer())
 	return cret
 }
@@ -433,20 +439,21 @@ var xMenuAttributeIterGetNext func(uintptr, *string, **glib.Variant) bool
 // remains at the current position.  The value returned in @value must
 // be unreffed using g_variant_unref() when it is no longer in use.
 func (x *MenuAttributeIter) GetNext(OutNameVar *string, ValueVar **glib.Variant) bool {
-
 	cret := xMenuAttributeIterGetNext(x.GoPointer(), OutNameVar, ValueVar)
 	return cret
 }
 
-var xMenuAttributeIterGetValue func(uintptr) *glib.Variant
+var xMenuAttributeIterGetValue func(uintptr) uintptr
 
 // Gets the value of the attribute at the current iterator position.
 //
 // The iterator is not advanced.
 func (x *MenuAttributeIter) GetValue() *glib.Variant {
-
 	cret := xMenuAttributeIterGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xMenuAttributeIterNext func(uintptr) bool
@@ -461,7 +468,6 @@ var xMenuAttributeIterNext func(uintptr) bool
 // to advance it to the first attribute (and determine if the first
 // attribute exists at all).
 func (x *MenuAttributeIter) Next() bool {
-
 	cret := xMenuAttributeIterNext(x.GoPointer())
 	return cret
 }
@@ -501,7 +507,6 @@ var xMenuLinkIterGetName func(uintptr) string
 //
 // The iterator is not advanced.
 func (x *MenuLinkIter) GetName() string {
-
 	cret := xMenuLinkIterGetName(x.GoPointer())
 	return cret
 }
@@ -523,7 +528,6 @@ var xMenuLinkIterGetNext func(uintptr, *string, **MenuModel) bool
 // remains at the current position.  The value returned in @value must
 // be unreffed using g_object_unref() when it is no longer in use.
 func (x *MenuLinkIter) GetNext(OutLinkVar *string, ValueVar **MenuModel) bool {
-
 	cret := xMenuLinkIterGetNext(x.GoPointer(), OutLinkVar, ValueVar)
 	return cret
 }
@@ -557,7 +561,6 @@ var xMenuLinkIterNext func(uintptr) bool
 // advance it to the first link (and determine if the first link exists
 // at all).
 func (x *MenuLinkIter) Next() bool {
-
 	cret := xMenuLinkIterNext(x.GoPointer())
 	return cret
 }
@@ -729,12 +732,11 @@ var xMenuModelGetItemAttribute func(uintptr, int, string, string, ...interface{}
 // #GVariant may go away after the call to g_variant_unref()).  In
 // particular, no '&amp;' characters are allowed in @format_string.
 func (x *MenuModel) GetItemAttribute(ItemIndexVar int, AttributeVar string, FormatStringVar string, varArgs ...interface{}) bool {
-
 	cret := xMenuModelGetItemAttribute(x.GoPointer(), ItemIndexVar, AttributeVar, FormatStringVar, varArgs...)
 	return cret
 }
 
-var xMenuModelGetItemAttributeValue func(uintptr, int, string, *glib.VariantType) *glib.Variant
+var xMenuModelGetItemAttributeValue func(uintptr, int, string, *glib.VariantType) uintptr
 
 // Queries the item at position @item_index in @model for the attribute
 // specified by @attribute.
@@ -748,9 +750,11 @@ var xMenuModelGetItemAttributeValue func(uintptr, int, string, *glib.VariantType
 // If the attribute does not exist, or does not match the expected type
 // then %NULL is returned.
 func (x *MenuModel) GetItemAttributeValue(ItemIndexVar int, AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-
 	cret := xMenuModelGetItemAttributeValue(x.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xMenuModelGetItemLink func(uintptr, int, string) uintptr
@@ -777,7 +781,6 @@ var xMenuModelGetNItems func(uintptr) int
 
 // Query the number of items in @model.
 func (x *MenuModel) GetNItems() int {
-
 	cret := xMenuModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -789,7 +792,6 @@ var xMenuModelIsMutable func(uintptr) bool
 // An immutable #GMenuModel will never emit the #GMenuModel::items-changed
 // signal. Consumers of the model may make optimisations accordingly.
 func (x *MenuModel) IsMutable() bool {
-
 	cret := xMenuModelIsMutable(x.GoPointer())
 	return cret
 }
@@ -812,9 +814,7 @@ var xMenuModelItemsChanged func(uintptr, int, int, int)
 // #GMenuModel API.  Said another way: the menu must not change while
 // user code is running without returning to the mainloop.
 func (x *MenuModel) ItemsChanged(PositionVar int, RemovedVar int, AddedVar int) {
-
 	xMenuModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 var xMenuModelIterateItemAttributes func(uintptr, int) uintptr
@@ -880,7 +880,7 @@ func (c *MenuModel) SetGoPointer(ptr uintptr) {
 //
 // As an example, if the menu contains items a, b, c, d (in that
 // order) and the signal (2, 1, 3) occurs then the new composition of
-// the menu will be a, b, _, _, _, d (with each _ representing some
+// the menu will be a, b, \_, \_, \_, d (with each _ representing some
 // new item).
 //
 // Signal handlers may query the model (particularly the added items)
@@ -900,7 +900,6 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp, RemovedVarp, AddedVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -911,7 +910,7 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -945,5 +944,4 @@ func init() {
 	core.PuregoSafeRegister(&xMenuModelItemsChanged, libs, "g_menu_model_items_changed")
 	core.PuregoSafeRegister(&xMenuModelIterateItemAttributes, libs, "g_menu_model_iterate_item_attributes")
 	core.PuregoSafeRegister(&xMenuModelIterateItemLinks, libs, "g_menu_model_iterate_item_links")
-
 }

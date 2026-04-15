@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -93,8 +92,12 @@ func (x *FontsetClass) OverrideGetMetrics(cb func(*Fontset) *FontMetrics) {
 	if cb == nil {
 		x.xGetMetrics = 0
 	} else {
-		x.xGetMetrics = purego.NewCallback(func(FontsetVarp uintptr) *FontMetrics {
-			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		x.xGetMetrics = purego.NewCallback(func(FontsetVarp uintptr) uintptr {
+			ret := cb(FontsetNewFromInternalPtr(FontsetVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -107,10 +110,14 @@ func (x *FontsetClass) GetGetMetrics() func(*Fontset) *FontMetrics {
 	if x.xGetMetrics == 0 {
 		return nil
 	}
-	var rawCallback func(FontsetVarp uintptr) *FontMetrics
+	var rawCallback func(FontsetVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetMetrics)
 	return func(FontsetVar *Fontset) *FontMetrics {
-		return rawCallback(FontsetVar.GoPointer())
+		rawRet := rawCallback(FontsetVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontMetrics)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -120,8 +127,12 @@ func (x *FontsetClass) OverrideGetLanguage(cb func(*Fontset) *Language) {
 	if cb == nil {
 		x.xGetLanguage = 0
 	} else {
-		x.xGetLanguage = purego.NewCallback(func(FontsetVarp uintptr) *Language {
-			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		x.xGetLanguage = purego.NewCallback(func(FontsetVarp uintptr) uintptr {
+			ret := cb(FontsetNewFromInternalPtr(FontsetVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -132,10 +143,14 @@ func (x *FontsetClass) GetGetLanguage() func(*Fontset) *Language {
 	if x.xGetLanguage == 0 {
 		return nil
 	}
-	var rawCallback func(FontsetVarp uintptr) *Language
+	var rawCallback func(FontsetVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetLanguage)
 	return func(FontsetVar *Fontset) *Language {
-		return rawCallback(FontsetVar.GoPointer())
+		rawRet := rawCallback(FontsetVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Language)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -289,24 +304,7 @@ var xFontsetForeach func(uintptr, uintptr, uintptr)
 //
 // If @func returns %TRUE, that stops the iteration.
 func (x *Fontset) Foreach(FuncVar *FontsetForeachFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xFontsetForeach(x.GoPointer(), FuncVarRef, DataVar)
-
+	xFontsetForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
 var xFontsetGetFont func(uintptr, uint) uintptr
@@ -326,13 +324,15 @@ func (x *Fontset) GetFont(WcVar uint) *Font {
 	return cls
 }
 
-var xFontsetGetMetrics func(uintptr) *FontMetrics
+var xFontsetGetMetrics func(uintptr) uintptr
 
 // Get overall metric information for the fonts in the fontset.
 func (x *Fontset) GetMetrics() *FontMetrics {
-
 	cret := xFontsetGetMetrics(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontMetrics)(unsafe.Pointer(cret))
 }
 
 func (c *Fontset) GoPointer() uintptr {
@@ -348,7 +348,7 @@ func (c *Fontset) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -363,5 +363,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontsetForeach, libs, "pango_fontset_foreach")
 	core.PuregoSafeRegister(&xFontsetGetFont, libs, "pango_fontset_get_font")
 	core.PuregoSafeRegister(&xFontsetGetMetrics, libs, "pango_fontset_get_metrics")
-
 }

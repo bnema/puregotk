@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -109,28 +108,27 @@ var xCalendarClearMarks func(uintptr)
 
 // Remove all visual markers.
 func (x *Calendar) ClearMarks() {
-
 	xCalendarClearMarks(x.GoPointer())
-
 }
 
-var xCalendarGetDate func(uintptr) *glib.DateTime
+var xCalendarGetDate func(uintptr) uintptr
 
 // Returns a `GDateTime` representing the shown
 // year, month and the selected day.
 //
 // The returned date is in the local time zone.
 func (x *Calendar) GetDate() *glib.DateTime {
-
 	cret := xCalendarGetDate(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xCalendarGetDay func(uintptr) int
 
 // Gets the day of the selected date.
 func (x *Calendar) GetDay() int {
-
 	cret := xCalendarGetDay(x.GoPointer())
 	return cret
 }
@@ -139,7 +137,6 @@ var xCalendarGetDayIsMarked func(uintptr, uint) bool
 
 // Returns if the @day of the @calendar is already marked.
 func (x *Calendar) GetDayIsMarked(DayVar uint) bool {
-
 	cret := xCalendarGetDayIsMarked(x.GoPointer(), DayVar)
 	return cret
 }
@@ -148,7 +145,6 @@ var xCalendarGetMonth func(uintptr) int
 
 // Gets the month of the selected date.
 func (x *Calendar) GetMonth() int {
-
 	cret := xCalendarGetMonth(x.GoPointer())
 	return cret
 }
@@ -161,7 +157,6 @@ var xCalendarGetShowDayNames func(uintptr) bool
 // This is the value of the [property@Gtk.Calendar:show-day-names]
 // property.
 func (x *Calendar) GetShowDayNames() bool {
-
 	cret := xCalendarGetShowDayNames(x.GoPointer())
 	return cret
 }
@@ -173,7 +168,6 @@ var xCalendarGetShowHeading func(uintptr) bool
 // This is the value of the [property@Gtk.Calendar:show-heading]
 // property.
 func (x *Calendar) GetShowHeading() bool {
-
 	cret := xCalendarGetShowHeading(x.GoPointer())
 	return cret
 }
@@ -186,7 +180,6 @@ var xCalendarGetShowWeekNumbers func(uintptr) bool
 // This is the value of the [property@Gtk.Calendar:show-week-numbers]
 // property.
 func (x *Calendar) GetShowWeekNumbers() bool {
-
 	cret := xCalendarGetShowWeekNumbers(x.GoPointer())
 	return cret
 }
@@ -195,7 +188,6 @@ var xCalendarGetYear func(uintptr) int
 
 // Gets the year of the selected date.
 func (x *Calendar) GetYear() int {
-
 	cret := xCalendarGetYear(x.GoPointer())
 	return cret
 }
@@ -204,27 +196,21 @@ var xCalendarMarkDay func(uintptr, uint)
 
 // Places a visual marker on a particular day of the current month.
 func (x *Calendar) MarkDay(DayVar uint) {
-
 	xCalendarMarkDay(x.GoPointer(), DayVar)
-
 }
 
 var xCalendarSelectDay func(uintptr, *glib.DateTime)
 
 // Switches to @date's year and month and select its day.
 func (x *Calendar) SelectDay(DateVar *glib.DateTime) {
-
 	xCalendarSelectDay(x.GoPointer(), DateVar)
-
 }
 
 var xCalendarSetDate func(uintptr, *glib.DateTime)
 
 // Switches to @date's year and month and selects its day.
 func (x *Calendar) SetDate(DateVar *glib.DateTime) {
-
 	xCalendarSetDate(x.GoPointer(), DateVar)
-
 }
 
 var xCalendarSetDay func(uintptr, int)
@@ -234,9 +220,7 @@ var xCalendarSetDay func(uintptr, int)
 // The new date must be valid. For example, setting the day to 31 when the
 // month is February will fail.
 func (x *Calendar) SetDay(DayVar int) {
-
 	xCalendarSetDay(x.GoPointer(), DayVar)
-
 }
 
 var xCalendarSetMonth func(uintptr, int)
@@ -246,18 +230,14 @@ var xCalendarSetMonth func(uintptr, int)
 // The new date must be valid. For example, setting the month to 1 (February)
 // when the day is 31 will fail.
 func (x *Calendar) SetMonth(MonthVar int) {
-
 	xCalendarSetMonth(x.GoPointer(), MonthVar)
-
 }
 
 var xCalendarSetShowDayNames func(uintptr, bool)
 
 // Sets whether the calendar shows day names.
 func (x *Calendar) SetShowDayNames(ValueVar bool) {
-
 	xCalendarSetShowDayNames(x.GoPointer(), ValueVar)
-
 }
 
 var xCalendarSetShowHeading func(uintptr, bool)
@@ -267,18 +247,14 @@ var xCalendarSetShowHeading func(uintptr, bool)
 // The heading contains the current year and month as well as
 // buttons for changing both.
 func (x *Calendar) SetShowHeading(ValueVar bool) {
-
 	xCalendarSetShowHeading(x.GoPointer(), ValueVar)
-
 }
 
 var xCalendarSetShowWeekNumbers func(uintptr, bool)
 
 // Sets whether week numbers are shown in the calendar.
 func (x *Calendar) SetShowWeekNumbers(ValueVar bool) {
-
 	xCalendarSetShowWeekNumbers(x.GoPointer(), ValueVar)
-
 }
 
 var xCalendarSetYear func(uintptr, int)
@@ -288,18 +264,14 @@ var xCalendarSetYear func(uintptr, int)
 // The new date must be valid. For example, setting the year to 2023 when the
 // date is February 29 will fail.
 func (x *Calendar) SetYear(YearVar int) {
-
 	xCalendarSetYear(x.GoPointer(), YearVar)
-
 }
 
 var xCalendarUnmarkDay func(uintptr, uint)
 
 // Removes the visual marker from a particular day.
 func (x *Calendar) UnmarkDay(DayVar uint) {
-
 	xCalendarUnmarkDay(x.GoPointer(), DayVar)
-
 }
 
 func (c *Calendar) GoPointer() uintptr {
@@ -459,7 +431,6 @@ func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -483,7 +454,6 @@ func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -507,7 +477,6 @@ func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -531,7 +500,6 @@ func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -555,7 +523,6 @@ func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -574,9 +541,19 @@ func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Calendar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Calendar) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -597,7 +574,6 @@ func (x *Calendar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Calendar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -622,7 +598,6 @@ func (x *Calendar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Calendar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -661,30 +636,23 @@ func (x *Calendar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Calendar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Calendar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Calendar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Calendar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -697,19 +665,7 @@ func (x *Calendar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Calendar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -717,14 +673,7 @@ func (x *Calendar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Calendar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -733,9 +682,7 @@ func (x *Calendar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Calendar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -757,9 +704,7 @@ func (x *Calendar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Calendar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -769,9 +714,7 @@ func (x *Calendar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Calendar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -793,9 +736,7 @@ func (x *Calendar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *Calendar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -805,9 +746,7 @@ func (x *Calendar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *Calendar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -830,9 +769,7 @@ func (x *Calendar) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *Calendar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -842,9 +779,7 @@ func (x *Calendar) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *Calendar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -852,14 +787,13 @@ func (x *Calendar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Calendar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -892,5 +826,4 @@ func init() {
 	core.PuregoSafeRegister(&xCalendarSetShowWeekNumbers, libs, "gtk_calendar_set_show_week_numbers")
 	core.PuregoSafeRegister(&xCalendarSetYear, libs, "gtk_calendar_set_year")
 	core.PuregoSafeRegister(&xCalendarUnmarkDay, libs, "gtk_calendar_unmark_day")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -34,6 +33,10 @@ type AccessibleTextInterface struct {
 	xGetExtents uintptr
 
 	xGetOffset uintptr
+
+	xSetCaretPosition uintptr
+
+	xSetSelection uintptr
 }
 
 func (x *AccessibleTextInterface) GoPointer() uintptr {
@@ -45,8 +48,12 @@ func (x *AccessibleTextInterface) OverrideGetContents(cb func(AccessibleText, ui
 	if cb == nil {
 		x.xGetContents = 0
 	} else {
-		x.xGetContents = purego.NewCallback(func(SelfVarp uintptr, StartVarp uint, EndVarp uint) *glib.Bytes {
-			return cb(&AccessibleTextBase{Ptr: SelfVarp}, StartVarp, EndVarp)
+		x.xGetContents = purego.NewCallback(func(SelfVarp uintptr, StartVarp uint, EndVarp uint) uintptr {
+			ret := cb(&AccessibleTextBase{Ptr: SelfVarp}, StartVarp, EndVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -56,10 +63,14 @@ func (x *AccessibleTextInterface) GetGetContents() func(AccessibleText, uint, ui
 	if x.xGetContents == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, StartVarp uint, EndVarp uint) *glib.Bytes
+	var rawCallback func(SelfVarp uintptr, StartVarp uint, EndVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetContents)
 	return func(SelfVar AccessibleText, StartVar uint, EndVar uint) *glib.Bytes {
-		return rawCallback(SelfVar.GoPointer(), StartVar, EndVar)
+		rawRet := rawCallback(SelfVar.GoPointer(), StartVar, EndVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Bytes)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -68,8 +79,12 @@ func (x *AccessibleTextInterface) OverrideGetContentsAt(cb func(AccessibleText, 
 	if cb == nil {
 		x.xGetContentsAt = 0
 	} else {
-		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) *glib.Bytes {
-			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, GranularityVarp, StartVarp, EndVarp)
+		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) uintptr {
+			ret := cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, GranularityVarp, StartVarp, EndVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -79,10 +94,14 @@ func (x *AccessibleTextInterface) GetGetContentsAt() func(AccessibleText, uint, 
 	if x.xGetContentsAt == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) *glib.Bytes
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetContentsAt)
 	return func(SelfVar AccessibleText, OffsetVar uint, GranularityVar AccessibleTextGranularity, StartVar *uint, EndVar *uint) *glib.Bytes {
-		return rawCallback(SelfVar.GoPointer(), OffsetVar, GranularityVar, StartVar, EndVar)
+		rawRet := rawCallback(SelfVar.GoPointer(), OffsetVar, GranularityVar, StartVar, EndVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Bytes)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -224,6 +243,52 @@ func (x *AccessibleTextInterface) GetGetOffset() func(AccessibleText, *graphene.
 	}
 }
 
+// OverrideSetCaretPosition sets the "set_caret_position" callback function.
+func (x *AccessibleTextInterface) OverrideSetCaretPosition(cb func(AccessibleText, uint) bool) {
+	if cb == nil {
+		x.xSetCaretPosition = 0
+	} else {
+		x.xSetCaretPosition = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint) bool {
+			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp)
+		})
+	}
+}
+
+// GetSetCaretPosition gets the "set_caret_position" callback function.
+func (x *AccessibleTextInterface) GetSetCaretPosition() func(AccessibleText, uint) bool {
+	if x.xSetCaretPosition == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint) bool
+	purego.RegisterFunc(&rawCallback, x.xSetCaretPosition)
+	return func(SelfVar AccessibleText, OffsetVar uint) bool {
+		return rawCallback(SelfVar.GoPointer(), OffsetVar)
+	}
+}
+
+// OverrideSetSelection sets the "set_selection" callback function.
+func (x *AccessibleTextInterface) OverrideSetSelection(cb func(AccessibleText, uint, *AccessibleTextRange) bool) {
+	if cb == nil {
+		x.xSetSelection = 0
+	} else {
+		x.xSetSelection = purego.NewCallback(func(SelfVarp uintptr, IVarp uint, RangeVarp *AccessibleTextRange) bool {
+			return cb(&AccessibleTextBase{Ptr: SelfVarp}, IVarp, RangeVarp)
+		})
+	}
+}
+
+// GetSetSelection gets the "set_selection" callback function.
+func (x *AccessibleTextInterface) GetSetSelection() func(AccessibleText, uint, *AccessibleTextRange) bool {
+	if x.xSetSelection == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, IVarp uint, RangeVarp *AccessibleTextRange) bool
+	purego.RegisterFunc(&rawCallback, x.xSetSelection)
+	return func(SelfVar AccessibleText, IVar uint, RangeVar *AccessibleTextRange) bool {
+		return rawCallback(SelfVar.GoPointer(), IVar, RangeVar)
+	}
+}
+
 // A range inside the text of an accessible object.
 type AccessibleTextRange struct {
 	_ structs.HostLayout
@@ -280,9 +345,7 @@ func (x *AccessibleTextBase) SetGoPointer(ptr uintptr) {
 // function every time the caret has moved, in order to notify assistive
 // technologies.
 func (x *AccessibleTextBase) UpdateCaretPosition() {
-
 	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
-
 }
 
 // Notifies assistive technologies of a change in contents.
@@ -295,9 +358,7 @@ func (x *AccessibleTextBase) UpdateCaretPosition() {
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
 func (x *AccessibleTextBase) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
-
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
-
 }
 
 // Updates the boundary of the selection.
@@ -306,14 +367,14 @@ func (x *AccessibleTextBase) UpdateContents(ChangeVar AccessibleTextContentChang
 // function every time the selection has moved, in order to notify assistive
 // technologies.
 func (x *AccessibleTextBase) UpdateSelectionBound() {
-
 	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
-
 }
 
-var XGtkAccessibleTextUpdateCaretPosition func(uintptr)
-var XGtkAccessibleTextUpdateContents func(uintptr, AccessibleTextContentChange, uint, uint)
-var XGtkAccessibleTextUpdateSelectionBound func(uintptr)
+var (
+	XGtkAccessibleTextUpdateCaretPosition  func(uintptr)
+	XGtkAccessibleTextUpdateContents       func(uintptr, AccessibleTextContentChange, uint, uint)
+	XGtkAccessibleTextUpdateSelectionBound func(uintptr)
+)
 
 const (
 	// An attribute for the background color, expressed as an RGB value
@@ -480,7 +541,7 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -499,5 +560,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateCaretPosition, libs, "gtk_accessible_text_update_caret_position")
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateContents, libs, "gtk_accessible_text_update_contents")
 	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateSelectionBound, libs, "gtk_accessible_text_update_selection_bound")
-
 }

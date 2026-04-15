@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -84,14 +83,7 @@ var xMultiSelectionSetModel func(uintptr, uintptr)
 //
 // If @model is %NULL, @self will be empty.
 func (x *MultiSelection) SetModel(ModelVar gio.ListModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xMultiSelectionSetModel(x.GoPointer(), ModelVarPtr)
-
+	xMultiSelectionSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *MultiSelection) GoPointer() uintptr {
@@ -123,7 +115,6 @@ func (x *MultiSelection) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *MultiSelection) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -137,7 +128,6 @@ func (x *MultiSelection) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *MultiSelection) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -148,7 +138,6 @@ func (x *MultiSelection) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *MultiSelection) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -199,9 +188,7 @@ func (x *MultiSelection) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *MultiSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Query the section that covers the given position. The number of
@@ -210,9 +197,7 @@ func (x *MultiSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVa
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
 func (x *MultiSelection) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
-
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
-
 }
 
 // This function emits the [signal@Gtk.SectionModel::sections-changed]
@@ -231,9 +216,7 @@ func (x *MultiSelection) GetSection(PositionVar uint, OutStartVar *uint, OutEndV
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
 func (x *MultiSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Gets the set containing all currently selected items in the model.
@@ -242,9 +225,11 @@ func (x *MultiSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
 // consider using [method@Gtk.SelectionModel.is_selected] or if you are only
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *MultiSelection) GetSelection() *Bitset {
-
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -255,35 +240,33 @@ func (x *MultiSelection) GetSelection() *Bitset {
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
 func (x *MultiSelection) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
-
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.
 func (x *MultiSelection) IsSelected(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to select all items in the model.
 func (x *MultiSelection) SelectAll() bool {
-
 	cret := XGtkSelectionModelSelectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to select an item in the model.
 func (x *MultiSelection) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
 func (x *MultiSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
-
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -293,9 +276,7 @@ func (x *MultiSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectR
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *MultiSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
-
 	XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
-
 }
 
 // Make selection changes.
@@ -335,35 +316,31 @@ func (x *MultiSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 // same bitset, which would mean that every item in the set should
 // be selected.
 func (x *MultiSelection) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
-
 	cret := XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
 	return cret
 }
 
 // Requests to unselect all items in the model.
 func (x *MultiSelection) UnselectAll() bool {
-
 	cret := XGtkSelectionModelUnselectAll(x.GoPointer())
 	return cret
 }
 
 // Requests to unselect an item in the model.
 func (x *MultiSelection) UnselectItem(PositionVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
 func (x *MultiSelection) UnselectRange(PositionVar uint, NItemsVar uint) bool {
-
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -379,5 +356,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xMultiSelectionGetModel, libs, "gtk_multi_selection_get_model")
 	core.PuregoSafeRegister(&xMultiSelectionSetModel, libs, "gtk_multi_selection_set_model")
-
 }

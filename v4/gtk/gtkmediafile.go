@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -296,9 +295,7 @@ var xMediaFileClear func(uintptr)
 
 // Resets the media file to be empty.
 func (x *MediaFile) Clear() {
-
 	xMediaFileClear(x.GoPointer())
-
 }
 
 var xMediaFileGetFile func(uintptr) uintptr
@@ -347,14 +344,7 @@ var xMediaFileSetFile func(uintptr, uintptr)
 //
 // If any file is still playing, stop playing it.
 func (x *MediaFile) SetFile(FileVar gio.File) {
-
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	xMediaFileSetFile(x.GoPointer(), FileVarPtr)
-
+	xMediaFileSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
 var xMediaFileSetFilename func(uintptr, uintptr)
@@ -364,12 +354,10 @@ var xMediaFileSetFilename func(uintptr, uintptr)
 // This is a utility function that converts the given @filename
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 func (x *MediaFile) SetFilename(FilenameVar *string) {
-
 	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
 	defer core.GFreeNullable(FilenameVarPtr)
 
 	xMediaFileSetFilename(x.GoPointer(), FilenameVarPtr)
-
 }
 
 var xMediaFileSetInputStream func(uintptr, uintptr)
@@ -381,14 +369,7 @@ var xMediaFileSetInputStream func(uintptr, uintptr)
 // Full control about the @stream is assumed for the duration of
 // playback. The stream will not be closed.
 func (x *MediaFile) SetInputStream(StreamVar *gio.InputStream) {
-
-	var StreamVarPtr uintptr
-	if StreamVar != nil {
-		StreamVarPtr = StreamVar.GoPointer()
-	}
-
-	xMediaFileSetInputStream(x.GoPointer(), StreamVarPtr)
-
+	xMediaFileSetInputStream(x.GoPointer(), StreamVar.GoPointer())
 }
 
 var xMediaFileSetResource func(uintptr, uintptr)
@@ -398,12 +379,10 @@ var xMediaFileSetResource func(uintptr, uintptr)
 // This is a utility function that converts the given @resource_path
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 func (x *MediaFile) SetResource(ResourcePathVar *string) {
-
 	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
 	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xMediaFileSetResource(x.GoPointer(), ResourcePathVarPtr)
-
 }
 
 func (c *MediaFile) GoPointer() uintptr {
@@ -428,9 +407,7 @@ func (c *MediaFile) SetGoPointer(ptr uintptr) {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *MediaFile) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -458,7 +435,6 @@ func (x *MediaFile) GetCurrentImage() *gdk.PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *MediaFile) GetFlags() gdk.PaintableFlags {
-
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -481,7 +457,6 @@ func (x *MediaFile) GetFlags() gdk.PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *MediaFile) GetIntrinsicAspectRatio() float64 {
-
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -497,7 +472,6 @@ func (x *MediaFile) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *MediaFile) GetIntrinsicHeight() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -513,7 +487,6 @@ func (x *MediaFile) GetIntrinsicHeight() int {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *MediaFile) GetIntrinsicWidth() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -529,9 +502,7 @@ func (x *MediaFile) GetIntrinsicWidth() int {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *MediaFile) InvalidateContents() {
-
 	gdk.XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -545,9 +516,7 @@ func (x *MediaFile) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *MediaFile) InvalidateSize() {
-
 	gdk.XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -556,14 +525,12 @@ func (x *MediaFile) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *MediaFile) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64) {
-
 	gdk.XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -588,5 +555,4 @@ func init() {
 	core.PuregoSafeRegister(&xMediaFileSetFilename, libs, "gtk_media_file_set_filename")
 	core.PuregoSafeRegister(&xMediaFileSetInputStream, libs, "gtk_media_file_set_input_stream")
 	core.PuregoSafeRegister(&xMediaFileSetResource, libs, "gtk_media_file_set_resource")
-
 }

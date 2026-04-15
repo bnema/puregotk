@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -211,7 +210,6 @@ var xToggleButtonGetActive func(uintptr) bool
 // Returns %TRUE if the toggle button is pressed in and %FALSE
 // if it is raised.
 func (x *ToggleButton) GetActive() bool {
-
 	cret := xToggleButtonGetActive(x.GoPointer())
 	return cret
 }
@@ -226,9 +224,7 @@ var xToggleButtonSetActive func(uintptr, bool)
 // If the status of the button changes, this action causes the
 // [signal@Gtk.ToggleButton::toggled] signal to be emitted.
 func (x *ToggleButton) SetActive(IsActiveVar bool) {
-
 	xToggleButtonSetActive(x.GoPointer(), IsActiveVar)
-
 }
 
 var xToggleButtonSetGroup func(uintptr, uintptr)
@@ -245,23 +241,14 @@ var xToggleButtonSetGroup func(uintptr, uintptr)
 // for all buttons in the group, and giving each button its own target
 // value.
 func (x *ToggleButton) SetGroup(GroupVar *ToggleButton) {
-
-	var GroupVarPtr uintptr
-	if GroupVar != nil {
-		GroupVarPtr = GroupVar.GoPointer()
-	}
-
-	xToggleButtonSetGroup(x.GoPointer(), GroupVarPtr)
-
+	xToggleButtonSetGroup(x.GoPointer(), GroupVar.GoPointer())
 }
 
 var xToggleButtonToggled func(uintptr)
 
 // Emits the ::toggled signal on the `GtkToggleButton`.
 func (x *ToggleButton) Toggled() {
-
 	xToggleButtonToggled(x.GoPointer())
-
 }
 
 func (c *ToggleButton) GoPointer() uintptr {
@@ -307,7 +294,6 @@ func (x *ToggleButton) ConnectToggled(cb *func(ToggleButton)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -326,9 +312,19 @@ func (x *ToggleButton) ConnectToggled(cb *func(ToggleButton)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *ToggleButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *ToggleButton) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -349,7 +345,6 @@ func (x *ToggleButton) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *ToggleButton) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -374,7 +369,6 @@ func (x *ToggleButton) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *ToggleButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -413,30 +407,23 @@ func (x *ToggleButton) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *ToggleButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *ToggleButton) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *ToggleButton) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *ToggleButton) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -449,19 +436,7 @@ func (x *ToggleButton) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *ToggleButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -469,14 +444,7 @@ func (x *ToggleButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *ToggleButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -485,9 +453,7 @@ func (x *ToggleButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *ToggleButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -509,9 +475,7 @@ func (x *ToggleButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *ToggleButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -521,9 +485,7 @@ func (x *ToggleButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -545,9 +507,7 @@ func (x *ToggleButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []A
 //
 // ```
 func (x *ToggleButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -557,9 +517,7 @@ func (x *ToggleButton) UpdateRelation(FirstRelationVar AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -582,9 +540,7 @@ func (x *ToggleButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acc
 //
 // ```
 func (x *ToggleButton) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -594,23 +550,22 @@ func (x *ToggleButton) UpdateState(FirstStateVar AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *ToggleButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the action name for @actionable.
 func (x *ToggleButton) GetActionName() string {
-
 	cret := XGtkActionableGetActionName(x.GoPointer())
 	return cret
 }
 
 // Gets the current target value of @actionable.
 func (x *ToggleButton) GetActionTargetValue() *glib.Variant {
-
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be
@@ -627,12 +582,10 @@ func (x *ToggleButton) GetActionTargetValue() *glib.Variant {
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
 func (x *ToggleButton) SetActionName(ActionNameVar *string) {
-
 	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
 	defer core.GFreeNullable(ActionNameVarPtr)
 
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
 }
 
 // Sets the target of an actionable widget.
@@ -645,9 +598,7 @@ func (x *ToggleButton) SetActionName(ActionNameVar *string) {
 // the action name at the same time, you can use
 // [method@Gtk.Actionable.set_detailed_action_name].
 func (x *ToggleButton) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-
 	XGtkActionableSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
-
 }
 
 // Sets the target value of an actionable widget.
@@ -669,9 +620,7 @@ func (x *ToggleButton) SetActionTarget(FormatStringVar string, varArgs ...interf
 // be rendered as active (and the other buttons, with different targets,
 // rendered inactive).
 func (x *ToggleButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
-
 	XGtkActionableSetActionTargetValue(x.GoPointer(), TargetValueVar)
-
 }
 
 // Sets the action-name and associated string target value of an
@@ -680,9 +629,7 @@ func (x *ToggleButton) SetActionTargetValue(TargetValueVar *glib.Variant) {
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
 func (x *ToggleButton) SetDetailedActionName(DetailedActionNameVar string) {
-
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -690,14 +637,13 @@ func (x *ToggleButton) SetDetailedActionName(DetailedActionNameVar string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ToggleButton) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -717,5 +663,4 @@ func init() {
 	core.PuregoSafeRegister(&xToggleButtonSetActive, libs, "gtk_toggle_button_set_active")
 	core.PuregoSafeRegister(&xToggleButtonSetGroup, libs, "gtk_toggle_button_set_group")
 	core.PuregoSafeRegister(&xToggleButtonToggled, libs, "gtk_toggle_button_toggled")
-
 }

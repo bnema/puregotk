@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -229,9 +228,7 @@ var xAdjustmentClampPage func(uintptr, float64, float64)
 // A [signal@Gtk.Adjustment::value-changed] signal will be emitted
 // if the value is changed.
 func (x *Adjustment) ClampPage(LowerVar float64, UpperVar float64) {
-
 	xAdjustmentClampPage(x.GoPointer(), LowerVar, UpperVar)
-
 }
 
 var xAdjustmentConfigure func(uintptr, float64, float64, float64, float64, float64, float64)
@@ -244,16 +241,13 @@ var xAdjustmentConfigure func(uintptr, float64, float64, float64, float64, float
 // way of compressing multiple emissions of
 // [signal@Gtk.Adjustment::changed] into one.
 func (x *Adjustment) Configure(ValueVar float64, LowerVar float64, UpperVar float64, StepIncrementVar float64, PageIncrementVar float64, PageSizeVar float64) {
-
 	xAdjustmentConfigure(x.GoPointer(), ValueVar, LowerVar, UpperVar, StepIncrementVar, PageIncrementVar, PageSizeVar)
-
 }
 
 var xAdjustmentGetLower func(uintptr) float64
 
 // Retrieves the minimum value of the adjustment.
 func (x *Adjustment) GetLower() float64 {
-
 	cret := xAdjustmentGetLower(x.GoPointer())
 	return cret
 }
@@ -262,7 +256,6 @@ var xAdjustmentGetMinimumIncrement func(uintptr) float64
 
 // Gets the smaller of step increment and page increment.
 func (x *Adjustment) GetMinimumIncrement() float64 {
-
 	cret := xAdjustmentGetMinimumIncrement(x.GoPointer())
 	return cret
 }
@@ -271,7 +264,6 @@ var xAdjustmentGetPageIncrement func(uintptr) float64
 
 // Retrieves the page increment of the adjustment.
 func (x *Adjustment) GetPageIncrement() float64 {
-
 	cret := xAdjustmentGetPageIncrement(x.GoPointer())
 	return cret
 }
@@ -280,7 +272,6 @@ var xAdjustmentGetPageSize func(uintptr) float64
 
 // Retrieves the page size of the adjustment.
 func (x *Adjustment) GetPageSize() float64 {
-
 	cret := xAdjustmentGetPageSize(x.GoPointer())
 	return cret
 }
@@ -289,7 +280,6 @@ var xAdjustmentGetStepIncrement func(uintptr) float64
 
 // Retrieves the step increment of the adjustment.
 func (x *Adjustment) GetStepIncrement() float64 {
-
 	cret := xAdjustmentGetStepIncrement(x.GoPointer())
 	return cret
 }
@@ -298,7 +288,6 @@ var xAdjustmentGetUpper func(uintptr) float64
 
 // Retrieves the maximum value of the adjustment.
 func (x *Adjustment) GetUpper() float64 {
-
 	cret := xAdjustmentGetUpper(x.GoPointer())
 	return cret
 }
@@ -307,7 +296,6 @@ var xAdjustmentGetValue func(uintptr) float64
 
 // Gets the current value of the adjustment.
 func (x *Adjustment) GetValue() float64 {
-
 	cret := xAdjustmentGetValue(x.GoPointer())
 	return cret
 }
@@ -328,9 +316,7 @@ var xAdjustmentSetLower func(uintptr, float64)
 // Alternatively, using a single g_object_set() for all the properties
 // to change, or using [method@Gtk.Adjustment.configure] has the same effect.
 func (x *Adjustment) SetLower(LowerVar float64) {
-
 	xAdjustmentSetLower(x.GoPointer(), LowerVar)
-
 }
 
 var xAdjustmentSetPageIncrement func(uintptr, float64)
@@ -341,9 +327,7 @@ var xAdjustmentSetPageIncrement func(uintptr, float64)
 // multiple emissions of the [signal@Gtk.Adjustment::changed]
 // signal when setting multiple adjustment properties.
 func (x *Adjustment) SetPageIncrement(PageIncrementVar float64) {
-
 	xAdjustmentSetPageIncrement(x.GoPointer(), PageIncrementVar)
-
 }
 
 var xAdjustmentSetPageSize func(uintptr, float64)
@@ -354,9 +338,7 @@ var xAdjustmentSetPageSize func(uintptr, float64)
 // multiple emissions of the [signal@Gtk.Adjustment::changed]
 // signal when setting multiple adjustment properties.
 func (x *Adjustment) SetPageSize(PageSizeVar float64) {
-
 	xAdjustmentSetPageSize(x.GoPointer(), PageSizeVar)
-
 }
 
 var xAdjustmentSetStepIncrement func(uintptr, float64)
@@ -367,9 +349,7 @@ var xAdjustmentSetStepIncrement func(uintptr, float64)
 // multiple emissions of the [signal@Gtk.Adjustment::changed]
 // signal when setting multiple adjustment properties.
 func (x *Adjustment) SetStepIncrement(StepIncrementVar float64) {
-
 	xAdjustmentSetStepIncrement(x.GoPointer(), StepIncrementVar)
-
 }
 
 var xAdjustmentSetUpper func(uintptr, float64)
@@ -383,9 +363,7 @@ var xAdjustmentSetUpper func(uintptr, float64)
 // multiple emissions of the [signal@Gtk.Adjustment::changed]
 // signal when setting multiple adjustment properties.
 func (x *Adjustment) SetUpper(UpperVar float64) {
-
 	xAdjustmentSetUpper(x.GoPointer(), UpperVar)
-
 }
 
 var xAdjustmentSetValue func(uintptr, float64)
@@ -400,9 +378,7 @@ var xAdjustmentSetValue func(uintptr, float64)
 // [property@Gtk.Adjustment:lower] to
 // [property@Gtk.Adjustment:upper] - [property@Gtk.Adjustment:page-size].
 func (x *Adjustment) SetValue(ValueVar float64) {
-
 	xAdjustmentSetValue(x.GoPointer(), ValueVar)
-
 }
 
 func (c *Adjustment) GoPointer() uintptr {
@@ -551,7 +527,6 @@ func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -575,7 +550,6 @@ func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -586,7 +560,7 @@ func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -615,5 +589,4 @@ func init() {
 	core.PuregoSafeRegister(&xAdjustmentSetStepIncrement, libs, "gtk_adjustment_set_step_increment")
 	core.PuregoSafeRegister(&xAdjustmentSetUpper, libs, "gtk_adjustment_set_upper")
 	core.PuregoSafeRegister(&xAdjustmentSetValue, libs, "gtk_adjustment_set_value")
-
 }

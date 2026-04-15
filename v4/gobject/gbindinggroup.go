@@ -2,10 +2,7 @@
 package gobject
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -59,9 +56,7 @@ var xBindingGroupBind func(uintptr, string, uintptr, string, BindingFlags)
 //
 // See g_object_bind_property() for more information.
 func (x *BindingGroup) Bind(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags) {
-
 	xBindingGroupBind(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar)
-
 }
 
 var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, uintptr, uintptr, uintptr, uintptr)
@@ -73,54 +68,7 @@ var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, u
 //
 // See g_object_bind_property_full() for more information.
 func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, UserDataDestroyVar *glib.DestroyNotify) {
-
-	var TransformToVarRef uintptr
-	if TransformToVar != nil {
-		TransformToVarPtr := uintptr(unsafe.Pointer(TransformToVar))
-		if cbRefPtr, ok := glib.GetCallback(TransformToVarPtr); ok {
-			TransformToVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *TransformToVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			TransformToVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(TransformToVarPtr, TransformToVarRef, TransformToVar)
-		}
-	}
-
-	var TransformFromVarRef uintptr
-	if TransformFromVar != nil {
-		TransformFromVarPtr := uintptr(unsafe.Pointer(TransformFromVar))
-		if cbRefPtr, ok := glib.GetCallback(TransformFromVarPtr); ok {
-			TransformFromVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
-				cbFn := *TransformFromVar
-				return cbFn(arg0, arg1, arg2, arg3)
-			}
-			TransformFromVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(TransformFromVarPtr, TransformFromVarRef, TransformFromVar)
-		}
-	}
-
-	var UserDataDestroyVarRef uintptr
-	if UserDataDestroyVar != nil {
-		UserDataDestroyVarPtr := uintptr(unsafe.Pointer(UserDataDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDataDestroyVarPtr); ok {
-			UserDataDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDataDestroyVar
-				cbFn(arg0)
-			}
-			UserDataDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDataDestroyVarPtr, UserDataDestroyVarRef, UserDataDestroyVar)
-		}
-	}
-
-	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVarRef, TransformFromVarRef, UserDataVar, UserDataDestroyVarRef)
-
+	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallbackNullable(UserDataDestroyVar))
 }
 
 var xBindingGroupBindWithClosures func(uintptr, string, uintptr, string, BindingFlags, *Closure, *Closure)
@@ -136,9 +84,7 @@ var xBindingGroupBindWithClosures func(uintptr, string, uintptr, string, Binding
 //
 // See g_object_bind_property_with_closures() for more information.
 func (x *BindingGroup) BindWithClosures(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *Closure, TransformFromVar *Closure) {
-
 	xBindingGroupBindWithClosures(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVar, TransformFromVar)
-
 }
 
 var xBindingGroupDupSource func(uintptr) uintptr
@@ -166,14 +112,7 @@ var xBindingGroupSetSource func(uintptr, uintptr)
 //
 // Note that all properties that have been bound must exist on @source.
 func (x *BindingGroup) SetSource(SourceVar *Object) {
-
-	var SourceVarPtr uintptr
-	if SourceVar != nil {
-		SourceVarPtr = SourceVar.GoPointer()
-	}
-
-	xBindingGroupSetSource(x.GoPointer(), SourceVarPtr)
-
+	xBindingGroupSetSource(x.GoPointer(), SourceVar.GoPointer())
 }
 
 func (c *BindingGroup) GoPointer() uintptr {
@@ -189,7 +128,7 @@ func (c *BindingGroup) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -208,5 +147,4 @@ func init() {
 	core.PuregoSafeRegister(&xBindingGroupBindWithClosures, libs, "g_binding_group_bind_with_closures")
 	core.PuregoSafeRegister(&xBindingGroupDupSource, libs, "g_binding_group_dup_source")
 	core.PuregoSafeRegister(&xBindingGroupSetSource, libs, "g_binding_group_set_source")
-
 }

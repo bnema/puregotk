@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -229,7 +228,6 @@ func (c *ConverterOutputStream) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *ConverterOutputStream) CanPoll() bool {
-
 	cret := XGPollableOutputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -246,14 +244,11 @@ func (x *ConverterOutputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.
@@ -268,7 +263,6 @@ func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) IsWritable() bool {
-
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
 	return cret
 }
@@ -304,7 +298,6 @@ func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Attempts to write the bytes contained in the @n_vectors @vectors to @stream,
@@ -339,12 +332,11 @@ func (x *ConverterOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVe
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -359,5 +351,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewConverterOutputStream, libs, "g_converter_output_stream_new")
 
 	core.PuregoSafeRegister(&xConverterOutputStreamGetConverter, libs, "g_converter_output_stream_get_converter")
-
 }

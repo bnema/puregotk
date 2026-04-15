@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -494,9 +493,7 @@ var xIOStreamClearPending func(uintptr)
 
 // Clears the pending flag on @stream.
 func (x *IOStream) ClearPending() {
-
 	xIOStreamClearPending(x.GoPointer())
-
 }
 
 var xIOStreamClose func(uintptr, uintptr, **glib.Error) bool
@@ -547,7 +544,6 @@ func (x *IOStream) Close(CancellableVar *Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
@@ -563,29 +559,7 @@ var xIOStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // to implement asynchronicity, so they are optional for inheriting
 // classes. However, if you override one you must override all.
 func (x *IOStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xIOStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xIOStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xIOStreamCloseFinish func(uintptr, uintptr, **glib.Error) bool
@@ -599,7 +573,6 @@ func (x *IOStream) CloseFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamGetInputStream func(uintptr) uintptr
@@ -642,7 +615,6 @@ var xIOStreamHasPending func(uintptr) bool
 
 // Checks if a stream has pending actions.
 func (x *IOStream) HasPending() bool {
-
 	cret := xIOStreamHasPending(x.GoPointer())
 	return cret
 }
@@ -651,12 +623,11 @@ var xIOStreamIsClosed func(uintptr) bool
 
 // Checks if a stream is closed.
 func (x *IOStream) IsClosed() bool {
-
 	cret := xIOStreamIsClosed(x.GoPointer())
 	return cret
 }
 
-var xIOStreamSetPending func(uintptr) bool
+var xIOStreamSetPending func(uintptr, **glib.Error) bool
 
 // Sets @stream to have actions pending. If the pending flag is
 // already set or @stream is closed, it will return %FALSE and set
@@ -664,12 +635,11 @@ var xIOStreamSetPending func(uintptr) bool
 func (x *IOStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xIOStreamSetPending(x.GoPointer())
+	cret := xIOStreamSetPending(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xIOStreamSpliceAsync func(uintptr, uintptr, IOStreamSpliceFlags, int, uintptr, uintptr, uintptr)
@@ -682,29 +652,7 @@ var xIOStreamSpliceAsync func(uintptr, uintptr, IOStreamSpliceFlags, int, uintpt
 // You can then call g_io_stream_splice_finish() to get the
 // result of the operation.
 func (x *IOStream) SpliceAsync(Stream2Var *IOStream, FlagsVar IOStreamSpliceFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xIOStreamSpliceAsync(x.GoPointer(), Stream2Var.GoPointer(), FlagsVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xIOStreamSpliceAsync(x.GoPointer(), Stream2Var.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 func (c *IOStream) GoPointer() uintptr {
@@ -737,12 +685,11 @@ func IOStreamSpliceFinish(ResultVar AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -766,5 +713,4 @@ func init() {
 	core.PuregoSafeRegister(&xIOStreamSpliceAsync, libs, "g_io_stream_splice_async")
 
 	core.PuregoSafeRegister(&xIOStreamSpliceFinish, libs, "g_io_stream_splice_finish")
-
 }

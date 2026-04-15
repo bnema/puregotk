@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -116,7 +115,6 @@ var xWindowControlsGetDecorationLayout func(uintptr) string
 
 // Gets the decoration layout of this window controls widget
 func (x *WindowControls) GetDecorationLayout() string {
-
 	cret := xWindowControlsGetDecorationLayout(x.GoPointer())
 	return cret
 }
@@ -125,7 +123,6 @@ var xWindowControlsGetEmpty func(uintptr) bool
 
 // Gets whether the widget has any window buttons.
 func (x *WindowControls) GetEmpty() bool {
-
 	cret := xWindowControlsGetEmpty(x.GoPointer())
 	return cret
 }
@@ -134,7 +131,6 @@ var xWindowControlsGetSide func(uintptr) PackType
 
 // Gets the side to which this window controls widget belongs.
 func (x *WindowControls) GetSide() PackType {
-
 	cret := xWindowControlsGetSide(x.GoPointer())
 	return cret
 }
@@ -143,7 +139,6 @@ var xWindowControlsGetUseNativeControls func(uintptr) bool
 
 // Returns whether platform native window controls are shown.
 func (x *WindowControls) GetUseNativeControls() bool {
-
 	cret := xWindowControlsGetUseNativeControls(x.GoPointer())
 	return cret
 }
@@ -166,12 +161,10 @@ var xWindowControlsSetDecorationLayout func(uintptr, uintptr)
 // If [property@Gtk.WindowControls:side] value is [enum@Gtk.PackType.start],
 // @self will display the part before the colon, otherwise after that.
 func (x *WindowControls) SetDecorationLayout(LayoutVar *string) {
-
 	LayoutVarPtr := core.GStrdupNullable(LayoutVar)
 	defer core.GFreeNullable(LayoutVarPtr)
 
 	xWindowControlsSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
-
 }
 
 var xWindowControlsSetSide func(uintptr, PackType)
@@ -181,9 +174,7 @@ var xWindowControlsSetSide func(uintptr, PackType)
 //
 // See [property@Gtk.WindowControls:decoration-layout].
 func (x *WindowControls) SetSide(SideVar PackType) {
-
 	xWindowControlsSetSide(x.GoPointer(), SideVar)
-
 }
 
 var xWindowControlsSetUseNativeControls func(uintptr, bool)
@@ -195,9 +186,7 @@ var xWindowControlsSetUseNativeControls func(uintptr, bool)
 //
 // See also [Using GTK on Apple macOS](osx.html?native-window-controls).
 func (x *WindowControls) SetUseNativeControls(SettingVar bool) {
-
 	xWindowControlsSetUseNativeControls(x.GoPointer(), SettingVar)
-
 }
 
 func (c *WindowControls) GoPointer() uintptr {
@@ -283,9 +272,19 @@ func (x *WindowControls) GetPropertyUseNativeControls() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *WindowControls) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *WindowControls) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -306,7 +305,6 @@ func (x *WindowControls) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *WindowControls) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -331,7 +329,6 @@ func (x *WindowControls) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *WindowControls) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -370,30 +367,23 @@ func (x *WindowControls) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *WindowControls) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *WindowControls) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *WindowControls) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *WindowControls) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -406,19 +396,7 @@ func (x *WindowControls) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *WindowControls) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -426,14 +404,7 @@ func (x *WindowControls) SetAccessibleParent(ParentVar Accessible, NextSiblingVa
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *WindowControls) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -442,9 +413,7 @@ func (x *WindowControls) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *WindowControls) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -466,9 +435,7 @@ func (x *WindowControls) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *WindowControls) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -478,9 +445,7 @@ func (x *WindowControls) UpdateProperty(FirstPropertyVar AccessibleProperty, var
 //
 // This function is meant to be used by language bindings.
 func (x *WindowControls) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -502,9 +467,7 @@ func (x *WindowControls) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 //
 // ```
 func (x *WindowControls) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -514,9 +477,7 @@ func (x *WindowControls) UpdateRelation(FirstRelationVar AccessibleRelation, var
 //
 // This function is meant to be used by language bindings.
 func (x *WindowControls) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -539,9 +500,7 @@ func (x *WindowControls) UpdateRelationValue(NRelationsVar int, RelationsVar []A
 //
 // ```
 func (x *WindowControls) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -551,9 +510,7 @@ func (x *WindowControls) UpdateState(FirstStateVar AccessibleState, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *WindowControls) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -561,14 +518,13 @@ func (x *WindowControls) UpdateStateValue(NStatesVar int, StatesVar []Accessible
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *WindowControls) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -589,5 +545,4 @@ func init() {
 	core.PuregoSafeRegister(&xWindowControlsSetDecorationLayout, libs, "gtk_window_controls_set_decoration_layout")
 	core.PuregoSafeRegister(&xWindowControlsSetSide, libs, "gtk_window_controls_set_side")
 	core.PuregoSafeRegister(&xWindowControlsSetUseNativeControls, libs, "gtk_window_controls_set_use_native_controls")
-
 }

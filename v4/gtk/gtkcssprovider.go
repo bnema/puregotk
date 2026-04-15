@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -96,9 +95,7 @@ var xCssProviderLoadFromBytes func(uintptr, *glib.Bytes)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromBytes(DataVar *glib.Bytes) {
-
 	xCssProviderLoadFromBytes(x.GoPointer(), DataVar)
-
 }
 
 var xCssProviderLoadFromData func(uintptr, string, int)
@@ -107,9 +104,7 @@ var xCssProviderLoadFromData func(uintptr, string, int)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromData(DataVar string, LengthVar int) {
-
 	xCssProviderLoadFromData(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 var xCssProviderLoadFromFile func(uintptr, uintptr)
@@ -118,9 +113,7 @@ var xCssProviderLoadFromFile func(uintptr, uintptr)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromFile(FileVar gio.File) {
-
 	xCssProviderLoadFromFile(x.GoPointer(), FileVar.GoPointer())
-
 }
 
 var xCssProviderLoadFromPath func(uintptr, string)
@@ -129,9 +122,7 @@ var xCssProviderLoadFromPath func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromPath(PathVar string) {
-
 	xCssProviderLoadFromPath(x.GoPointer(), PathVar)
-
 }
 
 var xCssProviderLoadFromResource func(uintptr, string)
@@ -141,9 +132,7 @@ var xCssProviderLoadFromResource func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromResource(ResourcePathVar string) {
-
 	xCssProviderLoadFromResource(x.GoPointer(), ResourcePathVar)
-
 }
 
 var xCssProviderLoadFromString func(uintptr, string)
@@ -152,9 +141,7 @@ var xCssProviderLoadFromString func(uintptr, string)
 //
 // This clears any previously loaded information.
 func (x *CssProvider) LoadFromString(StringVar string) {
-
 	xCssProviderLoadFromString(x.GoPointer(), StringVar)
-
 }
 
 var xCssProviderLoadNamed func(uintptr, string, uintptr)
@@ -165,12 +152,10 @@ var xCssProviderLoadNamed func(uintptr, string, uintptr)
 // releases, but it is guaranteed that this function uses the same
 // mechanism to load the theme that GTK uses for loading its own theme.
 func (x *CssProvider) LoadNamed(NameVar string, VariantVar *string) {
-
 	VariantVarPtr := core.GStrdupNullable(VariantVar)
 	defer core.GFreeNullable(VariantVarPtr)
 
 	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVarPtr)
-
 }
 
 var xCssProviderToString func(uintptr) string
@@ -183,7 +168,6 @@ var xCssProviderToString func(uintptr) string
 // [ctor@Gtk.CssProvider.new] will basically create a duplicate
 // of this @provider.
 func (x *CssProvider) ToString() string {
-
 	cret := xCssProviderToString(x.GoPointer())
 	return cret
 }
@@ -232,7 +216,6 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.E
 		cbFn := *cb
 
 		cbFn(fa, SectionVarp, (*glib.Error)(ErrorVarp))
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -243,7 +226,7 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.E
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -265,5 +248,4 @@ func init() {
 	core.PuregoSafeRegister(&xCssProviderLoadFromString, libs, "gtk_css_provider_load_from_string")
 	core.PuregoSafeRegister(&xCssProviderLoadNamed, libs, "gtk_css_provider_load_named")
 	core.PuregoSafeRegister(&xCssProviderToString, libs, "gtk_css_provider_to_string")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -229,28 +228,23 @@ var xScaleAddMark func(uintptr, float64, PositionType, uintptr)
 //
 // To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
 func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar *string) {
-
 	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
 	defer core.GFreeNullable(MarkupVarPtr)
 
 	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, MarkupVarPtr)
-
 }
 
 var xScaleClearMarks func(uintptr)
 
 // Removes any marks that have been added.
 func (x *Scale) ClearMarks() {
-
 	xScaleClearMarks(x.GoPointer())
-
 }
 
 var xScaleGetDigits func(uintptr) int
 
 // Gets the number of decimal places that are displayed in the value.
 func (x *Scale) GetDigits() int {
-
 	cret := xScaleGetDigits(x.GoPointer())
 	return cret
 }
@@ -260,7 +254,6 @@ var xScaleGetDrawValue func(uintptr) bool
 // Returns whether the current value is displayed as a string
 // next to the slider.
 func (x *Scale) GetDrawValue() bool {
-
 	cret := xScaleGetDrawValue(x.GoPointer())
 	return cret
 }
@@ -269,7 +262,6 @@ var xScaleGetHasOrigin func(uintptr) bool
 
 // Returns whether the scale has an origin.
 func (x *Scale) GetHasOrigin() bool {
-
 	cret := xScaleGetHasOrigin(x.GoPointer())
 	return cret
 }
@@ -305,16 +297,13 @@ var xScaleGetLayoutOffsets func(uintptr, *int, *int)
 // If the [property@Gtk.Scale:draw-value] property is %FALSE, the return
 // values are undefined.
 func (x *Scale) GetLayoutOffsets(XVar *int, YVar *int) {
-
 	xScaleGetLayoutOffsets(x.GoPointer(), XVar, YVar)
-
 }
 
 var xScaleGetValuePos func(uintptr) PositionType
 
 // Gets the position in which the current value is displayed.
 func (x *Scale) GetValuePos() PositionType {
-
 	cret := xScaleGetValuePos(x.GoPointer())
 	return cret
 }
@@ -334,9 +323,7 @@ var xScaleSetDigits func(uintptr, int)
 // you can use [method@Gtk.Scale.set_format_value_func] to format the displayed
 // value yourself.
 func (x *Scale) SetDigits(DigitsVar int) {
-
 	xScaleSetDigits(x.GoPointer(), DigitsVar)
-
 }
 
 var xScaleSetDrawValue func(uintptr, bool)
@@ -344,9 +331,7 @@ var xScaleSetDrawValue func(uintptr, bool)
 // Specifies whether the current value is displayed as a string next
 // to the slider.
 func (x *Scale) SetDrawValue(DrawValueVar bool) {
-
 	xScaleSetDrawValue(x.GoPointer(), DrawValueVar)
-
 }
 
 var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -360,39 +345,7 @@ var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
 // its own, rounded according to the value of the
 // [property@Gtk.Scale:digits] property.
 func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 float64, arg2 uintptr) string {
-				cbFn := *FuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	var DestroyNotifyVarRef uintptr
-	if DestroyNotifyVar != nil {
-		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
-			DestroyNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyNotifyVar
-				cbFn(arg0)
-			}
-			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
-		}
-	}
-
-	xScaleSetFormatValueFunc(x.GoPointer(), FuncVarRef, UserDataVar, DestroyNotifyVarRef)
-
+	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 }
 
 var xScaleSetHasOrigin func(uintptr, bool)
@@ -403,18 +356,14 @@ var xScaleSetHasOrigin func(uintptr, bool)
 // the scale will highlight the part of the trough between the origin
 // (bottom or left side) and the current value.
 func (x *Scale) SetHasOrigin(HasOriginVar bool) {
-
 	xScaleSetHasOrigin(x.GoPointer(), HasOriginVar)
-
 }
 
 var xScaleSetValuePos func(uintptr, PositionType)
 
 // Sets the position in which the current value is displayed.
 func (x *Scale) SetValuePos(PosVar PositionType) {
-
 	xScaleSetValuePos(x.GoPointer(), PosVar)
-
 }
 
 func (c *Scale) GoPointer() uintptr {
@@ -489,9 +438,19 @@ func (x *Scale) GetPropertyHasOrigin() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Scale) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Scale) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -512,7 +471,6 @@ func (x *Scale) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Scale) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -537,7 +495,6 @@ func (x *Scale) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Scale) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -576,30 +533,23 @@ func (x *Scale) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Scale) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Scale) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Scale) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Scale) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -612,19 +562,7 @@ func (x *Scale) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Scale) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -632,14 +570,7 @@ func (x *Scale) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Scale) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -648,9 +579,7 @@ func (x *Scale) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Scale) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -672,9 +601,7 @@ func (x *Scale) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Scale) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -684,9 +611,7 @@ func (x *Scale) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Scale) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -708,9 +633,7 @@ func (x *Scale) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Scale) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -720,9 +643,7 @@ func (x *Scale) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Scale) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -745,9 +666,7 @@ func (x *Scale) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Scale) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -757,9 +676,7 @@ func (x *Scale) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Scale) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -767,28 +684,24 @@ func (x *Scale) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Scale) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *Scale) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *Scale) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -816,5 +729,4 @@ func init() {
 	core.PuregoSafeRegister(&xScaleSetFormatValueFunc, libs, "gtk_scale_set_format_value_func")
 	core.PuregoSafeRegister(&xScaleSetHasOrigin, libs, "gtk_scale_set_has_origin")
 	core.PuregoSafeRegister(&xScaleSetValuePos, libs, "gtk_scale_set_value_pos")
-
 }

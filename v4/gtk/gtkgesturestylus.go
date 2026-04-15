@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -67,7 +66,6 @@ var xGestureStylusGetAxes func(uintptr, []gdk.AxisUse, *[]float64) bool
 // [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
 // signals.
 func (x *GestureStylus) GetAxes(AxesVar []gdk.AxisUse, ValuesVar *[]float64) bool {
-
 	cret := xGestureStylusGetAxes(x.GoPointer(), AxesVar, ValuesVar)
 	return cret
 }
@@ -81,7 +79,6 @@ var xGestureStylusGetAxis func(uintptr, gdk.AxisUse, *float64) bool
 // [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
 // signals.
 func (x *GestureStylus) GetAxis(AxisVar gdk.AxisUse, ValueVar *float64) bool {
-
 	cret := xGestureStylusGetAxis(x.GoPointer(), AxisVar, ValueVar)
 	return cret
 }
@@ -102,7 +99,6 @@ var xGestureStylusGetBacklog func(uintptr, *uintptr, *uint) bool
 //
 // The @backlog is provided in chronological order.
 func (x *GestureStylus) GetBacklog(BacklogVar *uintptr, NElemsVar *uint) bool {
-
 	cret := xGestureStylusGetBacklog(x.GoPointer(), BacklogVar, NElemsVar)
 	return cret
 }
@@ -136,7 +132,6 @@ var xGestureStylusGetStylusOnly func(uintptr) bool
 // Stylus-only gestures will signal events exclusively from stylus
 // input devices.
 func (x *GestureStylus) GetStylusOnly() bool {
-
 	cret := xGestureStylusGetStylusOnly(x.GoPointer())
 	return cret
 }
@@ -148,9 +143,7 @@ var xGestureStylusSetStylusOnly func(uintptr, bool)
 // If true, the gesture will exclusively handle events from stylus input devices,
 // otherwise it'll handle events from any pointing device.
 func (x *GestureStylus) SetStylusOnly(StylusOnlyVar bool) {
-
 	xGestureStylusSetStylusOnly(x.GoPointer(), StylusOnlyVar)
-
 }
 
 func (c *GestureStylus) GoPointer() uintptr {
@@ -196,7 +189,6 @@ func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) u
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -220,7 +212,6 @@ func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64))
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -244,7 +235,6 @@ func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float6
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -268,7 +258,6 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -279,7 +268,7 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -299,5 +288,4 @@ func init() {
 	core.PuregoSafeRegister(&xGestureStylusGetDeviceTool, libs, "gtk_gesture_stylus_get_device_tool")
 	core.PuregoSafeRegister(&xGestureStylusGetStylusOnly, libs, "gtk_gesture_stylus_get_stylus_only")
 	core.PuregoSafeRegister(&xGestureStylusSetStylusOnly, libs, "gtk_gesture_stylus_set_stylus_only")
-
 }

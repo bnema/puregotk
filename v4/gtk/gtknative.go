@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -102,34 +101,30 @@ func (x *NativeBase) GetSurface() *gdk.Surface {
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
 func (x *NativeBase) GetSurfaceTransform(XVar *float64, YVar *float64) {
-
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
-
 }
 
 // Realizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *NativeBase) Realize() {
-
 	XGtkNativeRealize(x.GoPointer())
-
 }
 
 // Unrealizes a `GtkNative`.
 //
 // This should only be used by subclasses.
 func (x *NativeBase) Unrealize() {
-
 	XGtkNativeUnrealize(x.GoPointer())
-
 }
 
-var XGtkNativeGetRenderer func(uintptr) uintptr
-var XGtkNativeGetSurface func(uintptr) uintptr
-var XGtkNativeGetSurfaceTransform func(uintptr, *float64, *float64)
-var XGtkNativeRealize func(uintptr)
-var XGtkNativeUnrealize func(uintptr)
+var (
+	XGtkNativeGetRenderer         func(uintptr) uintptr
+	XGtkNativeGetSurface          func(uintptr) uintptr
+	XGtkNativeGetSurfaceTransform func(uintptr, *float64, *float64)
+	XGtkNativeRealize             func(uintptr)
+	XGtkNativeUnrealize           func(uintptr)
+)
 
 var xNativeGetForSurface func(uintptr) uintptr
 
@@ -150,7 +145,7 @@ func NativeGetForSurface(SurfaceVar *gdk.Surface) *NativeBase {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -169,5 +164,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkNativeGetSurfaceTransform, libs, "gtk_native_get_surface_transform")
 	core.PuregoSafeRegister(&XGtkNativeRealize, libs, "gtk_native_realize")
 	core.PuregoSafeRegister(&XGtkNativeUnrealize, libs, "gtk_native_unrealize")
-
 }

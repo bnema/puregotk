@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -142,16 +141,13 @@ var xDragSourceDragCancel func(uintptr)
 
 // Cancels a currently ongoing drag operation.
 func (x *DragSource) DragCancel() {
-
 	xDragSourceDragCancel(x.GoPointer())
-
 }
 
 var xDragSourceGetActions func(uintptr) gdk.DragAction
 
 // Gets the actions that are currently set on the `GtkDragSource`.
 func (x *DragSource) GetActions() gdk.DragAction {
-
 	cret := xDragSourceGetActions(x.GoPointer())
 	return cret
 }
@@ -202,9 +198,7 @@ var xDragSourceSetActions func(uintptr, gdk.DragAction)
 // This function can be called before a drag is started,
 // or in a handler for the [signal@Gtk.DragSource::prepare] signal.
 func (x *DragSource) SetActions(ActionsVar gdk.DragAction) {
-
 	xDragSourceSetActions(x.GoPointer(), ActionsVar)
-
 }
 
 var xDragSourceSetContent func(uintptr, uintptr)
@@ -220,14 +214,7 @@ var xDragSourceSetContent func(uintptr, uintptr)
 // You may consider setting the content provider back to
 // %NULL in a [signal@Gtk.DragSource::drag-end] signal handler.
 func (x *DragSource) SetContent(ContentVar *gdk.ContentProvider) {
-
-	var ContentVarPtr uintptr
-	if ContentVar != nil {
-		ContentVarPtr = ContentVar.GoPointer()
-	}
-
-	xDragSourceSetContent(x.GoPointer(), ContentVarPtr)
-
+	xDragSourceSetContent(x.GoPointer(), ContentVar.GoPointer())
 }
 
 var xDragSourceSetIcon func(uintptr, uintptr, int, int)
@@ -243,14 +230,7 @@ var xDragSourceSetIcon func(uintptr, uintptr, int, int)
 // a [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] signal handler.
 func (x *DragSource) SetIcon(PaintableVar gdk.Paintable, HotXVar int, HotYVar int) {
-
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	xDragSourceSetIcon(x.GoPointer(), PaintableVarPtr, HotXVar, HotYVar)
-
+	xDragSourceSetIcon(x.GoPointer(), PaintableVar.GoPointer(), HotXVar, HotYVar)
 }
 
 func (c *DragSource) GoPointer() uintptr {
@@ -268,7 +248,7 @@ func (c *DragSource) SetGoPointer(ptr uintptr) {
 //
 // It can be used to e.g. set a custom drag icon with
 // [method@Gtk.DragSource.set_icon].
-func (x *DragSource) ConnectDragBegin(cb *func(DragSource, *gdk.Drag)) uint {
+func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
@@ -281,8 +261,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, *gdk.Drag)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }())
-
+		cbFn(fa, DragVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -296,7 +275,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, *gdk.Drag)) uint {
 // The signal handler may handle a failed drag operation based on
 // the type of error. It should return %TRUE if the failure has been handled
 // and the default "drag operation failed" animation should not be shown.
-func (x *DragSource) ConnectDragCancel(cb *func(DragSource, *gdk.Drag, gdk.DragCancelReason) bool) uint {
+func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
@@ -309,8 +288,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, *gdk.Drag, gdk.DragC
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }(), ReasonVarp)
-
+		return cbFn(fa, DragVarp, ReasonVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -324,7 +302,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, *gdk.Drag, gdk.DragC
 // A typical reason to connect to this signal is to undo
 // things done in [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] handlers.
-func (x *DragSource) ConnectDragEnd(cb *func(DragSource, *gdk.Drag, bool)) uint {
+func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
@@ -337,8 +315,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, *gdk.Drag, bool)) uint 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *gdk.Drag { cls := &gdk.Drag{}; cls.Ptr = DragVarp; return cls }(), DeleteDataVarp)
-
+		cbFn(fa, DragVarp, DeleteDataVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -353,7 +330,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, *gdk.Drag, bool)) uint 
 // to start. The default handler for this signal returns the value of
 // the [property@Gtk.DragSource:content] property, so if you set up that
 // property ahead of time, you don't need to connect to this signal.
-func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) *gdk.ContentProvider) uint {
+func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
@@ -368,7 +345,6 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) *gdk.
 
 		PrepareCls := cbFn(fa, XVarp, YVarp)
 		return PrepareCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -379,7 +355,7 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) *gdk.
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -400,5 +376,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSourceSetActions, libs, "gtk_drag_source_set_actions")
 	core.PuregoSafeRegister(&xDragSourceSetContent, libs, "gtk_drag_source_set_content")
 	core.PuregoSafeRegister(&xDragSourceSetIcon, libs, "gtk_drag_source_set_icon")
-
 }

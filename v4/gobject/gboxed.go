@@ -2,10 +2,7 @@
 package gobject
 
 import (
-	"unsafe"
-
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -23,7 +20,6 @@ var xBoxedCopy func(types.GType, uintptr) uintptr
 
 // Provide a copy of a boxed structure @src_boxed which is of type @boxed_type.
 func BoxedCopy(BoxedTypeVar types.GType, SrcBoxedVar uintptr) uintptr {
-
 	cret := xBoxedCopy(BoxedTypeVar, SrcBoxedVar)
 	return cret
 }
@@ -32,9 +28,7 @@ var xBoxedFree func(types.GType, uintptr)
 
 // Free the boxed structure @boxed which is of type @boxed_type.
 func BoxedFree(BoxedTypeVar types.GType, BoxedVar uintptr) {
-
 	xBoxedFree(BoxedTypeVar, BoxedVar)
-
 }
 
 var xBoxedTypeRegisterStatic func(string, uintptr, uintptr) types.GType
@@ -49,44 +43,13 @@ var xBoxedTypeRegisterStatic func(string, uintptr, uintptr) types.GType
 // instead of calling g_boxed_type_register_static() directly. The macro
 // will create the appropriate `*_get_type()` function for the boxed type.
 func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedFreeVar *BoxedFreeFunc) types.GType {
-
-	var BoxedCopyVarRef uintptr
-	if BoxedCopyVar != nil {
-		BoxedCopyVarPtr := uintptr(unsafe.Pointer(BoxedCopyVar))
-		if cbRefPtr, ok := glib.GetCallback(BoxedCopyVarPtr); ok {
-			BoxedCopyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) uintptr {
-				cbFn := *BoxedCopyVar
-				return cbFn(arg0)
-			}
-			BoxedCopyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(BoxedCopyVarPtr, BoxedCopyVarRef, BoxedCopyVar)
-		}
-	}
-
-	var BoxedFreeVarRef uintptr
-	if BoxedFreeVar != nil {
-		BoxedFreeVarPtr := uintptr(unsafe.Pointer(BoxedFreeVar))
-		if cbRefPtr, ok := glib.GetCallback(BoxedFreeVarPtr); ok {
-			BoxedFreeVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *BoxedFreeVar
-				cbFn(arg0)
-			}
-			BoxedFreeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(BoxedFreeVarPtr, BoxedFreeVarRef, BoxedFreeVar)
-		}
-	}
-
-	cret := xBoxedTypeRegisterStatic(NameVar, BoxedCopyVarRef, BoxedFreeVarRef)
+	cret := xBoxedTypeRegisterStatic(NameVar, glib.NewCallback(BoxedCopyVar), glib.NewCallback(BoxedFreeVar))
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0", "libgobject-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GOBJECT") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -99,5 +62,4 @@ func init() {
 	core.PuregoSafeRegister(&xBoxedCopy, libs, "g_boxed_copy")
 	core.PuregoSafeRegister(&xBoxedFree, libs, "g_boxed_free")
 	core.PuregoSafeRegister(&xBoxedTypeRegisterStatic, libs, "g_boxed_type_register_static")
-
 }

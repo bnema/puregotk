@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -222,7 +221,6 @@ var xMountOperationIsShowing func(uintptr) bool
 // Returns whether the `GtkMountOperation` is currently displaying
 // a window.
 func (x *MountOperation) IsShowing() bool {
-
 	cret := xMountOperationIsShowing(x.GoPointer())
 	return cret
 }
@@ -231,9 +229,7 @@ var xMountOperationSetDisplay func(uintptr, uintptr)
 
 // Sets the display to show windows of the `GtkMountOperation` on.
 func (x *MountOperation) SetDisplay(DisplayVar *gdk.Display) {
-
 	xMountOperationSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
-
 }
 
 var xMountOperationSetParent func(uintptr, uintptr)
@@ -241,14 +237,7 @@ var xMountOperationSetParent func(uintptr, uintptr)
 // Sets the transient parent for windows shown by the
 // `GtkMountOperation`.
 func (x *MountOperation) SetParent(ParentVar *Window) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	xMountOperationSetParent(x.GoPointer(), ParentVarPtr)
-
+	xMountOperationSetParent(x.GoPointer(), ParentVar.GoPointer())
 }
 
 func (c *MountOperation) GoPointer() uintptr {
@@ -272,7 +261,7 @@ func (x *MountOperation) GetPropertyIsShowing() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -291,5 +280,4 @@ func init() {
 	core.PuregoSafeRegister(&xMountOperationIsShowing, libs, "gtk_mount_operation_is_showing")
 	core.PuregoSafeRegister(&xMountOperationSetDisplay, libs, "gtk_mount_operation_set_display")
 	core.PuregoSafeRegister(&xMountOperationSetParent, libs, "gtk_mount_operation_set_parent")
-
 }

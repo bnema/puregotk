@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -28,7 +27,7 @@ func (x *MappedFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMappedFile func(string, bool, **Error) *MappedFile
+var xNewMappedFile func(string, bool, **Error) uintptr
 
 // Maps a file into memory. On UNIX, this is using the mmap() function.
 //
@@ -50,14 +49,16 @@ func NewMappedFile(FilenameVar string, WritableVar bool) (*MappedFile, error) {
 	var cerr *Error
 
 	cret := xNewMappedFile(FilenameVar, WritableVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*MappedFile)(unsafe.Pointer(cret)), nil
 }
 
-var xNewMappedFileFromFd func(int, bool, **Error) *MappedFile
+var xNewMappedFileFromFd func(int, bool, **Error) uintptr
 
 // Maps a file into memory. On UNIX, this is using the mmap() function.
 //
@@ -74,11 +75,13 @@ func NewMappedFileFromFd(FdVar int, WritableVar bool) (*MappedFile, error) {
 	var cerr *Error
 
 	cret := xNewMappedFileFromFd(FdVar, WritableVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*MappedFile)(unsafe.Pointer(cret)), nil
 }
 
 var xMappedFileFree func(uintptr)
@@ -86,20 +89,20 @@ var xMappedFileFree func(uintptr)
 // This call existed before #GMappedFile had refcounting and is currently
 // exactly the same as g_mapped_file_unref().
 func (x *MappedFile) Free() {
-
 	xMappedFileFree(x.GoPointer())
-
 }
 
-var xMappedFileGetBytes func(uintptr) *Bytes
+var xMappedFileGetBytes func(uintptr) uintptr
 
 // Creates a new #GBytes which references the data mapped from @file.
 // The mapped contents of the file must not be modified after creating this
 // bytes object, because a #GBytes should be immutable.
 func (x *MappedFile) GetBytes() *Bytes {
-
 	cret := xMappedFileGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
 var xMappedFileGetContents func(uintptr) string
@@ -111,7 +114,6 @@ var xMappedFileGetContents func(uintptr) string
 //
 // If the file is empty then %NULL is returned.
 func (x *MappedFile) GetContents() string {
-
 	cret := xMappedFileGetContents(x.GoPointer())
 	return cret
 }
@@ -120,19 +122,20 @@ var xMappedFileGetLength func(uintptr) uint
 
 // Returns the length of the contents of a #GMappedFile.
 func (x *MappedFile) GetLength() uint {
-
 	cret := xMappedFileGetLength(x.GoPointer())
 	return cret
 }
 
-var xMappedFileRef func(uintptr) *MappedFile
+var xMappedFileRef func(uintptr) uintptr
 
 // Increments the reference count of @file by one.  It is safe to call
 // this function from any thread.
 func (x *MappedFile) Ref() *MappedFile {
-
 	cret := xMappedFileRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MappedFile)(unsafe.Pointer(cret))
 }
 
 var xMappedFileUnref func(uintptr)
@@ -144,14 +147,12 @@ var xMappedFileUnref func(uintptr)
 //
 // Since 2.22
 func (x *MappedFile) Unref() {
-
 	xMappedFileUnref(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -172,5 +173,4 @@ func init() {
 	core.PuregoSafeRegister(&xMappedFileGetLength, libs, "g_mapped_file_get_length")
 	core.PuregoSafeRegister(&xMappedFileRef, libs, "g_mapped_file_ref")
 	core.PuregoSafeRegister(&xMappedFileUnref, libs, "g_mapped_file_unref")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -130,7 +129,7 @@ const (
 //
 // By default, `AdwWrapLayout` wraps as soon as the previous line cannot fit
 // any more children without shrinking them past their natural size. Set
-// [property@WrapLayout:wrap-policy] to [enum@Adw.WrapPolicy.MINIMUM] to only
+// [property@WrapLayout:wrap-policy] to [enum@Adw.WrapPolicy.minimum] to only
 // wrap once all the children in the previous line have been shrunk to their
 // minimum size.
 //
@@ -180,7 +179,6 @@ var xWrapLayoutGetAlign func(uintptr) float32
 
 // Gets the alignment of the children within each line.
 func (x *WrapLayout) GetAlign() float32 {
-
 	cret := xWrapLayoutGetAlign(x.GoPointer())
 	return cret
 }
@@ -189,7 +187,6 @@ var xWrapLayoutGetChildSpacing func(uintptr) int
 
 // Gets spacing between widgets on the same line.
 func (x *WrapLayout) GetChildSpacing() int {
-
 	cret := xWrapLayoutGetChildSpacing(x.GoPointer())
 	return cret
 }
@@ -198,7 +195,6 @@ var xWrapLayoutGetChildSpacingUnit func(uintptr) LengthUnit
 
 // Gets the length unit for child spacing.
 func (x *WrapLayout) GetChildSpacingUnit() LengthUnit {
-
 	cret := xWrapLayoutGetChildSpacingUnit(x.GoPointer())
 	return cret
 }
@@ -207,7 +203,6 @@ var xWrapLayoutGetJustify func(uintptr) JustifyMode
 
 // Gets whether and how each complete line is stretched to fill the entire widget.
 func (x *WrapLayout) GetJustify() JustifyMode {
-
 	cret := xWrapLayoutGetJustify(x.GoPointer())
 	return cret
 }
@@ -216,7 +211,6 @@ var xWrapLayoutGetJustifyLastLine func(uintptr) bool
 
 // Gets whether the last line should be stretched to fill the entire widget.
 func (x *WrapLayout) GetJustifyLastLine() bool {
-
 	cret := xWrapLayoutGetJustifyLastLine(x.GoPointer())
 	return cret
 }
@@ -225,7 +219,6 @@ var xWrapLayoutGetLineHomogeneous func(uintptr) bool
 
 // Gets whether all lines should take the same amount of space.
 func (x *WrapLayout) GetLineHomogeneous() bool {
-
 	cret := xWrapLayoutGetLineHomogeneous(x.GoPointer())
 	return cret
 }
@@ -234,7 +227,6 @@ var xWrapLayoutGetLineSpacing func(uintptr) int
 
 // Gets the spacing between lines.
 func (x *WrapLayout) GetLineSpacing() int {
-
 	cret := xWrapLayoutGetLineSpacing(x.GoPointer())
 	return cret
 }
@@ -243,7 +235,6 @@ var xWrapLayoutGetLineSpacingUnit func(uintptr) LengthUnit
 
 // Gets the length unit for line spacing.
 func (x *WrapLayout) GetLineSpacingUnit() LengthUnit {
-
 	cret := xWrapLayoutGetLineSpacingUnit(x.GoPointer())
 	return cret
 }
@@ -252,7 +243,6 @@ var xWrapLayoutGetNaturalLineLength func(uintptr) int
 
 // Gets the natural size for each line.
 func (x *WrapLayout) GetNaturalLineLength() int {
-
 	cret := xWrapLayoutGetNaturalLineLength(x.GoPointer())
 	return cret
 }
@@ -261,7 +251,6 @@ var xWrapLayoutGetNaturalLineLengthUnit func(uintptr) LengthUnit
 
 // Gets the length unit for line spacing.
 func (x *WrapLayout) GetNaturalLineLengthUnit() LengthUnit {
-
 	cret := xWrapLayoutGetNaturalLineLengthUnit(x.GoPointer())
 	return cret
 }
@@ -270,7 +259,6 @@ var xWrapLayoutGetPackDirection func(uintptr) PackDirection
 
 // Gets the direction children are packed in each line.
 func (x *WrapLayout) GetPackDirection() PackDirection {
-
 	cret := xWrapLayoutGetPackDirection(x.GoPointer())
 	return cret
 }
@@ -279,7 +267,6 @@ var xWrapLayoutGetWrapPolicy func(uintptr) WrapPolicy
 
 // Gets the policy for line wrapping.
 func (x *WrapLayout) GetWrapPolicy() WrapPolicy {
-
 	cret := xWrapLayoutGetWrapPolicy(x.GoPointer())
 	return cret
 }
@@ -288,7 +275,6 @@ var xWrapLayoutGetWrapReverse func(uintptr) bool
 
 // Gets whether wrap direction is reversed.
 func (x *WrapLayout) GetWrapReverse() bool {
-
 	cret := xWrapLayoutGetWrapReverse(x.GoPointer())
 	return cret
 }
@@ -302,12 +288,10 @@ var xWrapLayoutSetAlign func(uintptr, float32)
 // line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) SetAlign(AlignVar float32) {
-
 	xWrapLayoutSetAlign(x.GoPointer(), AlignVar)
-
 }
 
 var xWrapLayoutSetChildSpacing func(uintptr, int)
@@ -316,9 +300,7 @@ var xWrapLayoutSetChildSpacing func(uintptr, int)
 //
 // See [property@WrapLayout:child-spacing-unit].
 func (x *WrapLayout) SetChildSpacing(ChildSpacingVar int) {
-
 	xWrapLayoutSetChildSpacing(x.GoPointer(), ChildSpacingVar)
-
 }
 
 var xWrapLayoutSetChildSpacingUnit func(uintptr, LengthUnit)
@@ -329,9 +311,7 @@ var xWrapLayoutSetChildSpacingUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapLayout:child-spacing].
 func (x *WrapLayout) SetChildSpacingUnit(UnitVar LengthUnit) {
-
 	xWrapLayoutSetChildSpacingUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapLayoutSetJustify func(uintptr, JustifyMode)
@@ -339,24 +319,23 @@ var xWrapLayoutSetJustify func(uintptr, JustifyMode)
 // Sets whether and how each complete line should be stretched to fill the
 // entire widget.
 //
-// If set to `ADW_JUSTIFY_FILL`, each widget in the line will be stretched,
-// keeping consistent spacing, so that the line fills the entire widget.
+// If set to [enum@Adw.JustifyMode.fill], each widget in the line will be
+// stretched, keeping consistent spacing, so that the line fills the entire
+// widget.
 //
-// If set to `ADW_JUSTIFY_SPREAD`, the spacing between widgets will be
+// If set to [enum@Adw.JustifyMode.spread], the spacing between widgets will be
 // increased, keeping widget sizes intact. The first and last widget will be
 // aligned with the beginning and end of the line. If the line only contains a
 // single widget, it will be stretched regardless.
 //
-// If set to `ADW_JUSTIFY_NONE`, the line will not be stretched and the children
-// will be placed together within the line, according to
+// If set to [enum@Adw.JustifyMode.none], the line will not be stretched and the
+// children will be placed together within the line, according to
 // [property@WrapLayout:align].
 //
 // By default this doesn't affect the last line, as it will be incomplete. Use
 // [property@WrapLayout:justify-last-line] to justify it as well.
 func (x *WrapLayout) SetJustify(JustifyVar JustifyMode) {
-
 	xWrapLayoutSetJustify(x.GoPointer(), JustifyVar)
-
 }
 
 var xWrapLayoutSetJustifyLastLine func(uintptr, bool)
@@ -365,18 +344,14 @@ var xWrapLayoutSetJustifyLastLine func(uintptr, bool)
 //
 // See [property@WrapLayout:justify].
 func (x *WrapLayout) SetJustifyLastLine(JustifyLastLineVar bool) {
-
 	xWrapLayoutSetJustifyLastLine(x.GoPointer(), JustifyLastLineVar)
-
 }
 
 var xWrapLayoutSetLineHomogeneous func(uintptr, bool)
 
 // Sets whether all lines should take the same amount of space.
 func (x *WrapLayout) SetLineHomogeneous(HomogeneousVar bool) {
-
 	xWrapLayoutSetLineHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xWrapLayoutSetLineSpacing func(uintptr, int)
@@ -385,9 +360,7 @@ var xWrapLayoutSetLineSpacing func(uintptr, int)
 //
 // See [property@WrapLayout:line-spacing-unit].
 func (x *WrapLayout) SetLineSpacing(LineSpacingVar int) {
-
 	xWrapLayoutSetLineSpacing(x.GoPointer(), LineSpacingVar)
-
 }
 
 var xWrapLayoutSetLineSpacingUnit func(uintptr, LengthUnit)
@@ -398,9 +371,7 @@ var xWrapLayoutSetLineSpacingUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapLayout:line-spacing].
 func (x *WrapLayout) SetLineSpacingUnit(UnitVar LengthUnit) {
-
 	xWrapLayoutSetLineSpacingUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapLayoutSetNaturalLineLength func(uintptr, int)
@@ -412,9 +383,7 @@ var xWrapLayoutSetNaturalLineLength func(uintptr, int)
 //
 // See [property@WrapLayout:natural-line-length-unit].
 func (x *WrapLayout) SetNaturalLineLength(NaturalLineLengthVar int) {
-
 	xWrapLayoutSetNaturalLineLength(x.GoPointer(), NaturalLineLengthVar)
-
 }
 
 var xWrapLayoutSetNaturalLineLengthUnit func(uintptr, LengthUnit)
@@ -425,35 +394,29 @@ var xWrapLayoutSetNaturalLineLengthUnit func(uintptr, LengthUnit)
 //
 // See [property@WrapLayout:natural-line-length].
 func (x *WrapLayout) SetNaturalLineLengthUnit(UnitVar LengthUnit) {
-
 	xWrapLayoutSetNaturalLineLengthUnit(x.GoPointer(), UnitVar)
-
 }
 
 var xWrapLayoutSetPackDirection func(uintptr, PackDirection)
 
 // Sets the direction children are packed in each line.
 func (x *WrapLayout) SetPackDirection(PackDirectionVar PackDirection) {
-
 	xWrapLayoutSetPackDirection(x.GoPointer(), PackDirectionVar)
-
 }
 
 var xWrapLayoutSetWrapPolicy func(uintptr, WrapPolicy)
 
 // Sets the policy for line wrapping.
 //
-// If set to `ADW_WRAP_NATURAL`, the box will wrap to the next line as soon as
-// the previous line cannot fit any more children without shrinking them past
-// their natural size.
+// If set to [enum@Adw.WrapPolicy.natural], the box will wrap to the next line
+// as soon as the previous line cannot fit any more children without shrinking
+// them past their natural size.
 //
-// If set to `ADW_WRAP_MINIMUM`, the box will try to fit as many children into
-// each line as possible, shrinking them down to their minimum size before
-// wrapping to the next line.
+// If set to [enum@Adw.WrapPolicy.minimum], the box will try to fit as many
+// children into each line as possible, shrinking them down to their minimum
+// size before wrapping to the next line.
 func (x *WrapLayout) SetWrapPolicy(WrapPolicyVar WrapPolicy) {
-
 	xWrapLayoutSetWrapPolicy(x.GoPointer(), WrapPolicyVar)
-
 }
 
 var xWrapLayoutSetWrapReverse func(uintptr, bool)
@@ -464,9 +427,7 @@ var xWrapLayoutSetWrapReverse func(uintptr, bool)
 // in a vertical box. If set to `TRUE`, they wrap upwards or towards the start
 // respectively.
 func (x *WrapLayout) SetWrapReverse(WrapReverseVar bool) {
-
 	xWrapLayoutSetWrapReverse(x.GoPointer(), WrapReverseVar)
-
 }
 
 func (c *WrapLayout) GoPointer() uintptr {
@@ -488,7 +449,7 @@ func (c *WrapLayout) SetGoPointer(ptr uintptr) {
 // the line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) SetPropertyAlign(value float32) {
 	var v gobject.Value
@@ -505,7 +466,7 @@ func (x *WrapLayout) SetPropertyAlign(value float32) {
 // the line.
 //
 // Alignment is only used when [property@WrapLayout:justify] is set to
-// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [enum@Adw.JustifyMode.none], or on the last line when the
 // [property@WrapLayout:justify-last-line] is `FALSE`.
 func (x *WrapLayout) GetPropertyAlign() float32 {
 	var v gobject.Value
@@ -647,21 +608,18 @@ func (x *WrapLayout) GetPropertyWrapReverse() bool {
 
 // Retrieves the orientation of the @orientable.
 func (x *WrapLayout) GetOrientation() gtk.Orientation {
-
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *WrapLayout) SetOrientation(OrientationVar gtk.Orientation) {
-
 	gtk.XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -707,5 +665,4 @@ func init() {
 	core.PuregoSafeRegister(&xWrapLayoutSetPackDirection, libs, "adw_wrap_layout_set_pack_direction")
 	core.PuregoSafeRegister(&xWrapLayoutSetWrapPolicy, libs, "adw_wrap_layout_set_wrap_policy")
 	core.PuregoSafeRegister(&xWrapLayoutSetWrapReverse, libs, "adw_wrap_layout_set_wrap_reverse")
-
 }

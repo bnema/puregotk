@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -229,7 +228,6 @@ func (c *ConverterInputStream) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *ConverterInputStream) CanPoll() bool {
-
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -246,14 +244,11 @@ func (x *ConverterInputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be read.
@@ -268,7 +263,6 @@ func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.S
 // The behaviour of this method is undefined if
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) IsReadable() bool {
-
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
 	return cret
 }
@@ -300,12 +294,11 @@ func (x *ConverterInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint,
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -320,5 +313,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewConverterInputStream, libs, "g_converter_input_stream_new")
 
 	core.PuregoSafeRegister(&xConverterInputStreamGetConverter, libs, "g_converter_input_stream_get_converter")
-
 }

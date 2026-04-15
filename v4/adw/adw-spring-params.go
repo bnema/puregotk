@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -55,7 +54,7 @@ func (x *SpringParams) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSpringParams func(float64, float64, float64) *SpringParams
+var xNewSpringParams func(float64, float64, float64) uintptr
 
 // Creates a new `AdwSpringParams` from @mass, @stiffness and @damping_ratio.
 //
@@ -73,28 +72,31 @@ var xNewSpringParams func(float64, float64, float64) *SpringParams
 //
 // [ctor@SpringParams.new_full] allows to pass a raw damping value instead.
 func NewSpringParams(DampingRatioVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
-
 	cret := xNewSpringParams(DampingRatioVar, MassVar, StiffnessVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
-var xNewSpringParamsFull func(float64, float64, float64) *SpringParams
+var xNewSpringParamsFull func(float64, float64, float64) uintptr
 
 // Creates a new `AdwSpringParams` from @mass, @stiffness and @damping.
 //
 // See [ctor@SpringParams.new] for a simplified constructor using damping ratio
 // instead of @damping.
 func NewSpringParamsFull(DampingVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
-
 	cret := xNewSpringParamsFull(DampingVar, MassVar, StiffnessVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xSpringParamsGetDamping func(uintptr) float64
 
 // Gets the damping of @self.
 func (x *SpringParams) GetDamping() float64 {
-
 	cret := xSpringParamsGetDamping(x.GoPointer())
 	return cret
 }
@@ -103,7 +105,6 @@ var xSpringParamsGetDampingRatio func(uintptr) float64
 
 // Gets the damping ratio of @self.
 func (x *SpringParams) GetDampingRatio() float64 {
-
 	cret := xSpringParamsGetDampingRatio(x.GoPointer())
 	return cret
 }
@@ -112,7 +113,6 @@ var xSpringParamsGetMass func(uintptr) float64
 
 // Gets the mass of @self.
 func (x *SpringParams) GetMass() float64 {
-
 	cret := xSpringParamsGetMass(x.GoPointer())
 	return cret
 }
@@ -121,18 +121,19 @@ var xSpringParamsGetStiffness func(uintptr) float64
 
 // Gets the stiffness of @self.
 func (x *SpringParams) GetStiffness() float64 {
-
 	cret := xSpringParamsGetStiffness(x.GoPointer())
 	return cret
 }
 
-var xSpringParamsRef func(uintptr) *SpringParams
+var xSpringParamsRef func(uintptr) uintptr
 
 // Increases the reference count of @self.
 func (x *SpringParams) Ref() *SpringParams {
-
 	cret := xSpringParamsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xSpringParamsUnref func(uintptr)
@@ -141,14 +142,12 @@ var xSpringParamsUnref func(uintptr)
 //
 // If the last reference is dropped, the structure is freed.
 func (x *SpringParams) Unref() {
-
 	xSpringParamsUnref(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -169,5 +168,4 @@ func init() {
 	core.PuregoSafeRegister(&xSpringParamsGetStiffness, libs, "adw_spring_params_get_stiffness")
 	core.PuregoSafeRegister(&xSpringParamsRef, libs, "adw_spring_params_ref")
 	core.PuregoSafeRegister(&xSpringParamsUnref, libs, "adw_spring_params_unref")
-
 }

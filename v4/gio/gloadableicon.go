@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -177,21 +176,13 @@ func (x *LoadableIconBase) Load(SizeVar int, TypeVar *string, CancellableVar *Ca
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
 func (x *LoadableIconBase) LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
@@ -210,16 +201,17 @@ func (x *LoadableIconBase) LoadFinish(ResVar AsyncResult, TypeVar *string) (*Inp
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
-var XGLoadableIconLoad func(uintptr, int, *string, uintptr, **glib.Error) uintptr
-var XGLoadableIconLoadAsync func(uintptr, int, uintptr, uintptr, uintptr)
-var XGLoadableIconLoadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
+var (
+	XGLoadableIconLoad       func(uintptr, int, *string, uintptr, **glib.Error) uintptr
+	XGLoadableIconLoadAsync  func(uintptr, int, uintptr, uintptr, uintptr)
+	XGLoadableIconLoadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -234,5 +226,4 @@ func init() {
 	core.PuregoSafeRegister(&XGLoadableIconLoad, libs, "g_loadable_icon_load")
 	core.PuregoSafeRegister(&XGLoadableIconLoadAsync, libs, "g_loadable_icon_load_async")
 	core.PuregoSafeRegister(&XGLoadableIconLoadFinish, libs, "g_loadable_icon_load_finish")
-
 }

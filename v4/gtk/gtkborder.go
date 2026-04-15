@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -36,36 +35,38 @@ func (x *Border) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBorder func() *Border
+var xNewBorder func() uintptr
 
 // Allocates a new `GtkBorder` struct and initializes its elements to zero.
 func NewBorder() *Border {
-
 	cret := xNewBorder()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Border)(unsafe.Pointer(cret))
 }
 
-var xBorderCopy func(uintptr) *Border
+var xBorderCopy func(uintptr) uintptr
 
 // Copies a `GtkBorder`.
 func (x *Border) Copy() *Border {
-
 	cret := xBorderCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Border)(unsafe.Pointer(cret))
 }
 
 var xBorderFree func(uintptr)
 
 // Frees a `GtkBorder`.
 func (x *Border) Free() {
-
 	xBorderFree(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -81,5 +82,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xBorderCopy, libs, "gtk_border_copy")
 	core.PuregoSafeRegister(&xBorderFree, libs, "gtk_border_free")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -71,7 +70,6 @@ var xGesturePanGetOrientation func(uintptr) Orientation
 
 // Returns the orientation of the pan gestures that this @gesture expects.
 func (x *GesturePan) GetOrientation() Orientation {
-
 	cret := xGesturePanGetOrientation(x.GoPointer())
 	return cret
 }
@@ -80,9 +78,7 @@ var xGesturePanSetOrientation func(uintptr, Orientation)
 
 // Sets the orientation to be expected on pan gestures.
 func (x *GesturePan) SetOrientation(OrientationVar Orientation) {
-
 	xGesturePanSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func (c *GesturePan) GoPointer() uintptr {
@@ -111,7 +107,6 @@ func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uin
 		cbFn := *cb
 
 		cbFn(fa, DirectionVarp, OffsetVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -122,7 +117,7 @@ func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uin
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -138,5 +133,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xGesturePanGetOrientation, libs, "gtk_gesture_pan_get_orientation")
 	core.PuregoSafeRegister(&xGesturePanSetOrientation, libs, "gtk_gesture_pan_set_orientation")
-
 }

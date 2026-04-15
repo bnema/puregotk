@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -76,7 +75,6 @@ var xFileLauncherGetAlwaysAsk func(uintptr) bool
 
 // Returns whether to ask the user which app to use.
 func (x *FileLauncher) GetAlwaysAsk() bool {
-
 	cret := xFileLauncherGetAlwaysAsk(x.GoPointer())
 	return cret
 }
@@ -102,7 +100,6 @@ var xFileLauncherGetWritable func(uintptr) bool
 
 // Returns whether to make the file writable for the handler.
 func (x *FileLauncher) GetWritable() bool {
-
 	cret := xFileLauncherGetWritable(x.GoPointer())
 	return cret
 }
@@ -113,34 +110,7 @@ var xFileLauncherLaunch func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // This may present an app chooser dialog to the user.
 func (x *FileLauncher) Launch(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xFileLauncherLaunch(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xFileLauncherLaunch(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xFileLauncherLaunchFinish func(uintptr, uintptr, **glib.Error) bool
@@ -155,7 +125,6 @@ func (x *FileLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileLauncherOpenContainingFolder func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -165,34 +134,7 @@ var xFileLauncherOpenContainingFolder func(uintptr, uintptr, uintptr, uintptr, u
 // This is only supported for native files. It will fail if @file
 // is e.g. a http:// uri.
 func (x *FileLauncher) OpenContainingFolder(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xFileLauncherOpenContainingFolder(x.GoPointer(), ParentVarPtr, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xFileLauncherOpenContainingFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xFileLauncherOpenContainingFolderFinish func(uintptr, uintptr, **glib.Error) bool
@@ -207,7 +149,6 @@ func (x *FileLauncher) OpenContainingFolderFinish(ResultVar gio.AsyncResult) (bo
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFileLauncherSetAlwaysAsk func(uintptr, bool)
@@ -217,32 +158,21 @@ var xFileLauncherSetAlwaysAsk func(uintptr, bool)
 // If false, the file might be opened with a default app
 // or the previous choice.
 func (x *FileLauncher) SetAlwaysAsk(AlwaysAskVar bool) {
-
 	xFileLauncherSetAlwaysAsk(x.GoPointer(), AlwaysAskVar)
-
 }
 
 var xFileLauncherSetFile func(uintptr, uintptr)
 
 // Sets the file that will be opened.
 func (x *FileLauncher) SetFile(FileVar gio.File) {
-
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	xFileLauncherSetFile(x.GoPointer(), FileVarPtr)
-
+	xFileLauncherSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
 var xFileLauncherSetWritable func(uintptr, bool)
 
 // Sets whether to make the file writable for the handler.
 func (x *FileLauncher) SetWritable(WritableVar bool) {
-
 	xFileLauncherSetWritable(x.GoPointer(), WritableVar)
-
 }
 
 func (c *FileLauncher) GoPointer() uintptr {
@@ -294,7 +224,7 @@ func (x *FileLauncher) GetPropertyWritable() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -318,5 +248,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileLauncherSetAlwaysAsk, libs, "gtk_file_launcher_set_always_ask")
 	core.PuregoSafeRegister(&xFileLauncherSetFile, libs, "gtk_file_launcher_set_file")
 	core.PuregoSafeRegister(&xFileLauncherSetWritable, libs, "gtk_file_launcher_set_writable")
-
 }

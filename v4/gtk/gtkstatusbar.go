@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -93,7 +92,6 @@ var xStatusbarGetContextId func(uintptr, string) uint
 //
 // Note that the description is not shown in the UI.
 func (x *Statusbar) GetContextId(ContextDescriptionVar string) uint {
-
 	cret := xStatusbarGetContextId(x.GoPointer(), ContextDescriptionVar)
 	return cret
 }
@@ -107,16 +105,13 @@ var xStatusbarPop func(uintptr, uint)
 // if the message at the top of the stack has a different
 // context id.
 func (x *Statusbar) Pop(ContextIdVar uint) {
-
 	xStatusbarPop(x.GoPointer(), ContextIdVar)
-
 }
 
 var xStatusbarPush func(uintptr, uint, string) uint
 
 // Pushes a new message onto a statusbar’s stack.
 func (x *Statusbar) Push(ContextIdVar uint, TextVar string) uint {
-
 	cret := xStatusbarPush(x.GoPointer(), ContextIdVar, TextVar)
 	return cret
 }
@@ -126,9 +121,7 @@ var xStatusbarRemove func(uintptr, uint, uint)
 // Forces the removal of a message from a statusbar’s stack.
 // The exact @context_id and @message_id must be specified.
 func (x *Statusbar) Remove(ContextIdVar uint, MessageIdVar uint) {
-
 	xStatusbarRemove(x.GoPointer(), ContextIdVar, MessageIdVar)
-
 }
 
 var xStatusbarRemoveAll func(uintptr, uint)
@@ -136,9 +129,7 @@ var xStatusbarRemoveAll func(uintptr, uint)
 // Forces the removal of all messages from a statusbar's
 // stack with the exact @context_id.
 func (x *Statusbar) RemoveAll(ContextIdVar uint) {
-
 	xStatusbarRemoveAll(x.GoPointer(), ContextIdVar)
-
 }
 
 func (c *Statusbar) GoPointer() uintptr {
@@ -166,8 +157,7 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ContextIdVarp, core.GoString(TextVarp))
-
+		cbFn(fa, ContextIdVarp, TextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -190,8 +180,7 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ContextIdVarp, core.GoString(TextVarp))
-
+		cbFn(fa, ContextIdVarp, TextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -210,9 +199,19 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Statusbar) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Statusbar) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -233,7 +232,6 @@ func (x *Statusbar) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Statusbar) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -258,7 +256,6 @@ func (x *Statusbar) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Statusbar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -297,30 +294,23 @@ func (x *Statusbar) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Statusbar) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Statusbar) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Statusbar) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Statusbar) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -333,19 +323,7 @@ func (x *Statusbar) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Statusbar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -353,14 +331,7 @@ func (x *Statusbar) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acc
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Statusbar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -369,9 +340,7 @@ func (x *Statusbar) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Statusbar) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -393,9 +362,7 @@ func (x *Statusbar) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Statusbar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -405,9 +372,7 @@ func (x *Statusbar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Statusbar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -429,9 +394,7 @@ func (x *Statusbar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acce
 //
 // ```
 func (x *Statusbar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -441,9 +404,7 @@ func (x *Statusbar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs 
 //
 // This function is meant to be used by language bindings.
 func (x *Statusbar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -466,9 +427,7 @@ func (x *Statusbar) UpdateRelationValue(NRelationsVar int, RelationsVar []Access
 //
 // ```
 func (x *Statusbar) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -478,9 +437,7 @@ func (x *Statusbar) UpdateState(FirstStateVar AccessibleState, varArgs ...interf
 //
 // This function is meant to be used by language bindings.
 func (x *Statusbar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -488,14 +445,13 @@ func (x *Statusbar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Statusbar) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -514,5 +470,4 @@ func init() {
 	core.PuregoSafeRegister(&xStatusbarPush, libs, "gtk_statusbar_push")
 	core.PuregoSafeRegister(&xStatusbarRemove, libs, "gtk_statusbar_remove")
 	core.PuregoSafeRegister(&xStatusbarRemoveAll, libs, "gtk_statusbar_remove_all")
-
 }

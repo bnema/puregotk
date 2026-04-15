@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -43,7 +42,7 @@ func (x *PreferencesPageClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwPreferencesPage` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+// `AdwPreferencesPage` uses the [enum@Gtk.AccessibleRole.group] role.
 type PreferencesPage struct {
 	gtk.Widget
 }
@@ -81,9 +80,7 @@ var xPreferencesPageAdd func(uintptr, uintptr)
 
 // Adds a preferences group to @self.
 func (x *PreferencesPage) Add(GroupVar *PreferencesGroup) {
-
 	xPreferencesPageAdd(x.GoPointer(), GroupVar.GoPointer())
-
 }
 
 var xPreferencesPageGetBanner func(uintptr) uintptr
@@ -107,7 +104,6 @@ var xPreferencesPageGetDescription func(uintptr) string
 
 // Gets the description of @self.
 func (x *PreferencesPage) GetDescription() string {
-
 	cret := xPreferencesPageGetDescription(x.GoPointer())
 	return cret
 }
@@ -116,7 +112,6 @@ var xPreferencesPageGetDescriptionCentered func(uintptr) bool
 
 // Gets whether the description is centered.
 func (x *PreferencesPage) GetDescriptionCentered() bool {
-
 	cret := xPreferencesPageGetDescriptionCentered(x.GoPointer())
 	return cret
 }
@@ -144,7 +139,6 @@ var xPreferencesPageGetIconName func(uintptr) string
 
 // Gets the icon name for @self.
 func (x *PreferencesPage) GetIconName() string {
-
 	cret := xPreferencesPageGetIconName(x.GoPointer())
 	return cret
 }
@@ -153,7 +147,6 @@ var xPreferencesPageGetName func(uintptr) string
 
 // Gets the name of @self.
 func (x *PreferencesPage) GetName() string {
-
 	cret := xPreferencesPageGetName(x.GoPointer())
 	return cret
 }
@@ -162,7 +155,6 @@ var xPreferencesPageGetTitle func(uintptr) string
 
 // Gets the title of @self.
 func (x *PreferencesPage) GetTitle() string {
-
 	cret := xPreferencesPageGetTitle(x.GoPointer())
 	return cret
 }
@@ -171,7 +163,6 @@ var xPreferencesPageGetUseUnderline func(uintptr) bool
 
 // Gets whether an embedded underline in the title indicates a mnemonic.
 func (x *PreferencesPage) GetUseUnderline() bool {
-
 	cret := xPreferencesPageGetUseUnderline(x.GoPointer())
 	return cret
 }
@@ -183,41 +174,28 @@ var xPreferencesPageInsert func(uintptr, uintptr, int)
 // If @index is negative or larger than the number of groups, appends the group,
 // same as [method@PreferencesPage.add].
 func (x *PreferencesPage) Insert(GroupVar *PreferencesGroup, IndexVar int) {
-
 	xPreferencesPageInsert(x.GoPointer(), GroupVar.GoPointer(), IndexVar)
-
 }
 
 var xPreferencesPageRemove func(uintptr, uintptr)
 
 // Removes a group from @self.
 func (x *PreferencesPage) Remove(GroupVar *PreferencesGroup) {
-
 	xPreferencesPageRemove(x.GoPointer(), GroupVar.GoPointer())
-
 }
 
 var xPreferencesPageScrollToTop func(uintptr)
 
 // Scrolls the scrolled window of @self to the top.
 func (x *PreferencesPage) ScrollToTop() {
-
 	xPreferencesPageScrollToTop(x.GoPointer())
-
 }
 
 var xPreferencesPageSetBanner func(uintptr, uintptr)
 
 // Sets the banner displayed at the top of the page.
 func (x *PreferencesPage) SetBanner(BannerVar *Banner) {
-
-	var BannerVarPtr uintptr
-	if BannerVar != nil {
-		BannerVarPtr = BannerVar.GoPointer()
-	}
-
-	xPreferencesPageSetBanner(x.GoPointer(), BannerVarPtr)
-
+	xPreferencesPageSetBanner(x.GoPointer(), BannerVar.GoPointer())
 }
 
 var xPreferencesPageSetDescription func(uintptr, string)
@@ -226,60 +204,48 @@ var xPreferencesPageSetDescription func(uintptr, string)
 //
 // The description is displayed at the top of the page.
 func (x *PreferencesPage) SetDescription(DescriptionVar string) {
-
 	xPreferencesPageSetDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xPreferencesPageSetDescriptionCentered func(uintptr, bool)
 
 // Sets whether the description should be centered.
 func (x *PreferencesPage) SetDescriptionCentered(CenteredVar bool) {
-
 	xPreferencesPageSetDescriptionCentered(x.GoPointer(), CenteredVar)
-
 }
 
 var xPreferencesPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
 func (x *PreferencesPage) SetIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xPreferencesPageSetIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xPreferencesPageSetName func(uintptr, uintptr)
 
 // Sets the name of @self.
 func (x *PreferencesPage) SetName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xPreferencesPageSetName(x.GoPointer(), NameVarPtr)
-
 }
 
 var xPreferencesPageSetTitle func(uintptr, string)
 
 // Sets the title of @self.
 func (x *PreferencesPage) SetTitle(TitleVar string) {
-
 	xPreferencesPageSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 var xPreferencesPageSetUseUnderline func(uintptr, bool)
 
 // Sets whether an embedded underline in the title indicates a mnemonic.
 func (x *PreferencesPage) SetUseUnderline(UseUnderlineVar bool) {
-
 	xPreferencesPageSetUseUnderline(x.GoPointer(), UseUnderlineVar)
-
 }
 
 func (c *PreferencesPage) GoPointer() uintptr {
@@ -405,9 +371,19 @@ func (x *PreferencesPage) GetPropertyUseUnderline() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *PreferencesPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *PreferencesPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -428,7 +404,6 @@ func (x *PreferencesPage) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *PreferencesPage) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -453,7 +428,6 @@ func (x *PreferencesPage) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *PreferencesPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -492,30 +466,23 @@ func (x *PreferencesPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *PreferencesPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *PreferencesPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *PreferencesPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *PreferencesPage) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -528,19 +495,7 @@ func (x *PreferencesPage) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *PreferencesPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -548,14 +503,7 @@ func (x *PreferencesPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSibl
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *PreferencesPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -564,9 +512,7 @@ func (x *PreferencesPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessib
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *PreferencesPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -588,9 +534,7 @@ func (x *PreferencesPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformSta
 //
 // ```
 func (x *PreferencesPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -600,9 +544,7 @@ func (x *PreferencesPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -624,9 +566,7 @@ func (x *PreferencesPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar 
 //
 // ```
 func (x *PreferencesPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -636,9 +576,7 @@ func (x *PreferencesPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -661,9 +599,7 @@ func (x *PreferencesPage) UpdateRelationValue(NRelationsVar int, RelationsVar []
 //
 // ```
 func (x *PreferencesPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -673,9 +609,7 @@ func (x *PreferencesPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *PreferencesPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -683,14 +617,13 @@ func (x *PreferencesPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *PreferencesPage) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -723,5 +656,4 @@ func init() {
 	core.PuregoSafeRegister(&xPreferencesPageSetName, libs, "adw_preferences_page_set_name")
 	core.PuregoSafeRegister(&xPreferencesPageSetTitle, libs, "adw_preferences_page_set_title")
 	core.PuregoSafeRegister(&xPreferencesPageSetUseUnderline, libs, "adw_preferences_page_set_use_underline")
-
 }

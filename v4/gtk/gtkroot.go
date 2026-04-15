@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -107,23 +106,18 @@ func (x *RootBase) GetFocus() *Widget {
 // more convenient to use [method@Gtk.Widget.grab_focus] instead of
 // this function.
 func (x *RootBase) SetFocus(FocusVar *Widget) {
-
-	var FocusVarPtr uintptr
-	if FocusVar != nil {
-		FocusVarPtr = FocusVar.GoPointer()
-	}
-
-	XGtkRootSetFocus(x.GoPointer(), FocusVarPtr)
-
+	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
 }
 
-var XGtkRootGetDisplay func(uintptr) uintptr
-var XGtkRootGetFocus func(uintptr) uintptr
-var XGtkRootSetFocus func(uintptr, uintptr)
+var (
+	XGtkRootGetDisplay func(uintptr) uintptr
+	XGtkRootGetFocus   func(uintptr) uintptr
+	XGtkRootSetFocus   func(uintptr, uintptr)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -138,5 +132,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkRootGetDisplay, libs, "gtk_root_get_display")
 	core.PuregoSafeRegister(&XGtkRootGetFocus, libs, "gtk_root_get_focus")
 	core.PuregoSafeRegister(&XGtkRootSetFocus, libs, "gtk_root_set_focus")
-
 }

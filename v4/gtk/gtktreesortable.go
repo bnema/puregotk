@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -262,7 +261,6 @@ func (x *TreeSortableBase) SetGoPointer(ptr uintptr) {
 // %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 // %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
 func (x *TreeSortableBase) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
-
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
 	return cret
 }
@@ -271,7 +269,6 @@ func (x *TreeSortableBase) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortT
 // primarily by GtkTreeViewColumns in order to determine if a model can
 // go back to the default state, or not.
 func (x *TreeSortableBase) HasDefaultSortFunc() bool {
-
 	cret := XGtkTreeSortableHasDefaultSortFunc(x.GoPointer())
 	return cret
 }
@@ -286,9 +283,7 @@ func (x *TreeSortableBase) HasDefaultSortFunc() bool {
 // default state. In this case, when the current sort column id of @sortable
 // is %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
 func (x *TreeSortableBase) SetDefaultSortFunc(SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkTreeSortableSetDefaultSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 // Sets the current sort column to be @sort_column_id. The @sortable will
@@ -301,33 +296,29 @@ func (x *TreeSortableBase) SetDefaultSortFunc(SortFuncVar *TreeIterCompareFunc, 
 //
 // - %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: no sorting will occur
 func (x *TreeSortableBase) SetSortColumnId(SortColumnIdVar int, OrderVar SortType) {
-
 	XGtkTreeSortableSetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
-
 }
 
 // Sets the comparison function used when sorting to be @sort_func. If the
 // current sort column id of @sortable is the same as @sort_column_id, then
 // the model will sort using this function.
 func (x *TreeSortableBase) SetSortFunc(SortColumnIdVar int, SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkTreeSortableSetSortFunc(x.GoPointer(), SortColumnIdVar, glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 // Emits a `GtkTreeSortable::sort-column-changed` signal on @sortable.
 func (x *TreeSortableBase) SortColumnChanged() {
-
 	XGtkTreeSortableSortColumnChanged(x.GoPointer())
-
 }
 
-var XGtkTreeSortableGetSortColumnId func(uintptr, *int, *SortType) bool
-var XGtkTreeSortableHasDefaultSortFunc func(uintptr) bool
-var XGtkTreeSortableSetDefaultSortFunc func(uintptr, uintptr, uintptr, uintptr)
-var XGtkTreeSortableSetSortColumnId func(uintptr, int, SortType)
-var XGtkTreeSortableSetSortFunc func(uintptr, int, uintptr, uintptr, uintptr)
-var XGtkTreeSortableSortColumnChanged func(uintptr)
+var (
+	XGtkTreeSortableGetSortColumnId    func(uintptr, *int, *SortType) bool
+	XGtkTreeSortableHasDefaultSortFunc func(uintptr) bool
+	XGtkTreeSortableSetDefaultSortFunc func(uintptr, uintptr, uintptr, uintptr)
+	XGtkTreeSortableSetSortColumnId    func(uintptr, int, SortType)
+	XGtkTreeSortableSetSortFunc        func(uintptr, int, uintptr, uintptr, uintptr)
+	XGtkTreeSortableSortColumnChanged  func(uintptr)
+)
 
 const (
 	// Uses the default sort function in a [iface@Gtk.TreeSortable].
@@ -342,7 +333,7 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -360,5 +351,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkTreeSortableSetSortColumnId, libs, "gtk_tree_sortable_set_sort_column_id")
 	core.PuregoSafeRegister(&XGtkTreeSortableSetSortFunc, libs, "gtk_tree_sortable_set_sort_func")
 	core.PuregoSafeRegister(&XGtkTreeSortableSortColumnChanged, libs, "gtk_tree_sortable_sort_column_changed")
-
 }

@@ -2,8 +2,9 @@
 package gsk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 	"github.com/bnema/puregotk/v4/graphene"
@@ -74,7 +75,7 @@ const (
 	PathIntersectionEndValue PathIntersection = 3
 )
 
-var xPathParse func(string) *Path
+var xPathParse func(string) uintptr
 
 // Constructs a path from a serialized form.
 //
@@ -101,14 +102,16 @@ var xPathParse func(string) *Path
 //
 // The `O` command is an extension that is not supported in SVG.
 func PathParse(StringVar string) *Path {
-
 	cret := xPathParse(StringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GSK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -123,5 +126,4 @@ func init() {
 	core.PuregoSafeRegister(&xPathIntersectionGLibType, libs, "gsk_path_intersection_get_type")
 
 	core.PuregoSafeRegister(&xPathParse, libs, "gsk_path_parse")
-
 }

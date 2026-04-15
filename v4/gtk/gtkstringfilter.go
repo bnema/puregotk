@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -118,7 +117,6 @@ var xStringFilterGetIgnoreCase func(uintptr) bool
 
 // Returns whether the filter ignores case differences.
 func (x *StringFilter) GetIgnoreCase() bool {
-
 	cret := xStringFilterGetIgnoreCase(x.GoPointer())
 	return cret
 }
@@ -127,7 +125,6 @@ var xStringFilterGetMatchMode func(uintptr) StringFilterMatchMode
 
 // Returns the match mode that the filter is using.
 func (x *StringFilter) GetMatchMode() StringFilterMatchMode {
-
 	cret := xStringFilterGetMatchMode(x.GoPointer())
 	return cret
 }
@@ -136,7 +133,6 @@ var xStringFilterGetSearch func(uintptr) string
 
 // Gets the search term.
 func (x *StringFilter) GetSearch() string {
-
 	cret := xStringFilterGetSearch(x.GoPointer())
 	return cret
 }
@@ -148,44 +144,31 @@ var xStringFilterSetExpression func(uintptr, uintptr)
 //
 // The expression must have a value type of `G_TYPE_STRING`.
 func (x *StringFilter) SetExpression(ExpressionVar *Expression) {
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	xStringFilterSetExpression(x.GoPointer(), ExpressionVarPtr)
-
+	xStringFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())
 }
 
 var xStringFilterSetIgnoreCase func(uintptr, bool)
 
 // Sets whether the filter ignores case differences.
 func (x *StringFilter) SetIgnoreCase(IgnoreCaseVar bool) {
-
 	xStringFilterSetIgnoreCase(x.GoPointer(), IgnoreCaseVar)
-
 }
 
 var xStringFilterSetMatchMode func(uintptr, StringFilterMatchMode)
 
 // Sets the match mode for the filter.
 func (x *StringFilter) SetMatchMode(ModeVar StringFilterMatchMode) {
-
 	xStringFilterSetMatchMode(x.GoPointer(), ModeVar)
-
 }
 
 var xStringFilterSetSearch func(uintptr, uintptr)
 
 // Sets the string to search for.
 func (x *StringFilter) SetSearch(SearchVar *string) {
-
 	SearchVarPtr := core.GStrdupNullable(SearchVar)
 	defer core.GFreeNullable(SearchVarPtr)
 
 	xStringFilterSetSearch(x.GoPointer(), SearchVarPtr)
-
 }
 
 func (c *StringFilter) GoPointer() uintptr {
@@ -235,7 +218,7 @@ func (x *StringFilter) GetPropertySearch() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -259,5 +242,4 @@ func init() {
 	core.PuregoSafeRegister(&xStringFilterSetIgnoreCase, libs, "gtk_string_filter_set_ignore_case")
 	core.PuregoSafeRegister(&xStringFilterSetMatchMode, libs, "gtk_string_filter_set_match_mode")
 	core.PuregoSafeRegister(&xStringFilterSetSearch, libs, "gtk_string_filter_set_search")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -384,15 +383,12 @@ func (x *PrintOperationPreviewBase) SetGoPointer(ptr uintptr) {
 //
 // This function must be called to finish a custom print preview.
 func (x *PrintOperationPreviewBase) EndPreview() {
-
 	XGtkPrintOperationPreviewEndPreview(x.GoPointer())
-
 }
 
 // Returns whether the given page is included in the set of pages that
 // have been selected for printing.
 func (x *PrintOperationPreviewBase) IsSelected(PageNrVar int) bool {
-
 	cret := XGtkPrintOperationPreviewIsSelected(x.GoPointer(), PageNrVar)
 	return cret
 }
@@ -409,18 +405,18 @@ func (x *PrintOperationPreviewBase) IsSelected(PageNrVar int) bool {
 // Note that this function requires a suitable cairo context to
 // be associated with the print context.
 func (x *PrintOperationPreviewBase) RenderPage(PageNrVar int) {
-
 	XGtkPrintOperationPreviewRenderPage(x.GoPointer(), PageNrVar)
-
 }
 
-var XGtkPrintOperationPreviewEndPreview func(uintptr)
-var XGtkPrintOperationPreviewIsSelected func(uintptr, int) bool
-var XGtkPrintOperationPreviewRenderPage func(uintptr, int)
+var (
+	XGtkPrintOperationPreviewEndPreview func(uintptr)
+	XGtkPrintOperationPreviewIsSelected func(uintptr, int) bool
+	XGtkPrintOperationPreviewRenderPage func(uintptr, int)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -435,5 +431,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkPrintOperationPreviewEndPreview, libs, "gtk_print_operation_preview_end_preview")
 	core.PuregoSafeRegister(&XGtkPrintOperationPreviewIsSelected, libs, "gtk_print_operation_preview_is_selected")
 	core.PuregoSafeRegister(&XGtkPrintOperationPreviewRenderPage, libs, "gtk_print_operation_preview_render_page")
-
 }

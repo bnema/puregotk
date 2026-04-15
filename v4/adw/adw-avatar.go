@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -41,8 +40,8 @@ func (x *AvatarClass) GoPointer() uintptr {
 // The color is picked based on the hash of the [property@Avatar:text].
 //
 // If [property@Avatar:show-initials] is set to `FALSE`,
-// [property@Avatar:icon-name] or `avatar-default-symbolic` is shown instead of
-// the initials.
+// [property@Avatar:icon-name] or `adw-avatar-default-symbolic` is shown instead
+// of the initials.
 //
 // Use [property@Avatar:custom-image] to set a custom image.
 //
@@ -52,7 +51,7 @@ func (x *AvatarClass) GoPointer() uintptr {
 //
 // ## Accessibility
 //
-// `AdwAvatar` uses the `GTK_ACCESSIBLE_ROLE_IMG` role.
+// `AdwAvatar` uses the [enum@Gtk.AccessibleRole.img] role.
 type Avatar struct {
 	gtk.Widget
 }
@@ -128,7 +127,6 @@ var xAvatarGetIconName func(uintptr) string
 
 // Gets the name of an icon to use as a fallback.
 func (x *Avatar) GetIconName() string {
-
 	cret := xAvatarGetIconName(x.GoPointer())
 	return cret
 }
@@ -137,7 +135,6 @@ var xAvatarGetShowInitials func(uintptr) bool
 
 // Gets whether initials are used instead of an icon on the fallback avatar.
 func (x *Avatar) GetShowInitials() bool {
-
 	cret := xAvatarGetShowInitials(x.GoPointer())
 	return cret
 }
@@ -146,7 +143,6 @@ var xAvatarGetSize func(uintptr) int
 
 // Gets the size of the avatar.
 func (x *Avatar) GetSize() int {
-
 	cret := xAvatarGetSize(x.GoPointer())
 	return cret
 }
@@ -155,7 +151,6 @@ var xAvatarGetText func(uintptr) string
 
 // Gets the text used to generate the fallback initials and color.
 func (x *Avatar) GetText() string {
-
 	cret := xAvatarGetText(x.GoPointer())
 	return cret
 }
@@ -166,28 +161,19 @@ var xAvatarSetCustomImage func(uintptr, uintptr)
 //
 // Custom image is displayed instead of initials or icon.
 func (x *Avatar) SetCustomImage(CustomImageVar gdk.Paintable) {
-
-	var CustomImageVarPtr uintptr
-	if CustomImageVar != nil {
-		CustomImageVarPtr = CustomImageVar.GoPointer()
-	}
-
-	xAvatarSetCustomImage(x.GoPointer(), CustomImageVarPtr)
-
+	xAvatarSetCustomImage(x.GoPointer(), CustomImageVar.GoPointer())
 }
 
 var xAvatarSetIconName func(uintptr, uintptr)
 
 // Sets the name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) SetIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xAvatarSetIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xAvatarSetShowInitials func(uintptr, bool)
@@ -196,18 +182,14 @@ var xAvatarSetShowInitials func(uintptr, bool)
 //
 // See [property@Avatar:icon-name] for how to change the fallback icon.
 func (x *Avatar) SetShowInitials(ShowInitialsVar bool) {
-
 	xAvatarSetShowInitials(x.GoPointer(), ShowInitialsVar)
-
 }
 
 var xAvatarSetSize func(uintptr, int)
 
 // Sets the size of the avatar.
 func (x *Avatar) SetSize(SizeVar int) {
-
 	xAvatarSetSize(x.GoPointer(), SizeVar)
-
 }
 
 var xAvatarSetText func(uintptr, uintptr)
@@ -217,12 +199,10 @@ var xAvatarSetText func(uintptr, uintptr)
 // It's only used to generate the color if [property@Avatar:show-initials] is
 // `FALSE`.
 func (x *Avatar) SetText(TextVar *string) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xAvatarSetText(x.GoPointer(), TextVarPtr)
-
 }
 
 func (c *Avatar) GoPointer() uintptr {
@@ -239,7 +219,7 @@ func (c *Avatar) SetGoPointer(ptr uintptr) {
 // SetPropertyIconName sets the "icon-name" property.
 // The name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
@@ -250,7 +230,7 @@ func (x *Avatar) SetPropertyIconName(value string) {
 // GetPropertyIconName gets the "icon-name" property.
 // The name of an icon to use as a fallback.
 //
-// If no name is set, `avatar-default-symbolic` will be used.
+// If no name is set, `adw-avatar-default-symbolic` will be used.
 func (x *Avatar) GetPropertyIconName() string {
 	var v gobject.Value
 	x.GetProperty("icon-name", &v)
@@ -328,9 +308,19 @@ func (x *Avatar) GetPropertyText() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Avatar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Avatar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -351,7 +341,6 @@ func (x *Avatar) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Avatar) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -376,7 +365,6 @@ func (x *Avatar) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Avatar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -415,30 +403,23 @@ func (x *Avatar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Avatar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Avatar) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Avatar) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Avatar) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -451,19 +432,7 @@ func (x *Avatar) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Avatar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -471,14 +440,7 @@ func (x *Avatar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Avatar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -487,9 +449,7 @@ func (x *Avatar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Avatar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -511,9 +471,7 @@ func (x *Avatar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *Avatar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -523,9 +481,7 @@ func (x *Avatar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Avatar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -547,9 +503,7 @@ func (x *Avatar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Acc
 //
 // ```
 func (x *Avatar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -559,9 +513,7 @@ func (x *Avatar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *Avatar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -584,9 +536,7 @@ func (x *Avatar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acces
 //
 // ```
 func (x *Avatar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -596,9 +546,7 @@ func (x *Avatar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *Avatar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -606,14 +554,13 @@ func (x *Avatar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Avatar) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -638,5 +585,4 @@ func init() {
 	core.PuregoSafeRegister(&xAvatarSetShowInitials, libs, "adw_avatar_set_show_initials")
 	core.PuregoSafeRegister(&xAvatarSetSize, libs, "adw_avatar_set_size")
 	core.PuregoSafeRegister(&xAvatarSetText, libs, "adw_avatar_set_text")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -43,6 +42,25 @@ func (x *TabBarClass) GoPointer() uintptr {
 // When there's not enough space to show all the tabs, `AdwTabBar` will scroll
 // them. Pinned tabs always stay visible and aren't a part of the scrollable
 // area.
+//
+// ## Drag-and-Drop
+//
+// `AdwTabBar` tabs can have an additional drop target for arbitrary content.
+//
+// Use [method@TabBar.setup_extra_drop_target] to set it up, specifying the
+// supported content types and drag actions, then connect to
+// [signal@TabBar::extra-drag-drop] to handle a drop.
+//
+// In some cases, it may be necessary to determine the used action based on the
+// content. In that case, set [property@TabBar:extra-drag-preload] to `TRUE`
+// and connect to [signal@TabBar::extra-drag-value] signal, then return the
+// action from its handler. To access this action from the
+// [signal@TabBar::extra-drag-drop] handler, use the
+// [property@TabBar:extra-drag-preferred-action] property.
+//
+// [signal@TabBar::extra-drag-value] is also always emitted when starting to
+// hover an item, with a `NULL` value. This happens even when
+// [property@TabBar:extra-drag-preload] is `FALSE`.
 //
 // ## CSS nodes
 //
@@ -98,7 +116,6 @@ var xTabBarGetAutohide func(uintptr) bool
 
 // Gets whether the tabs automatically hide.
 func (x *TabBar) GetAutohide() bool {
-
 	cret := xTabBarGetAutohide(x.GoPointer())
 	return cret
 }
@@ -124,16 +141,20 @@ var xTabBarGetExpandTabs func(uintptr) bool
 
 // Gets whether tabs expand to full width.
 func (x *TabBar) GetExpandTabs() bool {
-
 	cret := xTabBarGetExpandTabs(x.GoPointer())
 	return cret
 }
 
 var xTabBarGetExtraDragPreferredAction func(uintptr) gdk.DragAction
 
-// Gets the current action during a drop on the extra_drop_target.
+// Gets the current drag action during a drop.
+//
+// This method should only be used from inside a
+// [signal@TabBar::extra-drag-drop] handler.
+//
+// The action will be a subset of what was originally passed to
+// [method@TabBar.setup_extra_drop_target].
 func (x *TabBar) GetExtraDragPreferredAction() gdk.DragAction {
-
 	cret := xTabBarGetExtraDragPreferredAction(x.GoPointer())
 	return cret
 }
@@ -142,7 +163,6 @@ var xTabBarGetExtraDragPreload func(uintptr) bool
 
 // Gets whether drop data should be preloaded on hover.
 func (x *TabBar) GetExtraDragPreload() bool {
-
 	cret := xTabBarGetExtraDragPreload(x.GoPointer())
 	return cret
 }
@@ -151,7 +171,6 @@ var xTabBarGetInverted func(uintptr) bool
 
 // Gets whether tabs use inverted layout.
 func (x *TabBar) GetInverted() bool {
-
 	cret := xTabBarGetInverted(x.GoPointer())
 	return cret
 }
@@ -162,7 +181,6 @@ var xTabBarGetIsOverflowing func(uintptr) bool
 //
 // If `TRUE`, all tabs cannot be displayed at once and require scrolling.
 func (x *TabBar) GetIsOverflowing() bool {
-
 	cret := xTabBarGetIsOverflowing(x.GoPointer())
 	return cret
 }
@@ -190,7 +208,6 @@ var xTabBarGetTabsRevealed func(uintptr) bool
 //
 // See [property@TabBar:autohide].
 func (x *TabBar) GetTabsRevealed() bool {
-
 	cret := xTabBarGetTabsRevealed(x.GoPointer())
 	return cret
 }
@@ -221,23 +238,14 @@ var xTabBarSetAutohide func(uintptr, bool)
 //
 // See [property@TabBar:tabs-revealed].
 func (x *TabBar) SetAutohide(AutohideVar bool) {
-
 	xTabBarSetAutohide(x.GoPointer(), AutohideVar)
-
 }
 
 var xTabBarSetEndActionWidget func(uintptr, uintptr)
 
 // Sets the widget to show after the tabs.
 func (x *TabBar) SetEndActionWidget(WidgetVar *gtk.Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xTabBarSetEndActionWidget(x.GoPointer(), WidgetVarPtr)
-
+	xTabBarSetEndActionWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 var xTabBarSetExpandTabs func(uintptr, bool)
@@ -247,9 +255,7 @@ var xTabBarSetExpandTabs func(uintptr, bool)
 // If set to `TRUE`, the tabs will always vary width filling the whole width
 // when possible, otherwise tabs will always have the minimum possible size.
 func (x *TabBar) SetExpandTabs(ExpandTabsVar bool) {
-
 	xTabBarSetExpandTabs(x.GoPointer(), ExpandTabsVar)
-
 }
 
 var xTabBarSetExtraDragPreload func(uintptr, bool)
@@ -258,9 +264,7 @@ var xTabBarSetExtraDragPreload func(uintptr, bool)
 //
 // See [property@Gtk.DropTarget:preload].
 func (x *TabBar) SetExtraDragPreload(PreloadVar bool) {
-
 	xTabBarSetExtraDragPreload(x.GoPointer(), PreloadVar)
-
 }
 
 var xTabBarSetInverted func(uintptr, bool)
@@ -270,43 +274,25 @@ var xTabBarSetInverted func(uintptr, bool)
 // If set to `TRUE`, non-pinned tabs will have the close button at the beginning
 // and the indicator at the end rather than the opposite.
 func (x *TabBar) SetInverted(InvertedVar bool) {
-
 	xTabBarSetInverted(x.GoPointer(), InvertedVar)
-
 }
 
 var xTabBarSetStartActionWidget func(uintptr, uintptr)
 
 // Sets the widget to show before the tabs.
 func (x *TabBar) SetStartActionWidget(WidgetVar *gtk.Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xTabBarSetStartActionWidget(x.GoPointer(), WidgetVarPtr)
-
+	xTabBarSetStartActionWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 var xTabBarSetView func(uintptr, uintptr)
 
 // Sets the tab view @self controls.
 func (x *TabBar) SetView(ViewVar *TabView) {
-
-	var ViewVarPtr uintptr
-	if ViewVar != nil {
-		ViewVarPtr = ViewVar.GoPointer()
-	}
-
-	xTabBarSetView(x.GoPointer(), ViewVarPtr)
-
+	xTabBarSetView(x.GoPointer(), ViewVar.GoPointer())
 }
 
 var xTabBarSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType, uint)
 
-// Sets the supported types for this drop target.
-//
 // Sets up an extra drop target on tabs.
 //
 // This allows to drag arbitrary content onto tabs, for example URLs in a web
@@ -317,9 +303,7 @@ var xTabBarSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType, uin
 //
 // The [signal@TabBar::extra-drag-drop] signal can be used to handle the drop.
 func (x *TabBar) SetupExtraDropTarget(ActionsVar gdk.DragAction, TypesVar []types.GType, NTypesVar uint) {
-
 	xTabBarSetupExtraDropTarget(x.GoPointer(), ActionsVar, TypesVar, NTypesVar)
-
 }
 
 func (c *TabBar) GoPointer() uintptr {
@@ -447,13 +431,13 @@ func (x *TabBar) GetPropertyTabsRevealed() bool {
 	return v.GetBoolean()
 }
 
-// This signal is emitted when content is dropped onto a tab.
+// Emitted when content is dropped onto a tab.
 //
 // The content must be of one of the types set up via
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, *TabPage, uintptr) bool) uint {
+func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
@@ -466,8 +450,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, *TabPage, uintptr) bool) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
-
+		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -476,7 +459,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, *TabPage, uintptr) bool) 
 	return handlerID
 }
 
-// This signal is emitted when the dropped content is preloaded.
+// Emitted when the dropped content is preloaded.
 //
 // In order for data to be preloaded, [property@TabBar:extra-drag-preload]
 // must be set to `TRUE`.
@@ -485,7 +468,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, *TabPage, uintptr) bool) 
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, *TabPage, uintptr) gdk.DragAction) uint {
+func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
@@ -498,8 +481,7 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, *TabPage, uintptr) gdk.D
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
-
+		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -518,9 +500,19 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, *TabPage, uintptr) gdk.D
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TabBar) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabBar) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -541,7 +533,6 @@ func (x *TabBar) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TabBar) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -566,7 +557,6 @@ func (x *TabBar) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TabBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -605,30 +595,23 @@ func (x *TabBar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TabBar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TabBar) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TabBar) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TabBar) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -641,19 +624,7 @@ func (x *TabBar) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TabBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -661,14 +632,7 @@ func (x *TabBar) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gt
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TabBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -677,9 +641,7 @@ func (x *TabBar) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TabBar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -701,9 +663,7 @@ func (x *TabBar) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *TabBar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -713,9 +673,7 @@ func (x *TabBar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *TabBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -737,9 +695,7 @@ func (x *TabBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Acc
 //
 // ```
 func (x *TabBar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -749,9 +705,7 @@ func (x *TabBar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 //
 // This function is meant to be used by language bindings.
 func (x *TabBar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -774,9 +728,7 @@ func (x *TabBar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acces
 //
 // ```
 func (x *TabBar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -786,9 +738,7 @@ func (x *TabBar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 //
 // This function is meant to be used by language bindings.
 func (x *TabBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -796,14 +746,13 @@ func (x *TabBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TabBar) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -835,5 +784,4 @@ func init() {
 	core.PuregoSafeRegister(&xTabBarSetStartActionWidget, libs, "adw_tab_bar_set_start_action_widget")
 	core.PuregoSafeRegister(&xTabBarSetView, libs, "adw_tab_bar_set_view")
 	core.PuregoSafeRegister(&xTabBarSetupExtraDropTarget, libs, "adw_tab_bar_setup_extra_drop_target")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -293,7 +292,6 @@ var xMemoryOutputStreamGetData func(uintptr) uintptr
 // Note that the returned pointer may become invalid on the next
 // write or truncate operation on the stream.
 func (x *MemoryOutputStream) GetData() uintptr {
-
 	cret := xMemoryOutputStreamGetData(x.GoPointer())
 	return cret
 }
@@ -303,7 +301,6 @@ var xMemoryOutputStreamGetDataSize func(uintptr) uint
 // Returns the number of bytes from the start up to including the last
 // byte written in the stream that has not been truncated away.
 func (x *MemoryOutputStream) GetDataSize() uint {
-
 	cret := xMemoryOutputStreamGetDataSize(x.GoPointer())
 	return cret
 }
@@ -326,19 +323,20 @@ var xMemoryOutputStreamGetSize func(uintptr) uint
 // In any case, if you want the number of bytes currently written to the
 // stream, use g_memory_output_stream_get_data_size().
 func (x *MemoryOutputStream) GetSize() uint {
-
 	cret := xMemoryOutputStreamGetSize(x.GoPointer())
 	return cret
 }
 
-var xMemoryOutputStreamStealAsBytes func(uintptr) *glib.Bytes
+var xMemoryOutputStreamStealAsBytes func(uintptr) uintptr
 
 // Returns data from the @ostream as a #GBytes. @ostream must be
 // closed before calling this function.
 func (x *MemoryOutputStream) StealAsBytes() *glib.Bytes {
-
 	cret := xMemoryOutputStreamStealAsBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xMemoryOutputStreamStealData func(uintptr) uintptr
@@ -350,7 +348,6 @@ var xMemoryOutputStreamStealData func(uintptr) uintptr
 //
 // @ostream must be closed before calling this function.
 func (x *MemoryOutputStream) StealData() uintptr {
-
 	cret := xMemoryOutputStreamStealData(x.GoPointer())
 	return cret
 }
@@ -450,7 +447,6 @@ func (x *MemoryOutputStream) GetPropertySize() uint {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *MemoryOutputStream) CanPoll() bool {
-
 	cret := XGPollableOutputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -467,14 +463,11 @@ func (x *MemoryOutputStream) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.
@@ -489,7 +482,6 @@ func (x *MemoryOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Sou
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryOutputStream) IsWritable() bool {
-
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
 	return cret
 }
@@ -525,7 +517,6 @@ func (x *MemoryOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, C
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Attempts to write the bytes contained in the @n_vectors @vectors to @stream,
@@ -560,12 +551,10 @@ func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVecto
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *MemoryOutputStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -573,7 +562,6 @@ func (x *MemoryOutputStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *MemoryOutputStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -605,12 +593,10 @@ func (x *MemoryOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancel
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *MemoryOutputStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -637,12 +623,11 @@ func (x *MemoryOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellab
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -662,5 +647,4 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryOutputStreamGetSize, libs, "g_memory_output_stream_get_size")
 	core.PuregoSafeRegister(&xMemoryOutputStreamStealAsBytes, libs, "g_memory_output_stream_steal_as_bytes")
 	core.PuregoSafeRegister(&xMemoryOutputStreamStealData, libs, "g_memory_output_stream_steal_data")
-
 }

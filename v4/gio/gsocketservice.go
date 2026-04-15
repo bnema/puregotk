@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -280,7 +279,6 @@ var xSocketServiceIsActive func(uintptr) bool
 // a non-active service will let connecting clients queue
 // up until the service is started.
 func (x *SocketService) IsActive() bool {
-
 	cret := xSocketServiceIsActive(x.GoPointer())
 	return cret
 }
@@ -295,9 +293,7 @@ var xSocketServiceStart func(uintptr)
 // This call is thread-safe, so it may be called from a thread
 // handling an incoming client request.
 func (x *SocketService) Start() {
-
 	xSocketServiceStart(x.GoPointer())
-
 }
 
 var xSocketServiceStop func(uintptr)
@@ -318,9 +314,7 @@ var xSocketServiceStop func(uintptr)
 // the socket service will start accepting connections immediately
 // when a new socket is added.
 func (x *SocketService) Stop() {
-
 	xSocketServiceStop(x.GoPointer())
-
 }
 
 func (c *SocketService) GoPointer() uintptr {
@@ -358,7 +352,7 @@ func (x *SocketService) GetPropertyActive() bool {
 //
 // @connection will be unreffed once the signal handler returns,
 // so you need to ref it yourself if you are planning to use it.
-func (x *SocketService) ConnectIncoming(cb *func(SocketService, *SocketConnection, *gobject.Object) bool) uint {
+func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "incoming", cbRefPtr)
@@ -371,15 +365,7 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, *SocketConnectio
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *SocketConnection { cls := &SocketConnection{}; cls.Ptr = ConnectionVarp; return cls }(), func() *gobject.Object {
-			if SourceObjectVarp == 0 {
-				return nil
-			}
-			cls := &gobject.Object{}
-			cls.Ptr = SourceObjectVarp
-			return cls
-		}())
-
+		return cbFn(fa, ConnectionVarp, SourceObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -390,7 +376,7 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, *SocketConnectio
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -407,5 +393,4 @@ func init() {
 	core.PuregoSafeRegister(&xSocketServiceIsActive, libs, "g_socket_service_is_active")
 	core.PuregoSafeRegister(&xSocketServiceStart, libs, "g_socket_service_start")
 	core.PuregoSafeRegister(&xSocketServiceStop, libs, "g_socket_service_stop")
-
 }

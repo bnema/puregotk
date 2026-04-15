@@ -2,8 +2,7 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -14,14 +13,12 @@ var xNetworkingInit func()
 // you only need to call it if you directly call system networking
 // functions (without calling any GLib networking functions first).
 func NetworkingInit() {
-
 	xNetworkingInit()
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -32,5 +29,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xNetworkingInit, libs, "g_networking_init")
-
 }

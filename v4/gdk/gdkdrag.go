@@ -4,8 +4,7 @@ package gdk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -39,7 +38,6 @@ var xDragActionIsUnique func(DragAction) bool
 // When @action is `GDK_ACTION_NONE` - ie no action was given, `TRUE`
 // is returned.
 func DragActionIsUnique(ActionVar DragAction) bool {
-
 	cret := xDragActionIsUnique(ActionVar)
 	return cret
 }
@@ -84,16 +82,13 @@ var xDragDropDone func(uintptr, bool)
 // call as effective, if this function is called multiple times,
 // all subsequent calls will be ignored.
 func (x *Drag) DropDone(SuccessVar bool) {
-
 	xDragDropDone(x.GoPointer(), SuccessVar)
-
 }
 
 var xDragGetActions func(uintptr) DragAction
 
 // Determines the bitmask of possible actions proposed by the source.
 func (x *Drag) GetActions() DragAction {
-
 	cret := xDragGetActions(x.GoPointer())
 	return cret
 }
@@ -172,20 +167,21 @@ func (x *Drag) GetDragSurface() *Surface {
 	return cls
 }
 
-var xDragGetFormats func(uintptr) *ContentFormats
+var xDragGetFormats func(uintptr) uintptr
 
 // Retrieves the formats supported by this `GdkDrag` object.
 func (x *Drag) GetFormats() *ContentFormats {
-
 	cret := xDragGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDragGetSelectedAction func(uintptr) DragAction
 
 // Determines the action chosen by the drag destination.
 func (x *Drag) GetSelectedAction() DragAction {
-
 	cret := xDragGetSelectedAction(x.GoPointer())
 	return cret
 }
@@ -214,9 +210,7 @@ var xDragSetHotspot func(uintptr, int, int)
 //
 // Initially, the hotspot is at the top left corner of the drag surface.
 func (x *Drag) SetHotspot(HotXVar int, HotYVar int) {
-
 	xDragSetHotspot(x.GoPointer(), HotXVar, HotYVar)
-
 }
 
 func (c *Drag) GoPointer() uintptr {
@@ -262,7 +256,6 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint {
 		cbFn := *cb
 
 		cbFn(fa, ReasonVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -288,7 +281,6 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -312,7 +304,6 @@ func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -352,7 +343,7 @@ func DragBegin(SurfaceVar *Surface, DeviceVar *Device, ContentVar *ContentProvid
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -380,5 +371,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSetHotspot, libs, "gdk_drag_set_hotspot")
 
 	core.PuregoSafeRegister(&xDragBegin, libs, "gdk_drag_begin")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gdkpixbuf"
@@ -242,7 +241,6 @@ var xPictureGetAlternativeText func(uintptr) string
 //
 // The returned string will be %NULL if the picture cannot be described textually.
 func (x *Picture) GetAlternativeText() string {
-
 	cret := xPictureGetAlternativeText(x.GoPointer())
 	return cret
 }
@@ -251,7 +249,6 @@ var xPictureGetCanShrink func(uintptr) bool
 
 // Returns whether the `GtkPicture` respects its contents size.
 func (x *Picture) GetCanShrink() bool {
-
 	cret := xPictureGetCanShrink(x.GoPointer())
 	return cret
 }
@@ -262,7 +259,6 @@ var xPictureGetContentFit func(uintptr) ContentFit
 //
 // See [enum@Gtk.ContentFit] for details.
 func (x *Picture) GetContentFit() ContentFit {
-
 	cret := xPictureGetContentFit(x.GoPointer())
 	return cret
 }
@@ -287,11 +283,18 @@ func (x *Picture) GetFile() *gio.FileBase {
 	return cls
 }
 
+var xPictureGetIsolateContents func(uintptr) bool
+
+// Returns whether the contents are isolated.
+func (x *Picture) GetIsolateContents() bool {
+	cret := xPictureGetIsolateContents(x.GoPointer())
+	return cret
+}
+
 var xPictureGetKeepAspectRatio func(uintptr) bool
 
 // Returns whether the `GtkPicture` preserves its contents aspect ratio.
 func (x *Picture) GetKeepAspectRatio() bool {
-
 	cret := xPictureGetKeepAspectRatio(x.GoPointer())
 	return cret
 }
@@ -323,17 +326,15 @@ var xPictureSetAlternativeText func(uintptr, uintptr)
 //
 // If the picture cannot be described textually, set this property to %NULL.
 func (x *Picture) SetAlternativeText(AlternativeTextVar *string) {
-
 	AlternativeTextVarPtr := core.GStrdupNullable(AlternativeTextVar)
 	defer core.GFreeNullable(AlternativeTextVarPtr)
 
 	xPictureSetAlternativeText(x.GoPointer(), AlternativeTextVarPtr)
-
 }
 
 var xPictureSetCanShrink func(uintptr, bool)
 
-// If set to %TRUE, the @self can be made smaller than its contents.
+// If set to %TRUE, then @self can be made smaller than its contents.
 //
 // The contents will then be scaled down when rendering.
 //
@@ -344,9 +345,7 @@ var xPictureSetCanShrink func(uintptr, bool)
 // because the grow behavior can be controlled via
 // [method@Gtk.Widget.set_halign] and [method@Gtk.Widget.set_valign].
 func (x *Picture) SetCanShrink(CanShrinkVar bool) {
-
 	xPictureSetCanShrink(x.GoPointer(), CanShrinkVar)
-
 }
 
 var xPictureSetContentFit func(uintptr, ContentFit)
@@ -355,9 +354,7 @@ var xPictureSetContentFit func(uintptr, ContentFit)
 //
 // See [enum@Gtk.ContentFit] for details.
 func (x *Picture) SetContentFit(ContentFitVar ContentFit) {
-
 	xPictureSetContentFit(x.GoPointer(), ContentFitVar)
-
 }
 
 var xPictureSetFile func(uintptr, uintptr)
@@ -373,14 +370,7 @@ var xPictureSetFile func(uintptr, uintptr)
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Picture) SetFile(FileVar gio.File) {
-
-	var FileVarPtr uintptr
-	if FileVar != nil {
-		FileVarPtr = FileVar.GoPointer()
-	}
-
-	xPictureSetFile(x.GoPointer(), FileVarPtr)
-
+	xPictureSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
 var xPictureSetFilename func(uintptr, uintptr)
@@ -396,12 +386,26 @@ var xPictureSetFilename func(uintptr, uintptr)
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Picture) SetFilename(FilenameVar *string) {
-
 	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
 	defer core.GFreeNullable(FilenameVarPtr)
 
 	xPictureSetFilename(x.GoPointer(), FilenameVarPtr)
+}
 
+var xPictureSetIsolateContents func(uintptr, bool)
+
+// If set to true, then the contents will be rendered individually.
+//
+// If set to false they will be able to erase or otherwise mix with
+// the background.
+//
+// GTK supports finer grained isolation, in rare cases where you need
+// this, you can use [method@Gtk.Snapshot.push_isolation] yourself to
+// achieve this.
+//
+// By default contents are isolated.
+func (x *Picture) SetIsolateContents(IsolateContentsVar bool) {
+	xPictureSetIsolateContents(x.GoPointer(), IsolateContentsVar)
 }
 
 var xPictureSetKeepAspectRatio func(uintptr, bool)
@@ -415,9 +419,7 @@ var xPictureSetKeepAspectRatio func(uintptr, bool)
 // If set to %FALSE or if the contents provide no aspect ratio,
 // the contents will be stretched over the picture's whole area.
 func (x *Picture) SetKeepAspectRatio(KeepAspectRatioVar bool) {
-
 	xPictureSetKeepAspectRatio(x.GoPointer(), KeepAspectRatioVar)
-
 }
 
 var xPictureSetPaintable func(uintptr, uintptr)
@@ -428,14 +430,7 @@ var xPictureSetPaintable func(uintptr, uintptr)
 //
 // See [ctor@Gtk.Picture.new_for_paintable] for details.
 func (x *Picture) SetPaintable(PaintableVar gdk.Paintable) {
-
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	xPictureSetPaintable(x.GoPointer(), PaintableVarPtr)
-
+	xPictureSetPaintable(x.GoPointer(), PaintableVar.GoPointer())
 }
 
 var xPictureSetPixbuf func(uintptr, uintptr)
@@ -446,14 +441,7 @@ var xPictureSetPixbuf func(uintptr, uintptr)
 //
 // This is a utility function that calls [method@Gtk.Picture.set_paintable].
 func (x *Picture) SetPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
-
-	var PixbufVarPtr uintptr
-	if PixbufVar != nil {
-		PixbufVarPtr = PixbufVar.GoPointer()
-	}
-
-	xPictureSetPixbuf(x.GoPointer(), PixbufVarPtr)
-
+	xPictureSetPixbuf(x.GoPointer(), PixbufVar.GoPointer())
 }
 
 var xPictureSetResource func(uintptr, uintptr)
@@ -463,12 +451,10 @@ var xPictureSetResource func(uintptr, uintptr)
 //
 // This is a utility function that calls [method@Gtk.Picture.set_file].
 func (x *Picture) SetResource(ResourcePathVar *string) {
-
 	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
 	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xPictureSetResource(x.GoPointer(), ResourcePathVarPtr)
-
 }
 
 func (c *Picture) GoPointer() uintptr {
@@ -516,6 +502,23 @@ func (x *Picture) GetPropertyCanShrink() bool {
 	return v.GetBoolean()
 }
 
+// SetPropertyIsolateContents sets the "isolate-contents" property.
+// If the rendering of the contents is isolated from the rest of the widget tree.
+func (x *Picture) SetPropertyIsolateContents(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("isolate-contents", &v)
+}
+
+// GetPropertyIsolateContents gets the "isolate-contents" property.
+// If the rendering of the contents is isolated from the rest of the widget tree.
+func (x *Picture) GetPropertyIsolateContents() bool {
+	var v gobject.Value
+	x.GetProperty("isolate-contents", &v)
+	return v.GetBoolean()
+}
+
 // SetPropertyKeepAspectRatio sets the "keep-aspect-ratio" property.
 // Whether the GtkPicture will render its contents trying to preserve the aspect
 // ratio.
@@ -545,9 +548,19 @@ func (x *Picture) GetPropertyKeepAspectRatio() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Picture) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Picture) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -568,7 +581,6 @@ func (x *Picture) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Picture) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -593,7 +605,6 @@ func (x *Picture) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Picture) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -632,30 +643,23 @@ func (x *Picture) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Picture) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Picture) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Picture) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Picture) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -668,19 +672,7 @@ func (x *Picture) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Picture) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -688,14 +680,7 @@ func (x *Picture) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Picture) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -704,9 +689,7 @@ func (x *Picture) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Picture) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -728,9 +711,7 @@ func (x *Picture) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Picture) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -740,9 +721,7 @@ func (x *Picture) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *Picture) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -764,9 +743,7 @@ func (x *Picture) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Access
 //
 // ```
 func (x *Picture) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -776,9 +753,7 @@ func (x *Picture) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *Picture) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -801,9 +776,7 @@ func (x *Picture) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessib
 //
 // ```
 func (x *Picture) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -813,9 +786,7 @@ func (x *Picture) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 //
 // This function is meant to be used by language bindings.
 func (x *Picture) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -823,14 +794,13 @@ func (x *Picture) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Picture) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -853,6 +823,7 @@ func init() {
 	core.PuregoSafeRegister(&xPictureGetCanShrink, libs, "gtk_picture_get_can_shrink")
 	core.PuregoSafeRegister(&xPictureGetContentFit, libs, "gtk_picture_get_content_fit")
 	core.PuregoSafeRegister(&xPictureGetFile, libs, "gtk_picture_get_file")
+	core.PuregoSafeRegister(&xPictureGetIsolateContents, libs, "gtk_picture_get_isolate_contents")
 	core.PuregoSafeRegister(&xPictureGetKeepAspectRatio, libs, "gtk_picture_get_keep_aspect_ratio")
 	core.PuregoSafeRegister(&xPictureGetPaintable, libs, "gtk_picture_get_paintable")
 	core.PuregoSafeRegister(&xPictureSetAlternativeText, libs, "gtk_picture_set_alternative_text")
@@ -860,9 +831,9 @@ func init() {
 	core.PuregoSafeRegister(&xPictureSetContentFit, libs, "gtk_picture_set_content_fit")
 	core.PuregoSafeRegister(&xPictureSetFile, libs, "gtk_picture_set_file")
 	core.PuregoSafeRegister(&xPictureSetFilename, libs, "gtk_picture_set_filename")
+	core.PuregoSafeRegister(&xPictureSetIsolateContents, libs, "gtk_picture_set_isolate_contents")
 	core.PuregoSafeRegister(&xPictureSetKeepAspectRatio, libs, "gtk_picture_set_keep_aspect_ratio")
 	core.PuregoSafeRegister(&xPictureSetPaintable, libs, "gtk_picture_set_paintable")
 	core.PuregoSafeRegister(&xPictureSetPixbuf, libs, "gtk_picture_set_pixbuf")
 	core.PuregoSafeRegister(&xPictureSetResource, libs, "gtk_picture_set_resource")
-
 }

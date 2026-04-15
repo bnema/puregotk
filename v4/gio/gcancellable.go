@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -247,9 +246,7 @@ var xCancellableCancel func(uintptr)
 // It is safe (although useless, since it will be a no-op) to call
 // this function from a [signal@Gio.Cancellable::cancelled] signal handler.
 func (x *Cancellable) Cancel() {
-
 	xCancellableCancel(x.GoPointer())
-
 }
 
 var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint
@@ -290,38 +287,7 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint
 //   - [method@Gio.Cancellable.make_pollfd]
 //   - [method@Gio.Cancellable.release_fd]
 func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CallbackVar
-				cbFn()
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var DataDestroyFuncVarRef uintptr
-	if DataDestroyFuncVar != nil {
-		DataDestroyFuncVarPtr := uintptr(unsafe.Pointer(DataDestroyFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(DataDestroyFuncVarPtr); ok {
-			DataDestroyFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DataDestroyFuncVar
-				cbFn(arg0)
-			}
-			DataDestroyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DataDestroyFuncVarPtr, DataDestroyFuncVarRef, DataDestroyFuncVar)
-		}
-	}
-
-	cret := xCancellableConnect(x.GoPointer(), CallbackVarRef, DataVar, DataDestroyFuncVarRef)
+	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DataDestroyFuncVar))
 	return cret
 }
 
@@ -342,9 +308,7 @@ var xCancellableDisconnect func(uintptr, uint)
 // If @cancellable is %NULL or @handler_id is `0` this function does
 // nothing.
 func (x *Cancellable) Disconnect(HandlerIdVar uint) {
-
 	xCancellableDisconnect(x.GoPointer(), HandlerIdVar)
-
 }
 
 var xCancellableGetFd func(uintptr) int
@@ -363,7 +327,6 @@ var xCancellableGetFd func(uintptr) int
 //
 // See also g_cancellable_make_pollfd().
 func (x *Cancellable) GetFd() int {
-
 	cret := xCancellableGetFd(x.GoPointer())
 	return cret
 }
@@ -372,7 +335,6 @@ var xCancellableIsCancelled func(uintptr) bool
 
 // Checks if a cancellable job has been cancelled.
 func (x *Cancellable) IsCancelled() bool {
-
 	cret := xCancellableIsCancelled(x.GoPointer())
 	return cret
 }
@@ -403,7 +365,6 @@ var xCancellableMakePollfd func(uintptr, *glib.PollFD) bool
 // Calling this function from a signal handler will therefore result in a
 // deadlock.
 func (x *Cancellable) MakePollfd(PollfdVar *glib.PollFD) bool {
-
 	cret := xCancellableMakePollfd(x.GoPointer(), PollfdVar)
 	return cret
 }
@@ -413,9 +374,7 @@ var xCancellablePopCurrent func(uintptr)
 // Pops @cancellable off the cancellable stack (verifying that @cancellable
 // is on the top of the stack).
 func (x *Cancellable) PopCurrent() {
-
 	xCancellablePopCurrent(x.GoPointer())
-
 }
 
 var xCancellablePushCurrent func(uintptr)
@@ -429,9 +388,7 @@ var xCancellablePushCurrent func(uintptr)
 // This is typically called automatically by e.g. #GFile operations,
 // so you rarely have to call this yourself.
 func (x *Cancellable) PushCurrent() {
-
 	xCancellablePushCurrent(x.GoPointer())
-
 }
 
 var xCancellableReleaseFd func(uintptr)
@@ -451,9 +408,7 @@ var xCancellableReleaseFd func(uintptr)
 // Calling this function from a signal handler will therefore result in a
 // deadlock.
 func (x *Cancellable) ReleaseFd() {
-
 	xCancellableReleaseFd(x.GoPointer())
-
 }
 
 var xCancellableReset func(uintptr)
@@ -475,27 +430,24 @@ var xCancellableReset func(uintptr)
 // Calling this function from a signal handler will therefore result in a
 // deadlock.
 func (x *Cancellable) Reset() {
-
 	xCancellableReset(x.GoPointer())
-
 }
 
-var xCancellableSetErrorIfCancelled func(uintptr) bool
+var xCancellableSetErrorIfCancelled func(uintptr, **glib.Error) bool
 
 // If the @cancellable is cancelled, sets the error to notify
 // that the operation was cancelled.
 func (x *Cancellable) SetErrorIfCancelled() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xCancellableSetErrorIfCancelled(x.GoPointer())
+	cret := xCancellableSetErrorIfCancelled(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xCancellableSourceNew func(uintptr) *glib.Source
+var xCancellableSourceNew func(uintptr) uintptr
 
 // Creates a source that triggers if @cancellable is cancelled and
 // calls its callback of type #GCancellableSourceFunc. This is
@@ -507,9 +459,11 @@ var xCancellableSourceNew func(uintptr) *glib.Source
 //
 // The new #GSource will hold a reference to the #GCancellable.
 func (x *Cancellable) SourceNew() *glib.Source {
-
 	cret := xCancellableSourceNew(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 func (c *Cancellable) GoPointer() uintptr {
@@ -590,7 +544,6 @@ func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -618,7 +571,7 @@ func CancellableGetCurrent() *Cancellable {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -646,5 +599,4 @@ func init() {
 	core.PuregoSafeRegister(&xCancellableSourceNew, libs, "g_cancellable_source_new")
 
 	core.PuregoSafeRegister(&xCancellableGetCurrent, libs, "g_cancellable_get_current")
-
 }

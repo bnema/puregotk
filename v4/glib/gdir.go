@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -26,7 +25,7 @@ func (x *Dir) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDirOpen func(string, uint, **Error) *Dir
+var xDirOpen func(string, uint, **Error) uintptr
 
 // Opens a directory for reading. The names of the files in the
 // directory can then be retrieved using g_dir_read_name().  Note
@@ -35,11 +34,13 @@ func DirOpen(PathVar string, FlagsVar uint) (*Dir, error) {
 	var cerr *Error
 
 	cret := xDirOpen(PathVar, FlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Dir)(unsafe.Pointer(cret)), nil
 }
 
 var xDirClose func(uintptr)
@@ -53,9 +54,7 @@ var xDirClose func(uintptr)
 // [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
 // [method@GLib.Dir.close] on it.
 func (x *Dir) Close() {
-
 	xDirClose(x.GoPointer())
-
 }
 
 var xDirReadName func(uintptr) string
@@ -74,18 +73,19 @@ var xDirReadName func(uintptr) string
 // On Windows, as is true of all GLib functions which operate on
 // filenames, the returned name is in UTF-8.
 func (x *Dir) ReadName() string {
-
 	cret := xDirReadName(x.GoPointer())
 	return cret
 }
 
-var xDirRef func(uintptr) *Dir
+var xDirRef func(uintptr) uintptr
 
 // Increment the reference count of `dir`.
 func (x *Dir) Ref() *Dir {
-
 	cret := xDirRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Dir)(unsafe.Pointer(cret))
 }
 
 var xDirRewind func(uintptr)
@@ -93,9 +93,7 @@ var xDirRewind func(uintptr)
 // Resets the given directory. The next call to g_dir_read_name()
 // will return the first entry again.
 func (x *Dir) Rewind() {
-
 	xDirRewind(x.GoPointer())
-
 }
 
 var xDirUnref func(uintptr)
@@ -112,14 +110,12 @@ var xDirUnref func(uintptr)
 // [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
 // [method@GLib.Dir.close] on it.
 func (x *Dir) Unref() {
-
 	xDirUnref(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -138,5 +134,4 @@ func init() {
 	core.PuregoSafeRegister(&xDirRef, libs, "g_dir_ref")
 	core.PuregoSafeRegister(&xDirRewind, libs, "g_dir_rewind")
 	core.PuregoSafeRegister(&xDirUnref, libs, "g_dir_unref")
-
 }

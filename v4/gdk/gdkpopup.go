@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -62,7 +61,6 @@ func (x *PopupBase) SetGoPointer(ptr uintptr) {
 
 // Returns whether this popup is set to hide on outside clicks.
 func (x *PopupBase) GetAutohide() bool {
-
 	cret := XGdkPopupGetAutohide(x.GoPointer())
 	return cret
 }
@@ -84,14 +82,12 @@ func (x *PopupBase) GetParent() *Surface {
 
 // Obtains the position of the popup relative to its parent.
 func (x *PopupBase) GetPositionX() int {
-
 	cret := XGdkPopupGetPositionX(x.GoPointer())
 	return cret
 }
 
 // Obtains the position of the popup relative to its parent.
 func (x *PopupBase) GetPositionY() int {
-
 	cret := XGdkPopupGetPositionY(x.GoPointer())
 	return cret
 }
@@ -101,7 +97,6 @@ func (x *PopupBase) GetPositionY() int {
 // The value returned may change after calling [method@Gdk.Popup.present],
 // or after the [signal@Gdk.Surface::layout] signal is emitted.
 func (x *PopupBase) GetRectAnchor() Gravity {
-
 	cret := XGdkPopupGetRectAnchor(x.GoPointer())
 	return cret
 }
@@ -111,7 +106,6 @@ func (x *PopupBase) GetRectAnchor() Gravity {
 // The value returned may change after calling [method@Gdk.Popup.present],
 // or after the [signal@Gdk.Surface::layout] signal is emitted.
 func (x *PopupBase) GetSurfaceAnchor() Gravity {
-
 	cret := XGdkPopupGetSurfaceAnchor(x.GoPointer())
 	return cret
 }
@@ -132,7 +126,6 @@ func (x *PopupBase) GetSurfaceAnchor() Gravity {
 // and is immediately hidden upon being presented. If presenting failed,
 // the [signal@Gdk.Surface::layout] signal will not me emitted.
 func (x *PopupBase) Present(WidthVar int, HeightVar int, LayoutVar *PopupLayout) bool {
-
 	cret := XGdkPopupPresent(x.GoPointer(), WidthVar, HeightVar, LayoutVar)
 	return cret
 }
@@ -158,17 +151,19 @@ func (x *PopupBase) GetPropertyAutohide() bool {
 	return v.GetBoolean()
 }
 
-var XGdkPopupGetAutohide func(uintptr) bool
-var XGdkPopupGetParent func(uintptr) uintptr
-var XGdkPopupGetPositionX func(uintptr) int
-var XGdkPopupGetPositionY func(uintptr) int
-var XGdkPopupGetRectAnchor func(uintptr) Gravity
-var XGdkPopupGetSurfaceAnchor func(uintptr) Gravity
-var XGdkPopupPresent func(uintptr, int, int, *PopupLayout) bool
+var (
+	XGdkPopupGetAutohide      func(uintptr) bool
+	XGdkPopupGetParent        func(uintptr) uintptr
+	XGdkPopupGetPositionX     func(uintptr) int
+	XGdkPopupGetPositionY     func(uintptr) int
+	XGdkPopupGetRectAnchor    func(uintptr) Gravity
+	XGdkPopupGetSurfaceAnchor func(uintptr) Gravity
+	XGdkPopupPresent          func(uintptr, int, int, *PopupLayout) bool
+)
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -187,5 +182,4 @@ func init() {
 	core.PuregoSafeRegister(&XGdkPopupGetRectAnchor, libs, "gdk_popup_get_rect_anchor")
 	core.PuregoSafeRegister(&XGdkPopupGetSurfaceAnchor, libs, "gdk_popup_get_surface_anchor")
 	core.PuregoSafeRegister(&XGdkPopupPresent, libs, "gdk_popup_present")
-
 }

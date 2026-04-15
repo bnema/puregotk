@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -61,24 +60,23 @@ func (x *OrientableBase) SetGoPointer(ptr uintptr) {
 
 // Retrieves the orientation of the @orientable.
 func (x *OrientableBase) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *OrientableBase) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
-var XGtkOrientableGetOrientation func(uintptr) Orientation
-var XGtkOrientableSetOrientation func(uintptr, Orientation)
+var (
+	XGtkOrientableGetOrientation func(uintptr) Orientation
+	XGtkOrientableSetOrientation func(uintptr, Orientation)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -92,5 +90,4 @@ func init() {
 
 	core.PuregoSafeRegister(&XGtkOrientableGetOrientation, libs, "gtk_orientable_get_orientation")
 	core.PuregoSafeRegister(&XGtkOrientableSetOrientation, libs, "gtk_orientable_set_orientation")
-
 }

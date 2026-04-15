@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -175,9 +174,7 @@ var xFlowBoxAppend func(uintptr, uintptr)
 //
 // See also: [method@Gtk.FlowBox.insert].
 func (x *FlowBox) Append(ChildVar *Widget) {
-
 	xFlowBoxAppend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xFlowBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -198,51 +195,13 @@ var xFlowBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // functionality in `GtkFlowBox`. When using a model, filtering and sorting
 // should be implemented by the model.
 func (x *FlowBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *FlowBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
-
-	var CreateWidgetFuncVarRef uintptr
-	if CreateWidgetFuncVar != nil {
-		CreateWidgetFuncVarPtr := uintptr(unsafe.Pointer(CreateWidgetFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(CreateWidgetFuncVarPtr); ok {
-			CreateWidgetFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-				cbFn := *CreateWidgetFuncVar
-				return cbFn(arg0, arg1)
-			}
-			CreateWidgetFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef, CreateWidgetFuncVar)
-		}
-	}
-
-	var UserDataFreeFuncVarRef uintptr
-	if UserDataFreeFuncVar != nil {
-		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-			UserDataFreeFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDataFreeFuncVar
-				cbFn(arg0)
-			}
-			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
-		}
-	}
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xFlowBoxBindModel(x.GoPointer(), ModelVarPtr, CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
-
+	xFlowBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallback(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
 }
 
 var xFlowBoxGetActivateOnSingleClick func(uintptr) bool
 
 // Returns whether children activate on single clicks.
 func (x *FlowBox) GetActivateOnSingleClick() bool {
-
 	cret := xFlowBoxGetActivateOnSingleClick(x.GoPointer())
 	return cret
 }
@@ -287,7 +246,6 @@ var xFlowBoxGetColumnSpacing func(uintptr) uint
 
 // Gets the horizontal spacing.
 func (x *FlowBox) GetColumnSpacing() uint {
-
 	cret := xFlowBoxGetColumnSpacing(x.GoPointer())
 	return cret
 }
@@ -296,7 +254,6 @@ var xFlowBoxGetHomogeneous func(uintptr) bool
 
 // Returns whether the box is homogeneous.
 func (x *FlowBox) GetHomogeneous() bool {
-
 	cret := xFlowBoxGetHomogeneous(x.GoPointer())
 	return cret
 }
@@ -305,7 +262,6 @@ var xFlowBoxGetMaxChildrenPerLine func(uintptr) uint
 
 // Gets the maximum number of children per line.
 func (x *FlowBox) GetMaxChildrenPerLine() uint {
-
 	cret := xFlowBoxGetMaxChildrenPerLine(x.GoPointer())
 	return cret
 }
@@ -314,7 +270,6 @@ var xFlowBoxGetMinChildrenPerLine func(uintptr) uint
 
 // Gets the minimum number of children per line.
 func (x *FlowBox) GetMinChildrenPerLine() uint {
-
 	cret := xFlowBoxGetMinChildrenPerLine(x.GoPointer())
 	return cret
 }
@@ -323,25 +278,25 @@ var xFlowBoxGetRowSpacing func(uintptr) uint
 
 // Gets the vertical spacing.
 func (x *FlowBox) GetRowSpacing() uint {
-
 	cret := xFlowBoxGetRowSpacing(x.GoPointer())
 	return cret
 }
 
-var xFlowBoxGetSelectedChildren func(uintptr) *glib.List
+var xFlowBoxGetSelectedChildren func(uintptr) uintptr
 
 // Creates a list of all selected children.
 func (x *FlowBox) GetSelectedChildren() *glib.List {
-
 	cret := xFlowBoxGetSelectedChildren(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xFlowBoxGetSelectionMode func(uintptr) SelectionMode
 
 // Gets the selection mode of @box.
 func (x *FlowBox) GetSelectionMode() SelectionMode {
-
 	cret := xFlowBoxGetSelectionMode(x.GoPointer())
 	return cret
 }
@@ -356,9 +311,7 @@ var xFlowBoxInsert func(uintptr, uintptr, int)
 // If @position is -1, or larger than the total number of children
 // in the @box, then the @widget will be appended to the end.
 func (x *FlowBox) Insert(WidgetVar *Widget, PositionVar int) {
-
 	xFlowBoxInsert(x.GoPointer(), WidgetVar.GoPointer(), PositionVar)
-
 }
 
 var xFlowBoxInvalidateFilter func(uintptr)
@@ -371,9 +324,7 @@ var xFlowBoxInvalidateFilter func(uintptr)
 // filter function just looked for a specific search
 // term, and the entry with the string has changed.
 func (x *FlowBox) InvalidateFilter() {
-
 	xFlowBoxInvalidateFilter(x.GoPointer())
-
 }
 
 var xFlowBoxInvalidateSort func(uintptr)
@@ -383,9 +334,7 @@ var xFlowBoxInvalidateSort func(uintptr)
 // Call this when the result of the sort function on
 // @box is changed due to an external factor.
 func (x *FlowBox) InvalidateSort() {
-
 	xFlowBoxInvalidateSort(x.GoPointer())
-
 }
 
 var xFlowBoxPrepend func(uintptr, uintptr)
@@ -397,18 +346,14 @@ var xFlowBoxPrepend func(uintptr, uintptr)
 //
 // See also: [method@Gtk.FlowBox.insert].
 func (x *FlowBox) Prepend(ChildVar *Widget) {
-
 	xFlowBoxPrepend(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xFlowBoxRemove func(uintptr, uintptr)
 
 // Removes a child from @box.
 func (x *FlowBox) Remove(WidgetVar *Widget) {
-
 	xFlowBoxRemove(x.GoPointer(), WidgetVar.GoPointer())
-
 }
 
 var xFlowBoxRemoveAll func(uintptr)
@@ -417,9 +362,7 @@ var xFlowBoxRemoveAll func(uintptr)
 //
 // This function does nothing if @box is backed by a model.
 func (x *FlowBox) RemoveAll() {
-
 	xFlowBoxRemoveAll(x.GoPointer())
-
 }
 
 var xFlowBoxSelectAll func(uintptr)
@@ -427,9 +370,7 @@ var xFlowBoxSelectAll func(uintptr)
 // Select all children of @box, if the selection
 // mode allows it.
 func (x *FlowBox) SelectAll() {
-
 	xFlowBoxSelectAll(x.GoPointer())
-
 }
 
 var xFlowBoxSelectChild func(uintptr, uintptr)
@@ -437,9 +378,7 @@ var xFlowBoxSelectChild func(uintptr, uintptr)
 // Selects a single child of @box, if the selection
 // mode allows it.
 func (x *FlowBox) SelectChild(ChildVar *FlowBoxChild) {
-
 	xFlowBoxSelectChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 var xFlowBoxSelectedForeach func(uintptr, uintptr, uintptr)
@@ -449,24 +388,7 @@ var xFlowBoxSelectedForeach func(uintptr, uintptr, uintptr)
 // Note that the selection cannot be modified from within
 // this function.
 func (x *FlowBox) SelectedForeach(FuncVar *FlowBoxForeachFunc, DataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1, arg2)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xFlowBoxSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
-
+	xFlowBoxSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
 var xFlowBoxSetActivateOnSingleClick func(uintptr, bool)
@@ -474,18 +396,14 @@ var xFlowBoxSetActivateOnSingleClick func(uintptr, bool)
 // If @single is %TRUE, children will be activated when you click
 // on them, otherwise you need to double-click.
 func (x *FlowBox) SetActivateOnSingleClick(SingleVar bool) {
-
 	xFlowBoxSetActivateOnSingleClick(x.GoPointer(), SingleVar)
-
 }
 
 var xFlowBoxSetColumnSpacing func(uintptr, uint)
 
 // Sets the horizontal space to add between children.
 func (x *FlowBox) SetColumnSpacing(SpacingVar uint) {
-
 	xFlowBoxSetColumnSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 var xFlowBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -504,39 +422,7 @@ var xFlowBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a filter function is incompatible with using a model
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var FilterFuncVarRef uintptr
-	if FilterFuncVar != nil {
-		FilterFuncVarPtr := uintptr(unsafe.Pointer(FilterFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FilterFuncVarPtr); ok {
-			FilterFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) bool {
-				cbFn := *FilterFuncVar
-				return cbFn(arg0, arg1)
-			}
-			FilterFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FilterFuncVarPtr, FilterFuncVarRef, FilterFuncVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xFlowBoxSetFilterFunc(x.GoPointer(), FilterFuncVarRef, UserDataVar, DestroyVarRef)
-
+	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xFlowBoxSetHadjustment func(uintptr, uintptr)
@@ -553,9 +439,7 @@ var xFlowBoxSetHadjustment func(uintptr, uintptr)
 // coordinate system as the allocation for immediate children
 // of the box.
 func (x *FlowBox) SetHadjustment(AdjustmentVar *Adjustment) {
-
 	xFlowBoxSetHadjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xFlowBoxSetHomogeneous func(uintptr, bool)
@@ -563,9 +447,7 @@ var xFlowBoxSetHomogeneous func(uintptr, bool)
 // Sets whether or not all children of @box are given
 // equal space in the box.
 func (x *FlowBox) SetHomogeneous(HomogeneousVar bool) {
-
 	xFlowBoxSetHomogeneous(x.GoPointer(), HomogeneousVar)
-
 }
 
 var xFlowBoxSetMaxChildrenPerLine func(uintptr, uint)
@@ -577,9 +459,7 @@ var xFlowBoxSetMaxChildrenPerLine func(uintptr, uint)
 // limits the overall natural size request to be no more
 // than @n_children children long in the given orientation.
 func (x *FlowBox) SetMaxChildrenPerLine(NChildrenVar uint) {
-
 	xFlowBoxSetMaxChildrenPerLine(x.GoPointer(), NChildrenVar)
-
 }
 
 var xFlowBoxSetMinChildrenPerLine func(uintptr, uint)
@@ -587,27 +467,21 @@ var xFlowBoxSetMinChildrenPerLine func(uintptr, uint)
 // Sets the minimum number of children to line up
 // in @box’s orientation before flowing.
 func (x *FlowBox) SetMinChildrenPerLine(NChildrenVar uint) {
-
 	xFlowBoxSetMinChildrenPerLine(x.GoPointer(), NChildrenVar)
-
 }
 
 var xFlowBoxSetRowSpacing func(uintptr, uint)
 
 // Sets the vertical space to add between children.
 func (x *FlowBox) SetRowSpacing(SpacingVar uint) {
-
 	xFlowBoxSetRowSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 var xFlowBoxSetSelectionMode func(uintptr, SelectionMode)
 
 // Sets how selection works in @box.
 func (x *FlowBox) SetSelectionMode(ModeVar SelectionMode) {
-
 	xFlowBoxSetSelectionMode(x.GoPointer(), ModeVar)
-
 }
 
 var xFlowBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -624,39 +498,7 @@ var xFlowBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a sort function is incompatible with using a model
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	var SortFuncVarRef uintptr
-	if SortFuncVar != nil {
-		SortFuncVarPtr := uintptr(unsafe.Pointer(SortFuncVar))
-		if cbRefPtr, ok := glib.GetCallback(SortFuncVarPtr); ok {
-			SortFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *SortFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
-		}
-	}
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xFlowBoxSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, DestroyVarRef)
-
+	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xFlowBoxSetVadjustment func(uintptr, uintptr)
@@ -673,9 +515,7 @@ var xFlowBoxSetVadjustment func(uintptr, uintptr)
 // coordinate system as the allocation for immediate children
 // of the box.
 func (x *FlowBox) SetVadjustment(AdjustmentVar *Adjustment) {
-
 	xFlowBoxSetVadjustment(x.GoPointer(), AdjustmentVar.GoPointer())
-
 }
 
 var xFlowBoxUnselectAll func(uintptr)
@@ -683,9 +523,7 @@ var xFlowBoxUnselectAll func(uintptr)
 // Unselect all children of @box, if the selection
 // mode allows it.
 func (x *FlowBox) UnselectAll() {
-
 	xFlowBoxUnselectAll(x.GoPointer())
-
 }
 
 var xFlowBoxUnselectChild func(uintptr, uintptr)
@@ -693,9 +531,7 @@ var xFlowBoxUnselectChild func(uintptr, uintptr)
 // Unselects a single child of @box, if the selection
 // mode allows it.
 func (x *FlowBox) UnselectChild(ChildVar *FlowBoxChild) {
-
 	xFlowBoxUnselectChild(x.GoPointer(), ChildVar.GoPointer())
-
 }
 
 func (c *FlowBox) GoPointer() uintptr {
@@ -861,7 +697,6 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -871,7 +706,7 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 }
 
 // Emitted when a child has been activated by the user.
-func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, *FlowBoxChild)) uint {
+func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
@@ -884,8 +719,7 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, *FlowBoxChild)) uint {
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, func() *FlowBoxChild { cls := &FlowBoxChild{}; cls.Ptr = ChildVarp; return cls }())
-
+		cbFn(fa, ChildVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -924,7 +758,6 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, b
 		cbFn := *cb
 
 		return cbFn(fa, StepVarp, CountVarp, ExtendVarp, ModifyVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -953,7 +786,6 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -981,7 +813,6 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1009,7 +840,6 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1038,7 +868,6 @@ func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1057,9 +886,19 @@ func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FlowBox) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *FlowBox) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1080,7 +919,6 @@ func (x *FlowBox) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FlowBox) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1105,7 +943,6 @@ func (x *FlowBox) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FlowBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1144,30 +981,23 @@ func (x *FlowBox) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FlowBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FlowBox) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FlowBox) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FlowBox) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1180,19 +1010,7 @@ func (x *FlowBox) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FlowBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1200,14 +1018,7 @@ func (x *FlowBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acces
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FlowBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1216,9 +1027,7 @@ func (x *FlowBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FlowBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1240,9 +1049,7 @@ func (x *FlowBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *FlowBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1252,9 +1059,7 @@ func (x *FlowBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1276,9 +1081,7 @@ func (x *FlowBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Access
 //
 // ```
 func (x *FlowBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1288,9 +1091,7 @@ func (x *FlowBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBox) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1313,9 +1114,7 @@ func (x *FlowBox) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessib
 //
 // ```
 func (x *FlowBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1325,9 +1124,7 @@ func (x *FlowBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1335,23 +1132,19 @@ func (x *FlowBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FlowBox) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *FlowBox) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *FlowBox) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 // The kind of widget that can be added to a `GtkFlowBox`.
@@ -1415,9 +1208,7 @@ var xFlowBoxChildChanged func(uintptr)
 // Another alternative is to call [method@Gtk.FlowBox.invalidate_sort]
 // on any model change, but that is more expensive.
 func (x *FlowBoxChild) Changed() {
-
 	xFlowBoxChildChanged(x.GoPointer())
-
 }
 
 var xFlowBoxChildGetChild func(uintptr) uintptr
@@ -1441,7 +1232,6 @@ var xFlowBoxChildGetIndex func(uintptr) int
 
 // Gets the current index of the @child in its `GtkFlowBox` container.
 func (x *FlowBoxChild) GetIndex() int {
-
 	cret := xFlowBoxChildGetIndex(x.GoPointer())
 	return cret
 }
@@ -1451,7 +1241,6 @@ var xFlowBoxChildIsSelected func(uintptr) bool
 // Returns whether the @child is currently selected in its
 // `GtkFlowBox` container.
 func (x *FlowBoxChild) IsSelected() bool {
-
 	cret := xFlowBoxChildIsSelected(x.GoPointer())
 	return cret
 }
@@ -1460,14 +1249,7 @@ var xFlowBoxChildSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *FlowBoxChild) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xFlowBoxChildSetChild(x.GoPointer(), ChildVarPtr)
-
+	xFlowBoxChildSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 func (c *FlowBoxChild) GoPointer() uintptr {
@@ -1504,7 +1286,6 @@ func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -1523,9 +1304,19 @@ func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *FlowBoxChild) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *FlowBoxChild) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -1546,7 +1337,6 @@ func (x *FlowBoxChild) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *FlowBoxChild) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -1571,7 +1361,6 @@ func (x *FlowBoxChild) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *FlowBoxChild) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1610,30 +1399,23 @@ func (x *FlowBoxChild) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *FlowBoxChild) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *FlowBoxChild) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *FlowBoxChild) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *FlowBoxChild) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -1646,19 +1428,7 @@ func (x *FlowBoxChild) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *FlowBoxChild) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -1666,14 +1436,7 @@ func (x *FlowBoxChild) SetAccessibleParent(ParentVar Accessible, NextSiblingVar 
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *FlowBoxChild) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -1682,9 +1445,7 @@ func (x *FlowBoxChild) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *FlowBoxChild) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -1706,9 +1467,7 @@ func (x *FlowBoxChild) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *FlowBoxChild) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -1718,9 +1477,7 @@ func (x *FlowBoxChild) UpdateProperty(FirstPropertyVar AccessibleProperty, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBoxChild) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -1742,9 +1499,7 @@ func (x *FlowBoxChild) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []A
 //
 // ```
 func (x *FlowBoxChild) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -1754,9 +1509,7 @@ func (x *FlowBoxChild) UpdateRelation(FirstRelationVar AccessibleRelation, varAr
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBoxChild) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -1779,9 +1532,7 @@ func (x *FlowBoxChild) UpdateRelationValue(NRelationsVar int, RelationsVar []Acc
 //
 // ```
 func (x *FlowBoxChild) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -1791,9 +1542,7 @@ func (x *FlowBoxChild) UpdateState(FirstStateVar AccessibleState, varArgs ...int
 //
 // This function is meant to be used by language bindings.
 func (x *FlowBoxChild) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -1801,14 +1550,13 @@ func (x *FlowBoxChild) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FlowBoxChild) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1866,5 +1614,4 @@ func init() {
 	core.PuregoSafeRegister(&xFlowBoxChildGetIndex, libs, "gtk_flow_box_child_get_index")
 	core.PuregoSafeRegister(&xFlowBoxChildIsSelected, libs, "gtk_flow_box_child_is_selected")
 	core.PuregoSafeRegister(&xFlowBoxChildSetChild, libs, "gtk_flow_box_child_set_child")
-
 }

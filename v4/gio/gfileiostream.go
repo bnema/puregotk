@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -441,7 +440,6 @@ var xFileIOStreamGetEtag func(uintptr) string
 // This must be called after the stream has been written
 // and closed, as the etag can change while writing.
 func (x *FileIOStream) GetEtag() string {
-
 	cret := xFileIOStreamGetEtag(x.GoPointer())
 	return cret
 }
@@ -485,7 +483,6 @@ func (x *FileIOStream) QueryInfo(AttributesVar string, CancellableVar *Cancellab
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xFileIOStreamQueryInfoAsync func(uintptr, string, int, uintptr, uintptr, uintptr)
@@ -497,29 +494,7 @@ var xFileIOStreamQueryInfoAsync func(uintptr, string, int, uintptr, uintptr, uin
 // For the synchronous version of this function, see
 // g_file_io_stream_query_info().
 func (x *FileIOStream) QueryInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xFileIOStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xFileIOStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xFileIOStreamQueryInfoFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -541,7 +516,6 @@ func (x *FileIOStream) QueryInfoFinish(ResultVar AsyncResult) (*FileInfo, error)
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 func (c *FileIOStream) GoPointer() uintptr {
@@ -557,7 +531,6 @@ func (c *FileIOStream) SetGoPointer(ptr uintptr) {
 
 // Tests if the stream supports the #GSeekableIface.
 func (x *FileIOStream) CanSeek() bool {
-
 	cret := XGSeekableCanSeek(x.GoPointer())
 	return cret
 }
@@ -565,7 +538,6 @@ func (x *FileIOStream) CanSeek() bool {
 // Tests if the length of the stream can be adjusted with
 // g_seekable_truncate().
 func (x *FileIOStream) CanTruncate() bool {
-
 	cret := XGSeekableCanTruncate(x.GoPointer())
 	return cret
 }
@@ -597,12 +569,10 @@ func (x *FileIOStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Tells the current position within the stream.
 func (x *FileIOStream) Tell() int64 {
-
 	cret := XGSeekableTell(x.GoPointer())
 	return cret
 }
@@ -629,12 +599,11 @@ func (x *FileIOStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (b
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -650,5 +619,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileIOStreamQueryInfo, libs, "g_file_io_stream_query_info")
 	core.PuregoSafeRegister(&xFileIOStreamQueryInfoAsync, libs, "g_file_io_stream_query_info_async")
 	core.PuregoSafeRegister(&xFileIOStreamQueryInfoFinish, libs, "g_file_io_stream_query_info_finish")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -190,12 +189,10 @@ var xSimpleProxyResolverSetDefaultProxy func(uintptr, uintptr)
 // #GSimpleProxyResolver will treat it as referring to all three of
 // the socks5, socks4a, and socks4 proxy types.
 func (x *SimpleProxyResolver) SetDefaultProxy(DefaultProxyVar *string) {
-
 	DefaultProxyVarPtr := core.GStrdupNullable(DefaultProxyVar)
 	defer core.GFreeNullable(DefaultProxyVarPtr)
 
 	xSimpleProxyResolverSetDefaultProxy(x.GoPointer(), DefaultProxyVarPtr)
-
 }
 
 var xSimpleProxyResolverSetIgnoreHosts func(uintptr, []string)
@@ -205,9 +202,7 @@ var xSimpleProxyResolverSetIgnoreHosts func(uintptr, []string)
 // See #GSimpleProxyResolver:ignore-hosts for more details on how the
 // @ignore_hosts argument is interpreted.
 func (x *SimpleProxyResolver) SetIgnoreHosts(IgnoreHostsVar []string) {
-
 	xSimpleProxyResolverSetIgnoreHosts(x.GoPointer(), IgnoreHostsVar)
-
 }
 
 var xSimpleProxyResolverSetUriProxy func(uintptr, string, string)
@@ -221,9 +216,7 @@ var xSimpleProxyResolverSetUriProxy func(uintptr, string, string)
 // as referring to all three of the socks5, socks4a, and socks4 proxy
 // types.
 func (x *SimpleProxyResolver) SetUriProxy(UriSchemeVar string, ProxyVar string) {
-
 	xSimpleProxyResolverSetUriProxy(x.GoPointer(), UriSchemeVar, ProxyVar)
-
 }
 
 func (c *SimpleProxyResolver) GoPointer() uintptr {
@@ -353,7 +346,6 @@ func (x *SimpleProxyResolver) GetPropertyIgnoreHosts() []string {
 // internally; g_proxy_resolver_get_default() will only return a proxy
 // resolver that returns %TRUE for this method.)
 func (x *SimpleProxyResolver) IsSupported() bool {
-
 	cret := XGProxyResolverIsSupported(x.GoPointer())
 	return cret
 }
@@ -386,20 +378,12 @@ func (x *SimpleProxyResolver) Lookup(UriVar string, CancellableVar *Cancellable)
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Asynchronous lookup of proxy. See g_proxy_resolver_lookup() for more
 // details.
 func (x *SimpleProxyResolver) LookupAsync(UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVarPtr, glib.NewCallbackNullable(CallbackVar), UserDataVar)
-
+	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Call this function to obtain the array of proxy URIs when
@@ -413,7 +397,6 @@ func (x *SimpleProxyResolver) LookupFinish(ResultVar AsyncResult) ([]string, err
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xSimpleProxyResolverNew func(uintptr, []string) uintptr
@@ -440,7 +423,7 @@ func SimpleProxyResolverNew(DefaultProxyVar *string, IgnoreHostsVar []string) *P
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -457,5 +440,4 @@ func init() {
 	core.PuregoSafeRegister(&xSimpleProxyResolverSetUriProxy, libs, "g_simple_proxy_resolver_set_uri_proxy")
 
 	core.PuregoSafeRegister(&xSimpleProxyResolverNew, libs, "g_simple_proxy_resolver_new")
-
 }

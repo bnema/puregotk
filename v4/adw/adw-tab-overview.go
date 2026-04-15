@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gio"
@@ -75,6 +74,26 @@ func (x *TabOverviewClass) GoPointer() uintptr {
 // If search and window buttons are disabled, and secondary menu is not set, the
 // header bar will be hidden.
 //
+// ## Drag-and-Drop
+//
+// `AdwTabOverview` thumbnails can have an additional drop target for arbitrary
+// content.
+//
+// Use [method@TabOverview.setup_extra_drop_target] to set it up, specifying the
+// supported content types and drag actions, then connect to
+// [signal@TabOverview::extra-drag-drop] to handle a drop.
+//
+// In some cases, it may be necessary to determine the used action based on the
+// content. In that case, set [property@TabOverview:extra-drag-preload] to
+// `TRUE` and connect to [signal@TabOverview::extra-drag-value] signal, then
+// return the action from its handler. To access this action from the
+// [signal@TabOverview::extra-drag-drop] handler, use the
+// [property@TabOverview:extra-drag-preferred-action] property.
+//
+// [signal@TabOverview::extra-drag-value] is also always emitted when starting to
+// hover an item, with a `NULL` value. This happens even when
+// [property@TabOverview:extra-drag-preload] is `FALSE`.
+//
 // ## Actions
 //
 // `AdwTabOverview` defines the `overview.open` and `overview.close` actions for
@@ -138,7 +157,6 @@ var xTabOverviewGetEnableNewTab func(uintptr) bool
 
 // Gets whether to new tab button is enabled for @self.
 func (x *TabOverview) GetEnableNewTab() bool {
-
 	cret := xTabOverviewGetEnableNewTab(x.GoPointer())
 	return cret
 }
@@ -147,7 +165,6 @@ var xTabOverviewGetEnableSearch func(uintptr) bool
 
 // Gets whether search in tabs is enabled for @self.
 func (x *TabOverview) GetEnableSearch() bool {
-
 	cret := xTabOverviewGetEnableSearch(x.GoPointer())
 	return cret
 }
@@ -156,16 +173,20 @@ var xTabOverviewGetExtraDragPreferredAction func(uintptr) gdk.DragAction
 
 // Gets the current action during a drop on the extra_drop_target.
 func (x *TabOverview) GetExtraDragPreferredAction() gdk.DragAction {
-
 	cret := xTabOverviewGetExtraDragPreferredAction(x.GoPointer())
 	return cret
 }
 
 var xTabOverviewGetExtraDragPreload func(uintptr) bool
 
-// Gets whether drop data should be preloaded on hover.
+// Gets the current drag action during a drop.
+//
+// This method should only be used from inside a
+// [signal@TabOverview::extra-drag-drop] handler.
+//
+// The action will be a subset of what was originally passed to
+// [method@TabOverview.setup_extra_drop_target].
 func (x *TabOverview) GetExtraDragPreload() bool {
-
 	cret := xTabOverviewGetExtraDragPreload(x.GoPointer())
 	return cret
 }
@@ -174,7 +195,6 @@ var xTabOverviewGetInverted func(uintptr) bool
 
 // Gets whether thumbnails use inverted layout.
 func (x *TabOverview) GetInverted() bool {
-
 	cret := xTabOverviewGetInverted(x.GoPointer())
 	return cret
 }
@@ -183,7 +203,6 @@ var xTabOverviewGetOpen func(uintptr) bool
 
 // Gets whether @self is open.
 func (x *TabOverview) GetOpen() bool {
-
 	cret := xTabOverviewGetOpen(x.GoPointer())
 	return cret
 }
@@ -194,7 +213,6 @@ var xTabOverviewGetSearchActive func(uintptr) bool
 //
 // See [property@TabOverview:enable-search].
 func (x *TabOverview) GetSearchActive() bool {
-
 	cret := xTabOverviewGetSearchActive(x.GoPointer())
 	return cret
 }
@@ -220,7 +238,6 @@ var xTabOverviewGetShowEndTitleButtons func(uintptr) bool
 
 // Gets whether end title buttons are shown in @self's header bar.
 func (x *TabOverview) GetShowEndTitleButtons() bool {
-
 	cret := xTabOverviewGetShowEndTitleButtons(x.GoPointer())
 	return cret
 }
@@ -229,7 +246,6 @@ var xTabOverviewGetShowStartTitleButtons func(uintptr) bool
 
 // Gets whether start title buttons are shown in @self's header bar.
 func (x *TabOverview) GetShowStartTitleButtons() bool {
-
 	cret := xTabOverviewGetShowStartTitleButtons(x.GoPointer())
 	return cret
 }
@@ -255,14 +271,7 @@ var xTabOverviewSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *TabOverview) SetChild(ChildVar *gtk.Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xTabOverviewSetChild(x.GoPointer(), ChildVarPtr)
-
+	xTabOverviewSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xTabOverviewSetEnableNewTab func(uintptr, bool)
@@ -271,9 +280,7 @@ var xTabOverviewSetEnableNewTab func(uintptr, bool)
 //
 // Connect to the [signal@TabOverview::create-tab] signal to use it.
 func (x *TabOverview) SetEnableNewTab(EnableNewTabVar bool) {
-
 	xTabOverviewSetEnableNewTab(x.GoPointer(), EnableNewTabVar)
-
 }
 
 var xTabOverviewSetEnableSearch func(uintptr, bool)
@@ -289,9 +296,7 @@ var xTabOverviewSetEnableSearch func(uintptr, bool)
 // Use [property@TabOverview:search-active] to check out if search is currently
 // active.
 func (x *TabOverview) SetEnableSearch(EnableSearchVar bool) {
-
 	xTabOverviewSetEnableSearch(x.GoPointer(), EnableSearchVar)
-
 }
 
 var xTabOverviewSetExtraDragPreload func(uintptr, bool)
@@ -300,9 +305,7 @@ var xTabOverviewSetExtraDragPreload func(uintptr, bool)
 //
 // See [property@Gtk.DropTarget:preload].
 func (x *TabOverview) SetExtraDragPreload(PreloadVar bool) {
-
 	xTabOverviewSetExtraDragPreload(x.GoPointer(), PreloadVar)
-
 }
 
 var xTabOverviewSetInverted func(uintptr, bool)
@@ -312,18 +315,14 @@ var xTabOverviewSetInverted func(uintptr, bool)
 // If set to `TRUE`, thumbnails will have the close or unpin button at the
 // beginning and the indicator at the end rather than the other way around.
 func (x *TabOverview) SetInverted(InvertedVar bool) {
-
 	xTabOverviewSetInverted(x.GoPointer(), InvertedVar)
-
 }
 
 var xTabOverviewSetOpen func(uintptr, bool)
 
 // Sets whether the to open @self.
 func (x *TabOverview) SetOpen(OpenVar bool) {
-
 	xTabOverviewSetOpen(x.GoPointer(), OpenVar)
-
 }
 
 var xTabOverviewSetSecondaryMenu func(uintptr, uintptr)
@@ -332,14 +331,7 @@ var xTabOverviewSetSecondaryMenu func(uintptr, uintptr)
 //
 // Use it to add extra actions, e.g. to open a new window or undo closed tab.
 func (x *TabOverview) SetSecondaryMenu(SecondaryMenuVar *gio.MenuModel) {
-
-	var SecondaryMenuVarPtr uintptr
-	if SecondaryMenuVar != nil {
-		SecondaryMenuVarPtr = SecondaryMenuVar.GoPointer()
-	}
-
-	xTabOverviewSetSecondaryMenu(x.GoPointer(), SecondaryMenuVarPtr)
-
+	xTabOverviewSetSecondaryMenu(x.GoPointer(), SecondaryMenuVar.GoPointer())
 }
 
 var xTabOverviewSetShowEndTitleButtons func(uintptr, bool)
@@ -348,9 +340,7 @@ var xTabOverviewSetShowEndTitleButtons func(uintptr, bool)
 //
 // See [property@HeaderBar:show-start-title-buttons] for the other side.
 func (x *TabOverview) SetShowEndTitleButtons(ShowEndTitleButtonsVar bool) {
-
 	xTabOverviewSetShowEndTitleButtons(x.GoPointer(), ShowEndTitleButtonsVar)
-
 }
 
 var xTabOverviewSetShowStartTitleButtons func(uintptr, bool)
@@ -359,9 +349,7 @@ var xTabOverviewSetShowStartTitleButtons func(uintptr, bool)
 //
 // See [property@HeaderBar:show-end-title-buttons] for the other side.
 func (x *TabOverview) SetShowStartTitleButtons(ShowStartTitleButtonsVar bool) {
-
 	xTabOverviewSetShowStartTitleButtons(x.GoPointer(), ShowStartTitleButtonsVar)
-
 }
 
 var xTabOverviewSetView func(uintptr, uintptr)
@@ -370,20 +358,11 @@ var xTabOverviewSetView func(uintptr, uintptr)
 //
 // The view must be inside @self, see [property@TabOverview:child].
 func (x *TabOverview) SetView(ViewVar *TabView) {
-
-	var ViewVarPtr uintptr
-	if ViewVar != nil {
-		ViewVarPtr = ViewVar.GoPointer()
-	}
-
-	xTabOverviewSetView(x.GoPointer(), ViewVarPtr)
-
+	xTabOverviewSetView(x.GoPointer(), ViewVar.GoPointer())
 }
 
 var xTabOverviewSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType, uint)
 
-// Sets the supported types for this drop target.
-//
 // Sets up an extra drop target on tabs.
 //
 // This allows to drag arbitrary content onto tabs, for example URLs in a web
@@ -395,9 +374,7 @@ var xTabOverviewSetupExtraDropTarget func(uintptr, gdk.DragAction, []types.GType
 // The [signal@TabOverview::extra-drag-drop] signal can be used to handle the
 // drop.
 func (x *TabOverview) SetupExtraDropTarget(ActionsVar gdk.DragAction, TypesVar []types.GType, NTypesVar uint) {
-
 	xTabOverviewSetupExtraDropTarget(x.GoPointer(), ActionsVar, TypesVar, NTypesVar)
-
 }
 
 func (c *TabOverview) GoPointer() uintptr {
@@ -587,7 +564,7 @@ func (x *TabOverview) GetPropertyShowStartTitleButtons() bool {
 //
 // The signal handler is expected to create a new page in the corresponding
 // [class@TabView] and return it.
-func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) *TabPage) uint {
+func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
@@ -602,7 +579,6 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) *TabPage) uint {
 
 		CreateTabCls := cbFn(fa)
 		return CreateTabCls.Ptr
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -611,13 +587,13 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) *TabPage) uint {
 	return handlerID
 }
 
-// This signal is emitted when content is dropped onto a tab.
+// Emitted when content is dropped onto a tab.
 //
 // The content must be of one of the types set up via
 // [method@TabOverview.setup_extra_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, *TabPage, uintptr) bool) uint {
+func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
@@ -630,8 +606,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, *TabPage, uintp
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
-
+		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -640,7 +615,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, *TabPage, uintp
 	return handlerID
 }
 
-// This signal is emitted when the dropped content is preloaded.
+// Emitted when the dropped content is preloaded.
 //
 // In order for data to be preloaded, [property@TabOverview:extra-drag-preload]
 // must be set to `TRUE`.
@@ -649,7 +624,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, *TabPage, uintp
 // [method@TabOverview.setup_extra_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, *TabPage, uintptr) gdk.DragAction) uint {
+func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
@@ -662,8 +637,7 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, *TabPage, uint
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, func() *TabPage { cls := &TabPage{}; cls.Ptr = PageVarp; return cls }(), ValueVarp)
-
+		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -682,9 +656,19 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, *TabPage, uint
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *TabOverview) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *TabOverview) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -705,7 +689,6 @@ func (x *TabOverview) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *TabOverview) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -730,7 +713,6 @@ func (x *TabOverview) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *TabOverview) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -769,30 +751,23 @@ func (x *TabOverview) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *TabOverview) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *TabOverview) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *TabOverview) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *TabOverview) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -805,19 +780,7 @@ func (x *TabOverview) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *TabOverview) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -825,14 +788,7 @@ func (x *TabOverview) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingV
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *TabOverview) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -841,9 +797,7 @@ func (x *TabOverview) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) 
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *TabOverview) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -865,9 +819,7 @@ func (x *TabOverview) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) 
 //
 // ```
 func (x *TabOverview) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -877,9 +829,7 @@ func (x *TabOverview) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 //
 // This function is meant to be used by language bindings.
 func (x *TabOverview) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -901,9 +851,7 @@ func (x *TabOverview) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gt
 //
 // ```
 func (x *TabOverview) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -913,9 +861,7 @@ func (x *TabOverview) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 //
 // This function is meant to be used by language bindings.
 func (x *TabOverview) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -938,9 +884,7 @@ func (x *TabOverview) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.
 //
 // ```
 func (x *TabOverview) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -950,9 +894,7 @@ func (x *TabOverview) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *TabOverview) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -960,14 +902,13 @@ func (x *TabOverview) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TabOverview) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1004,5 +945,4 @@ func init() {
 	core.PuregoSafeRegister(&xTabOverviewSetShowStartTitleButtons, libs, "adw_tab_overview_set_show_start_title_buttons")
 	core.PuregoSafeRegister(&xTabOverviewSetView, libs, "adw_tab_overview_set_view")
 	core.PuregoSafeRegister(&xTabOverviewSetupExtraDropTarget, libs, "adw_tab_overview_setup_extra_drop_target")
-
 }

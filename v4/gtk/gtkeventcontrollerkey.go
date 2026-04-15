@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -64,7 +63,6 @@ var xEventControllerKeyForward func(uintptr, uintptr) bool
 // [signal@Gtk.EventControllerKey::key-released]
 // or [signal@Gtk.EventControllerKey::modifiers] signals.
 func (x *EventControllerKey) Forward(WidgetVar *Widget) bool {
-
 	cret := xEventControllerKeyForward(x.GoPointer(), WidgetVar.GoPointer())
 	return cret
 }
@@ -75,7 +73,6 @@ var xEventControllerKeyGetGroup func(uintptr) uint
 //
 // See [method@Gdk.KeyEvent.get_layout].
 func (x *EventControllerKey) GetGroup() uint {
-
 	cret := xEventControllerKeyGetGroup(x.GoPointer())
 	return cret
 }
@@ -101,14 +98,7 @@ var xEventControllerKeySetImContext func(uintptr, uintptr)
 
 // Sets the input method context of the key @controller.
 func (x *EventControllerKey) SetImContext(ImContextVar *IMContext) {
-
-	var ImContextVarPtr uintptr
-	if ImContextVar != nil {
-		ImContextVarPtr = ImContextVar.GoPointer()
-	}
-
-	xEventControllerKeySetImContext(x.GoPointer(), ImContextVarPtr)
-
+	xEventControllerKeySetImContext(x.GoPointer(), ImContextVar.GoPointer())
 }
 
 func (c *EventControllerKey) GoPointer() uintptr {
@@ -141,7 +131,6 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint 
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -165,7 +154,6 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 		cbFn := *cb
 
 		return cbFn(fa, KeyvalVarp, KeycodeVarp, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -189,7 +177,6 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 		cbFn := *cb
 
 		cbFn(fa, KeyvalVarp, KeycodeVarp, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -213,7 +200,6 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 		cbFn := *cb
 
 		return cbFn(fa, StateVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -224,7 +210,7 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -242,5 +228,4 @@ func init() {
 	core.PuregoSafeRegister(&xEventControllerKeyGetGroup, libs, "gtk_event_controller_key_get_group")
 	core.PuregoSafeRegister(&xEventControllerKeyGetImContext, libs, "gtk_event_controller_key_get_im_context")
 	core.PuregoSafeRegister(&xEventControllerKeySetImContext, libs, "gtk_event_controller_key_set_im_context")
-
 }

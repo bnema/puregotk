@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -52,33 +51,35 @@ func (x *Requisition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRequisition func() *Requisition
+var xNewRequisition func() uintptr
 
 // Allocates a new `GtkRequisition`.
 //
 // The struct is initialized to zero.
 func NewRequisition() *Requisition {
-
 	cret := xNewRequisition()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Requisition)(unsafe.Pointer(cret))
 }
 
-var xRequisitionCopy func(uintptr) *Requisition
+var xRequisitionCopy func(uintptr) uintptr
 
 // Copies a `GtkRequisition`.
 func (x *Requisition) Copy() *Requisition {
-
 	cret := xRequisitionCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Requisition)(unsafe.Pointer(cret))
 }
 
 var xRequisitionFree func(uintptr)
 
 // Frees a `GtkRequisition`.
 func (x *Requisition) Free() {
-
 	xRequisitionFree(x.GoPointer())
-
 }
 
 type WidgetClass struct {
@@ -159,27 +160,10 @@ var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, uintpt
 // you will have to use [method@Gtk.WidgetClass.add_shortcut] with a custom
 // shortcut.
 func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, CallbackVar *ShortcutFunc, FormatStringVar *string, varArgs ...interface{}) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 *glib.Variant, arg2 uintptr) bool {
-				cbFn := *CallbackVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
-	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, FormatStringVarPtr, varArgs...)
-
+	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, glib.NewCallback(CallbackVar), FormatStringVarPtr, varArgs...)
 }
 
 var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, uintptr, ...interface{})
@@ -194,12 +178,10 @@ var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, u
 // [method@Gtk.WidgetClass.add_shortcut] and must be called during class
 // initialization.
 func (x *WidgetClass) AddBindingAction(KeyvalVar uint, ModsVar gdk.ModifierType, ActionNameVar string, FormatStringVar *string, varArgs ...interface{}) {
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
 	xWidgetClassAddBindingAction(x.GoPointer(), KeyvalVar, ModsVar, ActionNameVar, FormatStringVarPtr, varArgs...)
-
 }
 
 var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, uintptr, ...interface{})
@@ -214,12 +196,10 @@ var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, u
 // [method@Gtk.WidgetClass.add_shortcut] and must be called during class
 // initialization.
 func (x *WidgetClass) AddBindingSignal(KeyvalVar uint, ModsVar gdk.ModifierType, SignalVar string, FormatStringVar *string, varArgs ...interface{}) {
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
 	xWidgetClassAddBindingSignal(x.GoPointer(), KeyvalVar, ModsVar, SignalVar, FormatStringVarPtr, varArgs...)
-
 }
 
 var xWidgetClassAddShortcut func(uintptr, uintptr)
@@ -235,9 +215,7 @@ var xWidgetClassAddShortcut func(uintptr, uintptr)
 // This function must only be used in class initialization functions
 // otherwise it is not guaranteed that the shortcut will be installed.
 func (x *WidgetClass) AddShortcut(ShortcutVar *Shortcut) {
-
 	xWidgetClassAddShortcut(x.GoPointer(), ShortcutVar.GoPointer())
-
 }
 
 var xWidgetClassBindTemplateCallbackFull func(uintptr, string, uintptr)
@@ -252,24 +230,7 @@ var xWidgetClassBindTemplateCallbackFull func(uintptr, string, uintptr)
 // Note that this must be called from a composite widget classes
 // class initializer after calling [method@Gtk.WidgetClass.set_template].
 func (x *WidgetClass) BindTemplateCallbackFull(CallbackNameVar string, CallbackSymbolVar *gobject.Callback) {
-
-	var CallbackSymbolVarRef uintptr
-	if CallbackSymbolVar != nil {
-		CallbackSymbolVarPtr := uintptr(unsafe.Pointer(CallbackSymbolVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackSymbolVarPtr); ok {
-			CallbackSymbolVarRef = cbRefPtr
-		} else {
-			fcb := func() {
-				cbFn := *CallbackSymbolVar
-				cbFn()
-			}
-			CallbackSymbolVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackSymbolVarPtr, CallbackSymbolVarRef, CallbackSymbolVar)
-		}
-	}
-
-	xWidgetClassBindTemplateCallbackFull(x.GoPointer(), CallbackNameVar, CallbackSymbolVarRef)
-
+	xWidgetClassBindTemplateCallbackFull(x.GoPointer(), CallbackNameVar, glib.NewCallback(CallbackSymbolVar))
 }
 
 var xWidgetClassBindTemplateChildFull func(uintptr, string, bool, int)
@@ -303,9 +264,7 @@ var xWidgetClassBindTemplateChildFull func(uintptr, string, bool, int)
 // Note that this must be called from a composite widget classes class
 // initializer after calling [method@Gtk.WidgetClass.set_template].
 func (x *WidgetClass) BindTemplateChildFull(NameVar string, InternalChildVar bool, StructOffsetVar int) {
-
 	xWidgetClassBindTemplateChildFull(x.GoPointer(), NameVar, InternalChildVar, StructOffsetVar)
-
 }
 
 var xWidgetClassGetAccessibleRole func(uintptr) AccessibleRole
@@ -317,7 +276,6 @@ var xWidgetClassGetAccessibleRole func(uintptr) AccessibleRole
 //
 // See also: [method@Gtk.Accessible.get_accessible_role].
 func (x *WidgetClass) GetAccessibleRole() AccessibleRole {
-
 	cret := xWidgetClassGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -329,7 +287,6 @@ var xWidgetClassGetActivateSignal func(uintptr) uint
 // The activation signal is set using
 // [method@Gtk.WidgetClass.set_activate_signal].
 func (x *WidgetClass) GetActivateSignal() uint {
-
 	cret := xWidgetClassGetActivateSignal(x.GoPointer())
 	return cret
 }
@@ -340,7 +297,6 @@ var xWidgetClassGetCssName func(uintptr) string
 //
 // See [method@Gtk.WidgetClass.set_css_name] for details.
 func (x *WidgetClass) GetCssName() string {
-
 	cret := xWidgetClassGetCssName(x.GoPointer())
 	return cret
 }
@@ -352,7 +308,6 @@ var xWidgetClassGetLayoutManagerType func(uintptr) types.GType
 //
 // See also: [method@Gtk.WidgetClass.set_layout_manager_type].
 func (x *WidgetClass) GetLayoutManagerType() types.GType {
-
 	cret := xWidgetClassGetLayoutManagerType(x.GoPointer())
 	return cret
 }
@@ -367,27 +322,10 @@ var xWidgetClassInstallAction func(uintptr, string, uintptr, uintptr)
 // they have is whether they are enabled or not (which can be changed
 // with [method@Gtk.Widget.action_set_enabled]).
 func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar *string, ActivateVar *WidgetActionActivateFunc) {
-
-	var ActivateVarRef uintptr
-	if ActivateVar != nil {
-		ActivateVarPtr := uintptr(unsafe.Pointer(ActivateVar))
-		if cbRefPtr, ok := glib.GetCallback(ActivateVarPtr); ok {
-			ActivateVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *glib.Variant) {
-				cbFn := *ActivateVar
-				cbFn(arg0, core.GoString(arg1), arg2)
-			}
-			ActivateVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(ActivateVarPtr, ActivateVarRef, ActivateVar)
-		}
-	}
-
 	ParameterTypeVarPtr := core.GStrdupNullable(ParameterTypeVar)
 	defer core.GFreeNullable(ParameterTypeVarPtr)
 
-	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, ParameterTypeVarPtr, ActivateVarRef)
-
+	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, ParameterTypeVarPtr, glib.NewCallback(ActivateVar))
 }
 
 var xWidgetClassInstallPropertyAction func(uintptr, string, string)
@@ -408,9 +346,7 @@ var xWidgetClassInstallPropertyAction func(uintptr, string, string)
 // toggle the property value. Otherwise, the action will have a parameter
 // of the same type as the property.
 func (x *WidgetClass) InstallPropertyAction(ActionNameVar string, PropertyNameVar string) {
-
 	xWidgetClassInstallPropertyAction(x.GoPointer(), ActionNameVar, PropertyNameVar)
-
 }
 
 var xWidgetClassQueryAction func(uintptr, uint, *types.GType, *string, **glib.VariantType, *string) bool
@@ -425,7 +361,6 @@ var xWidgetClassQueryAction func(uintptr, uint, *types.GType, *string, **glib.Va
 // by parent classes. You can identify those by looking
 // at @owner.
 func (x *WidgetClass) QueryAction(IndexVar uint, OwnerVar *types.GType, ActionNameVar *string, ParameterTypeVar **glib.VariantType, PropertyNameVar *string) bool {
-
 	cret := xWidgetClassQueryAction(x.GoPointer(), IndexVar, OwnerVar, ActionNameVar, ParameterTypeVar, PropertyNameVar)
 	return cret
 }
@@ -437,9 +372,7 @@ var xWidgetClassSetAccessibleRole func(uintptr, AccessibleRole)
 // Different accessible roles have different states, and are
 // rendered differently by assistive technologies.
 func (x *WidgetClass) SetAccessibleRole(AccessibleRoleVar AccessibleRole) {
-
 	xWidgetClassSetAccessibleRole(x.GoPointer(), AccessibleRoleVar)
-
 }
 
 var xWidgetClassSetActivateSignal func(uintptr, uint)
@@ -451,9 +384,7 @@ var xWidgetClassSetActivateSignal func(uintptr, uint)
 // The @signal_id must have been registered with [function.GObject.signal_new]
 // or [func@GObject.signal_newv] before calling this function.
 func (x *WidgetClass) SetActivateSignal(SignalIdVar uint) {
-
 	xWidgetClassSetActivateSignal(x.GoPointer(), SignalIdVar)
-
 }
 
 var xWidgetClassSetActivateSignalFromName func(uintptr, string)
@@ -467,9 +398,7 @@ var xWidgetClassSetActivateSignalFromName func(uintptr, string)
 // The @signal_name must have been registered with [function.GObject.signal_new]
 // or [func@GObject.signal_newv] before calling this function.
 func (x *WidgetClass) SetActivateSignalFromName(SignalNameVar string) {
-
 	xWidgetClassSetActivateSignalFromName(x.GoPointer(), SignalNameVar)
-
 }
 
 var xWidgetClassSetCssName func(uintptr, string)
@@ -480,9 +409,7 @@ var xWidgetClassSetCssName func(uintptr, string)
 // set on the parent class is used. By default, `GtkWidget`
 // uses the name "widget".
 func (x *WidgetClass) SetCssName(NameVar string) {
-
 	xWidgetClassSetCssName(x.GoPointer(), NameVar)
-
 }
 
 var xWidgetClassSetLayoutManagerType func(uintptr, types.GType)
@@ -495,9 +422,7 @@ var xWidgetClassSetLayoutManagerType func(uintptr, types.GType)
 // This function should only be called from class init functions
 // of widgets.
 func (x *WidgetClass) SetLayoutManagerType(TypeVar types.GType) {
-
 	xWidgetClassSetLayoutManagerType(x.GoPointer(), TypeVar)
-
 }
 
 var xWidgetClassSetTemplate func(uintptr, *glib.Bytes)
@@ -511,9 +436,7 @@ var xWidgetClassSetTemplate func(uintptr, *glib.Bytes)
 // Note that any class that installs templates must call
 // [method@Gtk.Widget.init_template] in the widget’s instance initializer.
 func (x *WidgetClass) SetTemplate(TemplateBytesVar *glib.Bytes) {
-
 	xWidgetClassSetTemplate(x.GoPointer(), TemplateBytesVar)
-
 }
 
 var xWidgetClassSetTemplateFromResource func(uintptr, string)
@@ -525,9 +448,7 @@ var xWidgetClassSetTemplateFromResource func(uintptr, string)
 // [method@Gtk.Widget.init_template] in the widget’s instance
 // initializer.
 func (x *WidgetClass) SetTemplateFromResource(ResourceNameVar string) {
-
 	xWidgetClassSetTemplateFromResource(x.GoPointer(), ResourceNameVar)
-
 }
 
 var xWidgetClassSetTemplateScope func(uintptr, uintptr)
@@ -539,9 +460,7 @@ var xWidgetClassSetTemplateScope func(uintptr, uintptr)
 // Note that this must be called from a composite widget classes class
 // initializer after calling [method@Gtk.WidgetClass.set_template].
 func (x *WidgetClass) SetTemplateScope(ScopeVar BuilderScope) {
-
 	xWidgetClassSetTemplateScope(x.GoPointer(), ScopeVar.GoPointer())
-
 }
 
 // OverrideShow sets the "show" callback function.
@@ -1741,9 +1660,7 @@ var xWidgetActionSetEnabled func(uintptr, string, bool)
 // Enables or disables an action installed with
 // [method@Gtk.WidgetClass.install_action].
 func (x *Widget) ActionSetEnabled(ActionNameVar string, EnabledVar bool) {
-
 	xWidgetActionSetEnabled(x.GoPointer(), ActionNameVar, EnabledVar)
-
 }
 
 var xWidgetActivate func(uintptr) bool
@@ -1763,7 +1680,6 @@ var xWidgetActivate func(uintptr) bool
 //
 // If @widget is not activatable, the function returns false.
 func (x *Widget) Activate() bool {
-
 	cret := xWidgetActivate(x.GoPointer())
 	return cret
 }
@@ -1778,7 +1694,6 @@ var xWidgetActivateAction func(uintptr, string, uintptr, ...interface{}) bool
 // This is a wrapper around [method@Gtk.Widget.activate_action_variant]
 // that constructs the @args variant according to @format_string.
 func (x *Widget) ActivateAction(NameVar string, FormatStringVar *string, varArgs ...interface{}) bool {
-
 	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
 	defer core.GFreeNullable(FormatStringVarPtr)
 
@@ -1801,7 +1716,6 @@ var xWidgetActivateActionVariant func(uintptr, string, *glib.Variant) bool
 // The arguments must match the actions expected parameter type,
 // as returned by [method@Gio.Action.get_parameter_type].
 func (x *Widget) ActivateActionVariant(NameVar string, ArgsVar *glib.Variant) bool {
-
 	cret := xWidgetActivateActionVariant(x.GoPointer(), NameVar, ArgsVar)
 	return cret
 }
@@ -1813,9 +1727,7 @@ var xWidgetActivateDefault func(uintptr)
 // The action is looked up in the same was as for
 // [method@Gtk.Widget.activate_action].
 func (x *Widget) ActivateDefault() {
-
 	xWidgetActivateDefault(x.GoPointer())
-
 }
 
 var xWidgetAddController func(uintptr, uintptr)
@@ -1828,9 +1740,7 @@ var xWidgetAddController func(uintptr, uintptr)
 // You will usually want to call this function right after
 // creating any kind of [class@Gtk.EventController].
 func (x *Widget) AddController(ControllerVar *EventController) {
-
 	xWidgetAddController(x.GoPointer(), ControllerVar.GoPointer())
-
 }
 
 var xWidgetAddCssClass func(uintptr, string)
@@ -1843,9 +1753,7 @@ var xWidgetAddCssClass func(uintptr, string)
 // Use [method@Gtk.Widget.remove_css_class] to remove the
 // style again.
 func (x *Widget) AddCssClass(CssClassVar string) {
-
 	xWidgetAddCssClass(x.GoPointer(), CssClassVar)
-
 }
 
 var xWidgetAddMnemonicLabel func(uintptr, uintptr)
@@ -1858,9 +1766,7 @@ var xWidgetAddMnemonicLabel func(uintptr, uintptr)
 // when the widget is destroyed, so the caller must make sure
 // to update its internal state at this point as well.
 func (x *Widget) AddMnemonicLabel(LabelVar *Widget) {
-
 	xWidgetAddMnemonicLabel(x.GoPointer(), LabelVar.GoPointer())
-
 }
 
 var xWidgetAddTickCallback func(uintptr, uintptr, uintptr, uintptr) uint
@@ -1892,38 +1798,7 @@ var xWidgetAddTickCallback func(uintptr, uintptr, uintptr, uintptr) uint
 // To remove a tick callback, pass the ID that is returned by this function
 // to [method@Gtk.Widget.remove_tick_callback].
 func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) uint {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
-				cbFn := *CallbackVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
-	}
-
-	cret := xWidgetAddTickCallback(x.GoPointer(), CallbackVarRef, UserDataVar, NotifyVarRef)
+	cret := xWidgetAddTickCallback(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -1941,9 +1816,7 @@ var xWidgetAllocate func(uintptr, int, int, int, *gsk.Transform)
 // For a version that does not take a transform, see
 // [method@Gtk.Widget.size_allocate].
 func (x *Widget) Allocate(WidthVar int, HeightVar int, BaselineVar int, TransformVar *gsk.Transform) {
-
 	xWidgetAllocate(x.GoPointer(), WidthVar, HeightVar, BaselineVar, TransformVar)
-
 }
 
 var xWidgetChildFocus func(uintptr, DirectionType) bool
@@ -1969,7 +1842,6 @@ var xWidgetChildFocus func(uintptr, DirectionType) bool
 // writing an app, you’d use [method@Gtk.Widget.grab_focus] to move
 // the focus to a particular widget.
 func (x *Widget) ChildFocus(DirectionVar DirectionType) bool {
-
 	cret := xWidgetChildFocus(x.GoPointer(), DirectionVar)
 	return cret
 }
@@ -1989,7 +1861,6 @@ var xWidgetComputeBounds func(uintptr, uintptr, *graphene.Rect) bool
 //
 // It is valid for @widget and @target to be the same widget.
 func (x *Widget) ComputeBounds(TargetVar *Widget, OutBoundsVar *graphene.Rect) bool {
-
 	cret := xWidgetComputeBounds(x.GoPointer(), TargetVar.GoPointer(), OutBoundsVar)
 	return cret
 }
@@ -2010,7 +1881,6 @@ var xWidgetComputeExpand func(uintptr, Orientation) bool
 // set on the widget itself, or, if none has been explicitly set,
 // the widget may expand if some of its children do.
 func (x *Widget) ComputeExpand(OrientationVar Orientation) bool {
-
 	cret := xWidgetComputeExpand(x.GoPointer(), OrientationVar)
 	return cret
 }
@@ -2024,7 +1894,6 @@ var xWidgetComputePoint func(uintptr, uintptr, *graphene.Point, *graphene.Point)
 // a common ancestor. If that is not the case, @out_point is set
 // to (0, 0) and false is returned.
 func (x *Widget) ComputePoint(TargetVar *Widget, PointVar *graphene.Point, OutPointVar *graphene.Point) bool {
-
 	cret := xWidgetComputePoint(x.GoPointer(), TargetVar.GoPointer(), PointVar, OutPointVar)
 	return cret
 }
@@ -2041,7 +1910,6 @@ var xWidgetComputeTransform func(uintptr, uintptr, *graphene.Matrix) bool
 // To learn more about widget coordinate systems, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) ComputeTransform(TargetVar *Widget, OutTransformVar *graphene.Matrix) bool {
-
 	cret := xWidgetComputeTransform(x.GoPointer(), TargetVar.GoPointer(), OutTransformVar)
 	return cret
 }
@@ -2053,7 +1921,6 @@ var xWidgetContains func(uintptr, float64, float64) bool
 // The coordinates for (x, y) must be in widget coordinates, so
 // (0, 0) is assumed to be the top left of @widget's content area.
 func (x *Widget) Contains(XVar float64, YVar float64) bool {
-
 	cret := xWidgetContains(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -2136,16 +2003,13 @@ var xWidgetDisposeTemplate func(uintptr, types.GType)
 //
 // ```
 func (x *Widget) DisposeTemplate(WidgetTypeVar types.GType) {
-
 	xWidgetDisposeTemplate(x.GoPointer(), WidgetTypeVar)
-
 }
 
 var xWidgetDragCheckThreshold func(uintptr, int, int, int, int) bool
 
 // Checks to see if a drag movement has passed the GTK drag threshold.
 func (x *Widget) DragCheckThreshold(StartXVar int, StartYVar int, CurrentXVar int, CurrentYVar int) bool {
-
 	cret := xWidgetDragCheckThreshold(x.GoPointer(), StartXVar, StartYVar, CurrentXVar, CurrentYVar)
 	return cret
 }
@@ -2161,9 +2025,7 @@ var xWidgetErrorBell func(uintptr)
 // in many ways, depending on the windowing backend and the desktop
 // environment or window manager that is used.
 func (x *Widget) ErrorBell() {
-
 	xWidgetErrorBell(x.GoPointer())
-
 }
 
 var xWidgetGetAllocatedBaseline func(uintptr) int
@@ -2174,7 +2036,6 @@ var xWidgetGetAllocatedBaseline func(uintptr) int
 // for the `GtkWidget`Class.snapshot() function, and when allocating
 // child widgets in `GtkWidget`Class.size_allocate().
 func (x *Widget) GetAllocatedBaseline() int {
-
 	cret := xWidgetGetAllocatedBaseline(x.GoPointer())
 	return cret
 }
@@ -2186,7 +2047,6 @@ var xWidgetGetAllocatedHeight func(uintptr) int
 // To learn more about widget sizes, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) GetAllocatedHeight() int {
-
 	cret := xWidgetGetAllocatedHeight(x.GoPointer())
 	return cret
 }
@@ -2198,7 +2058,6 @@ var xWidgetGetAllocatedWidth func(uintptr) int
 // To learn more about widget sizes, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) GetAllocatedWidth() int {
-
 	cret := xWidgetGetAllocatedWidth(x.GoPointer())
 	return cret
 }
@@ -2221,9 +2080,7 @@ var xWidgetGetAllocation func(uintptr, *Allocation)
 // the assigned bounds, but not that they have exactly the bounds the
 // widget assigned.
 func (x *Widget) GetAllocation(AllocationVar *Allocation) {
-
 	xWidgetGetAllocation(x.GoPointer(), AllocationVar)
-
 }
 
 var xWidgetGetAncestor func(uintptr, types.GType) uintptr
@@ -2259,7 +2116,6 @@ var xWidgetGetBaseline func(uintptr) int
 // for the `GtkWidgetClass.snapshot()` function, and when allocating
 // child widgets in `GtkWidgetClass.size_allocate()`.
 func (x *Widget) GetBaseline() int {
-
 	cret := xWidgetGetBaseline(x.GoPointer())
 	return cret
 }
@@ -2271,7 +2127,6 @@ var xWidgetGetCanFocus func(uintptr) bool
 //
 // See [method@Gtk.Widget.set_can_focus].
 func (x *Widget) GetCanFocus() bool {
-
 	cret := xWidgetGetCanFocus(x.GoPointer())
 	return cret
 }
@@ -2280,7 +2135,6 @@ var xWidgetGetCanTarget func(uintptr) bool
 
 // Queries whether the widget can be the target of pointer events.
 func (x *Widget) GetCanTarget() bool {
-
 	cret := xWidgetGetCanTarget(x.GoPointer())
 	return cret
 }
@@ -2295,7 +2149,6 @@ var xWidgetGetChildVisible func(uintptr) bool
 // This function is only useful for widget implementations
 // and should never be called by an application.
 func (x *Widget) GetChildVisible() bool {
-
 	cret := xWidgetGetChildVisible(x.GoPointer())
 	return cret
 }
@@ -2331,16 +2184,13 @@ var xWidgetGetColor func(uintptr, *gdk.RGBA)
 // implementations that need to do custom drawing
 // with the foreground color.
 func (x *Widget) GetColor(ColorVar *gdk.RGBA) {
-
 	xWidgetGetColor(x.GoPointer(), ColorVar)
-
 }
 
 var xWidgetGetCssClasses func(uintptr) []string
 
 // Returns the list of style classes applied to the widget.
 func (x *Widget) GetCssClasses() []string {
-
 	cret := xWidgetGetCssClasses(x.GoPointer())
 	return cret
 }
@@ -2349,7 +2199,6 @@ var xWidgetGetCssName func(uintptr) string
 
 // Returns the CSS name of the widget.
 func (x *Widget) GetCssName() string {
-
 	cret := xWidgetGetCssName(x.GoPointer())
 	return cret
 }
@@ -2379,7 +2228,6 @@ var xWidgetGetDirection func(uintptr) TextDirection
 //
 // See [method@Gtk.Widget.set_direction].
 func (x *Widget) GetDirection() TextDirection {
-
 	cret := xWidgetGetDirection(x.GoPointer())
 	return cret
 }
@@ -2451,7 +2299,6 @@ var xWidgetGetFocusOnClick func(uintptr) bool
 //
 // See [method@Gtk.Widget.set_focus_on_click].
 func (x *Widget) GetFocusOnClick() bool {
-
 	cret := xWidgetGetFocusOnClick(x.GoPointer())
 	return cret
 }
@@ -2462,7 +2309,6 @@ var xWidgetGetFocusable func(uintptr) bool
 //
 // See [method@Gtk.Widget.set_focusable].
 func (x *Widget) GetFocusable() bool {
-
 	cret := xWidgetGetFocusable(x.GoPointer())
 	return cret
 }
@@ -2486,15 +2332,17 @@ func (x *Widget) GetFontMap() *pango.FontMap {
 	return cls
 }
 
-var xWidgetGetFontOptions func(uintptr) *cairo.FontOptions
+var xWidgetGetFontOptions func(uintptr) uintptr
 
 // Returns the `cairo_font_options_t` of the widget.
 //
 // Seee [method@Gtk.Widget.set_font_options].
 func (x *Widget) GetFontOptions() *cairo.FontOptions {
-
 	cret := xWidgetGetFontOptions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.FontOptions)(unsafe.Pointer(cret))
 }
 
 var xWidgetGetFrameClock func(uintptr) uintptr
@@ -2545,7 +2393,6 @@ var xWidgetGetHalign func(uintptr) Align
 //
 // Baselines are not supported for horizontal alignment.
 func (x *Widget) GetHalign() Align {
-
 	cret := xWidgetGetHalign(x.GoPointer())
 	return cret
 }
@@ -2554,7 +2401,6 @@ var xWidgetGetHasTooltip func(uintptr) bool
 
 // Returns the current value of the `has-tooltip` property.
 func (x *Widget) GetHasTooltip() bool {
-
 	cret := xWidgetGetHasTooltip(x.GoPointer())
 	return cret
 }
@@ -2572,7 +2418,6 @@ var xWidgetGetHeight func(uintptr) int
 // To learn more about widget sizes, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) GetHeight() int {
-
 	cret := xWidgetGetHeight(x.GoPointer())
 	return cret
 }
@@ -2595,7 +2440,6 @@ var xWidgetGetHexpand func(uintptr) bool
 // than computing whether the entire widget tree rooted at this widget
 // wants to expand.
 func (x *Widget) GetHexpand() bool {
-
 	cret := xWidgetGetHexpand(x.GoPointer())
 	return cret
 }
@@ -2612,7 +2456,6 @@ var xWidgetGetHexpandSet func(uintptr) bool
 // There are few reasons to use this function, but it’s here
 // for completeness and consistency.
 func (x *Widget) GetHexpandSet() bool {
-
 	cret := xWidgetGetHexpandSet(x.GoPointer())
 	return cret
 }
@@ -2659,7 +2502,6 @@ var xWidgetGetLimitEvents func(uintptr) bool
 
 // Gets the value of the [property@Gtk.Widget:limit-events] property.
 func (x *Widget) GetLimitEvents() bool {
-
 	cret := xWidgetGetLimitEvents(x.GoPointer())
 	return cret
 }
@@ -2668,7 +2510,6 @@ var xWidgetGetMapped func(uintptr) bool
 
 // Returns whether the widget is mapped.
 func (x *Widget) GetMapped() bool {
-
 	cret := xWidgetGetMapped(x.GoPointer())
 	return cret
 }
@@ -2677,7 +2518,6 @@ var xWidgetGetMarginBottom func(uintptr) int
 
 // Gets the bottom margin of the widget.
 func (x *Widget) GetMarginBottom() int {
-
 	cret := xWidgetGetMarginBottom(x.GoPointer())
 	return cret
 }
@@ -2686,7 +2526,6 @@ var xWidgetGetMarginEnd func(uintptr) int
 
 // Gets the end margin of the widget.
 func (x *Widget) GetMarginEnd() int {
-
 	cret := xWidgetGetMarginEnd(x.GoPointer())
 	return cret
 }
@@ -2695,7 +2534,6 @@ var xWidgetGetMarginStart func(uintptr) int
 
 // Gets the start margin of the widget.
 func (x *Widget) GetMarginStart() int {
-
 	cret := xWidgetGetMarginStart(x.GoPointer())
 	return cret
 }
@@ -2704,7 +2542,6 @@ var xWidgetGetMarginTop func(uintptr) int
 
 // Gets the top margin of the widget.
 func (x *Widget) GetMarginTop() int {
-
 	cret := xWidgetGetMarginTop(x.GoPointer())
 	return cret
 }
@@ -2715,7 +2552,6 @@ var xWidgetGetName func(uintptr) string
 //
 // See [method@Gtk.Widget.set_name] for the significance of widget names.
 func (x *Widget) GetName() string {
-
 	cret := xWidgetGetName(x.GoPointer())
 	return cret
 }
@@ -2767,7 +2603,6 @@ var xWidgetGetOpacity func(uintptr) float64
 //
 // See [method@Gtk.Widget.set_opacity].
 func (x *Widget) GetOpacity() float64 {
-
 	cret := xWidgetGetOpacity(x.GoPointer())
 	return cret
 }
@@ -2776,7 +2611,6 @@ var xWidgetGetOverflow func(uintptr) Overflow
 
 // Returns the widget’s overflow value.
 func (x *Widget) GetOverflow() Overflow {
-
 	cret := xWidgetGetOverflow(x.GoPointer())
 	return cret
 }
@@ -2842,9 +2676,7 @@ var xWidgetGetPreferredSize func(uintptr, *Requisition, *Requisition)
 //
 // Use [method@Gtk.Widget.measure] if you want to support baseline alignment.
 func (x *Widget) GetPreferredSize(MinimumSizeVar *Requisition, NaturalSizeVar *Requisition) {
-
 	xWidgetGetPreferredSize(x.GoPointer(), MinimumSizeVar, NaturalSizeVar)
-
 }
 
 var xWidgetGetPrevSibling func(uintptr) uintptr
@@ -2893,7 +2725,6 @@ var xWidgetGetRealized func(uintptr) bool
 
 // Determines whether the widget is realized.
 func (x *Widget) GetRealized() bool {
-
 	cret := xWidgetGetRealized(x.GoPointer())
 	return cret
 }
@@ -2906,7 +2737,6 @@ var xWidgetGetReceivesDefault func(uintptr) bool
 //
 // See [method@Gtk.Widget.set_receives_default].
 func (x *Widget) GetReceivesDefault() bool {
-
 	cret := xWidgetGetReceivesDefault(x.GoPointer())
 	return cret
 }
@@ -2921,7 +2751,6 @@ var xWidgetGetRequestMode func(uintptr) SizeRequestMode
 // either in context of their children or in context of their
 // allocation capabilities.
 func (x *Widget) GetRequestMode() SizeRequestMode {
-
 	cret := xWidgetGetRequestMode(x.GoPointer())
 	return cret
 }
@@ -2964,7 +2793,6 @@ var xWidgetGetScaleFactor func(uintptr) int
 // but you probably want to use [method@Gdk.Surface.get_scale]
 // to get the fractional scale value.
 func (x *Widget) GetScaleFactor() int {
-
 	cret := xWidgetGetScaleFactor(x.GoPointer())
 	return cret
 }
@@ -2980,7 +2808,6 @@ var xWidgetGetSensitive func(uintptr) bool
 // by both its own and its parent widget’s sensitivity.
 // See [method@Gtk.Widget.is_sensitive].
 func (x *Widget) GetSensitive() bool {
-
 	cret := xWidgetGetSensitive(x.GoPointer())
 	return cret
 }
@@ -3022,7 +2849,6 @@ var xWidgetGetSize func(uintptr, Orientation) int
 // To learn more about widget sizes, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) GetSize(OrientationVar Orientation) int {
-
 	cret := xWidgetGetSize(x.GoPointer(), OrientationVar)
 	return cret
 }
@@ -3040,9 +2866,7 @@ var xWidgetGetSizeRequest func(uintptr, *int, *int)
 // To get the size a widget will actually request, call
 // [method@Gtk.Widget.measure] instead of this function.
 func (x *Widget) GetSizeRequest(WidthVar *int, HeightVar *int) {
-
 	xWidgetGetSizeRequest(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xWidgetGetStateFlags func(uintptr) StateFlags
@@ -3057,7 +2881,6 @@ var xWidgetGetStateFlags func(uintptr) StateFlags
 // [flags@Gtk.StateFlags] to pass to a [class@Gtk.StyleContext]
 // method, you should look at [method@Gtk.StyleContext.get_state].
 func (x *Widget) GetStateFlags() StateFlags {
-
 	cret := xWidgetGetStateFlags(x.GoPointer())
 	return cret
 }
@@ -3116,7 +2939,6 @@ var xWidgetGetTooltipMarkup func(uintptr) string
 // [method@Gtk.Widget.set_tooltip_markup], this
 // function returns `NULL`.
 func (x *Widget) GetTooltipMarkup() string {
-
 	cret := xWidgetGetTooltipMarkup(x.GoPointer())
 	return cret
 }
@@ -3129,7 +2951,6 @@ var xWidgetGetTooltipText func(uintptr) string
 // [method@Gtk.Widget.set_tooltip_markup],
 // this function will return the escaped text.
 func (x *Widget) GetTooltipText() string {
-
 	cret := xWidgetGetTooltipText(x.GoPointer())
 	return cret
 }
@@ -3138,7 +2959,6 @@ var xWidgetGetValign func(uintptr) Align
 
 // Gets the vertical alignment of the widget.
 func (x *Widget) GetValign() Align {
-
 	cret := xWidgetGetValign(x.GoPointer())
 	return cret
 }
@@ -3150,7 +2970,6 @@ var xWidgetGetVexpand func(uintptr) bool
 //
 // See [method@Gtk.Widget.get_hexpand] for more detail.
 func (x *Widget) GetVexpand() bool {
-
 	cret := xWidgetGetVexpand(x.GoPointer())
 	return cret
 }
@@ -3161,7 +2980,6 @@ var xWidgetGetVexpandSet func(uintptr) bool
 //
 // See [method@Gtk.Widget.get_hexpand_set] for more detail.
 func (x *Widget) GetVexpandSet() bool {
-
 	cret := xWidgetGetVexpandSet(x.GoPointer())
 	return cret
 }
@@ -3179,7 +2997,6 @@ var xWidgetGetVisible func(uintptr) bool
 //
 // See [method@Gtk.Widget.set_visible].
 func (x *Widget) GetVisible() bool {
-
 	cret := xWidgetGetVisible(x.GoPointer())
 	return cret
 }
@@ -3197,7 +3014,6 @@ var xWidgetGetWidth func(uintptr) int
 // To learn more about widget sizes, see the coordinate
 // system [overview](coordinates.html).
 func (x *Widget) GetWidth() int {
-
 	cret := xWidgetGetWidth(x.GoPointer())
 	return cret
 }
@@ -3214,7 +3030,6 @@ var xWidgetGrabFocus func(uintptr) bool
 // Calling [method@Gtk.Widget.grab_focus] on an already focused widget
 // is allowed, should not have an effect, and return true.
 func (x *Widget) GrabFocus() bool {
-
 	cret := xWidgetGrabFocus(x.GoPointer())
 	return cret
 }
@@ -3223,7 +3038,6 @@ var xWidgetHasCssClass func(uintptr, string) bool
 
 // Returns whether a style class is currently applied to the widget.
 func (x *Widget) HasCssClass(CssClassVar string) bool {
-
 	cret := xWidgetHasCssClass(x.GoPointer(), CssClassVar)
 	return cret
 }
@@ -3233,7 +3047,6 @@ var xWidgetHasDefault func(uintptr) bool
 // Determines whether the widget is the current default widget
 // within its toplevel.
 func (x *Widget) HasDefault() bool {
-
 	cret := xWidgetHasDefault(x.GoPointer())
 	return cret
 }
@@ -3246,7 +3059,6 @@ var xWidgetHasFocus func(uintptr) bool
 // having the global input focus, and only having the focus
 // within a toplevel.
 func (x *Widget) HasFocus() bool {
-
 	cret := xWidgetHasFocus(x.GoPointer())
 	return cret
 }
@@ -3264,7 +3076,6 @@ var xWidgetHasVisibleFocus func(uintptr) bool
 // To find out if the widget has the global input focus, use
 // [method@Gtk.Widget.has_focus].
 func (x *Widget) HasVisibleFocus() bool {
-
 	cret := xWidgetHasVisibleFocus(x.GoPointer())
 	return cret
 }
@@ -3275,9 +3086,7 @@ var xWidgetHide func(uintptr)
 //
 // This is causing the widget to be hidden (invisible to the user).
 func (x *Widget) Hide() {
-
 	xWidgetHide(x.GoPointer())
-
 }
 
 var xWidgetInDestruction func(uintptr) bool
@@ -3287,7 +3096,6 @@ var xWidgetInDestruction func(uintptr) bool
 // This information can sometimes be used to avoid doing
 // unnecessary work.
 func (x *Widget) InDestruction() bool {
-
 	cret := xWidgetInDestruction(x.GoPointer())
 	return cret
 }
@@ -3315,9 +3123,7 @@ var xWidgetInitTemplate func(uintptr)
 // A good rule of thumb is to call this function as the first thing in
 // an instance initialization function.
 func (x *Widget) InitTemplate() {
-
 	xWidgetInitTemplate(x.GoPointer())
-
 }
 
 var xWidgetInsertActionGroup func(uintptr, string, uintptr)
@@ -3336,14 +3142,7 @@ var xWidgetInsertActionGroup func(uintptr, string, uintptr)
 // If @group is `NULL`, a previously inserted group for @name is
 // removed from @widget.
 func (x *Widget) InsertActionGroup(NameVar string, GroupVar gio.ActionGroup) {
-
-	var GroupVarPtr uintptr
-	if GroupVar != nil {
-		GroupVarPtr = GroupVar.GoPointer()
-	}
-
-	xWidgetInsertActionGroup(x.GoPointer(), NameVar, GroupVarPtr)
-
+	xWidgetInsertActionGroup(x.GoPointer(), NameVar, GroupVar.GoPointer())
 }
 
 var xWidgetInsertAfter func(uintptr, uintptr, uintptr)
@@ -3367,14 +3166,7 @@ var xWidgetInsertAfter func(uintptr, uintptr, uintptr)
 // This function is primarily meant for widget implementations; if you are
 // just using a widget, you *must* use its own API for adding children.
 func (x *Widget) InsertAfter(ParentVar *Widget, PreviousSiblingVar *Widget) {
-
-	var PreviousSiblingVarPtr uintptr
-	if PreviousSiblingVar != nil {
-		PreviousSiblingVarPtr = PreviousSiblingVar.GoPointer()
-	}
-
-	xWidgetInsertAfter(x.GoPointer(), ParentVar.GoPointer(), PreviousSiblingVarPtr)
-
+	xWidgetInsertAfter(x.GoPointer(), ParentVar.GoPointer(), PreviousSiblingVar.GoPointer())
 }
 
 var xWidgetInsertBefore func(uintptr, uintptr, uintptr)
@@ -3397,21 +3189,13 @@ var xWidgetInsertBefore func(uintptr, uintptr, uintptr)
 // This function is primarily meant for widget implementations; if you are
 // just using a widget, you *must* use its own API for adding children.
 func (x *Widget) InsertBefore(ParentVar *Widget, NextSiblingVar *Widget) {
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	xWidgetInsertBefore(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVarPtr)
-
+	xWidgetInsertBefore(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 var xWidgetIsAncestor func(uintptr, uintptr) bool
 
 // Determines whether the widget is a descendent of @ancestor.
 func (x *Widget) IsAncestor(AncestorVar *Widget) bool {
-
 	cret := xWidgetIsAncestor(x.GoPointer(), AncestorVar.GoPointer())
 	return cret
 }
@@ -3422,7 +3206,6 @@ var xWidgetIsDrawable func(uintptr) bool
 //
 // A widget can be drawn if it is mapped and visible.
 func (x *Widget) IsDrawable() bool {
-
 	cret := xWidgetIsDrawable(x.GoPointer())
 	return cret
 }
@@ -3437,7 +3220,6 @@ var xWidgetIsFocus func(uintptr) bool
 // will only be set if the toplevel widget additionally has the
 // global input focus.
 func (x *Widget) IsFocus() bool {
-
 	cret := xWidgetIsFocus(x.GoPointer())
 	return cret
 }
@@ -3449,7 +3231,6 @@ var xWidgetIsSensitive func(uintptr) bool
 // This means it is sensitive itself and also its
 // parent widget is sensitive.
 func (x *Widget) IsSensitive() bool {
-
 	cret := xWidgetIsSensitive(x.GoPointer())
 	return cret
 }
@@ -3464,7 +3245,6 @@ var xWidgetIsVisible func(uintptr) bool
 // See also [method@Gtk.Widget.get_visible] and
 // [method@Gtk.Widget.set_visible].
 func (x *Widget) IsVisible() bool {
-
 	cret := xWidgetIsVisible(x.GoPointer())
 	return cret
 }
@@ -3500,12 +3280,11 @@ var xWidgetKeynavFailed func(uintptr, DirectionType) bool
 // the entire row with the cursor keys, as e.g. known from user
 // interfaces that require entering license keys.
 func (x *Widget) KeynavFailed(DirectionVar DirectionType) bool {
-
 	cret := xWidgetKeynavFailed(x.GoPointer(), DirectionVar)
 	return cret
 }
 
-var xWidgetListMnemonicLabels func(uintptr) *glib.List
+var xWidgetListMnemonicLabels func(uintptr) uintptr
 
 // Returns the widgets for which this widget is the target of a
 // mnemonic.
@@ -3519,9 +3298,11 @@ var xWidgetListMnemonicLabels func(uintptr) *glib.List
 // must call `g_list_foreach (result, (GFunc)g_object_ref, NULL)`
 // first, and then unref all the widgets afterwards.
 func (x *Widget) ListMnemonicLabels() *glib.List {
-
 	cret := xWidgetListMnemonicLabels(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWidgetMap func(uintptr)
@@ -3530,9 +3311,7 @@ var xWidgetMap func(uintptr)
 //
 // This function is only for use in widget implementations.
 func (x *Widget) Map() {
-
 	xWidgetMap(x.GoPointer())
-
 }
 
 var xWidgetMeasure func(uintptr, Orientation, int, *int, *int, *int, *int)
@@ -3546,16 +3325,13 @@ var xWidgetMeasure func(uintptr, Orientation, int, *int, *int, *int, *int)
 // See [GtkWidget’s geometry management section](class.Widget.html#height-for-width-geometry-management) for
 // a more details on implementing `GtkWidgetClass.measure()`.
 func (x *Widget) Measure(OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
-
 	xWidgetMeasure(x.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
-
 }
 
 var xWidgetMnemonicActivate func(uintptr, bool) bool
 
 // Emits the [signal@Gtk.Widget::mnemonic-activate] signal.
 func (x *Widget) MnemonicActivate(GroupCyclingVar bool) bool {
-
 	cret := xWidgetMnemonicActivate(x.GoPointer(), GroupCyclingVar)
 	return cret
 }
@@ -3649,9 +3425,7 @@ var xWidgetQueueAllocate func(uintptr)
 //
 // This function is only for use in widget implementations.
 func (x *Widget) QueueAllocate() {
-
 	xWidgetQueueAllocate(x.GoPointer())
-
 }
 
 var xWidgetQueueDraw func(uintptr)
@@ -3664,9 +3438,7 @@ var xWidgetQueueDraw func(uintptr)
 // This means @widget's [vfunc@Gtk.Widget.snapshot]
 // implementation will be called.
 func (x *Widget) QueueDraw() {
-
 	xWidgetQueueDraw(x.GoPointer())
-
 }
 
 var xWidgetQueueResize func(uintptr)
@@ -3685,9 +3457,7 @@ var xWidgetQueueResize func(uintptr)
 //
 // This function is only for use in widget implementations.
 func (x *Widget) QueueResize() {
-
 	xWidgetQueueResize(x.GoPointer())
-
 }
 
 var xWidgetRealize func(uintptr)
@@ -3709,9 +3479,7 @@ var xWidgetRealize func(uintptr)
 // called after the widget is realized automatically, such as
 // [signal@Gtk.Widget::realize].
 func (x *Widget) Realize() {
-
 	xWidgetRealize(x.GoPointer())
-
 }
 
 var xWidgetRemoveController func(uintptr, uintptr)
@@ -3724,9 +3492,7 @@ var xWidgetRemoveController func(uintptr, uintptr)
 // Widgets will remove all event controllers automatically when they
 // are destroyed, there is normally no need to call this function.
 func (x *Widget) RemoveController(ControllerVar *EventController) {
-
 	xWidgetRemoveController(x.GoPointer(), ControllerVar.GoPointer())
-
 }
 
 var xWidgetRemoveCssClass func(uintptr, string)
@@ -3735,9 +3501,7 @@ var xWidgetRemoveCssClass func(uintptr, string)
 //
 // After this, the style of @widget will stop matching for @css_class.
 func (x *Widget) RemoveCssClass(CssClassVar string) {
-
 	xWidgetRemoveCssClass(x.GoPointer(), CssClassVar)
-
 }
 
 var xWidgetRemoveMnemonicLabel func(uintptr, uintptr)
@@ -3749,9 +3513,7 @@ var xWidgetRemoveMnemonicLabel func(uintptr, uintptr)
 // The widget must have previously been added to the list with
 // [method@Gtk.Widget.add_mnemonic_label].
 func (x *Widget) RemoveMnemonicLabel(LabelVar *Widget) {
-
 	xWidgetRemoveMnemonicLabel(x.GoPointer(), LabelVar.GoPointer())
-
 }
 
 var xWidgetRemoveTickCallback func(uintptr, uint)
@@ -3759,9 +3521,7 @@ var xWidgetRemoveTickCallback func(uintptr, uint)
 // Removes a tick callback previously registered with
 // [method@Gtk.Widget.add_tick_callback].
 func (x *Widget) RemoveTickCallback(IdVar uint) {
-
 	xWidgetRemoveTickCallback(x.GoPointer(), IdVar)
-
 }
 
 var xWidgetSetCanFocus func(uintptr, bool)
@@ -3781,18 +3541,14 @@ var xWidgetSetCanFocus func(uintptr, bool)
 // See [method@Gtk.Widget.grab_focus] for actually setting
 // the input focus on a widget.
 func (x *Widget) SetCanFocus(CanFocusVar bool) {
-
 	xWidgetSetCanFocus(x.GoPointer(), CanFocusVar)
-
 }
 
 var xWidgetSetCanTarget func(uintptr, bool)
 
 // Sets whether the widget can be the target of pointer events.
 func (x *Widget) SetCanTarget(CanTargetVar bool) {
-
 	xWidgetSetCanTarget(x.GoPointer(), CanTargetVar)
-
 }
 
 var xWidgetSetChildVisible func(uintptr, bool)
@@ -3814,18 +3570,14 @@ var xWidgetSetChildVisible func(uintptr, bool)
 // This function is only useful for widget implementations
 // and should never be called by an application.
 func (x *Widget) SetChildVisible(ChildVisibleVar bool) {
-
 	xWidgetSetChildVisible(x.GoPointer(), ChildVisibleVar)
-
 }
 
 var xWidgetSetCssClasses func(uintptr, []string)
 
 // Replaces the current style classes of the widget with @classes.
 func (x *Widget) SetCssClasses(ClassesVar []string) {
-
 	xWidgetSetCssClasses(x.GoPointer(), ClassesVar)
-
 }
 
 var xWidgetSetCursor func(uintptr, uintptr)
@@ -3836,14 +3588,7 @@ var xWidgetSetCursor func(uintptr, uintptr)
 // If the @cursor is `NULL`, @widget will use the cursor
 // inherited from its parent.
 func (x *Widget) SetCursor(CursorVar *gdk.Cursor) {
-
-	var CursorVarPtr uintptr
-	if CursorVar != nil {
-		CursorVarPtr = CursorVar.GoPointer()
-	}
-
-	xWidgetSetCursor(x.GoPointer(), CursorVarPtr)
-
+	xWidgetSetCursor(x.GoPointer(), CursorVar.GoPointer())
 }
 
 var xWidgetSetCursorFromName func(uintptr, uintptr)
@@ -3860,12 +3605,10 @@ var xWidgetSetCursorFromName func(uintptr, uintptr)
 // will do the same as calling [method@Gtk.Widget.set_cursor]
 // with a `NULL` cursor.
 func (x *Widget) SetCursorFromName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xWidgetSetCursorFromName(x.GoPointer(), NameVarPtr)
-
 }
 
 var xWidgetSetDirection func(uintptr, TextDirection)
@@ -3886,9 +3629,7 @@ var xWidgetSetDirection func(uintptr, TextDirection)
 // If the direction is set to [enum@Gtk.TextDirection.none], then
 // the value set by [func@Gtk.Widget.set_default_direction] will be used.
 func (x *Widget) SetDirection(DirVar TextDirection) {
-
 	xWidgetSetDirection(x.GoPointer(), DirVar)
-
 }
 
 var xWidgetSetFocusChild func(uintptr, uintptr)
@@ -3899,14 +3640,7 @@ var xWidgetSetFocusChild func(uintptr, uintptr)
 // If you want a certain widget to get the input focus, call
 // [method@Gtk.Widget.grab_focus] on it.
 func (x *Widget) SetFocusChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xWidgetSetFocusChild(x.GoPointer(), ChildVarPtr)
-
+	xWidgetSetFocusChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xWidgetSetFocusOnClick func(uintptr, bool)
@@ -3918,9 +3652,7 @@ var xWidgetSetFocusOnClick func(uintptr, bool)
 // toolbars where you don’t want the keyboard focus removed from
 // the main area of the application.
 func (x *Widget) SetFocusOnClick(FocusOnClickVar bool) {
-
 	xWidgetSetFocusOnClick(x.GoPointer(), FocusOnClickVar)
-
 }
 
 var xWidgetSetFocusable func(uintptr, bool)
@@ -3939,9 +3671,7 @@ var xWidgetSetFocusable func(uintptr, bool)
 // See [method@Gtk.Widget.grab_focus] for actually setting
 // the input focus on a widget.
 func (x *Widget) SetFocusable(FocusableVar bool) {
-
 	xWidgetSetFocusable(x.GoPointer(), FocusableVar)
-
 }
 
 var xWidgetSetFontMap func(uintptr, uintptr)
@@ -3955,14 +3685,7 @@ var xWidgetSetFontMap func(uintptr, uintptr)
 //
 // When not set, the widget will inherit the font map from its parent.
 func (x *Widget) SetFontMap(FontMapVar *pango.FontMap) {
-
-	var FontMapVarPtr uintptr
-	if FontMapVar != nil {
-		FontMapVarPtr = FontMapVar.GoPointer()
-	}
-
-	xWidgetSetFontMap(x.GoPointer(), FontMapVarPtr)
-
+	xWidgetSetFontMap(x.GoPointer(), FontMapVar.GoPointer())
 }
 
 var xWidgetSetFontOptions func(uintptr, *cairo.FontOptions)
@@ -3973,27 +3696,21 @@ var xWidgetSetFontOptions func(uintptr, *cairo.FontOptions)
 // When not set, the default font options for the `GdkDisplay`
 // will be used.
 func (x *Widget) SetFontOptions(OptionsVar *cairo.FontOptions) {
-
 	xWidgetSetFontOptions(x.GoPointer(), OptionsVar)
-
 }
 
 var xWidgetSetHalign func(uintptr, Align)
 
 // Sets the horizontal alignment of the widget.
 func (x *Widget) SetHalign(AlignVar Align) {
-
 	xWidgetSetHalign(x.GoPointer(), AlignVar)
-
 }
 
 var xWidgetSetHasTooltip func(uintptr, bool)
 
 // Sets the `has-tooltip` property on the widget.
 func (x *Widget) SetHasTooltip(HasTooltipVar bool) {
-
 	xWidgetSetHasTooltip(x.GoPointer(), HasTooltipVar)
-
 }
 
 var xWidgetSetHexpand func(uintptr, bool)
@@ -4025,9 +3742,7 @@ var xWidgetSetHexpand func(uintptr, bool)
 // [method@Gtk.Widget.set_hexpand_set]) which causes the widget’s hexpand
 // value to be used, rather than looking at children and widget state.
 func (x *Widget) SetHexpand(ExpandVar bool) {
-
 	xWidgetSetHexpand(x.GoPointer(), ExpandVar)
-
 }
 
 var xWidgetSetHexpandSet func(uintptr, bool)
@@ -4047,9 +3762,7 @@ var xWidgetSetHexpandSet func(uintptr, bool)
 // There are few reasons to use this function, but it’s here
 // for completeness and consistency.
 func (x *Widget) SetHexpandSet(SetVar bool) {
-
 	xWidgetSetHexpandSet(x.GoPointer(), SetVar)
-
 }
 
 var xWidgetSetLayoutManager func(uintptr, uintptr)
@@ -4057,14 +3770,7 @@ var xWidgetSetLayoutManager func(uintptr, uintptr)
 // Sets the layout manager to use for measuring and allocating children
 // of the widget.
 func (x *Widget) SetLayoutManager(LayoutManagerVar *LayoutManager) {
-
-	var LayoutManagerVarPtr uintptr
-	if LayoutManagerVar != nil {
-		LayoutManagerVarPtr = LayoutManagerVar.GoPointer()
-	}
-
-	xWidgetSetLayoutManager(x.GoPointer(), LayoutManagerVarPtr)
-
+	xWidgetSetLayoutManager(x.GoPointer(), LayoutManagerVar.GoPointer())
 }
 
 var xWidgetSetLimitEvents func(uintptr, bool)
@@ -4072,45 +3778,35 @@ var xWidgetSetLimitEvents func(uintptr, bool)
 // Sets whether the widget acts like a modal dialog,
 // with respect to event delivery.
 func (x *Widget) SetLimitEvents(LimitEventsVar bool) {
-
 	xWidgetSetLimitEvents(x.GoPointer(), LimitEventsVar)
-
 }
 
 var xWidgetSetMarginBottom func(uintptr, int)
 
 // Sets the bottom margin of the widget.
 func (x *Widget) SetMarginBottom(MarginVar int) {
-
 	xWidgetSetMarginBottom(x.GoPointer(), MarginVar)
-
 }
 
 var xWidgetSetMarginEnd func(uintptr, int)
 
 // Sets the end margin of the widget.
 func (x *Widget) SetMarginEnd(MarginVar int) {
-
 	xWidgetSetMarginEnd(x.GoPointer(), MarginVar)
-
 }
 
 var xWidgetSetMarginStart func(uintptr, int)
 
 // Sets the start margin of the widget.
 func (x *Widget) SetMarginStart(MarginVar int) {
-
 	xWidgetSetMarginStart(x.GoPointer(), MarginVar)
-
 }
 
 var xWidgetSetMarginTop func(uintptr, int)
 
 // Sets the top margin of the widget.
 func (x *Widget) SetMarginTop(MarginVar int) {
-
 	xWidgetSetMarginTop(x.GoPointer(), MarginVar)
-
 }
 
 var xWidgetSetName func(uintptr, string)
@@ -4127,9 +3823,7 @@ var xWidgetSetName func(uintptr, string)
 // these will make your widget impossible to match by name. Any combination
 // of alphanumeric symbols, dashes and underscores will suffice.
 func (x *Widget) SetName(NameVar string) {
-
 	xWidgetSetName(x.GoPointer(), NameVar)
-
 }
 
 var xWidgetSetOpacity func(uintptr, float64)
@@ -4158,9 +3852,7 @@ var xWidgetSetOpacity func(uintptr, float64)
 // non-translucent, even if they are attached to a toplevel that
 // is translucent.
 func (x *Widget) SetOpacity(OpacityVar float64) {
-
 	xWidgetSetOpacity(x.GoPointer(), OpacityVar)
-
 }
 
 var xWidgetSetOverflow func(uintptr, Overflow)
@@ -4175,9 +3867,7 @@ var xWidgetSetOverflow func(uintptr, Overflow)
 //
 // The default value is [enum@Gtk.Overflow.visible].
 func (x *Widget) SetOverflow(OverflowVar Overflow) {
-
 	xWidgetSetOverflow(x.GoPointer(), OverflowVar)
-
 }
 
 var xWidgetSetParent func(uintptr, uintptr)
@@ -4191,9 +3881,7 @@ var xWidgetSetParent func(uintptr, uintptr)
 // This function is useful only when implementing subclasses of
 // `GtkWidget`.
 func (x *Widget) SetParent(ParentVar *Widget) {
-
 	xWidgetSetParent(x.GoPointer(), ParentVar.GoPointer())
-
 }
 
 var xWidgetSetReceivesDefault func(uintptr, bool)
@@ -4202,9 +3890,7 @@ var xWidgetSetReceivesDefault func(uintptr, bool)
 // widget within its toplevel when it has the focus, even if
 // another widget is the default.
 func (x *Widget) SetReceivesDefault(ReceivesDefaultVar bool) {
-
 	xWidgetSetReceivesDefault(x.GoPointer(), ReceivesDefaultVar)
-
 }
 
 var xWidgetSetSensitive func(uintptr, bool)
@@ -4216,9 +3902,7 @@ var xWidgetSetSensitive func(uintptr, bool)
 // interact with them. Insensitive widgets are known as
 // “inactive”, “disabled”, or “ghosted” in some other toolkits.
 func (x *Widget) SetSensitive(SensitiveVar bool) {
-
 	xWidgetSetSensitive(x.GoPointer(), SensitiveVar)
-
 }
 
 var xWidgetSetSizeRequest func(uintptr, int, int)
@@ -4258,9 +3942,7 @@ var xWidgetSetSizeRequest func(uintptr, int, int)
 // much all other padding or border properties set by any subclass
 // of `GtkWidget`.
 func (x *Widget) SetSizeRequest(WidthVar int, HeightVar int) {
-
 	xWidgetSetSizeRequest(x.GoPointer(), WidthVar, HeightVar)
-
 }
 
 var xWidgetSetStateFlags func(uintptr, StateFlags, bool)
@@ -4275,9 +3957,7 @@ var xWidgetSetStateFlags func(uintptr, StateFlags, bool)
 //
 // This function is for use in widget implementations.
 func (x *Widget) SetStateFlags(FlagsVar StateFlags, ClearVar bool) {
-
 	xWidgetSetStateFlags(x.GoPointer(), FlagsVar, ClearVar)
-
 }
 
 var xWidgetSetTooltipMarkup func(uintptr, uintptr)
@@ -4292,12 +3972,10 @@ var xWidgetSetTooltipMarkup func(uintptr, uintptr)
 //
 // See also [method@Gtk.Tooltip.set_markup].
 func (x *Widget) SetTooltipMarkup(MarkupVar *string) {
-
 	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
 	defer core.GFreeNullable(MarkupVarPtr)
 
 	xWidgetSetTooltipMarkup(x.GoPointer(), MarkupVarPtr)
-
 }
 
 var xWidgetSetTooltipText func(uintptr, uintptr)
@@ -4313,21 +3991,17 @@ var xWidgetSetTooltipText func(uintptr, uintptr)
 //
 // See also [method@Gtk.Tooltip.set_text].
 func (x *Widget) SetTooltipText(TextVar *string) {
-
 	TextVarPtr := core.GStrdupNullable(TextVar)
 	defer core.GFreeNullable(TextVarPtr)
 
 	xWidgetSetTooltipText(x.GoPointer(), TextVarPtr)
-
 }
 
 var xWidgetSetValign func(uintptr, Align)
 
 // Sets the vertical alignment of the widget.
 func (x *Widget) SetValign(AlignVar Align) {
-
 	xWidgetSetValign(x.GoPointer(), AlignVar)
-
 }
 
 var xWidgetSetVexpand func(uintptr, bool)
@@ -4337,9 +4011,7 @@ var xWidgetSetVexpand func(uintptr, bool)
 //
 // See [method@Gtk.Widget.set_hexpand] for more detail.
 func (x *Widget) SetVexpand(ExpandVar bool) {
-
 	xWidgetSetVexpand(x.GoPointer(), ExpandVar)
-
 }
 
 var xWidgetSetVexpandSet func(uintptr, bool)
@@ -4348,9 +4020,7 @@ var xWidgetSetVexpandSet func(uintptr, bool)
 //
 // See [method@Gtk.Widget.set_hexpand_set] for more detail.
 func (x *Widget) SetVexpandSet(SetVar bool) {
-
 	xWidgetSetVexpandSet(x.GoPointer(), SetVar)
-
 }
 
 var xWidgetSetVisible func(uintptr, bool)
@@ -4360,9 +4030,7 @@ var xWidgetSetVisible func(uintptr, bool)
 // Note that setting this to true doesn’t mean the widget is
 // actually viewable, see [method@Gtk.Widget.get_visible].
 func (x *Widget) SetVisible(VisibleVar bool) {
-
 	xWidgetSetVisible(x.GoPointer(), VisibleVar)
-
 }
 
 var xWidgetShouldLayout func(uintptr) bool
@@ -4374,7 +4042,6 @@ var xWidgetShouldLayout func(uintptr) bool
 // for children that have their own surface, such
 // as [class@Gtk.Popover] instances.
 func (x *Widget) ShouldLayout() bool {
-
 	cret := xWidgetShouldLayout(x.GoPointer())
 	return cret
 }
@@ -4392,9 +4059,7 @@ var xWidgetShow func(uintptr)
 // mapped; other shown widgets are realized and mapped when their
 // toplevel widget is realized and mapped.
 func (x *Widget) Show() {
-
 	xWidgetShow(x.GoPointer())
-
 }
 
 var xWidgetSizeAllocate func(uintptr, *Allocation, int)
@@ -4404,9 +4069,7 @@ var xWidgetSizeAllocate func(uintptr, *Allocation, int)
 //
 // This is a simple form of [method@Gtk.Widget.allocate].
 func (x *Widget) SizeAllocate(AllocationVar *Allocation, BaselineVar int) {
-
 	xWidgetSizeAllocate(x.GoPointer(), AllocationVar, BaselineVar)
-
 }
 
 var xWidgetSnapshotChild func(uintptr, uintptr, uintptr)
@@ -4426,9 +4089,7 @@ var xWidgetSnapshotChild func(uintptr, uintptr, uintptr)
 //
 // It does nothing for children that implement `GtkNative`.
 func (x *Widget) SnapshotChild(ChildVar *Widget, SnapshotVar *Snapshot) {
-
 	xWidgetSnapshotChild(x.GoPointer(), ChildVar.GoPointer(), SnapshotVar.GoPointer())
-
 }
 
 var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, *float64, *float64) bool
@@ -4440,7 +4101,6 @@ var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, *float6
 // a common ancestor. If that is not the case, @dest_x and @dest_y
 // are set to 0 and false is returned.
 func (x *Widget) TranslateCoordinates(DestWidgetVar *Widget, SrcXVar float64, SrcYVar float64, DestXVar *float64, DestYVar *float64) bool {
-
 	cret := xWidgetTranslateCoordinates(x.GoPointer(), DestWidgetVar.GoPointer(), SrcXVar, SrcYVar, DestXVar, DestYVar)
 	return cret
 }
@@ -4449,9 +4109,7 @@ var xWidgetTriggerTooltipQuery func(uintptr)
 
 // Triggers a tooltip query on the display of the widget.
 func (x *Widget) TriggerTooltipQuery() {
-
 	xWidgetTriggerTooltipQuery(x.GoPointer())
-
 }
 
 var xWidgetUnmap func(uintptr)
@@ -4460,9 +4118,7 @@ var xWidgetUnmap func(uintptr)
 //
 // This function is only for use in widget implementations.
 func (x *Widget) Unmap() {
-
 	xWidgetUnmap(x.GoPointer())
-
 }
 
 var xWidgetUnparent func(uintptr)
@@ -4472,9 +4128,7 @@ var xWidgetUnparent func(uintptr)
 // This function is only for use in widget implementations,
 // typically in dispose.
 func (x *Widget) Unparent() {
-
 	xWidgetUnparent(x.GoPointer())
-
 }
 
 var xWidgetUnrealize func(uintptr)
@@ -4485,9 +4139,7 @@ var xWidgetUnrealize func(uintptr)
 //
 // This function is only useful in widget implementations.
 func (x *Widget) Unrealize() {
-
 	xWidgetUnrealize(x.GoPointer())
-
 }
 
 var xWidgetUnsetStateFlags func(uintptr, StateFlags)
@@ -4498,9 +4150,7 @@ var xWidgetUnsetStateFlags func(uintptr, StateFlags)
 //
 // This function is for use in widget implementations.
 func (x *Widget) UnsetStateFlags(FlagsVar StateFlags) {
-
 	xWidgetUnsetStateFlags(x.GoPointer(), FlagsVar)
-
 }
 
 func (c *Widget) GoPointer() uintptr {
@@ -5119,7 +4769,6 @@ func (x *Widget) ConnectDestroy(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5143,7 +4792,6 @@ func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint {
 		cbFn := *cb
 
 		cbFn(fa, PreviousDirectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5167,7 +4815,6 @@ func (x *Widget) ConnectHide(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5193,7 +4840,6 @@ func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint 
 		cbFn := *cb
 
 		return cbFn(fa, DirectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5225,7 +4871,6 @@ func (x *Widget) ConnectMap(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5252,7 +4897,6 @@ func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint {
 		cbFn := *cb
 
 		return cbFn(fa, GroupCyclingVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5281,7 +4925,6 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint {
 		cbFn := *cb
 
 		cbFn(fa, DirectionVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5303,7 +4946,7 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint {
 //
 // The signal handler is free to manipulate @tooltip with the therefore
 // destined function calls.
-func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, *Tooltip) bool) uint {
+func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
@@ -5316,8 +4959,7 @@ func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, *Tooltip) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, XVarp, YVarp, KeyboardModeVarp, func() *Tooltip { cls := &Tooltip{}; cls.Ptr = TooltipVarp; return cls }())
-
+		return cbFn(fa, XVarp, YVarp, KeyboardModeVarp, TooltipVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5344,7 +4986,6 @@ func (x *Widget) ConnectRealize(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5368,7 +5009,6 @@ func (x *Widget) ConnectShow(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5394,7 +5034,6 @@ func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint {
 		cbFn := *cb
 
 		cbFn(fa, FlagsVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5424,7 +5063,6 @@ func (x *Widget) ConnectUnmap(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5451,7 +5089,6 @@ func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -5470,9 +5107,19 @@ func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Widget) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Widget) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -5493,7 +5140,6 @@ func (x *Widget) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Widget) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -5518,7 +5164,6 @@ func (x *Widget) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Widget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -5557,30 +5202,23 @@ func (x *Widget) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Widget) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Widget) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Widget) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Widget) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -5593,19 +5231,7 @@ func (x *Widget) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Widget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -5613,14 +5239,7 @@ func (x *Widget) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Access
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Widget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -5629,9 +5248,7 @@ func (x *Widget) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Widget) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -5653,9 +5270,7 @@ func (x *Widget) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Widget) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -5665,9 +5280,7 @@ func (x *Widget) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Widget) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -5689,9 +5302,7 @@ func (x *Widget) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessi
 //
 // ```
 func (x *Widget) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -5701,9 +5312,7 @@ func (x *Widget) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 //
 // This function is meant to be used by language bindings.
 func (x *Widget) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -5726,9 +5335,7 @@ func (x *Widget) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessibl
 //
 // ```
 func (x *Widget) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -5738,9 +5345,7 @@ func (x *Widget) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 //
 // This function is meant to be used by language bindings.
 func (x *Widget) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -5748,7 +5353,6 @@ func (x *Widget) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Widget) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -5759,7 +5363,6 @@ var xWidgetGetDefaultDirection func() TextDirection
 //
 // See [func@Gtk.Widget.set_default_direction].
 func WidgetGetDefaultDirection() TextDirection {
-
 	cret := xWidgetGetDefaultDirection()
 	return cret
 }
@@ -5770,14 +5373,12 @@ var xWidgetSetDefaultDirection func(TextDirection)
 //
 // See [method@Gtk.Widget.set_direction].
 func WidgetSetDefaultDirection(DirVar TextDirection) {
-
 	xWidgetSetDefaultDirection(DirVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -5985,5 +5586,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xWidgetGetDefaultDirection, libs, "gtk_widget_get_default_direction")
 	core.PuregoSafeRegister(&xWidgetSetDefaultDirection, libs, "gtk_widget_set_default_direction")
-
 }

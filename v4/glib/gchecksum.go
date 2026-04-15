@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -41,7 +40,7 @@ func (x *Checksum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewChecksum func(ChecksumType) *Checksum
+var xNewChecksum func(ChecksumType) uintptr
 
 // Creates a new #GChecksum, using the checksum algorithm @checksum_type.
 // If the @checksum_type is not known, %NULL is returned.
@@ -57,29 +56,31 @@ var xNewChecksum func(ChecksumType) *Checksum
 // will be closed and it won't be possible to call g_checksum_update()
 // on it anymore.
 func NewChecksum(ChecksumTypeVar ChecksumType) *Checksum {
-
 	cret := xNewChecksum(ChecksumTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Checksum)(unsafe.Pointer(cret))
 }
 
-var xChecksumCopy func(uintptr) *Checksum
+var xChecksumCopy func(uintptr) uintptr
 
 // Copies a #GChecksum. If @checksum has been closed, by calling
 // g_checksum_get_string() or g_checksum_get_digest(), the copied
 // checksum will be closed as well.
 func (x *Checksum) Copy() *Checksum {
-
 	cret := xChecksumCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Checksum)(unsafe.Pointer(cret))
 }
 
 var xChecksumFree func(uintptr)
 
 // Frees the memory allocated for @checksum.
 func (x *Checksum) Free() {
-
 	xChecksumFree(x.GoPointer())
-
 }
 
 var xChecksumGetDigest func(uintptr, []byte, *uint)
@@ -90,9 +91,7 @@ var xChecksumGetDigest func(uintptr, []byte, *uint)
 // Once this function has been called, the #GChecksum is closed and can
 // no longer be updated with g_checksum_update().
 func (x *Checksum) GetDigest(BufferVar []byte, DigestLenVar *uint) {
-
 	xChecksumGetDigest(x.GoPointer(), BufferVar, DigestLenVar)
-
 }
 
 var xChecksumGetString func(uintptr) string
@@ -104,7 +103,6 @@ var xChecksumGetString func(uintptr) string
 //
 // The hexadecimal characters will be lower case.
 func (x *Checksum) GetString() string {
-
 	cret := xChecksumGetString(x.GoPointer())
 	return cret
 }
@@ -113,9 +111,7 @@ var xChecksumReset func(uintptr)
 
 // Resets the state of the @checksum back to its initial state.
 func (x *Checksum) Reset() {
-
 	xChecksumReset(x.GoPointer())
-
 }
 
 var xChecksumUpdate func(uintptr, []byte, int)
@@ -124,9 +120,7 @@ var xChecksumUpdate func(uintptr, []byte, int)
 // open, that is g_checksum_get_string() or g_checksum_get_digest() must
 // not have been called on @checksum.
 func (x *Checksum) Update(DataVar []byte, LengthVar int) {
-
 	xChecksumUpdate(x.GoPointer(), DataVar, LengthVar)
-
 }
 
 // The hashing algorithm to be used by #GChecksum when performing the
@@ -154,7 +148,6 @@ var xChecksumTypeGetLength func(ChecksumType) int
 
 // Gets the length in bytes of digests of type @checksum_type
 func ChecksumTypeGetLength(ChecksumTypeVar ChecksumType) int {
-
 	cret := xChecksumTypeGetLength(ChecksumTypeVar)
 
 	return cret
@@ -168,7 +161,6 @@ var xComputeChecksumForBytes func(ChecksumType, *Bytes) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForBytes(ChecksumTypeVar ChecksumType, DataVar *Bytes) string {
-
 	cret := xComputeChecksumForBytes(ChecksumTypeVar, DataVar)
 
 	return cret
@@ -182,7 +174,6 @@ var xComputeChecksumForData func(ChecksumType, []byte, uint) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForData(ChecksumTypeVar ChecksumType, DataVar []byte, LengthVar uint) string {
-
 	cret := xComputeChecksumForData(ChecksumTypeVar, DataVar, LengthVar)
 
 	return cret
@@ -194,7 +185,6 @@ var xComputeChecksumForString func(ChecksumType, string, int) string
 //
 // The hexadecimal string returned will be in lower case.
 func ComputeChecksumForString(ChecksumTypeVar ChecksumType, StrVar string, LengthVar int) string {
-
 	cret := xComputeChecksumForString(ChecksumTypeVar, StrVar, LengthVar)
 
 	return cret
@@ -202,7 +192,7 @@ func ComputeChecksumForString(ChecksumTypeVar ChecksumType, StrVar string, Lengt
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -227,5 +217,4 @@ func init() {
 	core.PuregoSafeRegister(&xChecksumGetString, libs, "g_checksum_get_string")
 	core.PuregoSafeRegister(&xChecksumReset, libs, "g_checksum_reset")
 	core.PuregoSafeRegister(&xChecksumUpdate, libs, "g_checksum_update")
-
 }

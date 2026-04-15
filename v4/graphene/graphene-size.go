@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -30,22 +29,23 @@ func (x *Size) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSizeAlloc func() *Size
+var xSizeAlloc func() uintptr
 
 // Allocates a new #graphene_size_t.
 //
 // The contents of the returned value are undefined.
 func SizeAlloc() *Size {
-
 	cret := xSizeAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 var xSizeEqual func(uintptr, *Size) bool
 
 // Checks whether the two give #graphene_size_t are equal.
 func (x *Size) Equal(BVar *Size) bool {
-
 	cret := xSizeEqual(x.GoPointer(), BVar)
 	return cret
 }
@@ -54,28 +54,30 @@ var xSizeFree func(uintptr)
 
 // Frees the resources allocated by graphene_size_alloc().
 func (x *Size) Free() {
-
 	xSizeFree(x.GoPointer())
-
 }
 
-var xSizeInit func(uintptr, float32, float32) *Size
+var xSizeInit func(uintptr, float32, float32) uintptr
 
 // Initializes a #graphene_size_t using the given @width and @height.
 func (x *Size) Init(WidthVar float32, HeightVar float32) *Size {
-
 	cret := xSizeInit(x.GoPointer(), WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
-var xSizeInitFromSize func(uintptr, *Size) *Size
+var xSizeInitFromSize func(uintptr, *Size) uintptr
 
 // Initializes a #graphene_size_t using the width and height of
 // the given @src.
 func (x *Size) InitFromSize(SrcVar *Size) *Size {
-
 	cret := xSizeInitFromSize(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 var xSizeInterpolate func(uintptr, *Size, float64, *Size)
@@ -83,33 +85,31 @@ var xSizeInterpolate func(uintptr, *Size, float64, *Size)
 // Linearly interpolates the two given #graphene_size_t using the given
 // interpolation @factor.
 func (x *Size) Interpolate(BVar *Size, FactorVar float64, ResVar *Size) {
-
 	xSizeInterpolate(x.GoPointer(), BVar, FactorVar, ResVar)
-
 }
 
 var xSizeScale func(uintptr, float32, *Size)
 
 // Scales the components of a #graphene_size_t using the given @factor.
 func (x *Size) Scale(FactorVar float32, ResVar *Size) {
-
 	xSizeScale(x.GoPointer(), FactorVar, ResVar)
-
 }
 
-var xSizeZero func() *Size
+var xSizeZero func() uintptr
 
 // A constant pointer to a zero #graphene_size_t, useful for
 // equality checks and interpolations.
 func SizeZero() *Size {
-
 	cret := xSizeZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0", "libgraphene-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GRAPHENE") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -131,5 +131,4 @@ func init() {
 	core.PuregoSafeRegister(&xSizeInitFromSize, libs, "graphene_size_init_from_size")
 	core.PuregoSafeRegister(&xSizeInterpolate, libs, "graphene_size_interpolate")
 	core.PuregoSafeRegister(&xSizeScale, libs, "graphene_size_scale")
-
 }

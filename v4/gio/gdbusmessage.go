@@ -2,8 +2,9 @@
 package gio
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -67,7 +68,6 @@ func NewDBusMessageFromBlob(BlobVar []byte, BlobLenVar uint, CapabilitiesVar DBu
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xNewDBusMessageMethodCall func(uintptr, string, uintptr, string) uintptr
@@ -108,7 +108,7 @@ func NewDBusMessageSignal(PathVar string, InterfaceVar string, SignalVar string)
 	return cls
 }
 
-var xDBusMessageCopy func(uintptr) uintptr
+var xDBusMessageCopy func(uintptr, **glib.Error) uintptr
 
 // Copies @message. The copy is a deep copy and the returned
 // #GDBusMessage is completely identical except that it is guaranteed
@@ -120,7 +120,7 @@ func (x *DBusMessage) Copy() (*DBusMessage, error) {
 	var cls *DBusMessage
 	var cerr *glib.Error
 
-	cret := xDBusMessageCopy(x.GoPointer())
+	cret := xDBusMessageCopy(x.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -131,7 +131,6 @@ func (x *DBusMessage) Copy() (*DBusMessage, error) {
 		return cls, nil
 	}
 	return cls, cerr
-
 }
 
 var xDBusMessageGetArg0 func(uintptr) string
@@ -141,7 +140,6 @@ var xDBusMessageGetArg0 func(uintptr) string
 // See [method@Gio.DBusMessage.get_arg0_path] for returning object-path-typed
 // arg0 values.
 func (x *DBusMessage) GetArg0() string {
-
 	cret := xDBusMessageGetArg0(x.GoPointer())
 	return cret
 }
@@ -152,25 +150,25 @@ var xDBusMessageGetArg0Path func(uintptr) string
 //
 // See [method@Gio.DBusMessage.get_arg0] for returning string-typed arg0 values.
 func (x *DBusMessage) GetArg0Path() string {
-
 	cret := xDBusMessageGetArg0Path(x.GoPointer())
 	return cret
 }
 
-var xDBusMessageGetBody func(uintptr) *glib.Variant
+var xDBusMessageGetBody func(uintptr) uintptr
 
 // Gets the body of a message.
 func (x *DBusMessage) GetBody() *glib.Variant {
-
 	cret := xDBusMessageGetBody(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDBusMessageGetByteOrder func(uintptr) DBusMessageByteOrder
 
 // Gets the byte order of @message.
 func (x *DBusMessage) GetByteOrder() DBusMessageByteOrder {
-
 	cret := xDBusMessageGetByteOrder(x.GoPointer())
 	return cret
 }
@@ -179,7 +177,6 @@ var xDBusMessageGetDestination func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION header field.
 func (x *DBusMessage) GetDestination() string {
-
 	cret := xDBusMessageGetDestination(x.GoPointer())
 	return cret
 }
@@ -188,7 +185,6 @@ var xDBusMessageGetErrorName func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME header field.
 func (x *DBusMessage) GetErrorName() string {
-
 	cret := xDBusMessageGetErrorName(x.GoPointer())
 	return cret
 }
@@ -197,28 +193,28 @@ var xDBusMessageGetFlags func(uintptr) DBusMessageFlags
 
 // Gets the flags for @message.
 func (x *DBusMessage) GetFlags() DBusMessageFlags {
-
 	cret := xDBusMessageGetFlags(x.GoPointer())
 	return cret
 }
 
-var xDBusMessageGetHeader func(uintptr, DBusMessageHeaderField) *glib.Variant
+var xDBusMessageGetHeader func(uintptr, DBusMessageHeaderField) uintptr
 
 // Gets a header field on @message.
 //
 // The caller is responsible for checking the type of the returned #GVariant
 // matches what is expected.
 func (x *DBusMessage) GetHeader(HeaderFieldVar DBusMessageHeaderField) *glib.Variant {
-
 	cret := xDBusMessageGetHeader(x.GoPointer(), HeaderFieldVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDBusMessageGetHeaderFields func(uintptr) uintptr
 
 // Gets an array of all header fields on @message that are set.
 func (x *DBusMessage) GetHeaderFields() uintptr {
-
 	cret := xDBusMessageGetHeaderFields(x.GoPointer())
 	return cret
 }
@@ -227,7 +223,6 @@ var xDBusMessageGetInterface func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE header field.
 func (x *DBusMessage) GetInterface() string {
-
 	cret := xDBusMessageGetInterface(x.GoPointer())
 	return cret
 }
@@ -238,7 +233,6 @@ var xDBusMessageGetLocked func(uintptr) bool
 // value, connect to the #GObject::notify signal to listen for changes
 // on the #GDBusMessage:locked property.
 func (x *DBusMessage) GetLocked() bool {
-
 	cret := xDBusMessageGetLocked(x.GoPointer())
 	return cret
 }
@@ -247,7 +241,6 @@ var xDBusMessageGetMember func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_MEMBER header field.
 func (x *DBusMessage) GetMember() string {
-
 	cret := xDBusMessageGetMember(x.GoPointer())
 	return cret
 }
@@ -256,7 +249,6 @@ var xDBusMessageGetMessageType func(uintptr) DBusMessageType
 
 // Gets the type of @message.
 func (x *DBusMessage) GetMessageType() DBusMessageType {
-
 	cret := xDBusMessageGetMessageType(x.GoPointer())
 	return cret
 }
@@ -265,7 +257,6 @@ var xDBusMessageGetNumUnixFds func(uintptr) uint32
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS header field.
 func (x *DBusMessage) GetNumUnixFds() uint32 {
-
 	cret := xDBusMessageGetNumUnixFds(x.GoPointer())
 	return cret
 }
@@ -274,7 +265,6 @@ var xDBusMessageGetPath func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_PATH header field.
 func (x *DBusMessage) GetPath() string {
-
 	cret := xDBusMessageGetPath(x.GoPointer())
 	return cret
 }
@@ -283,7 +273,6 @@ var xDBusMessageGetReplySerial func(uintptr) uint32
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL header field.
 func (x *DBusMessage) GetReplySerial() uint32 {
-
 	cret := xDBusMessageGetReplySerial(x.GoPointer())
 	return cret
 }
@@ -292,7 +281,6 @@ var xDBusMessageGetSender func(uintptr) string
 
 // Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_SENDER header field.
 func (x *DBusMessage) GetSender() string {
-
 	cret := xDBusMessageGetSender(x.GoPointer())
 	return cret
 }
@@ -301,7 +289,6 @@ var xDBusMessageGetSerial func(uintptr) uint32
 
 // Gets the serial for @message.
 func (x *DBusMessage) GetSerial() uint32 {
-
 	cret := xDBusMessageGetSerial(x.GoPointer())
 	return cret
 }
@@ -312,7 +299,6 @@ var xDBusMessageGetSignature func(uintptr) string
 //
 // This will always be non-%NULL, but may be an empty string.
 func (x *DBusMessage) GetSignature() string {
-
 	cret := xDBusMessageGetSignature(x.GoPointer())
 	return cret
 }
@@ -346,9 +332,7 @@ var xDBusMessageLock func(uintptr)
 
 // If @message is locked, does nothing. Otherwise locks the message.
 func (x *DBusMessage) Lock() {
-
 	xDBusMessageLock(x.GoPointer())
-
 }
 
 var xDBusMessageNewMethodError func(uintptr, string, string, ...interface{}) uintptr
@@ -458,7 +442,6 @@ var xDBusMessagePrint func(uintptr, uint) string
 //
 // ```
 func (x *DBusMessage) Print(IndentVar uint) string {
-
 	cret := xDBusMessagePrint(x.GoPointer(), IndentVar)
 	return cret
 }
@@ -471,48 +454,38 @@ var xDBusMessageSetBody func(uintptr, *glib.Variant)
 //
 // If @body is floating, @message assumes ownership of @body.
 func (x *DBusMessage) SetBody(BodyVar *glib.Variant) {
-
 	xDBusMessageSetBody(x.GoPointer(), BodyVar)
-
 }
 
 var xDBusMessageSetByteOrder func(uintptr, DBusMessageByteOrder)
 
 // Sets the byte order of @message.
 func (x *DBusMessage) SetByteOrder(ByteOrderVar DBusMessageByteOrder) {
-
 	xDBusMessageSetByteOrder(x.GoPointer(), ByteOrderVar)
-
 }
 
 var xDBusMessageSetDestination func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION header field.
 func (x *DBusMessage) SetDestination(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetDestination(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetErrorName func(uintptr, string)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME header field.
 func (x *DBusMessage) SetErrorName(ValueVar string) {
-
 	xDBusMessageSetErrorName(x.GoPointer(), ValueVar)
-
 }
 
 var xDBusMessageSetFlags func(uintptr, DBusMessageFlags)
 
 // Sets the flags to set on @message.
 func (x *DBusMessage) SetFlags(FlagsVar DBusMessageFlags) {
-
 	xDBusMessageSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xDBusMessageSetHeader func(uintptr, DBusMessageHeaderField, *glib.Variant)
@@ -521,84 +494,68 @@ var xDBusMessageSetHeader func(uintptr, DBusMessageHeaderField, *glib.Variant)
 //
 // If @value is floating, @message assumes ownership of @value.
 func (x *DBusMessage) SetHeader(HeaderFieldVar DBusMessageHeaderField, ValueVar *glib.Variant) {
-
 	xDBusMessageSetHeader(x.GoPointer(), HeaderFieldVar, ValueVar)
-
 }
 
 var xDBusMessageSetInterface func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE header field.
 func (x *DBusMessage) SetInterface(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetInterface(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetMember func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_MEMBER header field.
 func (x *DBusMessage) SetMember(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetMember(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetMessageType func(uintptr, DBusMessageType)
 
 // Sets @message to be of @type.
 func (x *DBusMessage) SetMessageType(TypeVar DBusMessageType) {
-
 	xDBusMessageSetMessageType(x.GoPointer(), TypeVar)
-
 }
 
 var xDBusMessageSetNumUnixFds func(uintptr, uint32)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS header field.
 func (x *DBusMessage) SetNumUnixFds(ValueVar uint32) {
-
 	xDBusMessageSetNumUnixFds(x.GoPointer(), ValueVar)
-
 }
 
 var xDBusMessageSetPath func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_PATH header field.
 func (x *DBusMessage) SetPath(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetPath(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetReplySerial func(uintptr, uint32)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL header field.
 func (x *DBusMessage) SetReplySerial(ValueVar uint32) {
-
 	xDBusMessageSetReplySerial(x.GoPointer(), ValueVar)
-
 }
 
 var xDBusMessageSetSender func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_SENDER header field.
 func (x *DBusMessage) SetSender(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetSender(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetSerial func(uintptr, uint32)
@@ -608,21 +565,17 @@ var xDBusMessageSetSerial func(uintptr, uint32)
 // The [D-Bus specification](https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-messages)
 // does not allow the @serial to be zero.
 func (x *DBusMessage) SetSerial(SerialVar uint32) {
-
 	xDBusMessageSetSerial(x.GoPointer(), SerialVar)
-
 }
 
 var xDBusMessageSetSignature func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE header field.
 func (x *DBusMessage) SetSignature(ValueVar *string) {
-
 	ValueVarPtr := core.GStrdupNullable(ValueVar)
 	defer core.GFreeNullable(ValueVarPtr)
 
 	xDBusMessageSetSignature(x.GoPointer(), ValueVarPtr)
-
 }
 
 var xDBusMessageSetUnixFdList func(uintptr, uintptr)
@@ -639,14 +592,7 @@ var xDBusMessageSetUnixFdList func(uintptr, uintptr)
 // access file descriptors if they are referenced by a value of type
 // %G_VARIANT_TYPE_HANDLE in the body of the message.
 func (x *DBusMessage) SetUnixFdList(FdListVar *UnixFDList) {
-
-	var FdListVarPtr uintptr
-	if FdListVar != nil {
-		FdListVarPtr = FdListVar.GoPointer()
-	}
-
-	xDBusMessageSetUnixFdList(x.GoPointer(), FdListVarPtr)
-
+	xDBusMessageSetUnixFdList(x.GoPointer(), FdListVar.GoPointer())
 }
 
 var xDBusMessageToBlob func(uintptr, *uint, DBusCapabilityFlags, **glib.Error) uintptr
@@ -661,10 +607,9 @@ func (x *DBusMessage) ToBlob(OutSizeVar *uint, CapabilitiesVar DBusCapabilityFla
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var xDBusMessageToGerror func(uintptr) bool
+var xDBusMessageToGerror func(uintptr, **glib.Error) bool
 
 // If @message is not of type %G_DBUS_MESSAGE_TYPE_ERROR does
 // nothing and returns %FALSE.
@@ -676,12 +621,11 @@ var xDBusMessageToGerror func(uintptr) bool
 func (x *DBusMessage) ToGerror() (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusMessageToGerror(x.GoPointer())
+	cret := xDBusMessageToGerror(x.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *DBusMessage) GoPointer() uintptr {
@@ -714,12 +658,11 @@ func DBusMessageBytesNeeded(BlobVar []byte, BlobLenVar uint) (int, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -783,5 +726,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusMessageToGerror, libs, "g_dbus_message_to_gerror")
 
 	core.PuregoSafeRegister(&xDBusMessageBytesNeeded, libs, "g_dbus_message_bytes_needed")
-
 }

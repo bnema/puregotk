@@ -2,8 +2,7 @@
 package gsk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -11,14 +10,13 @@ var xComponentTransferEqual func(uintptr, uintptr) bool
 
 // Compares two component transfers for equality.
 func ComponentTransferEqual(SelfVar uintptr, OtherVar uintptr) bool {
-
 	cret := xComponentTransferEqual(SelfVar, OtherVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GSK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -29,5 +27,4 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xComponentTransferEqual, libs, "gsk_component_transfer_equal")
-
 }

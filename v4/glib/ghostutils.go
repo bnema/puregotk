@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -18,7 +17,6 @@ var xHostnameIsAsciiEncoded func(string) bool
 // segments, and so it is possible for g_hostname_is_non_ascii() and
 // g_hostname_is_ascii_encoded() to both return %TRUE for a name.
 func HostnameIsAsciiEncoded(HostnameVar string) bool {
-
 	cret := xHostnameIsAsciiEncoded(HostnameVar)
 
 	return cret
@@ -31,7 +29,6 @@ var xHostnameIsIpAddress func(string) bool
 //
 // Since 2.66, IPv6 addresses with a zone-id are accepted (RFC6874).
 func HostnameIsIpAddress(HostnameVar string) bool {
-
 	cret := xHostnameIsIpAddress(HostnameVar)
 
 	return cret
@@ -47,7 +44,6 @@ var xHostnameIsNonAscii func(string) bool
 // segments, and so it is possible for g_hostname_is_non_ascii() and
 // g_hostname_is_ascii_encoded() to both return %TRUE for a name.
 func HostnameIsNonAscii(HostnameVar string) bool {
-
 	cret := xHostnameIsNonAscii(HostnameVar)
 
 	return cret
@@ -59,7 +55,6 @@ var xHostnameToAscii func(string) string
 // string containing no uppercase letters and not ending with a
 // trailing dot.
 func HostnameToAscii(HostnameVar string) string {
-
 	cret := xHostnameToAscii(HostnameVar)
 
 	return cret
@@ -75,7 +70,6 @@ var xHostnameToUnicode func(string) string
 // Of course if @hostname is not an internationalized hostname, then
 // the canonical presentation form will be entirely ASCII.
 func HostnameToUnicode(HostnameVar string) string {
-
 	cret := xHostnameToUnicode(HostnameVar)
 
 	return cret
@@ -83,7 +77,7 @@ func HostnameToUnicode(HostnameVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -98,5 +92,4 @@ func init() {
 	core.PuregoSafeRegister(&xHostnameIsNonAscii, libs, "g_hostname_is_non_ascii")
 	core.PuregoSafeRegister(&xHostnameToAscii, libs, "g_hostname_to_ascii")
 	core.PuregoSafeRegister(&xHostnameToUnicode, libs, "g_hostname_to_unicode")
-
 }

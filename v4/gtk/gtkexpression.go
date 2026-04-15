@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -43,18 +42,19 @@ var xExpressionWatchEvaluate func(uintptr, *gobject.Value) bool
 // This is equivalent to calling [method@Gtk.Expression.evaluate] with the
 // expression and this pointer originally used to create `watch`.
 func (x *ExpressionWatch) Evaluate(ValueVar *gobject.Value) bool {
-
 	cret := xExpressionWatchEvaluate(x.GoPointer(), ValueVar)
 	return cret
 }
 
-var xExpressionWatchRef func(uintptr) *ExpressionWatch
+var xExpressionWatchRef func(uintptr) uintptr
 
 // Acquires a reference on the given `GtkExpressionWatch`.
 func (x *ExpressionWatch) Ref() *ExpressionWatch {
-
 	cret := xExpressionWatchRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ExpressionWatch)(unsafe.Pointer(cret))
 }
 
 var xExpressionWatchUnref func(uintptr)
@@ -64,9 +64,7 @@ var xExpressionWatchUnref func(uintptr)
 // If the reference was the last, the resources associated to `self` are
 // freed.
 func (x *ExpressionWatch) Unref() {
-
 	xExpressionWatchUnref(x.GoPointer())
-
 }
 
 var xExpressionWatchUnwatch func(uintptr)
@@ -76,9 +74,7 @@ var xExpressionWatchUnwatch func(uintptr)
 // See [method@Gtk.Expression.watch] for how the watch
 // was established.
 func (x *ExpressionWatch) Unwatch() {
-
 	xExpressionWatchUnwatch(x.GoPointer())
-
 }
 
 var xNewParamSpecExpression func(string, string, string, gobject.ParamFlags) uintptr
@@ -139,9 +135,7 @@ var xValueSetExpression func(*gobject.Value, uintptr)
 //
 // The `GValue` will acquire a reference to the `expression`.
 func ValueSetExpression(ValueVar *gobject.Value, ExpressionVar *Expression) {
-
 	xValueSetExpression(ValueVar, ExpressionVar.GoPointer())
-
 }
 
 var xValueTakeExpression func(*gobject.Value, uintptr)
@@ -150,14 +144,7 @@ var xValueTakeExpression func(*gobject.Value, uintptr)
 //
 // This function transfers the ownership of the `expression` to the `GValue`.
 func ValueTakeExpression(ValueVar *gobject.Value, ExpressionVar *Expression) {
-
-	var ExpressionVarPtr uintptr
-	if ExpressionVar != nil {
-		ExpressionVarPtr = ExpressionVar.GoPointer()
-	}
-
-	xValueTakeExpression(ValueVar, ExpressionVarPtr)
-
+	xValueTakeExpression(ValueVar, ExpressionVar.GoPointer())
 }
 
 // A variant of `GtkClosureExpression` using a C closure.
@@ -351,13 +338,15 @@ func NewConstantExpressionForValue(ValueVar *gobject.Value) *ConstantExpression 
 	return cls
 }
 
-var xConstantExpressionGetValue func(uintptr) *gobject.Value
+var xConstantExpressionGetValue func(uintptr) uintptr
 
 // Gets the value that a constant expression evaluates to.
 func (x *ConstantExpression) GetValue() *gobject.Value {
-
 	cret := xConstantExpressionGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 func (c *ConstantExpression) GoPointer() uintptr {
@@ -496,13 +485,15 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 // [class@Gtk.BuilderListItemFactory] for an example of this technique.
 //
 // To create a constant expression, use the `&lt;constant&gt;` element. If the type attribute
-// is specified, the element content is interpreted as a value of that type. Otherwise,
+// is specified, the element content is interpreted as a value of that type, and the
+// initial attribute can be specified to get the initial value for that type. Otherwise,
 // it is assumed to be an object. For instance:
 //
 // ```xml
 //
 //	&lt;constant&gt;string_filter&lt;/constant&gt;
 //	&lt;constant type='gchararray'&gt;Hello, world&lt;/constant&gt;
+//	&lt;constant type='gchararray' initial='true' /&gt; &lt;!-- NULL --&gt;
 //
 // ```
 //
@@ -542,6 +533,21 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //
 // ```
 //
+// If an expression can fail, a `&lt;try&gt;` element can be used to provide fallbacks.
+// The expressions are tried from top to bottom until one of them succeeds.
+// If none of the expressions succeed, the expression fails as normal:
+//
+// ```xml
+//
+//	&lt;try&gt;
+//	  &lt;lookup type='GtkWindow' name='title'&gt;
+//	    &lt;lookup type='GtkLabel' name='root'&gt;&lt;/lookup&gt;
+//	  &lt;/lookup&gt;
+//	  &lt;constant type='gchararray'&gt;Hello World&lt;/constant&gt;
+//	&lt;/try&gt;
+//
+// ```
+//
 // To create a property binding, use the `&lt;binding&gt;` element in place of where a
 // `&lt;property&gt;` tag would ordinarily be used. The `name` and `object` attributes are
 // supported. The `name` attribute is required, and pertains to the applicable property
@@ -575,7 +581,7 @@ func ExpressionNewFromInternalPtr(ptr uintptr) *Expression {
 	return cls
 }
 
-var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
+var xExpressionBind func(uintptr, uintptr, string, uintptr) uintptr
 
 // Bind `target`'s property named `property` to `self`.
 //
@@ -584,20 +590,16 @@ var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
 // the object's property stays synchronized with `self`.
 //
 // If `self`'s evaluation fails, `target`'s `property` is not updated.
-// You can ensure that this doesn't happen by using a fallback
-// expression.
+// Use a [class@Gtk.TryExpression] to provide a fallback for this case.
 //
 // Note that this function takes ownership of `self`. If you want
 // to keep it around, you should [method@Gtk.Expression.ref] it beforehand.
 func (x *Expression) Bind(TargetVar *gobject.Object, PropertyVar string, ThisVar *gobject.Object) *ExpressionWatch {
-
-	var ThisVarPtr uintptr
-	if ThisVar != nil {
-		ThisVarPtr = ThisVar.GoPointer()
+	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVarPtr)
-	return cret
+	return (*ExpressionWatch)(unsafe.Pointer(cret))
 }
 
 var xExpressionEvaluate func(uintptr, uintptr, *gobject.Value) bool
@@ -613,13 +615,7 @@ var xExpressionEvaluate func(uintptr, uintptr, *gobject.Value) bool
 // set to `NULL`. In that case `value` will remain empty and `FALSE`
 // will be returned.
 func (x *Expression) Evaluate(ThisVar *gobject.Object, ValueVar *gobject.Value) bool {
-
-	var ThisVarPtr uintptr
-	if ThisVar != nil {
-		ThisVarPtr = ThisVar.GoPointer()
-	}
-
-	cret := xExpressionEvaluate(x.GoPointer(), ThisVarPtr, ValueVar)
+	cret := xExpressionEvaluate(x.GoPointer(), ThisVar.GoPointer(), ValueVar)
 	return cret
 }
 
@@ -630,7 +626,6 @@ var xExpressionGetValueType func(uintptr) types.GType
 // This type is constant and will not change over the lifetime
 // of this expression.
 func (x *Expression) GetValueType() types.GType {
-
 	cret := xExpressionGetValueType(x.GoPointer())
 	return cret
 }
@@ -645,7 +640,6 @@ var xExpressionIsStatic func(uintptr) bool
 // That means a call to [method@Gtk.Expression.watch] is not necessary because
 // it will never trigger a notify.
 func (x *Expression) IsStatic() bool {
-
 	cret := xExpressionIsStatic(x.GoPointer())
 	return cret
 }
@@ -673,12 +667,10 @@ var xExpressionUnref func(uintptr)
 // If the reference was the last, the resources associated to the `self` are
 // freed.
 func (x *Expression) Unref() {
-
 	xExpressionUnref(x.GoPointer())
-
 }
 
-var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) *ExpressionWatch
+var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Watch the given `expression` for changes.
 //
@@ -689,44 +681,11 @@ var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) *Expressi
 // gets invoked, but it guarantees the opposite: When it did in fact change,
 // the @notify will be invoked.
 func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *ExpressionWatch {
-
-	var NotifyVarRef uintptr
-	if NotifyVar != nil {
-		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-			NotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *NotifyVar
-				cbFn(arg0)
-			}
-			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
-		}
+	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), glib.NewCallbackNullable(NotifyVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
+	if cret == 0 {
+		return nil
 	}
-
-	var UserDestroyVarRef uintptr
-	if UserDestroyVar != nil {
-		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-			UserDestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *UserDestroyVar
-				cbFn(arg0)
-			}
-			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
-		}
-	}
-
-	var ThisVarPtr uintptr
-	if ThisVar != nil {
-		ThisVarPtr = ThisVar.GoPointer()
-	}
-
-	cret := xExpressionWatch(x.GoPointer(), ThisVarPtr, NotifyVarRef, UserDataVar, UserDestroyVarRef)
-	return cret
+	return (*ExpressionWatch)(unsafe.Pointer(cret))
 }
 
 func (c *Expression) GoPointer() uintptr {
@@ -957,9 +916,60 @@ func (c *PropertyExpression) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A `GtkExpression` that tries to evaluate each of its expressions until it succeeds.
+//
+// If all expressions fail to evaluate, the `GtkTryExpression`'s evaluation fails as well.
+type TryExpression struct {
+	Expression
+}
+
+var xTryExpressionGLibType func() types.GType
+
+func TryExpressionGLibType() types.GType {
+	return xTryExpressionGLibType()
+}
+
+func TryExpressionNewFromInternalPtr(ptr uintptr) *TryExpression {
+	cls := &TryExpression{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewTryExpression func(uint, uintptr) uintptr
+
+// Creates a `GtkExpression` with an array of expressions.
+//
+// When evaluated, the `GtkTryExpression` tries to evaluate each of its expressions until it succeeds.
+// If all expressions fail to evaluate, the `GtkTryExpression`'s evaluation fails as well.
+//
+// The value type of the expressions in the array must match.
+func NewTryExpression(NExpressionsVar uint, ExpressionsVar uintptr) *TryExpression {
+	var cls *TryExpression
+
+	cret := xNewTryExpression(NExpressionsVar, ExpressionsVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &TryExpression{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *TryExpression) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *TryExpression) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -1023,4 +1033,7 @@ func init() {
 	core.PuregoSafeRegister(&xPropertyExpressionGetExpression, libs, "gtk_property_expression_get_expression")
 	core.PuregoSafeRegister(&xPropertyExpressionGetPspec, libs, "gtk_property_expression_get_pspec")
 
+	core.PuregoSafeRegister(&xTryExpressionGLibType, libs, "gtk_try_expression_get_type")
+
+	core.PuregoSafeRegister(&xNewTryExpression, libs, "gtk_try_expression_new")
 }

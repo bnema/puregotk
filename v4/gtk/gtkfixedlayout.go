@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -123,22 +122,22 @@ func FixedLayoutChildNewFromInternalPtr(ptr uintptr) *FixedLayoutChild {
 	return cls
 }
 
-var xFixedLayoutChildGetTransform func(uintptr) *gsk.Transform
+var xFixedLayoutChildGetTransform func(uintptr) uintptr
 
 // Retrieves the transformation of the child.
 func (x *FixedLayoutChild) GetTransform() *gsk.Transform {
-
 	cret := xFixedLayoutChildGetTransform(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gsk.Transform)(unsafe.Pointer(cret))
 }
 
 var xFixedLayoutChildSetTransform func(uintptr, *gsk.Transform)
 
 // Sets the transformation of the child of a `GtkFixedLayout`.
 func (x *FixedLayoutChild) SetTransform(TransformVar *gsk.Transform) {
-
 	xFixedLayoutChildSetTransform(x.GoPointer(), TransformVar)
-
 }
 
 func (c *FixedLayoutChild) GoPointer() uintptr {
@@ -171,7 +170,7 @@ func (x *FixedLayoutChild) GetPropertyTransform() uintptr {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -189,5 +188,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xFixedLayoutChildGetTransform, libs, "gtk_fixed_layout_child_get_transform")
 	core.PuregoSafeRegister(&xFixedLayoutChildSetTransform, libs, "gtk_fixed_layout_child_set_transform")
-
 }

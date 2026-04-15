@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -73,7 +72,6 @@ var xGestureSwipeGetVelocity func(uintptr, *float64, *float64) bool
 // in @velocity_x and @velocity_y with the recorded velocity, as per the
 // last events processed.
 func (x *GestureSwipe) GetVelocity(VelocityXVar *float64, VelocityYVar *float64) bool {
-
 	cret := xGestureSwipeGetVelocity(x.GoPointer(), VelocityXVar, VelocityYVar)
 	return cret
 }
@@ -106,7 +104,6 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 		cbFn := *cb
 
 		cbFn(fa, VelocityXVarp, VelocityYVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -117,7 +114,7 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -132,5 +129,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewGestureSwipe, libs, "gtk_gesture_swipe_new")
 
 	core.PuregoSafeRegister(&xGestureSwipeGetVelocity, libs, "gtk_gesture_swipe_get_velocity")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -65,7 +64,6 @@ var xEventControllerMotionContainsPointer func(uintptr) bool
 
 // Returns if a pointer is within @self or one of its children.
 func (x *EventControllerMotion) ContainsPointer() bool {
-
 	cret := xEventControllerMotionContainsPointer(x.GoPointer())
 	return cret
 }
@@ -74,7 +72,6 @@ var xEventControllerMotionIsPointer func(uintptr) bool
 
 // Returns if a pointer is within @self, but not one of its children.
 func (x *EventControllerMotion) IsPointer() bool {
-
 	cret := xEventControllerMotionIsPointer(x.GoPointer())
 	return cret
 }
@@ -134,7 +131,6 @@ func (x *EventControllerMotion) ConnectEnter(cb *func(EventControllerMotion, flo
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -158,7 +154,6 @@ func (x *EventControllerMotion) ConnectLeave(cb *func(EventControllerMotion)) ui
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -182,7 +177,6 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -193,7 +187,7 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -209,5 +203,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xEventControllerMotionContainsPointer, libs, "gtk_event_controller_motion_contains_pointer")
 	core.PuregoSafeRegister(&xEventControllerMotionIsPointer, libs, "gtk_event_controller_motion_is_pointer")
-
 }

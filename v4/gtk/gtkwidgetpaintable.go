@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -100,14 +99,7 @@ var xWidgetPaintableSetWidget func(uintptr, uintptr)
 
 // Sets the widget that should be observed.
 func (x *WidgetPaintable) SetWidget(WidgetVar *Widget) {
-
-	var WidgetVarPtr uintptr
-	if WidgetVar != nil {
-		WidgetVarPtr = WidgetVar.GoPointer()
-	}
-
-	xWidgetPaintableSetWidget(x.GoPointer(), WidgetVarPtr)
-
+	xWidgetPaintableSetWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
 func (c *WidgetPaintable) GoPointer() uintptr {
@@ -132,9 +124,7 @@ func (c *WidgetPaintable) SetGoPointer(ptr uintptr) {
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
 func (x *WidgetPaintable) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
-
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
-
 }
 
 // Gets an immutable paintable for the current contents displayed by @paintable.
@@ -162,7 +152,6 @@ func (x *WidgetPaintable) GetCurrentImage() *gdk.PaintableBase {
 //
 // See [flags@Gdk.PaintableFlags] for the flags and what they mean.
 func (x *WidgetPaintable) GetFlags() gdk.PaintableFlags {
-
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
 	return cret
 }
@@ -185,7 +174,6 @@ func (x *WidgetPaintable) GetFlags() gdk.PaintableFlags {
 // If the @paintable does not have a preferred aspect ratio,
 // it returns 0. Negative values are never returned.
 func (x *WidgetPaintable) GetIntrinsicAspectRatio() float64 {
-
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
 	return cret
 }
@@ -201,7 +189,6 @@ func (x *WidgetPaintable) GetIntrinsicAspectRatio() float64 {
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
 func (x *WidgetPaintable) GetIntrinsicHeight() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -217,7 +204,6 @@ func (x *WidgetPaintable) GetIntrinsicHeight() int {
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
 func (x *WidgetPaintable) GetIntrinsicWidth() int {
-
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -233,9 +219,7 @@ func (x *WidgetPaintable) GetIntrinsicWidth() int {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
 // it must not call this function.
 func (x *WidgetPaintable) InvalidateContents() {
-
 	gdk.XGdkPaintableInvalidateContents(x.GoPointer())
-
 }
 
 // Called by implementations of `GdkPaintable` to invalidate their size.
@@ -249,9 +233,7 @@ func (x *WidgetPaintable) InvalidateContents() {
 // If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
 // it must not call this function.
 func (x *WidgetPaintable) InvalidateSize() {
-
 	gdk.XGdkPaintableInvalidateSize(x.GoPointer())
-
 }
 
 // Snapshots the given paintable with the given @width and @height.
@@ -260,14 +242,12 @@ func (x *WidgetPaintable) InvalidateSize() {
 // If @width and @height are not larger than zero, this function will
 // do nothing.
 func (x *WidgetPaintable) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64) {
-
 	gdk.XGdkPaintableSnapshot(x.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -283,5 +263,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xWidgetPaintableGetWidget, libs, "gtk_widget_paintable_get_widget")
 	core.PuregoSafeRegister(&xWidgetPaintableSetWidget, libs, "gtk_widget_paintable_set_widget")
-
 }

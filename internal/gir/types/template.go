@@ -24,52 +24,17 @@ type argsTemplate struct {
 	Full []string
 }
 
-// CallbackParam holds metadata for callback parameters to enable proper closure generation
-type CallbackParam struct {
-	// Name is the parameter name (e.g., "CallbackVar")
-	Name string
-	// TypeName is the callback type name (e.g., "TickCallback")
-	TypeName string
-	// PureTypes are the pure argument types for the closure
-	PureTypes []string
-	// CallArgs are expressions used when invoking cbFn from closure args
-	CallArgs []string
-	// RetRaw is the return type for the closure (e.g., "bool")
-	RetRaw string
-	// Nullable indicates if the callback can be nil
-	Nullable bool
-}
-
-// NullableStringParam holds metadata for nullable string parameters that need
-// temporary C-owned string allocation with g_strdup/g_free.
-type NullableStringParam struct {
-	// Name is the parameter name (e.g., "DataDirectoryVar")
-	Name string
-}
-
-// NullableClassParam holds metadata for nullable class/interface parameters
-// that need a nil-safe GoPointer() call.
-type NullableClassParam struct {
-	Name string
-}
-
-// SignalClassParam tracks a signal/callback parameter that is a class type.
-// The Pure type stays uintptr (purego ABI), but the API type is the proper
-// Go class type and the signal closure constructs the Go struct from the pointer.
-type SignalClassParam struct {
-	Index    int
-	GoType   string // qualified Go type without pointer, e.g. "gdk.Monitor"
-	Nullable bool   // when true, emit nil return for zero pointers
-}
-
-// GErrorParam tracks a signal/callback parameter that is a GLib.Error record.
-// The Pure type stays uintptr (purego ABI), but the API type is *glib.Error
-// and the signal closure converts via unsafe.Pointer.
+// GErrorParam tracks a signal parameter that is exposed as *glib.Error in the
+// public API but still crosses the purego callback ABI as a raw pointer.
 type GErrorParam struct {
-	// Index is the position in the Pure args slice.
-	Index int
-	// GoType is the qualified Go type for the cast (e.g., "glib.Error" or "Error").
+	Index  int
 	GoType string
+}
+
+// NullableStringParam tracks a nullable string argument that needs a temporary
+// C string when Go calls into C.
+type NullableStringParam struct {
+	Name string
 }
 
 type funcArgsTemplate struct {
@@ -80,37 +45,18 @@ type funcArgsTemplate struct {
 	// API are the arguments as suitable for a Go API
 	API argsTemplate
 
-	// Callbacks tracks callback parameters for proper closure generation
-	Callbacks []CallbackParam
-
-	// NullableStrings tracks nullable string parameters that need temporary C strings
-	NullableStrings []NullableStringParam
-
-	// NullableClasses tracks nullable class/interface parameters that need nil checks
-	NullableClasses []NullableClassParam
-
-	// SignalClasses tracks class-type signal parameters for struct construction
-	SignalClasses []SignalClassParam
-
-	// GErrors tracks GError record parameters in signal/callback contexts
-	// so PuregoSignalCall can emit unsafe.Pointer casts.
+	// GErrors tracks signal parameters that should be surfaced as *glib.Error.
 	GErrors []GErrorParam
 
-	// UsesNullableHelper indicates nullable string handling that needs core import.
-	UsesNullableHelper bool
-
-	// UsesGStrdup indicates transfer-full string handling that needs core import.
-	UsesGStrdup bool
+	// NullableStrings tracks Go->C nullable string params that need temporary C strings.
+	NullableStrings []NullableStringParam
 }
 
-// ArgContext indicates where the arguments are flowing so we can handle
-// direction-sensitive cases (e.g. nullable strings) differently.
+// ArgContext indicates whether arguments are flowing from Go->C or C->Go.
 type ArgContext int
 
 const (
-	// ArgsFromGoToC covers regular functions/methods where Go calls into C.
 	ArgsFromGoToC ArgContext = iota
-	// ArgsFromCToGo covers callbacks/signals where C calls into Go.
 	ArgsFromCToGo
 )
 
@@ -121,130 +67,7 @@ func isStringType(t string) bool {
 	return strings.TrimLeft(t, "*") == "string"
 }
 
-// isGErrorType reports whether a GIR type name refers to GLib.Error.
-// Within the GLib namespace the name is just "Error"; elsewhere it is "GLib.Error".
-func isGErrorType(girName string) bool {
-	return girName == "GLib.Error" || girName == "Error"
-}
-
-// NeedsCore reports whether this argument set requires core helpers.
-func (f funcArgsTemplate) NeedsCore() bool {
-	return f.UsesNullableHelper || f.UsesGStrdup
-}
-
-// HasPureStrings reports whether any Pure parameter is a string type.
-// Signal closures with string parameters need core.GoString() conversion.
-func (f funcArgsTemplate) HasPureStrings() bool {
-	for _, t := range f.Pure.Types {
-		if t == "string" {
-			return true
-		}
-	}
-	return false
-}
-
-// PuregoSignalFull returns Pure.Full with string types replaced by uintptr.
-// Used for signal fcb closures passed to purego.NewCallback, which cannot
-// handle Go string parameters (C passes const char* as a pointer).
-func (f funcArgsTemplate) PuregoSignalFull() []string {
-	out := make([]string, len(f.Pure.Full))
-	copy(out, f.Pure.Full)
-	for i, t := range f.Pure.Types {
-		if t == "string" {
-			out[i] = f.Pure.Names[i] + " uintptr"
-		}
-	}
-	for _, ge := range f.GErrors {
-		out[ge.Index] = f.Pure.Names[ge.Index] + " unsafe.Pointer"
-	}
-	return out
-}
-
-// PuregoSignalCall returns Pure.Call with string variables wrapped in
-// core.GoString() for C char* → Go string conversion in signal closures,
-// and GError parameters wrapped in (*glib.Error)(unsafe.Pointer(...)).
-func (f funcArgsTemplate) PuregoSignalCall() []string {
-	out := make([]string, len(f.Pure.Call))
-	copy(out, f.Pure.Call)
-	for i, t := range f.Pure.Types {
-		if t == "string" {
-			out[i] = "core.GoString(" + f.Pure.Names[i] + ")"
-		}
-	}
-	for _, ge := range f.GErrors {
-		out[ge.Index] = "(*" + ge.GoType + ")(" + f.Pure.Names[ge.Index] + ")"
-	}
-	for _, sc := range f.SignalClasses {
-		name := f.Pure.Names[sc.Index]
-		if sc.Nullable {
-			out[sc.Index] = fmt.Sprintf("func() *%s { if %s == 0 { return nil }; cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, name, sc.GoType, name)
-		} else {
-			out[sc.Index] = fmt.Sprintf("func() *%s { cls := &%s{}; cls.Ptr = %s; return cls }()", sc.GoType, sc.GoType, name)
-		}
-	}
-	return out
-}
-
-// HasGErrors reports whether any parameter is a GError that needs
-// an unsafe.Pointer cast in the signal closure.
-func (f funcArgsTemplate) HasGErrors() bool {
-	return len(f.GErrors) > 0
-}
-
-func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
-	if t == "" || callbackNS == "" || strings.EqualFold(callbackNS, currentNS) {
-		return t
-	}
-
-	if strings.Contains(t, ".") {
-		return t
-	}
-
-	ptrPrefix := ""
-	base := t
-	for strings.HasPrefix(base, "*") {
-		ptrPrefix += "*"
-		base = strings.TrimPrefix(base, "*")
-	}
-
-	slicePrefix := ""
-	for strings.HasPrefix(base, "[]") {
-		slicePrefix += "[]"
-		base = strings.TrimPrefix(base, "[]")
-	}
-
-	arrayPrefix := ""
-	for strings.HasPrefix(base, "[") {
-		end := strings.Index(base, "]")
-		if end == -1 {
-			break
-		}
-		arrayPrefix += base[:end+1]
-		base = base[end+1:]
-	}
-
-	switch base {
-	case "bool", "byte", "complex64", "complex128", "error", "float32", "float64", "int", "int8", "int16", "int32", "int64", "rune", "string", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr":
-		return t
-	}
-
-	if base == "" {
-		return t
-	}
-
-	qualifiedBase := callbackNS + "." + base
-	return ptrPrefix + slicePrefix + arrayPrefix + qualifiedBase
-}
-
-func qualifyCallbackTypes(types []string, callbackNS string, currentNS string) []string {
-	qualified := make([]string, len(types))
-	for i, t := range types {
-		qualified[i] = qualifyCallbackType(t, callbackNS, currentNS)
-	}
-	return qualified
-}
-
-func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext, transferFull bool) {
+func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext, imps *ImportSet) {
 	c := n
 	cRef := n // For CallWithRefs, defaults to same as Call
 	stars := strings.Count(t, "*")
@@ -266,43 +89,26 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 		c = n
 		cRef = n
 	} else {
-		// For transfer-full strings, use g_strdup so GTK can safely g_free() the copy.
-		// This must be checked before nullable handling to avoid conflicting conversions.
-		if ctx == ArgsFromGoToC && transferFull && isStringType(t) {
-			f.UsesGStrdup = true
-			if nullable {
-				// Nullable transfer-full: API type is *string, call uses GStrdupNullable
-				t = "*string"
-				c = fmt.Sprintf("core.GStrdupNullable(%s)", n)
-				cRef = c
-			} else {
-				c = fmt.Sprintf("core.GStrdup(%s)", n)
-				cRef = c
-			}
-		} else if ctx == ArgsFromGoToC && nullable && isStringType(t) {
-			// Nullable strings differ based on direction. For Go->C we need a *string API type
-			// and pass a nullable C pointer to C. For C->Go we keep the string as-is.
-			// We track these parameters so templates can allocate/free a temporary
-			// C-owned copy via g_strdup/g_free around each call.
-			f.UsesNullableHelper = true
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			imps.AddCore()
 			t = "*string"
-			c = fmt.Sprintf("%sPtr", n)
-			cRef = c
-			// Track this parameter for temp C allocation/free generation
+			c = n + "Ptr"
 			f.NullableStrings = append(f.NullableStrings, NullableStringParam{Name: n})
 		}
-
 		switch k {
 		case CallbackType:
-			// Call uses glib.NewCallback for contexts like callback accessor getters
-			if nullable {
+			// Destroy/notify callbacks are effectively optional even when GIR omits
+			// the nullable annotation.
+			lowerName := strings.ToLower(n)
+			isDestroyNotify := strings.Contains(lowerName, "destroy") ||
+				strings.Contains(lowerName, "notify") ||
+				strings.Contains(lowerName, "dnotify")
+			if nullable || isDestroyNotify {
 				c = fmt.Sprintf("%sNewCallbackNullable(%s)", glibNs, n)
 			} else {
 				c = fmt.Sprintf("%sNewCallback(%s)", glibNs, n)
 			}
-			// For CallWithRefs, start with the same value as Call
-			// It will be updated to {name}Ref in Add() if the callback lookup succeeds
-			cRef = c
+			imps.AddPkg("glib")
 			t = "*" + t
 		case ClassesType:
 			if stars == 0 {
@@ -310,6 +116,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				t = "uintptr"
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
+				imps.AddPkg("gobject")
 			} else if stars == 1 {
 				if ctx == ArgsFromGoToC && nullable {
 					c = n + "Ptr"
@@ -326,6 +133,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 				t = "uintptr"
 			} else if stars > 1 {
 				c = fmt.Sprintf("%sConvertPtr(%s)", gobjectNs, n)
+				imps.AddPkg("gobject")
 			} else if stars == 1 {
 				if ctx == ArgsFromGoToC && nullable {
 					c = n + "Ptr"
@@ -351,9 +159,10 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	f.API.Call = append(f.API.Call, c)
 	f.API.CallWithRefs = append(f.API.CallWithRefs, cRef)
 	f.API.Full = append(f.API.Full, n+" "+t)
+	imps.TrackGoType(t)
 }
 
-func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext, transferFull bool) {
+func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext) {
 	n += "p"
 	c := n
 	stars := strings.Count(t, "*")
@@ -366,17 +175,9 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nulla
 		}
 		c = n
 	} else {
-		// For transfer-full strings, the pure type must be uintptr to accept
-		// the g_strdup'd pointer from the API call
-		if ctx == ArgsFromGoToC && transferFull && isStringType(t) {
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			t = "uintptr"
-		} else if ctx == ArgsFromGoToC && nullable && isStringType(t) {
-			f.UsesNullableHelper = true
-			t = "uintptr"
-			// Use the pointer variable that will be set up by the template
-			c = fmt.Sprintf("%sPtr", strings.TrimSuffix(n, "p"))
 		}
-
 		switch k {
 		case RecordsType:
 			if stars == 0 {
@@ -416,7 +217,54 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nulla
 	f.Pure.Full = append(f.Pure.Full, n+" "+t)
 }
 
-func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, ctx ArgContext) {
+func isGErrorType(girName string) bool {
+	return girName == "GLib.Error" || girName == "Error"
+}
+
+// PuregoSignalFull returns the callback parameter list for generated signal
+// trampolines. GError values stay pointer-shaped but are typed as
+// unsafe.Pointer to keep go vet happy.
+func (f funcArgsTemplate) PuregoSignalFull() []string {
+	out := make([]string, len(f.Pure.Full))
+	copy(out, f.Pure.Full)
+	for _, ge := range f.GErrors {
+		out[ge.Index] = f.Pure.Names[ge.Index] + " unsafe.Pointer"
+	}
+	return out
+}
+
+// PuregoSignalCall returns the public signal callback arguments, casting any
+// tracked GError parameters back to their Go types.
+func (f funcArgsTemplate) PuregoSignalCall() []string {
+	out := make([]string, len(f.Pure.Call))
+	copy(out, f.Pure.Call)
+	for _, ge := range f.GErrors {
+		out[ge.Index] = "(*" + ge.GoType + ")(" + f.Pure.Names[ge.Index] + ")"
+	}
+	return out
+}
+
+// baseType returns strips prefixes from a Go type (e.g. `*glib.Error` → `glib`, `[4]gdk.RGBA` → `gdk`).
+func baseTypeName(typeName string) string {
+	return strings.TrimLeftFunc(typeName, func(r rune) bool {
+		return r == '*' || r == '[' || r == ']' || (r >= '0' && r <= '9')
+	})
+}
+
+// isGoPrimitive checks if a scalar or vector type name is a Go primitive type
+func isGoPrimitive(typeName string) bool {
+	baseType := baseTypeName(typeName)
+
+	for _, goType := range convList {
+		if goType == baseType {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, ctx ArgContext, imps *ImportSet) {
 	// get the lookup namespace
 	// as if the interface namespace is non-empty
 	// means we can also lookup in the namespace of the interface
@@ -433,7 +281,7 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	stars := strings.Count(goType, "*")
 	goType = util.NormalizeNamespace(ns, goType, true)
 
-	if kind != OtherType && kind != UnknownType {
+	if kind != OtherType && kind != UnknownType && !isGoPrimitive(goType) { // Only add namespace for non-primitive types
 		goType = util.AddNamespace(goType, ins)
 	}
 	if stars > 0 {
@@ -444,117 +292,34 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	varName := p.VarName()
 
 	// GIR "inout" parameters are also pointer-bearing at the ABI/API level.
-	// Treat them like out params so generated wrappers, raw bindings, and
-	// callback accessors all agree on pointer semantics.
 	isOut := p.Direction == "out" || p.Direction == "inout"
 
-	transferFull := p.TransferOwnership.TransferOwnership == "full"
-	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, transferFull)
-	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx, transferFull)
+	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, imps)
+	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx)
 
-	// For GError record parameters in signal/callback contexts (C→Go), the type
-	// is collapsed to uintptr by Type.Template(). Override the API type to
-	// *glib.Error so consumers get a proper Go error, and track the Pure index
-	// so PuregoSignalCall() can emit the unsafe.Pointer cast.
-	if ctx == ArgsFromCToGo && !isOut && goType == "uintptr" && p.Type != nil && isGErrorType(p.Type.Name) {
+	// Signal callbacks with GError* parameters should expose *glib.Error in the
+	// public API even though the raw callback ABI still uses a pointer value.
+	if goType == "uintptr" && p.Type != nil && isGErrorType(p.Type.Name) {
 		gerrorGoType := "glib.Error"
 		if strings.ToLower(ns) == "glib" {
 			gerrorGoType = "Error"
 		}
-		// Override API type from uintptr to *glib.Error
 		apiIdx := len(f.API.Types) - 1
 		f.API.Types[apiIdx] = "*" + gerrorGoType
 		f.API.Full[apiIdx] = varName + " *" + gerrorGoType
-		// Pure stays uintptr; PuregoSignalFull promotes it to unsafe.Pointer
-		pureIdx := len(f.Pure.Types) - 1
 		f.GErrors = append(f.GErrors, GErrorParam{
-			Index:  pureIdx,
+			Index:  len(f.Pure.Types) - 1,
 			GoType: gerrorGoType,
 		})
 	}
-
-	// For signal/callback contexts (C→Go), class-type parameters arrive as
-	// uintptr at the purego ABI level but should be presented as typed structs
-	// in the user callback. Track them so PuregoSignalCall emits construction.
-	if ctx == ArgsFromCToGo && !isOut && kind == ClassesType {
-		pureIdx := len(f.Pure.Types) - 1
-		apiType := f.API.Types[len(f.API.Types)-1]
-		if f.Pure.Types[pureIdx] == "uintptr" && apiType != "uintptr" {
-			f.SignalClasses = append(f.SignalClasses, SignalClassParam{
-				Index:    pureIdx,
-				GoType:   strings.TrimPrefix(apiType, "*"),
-				Nullable: p.Nullable,
-			})
-		}
-	}
-
-	// Upstream purego does not support direct array parameters (reflect.Array kind).
-	// Fixed-size C arrays like "int fds[2]" are pointer params at the ABI level.
-	// For non-out fixed-size array params, change the pure signature to *[N]T and
-	// pass &param from the API wrapper so purego sees a pointer.
-	if p.Array != nil && p.Array.FixedSize > 0 && !isOut {
-		idx := len(f.Pure.Types) - 1
-		f.Pure.Types[idx] = "*" + f.Pure.Types[idx]
-		f.Pure.Full[idx] = f.Pure.Names[idx] + " " + f.Pure.Types[idx]
-		apiIdx := len(f.API.Call) - 1
-		f.API.Call[apiIdx] = "&" + f.API.Call[apiIdx]
-		f.API.CallWithRefs[apiIdx] = "&" + f.API.CallWithRefs[apiIdx]
-	}
-
-	// For callback parameters (not out parameters), populate callback metadata
-	// This enables the template to generate proper closure wrapping
-	if kind == CallbackType && !isOut {
-		if cb, ok := kinds.GetCallback(lns, originalType); ok {
-			// Determine the callback's namespace from the original type name
-			// e.g., "gio.AsyncReadyCallback" -> "gio", "AsyncReadyCallback" -> lns
-			cbNs := lns
-			if parts := strings.Split(originalType, "."); len(parts) > 1 {
-				cbNs = parts[0]
-			}
-
-			// Get the callback's pure argument types and return type
-			// Use cbNs (callback's namespace) for proper type lookups
-			cbArgs := cb.Parameters.Template(cbNs, "", kinds, cb.Throws, ArgsFromCToGo)
-			var retRaw string
-			if cb.ReturnValue != nil {
-				cbRet := cb.ReturnValue.Template(cbNs, "", kinds, cb.Throws)
-				retRaw = cbRet.Raw
-			}
-
-			qualifiedPureTypes := qualifyCallbackTypes(cbArgs.Pure.Types, cbNs, ns)
-			callArgs := make([]string, len(qualifiedPureTypes))
-			for i := range qualifiedPureTypes {
-				callArgs[i] = fmt.Sprintf("arg%d", i)
-				if qualifiedPureTypes[i] == "string" {
-					// C callback string parameters are char* pointers in ABI.
-					qualifiedPureTypes[i] = "uintptr"
-					callArgs[i] = fmt.Sprintf("core.GoString(arg%d)", i)
-				}
-			}
-			qualifiedRetRaw := qualifyCallbackType(retRaw, cbNs, ns)
-
-			f.Callbacks = append(f.Callbacks, CallbackParam{
-				Name:      varName,
-				TypeName:  strings.TrimPrefix(goType, "*"),
-				PureTypes: qualifiedPureTypes,
-				CallArgs:  callArgs,
-				RetRaw:    qualifiedRetRaw,
-				Nullable:  p.Nullable,
-			})
-
-			// Update CallWithRefs to use {name}Ref since we have the callback info
-			// for generating the closure wrapper
-			lastIdx := len(f.API.CallWithRefs) - 1
-			f.API.CallWithRefs[lastIdx] = varName + "Ref"
-		}
-	}
 }
 
-func (f *funcArgsTemplate) AddThrows(ns string) {
+func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {
 	f.API.Call = append(f.API.Call, "&cerr")
 	f.API.CallWithRefs = append(f.API.CallWithRefs, "&cerr")
 	if strings.ToLower(ns) != "glib" {
 		f.Pure.Types = append(f.Pure.Types, "**glib.Error")
+		imps.AddPkg("glib")
 	} else {
 		f.Pure.Types = append(f.Pure.Types, "**Error")
 	}
@@ -670,6 +435,8 @@ type funcRetTemplate struct {
 	Value string
 	// Class indicates whether or not the return value is a class
 	Class bool
+	// Record indicates whether or not the return value is a record/boxed pointer type
+	Record bool
 	// RefSink indicates whether or not we should increase the reference count using obj.RefSink()
 	RefSink bool
 	// Throws indicates whether or not this function throws
@@ -746,6 +513,24 @@ func (fr *funcRetTemplate) Fmt(ngo bool) string {
 		after.WriteString("\n")
 		after.WriteString("cls.Ptr = cret\n")
 		val = "cls"
+	}
+	if fr.Record {
+		baseType := strings.TrimPrefix(fr.Value, "*")
+		if fr.Throws {
+			after.WriteString("if cerr != nil {\n")
+			after.WriteString("return nil, cerr\n")
+			after.WriteString("}\n")
+			after.WriteString("if cret == 0 {\n")
+			after.WriteString("return nil, nil\n")
+			after.WriteString("}\n")
+			after.WriteString(fmt.Sprintf("return (*%s)(unsafe.Pointer(cret)), nil\n", baseType))
+			return after.String()
+		}
+		after.WriteString("if cret == 0 {\n")
+		after.WriteString("return nil\n")
+		after.WriteString("}\n")
+		after.WriteString(fmt.Sprintf("return (*%s)(unsafe.Pointer(cret))\n", baseType))
+		return after.String()
 	}
 	if fr.Throws {
 		after.WriteString("if cerr == nil {\n")
@@ -863,33 +648,13 @@ type TemplateArg struct {
 	SharedLibraries []string
 	// NeedsInit declares whether or not this file needs an init code to register functions with purego
 	NeedsInit bool
-	// NeedsCore indicates if core helpers are required even without init.
-	NeedsCore bool
-	// HasReceiverCallbacks indicates if any receiver method has callback parameters
-	// This is used to conditionally import unsafe and purego
-	HasReceiverCallbacks bool
-	// HasFunctionCallbacks indicates if any standalone function has callback parameters
-	HasFunctionCallbacks bool
-	// HasSignalStrings indicates if any signal has string parameters that need
-	// core.GoString() conversion in the purego callback closure.
-	HasSignalStrings bool
-	// HasTypeGetters indicates if any record, class, interface, alias, or enum
-	// in this file has a GLib type getter that uses types.GType.
-	HasTypeGetters bool
-	// NeedsGLib indicates if the generated file uses glib.* symbols.
-	NeedsGLib bool
-	// NeedsGObject indicates if the generated file uses gobject.* symbols.
-	NeedsGObject bool
-	// CrossPkgImports are fully qualified import paths for cross-package
-	// references detected in the generated code (e.g. gio.*, cairo.*, pango.*).
-	CrossPkgImports []string
-	// OptionalLibrary indicates the shared library is optional (e.g. Wayland-only).
-	// When true, the template emits graceful dlopen (continue on error),
-	// package-level libs var, and an Available() helper.
+	// OptionalLibrary declares whether init should tolerate a missing shared library.
 	OptionalLibrary bool
-	// BuildConstraint is emitted as a Go build constraint at the top of
-	// each generated file (e.g. "//go:build linux"). Empty means no constraint.
+	// BuildConstraint is an optional file-level build tag like //go:build linux.
 	BuildConstraint string
+	// RegisterTypes declares whether the types in the GIR file need to be manually registered
+	// See https://bugs.webkit.org/show_bug.cgi?id=175937
+	RegisterTypes bool
 	// Imports defines the package imports that we need
 	// This does not include purego
 	// As the template already includes that if `NeedsInit` is set to true

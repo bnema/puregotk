@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -305,7 +304,6 @@ func (x *TlsInteraction) AskPassword(PasswordVar *TlsPassword, CancellableVar *C
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsInteractionAskPasswordAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -326,29 +324,7 @@ var xTlsInteractionAskPasswordAsync func(uintptr, uintptr, uintptr, uintptr, uin
 //
 // Certain implementations may not support immediate cancellation.
 func (x *TlsInteraction) AskPasswordAsync(PasswordVar *TlsPassword, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xTlsInteractionAskPasswordFinish func(uintptr, uintptr, **glib.Error) TlsInteractionResult
@@ -370,7 +346,6 @@ func (x *TlsInteraction) AskPasswordFinish(ResultVar AsyncResult) (TlsInteractio
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsInteractionInvokeAskPassword func(uintptr, uintptr, uintptr, **glib.Error) TlsInteractionResult
@@ -407,7 +382,6 @@ func (x *TlsInteraction) InvokeAskPassword(PasswordVar *TlsPassword, Cancellable
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsInteractionInvokeRequestCertificate func(uintptr, uintptr, TlsCertificateRequestFlags, uintptr, **glib.Error) TlsInteractionResult
@@ -445,7 +419,6 @@ func (x *TlsInteraction) InvokeRequestCertificate(ConnectionVar *TlsConnection, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsInteractionRequestCertificate func(uintptr, uintptr, TlsCertificateRequestFlags, uintptr, **glib.Error) TlsInteractionResult
@@ -479,7 +452,6 @@ func (x *TlsInteraction) RequestCertificate(ConnectionVar *TlsConnection, FlagsV
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xTlsInteractionRequestCertificateAsync func(uintptr, uintptr, TlsCertificateRequestFlags, uintptr, uintptr, uintptr)
@@ -493,29 +465,7 @@ var xTlsInteractionRequestCertificateAsync func(uintptr, uintptr, TlsCertificate
 // when the operation completes. Alternatively the user may abort this certificate
 // request, which will usually abort the TLS connection.
 func (x *TlsInteraction) RequestCertificateAsync(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-
-	var CallbackVarRef uintptr
-	if CallbackVar != nil {
-		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
-		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-			CallbackVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2)
-			}
-			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
-		}
-	}
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
-	}
-
-	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVarPtr, CallbackVarRef, UserDataVar)
-
+	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xTlsInteractionRequestCertificateFinish func(uintptr, uintptr, **glib.Error) TlsInteractionResult
@@ -538,7 +488,6 @@ func (x *TlsInteraction) RequestCertificateFinish(ResultVar AsyncResult) (TlsInt
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 func (c *TlsInteraction) GoPointer() uintptr {
@@ -554,7 +503,7 @@ func (c *TlsInteraction) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -574,5 +523,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsInteractionRequestCertificate, libs, "g_tls_interaction_request_certificate")
 	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateAsync, libs, "g_tls_interaction_request_certificate_async")
 	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateFinish, libs, "g_tls_interaction_request_certificate_finish")
-
 }

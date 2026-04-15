@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -128,9 +127,19 @@ var xFileFilterAddMimeType func(uintptr, string)
 
 // Adds a rule allowing a given mime type.
 func (x *FileFilter) AddMimeType(MimeTypeVar string) {
-
 	xFileFilterAddMimeType(x.GoPointer(), MimeTypeVar)
+}
 
+var xFileFilterAddMimeTypes func(uintptr, []string)
+
+// Adds a rule allowing a given array of mime types.
+// It can for example be used with
+// [Gly.Loader.get_mime_types](https://gnome.pages.gitlab.gnome.org/glycin/libglycin/type_func.Loader.get_mime_types.html).
+//
+// This is equivalent to calling [method@Gtk.FileFilter.add_mime_type]
+// for all the supported mime types.
+func (x *FileFilter) AddMimeTypes(MimeTypesVar []string) {
+	xFileFilterAddMimeTypes(x.GoPointer(), MimeTypesVar)
 }
 
 var xFileFilterAddPattern func(uintptr, string)
@@ -141,9 +150,7 @@ var xFileFilterAddPattern func(uintptr, string)
 // matching ignores case or not. On Windows, it does, on
 // other platforms, it doesn't.
 func (x *FileFilter) AddPattern(PatternVar string) {
-
 	xFileFilterAddPattern(x.GoPointer(), PatternVar)
-
 }
 
 var xFileFilterAddPixbufFormats func(uintptr)
@@ -153,9 +160,7 @@ var xFileFilterAddPixbufFormats func(uintptr)
 // This is equivalent to calling [method@Gtk.FileFilter.add_mime_type]
 // for all the supported mime types.
 func (x *FileFilter) AddPixbufFormats() {
-
 	xFileFilterAddPixbufFormats(x.GoPointer())
-
 }
 
 var xFileFilterAddSuffix func(uintptr, string)
@@ -174,9 +179,7 @@ var xFileFilterAddSuffix func(uintptr, string)
 // In contrast to pattern matches, suffix matches
 // are *always* case-insensitive.
 func (x *FileFilter) AddSuffix(SuffixVar string) {
-
 	xFileFilterAddSuffix(x.GoPointer(), SuffixVar)
-
 }
 
 var xFileFilterGetAttributes func(uintptr) []string
@@ -187,7 +190,6 @@ var xFileFilterGetAttributes func(uintptr) []string
 // This function will not typically be used by applications;
 // it is intended for use in file chooser implementation.
 func (x *FileFilter) GetAttributes() []string {
-
 	cret := xFileFilterGetAttributes(x.GoPointer())
 	return cret
 }
@@ -198,7 +200,6 @@ var xFileFilterGetName func(uintptr) string
 //
 // See [method@Gtk.FileFilter.set_name].
 func (x *FileFilter) GetName() string {
-
 	cret := xFileFilterGetName(x.GoPointer())
 	return cret
 }
@@ -210,21 +211,21 @@ var xFileFilterSetName func(uintptr, uintptr)
 // This is the string that will be displayed in the user interface
 // if there is a selectable list of filters.
 func (x *FileFilter) SetName(NameVar *string) {
-
 	NameVarPtr := core.GStrdupNullable(NameVar)
 	defer core.GFreeNullable(NameVarPtr)
 
 	xFileFilterSetName(x.GoPointer(), NameVarPtr)
-
 }
 
-var xFileFilterToGvariant func(uintptr) *glib.Variant
+var xFileFilterToGvariant func(uintptr) uintptr
 
 // Serialize a file filter to an `a{sv}` variant.
 func (x *FileFilter) ToGvariant() *glib.Variant {
-
 	cret := xFileFilterToGvariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 func (c *FileFilter) GoPointer() uintptr {
@@ -293,14 +294,13 @@ func (x *FileFilter) SetPropertySuffixes(value []string) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FileFilter) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -316,6 +316,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewFileFilterFromGvariant, libs, "gtk_file_filter_new_from_gvariant")
 
 	core.PuregoSafeRegister(&xFileFilterAddMimeType, libs, "gtk_file_filter_add_mime_type")
+	core.PuregoSafeRegister(&xFileFilterAddMimeTypes, libs, "gtk_file_filter_add_mime_types")
 	core.PuregoSafeRegister(&xFileFilterAddPattern, libs, "gtk_file_filter_add_pattern")
 	core.PuregoSafeRegister(&xFileFilterAddPixbufFormats, libs, "gtk_file_filter_add_pixbuf_formats")
 	core.PuregoSafeRegister(&xFileFilterAddSuffix, libs, "gtk_file_filter_add_suffix")
@@ -323,5 +324,4 @@ func init() {
 	core.PuregoSafeRegister(&xFileFilterGetName, libs, "gtk_file_filter_get_name")
 	core.PuregoSafeRegister(&xFileFilterSetName, libs, "gtk_file_filter_set_name")
 	core.PuregoSafeRegister(&xFileFilterToGvariant, libs, "gtk_file_filter_to_gvariant")
-
 }

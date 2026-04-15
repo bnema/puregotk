@@ -2,8 +2,7 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -19,9 +18,7 @@ var xTestInit func(*int, *[]string, ...interface{})
 // Like gtk_init() and g_test_init(), any known arguments will be
 // processed and stripped from @argc and @argv.
 func TestInit(ArgcpVar *int, ArgvpVar *[]string, varArgs ...interface{}) {
-
 	xTestInit(ArgcpVar, ArgvpVar, varArgs...)
-
 }
 
 var xTestListAllTypes func(*uint) uintptr
@@ -29,7 +26,6 @@ var xTestListAllTypes func(*uint) uintptr
 // Return the type ids that have been registered after
 // calling gtk_test_register_all_types().
 func TestListAllTypes(NTypesVar *uint) uintptr {
-
 	cret := xTestListAllTypes(NTypesVar)
 	return cret
 }
@@ -41,9 +37,7 @@ var xTestRegisterAllTypes func()
 // This allows to refer to any of those object types via
 // g_type_from_name() after calling this function.
 func TestRegisterAllTypes() {
-
 	xTestRegisterAllTypes()
-
 }
 
 var xTestWidgetWaitForDraw func(uintptr)
@@ -57,14 +51,12 @@ var xTestWidgetWaitForDraw func(uintptr)
 // depend on @widget relayouting or on interaction with the display
 // server.
 func TestWidgetWaitForDraw(WidgetVar *Widget) {
-
 	xTestWidgetWaitForDraw(WidgetVar.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -78,5 +70,4 @@ func init() {
 	core.PuregoSafeRegister(&xTestListAllTypes, libs, "gtk_test_list_all_types")
 	core.PuregoSafeRegister(&xTestRegisterAllTypes, libs, "gtk_test_register_all_types")
 	core.PuregoSafeRegister(&xTestWidgetWaitForDraw, libs, "gtk_test_widget_wait_for_draw")
-
 }

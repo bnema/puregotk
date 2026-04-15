@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -104,8 +103,12 @@ func (x *PollableOutputStreamInterface) OverrideCreateSource(cb func(PollableOut
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source {
-			return cb(&PollableOutputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&PollableOutputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -116,10 +119,14 @@ func (x *PollableOutputStreamInterface) GetCreateSource() func(PollableOutputStr
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(StreamVar PollableOutputStream, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -229,7 +236,6 @@ func (x *PollableOutputStreamBase) SetGoPointer(ptr uintptr) {
 // For any given stream, the value returned by this method is constant;
 // a stream cannot switch from pollable to non-pollable or vice versa.
 func (x *PollableOutputStreamBase) CanPoll() bool {
-
 	cret := XGPollableOutputStreamCanPoll(x.GoPointer())
 	return cret
 }
@@ -246,14 +252,11 @@ func (x *PollableOutputStreamBase) CanPoll() bool {
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableOutputStreamBase) CreateSource(CancellableVar *Cancellable) *glib.Source {
-
-	var CancellableVarPtr uintptr
-	if CancellableVar != nil {
-		CancellableVarPtr = CancellableVar.GoPointer()
+	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+	if cret == 0 {
+		return nil
 	}
-
-	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVarPtr)
-	return cret
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.
@@ -268,7 +271,6 @@ func (x *PollableOutputStreamBase) CreateSource(CancellableVar *Cancellable) *gl
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableOutputStreamBase) IsWritable() bool {
-
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
 	return cret
 }
@@ -304,7 +306,6 @@ func (x *PollableOutputStreamBase) WriteNonblocking(BufferVar []byte, CountVar u
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 // Attempts to write the bytes contained in the @n_vectors @vectors to @stream,
@@ -339,18 +340,19 @@ func (x *PollableOutputStreamBase) WritevNonblocking(VectorsVar []OutputVector, 
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
-var XGPollableOutputStreamCanPoll func(uintptr) bool
-var XGPollableOutputStreamCreateSource func(uintptr, uintptr) *glib.Source
-var XGPollableOutputStreamIsWritable func(uintptr) bool
-var XGPollableOutputStreamWriteNonblocking func(uintptr, []byte, uint, uintptr, **glib.Error) int
-var XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) PollableReturn
+var (
+	XGPollableOutputStreamCanPoll           func(uintptr) bool
+	XGPollableOutputStreamCreateSource      func(uintptr, uintptr) uintptr
+	XGPollableOutputStreamIsWritable        func(uintptr) bool
+	XGPollableOutputStreamWriteNonblocking  func(uintptr, []byte, uint, uintptr, **glib.Error) int
+	XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) PollableReturn
+)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -367,5 +369,4 @@ func init() {
 	core.PuregoSafeRegister(&XGPollableOutputStreamIsWritable, libs, "g_pollable_output_stream_is_writable")
 	core.PuregoSafeRegister(&XGPollableOutputStreamWriteNonblocking, libs, "g_pollable_output_stream_write_nonblocking")
 	core.PuregoSafeRegister(&XGPollableOutputStreamWritevNonblocking, libs, "g_pollable_output_stream_writev_nonblocking")
-
 }

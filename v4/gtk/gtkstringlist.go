@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -102,9 +101,7 @@ var xStringListAppend func(uintptr, string)
 // The @string will be copied. See
 // [method@Gtk.StringList.take] for a way to avoid that.
 func (x *StringList) Append(StringVar string) {
-
 	xStringListAppend(x.GoPointer(), StringVar)
-
 }
 
 var xStringListFind func(uintptr, string) uint
@@ -113,7 +110,6 @@ var xStringListFind func(uintptr, string) uint
 //
 // If @self does not contain @string item, `G_MAXUINT` is returned.
 func (x *StringList) Find(StringVar string) uint {
-
 	cret := xStringListFind(x.GoPointer(), StringVar)
 	return cret
 }
@@ -127,7 +123,6 @@ var xStringListGetString func(uintptr, uint) string
 // This function returns the const char *. To get the
 // object wrapping it, use g_list_model_get_item().
 func (x *StringList) GetString(PositionVar uint) string {
-
 	cret := xStringListGetString(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -139,9 +134,7 @@ var xStringListRemove func(uintptr, uint)
 // @position must be smaller than the current
 // length of the list.
 func (x *StringList) Remove(PositionVar uint) {
-
 	xStringListRemove(x.GoPointer(), PositionVar)
-
 }
 
 var xStringListSplice func(uintptr, uint, uint, []string)
@@ -159,9 +152,7 @@ var xStringListSplice func(uintptr, uint, uint, []string)
 // @position + @n_removals must be less than or equal to the length
 // of the list at the time this function is called).
 func (x *StringList) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar []string) {
-
 	xStringListSplice(x.GoPointer(), PositionVar, NRemovalsVar, AdditionsVar)
-
 }
 
 var xStringListTake func(uintptr, uintptr)
@@ -176,9 +167,7 @@ var xStringListTake func(uintptr, uintptr)
 // gtk_string_list_take (self, g_strdup_print ("%d dollars", lots));
 // ```
 func (x *StringList) Take(StringVar string) {
-
-	xStringListTake(x.GoPointer(), core.GStrdup(StringVar))
-
+	xStringListTake(x.GoPointer(), StringVar)
 }
 
 func (c *StringList) GoPointer() uintptr {
@@ -219,7 +208,6 @@ func (x *StringList) SetPropertyStrings(value []string) {
 //
 // See also: g_list_model_get_n_items()
 func (x *StringList) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -233,7 +221,6 @@ func (x *StringList) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *StringList) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -244,7 +231,6 @@ func (x *StringList) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *StringList) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -295,9 +281,7 @@ func (x *StringList) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *StringList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -305,7 +289,6 @@ func (x *StringList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar ui
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *StringList) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -351,7 +334,6 @@ var xStringObjectGetString func(uintptr) string
 
 // Returns the string contained in a `GtkStringObject`.
 func (x *StringObject) GetString() string {
-
 	cret := xStringObjectGetString(x.GoPointer())
 	return cret
 }
@@ -377,7 +359,7 @@ func (x *StringObject) GetPropertyString() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -403,5 +385,4 @@ func init() {
 	core.PuregoSafeRegister(&xNewStringObject, libs, "gtk_string_object_new")
 
 	core.PuregoSafeRegister(&xStringObjectGetString, libs, "gtk_string_object_get_string")
-
 }

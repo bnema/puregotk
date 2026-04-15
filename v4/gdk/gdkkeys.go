@@ -2,8 +2,7 @@
 package gdk
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -13,9 +12,7 @@ var xKeyvalConvertCase func(uint, *uint, *uint)
 //
 // Examples of keyvals are `GDK_KEY_a`, `GDK_KEY_Enter`, `GDK_KEY_F1`, etc.
 func KeyvalConvertCase(SymbolVar uint, LowerVar *uint, UpperVar *uint) {
-
 	xKeyvalConvertCase(SymbolVar, LowerVar, UpperVar)
-
 }
 
 var xKeyvalFromName func(string) uint
@@ -26,7 +23,6 @@ var xKeyvalFromName func(string) uint
 // `gdk/gdkkeysyms.h` header file
 // but without the leading “GDK_KEY_”.
 func KeyvalFromName(KeyvalNameVar string) uint {
-
 	cret := xKeyvalFromName(KeyvalNameVar)
 	return cret
 }
@@ -35,7 +31,6 @@ var xKeyvalIsLower func(uint) bool
 
 // Returns true if the given key value is in lower case.
 func KeyvalIsLower(KeyvalVar uint) bool {
-
 	cret := xKeyvalIsLower(KeyvalVar)
 	return cret
 }
@@ -44,7 +39,6 @@ var xKeyvalIsUpper func(uint) bool
 
 // Returns true if the given key value is in upper case.
 func KeyvalIsUpper(KeyvalVar uint) bool {
-
 	cret := xKeyvalIsUpper(KeyvalVar)
 	return cret
 }
@@ -57,7 +51,6 @@ var xKeyvalName func(uint) string
 // `gdk/gdkkeysyms.h` header file
 // but without the leading “GDK_KEY_”.
 func KeyvalName(KeyvalVar uint) string {
-
 	cret := xKeyvalName(KeyvalVar)
 	return cret
 }
@@ -66,7 +59,6 @@ var xKeyvalToLower func(uint) uint
 
 // Converts a key value to lower case, if applicable.
 func KeyvalToLower(KeyvalVar uint) uint {
-
 	cret := xKeyvalToLower(KeyvalVar)
 	return cret
 }
@@ -80,7 +72,6 @@ var xKeyvalToUnicode func(uint) uint32
 // into consideration, which might be expected for particular
 // keyvals, such as `GDK_KEY_KP_Decimal`.
 func KeyvalToUnicode(KeyvalVar uint) uint32 {
-
 	cret := xKeyvalToUnicode(KeyvalVar)
 	return cret
 }
@@ -89,7 +80,6 @@ var xKeyvalToUpper func(uint) uint
 
 // Converts a key value to upper case, if applicable.
 func KeyvalToUpper(KeyvalVar uint) uint {
-
 	cret := xKeyvalToUpper(KeyvalVar)
 	return cret
 }
@@ -98,14 +88,13 @@ var xUnicodeToKeyval func(uint32) uint
 
 // Converts from a Unicode character to a key symbol.
 func UnicodeToKeyval(WcVar uint32) uint {
-
 	cret := xUnicodeToKeyval(WcVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -124,5 +113,4 @@ func init() {
 	core.PuregoSafeRegister(&xKeyvalToUnicode, libs, "gdk_keyval_to_unicode")
 	core.PuregoSafeRegister(&xKeyvalToUpper, libs, "gdk_keyval_to_upper")
 	core.PuregoSafeRegister(&xUnicodeToKeyval, libs, "gdk_unicode_to_keyval")
-
 }

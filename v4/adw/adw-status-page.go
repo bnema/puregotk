@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -111,7 +110,6 @@ var xStatusPageGetDescription func(uintptr) string
 
 // Gets the description markup for @self.
 func (x *StatusPage) GetDescription() string {
-
 	cret := xStatusPageGetDescription(x.GoPointer())
 	return cret
 }
@@ -120,7 +118,6 @@ var xStatusPageGetIconName func(uintptr) string
 
 // Gets the icon name for @self.
 func (x *StatusPage) GetIconName() string {
-
 	cret := xStatusPageGetIconName(x.GoPointer())
 	return cret
 }
@@ -146,7 +143,6 @@ var xStatusPageGetTitle func(uintptr) string
 
 // Gets the title for @self.
 func (x *StatusPage) GetTitle() string {
-
 	cret := xStatusPageGetTitle(x.GoPointer())
 	return cret
 }
@@ -155,14 +151,7 @@ var xStatusPageSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @self.
 func (x *StatusPage) SetChild(ChildVar *gtk.Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xStatusPageSetChild(x.GoPointer(), ChildVarPtr)
-
+	xStatusPageSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xStatusPageSetDescription func(uintptr, uintptr)
@@ -171,12 +160,10 @@ var xStatusPageSetDescription func(uintptr, uintptr)
 //
 // The description is displayed below the title. It is parsed as Pango markup.
 func (x *StatusPage) SetDescription(DescriptionVar *string) {
-
 	DescriptionVarPtr := core.GStrdupNullable(DescriptionVar)
 	defer core.GFreeNullable(DescriptionVarPtr)
 
 	xStatusPageSetDescription(x.GoPointer(), DescriptionVarPtr)
-
 }
 
 var xStatusPageSetIconName func(uintptr, uintptr)
@@ -185,12 +172,10 @@ var xStatusPageSetIconName func(uintptr, uintptr)
 //
 // Changing this will set [property@StatusPage:paintable] to `NULL`.
 func (x *StatusPage) SetIconName(IconNameVar *string) {
-
 	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
 	defer core.GFreeNullable(IconNameVarPtr)
 
 	xStatusPageSetIconName(x.GoPointer(), IconNameVarPtr)
-
 }
 
 var xStatusPageSetPaintable func(uintptr, uintptr)
@@ -199,14 +184,7 @@ var xStatusPageSetPaintable func(uintptr, uintptr)
 //
 // Changing this will set [property@StatusPage:icon-name] to `NULL`.
 func (x *StatusPage) SetPaintable(PaintableVar gdk.Paintable) {
-
-	var PaintableVarPtr uintptr
-	if PaintableVar != nil {
-		PaintableVarPtr = PaintableVar.GoPointer()
-	}
-
-	xStatusPageSetPaintable(x.GoPointer(), PaintableVarPtr)
-
+	xStatusPageSetPaintable(x.GoPointer(), PaintableVar.GoPointer())
 }
 
 var xStatusPageSetTitle func(uintptr, string)
@@ -215,9 +193,7 @@ var xStatusPageSetTitle func(uintptr, string)
 //
 // The title is displayed below the icon. It is not parsed as Pango markup.
 func (x *StatusPage) SetTitle(TitleVar string) {
-
 	xStatusPageSetTitle(x.GoPointer(), TitleVar)
-
 }
 
 func (c *StatusPage) GoPointer() uintptr {
@@ -300,9 +276,19 @@ func (x *StatusPage) GetPropertyTitle() string {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *StatusPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
-
 	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *StatusPage) GetAccessibleId() string {
+	cret := gtk.XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -323,7 +309,6 @@ func (x *StatusPage) GetAccessibleParent() *gtk.AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *StatusPage) GetAccessibleRole() gtk.AccessibleRole {
-
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -348,7 +333,6 @@ func (x *StatusPage) GetAtContext() *gtk.ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *StatusPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -387,30 +371,23 @@ func (x *StatusPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *StatusPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
-
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *StatusPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
-
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *StatusPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
-
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *StatusPage) ResetState(StateVar gtk.AccessibleState) {
-
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -423,19 +400,7 @@ func (x *StatusPage) ResetState(StateVar gtk.AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *StatusPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -443,14 +408,7 @@ func (x *StatusPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVa
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *StatusPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -459,9 +417,7 @@ func (x *StatusPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *StatusPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
-
 	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -483,9 +439,7 @@ func (x *StatusPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
 //
 // ```
 func (x *StatusPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -495,9 +449,7 @@ func (x *StatusPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, var
 //
 // This function is meant to be used by language bindings.
 func (x *StatusPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -519,9 +471,7 @@ func (x *StatusPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk
 //
 // ```
 func (x *StatusPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -531,9 +481,7 @@ func (x *StatusPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, var
 //
 // This function is meant to be used by language bindings.
 func (x *StatusPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -556,9 +504,7 @@ func (x *StatusPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.A
 //
 // ```
 func (x *StatusPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...interface{}) {
-
 	gtk.XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -568,9 +514,7 @@ func (x *StatusPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *StatusPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
-
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -578,14 +522,13 @@ func (x *StatusPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessible
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *StatusPage) GetBuildableId() string {
-
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0", "libadwaita-1.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("ADW") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -609,5 +552,4 @@ func init() {
 	core.PuregoSafeRegister(&xStatusPageSetIconName, libs, "adw_status_page_set_icon_name")
 	core.PuregoSafeRegister(&xStatusPageSetPaintable, libs, "adw_status_page_set_paintable")
 	core.PuregoSafeRegister(&xStatusPageSetTitle, libs, "adw_status_page_set_title")
-
 }

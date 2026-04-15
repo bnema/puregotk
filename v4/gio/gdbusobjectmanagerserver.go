@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -106,9 +105,7 @@ var xDBusObjectManagerServerExport func(uintptr, uintptr)
 // Note that @manager will take a reference on @object for as long as
 // it is exported.
 func (x *DBusObjectManagerServer) Export(ObjectVar *DBusObjectSkeleton) {
-
 	xDBusObjectManagerServerExport(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
 var xDBusObjectManagerServerExportUniquely func(uintptr, uintptr)
@@ -118,9 +115,7 @@ var xDBusObjectManagerServerExportUniquely func(uintptr, uintptr)
 // if an object with the given path already exists. As such, the
 // #GDBusObjectProxy:g-object-path property of @object may be modified.
 func (x *DBusObjectManagerServer) ExportUniquely(ObjectVar *DBusObjectSkeleton) {
-
 	xDBusObjectManagerServerExportUniquely(x.GoPointer(), ObjectVar.GoPointer())
-
 }
 
 var xDBusObjectManagerServerGetConnection func(uintptr) uintptr
@@ -143,7 +138,6 @@ var xDBusObjectManagerServerIsExported func(uintptr, uintptr) bool
 
 // Returns whether @object is currently exported on @manager.
 func (x *DBusObjectManagerServer) IsExported(ObjectVar *DBusObjectSkeleton) bool {
-
 	cret := xDBusObjectManagerServerIsExported(x.GoPointer(), ObjectVar.GoPointer())
 	return cret
 }
@@ -153,14 +147,7 @@ var xDBusObjectManagerServerSetConnection func(uintptr, uintptr)
 // Exports all objects managed by @manager on @connection. If
 // @connection is %NULL, stops exporting objects.
 func (x *DBusObjectManagerServer) SetConnection(ConnectionVar *DBusConnection) {
-
-	var ConnectionVarPtr uintptr
-	if ConnectionVar != nil {
-		ConnectionVarPtr = ConnectionVar.GoPointer()
-	}
-
-	xDBusObjectManagerServerSetConnection(x.GoPointer(), ConnectionVarPtr)
-
+	xDBusObjectManagerServerSetConnection(x.GoPointer(), ConnectionVar.GoPointer())
 }
 
 var xDBusObjectManagerServerUnexport func(uintptr, string) bool
@@ -171,7 +158,6 @@ var xDBusObjectManagerServerUnexport func(uintptr, string) bool
 // Note that @object_path must be in the hierarchy rooted by the
 // object path for @manager.
 func (x *DBusObjectManagerServer) Unexport(ObjectPathVar string) bool {
-
 	cret := xDBusObjectManagerServerUnexport(x.GoPointer(), ObjectPathVar)
 	return cret
 }
@@ -235,21 +221,22 @@ func (x *DBusObjectManagerServer) GetObject(ObjectPathVar string) *DBusObjectBas
 
 // Gets the object path that @manager is for.
 func (x *DBusObjectManagerServer) GetObjectPath() string {
-
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
 	return cret
 }
 
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerServer) GetObjects() *glib.List {
-
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -269,5 +256,4 @@ func init() {
 	core.PuregoSafeRegister(&xDBusObjectManagerServerIsExported, libs, "g_dbus_object_manager_server_is_exported")
 	core.PuregoSafeRegister(&xDBusObjectManagerServerSetConnection, libs, "g_dbus_object_manager_server_set_connection")
 	core.PuregoSafeRegister(&xDBusObjectManagerServerUnexport, libs, "g_dbus_object_manager_server_unexport")
-
 }

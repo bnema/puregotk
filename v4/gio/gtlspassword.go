@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -157,7 +156,6 @@ var xTlsPasswordGetDescription func(uintptr) string
 
 // Get a description string about what the password will be used for.
 func (x *TlsPassword) GetDescription() string {
-
 	cret := xTlsPasswordGetDescription(x.GoPointer())
 	return cret
 }
@@ -166,7 +164,6 @@ var xTlsPasswordGetFlags func(uintptr) TlsPasswordFlags
 
 // Get flags about the password.
 func (x *TlsPassword) GetFlags() TlsPasswordFlags {
-
 	cret := xTlsPasswordGetFlags(x.GoPointer())
 	return cret
 }
@@ -179,7 +176,6 @@ var xTlsPasswordGetValue func(uintptr, *uint) uintptr
 // for @length in contexts where you know the password will have a
 // certain fixed length.)
 func (x *TlsPassword) GetValue(LengthVar *uint) uintptr {
-
 	cret := xTlsPasswordGetValue(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -190,7 +186,6 @@ var xTlsPasswordGetWarning func(uintptr) string
 // representation of the password flags returned from
 // g_tls_password_get_flags().
 func (x *TlsPassword) GetWarning() string {
-
 	cret := xTlsPasswordGetWarning(x.GoPointer())
 	return cret
 }
@@ -199,18 +194,14 @@ var xTlsPasswordSetDescription func(uintptr, string)
 
 // Set a description string about what the password will be used for.
 func (x *TlsPassword) SetDescription(DescriptionVar string) {
-
 	xTlsPasswordSetDescription(x.GoPointer(), DescriptionVar)
-
 }
 
 var xTlsPasswordSetFlags func(uintptr, TlsPasswordFlags)
 
 // Set flags about the password.
 func (x *TlsPassword) SetFlags(FlagsVar TlsPasswordFlags) {
-
 	xTlsPasswordSetFlags(x.GoPointer(), FlagsVar)
-
 }
 
 var xTlsPasswordSetValue func(uintptr, []byte, int)
@@ -223,9 +214,7 @@ var xTlsPasswordSetValue func(uintptr, []byte, int)
 // calculated automatically. (Note that the terminating nul is not
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValue(ValueVar []byte, LengthVar int) {
-
 	xTlsPasswordSetValue(x.GoPointer(), ValueVar, LengthVar)
-
 }
 
 var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
@@ -240,24 +229,7 @@ var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
 // calculated automatically. (Note that the terminating nul is not
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValueFull(ValueVar []byte, LengthVar int, DestroyVar *glib.DestroyNotify) {
-
-	var DestroyVarRef uintptr
-	if DestroyVar != nil {
-		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
-		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-			DestroyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *DestroyVar
-				cbFn(arg0)
-			}
-			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
-		}
-	}
-
-	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, DestroyVarRef)
-
+	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xTlsPasswordSetWarning func(uintptr, string)
@@ -266,9 +238,7 @@ var xTlsPasswordSetWarning func(uintptr, string)
 // representation of the password flags returned from
 // g_tls_password_get_flags().
 func (x *TlsPassword) SetWarning(WarningVar string) {
-
 	xTlsPasswordSetWarning(x.GoPointer(), WarningVar)
-
 }
 
 func (c *TlsPassword) GoPointer() uintptr {
@@ -318,7 +288,7 @@ func (x *TlsPassword) GetPropertyWarning() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -341,5 +311,4 @@ func init() {
 	core.PuregoSafeRegister(&xTlsPasswordSetValue, libs, "g_tls_password_set_value")
 	core.PuregoSafeRegister(&xTlsPasswordSetValueFull, libs, "g_tls_password_set_value_full")
 	core.PuregoSafeRegister(&xTlsPasswordSetWarning, libs, "g_tls_password_set_warning")
-
 }

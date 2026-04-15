@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -35,14 +34,16 @@ func (x *DBusAnnotationInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDBusAnnotationInfoRef func(uintptr) *DBusAnnotationInfo
+var xDBusAnnotationInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusAnnotationInfo) Ref() *DBusAnnotationInfo {
-
 	cret := xDBusAnnotationInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusAnnotationInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusAnnotationInfoUnref func(uintptr)
@@ -51,9 +52,7 @@ var xDBusAnnotationInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusAnnotationInfo) Unref() {
-
 	xDBusAnnotationInfoUnref(x.GoPointer())
-
 }
 
 // Information about an argument for a method or a signal.
@@ -79,14 +78,16 @@ func (x *DBusArgInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDBusArgInfoRef func(uintptr) *DBusArgInfo
+var xDBusArgInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusArgInfo) Ref() *DBusArgInfo {
-
 	cret := xDBusArgInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusArgInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusArgInfoUnref func(uintptr)
@@ -95,9 +96,7 @@ var xDBusArgInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusArgInfo) Unref() {
-
 	xDBusArgInfoUnref(x.GoPointer())
-
 }
 
 // Information about a D-Bus interface.
@@ -140,9 +139,7 @@ var xDBusInterfaceInfoCacheBuild func(uintptr)
 // Note that @info cannot be modified until
 // g_dbus_interface_info_cache_release() is called.
 func (x *DBusInterfaceInfo) CacheBuild() {
-
 	xDBusInterfaceInfoCacheBuild(x.GoPointer())
-
 }
 
 var xDBusInterfaceInfoCacheRelease func(uintptr)
@@ -151,9 +148,7 @@ var xDBusInterfaceInfoCacheRelease func(uintptr)
 // g_dbus_interface_info_cache_build() (if any) and frees the
 // resources used by the cache if the usage count drops to zero.
 func (x *DBusInterfaceInfo) CacheRelease() {
-
 	xDBusInterfaceInfoCacheRelease(x.GoPointer())
-
 }
 
 var xDBusInterfaceInfoGenerateXml func(uintptr, uint, *glib.String)
@@ -165,55 +160,61 @@ var xDBusInterfaceInfoGenerateXml func(uintptr, uint, *glib.String)
 // `org.freedesktop.DBus.Introspectable.Introspect`
 // method.
 func (x *DBusInterfaceInfo) GenerateXml(IndentVar uint, StringBuilderVar *glib.String) {
-
 	xDBusInterfaceInfoGenerateXml(x.GoPointer(), IndentVar, StringBuilderVar)
-
 }
 
-var xDBusInterfaceInfoLookupMethod func(uintptr, string) *DBusMethodInfo
+var xDBusInterfaceInfoLookupMethod func(uintptr, string) uintptr
 
 // Looks up information about a method.
 //
 // The cost of this function is O(n) in number of methods unless
 // g_dbus_interface_info_cache_build() has been used on @info.
 func (x *DBusInterfaceInfo) LookupMethod(NameVar string) *DBusMethodInfo {
-
 	cret := xDBusInterfaceInfoLookupMethod(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusMethodInfo)(unsafe.Pointer(cret))
 }
 
-var xDBusInterfaceInfoLookupProperty func(uintptr, string) *DBusPropertyInfo
+var xDBusInterfaceInfoLookupProperty func(uintptr, string) uintptr
 
 // Looks up information about a property.
 //
 // The cost of this function is O(n) in number of properties unless
 // g_dbus_interface_info_cache_build() has been used on @info.
 func (x *DBusInterfaceInfo) LookupProperty(NameVar string) *DBusPropertyInfo {
-
 	cret := xDBusInterfaceInfoLookupProperty(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusPropertyInfo)(unsafe.Pointer(cret))
 }
 
-var xDBusInterfaceInfoLookupSignal func(uintptr, string) *DBusSignalInfo
+var xDBusInterfaceInfoLookupSignal func(uintptr, string) uintptr
 
 // Looks up information about a signal.
 //
 // The cost of this function is O(n) in number of signals unless
 // g_dbus_interface_info_cache_build() has been used on @info.
 func (x *DBusInterfaceInfo) LookupSignal(NameVar string) *DBusSignalInfo {
-
 	cret := xDBusInterfaceInfoLookupSignal(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusSignalInfo)(unsafe.Pointer(cret))
 }
 
-var xDBusInterfaceInfoRef func(uintptr) *DBusInterfaceInfo
+var xDBusInterfaceInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusInterfaceInfo) Ref() *DBusInterfaceInfo {
-
 	cret := xDBusInterfaceInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceInfoUnref func(uintptr)
@@ -222,9 +223,7 @@ var xDBusInterfaceInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusInterfaceInfo) Unref() {
-
 	xDBusInterfaceInfoUnref(x.GoPointer())
-
 }
 
 // Information about a method on a D-Bus interface.
@@ -252,14 +251,16 @@ func (x *DBusMethodInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDBusMethodInfoRef func(uintptr) *DBusMethodInfo
+var xDBusMethodInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusMethodInfo) Ref() *DBusMethodInfo {
-
 	cret := xDBusMethodInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusMethodInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusMethodInfoUnref func(uintptr)
@@ -268,9 +269,7 @@ var xDBusMethodInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusMethodInfo) Unref() {
-
 	xDBusMethodInfoUnref(x.GoPointer())
-
 }
 
 // Information about nodes in a remote object hierarchy.
@@ -298,7 +297,7 @@ func (x *DBusNodeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewDBusNodeInfoForXml func(string, **glib.Error) *DBusNodeInfo
+var xNewDBusNodeInfoForXml func(string, **glib.Error) uintptr
 
 // Parses @xml_data and returns a #GDBusNodeInfo representing the data.
 //
@@ -312,11 +311,13 @@ func NewDBusNodeInfoForXml(XmlDataVar string) (*DBusNodeInfo, error) {
 	var cerr *glib.Error
 
 	cret := xNewDBusNodeInfoForXml(XmlDataVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
-
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*DBusNodeInfo)(unsafe.Pointer(cret)), nil
 }
 
 var xDBusNodeInfoGenerateXml func(uintptr, uint, *glib.String)
@@ -326,30 +327,32 @@ var xDBusNodeInfoGenerateXml func(uintptr, uint, *glib.String)
 // This function is typically used for generating introspection XML documents at run-time for
 // handling the `org.freedesktop.DBus.Introspectable.Introspect`  method.
 func (x *DBusNodeInfo) GenerateXml(IndentVar uint, StringBuilderVar *glib.String) {
-
 	xDBusNodeInfoGenerateXml(x.GoPointer(), IndentVar, StringBuilderVar)
-
 }
 
-var xDBusNodeInfoLookupInterface func(uintptr, string) *DBusInterfaceInfo
+var xDBusNodeInfoLookupInterface func(uintptr, string) uintptr
 
 // Looks up information about an interface.
 //
 // The cost of this function is O(n) in number of interfaces.
 func (x *DBusNodeInfo) LookupInterface(NameVar string) *DBusInterfaceInfo {
-
 	cret := xDBusNodeInfoLookupInterface(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
-var xDBusNodeInfoRef func(uintptr) *DBusNodeInfo
+var xDBusNodeInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusNodeInfo) Ref() *DBusNodeInfo {
-
 	cret := xDBusNodeInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusNodeInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusNodeInfoUnref func(uintptr)
@@ -358,9 +361,7 @@ var xDBusNodeInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusNodeInfo) Unref() {
-
 	xDBusNodeInfoUnref(x.GoPointer())
-
 }
 
 // Information about a D-Bus property on a D-Bus interface.
@@ -388,14 +389,16 @@ func (x *DBusPropertyInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDBusPropertyInfoRef func(uintptr) *DBusPropertyInfo
+var xDBusPropertyInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusPropertyInfo) Ref() *DBusPropertyInfo {
-
 	cret := xDBusPropertyInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusPropertyInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusPropertyInfoUnref func(uintptr)
@@ -404,9 +407,7 @@ var xDBusPropertyInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusPropertyInfo) Unref() {
-
 	xDBusPropertyInfoUnref(x.GoPointer())
-
 }
 
 // Information about a signal on a D-Bus interface.
@@ -432,14 +433,16 @@ func (x *DBusSignalInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDBusSignalInfoRef func(uintptr) *DBusSignalInfo
+var xDBusSignalInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
 // the reference count.
 func (x *DBusSignalInfo) Ref() *DBusSignalInfo {
-
 	cret := xDBusSignalInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusSignalInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusSignalInfoUnref func(uintptr)
@@ -448,9 +451,7 @@ var xDBusSignalInfoUnref func(uintptr)
 // the reference count of @info. When its reference count drops to 0,
 // the memory used is freed.
 func (x *DBusSignalInfo) Unref() {
-
 	xDBusSignalInfoUnref(x.GoPointer())
-
 }
 
 var xDbusAnnotationInfoLookup func(uintptr, string) string
@@ -459,14 +460,13 @@ var xDbusAnnotationInfoLookup func(uintptr, string) string
 //
 // The cost of this function is O(n) in number of annotations.
 func DbusAnnotationInfoLookup(AnnotationsVar uintptr, NameVar string) string {
-
 	cret := xDbusAnnotationInfoLookup(AnnotationsVar, NameVar)
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0", "libgio-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GIO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -522,5 +522,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xDBusSignalInfoRef, libs, "g_dbus_signal_info_ref")
 	core.PuregoSafeRegister(&xDBusSignalInfoUnref, libs, "g_dbus_signal_info_unref")
-
 }

@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -182,37 +181,28 @@ func (x *ColorChooserBase) SetGoPointer(ptr uintptr) {
 //
 // If @colors is %NULL, removes all previously added palettes.
 func (x *ColorChooserBase) AddPalette(OrientationVar Orientation, ColorsPerLineVar int, NColorsVar int, ColorsVar []gdk.RGBA) {
-
 	XGtkColorChooserAddPalette(x.GoPointer(), OrientationVar, ColorsPerLineVar, NColorsVar, ColorsVar)
-
 }
 
 // Gets the currently-selected color.
 func (x *ColorChooserBase) GetRgba(ColorVar *gdk.RGBA) {
-
 	XGtkColorChooserGetRgba(x.GoPointer(), ColorVar)
-
 }
 
 // Returns whether the color chooser shows the alpha channel.
 func (x *ColorChooserBase) GetUseAlpha() bool {
-
 	cret := XGtkColorChooserGetUseAlpha(x.GoPointer())
 	return cret
 }
 
 // Sets the color.
 func (x *ColorChooserBase) SetRgba(ColorVar *gdk.RGBA) {
-
 	XGtkColorChooserSetRgba(x.GoPointer(), ColorVar)
-
 }
 
 // Sets whether or not the color chooser should use the alpha channel.
 func (x *ColorChooserBase) SetUseAlpha(UseAlphaVar bool) {
-
 	XGtkColorChooserSetUseAlpha(x.GoPointer(), UseAlphaVar)
-
 }
 
 // SetPropertyRgba sets the "rgba" property.
@@ -277,15 +267,17 @@ func (x *ColorChooserBase) GetPropertyUseAlpha() bool {
 	return v.GetBoolean()
 }
 
-var XGtkColorChooserAddPalette func(uintptr, Orientation, int, int, []gdk.RGBA)
-var XGtkColorChooserGetRgba func(uintptr, *gdk.RGBA)
-var XGtkColorChooserGetUseAlpha func(uintptr) bool
-var XGtkColorChooserSetRgba func(uintptr, *gdk.RGBA)
-var XGtkColorChooserSetUseAlpha func(uintptr, bool)
+var (
+	XGtkColorChooserAddPalette  func(uintptr, Orientation, int, int, []gdk.RGBA)
+	XGtkColorChooserGetRgba     func(uintptr, *gdk.RGBA)
+	XGtkColorChooserGetUseAlpha func(uintptr) bool
+	XGtkColorChooserSetRgba     func(uintptr, *gdk.RGBA)
+	XGtkColorChooserSetUseAlpha func(uintptr, bool)
+)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -302,5 +294,4 @@ func init() {
 	core.PuregoSafeRegister(&XGtkColorChooserGetUseAlpha, libs, "gtk_color_chooser_get_use_alpha")
 	core.PuregoSafeRegister(&XGtkColorChooserSetRgba, libs, "gtk_color_chooser_set_rgba")
 	core.PuregoSafeRegister(&XGtkColorChooserSetUseAlpha, libs, "gtk_color_chooser_set_use_alpha")
-
 }

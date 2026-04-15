@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -159,7 +158,6 @@ var xFrameGetLabel func(uintptr) string
 // If the frame's label widget is not a `GtkLabel`, %NULL
 // is returned.
 func (x *Frame) GetLabel() string {
-
 	cret := xFrameGetLabel(x.GoPointer())
 	return cret
 }
@@ -168,7 +166,6 @@ var xFrameGetLabelAlign func(uintptr) float32
 
 // Retrieves the X alignment of the frame’s label.
 func (x *Frame) GetLabelAlign() float32 {
-
 	cret := xFrameGetLabelAlign(x.GoPointer())
 	return cret
 }
@@ -194,14 +191,7 @@ var xFrameSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @frame.
 func (x *Frame) SetChild(ChildVar *Widget) {
-
-	var ChildVarPtr uintptr
-	if ChildVar != nil {
-		ChildVarPtr = ChildVar.GoPointer()
-	}
-
-	xFrameSetChild(x.GoPointer(), ChildVarPtr)
-
+	xFrameSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
 var xFrameSetLabel func(uintptr, uintptr)
@@ -209,12 +199,10 @@ var xFrameSetLabel func(uintptr, uintptr)
 // Creates a new `GtkLabel` with the @label and sets it as the frame's
 // label widget.
 func (x *Frame) SetLabel(LabelVar *string) {
-
 	LabelVarPtr := core.GStrdupNullable(LabelVar)
 	defer core.GFreeNullable(LabelVarPtr)
 
 	xFrameSetLabel(x.GoPointer(), LabelVarPtr)
-
 }
 
 var xFrameSetLabelAlign func(uintptr, float32)
@@ -223,9 +211,7 @@ var xFrameSetLabelAlign func(uintptr, float32)
 //
 // The default value for a newly created frame is 0.0.
 func (x *Frame) SetLabelAlign(XalignVar float32) {
-
 	xFrameSetLabelAlign(x.GoPointer(), XalignVar)
-
 }
 
 var xFrameSetLabelWidget func(uintptr, uintptr)
@@ -235,14 +221,7 @@ var xFrameSetLabelWidget func(uintptr, uintptr)
 // This is the widget that will appear embedded in the top edge
 // of the frame as a title.
 func (x *Frame) SetLabelWidget(LabelWidgetVar *Widget) {
-
-	var LabelWidgetVarPtr uintptr
-	if LabelWidgetVar != nil {
-		LabelWidgetVarPtr = LabelWidgetVar.GoPointer()
-	}
-
-	xFrameSetLabelWidget(x.GoPointer(), LabelWidgetVarPtr)
-
+	xFrameSetLabelWidget(x.GoPointer(), LabelWidgetVar.GoPointer())
 }
 
 func (c *Frame) GoPointer() uintptr {
@@ -300,9 +279,19 @@ func (x *Frame) GetPropertyLabelXalign() float32 {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *Frame) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *Frame) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -323,7 +312,6 @@ func (x *Frame) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *Frame) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -348,7 +336,6 @@ func (x *Frame) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *Frame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -387,30 +374,23 @@ func (x *Frame) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *Frame) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *Frame) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *Frame) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *Frame) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -423,19 +403,7 @@ func (x *Frame) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *Frame) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -443,14 +411,7 @@ func (x *Frame) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessi
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *Frame) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -459,9 +420,7 @@ func (x *Frame) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *Frame) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -483,9 +442,7 @@ func (x *Frame) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *Frame) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -495,9 +452,7 @@ func (x *Frame) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Frame) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -519,9 +474,7 @@ func (x *Frame) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 //
 // ```
 func (x *Frame) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -531,9 +484,7 @@ func (x *Frame) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 //
 // This function is meant to be used by language bindings.
 func (x *Frame) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -556,9 +507,7 @@ func (x *Frame) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 //
 // ```
 func (x *Frame) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -568,9 +517,7 @@ func (x *Frame) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 //
 // This function is meant to be used by language bindings.
 func (x *Frame) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -578,14 +525,13 @@ func (x *Frame) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Frame) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -607,5 +553,4 @@ func init() {
 	core.PuregoSafeRegister(&xFrameSetLabel, libs, "gtk_frame_set_label")
 	core.PuregoSafeRegister(&xFrameSetLabelAlign, libs, "gtk_frame_set_label_align")
 	core.PuregoSafeRegister(&xFrameSetLabelWidget, libs, "gtk_frame_set_label_widget")
-
 }

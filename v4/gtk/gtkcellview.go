@@ -2,8 +2,9 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -141,15 +142,17 @@ func NewCellViewWithTexture(TextureVar *gdk.Texture) *CellView {
 	return cls
 }
 
-var xCellViewGetDisplayedRow func(uintptr) *TreePath
+var xCellViewGetDisplayedRow func(uintptr) uintptr
 
 // Returns a `GtkTreePath` referring to the currently
 // displayed row. If no row is currently displayed,
 // %NULL is returned.
 func (x *CellView) GetDisplayedRow() *TreePath {
-
 	cret := xCellViewGetDisplayedRow(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xCellViewGetDrawSensitive func(uintptr) bool
@@ -157,7 +160,6 @@ var xCellViewGetDrawSensitive func(uintptr) bool
 // Gets whether @cell_view is configured to draw all of its
 // cells in a sensitive state.
 func (x *CellView) GetDrawSensitive() bool {
-
 	cret := xCellViewGetDrawSensitive(x.GoPointer())
 	return cret
 }
@@ -167,7 +169,6 @@ var xCellViewGetFitModel func(uintptr) bool
 // Gets whether @cell_view is configured to request space
 // to fit the entire `GtkTreeModel`.
 func (x *CellView) GetFitModel() bool {
-
 	cret := xCellViewGetFitModel(x.GoPointer())
 	return cret
 }
@@ -199,9 +200,7 @@ var xCellViewSetDisplayedRow func(uintptr, *TreePath)
 // a needed intermediate state if say, the model for
 // the `GtkCellView` becomes temporarily empty.
 func (x *CellView) SetDisplayedRow(PathVar *TreePath) {
-
 	xCellViewSetDisplayedRow(x.GoPointer(), PathVar)
-
 }
 
 var xCellViewSetDrawSensitive func(uintptr, bool)
@@ -211,9 +210,7 @@ var xCellViewSetDrawSensitive func(uintptr, bool)
 // to ensure that rows with insensitive cells that contain
 // children appear sensitive in the parent menu item.
 func (x *CellView) SetDrawSensitive(DrawSensitiveVar bool) {
-
 	xCellViewSetDrawSensitive(x.GoPointer(), DrawSensitiveVar)
-
 }
 
 var xCellViewSetFitModel func(uintptr, bool)
@@ -224,9 +221,7 @@ var xCellViewSetFitModel func(uintptr, bool)
 // the combo box’s button always gets enough space and does not resize
 // when selection changes.
 func (x *CellView) SetFitModel(FitModelVar bool) {
-
 	xCellViewSetFitModel(x.GoPointer(), FitModelVar)
-
 }
 
 var xCellViewSetModel func(uintptr, uintptr)
@@ -235,14 +230,7 @@ var xCellViewSetModel func(uintptr, uintptr)
 // set, it will remove it before setting the new model.  If @model is
 // %NULL, then it will unset the old model.
 func (x *CellView) SetModel(ModelVar TreeModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xCellViewSetModel(x.GoPointer(), ModelVarPtr)
-
+	xCellViewSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 func (c *CellView) GoPointer() uintptr {
@@ -318,9 +306,19 @@ func (x *CellView) GetPropertyFitModel() bool {
 // Also, by using this API, you can ensure that the message
 // does not interrupts the user's current screen reader output.
 func (x *CellView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
-
 	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+}
 
+// Retrieves the accessible identifier for the accessible object.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations.
+//
+// It is left to the accessible implementation to define the scope
+// and uniqueness of the identifier.
+func (x *CellView) GetAccessibleId() string {
+	cret := XGtkAccessibleGetAccessibleId(x.GoPointer())
+	return cret
 }
 
 // Retrieves the accessible parent for an accessible object.
@@ -341,7 +339,6 @@ func (x *CellView) GetAccessibleParent() *AccessibleBase {
 
 // Retrieves the accessible role of an accessible object.
 func (x *CellView) GetAccessibleRole() AccessibleRole {
-
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
@@ -366,7 +363,6 @@ func (x *CellView) GetAtContext() *ATContext {
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
 func (x *CellView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
-
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -405,30 +401,23 @@ func (x *CellView) GetNextAccessibleSibling() *AccessibleBase {
 // implementations, e.g. to get platform state from an ignored
 // child widget, as is the case for `GtkText` wrappers.
 func (x *CellView) GetPlatformState(StateVar AccessiblePlatformState) bool {
-
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
 // Resets the accessible property to its default value.
 func (x *CellView) ResetProperty(PropertyVar AccessibleProperty) {
-
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
-
 }
 
 // Resets the accessible relation to its default value.
 func (x *CellView) ResetRelation(RelationVar AccessibleRelation) {
-
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
-
 }
 
 // Resets the accessible state to its default value.
 func (x *CellView) ResetState(StateVar AccessibleState) {
-
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
-
 }
 
 // Sets the parent and sibling of an accessible object.
@@ -441,19 +430,7 @@ func (x *CellView) ResetState(StateVar AccessibleState) {
 // child widget is the metadata object, and the parent of each metadata
 // object is the container widget.
 func (x *CellView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
-
-	var ParentVarPtr uintptr
-	if ParentVar != nil {
-		ParentVarPtr = ParentVar.GoPointer()
-	}
-
-	var NextSiblingVarPtr uintptr
-	if NextSiblingVar != nil {
-		NextSiblingVarPtr = NextSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVarPtr, NextSiblingVarPtr)
-
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
 }
 
 // Updates the next accessible sibling.
@@ -461,14 +438,7 @@ func (x *CellView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Acce
 // That might be useful when a new child of a custom accessible
 // is created, and it needs to be linked to a previous child.
 func (x *CellView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
-
-	var NewSiblingVarPtr uintptr
-	if NewSiblingVar != nil {
-		NewSiblingVarPtr = NewSiblingVar.GoPointer()
-	}
-
-	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVarPtr)
-
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
 }
 
 // Informs ATs that the platform state has changed.
@@ -477,9 +447,7 @@ func (x *CellView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
 // have a platform state but are not widgets. Widgets handle platform
 // states automatically.
 func (x *CellView) UpdatePlatformState(StateVar AccessiblePlatformState) {
-
 	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
-
 }
 
 // Updates a list of accessible properties.
@@ -501,9 +469,7 @@ func (x *CellView) UpdatePlatformState(StateVar AccessiblePlatformState) {
 //
 // ```
 func (x *CellView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateProperty(x.GoPointer(), FirstPropertyVar, varArgs...)
-
 }
 
 // Updates an array of accessible properties.
@@ -513,9 +479,7 @@ func (x *CellView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *CellView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
-
 }
 
 // Updates a list of accessible relations.
@@ -537,9 +501,7 @@ func (x *CellView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 //
 // ```
 func (x *CellView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateRelation(x.GoPointer(), FirstRelationVar, varArgs...)
-
 }
 
 // Updates an array of accessible relations.
@@ -549,9 +511,7 @@ func (x *CellView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 //
 // This function is meant to be used by language bindings.
 func (x *CellView) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
-
 }
 
 // Updates a list of accessible states.
@@ -574,9 +534,7 @@ func (x *CellView) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 //
 // ```
 func (x *CellView) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}) {
-
 	XGtkAccessibleUpdateState(x.GoPointer(), FirstStateVar, varArgs...)
-
 }
 
 // Updates an array of accessible states.
@@ -586,9 +544,7 @@ func (x *CellView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 //
 // This function is meant to be used by language bindings.
 func (x *CellView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
-
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
-
 }
 
 // Gets the ID of the @buildable object.
@@ -596,7 +552,6 @@ func (x *CellView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CellView) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -609,25 +564,19 @@ func (x *CellView) GetBuildableId() string {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *CellView) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *CellView) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *CellView) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -649,9 +598,11 @@ func (x *CellView) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellView) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -660,9 +611,7 @@ func (x *CellView) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellView) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -671,9 +620,7 @@ func (x *CellView) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *CellView) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -681,9 +628,7 @@ func (x *CellView) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *CellView) Reorder(CellVar *CellRenderer, PositionVar int) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -695,9 +640,7 @@ func (x *CellView) Reorder(CellVar *CellRenderer, PositionVar int) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *CellView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -708,28 +651,23 @@ func (x *CellView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *CellView) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *CellView) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -755,5 +693,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellViewSetDrawSensitive, libs, "gtk_cell_view_set_draw_sensitive")
 	core.PuregoSafeRegister(&xCellViewSetFitModel, libs, "gtk_cell_view_set_fit_model")
 	core.PuregoSafeRegister(&xCellViewSetModel, libs, "gtk_cell_view_set_model")
-
 }

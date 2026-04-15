@@ -2,8 +2,7 @@
 package pango
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -102,7 +101,6 @@ var xCoverageGet func(uintptr, int) CoverageLevel
 
 // Determine whether a particular index is covered by @coverage.
 func (x *Coverage) Get(IndexVar int) CoverageLevel {
-
 	cret := xCoverageGet(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -113,9 +111,7 @@ var xCoverageMax func(uintptr, uintptr)
 // value of the current coverage for the index and the coverage for
 // the corresponding index in @other.
 func (x *Coverage) Max(OtherVar *Coverage) {
-
 	xCoverageMax(x.GoPointer(), OtherVar.GoPointer())
-
 }
 
 var xCoverageRef func(uintptr) uintptr
@@ -138,18 +134,14 @@ var xCoverageSet func(uintptr, int, CoverageLevel)
 
 // Modify a particular index within @coverage
 func (x *Coverage) Set(IndexVar int, LevelVar CoverageLevel) {
-
 	xCoverageSet(x.GoPointer(), IndexVar, LevelVar)
-
 }
 
 var xCoverageToBytes func(uintptr, *[]byte, *int)
 
 // Convert a `PangoCoverage` structure into a flat binary format.
 func (x *Coverage) ToBytes(BytesVar *[]byte, NBytesVar *int) {
-
 	xCoverageToBytes(x.GoPointer(), BytesVar, NBytesVar)
-
 }
 
 var xCoverageUnref func(uintptr)
@@ -158,9 +150,7 @@ var xCoverageUnref func(uintptr)
 //
 // If the result is zero, free the coverage and all associated memory.
 func (x *Coverage) Unref() {
-
 	xCoverageUnref(x.GoPointer())
-
 }
 
 func (c *Coverage) GoPointer() uintptr {
@@ -193,7 +183,7 @@ func CoverageFromBytes(BytesVar []byte, NBytesVar int) *Coverage {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -218,5 +208,4 @@ func init() {
 	core.PuregoSafeRegister(&xCoverageUnref, libs, "pango_coverage_unref")
 
 	core.PuregoSafeRegister(&xCoverageFromBytes, libs, "pango_coverage_from_bytes")
-
 }

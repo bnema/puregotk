@@ -2,8 +2,9 @@
 package gtk
 
 import (
-	"github.com/ebitengine/purego"
+	"unsafe"
 
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -66,7 +67,6 @@ var xCellAreaBoxGetSpacing func(uintptr) int
 
 // Gets the spacing added between cell renderers.
 func (x *CellAreaBox) GetSpacing() int {
-
 	cret := xCellAreaBoxGetSpacing(x.GoPointer())
 	return cret
 }
@@ -78,9 +78,7 @@ var xCellAreaBoxPackEnd func(uintptr, uintptr, bool, bool, bool)
 // The @renderer is packed after (away from end of) any other
 // `GtkCellRenderer` packed with reference to the end of @box.
 func (x *CellAreaBox) PackEnd(RendererVar *CellRenderer, ExpandVar bool, AlignVar bool, FixedVar bool) {
-
 	xCellAreaBoxPackEnd(x.GoPointer(), RendererVar.GoPointer(), ExpandVar, AlignVar, FixedVar)
-
 }
 
 var xCellAreaBoxPackStart func(uintptr, uintptr, bool, bool, bool)
@@ -90,18 +88,14 @@ var xCellAreaBoxPackStart func(uintptr, uintptr, bool, bool, bool)
 // The @renderer is packed after any other `GtkCellRenderer` packed
 // with reference to the start of @box.
 func (x *CellAreaBox) PackStart(RendererVar *CellRenderer, ExpandVar bool, AlignVar bool, FixedVar bool) {
-
 	xCellAreaBoxPackStart(x.GoPointer(), RendererVar.GoPointer(), ExpandVar, AlignVar, FixedVar)
-
 }
 
 var xCellAreaBoxSetSpacing func(uintptr, int)
 
 // Sets the spacing to add between cell renderers in @box.
 func (x *CellAreaBox) SetSpacing(SpacingVar int) {
-
 	xCellAreaBoxSetSpacing(x.GoPointer(), SpacingVar)
-
 }
 
 func (c *CellAreaBox) GoPointer() uintptr {
@@ -137,7 +131,6 @@ func (x *CellAreaBox) GetPropertySpacing() int {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CellAreaBox) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -150,25 +143,19 @@ func (x *CellAreaBox) GetBuildableId() string {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *CellAreaBox) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *CellAreaBox) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *CellAreaBox) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -190,9 +177,11 @@ func (x *CellAreaBox) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellAreaBox) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Re-inserts @cell at @position.
@@ -200,9 +189,7 @@ func (x *CellAreaBox) GetCells() *glib.List {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *CellAreaBox) Reorder(CellVar *CellRenderer, PositionVar int) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -214,9 +201,7 @@ func (x *CellAreaBox) Reorder(CellVar *CellRenderer, PositionVar int) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *CellAreaBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -227,28 +212,23 @@ func (x *CellAreaBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellAreaBox) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Retrieves the orientation of the @orientable.
 func (x *CellAreaBox) GetOrientation() Orientation {
-
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
 	return cret
 }
 
 // Sets the orientation of the @orientable.
 func (x *CellAreaBox) SetOrientation(OrientationVar Orientation) {
-
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -266,5 +246,4 @@ func init() {
 	core.PuregoSafeRegister(&xCellAreaBoxPackEnd, libs, "gtk_cell_area_box_pack_end")
 	core.PuregoSafeRegister(&xCellAreaBoxPackStart, libs, "gtk_cell_area_box_pack_start")
 	core.PuregoSafeRegister(&xCellAreaBoxSetSpacing, libs, "gtk_cell_area_box_set_spacing")
-
 }

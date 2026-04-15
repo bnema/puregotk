@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -25,13 +24,15 @@ func (x *Sequence) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSequenceAppend func(uintptr, uintptr) *SequenceIter
+var xSequenceAppend func(uintptr, uintptr) uintptr
 
 // Adds a new item to the end of @seq.
 func (x *Sequence) Append(DataVar uintptr) *SequenceIter {
-
 	cret := xSequenceAppend(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceForeach func(uintptr, uintptr, uintptr)
@@ -39,24 +40,7 @@ var xSequenceForeach func(uintptr, uintptr, uintptr)
 // Calls @func for each item in the sequence passing @user_data
 // to the function. @func must not modify the sequence itself.
 func (x *Sequence) Foreach(FuncVar *Func, UserDataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xSequenceForeach(x.GoPointer(), FuncVarRef, UserDataVar)
-
+	xSequenceForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
 }
 
 var xSequenceFree func(uintptr)
@@ -65,37 +49,41 @@ var xSequenceFree func(uintptr)
 // function associated with it, that function is called on all items
 // in @seq.
 func (x *Sequence) Free() {
-
 	xSequenceFree(x.GoPointer())
-
 }
 
-var xSequenceGetBeginIter func(uintptr) *SequenceIter
+var xSequenceGetBeginIter func(uintptr) uintptr
 
 // Returns the begin iterator for @seq.
 func (x *Sequence) GetBeginIter() *SequenceIter {
-
 	cret := xSequenceGetBeginIter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetEndIter func(uintptr) *SequenceIter
+var xSequenceGetEndIter func(uintptr) uintptr
 
 // Returns the end iterator for @seg
 func (x *Sequence) GetEndIter() *SequenceIter {
-
 	cret := xSequenceGetEndIter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetIterAtPos func(uintptr, int) *SequenceIter
+var xSequenceGetIterAtPos func(uintptr, int) uintptr
 
 // Returns the iterator at position @pos. If @pos is negative or larger
 // than the number of items in @seq, the end iterator is returned.
 func (x *Sequence) GetIterAtPos(PosVar int) *SequenceIter {
-
 	cret := xSequenceGetIterAtPos(x.GoPointer(), PosVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceGetLength func(uintptr) int
@@ -104,12 +92,11 @@ var xSequenceGetLength func(uintptr) int
 // O(h) where `h' is the height of the tree. It is thus more efficient
 // to use g_sequence_is_empty() when comparing the length to zero.
 func (x *Sequence) GetLength() int {
-
 	cret := xSequenceGetLength(x.GoPointer())
 	return cret
 }
 
-var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Inserts @data into @seq using @cmp_func to determine the new
 // position. The sequence must already be sorted according to @cmp_func;
@@ -124,27 +111,14 @@ var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // it is more efficient to do unsorted insertions and then call
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSorted(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
+	cret := xSequenceInsertSorted(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceInsertSorted(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_insert_sorted(), but uses
 // a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
@@ -159,24 +133,11 @@ var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) *Sequence
 // it is more efficient to do unsorted insertions and then call
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSortedIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var IterCmpVarRef uintptr
-	if IterCmpVar != nil {
-		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
-		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-			IterCmpVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-				cbFn := *IterCmpVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
-		}
+	cret := xSequenceInsertSortedIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceInsertSortedIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceIsEmpty func(uintptr) bool
@@ -187,12 +148,11 @@ var xSequenceIsEmpty func(uintptr) bool
 // g_sequence_get_length() being equal to zero. However this function is
 // implemented in O(1) running time.
 func (x *Sequence) IsEmpty() bool {
-
 	cret := xSequenceIsEmpty(x.GoPointer())
 	return cret
 }
 
-var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Returns an iterator pointing to the position of the first item found
 // equal to @data according to @cmp_func and @cmp_data. If more than one
@@ -208,27 +168,14 @@ var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // This function will fail if the data contained in the sequence is
 // unsorted.
 func (x *Sequence) Lookup(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
+	cret := xSequenceLookup(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceLookup(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_lookup(), but uses a #GSequenceIterCompareFunc
 // instead of a #GCompareDataFunc as the compare function.
@@ -241,36 +188,25 @@ var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // This function will fail if the data contained in the sequence is
 // unsorted.
 func (x *Sequence) LookupIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var IterCmpVarRef uintptr
-	if IterCmpVar != nil {
-		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
-		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-			IterCmpVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-				cbFn := *IterCmpVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
-		}
+	cret := xSequenceLookupIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceLookupIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequencePrepend func(uintptr, uintptr) *SequenceIter
+var xSequencePrepend func(uintptr, uintptr) uintptr
 
 // Adds a new item to the front of @seq
 func (x *Sequence) Prepend(DataVar uintptr) *SequenceIter {
-
 	cret := xSequencePrepend(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Returns an iterator pointing to the position where @data would
 // be inserted according to @cmp_func and @cmp_data.
@@ -286,27 +222,14 @@ var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // This function will fail if the data contained in the sequence is
 // unsorted.
 func (x *Sequence) Search(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
+	cret := xSequenceSearch(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceSearch(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_search(), but uses a #GSequenceIterCompareFunc
 // instead of a #GCompareDataFunc as the compare function.
@@ -322,24 +245,11 @@ var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // This function will fail if the data contained in the sequence is
 // unsorted.
 func (x *Sequence) SearchIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
-
-	var IterCmpVarRef uintptr
-	if IterCmpVar != nil {
-		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
-		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-			IterCmpVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-				cbFn := *IterCmpVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
-		}
+	cret := xSequenceSearchIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
+	if cret == 0 {
+		return nil
 	}
-
-	cret := xSequenceSearchIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-	return cret
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceSort func(uintptr, uintptr, uintptr)
@@ -351,24 +261,7 @@ var xSequenceSort func(uintptr, uintptr, uintptr)
 // first comes before the second, and a positive value
 // if the second comes before the first.
 func (x *Sequence) Sort(CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
-	}
-
-	xSequenceSort(x.GoPointer(), CmpFuncVarRef, CmpDataVar)
-
+	xSequenceSort(x.GoPointer(), NewCallback(CmpFuncVar), CmpDataVar)
 }
 
 var xSequenceSortIter func(uintptr, uintptr, uintptr)
@@ -381,24 +274,7 @@ var xSequenceSortIter func(uintptr, uintptr, uintptr)
 // iterator comes before the second, and a positive value if the second
 // iterator comes before the first.
 func (x *Sequence) SortIter(CmpFuncVar *SequenceIterCompareFunc, CmpDataVar uintptr) {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
-	}
-
-	xSequenceSortIter(x.GoPointer(), CmpFuncVarRef, CmpDataVar)
-
+	xSequenceSortIter(x.GoPointer(), NewCallback(CmpFuncVar), CmpDataVar)
 }
 
 // The #GSequenceIter struct is an opaque data type representing an
@@ -418,7 +294,6 @@ var xSequenceIterCompare func(uintptr, *SequenceIter) int
 //
 // The @a and @b iterators must point into the same sequence.
 func (x *SequenceIter) Compare(BVar *SequenceIter) int {
-
 	cret := xSequenceIterCompare(x.GoPointer(), BVar)
 	return cret
 }
@@ -427,25 +302,25 @@ var xSequenceIterGetPosition func(uintptr) int
 
 // Returns the position of @iter
 func (x *SequenceIter) GetPosition() int {
-
 	cret := xSequenceIterGetPosition(x.GoPointer())
 	return cret
 }
 
-var xSequenceIterGetSequence func(uintptr) *Sequence
+var xSequenceIterGetSequence func(uintptr) uintptr
 
 // Returns the #GSequence that @iter points into.
 func (x *SequenceIter) GetSequence() *Sequence {
-
 	cret := xSequenceIterGetSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sequence)(unsafe.Pointer(cret))
 }
 
 var xSequenceIterIsBegin func(uintptr) bool
 
 // Returns whether @iter is the begin iterator
 func (x *SequenceIter) IsBegin() bool {
-
 	cret := xSequenceIterIsBegin(x.GoPointer())
 	return cret
 }
@@ -454,41 +329,46 @@ var xSequenceIterIsEnd func(uintptr) bool
 
 // Returns whether @iter is the end iterator
 func (x *SequenceIter) IsEnd() bool {
-
 	cret := xSequenceIterIsEnd(x.GoPointer())
 	return cret
 }
 
-var xSequenceIterMove func(uintptr, int) *SequenceIter
+var xSequenceIterMove func(uintptr, int) uintptr
 
 // Returns the #GSequenceIter which is @delta positions away from @iter.
 // If @iter is closer than -@delta positions to the beginning of the sequence,
 // the begin iterator is returned. If @iter is closer than @delta positions
 // to the end of the sequence, the end iterator is returned.
 func (x *SequenceIter) Move(DeltaVar int) *SequenceIter {
-
 	cret := xSequenceIterMove(x.GoPointer(), DeltaVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceIterNext func(uintptr) *SequenceIter
+var xSequenceIterNext func(uintptr) uintptr
 
 // Returns an iterator pointing to the next position after @iter.
 // If @iter is the end iterator, the end iterator is returned.
 func (x *SequenceIter) Next() *SequenceIter {
-
 	cret := xSequenceIterNext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceIterPrev func(uintptr) *SequenceIter
+var xSequenceIterPrev func(uintptr) uintptr
 
 // Returns an iterator pointing to the previous position before @iter.
 // If @iter is the begin iterator, the begin iterator is returned.
 func (x *SequenceIter) Prev() *SequenceIter {
-
 	cret := xSequenceIterPrev(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceForeachRange func(*SequenceIter, *SequenceIter, uintptr, uintptr)
@@ -497,44 +377,27 @@ var xSequenceForeachRange func(*SequenceIter, *SequenceIter, uintptr, uintptr)
 // @user_data to the function. @func must not modify the sequence
 // itself.
 func SequenceForeachRange(BeginVar *SequenceIter, EndVar *SequenceIter, FuncVar *Func, UserDataVar uintptr) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) {
-				cbFn := *FuncVar
-				cbFn(arg0, arg1)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	xSequenceForeachRange(BeginVar, EndVar, FuncVarRef, UserDataVar)
-
+	xSequenceForeachRange(BeginVar, EndVar, NewCallback(FuncVar), UserDataVar)
 }
 
 var xSequenceGet func(*SequenceIter) uintptr
 
 // Returns the data that @iter points to.
 func SequenceGet(IterVar *SequenceIter) uintptr {
-
 	cret := xSequenceGet(IterVar)
 
 	return cret
 }
 
-var xSequenceInsertBefore func(*SequenceIter, uintptr) *SequenceIter
+var xSequenceInsertBefore func(*SequenceIter, uintptr) uintptr
 
 // Inserts a new item just before the item pointed to by @iter.
 func SequenceInsertBefore(IterVar *SequenceIter, DataVar uintptr) *SequenceIter {
-
 	cret := xSequenceInsertBefore(IterVar, DataVar)
-
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceMove func(*SequenceIter, *SequenceIter)
@@ -544,9 +407,7 @@ var xSequenceMove func(*SequenceIter, *SequenceIter)
 // after @src. It is allowed for @src and @dest to point into different
 // sequences.
 func SequenceMove(SrcVar *SequenceIter, DestVar *SequenceIter) {
-
 	xSequenceMove(SrcVar, DestVar)
-
 }
 
 var xSequenceMoveRange func(*SequenceIter, *SequenceIter, *SequenceIter)
@@ -560,12 +421,10 @@ var xSequenceMoveRange func(*SequenceIter, *SequenceIter, *SequenceIter)
 // removed from the sequence. If @dest points to a place within
 // the (@begin, @end) range, the range does not move.
 func SequenceMoveRange(DestVar *SequenceIter, BeginVar *SequenceIter, EndVar *SequenceIter) {
-
 	xSequenceMoveRange(DestVar, BeginVar, EndVar)
-
 }
 
-var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
+var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) uintptr
 
 // Finds an iterator somewhere in the range (@begin, @end). This
 // iterator will be close to the middle of the range, but is not
@@ -574,10 +433,11 @@ var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
 // The @begin and @end iterators must both point to the same sequence
 // and @begin must come before or be equal to @end in the sequence.
 func SequenceRangeGetMidpoint(BeginVar *SequenceIter, EndVar *SequenceIter) *SequenceIter {
-
 	cret := xSequenceRangeGetMidpoint(BeginVar, EndVar)
-
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceRemove func(*SequenceIter)
@@ -588,9 +448,7 @@ var xSequenceRemove func(*SequenceIter)
 // If the sequence has a data destroy function associated with it, this
 // function is called on the data for the removed item.
 func SequenceRemove(IterVar *SequenceIter) {
-
 	xSequenceRemove(IterVar)
-
 }
 
 var xSequenceRemoveRange func(*SequenceIter, *SequenceIter)
@@ -600,9 +458,7 @@ var xSequenceRemoveRange func(*SequenceIter, *SequenceIter)
 // If the sequence has a data destroy function associated with it, this
 // function is called on the data for the removed items.
 func SequenceRemoveRange(BeginVar *SequenceIter, EndVar *SequenceIter) {
-
 	xSequenceRemoveRange(BeginVar, EndVar)
-
 }
 
 var xSequenceSet func(*SequenceIter, uintptr)
@@ -611,9 +467,7 @@ var xSequenceSet func(*SequenceIter, uintptr)
 // the sequence has a data destroy function associated with it, that
 // function is called on the existing data that @iter pointed to.
 func SequenceSet(IterVar *SequenceIter, DataVar uintptr) {
-
 	xSequenceSet(IterVar, DataVar)
-
 }
 
 var xSequenceSortChanged func(*SequenceIter, uintptr, uintptr)
@@ -629,24 +483,7 @@ var xSequenceSortChanged func(*SequenceIter, uintptr, uintptr)
 // the first item comes before the second, and a positive value if
 // the second item comes before the first.
 func SequenceSortChanged(IterVar *SequenceIter, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
-
-	var CmpFuncVarRef uintptr
-	if CmpFuncVar != nil {
-		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
-		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-			CmpFuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-				cbFn := *CmpFuncVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
-		}
-	}
-
-	xSequenceSortChanged(IterVar, CmpFuncVarRef, CmpDataVar)
-
+	xSequenceSortChanged(IterVar, NewCallback(CmpFuncVar), CmpDataVar)
 }
 
 var xSequenceSortChangedIter func(*SequenceIter, uintptr, uintptr)
@@ -661,24 +498,7 @@ var xSequenceSortChangedIter func(*SequenceIter, uintptr, uintptr)
 // iterator comes before the second, and a positive value if the second
 // iterator comes before the first.
 func SequenceSortChangedIter(IterVar *SequenceIter, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) {
-
-	var IterCmpVarRef uintptr
-	if IterCmpVar != nil {
-		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
-		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-			IterCmpVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-				cbFn := *IterCmpVar
-				return cbFn(arg0, arg1, arg2)
-			}
-			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
-		}
-	}
-
-	xSequenceSortChangedIter(IterVar, IterCmpVarRef, CmpDataVar)
-
+	xSequenceSortChangedIter(IterVar, NewCallback(IterCmpVar), CmpDataVar)
 }
 
 var xSequenceSwap func(*SequenceIter, *SequenceIter)
@@ -686,14 +506,12 @@ var xSequenceSwap func(*SequenceIter, *SequenceIter)
 // Swaps the items pointed to by @a and @b. It is allowed for @a and @b
 // to point into difference sequences.
 func SequenceSwap(AVar *SequenceIter, BVar *SequenceIter) {
-
 	xSequenceSwap(AVar, BVar)
-
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -742,5 +560,4 @@ func init() {
 	core.PuregoSafeRegister(&xSequenceIterMove, libs, "g_sequence_iter_move")
 	core.PuregoSafeRegister(&xSequenceIterNext, libs, "g_sequence_iter_next")
 	core.PuregoSafeRegister(&xSequenceIterPrev, libs, "g_sequence_iter_prev")
-
 }

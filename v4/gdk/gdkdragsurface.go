@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
 )
@@ -50,7 +49,6 @@ func (x *DragSurfaceBase) SetGoPointer(ptr uintptr) {
 
 // Present @drag_surface.
 func (x *DragSurfaceBase) Present(WidthVar int, HeightVar int) bool {
-
 	cret := XGdkDragSurfacePresent(x.GoPointer(), WidthVar, HeightVar)
 	return cret
 }
@@ -59,7 +57,7 @@ var XGdkDragSurfacePresent func(uintptr, int, int) bool
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GDK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -72,5 +70,4 @@ func init() {
 	core.PuregoSafeRegister(&xDragSurfaceGLibType, libs, "gdk_drag_surface_get_type")
 
 	core.PuregoSafeRegister(&XGdkDragSurfacePresent, libs, "gdk_drag_surface_present")
-
 }

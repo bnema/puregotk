@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
@@ -296,7 +295,6 @@ func (x *FontMap) AddFontFile(FilenameVar string) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
-
 }
 
 var xFontMapChanged func(uintptr)
@@ -309,9 +307,7 @@ var xFontMapChanged func(uintptr)
 // call this function if they have attached extra data to the
 // fontmap and such data is changed.
 func (x *FontMap) Changed() {
-
 	xFontMapChanged(x.GoPointer())
-
 }
 
 var xFontMapCreateContext func(uintptr) uintptr
@@ -370,7 +366,6 @@ var xFontMapGetSerial func(uintptr) uint
 // This can be used to automatically detect changes to a `PangoFontMap`,
 // like in `PangoContext`.
 func (x *FontMap) GetSerial() uint {
-
 	cret := xFontMapGetSerial(x.GoPointer())
 	return cret
 }
@@ -384,9 +379,7 @@ var xFontMapListFamilies func(uintptr, *uintptr, *int)
 // `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
 // for enumerating families.
 func (x *FontMap) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int) {
-
 	xFontMapListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
-
 }
 
 var xFontMapLoadFont func(uintptr, uintptr, *FontDescription) uintptr
@@ -435,15 +428,10 @@ var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, uintptr) uintptr
 func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar *string) *Font {
 	var cls *Font
 
-	var ContextVarPtr uintptr
-	if ContextVar != nil {
-		ContextVarPtr = ContextVar.GoPointer()
-	}
-
 	VariationsVarPtr := core.GStrdupNullable(VariationsVar)
 	defer core.GFreeNullable(VariationsVarPtr)
 
-	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVarPtr, VariationsVarPtr)
+	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -482,7 +470,6 @@ func (x *FontMap) GetPropertyNItems() uint {
 //
 // See also: g_list_model_get_n_items()
 func (x *FontMap) GetItem(PositionVar uint) uintptr {
-
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -496,7 +483,6 @@ func (x *FontMap) GetItem(PositionVar uint) uintptr {
 // The item type of a #GListModel can not change during the life of the
 // model.
 func (x *FontMap) GetItemType() types.GType {
-
 	cret := gio.XGListModelGetItemType(x.GoPointer())
 	return cret
 }
@@ -507,7 +493,6 @@ func (x *FontMap) GetItemType() types.GType {
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
 func (x *FontMap) GetNItems() uint {
-
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -558,14 +543,12 @@ func (x *FontMap) GetObject(PositionVar uint) *gobject.Object {
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
 func (x *FontMap) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
-
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
-
 }
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0", "libpango-1.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("PANGO") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -586,5 +569,4 @@ func init() {
 	core.PuregoSafeRegister(&xFontMapLoadFont, libs, "pango_font_map_load_font")
 	core.PuregoSafeRegister(&xFontMapLoadFontset, libs, "pango_font_map_load_fontset")
 	core.PuregoSafeRegister(&xFontMapReloadFont, libs, "pango_font_map_reload_font")
-
 }

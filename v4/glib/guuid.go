@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -18,7 +17,6 @@ var xUuidStringIsValid func(string) bool
 // Note that hyphens are required within the UUID string itself,
 // as per the aforementioned RFC.
 func UuidStringIsValid(StrVar string) bool {
-
 	cret := xUuidStringIsValid(StrVar)
 
 	return cret
@@ -30,7 +28,6 @@ var xUuidStringRandom func() string
 // randomness guarantees as #GRand, so must not be used for cryptographic
 // purposes such as key generation, nonces, salts or one-time pads.
 func UuidStringRandom() string {
-
 	cret := xUuidStringRandom()
 
 	return cret
@@ -38,7 +35,7 @@ func UuidStringRandom() string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -50,5 +47,4 @@ func init() {
 
 	core.PuregoSafeRegister(&xUuidStringIsValid, libs, "g_uuid_string_is_valid")
 	core.PuregoSafeRegister(&xUuidStringRandom, libs, "g_uuid_string_random")
-
 }

@@ -2,8 +2,7 @@
 package glib
 
 import (
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
@@ -14,12 +13,10 @@ var xDcgettext func(uintptr, string, int) string
 // more information about how this functions differs from calling
 // dcgettext() directly.
 func Dcgettext(DomainVar *string, MsgidVar string, CategoryVar int) string {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDcgettext(DomainVarPtr, MsgidVar, CategoryVar)
-
 	return cret
 }
 
@@ -58,12 +55,10 @@ var xDgettext func(uintptr, string) string
 // Applications should normally not use this function directly,
 // but use the _() macro for translations.
 func Dgettext(DomainVar *string, MsgidVar string) string {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDgettext(DomainVarPtr, MsgidVar)
-
 	return cret
 }
 
@@ -76,12 +71,10 @@ var xDngettext func(uintptr, string, string, uint) string
 // See g_dgettext() for details of how this differs from dngettext()
 // proper.
 func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar uint) string {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDngettext(DomainVarPtr, MsgidVar, MsgidPluralVar, NVar)
-
 	return cret
 }
 
@@ -101,12 +94,10 @@ var xDpgettext func(uintptr, string, uint) string
 // Applications should normally not use this function directly,
 // but use the C_() macro for translations with context.
 func Dpgettext(DomainVar *string, MsgctxtidVar string, MsgidoffsetVar uint) string {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext(DomainVarPtr, MsgctxtidVar, MsgidoffsetVar)
-
 	return cret
 }
 
@@ -123,12 +114,10 @@ var xDpgettext2 func(uintptr, string, string) string
 // This function differs from C_() in that it is not a macro and
 // thus you may use non-string-literals as context and msgid arguments.
 func Dpgettext2(DomainVar *string, ContextVar string, MsgidVar string) string {
-
 	DomainVarPtr := core.GStrdupNullable(DomainVar)
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext2(DomainVarPtr, ContextVar, MsgidVar)
-
 	return cret
 }
 
@@ -136,7 +125,6 @@ var xStripContext func(string, string) string
 
 // An auxiliary function for gettext() support (see Q_()).
 func StripContext(MsgidVar string, MsgvalVar string) string {
-
 	cret := xStripContext(MsgidVar, MsgvalVar)
 
 	return cret
@@ -144,7 +132,7 @@ func StripContext(MsgidVar string, MsgvalVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0", "libgobject-2.0.0.dylib", "libglib-2.0.0.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GLIB") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -160,5 +148,4 @@ func init() {
 	core.PuregoSafeRegister(&xDpgettext, libs, "g_dpgettext")
 	core.PuregoSafeRegister(&xDpgettext2, libs, "g_dpgettext2")
 	core.PuregoSafeRegister(&xStripContext, libs, "g_strip_context")
-
 }

@@ -4,8 +4,7 @@ package gtk
 import (
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -118,9 +117,7 @@ var xEntryCompletionComplete func(uintptr)
 //
 // The completion list view will be updated accordingly.
 func (x *EntryCompletion) Complete() {
-
 	xEntryCompletionComplete(x.GoPointer())
-
 }
 
 var xEntryCompletionComputePrefix func(uintptr, string) string
@@ -132,7 +129,6 @@ var xEntryCompletionComputePrefix func(uintptr, string) string
 // Note that a text column must have been set for this function to work,
 // see [method@Gtk.EntryCompletion.set_text_column] for details.
 func (x *EntryCompletion) ComputePrefix(KeyVar string) string {
-
 	cret := xEntryCompletionComputePrefix(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -142,7 +138,6 @@ var xEntryCompletionGetCompletionPrefix func(uintptr) string
 // Get the original text entered by the user that triggered
 // the completion or %NULL if there’s no completion ongoing.
 func (x *EntryCompletion) GetCompletionPrefix() string {
-
 	cret := xEntryCompletionGetCompletionPrefix(x.GoPointer())
 	return cret
 }
@@ -169,7 +164,6 @@ var xEntryCompletionGetInlineCompletion func(uintptr) bool
 // Returns whether the common prefix of the possible completions should
 // be automatically inserted in the entry.
 func (x *EntryCompletion) GetInlineCompletion() bool {
-
 	cret := xEntryCompletionGetInlineCompletion(x.GoPointer())
 	return cret
 }
@@ -178,7 +172,6 @@ var xEntryCompletionGetInlineSelection func(uintptr) bool
 
 // Returns %TRUE if inline-selection mode is turned on.
 func (x *EntryCompletion) GetInlineSelection() bool {
-
 	cret := xEntryCompletionGetInlineSelection(x.GoPointer())
 	return cret
 }
@@ -187,7 +180,6 @@ var xEntryCompletionGetMinimumKeyLength func(uintptr) int
 
 // Returns the minimum key length as set for @completion.
 func (x *EntryCompletion) GetMinimumKeyLength() int {
-
 	cret := xEntryCompletionGetMinimumKeyLength(x.GoPointer())
 	return cret
 }
@@ -215,7 +207,6 @@ var xEntryCompletionGetPopupCompletion func(uintptr) bool
 
 // Returns whether the completions should be presented in a popup window.
 func (x *EntryCompletion) GetPopupCompletion() bool {
-
 	cret := xEntryCompletionGetPopupCompletion(x.GoPointer())
 	return cret
 }
@@ -225,7 +216,6 @@ var xEntryCompletionGetPopupSetWidth func(uintptr) bool
 // Returns whether the completion popup window will be resized to the
 // width of the entry.
 func (x *EntryCompletion) GetPopupSetWidth() bool {
-
 	cret := xEntryCompletionGetPopupSetWidth(x.GoPointer())
 	return cret
 }
@@ -235,7 +225,6 @@ var xEntryCompletionGetPopupSingleMatch func(uintptr) bool
 // Returns whether the completion popup window will appear even if there is
 // only a single match.
 func (x *EntryCompletion) GetPopupSingleMatch() bool {
-
 	cret := xEntryCompletionGetPopupSingleMatch(x.GoPointer())
 	return cret
 }
@@ -244,7 +233,6 @@ var xEntryCompletionGetTextColumn func(uintptr) int
 
 // Returns the column in the model of @completion to get strings from.
 func (x *EntryCompletion) GetTextColumn() int {
-
 	cret := xEntryCompletionGetTextColumn(x.GoPointer())
 	return cret
 }
@@ -253,9 +241,7 @@ var xEntryCompletionInsertPrefix func(uintptr)
 
 // Requests a prefix insertion.
 func (x *EntryCompletion) InsertPrefix() {
-
 	xEntryCompletionInsertPrefix(x.GoPointer())
-
 }
 
 var xEntryCompletionSetInlineCompletion func(uintptr, bool)
@@ -263,9 +249,7 @@ var xEntryCompletionSetInlineCompletion func(uintptr, bool)
 // Sets whether the common prefix of the possible completions should
 // be automatically inserted in the entry.
 func (x *EntryCompletion) SetInlineCompletion(InlineCompletionVar bool) {
-
 	xEntryCompletionSetInlineCompletion(x.GoPointer(), InlineCompletionVar)
-
 }
 
 var xEntryCompletionSetInlineSelection func(uintptr, bool)
@@ -273,9 +257,7 @@ var xEntryCompletionSetInlineSelection func(uintptr, bool)
 // Sets whether it is possible to cycle through the possible completions
 // inside the entry.
 func (x *EntryCompletion) SetInlineSelection(InlineSelectionVar bool) {
-
 	xEntryCompletionSetInlineSelection(x.GoPointer(), InlineSelectionVar)
-
 }
 
 var xEntryCompletionSetMatchFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -285,39 +267,7 @@ var xEntryCompletionSetMatchFunc func(uintptr, uintptr, uintptr, uintptr)
 // The match function is used to determine if a row should or
 // should not be in the completion list.
 func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDataVar uintptr, FuncNotifyVar *glib.DestroyNotify) {
-
-	var FuncVarRef uintptr
-	if FuncVar != nil {
-		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-			FuncVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *TreeIter, arg3 uintptr) bool {
-				cbFn := *FuncVar
-				return cbFn(arg0, core.GoString(arg1), arg2, arg3)
-			}
-			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
-		}
-	}
-
-	var FuncNotifyVarRef uintptr
-	if FuncNotifyVar != nil {
-		FuncNotifyVarPtr := uintptr(unsafe.Pointer(FuncNotifyVar))
-		if cbRefPtr, ok := glib.GetCallback(FuncNotifyVarPtr); ok {
-			FuncNotifyVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FuncNotifyVar
-				cbFn(arg0)
-			}
-			FuncNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallbackWithClosure(FuncNotifyVarPtr, FuncNotifyVarRef, FuncNotifyVar)
-		}
-	}
-
-	xEntryCompletionSetMatchFunc(x.GoPointer(), FuncVarRef, FuncDataVar, FuncNotifyVarRef)
-
+	xEntryCompletionSetMatchFunc(x.GoPointer(), glib.NewCallback(FuncVar), FuncDataVar, glib.NewCallbackNullable(FuncNotifyVar))
 }
 
 var xEntryCompletionSetMinimumKeyLength func(uintptr, int)
@@ -329,9 +279,7 @@ var xEntryCompletionSetMinimumKeyLength func(uintptr, int)
 // key takes a lot of time and will come up with meaningless results anyway
 // (ie, a too large dataset).
 func (x *EntryCompletion) SetMinimumKeyLength(LengthVar int) {
-
 	xEntryCompletionSetMinimumKeyLength(x.GoPointer(), LengthVar)
-
 }
 
 var xEntryCompletionSetModel func(uintptr, uintptr)
@@ -342,23 +290,14 @@ var xEntryCompletionSetModel func(uintptr, uintptr)
 // before setting the new model. If model is %NULL, then it
 // will unset the model.
 func (x *EntryCompletion) SetModel(ModelVar TreeModel) {
-
-	var ModelVarPtr uintptr
-	if ModelVar != nil {
-		ModelVarPtr = ModelVar.GoPointer()
-	}
-
-	xEntryCompletionSetModel(x.GoPointer(), ModelVarPtr)
-
+	xEntryCompletionSetModel(x.GoPointer(), ModelVar.GoPointer())
 }
 
 var xEntryCompletionSetPopupCompletion func(uintptr, bool)
 
 // Sets whether the completions should be presented in a popup window.
 func (x *EntryCompletion) SetPopupCompletion(PopupCompletionVar bool) {
-
 	xEntryCompletionSetPopupCompletion(x.GoPointer(), PopupCompletionVar)
-
 }
 
 var xEntryCompletionSetPopupSetWidth func(uintptr, bool)
@@ -366,9 +305,7 @@ var xEntryCompletionSetPopupSetWidth func(uintptr, bool)
 // Sets whether the completion popup window will be resized to be the same
 // width as the entry.
 func (x *EntryCompletion) SetPopupSetWidth(PopupSetWidthVar bool) {
-
 	xEntryCompletionSetPopupSetWidth(x.GoPointer(), PopupSetWidthVar)
-
 }
 
 var xEntryCompletionSetPopupSingleMatch func(uintptr, bool)
@@ -379,9 +316,7 @@ var xEntryCompletionSetPopupSingleMatch func(uintptr, bool)
 // You may want to set this to %FALSE if you
 // are using [property@Gtk.EntryCompletion:inline-completion].
 func (x *EntryCompletion) SetPopupSingleMatch(PopupSingleMatchVar bool) {
-
 	xEntryCompletionSetPopupSingleMatch(x.GoPointer(), PopupSingleMatchVar)
-
 }
 
 var xEntryCompletionSetTextColumn func(uintptr, int)
@@ -398,9 +333,7 @@ var xEntryCompletionSetTextColumn func(uintptr, int)
 // renderer, use g_object_set() to set the
 // [property@Gtk.EntryCompletion:text-column] property directly.
 func (x *EntryCompletion) SetTextColumn(ColumnVar int) {
-
 	xEntryCompletionSetTextColumn(x.GoPointer(), ColumnVar)
-
 }
 
 func (c *EntryCompletion) GoPointer() uintptr {
@@ -581,7 +514,6 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 		cbFn := *cb
 
 		return cbFn(fa, ModelVarp, IterVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -612,8 +544,7 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, core.GoString(PrefixVarp))
-
+		return cbFn(fa, PrefixVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -644,7 +575,6 @@ func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr
 		cbFn := *cb
 
 		return cbFn(fa, ModelVarp, IterVarp)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -671,7 +601,6 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 		cbFn := *cb
 
 		cbFn(fa)
-
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
@@ -685,7 +614,6 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EntryCompletion) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -698,25 +626,19 @@ func (x *EntryCompletion) GetBuildableId() string {
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
 func (x *EntryCompletion) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
-
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
-
 }
 
 // Unsets all the mappings on all renderers on @cell_layout and
 // removes all renderers from @cell_layout.
 func (x *EntryCompletion) Clear() {
-
 	XGtkCellLayoutClear(x.GoPointer())
-
 }
 
 // Clears all existing attributes previously set with
 // gtk_cell_layout_set_attributes().
 func (x *EntryCompletion) ClearAttributes(CellVar *CellRenderer) {
-
 	XGtkCellLayoutClearAttributes(x.GoPointer(), CellVar.GoPointer())
-
 }
 
 // Returns the underlying `GtkCellArea` which might be @cell_layout
@@ -738,9 +660,11 @@ func (x *EntryCompletion) GetArea() *CellArea {
 
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *EntryCompletion) GetCells() *glib.List {
-
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -749,9 +673,7 @@ func (x *EntryCompletion) GetCells() *glib.List {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *EntryCompletion) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackEnd(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
@@ -760,9 +682,7 @@ func (x *EntryCompletion) PackEnd(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that reusing the same cell renderer is not supported.
 func (x *EntryCompletion) PackStart(CellVar *CellRenderer, ExpandVar bool) {
-
 	XGtkCellLayoutPackStart(x.GoPointer(), CellVar.GoPointer(), ExpandVar)
-
 }
 
 // Re-inserts @cell at @position.
@@ -770,9 +690,7 @@ func (x *EntryCompletion) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
 func (x *EntryCompletion) Reorder(CellVar *CellRenderer, PositionVar int) {
-
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
-
 }
 
 // Sets the attributes in the parameter list as the attributes
@@ -784,9 +702,7 @@ func (x *EntryCompletion) Reorder(CellVar *CellRenderer, PositionVar int) {
 // gtk_cell_layout_add_attribute(). All existing attributes are
 // removed, and replaced with the new attributes.
 func (x *EntryCompletion) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) {
-
 	XGtkCellLayoutSetAttributes(x.GoPointer(), CellVar.GoPointer(), varArgs...)
-
 }
 
 // Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
@@ -797,14 +713,12 @@ func (x *EntryCompletion) SetAttributes(CellVar *CellRenderer, varArgs ...interf
 //
 // @func may be %NULL to remove a previously set function.
 func (x *EntryCompletion) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
-
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -841,5 +755,4 @@ func init() {
 	core.PuregoSafeRegister(&xEntryCompletionSetPopupSetWidth, libs, "gtk_entry_completion_set_popup_set_width")
 	core.PuregoSafeRegister(&xEntryCompletionSetPopupSingleMatch, libs, "gtk_entry_completion_set_popup_single_match")
 	core.PuregoSafeRegister(&xEntryCompletionSetTextColumn, libs, "gtk_entry_completion_set_text_column")
-
 }

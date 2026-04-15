@@ -5,8 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/ebitengine/purego"
-
+	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -143,18 +142,14 @@ var xTreeStoreAppend func(uintptr, *TreeIter, *TreeIter)
 // be empty after this function is called. To fill in values, you need to call
 // gtk_tree_store_set() or gtk_tree_store_set_value().
 func (x *TreeStore) Append(IterVar *TreeIter, ParentVar *TreeIter) {
-
 	xTreeStoreAppend(x.GoPointer(), IterVar, ParentVar)
-
 }
 
 var xTreeStoreClear func(uintptr)
 
 // Removes all rows from @tree_store
 func (x *TreeStore) Clear() {
-
 	xTreeStoreClear(x.GoPointer())
-
 }
 
 var xTreeStoreInsert func(uintptr, *TreeIter, *TreeIter, int)
@@ -171,9 +166,7 @@ var xTreeStoreInsert func(uintptr, *TreeIter, *TreeIter, int)
 // will be empty after this function is called. To fill in values, you
 // need to call gtk_tree_store_set() or gtk_tree_store_set_value().
 func (x *TreeStore) Insert(IterVar *TreeIter, ParentVar *TreeIter, PositionVar int) {
-
 	xTreeStoreInsert(x.GoPointer(), IterVar, ParentVar, PositionVar)
-
 }
 
 var xTreeStoreInsertAfter func(uintptr, *TreeIter, *TreeIter, *TreeIter)
@@ -192,9 +185,7 @@ var xTreeStoreInsertAfter func(uintptr, *TreeIter, *TreeIter, *TreeIter)
 // be empty after this function is called. To fill in values, you need to call
 // gtk_tree_store_set() or gtk_tree_store_set_value().
 func (x *TreeStore) InsertAfter(IterVar *TreeIter, ParentVar *TreeIter, SiblingVar *TreeIter) {
-
 	xTreeStoreInsertAfter(x.GoPointer(), IterVar, ParentVar, SiblingVar)
-
 }
 
 var xTreeStoreInsertBefore func(uintptr, *TreeIter, *TreeIter, *TreeIter)
@@ -213,9 +204,7 @@ var xTreeStoreInsertBefore func(uintptr, *TreeIter, *TreeIter, *TreeIter)
 // be empty after this function is called. To fill in values, you need to call
 // gtk_tree_store_set() or gtk_tree_store_set_value().
 func (x *TreeStore) InsertBefore(IterVar *TreeIter, ParentVar *TreeIter, SiblingVar *TreeIter) {
-
 	xTreeStoreInsertBefore(x.GoPointer(), IterVar, ParentVar, SiblingVar)
-
 }
 
 var xTreeStoreInsertWithValues func(uintptr, *TreeIter, *TreeIter, int, ...interface{})
@@ -247,9 +236,7 @@ var xTreeStoreInsertWithValues func(uintptr, *TreeIter, *TreeIter, int, ...inter
 // performance of the program, gtk_tree_store_insert_with_values() should
 // generally be preferred when inserting rows in a sorted tree store.
 func (x *TreeStore) InsertWithValues(IterVar *TreeIter, ParentVar *TreeIter, PositionVar int, varArgs ...interface{}) {
-
 	xTreeStoreInsertWithValues(x.GoPointer(), IterVar, ParentVar, PositionVar, varArgs...)
-
 }
 
 var xTreeStoreInsertWithValuesv func(uintptr, *TreeIter, *TreeIter, int, []int, []gobject.Value, int)
@@ -259,16 +246,13 @@ var xTreeStoreInsertWithValuesv func(uintptr, *TreeIter, *TreeIter, int, []int, 
 //
 // This function is mainly intended for language bindings.
 func (x *TreeStore) InsertWithValuesv(IterVar *TreeIter, ParentVar *TreeIter, PositionVar int, ColumnsVar []int, ValuesVar []gobject.Value, NValuesVar int) {
-
 	xTreeStoreInsertWithValuesv(x.GoPointer(), IterVar, ParentVar, PositionVar, ColumnsVar, ValuesVar, NValuesVar)
-
 }
 
 var xTreeStoreIsAncestor func(uintptr, *TreeIter, *TreeIter) bool
 
 // Checks if @iter is an ancestor of @descendant.
 func (x *TreeStore) IsAncestor(IterVar *TreeIter, DescendantVar *TreeIter) bool {
-
 	cret := xTreeStoreIsAncestor(x.GoPointer(), IterVar, DescendantVar)
 	return cret
 }
@@ -280,7 +264,6 @@ var xTreeStoreIterDepth func(uintptr, *TreeIter) int
 // The depth will be 0 for anything on the root level, 1 for anything down
 // a level, etc.
 func (x *TreeStore) IterDepth(IterVar *TreeIter) int {
-
 	cret := xTreeStoreIterDepth(x.GoPointer(), IterVar)
 	return cret
 }
@@ -292,7 +275,6 @@ var xTreeStoreIterIsValid func(uintptr, *TreeIter) bool
 // This function is slow. Only use it for debugging and/or testing
 // purposes.
 func (x *TreeStore) IterIsValid(IterVar *TreeIter) bool {
-
 	cret := xTreeStoreIterIsValid(x.GoPointer(), IterVar)
 	return cret
 }
@@ -307,9 +289,7 @@ var xTreeStoreMoveAfter func(uintptr, *TreeIter, *TreeIter)
 //
 // If @position is %NULL, @iter will be moved to the start of the level.
 func (x *TreeStore) MoveAfter(IterVar *TreeIter, PositionVar *TreeIter) {
-
 	xTreeStoreMoveAfter(x.GoPointer(), IterVar, PositionVar)
-
 }
 
 var xTreeStoreMoveBefore func(uintptr, *TreeIter, *TreeIter)
@@ -322,9 +302,7 @@ var xTreeStoreMoveBefore func(uintptr, *TreeIter, *TreeIter)
 //
 // If @position is %NULL, @iter will be moved to the end of the level.
 func (x *TreeStore) MoveBefore(IterVar *TreeIter, PositionVar *TreeIter) {
-
 	xTreeStoreMoveBefore(x.GoPointer(), IterVar, PositionVar)
-
 }
 
 var xTreeStorePrepend func(uintptr, *TreeIter, *TreeIter)
@@ -337,9 +315,7 @@ var xTreeStorePrepend func(uintptr, *TreeIter, *TreeIter)
 // be empty after this function is called. To fill in values, you need to
 // call gtk_tree_store_set() or gtk_tree_store_set_value().
 func (x *TreeStore) Prepend(IterVar *TreeIter, ParentVar *TreeIter) {
-
 	xTreeStorePrepend(x.GoPointer(), IterVar, ParentVar)
-
 }
 
 var xTreeStoreRemove func(uintptr, *TreeIter) bool
@@ -349,7 +325,6 @@ var xTreeStoreRemove func(uintptr, *TreeIter) bool
 // After being removed, @iter is set to the next valid row at that level, or
 // invalidated if it previously pointed to the last one.
 func (x *TreeStore) Remove(IterVar *TreeIter) bool {
-
 	cret := xTreeStoreRemove(x.GoPointer(), IterVar)
 	return cret
 }
@@ -361,9 +336,7 @@ var xTreeStoreReorder func(uintptr, *TreeIter, []int)
 //
 // Note that this function only works with unsorted stores.
 func (x *TreeStore) Reorder(ParentVar *TreeIter, NewOrderVar []int) {
-
 	xTreeStoreReorder(x.GoPointer(), ParentVar, NewOrderVar)
-
 }
 
 var xTreeStoreSet func(uintptr, *TreeIter, ...interface{})
@@ -385,9 +358,7 @@ var xTreeStoreSet func(uintptr, *TreeIter, ...interface{})
 // The value will be referenced by the store if it is a `G_TYPE_OBJECT`, and it
 // will be copied if it is a `G_TYPE_STRING` or `G_TYPE_BOXED`.
 func (x *TreeStore) Set(IterVar *TreeIter, varArgs ...interface{}) {
-
 	xTreeStoreSet(x.GoPointer(), IterVar, varArgs...)
-
 }
 
 var xTreeStoreSetColumnTypes func(uintptr, int, []types.GType)
@@ -402,18 +373,14 @@ var xTreeStoreSetColumnTypes func(uintptr, int, []types.GType)
 // or a method on the `GtkTreeModel` interface is called on the
 // tree store.
 func (x *TreeStore) SetColumnTypes(NColumnsVar int, TypesVar []types.GType) {
-
 	xTreeStoreSetColumnTypes(x.GoPointer(), NColumnsVar, TypesVar)
-
 }
 
 var xTreeStoreSetValist func(uintptr, *TreeIter, []interface{})
 
 // A version of gtk_tree_store_set() using `va_list`.
 func (x *TreeStore) SetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
-
 	xTreeStoreSetValist(x.GoPointer(), IterVar, VarArgsVar)
-
 }
 
 var xTreeStoreSetValue func(uintptr, *TreeIter, int, *gobject.Value)
@@ -423,9 +390,7 @@ var xTreeStoreSetValue func(uintptr, *TreeIter, int, *gobject.Value)
 // The type of @value must be convertible to the type of the
 // column.
 func (x *TreeStore) SetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
-
 	xTreeStoreSetValue(x.GoPointer(), IterVar, ColumnVar, ValueVar)
-
 }
 
 var xTreeStoreSetValuesv func(uintptr, *TreeIter, []int, []gobject.Value, int)
@@ -437,9 +402,7 @@ var xTreeStoreSetValuesv func(uintptr, *TreeIter, []int, []gobject.Value, int)
 // This function is mainly intended for language bindings or in case
 // the number of columns to change is not known until run-time.
 func (x *TreeStore) SetValuesv(IterVar *TreeIter, ColumnsVar []int, ValuesVar []gobject.Value, NValuesVar int) {
-
 	xTreeStoreSetValuesv(x.GoPointer(), IterVar, ColumnsVar, ValuesVar, NValuesVar)
-
 }
 
 var xTreeStoreSwap func(uintptr, *TreeIter, *TreeIter)
@@ -448,9 +411,7 @@ var xTreeStoreSwap func(uintptr, *TreeIter, *TreeIter)
 //
 // Note that this function only works with unsorted stores.
 func (x *TreeStore) Swap(AVar *TreeIter, BVar *TreeIter) {
-
 	xTreeStoreSwap(x.GoPointer(), AVar, BVar)
-
 }
 
 func (c *TreeStore) GoPointer() uintptr {
@@ -469,7 +430,6 @@ func (c *TreeStore) SetGoPointer(ptr uintptr) {
 // `GtkBuilder` sets the name based on the ID attribute
 // of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TreeStore) GetBuildableId() string {
-
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
@@ -481,7 +441,6 @@ func (x *TreeStore) GetBuildableId() string {
 // not created for some model-specific reason.  Should robustly handle
 // a @dest no longer found in the model!
 func (x *TreeStore) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value) bool {
-
 	cret := XGtkTreeDragDestDragDataReceived(x.GoPointer(), DestVar, ValueVar)
 	return cret
 }
@@ -492,7 +451,6 @@ func (x *TreeStore) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value)
 // exist; the return value will almost certainly be %FALSE if the
 // parent of @dest_path doesn’t exist, though.
 func (x *TreeStore) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Value) bool {
-
 	cret := XGtkTreeDragDestRowDropPossible(x.GoPointer(), DestPathVar, ValueVar)
 	return cret
 }
@@ -503,7 +461,6 @@ func (x *TreeStore) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Val
 // some model-specific reason. Should robustly handle a @path no
 // longer found in the model!
 func (x *TreeStore) DragDataDelete(PathVar *TreePath) bool {
-
 	cret := XGtkTreeDragSourceDragDataDelete(x.GoPointer(), PathVar)
 	return cret
 }
@@ -528,7 +485,6 @@ func (x *TreeStore) DragDataGet(PathVar *TreePath) *gdk.ContentProvider {
 // the source of a DND operation. If the source doesn’t implement
 // this interface, the row is assumed draggable.
 func (x *TreeStore) RowDraggable(PathVar *TreePath) bool {
-
 	cret := XGtkTreeDragSourceRowDraggable(x.GoPointer(), PathVar)
 	return cret
 }
@@ -553,9 +509,7 @@ func (x *TreeStore) FilterNew(RootVar *TreePath) *TreeModelBase {
 // If @func returns %TRUE, then the tree ceases to be walked,
 // and gtk_tree_model_foreach() returns.
 func (x *TreeStore) Foreach(FuncVar *TreeModelForeachFunc, UserDataVar uintptr) {
-
 	XGtkTreeModelForeach(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar)
-
 }
 
 // Gets the value of one or more cells in the row referenced by @iter.
@@ -572,14 +526,11 @@ func (x *TreeStore) Foreach(FuncVar *TreeModelForeachFunc, UserDataVar uintptr) 
 // values with type %G_TYPE_STRING or %G_TYPE_BOXED have to be freed.
 // Other values are passed by value.
 func (x *TreeStore) Get(IterVar *TreeIter, varArgs ...interface{}) {
-
 	XGtkTreeModelGet(x.GoPointer(), IterVar, varArgs...)
-
 }
 
 // Returns the type of the column.
 func (x *TreeStore) GetColumnType(IndexVar int) types.GType {
-
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -590,7 +541,6 @@ func (x *TreeStore) GetColumnType(IndexVar int) types.GType {
 // The flags supported should not change during the lifetime
 // of the @tree_model.
 func (x *TreeStore) GetFlags() TreeModelFlags {
-
 	cret := XGtkTreeModelGetFlags(x.GoPointer())
 	return cret
 }
@@ -600,7 +550,6 @@ func (x *TreeStore) GetFlags() TreeModelFlags {
 // If @path does not exist, @iter is set to an invalid
 // iterator and %FALSE is returned.
 func (x *TreeStore) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
-
 	cret := XGtkTreeModelGetIter(x.GoPointer(), IterVar, PathVar)
 	return cret
 }
@@ -610,7 +559,6 @@ func (x *TreeStore) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 //
 // Returns %FALSE if the tree is empty, %TRUE otherwise.
 func (x *TreeStore) GetIterFirst(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelGetIterFirst(x.GoPointer(), IterVar)
 	return cret
 }
@@ -620,14 +568,12 @@ func (x *TreeStore) GetIterFirst(IterVar *TreeIter) bool {
 //
 // Otherwise, @iter is left invalid and %FALSE is returned.
 func (x *TreeStore) GetIterFromString(IterVar *TreeIter, PathStringVar string) bool {
-
 	cret := XGtkTreeModelGetIterFromString(x.GoPointer(), IterVar, PathStringVar)
 	return cret
 }
 
 // Returns the number of columns supported by @tree_model.
 func (x *TreeStore) GetNColumns() int {
-
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
 	return cret
 }
@@ -636,9 +582,11 @@ func (x *TreeStore) GetNColumns() int {
 //
 // This path should be freed with gtk_tree_path_free().
 func (x *TreeStore) GetPath(IterVar *TreeIter) *TreePath {
-
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 // Generates a string representation of the iter.
@@ -647,7 +595,6 @@ func (x *TreeStore) GetPath(IterVar *TreeIter) *TreePath {
 // For example, “4:10:0:3” would be an acceptable
 // return value for this string.
 func (x *TreeStore) GetStringFromIter(IterVar *TreeIter) string {
-
 	cret := XGtkTreeModelGetStringFromIter(x.GoPointer(), IterVar)
 	return cret
 }
@@ -657,9 +604,7 @@ func (x *TreeStore) GetStringFromIter(IterVar *TreeIter) string {
 // See [method@Gtk.TreeModel.get], this version takes a va_list
 // for language bindings to use.
 func (x *TreeStore) GetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
-
 	XGtkTreeModelGetValist(x.GoPointer(), IterVar, VarArgsVar)
-
 }
 
 // Initializes and sets @value to that at @column.
@@ -667,9 +612,7 @@ func (x *TreeStore) GetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
 // When done with @value, g_value_unset() needs to be called
 // to free any allocated memory.
 func (x *TreeStore) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
-
 	XGtkTreeModelGetValue(x.GoPointer(), IterVar, ColumnVar, ValueVar)
-
 }
 
 // Sets @iter to point to the first child of @parent.
@@ -681,14 +624,12 @@ func (x *TreeStore) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject
 // If @parent is %NULL returns the first node, equivalent to
 // `gtk_tree_model_get_iter_first (tree_model, iter);`
 func (x *TreeStore) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterChildren(x.GoPointer(), IterVar, ParentVar)
 	return cret
 }
 
 // Returns %TRUE if @iter has children, %FALSE otherwise.
 func (x *TreeStore) IterHasChild(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterHasChild(x.GoPointer(), IterVar)
 	return cret
 }
@@ -698,7 +639,6 @@ func (x *TreeStore) IterHasChild(IterVar *TreeIter) bool {
 // As a special case, if @iter is %NULL, then the number
 // of toplevel nodes is returned.
 func (x *TreeStore) IterNChildren(IterVar *TreeIter) int {
-
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
 	return cret
 }
@@ -708,7 +648,6 @@ func (x *TreeStore) IterNChildren(IterVar *TreeIter) int {
 // If there is no next @iter, %FALSE is returned and @iter is set
 // to be invalid.
 func (x *TreeStore) IterNext(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterNext(x.GoPointer(), IterVar)
 	return cret
 }
@@ -721,7 +660,6 @@ func (x *TreeStore) IterNext(IterVar *TreeIter) bool {
 // special case, if @parent is %NULL, then the @n-th root node
 // is set.
 func (x *TreeStore) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
-
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
 	return cret
 }
@@ -736,7 +674,6 @@ func (x *TreeStore) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar in
 // @iter will be initialized before the lookup is performed, so @child
 // and @iter cannot point to the same memory location.
 func (x *TreeStore) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterParent(x.GoPointer(), IterVar, ChildVar)
 	return cret
 }
@@ -746,7 +683,6 @@ func (x *TreeStore) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 // If there is no previous @iter, %FALSE is returned and @iter is
 // set to be invalid.
 func (x *TreeStore) IterPrevious(IterVar *TreeIter) bool {
-
 	cret := XGtkTreeModelIterPrevious(x.GoPointer(), IterVar)
 	return cret
 }
@@ -769,18 +705,14 @@ func (x *TreeStore) IterPrevious(IterVar *TreeIter) bool {
 // A model should be expected to be able to get an iter independent
 // of its reffed state.
 func (x *TreeStore) RefNode(IterVar *TreeIter) {
-
 	XGtkTreeModelRefNode(x.GoPointer(), IterVar)
-
 }
 
 // Emits the ::row-changed signal on @tree_model.
 //
 // See [signal@Gtk.TreeModel::row-changed].
 func (x *TreeStore) RowChanged(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowChanged(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::row-deleted signal on @tree_model.
@@ -794,9 +726,7 @@ func (x *TreeStore) RowChanged(PathVar *TreePath, IterVar *TreeIter) {
 // Nodes that are deleted are not unreffed, this means that any
 // outstanding references on the deleted node should not be released.
 func (x *TreeStore) RowDeleted(PathVar *TreePath) {
-
 	XGtkTreeModelRowDeleted(x.GoPointer(), PathVar)
-
 }
 
 // Emits the ::row-has-child-toggled signal on @tree_model.
@@ -806,18 +736,14 @@ func (x *TreeStore) RowDeleted(PathVar *TreePath) {
 // This should be called by models after the child
 // state of a node changes.
 func (x *TreeStore) RowHasChildToggled(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowHasChildToggled(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::row-inserted signal on @tree_model.
 //
 // See [signal@Gtk.TreeModel::row-inserted].
 func (x *TreeStore) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
-
 	XGtkTreeModelRowInserted(x.GoPointer(), PathVar, IterVar)
-
 }
 
 // Emits the ::rows-reordered signal on @tree_model.
@@ -827,9 +753,7 @@ func (x *TreeStore) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
 // This should be called by models when their rows have been
 // reordered.
 func (x *TreeStore) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int) {
-
 	XGtkTreeModelRowsReordered(x.GoPointer(), PathVar, IterVar, NewOrderVar)
-
 }
 
 // Emits the ::rows-reordered signal on @tree_model.
@@ -839,9 +763,7 @@ func (x *TreeStore) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrder
 // This should be called by models when their rows have been
 // reordered.
 func (x *TreeStore) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int, LengthVar int) {
-
 	XGtkTreeModelRowsReorderedWithLength(x.GoPointer(), PathVar, IterVar, NewOrderVar, LengthVar)
-
 }
 
 // Lets the tree unref the node.
@@ -853,9 +775,7 @@ func (x *TreeStore) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter
 //
 // Please note that nodes that are deleted are not unreffed.
 func (x *TreeStore) UnrefNode(IterVar *TreeIter) {
-
 	XGtkTreeModelUnrefNode(x.GoPointer(), IterVar)
-
 }
 
 // Fills in @sort_column_id and @order with the current sort column and the
@@ -863,7 +783,6 @@ func (x *TreeStore) UnrefNode(IterVar *TreeIter) {
 // %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 // %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
 func (x *TreeStore) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
-
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
 	return cret
 }
@@ -872,7 +791,6 @@ func (x *TreeStore) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bo
 // primarily by GtkTreeViewColumns in order to determine if a model can
 // go back to the default state, or not.
 func (x *TreeStore) HasDefaultSortFunc() bool {
-
 	cret := XGtkTreeSortableHasDefaultSortFunc(x.GoPointer())
 	return cret
 }
@@ -887,9 +805,7 @@ func (x *TreeStore) HasDefaultSortFunc() bool {
 // default state. In this case, when the current sort column id of @sortable
 // is %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
 func (x *TreeStore) SetDefaultSortFunc(SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkTreeSortableSetDefaultSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 // Sets the current sort column to be @sort_column_id. The @sortable will
@@ -902,30 +818,24 @@ func (x *TreeStore) SetDefaultSortFunc(SortFuncVar *TreeIterCompareFunc, UserDat
 //
 // - %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: no sorting will occur
 func (x *TreeStore) SetSortColumnId(SortColumnIdVar int, OrderVar SortType) {
-
 	XGtkTreeSortableSetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
-
 }
 
 // Sets the comparison function used when sorting to be @sort_func. If the
 // current sort column id of @sortable is the same as @sort_column_id, then
 // the model will sort using this function.
 func (x *TreeStore) SetSortFunc(SortColumnIdVar int, SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-
 	XGtkTreeSortableSetSortFunc(x.GoPointer(), SortColumnIdVar, glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
-
 }
 
 // Emits a `GtkTreeSortable::sort-column-changed` signal on @sortable.
 func (x *TreeStore) SortColumnChanged() {
-
 	XGtkTreeSortableSortColumnChanged(x.GoPointer())
-
 }
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1", "libgtk-4.1.dylib"})
 	var libs []uintptr
 	for _, libPath := range core.GetPaths("GTK") {
 		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -961,5 +871,4 @@ func init() {
 	core.PuregoSafeRegister(&xTreeStoreSetValue, libs, "gtk_tree_store_set_value")
 	core.PuregoSafeRegister(&xTreeStoreSetValuesv, libs, "gtk_tree_store_set_valuesv")
 	core.PuregoSafeRegister(&xTreeStoreSwap, libs, "gtk_tree_store_swap")
-
 }
