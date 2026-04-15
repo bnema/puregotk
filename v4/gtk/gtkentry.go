@@ -2087,7 +2087,7 @@ func (x *Entry) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *Entry) InsertText(TextVar string, LengthVar int32, PositionVar int32) {
+func (x *Entry) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 }
 

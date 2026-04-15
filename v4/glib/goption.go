@@ -128,7 +128,7 @@ func (x *OptionContext) GetSummary() string {
 	return cret
 }
 
-var xOptionContextParse func(uintptr, int32, []string, **Error) bool
+var xOptionContextParse func(uintptr, *int32, *[]string, **Error) bool
 
 // Parses the command line arguments, recognizing options
 // which have been added to @context. A side-effect of
@@ -151,7 +151,7 @@ var xOptionContextParse func(uintptr, int32, []string, **Error) bool
 // Note that function depends on the
 // [current locale](running.html#locale) for automatic
 // character set conversion of string and filename arguments.
-func (x *OptionContext) Parse(ArgcVar int32, ArgvVar []string) (bool, error) {
+func (x *OptionContext) Parse(ArgcVar *int32, ArgvVar *[]string) (bool, error) {
 	var cerr *Error
 
 	cret := xOptionContextParse(x.GoPointer(), ArgcVar, ArgvVar, &cerr)
@@ -161,7 +161,7 @@ func (x *OptionContext) Parse(ArgcVar int32, ArgvVar []string) (bool, error) {
 	return cret, cerr
 }
 
-var xOptionContextParseStrv func(uintptr, []string, **Error) bool
+var xOptionContextParseStrv func(uintptr, *[]string, **Error) bool
 
 // Parses the command line arguments.
 //
@@ -179,7 +179,7 @@ var xOptionContextParseStrv func(uintptr, []string, **Error) bool
 //
 // This function is useful if you are trying to use #GOptionContext with
 // #GApplication.
-func (x *OptionContext) ParseStrv(ArgumentsVar []string) (bool, error) {
+func (x *OptionContext) ParseStrv(ArgumentsVar *[]string) (bool, error) {
 	var cerr *Error
 
 	cret := xOptionContextParseStrv(x.GoPointer(), ArgumentsVar, &cerr)

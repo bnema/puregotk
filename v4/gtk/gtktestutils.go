@@ -6,7 +6,7 @@ import (
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xTestInit func(int32, []string, ...interface{})
+var xTestInit func(*int32, *[]string, ...interface{})
 
 // This function is used to initialize a GTK test program.
 //
@@ -17,7 +17,7 @@ var xTestInit func(int32, []string, ...interface{})
 //
 // Like gtk_init() and g_test_init(), any known arguments will be
 // processed and stripped from @argc and @argv.
-func TestInit(ArgcpVar int32, ArgvpVar []string, varArgs ...interface{}) {
+func TestInit(ArgcpVar *int32, ArgvpVar *[]string, varArgs ...interface{}) {
 	xTestInit(ArgcpVar, ArgvpVar, varArgs...)
 }
 

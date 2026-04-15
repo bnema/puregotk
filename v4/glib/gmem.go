@@ -232,7 +232,7 @@ func AlignedFreeSized(MemVar uintptr, AlignmentVar uint, SizeVar uint) {
 	xAlignedFreeSized(MemVar, AlignmentVar, SizeVar)
 }
 
-var xClearPointer func(uintptr, uintptr)
+var xClearPointer func(*uintptr, uintptr)
 
 // Clears a reference to a variable.
 //
@@ -271,7 +271,7 @@ var xClearPointer func(uintptr, uintptr)
 //
 // g_clear_pointer (&amp;sync, destroy_sync);
 // ```
-func ClearPointer(PpVar uintptr, DestroyVar *DestroyNotify) {
+func ClearPointer(PpVar *uintptr, DestroyVar *DestroyNotify) {
 	xClearPointer(PpVar, NewCallbackNullable(DestroyVar))
 }
 

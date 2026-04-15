@@ -20,6 +20,13 @@ type argsTemplate struct {
 	Full []string
 }
 
+// GErrorParam tracks a signal parameter that is exposed as *glib.Error in the
+// public API but still crosses the purego callback ABI as a raw pointer.
+type GErrorParam struct {
+	Index  int
+	GoType string
+}
+
 type funcArgsTemplate struct {
 	// Pure are the arguments as passed directly to PureGo
 	// The pure Call is a special case that contains the arguments for a callback call
@@ -27,6 +34,9 @@ type funcArgsTemplate struct {
 
 	// API are the arguments as suitable for a Go API
 	API argsTemplate
+
+	// GErrors tracks signal parameters that should be surfaced as *glib.Error.
+	GErrors []GErrorParam
 }
 
 func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, imps *ImportSet) {
@@ -152,6 +162,33 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
 	f.Pure.Full = append(f.Pure.Full, n+" "+t)
 }
 
+func isGErrorType(girName string) bool {
+	return girName == "GLib.Error" || girName == "Error"
+}
+
+// PuregoSignalFull returns the callback parameter list for generated signal
+// trampolines. GError values stay pointer-shaped but are typed as
+// unsafe.Pointer to keep go vet happy.
+func (f funcArgsTemplate) PuregoSignalFull() []string {
+	out := make([]string, len(f.Pure.Full))
+	copy(out, f.Pure.Full)
+	for _, ge := range f.GErrors {
+		out[ge.Index] = f.Pure.Names[ge.Index] + " unsafe.Pointer"
+	}
+	return out
+}
+
+// PuregoSignalCall returns the public signal callback arguments, casting any
+// tracked GError parameters back to their Go types.
+func (f funcArgsTemplate) PuregoSignalCall() []string {
+	out := make([]string, len(f.Pure.Call))
+	copy(out, f.Pure.Call)
+	for _, ge := range f.GErrors {
+		out[ge.Index] = "(*" + ge.GoType + ")(" + f.Pure.Names[ge.Index] + ")"
+	}
+	return out
+}
+
 // baseType returns strips prefixes from a Go type (e.g. `*glib.Error` → `glib`, `[4]gdk.RGBA` → `gdk`).
 func baseTypeName(typeName string) string {
 	return strings.TrimLeftFunc(typeName, func(r rune) bool {
@@ -196,10 +233,27 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	// Get a suitable variable name
 	varName := p.VarName()
 
-	isOut := p.Direction == "out"
+	// GIR "inout" parameters are also pointer-bearing at the ABI/API level.
+	isOut := p.Direction == "out" || p.Direction == "inout"
 
 	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, imps)
 	f.AddPure(goType, varName, kind, isOut)
+
+	// Signal callbacks with GError* parameters should expose *glib.Error in the
+	// public API even though the raw callback ABI still uses a pointer value.
+	if goType == "uintptr" && p.Type != nil && isGErrorType(p.Type.Name) {
+		gerrorGoType := "glib.Error"
+		if strings.ToLower(ns) == "glib" {
+			gerrorGoType = "Error"
+		}
+		apiIdx := len(f.API.Types) - 1
+		f.API.Types[apiIdx] = "*" + gerrorGoType
+		f.API.Full[apiIdx] = varName + " *" + gerrorGoType
+		f.GErrors = append(f.GErrors, GErrorParam{
+			Index:  len(f.Pure.Types) - 1,
+			GoType: gerrorGoType,
+		})
+	}
 }
 
 func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {

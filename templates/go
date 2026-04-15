@@ -406,17 +406,17 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
           return handlerID
      }
 
-     fcb := func(clsPtr uintptr {{convc .Args.Pure.Full}}) {{.Ret.Raw}} {
+     fcb := func(clsPtr uintptr {{convc .Args.PuregoSignalFull}}) {{.Ret.Raw}} {
           fa := {{$outer.Name}}{}
           fa.Ptr = clsPtr
           cbFn := *cb
           {{if .Ret.Class}}
-          {{.Name}}Cls := cbFn(fa {{convc .Args.Pure.Call}})
+          {{.Name}}Cls := cbFn(fa {{convc .Args.PuregoSignalCall}})
           return {{.Name}}Cls.Ptr
           {{else if .Ret.Value}}
-          return cbFn(fa {{convc .Args.Pure.Call}})
+          return cbFn(fa {{convc .Args.PuregoSignalCall}})
           {{else}}
-          cbFn(fa {{convc .Args.Pure.Call}})
+          cbFn(fa {{convc .Args.PuregoSignalCall}})
           {{end}}
      }
      cbRefPtr := purego.NewCallback(fcb)

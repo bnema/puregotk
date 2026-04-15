@@ -78,14 +78,14 @@ func (x *Hmac) Copy() *Hmac {
 	return (*Hmac)(unsafe.Pointer(cret))
 }
 
-var xHmacGetDigest func(uintptr, []byte, uint)
+var xHmacGetDigest func(uintptr, []byte, *uint)
 
 // Gets the digest from @checksum as a raw binary array and places it
 // into @buffer. The size of the digest depends on the type of checksum.
 //
 // Once this function has been called, the #GHmac is closed and can
 // no longer be updated with g_checksum_update().
-func (x *Hmac) GetDigest(BufferVar []byte, DigestLenVar uint) {
+func (x *Hmac) GetDigest(BufferVar []byte, DigestLenVar *uint) {
 	xHmacGetDigest(x.GoPointer(), BufferVar, DigestLenVar)
 }
 

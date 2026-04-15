@@ -1990,7 +1990,7 @@ func MutexNew() *Mutex {
 	return cret
 }
 
-var xOnceInitEnter func(uintptr) bool
+var xOnceInitEnter func(*uintptr) bool
 
 // Function to be called when starting a critical initialization
 // section. The argument @location must point to a static
@@ -2019,7 +2019,7 @@ var xOnceInitEnter func(uintptr) bool
 //
 // While @location has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func OnceInitEnter(LocationVar uintptr) bool {
+func OnceInitEnter(LocationVar *uintptr) bool {
 	cret := xOnceInitEnter(LocationVar)
 	return cret
 }
@@ -2055,7 +2055,7 @@ func OnceInitEnterPointer(LocationVar uintptr) bool {
 	return cret
 }
 
-var xOnceInitLeave func(uintptr, uint)
+var xOnceInitLeave func(*uintptr, uint)
 
 // Counterpart to g_once_init_enter(). Expects a location of a static
 // 0-initialized initialization variable, and an initialization value
@@ -2065,7 +2065,7 @@ var xOnceInitLeave func(uintptr, uint)
 //
 // While @location has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func OnceInitLeave(LocationVar uintptr, ResultVar uint) {
+func OnceInitLeave(LocationVar *uintptr, ResultVar uint) {
 	xOnceInitLeave(LocationVar, ResultVar)
 }
 

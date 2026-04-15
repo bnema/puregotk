@@ -3661,7 +3661,7 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 //
 // By default, if the signal is not handled, a stock error page will be displayed.
 // You need to handle the signal if you want to provide your own error page.
-func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr) bool) uint32 {
+func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, *glib.Error) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
@@ -3669,12 +3669,12 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, LoadEventVarp LoadEvent, FailingUriVarp string, ErrorVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, LoadEventVarp LoadEvent, FailingUriVarp string, ErrorVarp unsafe.Pointer) bool {
 		fa := WebView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, LoadEventVarp, FailingUriVarp, ErrorVarp)
+		return cbFn(fa, LoadEventVarp, FailingUriVarp, (*glib.Error)(ErrorVarp))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)

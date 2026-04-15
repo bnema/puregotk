@@ -19,7 +19,7 @@ func (x *IConv) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xIConvGIconv func(uintptr, string, uint, string, uint) uint
+var xIConvGIconv func(uintptr, string, *uint, string, *uint) uint
 
 // Same as the standard UNIX routine iconv(), but
 // may be implemented via libiconv on UNIX flavors that lack
@@ -37,7 +37,7 @@ var xIConvGIconv func(uintptr, string, uint, string, uint) uint
 //
 // See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
 // error occurs.
-func (x *IConv) GIconv(InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
+func (x *IConv) GIconv(InbufVar string, InbytesLeftVar *uint, OutbufVar string, OutbytesLeftVar *uint) uint {
 	cret := xIConvGIconv(x.GoPointer(), InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
 	return cret
 }
@@ -326,7 +326,7 @@ func GetFilenameCharsets(FilenameCharsetsVar *[]string) bool {
 	return cret
 }
 
-var xIconv func(uintptr, string, uint, string, uint) uint
+var xIconv func(uintptr, string, *uint, string, *uint) uint
 
 // Same as the standard UNIX routine iconv(), but
 // may be implemented via libiconv on UNIX flavors that lack
@@ -344,7 +344,7 @@ var xIconv func(uintptr, string, uint, string, uint) uint
 //
 // See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
 // error occurs.
-func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
+func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar *uint, OutbufVar string, OutbytesLeftVar *uint) uint {
 	cret := xIconv(ConverterVar, InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
 	return cret
 }

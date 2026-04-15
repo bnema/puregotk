@@ -600,7 +600,7 @@ func (x *PasswordEntryRow) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *PasswordEntryRow) InsertText(TextVar string, LengthVar int32, PositionVar int32) {
+func (x *PasswordEntryRow) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
 	gtk.XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 }
 

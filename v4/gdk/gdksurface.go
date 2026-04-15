@@ -463,13 +463,13 @@ func (x *Surface) SetOpaqueRegion(RegionVar *cairo.Region) {
 	xSurfaceSetOpaqueRegion(x.GoPointer(), RegionVar)
 }
 
-var xSurfaceTranslateCoordinates func(uintptr, uintptr, float64, float64) bool
+var xSurfaceTranslateCoordinates func(uintptr, uintptr, *float64, *float64) bool
 
 // Translates coordinates between two surfaces.
 //
 // Note that this only works if @to and @from are popups or
 // transient-for to the same toplevel (directly or indirectly).
-func (x *Surface) TranslateCoordinates(ToVar *Surface, XVar float64, YVar float64) bool {
+func (x *Surface) TranslateCoordinates(ToVar *Surface, XVar *float64, YVar *float64) bool {
 	cret := xSurfaceTranslateCoordinates(x.GoPointer(), ToVar.GoPointer(), XVar, YVar)
 	return cret
 }

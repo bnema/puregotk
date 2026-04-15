@@ -197,7 +197,7 @@ func (c *PrintOperation) SetGoPointer(ptr uintptr) {
 // Emitted when an error occurs while printing. The given @error, of the domain
 // %WEBKIT_PRINT_ERROR, contains further details of the failure.
 // The #WebKitPrintOperation::finished signal is emitted after this one.
-func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32 {
+func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, *glib.Error)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
@@ -205,12 +205,12 @@ func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
+	fcb := func(clsPtr uintptr, ErrorVarp unsafe.Pointer) {
 		fa := PrintOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ErrorVarp)
+		cbFn(fa, (*glib.Error)(ErrorVarp))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)

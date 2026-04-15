@@ -158,7 +158,7 @@ func (x *WebResource) GetPropertyUri() string {
 
 // This signal is emitted when an error occurs during the resource
 // load operation.
-func (x *WebResource) ConnectFailed(cb *func(WebResource, uintptr)) uint32 {
+func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
@@ -166,12 +166,12 @@ func (x *WebResource) ConnectFailed(cb *func(WebResource, uintptr)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
+	fcb := func(clsPtr uintptr, ErrorVarp unsafe.Pointer) {
 		fa := WebResource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ErrorVarp)
+		cbFn(fa, (*glib.Error)(ErrorVarp))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)

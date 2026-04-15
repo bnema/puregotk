@@ -131,7 +131,7 @@ func (x *Matrix) Scale(ScaleXVar float64, ScaleYVar float64) {
 	xMatrixScale(x.GoPointer(), ScaleXVar, ScaleYVar)
 }
 
-var xMatrixTransformDistance func(uintptr, float64, float64)
+var xMatrixTransformDistance func(uintptr, *float64, *float64)
 
 // Transforms the distance vector (@dx,@dy) by @matrix.
 //
@@ -148,7 +148,7 @@ var xMatrixTransformDistance func(uintptr, float64, float64)
 // always transforms to the same vector. If (@x1,@y1) transforms
 // to (@x2,@y2) then (@x1+@dx1,@y1+@dy1) will transform to
 // (@x1+@dx2,@y1+@dy2) for all values of @x1 and @x2.
-func (x *Matrix) TransformDistance(DxVar float64, DyVar float64) {
+func (x *Matrix) TransformDistance(DxVar *float64, DyVar *float64) {
 	xMatrixTransformDistance(x.GoPointer(), DxVar, DyVar)
 }
 
@@ -168,10 +168,10 @@ func (x *Matrix) TransformPixelRectangle(RectVar *Rectangle) {
 	xMatrixTransformPixelRectangle(x.GoPointer(), RectVar)
 }
 
-var xMatrixTransformPoint func(uintptr, float64, float64)
+var xMatrixTransformPoint func(uintptr, *float64, *float64)
 
 // Transforms the point (@x, @y) by @matrix.
-func (x *Matrix) TransformPoint(XVar float64, YVar float64) {
+func (x *Matrix) TransformPoint(XVar *float64, YVar *float64) {
 	xMatrixTransformPoint(x.GoPointer(), XVar, YVar)
 }
 

@@ -645,7 +645,7 @@ func (x *Svg) GetPropertyWeight() float64 {
 //	changing the paintable state definitively isn't.
 //
 //	If in doubt, defer to an idle.
-func (x *Svg) ConnectError(cb *func(Svg, uintptr)) uint32 {
+func (x *Svg) ConnectError(cb *func(Svg, *glib.Error)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
@@ -653,12 +653,12 @@ func (x *Svg) ConnectError(cb *func(Svg, uintptr)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
+	fcb := func(clsPtr uintptr, ErrorVarp unsafe.Pointer) {
 		fa := Svg{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ErrorVarp)
+		cbFn(fa, (*glib.Error)(ErrorVarp))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
