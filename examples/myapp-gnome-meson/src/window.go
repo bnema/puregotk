@@ -11,7 +11,6 @@ import (
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 	"github.com/bnema/puregotk/v4/gtk"
-	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 var gTypeWindow gobject.Type
@@ -86,7 +85,7 @@ func init() {
 				onLibButtonTestClicked := func(sw mylibgtkmeson.MainApplicationWindow) {
 					fmt.Println("mylib-gtk-meson test button clicked")
 
-					libWindow.ShowToast(L("Button was clicked!"))
+					libWindow.ShowToast("Button was clicked!")
 					libWindow.SetPropertyTestButtonSensitive(false)
 
 					var timer *time.Timer
@@ -98,7 +97,7 @@ func init() {
 					libWindow.ConnectDestroy(&onDestroy)
 
 					timer = time.AfterFunc(time.Second*3, func() {
-						libWindow.ShowToast(L("Button re-enabled after 3 seconds"))
+						libWindow.ShowToast("Button re-enabled after 3 seconds")
 						libWindow.SetPropertyTestButtonSensitive(true)
 					})
 				}

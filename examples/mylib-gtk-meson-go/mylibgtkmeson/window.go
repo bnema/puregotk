@@ -66,10 +66,12 @@ func (x *MainApplicationWindow) GetPropertyTestButtonSensitive() bool {
 	return v.GetBoolean()
 }
 
-func (x *MainApplicationWindow) ConnectButtonTestClicked(cb *func(MainApplicationWindow)) uint32 {
+func (x *MainApplicationWindow) ConnectButtonTestClicked(cb *func(MainApplicationWindow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "button-test-clicked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "button-test-clicked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -80,8 +82,10 @@ func (x *MainApplicationWindow) ConnectButtonTestClicked(cb *func(MainApplicatio
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "button-test-clicked", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "button-test-clicked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
@@ -188,7 +192,10 @@ func (x *MainApplicationWindow) GetActionEnabled(ActionNameVar string) bool {
 // with the same name but a different parameter type.
 func (x *MainApplicationWindow) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -201,7 +208,10 @@ func (x *MainApplicationWindow) GetActionParameterType(ActionNameVar string) *gl
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *MainApplicationWindow) GetActionState(ActionNameVar string) *glib.Variant {
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -224,7 +234,10 @@ func (x *MainApplicationWindow) GetActionState(ActionNameVar string) *glib.Varia
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *MainApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.Variant {
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -245,7 +258,10 @@ func (x *MainApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.V
 // with the same name but a different state type.
 func (x *MainApplicationWindow) GetActionStateType(ActionNameVar string) *glib.VariantType {
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.
@@ -348,7 +364,7 @@ func (x *MainApplicationWindow) AddAction(ActionVar gio.Action) {
 //	}
 //
 // ```
-func (x *MainApplicationWindow) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
+func (x *MainApplicationWindow) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 	gio.XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
 }
 
@@ -401,7 +417,7 @@ func (x *MainApplicationWindow) RemoveAction(ActionNameVar string) {
 //	}
 //
 // ```
-func (x *MainApplicationWindow) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32) {
+func (x *MainApplicationWindow) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int) {
 	gio.XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
 }
 
@@ -471,7 +487,7 @@ func (x *MainApplicationWindow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MainApplicationWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *MainApplicationWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -587,7 +603,7 @@ func (x *MainApplicationWindow) UpdateProperty(FirstPropertyVar gtk.AccessiblePr
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MainApplicationWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *MainApplicationWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -619,7 +635,7 @@ func (x *MainApplicationWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRe
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MainApplicationWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *MainApplicationWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -652,7 +668,7 @@ func (x *MainApplicationWindow) UpdateState(FirstStateVar gtk.AccessibleState, v
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MainApplicationWindow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *MainApplicationWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

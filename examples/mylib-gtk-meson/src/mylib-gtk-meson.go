@@ -4,18 +4,12 @@ package main
 
 import (
 	_ "embed"
-	"log/slog"
 
 	"github.com/bnema/puregotk/v4/gio"
 	"github.com/bnema/puregotk/v4/glib"
-	"github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 func init() {
-	if err := i18n.BindI18n(GettextPackage, LocaleDir, slog.Default()); err != nil {
-		panic(err)
-	}
-
 	resource, err := gio.NewResourceFromData(glib.NewBytes(ResourceContents, uint(len(ResourceContents))))
 	if err != nil {
 		panic(err)

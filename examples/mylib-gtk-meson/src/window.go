@@ -97,7 +97,7 @@ func init() {
 			buttonTest.ConnectClicked(&onButtonTestClicked)
 		})
 
-		objClass.OverrideSetProperty(func(o *gobject.Object, u uint32, v *gobject.Value, ps *gobject.ParamSpec) {
+		objClass.OverrideSetProperty(func(o *gobject.Object, u uint, v *gobject.Value, ps *gobject.ParamSpec) {
 			switch u {
 			case propertyIdTestButtonSensitive:
 				w := (*myLibGtkMesonMainApplicationWindow)(unsafe.Pointer(o.GetData(dataKeyGoInstance)))
@@ -106,7 +106,7 @@ func init() {
 			}
 		})
 
-		objClass.OverrideGetProperty(func(o *gobject.Object, u uint32, v *gobject.Value, ps *gobject.ParamSpec) {
+		objClass.OverrideGetProperty(func(o *gobject.Object, u uint, v *gobject.Value, ps *gobject.ParamSpec) {
 			switch u {
 			case propertyIdTestButtonSensitive:
 				w := (*myLibGtkMesonMainApplicationWindow)(unsafe.Pointer(o.GetData(dataKeyGoInstance)))
@@ -115,10 +115,12 @@ func init() {
 			}
 		})
 
+		nick := "Test Button Sensitive"
+		blurb := "Whether the test button is sensitive"
 		pspec := gobject.NewParamSpecBoolean(
 			"test-button-sensitive",
-			"Test Button Sensitive",
-			"Whether the test button is sensitive",
+			&nick,
+			&blurb,
 			true,
 			gobject.GParamReadwriteValue,
 		)

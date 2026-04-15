@@ -15,7 +15,7 @@ import (
 
 func main() {
 	dir := "."
-	os.RemoveAll(dir)
+	os.RemoveAll(filepath.Join(dir, "mylibgtkmeson"))
 	var girs []string
 	filepath.Walk("internal/gir/spec", func(path string, f os.FileInfo, err error) error {
 		if !strings.HasSuffix(path, ".gir") {

@@ -1,12 +1,8 @@
-codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80 h1:y5ZxMLLOjl4xc2tBl02olxZQ06xbbKiR+2ipBfDrVcs=
-codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80/go.mod h1:hVVM4ddvYRlc3IcK3CXJPlMwd/vaLj7gdDBZ6oPgT8w=
 github.com/bnema/purego v0.11.0-bnema.2 h1:7pzcdOJ8bGtLrCz6V582oyleP6css1ICQoGgj+/Ve4o=
 github.com/bnema/purego v0.11.0-bnema.2/go.mod h1:5BnOIUj+0fvk/vwv45iottFoGfkDT7cnLXnpM2s6Hng=
 github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050 h1:muRW0tgYbXMfg8XjDGrv3TfWLEj3osTP4MPDGqlslbc=
 github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050/go.mod h1:wpz1r09m7dCJS2rTFe5x95DdtjP97osxkPJkdHptFYI=
 github.com/goccy/go-yaml v1.18.0 h1:8W7wMFS12Pcas7KU+VVkaiCng+kG8QiFeFwzFb+rwuw=
 github.com/goccy/go-yaml v1.18.0/go.mod h1:XBurs7gK8ATbW4ZPGKgcbrY1Br56PdM69F7LkFRi1kA=
-github.com/pojntfx/go-gettext v0.4.1 h1:CW8zRtaBrmphqrOZFzClZueZ25UXVOSQfp9k9EUXwfo=
-github.com/pojntfx/go-gettext v0.4.1/go.mod h1:3Gu8/md0Y1PJjGH1n8ClX9qfO7hXWR0bOj2zGt1XFKY=
 golang.org/x/mod v0.31.0 h1:HaW9xtz0+kOcWKwli0ZXy79Ix+UW/vOfmWI5QVd2tgI=
 golang.org/x/mod v0.31.0/go.mod h1:43JraMp9cGx1Rx3AqioxrbrhNsLl2l/iNAvuBkrezpg=
