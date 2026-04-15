@@ -48,7 +48,7 @@ No Cgo needed, thus:
 ## Disadvantages
 
 Limitations of this library as compared to the alternatives using cgo:
-* Some APIs are not possible due to purego not currently supporting struct arguments (that are not pointers)
+* Some APIs involving complex by-value structs, unions, or other hard-to-map ABI cases may still be exposed conservatively. Common by-value struct arguments are supported by the bundled purego fork on Linux/macOS amd64/arm64, but exact C layout compatibility is still required.
 
 # Planned features
 In order of priority:
