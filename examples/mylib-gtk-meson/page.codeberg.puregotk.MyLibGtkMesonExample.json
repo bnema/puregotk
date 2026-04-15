@@ -24,7 +24,7 @@
         {
           "type": "dir",
           "path": "../..",
-          "dest": "vendor/codeberg.org/puregotk/puregotk"
+          "dest": "vendor/github.com/bnema/puregotk"
         },
         "go.mod.json"
       ]

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"text/template"
 
-	"codeberg.org/puregotk/puregotk/pkg/gir/pass"
-	"codeberg.org/puregotk/puregotk/pkg/gir/util"
+	"github.com/bnema/puregotk/pkg/gir/pass"
+	"github.com/bnema/puregotk/pkg/gir/util"
 )
 
 //go:generate go run gen.go
@@ -24,7 +24,7 @@ func main() {
 		return nil
 	})
 
-	p, err := pass.New(girs, "codeberg.org/puregotk/puregotk/v4")
+	p, err := pass.New(girs, "github.com/bnema/puregotk/v4")
 	if err != nil {
 		panic(err)
 	}

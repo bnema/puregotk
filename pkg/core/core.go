@@ -1,6 +1,6 @@
 package core
 
-import "codeberg.org/puregotk/puregotk/internal/core"
+import "github.com/bnema/puregotk/internal/core"
 
 var (
 	GetPaths           = core.GetPaths

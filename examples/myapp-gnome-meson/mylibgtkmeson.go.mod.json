@@ -13,11 +13,11 @@
     "url": "https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.4.1.zip"
   },
   {
-    "dest": "vendor/codeberg.org/puregotk/purego",
+    "dest": "vendor/github.com/bnema/purego",
     "sha256": "0d5fb9e11934b151ac357a9c0660e4dcd287d2f93db0829356415f6e6a8ef84b",
     "strip-components": 3,
     "type": "archive",
-    "url": "https://proxy.golang.org/codeberg.org/puregotk/purego/@v/v0.0.0-20260224095105-2513c838cb80.zip"
+    "url": "https://proxy.golang.org/github.com/bnema/purego/@v/v0.0.0-20260224095105-2513c838cb80.zip"
   },
   {
     "dest": "vendor/github.com/dennwc/flatpak-go-mod",

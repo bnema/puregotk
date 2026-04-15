@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	puregoModule = "codeberg.org/puregotk/purego"
-	coreModule   = "codeberg.org/puregotk/puregotk"
+	puregoModule = "github.com/bnema/purego"
+	coreModule   = "github.com/bnema/puregotk"
 )
 
 type ImportSet struct {

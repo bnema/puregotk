@@ -7,8 +7,8 @@ import (
 	"strings"
 	"text/template"
 
-	"codeberg.org/puregotk/puregotk/pkg/gir/pass"
-	"codeberg.org/puregotk/puregotk/pkg/gir/util"
+	"github.com/bnema/puregotk/pkg/gir/pass"
+	"github.com/bnema/puregotk/pkg/gir/util"
 )
 
 //go:generate go run gen.go
@@ -26,7 +26,7 @@ func main() {
 	})
 
 	// Locate puregotk dependency and collect its GIR files
-	cmd := exec.Command("go", "list", "-m", "-f", "{{.Dir}}", "codeberg.org/puregotk/puregotk")
+	cmd := exec.Command("go", "list", "-m", "-f", "{{.Dir}}", "github.com/bnema/puregotk")
 	output, err := cmd.Output()
 	if err != nil {
 		panic("puregotk dependency not found: " + err.Error())
@@ -41,9 +41,9 @@ func main() {
 		return nil
 	})
 
-	p, err := pass.New(girs, "codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go",
+	p, err := pass.New(girs, "github.com/bnema/puregotk/examples/mylib-gtk-meson-go",
 		pass.Dependency{
-			Module: "codeberg.org/puregotk/puregotk/v4",
+			Module: "github.com/bnema/puregotk/v4",
 			Files:  puregotkGirs,
 		},
 	)

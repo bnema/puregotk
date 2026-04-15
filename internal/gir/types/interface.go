@@ -3,7 +3,7 @@ package types
 import (
 	"strings"
 
-	"codeberg.org/puregotk/puregotk/internal/gir/util"
+	"github.com/bnema/puregotk/internal/gir/util"
 )
 
 func ConvertInterface(currns string, ins string, inter Interface, implemented map[string]bool, kinds KindMap, imps *ImportSet) InterfaceTemplate {

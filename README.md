@@ -63,8 +63,8 @@ package main
 import (
 	"os"
 
-	"codeberg.org/puregotk/puregotk/v4/gio"
-	"codeberg.org/puregotk/puregotk/v4/gtk"
+	"github.com/bnema/puregotk/v4/gio"
+	"github.com/bnema/puregotk/v4/gtk"
 )
 
 func main() {
@@ -112,7 +112,7 @@ However, for systems such as NixOS or distros that use other paths the following
 - `PUREGOTK_LIB_FOLDER`, set this to the root folder where all libs are stored e.g. `/some/path/`
 - `PUREGOTK_LIBNAME_PATH` where `LIBNAME` is the name of the library, e.g. `PUREGOTK_GTK_PATH` for the file path to GTK e.g. `/some/path/libgtk-4.so`. You have to do this for all deps, e.g. cairo, pango, etc
 
-See https://codeberg.org/puregotk/puregotk/blob/main/internal/core/core.go for exact implementation details.
+See https://github.com/bnema/puregotk/blob/main/internal/core/core.go for exact implementation details.
 
 Additionally we also have a fallback to `pkg-config`, but I would say only rely on this as a last effort due to the increased startup time.
 When packaging code, always make sure that correct paths are used by e.g. using the aforementioned environment variables.

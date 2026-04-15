@@ -12,8 +12,8 @@ import (
 	"strings"
 	"text/template"
 
-	"codeberg.org/puregotk/puregotk/internal/gir/types"
-	"codeberg.org/puregotk/puregotk/internal/gir/util"
+	"github.com/bnema/puregotk/internal/gir/types"
+	"github.com/bnema/puregotk/internal/gir/util"
 	"mvdan.cc/gofumpt/format"
 )
 

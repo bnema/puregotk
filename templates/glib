@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"sync"
 
-	"codeberg.org/puregotk/purego"
-	"codeberg.org/puregotk/puregotk/pkg/core"
+	"github.com/bnema/purego"
+	"github.com/bnema/puregotk/pkg/core"
 )
 
 var callbacks = struct {

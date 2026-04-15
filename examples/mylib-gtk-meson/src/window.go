@@ -4,11 +4,11 @@ import (
 	"runtime"
 	"unsafe"
 
-	"codeberg.org/puregotk/puregotk/v4/adw"
-	"codeberg.org/puregotk/puregotk/v4/glib"
-	"codeberg.org/puregotk/puregotk/v4/gobject"
-	"codeberg.org/puregotk/puregotk/v4/gobject/types"
-	"codeberg.org/puregotk/puregotk/v4/gtk"
+	"github.com/bnema/puregotk/v4/adw"
+	"github.com/bnema/puregotk/v4/glib"
+	"github.com/bnema/puregotk/v4/gobject"
+	"github.com/bnema/puregotk/v4/gobject/types"
+	"github.com/bnema/puregotk/v4/gtk"
 )
 
 import "C"

@@ -6,11 +6,11 @@ import (
 	"time"
 	"unsafe"
 
-	"codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go/mylibgtkmeson"
-	"codeberg.org/puregotk/puregotk/v4/adw"
-	"codeberg.org/puregotk/puregotk/v4/glib"
-	"codeberg.org/puregotk/puregotk/v4/gobject"
-	"codeberg.org/puregotk/puregotk/v4/gtk"
+	"github.com/bnema/puregotk/examples/mylib-gtk-meson-go/mylibgtkmeson"
+	"github.com/bnema/puregotk/v4/adw"
+	"github.com/bnema/puregotk/v4/glib"
+	"github.com/bnema/puregotk/v4/gobject"
+	"github.com/bnema/puregotk/v4/gtk"
 	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 

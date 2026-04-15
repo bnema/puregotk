@@ -3,7 +3,7 @@ package gobject
 import (
 	"reflect"
 
-	"codeberg.org/puregotk/puregotk/v4/glib"
+	"github.com/bnema/puregotk/v4/glib"
 )
 
 type Ptr interface {

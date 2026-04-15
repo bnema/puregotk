@@ -6,8 +6,8 @@ import (
 	_ "embed"
 	"log/slog"
 
-	"codeberg.org/puregotk/puregotk/v4/gio"
-	"codeberg.org/puregotk/puregotk/v4/glib"
+	"github.com/bnema/puregotk/v4/gio"
+	"github.com/bnema/puregotk/v4/glib"
 	"github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
