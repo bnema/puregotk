@@ -5,7 +5,7 @@ go 1.25.0
 replace github.com/bnema/puregotk v0.0.0-00010101000000-000000000000 => ../..
 
 require (
-	github.com/bnema/purego v0.0.0-20260224095105-2513c838cb80
+	github.com/bnema/purego v0.11.0-bnema.2
 	github.com/bnema/puregotk v0.0.0-00010101000000-000000000000
 )
 

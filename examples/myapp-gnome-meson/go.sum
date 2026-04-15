@@ -1,5 +1,7 @@
-github.com/bnema/purego v0.0.0-20260224095105-2513c838cb80 h1:y5ZxMLLOjl4xc2tBl02olxZQ06xbbKiR+2ipBfDrVcs=
-github.com/bnema/purego v0.0.0-20260224095105-2513c838cb80/go.mod h1:hVVM4ddvYRlc3IcK3CXJPlMwd/vaLj7gdDBZ6oPgT8w=
+codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80 h1:y5ZxMLLOjl4xc2tBl02olxZQ06xbbKiR+2ipBfDrVcs=
+codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80/go.mod h1:hVVM4ddvYRlc3IcK3CXJPlMwd/vaLj7gdDBZ6oPgT8w=
+github.com/bnema/purego v0.11.0-bnema.2 h1:7pzcdOJ8bGtLrCz6V582oyleP6css1ICQoGgj+/Ve4o=
+github.com/bnema/purego v0.11.0-bnema.2/go.mod h1:5BnOIUj+0fvk/vwv45iottFoGfkDT7cnLXnpM2s6Hng=
 github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050 h1:muRW0tgYbXMfg8XjDGrv3TfWLEj3osTP4MPDGqlslbc=
 github.com/dennwc/flatpak-go-mod v0.1.1-0.20251220152743-1642390bc050/go.mod h1:wpz1r09m7dCJS2rTFe5x95DdtjP97osxkPJkdHptFYI=
 github.com/goccy/go-yaml v1.18.0 h1:8W7wMFS12Pcas7KU+VVkaiCng+kG8QiFeFwzFb+rwuw=
