@@ -1017,7 +1017,9 @@ func (x *IconView) GetPropertyTooltipColumn() int32 {
 func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -1028,8 +1030,10 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::item-activated signal is emitted when the method
@@ -1042,7 +1046,9 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp uintptr) {
@@ -1053,8 +1059,10 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 		cbFn(fa, PathVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::move-cursor signal is a
@@ -1074,7 +1082,9 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int32, bool, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int32, ExtendVarp bool, ModifyVarp bool) bool {
@@ -1085,8 +1095,10 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int32, boo
 		return cbFn(fa, StepVarp, CountVarp, ExtendVarp, ModifyVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1100,7 +1112,9 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int32, boo
 func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1111,8 +1125,10 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1127,7 +1143,9 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1138,8 +1156,10 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::selection-changed signal is emitted when the selection
@@ -1147,7 +1167,9 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
 func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1158,8 +1180,10 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1175,7 +1199,9 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1186,8 +1212,10 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1201,7 +1229,9 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1212,8 +1242,10 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

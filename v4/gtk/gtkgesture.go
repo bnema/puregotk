@@ -471,7 +471,9 @@ func (x *Gesture) GetPropertyNPoints() uint32 {
 func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
@@ -482,8 +484,10 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 		cbFn(fa, SequenceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a sequence is cancelled.
@@ -499,7 +503,9 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
@@ -510,8 +516,10 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 		cbFn(fa, SequenceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @gesture either stopped recognizing the event
@@ -526,7 +534,9 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
@@ -537,8 +547,10 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 		cbFn(fa, SequenceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a sequence state changes.
@@ -548,7 +560,9 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSequenceState)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SequenceVarp uintptr, StateVarp EventSequenceState) {
@@ -559,8 +573,10 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 		cbFn(fa, SequenceVarp, StateVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever an event is handled while the gesture is recognized.
@@ -569,7 +585,9 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
@@ -580,8 +598,10 @@ func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
 		cbFn(fa, SequenceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

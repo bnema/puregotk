@@ -22,10 +22,6 @@ func unrefCallback(fnPtr interface{}) error {
 	if !ok {
 		return purego.UnrefCallbackFnPtr(fnPtr)
 	}
-	defer func() {
-		callbacks.Lock()
-		delete(callbacks.refs, cbPtr)
-		callbacks.Unlock()
-	}()
+	defer RemoveCallback(cbPtr)
 	return purego.UnrefCallback(refPtr)
 }

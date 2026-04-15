@@ -225,7 +225,9 @@ func (x *DBusServer) GetPropertyGuid() string {
 func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ConnectionVarp uintptr) bool {
@@ -236,8 +238,10 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 		return cbFn(fa, ConnectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Initializes the object implementing the interface.

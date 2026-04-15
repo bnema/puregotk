@@ -1244,7 +1244,9 @@ func (x *Label) GetPropertyYalign() float32 {
 func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1255,8 +1257,10 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted to activate a URI.
@@ -1266,7 +1270,9 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, UriVarp string) bool {
@@ -1277,8 +1283,10 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 		return cbFn(fa, UriVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted to copy the selection to the clipboard.
@@ -1289,7 +1297,9 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1300,8 +1310,10 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted when the user initiates a cursor movement.
@@ -1326,7 +1338,9 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int32, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int32, ExtendSelectionVarp bool) {
@@ -1337,8 +1351,10 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int32, bool)) ui
 		cbFn(fa, StepVarp, CountVarp, ExtendSelectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

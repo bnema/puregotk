@@ -141,7 +141,9 @@ func (x *AutomationSession) GetPropertyId() string {
 func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) WebView) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -153,8 +155,10 @@ func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) Web
 		return CreateWebViewCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the given automation session is about to finish.
@@ -162,7 +166,9 @@ func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) Web
 func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -173,8 +179,10 @@ func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint32
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

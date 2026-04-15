@@ -1535,7 +1535,12 @@ var xChildWatchAdd func(Pid, uintptr, uintptr) uint32
 // using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uint32 {
-	cret := xChildWatchAdd(PidVar, NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = childWatchFuncTrampolineCb
+	}
+	cret := xChildWatchAdd(PidVar, functionRef, DataVar)
+	trackChildWatchFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -1567,7 +1572,12 @@ var xChildWatchAddFull func(int32, Pid, uintptr, uintptr, uintptr) uint32
 // using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAddFull(PriorityVar int32, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-	cret := xChildWatchAddFull(PriorityVar, PidVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = childWatchFuncTrampolineCb
+	}
+	cret := xChildWatchAddFull(PriorityVar, PidVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+	trackChildWatchFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -1726,7 +1736,12 @@ var xIdleAdd func(uintptr, uintptr) uint32
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-	cret := xIdleAdd(NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xIdleAdd(functionRef, DataVar)
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -1747,7 +1762,12 @@ var xIdleAddFull func(int32, uintptr, uintptr, uintptr) uint32
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xIdleAddFull(PriorityVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -1764,7 +1784,12 @@ var xIdleAddOnce func(uintptr, uintptr) uint32
 //
 // This function otherwise behaves like [func@GLib.idle_add].
 func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-	cret := xIdleAddOnce(NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceOnceFuncTrampolineCb
+	}
+	cret := xIdleAddOnce(functionRef, DataVar)
+	trackSourceOnceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -1772,7 +1797,11 @@ var xIdleRemoveByData func(uintptr) bool
 
 // Removes the idle function with the given data.
 func IdleRemoveByData(DataVar uintptr) bool {
+	trackedSourceID := trackedSourceIDByUserData(DataVar)
 	cret := xIdleRemoveByData(DataVar)
+	if cret {
+		removeTrackedSource(trackedSourceID)
+	}
 	return cret
 }
 
@@ -2005,6 +2034,9 @@ var xSourceRemove func(uint32) bool
 // wrong source.
 func SourceRemove(TagVar uint32) bool {
 	cret := xSourceRemove(TagVar)
+	if cret {
+		removeTrackedSource(TagVar)
+	}
 	return cret
 }
 
@@ -2027,7 +2059,11 @@ var xSourceRemoveByUserData func(uintptr) bool
 //
 // If multiple sources exist with the same user data, only one will be destroyed.
 func SourceRemoveByUserData(UserDataVar uintptr) bool {
+	trackedSourceID := trackedSourceIDByUserData(UserDataVar)
 	cret := xSourceRemoveByUserData(UserDataVar)
+	if cret {
+		removeTrackedSource(trackedSourceID)
+	}
 	return cret
 }
 
@@ -2089,7 +2125,12 @@ var xTimeoutAdd func(uint32, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-	cret := xTimeoutAdd(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xTimeoutAdd(IntervalVar, functionRef, DataVar)
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -2124,7 +2165,12 @@ var xTimeoutAddFull func(int32, uint32, uintptr, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock time.
 // See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int32, IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xTimeoutAddFull(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -2138,7 +2184,12 @@ var xTimeoutAddOnce func(uint32, uintptr, uintptr) uint32
 //
 // This function otherwise behaves like [func@GLib.timeout_add].
 func TimeoutAddOnce(IntervalVar uint32, FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-	cret := xTimeoutAddOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceOnceFuncTrampolineCb
+	}
+	cret := xTimeoutAddOnce(IntervalVar, functionRef, DataVar)
+	trackSourceOnceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -2168,7 +2219,12 @@ var xTimeoutAddSeconds func(uint32, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr) uint32 {
-	cret := xTimeoutAddSeconds(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xTimeoutAddSeconds(IntervalVar, functionRef, DataVar)
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -2215,7 +2271,12 @@ var xTimeoutAddSecondsFull func(int32, uint32, uintptr, uintptr, uintptr) uint32
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int32, IntervalVar uint32, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceFuncTrampolineCb
+	}
+	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+	trackSourceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 
@@ -2224,7 +2285,12 @@ var xTimeoutAddSecondsOnce func(uint32, uintptr, uintptr) uint32
 // This function behaves like [func@GLib.timeout_add_once] but with a range in
 // seconds.
 func TimeoutAddSecondsOnce(IntervalVar uint32, FunctionVar *SourceOnceFunc, DataVar uintptr) uint32 {
-	cret := xTimeoutAddSecondsOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var functionRef uintptr
+	if FunctionVar != nil {
+		functionRef = sourceOnceFuncTrampolineCb
+	}
+	cret := xTimeoutAddSecondsOnce(IntervalVar, functionRef, DataVar)
+	trackSourceOnceFunc(cret, FunctionVar, DataVar)
 	return cret
 }
 

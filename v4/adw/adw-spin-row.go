@@ -405,7 +405,9 @@ func (x *SpinRow) GetPropertyWrap() bool {
 func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NewValueVarp *float64) int32 {
@@ -416,8 +418,10 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
 		return cbFn(fa, NewValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to tweak the formatting of the value for display.
@@ -426,7 +430,9 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
 func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -437,8 +443,10 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted right after the spinbutton wraps.
@@ -447,7 +455,9 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -458,8 +468,10 @@ func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

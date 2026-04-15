@@ -794,7 +794,9 @@ func (x *Notebook) GetPropertyShowTabs() bool {
 func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp int32) bool {
@@ -805,8 +807,10 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint
 		return cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::create-window signal is emitted when a detachable
@@ -820,7 +824,9 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint
 func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr) uintptr {
@@ -832,15 +838,19 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 		return CreateWindowCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a tab should be focused.
 func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TabVarp NotebookTab) bool {
@@ -851,8 +861,10 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 
 		return cbFn(fa, TabVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when focus was moved out.
@@ -865,7 +877,9 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 
 func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp DirectionType) {
@@ -876,8 +890,10 @@ func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32
 		cbFn(fa, DirectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // the ::page-added signal is emitted in the notebook
@@ -885,7 +901,9 @@ func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32
 func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
@@ -896,8 +914,10 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 
 		cbFn(fa, ChildVarp, PageNumVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // the ::page-removed signal is emitted in the notebook
@@ -905,7 +925,9 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 
 func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
@@ -916,8 +938,10 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint3
 		cbFn(fa, ChildVarp, PageNumVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // the ::page-reordered signal is emitted in the notebook
@@ -925,7 +949,9 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint3
 func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
@@ -936,8 +962,10 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uin
 		cbFn(fa, ChildVarp, PageNumVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the tab should be reordered.
@@ -950,7 +978,9 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uin
 func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp DirectionType, MoveToLastVarp bool) bool {
@@ -961,8 +991,10 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 		return cbFn(fa, DirectionVarp, MoveToLastVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a page should be selected.
@@ -971,7 +1003,9 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MoveFocusVarp bool) bool {
@@ -982,15 +1016,19 @@ func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
 		return cbFn(fa, MoveFocusVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user or a function changes the current page.
 func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, PageNumVarp uint32) {
@@ -1001,8 +1039,10 @@ func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint32)) uint32
 		cbFn(fa, PageVarp, PageNumVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -727,7 +727,9 @@ func (x *CellRendererText) GetPropertyWrapWidth() int32 {
 func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp string, NewTextVarp string) {
@@ -738,8 +740,10 @@ func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, stri
 		cbFn(fa, PathVarp, NewTextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

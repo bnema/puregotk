@@ -250,7 +250,9 @@ func (c *FrameClock) SetGoPointer(ptr uintptr) {
 func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -261,8 +263,10 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Begins processing of the frame.
@@ -271,7 +275,9 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -282,8 +288,10 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Used to flush pending motion events that are being batched up and
@@ -293,7 +301,9 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -304,8 +314,10 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted as the second step of toolkit and application processing
@@ -316,7 +328,9 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -327,8 +341,10 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted as the third step of toolkit and application processing
@@ -341,7 +357,9 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -352,8 +370,10 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after processing of the frame is finished.
@@ -363,7 +383,9 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -374,8 +396,10 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted as the first step of toolkit and application processing
@@ -388,7 +412,9 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -399,8 +425,10 @@ func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

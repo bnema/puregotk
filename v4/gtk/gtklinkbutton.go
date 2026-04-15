@@ -204,7 +204,9 @@ func (x *LinkButton) GetPropertyVisited() bool {
 func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -215,8 +217,10 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

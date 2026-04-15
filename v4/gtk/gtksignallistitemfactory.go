@@ -118,7 +118,9 @@ func (c *SignalListItemFactory) SetGoPointer(ptr uintptr) {
 func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -129,8 +131,10 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 		cbFn(fa, ObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a newly created listitem needs to be prepared for use.
@@ -145,7 +149,9 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -156,8 +162,10 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 		cbFn(fa, ObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an object is about to be destroyed.
@@ -169,7 +177,9 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -180,8 +190,10 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 		cbFn(fa, ObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an object has been unbound from its item.
@@ -195,7 +207,9 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -206,8 +220,10 @@ func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, ui
 		cbFn(fa, ObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

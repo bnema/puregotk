@@ -187,7 +187,9 @@ func (x *GeolocationManager) GetPropertyEnableHighAccuracy() bool {
 func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "start", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "start", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -198,8 +200,10 @@ func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uin
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "start", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "start", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The signal is emitted to notify that @manager doesn't need to receive
@@ -207,7 +211,9 @@ func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uin
 func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "stop", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "stop", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -218,8 +224,10 @@ func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "stop", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "stop", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

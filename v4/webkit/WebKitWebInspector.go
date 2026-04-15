@@ -206,7 +206,9 @@ func (x *WebInspector) GetPropertyInspectedUri() string {
 func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "attach", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "attach", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -217,8 +219,10 @@ func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "attach", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "attach", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the inspector should be shown.
@@ -235,7 +239,9 @@ func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
 func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "bring-to-front", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "bring-to-front", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -246,8 +252,10 @@ func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "bring-to-front", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "bring-to-front", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the inspector page is closed. If you are using your own
@@ -256,7 +264,9 @@ func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
 func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -267,8 +277,10 @@ func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the inspector is requested to be detached from the window
@@ -283,7 +295,9 @@ func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
 func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "detach", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "detach", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -294,8 +308,10 @@ func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "detach", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "detach", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the inspector is requested to open in a separate window.
@@ -310,7 +326,9 @@ func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
 func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "open-window", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "open-window", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -321,8 +339,10 @@ func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "open-window", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "open-window", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

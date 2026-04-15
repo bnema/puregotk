@@ -200,7 +200,9 @@ func (c *PrintOperation) SetGoPointer(ptr uintptr) {
 func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
@@ -211,8 +213,10 @@ func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32
 		cbFn(fa, ErrorVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the print operation has finished doing everything
@@ -220,7 +224,9 @@ func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, uintptr)) uint32
 func (x *PrintOperation) ConnectFinished(cb *func(PrintOperation)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -231,8 +237,10 @@ func (x *PrintOperation) ConnectFinished(cb *func(PrintOperation)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

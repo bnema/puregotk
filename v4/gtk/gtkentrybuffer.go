@@ -584,7 +584,9 @@ func (x *EntryBuffer) GetPropertyText() string {
 func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp uint32, NCharsVarp uint32) {
@@ -595,15 +597,19 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) 
 		cbFn(fa, PositionVarp, NCharsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted after text is inserted into the buffer.
 func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint32, string, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32) {
@@ -614,8 +620,10 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint32, string, 
 		cbFn(fa, PositionVarp, CharsVarp, NCharsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

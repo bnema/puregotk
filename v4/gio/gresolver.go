@@ -929,7 +929,9 @@ func (x *Resolver) GetPropertyTimeout() uint32 {
 func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -940,8 +942,10 @@ func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xResolverFreeAddresses func(*glib.List)

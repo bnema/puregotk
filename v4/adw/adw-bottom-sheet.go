@@ -638,7 +638,9 @@ func (x *BottomSheet) GetPropertyShowDragHandle() bool {
 func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -649,8 +651,10 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the progress @self will snap back to after the gesture is canceled.

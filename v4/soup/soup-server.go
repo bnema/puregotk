@@ -823,7 +823,9 @@ func (x *Server) GetPropertyServerHeader() string {
 func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-aborted", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-aborted", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp uintptr) {
@@ -834,8 +836,10 @@ func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
 		cbFn(fa, MessageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-aborted", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-aborted", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the server has finished writing a response to
@@ -843,7 +847,9 @@ func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
 func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-finished", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-finished", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp uintptr) {
@@ -854,8 +860,10 @@ func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
 		cbFn(fa, MessageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-finished", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-finished", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the server has successfully read a request.
@@ -869,7 +877,9 @@ func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
 func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-read", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-read", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp uintptr) {
@@ -880,8 +890,10 @@ func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
 		cbFn(fa, MessageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-read", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-read", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the server has started reading a new request.
@@ -899,7 +911,9 @@ func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
 func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp uintptr) {
@@ -910,8 +924,10 @@ func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint32 {
 		cbFn(fa, MessageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-started", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

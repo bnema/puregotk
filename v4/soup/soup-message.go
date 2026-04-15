@@ -855,7 +855,9 @@ func (x *Message) GetPropertyUri() uintptr {
 func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCertificateFlags) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TlsPeerCertificateVarp uintptr, TlsPeerErrorsVarp gio.TlsCertificateFlags) bool {
@@ -866,8 +868,10 @@ func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCer
 		return cbFn(fa, TlsPeerCertificateVarp, TlsPeerErrorsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the message requires authentication.
@@ -887,7 +891,9 @@ func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCer
 func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, AuthVarp uintptr, RetryingVarp bool) bool {
@@ -898,8 +904,10 @@ func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uin
 		return cbFn(fa, AuthVarp, RetryingVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted after [signal@Message::got-headers].
@@ -912,7 +920,9 @@ func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uin
 func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "content-sniffed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "content-sniffed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TypeVarp string, ParamsVarp uintptr) {
@@ -923,8 +933,10 @@ func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint
 		cbFn(fa, TypeVarp, ParamsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "content-sniffed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "content-sniffed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when all HTTP processing is finished for a message.
@@ -933,7 +945,9 @@ func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint
 func (x *Message) ConnectFinished(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -944,15 +958,19 @@ func (x *Message) ConnectFinished(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after receiving the complete message response body.
 func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -963,8 +981,10 @@ func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after reading a portion of the message
@@ -972,7 +992,9 @@ func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
 func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "got-body-data", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "got-body-data", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChunkSizeVarp uint32) {
@@ -983,8 +1005,10 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 		cbFn(fa, ChunkSizeVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "got-body-data", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "got-body-data", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after receiving the Status-Line and response headers.
@@ -1004,7 +1028,9 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1015,8 +1041,10 @@ func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after receiving a 1xx (Informational) response for
@@ -1032,7 +1060,9 @@ func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
 func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "got-informational", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "got-informational", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1043,8 +1073,10 @@ func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "got-informational", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "got-informational", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when [class@HSTSEnforcer] has upgraded the protocol
@@ -1053,7 +1085,9 @@ func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
 func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "hsts-enforced", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "hsts-enforced", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1064,8 +1098,10 @@ func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "hsts-enforced", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "hsts-enforced", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to indicate that some network-related event
@@ -1083,7 +1119,9 @@ func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
 func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "network-event", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "network-event", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, EventVarp gio.SocketClientEvent, ConnectionVarp uintptr) {
@@ -1094,8 +1132,10 @@ func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, u
 		cbFn(fa, EventVarp, ConnectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "network-event", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "network-event", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted during the @msg's connection TLS handshake when
@@ -1112,7 +1152,9 @@ func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, u
 func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-certificate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TlsConnectionVarp uintptr) bool {
@@ -1123,8 +1165,10 @@ func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uin
 		return cbFn(fa, TlsConnectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-certificate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted during the @msg's connection TLS handshake when
@@ -1142,7 +1186,9 @@ func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uin
 func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-certificate-password", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate-password", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TlsPasswordVarp uintptr) bool {
@@ -1153,8 +1199,10 @@ func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) b
 		return cbFn(fa, TlsPasswordVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-certificate-password", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate-password", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a request that was already sent once is now
@@ -1166,7 +1214,9 @@ func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) b
 func (x *Message) ConnectRestarted(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "restarted", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "restarted", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1177,15 +1227,19 @@ func (x *Message) ConnectRestarted(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "restarted", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "restarted", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted just before a message is sent.
 func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "starting", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "starting", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1196,8 +1250,10 @@ func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "starting", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "starting", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted immediately after writing the complete body for a
@@ -1205,7 +1261,9 @@ func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
 func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1216,8 +1274,10 @@ func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted immediately after writing a portion of the message
@@ -1225,7 +1285,9 @@ func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
 func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChunkSizeVarp uint32) {
@@ -1236,8 +1298,10 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 		cbFn(fa, ChunkSizeVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted immediately after writing the request headers for a
@@ -1245,7 +1309,9 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1256,8 +1322,10 @@ func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

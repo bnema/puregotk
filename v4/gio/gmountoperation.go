@@ -777,7 +777,9 @@ func (x *MountOperation) GetPropertyUsername() string {
 func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -788,8 +790,10 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mount operation asks the user for a password.
@@ -800,7 +804,9 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags) {
@@ -811,8 +817,10 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 		cbFn(fa, MessageVarp, DefaultUserVarp, DefaultDomainVarp, FlagsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when asking the user a question and gives a list of
@@ -824,7 +832,9 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, ChoicesVarp []string) {
@@ -835,15 +845,19 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 		cbFn(fa, MessageVarp, ChoicesVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user has replied to the mount operation.
 func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResultVarp MountOperationResult) {
@@ -854,8 +868,10 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 		cbFn(fa, ResultVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when one or more processes are blocking an operation
@@ -873,7 +889,9 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
@@ -884,8 +902,10 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 		cbFn(fa, MessageVarp, ProcessesVarp, ChoicesVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an unmount operation has been busy for more than some time
@@ -907,7 +927,9 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64) {
@@ -918,8 +940,10 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 		cbFn(fa, MessageVarp, TimeLeftVarp, BytesLeftVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

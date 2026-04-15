@@ -889,7 +889,9 @@ func (c *MenuModel) SetGoPointer(ptr uintptr) {
 func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int32, int32, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp int32, RemovedVarp int32, AddedVarp int32) {
@@ -900,8 +902,10 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int32, int32, int32)
 		cbFn(fa, PositionVarp, RemovedVarp, AddedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

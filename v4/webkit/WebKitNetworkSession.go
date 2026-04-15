@@ -312,7 +312,9 @@ func (x *NetworkSession) GetPropertyIsEphemeral() bool {
 func (x *NetworkSession) ConnectDownloadStarted(cb *func(NetworkSession, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "download-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "download-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DownloadVarp uintptr) {
@@ -323,8 +325,10 @@ func (x *NetworkSession) ConnectDownloadStarted(cb *func(NetworkSession, uintptr
 		cbFn(fa, DownloadVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "download-started", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "download-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xNetworkSessionGetDefault func() uintptr

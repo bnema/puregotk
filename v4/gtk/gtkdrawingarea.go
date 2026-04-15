@@ -293,7 +293,9 @@ func (x *DrawingArea) GetPropertyContentWidth() int32 {
 func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int32, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
@@ -304,8 +306,10 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int32, int32)) uint32 
 		cbFn(fa, WidthVarp, HeightVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

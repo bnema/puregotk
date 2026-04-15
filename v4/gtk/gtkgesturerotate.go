@@ -84,7 +84,9 @@ func (c *GestureRotate) SetGoPointer(ptr uintptr) {
 func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "angle-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "angle-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, AngleVarp float64, AngleDeltaVarp float64) {
@@ -95,8 +97,10 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 		cbFn(fa, AngleVarp, AngleDeltaVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "angle-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "angle-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

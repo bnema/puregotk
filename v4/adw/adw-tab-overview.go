@@ -567,7 +567,9 @@ func (x *TabOverview) GetPropertyShowStartTitleButtons() bool {
 func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -579,8 +581,10 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint32 {
 		return CreateTabCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when content is dropped onto a tab.
@@ -592,7 +596,9 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint32 {
 func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) bool {
@@ -603,8 +609,10 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the dropped content is preloaded.
@@ -619,7 +627,9 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintptr) gdk.DragAction) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) gdk.DragAction {
@@ -630,8 +640,10 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintp
 		return cbFn(fa, PageVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

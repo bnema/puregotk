@@ -420,7 +420,9 @@ func (c *PixbufLoader) SetGoPointer(ptr uintptr) {
 func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -431,8 +433,10 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a significant area of the image being
@@ -446,7 +450,9 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, int32, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32) {
@@ -457,8 +463,10 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, i
 		cbFn(fa, XVarp, YVarp, WidthVarp, HeightVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when gdk_pixbuf_loader_close() is called.
@@ -469,7 +477,9 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, i
 func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -480,8 +490,10 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the pixbuf loader has been fed the
@@ -494,7 +506,9 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int32, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
@@ -505,8 +519,10 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int32, int32))
 		cbFn(fa, WidthVarp, HeightVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

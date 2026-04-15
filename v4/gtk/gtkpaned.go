@@ -447,7 +447,9 @@ func (x *Paned) GetPropertyWideHandle() bool {
 func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -458,8 +460,10 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cancel moving the position of the handle using key
@@ -474,7 +478,9 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -485,8 +491,10 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cycle the focus between the children of the paned.
@@ -497,7 +505,9 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReversedVarp bool) bool {
@@ -508,8 +518,10 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 		return cbFn(fa, ReversedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cycle whether the paned should grab focus to allow
@@ -521,7 +533,9 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReversedVarp bool) bool {
@@ -532,8 +546,10 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 		return cbFn(fa, ReversedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to move the handle with key bindings.
@@ -549,7 +565,9 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScrollTypeVarp ScrollType) bool {
@@ -560,8 +578,10 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 		return cbFn(fa, ScrollTypeVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to accept the current position of the handle and then
@@ -573,7 +593,9 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -584,8 +606,10 @@ func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

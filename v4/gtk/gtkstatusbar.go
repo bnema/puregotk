@@ -147,7 +147,9 @@ func (c *Statusbar) SetGoPointer(ptr uintptr) {
 func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint32, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextIdVarp uint32, TextVarp string) {
@@ -158,15 +160,19 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint32, string)) uint3
 		cbFn(fa, ContextIdVarp, TextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a new message gets pushed onto a statusbar's stack.
 func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint32, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextIdVarp uint32, TextVarp string) {
@@ -177,8 +183,10 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint32, string)) uint3
 		cbFn(fa, ContextIdVarp, TextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

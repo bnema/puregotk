@@ -202,7 +202,9 @@ func (c *FilenameCompleter) SetGoPointer(ptr uintptr) {
 func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -213,8 +215,10 @@ func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

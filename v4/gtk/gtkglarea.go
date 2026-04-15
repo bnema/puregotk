@@ -611,7 +611,9 @@ func (x *GLArea) GetPropertyUseEs() bool {
 func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -623,8 +625,10 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
 		return CreateContextCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted every time the contents of the `GtkGLArea` should be redrawn.
@@ -634,7 +638,9 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
 func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr) bool {
@@ -645,8 +651,10 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
 		return cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted once when the widget is realized, and then each time the widget
@@ -663,7 +671,9 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
 func (x *GLArea) ConnectResize(cb *func(GLArea, int32, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
@@ -674,8 +684,10 @@ func (x *GLArea) ConnectResize(cb *func(GLArea, int32, int32)) uint32 {
 		cbFn(fa, WidthVarp, HeightVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

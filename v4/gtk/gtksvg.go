@@ -648,7 +648,9 @@ func (x *Svg) GetPropertyWeight() float64 {
 func (x *Svg) ConnectError(cb *func(Svg, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
@@ -659,8 +661,10 @@ func (x *Svg) ConnectError(cb *func(Svg, uintptr)) uint32 {
 		cbFn(fa, ErrorVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Compute a concrete size for the `GdkPaintable`.

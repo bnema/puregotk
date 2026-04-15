@@ -1471,7 +1471,9 @@ func (x *Application) GetPropertyVersion() string {
 func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1482,8 +1484,10 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::command-line signal is emitted on the primary instance when
@@ -1492,7 +1496,9 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
 func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int32) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, CommandLineVarp uintptr) int32 {
@@ -1503,8 +1509,10 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int32) u
 		return cbFn(fa, CommandLineVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::handle-local-options signal is emitted on the local instance
@@ -1551,7 +1559,9 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int32) u
 func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) int32) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "handle-local-options", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "handle-local-options", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, OptionsVarp uintptr) int32 {
@@ -1562,8 +1572,10 @@ func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) i
 		return cbFn(fa, OptionsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "handle-local-options", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "handle-local-options", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::name-lost signal is emitted only on the registered primary instance
@@ -1574,7 +1586,9 @@ func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) i
 func (x *Application) ConnectNameLost(cb *func(Application) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "name-lost", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "name-lost", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -1585,8 +1599,10 @@ func (x *Application) ConnectNameLost(cb *func(Application) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "name-lost", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "name-lost", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::open signal is emitted on the primary instance when there are
@@ -1594,7 +1610,9 @@ func (x *Application) ConnectNameLost(cb *func(Application) bool) uint32 {
 func (x *Application) ConnectOpen(cb *func(Application, uintptr, int32, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "open", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "open", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, FilesVarp uintptr, NFilesVarp int32, HintVarp string) {
@@ -1605,8 +1623,10 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int32, string))
 		cbFn(fa, FilesVarp, NFilesVarp, HintVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "open", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "open", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::shutdown signal is emitted only on the registered primary instance
@@ -1614,7 +1634,9 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int32, string))
 func (x *Application) ConnectShutdown(cb *func(Application)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "shutdown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "shutdown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1625,8 +1647,10 @@ func (x *Application) ConnectShutdown(cb *func(Application)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "shutdown", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "shutdown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::startup signal is emitted on the primary instance immediately
@@ -1634,7 +1658,9 @@ func (x *Application) ConnectShutdown(cb *func(Application)) uint32 {
 func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1645,8 +1671,10 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.

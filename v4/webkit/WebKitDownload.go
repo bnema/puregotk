@@ -261,7 +261,9 @@ func (x *Download) GetPropertyEstimatedProgress() float64 {
 func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "created-destination", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "created-destination", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DestinationVarp string) {
@@ -272,8 +274,10 @@ func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 
 		cbFn(fa, DestinationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "created-destination", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "created-destination", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted after response is received to
@@ -290,7 +294,9 @@ func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 
 func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "decide-destination", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "decide-destination", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SuggestedFilenameVarp string) bool {
@@ -301,8 +307,10 @@ func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uin
 		return cbFn(fa, SuggestedFilenameVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "decide-destination", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "decide-destination", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when an error occurs during the download
@@ -314,7 +322,9 @@ func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uin
 func (x *Download) ConnectFailed(cb *func(Download, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ErrorVarp uintptr) {
@@ -325,8 +335,10 @@ func (x *Download) ConnectFailed(cb *func(Download, uintptr)) uint32 {
 		cbFn(fa, ErrorVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when download finishes successfully or due to an error.
@@ -334,7 +346,9 @@ func (x *Download) ConnectFailed(cb *func(Download, uintptr)) uint32 {
 func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -345,8 +359,10 @@ func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted after response is received,
@@ -355,7 +371,9 @@ func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
 func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "received-data", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "received-data", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DataLengthVarp uint64) {
@@ -366,8 +384,10 @@ func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint32 {
 		cbFn(fa, DataLengthVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "received-data", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "received-data", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

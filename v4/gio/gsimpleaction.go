@@ -223,7 +223,9 @@ func (x *SimpleAction) GetPropertyStateType() uintptr {
 func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ParameterVarp uintptr) {
@@ -234,8 +236,10 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 		cbFn(fa, ParameterVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Indicates that the action just received a request to change its
@@ -277,7 +281,9 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ValueVarp uintptr) {
@@ -288,8 +294,10 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint3
 		cbFn(fa, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Activates the action.

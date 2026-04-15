@@ -690,7 +690,9 @@ func (x *Sidebar) GetPropertySelected() uint32 {
 func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IndexVarp uint32) {
@@ -701,8 +703,10 @@ func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
 		cbFn(fa, IndexVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when content is dropped onto the item at @index.
@@ -714,7 +718,9 @@ func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
 func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IndexVarp uint32, ValueVarp uintptr, PreferredActionVarp gdk.DragAction) bool {
@@ -725,8 +731,10 @@ func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction)
 		return cbFn(fa, IndexVarp, ValueVarp, PreferredActionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the pointer enters the item at @index.
@@ -738,7 +746,9 @@ func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction)
 func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drop-enter", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-enter", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IndexVarp uint32) gdk.DragAction {
@@ -749,8 +759,10 @@ func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uin
 		return cbFn(fa, IndexVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drop-enter", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drop-enter", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the dropped content is preloaded for the item at @index.
@@ -765,7 +777,9 @@ func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uin
 func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.DragAction) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drop-value-loaded", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-value-loaded", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IndexVarp uint32, ValueVarp uintptr) gdk.DragAction {
@@ -776,8 +790,10 @@ func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.
 		return cbFn(fa, IndexVarp, ValueVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drop-value-loaded", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drop-value-loaded", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a context menu is opened or closed for @item.
@@ -789,7 +805,9 @@ func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.
 func (x *Sidebar) ConnectSetupMenu(cb *func(Sidebar, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ItemVarp uintptr) {
@@ -800,8 +818,10 @@ func (x *Sidebar) ConnectSetupMenu(cb *func(Sidebar, uintptr)) uint32 {
 		cbFn(fa, ItemVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

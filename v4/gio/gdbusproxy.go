@@ -770,7 +770,9 @@ func (x *DBusProxy) GetPropertyGObjectPath() string {
 func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string) {
@@ -781,8 +783,10 @@ func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []str
 		cbFn(fa, ChangedPropertiesVarp, InvalidatedPropertiesVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a signal from the remote object and interface that @proxy is for, has been received.
@@ -793,7 +797,9 @@ func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []str
 func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
@@ -804,8 +810,10 @@ func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr))
 		cbFn(fa, SenderNameVarp, SignalNameVarp, ParametersVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Starts asynchronous initialization of the object implementing the

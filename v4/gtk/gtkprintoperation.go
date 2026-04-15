@@ -1426,7 +1426,9 @@ func (x *PrintOperation) GetPropertyUseFullPage() bool {
 func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr) {
@@ -1437,8 +1439,10 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) ui
 		cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when displaying the print dialog.
@@ -1455,7 +1459,9 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) ui
 func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobject.Object) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -1467,8 +1473,10 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobj
 		return CreateCustomWidgetCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted right before ::begin-print if you added
@@ -1480,7 +1488,9 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobj
 func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidgetVarp uintptr) {
@@ -1491,8 +1501,10 @@ func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintp
 		cbFn(fa, WidgetVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the print operation run has finished doing
@@ -1508,7 +1520,9 @@ func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintp
 func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResult)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResultVarp PrintOperationResult) {
@@ -1519,8 +1533,10 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 		cbFn(fa, ResultVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted for every page that is printed.
@@ -1580,7 +1596,9 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr, PageNrVarp int32) {
@@ -1591,8 +1609,10 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int32
 		cbFn(fa, ContextVarp, PageNrVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after all pages have been rendered.
@@ -1602,7 +1622,9 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int32
 func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr) {
@@ -1613,8 +1635,10 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint
 		cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after the ::begin-print signal, but before the actual rendering
@@ -1634,7 +1658,9 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint
 func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr) bool {
@@ -1645,8 +1671,10 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool)
 		return cbFn(fa, ContextVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted when a preview is requested from the native dialog.
@@ -1669,7 +1697,9 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool)
 func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintptr, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PreviewVarp uintptr, ContextVarp uintptr, ParentVarp uintptr) bool {
@@ -1680,8 +1710,10 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintpt
 		return cbFn(fa, PreviewVarp, ContextVarp, ParentVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted once for every page that is printed.
@@ -1692,7 +1724,9 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintpt
 func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintptr, int32, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextVarp uintptr, PageNrVarp int32, SetupVarp uintptr) {
@@ -1703,8 +1737,10 @@ func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintpt
 		cbFn(fa, ContextVarp, PageNrVarp, SetupVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted at between the various phases of the print operation.
@@ -1715,7 +1751,9 @@ func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintpt
 func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1726,8 +1764,10 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after change of selected printer.
@@ -1737,7 +1777,9 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint32 {
 func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, uintptr, uintptr, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidgetVarp uintptr, SetupVarp uintptr, SettingsVarp uintptr) {
@@ -1748,8 +1790,10 @@ func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, uint
 		cbFn(fa, WidgetVarp, SetupVarp, SettingsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Ends a preview.

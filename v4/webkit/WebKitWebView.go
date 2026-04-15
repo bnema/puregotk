@@ -3264,7 +3264,9 @@ func (x *WebView) GetPropertyZoomLevel() float64 {
 func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RequestVarp uintptr) bool {
@@ -3275,8 +3277,10 @@ func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
 		return cbFn(fa, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when closing a #WebKitWebView is requested. This occurs when a
@@ -3287,7 +3291,9 @@ func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
 func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -3298,8 +3304,10 @@ func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a context menu is about to be displayed to give the application
@@ -3346,7 +3354,9 @@ func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
 func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "context-menu", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextMenuVarp uintptr, HitTestResultVarp uintptr) bool {
@@ -3357,8 +3367,10 @@ func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) u
 		return cbFn(fa, ContextMenuVarp, HitTestResultVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "context-menu", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after #WebKitWebView::context-menu signal, if the context menu is shown,
@@ -3366,7 +3378,9 @@ func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) u
 func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "context-menu-dismissed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu-dismissed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -3377,8 +3391,10 @@ func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "context-menu-dismissed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu-dismissed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the creation of a new #WebKitWebView is requested.
@@ -3399,7 +3415,9 @@ func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
 func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NavigationActionVarp uintptr) uintptr {
@@ -3411,8 +3429,10 @@ func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
 		return CreateCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when WebKit is requesting the client to decide a policy
@@ -3462,7 +3482,9 @@ func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
 func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionType) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "decide-policy", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "decide-policy", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DecisionVarp uintptr, DecisionTypeVarp PolicyDecisionType) bool {
@@ -3473,8 +3495,10 @@ func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionT
 		return cbFn(fa, DecisionVarp, DecisionTypeVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "decide-policy", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "decide-policy", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when JavaScript code calls
@@ -3488,7 +3512,9 @@ func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionT
 func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "enter-fullscreen", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "enter-fullscreen", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -3499,8 +3525,10 @@ func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "enter-fullscreen", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "enter-fullscreen", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Prior to 2.46, this signal was emitted when insecure content was
@@ -3509,7 +3537,9 @@ func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
 func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureContentEvent)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insecure-content-detected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insecure-content-detected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, EventVarp InsecureContentEvent) {
@@ -3520,8 +3550,10 @@ func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureConte
 		cbFn(fa, EventVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "insecure-content-detected", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insecure-content-detected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the #WebKitWebView is about to restore its top level
@@ -3531,7 +3563,9 @@ func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureConte
 func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "leave-fullscreen", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "leave-fullscreen", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -3542,8 +3576,10 @@ func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
 		return cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "leave-fullscreen", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "leave-fullscreen", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a load operation in @web_view changes.
@@ -3596,7 +3632,9 @@ func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
 func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "load-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "load-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LoadEventVarp LoadEvent) {
@@ -3607,8 +3645,10 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 		cbFn(fa, LoadEventVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "load-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "load-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an error occurs during a load operation.
@@ -3624,7 +3664,9 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LoadEventVarp LoadEvent, FailingUriVarp string, ErrorVarp uintptr) bool {
@@ -3635,8 +3677,10 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr
 		return cbFn(fa, LoadEventVarp, FailingUriVarp, ErrorVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a TLS error occurs during a load operation.
@@ -3651,7 +3695,9 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, uintptr
 func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintptr, gio.TlsCertificateFlags) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "load-failed-with-tls-errors", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed-with-tls-errors", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, FailingUriVarp string, CertificateVarp uintptr, ErrorsVarp gio.TlsCertificateFlags) bool {
@@ -3662,8 +3708,10 @@ func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintp
 		return cbFn(fa, FailingUriVarp, CertificateVarp, ErrorsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "load-failed-with-tls-errors", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed-with-tls-errors", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the mouse cursor moves over an
@@ -3677,7 +3725,9 @@ func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintp
 func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mouse-target-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mouse-target-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, HitTestResultVarp uintptr, ModifiersVarp uint32) {
@@ -3688,8 +3738,10 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) 
 		cbFn(fa, HitTestResultVarp, ModifiersVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "mouse-target-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mouse-target-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when WebKit is requesting the client to
@@ -3744,7 +3796,9 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) 
 func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "permission-request", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "permission-request", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RequestVarp uintptr) bool {
@@ -3755,8 +3809,10 @@ func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint
 		return cbFn(fa, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "permission-request", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "permission-request", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when printing is requested on @web_view, usually by a JavaScript call,
@@ -3771,7 +3827,9 @@ func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint
 func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "print", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "print", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PrintOperationVarp uintptr) bool {
@@ -3782,8 +3840,10 @@ func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
 		return cbFn(fa, PrintOperationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "print", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "print", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal allows the User-Agent to respond to permission requests for powerful features, as
@@ -3796,7 +3856,9 @@ func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
 func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "query-permission-state", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "query-permission-state", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, QueryVarp uintptr) bool {
@@ -3807,8 +3869,10 @@ func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) u
 		return cbFn(fa, QueryVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "query-permission-state", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "query-permission-state", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after #WebKitWebView::create on the newly created #WebKitWebView
@@ -3820,7 +3884,9 @@ func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) u
 func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "ready-to-show", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "ready-to-show", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -3831,8 +3897,10 @@ func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "ready-to-show", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "ready-to-show", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a new resource is going to be loaded. The @request parameter
@@ -3842,7 +3910,9 @@ func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
 func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "resource-load-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "resource-load-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResourceVarp uintptr, RequestVarp uintptr) {
@@ -3853,8 +3923,10 @@ func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)
 		cbFn(fa, ResourceVarp, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "resource-load-started", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "resource-load-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after #WebKitWebView::ready-to-show on the newly
@@ -3867,7 +3939,9 @@ func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)
 func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "run-as-modal", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "run-as-modal", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -3878,8 +3952,10 @@ func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "run-as-modal", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "run-as-modal", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the user interacts with a &lt;input
@@ -3898,7 +3974,9 @@ func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
 func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "run-color-chooser", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "run-color-chooser", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RequestVarp uintptr) bool {
@@ -3909,8 +3987,10 @@ func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32
 		return cbFn(fa, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "run-color-chooser", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "run-color-chooser", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the user interacts with a &lt;input
@@ -3927,7 +4007,9 @@ func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32
 func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "run-file-chooser", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "run-file-chooser", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RequestVarp uintptr) bool {
@@ -3938,8 +4020,10 @@ func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 
 		return cbFn(fa, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "run-file-chooser", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "run-file-chooser", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when JavaScript code calls &lt;function&gt;window.alert&lt;/function&gt;,
@@ -3980,7 +4064,9 @@ func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 
 func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "script-dialog", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "script-dialog", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DialogVarp uintptr) bool {
@@ -3991,8 +4077,10 @@ func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
 		return cbFn(fa, DialogVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "script-dialog", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "script-dialog", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a notification should be presented to the
@@ -4004,7 +4092,9 @@ func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
 func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-notification", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-notification", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NotificationVarp uintptr) bool {
@@ -4015,8 +4105,10 @@ func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint3
 		return cbFn(fa, NotificationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "show-notification", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-notification", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a select element in @web_view needs to display a
@@ -4030,7 +4122,9 @@ func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint3
 func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-option-menu", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-option-menu", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MenuVarp uintptr, RectangleVarp uintptr) bool {
@@ -4041,8 +4135,10 @@ func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool
 		return cbFn(fa, MenuVarp, RectangleVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "show-option-menu", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-option-menu", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a form is about to be submitted. The @request
@@ -4059,7 +4155,9 @@ func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool
 func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "submit-form", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "submit-form", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RequestVarp uintptr) {
@@ -4070,8 +4168,10 @@ func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
 		cbFn(fa, RequestVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "submit-form", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "submit-form", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a #WebKitUserMessage is received from the
@@ -4085,7 +4185,9 @@ func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
 func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "user-message-received", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "user-message-received", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp uintptr) bool {
@@ -4096,8 +4198,10 @@ func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) ui
 		return cbFn(fa, MessageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "user-message-received", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "user-message-received", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the web process terminates abnormally due
@@ -4105,7 +4209,9 @@ func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) ui
 func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTerminationReason)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "web-process-terminated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "web-process-terminated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReasonVarp WebProcessTerminationReason) {
@@ -4116,8 +4222,10 @@ func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTermin
 		cbFn(fa, ReasonVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "web-process-terminated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "web-process-terminated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

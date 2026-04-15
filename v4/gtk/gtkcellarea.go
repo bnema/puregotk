@@ -1588,7 +1588,9 @@ func (c *CellArea) SetGoPointer(ptr uintptr) {
 func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintptr, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, CellAreaVarp uintptr, PathVarp string) {
@@ -1599,15 +1601,19 @@ func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintp
 		cbFn(fa, RendererVarp, EditableVarp, CellAreaVarp, PathVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted whenever applying attributes to @area from @model
 func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, bool, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ModelVarp uintptr, IterVarp uintptr, IsExpanderVarp bool, IsExpandedVarp bool) {
@@ -1618,8 +1624,10 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 		cbFn(fa, ModelVarp, IterVarp, IsExpanderVarp, IsExpandedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Indicates that focus changed on this @area. This signal
@@ -1633,7 +1641,9 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RendererVarp uintptr, PathVarp string) {
@@ -1644,8 +1654,10 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 		cbFn(fa, RendererVarp, PathVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Indicates that editing finished on @renderer and that @editable
@@ -1653,7 +1665,9 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr) {
@@ -1664,8 +1678,10 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 		cbFn(fa, RendererVarp, EditableVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the ID of the @buildable object.

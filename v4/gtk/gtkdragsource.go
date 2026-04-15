@@ -251,7 +251,9 @@ func (c *DragSource) SetGoPointer(ptr uintptr) {
 func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DragVarp uintptr) {
@@ -262,8 +264,10 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 		cbFn(fa, DragVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the drag source when a drag has failed.
@@ -274,7 +278,9 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DragVarp uintptr, ReasonVarp gdk.DragCancelReason) bool {
@@ -285,8 +291,10 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 		return cbFn(fa, DragVarp, ReasonVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the drag source when a drag is finished.
@@ -297,7 +305,9 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DragVarp uintptr, DeleteDataVarp bool) {
@@ -308,8 +318,10 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 
 		cbFn(fa, DragVarp, DeleteDataVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a drag is about to be initiated.
@@ -321,7 +333,9 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 
 func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) uintptr {
@@ -333,8 +347,10 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.C
 		return PrepareCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

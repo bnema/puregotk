@@ -93,7 +93,9 @@ func (c *GestureSwipe) SetGoPointer(ptr uintptr) {
 func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VelocityXVarp float64, VelocityYVarp float64) {
@@ -104,8 +106,10 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 		cbFn(fa, VelocityXVarp, VelocityYVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -1260,7 +1260,9 @@ func (x *Session) GetPropertyUserAgent() string {
 func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MsgVarp uintptr) {
@@ -1271,8 +1273,10 @@ func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint32 {
 		cbFn(fa, MsgVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a request is removed from @session's queue,
@@ -1283,7 +1287,9 @@ func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint32 {
 func (x *Session) ConnectRequestUnqueued(cb *func(Session, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MsgVarp uintptr) {
@@ -1294,8 +1300,10 @@ func (x *Session) ConnectRequestUnqueued(cb *func(Session, uintptr)) uint32 {
 		cbFn(fa, MsgVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

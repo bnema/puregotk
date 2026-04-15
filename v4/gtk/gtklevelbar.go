@@ -386,7 +386,9 @@ func (x *LevelBar) GetPropertyValue() float64 {
 func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NameVarp string) {
@@ -397,8 +399,10 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 		cbFn(fa, NameVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

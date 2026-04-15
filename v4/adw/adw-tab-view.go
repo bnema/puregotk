@@ -1737,7 +1737,9 @@ func (x *TabView) GetPropertyNPinnedPages() int32 {
 func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr) bool {
@@ -1748,8 +1750,10 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 		return cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a tab should be transferred into a new window.
@@ -1761,7 +1765,9 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -1773,8 +1779,10 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
 		return CreateWindowCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after the indicator icon on @page has been activated.
@@ -1784,7 +1792,9 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
 func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr) {
@@ -1795,8 +1805,10 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
 		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a page has been created or transferred to @self.
@@ -1806,7 +1818,9 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
 func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
@@ -1817,8 +1831,10 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 
 		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a page has been removed or transferred to another view.
@@ -1833,7 +1849,9 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 
 func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
@@ -1844,15 +1862,19 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int32)) uint32 
 		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after @page has been reordered to @position.
 func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
@@ -1863,8 +1885,10 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32
 		cbFn(fa, PageVarp, PositionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a context menu is opened or closed for @page.
@@ -1876,7 +1900,9 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32
 func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr) {
@@ -1887,8 +1913,10 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint32 {
 		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

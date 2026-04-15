@@ -263,7 +263,9 @@ func (c *DebugControllerDBus) SetGoPointer(ptr uintptr) {
 func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InvocationVarp uintptr) bool {
@@ -274,8 +276,10 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 		return cbFn(fa, InvocationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Get the value of #GDebugController:debug-enabled.

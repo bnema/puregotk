@@ -134,7 +134,9 @@ func (x *FileChooserWidget) GetPropertySubtitle() string {
 func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "desktop-folder", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "desktop-folder", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -145,8 +147,10 @@ func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) ui
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "desktop-folder", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "desktop-folder", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -164,7 +168,9 @@ func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) ui
 func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "down-folder", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "down-folder", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -175,8 +181,10 @@ func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint3
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "down-folder", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "down-folder", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -190,7 +198,9 @@ func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint3
 func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "home-folder", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "home-folder", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -201,8 +211,10 @@ func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint3
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "home-folder", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "home-folder", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -221,7 +233,9 @@ func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint3
 func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "location-popup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "location-popup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp string) {
@@ -232,8 +246,10 @@ func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, str
 		cbFn(fa, PathVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "location-popup", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "location-popup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -247,7 +263,9 @@ func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, str
 func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "location-popup-on-paste", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "location-popup-on-paste", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -258,8 +276,10 @@ func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidg
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "location-popup-on-paste", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "location-popup-on-paste", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -274,7 +294,9 @@ func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidg
 func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "location-toggle-popup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "location-toggle-popup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -285,8 +307,10 @@ func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidge
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "location-toggle-popup", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "location-toggle-popup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -299,7 +323,9 @@ func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidge
 func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "places-shortcut", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "places-shortcut", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -310,8 +336,10 @@ func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) u
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "places-shortcut", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "places-shortcut", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -331,7 +359,9 @@ func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) u
 func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int32)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "quick-bookmark", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "quick-bookmark", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, BookmarkIndexVarp int32) {
@@ -342,8 +372,10 @@ func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int
 		cbFn(fa, BookmarkIndexVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "quick-bookmark", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "quick-bookmark", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -356,7 +388,9 @@ func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int
 func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "recent-shortcut", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "recent-shortcut", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -367,8 +401,10 @@ func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) u
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "recent-shortcut", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "recent-shortcut", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -381,7 +417,9 @@ func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) u
 func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "search-shortcut", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "search-shortcut", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -392,8 +430,10 @@ func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) u
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "search-shortcut", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "search-shortcut", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -406,7 +446,9 @@ func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) u
 func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-hidden", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-hidden", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -417,8 +459,10 @@ func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint3
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "show-hidden", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-hidden", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -432,7 +476,9 @@ func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint3
 func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "up-folder", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "up-folder", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -443,8 +489,10 @@ func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint32 
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "up-folder", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "up-folder", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

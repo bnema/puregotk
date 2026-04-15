@@ -746,7 +746,9 @@ func (x *TlsConnection) GetPropertyUseSystemCertdb() bool {
 func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr, TlsCertificateFlags) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool {
@@ -757,8 +759,10 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr
 		return cbFn(fa, PeerCertVarp, ErrorsVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

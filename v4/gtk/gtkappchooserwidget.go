@@ -324,7 +324,9 @@ func (x *AppChooserWidget) GetPropertyShowRecommended() bool {
 func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ApplicationVarp uintptr) {
@@ -335,15 +337,19 @@ func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget
 		cbFn(fa, ApplicationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an application item is selected from the widget's list.
 func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ApplicationVarp uintptr) {
@@ -354,8 +360,10 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 		cbFn(fa, ApplicationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

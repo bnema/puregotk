@@ -467,7 +467,9 @@ func (x *ContentProvider) GetPropertyStorableFormats() uintptr {
 func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "content-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "content-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -478,8 +480,10 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint3
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "content-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "content-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

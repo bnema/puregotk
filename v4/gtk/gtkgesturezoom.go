@@ -86,7 +86,9 @@ func (c *GestureZoom) SetGoPointer(ptr uintptr) {
 func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScaleVarp float64) {
@@ -97,8 +99,10 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32
 		cbFn(fa, ScaleVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

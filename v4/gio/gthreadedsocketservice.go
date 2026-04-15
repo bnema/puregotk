@@ -264,7 +264,9 @@ func (x *ThreadedSocketService) GetPropertyMaxThreads() int32 {
 func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ConnectionVarp uintptr, SourceObjectVarp uintptr) bool {
@@ -275,8 +277,10 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintp
 		return cbFn(fa, ConnectionVarp, SourceObjectVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

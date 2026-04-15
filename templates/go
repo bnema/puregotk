@@ -235,9 +235,83 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     {{- if and (eq $.PkgName "glib") (eq .Name "ChildWatchAdd")}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = childWatchFuncTrampolineCb
+     }
+     cret := x{{.Name}}(PidVar, functionRef, DataVar)
+     trackChildWatchFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "ChildWatchAddFull")}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = childWatchFuncTrampolineCb
+     }
+     cret := x{{.Name}}(PriorityVar, PidVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     trackChildWatchFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAdd") (eq .Name "TimeoutAdd") (eq .Name "TimeoutAddSeconds"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAdd"}}
+     cret := x{{.Name}}(functionRef, DataVar)
+     {{- else}}
+     cret := x{{.Name}}(IntervalVar, functionRef, DataVar)
+     {{- end}}
+     trackSourceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAddFull") (eq .Name "TimeoutAddFull") (eq .Name "TimeoutAddSecondsFull"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAddFull"}}
+     cret := x{{.Name}}(PriorityVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     {{- else}}
+     cret := x{{.Name}}(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     {{- end}}
+     trackSourceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAddOnce") (eq .Name "TimeoutAddOnce") (eq .Name "TimeoutAddSecondsOnce"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceOnceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAddOnce"}}
+     cret := x{{.Name}}(functionRef, DataVar)
+     {{- else}}
+     cret := x{{.Name}}(IntervalVar, functionRef, DataVar)
+     {{- end}}
+     trackSourceOnceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "SourceRemove")}}
+     cret := x{{.Name}}(TagVar)
+     if cret {
+          removeTrackedSource(TagVar)
+     }
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "IdleRemoveByData")}}
+     trackedSourceID := trackedSourceIDByUserData(DataVar)
+     cret := x{{.Name}}(DataVar)
+     if cret {
+          removeTrackedSource(trackedSourceID)
+     }
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "SourceRemoveByUserData")}}
+     trackedSourceID := trackedSourceIDByUserData(UserDataVar)
+     cret := x{{.Name}}(UserDataVar)
+     if cret {
+          removeTrackedSource(trackedSourceID)
+     }
+     return cret
+     {{- else}}
      {{.Ret.Preamble $NotGLib}}
      {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
+     {{- end}}
 }
 {{end}}
 
@@ -327,7 +401,9 @@ func (c *{{.Name}}) SetGoPointer(ptr uintptr) {
 func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}}) uint32 {
      cbPtr := uintptr(unsafe.Pointer(cb))
      if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback(cbPtr); ok {
-          return {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
+          handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
+          {{if $NotGLib}}glib.{{end}}SaveHandlerMapping(handlerID, cbPtr)
+          return handlerID
      }
 
      fcb := func(clsPtr uintptr {{convc .Args.Pure.Full}}) {{.Ret.Raw}} {
@@ -344,8 +420,10 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
           {{end}}
      }
      cbRefPtr := purego.NewCallback(fcb)
-     {{if $NotGLib}}glib.{{end}}SaveCallback(cbPtr, cbRefPtr)
-     return {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
+     {{if $NotGLib}}glib.{{end}}SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+     handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
+     {{if $NotGLib}}glib.{{end}}SaveHandlerMapping(handlerID, cbPtr)
+     return handlerID
 }
 {{end}}
 
@@ -365,9 +443,83 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     {{- if and (eq $.PkgName "glib") (eq .Name "ChildWatchAdd")}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = childWatchFuncTrampolineCb
+     }
+     cret := x{{.Name}}(PidVar, functionRef, DataVar)
+     trackChildWatchFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "ChildWatchAddFull")}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = childWatchFuncTrampolineCb
+     }
+     cret := x{{.Name}}(PriorityVar, PidVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     trackChildWatchFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAdd") (eq .Name "TimeoutAdd") (eq .Name "TimeoutAddSeconds"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAdd"}}
+     cret := x{{.Name}}(functionRef, DataVar)
+     {{- else}}
+     cret := x{{.Name}}(IntervalVar, functionRef, DataVar)
+     {{- end}}
+     trackSourceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAddFull") (eq .Name "TimeoutAddFull") (eq .Name "TimeoutAddSecondsFull"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAddFull"}}
+     cret := x{{.Name}}(PriorityVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     {{- else}}
+     cret := x{{.Name}}(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
+     {{- end}}
+     trackSourceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (or (eq .Name "IdleAddOnce") (eq .Name "TimeoutAddOnce") (eq .Name "TimeoutAddSecondsOnce"))}}
+     var functionRef uintptr
+     if FunctionVar != nil {
+          functionRef = sourceOnceFuncTrampolineCb
+     }
+     {{- if eq .Name "IdleAddOnce"}}
+     cret := x{{.Name}}(functionRef, DataVar)
+     {{- else}}
+     cret := x{{.Name}}(IntervalVar, functionRef, DataVar)
+     {{- end}}
+     trackSourceOnceFunc(cret, FunctionVar, DataVar)
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "SourceRemove")}}
+     cret := x{{.Name}}(TagVar)
+     if cret {
+          removeTrackedSource(TagVar)
+     }
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "IdleRemoveByData")}}
+     trackedSourceID := trackedSourceIDByUserData(DataVar)
+     cret := x{{.Name}}(DataVar)
+     if cret {
+          removeTrackedSource(trackedSourceID)
+     }
+     return cret
+     {{- else if and (eq $.PkgName "glib") (eq .Name "SourceRemoveByUserData")}}
+     trackedSourceID := trackedSourceIDByUserData(UserDataVar)
+     cret := x{{.Name}}(UserDataVar)
+     if cret {
+          removeTrackedSource(trackedSourceID)
+     }
+     return cret
+     {{- else}}
      {{.Ret.Preamble $NotGLib}}
      {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
+     {{- end}}
 }
 {{end}}
 

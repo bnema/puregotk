@@ -192,7 +192,9 @@ func (c *BackForwardList) SetGoPointer(ptr uintptr) {
 func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ItemAddedVarp uintptr, ItemsRemovedVarp uintptr) {
@@ -203,8 +205,10 @@ func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uint
 		cbFn(fa, ItemAddedVarp, ItemsRemovedVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -415,7 +415,9 @@ func (x *NavigationPage) GetPropertyTitle() string {
 func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -426,8 +428,10 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the page starts hiding at the beginning of the navigation view
@@ -438,7 +442,9 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
 func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -449,8 +455,10 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the page shows at the beginning of the navigation view
@@ -461,7 +469,9 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
 func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -472,8 +482,10 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the navigation view transition has been completed and the page
@@ -484,7 +496,9 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
 func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -495,8 +509,10 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -1402,7 +1418,9 @@ func (x *NavigationView) GetPropertyVisiblePageTag() string {
 func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationPage) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) uintptr {
@@ -1414,8 +1432,10 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 		return GetNextPageCls.Ptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after @page has been popped from the navigation stack.
@@ -1428,7 +1448,9 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr) {
@@ -1439,8 +1461,10 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32
 		cbFn(fa, PageVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after a page has been pushed to the navigation stack.
@@ -1449,7 +1473,9 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32
 func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1460,8 +1486,10 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after the navigation stack has been replaced.
@@ -1470,7 +1498,9 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
 func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1481,8 +1511,10 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the progress @self will snap back to after the gesture is canceled.

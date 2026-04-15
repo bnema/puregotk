@@ -130,7 +130,9 @@ func (x *EventControllerFocus) GetPropertyIsFocus() bool {
 func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -141,8 +143,10 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever the focus leaves the widget hierarchy
@@ -157,7 +161,9 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -168,8 +174,10 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

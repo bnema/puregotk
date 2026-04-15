@@ -118,7 +118,9 @@ func (x *GestureLongPress) GetPropertyDelayFactor() float64 {
 func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -129,8 +131,10 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a press goes unmoved/unreleased longer than
@@ -138,7 +142,9 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -149,8 +155,10 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 		cbFn(fa, XVarp, YVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

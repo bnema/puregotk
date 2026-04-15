@@ -188,7 +188,9 @@ func (c *Overlay) SetGoPointer(ptr uintptr) {
 func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp *uintptr) bool {
@@ -199,8 +201,10 @@ func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) b
 		return cbFn(fa, WidgetVarp, AllocationVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

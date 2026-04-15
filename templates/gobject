@@ -2,6 +2,7 @@ package gobject
 
 import (
 	"reflect"
+	"unsafe"
 
 	"github.com/bnema/puregotk/v4/glib"
 )
@@ -37,11 +38,23 @@ func (o Object) Cast(v Ptr) {
 }
 
 func (o Object) ConnectSignal(signal string, cb *func()) uint32 {
-	return SignalConnect(o.GoPointer(), signal, glib.NewCallback(cb))
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		handlerID := SignalConnect(o.GoPointer(), signal, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
+	}
+
+	cbRefPtr := glib.NewCallback(cb)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := SignalConnect(o.GoPointer(), signal, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func (o Object) DisconnectSignal(handler uint32) {
 	SignalHandlerDisconnect(&o, handler)
+	glib.RemoveCallbackByHandler(handler)
 }
 
 // types

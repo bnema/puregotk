@@ -2033,7 +2033,9 @@ func (c *Object) SetGoPointer(ptr uintptr) {
 func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
@@ -2044,8 +2046,10 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 		cbFn(fa, PspecVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xObjectCompatControl func(uint, uintptr) uint

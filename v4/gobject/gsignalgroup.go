@@ -195,7 +195,9 @@ func (c *SignalGroup) SetGoPointer(ptr uintptr) {
 func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InstanceVarp uintptr) {
@@ -206,8 +208,10 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 		cbFn(fa, InstanceVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the target instance of @self is set to a
@@ -218,7 +222,9 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -229,8 +235,10 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

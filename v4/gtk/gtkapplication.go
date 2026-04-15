@@ -573,7 +573,9 @@ func (x *Application) GetPropertyScreensaverActive() bool {
 func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -584,8 +586,10 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a window is added to an application.
@@ -594,7 +598,9 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WindowVarp uintptr) {
@@ -605,8 +611,10 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 		cbFn(fa, WindowVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a window is removed from an application.
@@ -616,7 +624,9 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WindowVarp uintptr) {
@@ -627,8 +637,10 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint3
 		cbFn(fa, WindowVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.

@@ -366,7 +366,9 @@ func (x *SwipeTracker) GetPropertyUpperOvershoot() bool {
 func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -377,8 +379,10 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted as soon as the gesture has stopped.
@@ -390,7 +394,9 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {
 func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VelocityVarp float64, ToVarp float64) {
@@ -401,8 +407,10 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 		cbFn(fa, VelocityVarp, ToVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when a possible swipe is detected.
@@ -412,7 +420,9 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp NavigationDirection) {
@@ -423,15 +433,19 @@ func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection
 		cbFn(fa, DirectionVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted every time the progress value changes.
 func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ProgressVarp float64) {
@@ -442,8 +456,10 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint3
 		cbFn(fa, ProgressVarp)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Retrieves the orientation of the @orientable.

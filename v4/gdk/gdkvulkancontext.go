@@ -61,7 +61,9 @@ func (c *VulkanContext) SetGoPointer(ptr uintptr) {
 func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -72,8 +74,10 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 		cbFn(fa)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
-	return gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {
