@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"unsafe"
 
 	"github.com/bnema/purego"
@@ -19,11 +20,18 @@ func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
 	for _, lib := range libs {
 		sym, err := purego.Dlsym(lib, name)
 		if err == nil {
-			purego.RegisterFunc(fptr, sym)
-
+			registerFuncSafe(fptr, sym)
 			return
 		}
 	}
+}
+
+// registerFuncSafe wraps purego.RegisterFunc with panic recovery for signatures
+// that exceed purego's current ABI support. The function pointer stays nil and
+// only fails if the unsupported function is actually called.
+func registerFuncSafe(fptr interface{}, sym uintptr) {
+	defer func() { recover() }()
+	purego.RegisterFunc(fptr, sym)
 }
 
 // paths to where the shared object files should be located
@@ -112,52 +120,58 @@ func findPkgConf(name string) []string {
 	return []string{}
 }
 
-// GetPaths gets all shared object files from a library name
-// it does it in the following order
+// tryFindPaths gets all shared object files from a library name.
+// It does it in the following order:
 // see if PUREGOTK_LIBNAME_PATH is set (full path to the lib)
 // - e.g. PUREGOTK_GTK_PATH
 // see if PUREGOTK_LIB_FOLDER is set (root folder where to look for libs)
 // go over the hardcoded paths
 // find a library name with pkg-config
-// panic if failed
-// TODO: Hardcore a library shared object with linker -X flag
-// This is useful for packaging
-func GetPaths(name string) []string {
+func tryFindPaths(name string) []string {
 	// try to get from env var
 	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
 	if v := os.Getenv(ev); v != "" {
 		return []string{v}
 	}
 
-	// Or if a general folder is set where everywhere is located, return that
+	// Or if a general folder is set where everywhere is located, return that.
 	ep := os.Getenv("PUREGOTK_LIB_FOLDER")
 	if ep != "" {
-		g := findSos(ep, name)
-		if len(g) == 0 {
-			panic(fmt.Sprintf("Could not find lib: %s, at path: %s with env: %s", name, ep, "PUREGOTK_FOLDER"))
-		}
-		return g
+		return findSos(ep, name)
 	}
 
 	// fallback to lookup a path if no env var is found
 	gp, ok := paths[runtime.GOOS+"_"+runtime.GOARCH]
 	if ok {
-		// try to loop over paths
 		for _, p := range gp {
 			g := findSos(p, name)
 			if len(g) > 0 {
 				return g
 			}
-
 		}
 	}
-	// last effort: pkg-config
-	g := findPkgConf(name)
+
+	return findPkgConf(name)
+}
+
+// GetPaths gets all shared object files from a library name and panics if no
+// matching library can be found.
+// TODO: Hardcode a library shared object with linker -X flag.
+// This is useful for packaging.
+func GetPaths(name string) []string {
+	g := tryFindPaths(name)
 	if len(g) > 0 {
 		return g
 	}
 
+	ev := fmt.Sprintf("PUREGOTK_%s_PATH", name)
 	panic(fmt.Sprintf("Path for library: %s not found. Please set the path to this library shared object file manually with env variable: %s or PUREGOTK_LIB_FOLDER. Or make sure pkg-config is setup correctly", strings.ToLower(name), ev))
+}
+
+// TryGetPaths is like GetPaths but returns an empty slice instead of panicking.
+// Use this for optional libraries that may not be installed.
+func TryGetPaths(name string) []string {
+	return tryFindPaths(name)
 }
 
 // hasSuffix tests whether the string s ends with suffix.
@@ -227,4 +241,82 @@ func GoString(c uintptr) string {
 		length++
 	}
 	return string(unsafe.Slice((*byte)(ptr), length))
+}
+
+var (
+	xGStrdup    func(string) uintptr
+	gstrdupOnce sync.Once
+	xGFree      func(uintptr)
+	gfreeOnce   sync.Once
+)
+
+// GStrdup allocates a C-owned copy of a Go string using g_strdup.
+// The returned pointer must be freed with g_free by the receiver or callee.
+func GStrdup(s string) uintptr {
+	gstrdupOnce.Do(func() {
+		var libs []uintptr
+		for _, libPath := range GetPaths("GLIB") {
+			lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+			if err != nil {
+				continue
+			}
+			libs = append(libs, lib)
+		}
+		PuregoSafeRegister(&xGStrdup, libs, "g_strdup")
+	})
+	return xGStrdup(s)
+}
+
+// GStrdupNullable is like GStrdup but accepts a nullable *string.
+func GStrdupNullable(s *string) uintptr {
+	if s == nil {
+		return 0
+	}
+	return GStrdup(*s)
+}
+
+// GFree frees memory allocated by GLib allocation APIs.
+func GFree(ptr uintptr) {
+	if ptr == 0 {
+		return
+	}
+	gfreeOnce.Do(func() {
+		var libs []uintptr
+		for _, libPath := range GetPaths("GLIB") {
+			lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+			if err != nil {
+				continue
+			}
+			libs = append(libs, lib)
+		}
+		PuregoSafeRegister(&xGFree, libs, "g_free")
+	})
+	xGFree(ptr)
+}
+
+// GFreeNullable frees a nullable GLib-allocated pointer.
+func GFreeNullable(ptr uintptr) {
+	if ptr == 0 {
+		return
+	}
+	GFree(ptr)
+}
+
+// NullableStringToPtr converts a nullable Go string to a C string pointer.
+// The caller must call runtime.KeepAlive(backing) after the C call completes.
+func NullableStringToPtr(s *string) (uintptr, []byte) {
+	if s == nil {
+		return 0, nil
+	}
+	b := append([]byte(*s), 0)
+	return uintptr(unsafe.Pointer(&b[0])), b
+}
+
+// PtrToNullableString converts a nullable char* to a Go *string.
+func PtrToNullableString(ptr uintptr) *string {
+	if ptr == 0 {
+		return nil
+	}
+	str := GoString(ptr)
+	return &str
 }
