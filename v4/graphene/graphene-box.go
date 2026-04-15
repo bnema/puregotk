@@ -30,14 +30,17 @@ func (x *Box) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xBoxAlloc func() *Box
+var xBoxAlloc func() uintptr
 
 // Allocates a new #graphene_box_t.
 //
 // The contents of the returned structure are undefined.
 func BoxAlloc() *Box {
 	cret := xBoxAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
 var xBoxContainsBox func(uintptr, *Box) bool
@@ -167,24 +170,30 @@ func (x *Box) GetWidth() float32 {
 	return cret
 }
 
-var xBoxInit func(uintptr, *Point3D, *Point3D) *Box
+var xBoxInit func(uintptr, *Point3D, *Point3D) uintptr
 
 // Initializes the given #graphene_box_t with two vertices.
 func (x *Box) Init(MinVar *Point3D, MaxVar *Point3D) *Box {
 	cret := xBoxInit(x.GoPointer(), MinVar, MaxVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxInitFromBox func(uintptr, *Box) *Box
+var xBoxInitFromBox func(uintptr, *Box) uintptr
 
 // Initializes the given #graphene_box_t with the vertices of
 // another #graphene_box_t.
 func (x *Box) InitFromBox(SrcVar *Box) *Box {
 	cret := xBoxInitFromBox(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxInitFromPoints func(uintptr, uint32, []Point3D) *Box
+var xBoxInitFromPoints func(uintptr, uint32, []Point3D) uintptr
 
 // Initializes the given #graphene_box_t with the given array
 // of vertices.
@@ -193,19 +202,25 @@ var xBoxInitFromPoints func(uintptr, uint32, []Point3D) *Box
 // graphene_box_empty().
 func (x *Box) InitFromPoints(NPointsVar uint32, PointsVar []Point3D) *Box {
 	cret := xBoxInitFromPoints(x.GoPointer(), NPointsVar, PointsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxInitFromVec3 func(uintptr, *Vec3, *Vec3) *Box
+var xBoxInitFromVec3 func(uintptr, *Vec3, *Vec3) uintptr
 
 // Initializes the given #graphene_box_t with two vertices
 // stored inside #graphene_vec3_t.
 func (x *Box) InitFromVec3(MinVar *Vec3, MaxVar *Vec3) *Box {
 	cret := xBoxInitFromVec3(x.GoPointer(), MinVar, MaxVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxInitFromVectors func(uintptr, uint32, []Vec3) *Box
+var xBoxInitFromVectors func(uintptr, uint32, []Vec3) uintptr
 
 // Initializes the given #graphene_box_t with the given array
 // of vertices.
@@ -214,7 +229,10 @@ var xBoxInitFromVectors func(uintptr, uint32, []Vec3) *Box
 // graphene_box_empty().
 func (x *Box) InitFromVectors(NVectorsVar uint32, VectorsVar []Vec3) *Box {
 	cret := xBoxInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
 var xBoxIntersection func(uintptr, *Box, *Box) bool
@@ -235,27 +253,33 @@ func (x *Box) Union(BVar *Box, ResVar *Box) {
 	xBoxUnion(x.GoPointer(), BVar, ResVar)
 }
 
-var xBoxEmpty func() *Box
+var xBoxEmpty func() uintptr
 
 // A degenerate #graphene_box_t that can only be expanded.
 //
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxEmpty() *Box {
 	cret := xBoxEmpty()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxInfinite func() *Box
+var xBoxInfinite func() uintptr
 
 // A degenerate #graphene_box_t that cannot be expanded.
 //
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxInfinite() *Box {
 	cret := xBoxInfinite()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxMinusOne func() *Box
+var xBoxMinusOne func() uintptr
 
 // A #graphene_box_t with the minimum vertex set at (-1, -1, -1) and the
 // maximum vertex set at (0, 0, 0).
@@ -263,10 +287,13 @@ var xBoxMinusOne func() *Box
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxMinusOne() *Box {
 	cret := xBoxMinusOne()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxOne func() *Box
+var xBoxOne func() uintptr
 
 // A #graphene_box_t with the minimum vertex set at (0, 0, 0) and the
 // maximum vertex set at (1, 1, 1).
@@ -274,10 +301,13 @@ var xBoxOne func() *Box
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxOne() *Box {
 	cret := xBoxOne()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxOneMinusOne func() *Box
+var xBoxOneMinusOne func() uintptr
 
 // A #graphene_box_t with the minimum vertex set at (-1, -1, -1) and the
 // maximum vertex set at (1, 1, 1).
@@ -285,17 +315,23 @@ var xBoxOneMinusOne func() *Box
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxOneMinusOne() *Box {
 	cret := xBoxOneMinusOne()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
-var xBoxZero func() *Box
+var xBoxZero func() uintptr
 
 // A #graphene_box_t with both the minimum and maximum vertices set at (0, 0, 0).
 //
 // The returned value is owned by Graphene and should not be modified or freed.
 func BoxZero() *Box {
 	cret := xBoxZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Box)(unsafe.Pointer(cret))
 }
 
 func init() {

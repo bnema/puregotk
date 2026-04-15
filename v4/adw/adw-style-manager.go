@@ -85,7 +85,7 @@ func (x *StyleManager) GetAccentColor() AccentColor {
 	return cret
 }
 
-var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
+var xStyleManagerGetAccentColorRgba func(uintptr) uintptr
 
 // Gets the current system accent color as a `GdkRGBA`.
 //
@@ -95,7 +95,10 @@ var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
 // This is a background color. The matching foreground color is white.
 func (x *StyleManager) GetAccentColorRgba() *gdk.RGBA {
 	cret := xStyleManagerGetAccentColorRgba(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 var xStyleManagerGetColorScheme func(uintptr) ColorScheme

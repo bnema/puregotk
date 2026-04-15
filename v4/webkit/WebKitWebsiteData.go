@@ -73,14 +73,17 @@ func (x *WebsiteData) GetTypes() WebsiteDataTypes {
 	return cret
 }
 
-var xWebsiteDataRef func(uintptr) *WebsiteData
+var xWebsiteDataRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @website_data by one.
 //
 // This function is MT-safe and may be called from any thread.
 func (x *WebsiteData) Ref() *WebsiteData {
 	cret := xWebsiteDataRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*WebsiteData)(unsafe.Pointer(cret))
 }
 
 var xWebsiteDataUnref func(uintptr)

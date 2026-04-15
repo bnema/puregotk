@@ -2,13 +2,15 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 )
 
-var xPollableSourceNew func(uintptr) *glib.Source
+var xPollableSourceNew func(uintptr) uintptr
 
 // Utility method for #GPollableInputStream and #GPollableOutputStream
 // implementations. Creates a new #GSource that expects a callback of
@@ -17,10 +19,13 @@ var xPollableSourceNew func(uintptr) *glib.Source
 // sources to it to cause it to trigger.
 func PollableSourceNew(PollableStreamVar *gobject.Object) *glib.Source {
 	cret := xPollableSourceNew(PollableStreamVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
-var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) *glib.Source
+var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) uintptr
 
 // Utility method for #GPollableInputStream and #GPollableOutputStream
 // implementations. Creates a new #GSource, as with
@@ -28,7 +33,10 @@ var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) *glib.Source
 // dummy callback), and @cancellable, if they are non-%NULL.
 func PollableSourceNewFull(PollableStreamVar *gobject.Object, ChildSourceVar *glib.Source, CancellableVar *Cancellable) *glib.Source {
 	cret := xPollableSourceNewFull(PollableStreamVar.GoPointer(), ChildSourceVar, CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 var xPollableStreamRead func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int

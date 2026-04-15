@@ -51,7 +51,7 @@ func (x *RoundedRect) ContainsRect(RectVar *graphene.Rect) bool {
 	return cret
 }
 
-var xRoundedRectInit func(uintptr, *graphene.Rect, *graphene.Size, *graphene.Size, *graphene.Size, *graphene.Size) *RoundedRect
+var xRoundedRectInit func(uintptr, *graphene.Rect, *graphene.Size, *graphene.Size, *graphene.Size, *graphene.Size) uintptr
 
 // Initializes a rounded rectangle with the given values.
 //
@@ -59,10 +59,13 @@ var xRoundedRectInit func(uintptr, *graphene.Rect, *graphene.Size, *graphene.Siz
 // before returning.
 func (x *RoundedRect) Init(BoundsVar *graphene.Rect, TopLeftVar *graphene.Size, TopRightVar *graphene.Size, BottomRightVar *graphene.Size, BottomLeftVar *graphene.Size) *RoundedRect {
 	cret := xRoundedRectInit(x.GoPointer(), BoundsVar, TopLeftVar, TopRightVar, BottomRightVar, BottomLeftVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
-var xRoundedRectInitCopy func(uintptr, *RoundedRect) *RoundedRect
+var xRoundedRectInitCopy func(uintptr, *RoundedRect) uintptr
 
 // Initializes a rounded rectangle with a copy.
 //
@@ -70,16 +73,22 @@ var xRoundedRectInitCopy func(uintptr, *RoundedRect) *RoundedRect
 // so make sure the source is normalized.
 func (x *RoundedRect) InitCopy(SrcVar *RoundedRect) *RoundedRect {
 	cret := xRoundedRectInitCopy(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
-var xRoundedRectInitFromRect func(uintptr, *graphene.Rect, float32) *RoundedRect
+var xRoundedRectInitFromRect func(uintptr, *graphene.Rect, float32) uintptr
 
 // Initializes a rounded rectangle to the given bounds
 // and sets the radius of all four corners equally.
 func (x *RoundedRect) InitFromRect(BoundsVar *graphene.Rect, RadiusVar float32) *RoundedRect {
 	cret := xRoundedRectInitFromRect(x.GoPointer(), BoundsVar, RadiusVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
 var xRoundedRectIntersectsRect func(uintptr, *graphene.Rect) bool
@@ -103,7 +112,7 @@ func (x *RoundedRect) IsRectilinear() bool {
 	return cret
 }
 
-var xRoundedRectNormalize func(uintptr) *RoundedRect
+var xRoundedRectNormalize func(uintptr) uintptr
 
 // Normalizes a rounded rectangle.
 //
@@ -112,20 +121,26 @@ var xRoundedRectNormalize func(uintptr) *RoundedRect
 // and the corners do not overlap.
 func (x *RoundedRect) Normalize() *RoundedRect {
 	cret := xRoundedRectNormalize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
-var xRoundedRectOffset func(uintptr, float32, float32) *RoundedRect
+var xRoundedRectOffset func(uintptr, float32, float32) uintptr
 
 // Offsets the rounded rectangle's origin by @dx and @dy.
 //
 // The size and corners of the rounded rectangle are unchanged.
 func (x *RoundedRect) Offset(DxVar float32, DyVar float32) *RoundedRect {
 	cret := xRoundedRectOffset(x.GoPointer(), DxVar, DyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
-var xRoundedRectShrink func(uintptr, float32, float32, float32, float32) *RoundedRect
+var xRoundedRectShrink func(uintptr, float32, float32, float32, float32) uintptr
 
 // Shrinks (or grows) a rounded rectangle by moving the 4 sides
 // according to the offsets given.
@@ -137,7 +152,10 @@ var xRoundedRectShrink func(uintptr, float32, float32, float32, float32) *Rounde
 // if you pass negative values for the @top, @right, @bottom or @left.
 func (x *RoundedRect) Shrink(TopVar float32, RightVar float32, BottomVar float32, LeftVar float32) *RoundedRect {
 	cret := xRoundedRectShrink(x.GoPointer(), TopVar, RightVar, BottomVar, LeftVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
 func init() {

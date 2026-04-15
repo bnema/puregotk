@@ -626,7 +626,7 @@ func (x *InputStream) ReadAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar 
 	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) *glib.Bytes
+var xInputStreamReadBytes func(uintptr, uint, uintptr, **glib.Error) uintptr
 
 // Like g_input_stream_read(), this tries to read @count bytes from
 // the stream in a blocking fashion. However, rather than reading into
@@ -655,10 +655,13 @@ func (x *InputStream) ReadBytes(CountVar uint, CancellableVar *Cancellable) (*gl
 	var cerr *glib.Error
 
 	cret := xInputStreamReadBytes(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xInputStreamReadBytesAsync func(uintptr, uint, int32, uintptr, uintptr, uintptr)
@@ -687,17 +690,20 @@ func (x *InputStream) ReadBytesAsync(CountVar uint, IoPriorityVar int32, Cancell
 	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xInputStreamReadBytesFinish func(uintptr, uintptr, **glib.Error) *glib.Bytes
+var xInputStreamReadBytesFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an asynchronous stream read-into-#GBytes operation.
 func (x *InputStream) ReadBytesFinish(ResultVar AsyncResult) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
 	cret := xInputStreamReadBytesFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xInputStreamReadFinish func(uintptr, uintptr, **glib.Error) int

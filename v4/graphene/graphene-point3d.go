@@ -31,12 +31,15 @@ func (x *Point3D) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xPoint3DAlloc func() *Point3D
+var xPoint3DAlloc func() uintptr
 
 // Allocates a #graphene_point3d_t structure.
 func Point3DAlloc() *Point3D {
 	cret := xPoint3DAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point3D)(unsafe.Pointer(cret))
 }
 
 var xPoint3DCross func(uintptr, *Point3D, *Point3D)
@@ -77,30 +80,39 @@ func (x *Point3D) Free() {
 	xPoint3DFree(x.GoPointer())
 }
 
-var xPoint3DInit func(uintptr, float32, float32, float32) *Point3D
+var xPoint3DInit func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_point3d_t with the given coordinates.
 func (x *Point3D) Init(XVar float32, YVar float32, ZVar float32) *Point3D {
 	cret := xPoint3DInit(x.GoPointer(), XVar, YVar, ZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point3D)(unsafe.Pointer(cret))
 }
 
-var xPoint3DInitFromPoint func(uintptr, *Point3D) *Point3D
+var xPoint3DInitFromPoint func(uintptr, *Point3D) uintptr
 
 // Initializes a #graphene_point3d_t using the coordinates of
 // another #graphene_point3d_t.
 func (x *Point3D) InitFromPoint(SrcVar *Point3D) *Point3D {
 	cret := xPoint3DInitFromPoint(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point3D)(unsafe.Pointer(cret))
 }
 
-var xPoint3DInitFromVec3 func(uintptr, *Vec3) *Point3D
+var xPoint3DInitFromVec3 func(uintptr, *Vec3) uintptr
 
 // Initializes a #graphene_point3d_t using the components
 // of a #graphene_vec3_t.
 func (x *Point3D) InitFromVec3(VVar *Vec3) *Point3D {
 	cret := xPoint3DInitFromVec3(x.GoPointer(), VVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point3D)(unsafe.Pointer(cret))
 }
 
 var xPoint3DInterpolate func(uintptr, *Point3D, float64, *Point3D)
@@ -164,12 +176,15 @@ func (x *Point3D) ToVec3(VVar *Vec3) {
 	xPoint3DToVec3(x.GoPointer(), VVar)
 }
 
-var xPoint3dZero func() *Point3D
+var xPoint3dZero func() uintptr
 
 // Retrieves a constant point with all three coordinates set to 0.
 func Point3dZero() *Point3D {
 	cret := xPoint3dZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point3D)(unsafe.Pointer(cret))
 }
 
 func init() {

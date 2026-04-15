@@ -279,12 +279,15 @@ func (x *Texture) Download(DataVar []byte, StrideVar uint) {
 	xTextureDownload(x.GoPointer(), DataVar, StrideVar)
 }
 
-var xTextureGetColorState func(uintptr) *ColorState
+var xTextureGetColorState func(uintptr) uintptr
 
 // Returns the color state associated with the texture.
 func (x *Texture) GetColorState() *ColorState {
 	cret := xTextureGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xTextureGetFormat func(uintptr) MemoryFormat
@@ -333,7 +336,7 @@ func (x *Texture) SaveToPng(FilenameVar string) bool {
 	return cret
 }
 
-var xTextureSaveToPngBytes func(uintptr) *glib.Bytes
+var xTextureSaveToPngBytes func(uintptr) uintptr
 
 // Store the given @texture in memory as a PNG file.
 //
@@ -351,7 +354,10 @@ var xTextureSaveToPngBytes func(uintptr) *glib.Bytes
 // instead.
 func (x *Texture) SaveToPngBytes() *glib.Bytes {
 	cret := xTextureSaveToPngBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xTextureSaveToTiff func(uintptr, string) bool
@@ -364,7 +370,7 @@ func (x *Texture) SaveToTiff(FilenameVar string) bool {
 	return cret
 }
 
-var xTextureSaveToTiffBytes func(uintptr) *glib.Bytes
+var xTextureSaveToTiffBytes func(uintptr) uintptr
 
 // Store the given @texture in memory as a TIFF file.
 //
@@ -380,7 +386,10 @@ var xTextureSaveToTiffBytes func(uintptr) *glib.Bytes
 // use [method@Gdk.Texture.save_to_png_bytes].
 func (x *Texture) SaveToTiffBytes() *glib.Bytes {
 	cret := xTextureSaveToTiffBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 func (c *Texture) GoPointer() uintptr {
@@ -596,7 +605,10 @@ func (x *Texture) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Texture) Serialize() *glib.Variant {
 	cret := gio.XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

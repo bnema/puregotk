@@ -38,16 +38,19 @@ func (x *ShaderArgsBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewShaderArgsBuilder func(uintptr, *glib.Bytes) *ShaderArgsBuilder
+var xNewShaderArgsBuilder func(uintptr, *glib.Bytes) uintptr
 
 // Allocates a builder that can be used to construct a new uniform data
 // chunk.
 func NewShaderArgsBuilder(ShaderVar *GLShader, InitialValuesVar *glib.Bytes) *ShaderArgsBuilder {
 	cret := xNewShaderArgsBuilder(ShaderVar.GoPointer(), InitialValuesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ShaderArgsBuilder)(unsafe.Pointer(cret))
 }
 
-var xShaderArgsBuilderFreeToArgs func(uintptr) *glib.Bytes
+var xShaderArgsBuilderFreeToArgs func(uintptr) uintptr
 
 // Creates a new `GBytes` args from the current state of the
 // given @builder, and frees the @builder instance.
@@ -56,15 +59,21 @@ var xShaderArgsBuilderFreeToArgs func(uintptr) *glib.Bytes
 // on the @builder are zero-initialized.
 func (x *ShaderArgsBuilder) FreeToArgs() *glib.Bytes {
 	cret := xShaderArgsBuilderFreeToArgs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xShaderArgsBuilderRef func(uintptr) *ShaderArgsBuilder
+var xShaderArgsBuilderRef func(uintptr) uintptr
 
 // Increases the reference count of a `GskShaderArgsBuilder` by one.
 func (x *ShaderArgsBuilder) Ref() *ShaderArgsBuilder {
 	cret := xShaderArgsBuilderRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ShaderArgsBuilder)(unsafe.Pointer(cret))
 }
 
 var xShaderArgsBuilderSetBool func(uintptr, int32, bool)
@@ -130,7 +139,7 @@ func (x *ShaderArgsBuilder) SetVec4(IdxVar int32, ValueVar *graphene.Vec4) {
 	xShaderArgsBuilderSetVec4(x.GoPointer(), IdxVar, ValueVar)
 }
 
-var xShaderArgsBuilderToArgs func(uintptr) *glib.Bytes
+var xShaderArgsBuilderToArgs func(uintptr) uintptr
 
 // Creates a new `GBytes` args from the current state of the
 // given @builder.
@@ -145,7 +154,10 @@ var xShaderArgsBuilderToArgs func(uintptr) *glib.Bytes
 // [method@Gsk.ShaderArgsBuilder.free_to_args].
 func (x *ShaderArgsBuilder) ToArgs() *glib.Bytes {
 	cret := xShaderArgsBuilderToArgs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xShaderArgsBuilderUnref func(uintptr)
@@ -354,7 +366,7 @@ func (x *GLShader) FindUniformByName(NameVar string) int32 {
 	return cret
 }
 
-var xGLShaderFormatArgs func(uintptr, ...interface{}) *glib.Bytes
+var xGLShaderFormatArgs func(uintptr, ...interface{}) uintptr
 
 // Formats the uniform data as needed for feeding the named uniforms
 // values into the shader.
@@ -367,10 +379,13 @@ var xGLShaderFormatArgs func(uintptr, ...interface{}) *glib.Bytes
 // are zero-initialized.
 func (x *GLShader) FormatArgs(varArgs ...interface{}) *glib.Bytes {
 	cret := xGLShaderFormatArgs(x.GoPointer(), varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xGLShaderFormatArgsVa func(uintptr, []interface{}) *glib.Bytes
+var xGLShaderFormatArgsVa func(uintptr, []interface{}) uintptr
 
 // Formats the uniform data as needed for feeding the named uniforms
 // values into the shader.
@@ -385,7 +400,10 @@ var xGLShaderFormatArgsVa func(uintptr, []interface{}) *glib.Bytes
 // are zero-initialized.
 func (x *GLShader) FormatArgsVa(UniformsVar []interface{}) *glib.Bytes {
 	cret := xGLShaderFormatArgsVa(x.GoPointer(), UniformsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xGLShaderGetArgBool func(uintptr, *glib.Bytes, int32) bool
@@ -492,12 +510,15 @@ func (x *GLShader) GetResource() string {
 	return cret
 }
 
-var xGLShaderGetSource func(uintptr) *glib.Bytes
+var xGLShaderGetSource func(uintptr) uintptr
 
 // Gets the GLSL sourcecode being used to render this shader.
 func (x *GLShader) GetSource() *glib.Bytes {
 	cret := xGLShaderGetSource(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xGLShaderGetUniformName func(uintptr, int32) string

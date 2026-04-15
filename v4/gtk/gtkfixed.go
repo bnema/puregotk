@@ -104,13 +104,16 @@ func (x *Fixed) GetChildPosition(WidgetVar *Widget, XVar *float64, YVar *float64
 	xFixedGetChildPosition(x.GoPointer(), WidgetVar.GoPointer(), XVar, YVar)
 }
 
-var xFixedGetChildTransform func(uintptr, uintptr) *gsk.Transform
+var xFixedGetChildTransform func(uintptr, uintptr) uintptr
 
 // Retrieves the transformation for @widget set using
 // gtk_fixed_set_child_transform().
 func (x *Fixed) GetChildTransform(WidgetVar *Widget) *gsk.Transform {
 	cret := xFixedGetChildTransform(x.GoPointer(), WidgetVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gsk.Transform)(unsafe.Pointer(cret))
 }
 
 var xFixedMove func(uintptr, uintptr, float64, float64)

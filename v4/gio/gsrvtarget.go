@@ -2,17 +2,22 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
 
-var xSrvTargetListSort func(*glib.List) *glib.List
+var xSrvTargetListSort func(*glib.List) uintptr
 
 // Sorts @targets in place according to the algorithm in RFC 2782.
 func SrvTargetListSort(TargetsVar *glib.List) *glib.List {
 	cret := xSrvTargetListSort(TargetsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {

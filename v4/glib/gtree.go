@@ -39,31 +39,40 @@ func (x *Tree) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTree func(uintptr) *Tree
+var xNewTree func(uintptr) uintptr
 
 // Creates a new #GTree.
 func NewTree(KeyCompareFuncVar *CompareFunc) *Tree {
 	cret := xNewTree(NewCallback(KeyCompareFuncVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Tree)(unsafe.Pointer(cret))
 }
 
-var xNewTreeFull func(uintptr, uintptr, uintptr, uintptr) *Tree
+var xNewTreeFull func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Creates a new #GTree like g_tree_new() and allows to specify functions
 // to free the memory allocated for the key and value that get called when
 // removing the entry from the #GTree.
 func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, KeyDestroyFuncVar *DestroyNotify, ValueDestroyFuncVar *DestroyNotify) *Tree {
-	cret := xNewTreeFull(NewCallback(KeyCompareFuncVar), KeyCompareDataVar, NewCallback(KeyDestroyFuncVar), NewCallback(ValueDestroyFuncVar))
-	return cret
+	cret := xNewTreeFull(NewCallback(KeyCompareFuncVar), KeyCompareDataVar, NewCallbackNullable(KeyDestroyFuncVar), NewCallbackNullable(ValueDestroyFuncVar))
+	if cret == 0 {
+		return nil
+	}
+	return (*Tree)(unsafe.Pointer(cret))
 }
 
-var xNewTreeWithData func(uintptr, uintptr) *Tree
+var xNewTreeWithData func(uintptr, uintptr) uintptr
 
 // Creates a new #GTree with a comparison function that accepts user data.
 // See g_tree_new() for more details.
 func NewTreeWithData(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr) *Tree {
 	cret := xNewTreeWithData(NewCallback(KeyCompareFuncVar), KeyCompareDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Tree)(unsafe.Pointer(cret))
 }
 
 var xTreeDestroy func(uintptr)
@@ -128,7 +137,7 @@ func (x *Tree) Insert(KeyVar uintptr, ValueVar uintptr) {
 	xTreeInsert(x.GoPointer(), KeyVar, ValueVar)
 }
 
-var xTreeInsertNode func(uintptr, uintptr, uintptr) *TreeNode
+var xTreeInsertNode func(uintptr, uintptr, uintptr) uintptr
 
 // Inserts a key/value pair into a #GTree.
 //
@@ -145,7 +154,10 @@ var xTreeInsertNode func(uintptr, uintptr, uintptr) *TreeNode
 // are O(log(n)).
 func (x *Tree) InsertNode(KeyVar uintptr, ValueVar uintptr) *TreeNode {
 	cret := xTreeInsertNode(x.GoPointer(), KeyVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 var xTreeLookup func(uintptr, uintptr) uintptr
@@ -169,17 +181,20 @@ func (x *Tree) LookupExtended(LookupKeyVar uintptr, OrigKeyVar *uintptr, ValueVa
 	return cret
 }
 
-var xTreeLookupNode func(uintptr, uintptr) *TreeNode
+var xTreeLookupNode func(uintptr, uintptr) uintptr
 
 // Gets the tree node corresponding to the given key. Since a #GTree is
 // automatically balanced as key/value pairs are added, key lookup
 // is O(log n) (where n is the number of key/value pairs in the tree).
 func (x *Tree) LookupNode(KeyVar uintptr) *TreeNode {
 	cret := xTreeLookupNode(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
-var xTreeLowerBound func(uintptr, uintptr) *TreeNode
+var xTreeLowerBound func(uintptr, uintptr) uintptr
 
 // Gets the lower bound node corresponding to the given key,
 // or %NULL if the tree is empty or all the nodes in the tree
@@ -189,7 +204,10 @@ var xTreeLowerBound func(uintptr, uintptr) *TreeNode
 // than or equal to the searched key.
 func (x *Tree) LowerBound(KeyVar uintptr) *TreeNode {
 	cret := xTreeLowerBound(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 var xTreeNnodes func(uintptr) int32
@@ -200,32 +218,41 @@ func (x *Tree) Nnodes() int32 {
 	return cret
 }
 
-var xTreeNodeFirst func(uintptr) *TreeNode
+var xTreeNodeFirst func(uintptr) uintptr
 
 // Returns the first in-order node of the tree, or %NULL
 // for an empty tree.
 func (x *Tree) NodeFirst() *TreeNode {
 	cret := xTreeNodeFirst(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
-var xTreeNodeLast func(uintptr) *TreeNode
+var xTreeNodeLast func(uintptr) uintptr
 
 // Returns the last in-order node of the tree, or %NULL
 // for an empty tree.
 func (x *Tree) NodeLast() *TreeNode {
 	cret := xTreeNodeLast(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
-var xTreeRef func(uintptr) *Tree
+var xTreeRef func(uintptr) uintptr
 
 // Increments the reference count of @tree by one.
 //
 // It is safe to call this function from any thread.
 func (x *Tree) Ref() *Tree {
 	cret := xTreeRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Tree)(unsafe.Pointer(cret))
 }
 
 var xTreeRemove func(uintptr, uintptr) bool
@@ -261,7 +288,7 @@ func (x *Tree) Replace(KeyVar uintptr, ValueVar uintptr) {
 	xTreeReplace(x.GoPointer(), KeyVar, ValueVar)
 }
 
-var xTreeReplaceNode func(uintptr, uintptr, uintptr) *TreeNode
+var xTreeReplaceNode func(uintptr, uintptr, uintptr) uintptr
 
 // Inserts a new key and value into a #GTree similar to g_tree_insert_node().
 // The difference is that if the key already exists in the #GTree, it gets
@@ -274,7 +301,10 @@ var xTreeReplaceNode func(uintptr, uintptr, uintptr) *TreeNode
 // so that the distance from the root to every leaf is as small as possible.
 func (x *Tree) ReplaceNode(KeyVar uintptr, ValueVar uintptr) *TreeNode {
 	cret := xTreeReplaceNode(x.GoPointer(), KeyVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 var xTreeSearch func(uintptr, uintptr, uintptr) uintptr
@@ -293,7 +323,7 @@ func (x *Tree) Search(SearchFuncVar *CompareFunc, UserDataVar uintptr) uintptr {
 	return cret
 }
 
-var xTreeSearchNode func(uintptr, uintptr, uintptr) *TreeNode
+var xTreeSearchNode func(uintptr, uintptr, uintptr) uintptr
 
 // Searches a #GTree using @search_func.
 //
@@ -306,7 +336,10 @@ var xTreeSearchNode func(uintptr, uintptr, uintptr) *TreeNode
 // pairs that have a larger key.
 func (x *Tree) SearchNode(SearchFuncVar *CompareFunc, UserDataVar uintptr) *TreeNode {
 	cret := xTreeSearchNode(x.GoPointer(), NewCallback(SearchFuncVar), UserDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 var xTreeSteal func(uintptr, uintptr) bool
@@ -339,7 +372,7 @@ func (x *Tree) Unref() {
 	xTreeUnref(x.GoPointer())
 }
 
-var xTreeUpperBound func(uintptr, uintptr) *TreeNode
+var xTreeUpperBound func(uintptr, uintptr) uintptr
 
 // Gets the upper bound node corresponding to the given key,
 // or %NULL if the tree is empty or all the nodes in the tree
@@ -349,7 +382,10 @@ var xTreeUpperBound func(uintptr, uintptr) *TreeNode
 // than the searched key.
 func (x *Tree) UpperBound(KeyVar uintptr) *TreeNode {
 	cret := xTreeUpperBound(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 // An opaque type which identifies a specific node in a #GTree.
@@ -369,22 +405,28 @@ func (x *TreeNode) Key() uintptr {
 	return cret
 }
 
-var xTreeNodeNext func(uintptr) *TreeNode
+var xTreeNodeNext func(uintptr) uintptr
 
 // Returns the next in-order node of the tree, or %NULL
 // if the passed node was already the last one.
 func (x *TreeNode) Next() *TreeNode {
 	cret := xTreeNodeNext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
-var xTreeNodePrevious func(uintptr) *TreeNode
+var xTreeNodePrevious func(uintptr) uintptr
 
 // Returns the previous in-order node of the tree, or %NULL
 // if the passed node was already the first one.
 func (x *TreeNode) Previous() *TreeNode {
 	cret := xTreeNodePrevious(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
 var xTreeNodeValue func(uintptr) uintptr

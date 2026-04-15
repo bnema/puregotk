@@ -117,7 +117,7 @@ func (x *FileAttributeMatcher) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
+var xNewFileAttributeMatcher func(string) uintptr
 
 // Creates a new file attribute matcher, which matches attributes
 // against a given string. [GFileAttributeMatchers][struct@FileAttributeMatcher] are reference
@@ -140,7 +140,10 @@ var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
 //     namespace and all keys in the unix namespace.
 func NewFileAttributeMatcher(AttributesVar string) *FileAttributeMatcher {
 	cret := xNewFileAttributeMatcher(AttributesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeMatcherEnumerateNamespace func(uintptr, string) bool
@@ -183,15 +186,18 @@ func (x *FileAttributeMatcher) MatchesOnly(AttributeVar string) bool {
 	return cret
 }
 
-var xFileAttributeMatcherRef func(uintptr) *FileAttributeMatcher
+var xFileAttributeMatcherRef func(uintptr) uintptr
 
 // References a file attribute matcher.
 func (x *FileAttributeMatcher) Ref() *FileAttributeMatcher {
 	cret := xFileAttributeMatcherRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
-var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttributeMatcher
+var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) uintptr
 
 // Subtracts all attributes of @subtract from @matcher and returns
 // a matcher that supports those attributes.
@@ -203,7 +209,10 @@ var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttr
 // in the future.
 func (x *FileAttributeMatcher) Subtract(SubtractVar *FileAttributeMatcher) *FileAttributeMatcher {
 	cret := xFileAttributeMatcherSubtract(x.GoPointer(), SubtractVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeMatcher)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeMatcherToString func(uintptr) string
@@ -262,13 +271,16 @@ func (x *IOExtension) GetType() types.GType {
 	return cret
 }
 
-var xIOExtensionRefClass func(uintptr) *gobject.TypeClass
+var xIOExtensionRefClass func(uintptr) uintptr
 
 // Gets a reference to the class for the type that is
 // associated with @extension.
 func (x *IOExtension) RefClass() *gobject.TypeClass {
 	cret := xIOExtensionRefClass(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.TypeClass)(unsafe.Pointer(cret))
 }
 
 // `GIOExtensionPoint` provides a mechanism for modules to extend the
@@ -332,21 +344,27 @@ func (x *IOExtensionPoint) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xIOExtensionPointGetExtensionByName func(uintptr, string) *IOExtension
+var xIOExtensionPointGetExtensionByName func(uintptr, string) uintptr
 
 // Finds a #GIOExtension for an extension point by name.
 func (x *IOExtensionPoint) GetExtensionByName(NameVar string) *IOExtension {
 	cret := xIOExtensionPointGetExtensionByName(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOExtension)(unsafe.Pointer(cret))
 }
 
-var xIOExtensionPointGetExtensions func(uintptr) *glib.List
+var xIOExtensionPointGetExtensions func(uintptr) uintptr
 
 // Gets a list of all extensions that implement this extension point.
 // The list is sorted by priority, beginning with the highest priority.
 func (x *IOExtensionPoint) GetExtensions() *glib.List {
 	cret := xIOExtensionPointGetExtensions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xIOExtensionPointGetRequiredType func(uintptr) types.GType
@@ -684,7 +702,7 @@ func (x *Resource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewResourceFromData func(*glib.Bytes, **glib.Error) *Resource
+var xNewResourceFromData func(*glib.Bytes, **glib.Error) uintptr
 
 // Creates a [struct@Gio.Resource] from a reference to the binary resource bundle.
 //
@@ -703,10 +721,13 @@ func NewResourceFromData(DataVar *glib.Bytes) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xNewResourceFromData(DataVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Resource)(unsafe.Pointer(cret)), nil
 }
 
 var xResourceRegister func(uintptr)
@@ -776,7 +797,7 @@ func (x *Resource) HasChildren(PathVar string) bool {
 	return cret
 }
 
-var xResourceLookupData func(uintptr, string, ResourceLookupFlags, **glib.Error) *glib.Bytes
+var xResourceLookupData func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
 
 // Looks for a file at the specified @path in the resource and
 // returns a [struct@GLib.Bytes] that lets you directly access the data in
@@ -800,10 +821,13 @@ func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags
 	var cerr *glib.Error
 
 	cret := xResourceLookupData(x.GoPointer(), PathVar, LookupFlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xResourceOpenStream func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
@@ -832,14 +856,17 @@ func (x *Resource) OpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags
 	return cls, cerr
 }
 
-var xResourceRef func(uintptr) *Resource
+var xResourceRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @resource by one.
 //
 // This function is threadsafe and may be called from any thread.
 func (x *Resource) Ref() *Resource {
 	cret := xResourceRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Resource)(unsafe.Pointer(cret))
 }
 
 var xResourceUnref func(uintptr)
@@ -883,7 +910,7 @@ func (x *SrvTarget) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSrvTarget func(string, uint16, uint16, uint16) *SrvTarget
+var xNewSrvTarget func(string, uint16, uint16, uint16) uintptr
 
 // Creates a new #GSrvTarget with the given parameters.
 //
@@ -891,15 +918,21 @@ var xNewSrvTarget func(string, uint16, uint16, uint16) *SrvTarget
 // created by #GResolver.
 func NewSrvTarget(HostnameVar string, PortVar uint16, PriorityVar uint16, WeightVar uint16) *SrvTarget {
 	cret := xNewSrvTarget(HostnameVar, PortVar, PriorityVar, WeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SrvTarget)(unsafe.Pointer(cret))
 }
 
-var xSrvTargetCopy func(uintptr) *SrvTarget
+var xSrvTargetCopy func(uintptr) uintptr
 
 // Copies @target
 func (x *SrvTarget) Copy() *SrvTarget {
 	cret := xSrvTargetCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SrvTarget)(unsafe.Pointer(cret))
 }
 
 var xSrvTargetFree func(uintptr)

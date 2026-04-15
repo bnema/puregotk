@@ -231,8 +231,12 @@ func (x *MenuModelClass) OverrideGetItemAttributeValue(cb func(*MenuModel, int32
 	if cb == nil {
 		x.xGetItemAttributeValue = 0
 	} else {
-		x.xGetItemAttributeValue = purego.NewCallback(func(ModelVarp uintptr, ItemIndexVarp int32, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant {
-			return cb(MenuModelNewFromInternalPtr(ModelVarp), ItemIndexVarp, AttributeVarp, ExpectedTypeVarp)
+		x.xGetItemAttributeValue = purego.NewCallback(func(ModelVarp uintptr, ItemIndexVarp int32, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) uintptr {
+			ret := cb(MenuModelNewFromInternalPtr(ModelVarp), ItemIndexVarp, AttributeVarp, ExpectedTypeVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -242,10 +246,14 @@ func (x *MenuModelClass) GetGetItemAttributeValue() func(*MenuModel, int32, stri
 	if x.xGetItemAttributeValue == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, ItemIndexVarp int32, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant
+	var rawCallback func(ModelVarp uintptr, ItemIndexVarp int32, AttributeVarp string, ExpectedTypeVarp *glib.VariantType) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetItemAttributeValue)
 	return func(ModelVar *MenuModel, ItemIndexVar int32, AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-		return rawCallback(ModelVar.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
+		rawRet := rawCallback(ModelVar.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -435,14 +443,17 @@ func (x *MenuAttributeIter) GetNext(OutNameVar *string, ValueVar **glib.Variant)
 	return cret
 }
 
-var xMenuAttributeIterGetValue func(uintptr) *glib.Variant
+var xMenuAttributeIterGetValue func(uintptr) uintptr
 
 // Gets the value of the attribute at the current iterator position.
 //
 // The iterator is not advanced.
 func (x *MenuAttributeIter) GetValue() *glib.Variant {
 	cret := xMenuAttributeIterGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xMenuAttributeIterNext func(uintptr) bool
@@ -725,7 +736,7 @@ func (x *MenuModel) GetItemAttribute(ItemIndexVar int32, AttributeVar string, Fo
 	return cret
 }
 
-var xMenuModelGetItemAttributeValue func(uintptr, int32, string, *glib.VariantType) *glib.Variant
+var xMenuModelGetItemAttributeValue func(uintptr, int32, string, *glib.VariantType) uintptr
 
 // Queries the item at position @item_index in @model for the attribute
 // specified by @attribute.
@@ -740,7 +751,10 @@ var xMenuModelGetItemAttributeValue func(uintptr, int32, string, *glib.VariantTy
 // then %NULL is returned.
 func (x *MenuModel) GetItemAttributeValue(ItemIndexVar int32, AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
 	cret := xMenuModelGetItemAttributeValue(x.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xMenuModelGetItemLink func(uintptr, int32, string) uintptr

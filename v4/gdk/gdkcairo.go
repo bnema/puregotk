@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -46,7 +48,7 @@ func CairoRegion(CrVar *cairo.Context, RegionVar *cairo.Region) {
 	xCairoRegion(CrVar, RegionVar)
 }
 
-var xCairoRegionCreateFromSurface func(*cairo.Surface) *cairo.Region
+var xCairoRegionCreateFromSurface func(*cairo.Surface) uintptr
 
 // Creates region that covers the area where the given
 // @surface is more than 50% opaque.
@@ -55,7 +57,10 @@ var xCairoRegionCreateFromSurface func(*cairo.Surface) *cairo.Region
 // set with cairo_surface_set_device_offset().
 func CairoRegionCreateFromSurface(SurfaceVar *cairo.Surface) *cairo.Region {
 	cret := xCairoRegionCreateFromSurface(SurfaceVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xCairoSetSourcePixbuf func(*cairo.Context, uintptr, float64, float64)

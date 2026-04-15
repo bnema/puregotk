@@ -82,7 +82,7 @@ var xNewCursorFromCallback func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintptr, DestroyVar *glib.DestroyNotify, FallbackVar *Cursor) *Cursor {
 	var cls *Cursor
 
-	cret := xNewCursorFromCallback(glib.NewCallback(CallbackVar), DataVar, glib.NewCallback(DestroyVar), FallbackVar.GoPointer())
+	cret := xNewCursorFromCallback(glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DestroyVar), FallbackVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -228,7 +228,10 @@ func (x *DBusObjectManagerServer) GetObjectPath() string {
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerServer) GetObjects() *glib.List {
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {

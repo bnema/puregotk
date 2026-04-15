@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -60,12 +62,15 @@ func (x *RepeatNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xRepeatNodeGetChildBounds func(uintptr) *graphene.Rect
+var xRepeatNodeGetChildBounds func(uintptr) uintptr
 
 // Retrieves the bounding rectangle of the child of @node.
 func (x *RepeatNode) GetChildBounds() *graphene.Rect {
 	cret := xRepeatNodeGetChildBounds(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Rect)(unsafe.Pointer(cret))
 }
 
 func (c *RepeatNode) GoPointer() uintptr {

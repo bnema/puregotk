@@ -93,12 +93,15 @@ func NewInscription(TextVar string) *Inscription {
 	return cls
 }
 
-var xInscriptionGetAttributes func(uintptr) *pango.AttrList
+var xInscriptionGetAttributes func(uintptr) uintptr
 
 // Gets the inscription's attribute list.
 func (x *Inscription) GetAttributes() *pango.AttrList {
 	cret := xInscriptionGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xInscriptionGetMinChars func(uintptr) uint32

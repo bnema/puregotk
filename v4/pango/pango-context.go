@@ -102,12 +102,15 @@ func (x *Context) GetBaseGravity() Gravity {
 	return cret
 }
 
-var xContextGetFontDescription func(uintptr) *FontDescription
+var xContextGetFontDescription func(uintptr) uintptr
 
 // Retrieve the default font description for the context.
 func (x *Context) GetFontDescription() *FontDescription {
 	cret := xContextGetFontDescription(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xContextGetFontMap func(uintptr) uintptr
@@ -150,15 +153,18 @@ func (x *Context) GetGravityHint() GravityHint {
 	return cret
 }
 
-var xContextGetLanguage func(uintptr) *Language
+var xContextGetLanguage func(uintptr) uintptr
 
 // Retrieves the global language tag for the context.
 func (x *Context) GetLanguage() *Language {
 	cret := xContextGetLanguage(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
-var xContextGetMatrix func(uintptr) *Matrix
+var xContextGetMatrix func(uintptr) uintptr
 
 // Gets the transformation matrix that will be applied when
 // rendering with this context.
@@ -166,10 +172,13 @@ var xContextGetMatrix func(uintptr) *Matrix
 // See [method@Pango.Context.set_matrix].
 func (x *Context) GetMatrix() *Matrix {
 	cret := xContextGetMatrix(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xContextGetMetrics func(uintptr, *FontDescription, *Language) *FontMetrics
+var xContextGetMetrics func(uintptr, *FontDescription, *Language) uintptr
 
 // Get overall metric information for a particular font description.
 //
@@ -184,7 +193,10 @@ var xContextGetMetrics func(uintptr, *FontDescription, *Language) *FontMetrics
 // for the individual families.
 func (x *Context) GetMetrics(DescVar *FontDescription, LanguageVar *Language) *FontMetrics {
 	cret := xContextGetMetrics(x.GoPointer(), DescVar, LanguageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontMetrics)(unsafe.Pointer(cret))
 }
 
 var xContextGetRoundGlyphPositions func(uintptr) bool

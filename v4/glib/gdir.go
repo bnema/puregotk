@@ -25,7 +25,7 @@ func (x *Dir) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDirOpen func(string, uint32, **Error) *Dir
+var xDirOpen func(string, uint32, **Error) uintptr
 
 // Opens a directory for reading. The names of the files in the
 // directory can then be retrieved using g_dir_read_name().  Note
@@ -34,10 +34,13 @@ func DirOpen(PathVar string, FlagsVar uint32) (*Dir, error) {
 	var cerr *Error
 
 	cret := xDirOpen(PathVar, FlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Dir)(unsafe.Pointer(cret)), nil
 }
 
 var xDirClose func(uintptr)
@@ -74,12 +77,15 @@ func (x *Dir) ReadName() string {
 	return cret
 }
 
-var xDirRef func(uintptr) *Dir
+var xDirRef func(uintptr) uintptr
 
 // Increment the reference count of `dir`.
 func (x *Dir) Ref() *Dir {
 	cret := xDirRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Dir)(unsafe.Pointer(cret))
 }
 
 var xDirRewind func(uintptr)

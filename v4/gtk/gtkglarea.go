@@ -333,12 +333,15 @@ func (x *GLArea) GetContext() *gdk.GLContext {
 	return cls
 }
 
-var xGLAreaGetError func(uintptr) *glib.Error
+var xGLAreaGetError func(uintptr) uintptr
 
 // Gets the current error set on the @area.
 func (x *GLArea) GetError() *glib.Error {
 	cret := xGLAreaGetError(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Error)(unsafe.Pointer(cret))
 }
 
 var xGLAreaGetHasDepthBuffer func(uintptr) bool

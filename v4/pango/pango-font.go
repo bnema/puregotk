@@ -44,8 +44,12 @@ func (x *FontClass) OverrideDescribe(cb func(*Font) *FontDescription) {
 	if cb == nil {
 		x.xDescribe = 0
 	} else {
-		x.xDescribe = purego.NewCallback(func(FontVarp uintptr) *FontDescription {
-			return cb(FontNewFromInternalPtr(FontVarp))
+		x.xDescribe = purego.NewCallback(func(FontVarp uintptr) uintptr {
+			ret := cb(FontNewFromInternalPtr(FontVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -55,10 +59,14 @@ func (x *FontClass) GetDescribe() func(*Font) *FontDescription {
 	if x.xDescribe == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr) *FontDescription
+	var rawCallback func(FontVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xDescribe)
 	return func(FontVar *Font) *FontDescription {
-		return rawCallback(FontVar.GoPointer())
+		rawRet := rawCallback(FontVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontDescription)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -123,8 +131,12 @@ func (x *FontClass) OverrideGetMetrics(cb func(*Font, *Language) *FontMetrics) {
 	if cb == nil {
 		x.xGetMetrics = 0
 	} else {
-		x.xGetMetrics = purego.NewCallback(func(FontVarp uintptr, LanguageVarp *Language) *FontMetrics {
-			return cb(FontNewFromInternalPtr(FontVarp), LanguageVarp)
+		x.xGetMetrics = purego.NewCallback(func(FontVarp uintptr, LanguageVarp *Language) uintptr {
+			ret := cb(FontNewFromInternalPtr(FontVarp), LanguageVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -134,10 +146,14 @@ func (x *FontClass) GetGetMetrics() func(*Font, *Language) *FontMetrics {
 	if x.xGetMetrics == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr, LanguageVarp *Language) *FontMetrics
+	var rawCallback func(FontVarp uintptr, LanguageVarp *Language) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetMetrics)
 	return func(FontVar *Font, LanguageVar *Language) *FontMetrics {
-		return rawCallback(FontVar.GoPointer(), LanguageVar)
+		rawRet := rawCallback(FontVar.GoPointer(), LanguageVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontMetrics)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -179,8 +195,12 @@ func (x *FontClass) OverrideDescribeAbsolute(cb func(*Font) *FontDescription) {
 	if cb == nil {
 		x.xDescribeAbsolute = 0
 	} else {
-		x.xDescribeAbsolute = purego.NewCallback(func(FontVarp uintptr) *FontDescription {
-			return cb(FontNewFromInternalPtr(FontVarp))
+		x.xDescribeAbsolute = purego.NewCallback(func(FontVarp uintptr) uintptr {
+			ret := cb(FontNewFromInternalPtr(FontVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -190,10 +210,14 @@ func (x *FontClass) GetDescribeAbsolute() func(*Font) *FontDescription {
 	if x.xDescribeAbsolute == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr) *FontDescription
+	var rawCallback func(FontVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xDescribeAbsolute)
 	return func(FontVar *Font) *FontDescription {
-		return rawCallback(FontVar.GoPointer())
+		rawRet := rawCallback(FontVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontDescription)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -263,12 +287,15 @@ func (x *FontDescription) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewFontDescription func() *FontDescription
+var xNewFontDescription func() uintptr
 
 // Creates a new font description structure with all fields unset.
 func NewFontDescription() *FontDescription {
 	cret := xNewFontDescription()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontDescriptionBetterMatch func(uintptr, *FontDescription, *FontDescription) bool
@@ -289,15 +316,18 @@ func (x *FontDescription) BetterMatch(OldMatchVar *FontDescription, NewMatchVar 
 	return cret
 }
 
-var xFontDescriptionCopy func(uintptr) *FontDescription
+var xFontDescriptionCopy func(uintptr) uintptr
 
 // Make a copy of a `PangoFontDescription`.
 func (x *FontDescription) Copy() *FontDescription {
 	cret := xFontDescriptionCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
-var xFontDescriptionCopyStatic func(uintptr) *FontDescription
+var xFontDescriptionCopyStatic func(uintptr) uintptr
 
 // Make a copy of a `PangoFontDescription`, but don't duplicate
 // allocated fields.
@@ -308,7 +338,10 @@ var xFontDescriptionCopyStatic func(uintptr) *FontDescription
 // to be used when the copy is only needed temporarily.
 func (x *FontDescription) CopyStatic() *FontDescription {
 	cret := xFontDescriptionCopyStatic(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontDescriptionEqual func(uintptr, *FontDescription) bool
@@ -776,8 +809,12 @@ func (x *FontFaceClass) OverrideDescribe(cb func(*FontFace) *FontDescription) {
 	if cb == nil {
 		x.xDescribe = 0
 	} else {
-		x.xDescribe = purego.NewCallback(func(FaceVarp uintptr) *FontDescription {
-			return cb(FontFaceNewFromInternalPtr(FaceVarp))
+		x.xDescribe = purego.NewCallback(func(FaceVarp uintptr) uintptr {
+			ret := cb(FontFaceNewFromInternalPtr(FaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -787,10 +824,14 @@ func (x *FontFaceClass) GetDescribe() func(*FontFace) *FontDescription {
 	if x.xDescribe == 0 {
 		return nil
 	}
-	var rawCallback func(FaceVarp uintptr) *FontDescription
+	var rawCallback func(FaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xDescribe)
 	return func(FaceVar *FontFace) *FontDescription {
-		return rawCallback(FaceVar.GoPointer())
+		rawRet := rawCallback(FaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontDescription)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -1243,12 +1284,15 @@ func (x *FontMetrics) GetUnderlineThickness() int32 {
 	return cret
 }
 
-var xFontMetricsRef func(uintptr) *FontMetrics
+var xFontMetricsRef func(uintptr) uintptr
 
 // Increase the reference count of a font metrics structure by one.
 func (x *FontMetrics) Ref() *FontMetrics {
 	cret := xFontMetricsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontMetrics)(unsafe.Pointer(cret))
 }
 
 var xFontMetricsUnref func(uintptr)
@@ -1460,7 +1504,7 @@ const (
 	WeightUltraheavyValue Weight = 1000
 )
 
-var xFontDescriptionFromString func(string) *FontDescription
+var xFontDescriptionFromString func(string) uintptr
 
 // Creates a new font description from a string representation.
 //
@@ -1516,7 +1560,10 @@ var xFontDescriptionFromString func(string) *FontDescription
 //	Cantarell Italic Light 15 @‍wght=200 #‍tnum=1
 func FontDescriptionFromString(StrVar string) *FontDescription {
 	cret := xFontDescriptionFromString(StrVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 // A `PangoFont` is used to represent a font in a
@@ -1537,7 +1584,7 @@ func FontNewFromInternalPtr(ptr uintptr) *Font {
 	return cls
 }
 
-var xFontDescribe func(uintptr) *FontDescription
+var xFontDescribe func(uintptr) uintptr
 
 // Returns a description of the font, with font size set in points.
 //
@@ -1545,10 +1592,13 @@ var xFontDescribe func(uintptr) *FontDescription
 // the font size in device units.
 func (x *Font) Describe() *FontDescription {
 	cret := xFontDescribe(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
-var xFontDescribeWithAbsoluteSize func(uintptr) *FontDescription
+var xFontDescribeWithAbsoluteSize func(uintptr) uintptr
 
 // Returns a description of the font, with absolute font size set
 // in device units.
@@ -1556,7 +1606,10 @@ var xFontDescribeWithAbsoluteSize func(uintptr) *FontDescription
 // Use [method@Pango.Font.describe] if you want the font size in points.
 func (x *Font) DescribeWithAbsoluteSize() *FontDescription {
 	cret := xFontDescribeWithAbsoluteSize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontGetCoverage func(uintptr, *Language) uintptr
@@ -1679,7 +1732,7 @@ func (x *Font) GetLanguages() uintptr {
 	return cret
 }
 
-var xFontGetMetrics func(uintptr, *Language) *FontMetrics
+var xFontGetMetrics func(uintptr, *Language) uintptr
 
 // Gets overall metric information for a font.
 //
@@ -1691,7 +1744,10 @@ var xFontGetMetrics func(uintptr, *Language) *FontMetrics
 // output variables and returns.
 func (x *Font) GetMetrics(LanguageVar *Language) *FontMetrics {
 	cret := xFontGetMetrics(x.GoPointer(), LanguageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontMetrics)(unsafe.Pointer(cret))
 }
 
 var xFontHasChar func(uintptr, uint32) bool
@@ -1702,7 +1758,7 @@ func (x *Font) HasChar(WcVar uint32) bool {
 	return cret
 }
 
-var xFontSerialize func(uintptr) *glib.Bytes
+var xFontSerialize func(uintptr) uintptr
 
 // Serializes the @font in a way that can be uniquely identified.
 //
@@ -1715,7 +1771,10 @@ var xFontSerialize func(uintptr) *glib.Bytes
 // To recreate a font from its serialized form, use [func@Pango.Font.deserialize].
 func (x *Font) Serialize() *glib.Bytes {
 	cret := xFontSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 func (c *Font) GoPointer() uintptr {
@@ -1780,7 +1839,7 @@ func FontFaceNewFromInternalPtr(ptr uintptr) *FontFace {
 	return cls
 }
 
-var xFontFaceDescribe func(uintptr) *FontDescription
+var xFontFaceDescribe func(uintptr) uintptr
 
 // Returns a font description that matches the face.
 //
@@ -1789,7 +1848,10 @@ var xFontFaceDescribe func(uintptr) *FontDescription
 // will be unset.
 func (x *FontFace) Describe() *FontDescription {
 	cret := xFontFaceDescribe(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontFaceGetFaceName func(uintptr) string

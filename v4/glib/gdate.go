@@ -75,7 +75,7 @@ func (x *Date) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewDate func() *Date
+var xNewDate func() uintptr
 
 // Allocates a #GDate and initializes
 // it to a safe state. The new date will
@@ -83,10 +83,13 @@ var xNewDate func() *Date
 // represent an existing day). Free the return value with g_date_free().
 func NewDate() *Date {
 	cret := xNewDate()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Date)(unsafe.Pointer(cret))
 }
 
-var xNewDateDmy func(DateDay, DateMonth, DateYear) *Date
+var xNewDateDmy func(DateDay, DateMonth, DateYear) uintptr
 
 // Create a new #GDate representing the given day-month-year triplet.
 //
@@ -95,10 +98,13 @@ var xNewDateDmy func(DateDay, DateMonth, DateYear) *Date
 // and valid.
 func NewDateDmy(DayVar DateDay, MonthVar DateMonth, YearVar DateYear) *Date {
 	cret := xNewDateDmy(DayVar, MonthVar, YearVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Date)(unsafe.Pointer(cret))
 }
 
-var xNewDateJulian func(uint32) *Date
+var xNewDateJulian func(uint32) uintptr
 
 // Create a new #GDate representing the given Julian date.
 //
@@ -107,7 +113,10 @@ var xNewDateJulian func(uint32) *Date
 // valid.
 func NewDateJulian(JulianDayVar uint32) *Date {
 	cret := xNewDateJulian(JulianDayVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Date)(unsafe.Pointer(cret))
 }
 
 var xDateAddDays func(uintptr, uint32)
@@ -170,14 +179,17 @@ func (x *Date) Compare(RhsVar *Date) int32 {
 	return cret
 }
 
-var xDateCopy func(uintptr) *Date
+var xDateCopy func(uintptr) uintptr
 
 // Copies a GDate to a newly-allocated GDate. If the input was invalid
 // (as determined by g_date_valid()), the invalid state will be copied
 // as is into the new object.
 func (x *Date) Copy() *Date {
 	cret := xDateCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Date)(unsafe.Pointer(cret))
 }
 
 var xDateDaysBetween func(uintptr, *Date) int32

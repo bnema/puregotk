@@ -242,14 +242,17 @@ func (x *Entry) GetAlignment() float32 {
 	return cret
 }
 
-var xEntryGetAttributes func(uintptr) *pango.AttrList
+var xEntryGetAttributes func(uintptr) uintptr
 
 // Gets the attribute list of the `GtkEntry`.
 //
 // See [method@Gtk.Entry.set_attributes].
 func (x *Entry) GetAttributes() *pango.AttrList {
 	cret := xEntryGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xEntryGetBuffer func(uintptr) uintptr
@@ -530,14 +533,17 @@ func (x *Entry) GetProgressPulseStep() float64 {
 	return cret
 }
 
-var xEntryGetTabs func(uintptr) *pango.TabArray
+var xEntryGetTabs func(uintptr) uintptr
 
 // Gets the tabstops of the `GtkEntry`.
 //
 // See [method@Gtk.Entry.set_tabs].
 func (x *Entry) GetTabs() *pango.TabArray {
 	cret := xEntryGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xEntryGetTextLength func(uintptr) uint16

@@ -39,7 +39,7 @@ func (x *Hmac) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewHmac func(ChecksumType, []byte, uint) *Hmac
+var xNewHmac func(ChecksumType, []byte, uint) uintptr
 
 // Creates a new #GHmac, using the digest algorithm @digest_type.
 // If the @digest_type is not known, %NULL is returned.
@@ -59,17 +59,23 @@ var xNewHmac func(ChecksumType, []byte, uint) *Hmac
 // Support for %G_CHECKSUM_SHA384 was added in GLib 2.52.
 func NewHmac(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint) *Hmac {
 	cret := xNewHmac(DigestTypeVar, KeyVar, KeyLenVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Hmac)(unsafe.Pointer(cret))
 }
 
-var xHmacCopy func(uintptr) *Hmac
+var xHmacCopy func(uintptr) uintptr
 
 // Copies a #GHmac. If @hmac has been closed, by calling
 // g_hmac_get_string() or g_hmac_get_digest(), the copied
 // HMAC will be closed as well.
 func (x *Hmac) Copy() *Hmac {
 	cret := xHmacCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Hmac)(unsafe.Pointer(cret))
 }
 
 var xHmacGetDigest func(uintptr, []byte, uint)
@@ -96,14 +102,17 @@ func (x *Hmac) GetString() string {
 	return cret
 }
 
-var xHmacRef func(uintptr) *Hmac
+var xHmacRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @hmac by one.
 //
 // This function is MT-safe and may be called from any thread.
 func (x *Hmac) Ref() *Hmac {
 	cret := xHmacRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Hmac)(unsafe.Pointer(cret))
 }
 
 var xHmacUnref func(uintptr)

@@ -201,14 +201,17 @@ func (x *Text) GetActivatesDefault() bool {
 	return cret
 }
 
-var xTextGetAttributes func(uintptr) *pango.AttrList
+var xTextGetAttributes func(uintptr) uintptr
 
 // Gets the attribute list that was set on the text widget.
 //
 // See [method@Gtk.Text.set_attributes].
 func (x *Text) GetAttributes() *pango.AttrList {
 	cret := xTextGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xTextGetBuffer func(uintptr) uintptr
@@ -327,14 +330,17 @@ func (x *Text) GetPropagateTextWidth() bool {
 	return cret
 }
 
-var xTextGetTabs func(uintptr) *pango.TabArray
+var xTextGetTabs func(uintptr) uintptr
 
 // Gets the tab stops for the text widget.
 //
 // See [method@Gtk.Text.set_tabs].
 func (x *Text) GetTabs() *pango.TabArray {
 	cret := xTextGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xTextGetTextLength func(uintptr) uint16

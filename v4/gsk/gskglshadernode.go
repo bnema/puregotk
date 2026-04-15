@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -59,12 +61,15 @@ func NewGLShaderNode(ShaderVar *GLShader, BoundsVar *graphene.Rect, ArgsVar *gli
 	return cls
 }
 
-var xGLShaderNodeGetArgs func(uintptr) *glib.Bytes
+var xGLShaderNodeGetArgs func(uintptr) uintptr
 
 // Gets args for the node.
 func (x *GLShaderNode) GetArgs() *glib.Bytes {
 	cret := xGLShaderNodeGetArgs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xGLShaderNodeGetChild func(uintptr, uint32) uintptr

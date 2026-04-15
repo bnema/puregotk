@@ -41,7 +41,7 @@ func (x *GlyphItem) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
+var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) uintptr
 
 // Splits a shaped item (`PangoGlyphItem`) into multiple items based
 // on an attribute list.
@@ -62,15 +62,21 @@ var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
 // as one of the elements in the list.
 func (x *GlyphItem) ApplyAttrs(TextVar string, ListVar *AttrList) *glib.SList {
 	cret := xGlyphItemApplyAttrs(x.GoPointer(), TextVar, ListVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xGlyphItemCopy func(uintptr) *GlyphItem
+var xGlyphItemCopy func(uintptr) uintptr
 
 // Make a deep copy of an existing `PangoGlyphItem` structure.
 func (x *GlyphItem) Copy() *GlyphItem {
 	cret := xGlyphItemCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItem)(unsafe.Pointer(cret))
 }
 
 var xGlyphItemFree func(uintptr)
@@ -101,7 +107,7 @@ func (x *GlyphItem) LetterSpace(TextVar string, LogAttrsVar []LogAttr, LetterSpa
 	xGlyphItemLetterSpace(x.GoPointer(), TextVar, LogAttrsVar, LetterSpacingVar)
 }
 
-var xGlyphItemSplit func(uintptr, string, int32) *GlyphItem
+var xGlyphItemSplit func(uintptr, string, int32) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -116,7 +122,10 @@ var xGlyphItemSplit func(uintptr, string, int32) *GlyphItem
 // it internally.)
 func (x *GlyphItem) Split(TextVar string, SplitIndexVar int32) *GlyphItem {
 	cret := xGlyphItemSplit(x.GoPointer(), TextVar, SplitIndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItem)(unsafe.Pointer(cret))
 }
 
 // A `PangoGlyphItemIter` is an iterator over the clusters in a
@@ -192,12 +201,15 @@ func (x *GlyphItemIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xGlyphItemIterCopy func(uintptr) *GlyphItemIter
+var xGlyphItemIterCopy func(uintptr) uintptr
 
 // Make a shallow copy of an existing `PangoGlyphItemIter` structure.
 func (x *GlyphItemIter) Copy() *GlyphItemIter {
 	cret := xGlyphItemIterCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphItemIter)(unsafe.Pointer(cret))
 }
 
 var xGlyphItemIterFree func(uintptr)

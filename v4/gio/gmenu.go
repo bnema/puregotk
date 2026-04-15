@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -396,7 +398,7 @@ func (x *MenuItem) GetAttribute(AttributeVar string, FormatStringVar string, var
 	return cret
 }
 
-var xMenuItemGetAttributeValue func(uintptr, string, *glib.VariantType) *glib.Variant
+var xMenuItemGetAttributeValue func(uintptr, string, *glib.VariantType) uintptr
 
 // Queries the named @attribute on @menu_item.
 //
@@ -405,7 +407,10 @@ var xMenuItemGetAttributeValue func(uintptr, string, *glib.VariantType) *glib.Va
 // simply does not exist.
 func (x *MenuItem) GetAttributeValue(AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
 	cret := xMenuItemGetAttributeValue(x.GoPointer(), AttributeVar, ExpectedTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xMenuItemGetLink func(uintptr, string) uintptr

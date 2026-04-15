@@ -177,7 +177,7 @@ func (x *CellLayoutIface) GetSetCellDataFunc() func(CellLayout, *CellRenderer, *
 	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, FuncVarp uintptr, FuncDataVarp uintptr, DestroyVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetCellDataFunc)
 	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 	}
 }
 
@@ -243,8 +243,12 @@ func (x *CellLayoutIface) OverrideGetCells(cb func(CellLayout) *glib.List) {
 	if cb == nil {
 		x.xGetCells = 0
 	} else {
-		x.xGetCells = purego.NewCallback(func(CellLayoutVarp uintptr) *glib.List {
-			return cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+		x.xGetCells = purego.NewCallback(func(CellLayoutVarp uintptr) uintptr {
+			ret := cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -257,10 +261,14 @@ func (x *CellLayoutIface) GetGetCells() func(CellLayout) *glib.List {
 	if x.xGetCells == 0 {
 		return nil
 	}
-	var rawCallback func(CellLayoutVarp uintptr) *glib.List
+	var rawCallback func(CellLayoutVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetCells)
 	return func(CellLayoutVar CellLayout) *glib.List {
-		return rawCallback(CellLayoutVar.GoPointer())
+		rawRet := rawCallback(CellLayoutVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -501,7 +509,10 @@ func (x *CellLayoutBase) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellLayoutBase) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -550,7 +561,7 @@ func (x *CellLayoutBase) SetAttributes(CellVar *CellRenderer, varArgs ...interfa
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellLayoutBase) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var (
@@ -558,7 +569,7 @@ var (
 	XGtkCellLayoutClear           func(uintptr)
 	XGtkCellLayoutClearAttributes func(uintptr, uintptr)
 	XGtkCellLayoutGetArea         func(uintptr) uintptr
-	XGtkCellLayoutGetCells        func(uintptr) *glib.List
+	XGtkCellLayoutGetCells        func(uintptr) uintptr
 	XGtkCellLayoutPackEnd         func(uintptr, uintptr, bool)
 	XGtkCellLayoutPackStart       func(uintptr, uintptr, bool)
 	XGtkCellLayoutReorder         func(uintptr, uintptr, int32)

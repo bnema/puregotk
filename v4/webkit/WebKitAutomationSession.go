@@ -63,14 +63,17 @@ func AutomationSessionNewFromInternalPtr(ptr uintptr) *AutomationSession {
 	return cls
 }
 
-var xAutomationSessionGetApplicationInfo func(uintptr) *ApplicationInfo
+var xAutomationSessionGetApplicationInfo func(uintptr) uintptr
 
 // Get the the previously set #WebKitAutomationSession.
 //
 // Get the #WebKitAutomationSession previously set with webkit_automation_session_set_application_info().
 func (x *AutomationSession) GetApplicationInfo() *ApplicationInfo {
 	cret := xAutomationSessionGetApplicationInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ApplicationInfo)(unsafe.Pointer(cret))
 }
 
 var xAutomationSessionGetId func(uintptr) string

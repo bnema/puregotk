@@ -799,7 +799,7 @@ func (x *FileInfo) Dup() *FileInfo {
 	return cls
 }
 
-var xFileInfoGetAccessDateTime func(uintptr) *glib.DateTime
+var xFileInfoGetAccessDateTime func(uintptr) uintptr
 
 // Gets the access time of the current @info and returns it as a
 // #GDateTime.
@@ -813,7 +813,10 @@ var xFileInfoGetAccessDateTime func(uintptr) *glib.DateTime
 // be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetAccessDateTime() *glib.DateTime {
 	cret := xFileInfoGetAccessDateTime(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xFileInfoGetAttributeAsString func(uintptr, string) string
@@ -985,7 +988,7 @@ func (x *FileInfo) GetContentType() string {
 	return cret
 }
 
-var xFileInfoGetCreationDateTime func(uintptr) *glib.DateTime
+var xFileInfoGetCreationDateTime func(uintptr) uintptr
 
 // Gets the creation time of the current @info and returns it as a
 // #GDateTime.
@@ -999,17 +1002,23 @@ var xFileInfoGetCreationDateTime func(uintptr) *glib.DateTime
 // be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetCreationDateTime() *glib.DateTime {
 	cret := xFileInfoGetCreationDateTime(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
-var xFileInfoGetDeletionDate func(uintptr) *glib.DateTime
+var xFileInfoGetDeletionDate func(uintptr) uintptr
 
 // Returns the #GDateTime representing the deletion date of the file, as
 // available in %G_FILE_ATTRIBUTE_TRASH_DELETION_DATE. If the
 // %G_FILE_ATTRIBUTE_TRASH_DELETION_DATE attribute is unset, %NULL is returned.
 func (x *FileInfo) GetDeletionDate() *glib.DateTime {
 	cret := xFileInfoGetDeletionDate(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xFileInfoGetDisplayName func(uintptr) string
@@ -1116,7 +1125,7 @@ func (x *FileInfo) GetIsSymlink() bool {
 	return cret
 }
 
-var xFileInfoGetModificationDateTime func(uintptr) *glib.DateTime
+var xFileInfoGetModificationDateTime func(uintptr) uintptr
 
 // Gets the modification time of the current @info and returns it as a
 // #GDateTime.
@@ -1130,7 +1139,10 @@ var xFileInfoGetModificationDateTime func(uintptr) *glib.DateTime
 // be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetModificationDateTime() *glib.DateTime {
 	cret := xFileInfoGetModificationDateTime(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xFileInfoGetModificationTime func(uintptr, *glib.TimeVal)

@@ -147,22 +147,28 @@ func SvgErrorGetElement(ErrorVar *glib.Error) string {
 	return cret
 }
 
-var xSvgErrorGetEnd func(*glib.Error) *SvgLocation
+var xSvgErrorGetEnd func(*glib.Error) uintptr
 
 // Returns context information about the end position
 // in the document where the parsing error occurred.
 func SvgErrorGetEnd(ErrorVar *glib.Error) *SvgLocation {
 	cret := xSvgErrorGetEnd(ErrorVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SvgLocation)(unsafe.Pointer(cret))
 }
 
-var xSvgErrorGetStart func(*glib.Error) *SvgLocation
+var xSvgErrorGetStart func(*glib.Error) uintptr
 
 // Returns context information about the start position
 // in the document where the parsing error occurred.
 func SvgErrorGetStart(ErrorVar *glib.Error) *SvgLocation {
 	cret := xSvgErrorGetStart(ErrorVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SvgLocation)(unsafe.Pointer(cret))
 }
 
 // A paintable implementation that renders SVG, with animations.
@@ -444,7 +450,7 @@ func (x *Svg) Play() {
 	xSvgPlay(x.GoPointer())
 }
 
-var xSvgSerialize func(uintptr) *glib.Bytes
+var xSvgSerialize func(uintptr) uintptr
 
 // Serializes the content of the renderer as SVG.
 //
@@ -456,7 +462,10 @@ var xSvgSerialize func(uintptr) *glib.Bytes
 // of applying animations.
 func (x *Svg) Serialize() *glib.Bytes {
 	cret := xSvgSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xSvgSetFeatures func(uintptr, SvgFeatures)

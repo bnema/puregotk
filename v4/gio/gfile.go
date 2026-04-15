@@ -1127,8 +1127,12 @@ func (x *FileIface) OverrideQuerySettableAttributes(cb func(File, *Cancellable) 
 	if cb == nil {
 		x.xQuerySettableAttributes = 0
 	} else {
-		x.xQuerySettableAttributes = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList {
-			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xQuerySettableAttributes = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -1139,10 +1143,14 @@ func (x *FileIface) GetQuerySettableAttributes() func(File, *Cancellable) *FileA
 	if x.xQuerySettableAttributes == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xQuerySettableAttributes)
 	return func(FileVar File, CancellableVar *Cancellable) *FileAttributeInfoList {
-		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FileAttributeInfoList)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -1202,8 +1210,12 @@ func (x *FileIface) OverrideQueryWritableNamespaces(cb func(File, *Cancellable) 
 	if cb == nil {
 		x.xQueryWritableNamespaces = 0
 	} else {
-		x.xQueryWritableNamespaces = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList {
-			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xQueryWritableNamespaces = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -1214,10 +1226,14 @@ func (x *FileIface) GetQueryWritableNamespaces() func(File, *Cancellable) *FileA
 	if x.xQueryWritableNamespaces == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xQueryWritableNamespaces)
 	return func(FileVar File, CancellableVar *Cancellable) *FileAttributeInfoList {
-		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FileAttributeInfoList)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -4188,10 +4204,13 @@ func (x *FileBase) LoadBytes(CancellableVar *Cancellable, EtagOutVar *string) (*
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytes(x.GoPointer(), CancellableVar.GoPointer(), EtagOutVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Asynchronously loads the contents of @file as #GBytes.
@@ -4221,10 +4240,13 @@ func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar *string) (*
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytesFinish(x.GoPointer(), ResultVar.GoPointer(), EtagOutVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Loads the content of the file into memory. The data is always
@@ -5047,10 +5069,13 @@ func (x *FileBase) QuerySettableAttributes(CancellableVar *Cancellable) (*FileAt
 	var cerr *glib.Error
 
 	cret := XGFileQuerySettableAttributes(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*FileAttributeInfoList)(unsafe.Pointer(cret)), nil
 }
 
 // Obtain the list of attribute namespaces where new attributes
@@ -5064,10 +5089,13 @@ func (x *FileBase) QueryWritableNamespaces(CancellableVar *Cancellable) (*FileAt
 	var cerr *glib.Error
 
 	cret := XGFileQueryWritableNamespaces(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*FileAttributeInfoList)(unsafe.Pointer(cret)), nil
 }
 
 // Opens a file for reading. The result is a #GFileInputStream that
@@ -5800,9 +5828,9 @@ var (
 	XGFileHasUriScheme                        func(uintptr, string) bool
 	XGFileHash                                func(uintptr) uint32
 	XGFileIsNative                            func(uintptr) bool
-	XGFileLoadBytes                           func(uintptr, uintptr, *string, **glib.Error) *glib.Bytes
+	XGFileLoadBytes                           func(uintptr, uintptr, *string, **glib.Error) uintptr
 	XGFileLoadBytesAsync                      func(uintptr, uintptr, uintptr, uintptr)
-	XGFileLoadBytesFinish                     func(uintptr, uintptr, *string, **glib.Error) *glib.Bytes
+	XGFileLoadBytesFinish                     func(uintptr, uintptr, *string, **glib.Error) uintptr
 	XGFileLoadContents                        func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
 	XGFileLoadContentsAsync                   func(uintptr, uintptr, uintptr, uintptr)
 	XGFileLoadContentsFinish                  func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
@@ -5846,8 +5874,8 @@ var (
 	XGFileQueryInfo                           func(uintptr, string, FileQueryInfoFlags, uintptr, **glib.Error) uintptr
 	XGFileQueryInfoAsync                      func(uintptr, string, FileQueryInfoFlags, int32, uintptr, uintptr, uintptr)
 	XGFileQueryInfoFinish                     func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileQuerySettableAttributes             func(uintptr, uintptr, **glib.Error) *FileAttributeInfoList
-	XGFileQueryWritableNamespaces             func(uintptr, uintptr, **glib.Error) *FileAttributeInfoList
+	XGFileQuerySettableAttributes             func(uintptr, uintptr, **glib.Error) uintptr
+	XGFileQueryWritableNamespaces             func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileRead                                func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileReadAsync                           func(uintptr, int32, uintptr, uintptr, uintptr)
 	XGFileReadFinish                          func(uintptr, uintptr, **glib.Error) uintptr

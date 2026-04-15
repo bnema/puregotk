@@ -118,8 +118,12 @@ func (x *ContentProviderClass) OverrideRefFormats(cb func(*ContentProvider) *Con
 	if cb == nil {
 		x.xRefFormats = 0
 	} else {
-		x.xRefFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
-			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		x.xRefFormats = purego.NewCallback(func(ProviderVarp uintptr) uintptr {
+			ret := cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -129,10 +133,14 @@ func (x *ContentProviderClass) GetRefFormats() func(*ContentProvider) *ContentFo
 	if x.xRefFormats == 0 {
 		return nil
 	}
-	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	var rawCallback func(ProviderVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRefFormats)
 	return func(ProviderVar *ContentProvider) *ContentFormats {
-		return rawCallback(ProviderVar.GoPointer())
+		rawRet := rawCallback(ProviderVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*ContentFormats)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -141,8 +149,12 @@ func (x *ContentProviderClass) OverrideRefStorableFormats(cb func(*ContentProvid
 	if cb == nil {
 		x.xRefStorableFormats = 0
 	} else {
-		x.xRefStorableFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
-			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		x.xRefStorableFormats = purego.NewCallback(func(ProviderVarp uintptr) uintptr {
+			ret := cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -152,10 +164,14 @@ func (x *ContentProviderClass) GetRefStorableFormats() func(*ContentProvider) *C
 	if x.xRefStorableFormats == 0 {
 		return nil
 	}
-	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	var rawCallback func(ProviderVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRefStorableFormats)
 	return func(ProviderVar *ContentProvider) *ContentFormats {
-		return rawCallback(ProviderVar.GoPointer())
+		rawRet := rawCallback(ProviderVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*ContentFormats)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -364,15 +380,18 @@ func (x *ContentProvider) GetValue(ValueVar *gobject.Value) (bool, error) {
 	return cret, cerr
 }
 
-var xContentProviderRefFormats func(uintptr) *ContentFormats
+var xContentProviderRefFormats func(uintptr) uintptr
 
 // Gets the formats that the provider can provide its current contents in.
 func (x *ContentProvider) RefFormats() *ContentFormats {
 	cret := xContentProviderRefFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
-var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
+var xContentProviderRefStorableFormats func(uintptr) uintptr
 
 // Gets the formats that the provider suggests other applications to store
 // the data in.
@@ -382,7 +401,10 @@ var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
 // This can be assumed to be a subset of [method@Gdk.ContentProvider.ref_formats].
 func (x *ContentProvider) RefStorableFormats() *ContentFormats {
 	cret := xContentProviderRefStorableFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int32, uintptr, uintptr, uintptr)

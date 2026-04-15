@@ -2,6 +2,8 @@
 package pangocairo
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -52,10 +54,13 @@ func (x *FontBase) SetGoPointer(ptr uintptr) {
 // cairo_scaled_font_reference().
 func (x *FontBase) GetScaledFont() *cairo.ScaledFont {
 	cret := XPangoCairoFontGetScaledFont(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.ScaledFont)(unsafe.Pointer(cret))
 }
 
-var XPangoCairoFontGetScaledFont func(uintptr) *cairo.ScaledFont
+var XPangoCairoFontGetScaledFont func(uintptr) uintptr
 
 // `PangoCairoFontMap` is an interface exported by font maps for
 // use with Cairo.
@@ -158,7 +163,7 @@ var (
 	XPangoCairoFontMapSetResolution func(uintptr, float64)
 )
 
-var xContextGetFontOptions func(uintptr) *cairo.FontOptions
+var xContextGetFontOptions func(uintptr) uintptr
 
 // Retrieves any font rendering options previously set with
 // [func@PangoCairo.context_set_font_options].
@@ -167,7 +172,10 @@ var xContextGetFontOptions func(uintptr) *cairo.FontOptions
 // the target surface by [func@update_context].
 func ContextGetFontOptions(ContextVar *pango.Context) *cairo.FontOptions {
 	cret := xContextGetFontOptions(ContextVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.FontOptions)(unsafe.Pointer(cret))
 }
 
 var xContextGetResolution func(uintptr) float64

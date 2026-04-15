@@ -29,7 +29,7 @@ func (x *MarkupParseContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMarkupParseContext func(*MarkupParser, MarkupParseFlags, uintptr, uintptr) *MarkupParseContext
+var xNewMarkupParseContext func(*MarkupParser, MarkupParseFlags, uintptr, uintptr) uintptr
 
 // Creates a new parse context. A parse context is used to parse
 // marked-up documents. You can feed any number of documents into
@@ -37,8 +37,11 @@ var xNewMarkupParseContext func(*MarkupParser, MarkupParseFlags, uintptr, uintpt
 // the parse context can't continue to parse text (you have to
 // free it and create a new parse context).
 func NewMarkupParseContext(ParserVar *MarkupParser, FlagsVar MarkupParseFlags, UserDataVar uintptr, UserDataDnotifyVar *DestroyNotify) *MarkupParseContext {
-	cret := xNewMarkupParseContext(ParserVar, FlagsVar, UserDataVar, NewCallback(UserDataDnotifyVar))
-	return cret
+	cret := xNewMarkupParseContext(ParserVar, FlagsVar, UserDataVar, NewCallbackNullable(UserDataDnotifyVar))
+	if cret == 0 {
+		return nil
+	}
+	return (*MarkupParseContext)(unsafe.Pointer(cret))
 }
 
 var xMarkupParseContextEndParse func(uintptr, **Error) bool
@@ -80,7 +83,7 @@ func (x *MarkupParseContext) GetElement() string {
 	return cret
 }
 
-var xMarkupParseContextGetElementStack func(uintptr) *SList
+var xMarkupParseContextGetElementStack func(uintptr) uintptr
 
 // Retrieves the element stack from the internal state of the parser.
 //
@@ -95,7 +98,10 @@ var xMarkupParseContextGetElementStack func(uintptr) *SList
 // processed.
 func (x *MarkupParseContext) GetElementStack() *SList {
 	cret := xMarkupParseContextGetElementStack(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SList)(unsafe.Pointer(cret))
 }
 
 var xMarkupParseContextGetOffset func(uintptr) uint
@@ -327,12 +333,15 @@ func (x *MarkupParseContext) Push(ParserVar *MarkupParser, UserDataVar uintptr) 
 	xMarkupParseContextPush(x.GoPointer(), ParserVar, UserDataVar)
 }
 
-var xMarkupParseContextRef func(uintptr) *MarkupParseContext
+var xMarkupParseContextRef func(uintptr) uintptr
 
 // Increases the reference count of @context.
 func (x *MarkupParseContext) Ref() *MarkupParseContext {
 	cret := xMarkupParseContextRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MarkupParseContext)(unsafe.Pointer(cret))
 }
 
 var xMarkupParseContextUnref func(uintptr)

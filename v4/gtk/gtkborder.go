@@ -35,20 +35,26 @@ func (x *Border) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBorder func() *Border
+var xNewBorder func() uintptr
 
 // Allocates a new `GtkBorder` struct and initializes its elements to zero.
 func NewBorder() *Border {
 	cret := xNewBorder()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Border)(unsafe.Pointer(cret))
 }
 
-var xBorderCopy func(uintptr) *Border
+var xBorderCopy func(uintptr) uintptr
 
 // Copies a `GtkBorder`.
 func (x *Border) Copy() *Border {
 	cret := xBorderCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Border)(unsafe.Pointer(cret))
 }
 
 var xBorderFree func(uintptr)

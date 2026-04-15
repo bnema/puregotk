@@ -180,12 +180,15 @@ func (x *WindowGroup) AddWindow(WindowVar *Window) {
 	xWindowGroupAddWindow(x.GoPointer(), WindowVar.GoPointer())
 }
 
-var xWindowGroupListWindows func(uintptr) *glib.List
+var xWindowGroupListWindows func(uintptr) uintptr
 
 // Returns a list of the `GtkWindows` that belong to @window_group.
 func (x *WindowGroup) ListWindows() *glib.List {
 	cret := xWindowGroupListWindows(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWindowGroupRemoveWindow func(uintptr, uintptr)

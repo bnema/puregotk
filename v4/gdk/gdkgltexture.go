@@ -47,7 +47,7 @@ var xNewGLTexture func(uintptr, uint32, int32, int32, uintptr, uintptr) uintptr
 func NewGLTexture(ContextVar *GLContext, IdVar uint32, WidthVar int32, HeightVar int32, DestroyVar *glib.DestroyNotify, DataVar uintptr) *GLTexture {
 	var cls *GLTexture
 
-	cret := xNewGLTexture(ContextVar.GoPointer(), IdVar, WidthVar, HeightVar, glib.NewCallback(DestroyVar), DataVar)
+	cret := xNewGLTexture(ContextVar.GoPointer(), IdVar, WidthVar, HeightVar, glib.NewCallbackNullable(DestroyVar), DataVar)
 
 	if cret == 0 {
 		return nil
@@ -230,7 +230,10 @@ func (x *GLTexture) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *GLTexture) Serialize() *glib.Variant {
 	cret := gio.XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

@@ -65,12 +65,15 @@ func (x *Seat) GetCapabilities() SeatCapabilities {
 	return cret
 }
 
-var xSeatGetDevices func(uintptr, SeatCapabilities) *glib.List
+var xSeatGetDevices func(uintptr, SeatCapabilities) uintptr
 
 // Returns the devices that match the given capabilities.
 func (x *Seat) GetDevices(CapabilitiesVar SeatCapabilities) *glib.List {
 	cret := xSeatGetDevices(x.GoPointer(), CapabilitiesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xSeatGetDisplay func(uintptr) uintptr
@@ -124,12 +127,15 @@ func (x *Seat) GetPointer() *Device {
 	return cls
 }
 
-var xSeatGetTools func(uintptr) *glib.List
+var xSeatGetTools func(uintptr) uintptr
 
 // Returns all `GdkDeviceTools` that are known to the application.
 func (x *Seat) GetTools() *glib.List {
 	cret := xSeatGetTools(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func (c *Seat) GoPointer() uintptr {

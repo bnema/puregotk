@@ -38,48 +38,63 @@ func (x *BreakpointCondition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBreakpointConditionAnd func(*BreakpointCondition, *BreakpointCondition) *BreakpointCondition
+var xNewBreakpointConditionAnd func(*BreakpointCondition, *BreakpointCondition) uintptr
 
 // Creates a condition that triggers when @condition_1 and @condition_2 are both
 // true.
 func NewBreakpointConditionAnd(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
 	cret := xNewBreakpointConditionAnd(Condition1Var, Condition2Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
-var xNewBreakpointConditionLength func(BreakpointConditionLengthType, float64, LengthUnit) *BreakpointCondition
+var xNewBreakpointConditionLength func(BreakpointConditionLengthType, float64, LengthUnit) uintptr
 
 // Creates a condition that triggers on length changes.
 func NewBreakpointConditionLength(TypeVar BreakpointConditionLengthType, ValueVar float64, UnitVar LengthUnit) *BreakpointCondition {
 	cret := xNewBreakpointConditionLength(TypeVar, ValueVar, UnitVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
-var xNewBreakpointConditionOr func(*BreakpointCondition, *BreakpointCondition) *BreakpointCondition
+var xNewBreakpointConditionOr func(*BreakpointCondition, *BreakpointCondition) uintptr
 
 // Creates a condition that triggers when either @condition_1 or @condition_2 is
 // true.
 func NewBreakpointConditionOr(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
 	cret := xNewBreakpointConditionOr(Condition1Var, Condition2Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
-var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int32, int32) *BreakpointCondition
+var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int32, int32) uintptr
 
 // Creates a condition that triggers on ratio changes.
 //
 // The ratio is represented as @width divided by @height.
 func NewBreakpointConditionRatio(TypeVar BreakpointConditionRatioType, WidthVar int32, HeightVar int32) *BreakpointCondition {
 	cret := xNewBreakpointConditionRatio(TypeVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
-var xBreakpointConditionCopy func(uintptr) *BreakpointCondition
+var xBreakpointConditionCopy func(uintptr) uintptr
 
 // Copies @self.
 func (x *BreakpointCondition) Copy() *BreakpointCondition {
 	cret := xBreakpointConditionCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
 var xBreakpointConditionFree func(uintptr)
@@ -151,7 +166,7 @@ const (
 	BreakpointConditionMaxAspectRatioValue BreakpointConditionRatioType = 1
 )
 
-var xBreakpointConditionParse func(string) *BreakpointCondition
+var xBreakpointConditionParse func(string) uintptr
 
 // Parses a condition from a string.
 //
@@ -210,7 +225,10 @@ var xBreakpointConditionParse func(string) *BreakpointCondition
 // If parentheses are omitted, the first operator takes priority.
 func BreakpointConditionParse(StrVar string) *BreakpointCondition {
 	cret := xBreakpointConditionParse(StrVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
 // Describes a breakpoint for [class@Window] or [class@Dialog].
@@ -385,12 +403,15 @@ func (x *Breakpoint) AddSettersv(NSettersVar int32, ObjectsVar uintptr, NamesVar
 	xBreakpointAddSettersv(x.GoPointer(), NSettersVar, ObjectsVar, NamesVar, ValuesVar)
 }
 
-var xBreakpointGetCondition func(uintptr) *BreakpointCondition
+var xBreakpointGetCondition func(uintptr) uintptr
 
 // Gets the condition for @self.
 func (x *Breakpoint) GetCondition() *BreakpointCondition {
 	cret := xBreakpointGetCondition(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
 var xBreakpointSetCondition func(uintptr, *BreakpointCondition)

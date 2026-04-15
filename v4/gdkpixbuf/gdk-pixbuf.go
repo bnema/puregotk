@@ -2,6 +2,8 @@
 package gdkpixbuf
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
@@ -808,14 +810,17 @@ func (x *Pixbuf) GetOption(KeyVar string) string {
 	return cret
 }
 
-var xPixbufGetOptions func(uintptr) *glib.HashTable
+var xPixbufGetOptions func(uintptr) uintptr
 
 // Returns a `GHashTable` with a list of all the options that may have been
 // attached to the `pixbuf` when it was loaded, or that may have been
 // attached by another function using [method@GdkPixbuf.Pixbuf.set_option].
 func (x *Pixbuf) GetOptions() *glib.HashTable {
 	cret := xPixbufGetOptions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
 var xPixbufGetPixels func(uintptr) uintptr
@@ -887,7 +892,7 @@ func (x *Pixbuf) NewSubpixbuf(SrcXVar int32, SrcYVar int32, WidthVar int32, Heig
 	return cls
 }
 
-var xPixbufReadPixelBytes func(uintptr) *glib.Bytes
+var xPixbufReadPixelBytes func(uintptr) uintptr
 
 // Provides a #GBytes buffer containing the raw pixel data; the data
 // must not be modified.
@@ -896,7 +901,10 @@ var xPixbufReadPixelBytes func(uintptr) *glib.Bytes
 // if gdk_pixbuf_get_pixels() is called on a read-only pixbuf.
 func (x *Pixbuf) ReadPixelBytes() *glib.Bytes {
 	cret := xPixbufReadPixelBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xPixbufReadPixels func(uintptr) byte
@@ -1464,7 +1472,10 @@ func (x *Pixbuf) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Pixbuf) Serialize() *glib.Variant {
 	cret := gio.XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for
@@ -1544,12 +1555,15 @@ func PixbufCalculateRowstride(ColorspaceVar Colorspace, HasAlphaVar bool, BitsPe
 	return cret
 }
 
-var xPixbufGetFileInfo func(string, *int32, *int32) *PixbufFormat
+var xPixbufGetFileInfo func(string, *int32, *int32) uintptr
 
 // Parses an image file far enough to determine its format and size.
 func PixbufGetFileInfo(FilenameVar string, WidthVar *int32, HeightVar *int32) *PixbufFormat {
 	cret := xPixbufGetFileInfo(FilenameVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufGetFileInfoAsync func(string, uintptr, uintptr, uintptr)
@@ -1567,7 +1581,7 @@ func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable,
 	xPixbufGetFileInfoAsync(FilenameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xPixbufGetFileInfoFinish func(uintptr, *int32, *int32, **glib.Error) *PixbufFormat
+var xPixbufGetFileInfoFinish func(uintptr, *int32, *int32, **glib.Error) uintptr
 
 // Finishes an asynchronous pixbuf parsing operation started with
 // gdk_pixbuf_get_file_info_async().
@@ -1575,19 +1589,25 @@ func PixbufGetFileInfoFinish(AsyncResultVar gio.AsyncResult, WidthVar *int32, He
 	var cerr *glib.Error
 
 	cret := xPixbufGetFileInfoFinish(AsyncResultVar.GoPointer(), WidthVar, HeightVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret)), nil
 }
 
-var xPixbufGetFormats func() *glib.SList
+var xPixbufGetFormats func() uintptr
 
 // Obtains the available information about the image formats supported
 // by GdkPixbuf.
 func PixbufGetFormats() *glib.SList {
 	cret := xPixbufGetFormats()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xPixbufInitModules func(string, **glib.Error) bool

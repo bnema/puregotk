@@ -89,7 +89,7 @@ func (x *Bytes) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBytes func([]byte, uint) *Bytes
+var xNewBytes func([]byte, uint) uintptr
 
 // Creates a new [struct@GLib.Bytes] from @data.
 //
@@ -100,10 +100,13 @@ var xNewBytes func([]byte, uint) *Bytes
 // (since GLib 2.84).
 func NewBytes(DataVar []byte, SizeVar uint) *Bytes {
 	cret := xNewBytes(DataVar, SizeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xNewBytesFromBytes func(*Bytes, uint, uint) *Bytes
+var xNewBytesFromBytes func(*Bytes, uint, uint) uintptr
 
 // Creates a [struct@GLib.Bytes] which is a subsection of another `GBytes`.
 //
@@ -119,10 +122,13 @@ var xNewBytesFromBytes func(*Bytes, uint, uint) *Bytes
 // usage of `GBytes` when asynchronously writing to streams.
 func NewBytesFromBytes(BytesVar *Bytes, OffsetVar uint, LengthVar uint) *Bytes {
 	cret := xNewBytesFromBytes(BytesVar, OffsetVar, LengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xNewBytesStatic func([]byte, uint) *Bytes
+var xNewBytesStatic func([]byte, uint) uintptr
 
 // Creates a new [struct@GLib.Bytes] from static data.
 //
@@ -130,10 +136,13 @@ var xNewBytesStatic func([]byte, uint) *Bytes
 // is 0.
 func NewBytesStatic(DataVar []byte, SizeVar uint) *Bytes {
 	cret := xNewBytesStatic(DataVar, SizeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xNewBytesTake func(uintptr, uint) *Bytes
+var xNewBytesTake func(uintptr, uint) uintptr
 
 // Creates a new [struct@GLib.Bytes] from @data.
 //
@@ -147,10 +156,13 @@ var xNewBytesTake func(uintptr, uint) *Bytes
 // @data may be `NULL` if @size is 0.
 func NewBytesTake(DataVar uintptr, SizeVar uint) *Bytes {
 	cret := xNewBytesTake(DataVar, SizeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
+var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) uintptr
 
 // Creates a [struct@GLib.Bytes] from @data.
 //
@@ -163,7 +175,10 @@ var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
 // @data may be `NULL` if @size is 0.
 func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNotify, UserDataVar uintptr) *Bytes {
 	cret := xNewBytesWithFreeFunc(DataVar, SizeVar, NewCallback(FreeFuncVar), UserDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
 var xBytesCompare func(uintptr, uintptr) int32
@@ -261,12 +276,15 @@ func (x *Bytes) Hash() uint32 {
 	return cret
 }
 
-var xBytesRef func(uintptr) *Bytes
+var xBytesRef func(uintptr) uintptr
 
 // Increase the reference count on @bytes.
 func (x *Bytes) Ref() *Bytes {
 	cret := xBytesRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
 var xBytesUnref func(uintptr)
@@ -404,7 +422,7 @@ func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) uintptr {
 	return cret
 }
 
-var xByteArrayFreeToBytes func([]byte) *Bytes
+var xByteArrayFreeToBytes func([]byte) uintptr
 
 // Transfers the data from the `GByteArray` into a new immutable
 // [struct@GLib.Bytes].
@@ -417,7 +435,10 @@ var xByteArrayFreeToBytes func([]byte) *Bytes
 // [func@GLib.ByteArray.free] together.
 func ByteArrayFreeToBytes(ArrayVar []byte) *Bytes {
 	cret := xByteArrayFreeToBytes(ArrayVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bytes)(unsafe.Pointer(cret))
 }
 
 var xByteArrayNew func() uintptr

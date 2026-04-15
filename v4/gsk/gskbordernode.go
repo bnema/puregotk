@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -52,12 +54,15 @@ func (x *BorderNode) GetColors() uintptr {
 	return cret
 }
 
-var xBorderNodeGetOutline func(uintptr) *RoundedRect
+var xBorderNodeGetOutline func(uintptr) uintptr
 
 // Retrieves the outline of the border.
 func (x *BorderNode) GetOutline() *RoundedRect {
 	cret := xBorderNodeGetOutline(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
 var xBorderNodeGetWidths func(uintptr) uintptr

@@ -274,7 +274,7 @@ var xAuthDomainSetFilter func(uintptr, uintptr, uintptr, uintptr)
 // and [property@AuthDomain:filter-data properties], which can also be
 // used to set the filter at construct time.
 func (x *AuthDomain) SetFilter(FilterVar *AuthDomainFilter, FilterDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-	xAuthDomainSetFilter(x.GoPointer(), glib.NewCallback(FilterVar), FilterDataVar, glib.NewCallback(DnotifyVar))
+	xAuthDomainSetFilter(x.GoPointer(), glib.NewCallback(FilterVar), FilterDataVar, glib.NewCallbackNullable(DnotifyVar))
 }
 
 var xAuthDomainSetGenericAuthCallback func(uintptr, uintptr, uintptr, uintptr)
@@ -287,7 +287,7 @@ var xAuthDomainSetGenericAuthCallback func(uintptr, uintptr, uintptr, uintptr)
 // [callback@AuthDomainGenericAuthCallback] for information on what the callback
 // should do.
 func (x *AuthDomain) SetGenericAuthCallback(AuthCallbackVar *AuthDomainGenericAuthCallback, AuthDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-	xAuthDomainSetGenericAuthCallback(x.GoPointer(), glib.NewCallback(AuthCallbackVar), AuthDataVar, glib.NewCallback(DnotifyVar))
+	xAuthDomainSetGenericAuthCallback(x.GoPointer(), glib.NewCallback(AuthCallbackVar), AuthDataVar, glib.NewCallbackNullable(DnotifyVar))
 }
 
 func (c *AuthDomain) GoPointer() uintptr {

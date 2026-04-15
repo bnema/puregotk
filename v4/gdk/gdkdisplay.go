@@ -164,7 +164,7 @@ func (x *Display) GetDefaultSeat() *Seat {
 	return cls
 }
 
-var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
+var xDisplayGetDmabufFormats func(uintptr) uintptr
 
 // Returns the dma-buf formats that are supported on this display.
 //
@@ -179,7 +179,10 @@ var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
 // This function is threadsafe. It can be called from any thread.
 func (x *Display) GetDmabufFormats() *DmabufFormats {
 	cret := xDisplayGetDmabufFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DmabufFormats)(unsafe.Pointer(cret))
 }
 
 var xDisplayGetMonitorAtSurface func(uintptr, uintptr) uintptr
@@ -312,12 +315,15 @@ func (x *Display) IsRgba() bool {
 	return cret
 }
 
-var xDisplayListSeats func(uintptr) *glib.List
+var xDisplayListSeats func(uintptr) uintptr
 
 // Returns the list of seats known to @display.
 func (x *Display) ListSeats() *glib.List {
 	cret := xDisplayListSeats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xDisplayMapKeycode func(uintptr, uint32, *uintptr, *[]uint32, *int32) bool

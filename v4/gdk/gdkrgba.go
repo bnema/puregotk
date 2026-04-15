@@ -41,14 +41,17 @@ func (x *RGBA) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xRGBACopy func(uintptr) *RGBA
+var xRGBACopy func(uintptr) uintptr
 
 // Makes a copy of a `GdkRGBA`.
 //
 // The result must be freed through [method@Gdk.RGBA.free].
 func (x *RGBA) Copy() *RGBA {
 	cret := xRGBACopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RGBA)(unsafe.Pointer(cret))
 }
 
 var xRGBAEqual func(uintptr, uintptr) bool
@@ -125,11 +128,14 @@ func (x *RGBA) Parse(SpecVar string) bool {
 	return cret
 }
 
-var xRGBAPrint func(uintptr, *glib.String) *glib.String
+var xRGBAPrint func(uintptr, *glib.String) uintptr
 
 func (x *RGBA) Print(StringVar *glib.String) *glib.String {
 	cret := xRGBAPrint(x.GoPointer(), StringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.String)(unsafe.Pointer(cret))
 }
 
 var xRGBAToString func(uintptr) string

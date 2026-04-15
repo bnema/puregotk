@@ -39,13 +39,16 @@ func (x *StrvBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewStrvBuilder func() *StrvBuilder
+var xNewStrvBuilder func() uintptr
 
 // Creates a new #GStrvBuilder with a reference count of 1.
 // Use g_strv_builder_unref() on the returned value when no longer needed.
 func NewStrvBuilder() *StrvBuilder {
 	cret := xNewStrvBuilder()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*StrvBuilder)(unsafe.Pointer(cret))
 }
 
 var xStrvBuilderAdd func(uintptr, string)
@@ -85,13 +88,16 @@ func (x *StrvBuilder) End() []string {
 	return cret
 }
 
-var xStrvBuilderRef func(uintptr) *StrvBuilder
+var xStrvBuilderRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @builder by one.
 // This function is thread-safe and may be called from any thread.
 func (x *StrvBuilder) Ref() *StrvBuilder {
 	cret := xStrvBuilderRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*StrvBuilder)(unsafe.Pointer(cret))
 }
 
 var xStrvBuilderTake func(uintptr, string)

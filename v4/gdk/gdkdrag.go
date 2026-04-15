@@ -167,12 +167,15 @@ func (x *Drag) GetDragSurface() *Surface {
 	return cls
 }
 
-var xDragGetFormats func(uintptr) *ContentFormats
+var xDragGetFormats func(uintptr) uintptr
 
 // Retrieves the formats supported by this `GdkDrag` object.
 func (x *Drag) GetFormats() *ContentFormats {
 	cret := xDragGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDragGetSelectedAction func(uintptr) DragAction

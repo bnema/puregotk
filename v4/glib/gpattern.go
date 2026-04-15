@@ -40,20 +40,26 @@ func (x *PatternSpec) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPatternSpec func(string) *PatternSpec
+var xNewPatternSpec func(string) uintptr
 
 // Compiles a pattern to a [type@GLib.PatternSpec].
 func NewPatternSpec(PatternVar string) *PatternSpec {
 	cret := xNewPatternSpec(PatternVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PatternSpec)(unsafe.Pointer(cret))
 }
 
-var xPatternSpecCopy func(uintptr) *PatternSpec
+var xPatternSpecCopy func(uintptr) uintptr
 
 // Copies @pspec in a new [type@GLib.PatternSpec].
 func (x *PatternSpec) Copy() *PatternSpec {
 	cret := xPatternSpecCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PatternSpec)(unsafe.Pointer(cret))
 }
 
 var xPatternSpecEqual func(uintptr, *PatternSpec) bool

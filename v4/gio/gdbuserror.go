@@ -67,7 +67,7 @@ func DbusErrorIsRemoteError(ErrorVar *glib.Error) bool {
 	return cret
 }
 
-var xDbusErrorNewForDbusError func(string, string) *glib.Error
+var xDbusErrorNewForDbusError func(string, string) uintptr
 
 // Creates a [type@GLib.Error] based on the contents of @dbus_error_name and
 // @dbus_error_message.
@@ -100,7 +100,10 @@ var xDbusErrorNewForDbusError func(string, string) *glib.Error
 // use it.
 func DbusErrorNewForDbusError(DbusErrorNameVar string, DbusErrorMessageVar string) *glib.Error {
 	cret := xDbusErrorNewForDbusError(DbusErrorNameVar, DbusErrorMessageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Error)(unsafe.Pointer(cret))
 }
 
 var xDbusErrorRegisterError func(glib.Quark, int32, string) bool

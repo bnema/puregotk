@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -45,7 +47,7 @@ func NewCairoNode(BoundsVar *graphene.Rect) *CairoNode {
 	return cls
 }
 
-var xCairoNodeGetDrawContext func(uintptr) *cairo.Context
+var xCairoNodeGetDrawContext func(uintptr) uintptr
 
 // Creates a Cairo context for drawing using the surface associated
 // to the render node.
@@ -54,15 +56,21 @@ var xCairoNodeGetDrawContext func(uintptr) *cairo.Context
 // rendering to @renderer.
 func (x *CairoNode) GetDrawContext() *cairo.Context {
 	cret := xCairoNodeGetDrawContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
-var xCairoNodeGetSurface func(uintptr) *cairo.Surface
+var xCairoNodeGetSurface func(uintptr) uintptr
 
 // Retrieves the Cairo surface used by the render node.
 func (x *CairoNode) GetSurface() *cairo.Surface {
 	cret := xCairoNodeGetSurface(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Surface)(unsafe.Pointer(cret))
 }
 
 func (c *CairoNode) GoPointer() uintptr {

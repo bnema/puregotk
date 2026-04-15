@@ -82,20 +82,26 @@ func (x *GlyphString) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewGlyphString func() *GlyphString
+var xNewGlyphString func() uintptr
 
 // Create a new `PangoGlyphString`.
 func NewGlyphString() *GlyphString {
 	cret := xNewGlyphString()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphString)(unsafe.Pointer(cret))
 }
 
-var xGlyphStringCopy func(uintptr) *GlyphString
+var xGlyphStringCopy func(uintptr) uintptr
 
 // Copy a glyph string and associated storage.
 func (x *GlyphString) Copy() *GlyphString {
 	cret := xGlyphStringCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*GlyphString)(unsafe.Pointer(cret))
 }
 
 var xGlyphStringExtents func(uintptr, uintptr, *Rectangle, *Rectangle)

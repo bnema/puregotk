@@ -297,13 +297,16 @@ func (x *MemoryOutputStream) GetSize() uint {
 	return cret
 }
 
-var xMemoryOutputStreamStealAsBytes func(uintptr) *glib.Bytes
+var xMemoryOutputStreamStealAsBytes func(uintptr) uintptr
 
 // Returns data from the @ostream as a #GBytes. @ostream must be
 // closed before calling this function.
 func (x *MemoryOutputStream) StealAsBytes() *glib.Bytes {
 	cret := xMemoryOutputStreamStealAsBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xMemoryOutputStreamStealData func(uintptr) uintptr
@@ -431,7 +434,10 @@ func (x *MemoryOutputStream) CanPoll() bool {
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.

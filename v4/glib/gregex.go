@@ -374,14 +374,17 @@ func (x *MatchInfo) GetMatchCount() int32 {
 	return cret
 }
 
-var xMatchInfoGetRegex func(uintptr) *Regex
+var xMatchInfoGetRegex func(uintptr) uintptr
 
 // Returns #GRegex object used in @match_info. It belongs to Glib
 // and must not be freed. Use g_regex_ref() if you need to keep it
 // after you free @match_info object.
 func (x *MatchInfo) GetRegex() *Regex {
 	cret := xMatchInfoGetRegex(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Regex)(unsafe.Pointer(cret))
 }
 
 var xMatchInfoGetString func(uintptr) string
@@ -460,12 +463,15 @@ func (x *MatchInfo) Next() (bool, error) {
 	return cret, cerr
 }
 
-var xMatchInfoRef func(uintptr) *MatchInfo
+var xMatchInfoRef func(uintptr) uintptr
 
 // Increases reference count of @match_info by 1.
 func (x *MatchInfo) Ref() *MatchInfo {
 	cret := xMatchInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MatchInfo)(unsafe.Pointer(cret))
 }
 
 var xMatchInfoUnref func(uintptr)
@@ -626,7 +632,7 @@ func (x *Regex) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRegex func(string, RegexCompileFlags, RegexMatchFlags, **Error) *Regex
+var xNewRegex func(string, RegexCompileFlags, RegexMatchFlags, **Error) uintptr
 
 // Compiles the regular expression to an internal form, and does
 // the initial setup of the #GRegex structure.
@@ -634,10 +640,13 @@ func NewRegex(PatternVar string, CompileOptionsVar RegexCompileFlags, MatchOptio
 	var cerr *Error
 
 	cret := xNewRegex(PatternVar, CompileOptionsVar, MatchOptionsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Regex)(unsafe.Pointer(cret)), nil
 }
 
 var xRegexGetCaptureCount func(uintptr) int32
@@ -898,12 +907,15 @@ func (x *Regex) MatchFull(StringVar []string, StringLenVar int, StartPositionVar
 	return cret, cerr
 }
 
-var xRegexRef func(uintptr) *Regex
+var xRegexRef func(uintptr) uintptr
 
 // Increases reference count of @regex by 1.
 func (x *Regex) Ref() *Regex {
 	cret := xRegexRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Regex)(unsafe.Pointer(cret))
 }
 
 var xRegexReplace func(uintptr, []string, int, int32, string, RegexMatchFlags, **Error) string

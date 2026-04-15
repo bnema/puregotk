@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -61,12 +63,15 @@ func (x *ComponentTransferNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xComponentTransferNodeGetTransfer func(uintptr, gdk.ColorChannel) *ComponentTransfer
+var xComponentTransferNodeGetTransfer func(uintptr, gdk.ColorChannel) uintptr
 
 // Gets the component transfer for one of the components.
 func (x *ComponentTransferNode) GetTransfer(ComponentVar gdk.ColorChannel) *ComponentTransfer {
 	cret := xComponentTransferNodeGetTransfer(x.GoPointer(), ComponentVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
 func (c *ComponentTransferNode) GoPointer() uintptr {

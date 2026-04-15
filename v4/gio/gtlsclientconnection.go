@@ -127,7 +127,10 @@ func (x *TlsClientConnectionBase) CopySessionState(SourceVar TlsClientConnection
 // subject DN of the certificate authority.
 func (x *TlsClientConnectionBase) GetAcceptedCas() *glib.List {
 	cret := XGTlsClientConnectionGetAcceptedCas(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets @conn's expected server identity
@@ -220,7 +223,7 @@ func (x *TlsClientConnectionBase) GetPropertyUseSsl3() bool {
 
 var (
 	XGTlsClientConnectionCopySessionState   func(uintptr, uintptr)
-	XGTlsClientConnectionGetAcceptedCas     func(uintptr) *glib.List
+	XGTlsClientConnectionGetAcceptedCas     func(uintptr) uintptr
 	XGTlsClientConnectionGetServerIdentity  func(uintptr) uintptr
 	XGTlsClientConnectionGetUseSsl3         func(uintptr) bool
 	XGTlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags

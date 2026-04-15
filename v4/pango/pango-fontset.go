@@ -92,8 +92,12 @@ func (x *FontsetClass) OverrideGetMetrics(cb func(*Fontset) *FontMetrics) {
 	if cb == nil {
 		x.xGetMetrics = 0
 	} else {
-		x.xGetMetrics = purego.NewCallback(func(FontsetVarp uintptr) *FontMetrics {
-			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		x.xGetMetrics = purego.NewCallback(func(FontsetVarp uintptr) uintptr {
+			ret := cb(FontsetNewFromInternalPtr(FontsetVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -106,10 +110,14 @@ func (x *FontsetClass) GetGetMetrics() func(*Fontset) *FontMetrics {
 	if x.xGetMetrics == 0 {
 		return nil
 	}
-	var rawCallback func(FontsetVarp uintptr) *FontMetrics
+	var rawCallback func(FontsetVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetMetrics)
 	return func(FontsetVar *Fontset) *FontMetrics {
-		return rawCallback(FontsetVar.GoPointer())
+		rawRet := rawCallback(FontsetVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*FontMetrics)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -119,8 +127,12 @@ func (x *FontsetClass) OverrideGetLanguage(cb func(*Fontset) *Language) {
 	if cb == nil {
 		x.xGetLanguage = 0
 	} else {
-		x.xGetLanguage = purego.NewCallback(func(FontsetVarp uintptr) *Language {
-			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		x.xGetLanguage = purego.NewCallback(func(FontsetVarp uintptr) uintptr {
+			ret := cb(FontsetNewFromInternalPtr(FontsetVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -131,10 +143,14 @@ func (x *FontsetClass) GetGetLanguage() func(*Fontset) *Language {
 	if x.xGetLanguage == 0 {
 		return nil
 	}
-	var rawCallback func(FontsetVarp uintptr) *Language
+	var rawCallback func(FontsetVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetLanguage)
 	return func(FontsetVar *Fontset) *Language {
-		return rawCallback(FontsetVar.GoPointer())
+		rawRet := rawCallback(FontsetVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Language)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -308,12 +324,15 @@ func (x *Fontset) GetFont(WcVar uint32) *Font {
 	return cls
 }
 
-var xFontsetGetMetrics func(uintptr) *FontMetrics
+var xFontsetGetMetrics func(uintptr) uintptr
 
 // Get overall metric information for the fonts in the fontset.
 func (x *Fontset) GetMetrics() *FontMetrics {
 	cret := xFontsetGetMetrics(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontMetrics)(unsafe.Pointer(cret))
 }
 
 func (c *Fontset) GoPointer() uintptr {

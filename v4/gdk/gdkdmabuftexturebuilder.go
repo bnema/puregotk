@@ -144,12 +144,15 @@ func (x *DmabufTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uin
 	return cls, cerr
 }
 
-var xDmabufTextureBuilderGetColorState func(uintptr) *ColorState
+var xDmabufTextureBuilderGetColorState func(uintptr) uintptr
 
 // Gets the color state previously set via gdk_dmabuf_texture_builder_set_color_state().
 func (x *DmabufTextureBuilder) GetColorState() *ColorState {
 	cret := xDmabufTextureBuilderGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xDmabufTextureBuilderGetDisplay func(uintptr) uintptr
@@ -238,13 +241,16 @@ func (x *DmabufTextureBuilder) GetStride(PlaneVar uint32) uint32 {
 	return cret
 }
 
-var xDmabufTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
+var xDmabufTextureBuilderGetUpdateRegion func(uintptr) uintptr
 
 // Gets the region previously set via gdk_dmabuf_texture_builder_set_update_region() or
 // %NULL if none was set.
 func (x *DmabufTextureBuilder) GetUpdateRegion() *cairo.Region {
 	cret := xDmabufTextureBuilderGetUpdateRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xDmabufTextureBuilderGetUpdateTexture func(uintptr) uintptr

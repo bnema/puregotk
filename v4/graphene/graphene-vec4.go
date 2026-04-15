@@ -30,7 +30,7 @@ func (x *Vec4) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xVec4Alloc func() *Vec4
+var xVec4Alloc func() uintptr
 
 // Allocates a new #graphene_vec4_t structure.
 //
@@ -39,7 +39,10 @@ var xVec4Alloc func() *Vec4
 // Use graphene_vec4_init() to initialize the vector.
 func Vec4Alloc() *Vec4 {
 	cret := xVec4Alloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
 var xVec4Add func(uintptr, *Vec4, *Vec4)
@@ -129,49 +132,64 @@ func (x *Vec4) GetZ() float32 {
 	return cret
 }
 
-var xVec4Init func(uintptr, float32, float32, float32, float32) *Vec4
+var xVec4Init func(uintptr, float32, float32, float32, float32) uintptr
 
 // Initializes a #graphene_vec4_t using the given values.
 //
 // This function can be called multiple times.
 func (x *Vec4) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Vec4 {
 	cret := xVec4Init(x.GoPointer(), XVar, YVar, ZVar, WVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4InitFromFloat func(uintptr, [4]float32) *Vec4
+var xVec4InitFromFloat func(uintptr, [4]float32) uintptr
 
 // Initializes a #graphene_vec4_t with the values inside the given array.
 func (x *Vec4) InitFromFloat(SrcVar [4]float32) *Vec4 {
 	cret := xVec4InitFromFloat(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4InitFromVec2 func(uintptr, *Vec2, float32, float32) *Vec4
+var xVec4InitFromVec2 func(uintptr, *Vec2, float32, float32) uintptr
 
 // Initializes a #graphene_vec4_t using the components of a
 // #graphene_vec2_t and the values of @z and @w.
 func (x *Vec4) InitFromVec2(SrcVar *Vec2, ZVar float32, WVar float32) *Vec4 {
 	cret := xVec4InitFromVec2(x.GoPointer(), SrcVar, ZVar, WVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4InitFromVec3 func(uintptr, *Vec3, float32) *Vec4
+var xVec4InitFromVec3 func(uintptr, *Vec3, float32) uintptr
 
 // Initializes a #graphene_vec4_t using the components of a
 // #graphene_vec3_t and the value of @w.
 func (x *Vec4) InitFromVec3(SrcVar *Vec3, WVar float32) *Vec4 {
 	cret := xVec4InitFromVec3(x.GoPointer(), SrcVar, WVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4InitFromVec4 func(uintptr, *Vec4) *Vec4
+var xVec4InitFromVec4 func(uintptr, *Vec4) uintptr
 
 // Initializes a #graphene_vec4_t using the components of
 // another #graphene_vec4_t.
 func (x *Vec4) InitFromVec4(SrcVar *Vec4) *Vec4 {
 	cret := xVec4InitFromVec4(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
 var xVec4Interpolate func(uintptr, *Vec4, float64, *Vec4)
@@ -259,58 +277,76 @@ func (x *Vec4) ToFloat(DestVar *[4]float32) {
 	xVec4ToFloat(x.GoPointer(), DestVar)
 }
 
-var xVec4One func() *Vec4
+var xVec4One func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with all its
 // components set to 1.
 func Vec4One() *Vec4 {
 	cret := xVec4One()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4WAxis func() *Vec4
+var xVec4WAxis func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 0, 0, 1).
 func Vec4WAxis() *Vec4 {
 	cret := xVec4WAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4XAxis func() *Vec4
+var xVec4XAxis func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (1, 0, 0, 0).
 func Vec4XAxis() *Vec4 {
 	cret := xVec4XAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4YAxis func() *Vec4
+var xVec4YAxis func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 1, 0, 0).
 func Vec4YAxis() *Vec4 {
 	cret := xVec4YAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4ZAxis func() *Vec4
+var xVec4ZAxis func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with its
 // components set to (0, 0, 1, 0).
 func Vec4ZAxis() *Vec4 {
 	cret := xVec4ZAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
-var xVec4Zero func() *Vec4
+var xVec4Zero func() uintptr
 
 // Retrieves a pointer to a #graphene_vec4_t with all its
 // components set to 0.
 func Vec4Zero() *Vec4 {
 	cret := xVec4Zero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec4)(unsafe.Pointer(cret))
 }
 
 func init() {

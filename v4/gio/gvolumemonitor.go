@@ -330,8 +330,12 @@ func (x *VolumeMonitorClass) OverrideGetConnectedDrives(cb func(*VolumeMonitor) 
 	if cb == nil {
 		x.xGetConnectedDrives = 0
 	} else {
-		x.xGetConnectedDrives = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
-			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		x.xGetConnectedDrives = purego.NewCallback(func(VolumeMonitorVarp uintptr) uintptr {
+			ret := cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -341,10 +345,14 @@ func (x *VolumeMonitorClass) GetGetConnectedDrives() func(*VolumeMonitor) *glib.
 	if x.xGetConnectedDrives == 0 {
 		return nil
 	}
-	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	var rawCallback func(VolumeMonitorVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetConnectedDrives)
 	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
-		return rawCallback(VolumeMonitorVar.GoPointer())
+		rawRet := rawCallback(VolumeMonitorVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -353,8 +361,12 @@ func (x *VolumeMonitorClass) OverrideGetVolumes(cb func(*VolumeMonitor) *glib.Li
 	if cb == nil {
 		x.xGetVolumes = 0
 	} else {
-		x.xGetVolumes = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
-			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		x.xGetVolumes = purego.NewCallback(func(VolumeMonitorVarp uintptr) uintptr {
+			ret := cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -364,10 +376,14 @@ func (x *VolumeMonitorClass) GetGetVolumes() func(*VolumeMonitor) *glib.List {
 	if x.xGetVolumes == 0 {
 		return nil
 	}
-	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	var rawCallback func(VolumeMonitorVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetVolumes)
 	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
-		return rawCallback(VolumeMonitorVar.GoPointer())
+		rawRet := rawCallback(VolumeMonitorVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -376,8 +392,12 @@ func (x *VolumeMonitorClass) OverrideGetMounts(cb func(*VolumeMonitor) *glib.Lis
 	if cb == nil {
 		x.xGetMounts = 0
 	} else {
-		x.xGetMounts = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
-			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		x.xGetMounts = purego.NewCallback(func(VolumeMonitorVarp uintptr) uintptr {
+			ret := cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -387,10 +407,14 @@ func (x *VolumeMonitorClass) GetGetMounts() func(*VolumeMonitor) *glib.List {
 	if x.xGetMounts == 0 {
 		return nil
 	}
-	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	var rawCallback func(VolumeMonitorVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetMounts)
 	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
-		return rawCallback(VolumeMonitorVar.GoPointer())
+		rawRet := rawCallback(VolumeMonitorVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -710,7 +734,7 @@ func VolumeMonitorNewFromInternalPtr(ptr uintptr) *VolumeMonitor {
 	return cls
 }
 
-var xVolumeMonitorGetConnectedDrives func(uintptr) *glib.List
+var xVolumeMonitorGetConnectedDrives func(uintptr) uintptr
 
 // Gets a list of drives connected to the system.
 //
@@ -718,7 +742,10 @@ var xVolumeMonitorGetConnectedDrives func(uintptr) *glib.List
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetConnectedDrives() *glib.List {
 	cret := xVolumeMonitorGetConnectedDrives(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xVolumeMonitorGetMountForUuid func(uintptr, string) uintptr
@@ -737,7 +764,7 @@ func (x *VolumeMonitor) GetMountForUuid(UuidVar string) *MountBase {
 	return cls
 }
 
-var xVolumeMonitorGetMounts func(uintptr) *glib.List
+var xVolumeMonitorGetMounts func(uintptr) uintptr
 
 // Gets a list of the mounts on the system.
 //
@@ -745,7 +772,10 @@ var xVolumeMonitorGetMounts func(uintptr) *glib.List
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetMounts() *glib.List {
 	cret := xVolumeMonitorGetMounts(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xVolumeMonitorGetVolumeForUuid func(uintptr, string) uintptr
@@ -764,7 +794,7 @@ func (x *VolumeMonitor) GetVolumeForUuid(UuidVar string) *VolumeBase {
 	return cls
 }
 
-var xVolumeMonitorGetVolumes func(uintptr) *glib.List
+var xVolumeMonitorGetVolumes func(uintptr) uintptr
 
 // Gets a list of the volumes on the system.
 //
@@ -772,7 +802,10 @@ var xVolumeMonitorGetVolumes func(uintptr) *glib.List
 // its elements have been unreffed with g_object_unref().
 func (x *VolumeMonitor) GetVolumes() *glib.List {
 	cret := xVolumeMonitorGetVolumes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func (c *VolumeMonitor) GoPointer() uintptr {

@@ -95,8 +95,12 @@ func (x *PollableInputStreamInterface) OverrideCreateSource(cb func(PollableInpu
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source {
-			return cb(&PollableInputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&PollableInputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -107,10 +111,14 @@ func (x *PollableInputStreamInterface) GetCreateSource() func(PollableInputStrea
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(StreamVar PollableInputStream, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -207,7 +215,10 @@ func (x *PollableInputStreamBase) CanPoll() bool {
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) CreateSource(CancellableVar *Cancellable) *glib.Source {
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be read.
@@ -252,7 +263,7 @@ func (x *PollableInputStreamBase) ReadNonblocking(BufferVar *[]byte, CountVar ui
 
 var (
 	XGPollableInputStreamCanPoll         func(uintptr) bool
-	XGPollableInputStreamCreateSource    func(uintptr, uintptr) *glib.Source
+	XGPollableInputStreamCreateSource    func(uintptr, uintptr) uintptr
 	XGPollableInputStreamIsReadable      func(uintptr) bool
 	XGPollableInputStreamReadNonblocking func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
 )

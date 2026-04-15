@@ -29,14 +29,17 @@ func (x *Size) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSizeAlloc func() *Size
+var xSizeAlloc func() uintptr
 
 // Allocates a new #graphene_size_t.
 //
 // The contents of the returned value are undefined.
 func SizeAlloc() *Size {
 	cret := xSizeAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 var xSizeEqual func(uintptr, *Size) bool
@@ -54,21 +57,27 @@ func (x *Size) Free() {
 	xSizeFree(x.GoPointer())
 }
 
-var xSizeInit func(uintptr, float32, float32) *Size
+var xSizeInit func(uintptr, float32, float32) uintptr
 
 // Initializes a #graphene_size_t using the given @width and @height.
 func (x *Size) Init(WidthVar float32, HeightVar float32) *Size {
 	cret := xSizeInit(x.GoPointer(), WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
-var xSizeInitFromSize func(uintptr, *Size) *Size
+var xSizeInitFromSize func(uintptr, *Size) uintptr
 
 // Initializes a #graphene_size_t using the width and height of
 // the given @src.
 func (x *Size) InitFromSize(SrcVar *Size) *Size {
 	cret := xSizeInitFromSize(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 var xSizeInterpolate func(uintptr, *Size, float64, *Size)
@@ -86,13 +95,16 @@ func (x *Size) Scale(FactorVar float32, ResVar *Size) {
 	xSizeScale(x.GoPointer(), FactorVar, ResVar)
 }
 
-var xSizeZero func() *Size
+var xSizeZero func() uintptr
 
 // A constant pointer to a zero #graphene_size_t, useful for
 // equality checks and interpolations.
 func SizeZero() *Size {
 	cret := xSizeZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Size)(unsafe.Pointer(cret))
 }
 
 func init() {

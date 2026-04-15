@@ -32,14 +32,17 @@ func (x *Plane) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xPlaneAlloc func() *Plane
+var xPlaneAlloc func() uintptr
 
 // Allocates a new #graphene_plane_t structure.
 //
 // The contents of the returned structure are undefined.
 func PlaneAlloc() *Plane {
 	cret := xPlaneAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
 var xPlaneDistance func(uintptr, *Point3D) float32
@@ -82,34 +85,43 @@ func (x *Plane) GetNormal(NormalVar *Vec3) {
 	xPlaneGetNormal(x.GoPointer(), NormalVar)
 }
 
-var xPlaneInit func(uintptr, *Vec3, float32) *Plane
+var xPlaneInit func(uintptr, *Vec3, float32) uintptr
 
 // Initializes the given #graphene_plane_t using the given @normal vector
 // and @constant values.
 func (x *Plane) Init(NormalVar *Vec3, ConstantVar float32) *Plane {
 	cret := xPlaneInit(x.GoPointer(), NormalVar, ConstantVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
-var xPlaneInitFromPlane func(uintptr, *Plane) *Plane
+var xPlaneInitFromPlane func(uintptr, *Plane) uintptr
 
 // Initializes the given #graphene_plane_t using the normal
 // vector and constant of another #graphene_plane_t.
 func (x *Plane) InitFromPlane(SrcVar *Plane) *Plane {
 	cret := xPlaneInitFromPlane(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
-var xPlaneInitFromPoint func(uintptr, *Vec3, *Point3D) *Plane
+var xPlaneInitFromPoint func(uintptr, *Vec3, *Point3D) uintptr
 
 // Initializes the given #graphene_plane_t using the given normal vector
 // and an arbitrary co-planar point.
 func (x *Plane) InitFromPoint(NormalVar *Vec3, PointVar *Point3D) *Plane {
 	cret := xPlaneInitFromPoint(x.GoPointer(), NormalVar, PointVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
-var xPlaneInitFromPoints func(uintptr, *Point3D, *Point3D, *Point3D) *Plane
+var xPlaneInitFromPoints func(uintptr, *Point3D, *Point3D, *Point3D) uintptr
 
 // Initializes the given #graphene_plane_t using the 3 provided co-planar
 // points.
@@ -118,16 +130,22 @@ var xPlaneInitFromPoints func(uintptr, *Point3D, *Point3D, *Point3D) *Plane
 // the normal vector will point.
 func (x *Plane) InitFromPoints(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Plane {
 	cret := xPlaneInitFromPoints(x.GoPointer(), AVar, BVar, CVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
-var xPlaneInitFromVec4 func(uintptr, *Vec4) *Plane
+var xPlaneInitFromVec4 func(uintptr, *Vec4) uintptr
 
 // Initializes the given #graphene_plane_t using the components of
 // the given #graphene_vec4_t vector.
 func (x *Plane) InitFromVec4(SrcVar *Vec4) *Plane {
 	cret := xPlaneInitFromVec4(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Plane)(unsafe.Pointer(cret))
 }
 
 var xPlaneNegate func(uintptr, *Plane)

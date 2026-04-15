@@ -72,12 +72,15 @@ func (x *PathBuf) ClearToPath() string {
 	return cret
 }
 
-var xPathBufCopy func(uintptr) *PathBuf
+var xPathBufCopy func(uintptr) uintptr
 
 // Copies the contents of a path buffer into a new `GPathBuf`.
 func (x *PathBuf) Copy() *PathBuf {
 	cret := xPathBufCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufFree func(uintptr)
@@ -100,20 +103,26 @@ func (x *PathBuf) FreeToPath() string {
 	return cret
 }
 
-var xPathBufInit func(uintptr) *PathBuf
+var xPathBufInit func(uintptr) uintptr
 
 // Initializes a `GPathBuf` instance.
 func (x *PathBuf) Init() *PathBuf {
 	cret := xPathBufInit(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
-var xPathBufInitFromPath func(uintptr, string) *PathBuf
+var xPathBufInitFromPath func(uintptr, string) uintptr
 
 // Initializes a `GPathBuf` instance with the given path.
 func (x *PathBuf) InitFromPath(PathVar string) *PathBuf {
 	cret := xPathBufInitFromPath(x.GoPointer(), PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufPop func(uintptr) bool
@@ -146,7 +155,7 @@ func (x *PathBuf) Pop() bool {
 	return cret
 }
 
-var xPathBufPush func(uintptr, string) *PathBuf
+var xPathBufPush func(uintptr, string) uintptr
 
 // Extends the given path buffer with @path.
 //
@@ -177,7 +186,10 @@ var xPathBufPush func(uintptr, string) *PathBuf
 // ]|
 func (x *PathBuf) Push(PathVar string) *PathBuf {
 	cret := xPathBufPush(x.GoPointer(), PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuf)(unsafe.Pointer(cret))
 }
 
 var xPathBufSetExtension func(uintptr, string) bool

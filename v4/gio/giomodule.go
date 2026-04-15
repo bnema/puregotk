@@ -49,7 +49,7 @@ func (x *IOModuleScope) Free() {
 	xIOModuleScopeFree(x.GoPointer())
 }
 
-var xIoExtensionPointImplement func(string, types.GType, string, int32) *IOExtension
+var xIoExtensionPointImplement func(string, types.GType, string, int32) uintptr
 
 // Registers @type as extension for the extension point with name
 // @extension_point_name.
@@ -58,26 +58,35 @@ var xIoExtensionPointImplement func(string, types.GType, string, int32) *IOExten
 // extension point, the existing #GIOExtension object is returned.
 func IoExtensionPointImplement(ExtensionPointNameVar string, TypeVar types.GType, ExtensionNameVar string, PriorityVar int32) *IOExtension {
 	cret := xIoExtensionPointImplement(ExtensionPointNameVar, TypeVar, ExtensionNameVar, PriorityVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOExtension)(unsafe.Pointer(cret))
 }
 
-var xIoExtensionPointLookup func(string) *IOExtensionPoint
+var xIoExtensionPointLookup func(string) uintptr
 
 // Looks up an existing extension point.
 func IoExtensionPointLookup(NameVar string) *IOExtensionPoint {
 	cret := xIoExtensionPointLookup(NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOExtensionPoint)(unsafe.Pointer(cret))
 }
 
-var xIoExtensionPointRegister func(string) *IOExtensionPoint
+var xIoExtensionPointRegister func(string) uintptr
 
 // Registers an extension point.
 func IoExtensionPointRegister(NameVar string) *IOExtensionPoint {
 	cret := xIoExtensionPointRegister(NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOExtensionPoint)(unsafe.Pointer(cret))
 }
 
-var xIoModulesLoadAllInDirectory func(string) *glib.List
+var xIoModulesLoadAllInDirectory func(string) uintptr
 
 // Loads all the modules in the specified directory.
 //
@@ -86,10 +95,13 @@ var xIoModulesLoadAllInDirectory func(string) *glib.List
 // which allows delayed/lazy loading of modules.
 func IoModulesLoadAllInDirectory(DirnameVar string) *glib.List {
 	cret := xIoModulesLoadAllInDirectory(DirnameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xIoModulesLoadAllInDirectoryWithScope func(string, *IOModuleScope) *glib.List
+var xIoModulesLoadAllInDirectoryWithScope func(string, *IOModuleScope) uintptr
 
 // Loads all the modules in the specified directory.
 //
@@ -98,7 +110,10 @@ var xIoModulesLoadAllInDirectoryWithScope func(string, *IOModuleScope) *glib.Lis
 // which allows delayed/lazy loading of modules.
 func IoModulesLoadAllInDirectoryWithScope(DirnameVar string, ScopeVar *IOModuleScope) *glib.List {
 	cret := xIoModulesLoadAllInDirectoryWithScope(DirnameVar, ScopeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xIoModulesScanAllInDirectory func(string)

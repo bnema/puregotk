@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -43,7 +45,7 @@ func NewColorNode(RgbaVar *gdk.RGBA, BoundsVar *graphene.Rect) *ColorNode {
 	return cls
 }
 
-var xColorNodeGetColor func(uintptr) *gdk.RGBA
+var xColorNodeGetColor func(uintptr) uintptr
 
 // Retrieves the color of the given @node.
 //
@@ -51,7 +53,10 @@ var xColorNodeGetColor func(uintptr) *gdk.RGBA
 // if the render node was created for a non-sRGB color.
 func (x *ColorNode) GetColor() *gdk.RGBA {
 	cret := xColorNodeGetColor(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 func (c *ColorNode) GoPointer() uintptr {

@@ -245,7 +245,10 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 // with the same name but a different parameter type.
 func (x *Application) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -258,7 +261,10 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -281,7 +287,10 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -302,7 +311,10 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 // with the same name but a different state type.
 func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType {
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.

@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -59,12 +61,15 @@ func (x *RoundedClipNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xRoundedClipNodeGetClip func(uintptr) *RoundedRect
+var xRoundedClipNodeGetClip func(uintptr) uintptr
 
 // Retrieves the rounded rectangle used to clip the contents of the @node.
 func (x *RoundedClipNode) GetClip() *RoundedRect {
 	cret := xRoundedClipNodeGetClip(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
 func (c *RoundedClipNode) GoPointer() uintptr {

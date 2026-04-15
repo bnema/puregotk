@@ -214,7 +214,7 @@ func (x *RenderNode) Ref() *RenderNode {
 	return cls
 }
 
-var xRenderNodeSerialize func(uintptr) *glib.Bytes
+var xRenderNodeSerialize func(uintptr) uintptr
 
 // Serializes the @node for later deserialization via
 // gsk_render_node_deserialize(). No guarantees are made about the format
@@ -227,7 +227,10 @@ var xRenderNodeSerialize func(uintptr) *glib.Bytes
 // The format is not meant as a permanent storage format.
 func (x *RenderNode) Serialize() *glib.Bytes {
 	cret := xRenderNodeSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xRenderNodeUnref func(uintptr)

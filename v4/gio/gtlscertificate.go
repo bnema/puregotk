@@ -322,20 +322,26 @@ func (x *TlsCertificate) GetIssuerName() string {
 	return cret
 }
 
-var xTlsCertificateGetNotValidAfter func(uintptr) *glib.DateTime
+var xTlsCertificateGetNotValidAfter func(uintptr) uintptr
 
 // Returns the time at which the certificate became or will become invalid.
 func (x *TlsCertificate) GetNotValidAfter() *glib.DateTime {
 	cret := xTlsCertificateGetNotValidAfter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
-var xTlsCertificateGetNotValidBefore func(uintptr) *glib.DateTime
+var xTlsCertificateGetNotValidBefore func(uintptr) uintptr
 
 // Returns the time at which the certificate became or will become valid.
 func (x *TlsCertificate) GetNotValidBefore() *glib.DateTime {
 	cret := xTlsCertificateGetNotValidBefore(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xTlsCertificateGetSubjectName func(uintptr) string
@@ -685,7 +691,7 @@ func (x *TlsCertificate) GetPropertySubjectName() string {
 	return v.GetString()
 }
 
-var xTlsCertificateListNewFromFile func(string, **glib.Error) *glib.List
+var xTlsCertificateListNewFromFile func(string, **glib.Error) uintptr
 
 // Creates one or more #GTlsCertificates from the PEM-encoded
 // data in @file. If @file cannot be read or parsed, the function will
@@ -696,10 +702,13 @@ func TlsCertificateListNewFromFile(FileVar string) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xTlsCertificateListNewFromFile(FileVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 func init() {

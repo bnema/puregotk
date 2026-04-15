@@ -250,12 +250,15 @@ func (x *Toast) GetActionName() string {
 	return cret
 }
 
-var xToastGetActionTargetValue func(uintptr) *glib.Variant
+var xToastGetActionTargetValue func(uintptr) uintptr
 
 // Gets the parameter for action invocations.
 func (x *Toast) GetActionTargetValue() *glib.Variant {
 	cret := xToastGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xToastGetButtonLabel func(uintptr) string

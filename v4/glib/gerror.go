@@ -59,16 +59,19 @@ func (x *Error) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewError func(Quark, int32, string, ...interface{}) *Error
+var xNewError func(Quark, int32, string, ...interface{}) uintptr
 
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewError(DomainVar Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) *Error {
 	cret := xNewError(DomainVar, CodeVar, FormatVar, varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xNewErrorLiteral func(Quark, int32, string) *Error
+var xNewErrorLiteral func(Quark, int32, string) uintptr
 
 // Creates a new #GError; unlike g_error_new(), @message is
 // not a printf()-style format string. Use this function if
@@ -76,24 +79,33 @@ var xNewErrorLiteral func(Quark, int32, string) *Error
 // that could include printf() escape sequences.
 func NewErrorLiteral(DomainVar Quark, CodeVar int32, MessageVar string) *Error {
 	cret := xNewErrorLiteral(DomainVar, CodeVar, MessageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xNewErrorValist func(Quark, int32, string, []interface{}) *Error
+var xNewErrorValist func(Quark, int32, string, []interface{}) uintptr
 
 // Creates a new #GError with the given @domain and @code,
 // and a message formatted with @format.
 func NewErrorValist(DomainVar Quark, CodeVar int32, FormatVar string, ArgsVar []interface{}) *Error {
 	cret := xNewErrorValist(DomainVar, CodeVar, FormatVar, ArgsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
-var xErrorCopy func(uintptr) *Error
+var xErrorCopy func(uintptr) uintptr
 
 // Makes a copy of @error.
 func (x *Error) Copy() *Error {
 	cret := xErrorCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Error)(unsafe.Pointer(cret))
 }
 
 var xErrorFree func(uintptr)

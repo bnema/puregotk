@@ -213,7 +213,7 @@ func (x *TreeModelFilter) ConvertChildIterToIter(FilterIterVar *TreeIter, ChildI
 	return cret
 }
 
-var xTreeModelFilterConvertChildPathToPath func(uintptr, *TreePath) *TreePath
+var xTreeModelFilterConvertChildPathToPath func(uintptr, *TreePath) uintptr
 
 // Converts @child_path to a path relative to @filter. That is, @child_path
 // points to a path in the child model. The rerturned path will point to the
@@ -222,7 +222,10 @@ var xTreeModelFilterConvertChildPathToPath func(uintptr, *TreePath) *TreePath
 // is returned.
 func (x *TreeModelFilter) ConvertChildPathToPath(ChildPathVar *TreePath) *TreePath {
 	cret := xTreeModelFilterConvertChildPathToPath(x.GoPointer(), ChildPathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xTreeModelFilterConvertIterToChildIter func(uintptr, *TreeIter, *TreeIter)
@@ -232,7 +235,7 @@ func (x *TreeModelFilter) ConvertIterToChildIter(ChildIterVar *TreeIter, FilterI
 	xTreeModelFilterConvertIterToChildIter(x.GoPointer(), ChildIterVar, FilterIterVar)
 }
 
-var xTreeModelFilterConvertPathToChildPath func(uintptr, *TreePath) *TreePath
+var xTreeModelFilterConvertPathToChildPath func(uintptr, *TreePath) uintptr
 
 // Converts @filter_path to a path on the child model of @filter. That is,
 // @filter_path points to a location in @filter. The returned path will
@@ -240,7 +243,10 @@ var xTreeModelFilterConvertPathToChildPath func(uintptr, *TreePath) *TreePath
 // does not point to a location in the child model, %NULL is returned.
 func (x *TreeModelFilter) ConvertPathToChildPath(FilterPathVar *TreePath) *TreePath {
 	cret := xTreeModelFilterConvertPathToChildPath(x.GoPointer(), FilterPathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xTreeModelFilterGetModel func(uintptr) uintptr
@@ -498,7 +504,10 @@ func (x *TreeModelFilter) GetNColumns() int32 {
 // This path should be freed with gtk_tree_path_free().
 func (x *TreeModelFilter) GetPath(IterVar *TreeIter) *TreePath {
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 // Generates a string representation of the iter.

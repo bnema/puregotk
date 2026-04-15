@@ -84,7 +84,11 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
                if ret == nil {
                     return 0
                }
-               return ret.GoPointer(){{else}}return cb({{convcb .Args.Pure.Call}}){{end}}{{else}}cb({{convcb .Args.Pure.Call}}){{end}}
+               return ret.GoPointer(){{else if .Ret.Record}}ret := cb({{convcb .Args.Pure.Call}})
+               if ret == nil {
+                    return 0
+               }
+               return uintptr(unsafe.Pointer(ret)){{else}}return cb({{convcb .Args.Pure.Call}}){{end}}{{else}}cb({{convcb .Args.Pure.Call}}){{end}}
           })
      }
 }
@@ -104,7 +108,11 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           }
           ret := {{.Ret.Instance}}
           ret.Ptr = rawRet
-          return ret{{else}}return rawCallback({{convcbne .Args.API.Call}}){{end}}{{else}}rawCallback({{convcbne .Args.API.Call}}){{end}}
+          return ret{{else if .Ret.Record}}rawRet := rawCallback({{convcbne .Args.API.Call}})
+          if rawRet == 0 {
+               return nil
+          }
+          return ({{.Ret.Value}})(unsafe.Pointer(rawRet)){{else}}return rawCallback({{convcbne .Args.API.Call}}){{end}}{{else}}rawCallback({{convcbne .Args.API.Call}}){{end}}
      }
 }
 {{end}}

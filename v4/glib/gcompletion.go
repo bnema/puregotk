@@ -74,16 +74,19 @@ func (x *Completion) ClearItems() {
 	xCompletionClearItems(x.GoPointer())
 }
 
-var xCompletionComplete func(uintptr, string, string) *List
+var xCompletionComplete func(uintptr, string, string) uintptr
 
 // Attempts to complete the string @prefix using the #GCompletion
 // target items.
 func (x *Completion) Complete(PrefixVar string, NewPrefixVar string) *List {
 	cret := xCompletionComplete(x.GoPointer(), PrefixVar, NewPrefixVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
-var xCompletionCompleteUtf8 func(uintptr, string, string) *List
+var xCompletionCompleteUtf8 func(uintptr, string, string) uintptr
 
 // Attempts to complete the string @prefix using the #GCompletion target items.
 // In contrast to g_completion_complete(), this function returns the largest common
@@ -94,7 +97,10 @@ var xCompletionCompleteUtf8 func(uintptr, string, string) *List
 // items are UTF-8 strings.
 func (x *Completion) CompleteUtf8(PrefixVar string, NewPrefixVar string) *List {
 	cret := xCompletionCompleteUtf8(x.GoPointer(), PrefixVar, NewPrefixVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xCompletionFree func(uintptr)

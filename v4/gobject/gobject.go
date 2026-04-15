@@ -909,7 +909,7 @@ func (x *WeakRef) Set(ObjectVar *Object) {
 	xWeakRefSet(x.GoPointer(), ObjectVar.GoPointer())
 }
 
-var xCclosureNewObject func(uintptr, uintptr) *Closure
+var xCclosureNewObject func(uintptr, uintptr) uintptr
 
 // A variant of g_cclosure_new() which uses @object as @user_data and
 // calls g_object_watch_closure() on @object and the created
@@ -918,10 +918,13 @@ var xCclosureNewObject func(uintptr, uintptr) *Closure
 // after the object is is freed.
 func CclosureNewObject(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 	cret := xCclosureNewObject(glib.NewCallback(CallbackFuncVar), ObjectVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xCclosureNewObjectSwap func(uintptr, uintptr) *Closure
+var xCclosureNewObjectSwap func(uintptr, uintptr) uintptr
 
 // A variant of g_cclosure_new_swap() which uses @object as @user_data
 // and calls g_object_watch_closure() on @object and the created
@@ -930,7 +933,10 @@ var xCclosureNewObjectSwap func(uintptr, uintptr) *Closure
 // after the object is is freed.
 func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 	cret := xCclosureNewObjectSwap(glib.NewCallback(CallbackFuncVar), ObjectVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 var xClearObject func(uintptr)
@@ -1179,7 +1185,7 @@ var xObjectAddToggleRef func(uintptr, uintptr, uintptr)
 //
 // A g_object_add_toggle_ref() must be released with g_object_remove_toggle_ref().
 func (x *Object) AddToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
-	xObjectAddToggleRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
+	xObjectAddToggleRef(x.GoPointer(), glib.NewCallbackNullable(NotifyVar), DataVar)
 }
 
 var xObjectAddWeakPointer func(uintptr, uintptr)
@@ -1657,7 +1663,7 @@ var xObjectRemoveToggleRef func(uintptr, uintptr, uintptr)
 // might be a dangling pointer. If the object is destroyed on other threads,
 // you must take care of that yourself.
 func (x *Object) RemoveToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
-	xObjectRemoveToggleRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
+	xObjectRemoveToggleRef(x.GoPointer(), glib.NewCallbackNullable(NotifyVar), DataVar)
 }
 
 var xObjectRemoveWeakPointer func(uintptr, uintptr)
@@ -1976,14 +1982,14 @@ var xObjectWeakRef func(uintptr, uintptr, uintptr)
 // object's last g_object_unref() might happen in another thread.
 // Use #GWeakRef if thread-safety is required.
 func (x *Object) WeakRef(NotifyVar *WeakNotify, DataVar uintptr) {
-	xObjectWeakRef(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
+	xObjectWeakRef(x.GoPointer(), glib.NewCallbackNullable(NotifyVar), DataVar)
 }
 
 var xObjectWeakUnref func(uintptr, uintptr, uintptr)
 
 // Removes a weak reference callback to an object.
 func (x *Object) WeakUnref(NotifyVar *WeakNotify, DataVar uintptr) {
-	xObjectWeakUnref(x.GoPointer(), glib.NewCallback(NotifyVar), DataVar)
+	xObjectWeakUnref(x.GoPointer(), glib.NewCallbackNullable(NotifyVar), DataVar)
 }
 
 func (c *Object) GoPointer() uintptr {

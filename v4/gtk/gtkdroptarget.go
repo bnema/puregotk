@@ -178,14 +178,17 @@ func (x *DropTarget) GetDrop() *gdk.Drop {
 	return cls
 }
 
-var xDropTargetGetFormats func(uintptr) *gdk.ContentFormats
+var xDropTargetGetFormats func(uintptr) uintptr
 
 // Gets the data formats that this drop target accepts.
 //
 // If the result is %NULL, all formats are expected to be supported.
 func (x *DropTarget) GetFormats() *gdk.ContentFormats {
 	cret := xDropTargetGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDropTargetGetGtypes func(uintptr, *uint) uintptr
@@ -206,12 +209,15 @@ func (x *DropTarget) GetPreload() bool {
 	return cret
 }
 
-var xDropTargetGetValue func(uintptr) *gobject.Value
+var xDropTargetGetValue func(uintptr) uintptr
 
 // Gets the current drop data, as a `GValue`.
 func (x *DropTarget) GetValue() *gobject.Value {
 	cret := xDropTargetGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 var xDropTargetReject func(uintptr)

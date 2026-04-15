@@ -147,12 +147,15 @@ func (x *SpringAnimation) GetInitialVelocity() float64 {
 	return cret
 }
 
-var xSpringAnimationGetSpringParams func(uintptr) *SpringParams
+var xSpringAnimationGetSpringParams func(uintptr) uintptr
 
 // Gets the physical parameters of the spring of @self.
 func (x *SpringAnimation) GetSpringParams() *SpringParams {
 	cret := xSpringAnimationGetSpringParams(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xSpringAnimationGetValueFrom func(uintptr) float64

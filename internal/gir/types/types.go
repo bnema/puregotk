@@ -855,6 +855,7 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 	val := r.AnyType.Translate(ns, kinds)
 	raw := val
 	class := false
+	record := false
 	lns := ns
 	if ins != "" {
 		lns = ins
@@ -900,6 +901,14 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 			raw = "uintptr"
 			val = "uintptr"
 		}
+	case RecordsType:
+		// Record/boxed pointer returns need to round-trip as uintptr and then be
+		// cast back in the generated wrapper code.
+		if stars > 0 {
+			raw = "uintptr"
+			record = true
+			imps.AddUnsafe()
+		}
 	}
 	imps.TrackGoType(val)
 	imps.TrackGoType(raw)
@@ -907,6 +916,7 @@ func (r *ReturnValue) Template(ns string, ins string, kinds KindMap, throws bool
 		Raw:     raw,
 		Value:   val,
 		Class:   class,
+		Record:  record,
 		RefSink: r.TransferOwnership.TransferOwnership == "none",
 		Throws:  throws,
 	}

@@ -626,7 +626,7 @@ var xTextBufferAddCommitNotify func(uintptr, TextBufferNotifyFlags, uintptr, uin
 // [signal@Gtk.TextBuffer::delete-range] signals to avoid ordering issues with
 // other signal handlers which may further modify the [type@Gtk.TextBuffer].
 func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotifyVar *TextBufferCommitNotify, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) uint32 {
-	cret := xTextBufferAddCommitNotify(x.GoPointer(), FlagsVar, glib.NewCallback(CommitNotifyVar), UserDataVar, glib.NewCallback(DestroyVar))
+	cret := xTextBufferAddCommitNotify(x.GoPointer(), FlagsVar, glib.NewCallbackNullable(CommitNotifyVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 	return cret
 }
 

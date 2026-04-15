@@ -26,7 +26,7 @@ func (x *ScriptIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewScriptIter func(string, int32) *ScriptIter
+var xNewScriptIter func(string, int32) uintptr
 
 // Create a new `PangoScriptIter`, used to break a string of
 // Unicode text into runs by Unicode script.
@@ -36,7 +36,10 @@ var xNewScriptIter func(string, int32) *ScriptIter
 // [method@Pango.ScriptIter.free].
 func NewScriptIter(TextVar string, LengthVar int32) *ScriptIter {
 	cret := xNewScriptIter(TextVar, LengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ScriptIter)(unsafe.Pointer(cret))
 }
 
 var xScriptIterFree func(uintptr)
@@ -350,7 +353,7 @@ func ScriptForUnichar(ChVar uint32) Script {
 	return cret
 }
 
-var xScriptGetSampleLanguage func(Script) *Language
+var xScriptGetSampleLanguage func(Script) uintptr
 
 // Finds a language tag that is reasonably representative of @script.
 //
@@ -383,7 +386,10 @@ var xScriptGetSampleLanguage func(Script) *Language
 // context language is not feasible.
 func ScriptGetSampleLanguage(ScriptVar Script) *Language {
 	cret := xScriptGetSampleLanguage(ScriptVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
 func init() {

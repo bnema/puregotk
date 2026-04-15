@@ -103,8 +103,12 @@ func (x *PollableOutputStreamInterface) OverrideCreateSource(cb func(PollableOut
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source {
-			return cb(&PollableOutputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&PollableOutputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -115,10 +119,14 @@ func (x *PollableOutputStreamInterface) GetCreateSource() func(PollableOutputStr
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(StreamVar PollableOutputStream, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		rawRet := rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -245,7 +253,10 @@ func (x *PollableOutputStreamBase) CanPoll() bool {
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableOutputStreamBase) CreateSource(CancellableVar *Cancellable) *glib.Source {
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.
@@ -323,7 +334,7 @@ func (x *PollableOutputStreamBase) WritevNonblocking(VectorsVar []OutputVector, 
 
 var (
 	XGPollableOutputStreamCanPoll           func(uintptr) bool
-	XGPollableOutputStreamCreateSource      func(uintptr, uintptr) *glib.Source
+	XGPollableOutputStreamCreateSource      func(uintptr, uintptr) uintptr
 	XGPollableOutputStreamIsWritable        func(uintptr) bool
 	XGPollableOutputStreamWriteNonblocking  func(uintptr, []byte, uint, uintptr, **glib.Error) int
 	XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) PollableReturn

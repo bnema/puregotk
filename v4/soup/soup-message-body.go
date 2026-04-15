@@ -42,7 +42,7 @@ func (x *MessageBody) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMessageBody func() *MessageBody
+var xNewMessageBody func() uintptr
 
 // Creates a new [struct@MessageBody]
 //
@@ -50,7 +50,10 @@ var xNewMessageBody func() *MessageBody
 // will not normally need to call it yourself.
 func NewMessageBody() *MessageBody {
 	cret := xNewMessageBody()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MessageBody)(unsafe.Pointer(cret))
 }
 
 var xMessageBodyAppend func(uintptr, MemoryUse, []byte, uint)
@@ -87,7 +90,7 @@ func (x *MessageBody) Complete() {
 	xMessageBodyComplete(x.GoPointer())
 }
 
-var xMessageBodyFlatten func(uintptr) *glib.Bytes
+var xMessageBodyFlatten func(uintptr) uintptr
 
 // Fills in @body's data field with a buffer containing all of the
 // data in @body.
@@ -96,7 +99,10 @@ var xMessageBodyFlatten func(uintptr) *glib.Bytes
 // length field.
 func (x *MessageBody) Flatten() *glib.Bytes {
 	cret := xMessageBodyFlatten(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xMessageBodyGetAccumulate func(uintptr) bool
@@ -109,7 +115,7 @@ func (x *MessageBody) GetAccumulate() bool {
 	return cret
 }
 
-var xMessageBodyGetChunk func(uintptr, int64) *glib.Bytes
+var xMessageBodyGetChunk func(uintptr, int64) uintptr
 
 // Gets a [struct@GLib.Bytes] containing data from @body starting at @offset.
 //
@@ -129,7 +135,10 @@ var xMessageBodyGetChunk func(uintptr, int64) *glib.Bytes
 // currently available).
 func (x *MessageBody) GetChunk(OffsetVar int64) *glib.Bytes {
 	cret := xMessageBodyGetChunk(x.GoPointer(), OffsetVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xMessageBodyGotChunk func(uintptr, *glib.Bytes)
@@ -147,12 +156,15 @@ func (x *MessageBody) GotChunk(ChunkVar *glib.Bytes) {
 	xMessageBodyGotChunk(x.GoPointer(), ChunkVar)
 }
 
-var xMessageBodyRef func(uintptr) *MessageBody
+var xMessageBodyRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @body by one.
 func (x *MessageBody) Ref() *MessageBody {
 	cret := xMessageBodyRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MessageBody)(unsafe.Pointer(cret))
 }
 
 var xMessageBodySetAccumulate func(uintptr, bool)

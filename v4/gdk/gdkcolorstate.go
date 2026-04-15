@@ -2,21 +2,26 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xColorStateGetOklab func() *ColorState
+var xColorStateGetOklab func() uintptr
 
 // Returns the color state object representing the oklab color space.
 //
 // This is a perceptually uniform color state.
 func ColorStateGetOklab() *ColorState {
 	cret := xColorStateGetOklab()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
-var xColorStateGetOklch func() *ColorState
+var xColorStateGetOklch func() uintptr
 
 // Returns the color state object representing the oklch color space.
 //
@@ -24,10 +29,13 @@ var xColorStateGetOklch func() *ColorState
 // a polar coordinate.
 func ColorStateGetOklch() *ColorState {
 	cret := xColorStateGetOklch()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
-var xColorStateGetRec2100Linear func() *ColorState
+var xColorStateGetRec2100Linear func() uintptr
 
 // Returns the color state object representing the linear rec2100 color space.
 //
@@ -40,10 +48,13 @@ var xColorStateGetRec2100Linear func() *ColorState
 // for details about this colorstate.
 func ColorStateGetRec2100Linear() *ColorState {
 	cret := xColorStateGetRec2100Linear()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
-var xColorStateGetRec2100Pq func() *ColorState
+var xColorStateGetRec2100Pq func() uintptr
 
 // Returns the color state object representing the rec2100-pq color space.
 //
@@ -56,10 +67,13 @@ var xColorStateGetRec2100Pq func() *ColorState
 // for details about this colorstate.
 func ColorStateGetRec2100Pq() *ColorState {
 	cret := xColorStateGetRec2100Pq()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
-var xColorStateGetSrgb func() *ColorState
+var xColorStateGetSrgb func() uintptr
 
 // Returns the color state object representing the sRGB color space.
 //
@@ -72,10 +86,13 @@ var xColorStateGetSrgb func() *ColorState
 // for details about this colorstate.
 func ColorStateGetSrgb() *ColorState {
 	cret := xColorStateGetSrgb()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
-var xColorStateGetSrgbLinear func() *ColorState
+var xColorStateGetSrgbLinear func() uintptr
 
 // Returns the color state object representing the linearized sRGB color space.
 //
@@ -87,7 +104,10 @@ var xColorStateGetSrgbLinear func() *ColorState
 // for details about this colorstate.
 func ColorStateGetSrgbLinear() *ColorState {
 	cret := xColorStateGetSrgbLinear()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 func init() {

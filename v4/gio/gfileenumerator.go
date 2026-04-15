@@ -132,8 +132,12 @@ func (x *FileEnumeratorClass) OverrideNextFilesFinish(cb func(*FileEnumerator, A
 	if cb == nil {
 		x.xNextFilesFinish = 0
 	} else {
-		x.xNextFilesFinish = purego.NewCallback(func(EnumeratorVarp uintptr, ResultVarp uintptr) *glib.List {
-			return cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), &AsyncResultBase{Ptr: ResultVarp})
+		x.xNextFilesFinish = purego.NewCallback(func(EnumeratorVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -143,10 +147,14 @@ func (x *FileEnumeratorClass) GetNextFilesFinish() func(*FileEnumerator, AsyncRe
 	if x.xNextFilesFinish == 0 {
 		return nil
 	}
-	var rawCallback func(EnumeratorVarp uintptr, ResultVarp uintptr) *glib.List
+	var rawCallback func(EnumeratorVarp uintptr, ResultVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xNextFilesFinish)
 	return func(EnumeratorVar *FileEnumerator, ResultVar AsyncResult) *glib.List {
-		return rawCallback(EnumeratorVar.GoPointer(), ResultVar.GoPointer())
+		rawRet := rawCallback(EnumeratorVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -682,17 +690,20 @@ func (x *FileEnumerator) NextFilesAsync(NumFilesVar int32, IoPriorityVar int32, 
 	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xFileEnumeratorNextFilesFinish func(uintptr, uintptr, **glib.Error) *glib.List
+var xFileEnumeratorNextFilesFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the asynchronous operation started with g_file_enumerator_next_files_async().
 func (x *FileEnumerator) NextFilesFinish(ResultVar AsyncResult) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xFileEnumeratorNextFilesFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 var xFileEnumeratorSetPending func(uintptr, bool)

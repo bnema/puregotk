@@ -86,13 +86,16 @@ func (x *RecentInfo) Exists() bool {
 	return cret
 }
 
-var xRecentInfoGetAdded func(uintptr) *glib.DateTime
+var xRecentInfoGetAdded func(uintptr) uintptr
 
 // Gets the time when the resource
 // was added to the recently used resources list.
 func (x *RecentInfo) GetAdded() *glib.DateTime {
 	cret := xRecentInfoGetAdded(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xRecentInfoGetAge func(uintptr) int32
@@ -178,13 +181,16 @@ func (x *RecentInfo) GetMimeType() string {
 	return cret
 }
 
-var xRecentInfoGetModified func(uintptr) *glib.DateTime
+var xRecentInfoGetModified func(uintptr) uintptr
 
 // Gets the time when the meta-data
 // for the resource was last modified.
 func (x *RecentInfo) GetModified() *glib.DateTime {
 	cret := xRecentInfoGetModified(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xRecentInfoGetPrivateHint func(uintptr) bool
@@ -231,13 +237,16 @@ func (x *RecentInfo) GetUriDisplay() string {
 	return cret
 }
 
-var xRecentInfoGetVisited func(uintptr) *glib.DateTime
+var xRecentInfoGetVisited func(uintptr) uintptr
 
 // Gets the time when the meta-data
 // for the resource was last visited.
 func (x *RecentInfo) GetVisited() *glib.DateTime {
 	cret := xRecentInfoGetVisited(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xRecentInfoHasApplication func(uintptr, string) bool
@@ -283,12 +292,15 @@ func (x *RecentInfo) Match(InfoBVar *RecentInfo) bool {
 	return cret
 }
 
-var xRecentInfoRef func(uintptr) *RecentInfo
+var xRecentInfoRef func(uintptr) uintptr
 
 // Increases the reference count of @recent_info by one.
 func (x *RecentInfo) Ref() *RecentInfo {
 	cret := xRecentInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RecentInfo)(unsafe.Pointer(cret))
 }
 
 var xRecentInfoUnref func(uintptr)
@@ -628,12 +640,15 @@ func (x *RecentManager) AddItem(UriVar string) bool {
 	return cret
 }
 
-var xRecentManagerGetItems func(uintptr) *glib.List
+var xRecentManagerGetItems func(uintptr) uintptr
 
 // Gets the list of recently used resources.
 func (x *RecentManager) GetItems() *glib.List {
 	cret := xRecentManagerGetItems(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xRecentManagerHasItem func(uintptr, string) bool
@@ -645,7 +660,7 @@ func (x *RecentManager) HasItem(UriVar string) bool {
 	return cret
 }
 
-var xRecentManagerLookupItem func(uintptr, string, **glib.Error) *RecentInfo
+var xRecentManagerLookupItem func(uintptr, string, **glib.Error) uintptr
 
 // Searches for a URI inside the recently used resources list, and
 // returns a `GtkRecentInfo` containing information about the resource
@@ -654,10 +669,13 @@ func (x *RecentManager) LookupItem(UriVar string) (*RecentInfo, error) {
 	var cerr *glib.Error
 
 	cret := xRecentManagerLookupItem(x.GoPointer(), UriVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*RecentInfo)(unsafe.Pointer(cret)), nil
 }
 
 var xRecentManagerMoveItem func(uintptr, string, string, **glib.Error) bool

@@ -238,7 +238,7 @@ func (x *CookieJar) AddCookieWithFirstParty(FirstPartyVar *glib.Uri, CookieVar *
 	xCookieJarAddCookieWithFirstParty(x.GoPointer(), FirstPartyVar, CookieVar)
 }
 
-var xCookieJarAllCookies func(uintptr) *glib.SList
+var xCookieJarAllCookies func(uintptr) uintptr
 
 // Constructs a [struct@GLib.List] with every cookie inside the @jar.
 //
@@ -248,7 +248,10 @@ var xCookieJarAllCookies func(uintptr) *glib.SList
 // For historical reasons this list is in reverse order.
 func (x *CookieJar) AllCookies() *glib.SList {
 	cret := xCookieJarAllCookies(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xCookieJarDeleteCookie func(uintptr, *Cookie)
@@ -268,7 +271,7 @@ func (x *CookieJar) GetAcceptPolicy() CookieJarAcceptPolicy {
 	return cret
 }
 
-var xCookieJarGetCookieList func(uintptr, *glib.Uri, bool) *glib.SList
+var xCookieJarGetCookieList func(uintptr, *glib.Uri, bool) uintptr
 
 // Retrieves the list of cookies that would be sent with a request to @uri
 // as a [struct@GLib.List] of [struct@Cookie] objects.
@@ -282,10 +285,13 @@ var xCookieJarGetCookieList func(uintptr, *glib.Uri, bool) *glib.SList
 // this.
 func (x *CookieJar) GetCookieList(UriVar *glib.Uri, ForHttpVar bool) *glib.SList {
 	cret := xCookieJarGetCookieList(x.GoPointer(), UriVar, ForHttpVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xCookieJarGetCookieListWithSameSiteInfo func(uintptr, *glib.Uri, *glib.Uri, *glib.Uri, bool, bool, bool) *glib.SList
+var xCookieJarGetCookieListWithSameSiteInfo func(uintptr, *glib.Uri, *glib.Uri, *glib.Uri, bool, bool, bool) uintptr
 
 // This is an extended version of [method@CookieJar.get_cookie_list] that
 // provides more information required to use SameSite cookies.
@@ -295,7 +301,10 @@ var xCookieJarGetCookieListWithSameSiteInfo func(uintptr, *glib.Uri, *glib.Uri, 
 // more detailed information.
 func (x *CookieJar) GetCookieListWithSameSiteInfo(UriVar *glib.Uri, TopLevelVar *glib.Uri, SiteForCookiesVar *glib.Uri, ForHttpVar bool, IsSafeMethodVar bool, IsTopLevelNavigationVar bool) *glib.SList {
 	cret := xCookieJarGetCookieListWithSameSiteInfo(x.GoPointer(), UriVar, TopLevelVar, SiteForCookiesVar, ForHttpVar, IsSafeMethodVar, IsTopLevelNavigationVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xCookieJarGetCookies func(uintptr, *glib.Uri, bool) string

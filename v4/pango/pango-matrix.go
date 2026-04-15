@@ -54,12 +54,15 @@ func (x *Matrix) Concat(NewMatrixVar *Matrix) {
 	xMatrixConcat(x.GoPointer(), NewMatrixVar)
 }
 
-var xMatrixCopy func(uintptr) *Matrix
+var xMatrixCopy func(uintptr) uintptr
 
 // Copies a `PangoMatrix`.
 func (x *Matrix) Copy() *Matrix {
 	cret := xMatrixCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
 var xMatrixFree func(uintptr)

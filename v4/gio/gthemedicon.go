@@ -241,7 +241,10 @@ func (x *ThemedIcon) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *ThemedIcon) Serialize() *glib.Variant {
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

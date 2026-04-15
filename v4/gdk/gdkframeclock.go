@@ -129,12 +129,15 @@ func (x *FrameClock) EndUpdating() {
 	xFrameClockEndUpdating(x.GoPointer())
 }
 
-var xFrameClockGetCurrentTimings func(uintptr) *FrameTimings
+var xFrameClockGetCurrentTimings func(uintptr) uintptr
 
 // Gets the frame timings for the current frame.
 func (x *FrameClock) GetCurrentTimings() *FrameTimings {
 	cret := xFrameClockGetCurrentTimings(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FrameTimings)(unsafe.Pointer(cret))
 }
 
 var xFrameClockGetFps func(uintptr) float64
@@ -197,7 +200,7 @@ func (x *FrameClock) GetRefreshInfo(BaseTimeVar int64, RefreshIntervalReturnVar 
 	xFrameClockGetRefreshInfo(x.GoPointer(), BaseTimeVar, RefreshIntervalReturnVar, PresentationTimeReturnVar)
 }
 
-var xFrameClockGetTimings func(uintptr, int64) *FrameTimings
+var xFrameClockGetTimings func(uintptr, int64) uintptr
 
 // Retrieves a `GdkFrameTimings` object holding timing information
 // for the current frame or a recent frame.
@@ -207,7 +210,10 @@ var xFrameClockGetTimings func(uintptr, int64) *FrameTimings
 // [method@Gdk.FrameClock.get_history_start].
 func (x *FrameClock) GetTimings(FrameCounterVar int64) *FrameTimings {
 	cret := xFrameClockGetTimings(x.GoPointer(), FrameCounterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FrameTimings)(unsafe.Pointer(cret))
 }
 
 var xFrameClockRequestPhase func(uintptr, FrameClockPhase)

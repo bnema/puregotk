@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -140,14 +142,17 @@ func NewCellViewWithTexture(TextureVar *gdk.Texture) *CellView {
 	return cls
 }
 
-var xCellViewGetDisplayedRow func(uintptr) *TreePath
+var xCellViewGetDisplayedRow func(uintptr) uintptr
 
 // Returns a `GtkTreePath` referring to the currently
 // displayed row. If no row is currently displayed,
 // %NULL is returned.
 func (x *CellView) GetDisplayedRow() *TreePath {
 	cret := xCellViewGetDisplayedRow(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xCellViewGetDrawSensitive func(uintptr) bool
@@ -594,7 +599,10 @@ func (x *CellView) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellView) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -643,7 +651,7 @@ func (x *CellView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Retrieves the orientation of the @orientable.

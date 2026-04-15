@@ -31,40 +31,52 @@ func (x *CssSection) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewCssSection func(uintptr, *CssLocation, *CssLocation) *CssSection
+var xNewCssSection func(uintptr, *CssLocation, *CssLocation) uintptr
 
 // Creates a new `GtkCssSection` referring to the section
 // in the given `file` from the `start` location to the
 // `end` location.
 func NewCssSection(FileVar gio.File, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 	cret := xNewCssSection(FileVar.GoPointer(), StartVar, EndVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssSection)(unsafe.Pointer(cret))
 }
 
-var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocation) *CssSection
+var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocation) uintptr
 
 // Creates a new `GtkCssSection` referring to the section
 // in the given `file` or the given `bytes` from the `start` location to the
 // `end` location.
 func NewCssSectionWithBytes(FileVar gio.File, BytesVar *glib.Bytes, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 	cret := xNewCssSectionWithBytes(FileVar.GoPointer(), BytesVar, StartVar, EndVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssSection)(unsafe.Pointer(cret))
 }
 
-var xCssSectionGetBytes func(uintptr) *glib.Bytes
+var xCssSectionGetBytes func(uintptr) uintptr
 
 // Gets the bytes that @section was parsed from.
 func (x *CssSection) GetBytes() *glib.Bytes {
 	cret := xCssSectionGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xCssSectionGetEndLocation func(uintptr) *CssLocation
+var xCssSectionGetEndLocation func(uintptr) uintptr
 
 // Returns the location in the CSS document where this section ends.
 func (x *CssSection) GetEndLocation() *CssLocation {
 	cret := xCssSectionGetEndLocation(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssLocation)(unsafe.Pointer(cret))
 }
 
 var xCssSectionGetFile func(uintptr) uintptr
@@ -87,7 +99,7 @@ func (x *CssSection) GetFile() *gio.FileBase {
 	return cls
 }
 
-var xCssSectionGetParent func(uintptr) *CssSection
+var xCssSectionGetParent func(uintptr) uintptr
 
 // Gets the parent section for the given `section`.
 //
@@ -99,15 +111,21 @@ var xCssSectionGetParent func(uintptr) *CssSection
 // a different file.
 func (x *CssSection) GetParent() *CssSection {
 	cret := xCssSectionGetParent(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssSection)(unsafe.Pointer(cret))
 }
 
-var xCssSectionGetStartLocation func(uintptr) *CssLocation
+var xCssSectionGetStartLocation func(uintptr) uintptr
 
 // Returns the location in the CSS document where this section starts.
 func (x *CssSection) GetStartLocation() *CssLocation {
 	cret := xCssSectionGetStartLocation(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssLocation)(unsafe.Pointer(cret))
 }
 
 var xCssSectionPrint func(uintptr, *glib.String)
@@ -120,12 +138,15 @@ func (x *CssSection) Print(StringVar *glib.String) {
 	xCssSectionPrint(x.GoPointer(), StringVar)
 }
 
-var xCssSectionRef func(uintptr) *CssSection
+var xCssSectionRef func(uintptr) uintptr
 
 // Increments the reference count on `section`.
 func (x *CssSection) Ref() *CssSection {
 	cret := xCssSectionRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*CssSection)(unsafe.Pointer(cret))
 }
 
 var xCssSectionToString func(uintptr) string

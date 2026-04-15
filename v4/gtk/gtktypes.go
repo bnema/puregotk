@@ -39,20 +39,26 @@ func (x *Bitset) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBitsetEmpty func() *Bitset
+var xNewBitsetEmpty func() uintptr
 
 // Creates a new empty bitset.
 func NewBitsetEmpty() *Bitset {
 	cret := xNewBitsetEmpty()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
-var xNewBitsetRange func(uint32, uint32) *Bitset
+var xNewBitsetRange func(uint32, uint32) uintptr
 
 // Creates a bitset with the given range set.
 func NewBitsetRange(StartVar uint32, NItemsVar uint32) *Bitset {
 	cret := xNewBitsetRange(StartVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 var xBitsetAdd func(uintptr, uint32) bool
@@ -95,12 +101,15 @@ func (x *Bitset) Contains(ValueVar uint32) bool {
 	return cret
 }
 
-var xBitsetCopy func(uintptr) *Bitset
+var xBitsetCopy func(uintptr) uintptr
 
 // Creates a copy of @self.
 func (x *Bitset) Copy() *Bitset {
 	cret := xBitsetCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 var xBitsetDifference func(uintptr, *Bitset)
@@ -203,12 +212,15 @@ func (x *Bitset) IsEmpty() bool {
 	return cret
 }
 
-var xBitsetRef func(uintptr) *Bitset
+var xBitsetRef func(uintptr) uintptr
 
 // Acquires a reference on the given `GtkBitset`.
 func (x *Bitset) Ref() *Bitset {
 	cret := xBitsetRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 var xBitsetRemove func(uintptr, uint32) bool
@@ -345,12 +357,15 @@ func (x *ScrollInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewScrollInfo func() *ScrollInfo
+var xNewScrollInfo func() uintptr
 
 // Creates a new scroll info for scrolling an element into view.
 func NewScrollInfo() *ScrollInfo {
 	cret := xNewScrollInfo()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ScrollInfo)(unsafe.Pointer(cret))
 }
 
 var xScrollInfoGetEnableHorizontal func(uintptr) bool
@@ -369,12 +384,15 @@ func (x *ScrollInfo) GetEnableVertical() bool {
 	return cret
 }
 
-var xScrollInfoRef func(uintptr) *ScrollInfo
+var xScrollInfoRef func(uintptr) uintptr
 
 // Increases the reference count of a `GtkScrollInfo` by one.
 func (x *ScrollInfo) Ref() *ScrollInfo {
 	cret := xScrollInfoRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ScrollInfo)(unsafe.Pointer(cret))
 }
 
 var xScrollInfoSetEnableHorizontal func(uintptr, bool)

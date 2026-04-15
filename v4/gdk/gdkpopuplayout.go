@@ -57,7 +57,7 @@ func (x *PopupLayout) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPopupLayout func(*Rectangle, Gravity, Gravity) *PopupLayout
+var xNewPopupLayout func(*Rectangle, Gravity, Gravity) uintptr
 
 // Create a popup layout description.
 //
@@ -73,15 +73,21 @@ var xNewPopupLayout func(*Rectangle, Gravity, Gravity) *PopupLayout
 // position of surface.
 func NewPopupLayout(AnchorRectVar *Rectangle, RectAnchorVar Gravity, SurfaceAnchorVar Gravity) *PopupLayout {
 	cret := xNewPopupLayout(AnchorRectVar, RectAnchorVar, SurfaceAnchorVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PopupLayout)(unsafe.Pointer(cret))
 }
 
-var xPopupLayoutCopy func(uintptr) *PopupLayout
+var xPopupLayoutCopy func(uintptr) uintptr
 
 // Makes a copy of @layout.
 func (x *PopupLayout) Copy() *PopupLayout {
 	cret := xPopupLayoutCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PopupLayout)(unsafe.Pointer(cret))
 }
 
 var xPopupLayoutEqual func(uintptr, *PopupLayout) bool
@@ -100,12 +106,15 @@ func (x *PopupLayout) GetAnchorHints() AnchorHints {
 	return cret
 }
 
-var xPopupLayoutGetAnchorRect func(uintptr) *Rectangle
+var xPopupLayoutGetAnchorRect func(uintptr) uintptr
 
 // Get the anchor rectangle.
 func (x *PopupLayout) GetAnchorRect() *Rectangle {
 	cret := xPopupLayoutGetAnchorRect(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rectangle)(unsafe.Pointer(cret))
 }
 
 var xPopupLayoutGetOffset func(uintptr, *int32, *int32)
@@ -138,12 +147,15 @@ func (x *PopupLayout) GetSurfaceAnchor() Gravity {
 	return cret
 }
 
-var xPopupLayoutRef func(uintptr) *PopupLayout
+var xPopupLayoutRef func(uintptr) uintptr
 
 // Increases the reference count of @value.
 func (x *PopupLayout) Ref() *PopupLayout {
 	cret := xPopupLayoutRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PopupLayout)(unsafe.Pointer(cret))
 }
 
 var xPopupLayoutSetAnchorHints func(uintptr, AnchorHints)

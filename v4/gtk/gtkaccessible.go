@@ -261,29 +261,38 @@ func (x *AccessibleList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewAccessibleListFromArray func(uintptr, uint) *AccessibleList
+var xNewAccessibleListFromArray func(uintptr, uint) uintptr
 
 // Allocates a new list of accessible objects.
 func NewAccessibleListFromArray(AccessiblesVar uintptr, NAccessiblesVar uint) *AccessibleList {
 	cret := xNewAccessibleListFromArray(AccessiblesVar, NAccessiblesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AccessibleList)(unsafe.Pointer(cret))
 }
 
-var xNewAccessibleListFromList func(*glib.List) *AccessibleList
+var xNewAccessibleListFromList func(*glib.List) uintptr
 
 // Allocates a new `GtkAccessibleList`, doing a shallow copy
 // of the passed list of accessible objects
 func NewAccessibleListFromList(ListVar *glib.List) *AccessibleList {
 	cret := xNewAccessibleListFromList(ListVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AccessibleList)(unsafe.Pointer(cret))
 }
 
-var xAccessibleListGetObjects func(uintptr) *glib.List
+var xAccessibleListGetObjects func(uintptr) uintptr
 
 // Gets the list of objects this boxed type holds.
 func (x *AccessibleList) GetObjects() *glib.List {
 	cret := xAccessibleListGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // An interface for describing UI elements for Assistive Technologies.

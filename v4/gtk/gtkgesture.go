@@ -176,12 +176,15 @@ func (x *Gesture) GetDevice() *gdk.Device {
 	return cls
 }
 
-var xGestureGetGroup func(uintptr) *glib.List
+var xGestureGetGroup func(uintptr) uintptr
 
 // Returns all gestures in the group of @gesture
 func (x *Gesture) GetGroup() *glib.List {
 	cret := xGestureGetGroup(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xGestureGetLastEvent func(uintptr, *gdk.EventSequence) uintptr
@@ -205,12 +208,15 @@ func (x *Gesture) GetLastEvent(SequenceVar *gdk.EventSequence) *gdk.Event {
 	return cls
 }
 
-var xGestureGetLastUpdatedSequence func(uintptr) *gdk.EventSequence
+var xGestureGetLastUpdatedSequence func(uintptr) uintptr
 
 // Returns the `GdkEventSequence` that was last updated on @gesture.
 func (x *Gesture) GetLastUpdatedSequence() *gdk.EventSequence {
 	cret := xGestureGetLastUpdatedSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.EventSequence)(unsafe.Pointer(cret))
 }
 
 var xGestureGetPoint func(uintptr, *gdk.EventSequence, *float64, *float64) bool
@@ -233,13 +239,16 @@ func (x *Gesture) GetSequenceState(SequenceVar *gdk.EventSequence) EventSequence
 	return cret
 }
 
-var xGestureGetSequences func(uintptr) *glib.List
+var xGestureGetSequences func(uintptr) uintptr
 
 // Returns the list of `GdkEventSequences` currently being interpreted
 // by @gesture.
 func (x *Gesture) GetSequences() *glib.List {
 	cret := xGestureGetSequences(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xGestureGroup func(uintptr, uintptr)

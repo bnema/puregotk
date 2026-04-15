@@ -103,13 +103,16 @@ func NewBuilderListItemFactoryFromResource(ScopeVar BuilderScope, ResourcePathVa
 	return cls
 }
 
-var xBuilderListItemFactoryGetBytes func(uintptr) *glib.Bytes
+var xBuilderListItemFactoryGetBytes func(uintptr) uintptr
 
 // Gets the data used as the `GtkBuilder` UI template for constructing
 // listitems.
 func (x *BuilderListItemFactory) GetBytes() *glib.Bytes {
 	cret := xBuilderListItemFactoryGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xBuilderListItemFactoryGetResource func(uintptr) string

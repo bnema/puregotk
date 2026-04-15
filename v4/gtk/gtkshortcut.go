@@ -104,12 +104,15 @@ func (x *Shortcut) GetAction() *ShortcutAction {
 	return cls
 }
 
-var xShortcutGetArguments func(uintptr) *glib.Variant
+var xShortcutGetArguments func(uintptr) uintptr
 
 // Gets the arguments that are passed when activating the shortcut.
 func (x *Shortcut) GetArguments() *glib.Variant {
 	cret := xShortcutGetArguments(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xShortcutGetTrigger func(uintptr) uintptr

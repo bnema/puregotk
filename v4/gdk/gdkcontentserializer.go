@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
@@ -25,7 +27,7 @@ var xContentRegisterSerializer func(types.GType, string, uintptr, uintptr, uintp
 // use the last registered serializer for a given mime type,
 // so applications can override the built-in serializers.
 func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, SerializeVar *ContentSerializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-	xContentRegisterSerializer(TypeVar, MimeTypeVar, glib.NewCallback(SerializeVar), DataVar, glib.NewCallback(NotifyVar))
+	xContentRegisterSerializer(TypeVar, MimeTypeVar, glib.NewCallback(SerializeVar), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 var xContentSerializeAsync func(uintptr, string, *gobject.Value, int32, uintptr, uintptr, uintptr)
@@ -160,12 +162,15 @@ func (x *ContentSerializer) GetUserData() uintptr {
 	return cret
 }
 
-var xContentSerializerGetValue func(uintptr) *gobject.Value
+var xContentSerializerGetValue func(uintptr) uintptr
 
 // Gets the `GValue` to read the object to serialize from.
 func (x *ContentSerializer) GetValue() *gobject.Value {
 	cret := xContentSerializerGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 var xContentSerializerReturnError func(uintptr, *glib.Error)
@@ -188,7 +193,7 @@ var xContentSerializerSetTaskData func(uintptr, uintptr, uintptr)
 
 // Associate data with the current serialization operation.
 func (x *ContentSerializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-	xContentSerializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallback(NotifyVar))
+	xContentSerializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 func (c *ContentSerializer) GoPointer() uintptr {

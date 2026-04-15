@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -132,13 +134,16 @@ func (x *PrintContext) CreatePangoLayout() *pango.Layout {
 	return cls
 }
 
-var xPrintContextGetCairoContext func(uintptr) *cairo.Context
+var xPrintContextGetCairoContext func(uintptr) uintptr
 
 // Obtains the cairo context that is associated with the
 // `GtkPrintContext`.
 func (x *PrintContext) GetCairoContext() *cairo.Context {
 	cret := xPrintContextGetCairoContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 var xPrintContextGetDpiX func(uintptr) float64

@@ -40,7 +40,7 @@ func (x *Checksum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewChecksum func(ChecksumType) *Checksum
+var xNewChecksum func(ChecksumType) uintptr
 
 // Creates a new #GChecksum, using the checksum algorithm @checksum_type.
 // If the @checksum_type is not known, %NULL is returned.
@@ -57,17 +57,23 @@ var xNewChecksum func(ChecksumType) *Checksum
 // on it anymore.
 func NewChecksum(ChecksumTypeVar ChecksumType) *Checksum {
 	cret := xNewChecksum(ChecksumTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Checksum)(unsafe.Pointer(cret))
 }
 
-var xChecksumCopy func(uintptr) *Checksum
+var xChecksumCopy func(uintptr) uintptr
 
 // Copies a #GChecksum. If @checksum has been closed, by calling
 // g_checksum_get_string() or g_checksum_get_digest(), the copied
 // checksum will be closed as well.
 func (x *Checksum) Copy() *Checksum {
 	cret := xChecksumCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Checksum)(unsafe.Pointer(cret))
 }
 
 var xChecksumFree func(uintptr)

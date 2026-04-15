@@ -51,22 +51,28 @@ func (x *Requisition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRequisition func() *Requisition
+var xNewRequisition func() uintptr
 
 // Allocates a new `GtkRequisition`.
 //
 // The struct is initialized to zero.
 func NewRequisition() *Requisition {
 	cret := xNewRequisition()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Requisition)(unsafe.Pointer(cret))
 }
 
-var xRequisitionCopy func(uintptr) *Requisition
+var xRequisitionCopy func(uintptr) uintptr
 
 // Copies a `GtkRequisition`.
 func (x *Requisition) Copy() *Requisition {
 	cret := xRequisitionCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Requisition)(unsafe.Pointer(cret))
 }
 
 var xRequisitionFree func(uintptr)
@@ -1777,7 +1783,7 @@ var xWidgetAddTickCallback func(uintptr, uintptr, uintptr, uintptr) uint32
 // To remove a tick callback, pass the ID that is returned by this function
 // to [method@Gtk.Widget.remove_tick_callback].
 func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) uint32 {
-	cret := xWidgetAddTickCallback(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(NotifyVar))
+	cret := xWidgetAddTickCallback(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -2308,14 +2314,17 @@ func (x *Widget) GetFontMap() *pango.FontMap {
 	return cls
 }
 
-var xWidgetGetFontOptions func(uintptr) *cairo.FontOptions
+var xWidgetGetFontOptions func(uintptr) uintptr
 
 // Returns the `cairo_font_options_t` of the widget.
 //
 // Seee [method@Gtk.Widget.set_font_options].
 func (x *Widget) GetFontOptions() *cairo.FontOptions {
 	cret := xWidgetGetFontOptions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.FontOptions)(unsafe.Pointer(cret))
 }
 
 var xWidgetGetFrameClock func(uintptr) uintptr
@@ -3257,7 +3266,7 @@ func (x *Widget) KeynavFailed(DirectionVar DirectionType) bool {
 	return cret
 }
 
-var xWidgetListMnemonicLabels func(uintptr) *glib.List
+var xWidgetListMnemonicLabels func(uintptr) uintptr
 
 // Returns the widgets for which this widget is the target of a
 // mnemonic.
@@ -3272,7 +3281,10 @@ var xWidgetListMnemonicLabels func(uintptr) *glib.List
 // first, and then unref all the widgets afterwards.
 func (x *Widget) ListMnemonicLabels() *glib.List {
 	cret := xWidgetListMnemonicLabels(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWidgetMap func(uintptr)

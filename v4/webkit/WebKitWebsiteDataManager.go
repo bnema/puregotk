@@ -36,7 +36,7 @@ func (x *ITPFirstParty) GetDomain() string {
 	return cret
 }
 
-var xITPFirstPartyGetLastUpdateTime func(uintptr) *glib.DateTime
+var xITPFirstPartyGetLastUpdateTime func(uintptr) uintptr
 
 // Get the last time a #WebKitITPThirdParty has been seen under @itp_first_party.
 //
@@ -44,7 +44,10 @@ var xITPFirstPartyGetLastUpdateTime func(uintptr) *glib.DateTime
 // therefore corresponds to exactly one #WebKitITPThirdParty.
 func (x *ITPFirstParty) GetLastUpdateTime() *glib.DateTime {
 	cret := xITPFirstPartyGetLastUpdateTime(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xITPFirstPartyGetWebsiteDataAccessAllowed func(uintptr) bool
@@ -58,14 +61,17 @@ func (x *ITPFirstParty) GetWebsiteDataAccessAllowed() bool {
 	return cret
 }
 
-var xITPFirstPartyRef func(uintptr) *ITPFirstParty
+var xITPFirstPartyRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @itp_first_party by one.
 //
 // This function is MT-safe and may be called from any thread.
 func (x *ITPFirstParty) Ref() *ITPFirstParty {
 	cret := xITPFirstPartyRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ITPFirstParty)(unsafe.Pointer(cret))
 }
 
 var xITPFirstPartyUnref func(uintptr)
@@ -102,22 +108,28 @@ func (x *ITPThirdParty) GetDomain() string {
 	return cret
 }
 
-var xITPThirdPartyGetFirstParties func(uintptr) *glib.List
+var xITPThirdPartyGetFirstParties func(uintptr) uintptr
 
 // Get the list of #WebKitITPFirstParty under which @itp_third_party has been seen.
 func (x *ITPThirdParty) GetFirstParties() *glib.List {
 	cret := xITPThirdPartyGetFirstParties(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xITPThirdPartyRef func(uintptr) *ITPThirdParty
+var xITPThirdPartyRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @itp_third_party by one.
 //
 // This function is MT-safe and may be called from any thread.
 func (x *ITPThirdParty) Ref() *ITPThirdParty {
 	cret := xITPThirdPartyRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ITPThirdParty)(unsafe.Pointer(cret))
 }
 
 var xITPThirdPartyUnref func(uintptr)
@@ -230,17 +242,20 @@ func (x *WebsiteDataManager) Fetch(TypesVar WebsiteDataTypes, CancellableVar *gi
 	xWebsiteDataManagerFetch(x.GoPointer(), TypesVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xWebsiteDataManagerFetchFinish func(uintptr, uintptr, **glib.Error) *glib.List
+var xWebsiteDataManagerFetchFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finish an asynchronous operation started with webkit_website_data_manager_fetch().
 func (x *WebsiteDataManager) FetchFinish(ResultVar gio.AsyncResult) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xWebsiteDataManagerFetchFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 var xWebsiteDataManagerGetBaseCacheDirectory func(uintptr) string
@@ -297,17 +312,20 @@ func (x *WebsiteDataManager) GetItpSummary(CancellableVar *gio.Cancellable, Call
 	xWebsiteDataManagerGetItpSummary(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xWebsiteDataManagerGetItpSummaryFinish func(uintptr, uintptr, **glib.Error) *glib.List
+var xWebsiteDataManagerGetItpSummaryFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finish an asynchronous operation started with webkit_website_data_manager_get_itp_summary().
 func (x *WebsiteDataManager) GetItpSummaryFinish(ResultVar gio.AsyncResult) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xWebsiteDataManagerGetItpSummaryFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 var xWebsiteDataManagerIsEphemeral func(uintptr) bool

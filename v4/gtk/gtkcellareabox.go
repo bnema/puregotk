@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -176,7 +178,10 @@ func (x *CellAreaBox) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellAreaBox) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Re-inserts @cell at @position.
@@ -207,7 +212,7 @@ func (x *CellAreaBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellAreaBox) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Retrieves the orientation of the @orientable.

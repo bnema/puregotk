@@ -268,7 +268,7 @@ func (x *ConstraintLayout) AddConstraint(ConstraintVar *Constraint) {
 	xConstraintLayoutAddConstraint(x.GoPointer(), ConstraintVar.GoPointer())
 }
 
-var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint, int32, int32, **glib.Error, string, ...interface{}) *glib.List
+var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint, int32, int32, **glib.Error, string, ...interface{}) uintptr
 
 // Creates a list of constraints from a VFL description.
 //
@@ -277,10 +277,13 @@ var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint,
 // variadic arguments to populate the view/target map.
 func (x *ConstraintLayout) AddConstraintsFromDescription(LinesVar []string, NLinesVar uint, HspacingVar int32, VspacingVar int32, ErrorVar **glib.Error, FirstViewVar string, varArgs ...interface{}) *glib.List {
 	cret := xConstraintLayoutAddConstraintsFromDescription(x.GoPointer(), LinesVar, NLinesVar, HspacingVar, VspacingVar, ErrorVar, FirstViewVar, varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xConstraintLayoutAddConstraintsFromDescriptionv func(uintptr, []string, uint, int32, int32, *glib.HashTable, **glib.Error) *glib.List
+var xConstraintLayoutAddConstraintsFromDescriptionv func(uintptr, []string, uint, int32, int32, *glib.HashTable, **glib.Error) uintptr
 
 // Creates a list of constraints from a VFL description.
 //
@@ -367,10 +370,13 @@ func (x *ConstraintLayout) AddConstraintsFromDescriptionv(LinesVar []string, NLi
 	var cerr *glib.Error
 
 	cret := xConstraintLayoutAddConstraintsFromDescriptionv(x.GoPointer(), LinesVar, NLinesVar, HspacingVar, VspacingVar, ViewsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 var xConstraintLayoutAddGuide func(uintptr, uintptr)

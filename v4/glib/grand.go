@@ -26,7 +26,7 @@ func (x *Rand) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRand func() *Rand
+var xNewRand func() uintptr
 
 // Creates a new random number generator initialized with a seed taken
 // either from `/dev/urandom` (if existing) or from the current time
@@ -35,33 +35,45 @@ var xNewRand func() *Rand
 // On Windows, the seed is taken from rand_s().
 func NewRand() *Rand {
 	cret := xNewRand()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xNewRandWithSeed func(uint32) *Rand
+var xNewRandWithSeed func(uint32) uintptr
 
 // Creates a new random number generator initialized with @seed.
 func NewRandWithSeed(SeedVar uint32) *Rand {
 	cret := xNewRandWithSeed(SeedVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xNewRandWithSeedArray func(uint32, uint32) *Rand
+var xNewRandWithSeedArray func(uint32, uint32) uintptr
 
 // Creates a new random number generator initialized with @seed.
 func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint32) *Rand {
 	cret := xNewRandWithSeedArray(SeedVar, SeedLengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xRandCopy func(uintptr) *Rand
+var xRandCopy func(uintptr) uintptr
 
 // Copies a #GRand into a new one with the same exact state as before.
 // This way you can take a snapshot of the random number generator for
 // replaying later.
 func (x *Rand) Copy() *Rand {
 	cret := xRandCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rand)(unsafe.Pointer(cret))
 }
 
 var xRandDouble func(uintptr) float64

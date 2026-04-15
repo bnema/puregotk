@@ -273,7 +273,10 @@ func (x *MemoryInputStream) CanPoll() bool {
 // g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *MemoryInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be read.

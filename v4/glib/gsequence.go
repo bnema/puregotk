@@ -24,12 +24,15 @@ func (x *Sequence) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSequenceAppend func(uintptr, uintptr) *SequenceIter
+var xSequenceAppend func(uintptr, uintptr) uintptr
 
 // Adds a new item to the end of @seq.
 func (x *Sequence) Append(DataVar uintptr) *SequenceIter {
 	cret := xSequenceAppend(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceForeach func(uintptr, uintptr, uintptr)
@@ -49,29 +52,38 @@ func (x *Sequence) Free() {
 	xSequenceFree(x.GoPointer())
 }
 
-var xSequenceGetBeginIter func(uintptr) *SequenceIter
+var xSequenceGetBeginIter func(uintptr) uintptr
 
 // Returns the begin iterator for @seq.
 func (x *Sequence) GetBeginIter() *SequenceIter {
 	cret := xSequenceGetBeginIter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetEndIter func(uintptr) *SequenceIter
+var xSequenceGetEndIter func(uintptr) uintptr
 
 // Returns the end iterator for @seg
 func (x *Sequence) GetEndIter() *SequenceIter {
 	cret := xSequenceGetEndIter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetIterAtPos func(uintptr, int32) *SequenceIter
+var xSequenceGetIterAtPos func(uintptr, int32) uintptr
 
 // Returns the iterator at position @pos. If @pos is negative or larger
 // than the number of items in @seq, the end iterator is returned.
 func (x *Sequence) GetIterAtPos(PosVar int32) *SequenceIter {
 	cret := xSequenceGetIterAtPos(x.GoPointer(), PosVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceGetLength func(uintptr) int32
@@ -84,7 +96,7 @@ func (x *Sequence) GetLength() int32 {
 	return cret
 }
 
-var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Inserts @data into @seq using @cmp_func to determine the new
 // position. The sequence must already be sorted according to @cmp_func;
@@ -100,10 +112,13 @@ var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSorted(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceInsertSorted(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_insert_sorted(), but uses
 // a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
@@ -119,7 +134,10 @@ var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) *Sequence
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSortedIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceInsertSortedIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceIsEmpty func(uintptr) bool
@@ -134,7 +152,7 @@ func (x *Sequence) IsEmpty() bool {
 	return cret
 }
 
-var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Returns an iterator pointing to the position of the first item found
 // equal to @data according to @cmp_func and @cmp_data. If more than one
@@ -151,10 +169,13 @@ var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) Lookup(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceLookup(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_lookup(), but uses a #GSequenceIterCompareFunc
 // instead of a #GCompareDataFunc as the compare function.
@@ -168,18 +189,24 @@ var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) LookupIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceLookupIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequencePrepend func(uintptr, uintptr) *SequenceIter
+var xSequencePrepend func(uintptr, uintptr) uintptr
 
 // Adds a new item to the front of @seq
 func (x *Sequence) Prepend(DataVar uintptr) *SequenceIter {
 	cret := xSequencePrepend(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Returns an iterator pointing to the position where @data would
 // be inserted according to @cmp_func and @cmp_data.
@@ -196,10 +223,13 @@ var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) Search(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceSearch(x.GoPointer(), DataVar, NewCallback(CmpFuncVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
+var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Like g_sequence_search(), but uses a #GSequenceIterCompareFunc
 // instead of a #GCompareDataFunc as the compare function.
@@ -216,7 +246,10 @@ var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) SearchIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 	cret := xSequenceSearchIter(x.GoPointer(), DataVar, NewCallback(IterCmpVar), CmpDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceSort func(uintptr, uintptr, uintptr)
@@ -273,12 +306,15 @@ func (x *SequenceIter) GetPosition() int32 {
 	return cret
 }
 
-var xSequenceIterGetSequence func(uintptr) *Sequence
+var xSequenceIterGetSequence func(uintptr) uintptr
 
 // Returns the #GSequence that @iter points into.
 func (x *SequenceIter) GetSequence() *Sequence {
 	cret := xSequenceIterGetSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sequence)(unsafe.Pointer(cret))
 }
 
 var xSequenceIterIsBegin func(uintptr) bool
@@ -297,7 +333,7 @@ func (x *SequenceIter) IsEnd() bool {
 	return cret
 }
 
-var xSequenceIterMove func(uintptr, int32) *SequenceIter
+var xSequenceIterMove func(uintptr, int32) uintptr
 
 // Returns the #GSequenceIter which is @delta positions away from @iter.
 // If @iter is closer than -@delta positions to the beginning of the sequence,
@@ -305,25 +341,34 @@ var xSequenceIterMove func(uintptr, int32) *SequenceIter
 // to the end of the sequence, the end iterator is returned.
 func (x *SequenceIter) Move(DeltaVar int32) *SequenceIter {
 	cret := xSequenceIterMove(x.GoPointer(), DeltaVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceIterNext func(uintptr) *SequenceIter
+var xSequenceIterNext func(uintptr) uintptr
 
 // Returns an iterator pointing to the next position after @iter.
 // If @iter is the end iterator, the end iterator is returned.
 func (x *SequenceIter) Next() *SequenceIter {
 	cret := xSequenceIterNext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceIterPrev func(uintptr) *SequenceIter
+var xSequenceIterPrev func(uintptr) uintptr
 
 // Returns an iterator pointing to the previous position before @iter.
 // If @iter is the begin iterator, the begin iterator is returned.
 func (x *SequenceIter) Prev() *SequenceIter {
 	cret := xSequenceIterPrev(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceForeachRange func(*SequenceIter, *SequenceIter, uintptr, uintptr)
@@ -343,12 +388,15 @@ func SequenceGet(IterVar *SequenceIter) uintptr {
 	return cret
 }
 
-var xSequenceInsertBefore func(*SequenceIter, uintptr) *SequenceIter
+var xSequenceInsertBefore func(*SequenceIter, uintptr) uintptr
 
 // Inserts a new item just before the item pointed to by @iter.
 func SequenceInsertBefore(IterVar *SequenceIter, DataVar uintptr) *SequenceIter {
 	cret := xSequenceInsertBefore(IterVar, DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceMove func(*SequenceIter, *SequenceIter)
@@ -375,7 +423,7 @@ func SequenceMoveRange(DestVar *SequenceIter, BeginVar *SequenceIter, EndVar *Se
 	xSequenceMoveRange(DestVar, BeginVar, EndVar)
 }
 
-var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
+var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) uintptr
 
 // Finds an iterator somewhere in the range (@begin, @end). This
 // iterator will be close to the middle of the range, but is not
@@ -385,7 +433,10 @@ var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
 // and @begin must come before or be equal to @end in the sequence.
 func SequenceRangeGetMidpoint(BeginVar *SequenceIter, EndVar *SequenceIter) *SequenceIter {
 	cret := xSequenceRangeGetMidpoint(BeginVar, EndVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
 var xSequenceRemove func(*SequenceIter)

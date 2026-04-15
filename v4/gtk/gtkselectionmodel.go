@@ -84,8 +84,12 @@ func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionM
 	if cb == nil {
 		x.xGetSelectionInRange = 0
 	} else {
-		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) *Bitset {
-			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
+		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) uintptr {
+			ret := cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -99,10 +103,14 @@ func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, 
 	if x.xGetSelectionInRange == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) *Bitset
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetSelectionInRange)
 	return func(ModelVar SelectionModel, PositionVar uint32, NItemsVar uint32) *Bitset {
-		return rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
+		rawRet := rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Bitset)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -394,7 +402,10 @@ func (x *SelectionModelBase) SetGoPointer(ptr uintptr) {
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *SelectionModelBase) GetSelection() *Bitset {
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -406,7 +417,10 @@ func (x *SelectionModelBase) GetSelection() *Bitset {
 // signal.
 func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *Bitset {
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.
@@ -501,8 +515,8 @@ func (x *SelectionModelBase) UnselectRange(PositionVar uint32, NItemsVar uint32)
 }
 
 var (
-	XGtkSelectionModelGetSelection        func(uintptr) *Bitset
-	XGtkSelectionModelGetSelectionInRange func(uintptr, uint32, uint32) *Bitset
+	XGtkSelectionModelGetSelection        func(uintptr) uintptr
+	XGtkSelectionModelGetSelectionInRange func(uintptr, uint32, uint32) uintptr
 	XGtkSelectionModelIsSelected          func(uintptr, uint32) bool
 	XGtkSelectionModelSelectAll           func(uintptr) bool
 	XGtkSelectionModelSelectItem          func(uintptr, uint32, bool) bool

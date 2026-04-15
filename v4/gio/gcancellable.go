@@ -447,7 +447,7 @@ func (x *Cancellable) SetErrorIfCancelled() (bool, error) {
 	return cret, cerr
 }
 
-var xCancellableSourceNew func(uintptr) *glib.Source
+var xCancellableSourceNew func(uintptr) uintptr
 
 // Creates a source that triggers if @cancellable is cancelled and
 // calls its callback of type #GCancellableSourceFunc. This is
@@ -460,7 +460,10 @@ var xCancellableSourceNew func(uintptr) *glib.Source
 // The new #GSource will hold a reference to the #GCancellable.
 func (x *Cancellable) SourceNew() *glib.Source {
 	cret := xCancellableSourceNew(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 func (c *Cancellable) GoPointer() uintptr {

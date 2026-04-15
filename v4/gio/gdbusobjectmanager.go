@@ -69,8 +69,12 @@ func (x *DBusObjectManagerIface) OverrideGetObjects(cb func(DBusObjectManager) *
 	if cb == nil {
 		x.xGetObjects = 0
 	} else {
-		x.xGetObjects = purego.NewCallback(func(ManagerVarp uintptr) *glib.List {
-			return cb(&DBusObjectManagerBase{Ptr: ManagerVarp})
+		x.xGetObjects = purego.NewCallback(func(ManagerVarp uintptr) uintptr {
+			ret := cb(&DBusObjectManagerBase{Ptr: ManagerVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -81,10 +85,14 @@ func (x *DBusObjectManagerIface) GetGetObjects() func(DBusObjectManager) *glib.L
 	if x.xGetObjects == 0 {
 		return nil
 	}
-	var rawCallback func(ManagerVarp uintptr) *glib.List
+	var rawCallback func(ManagerVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetObjects)
 	return func(ManagerVar DBusObjectManager) *glib.List {
-		return rawCallback(ManagerVar.GoPointer())
+		rawRet := rawCallback(ManagerVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -333,14 +341,17 @@ func (x *DBusObjectManagerBase) GetObjectPath() string {
 // Gets all #GDBusObject objects known to @manager.
 func (x *DBusObjectManagerBase) GetObjects() *glib.List {
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var (
 	XGDbusObjectManagerGetInterface  func(uintptr, string, string) uintptr
 	XGDbusObjectManagerGetObject     func(uintptr, string) uintptr
 	XGDbusObjectManagerGetObjectPath func(uintptr) string
-	XGDbusObjectManagerGetObjects    func(uintptr) *glib.List
+	XGDbusObjectManagerGetObjects    func(uintptr) uintptr
 )
 
 func init() {

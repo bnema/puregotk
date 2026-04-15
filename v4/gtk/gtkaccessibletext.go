@@ -48,8 +48,12 @@ func (x *AccessibleTextInterface) OverrideGetContents(cb func(AccessibleText, ui
 	if cb == nil {
 		x.xGetContents = 0
 	} else {
-		x.xGetContents = purego.NewCallback(func(SelfVarp uintptr, StartVarp uint32, EndVarp uint32) *glib.Bytes {
-			return cb(&AccessibleTextBase{Ptr: SelfVarp}, StartVarp, EndVarp)
+		x.xGetContents = purego.NewCallback(func(SelfVarp uintptr, StartVarp uint32, EndVarp uint32) uintptr {
+			ret := cb(&AccessibleTextBase{Ptr: SelfVarp}, StartVarp, EndVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -59,10 +63,14 @@ func (x *AccessibleTextInterface) GetGetContents() func(AccessibleText, uint32, 
 	if x.xGetContents == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, StartVarp uint32, EndVarp uint32) *glib.Bytes
+	var rawCallback func(SelfVarp uintptr, StartVarp uint32, EndVarp uint32) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetContents)
 	return func(SelfVar AccessibleText, StartVar uint32, EndVar uint32) *glib.Bytes {
-		return rawCallback(SelfVar.GoPointer(), StartVar, EndVar)
+		rawRet := rawCallback(SelfVar.GoPointer(), StartVar, EndVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Bytes)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -71,8 +79,12 @@ func (x *AccessibleTextInterface) OverrideGetContentsAt(cb func(AccessibleText, 
 	if cb == nil {
 		x.xGetContentsAt = 0
 	} else {
-		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint32, GranularityVarp AccessibleTextGranularity, StartVarp *uint32, EndVarp *uint32) *glib.Bytes {
-			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, GranularityVarp, StartVarp, EndVarp)
+		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint32, GranularityVarp AccessibleTextGranularity, StartVarp *uint32, EndVarp *uint32) uintptr {
+			ret := cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, GranularityVarp, StartVarp, EndVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -82,10 +94,14 @@ func (x *AccessibleTextInterface) GetGetContentsAt() func(AccessibleText, uint32
 	if x.xGetContentsAt == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, OffsetVarp uint32, GranularityVarp AccessibleTextGranularity, StartVarp *uint32, EndVarp *uint32) *glib.Bytes
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint32, GranularityVarp AccessibleTextGranularity, StartVarp *uint32, EndVarp *uint32) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetContentsAt)
 	return func(SelfVar AccessibleText, OffsetVar uint32, GranularityVar AccessibleTextGranularity, StartVar *uint32, EndVar *uint32) *glib.Bytes {
-		return rawCallback(SelfVar.GoPointer(), OffsetVar, GranularityVar, StartVar, EndVar)
+		rawRet := rawCallback(SelfVar.GoPointer(), OffsetVar, GranularityVar, StartVar, EndVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Bytes)(unsafe.Pointer(rawRet))
 	}
 }
 

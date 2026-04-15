@@ -41,14 +41,17 @@ func (x *Queue) ClearFull(FreeFuncVar *DestroyNotify) {
 	xQueueClearFull(x.GoPointer(), NewCallbackNullable(FreeFuncVar))
 }
 
-var xQueueCopy func(uintptr) *Queue
+var xQueueCopy func(uintptr) uintptr
 
 // Copies a @queue. Note that is a shallow copy. If the elements in the
 // queue consist of pointers to data, the pointers are copied, but the
 // actual data is not.
 func (x *Queue) Copy() *Queue {
 	cret := xQueueCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Queue)(unsafe.Pointer(cret))
 }
 
 var xQueueDeleteLink func(uintptr, *List)
@@ -60,15 +63,18 @@ func (x *Queue) DeleteLink(LinkVar *List) {
 	xQueueDeleteLink(x.GoPointer(), LinkVar)
 }
 
-var xQueueFind func(uintptr, uintptr) *List
+var xQueueFind func(uintptr, uintptr) uintptr
 
 // Finds the first link in @queue which contains @data.
 func (x *Queue) Find(DataVar uintptr) *List {
 	cret := xQueueFind(x.GoPointer(), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
-var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
+var xQueueFindCustom func(uintptr, uintptr, uintptr) uintptr
 
 // Finds an element in a #GQueue, using a supplied function to find the
 // desired element. It iterates over the queue, calling the given function
@@ -77,7 +83,10 @@ var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
 // first argument and the given user data as the second argument.
 func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
 	cret := xQueueFindCustom(x.GoPointer(), DataVar, NewCallback(FuncVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueueForeach func(uintptr, uintptr, uintptr)
@@ -209,12 +218,15 @@ func (x *Queue) PeekHead() uintptr {
 	return cret
 }
 
-var xQueuePeekHeadLink func(uintptr) *List
+var xQueuePeekHeadLink func(uintptr) uintptr
 
 // Returns the first link in @queue.
 func (x *Queue) PeekHeadLink() *List {
 	cret := xQueuePeekHeadLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePeekNth func(uintptr, uint32) uintptr
@@ -225,12 +237,15 @@ func (x *Queue) PeekNth(NVar uint32) uintptr {
 	return cret
 }
 
-var xQueuePeekNthLink func(uintptr, uint32) *List
+var xQueuePeekNthLink func(uintptr, uint32) uintptr
 
 // Returns the link at the given position
 func (x *Queue) PeekNthLink(NVar uint32) *List {
 	cret := xQueuePeekNthLink(x.GoPointer(), NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePeekTail func(uintptr) uintptr
@@ -241,12 +256,15 @@ func (x *Queue) PeekTail() uintptr {
 	return cret
 }
 
-var xQueuePeekTailLink func(uintptr) *List
+var xQueuePeekTailLink func(uintptr) uintptr
 
 // Returns the last link in @queue.
 func (x *Queue) PeekTailLink() *List {
 	cret := xQueuePeekTailLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopHead func(uintptr) uintptr
@@ -257,12 +275,15 @@ func (x *Queue) PopHead() uintptr {
 	return cret
 }
 
-var xQueuePopHeadLink func(uintptr) *List
+var xQueuePopHeadLink func(uintptr) uintptr
 
 // Removes and returns the first element of the queue.
 func (x *Queue) PopHeadLink() *List {
 	cret := xQueuePopHeadLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopNth func(uintptr, uint32) uintptr
@@ -273,12 +294,15 @@ func (x *Queue) PopNth(NVar uint32) uintptr {
 	return cret
 }
 
-var xQueuePopNthLink func(uintptr, uint32) *List
+var xQueuePopNthLink func(uintptr, uint32) uintptr
 
 // Removes and returns the link at the given position.
 func (x *Queue) PopNthLink(NVar uint32) *List {
 	cret := xQueuePopNthLink(x.GoPointer(), NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePopTail func(uintptr) uintptr
@@ -289,12 +313,15 @@ func (x *Queue) PopTail() uintptr {
 	return cret
 }
 
-var xQueuePopTailLink func(uintptr) *List
+var xQueuePopTailLink func(uintptr) uintptr
 
 // Removes and returns the last element of the queue.
 func (x *Queue) PopTailLink() *List {
 	cret := xQueuePopTailLink(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*List)(unsafe.Pointer(cret))
 }
 
 var xQueuePushHead func(uintptr, uintptr)

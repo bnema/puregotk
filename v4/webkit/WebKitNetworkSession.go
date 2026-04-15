@@ -148,17 +148,20 @@ func (x *NetworkSession) GetItpSummary(CancellableVar *gio.Cancellable, Callback
 	xNetworkSessionGetItpSummary(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xNetworkSessionGetItpSummaryFinish func(uintptr, uintptr, **glib.Error) *glib.List
+var xNetworkSessionGetItpSummaryFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finish an asynchronous operation started with webkit_network_session_get_itp_summary().
 func (x *NetworkSession) GetItpSummaryFinish(ResultVar gio.AsyncResult) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xNetworkSessionGetItpSummaryFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret)), nil
 }
 
 var xNetworkSessionGetPersistentCredentialStorageEnabled func(uintptr) bool

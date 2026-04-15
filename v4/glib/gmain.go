@@ -112,20 +112,26 @@ func (x *MainContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMainContext func() *MainContext
+var xNewMainContext func() uintptr
 
 // Creates a new [struct@GLib.MainContext] structure.
 func NewMainContext() *MainContext {
 	cret := xNewMainContext()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
-var xNewMainContextWithFlags func(MainContextFlags) *MainContext
+var xNewMainContextWithFlags func(MainContextFlags) uintptr
 
 // Creates a new [struct@GLib.MainContext] structure.
 func NewMainContextWithFlags(FlagsVar MainContextFlags) *MainContext {
 	cret := xNewMainContextWithFlags(FlagsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
 var xMainContextAcquire func(uintptr) bool
@@ -193,7 +199,7 @@ func (x *MainContext) Dispatch() {
 	xMainContextDispatch(x.GoPointer())
 }
 
-var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) *Source
+var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) uintptr
 
 // Finds a source with the given source functions and user data.
 //
@@ -201,10 +207,13 @@ var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) *
 // the first one found will be returned.
 func (x *MainContext) FindSourceByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) *Source {
 	cret := xMainContextFindSourceByFuncsUserData(x.GoPointer(), FuncsVar, UserDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
-var xMainContextFindSourceById func(uintptr, uint32) *Source
+var xMainContextFindSourceById func(uintptr, uint32) uintptr
 
 // Finds a [struct@GLib.Source] given a pair of context and ID.
 //
@@ -220,10 +229,13 @@ var xMainContextFindSourceById func(uintptr, uint32) *Source
 // wrong source.
 func (x *MainContext) FindSourceById(SourceIdVar uint32) *Source {
 	cret := xMainContextFindSourceById(x.GoPointer(), SourceIdVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
-var xMainContextFindSourceByUserData func(uintptr, uintptr) *Source
+var xMainContextFindSourceByUserData func(uintptr, uintptr) uintptr
 
 // Finds a source with the given user data for the callback.
 //
@@ -231,7 +243,10 @@ var xMainContextFindSourceByUserData func(uintptr, uintptr) *Source
 // one found will be returned.
 func (x *MainContext) FindSourceByUserData(UserDataVar uintptr) *Source {
 	cret := xMainContextFindSourceByUserData(x.GoPointer(), UserDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 var xMainContextGetPollFunc func(uintptr) uintptr
@@ -456,12 +471,15 @@ func (x *MainContext) Query(MaxPriorityVar int32, TimeoutVar *int32, FdsVar *[]P
 	return cret
 }
 
-var xMainContextRef func(uintptr) *MainContext
+var xMainContextRef func(uintptr) uintptr
 
 // Increases the reference count on a [struct@GLib.MainContext] object by one.
 func (x *MainContext) Ref() *MainContext {
 	cret := xMainContextRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
 var xMainContextRelease func(uintptr)
@@ -581,20 +599,26 @@ func (x *MainLoop) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMainLoop func(*MainContext, bool) *MainLoop
+var xNewMainLoop func(*MainContext, bool) uintptr
 
 // Creates a new [struct@GLib.MainLoop] structure.
 func NewMainLoop(ContextVar *MainContext, IsRunningVar bool) *MainLoop {
 	cret := xNewMainLoop(ContextVar, IsRunningVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainLoop)(unsafe.Pointer(cret))
 }
 
-var xMainLoopGetContext func(uintptr) *MainContext
+var xMainLoopGetContext func(uintptr) uintptr
 
 // Returns the [struct@GLib.MainContext] of @loop.
 func (x *MainLoop) GetContext() *MainContext {
 	cret := xMainLoopGetContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
 var xMainLoopIsRunning func(uintptr) bool
@@ -617,12 +641,15 @@ func (x *MainLoop) Quit() {
 	xMainLoopQuit(x.GoPointer())
 }
 
-var xMainLoopRef func(uintptr) *MainLoop
+var xMainLoopRef func(uintptr) uintptr
 
 // Increases the reference count on a [struct@GLib.MainLoop] object by one.
 func (x *MainLoop) Ref() *MainLoop {
 	cret := xMainLoopRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainLoop)(unsafe.Pointer(cret))
 }
 
 var xMainLoopRun func(uintptr)
@@ -687,7 +714,7 @@ func (x *Source) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSource func(*SourceFuncs, uint32) *Source
+var xNewSource func(*SourceFuncs, uint32) uintptr
 
 // Creates a new [struct@GLib.Source] structure.
 //
@@ -701,7 +728,10 @@ var xNewSource func(*SourceFuncs, uint32) *Source
 // executed.
 func NewSource(SourceFuncsVar *SourceFuncs, StructSizeVar uint32) *Source {
 	cret := xNewSource(SourceFuncsVar, StructSizeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 var xSourceAddChildSource func(uintptr, *Source)
@@ -806,7 +836,7 @@ func (x *Source) Destroy() {
 	xSourceDestroy(x.GoPointer())
 }
 
-var xSourceDupContext func(uintptr) *MainContext
+var xSourceDupContext func(uintptr) uintptr
 
 // Gets a reference to the [struct@GLib.MainContext] with which the source is
 // associated.
@@ -816,7 +846,10 @@ var xSourceDupContext func(uintptr) *MainContext
 // [func@GLib.main_current_source].
 func (x *Source) DupContext() *MainContext {
 	cret := xSourceDupContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
 var xSourceGetCanRecurse func(uintptr) bool
@@ -829,7 +862,7 @@ func (x *Source) GetCanRecurse() bool {
 	return cret
 }
 
-var xSourceGetContext func(uintptr) *MainContext
+var xSourceGetContext func(uintptr) uintptr
 
 // Gets the [struct@GLib.MainContext] with which the source is associated.
 //
@@ -845,7 +878,10 @@ var xSourceGetContext func(uintptr) *MainContext
 // [method@GLib.Source.dup_context] should be used instead.
 func (x *Source) GetContext() *MainContext {
 	cret := xSourceGetContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
 var xSourceGetCurrentTime func(uintptr, *TimeVal)
@@ -1048,12 +1084,15 @@ func (x *Source) QueryUnixFd(TagVar uintptr) IOCondition {
 	return cret
 }
 
-var xSourceRef func(uintptr) *Source
+var xSourceRef func(uintptr) uintptr
 
 // Increases the reference count on a source by one.
 func (x *Source) Ref() *Source {
 	cret := xSourceRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 var xSourceRemoveChildSource func(uintptr, *Source)
@@ -1532,7 +1571,7 @@ func ChildWatchAddFull(PriorityVar int32, PidVar Pid, FunctionVar *ChildWatchFun
 	return cret
 }
 
-var xChildWatchSourceNew func(Pid) *Source
+var xChildWatchSourceNew func(Pid) uintptr
 
 // Creates a new child watch source.
 //
@@ -1576,7 +1615,10 @@ var xChildWatchSourceNew func(Pid) *Source
 // remains a valid thing to do.
 func ChildWatchSourceNew(PidVar Pid) *Source {
 	cret := xChildWatchSourceNew(PidVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 var xClearHandleId func(uint32, uintptr)
@@ -1734,7 +1776,7 @@ func IdleRemoveByData(DataVar uintptr) bool {
 	return cret
 }
 
-var xIdleSourceNew func() *Source
+var xIdleSourceNew func() uintptr
 
 // Creates a new idle source.
 //
@@ -1746,10 +1788,13 @@ var xIdleSourceNew func() *Source
 // [const@GLib.PRIORITY_DEFAULT].
 func IdleSourceNew() *Source {
 	cret := xIdleSourceNew()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
-var xMainContextDefault func() *MainContext
+var xMainContextDefault func() uintptr
 
 // Returns the global-default main context.
 //
@@ -1759,10 +1804,13 @@ var xMainContextDefault func() *MainContext
 // [func@GLib.MainContext.get_thread_default].
 func MainContextDefault() *MainContext {
 	cret := xMainContextDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
-var xMainContextGetThreadDefault func() *MainContext
+var xMainContextGetThreadDefault func() uintptr
 
 // Gets the thread-default main context for this thread.
 //
@@ -1778,10 +1826,13 @@ var xMainContextGetThreadDefault func() *MainContext
 // [func@GLib.MainContext.ref_thread_default] instead.
 func MainContextGetThreadDefault() *MainContext {
 	cret := xMainContextGetThreadDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
-var xMainContextRefThreadDefault func() *MainContext
+var xMainContextRefThreadDefault func() uintptr
 
 // Gets a reference to the thread-default [struct@GLib.MainContext] for this
 // thread
@@ -1795,15 +1846,21 @@ var xMainContextRefThreadDefault func() *MainContext
 // `NULL`.
 func MainContextRefThreadDefault() *MainContext {
 	cret := xMainContextRefThreadDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MainContext)(unsafe.Pointer(cret))
 }
 
-var xMainCurrentSource func() *Source
+var xMainCurrentSource func() uintptr
 
 // Returns the currently firing source for this thread.
 func MainCurrentSource() *Source {
 	cret := xMainCurrentSource()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 var xMainDepth func() int32
@@ -2171,7 +2228,7 @@ func TimeoutAddSecondsOnce(IntervalVar uint32, FunctionVar *SourceOnceFunc, Data
 	return cret
 }
 
-var xTimeoutSourceNew func(uint32) *Source
+var xTimeoutSourceNew func(uint32) uintptr
 
 // Creates a new timeout source.
 //
@@ -2183,10 +2240,13 @@ var xTimeoutSourceNew func(uint32) *Source
 // time.  See [func@GLib.get_monotonic_time].
 func TimeoutSourceNew(IntervalVar uint32) *Source {
 	cret := xTimeoutSourceNew(IntervalVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
-var xTimeoutSourceNewSeconds func(uint32) *Source
+var xTimeoutSourceNewSeconds func(uint32) uintptr
 
 // Creates a new timeout source.
 //
@@ -2201,7 +2261,10 @@ var xTimeoutSourceNewSeconds func(uint32) *Source
 // See [func@GLib.get_monotonic_time].
 func TimeoutSourceNewSeconds(IntervalVar uint32) *Source {
 	cret := xTimeoutSourceNewSeconds(IntervalVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 func init() {

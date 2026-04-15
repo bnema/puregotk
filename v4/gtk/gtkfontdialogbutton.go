@@ -125,7 +125,7 @@ func (x *FontDialogButton) GetDialog() *FontDialog {
 	return cls
 }
 
-var xFontDialogButtonGetFontDesc func(uintptr) *pango.FontDescription
+var xFontDialogButtonGetFontDesc func(uintptr) uintptr
 
 // Returns the font of the button.
 //
@@ -134,7 +134,10 @@ var xFontDialogButtonGetFontDesc func(uintptr) *pango.FontDescription
 // informed about changes, listen to "notify::font-desc".
 func (x *FontDialogButton) GetFontDesc() *pango.FontDescription {
 	cret := xFontDialogButtonGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 var xFontDialogButtonGetFontFeatures func(uintptr) string
@@ -153,12 +156,15 @@ func (x *FontDialogButton) GetFontFeatures() string {
 	return cret
 }
 
-var xFontDialogButtonGetLanguage func(uintptr) *pango.Language
+var xFontDialogButtonGetLanguage func(uintptr) uintptr
 
 // Returns the language that is used for font features.
 func (x *FontDialogButton) GetLanguage() *pango.Language {
 	cret := xFontDialogButtonGetLanguage(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
 var xFontDialogButtonGetLevel func(uintptr) FontLevel

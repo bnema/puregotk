@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -249,7 +251,10 @@ func (x *PropertyAction) GetName() string {
 // [type@GLib.Variant], but `NULL` instead.
 func (x *PropertyAction) GetParameterType() *glib.VariantType {
 	cret := XGActionGetParameterType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of @action.
@@ -262,7 +267,10 @@ func (x *PropertyAction) GetParameterType() *glib.VariantType {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetState() *glib.Variant {
 	cret := XGActionGetState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of
@@ -285,7 +293,10 @@ func (x *PropertyAction) GetState() *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *PropertyAction) GetStateHint() *glib.Variant {
 	cret := XGActionGetStateHint(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of @action.
@@ -302,7 +313,10 @@ func (x *PropertyAction) GetStateHint() *glib.Variant {
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *PropertyAction) GetStateType() *glib.VariantType {
 	cret := XGActionGetStateType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 func init() {

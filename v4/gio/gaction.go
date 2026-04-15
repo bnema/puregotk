@@ -70,8 +70,12 @@ func (x *ActionInterface) OverrideGetParameterType(cb func(Action) *glib.Variant
 	if cb == nil {
 		x.xGetParameterType = 0
 	} else {
-		x.xGetParameterType = purego.NewCallback(func(ActionVarp uintptr) *glib.VariantType {
-			return cb(&ActionBase{Ptr: ActionVarp})
+		x.xGetParameterType = purego.NewCallback(func(ActionVarp uintptr) uintptr {
+			ret := cb(&ActionBase{Ptr: ActionVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -82,10 +86,14 @@ func (x *ActionInterface) GetGetParameterType() func(Action) *glib.VariantType {
 	if x.xGetParameterType == 0 {
 		return nil
 	}
-	var rawCallback func(ActionVarp uintptr) *glib.VariantType
+	var rawCallback func(ActionVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetParameterType)
 	return func(ActionVar Action) *glib.VariantType {
-		return rawCallback(ActionVar.GoPointer())
+		rawRet := rawCallback(ActionVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.VariantType)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -95,8 +103,12 @@ func (x *ActionInterface) OverrideGetStateType(cb func(Action) *glib.VariantType
 	if cb == nil {
 		x.xGetStateType = 0
 	} else {
-		x.xGetStateType = purego.NewCallback(func(ActionVarp uintptr) *glib.VariantType {
-			return cb(&ActionBase{Ptr: ActionVarp})
+		x.xGetStateType = purego.NewCallback(func(ActionVarp uintptr) uintptr {
+			ret := cb(&ActionBase{Ptr: ActionVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -107,10 +119,14 @@ func (x *ActionInterface) GetGetStateType() func(Action) *glib.VariantType {
 	if x.xGetStateType == 0 {
 		return nil
 	}
-	var rawCallback func(ActionVarp uintptr) *glib.VariantType
+	var rawCallback func(ActionVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetStateType)
 	return func(ActionVar Action) *glib.VariantType {
-		return rawCallback(ActionVar.GoPointer())
+		rawRet := rawCallback(ActionVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.VariantType)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -120,8 +136,12 @@ func (x *ActionInterface) OverrideGetStateHint(cb func(Action) *glib.Variant) {
 	if cb == nil {
 		x.xGetStateHint = 0
 	} else {
-		x.xGetStateHint = purego.NewCallback(func(ActionVarp uintptr) *glib.Variant {
-			return cb(&ActionBase{Ptr: ActionVarp})
+		x.xGetStateHint = purego.NewCallback(func(ActionVarp uintptr) uintptr {
+			ret := cb(&ActionBase{Ptr: ActionVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -132,10 +152,14 @@ func (x *ActionInterface) GetGetStateHint() func(Action) *glib.Variant {
 	if x.xGetStateHint == 0 {
 		return nil
 	}
-	var rawCallback func(ActionVarp uintptr) *glib.Variant
+	var rawCallback func(ActionVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetStateHint)
 	return func(ActionVar Action) *glib.Variant {
-		return rawCallback(ActionVar.GoPointer())
+		rawRet := rawCallback(ActionVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -170,8 +194,12 @@ func (x *ActionInterface) OverrideGetState(cb func(Action) *glib.Variant) {
 	if cb == nil {
 		x.xGetState = 0
 	} else {
-		x.xGetState = purego.NewCallback(func(ActionVarp uintptr) *glib.Variant {
-			return cb(&ActionBase{Ptr: ActionVarp})
+		x.xGetState = purego.NewCallback(func(ActionVarp uintptr) uintptr {
+			ret := cb(&ActionBase{Ptr: ActionVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -182,10 +210,14 @@ func (x *ActionInterface) GetGetState() func(Action) *glib.Variant {
 	if x.xGetState == 0 {
 		return nil
 	}
-	var rawCallback func(ActionVarp uintptr) *glib.Variant
+	var rawCallback func(ActionVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetState)
 	return func(ActionVar Action) *glib.Variant {
-		return rawCallback(ActionVar.GoPointer())
+		rawRet := rawCallback(ActionVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -357,7 +389,10 @@ func (x *ActionBase) GetName() string {
 // [type@GLib.Variant], but `NULL` instead.
 func (x *ActionBase) GetParameterType() *glib.VariantType {
 	cret := XGActionGetParameterType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of @action.
@@ -370,7 +405,10 @@ func (x *ActionBase) GetParameterType() *glib.VariantType {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionBase) GetState() *glib.Variant {
 	cret := XGActionGetState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of
@@ -393,7 +431,10 @@ func (x *ActionBase) GetState() *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionBase) GetStateHint() *glib.Variant {
 	cret := XGActionGetStateHint(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of @action.
@@ -410,7 +451,10 @@ func (x *ActionBase) GetStateHint() *glib.Variant {
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *ActionBase) GetStateType() *glib.VariantType {
 	cret := XGActionGetStateType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // GetPropertyEnabled gets the "enabled" property.
@@ -475,10 +519,10 @@ var (
 	XGActionChangeState      func(uintptr, *glib.Variant)
 	XGActionGetEnabled       func(uintptr) bool
 	XGActionGetName          func(uintptr) string
-	XGActionGetParameterType func(uintptr) *glib.VariantType
-	XGActionGetState         func(uintptr) *glib.Variant
-	XGActionGetStateHint     func(uintptr) *glib.Variant
-	XGActionGetStateType     func(uintptr) *glib.VariantType
+	XGActionGetParameterType func(uintptr) uintptr
+	XGActionGetState         func(uintptr) uintptr
+	XGActionGetStateHint     func(uintptr) uintptr
+	XGActionGetStateType     func(uintptr) uintptr
 )
 
 var xActionNameIsValid func(string) bool

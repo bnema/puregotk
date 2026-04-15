@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -173,12 +175,15 @@ func (x *SizeGroup) GetMode() SizeGroupMode {
 	return cret
 }
 
-var xSizeGroupGetWidgets func(uintptr) *glib.SList
+var xSizeGroupGetWidgets func(uintptr) uintptr
 
 // Returns the list of widgets associated with @size_group.
 func (x *SizeGroup) GetWidgets() *glib.SList {
 	cret := xSizeGroupGetWidgets(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xSizeGroupRemoveWidget func(uintptr, uintptr)

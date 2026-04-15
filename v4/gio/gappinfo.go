@@ -1441,7 +1441,7 @@ func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar stri
 	return cls, cerr
 }
 
-var xAppInfoGetAll func() *glib.List
+var xAppInfoGetAll func() uintptr
 
 // Gets a list of all of the applications currently registered
 // on this system.
@@ -1458,10 +1458,13 @@ var xAppInfoGetAll func() *glib.List
 // set.
 func AppInfoGetAll() *glib.List {
 	cret := xAppInfoGetAll()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xAppInfoGetAllForType func(string) *glib.List
+var xAppInfoGetAllForType func(string) uintptr
 
 // Gets a list of all [iface@Gio.AppInfo]s for a given content type,
 // including the recommended and fallback [iface@Gio.AppInfo]s. See
@@ -1469,7 +1472,10 @@ var xAppInfoGetAllForType func(string) *glib.List
 // [func@Gio.AppInfo.get_fallback_for_type].
 func AppInfoGetAllForType(ContentTypeVar string) *glib.List {
 	cret := xAppInfoGetAllForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xAppInfoGetDefaultForType func(string, bool) uintptr
@@ -1573,17 +1579,20 @@ func AppInfoGetDefaultForUriSchemeFinish(ResultVar AsyncResult) (*AppInfoBase, e
 	return cls, cerr
 }
 
-var xAppInfoGetFallbackForType func(string) *glib.List
+var xAppInfoGetFallbackForType func(string) uintptr
 
 // Gets a list of fallback [iface@Gio.AppInfo]s for a given content type, i.e.
 // those applications which claim to support the given content type by MIME
 // type subclassing and not directly.
 func AppInfoGetFallbackForType(ContentTypeVar string) *glib.List {
 	cret := xAppInfoGetFallbackForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xAppInfoGetRecommendedForType func(string) *glib.List
+var xAppInfoGetRecommendedForType func(string) uintptr
 
 // Gets a list of recommended [iface@Gio.AppInfo]s for a given content type,
 // i.e. those applications which claim to support the given content type
@@ -1594,7 +1603,10 @@ var xAppInfoGetRecommendedForType func(string) *glib.List
 // been called.
 func AppInfoGetRecommendedForType(ContentTypeVar string) *glib.List {
 	cret := xAppInfoGetRecommendedForType(ContentTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xAppInfoLaunchDefaultForUri func(string, uintptr, **glib.Error) bool

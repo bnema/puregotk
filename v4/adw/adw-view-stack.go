@@ -1650,7 +1650,10 @@ func (x *ViewStackPages) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 	cret := gtk.XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gtk.Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -1662,7 +1665,10 @@ func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 // signal.
 func (x *ViewStackPages) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *gtk.Bitset {
 	cret := gtk.XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gtk.Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.

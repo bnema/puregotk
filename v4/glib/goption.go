@@ -99,12 +99,15 @@ func (x *OptionContext) GetIgnoreUnknownOptions() bool {
 	return cret
 }
 
-var xOptionContextGetMainGroup func(uintptr) *OptionGroup
+var xOptionContextGetMainGroup func(uintptr) uintptr
 
 // Returns a pointer to the main group of @context.
 func (x *OptionContext) GetMainGroup() *OptionGroup {
 	cret := xOptionContextGetMainGroup(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*OptionGroup)(unsafe.Pointer(cret))
 }
 
 var xOptionContextGetStrictPosix func(uintptr) bool
@@ -363,7 +366,7 @@ func (x *OptionGroup) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
+var xNewOptionGroup func(string, string, string, uintptr, uintptr) uintptr
 
 // Creates a new #GOptionGroup.
 //
@@ -373,7 +376,10 @@ var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
 // ‘Application Options:’.
 func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar string, UserDataVar uintptr, DestroyVar *DestroyNotify) *OptionGroup {
 	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallbackNullable(DestroyVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*OptionGroup)(unsafe.Pointer(cret))
 }
 
 var xOptionGroupAddEntries func(uintptr, []OptionEntry)
@@ -391,12 +397,15 @@ func (x *OptionGroup) Free() {
 	xOptionGroupFree(x.GoPointer())
 }
 
-var xOptionGroupRef func(uintptr) *OptionGroup
+var xOptionGroupRef func(uintptr) uintptr
 
 // Increments the reference count of @group by one.
 func (x *OptionGroup) Ref() *OptionGroup {
 	cret := xOptionGroupRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*OptionGroup)(unsafe.Pointer(cret))
 }
 
 var xOptionGroupSetErrorHook func(uintptr, uintptr)

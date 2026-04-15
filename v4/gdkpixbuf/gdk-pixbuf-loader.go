@@ -317,13 +317,16 @@ func (x *PixbufLoader) GetAnimation() *PixbufAnimation {
 	return cls
 }
 
-var xPixbufLoaderGetFormat func(uintptr) *PixbufFormat
+var xPixbufLoaderGetFormat func(uintptr) uintptr
 
 // Obtains the available information about the format of the
 // currently loading image file.
 func (x *PixbufLoader) GetFormat() *PixbufFormat {
 	cret := xPixbufLoaderGetFormat(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufLoaderGetPixbuf func(uintptr) uintptr

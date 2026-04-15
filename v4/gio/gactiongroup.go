@@ -131,8 +131,12 @@ func (x *ActionGroupInterface) OverrideGetActionParameterType(cb func(ActionGrou
 	if cb == nil {
 		x.xGetActionParameterType = 0
 	} else {
-		x.xGetActionParameterType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType {
-			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		x.xGetActionParameterType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr {
+			ret := cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -143,10 +147,14 @@ func (x *ActionGroupInterface) GetGetActionParameterType() func(ActionGroup, str
 	if x.xGetActionParameterType == 0 {
 		return nil
 	}
-	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetActionParameterType)
 	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.VariantType {
-		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		rawRet := rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.VariantType)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -156,8 +164,12 @@ func (x *ActionGroupInterface) OverrideGetActionStateType(cb func(ActionGroup, s
 	if cb == nil {
 		x.xGetActionStateType = 0
 	} else {
-		x.xGetActionStateType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType {
-			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		x.xGetActionStateType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr {
+			ret := cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -168,10 +180,14 @@ func (x *ActionGroupInterface) GetGetActionStateType() func(ActionGroup, string)
 	if x.xGetActionStateType == 0 {
 		return nil
 	}
-	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetActionStateType)
 	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.VariantType {
-		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		rawRet := rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.VariantType)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -181,8 +197,12 @@ func (x *ActionGroupInterface) OverrideGetActionStateHint(cb func(ActionGroup, s
 	if cb == nil {
 		x.xGetActionStateHint = 0
 	} else {
-		x.xGetActionStateHint = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant {
-			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		x.xGetActionStateHint = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr {
+			ret := cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -193,10 +213,14 @@ func (x *ActionGroupInterface) GetGetActionStateHint() func(ActionGroup, string)
 	if x.xGetActionStateHint == 0 {
 		return nil
 	}
-	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetActionStateHint)
 	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.Variant {
-		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		rawRet := rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -206,8 +230,12 @@ func (x *ActionGroupInterface) OverrideGetActionState(cb func(ActionGroup, strin
 	if cb == nil {
 		x.xGetActionState = 0
 	} else {
-		x.xGetActionState = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant {
-			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		x.xGetActionState = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr {
+			ret := cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -218,10 +246,14 @@ func (x *ActionGroupInterface) GetGetActionState() func(ActionGroup, string) *gl
 	if x.xGetActionState == 0 {
 		return nil
 	}
-	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetActionState)
 	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.Variant {
-		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		rawRet := rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -588,7 +620,10 @@ func (x *ActionGroupBase) GetActionEnabled(ActionNameVar string) bool {
 // with the same name but a different parameter type.
 func (x *ActionGroupBase) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -601,7 +636,10 @@ func (x *ActionGroupBase) GetActionParameterType(ActionNameVar string) *glib.Var
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionGroupBase) GetActionState(ActionNameVar string) *glib.Variant {
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -624,7 +662,10 @@ func (x *ActionGroupBase) GetActionState(ActionNameVar string) *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionGroupBase) GetActionStateHint(ActionNameVar string) *glib.Variant {
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -645,7 +686,10 @@ func (x *ActionGroupBase) GetActionStateHint(ActionNameVar string) *glib.Variant
 // with the same name but a different state type.
 func (x *ActionGroupBase) GetActionStateType(ActionNameVar string) *glib.VariantType {
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.
@@ -703,10 +747,10 @@ var (
 	XGActionGroupActivateAction         func(uintptr, string, *glib.Variant)
 	XGActionGroupChangeActionState      func(uintptr, string, *glib.Variant)
 	XGActionGroupGetActionEnabled       func(uintptr, string) bool
-	XGActionGroupGetActionParameterType func(uintptr, string) *glib.VariantType
-	XGActionGroupGetActionState         func(uintptr, string) *glib.Variant
-	XGActionGroupGetActionStateHint     func(uintptr, string) *glib.Variant
-	XGActionGroupGetActionStateType     func(uintptr, string) *glib.VariantType
+	XGActionGroupGetActionParameterType func(uintptr, string) uintptr
+	XGActionGroupGetActionState         func(uintptr, string) uintptr
+	XGActionGroupGetActionStateHint     func(uintptr, string) uintptr
+	XGActionGroupGetActionStateType     func(uintptr, string) uintptr
 	XGActionGroupHasAction              func(uintptr, string) bool
 	XGActionGroupListActions            func(uintptr) []string
 	XGActionGroupQueryAction            func(uintptr, string, *bool, **glib.VariantType, **glib.VariantType, **glib.Variant, **glib.Variant) bool

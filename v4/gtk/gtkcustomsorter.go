@@ -69,7 +69,7 @@ var xCustomSorterSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // If a previous function was set, its @user_destroy will be
 // called now.
 func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-	xCustomSorterSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xCustomSorterSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 func (c *CustomSorter) GoPointer() uintptr {

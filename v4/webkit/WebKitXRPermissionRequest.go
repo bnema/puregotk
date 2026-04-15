@@ -153,12 +153,15 @@ func (x *XRPermissionRequest) GetRequiredFeaturesRequested() XRSessionFeatures {
 	return cret
 }
 
-var xXRPermissionRequestGetSecurityOrigin func(uintptr) *SecurityOrigin
+var xXRPermissionRequestGetSecurityOrigin func(uintptr) uintptr
 
 // Gets the security origin that initiated the permission request.
 func (x *XRPermissionRequest) GetSecurityOrigin() *SecurityOrigin {
 	cret := xXRPermissionRequestGetSecurityOrigin(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SecurityOrigin)(unsafe.Pointer(cret))
 }
 
 var xXRPermissionRequestGetSessionMode func(uintptr) XRSessionMode

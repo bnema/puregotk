@@ -225,13 +225,16 @@ func (x *ParamSpecPool) List(OwnerTypeVar types.GType, NPspecsPVar *uint32) uint
 	return cret
 }
 
-var xParamSpecPoolListOwned func(uintptr, types.GType) *glib.List
+var xParamSpecPoolListOwned func(uintptr, types.GType) uintptr
 
 // Gets an #GList of all #GParamSpecs owned by @owner_type in
 // the pool.
 func (x *ParamSpecPool) ListOwned(OwnerTypeVar types.GType) *glib.List {
 	cret := xParamSpecPoolListOwned(x.GoPointer(), OwnerTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xParamSpecPoolLookup func(uintptr, string, types.GType, bool) uintptr
@@ -625,14 +628,17 @@ func (x *ParamSpec) GetBlurb() string {
 	return cret
 }
 
-var xParamSpecGetDefaultValue func(uintptr) *Value
+var xParamSpecGetDefaultValue func(uintptr) uintptr
 
 // Gets the default value of @pspec as a pointer to a #GValue.
 //
 // The #GValue will remain valid for the life of @pspec.
 func (x *ParamSpec) GetDefaultValue() *Value {
 	cret := xParamSpecGetDefaultValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
 var xParamSpecGetName func(uintptr) string

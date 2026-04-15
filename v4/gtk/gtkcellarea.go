@@ -1391,12 +1391,15 @@ func (x *CellArea) GetFocusFromSibling(RendererVar *CellRenderer) *CellRenderer 
 	return cls
 }
 
-var xCellAreaGetFocusSiblings func(uintptr, uintptr) *glib.List
+var xCellAreaGetFocusSiblings func(uintptr, uintptr) uintptr
 
 // Gets the focus sibling cell renderers for @renderer.
 func (x *CellArea) GetFocusSiblings(RendererVar *CellRenderer) *glib.List {
 	cret := xCellAreaGetFocusSiblings(x.GoPointer(), RendererVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xCellAreaGetPreferredHeight func(uintptr, uintptr, uintptr, *int32, *int32)
@@ -1717,7 +1720,10 @@ func (x *CellArea) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *CellArea) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -1766,7 +1772,7 @@ func (x *CellArea) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *CellArea) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 func init() {

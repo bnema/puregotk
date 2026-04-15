@@ -671,7 +671,7 @@ func (x *Socket) ConnectionFactoryCreateConnection() *SocketConnection {
 	return cls
 }
 
-var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
+var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) uintptr
 
 // Creates a #GSource that can be attached to a %GMainContext to monitor
 // for the availability of the specified @condition on the socket. The #GSource
@@ -695,7 +695,10 @@ var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
 // you call will then fail with a %G_IO_ERROR_TIMED_OUT.
 func (x *Socket) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
 	cret := xSocketCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 var xSocketGetAvailableBytes func(uintptr) int
@@ -1104,7 +1107,7 @@ func (x *Socket) Receive(BufferVar *[]byte, SizeVar uint, CancellableVar *Cancel
 	return cret, cerr
 }
 
-var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) *glib.Bytes
+var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) uintptr
 
 // Receives data (up to @size bytes) from a socket.
 //
@@ -1119,13 +1122,16 @@ func (x *Socket) ReceiveBytes(SizeVar uint, TimeoutUsVar int64, CancellableVar *
 	var cerr *glib.Error
 
 	cret := xSocketReceiveBytes(x.GoPointer(), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
-var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr, **glib.Error) *glib.Bytes
+var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr, **glib.Error) uintptr
 
 // Receive data (up to @size bytes) from a socket.
 //
@@ -1145,10 +1151,13 @@ func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, Time
 	var cerr *glib.Error
 
 	cret := xSocketReceiveBytesFrom(x.GoPointer(), AddressVar, SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xSocketReceiveFrom func(uintptr, **SocketAddress, *[]byte, uint, uintptr, **glib.Error) int

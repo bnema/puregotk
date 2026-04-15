@@ -679,7 +679,10 @@ func (x *ActionRow) GetActionName() string {
 // Gets the current target value of @actionable.
 func (x *ActionRow) GetActionTargetValue() *glib.Variant {
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be

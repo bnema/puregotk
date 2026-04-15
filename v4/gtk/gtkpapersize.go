@@ -36,7 +36,7 @@ func (x *PaperSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPaperSize func(string) *PaperSize
+var xNewPaperSize func(string) uintptr
 
 // Creates a new `GtkPaperSize` object by parsing a
 // [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
@@ -46,19 +46,25 @@ var xNewPaperSize func(string) *PaperSize
 // see [func@Gtk.PaperSize.get_default].
 func NewPaperSize(NameVar string) *PaperSize {
 	cret := xNewPaperSize(NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xNewPaperSizeCustom func(string, string, float64, float64, Unit) *PaperSize
+var xNewPaperSizeCustom func(string, string, float64, float64, Unit) uintptr
 
 // Creates a new `GtkPaperSize` object with the
 // given parameters.
 func NewPaperSizeCustom(NameVar string, DisplayNameVar string, WidthVar float64, HeightVar float64, UnitVar Unit) *PaperSize {
 	cret := xNewPaperSizeCustom(NameVar, DisplayNameVar, WidthVar, HeightVar, UnitVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xNewPaperSizeFromGvariant func(*glib.Variant) *PaperSize
+var xNewPaperSizeFromGvariant func(*glib.Variant) uintptr
 
 // Deserialize a paper size from a `GVariant`.
 //
@@ -66,10 +72,13 @@ var xNewPaperSizeFromGvariant func(*glib.Variant) *PaperSize
 // [method@Gtk.PaperSize.to_gvariant].
 func NewPaperSizeFromGvariant(VariantVar *glib.Variant) *PaperSize {
 	cret := xNewPaperSizeFromGvariant(VariantVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xNewPaperSizeFromIpp func(string, float64, float64) *PaperSize
+var xNewPaperSizeFromIpp func(string, float64, float64) uintptr
 
 // Creates a new `GtkPaperSize` object by using
 // IPP information.
@@ -79,10 +88,13 @@ var xNewPaperSizeFromIpp func(string, float64, float64) *PaperSize
 // construct a custom `GtkPaperSize` object.
 func NewPaperSizeFromIpp(IppNameVar string, WidthVar float64, HeightVar float64) *PaperSize {
 	cret := xNewPaperSizeFromIpp(IppNameVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xNewPaperSizeFromKeyFile func(*glib.KeyFile, string, **glib.Error) *PaperSize
+var xNewPaperSizeFromKeyFile func(*glib.KeyFile, string, **glib.Error) uintptr
 
 // Reads a paper size from the group @group_name in the key file
 // @key_file.
@@ -90,13 +102,16 @@ func NewPaperSizeFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (*Pa
 	var cerr *glib.Error
 
 	cret := xNewPaperSizeFromKeyFile(KeyFileVar, GroupNameVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret)), nil
 }
 
-var xNewPaperSizeFromPpd func(string, string, float64, float64) *PaperSize
+var xNewPaperSizeFromPpd func(string, string, float64, float64) uintptr
 
 // Creates a new `GtkPaperSize` object by using
 // PPD information.
@@ -106,15 +121,21 @@ var xNewPaperSizeFromPpd func(string, string, float64, float64) *PaperSize
 // construct a custom `GtkPaperSize` object.
 func NewPaperSizeFromPpd(PpdNameVar string, PpdDisplayNameVar string, WidthVar float64, HeightVar float64) *PaperSize {
 	cret := xNewPaperSizeFromPpd(PpdNameVar, PpdDisplayNameVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xPaperSizeCopy func(uintptr) *PaperSize
+var xPaperSizeCopy func(uintptr) uintptr
 
 // Copies an existing `GtkPaperSize`.
 func (x *PaperSize) Copy() *PaperSize {
 	cret := xPaperSizeCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
 var xPaperSizeFree func(uintptr)
@@ -230,12 +251,15 @@ func (x *PaperSize) SetSize(WidthVar float64, HeightVar float64, UnitVar Unit) {
 	xPaperSizeSetSize(x.GoPointer(), WidthVar, HeightVar, UnitVar)
 }
 
-var xPaperSizeToGvariant func(uintptr) *glib.Variant
+var xPaperSizeToGvariant func(uintptr) uintptr
 
 // Serialize a paper size to an `a{sv}` variant.
 func (x *PaperSize) ToGvariant() *glib.Variant {
 	cret := xPaperSizeToGvariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xPaperSizeToKeyFile func(uintptr, *glib.KeyFile, string)
@@ -271,12 +295,15 @@ func PaperSizeGetDefault() string {
 	return cret
 }
 
-var xPaperSizeGetPaperSizes func(bool) *glib.List
+var xPaperSizeGetPaperSizes func(bool) uintptr
 
 // Creates a list of known paper sizes.
 func PaperSizeGetPaperSizes(IncludeCustomVar bool) *glib.List {
 	cret := xPaperSizeGetPaperSizes(IncludeCustomVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {

@@ -46,12 +46,15 @@ func (x *PathPoint) Compare(Point2Var *PathPoint) int32 {
 	return cret
 }
 
-var xPathPointCopy func(uintptr) *PathPoint
+var xPathPointCopy func(uintptr) uintptr
 
 // Copies a path point.
 func (x *PathPoint) Copy() *PathPoint {
 	cret := xPathPointCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathPoint)(unsafe.Pointer(cret))
 }
 
 var xPathPointEqual func(uintptr, *PathPoint) bool

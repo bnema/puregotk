@@ -349,12 +349,15 @@ func SignalEmitv(InstanceAndParamsVar []Value, SignalIdVar uint32, DetailVar gli
 	xSignalEmitv(InstanceAndParamsVar, SignalIdVar, DetailVar, ReturnValueVar)
 }
 
-var xSignalGetInvocationHint func(uintptr) *SignalInvocationHint
+var xSignalGetInvocationHint func(uintptr) uintptr
 
 // Returns the invocation hint of the innermost signal emission of instance.
 func SignalGetInvocationHint(InstanceVar *Object) *SignalInvocationHint {
 	cret := xSignalGetInvocationHint(InstanceVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SignalInvocationHint)(unsafe.Pointer(cret))
 }
 
 var xSignalHandlerBlock func(uintptr, uint32)

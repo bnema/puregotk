@@ -13,7 +13,7 @@ import (
 )
 
 // The type of the @get_property function in #GDBusInterfaceVTable.
-type DBusInterfaceGetPropertyFunc func(uintptr, string, string, string, string, **glib.Error, uintptr) *glib.Variant
+type DBusInterfaceGetPropertyFunc func(uintptr, string, string, string, string, **glib.Error, uintptr) uintptr
 
 // The type of the @method_call function in #GDBusInterfaceVTable.
 //
@@ -105,7 +105,7 @@ type DBusSignalCallback func(uintptr, string, string, string, string, *glib.Vari
 //
 // Subtrees are flat.  @node, if non-%NULL, is always exactly one
 // segment of the object path (ie: it never contains a slash).
-type DBusSubtreeDispatchFunc func(uintptr, string, string, string, string, uintptr, uintptr) *DBusInterfaceVTable
+type DBusSubtreeDispatchFunc func(uintptr, string, string, string, string, uintptr, uintptr) uintptr
 
 // The type of the @enumerate function in #GDBusSubtreeVTable.
 //
@@ -560,20 +560,23 @@ func (x *DBusConnection) Call(BusNameVar string, ObjectPathVar string, Interface
 	xDBusConnectionCall(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xDBusConnectionCallFinish func(uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an operation started with g_dbus_connection_call().
 func (x *DBusConnection) CallFinish(ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionCallFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **glib.Error) uintptr
 
 // Synchronously invokes the @method_name method on the
 // @interface_name D-Bus interface on the remote object at
@@ -617,10 +620,13 @@ func (x *DBusConnection) CallSync(BusNameVar string, ObjectPathVar string, Inter
 	var cerr *glib.Error
 
 	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
 var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, uintptr, uintptr, uintptr)
@@ -644,7 +650,7 @@ func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar str
 	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xDBusConnectionCallWithUnixFdListFinish func(uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListFinish func(uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
 
 // Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
 //
@@ -662,13 +668,16 @@ func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, Res
 	var cerr *glib.Error
 
 	cret := xDBusConnectionCallWithUnixFdListFinish(x.GoPointer(), OutFdListVar, ResVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
 
 // Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
 // See g_dbus_connection_call_with_unix_fd_list() and
@@ -679,10 +688,13 @@ func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar string, ObjectPathVar
 	var cerr *glib.Error
 
 	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
 var xDBusConnectionClose func(uintptr, uintptr, uintptr, uintptr)

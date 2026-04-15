@@ -272,7 +272,7 @@ var xClearPointer func(uintptr, uintptr)
 // g_clear_pointer (&amp;sync, destroy_sync);
 // ```
 func ClearPointer(PpVar uintptr, DestroyVar *DestroyNotify) {
-	xClearPointer(PpVar, NewCallback(DestroyVar))
+	xClearPointer(PpVar, NewCallbackNullable(DestroyVar))
 }
 
 var xFree func(uintptr)

@@ -2,6 +2,8 @@
 package soup
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -59,17 +61,20 @@ func HeaderGStringAppendParamQuoted(StringVar *glib.String, NameVar string, Valu
 	xHeaderGStringAppendParamQuoted(StringVar, NameVar, ValueVar)
 }
 
-var xHeaderParseList func(string) *glib.SList
+var xHeaderParseList func(string) uintptr
 
 // Parses a header whose content is described by RFC2616 as `#something`.
 //
 // "something" does not itself contain commas, except as part of quoted-strings.
 func HeaderParseList(HeaderVar string) *glib.SList {
 	cret := xHeaderParseList(HeaderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xHeaderParseParamList func(string) *glib.HashTable
+var xHeaderParseParamList func(string) uintptr
 
 // Parses a header which is a comma-delimited list of something like:
 // `token [ "=" ( token | quoted-string ) ]`.
@@ -82,10 +87,13 @@ var xHeaderParseParamList func(string) *glib.HashTable
 // header).
 func HeaderParseParamList(HeaderVar string) *glib.HashTable {
 	cret := xHeaderParseParamList(HeaderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
-var xHeaderParseParamListStrict func(string) *glib.HashTable
+var xHeaderParseParamListStrict func(string) uintptr
 
 // A strict version of [func@header_parse_param_list]
 // that bails out if there are duplicate parameters.
@@ -97,10 +105,13 @@ var xHeaderParseParamListStrict func(string) *glib.HashTable
 // [func@header_parse_param_list] instead.
 func HeaderParseParamListStrict(HeaderVar string) *glib.HashTable {
 	cret := xHeaderParseParamListStrict(HeaderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
-var xHeaderParseQualityList func(string, **glib.SList) *glib.SList
+var xHeaderParseQualityList func(string, **glib.SList) uintptr
 
 // Parses a header whose content is a list of items with optional
 // "qvalue"s (eg, Accept, Accept-Charset, Accept-Encoding,
@@ -111,10 +122,13 @@ var xHeaderParseQualityList func(string, **glib.SList) *glib.SList
 // the main list.
 func HeaderParseQualityList(HeaderVar string, UnacceptableVar **glib.SList) *glib.SList {
 	cret := xHeaderParseQualityList(HeaderVar, UnacceptableVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xHeaderParseSemiParamList func(string) *glib.HashTable
+var xHeaderParseSemiParamList func(string) uintptr
 
 // Parses a header which is a semicolon-delimited list of something
 // like: `token [ "=" ( token | quoted-string ) ]`.
@@ -127,10 +141,13 @@ var xHeaderParseSemiParamList func(string) *glib.HashTable
 // header).
 func HeaderParseSemiParamList(HeaderVar string) *glib.HashTable {
 	cret := xHeaderParseSemiParamList(HeaderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
-var xHeaderParseSemiParamListStrict func(string) *glib.HashTable
+var xHeaderParseSemiParamListStrict func(string) uintptr
 
 // A strict version of [func@header_parse_semi_param_list]
 // that bails out if there are duplicate parameters.
@@ -142,7 +159,10 @@ var xHeaderParseSemiParamListStrict func(string) *glib.HashTable
 // [func@header_parse_semi_param_list] instead.
 func HeaderParseSemiParamListStrict(HeaderVar string) *glib.HashTable {
 	cret := xHeaderParseSemiParamListStrict(HeaderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
 var xHeadersParse func(string, int32, *MessageHeaders) bool

@@ -111,7 +111,7 @@ func (x *Calendar) ClearMarks() {
 	xCalendarClearMarks(x.GoPointer())
 }
 
-var xCalendarGetDate func(uintptr) *glib.DateTime
+var xCalendarGetDate func(uintptr) uintptr
 
 // Returns a `GDateTime` representing the shown
 // year, month and the selected day.
@@ -119,7 +119,10 @@ var xCalendarGetDate func(uintptr) *glib.DateTime
 // The returned date is in the local time zone.
 func (x *Calendar) GetDate() *glib.DateTime {
 	cret := xCalendarGetDate(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xCalendarGetDay func(uintptr) int32

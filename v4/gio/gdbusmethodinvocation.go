@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -117,7 +119,7 @@ func (x *DBusMethodInvocation) GetMessage() *DBusMessage {
 	return cls
 }
 
-var xDBusMethodInvocationGetMethodInfo func(uintptr) *DBusMethodInfo
+var xDBusMethodInvocationGetMethodInfo func(uintptr) uintptr
 
 // Gets information about the method call, if any.
 //
@@ -127,7 +129,10 @@ var xDBusMethodInvocationGetMethodInfo func(uintptr) *DBusMethodInfo
 // #GDBusInterfaceVTable for more information.
 func (x *DBusMethodInvocation) GetMethodInfo() *DBusMethodInfo {
 	cret := xDBusMethodInvocationGetMethodInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusMethodInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusMethodInvocationGetMethodName func(uintptr) string
@@ -146,16 +151,19 @@ func (x *DBusMethodInvocation) GetObjectPath() string {
 	return cret
 }
 
-var xDBusMethodInvocationGetParameters func(uintptr) *glib.Variant
+var xDBusMethodInvocationGetParameters func(uintptr) uintptr
 
 // Gets the parameters of the method invocation. If there are no input
 // parameters then this will return a GVariant with 0 children rather than NULL.
 func (x *DBusMethodInvocation) GetParameters() *glib.Variant {
 	cret := xDBusMethodInvocationGetParameters(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xDBusMethodInvocationGetPropertyInfo func(uintptr) *DBusPropertyInfo
+var xDBusMethodInvocationGetPropertyInfo func(uintptr) uintptr
 
 // Gets information about the property that this method call is for, if
 // any.
@@ -170,7 +178,10 @@ var xDBusMethodInvocationGetPropertyInfo func(uintptr) *DBusPropertyInfo
 // If the call was GetAll, %NULL will be returned.
 func (x *DBusMethodInvocation) GetPropertyInfo() *DBusPropertyInfo {
 	cret := xDBusMethodInvocationGetPropertyInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusPropertyInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusMethodInvocationGetSender func(uintptr) string

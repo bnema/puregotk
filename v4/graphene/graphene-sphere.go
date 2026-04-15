@@ -29,14 +29,17 @@ func (x *Sphere) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSphereAlloc func() *Sphere
+var xSphereAlloc func() uintptr
 
 // Allocates a new #graphene_sphere_t.
 //
 // The contents of the newly allocated structure are undefined.
 func SphereAlloc() *Sphere {
 	cret := xSphereAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
 var xSphereContainsPoint func(uintptr, *Point3D) bool
@@ -95,15 +98,18 @@ func (x *Sphere) GetRadius() float32 {
 	return cret
 }
 
-var xSphereInit func(uintptr, *Point3D, float32) *Sphere
+var xSphereInit func(uintptr, *Point3D, float32) uintptr
 
 // Initializes the given #graphene_sphere_t with the given @center and @radius.
 func (x *Sphere) Init(CenterVar *Point3D, RadiusVar float32) *Sphere {
 	cret := xSphereInit(x.GoPointer(), CenterVar, RadiusVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromPoints func(uintptr, uint32, []Point3D, *Point3D) *Sphere
+var xSphereInitFromPoints func(uintptr, uint32, []Point3D, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
@@ -112,10 +118,13 @@ var xSphereInitFromPoints func(uintptr, uint32, []Point3D, *Point3D) *Sphere
 // of the 3D volume that encompasses all @points.
 func (x *Sphere) InitFromPoints(NPointsVar uint32, PointsVar []Point3D, CenterVar *Point3D) *Sphere {
 	cret := xSphereInitFromPoints(x.GoPointer(), NPointsVar, PointsVar, CenterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromVectors func(uintptr, uint32, []Vec3, *Point3D) *Sphere
+var xSphereInitFromVectors func(uintptr, uint32, []Vec3, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
@@ -124,7 +133,10 @@ var xSphereInitFromVectors func(uintptr, uint32, []Vec3, *Point3D) *Sphere
 // of the 3D volume that encompasses all @vectors.
 func (x *Sphere) InitFromVectors(NVectorsVar uint32, VectorsVar []Vec3, CenterVar *Point3D) *Sphere {
 	cret := xSphereInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar, CenterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Sphere)(unsafe.Pointer(cret))
 }
 
 var xSphereIsEmpty func(uintptr) bool

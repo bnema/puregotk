@@ -602,12 +602,15 @@ func (x *Renderer) GetAlpha(PartVar RenderPart) uint16 {
 	return cret
 }
 
-var xRendererGetColor func(uintptr, RenderPart) *Color
+var xRendererGetColor func(uintptr, RenderPart) uintptr
 
 // Gets the current rendering color for the specified part.
 func (x *Renderer) GetColor(PartVar RenderPart) *Color {
 	cret := xRendererGetColor(x.GoPointer(), PartVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Color)(unsafe.Pointer(cret))
 }
 
 var xRendererGetLayout func(uintptr) uintptr
@@ -633,7 +636,7 @@ func (x *Renderer) GetLayout() *Layout {
 	return cls
 }
 
-var xRendererGetLayoutLine func(uintptr) *LayoutLine
+var xRendererGetLayoutLine func(uintptr) uintptr
 
 // Gets the layout line currently being rendered using @renderer.
 //
@@ -644,10 +647,13 @@ var xRendererGetLayoutLine func(uintptr) *LayoutLine
 // rendered.
 func (x *Renderer) GetLayoutLine() *LayoutLine {
 	cret := xRendererGetLayoutLine(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
-var xRendererGetMatrix func(uintptr) *Matrix
+var xRendererGetMatrix func(uintptr) uintptr
 
 // Gets the transformation matrix that will be applied when
 // rendering.
@@ -655,7 +661,10 @@ var xRendererGetMatrix func(uintptr) *Matrix
 // See [method@Pango.Renderer.set_matrix].
 func (x *Renderer) GetMatrix() *Matrix {
 	cret := xRendererGetMatrix(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
 var xRendererPartChanged func(uintptr, RenderPart)

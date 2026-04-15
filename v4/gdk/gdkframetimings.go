@@ -112,12 +112,15 @@ func (x *FrameTimings) GetRefreshInterval() int64 {
 	return cret
 }
 
-var xFrameTimingsRef func(uintptr) *FrameTimings
+var xFrameTimingsRef func(uintptr) uintptr
 
 // Increases the reference count of @timings.
 func (x *FrameTimings) Ref() *FrameTimings {
 	cret := xFrameTimingsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FrameTimings)(unsafe.Pointer(cret))
 }
 
 var xFrameTimingsUnref func(uintptr)

@@ -2,6 +2,8 @@
 package pango
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -25,7 +27,7 @@ func MarkupParserFinish(ContextVar *glib.MarkupParseContext, AttrListVar **AttrL
 	return cret, cerr
 }
 
-var xMarkupParserNew func(uint32) *glib.MarkupParseContext
+var xMarkupParserNew func(uint32) uintptr
 
 // Incrementally parses marked-up text to create a plain-text string
 // and an attribute list.
@@ -51,7 +53,10 @@ var xMarkupParserNew func(uint32) *glib.MarkupParseContext
 // the [func@Pango.parse_markup] API is recommended instead.
 func MarkupParserNew(AccelMarkerVar uint32) *glib.MarkupParseContext {
 	cret := xMarkupParserNew(AccelMarkerVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.MarkupParseContext)(unsafe.Pointer(cret))
 }
 
 var xParseMarkup func(string, int32, uint32, **AttrList, *string, *uint32, **glib.Error) bool

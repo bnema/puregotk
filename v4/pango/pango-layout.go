@@ -48,12 +48,15 @@ func (x *LayoutIter) AtLastLine() bool {
 	return cret
 }
 
-var xLayoutIterCopy func(uintptr) *LayoutIter
+var xLayoutIterCopy func(uintptr) uintptr
 
 // Copies a `PangoLayoutIter`.
 func (x *LayoutIter) Copy() *LayoutIter {
 	cret := xLayoutIterCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutIter)(unsafe.Pointer(cret))
 }
 
 var xLayoutIterFree func(uintptr)
@@ -132,7 +135,7 @@ func (x *LayoutIter) GetLayoutExtents(InkRectVar *Rectangle, LogicalRectVar *Rec
 	xLayoutIterGetLayoutExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutIterGetLine func(uintptr) *LayoutLine
+var xLayoutIterGetLine func(uintptr) uintptr
 
 // Gets the current line.
 //
@@ -141,7 +144,10 @@ var xLayoutIterGetLine func(uintptr) *LayoutLine
 // glyph widths, etc.).
 func (x *LayoutIter) GetLine() *LayoutLine {
 	cret := xLayoutIterGetLine(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
 var xLayoutIterGetLineExtents func(uintptr, *Rectangle, *Rectangle)
@@ -156,7 +162,7 @@ func (x *LayoutIter) GetLineExtents(InkRectVar *Rectangle, LogicalRectVar *Recta
 	xLayoutIterGetLineExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutIterGetLineReadonly func(uintptr) *LayoutLine
+var xLayoutIterGetLineReadonly func(uintptr) uintptr
 
 // Gets the current line for read-only access.
 //
@@ -165,7 +171,10 @@ var xLayoutIterGetLineReadonly func(uintptr) *LayoutLine
 // (glyphs, glyph widths, etc.).
 func (x *LayoutIter) GetLineReadonly() *LayoutLine {
 	cret := xLayoutIterGetLineReadonly(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
 var xLayoutIterGetLineYrange func(uintptr, *int32, *int32)
@@ -185,7 +194,7 @@ func (x *LayoutIter) GetLineYrange(Y0Var *int32, Y1Var *int32) {
 	xLayoutIterGetLineYrange(x.GoPointer(), Y0Var, Y1Var)
 }
 
-var xLayoutIterGetRun func(uintptr) *LayoutRun
+var xLayoutIterGetRun func(uintptr) uintptr
 
 // Gets the current run.
 //
@@ -198,7 +207,10 @@ var xLayoutIterGetRun func(uintptr) *LayoutRun
 // plan to modify the contents of the run (glyphs, glyph widths, etc.).
 func (x *LayoutIter) GetRun() *LayoutRun {
 	cret := xLayoutIterGetRun(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutRun)(unsafe.Pointer(cret))
 }
 
 var xLayoutIterGetRunBaseline func(uintptr) int32
@@ -224,7 +236,7 @@ func (x *LayoutIter) GetRunExtents(InkRectVar *Rectangle, LogicalRectVar *Rectan
 	xLayoutIterGetRunExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutIterGetRunReadonly func(uintptr) *LayoutRun
+var xLayoutIterGetRunReadonly func(uintptr) uintptr
 
 // Gets the current run for read-only access.
 //
@@ -238,7 +250,10 @@ var xLayoutIterGetRunReadonly func(uintptr) *LayoutRun
 // glyph widths, etc.).
 func (x *LayoutIter) GetRunReadonly() *LayoutRun {
 	cret := xLayoutIterGetRunReadonly(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutRun)(unsafe.Pointer(cret))
 }
 
 var xLayoutIterNextChar func(uintptr) bool
@@ -400,12 +415,15 @@ func (x *LayoutLine) IsParagraphStartFn() bool {
 	return cret
 }
 
-var xLayoutLineRef func(uintptr) *LayoutLine
+var xLayoutLineRef func(uintptr) uintptr
 
 // Increase the reference count of a `PangoLayoutLine` by one.
 func (x *LayoutLine) Ref() *LayoutLine {
 	cret := xLayoutLineRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
 var xLayoutLineUnref func(uintptr)
@@ -695,12 +713,15 @@ func (x *Layout) GetAlignment() Alignment {
 	return cret
 }
 
-var xLayoutGetAttributes func(uintptr) *AttrList
+var xLayoutGetAttributes func(uintptr) uintptr
 
 // Gets the attribute list for the layout, if any.
 func (x *Layout) GetAttributes() *AttrList {
 	cret := xLayoutGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AttrList)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetAutoDir func(uintptr) bool
@@ -841,12 +862,15 @@ func (x *Layout) GetExtents(InkRectVar *Rectangle, LogicalRectVar *Rectangle) {
 	xLayoutGetExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutGetFontDescription func(uintptr) *FontDescription
+var xLayoutGetFontDescription func(uintptr) uintptr
 
 // Gets the font description for the layout, if any.
 func (x *Layout) GetFontDescription() *FontDescription {
 	cret := xLayoutGetFontDescription(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetHeight func(uintptr) int32
@@ -869,12 +893,15 @@ func (x *Layout) GetIndent() int32 {
 	return cret
 }
 
-var xLayoutGetIter func(uintptr) *LayoutIter
+var xLayoutGetIter func(uintptr) uintptr
 
 // Returns an iterator to iterate over the visual extents of the layout.
 func (x *Layout) GetIter() *LayoutIter {
 	cret := xLayoutGetIter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutIter)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetJustify func(uintptr) bool
@@ -895,7 +922,7 @@ func (x *Layout) GetJustifyLastLine() bool {
 	return cret
 }
 
-var xLayoutGetLine func(uintptr, int32) *LayoutLine
+var xLayoutGetLine func(uintptr, int32) uintptr
 
 // Retrieves a particular line from a `PangoLayout`.
 //
@@ -903,7 +930,10 @@ var xLayoutGetLine func(uintptr, int32) *LayoutLine
 // plan to modify the contents of the line (glyphs, glyph widths, etc.).
 func (x *Layout) GetLine(LineVar int32) *LayoutLine {
 	cret := xLayoutGetLine(x.GoPointer(), LineVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetLineCount func(uintptr) int32
@@ -914,7 +944,7 @@ func (x *Layout) GetLineCount() int32 {
 	return cret
 }
 
-var xLayoutGetLineReadonly func(uintptr, int32) *LayoutLine
+var xLayoutGetLineReadonly func(uintptr, int32) uintptr
 
 // Retrieves a particular line from a `PangoLayout`.
 //
@@ -923,7 +953,10 @@ var xLayoutGetLineReadonly func(uintptr, int32) *LayoutLine
 // (glyphs, glyph widths, etc.).
 func (x *Layout) GetLineReadonly(LineVar int32) *LayoutLine {
 	cret := xLayoutGetLineReadonly(x.GoPointer(), LineVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetLineSpacing func(uintptr) float32
@@ -936,7 +969,7 @@ func (x *Layout) GetLineSpacing() float32 {
 	return cret
 }
 
-var xLayoutGetLines func(uintptr) *glib.SList
+var xLayoutGetLines func(uintptr) uintptr
 
 // Returns the lines of the @layout as a list.
 //
@@ -944,10 +977,13 @@ var xLayoutGetLines func(uintptr) *glib.SList
 // plan to modify the contents of the lines (glyphs, glyph widths, etc.).
 func (x *Layout) GetLines() *glib.SList {
 	cret := xLayoutGetLines(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xLayoutGetLinesReadonly func(uintptr) *glib.SList
+var xLayoutGetLinesReadonly func(uintptr) uintptr
 
 // Returns the lines of the @layout as a list.
 //
@@ -956,7 +992,10 @@ var xLayoutGetLinesReadonly func(uintptr) *glib.SList
 // (glyphs, glyph widths, etc.).
 func (x *Layout) GetLinesReadonly() *glib.SList {
 	cret := xLayoutGetLinesReadonly(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetLogAttrs func(uintptr, *uintptr, *int32)
@@ -1056,7 +1095,7 @@ func (x *Layout) GetSpacing() int32 {
 	return cret
 }
 
-var xLayoutGetTabs func(uintptr) *TabArray
+var xLayoutGetTabs func(uintptr) uintptr
 
 // Gets the current `PangoTabArray` used by this layout.
 //
@@ -1066,7 +1105,10 @@ var xLayoutGetTabs func(uintptr) *TabArray
 // The return value should be freed with [method@Pango.TabArray.free].
 func (x *Layout) GetTabs() *TabArray {
 	cret := xLayoutGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TabArray)(unsafe.Pointer(cret))
 }
 
 var xLayoutGetText func(uintptr) string
@@ -1179,7 +1221,7 @@ func (x *Layout) MoveCursorVisually(StrongVar bool, OldIndexVar int32, OldTraili
 	xLayoutMoveCursorVisually(x.GoPointer(), StrongVar, OldIndexVar, OldTrailingVar, DirectionVar, NewIndexVar, NewTrailingVar)
 }
 
-var xLayoutSerialize func(uintptr, LayoutSerializeFlags) *glib.Bytes
+var xLayoutSerialize func(uintptr, LayoutSerializeFlags) uintptr
 
 // Serializes the @layout for later deserialization via [func@Pango.Layout.deserialize].
 //
@@ -1191,7 +1233,10 @@ var xLayoutSerialize func(uintptr, LayoutSerializeFlags) *glib.Bytes
 // The format is not meant as a permanent storage format.
 func (x *Layout) Serialize(FlagsVar LayoutSerializeFlags) *glib.Bytes {
 	cret := xLayoutSerialize(x.GoPointer(), FlagsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xLayoutSetAlignment func(uintptr, Alignment)

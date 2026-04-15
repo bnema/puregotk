@@ -109,28 +109,37 @@ func EnumCompleteTypeInfo(GEnumTypeVar types.GType, InfoVar *TypeInfo, ConstValu
 	xEnumCompleteTypeInfo(GEnumTypeVar, InfoVar, ConstValuesVar)
 }
 
-var xEnumGetValue func(*EnumClass, int32) *EnumValue
+var xEnumGetValue func(*EnumClass, int32) uintptr
 
 // Returns the #GEnumValue for a value.
 func EnumGetValue(EnumClassVar *EnumClass, ValueVar int32) *EnumValue {
 	cret := xEnumGetValue(EnumClassVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
-var xEnumGetValueByName func(*EnumClass, string) *EnumValue
+var xEnumGetValueByName func(*EnumClass, string) uintptr
 
 // Looks up a #GEnumValue by name.
 func EnumGetValueByName(EnumClassVar *EnumClass, NameVar string) *EnumValue {
 	cret := xEnumGetValueByName(EnumClassVar, NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
-var xEnumGetValueByNick func(*EnumClass, string) *EnumValue
+var xEnumGetValueByNick func(*EnumClass, string) uintptr
 
 // Looks up a #GEnumValue by nickname.
 func EnumGetValueByNick(EnumClassVar *EnumClass, NickVar string) *EnumValue {
 	cret := xEnumGetValueByNick(EnumClassVar, NickVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EnumValue)(unsafe.Pointer(cret))
 }
 
 var xEnumRegisterStatic func(string, []EnumValue) types.GType
@@ -165,28 +174,37 @@ func FlagsCompleteTypeInfo(GFlagsTypeVar types.GType, InfoVar *TypeInfo, ConstVa
 	xFlagsCompleteTypeInfo(GFlagsTypeVar, InfoVar, ConstValuesVar)
 }
 
-var xFlagsGetFirstValue func(*FlagsClass, uint32) *FlagsValue
+var xFlagsGetFirstValue func(*FlagsClass, uint32) uintptr
 
 // Returns the first #GFlagsValue which is set in @value.
 func FlagsGetFirstValue(FlagsClassVar *FlagsClass, ValueVar uint32) *FlagsValue {
 	cret := xFlagsGetFirstValue(FlagsClassVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
-var xFlagsGetValueByName func(*FlagsClass, string) *FlagsValue
+var xFlagsGetValueByName func(*FlagsClass, string) uintptr
 
 // Looks up a #GFlagsValue by name.
 func FlagsGetValueByName(FlagsClassVar *FlagsClass, NameVar string) *FlagsValue {
 	cret := xFlagsGetValueByName(FlagsClassVar, NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
-var xFlagsGetValueByNick func(*FlagsClass, string) *FlagsValue
+var xFlagsGetValueByNick func(*FlagsClass, string) uintptr
 
 // Looks up a #GFlagsValue by nickname.
 func FlagsGetValueByNick(FlagsClassVar *FlagsClass, NickVar string) *FlagsValue {
 	cret := xFlagsGetValueByNick(FlagsClassVar, NickVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FlagsValue)(unsafe.Pointer(cret))
 }
 
 var xFlagsRegisterStatic func(string, []FlagsValue) types.GType

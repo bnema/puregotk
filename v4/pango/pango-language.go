@@ -2,11 +2,13 @@
 package pango
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xLanguageFromString func(string) *Language
+var xLanguageFromString func(string) uintptr
 
 // Convert a language tag to a `PangoLanguage`.
 //
@@ -22,10 +24,13 @@ var xLanguageFromString func(string) *Language
 // `PangoLanguage` for the current locale of the process.
 func LanguageFromString(LanguageVar string) *Language {
 	cret := xLanguageFromString(LanguageVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
-var xLanguageGetDefault func() *Language
+var xLanguageGetDefault func() uintptr
 
 // Returns the `PangoLanguage` for the current locale of the process.
 //
@@ -60,7 +65,10 @@ var xLanguageGetDefault func() *Language
 // just call pango_language_from_string() yourself.
 func LanguageGetDefault() *Language {
 	cret := xLanguageGetDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Language)(unsafe.Pointer(cret))
 }
 
 var xLanguageGetPreferred func() uintptr

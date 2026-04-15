@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/pango"
@@ -49,7 +51,7 @@ func DisableSetlocale() {
 	xDisableSetlocale()
 }
 
-var xGetDefaultLanguage func() *pango.Language
+var xGetDefaultLanguage func() uintptr
 
 // Returns the `PangoLanguage` for the default language
 // currently in effect.
@@ -65,7 +67,10 @@ var xGetDefaultLanguage func() *pango.Language
 // See that function for details.
 func GetDefaultLanguage() *pango.Language {
 	cret := xGetDefaultLanguage()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
 var xGetLocaleDirection func() TextDirection

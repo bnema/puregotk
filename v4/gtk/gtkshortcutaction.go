@@ -164,7 +164,7 @@ var xNewCallbackAction func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAction(CallbackVar *ShortcutFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAction {
 	var cls *CallbackAction
 
-	cret := xNewCallbackAction(glib.NewCallback(CallbackVar), DataVar, glib.NewCallback(DestroyVar))
+	cret := xNewCallbackAction(glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 	if cret == 0 {
 		return nil

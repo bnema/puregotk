@@ -31,14 +31,17 @@ func (x *Triangle) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xTriangleAlloc func() *Triangle
+var xTriangleAlloc func() uintptr
 
 // Allocates a new #graphene_triangle_t.
 //
 // The contents of the returned structure are undefined.
 func TriangleAlloc() *Triangle {
 	cret := xTriangleAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Triangle)(unsafe.Pointer(cret))
 }
 
 var xTriangleContainsPoint func(uintptr, *Point3D) bool
@@ -160,30 +163,39 @@ func (x *Triangle) GetVertices(AVar *Vec3, BVar *Vec3, CVar *Vec3) {
 	xTriangleGetVertices(x.GoPointer(), AVar, BVar, CVar)
 }
 
-var xTriangleInitFromFloat func(uintptr, [3]float32, [3]float32, [3]float32) *Triangle
+var xTriangleInitFromFloat func(uintptr, [3]float32, [3]float32, [3]float32) uintptr
 
 // Initializes a #graphene_triangle_t using the three given arrays
 // of floating point values, each representing the coordinates of
 // a point in 3D space.
 func (x *Triangle) InitFromFloat(AVar [3]float32, BVar [3]float32, CVar [3]float32) *Triangle {
 	cret := xTriangleInitFromFloat(x.GoPointer(), AVar, BVar, CVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Triangle)(unsafe.Pointer(cret))
 }
 
-var xTriangleInitFromPoint3d func(uintptr, *Point3D, *Point3D, *Point3D) *Triangle
+var xTriangleInitFromPoint3d func(uintptr, *Point3D, *Point3D, *Point3D) uintptr
 
 // Initializes a #graphene_triangle_t using the three given 3D points.
 func (x *Triangle) InitFromPoint3d(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Triangle {
 	cret := xTriangleInitFromPoint3d(x.GoPointer(), AVar, BVar, CVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Triangle)(unsafe.Pointer(cret))
 }
 
-var xTriangleInitFromVec3 func(uintptr, *Vec3, *Vec3, *Vec3) *Triangle
+var xTriangleInitFromVec3 func(uintptr, *Vec3, *Vec3, *Vec3) uintptr
 
 // Initializes a #graphene_triangle_t using the three given vectors.
 func (x *Triangle) InitFromVec3(AVar *Vec3, BVar *Vec3, CVar *Vec3) *Triangle {
 	cret := xTriangleInitFromVec3(x.GoPointer(), AVar, BVar, CVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Triangle)(unsafe.Pointer(cret))
 }
 
 func init() {

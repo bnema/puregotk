@@ -110,7 +110,7 @@ var xSignalGroupConnectData func(uintptr, string, uintptr, uintptr, uintptr, Con
 //
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectData(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, NotifyVar *ClosureNotify, FlagsVar ConnectFlags) {
-	xSignalGroupConnectData(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallback(NotifyVar), FlagsVar)
+	xSignalGroupConnectData(x.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallbackNullable(NotifyVar), FlagsVar)
 }
 
 var xSignalGroupConnectObject func(uintptr, string, uintptr, uintptr, ConnectFlags)

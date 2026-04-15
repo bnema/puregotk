@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
@@ -125,13 +127,16 @@ func (x *Drop) GetDrag() *Drag {
 	return cls
 }
 
-var xDropGetFormats func(uintptr) *ContentFormats
+var xDropGetFormats func(uintptr) uintptr
 
 // Returns the `GdkContentFormats` that the drop offers the data
 // to be read in.
 func (x *Drop) GetFormats() *ContentFormats {
 	cret := xDropGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDropGetSurface func(uintptr) uintptr
@@ -198,7 +203,7 @@ func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, Cancella
 	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xDropReadValueFinish func(uintptr, uintptr, **glib.Error) *gobject.Value
+var xDropReadValueFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an async drop read.
 //
@@ -207,10 +212,13 @@ func (x *Drop) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, error
 	var cerr *glib.Error
 
 	cret := xDropReadValueFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret)), nil
 }
 
 var xDropStatus func(uintptr, DragAction, DragAction)

@@ -316,12 +316,15 @@ func (x *ListBox) GetSelectedRow() *ListBoxRow {
 	return cls
 }
 
-var xListBoxGetSelectedRows func(uintptr) *glib.List
+var xListBoxGetSelectedRows func(uintptr) uintptr
 
 // Creates a list of all selected children.
 func (x *ListBox) GetSelectedRows() *glib.List {
 	cret := xListBoxGetSelectedRows(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xListBoxGetSelectionMode func(uintptr) SelectionMode
@@ -486,7 +489,7 @@ var xListBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a filter function is incompatible with using a model
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
@@ -517,7 +520,7 @@ var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
 // row becomes a different row). It is also called for all rows when
 // [method@Gtk.ListBox.invalidate_headers] is called.
 func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallbackNullable(UpdateHeaderVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallbackNullable(UpdateHeaderVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xListBoxSetPlaceholder func(uintptr, uintptr)
@@ -558,7 +561,7 @@ var xListBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a sort function is incompatible with using a model
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xListBoxSetTabBehavior func(uintptr, ListTabBehavior)
@@ -1582,7 +1585,10 @@ func (x *ListBoxRow) GetActionName() string {
 // Gets the current target value of @actionable.
 func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be

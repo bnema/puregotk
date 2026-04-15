@@ -181,7 +181,7 @@ func (x *PrintJob) GetStatus() PrintStatus {
 	return cret
 }
 
-var xPrintJobGetSurface func(uintptr, **glib.Error) *cairo.Surface
+var xPrintJobGetSurface func(uintptr, **glib.Error) uintptr
 
 // Gets a cairo surface onto which the pages of
 // the print job should be rendered.
@@ -189,10 +189,13 @@ func (x *PrintJob) GetSurface() (*cairo.Surface, error) {
 	var cerr *glib.Error
 
 	cret := xPrintJobGetSurface(x.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*cairo.Surface)(unsafe.Pointer(cret)), nil
 }
 
 var xPrintJobGetTitle func(uintptr) string
@@ -217,7 +220,7 @@ var xPrintJobSend func(uintptr, uintptr, uintptr, uintptr)
 
 // Sends the print job off to the printer.
 func (x *PrintJob) Send(CallbackVar *PrintJobCompleteFunc, UserDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
-	xPrintJobSend(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DnotifyVar))
+	xPrintJobSend(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DnotifyVar))
 }
 
 var xPrintJobSetCollate func(uintptr, bool)

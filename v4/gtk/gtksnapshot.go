@@ -82,13 +82,16 @@ func (x *Snapshot) AppendBorder(OutlineVar *gsk.RoundedRect, BorderWidthVar [4]f
 	xSnapshotAppendBorder(x.GoPointer(), OutlineVar, BorderWidthVar, BorderColorVar)
 }
 
-var xSnapshotAppendCairo func(uintptr, *graphene.Rect) *cairo.Context
+var xSnapshotAppendCairo func(uintptr, *graphene.Rect) uintptr
 
 // Creates a new [class@Gsk.CairoNode] and appends it to the current
 // render node of @snapshot, without changing the current node.
 func (x *Snapshot) AppendCairo(BoundsVar *graphene.Rect) *cairo.Context {
 	cret := xSnapshotAppendCairo(x.GoPointer(), BoundsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 var xSnapshotAppendColor func(uintptr, *gdk.RGBA, *graphene.Rect)

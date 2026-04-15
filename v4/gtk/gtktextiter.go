@@ -341,7 +341,7 @@ func (x *TextIter) Compare(RhsVar *TextIter) int32 {
 	return cret
 }
 
-var xTextIterCopy func(uintptr) *TextIter
+var xTextIterCopy func(uintptr) uintptr
 
 // Creates a dynamically-allocated copy of an iterator.
 //
@@ -352,7 +352,10 @@ var xTextIterCopy func(uintptr) *TextIter
 // The function is used by language bindings.
 func (x *TextIter) Copy() *TextIter {
 	cret := xTextIterCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TextIter)(unsafe.Pointer(cret))
 }
 
 var xTextIterEditable func(uintptr, bool) bool
@@ -812,7 +815,7 @@ func (x *TextIter) GetChildAnchor() *TextChildAnchor {
 	return cls
 }
 
-var xTextIterGetLanguage func(uintptr) *pango.Language
+var xTextIterGetLanguage func(uintptr) uintptr
 
 // Returns the language in effect at @iter.
 //
@@ -820,7 +823,10 @@ var xTextIterGetLanguage func(uintptr) *pango.Language
 // value is identical to that of [func@Gtk.get_default_language].
 func (x *TextIter) GetLanguage() *pango.Language {
 	cret := xTextIterGetLanguage(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
 var xTextIterGetLine func(uintptr) int32
@@ -858,7 +864,7 @@ func (x *TextIter) GetLineOffset() int32 {
 	return cret
 }
 
-var xTextIterGetMarks func(uintptr) *glib.SList
+var xTextIterGetMarks func(uintptr) uintptr
 
 // Returns a list of all `GtkTextMark` at this location.
 //
@@ -869,7 +875,10 @@ var xTextIterGetMarks func(uintptr) *glib.SList
 // The returned list is not in any meaningful order.
 func (x *TextIter) GetMarks() *glib.SList {
 	cret := xTextIterGetMarks(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xTextIterGetOffset func(uintptr) int32
@@ -921,7 +930,7 @@ func (x *TextIter) GetSlice(EndVar *TextIter) string {
 	return cret
 }
 
-var xTextIterGetTags func(uintptr) *glib.SList
+var xTextIterGetTags func(uintptr) uintptr
 
 // Returns a list of tags that apply to @iter, in ascending order of
 // priority.
@@ -932,7 +941,10 @@ var xTextIterGetTags func(uintptr) *glib.SList
 // but you have to free the list itself.
 func (x *TextIter) GetTags() *glib.SList {
 	cret := xTextIterGetTags(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xTextIterGetText func(uintptr, *TextIter) string
@@ -949,7 +961,7 @@ func (x *TextIter) GetText(EndVar *TextIter) string {
 	return cret
 }
 
-var xTextIterGetToggledTags func(uintptr, bool) *glib.SList
+var xTextIterGetToggledTags func(uintptr, bool) uintptr
 
 // Returns a list of `GtkTextTag` that are toggled on or off at this
 // point.
@@ -961,7 +973,10 @@ var xTextIterGetToggledTags func(uintptr, bool) *glib.SList
 // does not have the tag applied to it.
 func (x *TextIter) GetToggledTags(ToggledOnVar bool) *glib.SList {
 	cret := xTextIterGetToggledTags(x.GoPointer(), ToggledOnVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xTextIterGetVisibleLineIndex func(uintptr) int32

@@ -32,14 +32,17 @@ func (x *Euler) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xEulerAlloc func() *Euler
+var xEulerAlloc func() uintptr
 
 // Allocates a new #graphene_euler_t.
 //
 // The contents of the returned structure are undefined.
 func EulerAlloc() *Euler {
 	cret := xEulerAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
 var xEulerEqual func(uintptr, *Euler) bool
@@ -128,17 +131,20 @@ func (x *Euler) GetZ() float32 {
 	return cret
 }
 
-var xEulerInit func(uintptr, float32, float32, float32) *Euler
+var xEulerInit func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_euler_t using the given angles.
 //
 // The order of the rotations is %GRAPHENE_EULER_ORDER_DEFAULT.
 func (x *Euler) Init(XVar float32, YVar float32, ZVar float32) *Euler {
 	cret := xEulerInit(x.GoPointer(), XVar, YVar, ZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromEuler func(uintptr, *Euler) *Euler
+var xEulerInitFromEuler func(uintptr, *Euler) uintptr
 
 // Initializes a #graphene_euler_t using the angles and order of
 // another #graphene_euler_t.
@@ -147,10 +153,13 @@ var xEulerInitFromEuler func(uintptr, *Euler) *Euler
 // to calling graphene_euler_init() with all angles set to 0.
 func (x *Euler) InitFromEuler(SrcVar *Euler) *Euler {
 	cret := xEulerInitFromEuler(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) *Euler
+var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given rotation matrix.
 //
@@ -158,10 +167,13 @@ var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) *Euler
 // be initialized with all angles set to 0.
 func (x *Euler) InitFromMatrix(MVar *Matrix, OrderVar EulerOrder) *Euler {
 	cret := xEulerInitFromMatrix(x.GoPointer(), MVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) *Euler
+var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given normalized quaternion.
 //
@@ -169,19 +181,25 @@ var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) *Euler
 // be initialized with all angles set to 0.
 func (x *Euler) InitFromQuaternion(QVar *Quaternion, OrderVar EulerOrder) *Euler {
 	cret := xEulerInitFromQuaternion(x.GoPointer(), QVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromRadians func(uintptr, float32, float32, float32, EulerOrder) *Euler
+var xEulerInitFromRadians func(uintptr, float32, float32, float32, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the given angles
 // and order of rotation.
 func (x *Euler) InitFromRadians(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
 	cret := xEulerInitFromRadians(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) *Euler
+var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t using the angles contained in a
 // #graphene_vec3_t.
@@ -190,15 +208,21 @@ var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) *Euler
 // initialized with all angles set to 0.
 func (x *Euler) InitFromVec3(VVar *Vec3, OrderVar EulerOrder) *Euler {
 	cret := xEulerInitFromVec3(x.GoPointer(), VVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
-var xEulerInitWithOrder func(uintptr, float32, float32, float32, EulerOrder) *Euler
+var xEulerInitWithOrder func(uintptr, float32, float32, float32, EulerOrder) uintptr
 
 // Initializes a #graphene_euler_t with the given angles and @order.
 func (x *Euler) InitWithOrder(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
 	cret := xEulerInitWithOrder(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Euler)(unsafe.Pointer(cret))
 }
 
 var xEulerReorder func(uintptr, EulerOrder, *Euler)

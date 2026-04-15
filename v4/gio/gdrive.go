@@ -252,8 +252,12 @@ func (x *DriveIface) OverrideGetVolumes(cb func(Drive) *glib.List) {
 	if cb == nil {
 		x.xGetVolumes = 0
 	} else {
-		x.xGetVolumes = purego.NewCallback(func(DriveVarp uintptr) *glib.List {
-			return cb(&DriveBase{Ptr: DriveVarp})
+		x.xGetVolumes = purego.NewCallback(func(DriveVarp uintptr) uintptr {
+			ret := cb(&DriveBase{Ptr: DriveVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -264,10 +268,14 @@ func (x *DriveIface) GetGetVolumes() func(Drive) *glib.List {
 	if x.xGetVolumes == 0 {
 		return nil
 	}
-	var rawCallback func(DriveVarp uintptr) *glib.List
+	var rawCallback func(DriveVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetVolumes)
 	return func(DriveVar Drive) *glib.List {
-		return rawCallback(DriveVar.GoPointer())
+		rawRet := rawCallback(DriveVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -1131,7 +1139,10 @@ func (x *DriveBase) GetSymbolicIcon() *IconBase {
 // its elements have been unreffed with g_object_unref().
 func (x *DriveBase) GetVolumes() *glib.List {
 	cret := XGDriveGetVolumes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Checks if the @drive has media. Note that the OS may not be polling
@@ -1244,7 +1255,7 @@ var (
 	XGDriveGetSortKey               func(uintptr) string
 	XGDriveGetStartStopType         func(uintptr) DriveStartStopType
 	XGDriveGetSymbolicIcon          func(uintptr) uintptr
-	XGDriveGetVolumes               func(uintptr) *glib.List
+	XGDriveGetVolumes               func(uintptr) uintptr
 	XGDriveHasMedia                 func(uintptr) bool
 	XGDriveHasVolumes               func(uintptr) bool
 	XGDriveIsMediaCheckAutomatic    func(uintptr) bool

@@ -44,7 +44,7 @@ func ImageNewFromInternalPtr(ptr uintptr) *Image {
 	return cls
 }
 
-var xImageAsBytes func(uintptr) *glib.Bytes
+var xImageAsBytes func(uintptr) uintptr
 
 // Get the @image pixel data as an array of bytes.
 //
@@ -53,7 +53,10 @@ var xImageAsBytes func(uintptr) *glib.Bytes
 // the architecture.
 func (x *Image) AsBytes() *glib.Bytes {
 	cret := xImageAsBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xImageGetHeight func(uintptr) int32
@@ -167,7 +170,10 @@ func (x *Image) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *Image) Serialize() *glib.Variant {
 	cret := gio.XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

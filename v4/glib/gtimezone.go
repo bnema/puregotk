@@ -50,7 +50,7 @@ func (x *TimeZone) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTimeZone func(string) *TimeZone
+var xNewTimeZone func(string) uintptr
 
 // A version of g_time_zone_new_identifier() which returns the UTC time zone
 // if @identifier could not be parsed or loaded.
@@ -59,10 +59,13 @@ var xNewTimeZone func(string) *TimeZone
 // g_time_zone_new_identifier().
 func NewTimeZone(IdentifierVar string) *TimeZone {
 	cret := xNewTimeZone(IdentifierVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xNewTimeZoneIdentifier func(string) *TimeZone
+var xNewTimeZoneIdentifier func(string) uintptr
 
 // Creates a #GTimeZone corresponding to @identifier. If @identifier cannot be
 // parsed or loaded, %NULL is returned.
@@ -131,10 +134,13 @@ var xNewTimeZoneIdentifier func(string) *TimeZone
 // when you are done with it.
 func NewTimeZoneIdentifier(IdentifierVar string) *TimeZone {
 	cret := xNewTimeZoneIdentifier(IdentifierVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xNewTimeZoneLocal func() *TimeZone
+var xNewTimeZoneLocal func() uintptr
 
 // Creates a #GTimeZone corresponding to local time.  The local time
 // zone may change between invocations to this function; for example,
@@ -147,10 +153,13 @@ var xNewTimeZoneLocal func() *TimeZone
 // when you are done with it.
 func NewTimeZoneLocal() *TimeZone {
 	cret := xNewTimeZoneLocal()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xNewTimeZoneOffset func(int32) *TimeZone
+var xNewTimeZoneOffset func(int32) uintptr
 
 // Creates a #GTimeZone corresponding to the given constant offset from UTC,
 // in seconds.
@@ -164,10 +173,13 @@ var xNewTimeZoneOffset func(int32) *TimeZone
 // g_time_zone_new_identifier() directly.
 func NewTimeZoneOffset(SecondsVar int32) *TimeZone {
 	cret := xNewTimeZoneOffset(SecondsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xNewTimeZoneUtc func() *TimeZone
+var xNewTimeZoneUtc func() uintptr
 
 // Creates a #GTimeZone corresponding to UTC.
 //
@@ -178,7 +190,10 @@ var xNewTimeZoneUtc func() *TimeZone
 // when you are done with it.
 func NewTimeZoneUtc() *TimeZone {
 	cret := xNewTimeZoneUtc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
 var xTimeZoneAdjustTime func(uintptr, TimeType, int64) int32
@@ -279,12 +294,15 @@ func (x *TimeZone) IsDst(IntervalVar int32) bool {
 	return cret
 }
 
-var xTimeZoneRef func(uintptr) *TimeZone
+var xTimeZoneRef func(uintptr) uintptr
 
 // Increases the reference count on @tz.
 func (x *TimeZone) Ref() *TimeZone {
 	cret := xTimeZoneRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
 var xTimeZoneUnref func(uintptr)

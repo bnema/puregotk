@@ -1945,7 +1945,7 @@ func WindowGetToplevels() *gio.ListModelBase {
 	return cls
 }
 
-var xWindowListToplevels func() *glib.List
+var xWindowListToplevels func() uintptr
 
 // Returns the list of all existing toplevel windows.
 //
@@ -1956,7 +1956,10 @@ var xWindowListToplevels func() *glib.List
 // and then unref all the widgets afterwards.
 func WindowListToplevels() *glib.List {
 	cret := xWindowListToplevels()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWindowSetAutoStartupNotification func(bool)

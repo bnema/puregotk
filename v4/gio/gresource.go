@@ -42,7 +42,7 @@ func (x *StaticResource) Fini() {
 	xStaticResourceFini(x.GoPointer())
 }
 
-var xStaticResourceGetResource func(uintptr) *Resource
+var xStaticResourceGetResource func(uintptr) uintptr
 
 // Gets the [struct@Gio.Resource] that was registered by a call to
 // [method@Gio.StaticResource.init].
@@ -52,7 +52,10 @@ var xStaticResourceGetResource func(uintptr) *Resource
 // and is not typically used by other code.
 func (x *StaticResource) GetResource() *Resource {
 	cret := xStaticResourceGetResource(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Resource)(unsafe.Pointer(cret))
 }
 
 var xStaticResourceInit func(uintptr)
@@ -75,7 +78,7 @@ func ResourceErrorQuark() glib.Quark {
 	return cret
 }
 
-var xResourceLoad func(string, **glib.Error) *Resource
+var xResourceLoad func(string, **glib.Error) uintptr
 
 // Loads a binary resource bundle and creates a [struct@Gio.Resource]
 // representation of it, allowing you to query it for data.
@@ -91,10 +94,13 @@ func ResourceLoad(FilenameVar string) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xResourceLoad(FilenameVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Resource)(unsafe.Pointer(cret)), nil
 }
 
 var xResourcesEnumerateChildren func(string, ResourceLookupFlags, **glib.Error) []string
@@ -141,7 +147,7 @@ func ResourcesHasChildren(PathVar string) bool {
 	return cret
 }
 
-var xResourcesLookupData func(string, ResourceLookupFlags, **glib.Error) *glib.Bytes
+var xResourcesLookupData func(string, ResourceLookupFlags, **glib.Error) uintptr
 
 // Looks for a file at the specified @path in the set of
 // globally registered resources and returns a [struct@GLib.Bytes] that
@@ -161,10 +167,13 @@ func ResourcesLookupData(PathVar string, LookupFlagsVar ResourceLookupFlags) (*g
 	var cerr *glib.Error
 
 	cret := xResourcesLookupData(PathVar, LookupFlagsVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xResourcesOpenStream func(string, ResourceLookupFlags, **glib.Error) uintptr

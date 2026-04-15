@@ -181,10 +181,13 @@ func (x *ZlibDecompressor) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, erro
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Resets all internal state in the converter, making it behave

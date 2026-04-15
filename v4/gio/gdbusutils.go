@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -57,7 +59,7 @@ func DbusGenerateGuid() string {
 	return cret
 }
 
-var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) *glib.Variant
+var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) uintptr
 
 // Converts a #GValue to a #GVariant of the type indicated by the @type
 // parameter.
@@ -89,7 +91,10 @@ var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) *glib.Variant
 // #GVariant to a #GValue.
 func DbusGvalueToGvariant(GvalueVar *gobject.Value, TypeVar *glib.VariantType) *glib.Variant {
 	cret := xDbusGvalueToGvariant(GvalueVar, TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDbusGvariantToGvalue func(*glib.Variant, *gobject.Value)

@@ -86,12 +86,15 @@ func (x *PrintSetup) GetPrintSettings() *PrintSettings {
 	return cls
 }
 
-var xPrintSetupRef func(uintptr) *PrintSetup
+var xPrintSetupRef func(uintptr) uintptr
 
 // Increase the reference count of @setup.
 func (x *PrintSetup) Ref() *PrintSetup {
 	cret := xPrintSetupRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PrintSetup)(unsafe.Pointer(cret))
 }
 
 var xPrintSetupUnref func(uintptr)
@@ -339,7 +342,7 @@ func (x *PrintDialog) Setup(ParentVar *Window, CancellableVar *gio.Cancellable, 
 	xPrintDialogSetup(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xPrintDialogSetupFinish func(uintptr, uintptr, **glib.Error) *PrintSetup
+var xPrintDialogSetupFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.PrintDialog.setup] call.
 //
@@ -353,10 +356,13 @@ func (x *PrintDialog) SetupFinish(ResultVar gio.AsyncResult) (*PrintSetup, error
 	var cerr *glib.Error
 
 	cret := xPrintDialogSetupFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*PrintSetup)(unsafe.Pointer(cret)), nil
 }
 
 func (c *PrintDialog) GoPointer() uintptr {

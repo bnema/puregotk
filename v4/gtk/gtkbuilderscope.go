@@ -122,8 +122,12 @@ func (x *BuilderScopeInterface) OverrideCreateClosure(cb func(BuilderScope, *Bui
 	if cb == nil {
 		x.xCreateClosure = 0
 	} else {
-		x.xCreateClosure = purego.NewCallback(func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) *gobject.Closure {
-			return cb(&BuilderScopeBase{Ptr: SelfVarp}, BuilderNewFromInternalPtr(BuilderVarp), FunctionNameVarp, FlagsVarp, gobject.ObjectNewFromInternalPtr(ObjectVarp))
+		x.xCreateClosure = purego.NewCallback(func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) uintptr {
+			ret := cb(&BuilderScopeBase{Ptr: SelfVarp}, BuilderNewFromInternalPtr(BuilderVarp), FunctionNameVarp, FlagsVarp, gobject.ObjectNewFromInternalPtr(ObjectVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -139,10 +143,14 @@ func (x *BuilderScopeInterface) GetCreateClosure() func(BuilderScope, *Builder, 
 	if x.xCreateClosure == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) *gobject.Closure
+	var rawCallback func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateClosure)
 	return func(SelfVar BuilderScope, BuilderVar *Builder, FunctionNameVar string, FlagsVar BuilderClosureFlags, ObjectVar *gobject.Object) *gobject.Closure {
-		return rawCallback(SelfVar.GoPointer(), BuilderVar.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer())
+		rawRet := rawCallback(SelfVar.GoPointer(), BuilderVar.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*gobject.Closure)(unsafe.Pointer(rawRet))
 	}
 }
 

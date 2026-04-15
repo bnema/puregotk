@@ -237,7 +237,7 @@ var xDrawingAreaSetDrawFunc func(uintptr, uintptr, uintptr, uintptr)
 // If what you are drawing does change, call [method@Gtk.Widget.queue_draw]
 // on the drawing area. This will cause a redraw and will call @draw_func again.
 func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallbackNullable(DrawFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallbackNullable(DrawFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 func (c *DrawingArea) GoPointer() uintptr {

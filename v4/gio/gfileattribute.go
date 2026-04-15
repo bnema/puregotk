@@ -45,12 +45,15 @@ func (x *FileAttributeInfoList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewFileAttributeInfoList func() *FileAttributeInfoList
+var xNewFileAttributeInfoList func() uintptr
 
 // Creates a new file attribute info list.
 func NewFileAttributeInfoList() *FileAttributeInfoList {
 	cret := xNewFileAttributeInfoList()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeInfoList)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeInfoListAdd func(uintptr, string, FileAttributeType, FileAttributeInfoFlags)
@@ -61,28 +64,37 @@ func (x *FileAttributeInfoList) Add(NameVar string, TypeVar FileAttributeType, F
 	xFileAttributeInfoListAdd(x.GoPointer(), NameVar, TypeVar, FlagsVar)
 }
 
-var xFileAttributeInfoListDup func(uintptr) *FileAttributeInfoList
+var xFileAttributeInfoListDup func(uintptr) uintptr
 
 // Makes a duplicate of a file attribute info list.
 func (x *FileAttributeInfoList) Dup() *FileAttributeInfoList {
 	cret := xFileAttributeInfoListDup(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeInfoList)(unsafe.Pointer(cret))
 }
 
-var xFileAttributeInfoListLookup func(uintptr, string) *FileAttributeInfo
+var xFileAttributeInfoListLookup func(uintptr, string) uintptr
 
 // Gets the file attribute with the name @name from @list.
 func (x *FileAttributeInfoList) Lookup(NameVar string) *FileAttributeInfo {
 	cret := xFileAttributeInfoListLookup(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeInfo)(unsafe.Pointer(cret))
 }
 
-var xFileAttributeInfoListRef func(uintptr) *FileAttributeInfoList
+var xFileAttributeInfoListRef func(uintptr) uintptr
 
 // References a file attribute info list.
 func (x *FileAttributeInfoList) Ref() *FileAttributeInfoList {
 	cret := xFileAttributeInfoListRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FileAttributeInfoList)(unsafe.Pointer(cret))
 }
 
 var xFileAttributeInfoListUnref func(uintptr)

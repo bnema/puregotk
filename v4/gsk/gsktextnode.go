@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -47,7 +49,7 @@ func NewTextNode(FontVar *pango.Font, GlyphsVar *pango.GlyphString, ColorVar *gd
 	return cls
 }
 
-var xTextNodeGetColor func(uintptr) *gdk.RGBA
+var xTextNodeGetColor func(uintptr) uintptr
 
 // Retrieves the color used by the text @node.
 //
@@ -55,7 +57,10 @@ var xTextNodeGetColor func(uintptr) *gdk.RGBA
 // if the render node was created for a non-sRGB color.
 func (x *TextNode) GetColor() *gdk.RGBA {
 	cret := xTextNodeGetColor(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 var xTextNodeGetFont func(uintptr) uintptr
@@ -91,12 +96,15 @@ func (x *TextNode) GetNumGlyphs() uint32 {
 	return cret
 }
 
-var xTextNodeGetOffset func(uintptr) *graphene.Point
+var xTextNodeGetOffset func(uintptr) uintptr
 
 // Retrieves the offset applied to the text.
 func (x *TextNode) GetOffset() *graphene.Point {
 	cret := xTextNodeGetOffset(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 var xTextNodeHasColorGlyphs func(uintptr) bool

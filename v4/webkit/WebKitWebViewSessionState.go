@@ -26,15 +26,18 @@ func (x *WebViewSessionState) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewWebViewSessionState func(*glib.Bytes) *WebViewSessionState
+var xNewWebViewSessionState func(*glib.Bytes) uintptr
 
 // Creates a new #WebKitWebViewSessionState from serialized data.
 func NewWebViewSessionState(DataVar *glib.Bytes) *WebViewSessionState {
 	cret := xNewWebViewSessionState(DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*WebViewSessionState)(unsafe.Pointer(cret))
 }
 
-var xWebViewSessionStateRef func(uintptr) *WebViewSessionState
+var xWebViewSessionStateRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @state by one.
 //
@@ -42,15 +45,21 @@ var xWebViewSessionStateRef func(uintptr) *WebViewSessionState
 // function is MT-safe and may be called from any thread.
 func (x *WebViewSessionState) Ref() *WebViewSessionState {
 	cret := xWebViewSessionStateRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*WebViewSessionState)(unsafe.Pointer(cret))
 }
 
-var xWebViewSessionStateSerialize func(uintptr) *glib.Bytes
+var xWebViewSessionStateSerialize func(uintptr) uintptr
 
 // Serializes a #WebKitWebViewSessionState.
 func (x *WebViewSessionState) Serialize() *glib.Bytes {
 	cret := xWebViewSessionStateSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 var xWebViewSessionStateUnref func(uintptr)

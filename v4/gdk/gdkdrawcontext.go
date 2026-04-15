@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -95,7 +97,7 @@ func (x *DrawContext) GetDisplay() *Display {
 	return cls
 }
 
-var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
+var xDrawContextGetFrameRegion func(uintptr) uintptr
 
 // Retrieves the region that is currently being repainted.
 //
@@ -107,7 +109,10 @@ var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
 // and [method@Gdk.DrawContext.end_frame], %NULL will be returned.
 func (x *DrawContext) GetFrameRegion() *cairo.Region {
 	cret := xDrawContextGetFrameRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xDrawContextGetSurface func(uintptr) uintptr

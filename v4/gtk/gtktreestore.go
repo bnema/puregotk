@@ -583,7 +583,10 @@ func (x *TreeStore) GetNColumns() int32 {
 // This path should be freed with gtk_tree_path_free().
 func (x *TreeStore) GetPath(IterVar *TreeIter) *TreePath {
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 // Generates a string representation of the iter.

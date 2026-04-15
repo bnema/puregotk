@@ -115,13 +115,16 @@ func (x *Value) DupString() string {
 	return cret
 }
 
-var xValueDupVariant func(uintptr) *glib.Variant
+var xValueDupVariant func(uintptr) uintptr
 
 // Get the contents of a variant #GValue, increasing its refcount. The returned
 // #GVariant is never floating.
 func (x *Value) DupVariant() *glib.Variant {
 	cret := xValueDupVariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xValueFitsPointer func(uintptr) bool
@@ -315,15 +318,18 @@ func (x *Value) GetUlong() uint32 {
 	return cret
 }
 
-var xValueGetVariant func(uintptr) *glib.Variant
+var xValueGetVariant func(uintptr) uintptr
 
 // Get the contents of a variant #GValue.
 func (x *Value) GetVariant() *glib.Variant {
 	cret := xValueGetVariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xValueInit func(uintptr, types.GType) *Value
+var xValueInit func(uintptr, types.GType) uintptr
 
 // Initializes @value to store values of the given @type, and sets its value
 // to the initial value for @type.
@@ -342,7 +348,10 @@ var xValueInit func(uintptr, types.GType) *Value
 // ```
 func (x *Value) Init(GTypeVar types.GType) *Value {
 	cret := xValueInit(x.GoPointer(), GTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
 var xValueInitFromInstance func(uintptr, *TypeInstance)
@@ -373,14 +382,17 @@ func (x *Value) PeekPointer() uintptr {
 	return cret
 }
 
-var xValueReset func(uintptr) *Value
+var xValueReset func(uintptr) uintptr
 
 // Clears the current value in @value and resets it to the initial value
 // (as if the value had just been initialized using
 // [method@GObject.Value.init]).
 func (x *Value) Reset() *Value {
 	cret := xValueReset(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
 var xValueSetBoolean func(uintptr, bool)

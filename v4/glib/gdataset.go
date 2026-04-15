@@ -234,7 +234,7 @@ var xDatasetIdSetDataFull func(uintptr, Quark, uintptr, uintptr)
 // previous data with the same key is removed, and its destroy function
 // is called.
 func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar uintptr, DestroyFuncVar *DestroyNotify) {
-	xDatasetIdSetDataFull(DatasetLocationVar, KeyIdVar, DataVar, NewCallback(DestroyFuncVar))
+	xDatasetIdSetDataFull(DatasetLocationVar, KeyIdVar, DataVar, NewCallbackNullable(DestroyFuncVar))
 }
 
 func init() {

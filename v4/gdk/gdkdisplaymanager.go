@@ -132,12 +132,15 @@ func (x *DisplayManager) GetDefaultDisplay() *Display {
 	return cls
 }
 
-var xDisplayManagerListDisplays func(uintptr) *glib.SList
+var xDisplayManagerListDisplays func(uintptr) uintptr
 
 // List all currently open displays.
 func (x *DisplayManager) ListDisplays() *glib.SList {
 	cret := xDisplayManagerListDisplays(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xDisplayManagerOpenDisplay func(uintptr, string) uintptr

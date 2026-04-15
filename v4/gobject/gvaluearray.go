@@ -58,32 +58,41 @@ func (x *ValueArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewValueArray func(uint32) *ValueArray
+var xNewValueArray func(uint32) uintptr
 
 // Allocate and initialize a new #GValueArray, optionally preserve space
 // for @n_prealloced elements. New arrays always contain 0 elements,
 // regardless of the value of @n_prealloced.
 func NewValueArray(NPreallocedVar uint32) *ValueArray {
 	cret := xNewValueArray(NPreallocedVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayAppend func(uintptr, *Value) *ValueArray
+var xValueArrayAppend func(uintptr, *Value) uintptr
 
 // Insert a copy of @value as last element of @value_array. If @value is
 // %NULL, an uninitialized value is appended.
 func (x *ValueArray) Append(ValueVar *Value) *ValueArray {
 	cret := xValueArrayAppend(x.GoPointer(), ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayCopy func(uintptr) *ValueArray
+var xValueArrayCopy func(uintptr) uintptr
 
 // Construct an exact copy of a #GValueArray by duplicating all its
 // contents.
 func (x *ValueArray) Copy() *ValueArray {
 	cret := xValueArrayCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
 var xValueArrayFree func(uintptr)
@@ -93,41 +102,53 @@ func (x *ValueArray) Free() {
 	xValueArrayFree(x.GoPointer())
 }
 
-var xValueArrayGetNth func(uintptr, uint32) *Value
+var xValueArrayGetNth func(uintptr, uint32) uintptr
 
 // Return a pointer to the value at @index_ contained in @value_array.
 func (x *ValueArray) GetNth(IndexVar uint32) *Value {
 	cret := xValueArrayGetNth(x.GoPointer(), IndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Value)(unsafe.Pointer(cret))
 }
 
-var xValueArrayInsert func(uintptr, uint32, *Value) *ValueArray
+var xValueArrayInsert func(uintptr, uint32, *Value) uintptr
 
 // Insert a copy of @value at specified position into @value_array. If @value
 // is %NULL, an uninitialized value is inserted.
 func (x *ValueArray) Insert(IndexVar uint32, ValueVar *Value) *ValueArray {
 	cret := xValueArrayInsert(x.GoPointer(), IndexVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayPrepend func(uintptr, *Value) *ValueArray
+var xValueArrayPrepend func(uintptr, *Value) uintptr
 
 // Insert a copy of @value as first element of @value_array. If @value is
 // %NULL, an uninitialized value is prepended.
 func (x *ValueArray) Prepend(ValueVar *Value) *ValueArray {
 	cret := xValueArrayPrepend(x.GoPointer(), ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayRemove func(uintptr, uint32) *ValueArray
+var xValueArrayRemove func(uintptr, uint32) uintptr
 
 // Remove the value at position @index_ from @value_array.
 func (x *ValueArray) Remove(IndexVar uint32) *ValueArray {
 	cret := xValueArrayRemove(x.GoPointer(), IndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArraySort func(uintptr, uintptr) *ValueArray
+var xValueArraySort func(uintptr, uintptr) uintptr
 
 // Sort @value_array using @compare_func to compare the elements according to
 // the semantics of #GCompareFunc.
@@ -136,10 +157,13 @@ var xValueArraySort func(uintptr, uintptr) *ValueArray
 // C qsort() function.
 func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
 	cret := xValueArraySort(x.GoPointer(), glib.NewCallback(CompareFuncVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
+var xValueArraySortWithData func(uintptr, uintptr, uintptr) uintptr
 
 // Sort @value_array using @compare_func to compare the elements according
 // to the semantics of #GCompareDataFunc.
@@ -148,7 +172,10 @@ var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
 // C qsort() function.
 func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) *ValueArray {
 	cret := xValueArraySortWithData(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
 func init() {

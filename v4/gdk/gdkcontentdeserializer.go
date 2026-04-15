@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gio"
@@ -48,7 +50,7 @@ var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uin
 // use the last registered deserializer for a given mime type,
 // so applications can override the built-in deserializers.
 func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, DeserializeVar *ContentDeserializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallback(NotifyVar))
+	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 // Deserializes content received via inter-application data transfers.
@@ -159,12 +161,15 @@ func (x *ContentDeserializer) GetUserData() uintptr {
 	return cret
 }
 
-var xContentDeserializerGetValue func(uintptr) *gobject.Value
+var xContentDeserializerGetValue func(uintptr) uintptr
 
 // Gets the `GValue` to store the deserialized object in.
 func (x *ContentDeserializer) GetValue() *gobject.Value {
 	cret := xContentDeserializerGetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret))
 }
 
 var xContentDeserializerReturnError func(uintptr, *glib.Error)
@@ -187,7 +192,7 @@ var xContentDeserializerSetTaskData func(uintptr, uintptr, uintptr)
 
 // Associate data with the current deserialization operation.
 func (x *ContentDeserializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
-	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallback(NotifyVar))
+	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallbackNullable(NotifyVar))
 }
 
 func (c *ContentDeserializer) GoPointer() uintptr {

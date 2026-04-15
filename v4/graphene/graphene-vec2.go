@@ -30,7 +30,7 @@ func (x *Vec2) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xVec2Alloc func() *Vec2
+var xVec2Alloc func() uintptr
 
 // Allocates a new #graphene_vec2_t structure.
 //
@@ -39,7 +39,10 @@ var xVec2Alloc func() *Vec2
 // Use graphene_vec2_init() to initialize the vector.
 func Vec2Alloc() *Vec2 {
 	cret := xVec2Alloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
 var xVec2Add func(uintptr, *Vec2, *Vec2)
@@ -98,30 +101,39 @@ func (x *Vec2) GetY() float32 {
 	return cret
 }
 
-var xVec2Init func(uintptr, float32, float32) *Vec2
+var xVec2Init func(uintptr, float32, float32) uintptr
 
 // Initializes a #graphene_vec2_t using the given values.
 //
 // This function can be called multiple times.
 func (x *Vec2) Init(XVar float32, YVar float32) *Vec2 {
 	cret := xVec2Init(x.GoPointer(), XVar, YVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
-var xVec2InitFromFloat func(uintptr, [2]float32) *Vec2
+var xVec2InitFromFloat func(uintptr, [2]float32) uintptr
 
 // Initializes @v with the contents of the given array.
 func (x *Vec2) InitFromFloat(SrcVar [2]float32) *Vec2 {
 	cret := xVec2InitFromFloat(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
-var xVec2InitFromVec2 func(uintptr, *Vec2) *Vec2
+var xVec2InitFromVec2 func(uintptr, *Vec2) uintptr
 
 // Copies the contents of @src into @v.
 func (x *Vec2) InitFromVec2(SrcVar *Vec2) *Vec2 {
 	cret := xVec2InitFromVec2(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
 var xVec2Interpolate func(uintptr, *Vec2, float64, *Vec2)
@@ -209,36 +221,48 @@ func (x *Vec2) ToFloat(DestVar *[2]float32) {
 	xVec2ToFloat(x.GoPointer(), DestVar)
 }
 
-var xVec2One func() *Vec2
+var xVec2One func() uintptr
 
 // Retrieves a constant vector with (1, 1) components.
 func Vec2One() *Vec2 {
 	cret := xVec2One()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
-var xVec2XAxis func() *Vec2
+var xVec2XAxis func() uintptr
 
 // Retrieves a constant vector with (1, 0) components.
 func Vec2XAxis() *Vec2 {
 	cret := xVec2XAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
-var xVec2YAxis func() *Vec2
+var xVec2YAxis func() uintptr
 
 // Retrieves a constant vector with (0, 1) components.
 func Vec2YAxis() *Vec2 {
 	cret := xVec2YAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
-var xVec2Zero func() *Vec2
+var xVec2Zero func() uintptr
 
 // Retrieves a constant vector with (0, 0) components.
 func Vec2Zero() *Vec2 {
 	cret := xVec2Zero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec2)(unsafe.Pointer(cret))
 }
 
 func init() {

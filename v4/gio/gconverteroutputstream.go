@@ -245,7 +245,10 @@ func (x *ConverterOutputStream) CanPoll() bool {
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Checks if @stream can be written.

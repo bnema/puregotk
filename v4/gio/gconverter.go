@@ -213,10 +213,13 @@ func (x *ConverterBase) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) 
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 // Resets all internal state in the converter, making it behave
@@ -228,7 +231,7 @@ func (x *ConverterBase) Reset() {
 
 var (
 	XGConverterConvert      func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
-	XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
+	XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) uintptr
 	XGConverterReset        func(uintptr)
 )
 

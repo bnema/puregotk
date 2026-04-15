@@ -20,7 +20,7 @@ type SettingsBindGetMapping func(*gobject.Value, *glib.Variant, uintptr) bool
 
 // The type for the function that is used to convert an object property
 // value to a [struct@GLib.Variant] for storing it in [class@Gio.Settings].
-type SettingsBindSetMapping func(*gobject.Value, *glib.VariantType, uintptr) *glib.Variant
+type SettingsBindSetMapping func(*gobject.Value, *glib.VariantType, uintptr) uintptr
 
 // The type of the function that is used to convert from a value stored
 // in a [class@Gio.Settings] to a value that is useful to the application.
@@ -788,7 +788,7 @@ var xSettingsBindWithMapping func(uintptr, string, uintptr, string, SettingsBind
 // If you bind the same property twice on the same object, the second
 // binding overrides the first one.
 func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, PropertyVar string, FlagsVar SettingsBindFlags, GetMappingVar *SettingsBindGetMapping, SetMappingVar *SettingsBindSetMapping, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallbackNullable(GetMappingVar), glib.NewCallbackNullable(SetMappingVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallbackNullable(GetMappingVar), glib.NewCallbackNullable(SetMappingVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xSettingsBindWithMappingClosures func(uintptr, string, uintptr, string, SettingsBindFlags, *gobject.Closure, *gobject.Closure)
@@ -915,7 +915,7 @@ func (x *Settings) GetChild(NameVar string) *Settings {
 	return cls
 }
 
-var xSettingsGetDefaultValue func(uintptr, string) *glib.Variant
+var xSettingsGetDefaultValue func(uintptr, string) uintptr
 
 // Gets the ‘default value’ of a key.
 //
@@ -940,7 +940,10 @@ var xSettingsGetDefaultValue func(uintptr, string) *glib.Variant
 // schema for @settings.
 func (x *Settings) GetDefaultValue(KeyVar string) *glib.Variant {
 	cret := xSettingsGetDefaultValue(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xSettingsGetDouble func(uintptr, string) float64
@@ -1066,12 +1069,15 @@ func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, User
 	return cret
 }
 
-var xSettingsGetRange func(uintptr, string) *glib.Variant
+var xSettingsGetRange func(uintptr, string) uintptr
 
 // Queries the range of a key.
 func (x *Settings) GetRange(KeyVar string) *glib.Variant {
 	cret := xSettingsGetRange(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xSettingsGetString func(uintptr, string) string
@@ -1126,7 +1132,7 @@ func (x *Settings) GetUint64(KeyVar string) uint64 {
 	return cret
 }
 
-var xSettingsGetUserValue func(uintptr, string) *glib.Variant
+var xSettingsGetUserValue func(uintptr, string) uintptr
 
 // Checks the ‘user value’ of a key, if there is one.
 //
@@ -1148,10 +1154,13 @@ var xSettingsGetUserValue func(uintptr, string) *glib.Variant
 // schema for @settings.
 func (x *Settings) GetUserValue(KeyVar string) *glib.Variant {
 	cret := xSettingsGetUserValue(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xSettingsGetValue func(uintptr, string) *glib.Variant
+var xSettingsGetValue func(uintptr, string) uintptr
 
 // Gets the value that is stored in @settings for @key.
 //
@@ -1159,7 +1168,10 @@ var xSettingsGetValue func(uintptr, string) *glib.Variant
 // schema for @settings.
 func (x *Settings) GetValue(KeyVar string) *glib.Variant {
 	cret := xSettingsGetValue(x.GoPointer(), KeyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xSettingsIsWritable func(uintptr, string) bool

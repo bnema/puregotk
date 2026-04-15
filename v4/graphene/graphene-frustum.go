@@ -30,14 +30,17 @@ func (x *Frustum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xFrustumAlloc func() *Frustum
+var xFrustumAlloc func() uintptr
 
 // Allocates a new #graphene_frustum_t structure.
 //
 // The contents of the returned structure are undefined.
 func FrustumAlloc() *Frustum {
 	cret := xFrustumAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
 var xFrustumContainsPoint func(uintptr, *Point3D) bool
@@ -71,30 +74,39 @@ func (x *Frustum) GetPlanes(PlanesVar *[6]Plane) {
 	xFrustumGetPlanes(x.GoPointer(), PlanesVar)
 }
 
-var xFrustumInit func(uintptr, *Plane, *Plane, *Plane, *Plane, *Plane, *Plane) *Frustum
+var xFrustumInit func(uintptr, *Plane, *Plane, *Plane, *Plane, *Plane, *Plane) uintptr
 
 // Initializes the given #graphene_frustum_t using the provided
 // clipping planes.
 func (x *Frustum) Init(P0Var *Plane, P1Var *Plane, P2Var *Plane, P3Var *Plane, P4Var *Plane, P5Var *Plane) *Frustum {
 	cret := xFrustumInit(x.GoPointer(), P0Var, P1Var, P2Var, P3Var, P4Var, P5Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
-var xFrustumInitFromFrustum func(uintptr, *Frustum) *Frustum
+var xFrustumInitFromFrustum func(uintptr, *Frustum) uintptr
 
 // Initializes the given #graphene_frustum_t using the clipping
 // planes of another #graphene_frustum_t.
 func (x *Frustum) InitFromFrustum(SrcVar *Frustum) *Frustum {
 	cret := xFrustumInitFromFrustum(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
-var xFrustumInitFromMatrix func(uintptr, *Matrix) *Frustum
+var xFrustumInitFromMatrix func(uintptr, *Matrix) uintptr
 
 // Initializes a #graphene_frustum_t using the given @matrix.
 func (x *Frustum) InitFromMatrix(MatrixVar *Matrix) *Frustum {
 	cret := xFrustumInitFromMatrix(x.GoPointer(), MatrixVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Frustum)(unsafe.Pointer(cret))
 }
 
 var xFrustumIntersectsBox func(uintptr, *Box) bool

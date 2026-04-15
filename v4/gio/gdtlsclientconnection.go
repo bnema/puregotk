@@ -65,7 +65,10 @@ func (x *DtlsClientConnectionBase) SetGoPointer(ptr uintptr) {
 // subject DN of the certificate authority.
 func (x *DtlsClientConnectionBase) GetAcceptedCas() *glib.List {
 	cret := XGDtlsClientConnectionGetAcceptedCas(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets @conn's expected server identity
@@ -113,7 +116,7 @@ func (x *DtlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFla
 }
 
 var (
-	XGDtlsClientConnectionGetAcceptedCas     func(uintptr) *glib.List
+	XGDtlsClientConnectionGetAcceptedCas     func(uintptr) uintptr
 	XGDtlsClientConnectionGetServerIdentity  func(uintptr) uintptr
 	XGDtlsClientConnectionGetValidationFlags func(uintptr) TlsCertificateFlags
 	XGDtlsClientConnectionSetServerIdentity  func(uintptr, uintptr)

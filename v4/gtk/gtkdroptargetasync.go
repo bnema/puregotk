@@ -94,14 +94,17 @@ func (x *DropTargetAsync) GetActions() gdk.DragAction {
 	return cret
 }
 
-var xDropTargetAsyncGetFormats func(uintptr) *gdk.ContentFormats
+var xDropTargetAsyncGetFormats func(uintptr) uintptr
 
 // Gets the data formats that this drop target accepts.
 //
 // If the result is %NULL, all formats are expected to be supported.
 func (x *DropTargetAsync) GetFormats() *gdk.ContentFormats {
 	cret := xDropTargetAsyncGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xDropTargetAsyncRejectDrop func(uintptr, uintptr)

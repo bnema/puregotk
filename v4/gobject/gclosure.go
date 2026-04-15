@@ -130,7 +130,7 @@ func (x *Closure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewClosureObject func(uint32, uintptr) *Closure
+var xNewClosureObject func(uint32, uintptr) uintptr
 
 // A variant of g_closure_new_simple() which stores @object in the
 // @data field of the closure and calls g_object_watch_closure() on
@@ -138,10 +138,13 @@ var xNewClosureObject func(uint32, uintptr) *Closure
 // when implementing new types of closures.
 func NewClosureObject(SizeofClosureVar uint32, ObjectVar *Object) *Closure {
 	cret := xNewClosureObject(SizeofClosureVar, ObjectVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xNewClosureSimple func(uint32, uintptr) *Closure
+var xNewClosureSimple func(uint32, uintptr) uintptr
 
 // Allocates a struct of the given size and initializes the initial
 // part as a #GClosure.
@@ -187,7 +190,10 @@ var xNewClosureSimple func(uint32, uintptr) *Closure
 // ]|
 func NewClosureSimple(SizeofClosureVar uint32, DataVar uintptr) *Closure {
 	cret := xNewClosureSimple(SizeofClosureVar, DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
@@ -200,7 +206,7 @@ var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
 // the closure being both invalidated and finalized, then the invalidate
 // notifiers will be run before the finalize notifiers.
 func (x *Closure) AddFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
@@ -211,7 +217,7 @@ var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
 // Invalidation notifiers are invoked before finalization notifiers,
 // in an unspecified order.
 func (x *Closure) AddInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
@@ -223,7 +229,7 @@ var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // duration of the callback. See g_object_watch_closure() for an
 // example of marshal guards.
 func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVar *ClosureNotify, PostMarshalDataVar uintptr, PostMarshalNotifyVar *ClosureNotify) {
-	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallback(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallback(PostMarshalNotifyVar))
+	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallbackNullable(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallbackNullable(PostMarshalNotifyVar))
 }
 
 var xClosureInvalidate func(uintptr)
@@ -254,13 +260,16 @@ func (x *Closure) Invoke(ReturnValueVar *Value, NParamValuesVar uint32, ParamVal
 	xClosureInvoke(x.GoPointer(), ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar)
 }
 
-var xClosureRef func(uintptr) *Closure
+var xClosureRef func(uintptr) uintptr
 
 // Increments the reference count on a closure to force it staying
 // alive while the caller holds a pointer to it.
 func (x *Closure) Ref() *Closure {
 	cret := xClosureRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 var xClosureRemoveFinalizeNotifier func(uintptr, uintptr, uintptr)
@@ -269,7 +278,7 @@ var xClosureRemoveFinalizeNotifier func(uintptr, uintptr, uintptr)
 //
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureRemoveInvalidateNotifier func(uintptr, uintptr, uintptr)
@@ -278,7 +287,7 @@ var xClosureRemoveInvalidateNotifier func(uintptr, uintptr, uintptr)
 //
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
-	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 }
 
 var xClosureSetMarshal func(uintptr, uintptr)
@@ -432,36 +441,45 @@ func CclosureMarshalGeneric(ClosureVar *Closure, ReturnGvalueVar *Value, NParamV
 	xCclosureMarshalGeneric(ClosureVar, ReturnGvalueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
 }
 
-var xCclosureNew func(uintptr, uintptr, uintptr) *Closure
+var xCclosureNew func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new closure which invokes @callback_func with @user_data as
 // the last parameter.
 //
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
-	cret := xCclosureNew(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
-	return cret
+	cret := xCclosureNew(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyDataVar))
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xCclosureNewSwap func(uintptr, uintptr, uintptr) *Closure
+var xCclosureNewSwap func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new closure which invokes @callback_func with @user_data as
 // the first parameter.
 //
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
-	cret := xCclosureNewSwap(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
-	return cret
+	cret := xCclosureNewSwap(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyDataVar))
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
-var xSignalTypeCclosureNew func(types.GType, uint32) *Closure
+var xSignalTypeCclosureNew func(types.GType, uint32) uintptr
 
 // Creates a new closure which invokes the function found at the offset
 // @struct_offset in the class structure of the interface or classed type
 // identified by @itype.
 func SignalTypeCclosureNew(ItypeVar types.GType, StructOffsetVar uint32) *Closure {
 	cret := xSignalTypeCclosureNew(ItypeVar, StructOffsetVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Closure)(unsafe.Pointer(cret))
 }
 
 func init() {

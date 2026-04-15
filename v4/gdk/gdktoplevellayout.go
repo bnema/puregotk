@@ -34,7 +34,7 @@ func (x *ToplevelLayout) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewToplevelLayout func() *ToplevelLayout
+var xNewToplevelLayout func() uintptr
 
 // Create a toplevel layout description.
 //
@@ -45,15 +45,21 @@ var xNewToplevelLayout func() *ToplevelLayout
 // ”device pixels” (see [method@Gdk.Surface.get_scale]).
 func NewToplevelLayout() *ToplevelLayout {
 	cret := xNewToplevelLayout()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ToplevelLayout)(unsafe.Pointer(cret))
 }
 
-var xToplevelLayoutCopy func(uintptr) *ToplevelLayout
+var xToplevelLayoutCopy func(uintptr) uintptr
 
 // Create a new `GdkToplevelLayout` and copy the contents of @layout into it.
 func (x *ToplevelLayout) Copy() *ToplevelLayout {
 	cret := xToplevelLayoutCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ToplevelLayout)(unsafe.Pointer(cret))
 }
 
 var xToplevelLayoutEqual func(uintptr, *ToplevelLayout) bool
@@ -111,12 +117,15 @@ func (x *ToplevelLayout) GetResizable() bool {
 	return cret
 }
 
-var xToplevelLayoutRef func(uintptr) *ToplevelLayout
+var xToplevelLayoutRef func(uintptr) uintptr
 
 // Increases the reference count of @layout.
 func (x *ToplevelLayout) Ref() *ToplevelLayout {
 	cret := xToplevelLayoutRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ToplevelLayout)(unsafe.Pointer(cret))
 }
 
 var xToplevelLayoutSetFullscreen func(uintptr, bool, uintptr)

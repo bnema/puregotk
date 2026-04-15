@@ -2,6 +2,8 @@
 package soup
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -18,17 +20,20 @@ const (
 	FORM_MIME_TYPE_URLENCODED string = "application/x-www-form-urlencoded"
 )
 
-var xFormDecode func(string) *glib.HashTable
+var xFormDecode func(string) uintptr
 
 // Decodes @form.
 //
 // which is an urlencoded dataset as defined in the HTML 4.01 spec.
 func FormDecode(EncodedFormVar string) *glib.HashTable {
 	cret := xFormDecode(EncodedFormVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
-var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes) *glib.HashTable
+var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes) uintptr
 
 // Decodes the "multipart/form-data" request in @multipart.
 //
@@ -51,7 +56,10 @@ var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes
 // and [method@Multipart.get_part].
 func FormDecodeMultipart(MultipartVar *Multipart, FileControlNameVar string, FilenameVar *string, ContentTypeVar *string, FileVar **glib.Bytes) *glib.HashTable {
 	cret := xFormDecodeMultipart(MultipartVar, FileControlNameVar, FilenameVar, ContentTypeVar, FileVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
 var xFormEncode func(string, ...interface{}) string

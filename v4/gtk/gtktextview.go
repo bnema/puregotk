@@ -1080,7 +1080,7 @@ func (x *TextView) GetRtlContext() *pango.Context {
 	return cls
 }
 
-var xTextViewGetTabs func(uintptr) *pango.TabArray
+var xTextViewGetTabs func(uintptr) uintptr
 
 // Gets the default tabs for @text_view.
 //
@@ -1089,7 +1089,10 @@ var xTextViewGetTabs func(uintptr) *pango.TabArray
 // return value with [method@Pango.TabArray.free].
 func (x *TextView) GetTabs() *pango.TabArray {
 	cret := xTextViewGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xTextViewGetTopMargin func(uintptr) int32

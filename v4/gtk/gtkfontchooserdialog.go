@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -367,7 +369,10 @@ func (x *FontChooserDialog) GetFont() string {
 // font descriptions.
 func (x *FontChooserDialog) GetFontDesc() *pango.FontDescription {
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 // Gets the `PangoFontFace` representing the selected font group
@@ -465,7 +470,7 @@ func (x *FontChooserDialog) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontChooserDialog) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Sets the currently-selected font.

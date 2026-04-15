@@ -37,7 +37,7 @@ func (x *Multipart) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMultipart func(string) *Multipart
+var xNewMultipart func(string) uintptr
 
 // Creates a new empty [struct@Multipart] with a randomly-generated
 // boundary string.
@@ -47,15 +47,21 @@ var xNewMultipart func(string) *Multipart
 // See also: [ctor@Message.new_from_multipart].
 func NewMultipart(MimeTypeVar string) *Multipart {
 	cret := xNewMultipart(MimeTypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Multipart)(unsafe.Pointer(cret))
 }
 
-var xNewMultipartFromMessage func(*MessageHeaders, *glib.Bytes) *Multipart
+var xNewMultipartFromMessage func(*MessageHeaders, *glib.Bytes) uintptr
 
 // Parses @headers and @body to form a new [struct@Multipart]
 func NewMultipartFromMessage(HeadersVar *MessageHeaders, BodyVar *glib.Bytes) *Multipart {
 	cret := xNewMultipartFromMessage(HeadersVar, BodyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Multipart)(unsafe.Pointer(cret))
 }
 
 var xMultipartAppendFormFile func(uintptr, string, string, string, *glib.Bytes)

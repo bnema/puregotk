@@ -32,14 +32,17 @@ func (x *Ray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xRayAlloc func() *Ray
+var xRayAlloc func() uintptr
 
 // Allocates a new #graphene_ray_t structure.
 //
 // The contents of the returned structure are undefined.
 func RayAlloc() *Ray {
 	cret := xRayAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Ray)(unsafe.Pointer(cret))
 }
 
 var xRayEqual func(uintptr, *Ray) bool
@@ -111,30 +114,39 @@ func (x *Ray) GetPositionAt(TVar float32, PositionVar *Point3D) {
 	xRayGetPositionAt(x.GoPointer(), TVar, PositionVar)
 }
 
-var xRayInit func(uintptr, *Point3D, *Vec3) *Ray
+var xRayInit func(uintptr, *Point3D, *Vec3) uintptr
 
 // Initializes the given #graphene_ray_t using the given @origin
 // and @direction values.
 func (x *Ray) Init(OriginVar *Point3D, DirectionVar *Vec3) *Ray {
 	cret := xRayInit(x.GoPointer(), OriginVar, DirectionVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Ray)(unsafe.Pointer(cret))
 }
 
-var xRayInitFromRay func(uintptr, *Ray) *Ray
+var xRayInitFromRay func(uintptr, *Ray) uintptr
 
 // Initializes the given #graphene_ray_t using the origin and direction
 // values of another #graphene_ray_t.
 func (x *Ray) InitFromRay(SrcVar *Ray) *Ray {
 	cret := xRayInitFromRay(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Ray)(unsafe.Pointer(cret))
 }
 
-var xRayInitFromVec3 func(uintptr, *Vec3, *Vec3) *Ray
+var xRayInitFromVec3 func(uintptr, *Vec3, *Vec3) uintptr
 
 // Initializes the given #graphene_ray_t using the given vectors.
 func (x *Ray) InitFromVec3(OriginVar *Vec3, DirectionVar *Vec3) *Ray {
 	cret := xRayInitFromVec3(x.GoPointer(), OriginVar, DirectionVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Ray)(unsafe.Pointer(cret))
 }
 
 var xRayIntersectBox func(uintptr, *Box, *float32) RayIntersectionKind

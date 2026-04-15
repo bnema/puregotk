@@ -30,14 +30,17 @@ func (x *Quad) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xQuadAlloc func() *Quad
+var xQuadAlloc func() uintptr
 
 // Allocates a new #graphene_quad_t instance.
 //
 // The contents of the returned instance are undefined.
 func QuadAlloc() *Quad {
 	cret := xQuadAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quad)(unsafe.Pointer(cret))
 }
 
 var xQuadBounds func(uintptr, *Rect)
@@ -62,37 +65,49 @@ func (x *Quad) Free() {
 	xQuadFree(x.GoPointer())
 }
 
-var xQuadGetPoint func(uintptr, uint32) *Point
+var xQuadGetPoint func(uintptr, uint32) uintptr
 
 // Retrieves the point of a #graphene_quad_t at the given index.
 func (x *Quad) GetPoint(IndexVar uint32) *Point {
 	cret := xQuadGetPoint(x.GoPointer(), IndexVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
-var xQuadInit func(uintptr, *Point, *Point, *Point, *Point) *Quad
+var xQuadInit func(uintptr, *Point, *Point, *Point, *Point) uintptr
 
 // Initializes a #graphene_quad_t with the given points.
 func (x *Quad) Init(P1Var *Point, P2Var *Point, P3Var *Point, P4Var *Point) *Quad {
 	cret := xQuadInit(x.GoPointer(), P1Var, P2Var, P3Var, P4Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quad)(unsafe.Pointer(cret))
 }
 
-var xQuadInitFromPoints func(uintptr, [4]Point) *Quad
+var xQuadInitFromPoints func(uintptr, [4]Point) uintptr
 
 // Initializes a #graphene_quad_t using an array of points.
 func (x *Quad) InitFromPoints(PointsVar [4]Point) *Quad {
 	cret := xQuadInitFromPoints(x.GoPointer(), PointsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quad)(unsafe.Pointer(cret))
 }
 
-var xQuadInitFromRect func(uintptr, *Rect) *Quad
+var xQuadInitFromRect func(uintptr, *Rect) uintptr
 
 // Initializes a #graphene_quad_t using the four corners of the
 // given #graphene_rect_t.
 func (x *Quad) InitFromRect(RVar *Rect) *Quad {
 	cret := xQuadInitFromRect(x.GoPointer(), RVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quad)(unsafe.Pointer(cret))
 }
 
 func init() {

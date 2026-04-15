@@ -437,13 +437,16 @@ func (x *PrintSettings) GetPaperHeight(UnitVar Unit) float64 {
 	return cret
 }
 
-var xPrintSettingsGetPaperSize func(uintptr) *PaperSize
+var xPrintSettingsGetPaperSize func(uintptr) uintptr
 
 // Gets the value of %GTK_PRINT_SETTINGS_PAPER_FORMAT,
 // converted to a `GtkPaperSize`.
 func (x *PrintSettings) GetPaperSize() *PaperSize {
 	cret := xPrintSettingsGetPaperSize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
 var xPrintSettingsGetPaperWidth func(uintptr, Unit) float64
@@ -813,12 +816,15 @@ func (x *PrintSettings) ToFile(FileNameVar string) (bool, error) {
 	return cret, cerr
 }
 
-var xPrintSettingsToGvariant func(uintptr) *glib.Variant
+var xPrintSettingsToGvariant func(uintptr) uintptr
 
 // Serialize print settings to an a{sv} variant.
 func (x *PrintSettings) ToGvariant() *glib.Variant {
 	cret := xPrintSettingsToGvariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xPrintSettingsToKeyFile func(uintptr, *glib.KeyFile, string)

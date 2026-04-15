@@ -82,12 +82,15 @@ func (x *EmblemedIcon) ClearEmblems() {
 	xEmblemedIconClearEmblems(x.GoPointer())
 }
 
-var xEmblemedIconGetEmblems func(uintptr) *glib.List
+var xEmblemedIconGetEmblems func(uintptr) uintptr
 
 // Gets the list of emblems for the @icon.
 func (x *EmblemedIcon) GetEmblems() *glib.List {
 	cret := xEmblemedIconGetEmblems(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xEmblemedIconGetIcon func(uintptr) uintptr
@@ -137,7 +140,10 @@ func (x *EmblemedIcon) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *EmblemedIcon) Serialize() *glib.Variant {
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

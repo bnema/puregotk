@@ -158,8 +158,12 @@ func (x *IconIface) OverrideSerialize(cb func(Icon) *glib.Variant) {
 	if cb == nil {
 		x.xSerialize = 0
 	} else {
-		x.xSerialize = purego.NewCallback(func(IconVarp uintptr) *glib.Variant {
-			return cb(&IconBase{Ptr: IconVarp})
+		x.xSerialize = purego.NewCallback(func(IconVarp uintptr) uintptr {
+			ret := cb(&IconBase{Ptr: IconVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -170,10 +174,14 @@ func (x *IconIface) GetSerialize() func(Icon) *glib.Variant {
 	if x.xSerialize == 0 {
 		return nil
 	}
-	var rawCallback func(IconVarp uintptr) *glib.Variant
+	var rawCallback func(IconVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xSerialize)
 	return func(IconVar Icon) *glib.Variant {
-		return rawCallback(IconVar.GoPointer())
+		rawRet := rawCallback(IconVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -256,7 +264,10 @@ func (x *IconBase) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *IconBase) Serialize() *glib.Variant {
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for
@@ -283,7 +294,7 @@ func (x *IconBase) ToString() string {
 var (
 	XGIconEqual     func(uintptr, uintptr) bool
 	XGIconHash      func(uintptr) uint32
-	XGIconSerialize func(uintptr) *glib.Variant
+	XGIconSerialize func(uintptr) uintptr
 	XGIconToString  func(uintptr) string
 )
 

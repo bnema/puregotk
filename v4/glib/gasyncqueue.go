@@ -166,13 +166,16 @@ func (x *AsyncQueue) PushUnlocked(DataVar uintptr) {
 	xAsyncQueuePushUnlocked(x.GoPointer(), DataVar)
 }
 
-var xAsyncQueueRef func(uintptr) *AsyncQueue
+var xAsyncQueueRef func(uintptr) uintptr
 
 // Increases the reference count of the asynchronous @queue by 1.
 // You do not need to hold the lock to call this function.
 func (x *AsyncQueue) Ref() *AsyncQueue {
 	cret := xAsyncQueueRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AsyncQueue)(unsafe.Pointer(cret))
 }
 
 var xAsyncQueueRefUnlocked func(uintptr)
@@ -352,22 +355,28 @@ func (x *AsyncQueue) UnrefAndUnlock() {
 	xAsyncQueueUnrefAndUnlock(x.GoPointer())
 }
 
-var xAsyncQueueNew func() *AsyncQueue
+var xAsyncQueueNew func() uintptr
 
 // Creates a new asynchronous queue.
 func AsyncQueueNew() *AsyncQueue {
 	cret := xAsyncQueueNew()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AsyncQueue)(unsafe.Pointer(cret))
 }
 
-var xAsyncQueueNewFull func(uintptr) *AsyncQueue
+var xAsyncQueueNewFull func(uintptr) uintptr
 
 // Creates a new asynchronous queue and sets up a destroy notify
 // function that is used to free any remaining queue items when
 // the queue is destroyed after the final unref.
 func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
 	cret := xAsyncQueueNewFull(NewCallbackNullable(ItemFreeFuncVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*AsyncQueue)(unsafe.Pointer(cret))
 }
 
 func init() {

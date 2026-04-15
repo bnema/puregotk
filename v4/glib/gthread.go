@@ -805,7 +805,7 @@ var xStaticPrivateSet func(uintptr, uintptr, uintptr)
 //
 // @notify is used quite differently from @destructor in g_private_new().
 func (x *StaticPrivate) Set(DataVar uintptr, NotifyVar *DestroyNotify) {
-	xStaticPrivateSet(x.GoPointer(), DataVar, NewCallback(NotifyVar))
+	xStaticPrivateSet(x.GoPointer(), DataVar, NewCallbackNullable(NotifyVar))
 }
 
 // The [struct@StaticRWLock] struct represents a read-write lock. A read-write
@@ -1138,7 +1138,7 @@ func (x *Thread) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewThread func(string, uintptr, uintptr) *Thread
+var xNewThread func(string, uintptr, uintptr) uintptr
 
 // This function creates a new thread. The new thread starts by invoking
 // @func with the argument data. The thread will run until @func returns
@@ -1169,10 +1169,13 @@ var xNewThread func(string, uintptr, uintptr) *Thread
 // POSIX and all threads inherit their parent thread's priority.
 func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 	cret := xNewThread(NameVar, NewCallback(FuncVar), DataVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Thread)(unsafe.Pointer(cret))
 }
 
-var xThreadTryNew func(string, uintptr, uintptr, **Error) *Thread
+var xThreadTryNew func(string, uintptr, uintptr, **Error) uintptr
 
 // This function is the same as g_thread_new() except that
 // it allows for the possibility of failure.
@@ -1183,10 +1186,13 @@ func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread
 	var cerr *Error
 
 	cret := xThreadTryNew(NameVar, NewCallback(FuncVar), DataVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Thread)(unsafe.Pointer(cret)), nil
 }
 
 var xThreadGetName func(uintptr) string
@@ -1222,12 +1228,15 @@ func (x *Thread) Join() uintptr {
 	return cret
 }
 
-var xThreadRef func(uintptr) *Thread
+var xThreadRef func(uintptr) uintptr
 
 // Increase the reference count on @thread.
 func (x *Thread) Ref() *Thread {
 	cret := xThreadRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Thread)(unsafe.Pointer(cret))
 }
 
 var xThreadSetPriority func(uintptr, ThreadPriority)
@@ -1432,8 +1441,12 @@ func (x *ThreadFunctions) OverrideCondNew(cb func() *Cond) {
 	if cb == nil {
 		x.xCondNew = 0
 	} else {
-		x.xCondNew = purego.NewCallback(func() *Cond {
-			return cb()
+		x.xCondNew = purego.NewCallback(func() uintptr {
+			ret := cb()
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -1444,10 +1457,14 @@ func (x *ThreadFunctions) GetCondNew() func() *Cond {
 	if x.xCondNew == 0 {
 		return nil
 	}
-	var rawCallback func() *Cond
+	var rawCallback func() uintptr
 	purego.RegisterFunc(&rawCallback, x.xCondNew)
 	return func() *Cond {
-		return rawCallback()
+		rawRet := rawCallback()
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Cond)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -1582,8 +1599,12 @@ func (x *ThreadFunctions) OverridePrivateNew(cb func(*DestroyNotify) *Private) {
 	if cb == nil {
 		x.xPrivateNew = 0
 	} else {
-		x.xPrivateNew = purego.NewCallback(func(DestructorVarp uintptr) *Private {
-			return cb((*DestroyNotify)(unsafe.Pointer(DestructorVarp)))
+		x.xPrivateNew = purego.NewCallback(func(DestructorVarp uintptr) uintptr {
+			ret := cb((*DestroyNotify)(unsafe.Pointer(DestructorVarp)))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -1594,10 +1615,14 @@ func (x *ThreadFunctions) GetPrivateNew() func(*DestroyNotify) *Private {
 	if x.xPrivateNew == 0 {
 		return nil
 	}
-	var rawCallback func(DestructorVarp uintptr) *Private
+	var rawCallback func(DestructorVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xPrivateNew)
 	return func(DestructorVar *DestroyNotify) *Private {
-		return rawCallback(NewCallback(DestructorVar))
+		rawRet := rawCallback(NewCallback(DestructorVar))
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Private)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -1935,12 +1960,15 @@ const (
 	GThreadPriorityUrgentValue ThreadPriority = 3
 )
 
-var xCondNew func() *Cond
+var xCondNew func() uintptr
 
 // Allocates and initializes a new #GCond.
 func CondNew() *Cond {
 	cret := xCondNew()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Cond)(unsafe.Pointer(cret))
 }
 
 var xGetNumProcessors func() uint32
@@ -2055,15 +2083,18 @@ func OnceInitLeavePointer(LocationVar uintptr, ResultVar uintptr) {
 	xOnceInitLeavePointer(LocationVar, ResultVar)
 }
 
-var xPrivateNew func(uintptr) *Private
+var xPrivateNew func(uintptr) uintptr
 
 // Creates a new #GPrivate.
 func PrivateNew(NotifyVar *DestroyNotify) *Private {
-	cret := xPrivateNew(NewCallback(NotifyVar))
-	return cret
+	cret := xPrivateNew(NewCallbackNullable(NotifyVar))
+	if cret == 0 {
+		return nil
+	}
+	return (*Private)(unsafe.Pointer(cret))
 }
 
-var xThreadCreate func(uintptr, uintptr, bool, **Error) *Thread
+var xThreadCreate func(uintptr, uintptr, bool, **Error) uintptr
 
 // This function creates a new thread.
 //
@@ -2081,23 +2112,29 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 	var cerr *Error
 
 	cret := xThreadCreate(NewCallback(FuncVar), DataVar, JoinableVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Thread)(unsafe.Pointer(cret)), nil
 }
 
-var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority, **Error) *Thread
+var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority, **Error) uintptr
 
 // This function creates a new thread.
 func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
 	var cerr *Error
 
 	cret := xThreadCreateFull(NewCallback(FuncVar), DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*Thread)(unsafe.Pointer(cret)), nil
 }
 
 var xThreadExit func(uintptr)
@@ -2178,7 +2215,7 @@ func ThreadInitWithErrorcheckMutexes(VtableVar uintptr) {
 	xThreadInitWithErrorcheckMutexes(VtableVar)
 }
 
-var xThreadSelf func() *Thread
+var xThreadSelf func() uintptr
 
 // This function returns the #GThread corresponding to the
 // current thread. Note that this function does not increase
@@ -2191,7 +2228,10 @@ var xThreadSelf func() *Thread
 // as g_thread_join()) on these threads.
 func ThreadSelf() *Thread {
 	cret := xThreadSelf()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Thread)(unsafe.Pointer(cret))
 }
 
 var xThreadYield func()

@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
@@ -29,7 +31,7 @@ func CairoContextNewFromInternalPtr(ptr uintptr) *CairoContext {
 	return cls
 }
 
-var xCairoContextCairoCreate func(uintptr) *cairo.Context
+var xCairoContextCairoCreate func(uintptr) uintptr
 
 // Retrieves a Cairo context to be used to draw on the `GdkSurface`
 // of @context.
@@ -41,7 +43,10 @@ var xCairoContextCairoCreate func(uintptr) *cairo.Context
 // [method@Gdk.DrawContext.end_frame] is called.
 func (x *CairoContext) CairoCreate() *cairo.Context {
 	cret := xCairoContextCairoCreate(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Context)(unsafe.Pointer(cret))
 }
 
 func (c *CairoContext) GoPointer() uintptr {

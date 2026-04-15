@@ -122,12 +122,15 @@ func FixedLayoutChildNewFromInternalPtr(ptr uintptr) *FixedLayoutChild {
 	return cls
 }
 
-var xFixedLayoutChildGetTransform func(uintptr) *gsk.Transform
+var xFixedLayoutChildGetTransform func(uintptr) uintptr
 
 // Retrieves the transformation of the child.
 func (x *FixedLayoutChild) GetTransform() *gsk.Transform {
 	cret := xFixedLayoutChildGetTransform(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gsk.Transform)(unsafe.Pointer(cret))
 }
 
 var xFixedLayoutChildSetTransform func(uintptr, *gsk.Transform)

@@ -105,7 +105,7 @@ func (x *IOChannel) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewIOChannelFile func(string, string, **Error) *IOChannel
+var xNewIOChannelFile func(string, string, **Error) uintptr
 
 // Open a file @filename as a #GIOChannel using mode @mode. This
 // channel will be closed when the last reference to it is dropped,
@@ -116,13 +116,16 @@ func NewIOChannelFile(FilenameVar string, ModeVar string) (*IOChannel, error) {
 	var cerr *Error
 
 	cret := xNewIOChannelFile(FilenameVar, ModeVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*IOChannel)(unsafe.Pointer(cret)), nil
 }
 
-var xIOChannelUnixNew func(int32) *IOChannel
+var xIOChannelUnixNew func(int32) uintptr
 
 // Creates a new #GIOChannel given a file descriptor. On UNIX systems
 // this works for plain files, pipes, and sockets.
@@ -148,7 +151,10 @@ var xIOChannelUnixNew func(int32) *IOChannel
 // issued, and GLib assumes that it is the file descriptor you mean.
 func IOChannelUnixNew(FdVar int32) *IOChannel {
 	cret := xIOChannelUnixNew(FdVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOChannel)(unsafe.Pointer(cret))
 }
 
 var xIOChannelClose func(uintptr)
@@ -335,12 +341,15 @@ func (x *IOChannel) ReadUnichar(ThecharVar *uint32) (IOStatus, error) {
 	return cret, cerr
 }
 
-var xIOChannelRef func(uintptr) *IOChannel
+var xIOChannelRef func(uintptr) uintptr
 
 // Increments the reference count of a #GIOChannel.
 func (x *IOChannel) Ref() *IOChannel {
 	cret := xIOChannelRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*IOChannel)(unsafe.Pointer(cret))
 }
 
 var xIOChannelSeek func(uintptr, int64, SeekType) IOError
@@ -707,8 +716,12 @@ func (x *IOFuncs) OverrideIoCreateWatch(cb func(*IOChannel, IOCondition) *Source
 	if cb == nil {
 		x.xIoCreateWatch = 0
 	} else {
-		x.xIoCreateWatch = purego.NewCallback(func(ChannelVarp *IOChannel, ConditionVarp IOCondition) *Source {
-			return cb(ChannelVarp, ConditionVarp)
+		x.xIoCreateWatch = purego.NewCallback(func(ChannelVarp *IOChannel, ConditionVarp IOCondition) uintptr {
+			ret := cb(ChannelVarp, ConditionVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -721,10 +734,14 @@ func (x *IOFuncs) GetIoCreateWatch() func(*IOChannel, IOCondition) *Source {
 	if x.xIoCreateWatch == 0 {
 		return nil
 	}
-	var rawCallback func(ChannelVarp *IOChannel, ConditionVarp IOCondition) *Source
+	var rawCallback func(ChannelVarp *IOChannel, ConditionVarp IOCondition) uintptr
 	purego.RegisterFunc(&rawCallback, x.xIoCreateWatch)
 	return func(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
-		return rawCallback(ChannelVar, ConditionVar)
+		rawRet := rawCallback(ChannelVar, ConditionVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -990,7 +1007,7 @@ var xIoAddWatchFull func(*IOChannel, int32, IOCondition, uintptr, uintptr, uintp
 // and attaches it to the main loop context with g_source_attach().
 // You can do these steps manually if you need greater control.
 func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int32, ConditionVar IOCondition, FuncVar *IOFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint32 {
-	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, NewCallback(FuncVar), UserDataVar, NewCallback(NotifyVar))
+	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, NewCallback(FuncVar), UserDataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -1002,7 +1019,7 @@ func IoChannelErrorFromErrno(EnVar int32) IOChannelError {
 	return cret
 }
 
-var xIoCreateWatch func(*IOChannel, IOCondition) *Source
+var xIoCreateWatch func(*IOChannel, IOCondition) uintptr
 
 // Creates a #GSource that's dispatched when @condition is met for the
 // given @channel. For example, if condition is %G_IO_IN, the source will
@@ -1020,7 +1037,10 @@ var xIoCreateWatch func(*IOChannel, IOCondition) *Source
 // implementation and unavoidable.
 func IoCreateWatch(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
 	cret := xIoCreateWatch(ChannelVar, ConditionVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Source)(unsafe.Pointer(cret))
 }
 
 func init() {

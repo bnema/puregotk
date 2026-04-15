@@ -215,7 +215,10 @@ func (x *DBusObjectSkeleton) GetInterface(InterfaceNameVar string) *DBusInterfac
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectSkeleton) GetInterfaces() *glib.List {
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets the object path for @object.

@@ -177,7 +177,7 @@ func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, Font
 	return cret, cerr
 }
 
-var xFontDialogChooseFontFinish func(uintptr, uintptr, **glib.Error) *pango.FontDescription
+var xFontDialogChooseFontFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FontDialog.choose_font] call.
 //
@@ -187,10 +187,13 @@ func (x *FontDialog) ChooseFontFinish(ResultVar gio.AsyncResult) (*pango.FontDes
 	var cerr *glib.Error
 
 	cret := xFontDialogChooseFontFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret)), nil
 }
 
 var xFontDialogGetFilter func(uintptr) uintptr
@@ -229,12 +232,15 @@ func (x *FontDialog) GetFontMap() *pango.FontMap {
 	return cls
 }
 
-var xFontDialogGetLanguage func(uintptr) *pango.Language
+var xFontDialogGetLanguage func(uintptr) uintptr
 
 // Returns the language for which font features are applied.
 func (x *FontDialog) GetLanguage() *pango.Language {
 	cret := xFontDialogGetLanguage(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
 var xFontDialogGetModal func(uintptr) bool

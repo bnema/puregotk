@@ -29,7 +29,7 @@ func (x *MessageHeaders) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewMessageHeaders func(MessageHeadersType) *MessageHeaders
+var xNewMessageHeaders func(MessageHeadersType) uintptr
 
 // Creates a [struct@MessageHeaders].
 //
@@ -38,7 +38,10 @@ var xNewMessageHeaders func(MessageHeadersType) *MessageHeaders
 // headers.)
 func NewMessageHeaders(TypeVar MessageHeadersType) *MessageHeaders {
 	cret := xNewMessageHeaders(TypeVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MessageHeaders)(unsafe.Pointer(cret))
 }
 
 var xMessageHeadersAppend func(uintptr, string, string)
@@ -274,12 +277,15 @@ func (x *MessageHeaders) HeaderEquals(NameVar string, ValueVar string) bool {
 	return cret
 }
 
-var xMessageHeadersRef func(uintptr) *MessageHeaders
+var xMessageHeadersRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @hdrs by one.
 func (x *MessageHeaders) Ref() *MessageHeaders {
 	cret := xMessageHeadersRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*MessageHeaders)(unsafe.Pointer(cret))
 }
 
 var xMessageHeadersRemove func(uintptr, string)

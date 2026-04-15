@@ -2,13 +2,15 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/pango"
 )
 
-var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) *cairo.Region
+var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) uintptr
 
 // Obtains a clip region which contains the areas where the given ranges
 // of text would be drawn.
@@ -22,10 +24,13 @@ var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) *cairo.R
 // of text, such as when text is selected.
 func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int32, YOriginVar int32, IndexRangesVar int32, NRangesVar int32) *cairo.Region {
 	cret := xPangoLayoutGetClipRegion(LayoutVar.GoPointer(), XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
-var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32, int32) *cairo.Region
+var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32, int32) uintptr
 
 // Obtains a clip region which contains the areas where the given
 // ranges of text would be drawn.
@@ -44,7 +49,10 @@ var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32,
 // of text, such as when text is selected.
 func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int32, YOriginVar int32, IndexRangesVar []int32, NRangesVar int32) *cairo.Region {
 	cret := xPangoLayoutLineGetClipRegion(LineVar, XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 func init() {

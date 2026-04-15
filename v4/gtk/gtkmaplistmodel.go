@@ -86,7 +86,7 @@ var xNewMapListModel func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *MapListModel {
 	var cls *MapListModel
 
-	cret := xNewMapListModel(ModelVar.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	cret := xNewMapListModel(ModelVar.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -135,7 +135,7 @@ var xMapListModelSetMapFunc func(uintptr, uintptr, uintptr, uintptr)
 // of @self. It assumes that the caller knows what they are doing and the map
 // function returns items of the appropriate type.
 func (x *MapListModel) SetMapFunc(MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-	xMapListModelSetMapFunc(x.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xMapListModelSetMapFunc(x.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 var xMapListModelSetModel func(uintptr, uintptr)

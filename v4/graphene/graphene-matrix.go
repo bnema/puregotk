@@ -30,12 +30,15 @@ func (x *Matrix) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xMatrixAlloc func() *Matrix
+var xMatrixAlloc func() uintptr
 
 // Allocates a new #graphene_matrix_t.
 func MatrixAlloc() *Matrix {
 	cret := xMatrixAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
 var xMatrixDecompose func(uintptr, *Vec3, *Vec3, *Quaternion, *Vec3, *Vec4) bool
@@ -170,7 +173,7 @@ func (x *Matrix) GetZTranslation() float32 {
 	return cret
 }
 
-var xMatrixInitFrom2d func(uintptr, float64, float64, float64, float64, float64, float64) *Matrix
+var xMatrixInitFrom2d func(uintptr, float64, float64, float64, float64, float64, float64) uintptr
 
 // Initializes a #graphene_matrix_t from the values of an affine
 // transformation matrix.
@@ -189,55 +192,73 @@ var xMatrixInitFrom2d func(uintptr, float64, float64, float64, float64, float64,
 // from other libraries and a #graphene_matrix_t.
 func (x *Matrix) InitFrom2d(XxVar float64, YxVar float64, XyVar float64, YyVar float64, X0Var float64, Y0Var float64) *Matrix {
 	cret := xMatrixInitFrom2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, X0Var, Y0Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitFromFloat func(uintptr, [16]float32) *Matrix
+var xMatrixInitFromFloat func(uintptr, [16]float32) uintptr
 
 // Initializes a #graphene_matrix_t with the given array of floating
 // point values.
 func (x *Matrix) InitFromFloat(VVar [16]float32) *Matrix {
 	cret := xMatrixInitFromFloat(x.GoPointer(), VVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitFromMatrix func(uintptr, *Matrix) *Matrix
+var xMatrixInitFromMatrix func(uintptr, *Matrix) uintptr
 
 // Initializes a #graphene_matrix_t using the values of the
 // given matrix.
 func (x *Matrix) InitFromMatrix(SrcVar *Matrix) *Matrix {
 	cret := xMatrixInitFromMatrix(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitFromVec4 func(uintptr, *Vec4, *Vec4, *Vec4, *Vec4) *Matrix
+var xMatrixInitFromVec4 func(uintptr, *Vec4, *Vec4, *Vec4, *Vec4) uintptr
 
 // Initializes a #graphene_matrix_t with the given four row
 // vectors.
 func (x *Matrix) InitFromVec4(V0Var *Vec4, V1Var *Vec4, V2Var *Vec4, V3Var *Vec4) *Matrix {
 	cret := xMatrixInitFromVec4(x.GoPointer(), V0Var, V1Var, V2Var, V3Var)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitFrustum func(uintptr, float32, float32, float32, float32, float32, float32) *Matrix
+var xMatrixInitFrustum func(uintptr, float32, float32, float32, float32, float32, float32) uintptr
 
 // Initializes a #graphene_matrix_t compatible with #graphene_frustum_t.
 //
 // See also: graphene_frustum_init_from_matrix()
 func (x *Matrix) InitFrustum(LeftVar float32, RightVar float32, BottomVar float32, TopVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 	cret := xMatrixInitFrustum(x.GoPointer(), LeftVar, RightVar, BottomVar, TopVar, ZNearVar, ZFarVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitIdentity func(uintptr) *Matrix
+var xMatrixInitIdentity func(uintptr) uintptr
 
 // Initializes a #graphene_matrix_t with the identity matrix.
 func (x *Matrix) InitIdentity() *Matrix {
 	cret := xMatrixInitIdentity(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitLookAt func(uintptr, *Vec3, *Vec3, *Vec3) *Matrix
+var xMatrixInitLookAt func(uintptr, *Vec3, *Vec3, *Vec3) uintptr
 
 // Initializes a #graphene_matrix_t so that it positions the "camera"
 // at the given @eye coordinates towards an object at the @center
@@ -257,58 +278,79 @@ var xMatrixInitLookAt func(uintptr, *Vec3, *Vec3, *Vec3) *Matrix
 // coordinates.
 func (x *Matrix) InitLookAt(EyeVar *Vec3, CenterVar *Vec3, UpVar *Vec3) *Matrix {
 	cret := xMatrixInitLookAt(x.GoPointer(), EyeVar, CenterVar, UpVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitOrtho func(uintptr, float32, float32, float32, float32, float32, float32) *Matrix
+var xMatrixInitOrtho func(uintptr, float32, float32, float32, float32, float32, float32) uintptr
 
 // Initializes a #graphene_matrix_t with an orthographic projection.
 func (x *Matrix) InitOrtho(LeftVar float32, RightVar float32, TopVar float32, BottomVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 	cret := xMatrixInitOrtho(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar, ZNearVar, ZFarVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitPerspective func(uintptr, float32, float32, float32, float32) *Matrix
+var xMatrixInitPerspective func(uintptr, float32, float32, float32, float32) uintptr
 
 // Initializes a #graphene_matrix_t with a perspective projection.
 func (x *Matrix) InitPerspective(FovyVar float32, AspectVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 	cret := xMatrixInitPerspective(x.GoPointer(), FovyVar, AspectVar, ZNearVar, ZFarVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitRotate func(uintptr, float32, *Vec3) *Matrix
+var xMatrixInitRotate func(uintptr, float32, *Vec3) uintptr
 
 // Initializes @m to represent a rotation of @angle degrees on
 // the axis represented by the @axis vector.
 func (x *Matrix) InitRotate(AngleVar float32, AxisVar *Vec3) *Matrix {
 	cret := xMatrixInitRotate(x.GoPointer(), AngleVar, AxisVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitScale func(uintptr, float32, float32, float32) *Matrix
+var xMatrixInitScale func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_matrix_t with the given scaling factors.
 func (x *Matrix) InitScale(XVar float32, YVar float32, ZVar float32) *Matrix {
 	cret := xMatrixInitScale(x.GoPointer(), XVar, YVar, ZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitSkew func(uintptr, float32, float32) *Matrix
+var xMatrixInitSkew func(uintptr, float32, float32) uintptr
 
 // Initializes a #graphene_matrix_t with a skew transformation
 // with the given factors.
 func (x *Matrix) InitSkew(XSkewVar float32, YSkewVar float32) *Matrix {
 	cret := xMatrixInitSkew(x.GoPointer(), XSkewVar, YSkewVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
-var xMatrixInitTranslate func(uintptr, *Point3D) *Matrix
+var xMatrixInitTranslate func(uintptr, *Point3D) uintptr
 
 // Initializes a #graphene_matrix_t with a translation to the
 // given coordinates.
 func (x *Matrix) InitTranslate(PVar *Point3D) *Matrix {
 	cret := xMatrixInitTranslate(x.GoPointer(), PVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Matrix)(unsafe.Pointer(cret))
 }
 
 var xMatrixInterpolate func(uintptr, *Matrix, float64, *Matrix)

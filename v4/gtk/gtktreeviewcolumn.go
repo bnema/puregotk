@@ -479,7 +479,7 @@ var xTreeViewColumnSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uint
 // cell renderer as appropriate.  @func may be %NULL to remove an
 // older one.
 func (x *TreeViewColumn) SetCellDataFunc(CellRendererVar *CellRenderer, FuncVar *TreeCellDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xTreeViewColumnSetClickable func(uintptr, bool)
@@ -903,7 +903,10 @@ func (x *TreeViewColumn) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *TreeViewColumn) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Re-inserts @cell at @position.

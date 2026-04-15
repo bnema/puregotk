@@ -463,7 +463,7 @@ var xSimpleAsyncResultSetOpResGpointer func(uintptr, uintptr, uintptr)
 
 // Sets the operation result within the asynchronous result to a pointer.
 func (x *SimpleAsyncResult) SetOpResGpointer(OpResVar uintptr, DestroyOpResVar *glib.DestroyNotify) {
-	xSimpleAsyncResultSetOpResGpointer(x.GoPointer(), OpResVar, glib.NewCallback(DestroyOpResVar))
+	xSimpleAsyncResultSetOpResGpointer(x.GoPointer(), OpResVar, glib.NewCallbackNullable(DestroyOpResVar))
 }
 
 var xSimpleAsyncResultSetOpResGssize func(uintptr, int)

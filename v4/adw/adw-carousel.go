@@ -157,12 +157,15 @@ func (x *Carousel) GetRevealDuration() uint32 {
 	return cret
 }
 
-var xCarouselGetScrollParams func(uintptr) *SpringParams
+var xCarouselGetScrollParams func(uintptr) uintptr
 
 // Gets the scroll animation spring parameters for @self.
 func (x *Carousel) GetScrollParams() *SpringParams {
 	cret := xCarouselGetScrollParams(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xCarouselGetSpacing func(uintptr) uint32

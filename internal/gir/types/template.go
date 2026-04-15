@@ -51,7 +51,13 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	} else {
 		switch k {
 		case CallbackType:
-			if nullable {
+			// Destroy/notify callbacks are effectively optional even when GIR omits
+			// the nullable annotation.
+			lowerName := strings.ToLower(n)
+			isDestroyNotify := strings.Contains(lowerName, "destroy") ||
+				strings.Contains(lowerName, "notify") ||
+				strings.Contains(lowerName, "dnotify")
+			if nullable || isDestroyNotify {
 				c = fmt.Sprintf("%sNewCallbackNullable(%s)", glibNs, n)
 			} else {
 				c = fmt.Sprintf("%sNewCallback(%s)", glibNs, n)
@@ -316,6 +322,8 @@ type funcRetTemplate struct {
 	Value string
 	// Class indicates whether or not the return value is a class
 	Class bool
+	// Record indicates whether or not the return value is a record/boxed pointer type
+	Record bool
 	// RefSink indicates whether or not we should increase the reference count using obj.RefSink()
 	RefSink bool
 	// Throws indicates whether or not this function throws
@@ -392,6 +400,24 @@ func (fr *funcRetTemplate) Fmt(ngo bool) string {
 		after.WriteString("\n")
 		after.WriteString("cls.Ptr = cret\n")
 		val = "cls"
+	}
+	if fr.Record {
+		baseType := strings.TrimPrefix(fr.Value, "*")
+		if fr.Throws {
+			after.WriteString("if cerr != nil {\n")
+			after.WriteString("return nil, cerr\n")
+			after.WriteString("}\n")
+			after.WriteString("if cret == 0 {\n")
+			after.WriteString("return nil, nil\n")
+			after.WriteString("}\n")
+			after.WriteString(fmt.Sprintf("return (*%s)(unsafe.Pointer(cret)), nil\n", baseType))
+			return after.String()
+		}
+		after.WriteString("if cret == 0 {\n")
+		after.WriteString("return nil\n")
+		after.WriteString("}\n")
+		after.WriteString(fmt.Sprintf("return (*%s)(unsafe.Pointer(cret))\n", baseType))
+		return after.String()
 	}
 	if fr.Throws {
 		after.WriteString("if cerr == nil {\n")

@@ -362,7 +362,10 @@ func (x *SingleSelection) SectionsChanged(PositionVar uint32, NItemsVar uint32) 
 // interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 func (x *SingleSelection) GetSelection() *Bitset {
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Gets the set of selected items in a range.
@@ -374,7 +377,10 @@ func (x *SingleSelection) GetSelection() *Bitset {
 // signal.
 func (x *SingleSelection) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *Bitset {
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Bitset)(unsafe.Pointer(cret))
 }
 
 // Checks if the given item is selected.

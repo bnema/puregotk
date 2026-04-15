@@ -66,12 +66,15 @@ func (x *HashTableIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xHashTableIterGetHashTable func(uintptr) *HashTable
+var xHashTableIterGetHashTable func(uintptr) uintptr
 
 // Returns the #GHashTable associated with @iter.
 func (x *HashTableIter) GetHashTable() *HashTable {
 	cret := xHashTableIterGetHashTable(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*HashTable)(unsafe.Pointer(cret))
 }
 
 var xHashTableIterInit func(uintptr, *HashTable)
@@ -393,7 +396,7 @@ func HashTableLookupExtended(HashTableVar *HashTable, LookupKeyVar uintptr, Orig
 	return cret
 }
 
-var xHashTableNewSimilar func(*HashTable) *HashTable
+var xHashTableNewSimilar func(*HashTable) uintptr
 
 // Creates a new #GHashTable like g_hash_table_new_full() with a reference
 // count of 1.
@@ -405,16 +408,22 @@ var xHashTableNewSimilar func(*HashTable) *HashTable
 // or values from @other_hash_table.
 func HashTableNewSimilar(OtherHashTableVar *HashTable) *HashTable {
 	cret := xHashTableNewSimilar(OtherHashTableVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*HashTable)(unsafe.Pointer(cret))
 }
 
-var xHashTableRef func(*HashTable) *HashTable
+var xHashTableRef func(*HashTable) uintptr
 
 // Atomically increments the reference count of @hash_table by one.
 // This function is MT-safe and may be called from any thread.
 func HashTableRef(HashTableVar *HashTable) *HashTable {
 	cret := xHashTableRef(HashTableVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*HashTable)(unsafe.Pointer(cret))
 }
 
 var xHashTableRemove func(*HashTable, uintptr) bool

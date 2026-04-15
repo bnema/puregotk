@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -67,21 +69,27 @@ func (x *StrokeNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xStrokeNodeGetPath func(uintptr) *Path
+var xStrokeNodeGetPath func(uintptr) uintptr
 
 // Retrieves the path that will be stroked with the contents of
 // the @node.
 func (x *StrokeNode) GetPath() *Path {
 	cret := xStrokeNodeGetPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
-var xStrokeNodeGetStroke func(uintptr) *Stroke
+var xStrokeNodeGetStroke func(uintptr) uintptr
 
 // Retrieves the stroke attributes used in this @node.
 func (x *StrokeNode) GetStroke() *Stroke {
 	cret := xStrokeNodeGetStroke(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Stroke)(unsafe.Pointer(cret))
 }
 
 func (c *StrokeNode) GoPointer() uintptr {

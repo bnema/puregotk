@@ -298,7 +298,7 @@ func NewLabelWithMnemonic(StrVar string) *Label {
 	return cls
 }
 
-var xLabelGetAttributes func(uintptr) *pango.AttrList
+var xLabelGetAttributes func(uintptr) uintptr
 
 // Gets the label's attribute list.
 //
@@ -310,7 +310,10 @@ var xLabelGetAttributes func(uintptr) *pango.AttrList
 // `pango_layout_get_attributes (gtk_label_get_layout (self))`.
 func (x *Label) GetAttributes() *pango.AttrList {
 	cret := xLabelGetAttributes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.AttrList)(unsafe.Pointer(cret))
 }
 
 var xLabelGetCurrentUri func(uintptr) string
@@ -502,14 +505,17 @@ func (x *Label) GetSingleLineMode() bool {
 	return cret
 }
 
-var xLabelGetTabs func(uintptr) *pango.TabArray
+var xLabelGetTabs func(uintptr) uintptr
 
 // Gets the tab stops for the label.
 //
 // The returned array will be `NULL` if “standard” (8-space) tabs are used.
 func (x *Label) GetTabs() *pango.TabArray {
 	cret := xLabelGetTabs(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.TabArray)(unsafe.Pointer(cret))
 }
 
 var xLabelGetText func(uintptr) string

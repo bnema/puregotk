@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -145,7 +147,10 @@ func (x *DBusActionGroup) GetActionEnabled(ActionNameVar string) bool {
 // with the same name but a different parameter type.
 func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of the named action within @action_group.
@@ -158,7 +163,10 @@ func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.Var
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of the
@@ -181,7 +189,10 @@ func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant {
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of the named action within
@@ -202,7 +213,10 @@ func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant
 // with the same name but a different state type.
 func (x *DBusActionGroup) GetActionStateType(ActionNameVar string) *glib.VariantType {
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Checks if the named action exists within @action_group.

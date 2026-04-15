@@ -163,12 +163,15 @@ func (x *ContextMenuItem) GetGaction() *gio.ActionBase {
 	return cls
 }
 
-var xContextMenuItemGetGactionTarget func(uintptr) *glib.Variant
+var xContextMenuItemGetGactionTarget func(uintptr) uintptr
 
 // Gets the target #GVariant associated with @item.
 func (x *ContextMenuItem) GetGactionTarget() *glib.Variant {
 	cret := xContextMenuItemGetGactionTarget(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xContextMenuItemGetStockAction func(uintptr) ContextMenuAction

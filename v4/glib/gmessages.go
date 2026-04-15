@@ -410,7 +410,7 @@ var xLogSetHandlerFull func(string, LogLevelFlags, uintptr, uintptr, uintptr) ui
 // The `log_domain` parameter can be set to `NULL` or an empty string to use the default
 // application domain.
 func LogSetHandlerFull(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr, DestroyVar *DestroyNotify) uint32 {
-	cret := xLogSetHandlerFull(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar, NewCallback(DestroyVar))
+	cret := xLogSetHandlerFull(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar, NewCallbackNullable(DestroyVar))
 	return cret
 }
 

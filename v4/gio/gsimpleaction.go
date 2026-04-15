@@ -343,7 +343,10 @@ func (x *SimpleAction) GetName() string {
 // [type@GLib.Variant], but `NULL` instead.
 func (x *SimpleAction) GetParameterType() *glib.VariantType {
 	cret := XGActionGetParameterType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 // Queries the current state of @action.
@@ -356,7 +359,10 @@ func (x *SimpleAction) GetParameterType() *glib.VariantType {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleAction) GetState() *glib.Variant {
 	cret := XGActionGetState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Requests a hint about the valid range of values for the state of
@@ -379,7 +385,10 @@ func (x *SimpleAction) GetState() *glib.Variant {
 // [method@GLib.Variant.unref] when it is no longer required.
 func (x *SimpleAction) GetStateHint() *glib.Variant {
 	cret := XGActionGetStateHint(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Queries the type of the state of @action.
@@ -396,7 +405,10 @@ func (x *SimpleAction) GetStateHint() *glib.Variant {
 // will return `NULL` and you must not call [method@Gio.Action.change_state].
 func (x *SimpleAction) GetStateType() *glib.VariantType {
 	cret := XGActionGetStateType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 func init() {

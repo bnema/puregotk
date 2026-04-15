@@ -32,7 +32,7 @@ func (x *Color) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xColorCopy func(uintptr) *Color
+var xColorCopy func(uintptr) uintptr
 
 // Creates a copy of @src.
 //
@@ -42,7 +42,10 @@ var xColorCopy func(uintptr) *Color
 // in C).
 func (x *Color) Copy() *Color {
 	cret := xColorCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Color)(unsafe.Pointer(cret))
 }
 
 var xColorFree func(uintptr)

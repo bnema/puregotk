@@ -29,7 +29,7 @@ func (x *TabArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTabArray func(int32, bool) *TabArray
+var xNewTabArray func(int32, bool) uintptr
 
 // Creates an array of @initial_size tab stops.
 //
@@ -37,10 +37,13 @@ var xNewTabArray func(int32, bool) *TabArray
 // otherwise in Pango units. All stops are initially at position 0.
 func NewTabArray(InitialSizeVar int32, PositionsInPixelsVar bool) *TabArray {
 	cret := xNewTabArray(InitialSizeVar, PositionsInPixelsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TabArray)(unsafe.Pointer(cret))
 }
 
-var xNewTabArrayWithPositions func(int32, bool, TabAlign, int32, ...interface{}) *TabArray
+var xNewTabArrayWithPositions func(int32, bool, TabAlign, int32, ...interface{}) uintptr
 
 // Creates a `PangoTabArray` and allows you to specify the alignment
 // and position of each tab stop.
@@ -48,15 +51,21 @@ var xNewTabArrayWithPositions func(int32, bool, TabAlign, int32, ...interface{})
 // You **must** provide an alignment and position for @size tab stops.
 func NewTabArrayWithPositions(SizeVar int32, PositionsInPixelsVar bool, FirstAlignmentVar TabAlign, FirstPositionVar int32, varArgs ...interface{}) *TabArray {
 	cret := xNewTabArrayWithPositions(SizeVar, PositionsInPixelsVar, FirstAlignmentVar, FirstPositionVar, varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TabArray)(unsafe.Pointer(cret))
 }
 
-var xTabArrayCopy func(uintptr) *TabArray
+var xTabArrayCopy func(uintptr) uintptr
 
 // Copies a `PangoTabArray`.
 func (x *TabArray) Copy() *TabArray {
 	cret := xTabArrayCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TabArray)(unsafe.Pointer(cret))
 }
 
 var xTabArrayFree func(uintptr)
@@ -213,7 +222,7 @@ const (
 	TabDecimalValue TabAlign = 3
 )
 
-var xTabArrayFromString func(string) *TabArray
+var xTabArrayFromString func(string) uintptr
 
 // Deserializes a `PangoTabArray` from a string.
 //
@@ -221,7 +230,10 @@ var xTabArrayFromString func(string) *TabArray
 // See that functions for details about the format.
 func TabArrayFromString(TextVar string) *TabArray {
 	cret := xTabArrayFromString(TextVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TabArray)(unsafe.Pointer(cret))
 }
 
 func init() {

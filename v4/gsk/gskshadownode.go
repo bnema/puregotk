@@ -87,12 +87,15 @@ func (x *ShadowNode) GetNShadows() uint {
 	return cret
 }
 
-var xShadowNodeGetShadow func(uintptr, uint) *Shadow
+var xShadowNodeGetShadow func(uintptr, uint) uintptr
 
 // Retrieves the shadow data at the given index @i.
 func (x *ShadowNode) GetShadow(IVar uint) *Shadow {
 	cret := xShadowNodeGetShadow(x.GoPointer(), IVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Shadow)(unsafe.Pointer(cret))
 }
 
 func (c *ShadowNode) GoPointer() uintptr {

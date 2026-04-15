@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -60,12 +62,15 @@ func (x *ClipNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xClipNodeGetClip func(uintptr) *graphene.Rect
+var xClipNodeGetClip func(uintptr) uintptr
 
 // Retrieves the clip rectangle for @node.
 func (x *ClipNode) GetClip() *graphene.Rect {
 	cret := xClipNodeGetClip(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Rect)(unsafe.Pointer(cret))
 }
 
 func (c *ClipNode) GoPointer() uintptr {

@@ -91,12 +91,15 @@ func (x *GLTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uintptr
 	return cls
 }
 
-var xGLTextureBuilderGetColorState func(uintptr) *ColorState
+var xGLTextureBuilderGetColorState func(uintptr) uintptr
 
 // Gets the color state previously set via gdk_gl_texture_builder_set_color_state().
 func (x *GLTextureBuilder) GetColorState() *ColorState {
 	cret := xGLTextureBuilderGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xGLTextureBuilderGetContext func(uintptr) uintptr
@@ -159,13 +162,16 @@ func (x *GLTextureBuilder) GetSync() uintptr {
 	return cret
 }
 
-var xGLTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
+var xGLTextureBuilderGetUpdateRegion func(uintptr) uintptr
 
 // Gets the region previously set via gdk_gl_texture_builder_set_update_region() or
 // %NULL if none was set.
 func (x *GLTextureBuilder) GetUpdateRegion() *cairo.Region {
 	cret := xGLTextureBuilderGetUpdateRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xGLTextureBuilderGetUpdateTexture func(uintptr) uintptr

@@ -101,7 +101,7 @@ func (x *TreeSelection) GetSelected(ModelVar **TreeModel, IterVar *TreeIter) boo
 	return cret
 }
 
-var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) *glib.List
+var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) uintptr
 
 // Creates a list of path of all selected rows. Additionally, if you are
 // planning on modifying the model after calling this function, you may
@@ -115,7 +115,10 @@ var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) *glib.List
 // ```
 func (x *TreeSelection) GetSelectedRows(ModelVar **TreeModel) *glib.List {
 	cret := xTreeSelectionGetSelectedRows(x.GoPointer(), ModelVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xTreeSelectionGetTreeView func(uintptr) uintptr
@@ -217,7 +220,7 @@ var xTreeSelectionSetSelectFunction func(uintptr, uintptr, uintptr, uintptr)
 // should return %TRUE if the state of the node may be toggled, and %FALSE
 // if the state of the node should be left unchanged.
 func (x *TreeSelection) SetSelectFunction(FuncVar *TreeSelectionFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xTreeSelectionUnselectAll func(uintptr)

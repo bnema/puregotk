@@ -696,7 +696,7 @@ func (x *Task) GetCompleted() bool {
 	return cret
 }
 
-var xTaskGetContext func(uintptr) *glib.MainContext
+var xTaskGetContext func(uintptr) uintptr
 
 // Gets the #GMainContext that @task will return its result in (that
 // is, the context that was the thread-default main context
@@ -707,7 +707,10 @@ var xTaskGetContext func(uintptr) *glib.MainContext
 // context is the default #GMainContext.
 func (x *Task) GetContext() *glib.MainContext {
 	cret := xTaskGetContext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.MainContext)(unsafe.Pointer(cret))
 }
 
 var xTaskGetName func(uintptr) string

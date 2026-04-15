@@ -68,7 +68,7 @@ func (x *GestureSingle) GetCurrentButton() uint32 {
 	return cret
 }
 
-var xGestureSingleGetCurrentSequence func(uintptr) *gdk.EventSequence
+var xGestureSingleGetCurrentSequence func(uintptr) uintptr
 
 // Returns the event sequence currently interacting with @gesture.
 //
@@ -76,7 +76,10 @@ var xGestureSingleGetCurrentSequence func(uintptr) *gdk.EventSequence
 // returns %TRUE.
 func (x *GestureSingle) GetCurrentSequence() *gdk.EventSequence {
 	cret := xGestureSingleGetCurrentSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.EventSequence)(unsafe.Pointer(cret))
 }
 
 var xGestureSingleGetExclusive func(uintptr) bool

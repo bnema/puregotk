@@ -781,13 +781,16 @@ func (x *TreeView) GetColumn(NVar int32) *TreeViewColumn {
 	return cls
 }
 
-var xTreeViewGetColumns func(uintptr) *glib.List
+var xTreeViewGetColumns func(uintptr) uintptr
 
 // Returns a `GList` of all the `GtkTreeViewColumn`s currently in @tree_view.
 // The returned list must be freed with g_list_free ().
 func (x *TreeView) GetColumns() *glib.List {
 	cret := xTreeViewGetColumns(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xTreeViewGetCursor func(uintptr, **TreePath, **TreeViewColumn)
@@ -1130,7 +1133,7 @@ var xTreeViewInsertColumnWithDataFunc func(uintptr, int32, string, uintptr, uint
 // If @tree_view has “fixed_height” mode enabled, then the new column will have its
 // “sizing” property set to be GTK_TREE_VIEW_COLUMN_FIXED.
 func (x *TreeView) InsertColumnWithDataFunc(PositionVar int32, TitleVar string, CellVar *CellRenderer, FuncVar *TreeCellDataFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) int32 {
-	cret := xTreeViewInsertColumnWithDataFunc(x.GoPointer(), PositionVar, TitleVar, CellVar.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DnotifyVar))
+	cret := xTreeViewInsertColumnWithDataFunc(x.GoPointer(), PositionVar, TitleVar, CellVar.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallbackNullable(DnotifyVar))
 	return cret
 }
 

@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -46,12 +48,15 @@ func NewBytesIcon(BytesVar *glib.Bytes) *BytesIcon {
 	return cls
 }
 
-var xBytesIconGetBytes func(uintptr) *glib.Bytes
+var xBytesIconGetBytes func(uintptr) uintptr
 
 // Gets the #GBytes associated with the given @icon.
 func (x *BytesIcon) GetBytes() *glib.Bytes {
 	cret := xBytesIconGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
 func (c *BytesIcon) GoPointer() uintptr {
@@ -101,7 +106,10 @@ func (x *BytesIcon) Hash() uint32 {
 // (as opposed to over the network), and within the same file system namespace.
 func (x *BytesIcon) Serialize() *glib.Variant {
 	cret := XGIconSerialize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Generates a textual representation of @icon that can be used for

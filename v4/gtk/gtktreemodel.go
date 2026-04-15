@@ -43,7 +43,7 @@ func (x *TreeIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xTreeIterCopy func(uintptr) *TreeIter
+var xTreeIterCopy func(uintptr) uintptr
 
 // Creates a dynamically allocated tree iterator as a copy of @iter.
 //
@@ -53,7 +53,10 @@ var xTreeIterCopy func(uintptr) *TreeIter
 // You must free this iter with gtk_tree_iter_free().
 func (x *TreeIter) Copy() *TreeIter {
 	cret := xTreeIterCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeIter)(unsafe.Pointer(cret))
 }
 
 var xTreeIterFree func(uintptr)
@@ -358,8 +361,12 @@ func (x *TreeModelIface) OverrideGetPath(cb func(TreeModel, *TreeIter) *TreePath
 	if cb == nil {
 		x.xGetPath = 0
 	} else {
-		x.xGetPath = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) *TreePath {
-			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		x.xGetPath = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) uintptr {
+			ret := cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -370,10 +377,14 @@ func (x *TreeModelIface) GetGetPath() func(TreeModel, *TreeIter) *TreePath {
 	if x.xGetPath == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) *TreePath
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetPath)
 	return func(TreeModelVar TreeModel, IterVar *TreeIter) *TreePath {
-		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+		rawRet := rawCallback(TreeModelVar.GoPointer(), IterVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*TreePath)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -654,42 +665,54 @@ func (x *TreePath) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTreePath func() *TreePath
+var xNewTreePath func() uintptr
 
 // Creates a new `GtkTreePath`
 // This refers to a row.
 func NewTreePath() *TreePath {
 	cret := xNewTreePath()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFirst func() *TreePath
+var xNewTreePathFirst func() uintptr
 
 // Creates a new `GtkTreePath`.
 //
 // The string representation of this path is “0”.
 func NewTreePathFirst() *TreePath {
 	cret := xNewTreePathFirst()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFromIndices func(int32, ...interface{}) *TreePath
+var xNewTreePathFromIndices func(int32, ...interface{}) uintptr
 
 // Creates a new path with @first_index and @varargs as indices.
 func NewTreePathFromIndices(FirstIndexVar int32, varArgs ...interface{}) *TreePath {
 	cret := xNewTreePathFromIndices(FirstIndexVar, varArgs...)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFromIndicesv func([]int32, uint) *TreePath
+var xNewTreePathFromIndicesv func([]int32, uint) uintptr
 
 // Creates a new path with the given @indices array of @length.
 func NewTreePathFromIndicesv(IndicesVar []int32, LengthVar uint) *TreePath {
 	cret := xNewTreePathFromIndicesv(IndicesVar, LengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFromString func(string) *TreePath
+var xNewTreePathFromString func(string) uintptr
 
 // Creates a new `GtkTreePath` initialized to @path.
 //
@@ -700,7 +723,10 @@ var xNewTreePathFromString func(string) *TreePath
 // If an invalid path string is passed in, %NULL is returned.
 func NewTreePathFromString(PathVar string) *TreePath {
 	cret := xNewTreePathFromString(PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xTreePathAppendIndex func(uintptr, int32)
@@ -724,12 +750,15 @@ func (x *TreePath) Compare(BVar *TreePath) int32 {
 	return cret
 }
 
-var xTreePathCopy func(uintptr) *TreePath
+var xTreePathCopy func(uintptr) uintptr
 
 // Creates a new `GtkTreePath` as a copy of @path.
 func (x *TreePath) Copy() *TreePath {
 	cret := xTreePathCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xTreePathDown func(uintptr)
@@ -858,7 +887,7 @@ func (x *TreeRowReference) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTreeRowReference func(uintptr, *TreePath) *TreeRowReference
+var xNewTreeRowReference func(uintptr, *TreePath) uintptr
 
 // Creates a row reference based on @path.
 //
@@ -868,10 +897,13 @@ var xNewTreeRowReference func(uintptr, *TreePath) *TreeRowReference
 // @path isn’t a valid path in @model, then %NULL is returned.
 func NewTreeRowReference(ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
 	cret := xNewTreeRowReference(ModelVar.GoPointer(), PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeRowReference)(unsafe.Pointer(cret))
 }
 
-var xNewTreeRowReferenceProxy func(uintptr, uintptr, *TreePath) *TreeRowReference
+var xNewTreeRowReferenceProxy func(uintptr, uintptr, *TreePath) uintptr
 
 // You do not need to use this function.
 //
@@ -899,15 +931,21 @@ var xNewTreeRowReferenceProxy func(uintptr, uintptr, *TreePath) *TreeRowReferenc
 // itself, and is not generally needed by most applications.
 func NewTreeRowReferenceProxy(ProxyVar *gobject.Object, ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
 	cret := xNewTreeRowReferenceProxy(ProxyVar.GoPointer(), ModelVar.GoPointer(), PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeRowReference)(unsafe.Pointer(cret))
 }
 
-var xTreeRowReferenceCopy func(uintptr) *TreeRowReference
+var xTreeRowReferenceCopy func(uintptr) uintptr
 
 // Copies a `GtkTreeRowReference`.
 func (x *TreeRowReference) Copy() *TreeRowReference {
 	cret := xTreeRowReferenceCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreeRowReference)(unsafe.Pointer(cret))
 }
 
 var xTreeRowReferenceFree func(uintptr)
@@ -934,13 +972,16 @@ func (x *TreeRowReference) GetModel() *TreeModelBase {
 	return cls
 }
 
-var xTreeRowReferenceGetPath func(uintptr) *TreePath
+var xTreeRowReferenceGetPath func(uintptr) uintptr
 
 // Returns a path that the row reference currently points to,
 // or %NULL if the path pointed to is no longer valid.
 func (x *TreeRowReference) GetPath() *TreePath {
 	cret := xTreeRowReferenceGetPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xTreeRowReferenceValid func(uintptr) bool
@@ -1309,7 +1350,10 @@ func (x *TreeModelBase) GetNColumns() int32 {
 // This path should be freed with gtk_tree_path_free().
 func (x *TreeModelBase) GetPath(IterVar *TreeIter) *TreePath {
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 // Generates a string representation of the iter.
@@ -1511,7 +1555,7 @@ var (
 	XGtkTreeModelGetIterFirst            func(uintptr, *TreeIter) bool
 	XGtkTreeModelGetIterFromString       func(uintptr, *TreeIter, string) bool
 	XGtkTreeModelGetNColumns             func(uintptr) int32
-	XGtkTreeModelGetPath                 func(uintptr, *TreeIter) *TreePath
+	XGtkTreeModelGetPath                 func(uintptr, *TreeIter) uintptr
 	XGtkTreeModelGetStringFromIter       func(uintptr, *TreeIter) string
 	XGtkTreeModelGetValist               func(uintptr, *TreeIter, []interface{})
 	XGtkTreeModelGetValue                func(uintptr, *TreeIter, int32, *gobject.Value)

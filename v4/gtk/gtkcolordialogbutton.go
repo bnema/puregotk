@@ -101,7 +101,7 @@ func (x *ColorDialogButton) GetDialog() *ColorDialog {
 	return cls
 }
 
-var xColorDialogButtonGetRgba func(uintptr) *gdk.RGBA
+var xColorDialogButtonGetRgba func(uintptr) uintptr
 
 // Returns the color of the button.
 //
@@ -110,7 +110,10 @@ var xColorDialogButtonGetRgba func(uintptr) *gdk.RGBA
 // informed about changes, listen to "notify::rgba".
 func (x *ColorDialogButton) GetRgba() *gdk.RGBA {
 	cret := xColorDialogButtonGetRgba(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 var xColorDialogButtonSetDialog func(uintptr, uintptr)

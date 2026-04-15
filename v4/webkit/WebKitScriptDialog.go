@@ -92,7 +92,7 @@ func (x *ScriptDialog) PromptSetText(TextVar string) {
 	xScriptDialogPromptSetText(x.GoPointer(), TextVar)
 }
 
-var xScriptDialogRef func(uintptr) *ScriptDialog
+var xScriptDialogRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @dialog by one.
 //
@@ -100,7 +100,10 @@ var xScriptDialogRef func(uintptr) *ScriptDialog
 // function is MT-safe and may be called from any thread.
 func (x *ScriptDialog) Ref() *ScriptDialog {
 	cret := xScriptDialogRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ScriptDialog)(unsafe.Pointer(cret))
 }
 
 var xScriptDialogUnref func(uintptr)

@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -67,20 +69,26 @@ func (x *ColorMatrixNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xColorMatrixNodeGetColorMatrix func(uintptr) *graphene.Matrix
+var xColorMatrixNodeGetColorMatrix func(uintptr) uintptr
 
 // Retrieves the color matrix used by the @node.
 func (x *ColorMatrixNode) GetColorMatrix() *graphene.Matrix {
 	cret := xColorMatrixNodeGetColorMatrix(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Matrix)(unsafe.Pointer(cret))
 }
 
-var xColorMatrixNodeGetColorOffset func(uintptr) *graphene.Vec4
+var xColorMatrixNodeGetColorOffset func(uintptr) uintptr
 
 // Retrieves the color offset used by the @node.
 func (x *ColorMatrixNode) GetColorOffset() *graphene.Vec4 {
 	cret := xColorMatrixNodeGetColorOffset(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Vec4)(unsafe.Pointer(cret))
 }
 
 func (c *ColorMatrixNode) GoPointer() uintptr {

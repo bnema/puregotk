@@ -214,12 +214,15 @@ func (x *FileFilter) SetName(NameVar string) {
 	xFileFilterSetName(x.GoPointer(), NameVar)
 }
 
-var xFileFilterToGvariant func(uintptr) *glib.Variant
+var xFileFilterToGvariant func(uintptr) uintptr
 
 // Serialize a file filter to an `a{sv}` variant.
 func (x *FileFilter) ToGvariant() *glib.Variant {
 	cret := xFileFilterToGvariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 func (c *FileFilter) GoPointer() uintptr {

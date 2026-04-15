@@ -36,14 +36,17 @@ func (x *Quaternion) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xQuaternionAlloc func() *Quaternion
+var xQuaternionAlloc func() uintptr
 
 // Allocates a new #graphene_quaternion_t.
 //
 // The contents of the returned value are undefined.
 func QuaternionAlloc() *Quaternion {
 	cret := xQuaternionAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
 var xQuaternionAdd func(uintptr, *Quaternion, *Quaternion)
@@ -76,24 +79,30 @@ func (x *Quaternion) Free() {
 	xQuaternionFree(x.GoPointer())
 }
 
-var xQuaternionInit func(uintptr, float32, float32, float32, float32) *Quaternion
+var xQuaternionInit func(uintptr, float32, float32, float32, float32) uintptr
 
 // Initializes a #graphene_quaternion_t using the given four values.
 func (x *Quaternion) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Quaternion {
 	cret := xQuaternionInit(x.GoPointer(), XVar, YVar, ZVar, WVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromAngleVec3 func(uintptr, float32, *Vec3) *Quaternion
+var xQuaternionInitFromAngleVec3 func(uintptr, float32, *Vec3) uintptr
 
 // Initializes a #graphene_quaternion_t using an @angle on a
 // specific @axis.
 func (x *Quaternion) InitFromAngleVec3(AngleVar float32, AxisVar *Vec3) *Quaternion {
 	cret := xQuaternionInitFromAngleVec3(x.GoPointer(), AngleVar, AxisVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromAngles func(uintptr, float32, float32, float32) *Quaternion
+var xQuaternionInitFromAngles func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_quaternion_t using the values of
 // the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
@@ -102,35 +111,47 @@ var xQuaternionInitFromAngles func(uintptr, float32, float32, float32) *Quaterni
 // See also: graphene_quaternion_init_from_euler()
 func (x *Quaternion) InitFromAngles(DegXVar float32, DegYVar float32, DegZVar float32) *Quaternion {
 	cret := xQuaternionInitFromAngles(x.GoPointer(), DegXVar, DegYVar, DegZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromEuler func(uintptr, *Euler) *Quaternion
+var xQuaternionInitFromEuler func(uintptr, *Euler) uintptr
 
 // Initializes a #graphene_quaternion_t using the given #graphene_euler_t.
 func (x *Quaternion) InitFromEuler(EVar *Euler) *Quaternion {
 	cret := xQuaternionInitFromEuler(x.GoPointer(), EVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromMatrix func(uintptr, *Matrix) *Quaternion
+var xQuaternionInitFromMatrix func(uintptr, *Matrix) uintptr
 
 // Initializes a #graphene_quaternion_t using the rotation components
 // of a transformation matrix.
 func (x *Quaternion) InitFromMatrix(MVar *Matrix) *Quaternion {
 	cret := xQuaternionInitFromMatrix(x.GoPointer(), MVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromQuaternion func(uintptr, *Quaternion) *Quaternion
+var xQuaternionInitFromQuaternion func(uintptr, *Quaternion) uintptr
 
 // Initializes a #graphene_quaternion_t with the values from @src.
 func (x *Quaternion) InitFromQuaternion(SrcVar *Quaternion) *Quaternion {
 	cret := xQuaternionInitFromQuaternion(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromRadians func(uintptr, float32, float32, float32) *Quaternion
+var xQuaternionInitFromRadians func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_quaternion_t using the values of
 // the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
@@ -139,24 +160,33 @@ var xQuaternionInitFromRadians func(uintptr, float32, float32, float32) *Quatern
 // See also: graphene_quaternion_init_from_euler()
 func (x *Quaternion) InitFromRadians(RadXVar float32, RadYVar float32, RadZVar float32) *Quaternion {
 	cret := xQuaternionInitFromRadians(x.GoPointer(), RadXVar, RadYVar, RadZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitFromVec4 func(uintptr, *Vec4) *Quaternion
+var xQuaternionInitFromVec4 func(uintptr, *Vec4) uintptr
 
 // Initializes a #graphene_quaternion_t with the values from @src.
 func (x *Quaternion) InitFromVec4(SrcVar *Vec4) *Quaternion {
 	cret := xQuaternionInitFromVec4(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
-var xQuaternionInitIdentity func(uintptr) *Quaternion
+var xQuaternionInitIdentity func(uintptr) uintptr
 
 // Initializes a #graphene_quaternion_t using the identity
 // transformation.
 func (x *Quaternion) InitIdentity() *Quaternion {
 	cret := xQuaternionInitIdentity(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Quaternion)(unsafe.Pointer(cret))
 }
 
 var xQuaternionInvert func(uintptr, *Quaternion)

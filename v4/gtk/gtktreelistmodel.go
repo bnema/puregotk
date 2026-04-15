@@ -66,7 +66,7 @@ var xNewTreeListModel func(uintptr, bool, bool, uintptr, uintptr, uintptr) uintp
 func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar bool, CreateFuncVar *TreeListModelCreateModelFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *TreeListModel {
 	var cls *TreeListModel
 
-	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, glib.NewCallback(CreateFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, glib.NewCallback(CreateFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil

@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -50,12 +52,15 @@ func (x *LinearGradientNode) GetColorStops(NStopsVar *uint) uintptr {
 	return cret
 }
 
-var xLinearGradientNodeGetEnd func(uintptr) *graphene.Point
+var xLinearGradientNodeGetEnd func(uintptr) uintptr
 
 // Retrieves the final point of the linear gradient.
 func (x *LinearGradientNode) GetEnd() *graphene.Point {
 	cret := xLinearGradientNodeGetEnd(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 var xLinearGradientNodeGetNColorStops func(uintptr) uint
@@ -66,12 +71,15 @@ func (x *LinearGradientNode) GetNColorStops() uint {
 	return cret
 }
 
-var xLinearGradientNodeGetStart func(uintptr) *graphene.Point
+var xLinearGradientNodeGetStart func(uintptr) uintptr
 
 // Retrieves the initial point of the linear gradient.
 func (x *LinearGradientNode) GetStart() *graphene.Point {
 	cret := xLinearGradientNodeGetStart(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 func (c *LinearGradientNode) GoPointer() uintptr {

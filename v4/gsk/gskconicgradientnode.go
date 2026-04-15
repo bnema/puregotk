@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -58,12 +60,15 @@ func (x *ConicGradientNode) GetAngle() float32 {
 	return cret
 }
 
-var xConicGradientNodeGetCenter func(uintptr) *graphene.Point
+var xConicGradientNodeGetCenter func(uintptr) uintptr
 
 // Retrieves the center pointer for the gradient.
 func (x *ConicGradientNode) GetCenter() *graphene.Point {
 	cret := xConicGradientNodeGetCenter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 var xConicGradientNodeGetColorStops func(uintptr, *uint) uintptr

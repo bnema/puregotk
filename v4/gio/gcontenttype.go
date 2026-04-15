@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -190,14 +192,17 @@ func ContentTypeSetMimeDirs(DirsVar []string) {
 	xContentTypeSetMimeDirs(DirsVar)
 }
 
-var xContentTypesGetRegistered func() *glib.List
+var xContentTypesGetRegistered func() uintptr
 
 // Gets a list of strings containing all the registered content types
 // known to the system. The list and its data should be freed using
 // `g_list_free_full (list, g_free)`.
 func ContentTypesGetRegistered() *glib.List {
 	cret := xContentTypesGetRegistered()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {

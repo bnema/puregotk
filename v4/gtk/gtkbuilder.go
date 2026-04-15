@@ -712,7 +712,7 @@ func (x *Builder) AddObjectsFromString(BufferVar string, LengthVar int, ObjectId
 	return cret, cerr
 }
 
-var xBuilderCreateClosure func(uintptr, string, BuilderClosureFlags, uintptr, **glib.Error) *gobject.Closure
+var xBuilderCreateClosure func(uintptr, string, BuilderClosureFlags, uintptr, **glib.Error) uintptr
 
 // Creates a closure to invoke the function called @function_name.
 //
@@ -725,10 +725,13 @@ func (x *Builder) CreateClosure(FunctionNameVar string, FlagsVar BuilderClosureF
 	var cerr *glib.Error
 
 	cret := xBuilderCreateClosure(x.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*gobject.Closure)(unsafe.Pointer(cret)), nil
 }
 
 var xBuilderExposeObject func(uintptr, string, uintptr)
@@ -798,7 +801,7 @@ func (x *Builder) GetObject(NameVar string) *gobject.Object {
 	return cls
 }
 
-var xBuilderGetObjects func(uintptr) *glib.SList
+var xBuilderGetObjects func(uintptr) uintptr
 
 // Gets all objects that have been constructed by @builder.
 //
@@ -806,7 +809,10 @@ var xBuilderGetObjects func(uintptr) *glib.SList
 // counts of the returned objects.
 func (x *Builder) GetObjects() *glib.SList {
 	cret := xBuilderGetObjects(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xBuilderGetScope func(uintptr) uintptr

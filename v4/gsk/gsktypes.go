@@ -37,7 +37,7 @@ func (x *ComponentTransfer) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewComponentTransferDiscrete func(uint32, []float32) *ComponentTransfer
+var xNewComponentTransferDiscrete func(uint32, []float32) uintptr
 
 // Creates a new component transfer that applies
 // a step function.
@@ -60,10 +60,13 @@ var xNewComponentTransferDiscrete func(uint32, []float32) *ComponentTransfer
 // &lt;/figure&gt;
 func NewComponentTransferDiscrete(NVar uint32, ValuesVar []float32) *ComponentTransfer {
 	cret := xNewComponentTransferDiscrete(NVar, ValuesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xNewComponentTransferGamma func(float32, float32, float32) *ComponentTransfer
+var xNewComponentTransferGamma func(float32, float32, float32) uintptr
 
 // Creates a new component transfer that applies
 // a gamma transform.
@@ -82,10 +85,13 @@ var xNewComponentTransferGamma func(float32, float32, float32) *ComponentTransfe
 // &lt;/figure&gt;
 func NewComponentTransferGamma(AmpVar float32, ExpVar float32, OfsVar float32) *ComponentTransfer {
 	cret := xNewComponentTransferGamma(AmpVar, ExpVar, OfsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xNewComponentTransferIdentity func() *ComponentTransfer
+var xNewComponentTransferIdentity func() uintptr
 
 // Creates a new component transfer that doesn't
 // change the component value.
@@ -100,10 +106,13 @@ var xNewComponentTransferIdentity func() *ComponentTransfer
 // &lt;/figure&gt;
 func NewComponentTransferIdentity() *ComponentTransfer {
 	cret := xNewComponentTransferIdentity()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xNewComponentTransferLevels func(float32) *ComponentTransfer
+var xNewComponentTransferLevels func(float32) uintptr
 
 // Creates a new component transfer that limits
 // the values of the component to `n` levels.
@@ -122,10 +131,13 @@ var xNewComponentTransferLevels func(float32) *ComponentTransfer
 // &lt;/figure&gt;
 func NewComponentTransferLevels(NVar float32) *ComponentTransfer {
 	cret := xNewComponentTransferLevels(NVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xNewComponentTransferLinear func(float32, float32) *ComponentTransfer
+var xNewComponentTransferLinear func(float32, float32) uintptr
 
 // Creates a new component transfer that applies
 // a linear transform.
@@ -144,10 +156,13 @@ var xNewComponentTransferLinear func(float32, float32) *ComponentTransfer
 // &lt;/figure&gt;
 func NewComponentTransferLinear(MVar float32, BVar float32) *ComponentTransfer {
 	cret := xNewComponentTransferLinear(MVar, BVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xNewComponentTransferTable func(uint32, []float32) *ComponentTransfer
+var xNewComponentTransferTable func(uint32, []float32) uintptr
 
 // Creates a new component transfer that applies
 // a piecewise linear function.
@@ -170,15 +185,21 @@ var xNewComponentTransferTable func(uint32, []float32) *ComponentTransfer
 // &lt;/figure&gt;
 func NewComponentTransferTable(NVar uint32, ValuesVar []float32) *ComponentTransfer {
 	cret := xNewComponentTransferTable(NVar, ValuesVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
-var xComponentTransferCopy func(uintptr) *ComponentTransfer
+var xComponentTransferCopy func(uintptr) uintptr
 
 // Creates a copy of @other.
 func (x *ComponentTransfer) Copy() *ComponentTransfer {
 	cret := xComponentTransferCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ComponentTransfer)(unsafe.Pointer(cret))
 }
 
 var xComponentTransferFree func(uintptr)
@@ -415,12 +436,15 @@ func (x *Path) Print(StringVar *glib.String) {
 	xPathPrint(x.GoPointer(), StringVar)
 }
 
-var xPathRef func(uintptr) *Path
+var xPathRef func(uintptr) uintptr
 
 // Increases the reference count of a path by one.
 func (x *Path) Ref() *Path {
 	cret := xPathRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 var xPathToCairo func(uintptr, *cairo.Context)
@@ -513,7 +537,7 @@ func (x *PathBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPathBuilder func() *PathBuilder
+var xNewPathBuilder func() uintptr
 
 // Create a new `GskPathBuilder` object.
 //
@@ -521,7 +545,10 @@ var xNewPathBuilder func() *PathBuilder
 // Use addition functions to add types to it.
 func NewPathBuilder() *PathBuilder {
 	cret := xNewPathBuilder()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuilder)(unsafe.Pointer(cret))
 }
 
 var xPathBuilderAddCairoPath func(uintptr, *cairo.Path)
@@ -679,16 +706,19 @@ func (x *PathBuilder) CubicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var
 	xPathBuilderCubicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, X3Var, Y3Var)
 }
 
-var xPathBuilderFreeToPath func(uintptr) *Path
+var xPathBuilderFreeToPath func(uintptr) uintptr
 
 // Creates a new path from the current state of the
 // builder, and unrefs the builder.
 func (x *PathBuilder) FreeToPath() *Path {
 	cret := xPathBuilderFreeToPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
-var xPathBuilderGetCurrentPoint func(uintptr) *graphene.Point
+var xPathBuilderGetCurrentPoint func(uintptr) uintptr
 
 // Gets the current point.
 //
@@ -700,7 +730,10 @@ var xPathBuilderGetCurrentPoint func(uintptr) *graphene.Point
 // out without a current point.
 func (x *PathBuilder) GetCurrentPoint() *graphene.Point {
 	cret := xPathBuilderGetCurrentPoint(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 var xPathBuilderHtmlArcTo func(uintptr, float32, float32, float32, float32, float32)
@@ -761,7 +794,7 @@ func (x *PathBuilder) QuadTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var 
 	xPathBuilderQuadTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
 }
 
-var xPathBuilderRef func(uintptr) *PathBuilder
+var xPathBuilderRef func(uintptr) uintptr
 
 // Acquires a reference on the given builder.
 //
@@ -769,7 +802,10 @@ var xPathBuilderRef func(uintptr) *PathBuilder
 // `GskPathBuilder` objects should not be kept around.
 func (x *PathBuilder) Ref() *PathBuilder {
 	cret := xPathBuilderRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathBuilder)(unsafe.Pointer(cret))
 }
 
 var xPathBuilderRelArcTo func(uintptr, float32, float32, float32, float32)
@@ -877,7 +913,7 @@ func (x *PathBuilder) SvgArcTo(RxVar float32, RyVar float32, XAxisRotationVar fl
 	xPathBuilderSvgArcTo(x.GoPointer(), RxVar, RyVar, XAxisRotationVar, LargeArcVar, PositiveSweepVar, XVar, YVar)
 }
 
-var xPathBuilderToPath func(uintptr) *Path
+var xPathBuilderToPath func(uintptr) uintptr
 
 // Creates a new path from the given builder.
 //
@@ -890,7 +926,10 @@ var xPathBuilderToPath func(uintptr) *Path
 // C code should use [method@Gsk.PathBuilder.free_to_path].
 func (x *PathBuilder) ToPath() *Path {
 	cret := xPathBuilderToPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 var xPathBuilderUnref func(uintptr)
@@ -923,21 +962,27 @@ func (x *PathMeasure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPathMeasure func(*Path) *PathMeasure
+var xNewPathMeasure func(*Path) uintptr
 
 // Creates a measure object for the given @path with the
 // default tolerance.
 func NewPathMeasure(PathVar *Path) *PathMeasure {
 	cret := xNewPathMeasure(PathVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathMeasure)(unsafe.Pointer(cret))
 }
 
-var xNewPathMeasureWithTolerance func(*Path, float32) *PathMeasure
+var xNewPathMeasureWithTolerance func(*Path, float32) uintptr
 
 // Creates a measure object for the given @path and @tolerance.
 func NewPathMeasureWithTolerance(PathVar *Path, ToleranceVar float32) *PathMeasure {
 	cret := xNewPathMeasureWithTolerance(PathVar, ToleranceVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathMeasure)(unsafe.Pointer(cret))
 }
 
 var xPathMeasureGetLength func(uintptr) float32
@@ -950,12 +995,15 @@ func (x *PathMeasure) GetLength() float32 {
 	return cret
 }
 
-var xPathMeasureGetPath func(uintptr) *Path
+var xPathMeasureGetPath func(uintptr) uintptr
 
 // Returns the path that the measure was created for.
 func (x *PathMeasure) GetPath() *Path {
 	cret := xPathMeasureGetPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 var xPathMeasureGetPoint func(uintptr, float32, *PathPoint) bool
@@ -976,12 +1024,15 @@ func (x *PathMeasure) GetTolerance() float32 {
 	return cret
 }
 
-var xPathMeasureRef func(uintptr) *PathMeasure
+var xPathMeasureRef func(uintptr) uintptr
 
 // Increases the reference count of a `GskPathMeasure` by one.
 func (x *PathMeasure) Ref() *PathMeasure {
 	cret := xPathMeasureRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PathMeasure)(unsafe.Pointer(cret))
 }
 
 var xPathMeasureUnref func(uintptr)
@@ -1093,12 +1144,15 @@ func (x *RenderReplay) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewRenderReplay func() *RenderReplay
+var xNewRenderReplay func() uintptr
 
 // Creates a new replay object to replay nodes.
 func NewRenderReplay() *RenderReplay {
 	cret := xNewRenderReplay()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RenderReplay)(unsafe.Pointer(cret))
 }
 
 var xRenderReplayDefault func(uintptr, uintptr) uintptr
@@ -1196,7 +1250,7 @@ var xRenderReplaySetFontFilter func(uintptr, uintptr, uintptr, uintptr)
 // You can call [method@GskRenderReplay.filter_font] to filter
 // a font yourself.
 func (x *RenderReplay) SetFontFilter(FilterVar *RenderReplayFontFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-	xRenderReplaySetFontFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xRenderReplaySetFontFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 var xRenderReplaySetNodeFilter func(uintptr, uintptr, uintptr, uintptr)
@@ -1215,7 +1269,7 @@ var xRenderReplaySetNodeFilter func(uintptr, uintptr, uintptr, uintptr)
 //   - call [method@Gsk.RenderReplay.default] to have the default handler
 //     run for this node, which calls your function on its children
 func (x *RenderReplay) SetNodeFilter(FilterVar *RenderReplayNodeFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-	xRenderReplaySetNodeFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xRenderReplaySetNodeFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 var xRenderReplaySetTextureFilter func(uintptr, uintptr, uintptr, uintptr)
@@ -1226,7 +1280,7 @@ var xRenderReplaySetTextureFilter func(uintptr, uintptr, uintptr, uintptr)
 // You can call [method@GskRenderReplay.filter_texture] to filter
 // a texture yourself.
 func (x *RenderReplay) SetTextureFilter(FilterVar *RenderReplayTextureFilter, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
-	xRenderReplaySetTextureFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xRenderReplaySetTextureFilter(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 }
 
 // Collects the parameters that are needed when stroking a path.
@@ -1244,20 +1298,26 @@ func (x *Stroke) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewStroke func(float32) *Stroke
+var xNewStroke func(float32) uintptr
 
 // Creates a new `GskStroke` with the given @line_width.
 func NewStroke(LineWidthVar float32) *Stroke {
 	cret := xNewStroke(LineWidthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Stroke)(unsafe.Pointer(cret))
 }
 
-var xStrokeCopy func(uintptr) *Stroke
+var xStrokeCopy func(uintptr) uintptr
 
 // Creates a copy of a `GskStroke`.
 func (x *Stroke) Copy() *Stroke {
 	cret := xStrokeCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Stroke)(unsafe.Pointer(cret))
 }
 
 var xStrokeFree func(uintptr)
@@ -1433,7 +1493,7 @@ func (x *Transform) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTransform func() *Transform
+var xNewTransform func() uintptr
 
 // Creates a new identity transform.
 //
@@ -1441,7 +1501,10 @@ var xNewTransform func() *Transform
 // bindings. For C code, this is equivalent to using `NULL`.
 func NewTransform() *Transform {
 	cret := xNewTransform()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 var xTransformEqual func(uintptr, *Transform) bool
@@ -1460,7 +1523,7 @@ func (x *Transform) GetCategory() TransformCategory {
 	return cret
 }
 
-var xTransformInvert func(uintptr) *Transform
+var xTransformInvert func(uintptr) uintptr
 
 // Inverts the given transform.
 //
@@ -1474,10 +1537,13 @@ var xTransformInvert func(uintptr) *Transform
 // if you want to keep it around.
 func (x *Transform) Invert() *Transform {
 	cret := xTransformInvert(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
+var xTransformMatrix func(uintptr, *graphene.Matrix) uintptr
 
 // Multiplies @next with the given @matrix.
 //
@@ -1485,10 +1551,13 @@ var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
 // if you want to keep it around.
 func (x *Transform) Matrix(MatrixVar *graphene.Matrix) *Transform {
 	cret := xTransformMatrix(x.GoPointer(), MatrixVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32, float32) *Transform
+var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32, float32) uintptr
 
 // Multiplies @next with the matrix [ xx yx x0; xy yy y0; 0 0 1 ].
 //
@@ -1500,10 +1569,13 @@ var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32
 // if you want to keep it around.
 func (x *Transform) Matrix2d(XxVar float32, YxVar float32, XyVar float32, YyVar float32, DxVar float32, DyVar float32) *Transform {
 	cret := xTransformMatrix2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, DxVar, DyVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformPerspective func(uintptr, float32) *Transform
+var xTransformPerspective func(uintptr, float32) uintptr
 
 // Applies a perspective projection transform.
 //
@@ -1516,7 +1588,10 @@ var xTransformPerspective func(uintptr, float32) *Transform
 // if you want to keep it around.
 func (x *Transform) Perspective(DepthVar float32) *Transform {
 	cret := xTransformPerspective(x.GoPointer(), DepthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 var xTransformPrint func(uintptr, *glib.String)
@@ -1529,15 +1604,18 @@ func (x *Transform) Print(StringVar *glib.String) {
 	xTransformPrint(x.GoPointer(), StringVar)
 }
 
-var xTransformRef func(uintptr) *Transform
+var xTransformRef func(uintptr) uintptr
 
 // Acquires a reference on the given transform.
 func (x *Transform) Ref() *Transform {
 	cret := xTransformRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformRotate func(uintptr, float32) *Transform
+var xTransformRotate func(uintptr, float32) uintptr
 
 // Rotates @next by an angle around the Z axis.
 //
@@ -1547,10 +1625,13 @@ var xTransformRotate func(uintptr, float32) *Transform
 // if you want to keep it around.
 func (x *Transform) Rotate(AngleVar float32) *Transform {
 	cret := xTransformRotate(x.GoPointer(), AngleVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) *Transform
+var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) uintptr
 
 // Rotates @next @angle degrees around @axis.
 //
@@ -1560,10 +1641,13 @@ var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) *Transform
 // if you want to keep it around.
 func (x *Transform) Rotate3d(AngleVar float32, AxisVar *graphene.Vec3) *Transform {
 	cret := xTransformRotate3d(x.GoPointer(), AngleVar, AxisVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformScale func(uintptr, float32, float32) *Transform
+var xTransformScale func(uintptr, float32, float32) uintptr
 
 // Scales @next in 2-dimensional space by the given factors.
 //
@@ -1573,10 +1657,13 @@ var xTransformScale func(uintptr, float32, float32) *Transform
 // if you want to keep it around.
 func (x *Transform) Scale(FactorXVar float32, FactorYVar float32) *Transform {
 	cret := xTransformScale(x.GoPointer(), FactorXVar, FactorYVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformScale3d func(uintptr, float32, float32, float32) *Transform
+var xTransformScale3d func(uintptr, float32, float32, float32) uintptr
 
 // Scales @next by the given factors.
 //
@@ -1584,10 +1671,13 @@ var xTransformScale3d func(uintptr, float32, float32, float32) *Transform
 // if you want to keep it around.
 func (x *Transform) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar float32) *Transform {
 	cret := xTransformScale3d(x.GoPointer(), FactorXVar, FactorYVar, FactorZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformSkew func(uintptr, float32, float32) *Transform
+var xTransformSkew func(uintptr, float32, float32) uintptr
 
 // Applies a skew transform.
 //
@@ -1595,7 +1685,10 @@ var xTransformSkew func(uintptr, float32, float32) *Transform
 // if you want to keep it around.
 func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
 	cret := xTransformSkew(x.GoPointer(), SkewXVar, SkewYVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 var xTransformTo2d func(uintptr, *float32, *float32, *float32, *float32, *float32, *float32)
@@ -1710,7 +1803,7 @@ func (x *Transform) ToTranslate(OutDxVar *float32, OutDyVar *float32) {
 	xTransformToTranslate(x.GoPointer(), OutDxVar, OutDyVar)
 }
 
-var xTransformTransform func(uintptr, *Transform) *Transform
+var xTransformTransform func(uintptr, *Transform) uintptr
 
 // Applies all the operations from @other to @next.
 //
@@ -1718,7 +1811,10 @@ var xTransformTransform func(uintptr, *Transform) *Transform
 // if you want to keep it around.
 func (x *Transform) Transform(OtherVar *Transform) *Transform {
 	cret := xTransformTransform(x.GoPointer(), OtherVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 var xTransformTransformBounds func(uintptr, *graphene.Rect, *graphene.Rect)
@@ -1739,7 +1835,7 @@ func (x *Transform) TransformPoint(PointVar *graphene.Point, OutPointVar *graphe
 	xTransformTransformPoint(x.GoPointer(), PointVar, OutPointVar)
 }
 
-var xTransformTranslate func(uintptr, *graphene.Point) *Transform
+var xTransformTranslate func(uintptr, *graphene.Point) uintptr
 
 // Translates @next in 2-dimensional space by @point.
 //
@@ -1747,10 +1843,13 @@ var xTransformTranslate func(uintptr, *graphene.Point) *Transform
 // if you want to keep it around.
 func (x *Transform) Translate(PointVar *graphene.Point) *Transform {
 	cret := xTransformTranslate(x.GoPointer(), PointVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
-var xTransformTranslate3d func(uintptr, *graphene.Point3D) *Transform
+var xTransformTranslate3d func(uintptr, *graphene.Point3D) uintptr
 
 // Translates @next by @point.
 //
@@ -1758,7 +1857,10 @@ var xTransformTranslate3d func(uintptr, *graphene.Point3D) *Transform
 // if you want to keep it around.
 func (x *Transform) Translate3d(PointVar *graphene.Point3D) *Transform {
 	cret := xTransformTranslate3d(x.GoPointer(), PointVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 var xTransformUnref func(uintptr)

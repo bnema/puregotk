@@ -61,7 +61,7 @@ func (x *BookmarkFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewBookmarkFile func() *BookmarkFile
+var xNewBookmarkFile func() uintptr
 
 // Creates a new empty #GBookmarkFile object.
 //
@@ -70,7 +70,10 @@ var xNewBookmarkFile func() *BookmarkFile
 // file.
 func NewBookmarkFile() *BookmarkFile {
 	cret := xNewBookmarkFile()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BookmarkFile)(unsafe.Pointer(cret))
 }
 
 var xBookmarkFileAddApplication func(uintptr, string, string, string)
@@ -111,12 +114,15 @@ func (x *BookmarkFile) AddGroup(UriVar string, GroupVar string) {
 	xBookmarkFileAddGroup(x.GoPointer(), UriVar, GroupVar)
 }
 
-var xBookmarkFileCopy func(uintptr) *BookmarkFile
+var xBookmarkFileCopy func(uintptr) uintptr
 
 // Deeply copies a @bookmark #GBookmarkFile object to a new one.
 func (x *BookmarkFile) Copy() *BookmarkFile {
 	cret := xBookmarkFileCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*BookmarkFile)(unsafe.Pointer(cret))
 }
 
 var xBookmarkFileFree func(uintptr)
@@ -142,7 +148,7 @@ func (x *BookmarkFile) GetAdded(UriVar string) (int, error) {
 	return cret, cerr
 }
 
-var xBookmarkFileGetAddedDateTime func(uintptr, string, **Error) *DateTime
+var xBookmarkFileGetAddedDateTime func(uintptr, string, **Error) uintptr
 
 // Gets the time the bookmark for @uri was added to @bookmark
 //
@@ -152,10 +158,13 @@ func (x *BookmarkFile) GetAddedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAddedDateTime(x.GoPointer(), UriVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*DateTime)(unsafe.Pointer(cret)), nil
 }
 
 var xBookmarkFileGetAppInfo func(uintptr, string, string, *string, *uint32, *int, **Error) bool
@@ -328,7 +337,7 @@ func (x *BookmarkFile) GetModified(UriVar string) (int, error) {
 	return cret, cerr
 }
 
-var xBookmarkFileGetModifiedDateTime func(uintptr, string, **Error) *DateTime
+var xBookmarkFileGetModifiedDateTime func(uintptr, string, **Error) uintptr
 
 // Gets the time when the bookmark for @uri was last modified.
 //
@@ -338,10 +347,13 @@ func (x *BookmarkFile) GetModifiedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetModifiedDateTime(x.GoPointer(), UriVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*DateTime)(unsafe.Pointer(cret)), nil
 }
 
 var xBookmarkFileGetSize func(uintptr) int32
@@ -396,7 +408,7 @@ func (x *BookmarkFile) GetVisited(UriVar string) (int, error) {
 	return cret, cerr
 }
 
-var xBookmarkFileGetVisitedDateTime func(uintptr, string, **Error) *DateTime
+var xBookmarkFileGetVisitedDateTime func(uintptr, string, **Error) uintptr
 
 // Gets the time the bookmark for @uri was last visited.
 //
@@ -406,10 +418,13 @@ func (x *BookmarkFile) GetVisitedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetVisitedDateTime(x.GoPointer(), UriVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*DateTime)(unsafe.Pointer(cret)), nil
 }
 
 var xBookmarkFileHasApplication func(uintptr, string, string, **Error) bool

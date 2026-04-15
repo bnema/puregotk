@@ -97,7 +97,7 @@ var xSubprocessLauncherSetChildSetup func(uintptr, uintptr, uintptr, uintptr)
 //
 // Child setup functions are only available on UNIX.
 func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
-	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
+	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 }
 
 var xSubprocessLauncherSetCwd func(uintptr, string)

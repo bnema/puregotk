@@ -129,12 +129,15 @@ func (x *WebsocketConnection) GetConnectionType() WebsocketConnectionType {
 	return cret
 }
 
-var xWebsocketConnectionGetExtensions func(uintptr) *glib.List
+var xWebsocketConnectionGetExtensions func(uintptr) uintptr
 
 // Get the extensions chosen via negotiation with the peer.
 func (x *WebsocketConnection) GetExtensions() *glib.List {
 	cret := xWebsocketConnectionGetExtensions(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xWebsocketConnectionGetIoStream func(uintptr) uintptr
@@ -202,7 +205,7 @@ func (x *WebsocketConnection) GetState() WebsocketState {
 	return cret
 }
 
-var xWebsocketConnectionGetUri func(uintptr) *glib.Uri
+var xWebsocketConnectionGetUri func(uintptr) uintptr
 
 // Get the URI of the WebSocket.
 //
@@ -210,7 +213,10 @@ var xWebsocketConnectionGetUri func(uintptr) *glib.Uri
 // for clients it is the address connected to.
 func (x *WebsocketConnection) GetUri() *glib.Uri {
 	cret := xWebsocketConnectionGetUri(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Uri)(unsafe.Pointer(cret))
 }
 
 var xWebsocketConnectionSendBinary func(uintptr, []byte, uint)

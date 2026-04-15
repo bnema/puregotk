@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -69,13 +71,16 @@ func (x *FillNode) GetFillRule() FillRule {
 	return cret
 }
 
-var xFillNodeGetPath func(uintptr) *Path
+var xFillNodeGetPath func(uintptr) uintptr
 
 // Retrieves the path used to describe the area filled with the contents of
 // the @node.
 func (x *FillNode) GetPath() *Path {
 	cret := xFillNodeGetPath(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 func (c *FillNode) GoPointer() uintptr {

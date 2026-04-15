@@ -88,7 +88,7 @@ func (x *DirectoryList) GetAttributes() string {
 	return cret
 }
 
-var xDirectoryListGetError func(uintptr) *glib.Error
+var xDirectoryListGetError func(uintptr) uintptr
 
 // Gets the loading error, if any.
 //
@@ -100,7 +100,10 @@ var xDirectoryListGetError func(uintptr) *glib.Error
 // successfully queried files will remain in the list.
 func (x *DirectoryList) GetError() *glib.Error {
 	cret := xDirectoryListGetError(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Error)(unsafe.Pointer(cret))
 }
 
 var xDirectoryListGetFile func(uintptr) uintptr

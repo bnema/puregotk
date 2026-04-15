@@ -116,14 +116,17 @@ func (x *Relation) Print() {
 	xRelationPrint(x.GoPointer())
 }
 
-var xRelationSelect func(uintptr, uintptr, int32) *Tuples
+var xRelationSelect func(uintptr, uintptr, int32) uintptr
 
 // Returns all of the tuples which have the given key in the given
 // field. Use g_tuples_index() to access the returned records. The
 // returned records should be freed with g_tuples_destroy().
 func (x *Relation) Select(KeyVar uintptr, FieldVar int32) *Tuples {
 	cret := xRelationSelect(x.GoPointer(), KeyVar, FieldVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Tuples)(unsafe.Pointer(cret))
 }
 
 // The #GTuples struct is used to return records (or tuples) from the

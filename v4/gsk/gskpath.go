@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -73,7 +75,7 @@ const (
 	PathIntersectionEndValue PathIntersection = 3
 )
 
-var xPathParse func(string) *Path
+var xPathParse func(string) uintptr
 
 // Constructs a path from a serialized form.
 //
@@ -101,7 +103,10 @@ var xPathParse func(string) *Path
 // The `O` command is an extension that is not supported in SVG.
 func PathParse(StringVar string) *Path {
 	cret := xPathParse(StringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Path)(unsafe.Pointer(cret))
 }
 
 func init() {

@@ -282,12 +282,15 @@ func (x *FlowBox) GetRowSpacing() uint32 {
 	return cret
 }
 
-var xFlowBoxGetSelectedChildren func(uintptr) *glib.List
+var xFlowBoxGetSelectedChildren func(uintptr) uintptr
 
 // Creates a list of all selected children.
 func (x *FlowBox) GetSelectedChildren() *glib.List {
 	cret := xFlowBoxGetSelectedChildren(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xFlowBoxGetSelectionMode func(uintptr) SelectionMode
@@ -419,7 +422,7 @@ var xFlowBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a filter function is incompatible with using a model
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xFlowBoxSetHadjustment func(uintptr, uintptr)
@@ -495,7 +498,7 @@ var xFlowBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // Note that using a sort function is incompatible with using a model
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xFlowBoxSetVadjustment func(uintptr, uintptr)

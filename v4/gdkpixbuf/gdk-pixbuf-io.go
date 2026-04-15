@@ -137,12 +137,15 @@ func (x *PixbufFormat) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xPixbufFormatCopy func(uintptr) *PixbufFormat
+var xPixbufFormatCopy func(uintptr) uintptr
 
 // Creates a copy of `format`.
 func (x *PixbufFormat) Copy() *PixbufFormat {
 	cret := xPixbufFormatCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PixbufFormat)(unsafe.Pointer(cret))
 }
 
 var xPixbufFormatFree func(uintptr)

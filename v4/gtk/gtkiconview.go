@@ -321,12 +321,15 @@ func (x *IconView) GetModel() *TreeModelBase {
 	return cls
 }
 
-var xIconViewGetPathAtPos func(uintptr, int32, int32) *TreePath
+var xIconViewGetPathAtPos func(uintptr, int32, int32) uintptr
 
 // Gets the path for the icon at the given position.
 func (x *IconView) GetPathAtPos(XVar int32, YVar int32) *TreePath {
 	cret := xIconViewGetPathAtPos(x.GoPointer(), XVar, YVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TreePath)(unsafe.Pointer(cret))
 }
 
 var xIconViewGetPixbufColumn func(uintptr) int32
@@ -354,7 +357,7 @@ func (x *IconView) GetRowSpacing() int32 {
 	return cret
 }
 
-var xIconViewGetSelectedItems func(uintptr) *glib.List
+var xIconViewGetSelectedItems func(uintptr) uintptr
 
 // Creates a list of paths of all selected items. Additionally, if you are
 // planning on modifying the model after calling this function, you may
@@ -375,7 +378,10 @@ var xIconViewGetSelectedItems func(uintptr) *glib.List
 // ```
 func (x *IconView) GetSelectedItems() *glib.List {
 	cret := xIconViewGetSelectedItems(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xIconViewGetSelectionMode func(uintptr) SelectionMode
@@ -1513,7 +1519,10 @@ func (x *IconView) GetArea() *CellArea {
 // Returns the cell renderers which have been added to @cell_layout.
 func (x *IconView) GetCells() *glib.List {
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
@@ -1562,7 +1571,7 @@ func (x *IconView) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 //
 // @func may be %NULL to remove a previously set function.
 func (x *IconView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Returns the size of a non-scrolling border around the

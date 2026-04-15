@@ -87,12 +87,15 @@ func (x *TestLogBuffer) Free() {
 	xTestLogBufferFree(x.GoPointer())
 }
 
-var xTestLogBufferPop func(uintptr) *TestLogMsg
+var xTestLogBufferPop func(uintptr) uintptr
 
 // Internal function for gtester to retrieve test log messages, no ABI guarantees provided.
 func (x *TestLogBuffer) Pop() *TestLogMsg {
 	cret := xTestLogBufferPop(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestLogMsg)(unsafe.Pointer(cret))
 }
 
 var xTestLogBufferPush func(uintptr, uint32, byte)
@@ -503,7 +506,7 @@ func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ..
 	return cret
 }
 
-var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *TestCase
+var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) uintptr
 
 // Creates a new [struct@GLib.TestCase].
 //
@@ -524,15 +527,21 @@ var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *Test
 // varying @test_name and @data_test arguments.
 func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) *TestCase {
 	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, NewCallback(DataSetupVar), NewCallback(DataTestVar), NewCallback(DataTeardownVar))
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestCase)(unsafe.Pointer(cret))
 }
 
-var xTestCreateSuite func(string) *TestSuite
+var xTestCreateSuite func(string) uintptr
 
 // Creates a new test suite with the name @suite_name.
 func TestCreateSuite(SuiteNameVar string) *TestSuite {
 	cret := xTestCreateSuite(SuiteNameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestSuite)(unsafe.Pointer(cret))
 }
 
 var xTestDisableCrashReporting func()
@@ -690,12 +699,15 @@ func TestGetPath() string {
 	return cret
 }
 
-var xTestGetRoot func() *TestSuite
+var xTestGetRoot func() uintptr
 
 // Gets the toplevel test suite for the test path API.
 func TestGetRoot() *TestSuite {
 	cret := xTestGetRoot()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*TestSuite)(unsafe.Pointer(cret))
 }
 
 var xTestIncomplete func(string)
@@ -866,7 +878,7 @@ var xTestQueueDestroy func(uintptr, uintptr)
 // enqueueing callback `A` before callback `B` will cause `B()` to be called
 // before `A()` during teardown.
 func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
-	xTestQueueDestroy(NewCallback(DestroyFuncVar), DestroyDataVar)
+	xTestQueueDestroy(NewCallbackNullable(DestroyFuncVar), DestroyDataVar)
 }
 
 var xTestQueueFree func(uintptr)

@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -50,7 +52,7 @@ func (x *OutsetShadowNode) GetBlurRadius() float32 {
 	return cret
 }
 
-var xOutsetShadowNodeGetColor func(uintptr) *gdk.RGBA
+var xOutsetShadowNodeGetColor func(uintptr) uintptr
 
 // Retrieves the color of the outset shadow.
 //
@@ -58,7 +60,10 @@ var xOutsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 // if the render node was created for a non-sRGB color.
 func (x *OutsetShadowNode) GetColor() *gdk.RGBA {
 	cret := xOutsetShadowNodeGetColor(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret))
 }
 
 var xOutsetShadowNodeGetDx func(uintptr) float32
@@ -77,12 +82,15 @@ func (x *OutsetShadowNode) GetDy() float32 {
 	return cret
 }
 
-var xOutsetShadowNodeGetOutline func(uintptr) *RoundedRect
+var xOutsetShadowNodeGetOutline func(uintptr) uintptr
 
 // Retrieves the outline rectangle of the outset shadow.
 func (x *OutsetShadowNode) GetOutline() *RoundedRect {
 	cret := xOutsetShadowNodeGetOutline(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*RoundedRect)(unsafe.Pointer(cret))
 }
 
 var xOutsetShadowNodeGetSpread func(uintptr) float32

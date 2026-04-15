@@ -132,7 +132,7 @@ func (x *Surface) CreateGlContext() (*GLContext, error) {
 	return cls, cerr
 }
 
-var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int32, int32) *cairo.Surface
+var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int32, int32) uintptr
 
 // Create a new Cairo surface that is as compatible as possible with the
 // given @surface.
@@ -151,7 +151,10 @@ var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int32, int32) *cai
 // or any other error occurs.
 func (x *Surface) CreateSimilarSurface(ContentVar cairo.Content, WidthVar int32, HeightVar int32) *cairo.Surface {
 	cret := xSurfaceCreateSimilarSurface(x.GoPointer(), ContentVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Surface)(unsafe.Pointer(cret))
 }
 
 var xSurfaceCreateVulkanContext func(uintptr, **glib.Error) uintptr

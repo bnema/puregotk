@@ -86,21 +86,27 @@ func (x *MemoryTextureBuilder) Build() *Texture {
 	return cls
 }
 
-var xMemoryTextureBuilderGetBytes func(uintptr) *glib.Bytes
+var xMemoryTextureBuilderGetBytes func(uintptr) uintptr
 
 // Gets the bytes previously set via gdk_memory_texture_builder_set_bytes()
 // or %NULL if none was set.
 func (x *MemoryTextureBuilder) GetBytes() *glib.Bytes {
 	cret := xMemoryTextureBuilderGetBytes(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xMemoryTextureBuilderGetColorState func(uintptr) *ColorState
+var xMemoryTextureBuilderGetColorState func(uintptr) uintptr
 
 // Gets the colorstate previously set via gdk_memory_texture_builder_set_color_state().
 func (x *MemoryTextureBuilder) GetColorState() *ColorState {
 	cret := xMemoryTextureBuilderGetColorState(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ColorState)(unsafe.Pointer(cret))
 }
 
 var xMemoryTextureBuilderGetFormat func(uintptr) MemoryFormat
@@ -144,13 +150,16 @@ func (x *MemoryTextureBuilder) GetStrideForPlane(PlaneVar uint32) uint {
 	return cret
 }
 
-var xMemoryTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
+var xMemoryTextureBuilderGetUpdateRegion func(uintptr) uintptr
 
 // Gets the region previously set via gdk_memory_texture_builder_set_update_region()
 // or %NULL if none was set.
 func (x *MemoryTextureBuilder) GetUpdateRegion() *cairo.Region {
 	cret := xMemoryTextureBuilderGetUpdateRegion(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
 var xMemoryTextureBuilderGetUpdateTexture func(uintptr) uintptr

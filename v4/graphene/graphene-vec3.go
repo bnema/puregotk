@@ -30,7 +30,7 @@ func (x *Vec3) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xVec3Alloc func() *Vec3
+var xVec3Alloc func() uintptr
 
 // Allocates a new #graphene_vec3_t structure.
 //
@@ -39,7 +39,10 @@ var xVec3Alloc func() *Vec3
 // Use graphene_vec3_init() to initialize the vector.
 func Vec3Alloc() *Vec3 {
 	cret := xVec3Alloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
 var xVec3Add func(uintptr, *Vec3, *Vec3)
@@ -152,31 +155,40 @@ func (x *Vec3) GetZ() float32 {
 	return cret
 }
 
-var xVec3Init func(uintptr, float32, float32, float32) *Vec3
+var xVec3Init func(uintptr, float32, float32, float32) uintptr
 
 // Initializes a #graphene_vec3_t using the given values.
 //
 // This function can be called multiple times.
 func (x *Vec3) Init(XVar float32, YVar float32, ZVar float32) *Vec3 {
 	cret := xVec3Init(x.GoPointer(), XVar, YVar, ZVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3InitFromFloat func(uintptr, [3]float32) *Vec3
+var xVec3InitFromFloat func(uintptr, [3]float32) uintptr
 
 // Initializes a #graphene_vec3_t with the values from an array.
 func (x *Vec3) InitFromFloat(SrcVar [3]float32) *Vec3 {
 	cret := xVec3InitFromFloat(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3InitFromVec3 func(uintptr, *Vec3) *Vec3
+var xVec3InitFromVec3 func(uintptr, *Vec3) uintptr
 
 // Initializes a #graphene_vec3_t with the values of another
 // #graphene_vec3_t.
 func (x *Vec3) InitFromVec3(SrcVar *Vec3) *Vec3 {
 	cret := xVec3InitFromVec3(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
 var xVec3Interpolate func(uintptr, *Vec3, float64, *Vec3)
@@ -263,49 +275,64 @@ func (x *Vec3) ToFloat(DestVar *[3]float32) {
 	xVec3ToFloat(x.GoPointer(), DestVar)
 }
 
-var xVec3One func() *Vec3
+var xVec3One func() uintptr
 
 // Provides a constant pointer to a vector with three components,
 // all sets to 1.
 func Vec3One() *Vec3 {
 	cret := xVec3One()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3XAxis func() *Vec3
+var xVec3XAxis func() uintptr
 
 // Provides a constant pointer to a vector with three components
 // with values set to (1, 0, 0).
 func Vec3XAxis() *Vec3 {
 	cret := xVec3XAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3YAxis func() *Vec3
+var xVec3YAxis func() uintptr
 
 // Provides a constant pointer to a vector with three components
 // with values set to (0, 1, 0).
 func Vec3YAxis() *Vec3 {
 	cret := xVec3YAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3ZAxis func() *Vec3
+var xVec3ZAxis func() uintptr
 
 // Provides a constant pointer to a vector with three components
 // with values set to (0, 0, 1).
 func Vec3ZAxis() *Vec3 {
 	cret := xVec3ZAxis()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
-var xVec3Zero func() *Vec3
+var xVec3Zero func() uintptr
 
 // Provides a constant pointer to a vector with three components,
 // all sets to 0.
 func Vec3Zero() *Vec3 {
 	cret := xVec3Zero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Vec3)(unsafe.Pointer(cret))
 }
 
 func init() {

@@ -453,7 +453,7 @@ func (x *ApplicationCommandLine) GetIsRemote() bool {
 	return cret
 }
 
-var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
+var xApplicationCommandLineGetOptionsDict func(uintptr) uintptr
 
 // Gets the options that were passed to g_application_command_line().
 //
@@ -469,10 +469,13 @@ var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
 // all values must be checked before being used.
 func (x *ApplicationCommandLine) GetOptionsDict() *glib.VariantDict {
 	cret := xApplicationCommandLineGetOptionsDict(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantDict)(unsafe.Pointer(cret))
 }
 
-var xApplicationCommandLineGetPlatformData func(uintptr) *glib.Variant
+var xApplicationCommandLineGetPlatformData func(uintptr) uintptr
 
 // Gets the platform data associated with the invocation of @cmdline.
 //
@@ -487,7 +490,10 @@ var xApplicationCommandLineGetPlatformData func(uintptr) *glib.Variant
 // For local invocation, it will be %NULL.
 func (x *ApplicationCommandLine) GetPlatformData() *glib.Variant {
 	cret := xApplicationCommandLineGetPlatformData(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xApplicationCommandLineGetStdin func(uintptr) uintptr

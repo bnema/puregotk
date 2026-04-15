@@ -81,12 +81,15 @@ func (x *Clipboard) GetDisplay() *Display {
 	return cls
 }
 
-var xClipboardGetFormats func(uintptr) *ContentFormats
+var xClipboardGetFormats func(uintptr) uintptr
 
 // Gets the formats that the clipboard can provide its current contents in.
 func (x *Clipboard) GetFormats() *ContentFormats {
 	cret := xClipboardGetFormats(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*ContentFormats)(unsafe.Pointer(cret))
 }
 
 var xClipboardIsLocal func(uintptr) bool
@@ -207,7 +210,7 @@ func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, Can
 	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xClipboardReadValueFinish func(uintptr, uintptr, **glib.Error) *gobject.Value
+var xClipboardReadValueFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an asynchronous clipboard read.
 //
@@ -216,10 +219,13 @@ func (x *Clipboard) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, 
 	var cerr *glib.Error
 
 	cret := xClipboardReadValueFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*gobject.Value)(unsafe.Pointer(cret)), nil
 }
 
 var xClipboardSet func(uintptr, types.GType, ...interface{})

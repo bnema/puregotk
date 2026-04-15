@@ -730,7 +730,7 @@ func (x *Session) Send(MsgVar *Message, CancellableVar *gio.Cancellable) (*gio.I
 	return cls, cerr
 }
 
-var xSessionSendAndRead func(uintptr, uintptr, uintptr, **glib.Error) *glib.Bytes
+var xSessionSendAndRead func(uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Synchronously sends @msg and reads the response body.
 //
@@ -743,10 +743,13 @@ func (x *Session) SendAndRead(MsgVar *Message, CancellableVar *gio.Cancellable) 
 	var cerr *glib.Error
 
 	cret := xSessionSendAndRead(x.GoPointer(), MsgVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xSessionSendAndReadAsync func(uintptr, uintptr, int32, uintptr, uintptr, uintptr)
@@ -764,7 +767,7 @@ func (x *Session) SendAndReadAsync(MsgVar *Message, IoPriorityVar int32, Cancell
 	xSessionSendAndReadAsync(x.GoPointer(), MsgVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xSessionSendAndReadFinish func(uintptr, uintptr, **glib.Error) *glib.Bytes
+var xSessionSendAndReadFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Gets the response to a [method@Session.send_and_read_async].
 //
@@ -773,10 +776,13 @@ func (x *Session) SendAndReadFinish(ResultVar gio.AsyncResult) (*glib.Bytes, err
 	var cerr *glib.Error
 
 	cret := xSessionSendAndReadFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*glib.Bytes)(unsafe.Pointer(cret)), nil
 }
 
 var xSessionSendAndSplice func(uintptr, uintptr, uintptr, gio.OutputStreamSpliceFlags, uintptr, **glib.Error) int

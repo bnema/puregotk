@@ -100,7 +100,7 @@ var xNewCallbackAnimationTarget func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAnimationTarget(CallbackVar *AnimationTargetFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAnimationTarget {
 	var cls *CallbackAnimationTarget
 
-	cret := xNewCallbackAnimationTarget(glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DestroyVar))
+	cret := xNewCallbackAnimationTarget(glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 
 	if cret == 0 {
 		return nil

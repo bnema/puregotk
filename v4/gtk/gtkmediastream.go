@@ -474,7 +474,7 @@ func (x *MediaStream) GetEnded() bool {
 	return cret
 }
 
-var xMediaStreamGetError func(uintptr) *glib.Error
+var xMediaStreamGetError func(uintptr) uintptr
 
 // If the stream is in an error state, returns the `GError`
 // explaining that state.
@@ -492,7 +492,10 @@ var xMediaStreamGetError func(uintptr) *glib.Error
 // set, e.g. with [method@Gtk.MediaFile.set_file].
 func (x *MediaStream) GetError() *glib.Error {
 	cret := xMediaStreamGetError(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Error)(unsafe.Pointer(cret))
 }
 
 var xMediaStreamGetLoop func(uintptr) bool

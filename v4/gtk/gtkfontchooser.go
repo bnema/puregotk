@@ -153,7 +153,7 @@ func (x *FontChooserIface) GetSetFilterFunc() func(FontChooser, *FontFilterFunc,
 	var rawCallback func(FontchooserVarp uintptr, FilterVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetFilterFunc)
 	return func(FontchooserVar FontChooser, FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-		rawCallback(FontchooserVar.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+		rawCallback(FontchooserVar.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 	}
 }
 
@@ -314,7 +314,10 @@ func (x *FontChooserBase) GetFont() string {
 // font descriptions.
 func (x *FontChooserBase) GetFontDesc() *pango.FontDescription {
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*pango.FontDescription)(unsafe.Pointer(cret))
 }
 
 // Gets the `PangoFontFace` representing the selected font group
@@ -412,7 +415,7 @@ func (x *FontChooserBase) GetShowPreviewEntry() bool {
 // Adds a filter function that decides which fonts to display
 // in the font chooser.
 func (x *FontChooserBase) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 // Sets the currently-selected font.
@@ -596,7 +599,7 @@ func (x *FontChooserBase) GetPropertyShowPreviewEntry() bool {
 
 var (
 	XGtkFontChooserGetFont             func(uintptr) string
-	XGtkFontChooserGetFontDesc         func(uintptr) *pango.FontDescription
+	XGtkFontChooserGetFontDesc         func(uintptr) uintptr
 	XGtkFontChooserGetFontFace         func(uintptr) uintptr
 	XGtkFontChooserGetFontFamily       func(uintptr) uintptr
 	XGtkFontChooserGetFontFeatures     func(uintptr) string

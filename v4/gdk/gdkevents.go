@@ -660,7 +660,7 @@ func (x *Event) GetDisplay() *Display {
 	return cls
 }
 
-var xEventGetEventSequence func(uintptr) *EventSequence
+var xEventGetEventSequence func(uintptr) uintptr
 
 // Returns the event sequence to which the event belongs.
 //
@@ -668,7 +668,10 @@ var xEventGetEventSequence func(uintptr) *EventSequence
 // events typically don't have event sequence information.
 func (x *Event) GetEventSequence() *EventSequence {
 	cret := xEventGetEventSequence(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*EventSequence)(unsafe.Pointer(cret))
 }
 
 var xEventGetEventType func(uintptr) EventType

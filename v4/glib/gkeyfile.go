@@ -165,7 +165,7 @@ func (x *KeyFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewKeyFile func() *KeyFile
+var xNewKeyFile func() uintptr
 
 // Creates a new empty [struct@GLib.KeyFile] object.
 //
@@ -175,7 +175,10 @@ var xNewKeyFile func() *KeyFile
 // read an existing key file.
 func NewKeyFile() *KeyFile {
 	cret := xNewKeyFile()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*KeyFile)(unsafe.Pointer(cret))
 }
 
 var xKeyFileFree func(uintptr)
@@ -649,12 +652,15 @@ func (x *KeyFile) LoadFromFile(FileVar string, FlagsVar KeyFileFlags) (bool, err
 	return cret, cerr
 }
 
-var xKeyFileRef func(uintptr) *KeyFile
+var xKeyFileRef func(uintptr) uintptr
 
 // Increases the reference count of @key_file.
 func (x *KeyFile) Ref() *KeyFile {
 	cret := xKeyFileRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*KeyFile)(unsafe.Pointer(cret))
 }
 
 var xKeyFileRemoveComment func(uintptr, string, string, **Error) bool

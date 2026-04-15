@@ -54,7 +54,7 @@ func (x *SpringParams) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSpringParams func(float64, float64, float64) *SpringParams
+var xNewSpringParams func(float64, float64, float64) uintptr
 
 // Creates a new `AdwSpringParams` from @mass, @stiffness and @damping_ratio.
 //
@@ -73,10 +73,13 @@ var xNewSpringParams func(float64, float64, float64) *SpringParams
 // [ctor@SpringParams.new_full] allows to pass a raw damping value instead.
 func NewSpringParams(DampingRatioVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
 	cret := xNewSpringParams(DampingRatioVar, MassVar, StiffnessVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
-var xNewSpringParamsFull func(float64, float64, float64) *SpringParams
+var xNewSpringParamsFull func(float64, float64, float64) uintptr
 
 // Creates a new `AdwSpringParams` from @mass, @stiffness and @damping.
 //
@@ -84,7 +87,10 @@ var xNewSpringParamsFull func(float64, float64, float64) *SpringParams
 // instead of @damping.
 func NewSpringParamsFull(DampingVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
 	cret := xNewSpringParamsFull(DampingVar, MassVar, StiffnessVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xSpringParamsGetDamping func(uintptr) float64
@@ -119,12 +125,15 @@ func (x *SpringParams) GetStiffness() float64 {
 	return cret
 }
 
-var xSpringParamsRef func(uintptr) *SpringParams
+var xSpringParamsRef func(uintptr) uintptr
 
 // Increases the reference count of @self.
 func (x *SpringParams) Ref() *SpringParams {
 	cret := xSpringParamsRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xSpringParamsUnref func(uintptr)

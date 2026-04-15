@@ -2,6 +2,8 @@
 package soup
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -32,7 +34,7 @@ const (
 	DateCookieValue DateFormat = 2
 )
 
-var xDateTimeNewFromHttpString func(string) *glib.DateTime
+var xDateTimeNewFromHttpString func(string) uintptr
 
 // Parses @date_string and tries to extract a date from it.
 //
@@ -41,7 +43,10 @@ var xDateTimeNewFromHttpString func(string) *glib.DateTime
 // leading "0"s, etc.)
 func DateTimeNewFromHttpString(DateStringVar string) *glib.DateTime {
 	cret := xDateTimeNewFromHttpString(DateStringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
 var xDateTimeToString func(*glib.DateTime, DateFormat) string

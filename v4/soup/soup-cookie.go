@@ -2,6 +2,8 @@
 package soup
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -46,7 +48,7 @@ const (
 	SameSitePolicyStrictValue SameSitePolicy = 2
 )
 
-var xCookieParse func(string, *glib.Uri) *Cookie
+var xCookieParse func(string, *glib.Uri) uintptr
 
 // Parses @header and returns a [struct@Cookie].
 //
@@ -63,7 +65,10 @@ var xCookieParse func(string, *glib.Uri) *Cookie
 // is %SOUP_SAME_SITE_POLICY_LAX.
 func CookieParse(HeaderVar string, OriginVar *glib.Uri) *Cookie {
 	cret := xCookieParse(HeaderVar, OriginVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Cookie)(unsafe.Pointer(cret))
 }
 
 var xCookiesFree func(*glib.SList)
@@ -73,7 +78,7 @@ func CookiesFree(CookiesVar *glib.SList) {
 	xCookiesFree(CookiesVar)
 }
 
-var xCookiesFromRequest func(uintptr) *glib.SList
+var xCookiesFromRequest func(uintptr) uintptr
 
 // Parses @msg's Cookie request header and returns a [struct@GLib.SList] of
 // `SoupCookie`s.
@@ -84,10 +89,13 @@ var xCookiesFromRequest func(uintptr) *glib.SList
 // [func@cookies_to_response].)
 func CookiesFromRequest(MsgVar *Message) *glib.SList {
 	cret := xCookiesFromRequest(MsgVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xCookiesFromResponse func(uintptr) *glib.SList
+var xCookiesFromResponse func(uintptr) uintptr
 
 // Parses @msg's Set-Cookie response headers and returns a [struct@GLib.SList]
 // of `SoupCookie`s.
@@ -96,7 +104,10 @@ var xCookiesFromResponse func(uintptr) *glib.SList
 // values defaulted from @msg.
 func CookiesFromResponse(MsgVar *Message) *glib.SList {
 	cret := xCookiesFromResponse(MsgVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
 var xCookiesToCookieHeader func(*glib.SList) string

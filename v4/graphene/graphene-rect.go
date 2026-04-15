@@ -163,7 +163,7 @@ func (x *Rect) GetY() float32 {
 	return cret
 }
 
-var xRectInit func(uintptr, float32, float32, float32, float32) *Rect
+var xRectInit func(uintptr, float32, float32, float32, float32) uintptr
 
 // Initializes the given #graphene_rect_t with the given values.
 //
@@ -171,10 +171,13 @@ var xRectInit func(uintptr, float32, float32, float32, float32) *Rect
 // before returning.
 func (x *Rect) Init(XVar float32, YVar float32, WidthVar float32, HeightVar float32) *Rect {
 	cret := xRectInit(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
-var xRectInitFromRect func(uintptr, *Rect) *Rect
+var xRectInitFromRect func(uintptr, *Rect) uintptr
 
 // Initializes @r using the given @src rectangle.
 //
@@ -182,10 +185,13 @@ var xRectInitFromRect func(uintptr, *Rect) *Rect
 // before returning.
 func (x *Rect) InitFromRect(SrcVar *Rect) *Rect {
 	cret := xRectInitFromRect(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
-var xRectInset func(uintptr, float32, float32) *Rect
+var xRectInset func(uintptr, float32, float32) uintptr
 
 // Changes the given rectangle to be smaller, or larger depending on the
 // given inset parameters.
@@ -203,7 +209,10 @@ var xRectInset func(uintptr, float32, float32) *Rect
 // height then the size will be set to zero.
 func (x *Rect) Inset(DXVar float32, DYVar float32) *Rect {
 	cret := xRectInset(x.GoPointer(), DXVar, DYVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
 var xRectInsetR func(uintptr, float32, float32, *Rect)
@@ -249,7 +258,7 @@ func (x *Rect) Intersection(BVar *Rect, ResVar *Rect) bool {
 	return cret
 }
 
-var xRectNormalize func(uintptr) *Rect
+var xRectNormalize func(uintptr) uintptr
 
 // Normalizes the passed rectangle.
 //
@@ -258,7 +267,10 @@ var xRectNormalize func(uintptr) *Rect
 // the rectangle.
 func (x *Rect) Normalize() *Rect {
 	cret := xRectNormalize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
 var xRectNormalizeR func(uintptr, *Rect)
@@ -272,14 +284,17 @@ func (x *Rect) NormalizeR(ResVar *Rect) {
 	xRectNormalizeR(x.GoPointer(), ResVar)
 }
 
-var xRectOffset func(uintptr, float32, float32) *Rect
+var xRectOffset func(uintptr, float32, float32) uintptr
 
 // Offsets the origin by @d_x and @d_y.
 //
 // The size of the rectangle is unchanged.
 func (x *Rect) Offset(DXVar float32, DYVar float32) *Rect {
 	cret := xRectOffset(x.GoPointer(), DXVar, DYVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
 var xRectOffsetR func(uintptr, float32, float32, *Rect)
@@ -333,14 +348,17 @@ func (x *Rect) RoundExtents(ResVar *Rect) {
 	xRectRoundExtents(x.GoPointer(), ResVar)
 }
 
-var xRectRoundToPixel func(uintptr) *Rect
+var xRectRoundToPixel func(uintptr) uintptr
 
 // Rounds the origin and the size of the given rectangle to
 // their nearest integer values; the rounding is guaranteed
 // to be large enough to contain the original rectangle.
 func (x *Rect) RoundToPixel() *Rect {
 	cret := xRectRoundToPixel(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
 var xRectScale func(uintptr, float32, float32, *Rect)
@@ -362,23 +380,29 @@ func (x *Rect) Union(BVar *Rect, ResVar *Rect) {
 	xRectUnion(x.GoPointer(), BVar, ResVar)
 }
 
-var xRectAlloc func() *Rect
+var xRectAlloc func() uintptr
 
 // Allocates a new #graphene_rect_t.
 //
 // The contents of the returned rectangle are undefined.
 func RectAlloc() *Rect {
 	cret := xRectAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
-var xRectZero func() *Rect
+var xRectZero func() uintptr
 
 // Returns a degenerate rectangle with origin fixed at (0, 0) and
 // a size of 0, 0.
 func RectZero() *Rect {
 	cret := xRectZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Rect)(unsafe.Pointer(cret))
 }
 
 func init() {

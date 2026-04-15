@@ -51,8 +51,12 @@ func (x *SettingsBackendClass) OverrideRead(cb func(*SettingsBackend, string, *g
 	if cb == nil {
 		x.xRead = 0
 	} else {
-		x.xRead = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant {
-			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp, DefaultValueVarp)
+		x.xRead = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) uintptr {
+			ret := cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp, DefaultValueVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -63,10 +67,14 @@ func (x *SettingsBackendClass) GetRead() func(*SettingsBackend, string, *glib.Va
 	if x.xRead == 0 {
 		return nil
 	}
-	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) uintptr
 	purego.RegisterFunc(&rawCallback, x.xRead)
 	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType, DefaultValueVar bool) *glib.Variant {
-		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar, DefaultValueVar)
+		rawRet := rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar, DefaultValueVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -286,8 +294,12 @@ func (x *SettingsBackendClass) OverrideReadUserValue(cb func(*SettingsBackend, s
 	if cb == nil {
 		x.xReadUserValue = 0
 	} else {
-		x.xReadUserValue = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant {
-			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp)
+		x.xReadUserValue = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) uintptr {
+			ret := cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp)
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -298,10 +310,14 @@ func (x *SettingsBackendClass) GetReadUserValue() func(*SettingsBackend, string,
 	if x.xReadUserValue == 0 {
 		return nil
 	}
-	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) uintptr
 	purego.RegisterFunc(&rawCallback, x.xReadUserValue)
 	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
-		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar)
+		rawRet := rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 

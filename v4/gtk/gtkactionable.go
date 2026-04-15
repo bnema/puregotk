@@ -87,8 +87,12 @@ func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *
 	if cb == nil {
 		x.xGetActionTargetValue = 0
 	} else {
-		x.xGetActionTargetValue = purego.NewCallback(func(ActionableVarp uintptr) *glib.Variant {
-			return cb(&ActionableBase{Ptr: ActionableVarp})
+		x.xGetActionTargetValue = purego.NewCallback(func(ActionableVarp uintptr) uintptr {
+			ret := cb(&ActionableBase{Ptr: ActionableVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -99,10 +103,14 @@ func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.V
 	if x.xGetActionTargetValue == 0 {
 		return nil
 	}
-	var rawCallback func(ActionableVarp uintptr) *glib.Variant
+	var rawCallback func(ActionableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetActionTargetValue)
 	return func(ActionableVar Actionable) *glib.Variant {
-		return rawCallback(ActionableVar.GoPointer())
+		rawRet := rawCallback(ActionableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -184,7 +192,10 @@ func (x *ActionableBase) GetActionName() string {
 // Gets the current target value of @actionable.
 func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 // Specifies the name of the action with which this widget should be
@@ -292,7 +303,7 @@ func (x *ActionableBase) GetPropertyActionTarget() uintptr {
 
 var (
 	XGtkActionableGetActionName         func(uintptr) string
-	XGtkActionableGetActionTargetValue  func(uintptr) *glib.Variant
+	XGtkActionableGetActionTargetValue  func(uintptr) uintptr
 	XGtkActionableSetActionName         func(uintptr, string)
 	XGtkActionableSetActionTarget       func(uintptr, string, ...interface{})
 	XGtkActionableSetActionTargetValue  func(uintptr, *glib.Variant)

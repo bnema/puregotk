@@ -63,8 +63,12 @@ func (x *DBusObjectIface) OverrideGetInterfaces(cb func(DBusObject) *glib.List) 
 	if cb == nil {
 		x.xGetInterfaces = 0
 	} else {
-		x.xGetInterfaces = purego.NewCallback(func(ObjectVarp uintptr) *glib.List {
-			return cb(&DBusObjectBase{Ptr: ObjectVarp})
+		x.xGetInterfaces = purego.NewCallback(func(ObjectVarp uintptr) uintptr {
+			ret := cb(&DBusObjectBase{Ptr: ObjectVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -75,10 +79,14 @@ func (x *DBusObjectIface) GetGetInterfaces() func(DBusObject) *glib.List {
 	if x.xGetInterfaces == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr) *glib.List
+	var rawCallback func(ObjectVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetInterfaces)
 	return func(ObjectVar DBusObject) *glib.List {
-		return rawCallback(ObjectVar.GoPointer())
+		rawRet := rawCallback(ObjectVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.List)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -218,7 +226,10 @@ func (x *DBusObjectBase) GetInterface(InterfaceNameVar string) *DBusInterfaceBas
 // Gets the D-Bus interfaces associated with @object.
 func (x *DBusObjectBase) GetInterfaces() *glib.List {
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 // Gets the object path for @object.
@@ -229,7 +240,7 @@ func (x *DBusObjectBase) GetObjectPath() string {
 
 var (
 	XGDbusObjectGetInterface  func(uintptr, string) uintptr
-	XGDbusObjectGetInterfaces func(uintptr) *glib.List
+	XGDbusObjectGetInterfaces func(uintptr) uintptr
 	XGDbusObjectGetObjectPath func(uintptr) string
 )
 

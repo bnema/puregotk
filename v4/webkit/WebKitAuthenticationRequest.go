@@ -145,7 +145,7 @@ func (x *AuthenticationRequest) GetPort() uint32 {
 	return cret
 }
 
-var xAuthenticationRequestGetProposedCredential func(uintptr) *Credential
+var xAuthenticationRequestGetProposedCredential func(uintptr) uintptr
 
 // Get the #WebKitCredential of the proposed authentication challenge.
 //
@@ -154,7 +154,10 @@ var xAuthenticationRequestGetProposedCredential func(uintptr) *Credential
 // authentication or construct their own #WebKitCredential.
 func (x *AuthenticationRequest) GetProposedCredential() *Credential {
 	cret := xAuthenticationRequestGetProposedCredential(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Credential)(unsafe.Pointer(cret))
 }
 
 var xAuthenticationRequestGetRealm func(uintptr) string
@@ -173,12 +176,15 @@ func (x *AuthenticationRequest) GetScheme() AuthenticationScheme {
 	return cret
 }
 
-var xAuthenticationRequestGetSecurityOrigin func(uintptr) *SecurityOrigin
+var xAuthenticationRequestGetSecurityOrigin func(uintptr) uintptr
 
 // Get the #WebKitSecurityOrigin that this authentication challenge is applicable to.
 func (x *AuthenticationRequest) GetSecurityOrigin() *SecurityOrigin {
 	cret := xAuthenticationRequestGetSecurityOrigin(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SecurityOrigin)(unsafe.Pointer(cret))
 }
 
 var xAuthenticationRequestIsForProxy func(uintptr) bool

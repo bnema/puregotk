@@ -29,7 +29,7 @@ func (x *Point) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xPointAlloc func() *Point
+var xPointAlloc func() uintptr
 
 // Allocates a new #graphene_point_t structure.
 //
@@ -55,7 +55,10 @@ var xPointAlloc func() *Point
 // ]|
 func PointAlloc() *Point {
 	cret := xPointAlloc()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
 var xPointDistance func(uintptr, *Point, *float32, *float32) float32
@@ -86,30 +89,39 @@ func (x *Point) Free() {
 	xPointFree(x.GoPointer())
 }
 
-var xPointInit func(uintptr, float32, float32) *Point
+var xPointInit func(uintptr, float32, float32) uintptr
 
 // Initializes @p to the given @x and @y coordinates.
 //
 // It's safe to call this function multiple times.
 func (x *Point) Init(XVar float32, YVar float32) *Point {
 	cret := xPointInit(x.GoPointer(), XVar, YVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
-var xPointInitFromPoint func(uintptr, *Point) *Point
+var xPointInitFromPoint func(uintptr, *Point) uintptr
 
 // Initializes @p with the same coordinates of @src.
 func (x *Point) InitFromPoint(SrcVar *Point) *Point {
 	cret := xPointInitFromPoint(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
-var xPointInitFromVec2 func(uintptr, *Vec2) *Point
+var xPointInitFromVec2 func(uintptr, *Vec2) uintptr
 
 // Initializes @p with the coordinates inside the given #graphene_vec2_t.
 func (x *Point) InitFromVec2(SrcVar *Vec2) *Point {
 	cret := xPointInitFromVec2(x.GoPointer(), SrcVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
 var xPointInterpolate func(uintptr, *Point, float64, *Point)
@@ -137,12 +149,15 @@ func (x *Point) ToVec2(VVar *Vec2) {
 	xPointToVec2(x.GoPointer(), VVar)
 }
 
-var xPointZero func() *Point
+var xPointZero func() uintptr
 
 // Returns a point fixed at (0, 0).
 func PointZero() *Point {
 	cret := xPointZero()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Point)(unsafe.Pointer(cret))
 }
 
 func init() {

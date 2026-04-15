@@ -265,12 +265,15 @@ func (x *Flap) GetRevealFlap() bool {
 	return cret
 }
 
-var xFlapGetRevealParams func(uintptr) *SpringParams
+var xFlapGetRevealParams func(uintptr) uintptr
 
 // Gets the reveal animation spring parameters for @self.
 func (x *Flap) GetRevealParams() *SpringParams {
 	cret := xFlapGetRevealParams(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xFlapGetRevealProgress func(uintptr) float64

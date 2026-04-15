@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject/types"
@@ -45,12 +47,15 @@ func NewRadialGradientNode(BoundsVar *graphene.Rect, CenterVar *graphene.Point, 
 	return cls
 }
 
-var xRadialGradientNodeGetCenter func(uintptr) *graphene.Point
+var xRadialGradientNodeGetCenter func(uintptr) uintptr
 
 // Retrieves the center pointer for the gradient.
 func (x *RadialGradientNode) GetCenter() *graphene.Point {
 	cret := xRadialGradientNodeGetCenter(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*graphene.Point)(unsafe.Pointer(cret))
 }
 
 var xRadialGradientNodeGetColorStops func(uintptr, *uint) uintptr

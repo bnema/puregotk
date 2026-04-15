@@ -130,7 +130,7 @@ func (x *SettingsSchema) GetId() string {
 	return cret
 }
 
-var xSettingsSchemaGetKey func(uintptr, string) *SettingsSchemaKey
+var xSettingsSchemaGetKey func(uintptr, string) uintptr
 
 // Gets the key named @name from @schema.
 //
@@ -138,7 +138,10 @@ var xSettingsSchemaGetKey func(uintptr, string) *SettingsSchemaKey
 // g_settings_schema_list_keys().
 func (x *SettingsSchema) GetKey(NameVar string) *SettingsSchemaKey {
 	cret := xSettingsSchemaGetKey(x.GoPointer(), NameVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchemaKey)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaGetPath func(uintptr) string
@@ -188,12 +191,15 @@ func (x *SettingsSchema) ListKeys() []string {
 	return cret
 }
 
-var xSettingsSchemaRef func(uintptr) *SettingsSchema
+var xSettingsSchemaRef func(uintptr) uintptr
 
 // Increase the reference count of @schema, returning a new reference.
 func (x *SettingsSchema) Ref() *SettingsSchema {
 	cret := xSettingsSchemaRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchema)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaUnref func(uintptr)
@@ -219,7 +225,7 @@ func (x *SettingsSchemaKey) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSettingsSchemaKeyGetDefaultValue func(uintptr) *glib.Variant
+var xSettingsSchemaKeyGetDefaultValue func(uintptr) uintptr
 
 // Gets the default value for @key.
 //
@@ -227,7 +233,10 @@ var xSettingsSchemaKeyGetDefaultValue func(uintptr) *glib.Variant
 // administrator defaults and lockdown are not visible via this API.
 func (x *SettingsSchemaKey) GetDefaultValue() *glib.Variant {
 	cret := xSettingsSchemaKeyGetDefaultValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaKeyGetDescription func(uintptr) string
@@ -259,7 +268,7 @@ func (x *SettingsSchemaKey) GetName() string {
 	return cret
 }
 
-var xSettingsSchemaKeyGetRange func(uintptr) *glib.Variant
+var xSettingsSchemaKeyGetRange func(uintptr) uintptr
 
 // Queries the range of a key.
 //
@@ -299,7 +308,10 @@ var xSettingsSchemaKeyGetRange func(uintptr) *glib.Variant
 // no longer needed.
 func (x *SettingsSchemaKey) GetRange() *glib.Variant {
 	cret := xSettingsSchemaKeyGetRange(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaKeyGetSummary func(uintptr) string
@@ -322,12 +334,15 @@ func (x *SettingsSchemaKey) GetSummary() string {
 	return cret
 }
 
-var xSettingsSchemaKeyGetValueType func(uintptr) *glib.VariantType
+var xSettingsSchemaKeyGetValueType func(uintptr) uintptr
 
 // Gets the #GVariantType of @key.
 func (x *SettingsSchemaKey) GetValueType() *glib.VariantType {
 	cret := xSettingsSchemaKeyGetValueType(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.VariantType)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaKeyRangeCheck func(uintptr, *glib.Variant) bool
@@ -342,12 +357,15 @@ func (x *SettingsSchemaKey) RangeCheck(ValueVar *glib.Variant) bool {
 	return cret
 }
 
-var xSettingsSchemaKeyRef func(uintptr) *SettingsSchemaKey
+var xSettingsSchemaKeyRef func(uintptr) uintptr
 
 // Increase the reference count of @key, returning a new reference.
 func (x *SettingsSchemaKey) Ref() *SettingsSchemaKey {
 	cret := xSettingsSchemaKeyRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchemaKey)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaKeyUnref func(uintptr)
@@ -372,7 +390,7 @@ func (x *SettingsSchemaSource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewSettingsSchemaSourceFromDirectory func(string, *SettingsSchemaSource, bool, **glib.Error) *SettingsSchemaSource
+var xNewSettingsSchemaSourceFromDirectory func(string, *SettingsSchemaSource, bool, **glib.Error) uintptr
 
 // Attempts to create a new schema source corresponding to the contents
 // of the given directory.
@@ -409,10 +427,13 @@ func NewSettingsSchemaSourceFromDirectory(DirectoryVar string, ParentVar *Settin
 	var cerr *glib.Error
 
 	cret := xNewSettingsSchemaSourceFromDirectory(DirectoryVar, ParentVar, TrustedVar, &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*SettingsSchemaSource)(unsafe.Pointer(cret)), nil
 }
 
 var xSettingsSchemaSourceListSchemas func(uintptr, bool, *[]string, *[]string)
@@ -433,7 +454,7 @@ func (x *SettingsSchemaSource) ListSchemas(RecursiveVar bool, NonRelocatableVar 
 	xSettingsSchemaSourceListSchemas(x.GoPointer(), RecursiveVar, NonRelocatableVar, RelocatableVar)
 }
 
-var xSettingsSchemaSourceLookup func(uintptr, string, bool) *SettingsSchema
+var xSettingsSchemaSourceLookup func(uintptr, string, bool) uintptr
 
 // Looks up a schema with the identifier @schema_id in @source.
 //
@@ -447,15 +468,21 @@ var xSettingsSchemaSourceLookup func(uintptr, string, bool) *SettingsSchema
 // If the schema isn't found, %NULL is returned.
 func (x *SettingsSchemaSource) Lookup(SchemaIdVar string, RecursiveVar bool) *SettingsSchema {
 	cret := xSettingsSchemaSourceLookup(x.GoPointer(), SchemaIdVar, RecursiveVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchema)(unsafe.Pointer(cret))
 }
 
-var xSettingsSchemaSourceRef func(uintptr) *SettingsSchemaSource
+var xSettingsSchemaSourceRef func(uintptr) uintptr
 
 // Increase the reference count of @source, returning a new reference.
 func (x *SettingsSchemaSource) Ref() *SettingsSchemaSource {
 	cret := xSettingsSchemaSourceRef(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchemaSource)(unsafe.Pointer(cret))
 }
 
 var xSettingsSchemaSourceUnref func(uintptr)
@@ -465,7 +492,7 @@ func (x *SettingsSchemaSource) Unref() {
 	xSettingsSchemaSourceUnref(x.GoPointer())
 }
 
-var xSettingsSchemaSourceGetDefault func() *SettingsSchemaSource
+var xSettingsSchemaSourceGetDefault func() uintptr
 
 // Gets the default system schema source.
 //
@@ -482,7 +509,10 @@ var xSettingsSchemaSourceGetDefault func() *SettingsSchemaSource
 // recursively.
 func SettingsSchemaSourceGetDefault() *SettingsSchemaSource {
 	cret := xSettingsSchemaSourceGetDefault()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SettingsSchemaSource)(unsafe.Pointer(cret))
 }
 
 func init() {

@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -228,12 +230,15 @@ func (x *PageSetup) GetPaperHeight(UnitVar Unit) float64 {
 	return cret
 }
 
-var xPageSetupGetPaperSize func(uintptr) *PaperSize
+var xPageSetupGetPaperSize func(uintptr) uintptr
 
 // Gets the paper size of the `GtkPageSetup`.
 func (x *PageSetup) GetPaperSize() *PaperSize {
 	cret := xPageSetupGetPaperSize(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
 var xPageSetupGetPaperWidth func(uintptr, Unit) float64
@@ -359,12 +364,15 @@ func (x *PageSetup) ToFile(FileNameVar string) (bool, error) {
 	return cret, cerr
 }
 
-var xPageSetupToGvariant func(uintptr) *glib.Variant
+var xPageSetupToGvariant func(uintptr) uintptr
 
 // Serialize page setup to an a{sv} variant.
 func (x *PageSetup) ToGvariant() *glib.Variant {
 	cret := xPageSetupToGvariant(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xPageSetupToKeyFile func(uintptr, *glib.KeyFile, string)

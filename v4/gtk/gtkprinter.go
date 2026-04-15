@@ -74,7 +74,7 @@ var xEnumeratePrinters func(uintptr, uintptr, uintptr, bool)
 //
 // If @func returns true, the enumeration is stopped.
 func EnumeratePrinters(FuncVar *PrinterFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify, WaitVar bool) {
-	xEnumeratePrinters(glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar), WaitVar)
+	xEnumeratePrinters(glib.NewCallback(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar), WaitVar)
 }
 
 // Represents a printer.
@@ -144,12 +144,15 @@ func (x *Printer) Compare(BVar *Printer) int32 {
 	return cret
 }
 
-var xPrinterGetBackend func(uintptr) *PrintBackend
+var xPrinterGetBackend func(uintptr) uintptr
 
 // Returns the backend of the printer.
 func (x *Printer) GetBackend() *PrintBackend {
 	cret := xPrinterGetBackend(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*PrintBackend)(unsafe.Pointer(cret))
 }
 
 var xPrinterGetCapabilities func(uintptr) PrintCapabilities
@@ -317,7 +320,7 @@ func (x *Printer) IsVirtual() bool {
 	return cret
 }
 
-var xPrinterListPapers func(uintptr) *glib.List
+var xPrinterListPapers func(uintptr) uintptr
 
 // Lists all the paper sizes @printer supports.
 //
@@ -326,7 +329,10 @@ var xPrinterListPapers func(uintptr) *glib.List
 // [method@Gtk.Printer.request_details].
 func (x *Printer) ListPapers() *glib.List {
 	cret := xPrinterListPapers(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xPrinterRequestDetails func(uintptr)

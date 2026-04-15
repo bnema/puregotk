@@ -337,7 +337,7 @@ var xAssistantSetForwardPageFunc func(uintptr, uintptr, uintptr, uintptr)
 // use the default forward function, which just goes to the
 // next visible page.
 func (x *Assistant) SetForwardPageFunc(PageFuncVar *AssistantPageFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xAssistantSetForwardPageFunc(x.GoPointer(), glib.NewCallbackNullable(PageFuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xAssistantSetForwardPageFunc(x.GoPointer(), glib.NewCallbackNullable(PageFuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xAssistantSetPageComplete func(uintptr, uintptr, bool)

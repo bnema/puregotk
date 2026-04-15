@@ -65,12 +65,15 @@ func (x *Item) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewItem func() *Item
+var xNewItem func() uintptr
 
 // Creates a new `PangoItem` structure initialized to default values.
 func NewItem() *Item {
 	cret := xNewItem()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 var xItemApplyAttrs func(uintptr, *AttrIterator)
@@ -90,12 +93,15 @@ func (x *Item) ApplyAttrs(IterVar *AttrIterator) {
 	xItemApplyAttrs(x.GoPointer(), IterVar)
 }
 
-var xItemCopy func(uintptr) *Item
+var xItemCopy func(uintptr) uintptr
 
 // Copy an existing `PangoItem` structure.
 func (x *Item) Copy() *Item {
 	cret := xItemCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 var xItemFree func(uintptr)
@@ -118,7 +124,7 @@ func (x *Item) GetCharOffset() int32 {
 	return cret
 }
 
-var xItemSplit func(uintptr, int32, int32) *Item
+var xItemSplit func(uintptr, int32, int32) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -134,7 +140,10 @@ var xItemSplit func(uintptr, int32, int32) *Item
 // itself.
 func (x *Item) Split(SplitIndexVar int32, SplitOffsetVar int32) *Item {
 	cret := xItemSplit(x.GoPointer(), SplitIndexVar, SplitOffsetVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Item)(unsafe.Pointer(cret))
 }
 
 const (
@@ -148,7 +157,7 @@ const (
 	ANALYSIS_FLAG_NEED_HYPHEN int32 = 4
 )
 
-var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) *glib.List
+var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) uintptr
 
 // Breaks a piece of text into segments with consistent directional
 // level and font.
@@ -164,10 +173,13 @@ var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) *glib
 // in the same @cached_iter).
 func Itemize(ContextVar *Context, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 	cret := xItemize(ContextVar.GoPointer(), TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xItemizeWithBaseDir func(uintptr, Direction, string, int32, int32, *AttrList, *AttrIterator) *glib.List
+var xItemizeWithBaseDir func(uintptr, Direction, string, int32, int32, *AttrList, *AttrIterator) uintptr
 
 // Like `pango_itemize()`, but with an explicitly specified base direction.
 //
@@ -176,10 +188,13 @@ var xItemizeWithBaseDir func(uintptr, Direction, string, int32, int32, *AttrList
 // (see [method@Pango.Context.set_base_dir]).
 func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 	cret := xItemizeWithBaseDir(ContextVar.GoPointer(), BaseDirVar, TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xReorderItems func(*glib.List) *glib.List
+var xReorderItems func(*glib.List) uintptr
 
 // Reorder items from logical order to visual order.
 //
@@ -192,7 +207,10 @@ var xReorderItems func(*glib.List) *glib.List
 //	is duplicated elsewhere in Pango for that reason.)
 func ReorderItems(ItemsVar *glib.List) *glib.List {
 	cret := xReorderItems(ItemsVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 func init() {

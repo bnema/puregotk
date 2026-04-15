@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -146,12 +148,15 @@ func (x *DBusMessage) GetArg0Path() string {
 	return cret
 }
 
-var xDBusMessageGetBody func(uintptr) *glib.Variant
+var xDBusMessageGetBody func(uintptr) uintptr
 
 // Gets the body of a message.
 func (x *DBusMessage) GetBody() *glib.Variant {
 	cret := xDBusMessageGetBody(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDBusMessageGetByteOrder func(uintptr) DBusMessageByteOrder
@@ -186,7 +191,7 @@ func (x *DBusMessage) GetFlags() DBusMessageFlags {
 	return cret
 }
 
-var xDBusMessageGetHeader func(uintptr, DBusMessageHeaderField) *glib.Variant
+var xDBusMessageGetHeader func(uintptr, DBusMessageHeaderField) uintptr
 
 // Gets a header field on @message.
 //
@@ -194,7 +199,10 @@ var xDBusMessageGetHeader func(uintptr, DBusMessageHeaderField) *glib.Variant
 // matches what is expected.
 func (x *DBusMessage) GetHeader(HeaderFieldVar DBusMessageHeaderField) *glib.Variant {
 	cret := xDBusMessageGetHeader(x.GoPointer(), HeaderFieldVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
 var xDBusMessageGetHeaderFields func(uintptr) uintptr

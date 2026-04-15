@@ -36,8 +36,12 @@ func (x *DBusInterfaceIface) OverrideGetInfo(cb func(DBusInterface) *DBusInterfa
 	if cb == nil {
 		x.xGetInfo = 0
 	} else {
-		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
-			return cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -48,10 +52,14 @@ func (x *DBusInterfaceIface) GetGetInfo() func(DBusInterface) *DBusInterfaceInfo
 	if x.xGetInfo == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetInfo)
 	return func(InterfaceVar DBusInterface) *DBusInterfaceInfo {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceInfo)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -208,7 +216,10 @@ func (x *DBusInterfaceBase) DupObject() *DBusObjectBase {
 // #GDBusInterfaceInfo.
 func (x *DBusInterfaceBase) GetInfo() *DBusInterfaceInfo {
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
 // Gets the #GDBusObject that @interface_ belongs to, if any.
@@ -239,7 +250,7 @@ func (x *DBusInterfaceBase) SetObject(ObjectVar DBusObject) {
 
 var (
 	XGDbusInterfaceDupObject func(uintptr) uintptr
-	XGDbusInterfaceGetInfo   func(uintptr) *DBusInterfaceInfo
+	XGDbusInterfaceGetInfo   func(uintptr) uintptr
 	XGDbusInterfaceGetObject func(uintptr) uintptr
 	XGDbusInterfaceSetObject func(uintptr, uintptr)
 )

@@ -208,12 +208,15 @@ func (x *Leaflet) GetChildByName(NameVar string) *gtk.Widget {
 	return cls
 }
 
-var xLeafletGetChildTransitionParams func(uintptr) *SpringParams
+var xLeafletGetChildTransitionParams func(uintptr) uintptr
 
 // Gets the child transition spring parameters for @self.
 func (x *Leaflet) GetChildTransitionParams() *SpringParams {
 	cret := xLeafletGetChildTransitionParams(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*SpringParams)(unsafe.Pointer(cret))
 }
 
 var xLeafletGetChildTransitionRunning func(uintptr) bool

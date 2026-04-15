@@ -74,7 +74,7 @@ func (x *ColorDialog) ChooseRgba(ParentVar *Window, InitialColorVar *gdk.RGBA, C
 	xColorDialogChooseRgba(x.GoPointer(), ParentVar.GoPointer(), InitialColorVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xColorDialogChooseRgbaFinish func(uintptr, uintptr, **glib.Error) *gdk.RGBA
+var xColorDialogChooseRgbaFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.ColorDialog.choose_rgba] call
 //
@@ -84,10 +84,13 @@ func (x *ColorDialog) ChooseRgbaFinish(ResultVar gio.AsyncResult) (*gdk.RGBA, er
 	var cerr *glib.Error
 
 	cret := xColorDialogChooseRgbaFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-	if cerr == nil {
-		return cret, nil
+	if cerr != nil {
+		return nil, cerr
 	}
-	return cret, cerr
+	if cret == 0 {
+		return nil, nil
+	}
+	return (*gdk.RGBA)(unsafe.Pointer(cret)), nil
 }
 
 var xColorDialogGetModal func(uintptr) bool

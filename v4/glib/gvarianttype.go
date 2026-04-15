@@ -208,7 +208,7 @@ func (x *VariantType) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewVariantType func(string) *VariantType
+var xNewVariantType func(string) uintptr
 
 // Creates a new [type@GLib.VariantType] corresponding to the type string given
 // by @type_string.
@@ -219,10 +219,13 @@ var xNewVariantType func(string) *VariantType
 // string.  Use [func@GLib.VariantType.string_is_valid] if you are unsure.
 func NewVariantType(TypeStringVar string) *VariantType {
 	cret := xNewVariantType(TypeStringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xNewVariantTypeArray func(*VariantType) *VariantType
+var xNewVariantTypeArray func(*VariantType) uintptr
 
 // Constructs the type corresponding to an array of elements of the
 // type @type.
@@ -230,10 +233,13 @@ var xNewVariantTypeArray func(*VariantType) *VariantType
 // It is appropriate to call [method@GLib.VariantType.first] on the return value.
 func NewVariantTypeArray(ElementVar *VariantType) *VariantType {
 	cret := xNewVariantTypeArray(ElementVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xNewVariantTypeDictEntry func(*VariantType, *VariantType) *VariantType
+var xNewVariantTypeDictEntry func(*VariantType, *VariantType) uintptr
 
 // Constructs the type corresponding to a dictionary entry with a key
 // of type @key and a value of type @value.
@@ -241,10 +247,13 @@ var xNewVariantTypeDictEntry func(*VariantType, *VariantType) *VariantType
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeDictEntry(KeyVar *VariantType, ValueVar *VariantType) *VariantType {
 	cret := xNewVariantTypeDictEntry(KeyVar, ValueVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xNewVariantTypeMaybe func(*VariantType) *VariantType
+var xNewVariantTypeMaybe func(*VariantType) uintptr
 
 // Constructs the type corresponding to a ‘maybe’ instance containing
 // type @type or `Nothing`.
@@ -252,10 +261,13 @@ var xNewVariantTypeMaybe func(*VariantType) *VariantType
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeMaybe(ElementVar *VariantType) *VariantType {
 	cret := xNewVariantTypeMaybe(ElementVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xNewVariantTypeTuple func(uintptr, int32) *VariantType
+var xNewVariantTypeTuple func(uintptr, int32) uintptr
 
 // Constructs a new tuple type, from @items.
 //
@@ -265,10 +277,13 @@ var xNewVariantTypeTuple func(uintptr, int32) *VariantType
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
 func NewVariantTypeTuple(ItemsVar uintptr, LengthVar int32) *VariantType {
 	cret := xNewVariantTypeTuple(ItemsVar, LengthVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xVariantTypeCopy func(uintptr) *VariantType
+var xVariantTypeCopy func(uintptr) uintptr
 
 // Makes a copy of a [type@GLib.VariantType].
 //
@@ -276,7 +291,10 @@ var xVariantTypeCopy func(uintptr) *VariantType
 // @type may not be `NULL`.
 func (x *VariantType) Copy() *VariantType {
 	cret := xVariantTypeCopy(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypeDupString func(uintptr) string
@@ -290,14 +308,17 @@ func (x *VariantType) DupString() string {
 	return cret
 }
 
-var xVariantTypeElement func(uintptr) *VariantType
+var xVariantTypeElement func(uintptr) uintptr
 
 // Determines the element type of an array or ‘maybe’ type.
 //
 // This function may only be used with array or ‘maybe’ types.
 func (x *VariantType) Element() *VariantType {
 	cret := xVariantTypeElement(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypeEqual func(uintptr, uintptr) bool
@@ -317,7 +338,7 @@ func (x *VariantType) Equal(Type2Var uintptr) bool {
 	return cret
 }
 
-var xVariantTypeFirst func(uintptr) *VariantType
+var xVariantTypeFirst func(uintptr) uintptr
 
 // Determines the first item type of a tuple or dictionary entry
 // type.
@@ -335,7 +356,10 @@ var xVariantTypeFirst func(uintptr) *VariantType
 // interface over tuple and dictionary entry types.
 func (x *VariantType) First() *VariantType {
 	cret := xVariantTypeFirst(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypeFree func(uintptr)
@@ -499,7 +523,7 @@ func (x *VariantType) IsVariant() bool {
 	return cret
 }
 
-var xVariantTypeKey func(uintptr) *VariantType
+var xVariantTypeKey func(uintptr) uintptr
 
 // Determines the key type of a dictionary entry type.
 //
@@ -508,7 +532,10 @@ var xVariantTypeKey func(uintptr) *VariantType
 // [method@GLib.VariantType.first].
 func (x *VariantType) Key() *VariantType {
 	cret := xVariantTypeKey(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypeNItems func(uintptr) uint
@@ -527,7 +554,7 @@ func (x *VariantType) NItems() uint {
 	return cret
 }
 
-var xVariantTypeNext func(uintptr) *VariantType
+var xVariantTypeNext func(uintptr) uintptr
 
 // Determines the next item type of a tuple or dictionary entry
 // type.
@@ -542,7 +569,10 @@ var xVariantTypeNext func(uintptr) *VariantType
 // For tuples, `NULL` is returned when @type is the last item in the tuple.
 func (x *VariantType) Next() *VariantType {
 	cret := xVariantTypeNext(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypePeekString func(uintptr) string
@@ -558,21 +588,27 @@ func (x *VariantType) PeekString() string {
 	return cret
 }
 
-var xVariantTypeValue func(uintptr) *VariantType
+var xVariantTypeValue func(uintptr) uintptr
 
 // Determines the value type of a dictionary entry type.
 //
 // This function may only be used with a dictionary entry type.
 func (x *VariantType) Value() *VariantType {
 	cret := xVariantTypeValue(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xVariantTypeChecked func(string) *VariantType
+var xVariantTypeChecked func(string) uintptr
 
 func VariantTypeChecked(TypeStringVar string) *VariantType {
 	cret := xVariantTypeChecked(TypeStringVar)
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*VariantType)(unsafe.Pointer(cret))
 }
 
 var xVariantTypeStringGetDepth func(string) uint

@@ -45,8 +45,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkele
 	if cb == nil {
 		x.xGetInfo = 0
 	} else {
-		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -57,10 +61,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetInfo() func(*DBusInterfaceSkeleton) *
 	if x.xGetInfo == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetInfo)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceInfo {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceInfo)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -70,8 +78,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetVtable(cb func(*DBusInterfaceSke
 	if cb == nil {
 		x.xGetVtable = 0
 	} else {
-		x.xGetVtable = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceVTable {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetVtable = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -82,10 +94,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetVtable() func(*DBusInterfaceSkeleton)
 	if x.xGetVtable == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceVTable
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetVtable)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceVTable {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*DBusInterfaceVTable)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -95,8 +111,12 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetProperties(cb func(*DBusInterfac
 	if cb == nil {
 		x.xGetProperties = 0
 	} else {
-		x.xGetProperties = purego.NewCallback(func(InterfaceVarp uintptr) *glib.Variant {
-			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		x.xGetProperties = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -107,10 +127,14 @@ func (x *DBusInterfaceSkeletonClass) GetGetProperties() func(*DBusInterfaceSkele
 	if x.xGetProperties == 0 {
 		return nil
 	}
-	var rawCallback func(InterfaceVarp uintptr) *glib.Variant
+	var rawCallback func(InterfaceVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetProperties)
 	return func(InterfaceVar *DBusInterfaceSkeleton) *glib.Variant {
-		return rawCallback(InterfaceVar.GoPointer())
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Variant)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -264,12 +288,15 @@ func (x *DBusInterfaceSkeleton) GetConnection() *DBusConnection {
 	return cls
 }
 
-var xDBusInterfaceSkeletonGetConnections func(uintptr) *glib.List
+var xDBusInterfaceSkeletonGetConnections func(uintptr) uintptr
 
 // Gets a list of the connections that @interface_ is exported on.
 func (x *DBusInterfaceSkeleton) GetConnections() *glib.List {
 	cret := xDBusInterfaceSkeletonGetConnections(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.List)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonGetFlags func(uintptr) DBusInterfaceSkeletonFlags
@@ -281,13 +308,16 @@ func (x *DBusInterfaceSkeleton) GetFlags() DBusInterfaceSkeletonFlags {
 	return cret
 }
 
-var xDBusInterfaceSkeletonGetInfo func(uintptr) *DBusInterfaceInfo
+var xDBusInterfaceSkeletonGetInfo func(uintptr) uintptr
 
 // Gets D-Bus introspection information for the D-Bus interface
 // implemented by @interface_.
 func (x *DBusInterfaceSkeleton) GetInfo() *DBusInterfaceInfo {
 	cret := xDBusInterfaceSkeletonGetInfo(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceInfo)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonGetObjectPath func(uintptr) string
@@ -298,22 +328,28 @@ func (x *DBusInterfaceSkeleton) GetObjectPath() string {
 	return cret
 }
 
-var xDBusInterfaceSkeletonGetProperties func(uintptr) *glib.Variant
+var xDBusInterfaceSkeletonGetProperties func(uintptr) uintptr
 
 // Gets all D-Bus properties for @interface_.
 func (x *DBusInterfaceSkeleton) GetProperties() *glib.Variant {
 	cret := xDBusInterfaceSkeletonGetProperties(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xDBusInterfaceSkeletonGetVtable func(uintptr) *DBusInterfaceVTable
+var xDBusInterfaceSkeletonGetVtable func(uintptr) uintptr
 
 // Gets the interface vtable for the D-Bus interface implemented by
 // @interface_. The returned function pointers should expect @interface_
 // itself to be passed as @user_data.
 func (x *DBusInterfaceSkeleton) GetVtable() *DBusInterfaceVTable {
 	cret := xDBusInterfaceSkeletonGetVtable(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*DBusInterfaceVTable)(unsafe.Pointer(cret))
 }
 
 var xDBusInterfaceSkeletonHasConnection func(uintptr, uintptr) bool

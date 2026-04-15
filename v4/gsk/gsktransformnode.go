@@ -2,6 +2,8 @@
 package gsk
 
 import (
+	"unsafe"
+
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gobject"
@@ -59,12 +61,15 @@ func (x *TransformNode) GetChild() *RenderNode {
 	return cls
 }
 
-var xTransformNodeGetTransform func(uintptr) *Transform
+var xTransformNodeGetTransform func(uintptr) uintptr
 
 // Retrieves the `GskTransform` used by the @node.
 func (x *TransformNode) GetTransform() *Transform {
 	cret := xTransformNodeGetTransform(x.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*Transform)(unsafe.Pointer(cret))
 }
 
 func (c *TransformNode) GoPointer() uintptr {

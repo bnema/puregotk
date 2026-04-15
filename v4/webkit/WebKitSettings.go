@@ -2285,7 +2285,7 @@ func SettingsFontSizeToPoints(PixelsVar uint32) uint32 {
 	return cret
 }
 
-var xSettingsGetAllFeatures func() *FeatureList
+var xSettingsGetAllFeatures func() uintptr
 
 // Gets the list of all available WebKit features.
 //
@@ -2298,10 +2298,13 @@ var xSettingsGetAllFeatures func() *FeatureList
 // [func@Settings.get_experimental_features] instead.
 func SettingsGetAllFeatures() *FeatureList {
 	cret := xSettingsGetAllFeatures()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FeatureList)(unsafe.Pointer(cret))
 }
 
-var xSettingsGetDevelopmentFeatures func() *FeatureList
+var xSettingsGetDevelopmentFeatures func() uintptr
 
 // Gets the list of available development WebKit features.
 //
@@ -2312,10 +2315,13 @@ var xSettingsGetDevelopmentFeatures func() *FeatureList
 // more details.
 func SettingsGetDevelopmentFeatures() *FeatureList {
 	cret := xSettingsGetDevelopmentFeatures()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FeatureList)(unsafe.Pointer(cret))
 }
 
-var xSettingsGetExperimentalFeatures func() *FeatureList
+var xSettingsGetExperimentalFeatures func() uintptr
 
 // Gets the list of available experimental WebKit features.
 //
@@ -2325,7 +2331,10 @@ var xSettingsGetExperimentalFeatures func() *FeatureList
 // [enum@FeatureStatus] for more details.
 func SettingsGetExperimentalFeatures() *FeatureList {
 	cret := xSettingsGetExperimentalFeatures()
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*FeatureList)(unsafe.Pointer(cret))
 }
 
 func init() {

@@ -92,8 +92,12 @@ func (x *DatagramBasedInterface) OverrideCreateSource(cb func(DatagramBased, gli
 	if cb == nil {
 		x.xCreateSource = 0
 	} else {
-		x.xCreateSource = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source {
-			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		x.xCreateSource = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) uintptr {
+			ret := cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return uintptr(unsafe.Pointer(ret))
 		})
 	}
 }
@@ -104,10 +108,14 @@ func (x *DatagramBasedInterface) GetCreateSource() func(DatagramBased, glib.IOCo
 	if x.xCreateSource == 0 {
 		return nil
 	}
-	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source
+	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xCreateSource)
 	return func(DatagramBasedVar DatagramBased, ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
-		return rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+		rawRet := rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		return (*glib.Source)(unsafe.Pointer(rawRet))
 	}
 }
 
@@ -318,7 +326,10 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 // g_cancellable_is_cancelled().
 func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
 	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
-	return cret
+	if cret == 0 {
+		return nil
+	}
+	return (*glib.Source)(unsafe.Pointer(cret))
 }
 
 // Receive one or more data messages from @datagram_based in one go.
@@ -435,7 +446,7 @@ func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessage
 var (
 	XGDatagramBasedConditionCheck  func(uintptr, glib.IOCondition) glib.IOCondition
 	XGDatagramBasedConditionWait   func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
-	XGDatagramBasedCreateSource    func(uintptr, glib.IOCondition, uintptr) *glib.Source
+	XGDatagramBasedCreateSource    func(uintptr, glib.IOCondition, uintptr) uintptr
 	XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
 	XGDatagramBasedSendMessages    func(uintptr, []OutputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
 )
