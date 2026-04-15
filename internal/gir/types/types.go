@@ -216,7 +216,7 @@ type Bitfield struct {
 	InfoElements
 }
 
-func (b *Bitfield) Template(ns string) EnumTemplate {
+func (b *Bitfield) Template(ns string, cPrefix string) EnumTemplate {
 	els := make([]enumValues, len(b.Members))
 	for i, m := range b.Members {
 		v, err := strconv.Atoi(m.Value)
@@ -226,7 +226,7 @@ func (b *Bitfield) Template(ns string) EnumTemplate {
 		// + Value needed to get rid of duplicates
 		els[i] = enumValues{
 			Doc:   m.Doc.StringSafe(),
-			Name:  util.SnakeToCamel(util.RemoveSnakePrefix(strings.ToLower(m.CIdentifier), ns)) + "Value",
+			Name:  util.SnakeToCamel(util.RemoveSnakePrefixMulti(strings.ToLower(m.CIdentifier), cPrefix, ns)) + "Value",
 			Value: v,
 		}
 	}
@@ -485,7 +485,7 @@ type Enum struct {
 	InfoElements
 }
 
-func (e *Enum) Template(ns string) EnumTemplate {
+func (e *Enum) Template(ns string, cPrefix string) EnumTemplate {
 	els := make([]enumValues, len(e.Members))
 
 	for i, m := range e.Members {
@@ -494,7 +494,7 @@ func (e *Enum) Template(ns string) EnumTemplate {
 			panic(err)
 		}
 		id := strings.ToLower(m.CIdentifier)
-		sID := util.RemoveSnakePrefix(id, ns)
+		sID := util.RemoveSnakePrefixMulti(id, cPrefix, ns)
 		els[i] = enumValues{
 			Doc: m.Doc.StringSafe(),
 			// + Value needed to get rid of duplicates

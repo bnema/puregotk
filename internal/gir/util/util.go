@@ -68,6 +68,43 @@ func RemoveSnakePrefix(s string, prefix string) string {
 	return strings.Join(parts, "_")
 }
 
+// CamelToSnake converts a CamelCase string to snake_case.
+func CamelToSnake(s string) string {
+	var sb strings.Builder
+	for i, r := range s {
+		if i > 0 && r >= 'A' && r <= 'Z' {
+			sb.WriteByte('_')
+		}
+		sb.WriteRune(r)
+	}
+	return strings.ToLower(sb.String())
+}
+
+// RemoveSnakePrefixMulti strips a multi-segment snake_case prefix from s.
+// The prefix is given in CamelCase and converted to snake_case before stripping.
+// For single-segment prefixes, it falls back to RemoveSnakePrefix.
+func RemoveSnakePrefixMulti(s, camelPrefix, fallbackNs string) string {
+	if camelPrefix == "" {
+		return RemoveSnakePrefix(s, fallbackNs)
+	}
+	snakePrefix := CamelToSnake(camelPrefix)
+	prefixParts := strings.Split(snakePrefix, "_")
+	if len(prefixParts) <= 1 {
+		return RemoveSnakePrefix(s, fallbackNs)
+	}
+
+	sParts := strings.Split(strings.ToLower(s), "_")
+	if len(sParts) <= len(prefixParts) {
+		return s
+	}
+	for i, pp := range prefixParts {
+		if sParts[i] != pp {
+			return RemoveSnakePrefix(s, fallbackNs)
+		}
+	}
+	return strings.Join(sParts[len(prefixParts):], "_")
+}
+
 // ReplaceExtension replaces an extension from filename with ext
 // the extension is found by splitting on "." and taking the last part
 func ReplaceExtension(filename string, ext string) string {

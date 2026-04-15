@@ -22,6 +22,37 @@ type Dependency struct {
 	Files  []string
 }
 
+// NamespaceConfig holds per-namespace generator overrides.
+type NamespaceConfig struct {
+	PackageName     string
+	OptionalLibrary bool
+	BuildConstraint string
+}
+
+var namespaceConfigs = map[string]NamespaceConfig{
+	"Gtk4LayerShell":  {PackageName: "layershell", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
+	"Gtk4SessionLock": {PackageName: "sessionlock", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
+}
+
+func packageNameForNamespace(namespace string) string {
+	if cfg, ok := namespaceConfigs[namespace]; ok && cfg.PackageName != "" {
+		return cfg.PackageName
+	}
+	return strings.ToLower(namespace)
+}
+
+// filterSentinelEnumMembers removes enum sentinel members such as *_ENTRY_NUMBER.
+func filterSentinelEnumMembers(members []types.Member) []types.Member {
+	filtered := make([]types.Member, 0, len(members))
+	for _, m := range members {
+		if strings.HasSuffix(m.CIdentifier, "_ENTRY_NUMBER") {
+			continue
+		}
+		filtered = append(filtered, m)
+	}
+	return filtered
+}
+
 type Pass struct {
 	Parsed []types.Repository
 	Types  types.KindMap
@@ -62,12 +93,14 @@ func New(files []string, module string, deps ...Dependency) (*Pass, error) {
 		}
 		p.Parsed[i] = r
 
-		pkg := strings.ToLower(r.Namespaces[0].Name)
+		namespace := r.Namespaces[0].Name
+		pkgKey := strings.ToLower(namespace)
+		pkgPath := packageNameForNamespace(namespace)
 		m := module
 		if override, ok := fileModule[f]; ok {
 			m = override
 		}
-		p.impPackageImports[pkg] = m + "/" + pkg
+		p.impPackageImports[pkgKey] = m + "/" + pkgPath
 	}
 	return &p, nil
 }
@@ -179,7 +212,8 @@ func (f *file) allFuncs() iter.Seq[types.FuncTemplate] {
 
 func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string) {
 	ns := r.Namespaces[0]
-	pkgName := strings.ToLower(ns.Name)
+	nsCfg := namespaceConfigs[ns.Name]
+	pkgName := packageNameForNamespace(ns.Name)
 
 	files := make(map[string]*file)
 	getFile := func(fn string) *file {
@@ -195,7 +229,9 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	}
 
 	for _, el := range ns.Bitfields {
-		temp := el.Template(ns.Name)
+		filtered := el
+		filtered.Members = filterSentinelEnumMembers(el.Members)
+		temp := filtered.Template(ns.Name, ns.CIdentifierPrefixes)
 		pf := getFile(el.FilenameSafe())
 		pf.enums = append(pf.enums, temp)
 		if temp.TypeGetter != "" {
@@ -204,7 +240,9 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	}
 
 	for _, el := range ns.Enums {
-		temp := el.Template(ns.Name)
+		filtered := el
+		filtered.Members = filterSentinelEnumMembers(el.Members)
+		temp := filtered.Template(ns.Name, ns.CIdentifierPrefixes)
 		pf := getFile(el.FilenameSafe())
 		pf.enums = append(pf.enums, temp)
 		if temp.TypeGetter != "" {
@@ -577,6 +615,8 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			PkgConfigName:   pkgConfigName,
 			SharedLibraries: sharedLibraries,
 			NeedsInit:       needsInit,
+			OptionalLibrary: nsCfg.OptionalLibrary,
+			BuildConstraint: nsCfg.BuildConstraint,
 			RegisterTypes:   registerTypes,
 			Imports:         pf.imps.Ordered(),
 			Aliases:         pf.aliases,

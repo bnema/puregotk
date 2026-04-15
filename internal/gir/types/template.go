@@ -588,6 +588,10 @@ type TemplateArg struct {
 	SharedLibraries []string
 	// NeedsInit declares whether or not this file needs an init code to register functions with purego
 	NeedsInit bool
+	// OptionalLibrary declares whether init should tolerate a missing shared library.
+	OptionalLibrary bool
+	// BuildConstraint is an optional file-level build tag like //go:build linux.
+	BuildConstraint string
 	// RegisterTypes declares whether the types in the GIR file need to be manually registered
 	// See https://bugs.webkit.org/show_bug.cgi?id=175937
 	RegisterTypes bool
