@@ -196,7 +196,7 @@ type AttrInt struct {
 
 	Attr uintptr
 
-	Value int32
+	Value int
 }
 
 func (x *AttrInt) GoPointer() uintptr {
@@ -286,7 +286,7 @@ func (x *AttrIterator) Next() bool {
 	return cret
 }
 
-var xAttrIteratorRange func(uintptr, *int32, *int32)
+var xAttrIteratorRange func(uintptr, *int, *int)
 
 // Get the range of the current segment.
 //
@@ -294,7 +294,7 @@ var xAttrIteratorRange func(uintptr, *int32, *int32)
 // like the values in `PangoAttribute`. To deal with this API
 // oversight, stored return values that wouldn't fit into
 // a signed integer are clamped to %G_MAXINT.
-func (x *AttrIterator) Range(StartVar *int32, EndVar *int32) {
+func (x *AttrIterator) Range(StartVar *int, EndVar *int) {
 	xAttrIteratorRange(x.GoPointer(), StartVar, EndVar)
 }
 
@@ -460,7 +460,7 @@ func (x *AttrList) Ref() *AttrList {
 	return (*AttrList)(unsafe.Pointer(cret))
 }
 
-var xAttrListSplice func(uintptr, *AttrList, int32, int32)
+var xAttrListSplice func(uintptr, *AttrList, int, int)
 
 // This function opens up a hole in @list, fills it
 // in with attributes from the left, and then merges
@@ -480,7 +480,7 @@ var xAttrListSplice func(uintptr, *AttrList, int32, int32)
 // not imited to @len, and are just overlayed on top of @list.
 //
 // This mode is useful for merging two lists of attributes together.
-func (x *AttrList) Splice(OtherVar *AttrList, PosVar int32, LenVar int32) {
+func (x *AttrList) Splice(OtherVar *AttrList, PosVar int, LenVar int) {
 	xAttrListSplice(x.GoPointer(), OtherVar, PosVar, LenVar)
 }
 
@@ -536,7 +536,7 @@ func (x *AttrList) Unref() {
 	xAttrListUnref(x.GoPointer())
 }
 
-var xAttrListUpdate func(uintptr, int32, int32, int32)
+var xAttrListUpdate func(uintptr, int, int, int)
 
 // Update indices of attributes in @list for a change in the
 // text they refer to.
@@ -552,7 +552,7 @@ var xAttrListUpdate func(uintptr, int32, int32, int32)
 //
 // Attributes start and end positions are updated if they are
 // behind @pos + @remove.
-func (x *AttrList) Update(PosVar int32, RemoveVar int32, AddVar int32) {
+func (x *AttrList) Update(PosVar int, RemoveVar int, AddVar int) {
 	xAttrListUpdate(x.GoPointer(), PosVar, RemoveVar, AddVar)
 }
 
@@ -585,9 +585,9 @@ type AttrSize struct {
 
 	Attr uintptr
 
-	Size int32
+	Size int
 
-	Absolute uint32
+	Absolute uint
 }
 
 func (x *AttrSize) GoPointer() uintptr {
@@ -621,9 +621,9 @@ type Attribute struct {
 
 	Klass *AttrClass
 
-	StartIndex uint32
+	StartIndex uint
 
-	EndIndex uint32
+	EndIndex uint
 }
 
 var xAttributeGLibType func() types.GType
@@ -796,10 +796,10 @@ func (x *Attribute) Init(KlassVar *AttrClass) {
 const (
 	// Value for @start_index in `PangoAttribute` that indicates
 	// the beginning of the text.
-	ATTR_INDEX_FROM_TEXT_BEGINNING uint32 = 0
+	ATTR_INDEX_FROM_TEXT_BEGINNING uint = 0
 	// Value for @end_index in `PangoAttribute` that indicates
 	// the end of the text.
-	ATTR_INDEX_TO_TEXT_END uint32 = 4294967295
+	ATTR_INDEX_TO_TEXT_END uint = 4294967295
 )
 
 // These flags affect how Pango treats characters that are normally
@@ -1087,7 +1087,7 @@ func AttrBackgroundNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribut
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrBaselineShiftNew func(int32) uintptr
+var xAttrBaselineShiftNew func(int) uintptr
 
 // Create a new baseline displacement attribute.
 //
@@ -1100,7 +1100,7 @@ var xAttrBaselineShiftNew func(int32) uintptr
 //	&lt;img alt="Baseline Shift" src="baseline-shift-light.png"&gt;
 //
 // &lt;/picture&gt;
-func AttrBaselineShiftNew(ShiftVar int32) *Attribute {
+func AttrBaselineShiftNew(ShiftVar int) *Attribute {
 	cret := xAttrBaselineShiftNew(ShiftVar)
 	if cret == 0 {
 		return nil
@@ -1247,10 +1247,10 @@ func AttrLanguageNew(LanguageVar *Language) *Attribute {
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrLetterSpacingNew func(int32) uintptr
+var xAttrLetterSpacingNew func(int) uintptr
 
 // Create a new letter-spacing attribute.
-func AttrLetterSpacingNew(LetterSpacingVar int32) *Attribute {
+func AttrLetterSpacingNew(LetterSpacingVar int) *Attribute {
 	cret := xAttrLetterSpacingNew(LetterSpacingVar)
 	if cret == 0 {
 		return nil
@@ -1274,7 +1274,7 @@ func AttrLineHeightNew(FactorVar float64) *Attribute {
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrLineHeightNewAbsolute func(int32) uintptr
+var xAttrLineHeightNewAbsolute func(int) uintptr
 
 // Override the height of logical line extents to be @height.
 //
@@ -1282,7 +1282,7 @@ var xAttrLineHeightNewAbsolute func(int32) uintptr
 // [method@Pango.LayoutLine.get_extents],
 // [method@Pango.LayoutLine.get_pixel_extents] and
 // [method@Pango.LayoutIter.get_line_extents].
-func AttrLineHeightNewAbsolute(HeightVar int32) *Attribute {
+func AttrLineHeightNewAbsolute(HeightVar int) *Attribute {
 	cret := xAttrLineHeightNewAbsolute(HeightVar)
 	if cret == 0 {
 		return nil
@@ -1329,10 +1329,10 @@ func AttrOverlineNew(OverlineVar Overline) *Attribute {
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrRiseNew func(int32) uintptr
+var xAttrRiseNew func(int) uintptr
 
 // Create a new baseline displacement attribute.
-func AttrRiseNew(RiseVar int32) *Attribute {
+func AttrRiseNew(RiseVar int) *Attribute {
 	cret := xAttrRiseNew(RiseVar)
 	if cret == 0 {
 		return nil
@@ -1411,10 +1411,10 @@ func AttrShowNew(FlagsVar ShowFlags) *Attribute {
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrSizeNew func(int32) uintptr
+var xAttrSizeNew func(int) uintptr
 
 // Create a new font-size attribute in fractional points.
-func AttrSizeNew(SizeVar int32) *Attribute {
+func AttrSizeNew(SizeVar int) *Attribute {
 	cret := xAttrSizeNew(SizeVar)
 	if cret == 0 {
 		return nil
@@ -1422,10 +1422,10 @@ func AttrSizeNew(SizeVar int32) *Attribute {
 	return (*Attribute)(unsafe.Pointer(cret))
 }
 
-var xAttrSizeNewAbsolute func(int32) uintptr
+var xAttrSizeNewAbsolute func(int) uintptr
 
 // Create a new font-size attribute in device units.
-func AttrSizeNewAbsolute(SizeVar int32) *Attribute {
+func AttrSizeNewAbsolute(SizeVar int) *Attribute {
 	cret := xAttrSizeNewAbsolute(SizeVar)
 	if cret == 0 {
 		return nil

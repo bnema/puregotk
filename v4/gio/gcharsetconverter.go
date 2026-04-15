@@ -60,10 +60,10 @@ func NewCharsetConverter(ToCharsetVar string, FromCharsetVar string) (*CharsetCo
 	return cls, cerr
 }
 
-var xCharsetConverterGetNumFallbacks func(uintptr) uint32
+var xCharsetConverterGetNumFallbacks func(uintptr) uint
 
 // Gets the number of fallbacks that @converter has applied so far.
-func (x *CharsetConverter) GetNumFallbacks() uint32 {
+func (x *CharsetConverter) GetNumFallbacks() uint {
 	cret := xCharsetConverterGetNumFallbacks(x.GoPointer())
 	return cret
 }
@@ -99,7 +99,7 @@ func (c *CharsetConverter) SetGoPointer(ptr uintptr) {
 func (x *CharsetConverter) SetPropertyFromCharset(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("from-charset", &v)
 }
 
@@ -116,7 +116,7 @@ func (x *CharsetConverter) GetPropertyFromCharset() string {
 func (x *CharsetConverter) SetPropertyToCharset(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("to-charset", &v)
 }
 

@@ -188,10 +188,10 @@ func (x *ServerMessage) GetSocket() *gio.Socket {
 	return cls
 }
 
-var xServerMessageGetStatus func(uintptr) uint32
+var xServerMessageGetStatus func(uintptr) uint
 
 // Get the HTTP status code of @msg.
-func (x *ServerMessage) GetStatus() uint32 {
+func (x *ServerMessage) GetStatus() uint {
 	cret := xServerMessageGetStatus(x.GoPointer())
 	return cret
 }
@@ -262,7 +262,7 @@ func (x *ServerMessage) SetHttpVersion(VersionVar HTTPVersion) {
 	xServerMessageSetHttpVersion(x.GoPointer(), VersionVar)
 }
 
-var xServerMessageSetRedirect func(uintptr, uint32, string)
+var xServerMessageSetRedirect func(uintptr, uint, string)
 
 // Sets @msg's status_code to @status_code and adds a Location header
 // pointing to @redirect_uri. Use this from a [class@Server] when you
@@ -272,26 +272,35 @@ var xServerMessageSetRedirect func(uintptr, uint32, string)
 // interpreted relative to @msg's current URI. In particular, if
 // @redirect_uri is just a path, it will replace the path
 // *and query* of @msg's URI.
-func (x *ServerMessage) SetRedirect(StatusCodeVar uint32, RedirectUriVar string) {
+func (x *ServerMessage) SetRedirect(StatusCodeVar uint, RedirectUriVar string) {
 	xServerMessageSetRedirect(x.GoPointer(), StatusCodeVar, RedirectUriVar)
 }
 
-var xServerMessageSetResponse func(uintptr, string, MemoryUse, string, uint)
+var xServerMessageSetResponse func(uintptr, uintptr, MemoryUse, uintptr, uint)
 
 // Convenience function to set the response body of a [class@ServerMessage]. If
 // @content_type is %NULL, the response body must be empty as well.
-func (x *ServerMessage) SetResponse(ContentTypeVar string, RespUseVar MemoryUse, RespBodyVar string, RespLengthVar uint) {
-	xServerMessageSetResponse(x.GoPointer(), ContentTypeVar, RespUseVar, RespBodyVar, RespLengthVar)
+func (x *ServerMessage) SetResponse(ContentTypeVar *string, RespUseVar MemoryUse, RespBodyVar *string, RespLengthVar uint) {
+	ContentTypeVarPtr := core.GStrdupNullable(ContentTypeVar)
+	defer core.GFreeNullable(ContentTypeVarPtr)
+
+	RespBodyVarPtr := core.GStrdupNullable(RespBodyVar)
+	defer core.GFreeNullable(RespBodyVarPtr)
+
+	xServerMessageSetResponse(x.GoPointer(), ContentTypeVarPtr, RespUseVar, RespBodyVarPtr, RespLengthVar)
 }
 
-var xServerMessageSetStatus func(uintptr, uint32, string)
+var xServerMessageSetStatus func(uintptr, uint, uintptr)
 
 // Sets @msg's status code to @status_code.
 //
 // If @status_code is a known value and @reason_phrase is %NULL, the
 // reason_phrase will be set automatically.
-func (x *ServerMessage) SetStatus(StatusCodeVar uint32, ReasonPhraseVar string) {
-	xServerMessageSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVar)
+func (x *ServerMessage) SetStatus(StatusCodeVar uint, ReasonPhraseVar *string) {
+	ReasonPhraseVarPtr := core.GStrdupNullable(ReasonPhraseVar)
+	defer core.GFreeNullable(ReasonPhraseVarPtr)
+
+	xServerMessageSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVarPtr)
 }
 
 var xServerMessageStealConnection func(uintptr) uintptr
@@ -345,7 +354,7 @@ func (c *ServerMessage) SetGoPointer(ptr uintptr) {
 // after client TLS certificate has been received.
 // You can return %TRUE to accept @tls_certificate despite
 // @tls_errors.
-func (x *ServerMessage) ConnectAcceptCertificate(cb *func(ServerMessage, uintptr, gio.TlsCertificateFlags) bool) uint32 {
+func (x *ServerMessage) ConnectAcceptCertificate(cb *func(ServerMessage, uintptr, gio.TlsCertificateFlags) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
@@ -368,7 +377,7 @@ func (x *ServerMessage) ConnectAcceptCertificate(cb *func(ServerMessage, uintptr
 }
 
 // Emitted when the @msg's socket is connected and the TLS handshake completed.
-func (x *ServerMessage) ConnectConnected(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectConnected(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "connected", cbRefPtr)
@@ -391,7 +400,7 @@ func (x *ServerMessage) ConnectConnected(cb *func(ServerMessage)) uint32 {
 }
 
 // Emitted when the @msg's socket is disconnected.
-func (x *ServerMessage) ConnectDisconnected(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectDisconnected(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "disconnected", cbRefPtr)
@@ -415,7 +424,7 @@ func (x *ServerMessage) ConnectDisconnected(cb *func(ServerMessage)) uint32 {
 
 // Emitted when all HTTP processing is finished for a message.
 // (After [signal@ServerMessage::wrote-body]).
-func (x *ServerMessage) ConnectFinished(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectFinished(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
@@ -438,7 +447,7 @@ func (x *ServerMessage) ConnectFinished(cb *func(ServerMessage)) uint32 {
 }
 
 // Emitted after receiving the complete request body.
-func (x *ServerMessage) ConnectGotBody(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectGotBody(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
@@ -464,7 +473,7 @@ func (x *ServerMessage) ConnectGotBody(cb *func(ServerMessage)) uint32 {
 //
 // Note that "chunk" in this context means any subpiece of the body, not
 // necessarily the specific HTTP 1.1 chunks sent by the other side.
-func (x *ServerMessage) ConnectGotChunk(cb *func(ServerMessage, uintptr)) uint32 {
+func (x *ServerMessage) ConnectGotChunk(cb *func(ServerMessage, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-chunk", cbRefPtr)
@@ -487,7 +496,7 @@ func (x *ServerMessage) ConnectGotChunk(cb *func(ServerMessage, uintptr)) uint32
 }
 
 // Emitted after receiving the Request-Line and request headers.
-func (x *ServerMessage) ConnectGotHeaders(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectGotHeaders(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
@@ -511,7 +520,7 @@ func (x *ServerMessage) ConnectGotHeaders(cb *func(ServerMessage)) uint32 {
 
 // Emitted immediately after writing the complete response body for a
 // message.
-func (x *ServerMessage) ConnectWroteBody(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectWroteBody(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
@@ -535,7 +544,7 @@ func (x *ServerMessage) ConnectWroteBody(cb *func(ServerMessage)) uint32 {
 
 // Emitted immediately after writing a portion of the message
 // body to the network.
-func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint32)) uint32 {
+func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
@@ -543,7 +552,7 @@ func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint32)) ui
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChunkSizeVarp uint32) {
+	fcb := func(clsPtr uintptr, ChunkSizeVarp uint) {
 		fa := ServerMessage{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -565,7 +574,7 @@ func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint32)) ui
 // [method@MessageBody.append_bytes] has been written. To get
 // more useful continuous progress information, use
 // [signal@ServerMessage::wrote-body-data].
-func (x *ServerMessage) ConnectWroteChunk(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectWroteChunk(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-chunk", cbRefPtr)
@@ -589,7 +598,7 @@ func (x *ServerMessage) ConnectWroteChunk(cb *func(ServerMessage)) uint32 {
 
 // Emitted immediately after writing the response headers for a
 // message.
-func (x *ServerMessage) ConnectWroteHeaders(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectWroteHeaders(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)
@@ -612,7 +621,7 @@ func (x *ServerMessage) ConnectWroteHeaders(cb *func(ServerMessage)) uint32 {
 }
 
 // Emitted immediately after writing a 1xx (Informational) response.
-func (x *ServerMessage) ConnectWroteInformational(cb *func(ServerMessage)) uint32 {
+func (x *ServerMessage) ConnectWroteInformational(cb *func(ServerMessage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-informational", cbRefPtr)

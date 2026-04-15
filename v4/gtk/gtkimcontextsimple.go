@@ -32,7 +32,7 @@ const (
 	// Evaluates to the maximum length of a compose sequence.
 	//
 	// This macro is longer used by GTK.
-	MAX_COMPOSE_LEN int32 = 7
+	MAX_COMPOSE_LEN int = 7
 )
 
 // Supports compose sequences, dead keys and numeric Unicode input.
@@ -112,7 +112,7 @@ func (x *IMContextSimple) AddComposeFile(ComposeFileVar string) {
 	xIMContextSimpleAddComposeFile(x.GoPointer(), ComposeFileVar)
 }
 
-var xIMContextSimpleAddTable func(uintptr, []uint16, int32, int32)
+var xIMContextSimpleAddTable func(uintptr, []uint16, int, int)
 
 // Adds an additional table to search to the input context.
 // Each row of the table consists of @max_seq_len key symbols
@@ -123,7 +123,7 @@ var xIMContextSimpleAddTable func(uintptr, []uint16, int32, int32)
 // The table must be sorted in dictionary order on the
 // numeric value of the key symbol fields. (Values beyond
 // the length of the sequence should be zero.)
-func (x *IMContextSimple) AddTable(DataVar []uint16, MaxSeqLenVar int32, NSeqsVar int32) {
+func (x *IMContextSimple) AddTable(DataVar []uint16, MaxSeqLenVar int, NSeqsVar int) {
 	xIMContextSimpleAddTable(x.GoPointer(), DataVar, MaxSeqLenVar, NSeqsVar)
 }
 

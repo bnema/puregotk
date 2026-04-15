@@ -104,13 +104,16 @@ func CacheNewFromInternalPtr(ptr uintptr) *Cache {
 	return cls
 }
 
-var xNewCache func(string, CacheType) uintptr
+var xNewCache func(uintptr, CacheType) uintptr
 
 // Creates a new #SoupCache.
-func NewCache(CacheDirVar string, CacheTypeVar CacheType) *Cache {
+func NewCache(CacheDirVar *string, CacheTypeVar CacheType) *Cache {
 	var cls *Cache
 
-	cret := xNewCache(CacheDirVar, CacheTypeVar)
+	CacheDirVarPtr := core.GStrdupNullable(CacheDirVar)
+	defer core.GFreeNullable(CacheDirVarPtr)
+
+	cret := xNewCache(CacheDirVarPtr, CacheTypeVar)
 
 	if cret == 0 {
 		return nil
@@ -157,10 +160,10 @@ func (x *Cache) Flush() {
 	xCacheFlush(x.GoPointer())
 }
 
-var xCacheGetMaxSize func(uintptr) uint32
+var xCacheGetMaxSize func(uintptr) uint
 
 // Gets the maximum size of the cache.
-func (x *Cache) GetMaxSize() uint32 {
+func (x *Cache) GetMaxSize() uint {
 	cret := xCacheGetMaxSize(x.GoPointer())
 	return cret
 }
@@ -174,10 +177,10 @@ func (x *Cache) Load() {
 	xCacheLoad(x.GoPointer())
 }
 
-var xCacheSetMaxSize func(uintptr, uint32)
+var xCacheSetMaxSize func(uintptr, uint)
 
 // Sets the maximum size of the cache.
-func (x *Cache) SetMaxSize(MaxSizeVar uint32) {
+func (x *Cache) SetMaxSize(MaxSizeVar uint) {
 	xCacheSetMaxSize(x.GoPointer(), MaxSizeVar)
 }
 
@@ -197,7 +200,7 @@ func (c *Cache) SetGoPointer(ptr uintptr) {
 func (x *Cache) SetPropertyCacheDir(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cache-dir", &v)
 }
 

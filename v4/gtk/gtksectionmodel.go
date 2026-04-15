@@ -30,11 +30,11 @@ func (x *SectionModelInterface) GoPointer() uintptr {
 //
 //	the position is outside the number of items, returns a single range from
 //	n_items to G_MAXUINT
-func (x *SectionModelInterface) OverrideGetSection(cb func(SectionModel, uint32, *uint32, *uint32)) {
+func (x *SectionModelInterface) OverrideGetSection(cb func(SectionModel, uint, *uint, *uint)) {
 	if cb == nil {
 		x.xGetSection = 0
 	} else {
-		x.xGetSection = purego.NewCallback(func(SelfVarp uintptr, PositionVarp uint32, OutStartVarp *uint32, OutEndVarp *uint32) {
+		x.xGetSection = purego.NewCallback(func(SelfVarp uintptr, PositionVarp uint, OutStartVarp *uint, OutEndVarp *uint) {
 			cb(&SectionModelBase{Ptr: SelfVarp}, PositionVarp, OutStartVarp, OutEndVarp)
 		})
 	}
@@ -45,13 +45,13 @@ func (x *SectionModelInterface) OverrideGetSection(cb func(SectionModel, uint32,
 //
 //	the position is outside the number of items, returns a single range from
 //	n_items to G_MAXUINT
-func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint32, *uint32, *uint32) {
+func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint, *uint, *uint) {
 	if x.xGetSection == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, PositionVarp uint32, OutStartVarp *uint32, OutEndVarp *uint32)
+	var rawCallback func(SelfVarp uintptr, PositionVarp uint, OutStartVarp *uint, OutEndVarp *uint)
 	purego.RegisterFunc(&rawCallback, x.xGetSection)
-	return func(SelfVar SectionModel, PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
+	return func(SelfVar SectionModel, PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 		rawCallback(SelfVar.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 	}
 }
@@ -74,8 +74,8 @@ func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint32, *uint
 type SectionModel interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32)
-	SectionsChanged(PositionVar uint32, NItemsVar uint32)
+	GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint)
+	SectionsChanged(PositionVar uint, NItemsVar uint)
 }
 
 var xSectionModelGLibType func() types.GType
@@ -104,7 +104,7 @@ func (x *SectionModelBase) SetGoPointer(ptr uintptr) {
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *SectionModelBase) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
+func (x *SectionModelBase) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 }
 
@@ -123,13 +123,13 @@ func (x *SectionModelBase) GetSection(PositionVar uint32, OutStartVar *uint32, O
 // in a larger range, that the larger range is included in the emission
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
-func (x *SectionModelBase) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
+func (x *SectionModelBase) SectionsChanged(PositionVar uint, NItemsVar uint) {
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 
 var (
-	XGtkSectionModelGetSection      func(uintptr, uint32, *uint32, *uint32)
-	XGtkSectionModelSectionsChanged func(uintptr, uint32, uint32)
+	XGtkSectionModelGetSection      func(uintptr, uint, *uint, *uint)
+	XGtkSectionModelSectionsChanged func(uintptr, uint, uint)
 )
 
 func init() {

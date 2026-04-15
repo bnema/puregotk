@@ -43,12 +43,12 @@ func IconPaintableNewFromInternalPtr(ptr uintptr) *IconPaintable {
 	return cls
 }
 
-var xNewIconPaintableForFile func(uintptr, int32, int32) uintptr
+var xNewIconPaintableForFile func(uintptr, int, int) uintptr
 
 // Creates a `GtkIconPaintable` for a file with a given size and scale.
 //
 // The icon can then be rendered by using it as a `GdkPaintable`.
-func NewIconPaintableForFile(FileVar gio.File, SizeVar int32, ScaleVar int32) *IconPaintable {
+func NewIconPaintableForFile(FileVar gio.File, SizeVar int, ScaleVar int) *IconPaintable {
 	var cls *IconPaintable
 
 	cret := xNewIconPaintableForFile(FileVar.GoPointer(), SizeVar, ScaleVar)
@@ -122,7 +122,7 @@ func (c *IconPaintable) SetGoPointer(ptr uintptr) {
 func (x *IconPaintable) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -152,33 +152,33 @@ func (x *IconPaintable) GetPropertyIsSymbolic() bool {
 }
 
 // SetPropertyScale sets the "scale" property.
-func (x *IconPaintable) SetPropertyScale(value int32) {
+func (x *IconPaintable) SetPropertyScale(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("scale", &v)
 }
 
 // GetPropertyScale gets the "scale" property.
-func (x *IconPaintable) GetPropertyScale() int32 {
+func (x *IconPaintable) GetPropertyScale() int {
 	var v gobject.Value
 	x.GetProperty("scale", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertySize sets the "size" property.
-func (x *IconPaintable) SetPropertySize(value int32) {
+func (x *IconPaintable) SetPropertySize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("size", &v)
 }
 
 // GetPropertySize gets the "size" property.
-func (x *IconPaintable) GetPropertySize() int32 {
+func (x *IconPaintable) GetPropertySize() int {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Compute a concrete size for the `GdkPaintable`.
@@ -256,7 +256,7 @@ func (x *IconPaintable) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *IconPaintable) GetIntrinsicHeight() int32 {
+func (x *IconPaintable) GetIntrinsicHeight() int {
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -271,7 +271,7 @@ func (x *IconPaintable) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *IconPaintable) GetIntrinsicWidth() int32 {
+func (x *IconPaintable) GetIntrinsicWidth() int {
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }

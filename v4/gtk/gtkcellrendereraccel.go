@@ -80,29 +80,29 @@ func (c *CellRendererAccel) SetGoPointer(ptr uintptr) {
 
 // SetPropertyAccelKey sets the "accel-key" property.
 // The keyval of the accelerator.
-func (x *CellRendererAccel) SetPropertyAccelKey(value uint32) {
+func (x *CellRendererAccel) SetPropertyAccelKey(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("accel-key", &v)
 }
 
 // GetPropertyAccelKey gets the "accel-key" property.
 // The keyval of the accelerator.
-func (x *CellRendererAccel) GetPropertyAccelKey() uint32 {
+func (x *CellRendererAccel) GetPropertyAccelKey() uint {
 	var v gobject.Value
 	x.GetProperty("accel-key", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyKeycode sets the "keycode" property.
 // The hardware keycode of the accelerator. Note that the hardware keycode is
 // only relevant if the key does not have a keyval. Normally, the keyboard
 // configuration should assign keyvals to all keys.
-func (x *CellRendererAccel) SetPropertyKeycode(value uint32) {
+func (x *CellRendererAccel) SetPropertyKeycode(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("keycode", &v)
 }
 
@@ -110,14 +110,14 @@ func (x *CellRendererAccel) SetPropertyKeycode(value uint32) {
 // The hardware keycode of the accelerator. Note that the hardware keycode is
 // only relevant if the key does not have a keyval. Normally, the keyboard
 // configuration should assign keyvals to all keys.
-func (x *CellRendererAccel) GetPropertyKeycode() uint32 {
+func (x *CellRendererAccel) GetPropertyKeycode() uint {
 	var v gobject.Value
 	x.GetProperty("keycode", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Gets emitted when the user has removed the accelerator.
-func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, string)) uint32 {
+func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
@@ -140,7 +140,7 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 }
 
 // Gets emitted when the user has selected a new accelerator.
-func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, string, uint32, gdk.ModifierType, uint32)) uint32 {
+func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, string, uint, gdk.ModifierType, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
@@ -148,7 +148,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint32, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint32) {
+	fcb := func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint) {
 		fa := CellRendererAccel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

@@ -97,7 +97,7 @@ func (c *GestureDrag) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted whenever dragging starts.
-func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) uint32 {
+func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
@@ -120,7 +120,7 @@ func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) 
 }
 
 // Emitted whenever the dragging is finished.
-func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) uint32 {
+func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
@@ -143,7 +143,7 @@ func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) ui
 }
 
 // Emitted whenever the dragging point moves.
-func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64)) uint32 {
+func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-update", cbRefPtr)

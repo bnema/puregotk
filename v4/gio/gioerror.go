@@ -7,7 +7,7 @@ import (
 	"github.com/bnema/puregotk/v4/glib"
 )
 
-var xIoErrorFromErrno func(int32) IOErrorEnum
+var xIoErrorFromErrno func(int) IOErrorEnum
 
 // Converts `errno.h` error codes into GIO error codes.
 //
@@ -29,7 +29,7 @@ var xIoErrorFromErrno func(int32) IOErrorEnum
 //	g_io_error_from_errno (saved_errno);
 //
 // ]|
-func IoErrorFromErrno(ErrNoVar int32) IOErrorEnum {
+func IoErrorFromErrno(ErrNoVar int) IOErrorEnum {
 	cret := xIoErrorFromErrno(ErrNoVar)
 	return cret
 }

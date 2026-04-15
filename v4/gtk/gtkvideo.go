@@ -91,16 +91,19 @@ func NewVideoForFile(FileVar gio.File) *Video {
 	return cls
 }
 
-var xNewVideoForFilename func(string) uintptr
+var xNewVideoForFilename func(uintptr) uintptr
 
 // Creates a `GtkVideo` to play back the given @filename.
 //
 // This is a utility function that calls [ctor@Gtk.Video.new_for_file],
 // See that function for details.
-func NewVideoForFilename(FilenameVar string) *Video {
+func NewVideoForFilename(FilenameVar *string) *Video {
 	var cls *Video
 
-	cret := xNewVideoForFilename(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	cret := xNewVideoForFilename(FilenameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -128,16 +131,19 @@ func NewVideoForMediaStream(StreamVar *MediaStream) *Video {
 	return cls
 }
 
-var xNewVideoForResource func(string) uintptr
+var xNewVideoForResource func(uintptr) uintptr
 
 // Creates a `GtkVideo` to play back the resource at the
 // given @resource_path.
 //
 // This is a utility function that calls [ctor@Gtk.Video.new_for_file].
-func NewVideoForResource(ResourcePathVar string) *Video {
+func NewVideoForResource(ResourcePathVar *string) *Video {
 	var cls *Video
 
-	cret := xNewVideoForResource(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	cret := xNewVideoForResource(ResourcePathVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -224,13 +230,16 @@ func (x *Video) SetFile(FileVar gio.File) {
 	xVideoSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
-var xVideoSetFilename func(uintptr, string)
+var xVideoSetFilename func(uintptr, uintptr)
 
 // Makes @self play the given @filename.
 //
 // This is a utility function that calls gtk_video_set_file(),
-func (x *Video) SetFilename(FilenameVar string) {
-	xVideoSetFilename(x.GoPointer(), FilenameVar)
+func (x *Video) SetFilename(FilenameVar *string) {
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	xVideoSetFilename(x.GoPointer(), FilenameVarPtr)
 }
 
 var xVideoSetGraphicsOffload func(uintptr, GraphicsOffloadEnabled)
@@ -263,13 +272,16 @@ func (x *Video) SetMediaStream(StreamVar *MediaStream) {
 	xVideoSetMediaStream(x.GoPointer(), StreamVar.GoPointer())
 }
 
-var xVideoSetResource func(uintptr, string)
+var xVideoSetResource func(uintptr, uintptr)
 
 // Makes @self play the resource at the given @resource_path.
 //
 // This is a utility function that calls [method@Gtk.Video.set_file].
-func (x *Video) SetResource(ResourcePathVar string) {
-	xVideoSetResource(x.GoPointer(), ResourcePathVar)
+func (x *Video) SetResource(ResourcePathVar *string) {
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	xVideoSetResource(x.GoPointer(), ResourcePathVarPtr)
 }
 
 func (c *Video) GoPointer() uintptr {
@@ -383,7 +395,7 @@ func (x *Video) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Video) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Video) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -499,7 +511,7 @@ func (x *Video) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Video) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Video) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -531,7 +543,7 @@ func (x *Video) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Video) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Video) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -564,7 +576,7 @@ func (x *Video) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Video) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Video) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

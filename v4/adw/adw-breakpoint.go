@@ -73,12 +73,12 @@ func NewBreakpointConditionOr(Condition1Var *BreakpointCondition, Condition2Var 
 	return (*BreakpointCondition)(unsafe.Pointer(cret))
 }
 
-var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int32, int32) uintptr
+var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int, int) uintptr
 
 // Creates a condition that triggers on ratio changes.
 //
 // The ratio is represented as @width divided by @height.
-func NewBreakpointConditionRatio(TypeVar BreakpointConditionRatioType, WidthVar int32, HeightVar int32) *BreakpointCondition {
+func NewBreakpointConditionRatio(TypeVar BreakpointConditionRatioType, WidthVar int, HeightVar int) *BreakpointCondition {
 	cret := xNewBreakpointConditionRatio(TypeVar, WidthVar, HeightVar)
 	if cret == 0 {
 		return nil
@@ -390,7 +390,7 @@ func (x *Breakpoint) AddSettersValist(FirstObjectVar *gobject.Object, FirstPrope
 	xBreakpointAddSettersValist(x.GoPointer(), FirstObjectVar.GoPointer(), FirstPropertyVar, ArgsVar)
 }
 
-var xBreakpointAddSettersv func(uintptr, int32, uintptr, []string, uintptr)
+var xBreakpointAddSettersv func(uintptr, int, uintptr, []string, uintptr)
 
 // Adds @n_setters setters to @self.
 //
@@ -399,7 +399,7 @@ var xBreakpointAddSettersv func(uintptr, int32, uintptr, []string, uintptr)
 // See [method@Breakpoint.add_setter].
 //
 // This function is meant to be used by language bindings.
-func (x *Breakpoint) AddSettersv(NSettersVar int32, ObjectsVar uintptr, NamesVar []string, ValuesVar uintptr) {
+func (x *Breakpoint) AddSettersv(NSettersVar int, ObjectsVar uintptr, NamesVar []string, ValuesVar uintptr) {
 	xBreakpointAddSettersv(x.GoPointer(), NSettersVar, ObjectsVar, NamesVar, ValuesVar)
 }
 
@@ -452,7 +452,7 @@ func (x *Breakpoint) GetPropertyCondition() uintptr {
 // Emitted when the breakpoint is applied.
 //
 // This signal is emitted after the setters have been applied.
-func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
+func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
@@ -477,7 +477,7 @@ func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
 // Emitted when the breakpoint is unapplied.
 //
 // This signal is emitted before resetting the setter values.
-func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
+func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)

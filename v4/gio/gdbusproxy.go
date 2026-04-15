@@ -212,7 +212,7 @@ func NewDBusProxyForBusSync(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar
 	return cls, cerr
 }
 
-var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, string, string, uintptr, **glib.Error) uintptr
+var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, uintptr, string, string, uintptr, **glib.Error) uintptr
 
 // Creates a proxy for accessing @interface_name on the remote object
 // at @object_path owned by @name at @connection and synchronously
@@ -236,11 +236,14 @@ var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, 
 // and g_dbus_proxy_new_finish() for the asynchronous version.
 //
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
-func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
+func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar *string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
 	var cls *DBusProxy
 	var cerr *glib.Error
 
-	cret := xNewDBusProxySync(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewDBusProxySync(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVarPtr, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -253,7 +256,7 @@ func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, In
 	return cls, cerr
 }
 
-var xDBusProxyCall func(uintptr, string, *glib.Variant, DBusCallFlags, int32, uintptr, uintptr, uintptr)
+var xDBusProxyCall func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, uintptr, uintptr)
 
 // Asynchronously invokes the @method_name method on @proxy.
 //
@@ -299,7 +302,7 @@ var xDBusProxyCall func(uintptr, string, *glib.Variant, DBusCallFlags, int32, ui
 //
 // If @callback is %NULL then the D-Bus method call message will be sent with
 // the %G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED flag set.
-func (x *DBusProxy) Call(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusProxy) Call(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	xDBusProxyCall(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -319,7 +322,7 @@ func (x *DBusProxy) CallFinish(ResVar AsyncResult) (*glib.Variant, error) {
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusProxyCallSync func(uintptr, string, *glib.Variant, DBusCallFlags, int32, uintptr, **glib.Error) uintptr
+var xDBusProxyCallSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, **glib.Error) uintptr
 
 // Synchronously invokes the @method_name method on @proxy.
 //
@@ -357,7 +360,7 @@ var xDBusProxyCallSync func(uintptr, string, *glib.Variant, DBusCallFlags, int32
 // If @proxy has an expected interface (see
 // #GDBusProxy:g-interface-info) and @method_name is referenced by it,
 // then the return value is checked against the return type.
-func (x *DBusProxy) CallSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int32, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusProxy) CallSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
@@ -370,12 +373,12 @@ func (x *DBusProxy) CallSync(MethodNameVar string, ParametersVar *glib.Variant, 
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusProxyCallWithUnixFdList func(uintptr, string, *glib.Variant, DBusCallFlags, int32, uintptr, uintptr, uintptr, uintptr)
+var xDBusProxyCallWithUnixFdList func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, uintptr, uintptr, uintptr)
 
 // Like g_dbus_proxy_call() but also takes a #GUnixFDList object.
 //
 // This method is only available on UNIX.
-func (x *DBusProxy) CallWithUnixFdList(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int32, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusProxy) CallWithUnixFdList(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	xDBusProxyCallWithUnixFdList(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -395,12 +398,12 @@ func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar A
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int32, uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
+var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
 
 // Like g_dbus_proxy_call_sync() but also takes and returns #GUnixFDList objects.
 //
 // This method is only available on UNIX.
-func (x *DBusProxy) CallWithUnixFdListSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int32, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusProxy) CallWithUnixFdListSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
@@ -454,14 +457,14 @@ func (x *DBusProxy) GetConnection() *DBusConnection {
 	return cls
 }
 
-var xDBusProxyGetDefaultTimeout func(uintptr) int32
+var xDBusProxyGetDefaultTimeout func(uintptr) int
 
 // Gets the timeout to use if -1 (specifying default timeout) is
 // passed as @timeout_msec in the g_dbus_proxy_call() and
 // g_dbus_proxy_call_sync() functions.
 //
 // See the #GDBusProxy:g-default-timeout property for more details.
-func (x *DBusProxy) GetDefaultTimeout() int32 {
+func (x *DBusProxy) GetDefaultTimeout() int {
 	cret := xDBusProxyGetDefaultTimeout(x.GoPointer())
 	return cret
 }
@@ -567,14 +570,14 @@ func (x *DBusProxy) SetCachedProperty(PropertyNameVar string, ValueVar *glib.Var
 	xDBusProxySetCachedProperty(x.GoPointer(), PropertyNameVar, ValueVar)
 }
 
-var xDBusProxySetDefaultTimeout func(uintptr, int32)
+var xDBusProxySetDefaultTimeout func(uintptr, int)
 
 // Sets the timeout to use if -1 (specifying default timeout) is
 // passed as @timeout_msec in the g_dbus_proxy_call() and
 // g_dbus_proxy_call_sync() functions.
 //
 // See the #GDBusProxy:g-default-timeout property for more details.
-func (x *DBusProxy) SetDefaultTimeout(TimeoutMsecVar int32) {
+func (x *DBusProxy) SetDefaultTimeout(TimeoutMsecVar int) {
 	xDBusProxySetDefaultTimeout(x.GoPointer(), TimeoutMsecVar)
 }
 
@@ -607,10 +610,10 @@ func (c *DBusProxy) SetGoPointer(ptr uintptr) {
 // remote method invocations on the proxy. If this property is -1,
 // the default timeout (typically 25 seconds) is used. If set to
 // %G_MAXINT, then no timeout is used.
-func (x *DBusProxy) SetPropertyGDefaultTimeout(value int32) {
+func (x *DBusProxy) SetPropertyGDefaultTimeout(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("g-default-timeout", &v)
 }
 
@@ -623,10 +626,10 @@ func (x *DBusProxy) SetPropertyGDefaultTimeout(value int32) {
 // remote method invocations on the proxy. If this property is -1,
 // the default timeout (typically 25 seconds) is used. If set to
 // %G_MAXINT, then no timeout is used.
-func (x *DBusProxy) GetPropertyGDefaultTimeout() int32 {
+func (x *DBusProxy) GetPropertyGDefaultTimeout() int {
 	var v gobject.Value
 	x.GetProperty("g-default-timeout", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGInterfaceInfo sets the "g-interface-info" property.
@@ -699,7 +702,7 @@ func (x *DBusProxy) GetPropertyGInterfaceInfo() uintptr {
 func (x *DBusProxy) SetPropertyGInterfaceName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-interface-name", &v)
 }
 
@@ -716,7 +719,7 @@ func (x *DBusProxy) GetPropertyGInterfaceName() string {
 func (x *DBusProxy) SetPropertyGName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-name", &v)
 }
 
@@ -743,7 +746,7 @@ func (x *DBusProxy) GetPropertyGNameOwner() string {
 func (x *DBusProxy) SetPropertyGObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-object-path", &v)
 }
 
@@ -767,7 +770,7 @@ func (x *DBusProxy) GetPropertyGObjectPath() string {
 // This signal corresponds to the
 // `PropertiesChanged` D-Bus signal on the
 // `org.freedesktop.DBus.Properties` interface.
-func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []string)) uint32 {
+func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
@@ -794,7 +797,7 @@ func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []str
 // Since 2.72 this signal supports detailed connections. You can connect to
 // the detailed signal `g-signal::x` in order to receive callbacks only when
 // signal `x` is received from the remote object.
-func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr)) uint32 {
+func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
@@ -852,7 +855,7 @@ func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr))
 // in a thread, so if you want to support asynchronous initialization via
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
-func (x *DBusProxy) InitAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusProxy) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -990,7 +993,7 @@ func (x *DBusProxy) Init(CancellableVar *Cancellable) (bool, error) {
 	return cret, cerr
 }
 
-var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, string, string, uintptr, uintptr, uintptr)
+var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, uintptr, string, string, uintptr, uintptr, uintptr)
 
 // Creates a proxy for accessing @interface_name on the remote object
 // at @object_path owned by @name at @connection and asynchronously
@@ -1019,8 +1022,11 @@ var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, stri
 // See g_dbus_proxy_new_sync() and for a synchronous version of this constructor.
 //
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
-func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar *string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVarPtr, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDBusProxyNewForBus func(BusType, DBusProxyFlags, *DBusInterfaceInfo, string, string, string, uintptr, uintptr, uintptr)

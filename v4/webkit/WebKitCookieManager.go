@@ -283,7 +283,7 @@ func (c *CookieManager) SetGoPointer(ptr uintptr) {
 }
 
 // This signal is emitted when cookies are added, removed or modified.
-func (x *CookieManager) ConnectChanged(cb *func(CookieManager)) uint32 {
+func (x *CookieManager) ConnectChanged(cb *func(CookieManager)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

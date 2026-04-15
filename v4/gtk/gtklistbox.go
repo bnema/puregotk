@@ -30,7 +30,7 @@ type ListBoxFilterFunc func(uintptr, uintptr) bool
 type ListBoxForeachFunc func(uintptr, uintptr, uintptr)
 
 // Compare two rows to determine which should be first.
-type ListBoxSortFunc func(uintptr, uintptr, uintptr) int32
+type ListBoxSortFunc func(uintptr, uintptr, uintptr) int
 
 // Whenever @row changes or which row is before @row changes this
 // is called, which lets you update the header on @row.
@@ -258,13 +258,13 @@ func (x *ListBox) GetAdjustment() *Adjustment {
 	return cls
 }
 
-var xListBoxGetRowAtIndex func(uintptr, int32) uintptr
+var xListBoxGetRowAtIndex func(uintptr, int) uintptr
 
 // Gets the n-th child in the list (not counting headers).
 //
 // If @index_ is negative or larger than the number of items in the
 // list, %NULL is returned.
-func (x *ListBox) GetRowAtIndex(IndexVar int32) *ListBoxRow {
+func (x *ListBox) GetRowAtIndex(IndexVar int) *ListBoxRow {
 	var cls *ListBoxRow
 
 	cret := xListBoxGetRowAtIndex(x.GoPointer(), IndexVar)
@@ -278,10 +278,10 @@ func (x *ListBox) GetRowAtIndex(IndexVar int32) *ListBoxRow {
 	return cls
 }
 
-var xListBoxGetRowAtY func(uintptr, int32) uintptr
+var xListBoxGetRowAtY func(uintptr, int) uintptr
 
 // Gets the row at the @y position.
-func (x *ListBox) GetRowAtY(YVar int32) *ListBoxRow {
+func (x *ListBox) GetRowAtY(YVar int) *ListBoxRow {
 	var cls *ListBoxRow
 
 	cret := xListBoxGetRowAtY(x.GoPointer(), YVar)
@@ -352,7 +352,7 @@ func (x *ListBox) GetTabBehavior() ListTabBehavior {
 	return cret
 }
 
-var xListBoxInsert func(uintptr, uintptr, int32)
+var xListBoxInsert func(uintptr, uintptr, int)
 
 // Insert the @child into the @box at @position.
 //
@@ -361,7 +361,7 @@ var xListBoxInsert func(uintptr, uintptr, int32)
 //
 // If @position is -1, or larger than the total number of items in the
 // @box, then the @child will be appended to the end.
-func (x *ListBox) Insert(ChildVar *Widget, PositionVar int32) {
+func (x *ListBox) Insert(ChildVar *Widget, PositionVar int) {
 	xListBoxInsert(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
 }
 
@@ -650,7 +650,7 @@ func (x *ListBox) GetPropertyShowSeparators() bool {
 }
 
 // Emitted when the cursor row is activated.
-func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint32 {
+func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-row", cbRefPtr)
@@ -683,7 +683,7 @@ func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint32 {
 //     move by individual children
 //   - &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the box
 //   - &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt; move vertically by pages
-func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int32, bool, bool)) uint32 {
+func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int, bool, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
@@ -691,7 +691,7 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int32, bool,
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int32, ExtendVarp bool, ModifyVarp bool) {
+	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) {
 		fa := ListBox{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -706,7 +706,7 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int32, bool,
 }
 
 // Emitted when a row has been activated by the user.
-func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint32 {
+func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
@@ -734,7 +734,7 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint32 {
 // When the @box is using %GTK_SELECTION_MULTIPLE, this signal will not
 // give you the full picture of selection changes, and you should use
 // the [signal@Gtk.ListBox::selected-rows-changed] signal instead.
-func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint32 {
+func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "row-selected", cbRefPtr)
@@ -762,7 +762,7 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint32 {
+func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
@@ -785,7 +785,7 @@ func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint32 {
 }
 
 // Emitted when the set of selected rows changes.
-func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint32 {
+func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "selected-rows-changed", cbRefPtr)
@@ -810,7 +810,7 @@ func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint32 {
 // Emitted when the cursor row is toggled.
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;␣&lt;/kbd&gt;.
-func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint32 {
+func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
@@ -839,7 +839,7 @@ func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint32 {
 //
 // The default binding for this signal is
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint32 {
+func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
@@ -927,7 +927,7 @@ func (x *ListBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListBox) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ListBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1043,7 +1043,7 @@ func (x *ListBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ListBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1075,7 +1075,7 @@ func (x *ListBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ListBox) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1108,7 +1108,7 @@ func (x *ListBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ListBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1229,10 +1229,10 @@ func (x *ListBoxRow) GetHeader() *Widget {
 	return cls
 }
 
-var xListBoxRowGetIndex func(uintptr) int32
+var xListBoxRowGetIndex func(uintptr) int
 
 // Gets the current index of the @row in its `GtkListBox` container.
-func (x *ListBoxRow) GetIndex() int32 {
+func (x *ListBoxRow) GetIndex() int {
 	cret := xListBoxRowGetIndex(x.GoPointer())
 	return cret
 }
@@ -1339,7 +1339,7 @@ func (x *ListBoxRow) GetPropertySelectable() bool {
 // If you want to be notified when the user activates a row (by key or not),
 // use the [signal@Gtk.ListBox::row-activated] signal on the row’s parent
 // `GtkListBox`.
-func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint32 {
+func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -1427,7 +1427,7 @@ func (x *ListBoxRow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListBoxRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ListBoxRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1543,7 +1543,7 @@ func (x *ListBoxRow) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBoxRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ListBoxRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1575,7 +1575,7 @@ func (x *ListBoxRow) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBoxRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ListBoxRow) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1608,7 +1608,7 @@ func (x *ListBoxRow) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListBoxRow) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ListBoxRow) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1640,8 +1640,11 @@ func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ListBoxRow) SetActionName(ActionNameVar string) {
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *ListBoxRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

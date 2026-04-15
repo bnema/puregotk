@@ -108,7 +108,7 @@ func (x *Notification) AddButton(LabelVar string, DetailedActionVar string) {
 	xNotificationAddButton(x.GoPointer(), LabelVar, DetailedActionVar)
 }
 
-var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...interface{})
+var xNotificationAddButtonWithTarget func(uintptr, string, string, uintptr, ...interface{})
 
 // Adds a button to @notification that activates @action when clicked.
 // @action must be an application-wide action (it must start with "app.").
@@ -117,8 +117,11 @@ var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...in
 // positional parameters into a #GVariant instance, similar to
 // g_variant_new(). @action will be activated with that #GVariant as its
 // parameter.
-func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
-	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, TargetFormatVar, varArgs...)
+func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
+	TargetFormatVarPtr := core.GStrdupNullable(TargetFormatVar)
+	defer core.GFreeNullable(TargetFormatVarPtr)
+
+	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, TargetFormatVarPtr, varArgs...)
 }
 
 var xNotificationAddButtonWithTargetValue func(uintptr, string, string, *glib.Variant)
@@ -132,14 +135,17 @@ func (x *Notification) AddButtonWithTargetValue(LabelVar string, ActionVar strin
 	xNotificationAddButtonWithTargetValue(x.GoPointer(), LabelVar, ActionVar, TargetVar)
 }
 
-var xNotificationSetBody func(uintptr, string)
+var xNotificationSetBody func(uintptr, uintptr)
 
 // Sets the body of @notification to @body.
-func (x *Notification) SetBody(BodyVar string) {
-	xNotificationSetBody(x.GoPointer(), BodyVar)
+func (x *Notification) SetBody(BodyVar *string) {
+	BodyVarPtr := core.GStrdupNullable(BodyVar)
+	defer core.GFreeNullable(BodyVarPtr)
+
+	xNotificationSetBody(x.GoPointer(), BodyVarPtr)
 }
 
-var xNotificationSetCategory func(uintptr, string)
+var xNotificationSetCategory func(uintptr, uintptr)
 
 // Sets the type of @notification to @category. Categories have a main
 // type like `email`, `im` or `device` and can have a detail separated
@@ -147,8 +153,11 @@ var xNotificationSetCategory func(uintptr, string)
 // helps the notification server to select proper feedback to the user.
 //
 // Standard categories are [listed in the specification](https://specifications.freedesktop.org/notification-spec/latest/ar01s06.html).
-func (x *Notification) SetCategory(CategoryVar string) {
-	xNotificationSetCategory(x.GoPointer(), CategoryVar)
+func (x *Notification) SetCategory(CategoryVar *string) {
+	CategoryVarPtr := core.GStrdupNullable(CategoryVar)
+	defer core.GFreeNullable(CategoryVarPtr)
+
+	xNotificationSetCategory(x.GoPointer(), CategoryVarPtr)
 }
 
 var xNotificationSetDefaultAction func(uintptr, string)
@@ -168,7 +177,7 @@ func (x *Notification) SetDefaultAction(DetailedActionVar string) {
 	xNotificationSetDefaultAction(x.GoPointer(), DetailedActionVar)
 }
 
-var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...interface{})
+var xNotificationSetDefaultActionAndTarget func(uintptr, string, uintptr, ...interface{})
 
 // Sets the default action of @notification to @action. This action is
 // activated when the notification is clicked on. It must be an
@@ -181,8 +190,11 @@ var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...inte
 //
 // When no default action is set, the application that the notification
 // was sent on is activated.
-func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
-	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, TargetFormatVar, varArgs...)
+func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
+	TargetFormatVarPtr := core.GStrdupNullable(TargetFormatVar)
+	defer core.GFreeNullable(TargetFormatVarPtr)
+
+	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, TargetFormatVarPtr, varArgs...)
 }
 
 var xNotificationSetDefaultActionAndTargetValue func(uintptr, string, *glib.Variant)

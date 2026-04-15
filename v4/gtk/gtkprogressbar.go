@@ -221,7 +221,7 @@ func (x *ProgressBar) SetShowText(ShowTextVar bool) {
 	xProgressBarSetShowText(x.GoPointer(), ShowTextVar)
 }
 
-var xProgressBarSetText func(uintptr, string)
+var xProgressBarSetText func(uintptr, uintptr)
 
 // Causes the given @text to appear next to the progress bar.
 //
@@ -234,8 +234,11 @@ var xProgressBarSetText func(uintptr, string)
 // percentage. If @text is the empty string, the progress bar will still
 // be styled and sized suitably for containing text, as long as
 // [property@Gtk.ProgressBar:show-text] is %TRUE.
-func (x *ProgressBar) SetText(TextVar string) {
-	xProgressBarSetText(x.GoPointer(), TextVar)
+func (x *ProgressBar) SetText(TextVar *string) {
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	xProgressBarSetText(x.GoPointer(), TextVarPtr)
 }
 
 func (c *ProgressBar) GoPointer() uintptr {
@@ -340,7 +343,7 @@ func (x *ProgressBar) GetPropertyShowText() bool {
 func (x *ProgressBar) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -418,7 +421,7 @@ func (x *ProgressBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ProgressBar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ProgressBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -534,7 +537,7 @@ func (x *ProgressBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ProgressBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ProgressBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -566,7 +569,7 @@ func (x *ProgressBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ProgressBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ProgressBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -599,7 +602,7 @@ func (x *ProgressBar) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ProgressBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ProgressBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

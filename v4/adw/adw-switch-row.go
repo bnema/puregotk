@@ -199,7 +199,7 @@ func (x *SwitchRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SwitchRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *SwitchRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -315,7 +315,7 @@ func (x *SwitchRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SwitchRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *SwitchRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -347,7 +347,7 @@ func (x *SwitchRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SwitchRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *SwitchRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -380,7 +380,7 @@ func (x *SwitchRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SwitchRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *SwitchRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -412,8 +412,11 @@ func (x *SwitchRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *SwitchRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *SwitchRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

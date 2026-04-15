@@ -225,19 +225,19 @@ func (x *Message) AddFlags(FlagsVar MessageFlags) {
 	xMessageAddFlags(x.GoPointer(), FlagsVar)
 }
 
-var xMessageAddHeaderHandler func(uintptr, string, string, uintptr, uintptr) uint32
+var xMessageAddHeaderHandler func(uintptr, string, string, uintptr, uintptr) uint
 
 // Adds a signal handler to @msg for @signal.
 //
 // Similar to [func@GObject.signal_connect], but the @callback will only be run
 // if @msg's incoming messages headers (that is, the `request_headers`) contain
 // a header named @header.
-func (x *Message) AddHeaderHandler(SignalVar string, HeaderVar string, CallbackVar *gobject.Callback, UserDataVar uintptr) uint32 {
+func (x *Message) AddHeaderHandler(SignalVar string, HeaderVar string, CallbackVar *gobject.Callback, UserDataVar uintptr) uint {
 	cret := xMessageAddHeaderHandler(x.GoPointer(), SignalVar, HeaderVar, glib.NewCallback(CallbackVar), UserDataVar)
 	return cret
 }
 
-var xMessageAddStatusCodeHandler func(uintptr, string, uint32, uintptr, uintptr) uint32
+var xMessageAddStatusCodeHandler func(uintptr, string, uint, uintptr, uintptr) uint
 
 // Adds a signal handler to @msg for @signal.
 //
@@ -246,7 +246,7 @@ var xMessageAddStatusCodeHandler func(uintptr, string, uint32, uintptr, uintptr)
 //
 // @signal must be a signal that will be emitted after @msg's status
 // is set (this means it can't be a "wrote" signal).
-func (x *Message) AddStatusCodeHandler(SignalVar string, StatusCodeVar uint32, CallbackVar *gobject.Callback, UserDataVar uintptr) uint32 {
+func (x *Message) AddStatusCodeHandler(SignalVar string, StatusCodeVar uint, CallbackVar *gobject.Callback, UserDataVar uintptr) uint {
 	cret := xMessageAddStatusCodeHandler(x.GoPointer(), SignalVar, StatusCodeVar, glib.NewCallback(CallbackVar), UserDataVar)
 	return cret
 }
@@ -608,7 +608,7 @@ func (x *Message) SetPriority(PriorityVar MessagePriority) {
 	xMessageSetPriority(x.GoPointer(), PriorityVar)
 }
 
-var xMessageSetRequestBody func(uintptr, string, uintptr, int)
+var xMessageSetRequestBody func(uintptr, uintptr, uintptr, int)
 
 // Set the request body of a [class@Message].
 //
@@ -616,11 +616,14 @@ var xMessageSetRequestBody func(uintptr, string, uintptr, int)
 // not be changed if present.
 // The request body needs to be set again in case @msg is restarted
 // (in case of redirection or authentication).
-func (x *Message) SetRequestBody(ContentTypeVar string, StreamVar *gio.InputStream, ContentLengthVar int) {
-	xMessageSetRequestBody(x.GoPointer(), ContentTypeVar, StreamVar.GoPointer(), ContentLengthVar)
+func (x *Message) SetRequestBody(ContentTypeVar *string, StreamVar *gio.InputStream, ContentLengthVar int) {
+	ContentTypeVarPtr := core.GStrdupNullable(ContentTypeVar)
+	defer core.GFreeNullable(ContentTypeVarPtr)
+
+	xMessageSetRequestBody(x.GoPointer(), ContentTypeVarPtr, StreamVar.GoPointer(), ContentLengthVar)
 }
 
-var xMessageSetRequestBodyFromBytes func(uintptr, string, *glib.Bytes)
+var xMessageSetRequestBodyFromBytes func(uintptr, uintptr, *glib.Bytes)
 
 // Set the request body of a [class@Message] from [struct@GLib.Bytes].
 //
@@ -628,8 +631,11 @@ var xMessageSetRequestBodyFromBytes func(uintptr, string, *glib.Bytes)
 // not be changed if present.
 // The request body needs to be set again in case @msg is restarted
 // (in case of redirection or authentication).
-func (x *Message) SetRequestBodyFromBytes(ContentTypeVar string, BytesVar *glib.Bytes) {
-	xMessageSetRequestBodyFromBytes(x.GoPointer(), ContentTypeVar, BytesVar)
+func (x *Message) SetRequestBodyFromBytes(ContentTypeVar *string, BytesVar *glib.Bytes) {
+	ContentTypeVarPtr := core.GStrdupNullable(ContentTypeVar)
+	defer core.GFreeNullable(ContentTypeVarPtr)
+
+	xMessageSetRequestBodyFromBytes(x.GoPointer(), ContentTypeVarPtr, BytesVar)
 }
 
 var xMessageSetSiteForCookies func(uintptr, *glib.Uri)
@@ -761,7 +767,7 @@ func (x *Message) GetPropertyIsTopLevelNavigation() bool {
 func (x *Message) SetPropertyMethod(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("method", &v)
 }
 
@@ -816,10 +822,10 @@ func (x *Message) GetPropertySiteForCookies() uintptr {
 
 // GetPropertyStatusCode gets the "status-code" property.
 // The HTTP response status code.
-func (x *Message) GetPropertyStatusCode() uint32 {
+func (x *Message) GetPropertyStatusCode() uint {
 	var v gobject.Value
 	x.GetProperty("status-code", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyTlsCiphersuiteName gets the "tls-ciphersuite-name" property.
@@ -852,7 +858,7 @@ func (x *Message) GetPropertyUri() uintptr {
 //
 // You can return %TRUE to accept @tls_certificate despite
 // @tls_errors.
-func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCertificateFlags) bool) uint32 {
+func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCertificateFlags) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
@@ -888,7 +894,7 @@ func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCer
 // [method@GObject.Object.ref] on @auth and returning %TRUE. The operation will
 // complete once either [method@Auth.authenticate] or
 // [method@Auth.cancel] are called.
-func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uint32 {
+func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
@@ -917,7 +923,7 @@ func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uin
 // Content-Type sent by the server, this signal is emitted
 // immediately after [signal@Message::got-headers], and @type is
 // %NULL.
-func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint32 {
+func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "content-sniffed", cbRefPtr)
@@ -942,7 +948,7 @@ func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint
 // Emitted when all HTTP processing is finished for a message.
 //
 // (After [signal@Message::got_body]).
-func (x *Message) ConnectFinished(cb *func(Message)) uint32 {
+func (x *Message) ConnectFinished(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
@@ -965,7 +971,7 @@ func (x *Message) ConnectFinished(cb *func(Message)) uint32 {
 }
 
 // Emitted after receiving the complete message response body.
-func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
+func (x *Message) ConnectGotBody(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-body", cbRefPtr)
@@ -989,7 +995,7 @@ func (x *Message) ConnectGotBody(cb *func(Message)) uint32 {
 
 // Emitted after reading a portion of the message
 // body from the network.
-func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
+func (x *Message) ConnectGotBodyData(cb *func(Message, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-body-data", cbRefPtr)
@@ -997,7 +1003,7 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChunkSizeVarp uint32) {
+	fcb := func(clsPtr uintptr, ChunkSizeVarp uint) {
 		fa := Message{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1025,7 +1031,7 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint32)) uint32 {
 // requeue it from a [signal@Message::got-body] handler rather
 // than a [signal@Message::got_headers] handler, so that the
 // existing HTTP connection can be reused.)
-func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
+func (x *Message) ConnectGotHeaders(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-headers", cbRefPtr)
@@ -1057,7 +1063,7 @@ func (x *Message) ConnectGotHeaders(cb *func(Message)) uint32 {
 // If you cancel or requeue @msg while processing this signal,
 // then the current HTTP I/O will be stopped after this signal
 // emission finished, and @msg's connection will be closed.
-func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
+func (x *Message) ConnectGotInformational(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-informational", cbRefPtr)
@@ -1082,7 +1088,7 @@ func (x *Message) ConnectGotInformational(cb *func(Message)) uint32 {
 // Emitted when [class@HSTSEnforcer] has upgraded the protocol
 // for @msg to HTTPS as a result of matching its domain with
 // a HSTS policy.
-func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
+func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "hsts-enforced", cbRefPtr)
@@ -1116,7 +1122,7 @@ func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint32 {
 // See [signal@Gio.SocketClient::event] for more information on what
 // the different values of @event correspond to, and what
 // @connection will be in each case.
-func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, uintptr)) uint32 {
+func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "network-event", cbRefPtr)
@@ -1149,7 +1155,7 @@ func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, u
 // [property@Session:tls-interaction] was set, or if
 // [method@Message.set_tls_client_certificate] was called before the
 // connection TLS handshake started.
-func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uint32 {
+func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate", cbRefPtr)
@@ -1183,7 +1189,7 @@ func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uin
 // [method@Message.tls_client_certificate_password_request_complete]
 // later after setting the password on @password. Note that this signal
 // is not emitted if [property@Session:tls-interaction] was set.
-func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) bool) uint32 {
+func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-certificate-password", cbRefPtr)
@@ -1211,7 +1217,7 @@ func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) b
 // e.g. because the first attempt received a
 // redirection response, or because we needed to use
 // authentication.
-func (x *Message) ConnectRestarted(cb *func(Message)) uint32 {
+func (x *Message) ConnectRestarted(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "restarted", cbRefPtr)
@@ -1234,7 +1240,7 @@ func (x *Message) ConnectRestarted(cb *func(Message)) uint32 {
 }
 
 // Emitted just before a message is sent.
-func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
+func (x *Message) ConnectStarting(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "starting", cbRefPtr)
@@ -1258,7 +1264,7 @@ func (x *Message) ConnectStarting(cb *func(Message)) uint32 {
 
 // Emitted immediately after writing the complete body for a
 // message.
-func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
+func (x *Message) ConnectWroteBody(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body", cbRefPtr)
@@ -1282,7 +1288,7 @@ func (x *Message) ConnectWroteBody(cb *func(Message)) uint32 {
 
 // Emitted immediately after writing a portion of the message
 // body to the network.
-func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
+func (x *Message) ConnectWroteBodyData(cb *func(Message, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-body-data", cbRefPtr)
@@ -1290,7 +1296,7 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChunkSizeVarp uint32) {
+	fcb := func(clsPtr uintptr, ChunkSizeVarp uint) {
 		fa := Message{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1306,7 +1312,7 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint32)) uint32 {
 
 // Emitted immediately after writing the request headers for a
 // message.
-func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint32 {
+func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrote-headers", cbRefPtr)

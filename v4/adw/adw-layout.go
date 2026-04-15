@@ -80,11 +80,14 @@ func (x *Layout) GetName() string {
 	return cret
 }
 
-var xLayoutSetName func(uintptr, string)
+var xLayoutSetName func(uintptr, uintptr)
 
 // Sets the name of the layout.
-func (x *Layout) SetName(NameVar string) {
-	xLayoutSetName(x.GoPointer(), NameVar)
+func (x *Layout) SetName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xLayoutSetName(x.GoPointer(), NameVarPtr)
 }
 
 func (c *Layout) GoPointer() uintptr {
@@ -103,7 +106,7 @@ func (c *Layout) SetGoPointer(ptr uintptr) {
 func (x *Layout) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

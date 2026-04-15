@@ -166,17 +166,20 @@ func NewImageFromGicon(IconVar gio.Icon) *Image {
 	return cls
 }
 
-var xNewImageFromIconName func(string) uintptr
+var xNewImageFromIconName func(uintptr) uintptr
 
 // Creates a `GtkImage` displaying an icon from the current icon theme.
 //
 // If the icon name isn’t known, a “broken image” icon will be
 // displayed instead. If the current icon theme is changed, the icon
 // will be updated appropriately.
-func NewImageFromIconName(IconNameVar string) *Image {
+func NewImageFromIconName(IconNameVar *string) *Image {
 	var cls *Image
 
-	cret := xNewImageFromIconName(IconNameVar)
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	cret := xNewImageFromIconName(IconNameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -347,10 +350,10 @@ func (x *Image) GetPaintable() *gdk.PaintableBase {
 	return cls
 }
 
-var xImageGetPixelSize func(uintptr) int32
+var xImageGetPixelSize func(uintptr) int
 
 // Gets the pixel size used for named icons.
-func (x *Image) GetPixelSize() int32 {
+func (x *Image) GetPixelSize() int {
 	cret := xImageGetPixelSize(x.GoPointer())
 	return cret
 }
@@ -367,7 +370,7 @@ func (x *Image) GetStorageType() ImageType {
 	return cret
 }
 
-var xImageSetFromFile func(uintptr, string)
+var xImageSetFromFile func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a file.
 //
@@ -379,8 +382,11 @@ var xImageSetFromFile func(uintptr, string)
 //	Use a proper image loading framework such as libglycin, which can
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
-func (x *Image) SetFromFile(FilenameVar string) {
-	xImageSetFromFile(x.GoPointer(), FilenameVar)
+func (x *Image) SetFromFile(FilenameVar *string) {
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	xImageSetFromFile(x.GoPointer(), FilenameVarPtr)
 }
 
 var xImageSetFromGicon func(uintptr, uintptr)
@@ -392,13 +398,16 @@ func (x *Image) SetFromGicon(IconVar gio.Icon) {
 	xImageSetFromGicon(x.GoPointer(), IconVar.GoPointer())
 }
 
-var xImageSetFromIconName func(uintptr, string)
+var xImageSetFromIconName func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a named icon.
 //
 // See [ctor@Gtk.Image.new_from_icon_name] for details.
-func (x *Image) SetFromIconName(IconNameVar string) {
-	xImageSetFromIconName(x.GoPointer(), IconNameVar)
+func (x *Image) SetFromIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xImageSetFromIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xImageSetFromPaintable func(uintptr, uintptr)
@@ -423,13 +432,16 @@ func (x *Image) SetFromPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 	xImageSetFromPixbuf(x.GoPointer(), PixbufVar.GoPointer())
 }
 
-var xImageSetFromResource func(uintptr, string)
+var xImageSetFromResource func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a resource.
 //
 // See [ctor@Gtk.Image.new_from_resource] for details.
-func (x *Image) SetFromResource(ResourcePathVar string) {
-	xImageSetFromResource(x.GoPointer(), ResourcePathVar)
+func (x *Image) SetFromResource(ResourcePathVar *string) {
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	xImageSetFromResource(x.GoPointer(), ResourcePathVarPtr)
 }
 
 var xImageSetIconSize func(uintptr, IconSize)
@@ -439,13 +451,13 @@ func (x *Image) SetIconSize(IconSizeVar IconSize) {
 	xImageSetIconSize(x.GoPointer(), IconSizeVar)
 }
 
-var xImageSetPixelSize func(uintptr, int32)
+var xImageSetPixelSize func(uintptr, int)
 
 // Sets the pixel size to use for named icons.
 //
 // If the pixel size is set to a value != -1, it is used instead
 // of the icon size set by [method@Gtk.Image.set_icon_size].
-func (x *Image) SetPixelSize(PixelSizeVar int32) {
+func (x *Image) SetPixelSize(PixelSizeVar int) {
 	xImageSetPixelSize(x.GoPointer(), PixelSizeVar)
 }
 
@@ -465,7 +477,7 @@ func (c *Image) SetGoPointer(ptr uintptr) {
 func (x *Image) SetPropertyFile(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("file", &v)
 }
 
@@ -484,7 +496,7 @@ func (x *Image) GetPropertyFile() string {
 func (x *Image) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -504,10 +516,10 @@ func (x *Image) GetPropertyIconName() string {
 // If set to a value != -1, this property overrides the
 // [property@Gtk.Image:icon-size] property for images of type
 // `GTK_IMAGE_ICON_NAME`.
-func (x *Image) SetPropertyPixelSize(value int32) {
+func (x *Image) SetPropertyPixelSize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("pixel-size", &v)
 }
 
@@ -517,10 +529,10 @@ func (x *Image) SetPropertyPixelSize(value int32) {
 // If set to a value != -1, this property overrides the
 // [property@Gtk.Image:icon-size] property for images of type
 // `GTK_IMAGE_ICON_NAME`.
-func (x *Image) GetPropertyPixelSize() int32 {
+func (x *Image) GetPropertyPixelSize() int {
 	var v gobject.Value
 	x.GetProperty("pixel-size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyResource sets the "resource" property.
@@ -528,7 +540,7 @@ func (x *Image) GetPropertyPixelSize() int32 {
 func (x *Image) SetPropertyResource(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource", &v)
 }
 
@@ -631,7 +643,7 @@ func (x *Image) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Image) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Image) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -747,7 +759,7 @@ func (x *Image) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Image) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Image) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -779,7 +791,7 @@ func (x *Image) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Image) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Image) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -812,7 +824,7 @@ func (x *Image) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Image) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Image) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

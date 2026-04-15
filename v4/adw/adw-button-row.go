@@ -122,18 +122,24 @@ func (x *ButtonRow) GetStartIconName() string {
 	return cret
 }
 
-var xButtonRowSetEndIconName func(uintptr, string)
+var xButtonRowSetEndIconName func(uintptr, uintptr)
 
 // Sets the end icon name for @self.
-func (x *ButtonRow) SetEndIconName(IconNameVar string) {
-	xButtonRowSetEndIconName(x.GoPointer(), IconNameVar)
+func (x *ButtonRow) SetEndIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xButtonRowSetEndIconName(x.GoPointer(), IconNameVarPtr)
 }
 
-var xButtonRowSetStartIconName func(uintptr, string)
+var xButtonRowSetStartIconName func(uintptr, uintptr)
 
 // Sets the start icon name for @self.
-func (x *ButtonRow) SetStartIconName(IconNameVar string) {
-	xButtonRowSetStartIconName(x.GoPointer(), IconNameVar)
+func (x *ButtonRow) SetStartIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xButtonRowSetStartIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 func (c *ButtonRow) GoPointer() uintptr {
@@ -152,7 +158,7 @@ func (c *ButtonRow) SetGoPointer(ptr uintptr) {
 func (x *ButtonRow) SetPropertyEndIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("end-icon-name", &v)
 }
 
@@ -169,7 +175,7 @@ func (x *ButtonRow) GetPropertyEndIconName() string {
 func (x *ButtonRow) SetPropertyStartIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("start-icon-name", &v)
 }
 
@@ -182,7 +188,7 @@ func (x *ButtonRow) GetPropertyStartIconName() string {
 }
 
 // This signal is emitted after the row has been activated.
-func (x *ButtonRow) ConnectActivated(cb *func(ButtonRow)) uint32 {
+func (x *ButtonRow) ConnectActivated(cb *func(ButtonRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
@@ -270,7 +276,7 @@ func (x *ButtonRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ButtonRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ButtonRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -386,7 +392,7 @@ func (x *ButtonRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ButtonRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ButtonRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -418,7 +424,7 @@ func (x *ButtonRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ButtonRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ButtonRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -451,7 +457,7 @@ func (x *ButtonRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ButtonRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ButtonRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -483,8 +489,11 @@ func (x *ButtonRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ButtonRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *ButtonRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

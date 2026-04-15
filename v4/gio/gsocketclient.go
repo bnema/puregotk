@@ -590,12 +590,12 @@ func (x *SocketClient) GetSocketType() SocketType {
 	return cret
 }
 
-var xSocketClientGetTimeout func(uintptr) uint32
+var xSocketClientGetTimeout func(uintptr) uint
 
 // Gets the I/O timeout time for sockets created by @client.
 //
 // See g_socket_client_set_timeout() for details.
-func (x *SocketClient) GetTimeout() uint32 {
+func (x *SocketClient) GetTimeout() uint {
 	cret := xSocketClientGetTimeout(x.GoPointer())
 	return cret
 }
@@ -698,7 +698,7 @@ func (x *SocketClient) SetSocketType(TypeVar SocketType) {
 	xSocketClientSetSocketType(x.GoPointer(), TypeVar)
 }
 
-var xSocketClientSetTimeout func(uintptr, uint32)
+var xSocketClientSetTimeout func(uintptr, uint)
 
 // Sets the I/O timeout for sockets created by @client. @timeout is a
 // time in seconds, or 0 for no timeout (the default).
@@ -706,7 +706,7 @@ var xSocketClientSetTimeout func(uintptr, uint32)
 // The timeout value affects the initial connection attempt as well,
 // so setting this may cause calls to g_socket_client_connect(), etc,
 // to fail with %G_IO_ERROR_TIMED_OUT.
-func (x *SocketClient) SetTimeout(TimeoutVar uint32) {
+func (x *SocketClient) SetTimeout(TimeoutVar uint) {
 	xSocketClientSetTimeout(x.GoPointer(), TimeoutVar)
 }
 
@@ -776,19 +776,19 @@ func (x *SocketClient) GetPropertyEnableProxy() bool {
 
 // SetPropertyTimeout sets the "timeout" property.
 // The I/O timeout for sockets, in seconds, or `0` for none.
-func (x *SocketClient) SetPropertyTimeout(value uint32) {
+func (x *SocketClient) SetPropertyTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("timeout", &v)
 }
 
 // GetPropertyTimeout gets the "timeout" property.
 // The I/O timeout for sockets, in seconds, or `0` for none.
-func (x *SocketClient) GetPropertyTimeout() uint32 {
+func (x *SocketClient) GetPropertyTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTls sets the "tls" property.
@@ -857,7 +857,7 @@ func (x *SocketClient) GetPropertyTls() bool {
 //
 // Note that there may be additional #GSocketClientEvent values in
 // the future; unrecognized @event values should be ignored.
-func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint32 {
+func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)

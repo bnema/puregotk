@@ -19,7 +19,7 @@ import (
 //
 // Since this function is called for each data access, it’s not a
 // particularly efficient operation.
-type TreeModelFilterModifyFunc func(uintptr, *TreeIter, *gobject.Value, int32, uintptr)
+type TreeModelFilterModifyFunc func(uintptr, *TreeIter, *gobject.Value, int, uintptr)
 
 // A function which decides whether the row indicated by @iter is visible.
 type TreeModelFilterVisibleFunc func(uintptr, *TreeIter, uintptr) bool
@@ -72,11 +72,11 @@ func (x *TreeModelFilterClass) GetVisible() func(*TreeModelFilter, TreeModel, *T
 //
 // Since this function is called for each data access, it’s not a
 // particularly efficient operation.
-func (x *TreeModelFilterClass) OverrideModify(cb func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int32)) {
+func (x *TreeModelFilterClass) OverrideModify(cb func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int)) {
 	if cb == nil {
 		x.xModify = 0
 	} else {
-		x.xModify = purego.NewCallback(func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int32) {
+		x.xModify = purego.NewCallback(func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int) {
 			cb(TreeModelFilterNewFromInternalPtr(SelfVarp), &TreeModelBase{Ptr: ChildModelVarp}, IterVarp, ValueVarp, ColumnVarp)
 		})
 	}
@@ -89,13 +89,13 @@ func (x *TreeModelFilterClass) OverrideModify(cb func(*TreeModelFilter, TreeMode
 //
 // Since this function is called for each data access, it’s not a
 // particularly efficient operation.
-func (x *TreeModelFilterClass) GetModify() func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int32) {
+func (x *TreeModelFilterClass) GetModify() func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int) {
 	if x.xModify == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int32)
+	var rawCallback func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int)
 	purego.RegisterFunc(&rawCallback, x.xModify)
-	return func(SelfVar *TreeModelFilter, ChildModelVar TreeModel, IterVar *TreeIter, ValueVar *gobject.Value, ColumnVar int32) {
+	return func(SelfVar *TreeModelFilter, ChildModelVar TreeModel, IterVar *TreeIter, ValueVar *gobject.Value, ColumnVar int) {
 		rawCallback(SelfVar.GoPointer(), ChildModelVar.GoPointer(), IterVar, ValueVar, ColumnVar)
 	}
 }
@@ -274,7 +274,7 @@ func (x *TreeModelFilter) Refilter() {
 	xTreeModelFilterRefilter(x.GoPointer())
 }
 
-var xTreeModelFilterSetModifyFunc func(uintptr, int32, []types.GType, uintptr, uintptr, uintptr)
+var xTreeModelFilterSetModifyFunc func(uintptr, int, []types.GType, uintptr, uintptr, uintptr)
 
 // With the @n_columns and @types parameters, you give an array of column
 // types for this model (which will be exposed to the parent model/view).
@@ -286,11 +286,11 @@ var xTreeModelFilterSetModifyFunc func(uintptr, int32, []types.GType, uintptr, u
 //
 // Note that gtk_tree_model_filter_set_modify_func()
 // can only be called once for a given filter model.
-func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int32, TypesVar []types.GType, FuncVar *TreeModelFilterModifyFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
+func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int, TypesVar []types.GType, FuncVar *TreeModelFilterModifyFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 	xTreeModelFilterSetModifyFunc(x.GoPointer(), NColumnsVar, TypesVar, glib.NewCallback(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
-var xTreeModelFilterSetVisibleColumn func(uintptr, int32)
+var xTreeModelFilterSetVisibleColumn func(uintptr, int)
 
 // Sets @column of the child_model to be the column where @filter should
 // look for visibility information. @columns should be a column of type
@@ -300,7 +300,7 @@ var xTreeModelFilterSetVisibleColumn func(uintptr, int32)
 // Note that gtk_tree_model_filter_set_visible_func() or
 // gtk_tree_model_filter_set_visible_column() can only be called
 // once for a given filter model.
-func (x *TreeModelFilter) SetVisibleColumn(ColumnVar int32) {
+func (x *TreeModelFilter) SetVisibleColumn(ColumnVar int) {
 	xTreeModelFilterSetVisibleColumn(x.GoPointer(), ColumnVar)
 }
 
@@ -451,7 +451,7 @@ func (x *TreeModelFilter) Get(IterVar *TreeIter, varArgs ...interface{}) {
 }
 
 // Returns the type of the column.
-func (x *TreeModelFilter) GetColumnType(IndexVar int32) types.GType {
+func (x *TreeModelFilter) GetColumnType(IndexVar int) types.GType {
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -494,7 +494,7 @@ func (x *TreeModelFilter) GetIterFromString(IterVar *TreeIter, PathStringVar str
 }
 
 // Returns the number of columns supported by @tree_model.
-func (x *TreeModelFilter) GetNColumns() int32 {
+func (x *TreeModelFilter) GetNColumns() int {
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
 	return cret
 }
@@ -532,7 +532,7 @@ func (x *TreeModelFilter) GetValist(IterVar *TreeIter, VarArgsVar []interface{})
 //
 // When done with @value, g_value_unset() needs to be called
 // to free any allocated memory.
-func (x *TreeModelFilter) GetValue(IterVar *TreeIter, ColumnVar int32, ValueVar *gobject.Value) {
+func (x *TreeModelFilter) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
 	XGtkTreeModelGetValue(x.GoPointer(), IterVar, ColumnVar, ValueVar)
 }
 
@@ -559,7 +559,7 @@ func (x *TreeModelFilter) IterHasChild(IterVar *TreeIter) bool {
 //
 // As a special case, if @iter is %NULL, then the number
 // of toplevel nodes is returned.
-func (x *TreeModelFilter) IterNChildren(IterVar *TreeIter) int32 {
+func (x *TreeModelFilter) IterNChildren(IterVar *TreeIter) int {
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
 	return cret
 }
@@ -580,7 +580,7 @@ func (x *TreeModelFilter) IterNext(IterVar *TreeIter) bool {
 // will remain a valid node after this function has been called. As a
 // special case, if @parent is %NULL, then the @n-th root node
 // is set.
-func (x *TreeModelFilter) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int32) bool {
+func (x *TreeModelFilter) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
 	return cret
 }
@@ -673,7 +673,7 @@ func (x *TreeModelFilter) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
 //
 // This should be called by models when their rows have been
 // reordered.
-func (x *TreeModelFilter) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int32) {
+func (x *TreeModelFilter) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int) {
 	XGtkTreeModelRowsReordered(x.GoPointer(), PathVar, IterVar, NewOrderVar)
 }
 
@@ -683,7 +683,7 @@ func (x *TreeModelFilter) RowsReordered(PathVar *TreePath, IterVar *TreeIter, Ne
 //
 // This should be called by models when their rows have been
 // reordered.
-func (x *TreeModelFilter) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32, LengthVar int32) {
+func (x *TreeModelFilter) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int, LengthVar int) {
 	XGtkTreeModelRowsReorderedWithLength(x.GoPointer(), PathVar, IterVar, NewOrderVar, LengthVar)
 }
 

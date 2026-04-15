@@ -149,11 +149,11 @@ func (x *PaintableInterface) GetGetFlags() func(Paintable) PaintableFlags {
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
 //	be able to render at any size.
-func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int32) {
+func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int) {
 	if cb == nil {
 		x.xGetIntrinsicWidth = 0
 	} else {
-		x.xGetIntrinsicWidth = purego.NewCallback(func(PaintableVarp uintptr) int32 {
+		x.xGetIntrinsicWidth = purego.NewCallback(func(PaintableVarp uintptr) int {
 			return cb(&PaintableBase{Ptr: PaintableVarp})
 		})
 	}
@@ -164,13 +164,13 @@ func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int32)
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
 //	be able to render at any size.
-func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int32 {
+func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int {
 	if x.xGetIntrinsicWidth == 0 {
 		return nil
 	}
-	var rawCallback func(PaintableVarp uintptr) int32
+	var rawCallback func(PaintableVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetIntrinsicWidth)
-	return func(PaintableVar Paintable) int32 {
+	return func(PaintableVar Paintable) int {
 		return rawCallback(PaintableVar.GoPointer())
 	}
 }
@@ -180,11 +180,11 @@ func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int32 {
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
 //	be able to render at any size.
-func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int32) {
+func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int) {
 	if cb == nil {
 		x.xGetIntrinsicHeight = 0
 	} else {
-		x.xGetIntrinsicHeight = purego.NewCallback(func(PaintableVarp uintptr) int32 {
+		x.xGetIntrinsicHeight = purego.NewCallback(func(PaintableVarp uintptr) int {
 			return cb(&PaintableBase{Ptr: PaintableVarp})
 		})
 	}
@@ -195,13 +195,13 @@ func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int32
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
 //	be able to render at any size.
-func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int32 {
+func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int {
 	if x.xGetIntrinsicHeight == 0 {
 		return nil
 	}
-	var rawCallback func(PaintableVarp uintptr) int32
+	var rawCallback func(PaintableVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetIntrinsicHeight)
-	return func(PaintableVar Paintable) int32 {
+	return func(PaintableVar Paintable) int {
 		return rawCallback(PaintableVar.GoPointer())
 	}
 }
@@ -290,8 +290,8 @@ type Paintable interface {
 	GetCurrentImage() *PaintableBase
 	GetFlags() PaintableFlags
 	GetIntrinsicAspectRatio() float64
-	GetIntrinsicHeight() int32
-	GetIntrinsicWidth() int32
+	GetIntrinsicHeight() int
+	GetIntrinsicWidth() int
 	InvalidateContents()
 	InvalidateSize()
 	Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar float64)
@@ -393,7 +393,7 @@ func (x *PaintableBase) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *PaintableBase) GetIntrinsicHeight() int32 {
+func (x *PaintableBase) GetIntrinsicHeight() int {
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -408,7 +408,7 @@ func (x *PaintableBase) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *PaintableBase) GetIntrinsicWidth() int32 {
+func (x *PaintableBase) GetIntrinsicWidth() int {
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -455,8 +455,8 @@ var (
 	XGdkPaintableGetCurrentImage         func(uintptr) uintptr
 	XGdkPaintableGetFlags                func(uintptr) PaintableFlags
 	XGdkPaintableGetIntrinsicAspectRatio func(uintptr) float64
-	XGdkPaintableGetIntrinsicHeight      func(uintptr) int32
-	XGdkPaintableGetIntrinsicWidth       func(uintptr) int32
+	XGdkPaintableGetIntrinsicHeight      func(uintptr) int
+	XGdkPaintableGetIntrinsicWidth       func(uintptr) int
 	XGdkPaintableInvalidateContents      func(uintptr)
 	XGdkPaintableInvalidateSize          func(uintptr)
 	XGdkPaintableSnapshot                func(uintptr, uintptr, float64, float64)
@@ -485,7 +485,7 @@ const (
 	PaintableStaticContentsValue PaintableFlags = 2
 )
 
-var xPaintableNewEmpty func(int32, int32) uintptr
+var xPaintableNewEmpty func(int, int) uintptr
 
 // Returns a paintable that has the given intrinsic size and draws nothing.
 //
@@ -494,7 +494,7 @@ var xPaintableNewEmpty func(int32, int32) uintptr
 // when the paintable is in an incomplete state (like a
 // [GtkMediaStream](../gtk4/class.MediaStream.html) before receiving
 // the first frame).
-func PaintableNewEmpty(IntrinsicWidthVar int32, IntrinsicHeightVar int32) *PaintableBase {
+func PaintableNewEmpty(IntrinsicWidthVar int, IntrinsicHeightVar int) *PaintableBase {
 	var cls *PaintableBase
 
 	cret := xPaintableNewEmpty(IntrinsicWidthVar, IntrinsicHeightVar)

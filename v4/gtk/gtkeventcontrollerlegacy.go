@@ -68,7 +68,7 @@ func (c *EventControllerLegacy) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted for each GDK event delivered to @controller.
-func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uintptr) bool) uint32 {
+func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)

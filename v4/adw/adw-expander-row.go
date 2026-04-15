@@ -167,20 +167,20 @@ func (x *ExpanderRow) GetSubtitle() string {
 	return cret
 }
 
-var xExpanderRowGetSubtitleLines func(uintptr) int32
+var xExpanderRowGetSubtitleLines func(uintptr) int
 
 // Gets the number of lines at the end of which the subtitle label will be
 // ellipsized.
-func (x *ExpanderRow) GetSubtitleLines() int32 {
+func (x *ExpanderRow) GetSubtitleLines() int {
 	cret := xExpanderRowGetSubtitleLines(x.GoPointer())
 	return cret
 }
 
-var xExpanderRowGetTitleLines func(uintptr) int32
+var xExpanderRowGetTitleLines func(uintptr) int
 
 // Gets the number of lines at the end of which the title label will be
 // ellipsized.
-func (x *ExpanderRow) GetTitleLines() int32 {
+func (x *ExpanderRow) GetTitleLines() int {
 	cret := xExpanderRowGetTitleLines(x.GoPointer())
 	return cret
 }
@@ -206,11 +206,14 @@ func (x *ExpanderRow) SetExpanded(ExpandedVar bool) {
 	xExpanderRowSetExpanded(x.GoPointer(), ExpandedVar)
 }
 
-var xExpanderRowSetIconName func(uintptr, string)
+var xExpanderRowSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *ExpanderRow) SetIconName(IconNameVar string) {
-	xExpanderRowSetIconName(x.GoPointer(), IconNameVar)
+func (x *ExpanderRow) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xExpanderRowSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xExpanderRowSetShowEnableSwitch func(uintptr, bool)
@@ -230,23 +233,23 @@ func (x *ExpanderRow) SetSubtitle(SubtitleVar string) {
 	xExpanderRowSetSubtitle(x.GoPointer(), SubtitleVar)
 }
 
-var xExpanderRowSetSubtitleLines func(uintptr, int32)
+var xExpanderRowSetSubtitleLines func(uintptr, int)
 
 // Sets the number of lines at the end of which the subtitle label will be
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) SetSubtitleLines(SubtitleLinesVar int32) {
+func (x *ExpanderRow) SetSubtitleLines(SubtitleLinesVar int) {
 	xExpanderRowSetSubtitleLines(x.GoPointer(), SubtitleLinesVar)
 }
 
-var xExpanderRowSetTitleLines func(uintptr, int32)
+var xExpanderRowSetTitleLines func(uintptr, int)
 
 // Sets the number of lines at the end of which the title label will be
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) SetTitleLines(TitleLinesVar int32) {
+func (x *ExpanderRow) SetTitleLines(TitleLinesVar int) {
 	xExpanderRowSetTitleLines(x.GoPointer(), TitleLinesVar)
 }
 
@@ -300,7 +303,7 @@ func (x *ExpanderRow) GetPropertyExpanded() bool {
 func (x *ExpanderRow) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -337,7 +340,7 @@ func (x *ExpanderRow) GetPropertyShowEnableSwitch() bool {
 func (x *ExpanderRow) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -357,10 +360,10 @@ func (x *ExpanderRow) GetPropertySubtitle() string {
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) SetPropertySubtitleLines(value int32) {
+func (x *ExpanderRow) SetPropertySubtitleLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("subtitle-lines", &v)
 }
 
@@ -369,20 +372,20 @@ func (x *ExpanderRow) SetPropertySubtitleLines(value int32) {
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) GetPropertySubtitleLines() int32 {
+func (x *ExpanderRow) GetPropertySubtitleLines() int {
 	var v gobject.Value
 	x.GetProperty("subtitle-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyTitleLines sets the "title-lines" property.
 // The number of lines at the end of which the title label will be ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) SetPropertyTitleLines(value int32) {
+func (x *ExpanderRow) SetPropertyTitleLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("title-lines", &v)
 }
 
@@ -390,10 +393,10 @@ func (x *ExpanderRow) SetPropertyTitleLines(value int32) {
 // The number of lines at the end of which the title label will be ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ExpanderRow) GetPropertyTitleLines() int32 {
+func (x *ExpanderRow) GetPropertyTitleLines() int {
 	var v gobject.Value
 	x.GetProperty("title-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -462,7 +465,7 @@ func (x *ExpanderRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ExpanderRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ExpanderRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -578,7 +581,7 @@ func (x *ExpanderRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ExpanderRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ExpanderRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -610,7 +613,7 @@ func (x *ExpanderRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ExpanderRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ExpanderRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -643,7 +646,7 @@ func (x *ExpanderRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ExpanderRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ExpanderRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -675,8 +678,11 @@ func (x *ExpanderRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ExpanderRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *ExpanderRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

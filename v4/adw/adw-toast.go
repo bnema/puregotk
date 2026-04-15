@@ -294,10 +294,10 @@ func (x *Toast) GetPriority() ToastPriority {
 	return cret
 }
 
-var xToastGetTimeout func(uintptr) uint32
+var xToastGetTimeout func(uintptr) uint
 
 // Gets timeout for @self.
-func (x *Toast) GetTimeout() uint32 {
+func (x *Toast) GetTimeout() uint {
 	cret := xToastGetTimeout(x.GoPointer())
 	return cret
 }
@@ -321,18 +321,21 @@ func (x *Toast) GetUseMarkup() bool {
 	return cret
 }
 
-var xToastSetActionName func(uintptr, string)
+var xToastSetActionName func(uintptr, uintptr)
 
 // Sets the name of the associated action.
 //
 // It will be activated when clicking the button.
 //
 // See [property@Toast:action-target].
-func (x *Toast) SetActionName(ActionNameVar string) {
-	xToastSetActionName(x.GoPointer(), ActionNameVar)
+func (x *Toast) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	xToastSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
-var xToastSetActionTarget func(uintptr, string, ...interface{})
+var xToastSetActionTarget func(uintptr, uintptr, ...interface{})
 
 // Sets the parameter for action invocations.
 //
@@ -343,8 +346,11 @@ var xToastSetActionTarget func(uintptr, string, ...interface{})
 // If you are setting a string-valued target and want to set
 // the action name at the same time, you can use
 // [method@Toast.set_detailed_action_name].
-func (x *Toast) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
-	xToastSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
+func (x *Toast) SetActionTarget(FormatStringVar *string, varArgs ...interface{}) {
+	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
+	defer core.GFreeNullable(FormatStringVarPtr)
+
+	xToastSetActionTarget(x.GoPointer(), FormatStringVarPtr, varArgs...)
 }
 
 var xToastSetActionTargetValue func(uintptr, *glib.Variant)
@@ -357,7 +363,7 @@ func (x *Toast) SetActionTargetValue(ActionTargetVar *glib.Variant) {
 	xToastSetActionTargetValue(x.GoPointer(), ActionTargetVar)
 }
 
-var xToastSetButtonLabel func(uintptr, string)
+var xToastSetButtonLabel func(uintptr, uintptr)
 
 // Sets the label to show on the button.
 //
@@ -366,8 +372,11 @@ var xToastSetButtonLabel func(uintptr, string)
 // If set to `NULL`, the button won't be shown.
 //
 // See [property@Toast:action-name].
-func (x *Toast) SetButtonLabel(ButtonLabelVar string) {
-	xToastSetButtonLabel(x.GoPointer(), ButtonLabelVar)
+func (x *Toast) SetButtonLabel(ButtonLabelVar *string) {
+	ButtonLabelVarPtr := core.GStrdupNullable(ButtonLabelVar)
+	defer core.GFreeNullable(ButtonLabelVarPtr)
+
+	xToastSetButtonLabel(x.GoPointer(), ButtonLabelVarPtr)
 }
 
 var xToastSetCustomTitle func(uintptr, uintptr)
@@ -382,14 +391,17 @@ func (x *Toast) SetCustomTitle(WidgetVar *gtk.Widget) {
 	xToastSetCustomTitle(x.GoPointer(), WidgetVar.GoPointer())
 }
 
-var xToastSetDetailedActionName func(uintptr, string)
+var xToastSetDetailedActionName func(uintptr, uintptr)
 
 // Sets the action name and its parameter.
 //
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
-func (x *Toast) SetDetailedActionName(DetailedActionNameVar string) {
-	xToastSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
+func (x *Toast) SetDetailedActionName(DetailedActionNameVar *string) {
+	DetailedActionNameVarPtr := core.GStrdupNullable(DetailedActionNameVar)
+	defer core.GFreeNullable(DetailedActionNameVarPtr)
+
+	xToastSetDetailedActionName(x.GoPointer(), DetailedActionNameVarPtr)
 }
 
 var xToastSetPriority func(uintptr, ToastPriority)
@@ -407,7 +419,7 @@ func (x *Toast) SetPriority(PriorityVar ToastPriority) {
 	xToastSetPriority(x.GoPointer(), PriorityVar)
 }
 
-var xToastSetTimeout func(uintptr, uint32)
+var xToastSetTimeout func(uintptr, uint)
 
 // Sets timeout for @self.
 //
@@ -416,7 +428,7 @@ var xToastSetTimeout func(uintptr, uint32)
 //
 // Toasts cannot disappear while being hovered, pressed (on touchscreen), or
 // have keyboard focus inside them.
-func (x *Toast) SetTimeout(TimeoutVar uint32) {
+func (x *Toast) SetTimeout(TimeoutVar uint) {
 	xToastSetTimeout(x.GoPointer(), TimeoutVar)
 }
 
@@ -462,7 +474,7 @@ func (c *Toast) SetGoPointer(ptr uintptr) {
 func (x *Toast) SetPropertyActionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("action-name", &v)
 }
 
@@ -506,7 +518,7 @@ func (x *Toast) GetPropertyActionTarget() uintptr {
 func (x *Toast) SetPropertyButtonLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("button-label", &v)
 }
 
@@ -532,10 +544,10 @@ func (x *Toast) GetPropertyButtonLabel() string {
 //
 // Toasts cannot disappear while being hovered, pressed (on touchscreen), or
 // have keyboard focus inside them.
-func (x *Toast) SetPropertyTimeout(value uint32) {
+func (x *Toast) SetPropertyTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("timeout", &v)
 }
 
@@ -547,10 +559,10 @@ func (x *Toast) SetPropertyTimeout(value uint32) {
 //
 // Toasts cannot disappear while being hovered, pressed (on touchscreen), or
 // have keyboard focus inside them.
-func (x *Toast) GetPropertyTimeout() uint32 {
+func (x *Toast) GetPropertyTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTitle sets the "title" property.
@@ -564,7 +576,7 @@ func (x *Toast) GetPropertyTimeout() uint32 {
 func (x *Toast) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -606,7 +618,7 @@ func (x *Toast) GetPropertyUseMarkup() bool {
 // Emitted after the button has been clicked.
 //
 // It can be used as an alternative to setting an action.
-func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint32 {
+func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
@@ -629,7 +641,7 @@ func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint32 {
 }
 
 // Emitted when the toast has been dismissed.
-func (x *Toast) ConnectDismissed(cb *func(Toast)) uint32 {
+func (x *Toast) ConnectDismissed(cb *func(Toast)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)

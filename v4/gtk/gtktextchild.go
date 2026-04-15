@@ -195,12 +195,12 @@ func (x *TextChildAnchor) GetDeleted() bool {
 	return cret
 }
 
-var xTextChildAnchorGetWidgets func(uintptr, *uint32) uintptr
+var xTextChildAnchorGetWidgets func(uintptr, *uint) uintptr
 
 // Gets a list of all widgets anchored at this child anchor.
 //
 // The order in which the widgets are returned is not defined.
-func (x *TextChildAnchor) GetWidgets(OutLenVar *uint32) uintptr {
+func (x *TextChildAnchor) GetWidgets(OutLenVar *uint) uintptr {
 	cret := xTextChildAnchorGetWidgets(x.GoPointer(), OutLenVar)
 	return cret
 }

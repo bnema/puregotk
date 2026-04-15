@@ -176,10 +176,10 @@ func (x *EntryCompletion) GetInlineSelection() bool {
 	return cret
 }
 
-var xEntryCompletionGetMinimumKeyLength func(uintptr) int32
+var xEntryCompletionGetMinimumKeyLength func(uintptr) int
 
 // Returns the minimum key length as set for @completion.
-func (x *EntryCompletion) GetMinimumKeyLength() int32 {
+func (x *EntryCompletion) GetMinimumKeyLength() int {
 	cret := xEntryCompletionGetMinimumKeyLength(x.GoPointer())
 	return cret
 }
@@ -229,10 +229,10 @@ func (x *EntryCompletion) GetPopupSingleMatch() bool {
 	return cret
 }
 
-var xEntryCompletionGetTextColumn func(uintptr) int32
+var xEntryCompletionGetTextColumn func(uintptr) int
 
 // Returns the column in the model of @completion to get strings from.
-func (x *EntryCompletion) GetTextColumn() int32 {
+func (x *EntryCompletion) GetTextColumn() int {
 	cret := xEntryCompletionGetTextColumn(x.GoPointer())
 	return cret
 }
@@ -270,7 +270,7 @@ func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDa
 	xEntryCompletionSetMatchFunc(x.GoPointer(), glib.NewCallback(FuncVar), FuncDataVar, glib.NewCallbackNullable(FuncNotifyVar))
 }
 
-var xEntryCompletionSetMinimumKeyLength func(uintptr, int32)
+var xEntryCompletionSetMinimumKeyLength func(uintptr, int)
 
 // Requires the length of the search key for @completion to be at least
 // @length.
@@ -278,7 +278,7 @@ var xEntryCompletionSetMinimumKeyLength func(uintptr, int32)
 // This is useful for long lists, where completing using a small
 // key takes a lot of time and will come up with meaningless results anyway
 // (ie, a too large dataset).
-func (x *EntryCompletion) SetMinimumKeyLength(LengthVar int32) {
+func (x *EntryCompletion) SetMinimumKeyLength(LengthVar int) {
 	xEntryCompletionSetMinimumKeyLength(x.GoPointer(), LengthVar)
 }
 
@@ -319,7 +319,7 @@ func (x *EntryCompletion) SetPopupSingleMatch(PopupSingleMatchVar bool) {
 	xEntryCompletionSetPopupSingleMatch(x.GoPointer(), PopupSingleMatchVar)
 }
 
-var xEntryCompletionSetTextColumn func(uintptr, int32)
+var xEntryCompletionSetTextColumn func(uintptr, int)
 
 // Convenience function for setting up the most used case of this code: a
 // completion list with just strings.
@@ -332,7 +332,7 @@ var xEntryCompletionSetTextColumn func(uintptr, int32)
 // column. If you need to set the text column, but don't want the cell
 // renderer, use g_object_set() to set the
 // [property@Gtk.EntryCompletion:text-column] property directly.
-func (x *EntryCompletion) SetTextColumn(ColumnVar int32) {
+func (x *EntryCompletion) SetTextColumn(ColumnVar int) {
 	xEntryCompletionSetTextColumn(x.GoPointer(), ColumnVar)
 }
 
@@ -393,19 +393,19 @@ func (x *EntryCompletion) GetPropertyInlineSelection() bool {
 
 // SetPropertyMinimumKeyLength sets the "minimum-key-length" property.
 // The minimum key length as set for completion.
-func (x *EntryCompletion) SetPropertyMinimumKeyLength(value int32) {
+func (x *EntryCompletion) SetPropertyMinimumKeyLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("minimum-key-length", &v)
 }
 
 // GetPropertyMinimumKeyLength gets the "minimum-key-length" property.
 // The minimum key length as set for completion.
-func (x *EntryCompletion) GetPropertyMinimumKeyLength() int32 {
+func (x *EntryCompletion) GetPropertyMinimumKeyLength() int {
 	var v gobject.Value
 	x.GetProperty("minimum-key-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPopupCompletion sets the "popup-completion" property.
@@ -475,10 +475,10 @@ func (x *EntryCompletion) GetPropertyPopupSingleMatch() bool {
 // The column of the model containing the strings.
 //
 // Note that the strings must be UTF-8.
-func (x *EntryCompletion) SetPropertyTextColumn(value int32) {
+func (x *EntryCompletion) SetPropertyTextColumn(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("text-column", &v)
 }
 
@@ -486,10 +486,10 @@ func (x *EntryCompletion) SetPropertyTextColumn(value int32) {
 // The column of the model containing the strings.
 //
 // Note that the strings must be UTF-8.
-func (x *EntryCompletion) GetPropertyTextColumn() int32 {
+func (x *EntryCompletion) GetPropertyTextColumn() int {
 	var v gobject.Value
 	x.GetProperty("text-column", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when a match from the cursor is on a match of the list.
@@ -500,7 +500,7 @@ func (x *EntryCompletion) GetPropertyTextColumn() int32 {
 //
 // Note that @model is the model that was passed to
 // [method@Gtk.EntryCompletion.set_model].
-func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr, uintptr) bool) uint32 {
+func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
@@ -531,7 +531,7 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 // smaller part of the @prefix into the entry - e.g. the entry used in
 // the `GtkFileChooser` inserts only the part of the prefix up to the
 // next '/'.
-func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) bool) uint32 {
+func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
@@ -561,7 +561,7 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 //
 // Note that @model is the model that was passed to
 // [method@Gtk.EntryCompletion.set_model].
-func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr, uintptr) bool) uint32 {
+func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
@@ -587,7 +587,7 @@ func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr
 // number of rows in completion_complete method.
 //
 // In other words when `GtkEntryCompletion` is out of suggestions.
-func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint32 {
+func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
@@ -625,7 +625,7 @@ func (x *EntryCompletion) GetBuildableId() string {
 // example if column 2 of the model contains strings, you could have the
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
-func (x *EntryCompletion) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int32) {
+func (x *EntryCompletion) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
 }
 
@@ -689,7 +689,7 @@ func (x *EntryCompletion) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
-func (x *EntryCompletion) Reorder(CellVar *CellRenderer, PositionVar int32) {
+func (x *EntryCompletion) Reorder(CellVar *CellRenderer, PositionVar int) {
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
 }
 

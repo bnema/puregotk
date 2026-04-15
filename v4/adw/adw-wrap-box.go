@@ -130,10 +130,10 @@ func (x *WrapBox) GetAlign() float32 {
 	return cret
 }
 
-var xWrapBoxGetChildSpacing func(uintptr) int32
+var xWrapBoxGetChildSpacing func(uintptr) int
 
 // Gets spacing between widgets on the same line.
-func (x *WrapBox) GetChildSpacing() int32 {
+func (x *WrapBox) GetChildSpacing() int {
 	cret := xWrapBoxGetChildSpacing(x.GoPointer())
 	return cret
 }
@@ -170,12 +170,12 @@ func (x *WrapBox) GetLineHomogeneous() bool {
 	return cret
 }
 
-var xWrapBoxGetLineSpacing func(uintptr) int32
+var xWrapBoxGetLineSpacing func(uintptr) int
 
 // Gets the spacing between lines.
 //
 // See [property@WrapBox:line-spacing-unit].
-func (x *WrapBox) GetLineSpacing() int32 {
+func (x *WrapBox) GetLineSpacing() int {
 	cret := xWrapBoxGetLineSpacing(x.GoPointer())
 	return cret
 }
@@ -188,10 +188,10 @@ func (x *WrapBox) GetLineSpacingUnit() LengthUnit {
 	return cret
 }
 
-var xWrapBoxGetNaturalLineLength func(uintptr) int32
+var xWrapBoxGetNaturalLineLength func(uintptr) int
 
 // Gets the natural size for each line.
-func (x *WrapBox) GetNaturalLineLength() int32 {
+func (x *WrapBox) GetNaturalLineLength() int {
 	cret := xWrapBoxGetNaturalLineLength(x.GoPointer())
 	return cret
 }
@@ -285,12 +285,12 @@ func (x *WrapBox) SetAlign(AlignVar float32) {
 	xWrapBoxSetAlign(x.GoPointer(), AlignVar)
 }
 
-var xWrapBoxSetChildSpacing func(uintptr, int32)
+var xWrapBoxSetChildSpacing func(uintptr, int)
 
 // Sets the spacing between widgets on the same line.
 //
 // See [property@WrapBox:child-spacing-unit].
-func (x *WrapBox) SetChildSpacing(ChildSpacingVar int32) {
+func (x *WrapBox) SetChildSpacing(ChildSpacingVar int) {
 	xWrapBoxSetChildSpacing(x.GoPointer(), ChildSpacingVar)
 }
 
@@ -345,10 +345,10 @@ func (x *WrapBox) SetLineHomogeneous(HomogeneousVar bool) {
 	xWrapBoxSetLineHomogeneous(x.GoPointer(), HomogeneousVar)
 }
 
-var xWrapBoxSetLineSpacing func(uintptr, int32)
+var xWrapBoxSetLineSpacing func(uintptr, int)
 
 // Sets the spacing between lines.
-func (x *WrapBox) SetLineSpacing(LineSpacingVar int32) {
+func (x *WrapBox) SetLineSpacing(LineSpacingVar int) {
 	xWrapBoxSetLineSpacing(x.GoPointer(), LineSpacingVar)
 }
 
@@ -363,7 +363,7 @@ func (x *WrapBox) SetLineSpacingUnit(UnitVar LengthUnit) {
 	xWrapBoxSetLineSpacingUnit(x.GoPointer(), UnitVar)
 }
 
-var xWrapBoxSetNaturalLineLength func(uintptr, int32)
+var xWrapBoxSetNaturalLineLength func(uintptr, int)
 
 // Sets the natural size for each line.
 //
@@ -371,7 +371,7 @@ var xWrapBoxSetNaturalLineLength func(uintptr, int32)
 // popovers.
 //
 // See [property@WrapBox:natural-line-length-unit].
-func (x *WrapBox) SetNaturalLineLength(NaturalLineLengthVar int32) {
+func (x *WrapBox) SetNaturalLineLength(NaturalLineLengthVar int) {
 	xWrapBoxSetNaturalLineLength(x.GoPointer(), NaturalLineLengthVar)
 }
 
@@ -467,10 +467,10 @@ func (x *WrapBox) GetPropertyAlign() float32 {
 // The spacing between widgets on the same line.
 //
 // See [property@WrapBox:child-spacing-unit].
-func (x *WrapBox) SetPropertyChildSpacing(value int32) {
+func (x *WrapBox) SetPropertyChildSpacing(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("child-spacing", &v)
 }
 
@@ -478,10 +478,10 @@ func (x *WrapBox) SetPropertyChildSpacing(value int32) {
 // The spacing between widgets on the same line.
 //
 // See [property@WrapBox:child-spacing-unit].
-func (x *WrapBox) GetPropertyChildSpacing() int32 {
+func (x *WrapBox) GetPropertyChildSpacing() int {
 	var v gobject.Value
 	x.GetProperty("child-spacing", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyJustifyLastLine sets the "justify-last-line" property.
@@ -526,10 +526,10 @@ func (x *WrapBox) GetPropertyLineHomogeneous() bool {
 // The spacing between lines.
 //
 // See [property@WrapBox:line-spacing-unit].
-func (x *WrapBox) SetPropertyLineSpacing(value int32) {
+func (x *WrapBox) SetPropertyLineSpacing(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("line-spacing", &v)
 }
 
@@ -537,10 +537,10 @@ func (x *WrapBox) SetPropertyLineSpacing(value int32) {
 // The spacing between lines.
 //
 // See [property@WrapBox:line-spacing-unit].
-func (x *WrapBox) GetPropertyLineSpacing() int32 {
+func (x *WrapBox) GetPropertyLineSpacing() int {
 	var v gobject.Value
 	x.GetProperty("line-spacing", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyNaturalLineLength sets the "natural-line-length" property.
@@ -550,10 +550,10 @@ func (x *WrapBox) GetPropertyLineSpacing() int32 {
 // popovers.
 //
 // See [property@WrapBox:natural-line-length-unit].
-func (x *WrapBox) SetPropertyNaturalLineLength(value int32) {
+func (x *WrapBox) SetPropertyNaturalLineLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("natural-line-length", &v)
 }
 
@@ -564,10 +564,10 @@ func (x *WrapBox) SetPropertyNaturalLineLength(value int32) {
 // popovers.
 //
 // See [property@WrapBox:natural-line-length-unit].
-func (x *WrapBox) GetPropertyNaturalLineLength() int32 {
+func (x *WrapBox) GetPropertyNaturalLineLength() int {
 	var v gobject.Value
 	x.GetProperty("natural-line-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWrapReverse sets the "wrap-reverse" property.
@@ -661,7 +661,7 @@ func (x *WrapBox) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *WrapBox) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *WrapBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -777,7 +777,7 @@ func (x *WrapBox) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WrapBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *WrapBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -809,7 +809,7 @@ func (x *WrapBox) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WrapBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *WrapBox) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -842,7 +842,7 @@ func (x *WrapBox) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WrapBox) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *WrapBox) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

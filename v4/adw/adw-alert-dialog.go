@@ -232,7 +232,7 @@ func AlertDialogNewFromInternalPtr(ptr uintptr) *AlertDialog {
 	return cls
 }
 
-var xNewAlertDialog func(string, string) uintptr
+var xNewAlertDialog func(uintptr, uintptr) uintptr
 
 // Creates a new `AdwAlertDialog`.
 //
@@ -250,10 +250,16 @@ var xNewAlertDialog func(string, string) uintptr
 //	filename);
 //
 // ```
-func NewAlertDialog(HeadingVar string, BodyVar string) *AlertDialog {
+func NewAlertDialog(HeadingVar *string, BodyVar *string) *AlertDialog {
 	var cls *AlertDialog
 
-	cret := xNewAlertDialog(HeadingVar, BodyVar)
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
+
+	BodyVarPtr := core.GStrdupNullable(BodyVar)
+	defer core.GFreeNullable(BodyVarPtr)
+
+	cret := xNewAlertDialog(HeadingVarPtr, BodyVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -523,7 +529,7 @@ func (x *AlertDialog) SetCloseResponse(ResponseVar string) {
 	xAlertDialogSetCloseResponse(x.GoPointer(), ResponseVar)
 }
 
-var xAlertDialogSetDefaultResponse func(uintptr, string)
+var xAlertDialogSetDefaultResponse func(uintptr, uintptr)
 
 // Sets the ID of the default response of @self.
 //
@@ -534,8 +540,11 @@ var xAlertDialogSetDefaultResponse func(uintptr, string)
 // will be focused by default.
 //
 // See [property@Dialog:default-widget].
-func (x *AlertDialog) SetDefaultResponse(ResponseVar string) {
-	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
+func (x *AlertDialog) SetDefaultResponse(ResponseVar *string) {
+	ResponseVarPtr := core.GStrdupNullable(ResponseVar)
+	defer core.GFreeNullable(ResponseVarPtr)
+
+	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVarPtr)
 }
 
 var xAlertDialogSetExtraChild func(uintptr, uintptr)
@@ -547,11 +556,14 @@ func (x *AlertDialog) SetExtraChild(ChildVar *gtk.Widget) {
 	xAlertDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xAlertDialogSetHeading func(uintptr, string)
+var xAlertDialogSetHeading func(uintptr, uintptr)
 
 // Sets the heading of @self.
-func (x *AlertDialog) SetHeading(HeadingVar string) {
-	xAlertDialogSetHeading(x.GoPointer(), HeadingVar)
+func (x *AlertDialog) SetHeading(HeadingVar *string) {
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
+
+	xAlertDialogSetHeading(x.GoPointer(), HeadingVarPtr)
 }
 
 var xAlertDialogSetHeadingUseMarkup func(uintptr, bool)
@@ -652,7 +664,7 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 func (x *AlertDialog) SetPropertyBody(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("body", &v)
 }
 
@@ -697,7 +709,7 @@ func (x *AlertDialog) GetPropertyBodyUseMarkup() bool {
 func (x *AlertDialog) SetPropertyCloseResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("close-response", &v)
 }
 
@@ -729,7 +741,7 @@ func (x *AlertDialog) GetPropertyCloseResponse() string {
 func (x *AlertDialog) SetPropertyDefaultResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-response", &v)
 }
 
@@ -754,7 +766,7 @@ func (x *AlertDialog) GetPropertyDefaultResponse() string {
 func (x *AlertDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -840,7 +852,7 @@ func (x *AlertDialog) GetPropertyPreferWideLayout() bool {
 // if the dialog was closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system
 // action, @response will be set to the value of
 // [property@AlertDialog:close-response].
-func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
+func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
@@ -928,7 +940,7 @@ func (x *AlertDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AlertDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *AlertDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1044,7 +1056,7 @@ func (x *AlertDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AlertDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *AlertDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1076,7 +1088,7 @@ func (x *AlertDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AlertDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *AlertDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1109,7 +1121,7 @@ func (x *AlertDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AlertDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *AlertDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

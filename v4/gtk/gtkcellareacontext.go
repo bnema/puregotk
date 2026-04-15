@@ -37,11 +37,11 @@ func (x *CellAreaContextClass) GoPointer() uintptr {
 //	(or both) have been decided for a group of rows. The context should
 //	store any allocations for internally aligned cells at this point so
 //	that they dont need to be recalculated at gtk_cell_area_render() time.
-func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int32, int32)) {
+func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int, int)) {
 	if cb == nil {
 		x.xAllocate = 0
 	} else {
-		x.xAllocate = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int32, HeightVarp int32) {
+		x.xAllocate = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int, HeightVarp int) {
 			cb(CellAreaContextNewFromInternalPtr(ContextVarp), WidthVarp, HeightVarp)
 		})
 	}
@@ -53,13 +53,13 @@ func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int32,
 //	(or both) have been decided for a group of rows. The context should
 //	store any allocations for internally aligned cells at this point so
 //	that they dont need to be recalculated at gtk_cell_area_render() time.
-func (x *CellAreaContextClass) GetAllocate() func(*CellAreaContext, int32, int32) {
+func (x *CellAreaContextClass) GetAllocate() func(*CellAreaContext, int, int) {
 	if x.xAllocate == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(ContextVarp uintptr, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xAllocate)
-	return func(ContextVar *CellAreaContext, WidthVar int32, HeightVar int32) {
+	return func(ContextVar *CellAreaContext, WidthVar int, HeightVar int) {
 		rawCallback(ContextVar.GoPointer(), WidthVar, HeightVar)
 	}
 }
@@ -97,11 +97,11 @@ func (x *CellAreaContextClass) GetReset() func(*CellAreaContext) {
 // Returns the aligned height for the given
 //
 //	width that context must store while collecting sizes for it’s rows.
-func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellAreaContext, int32, *int32, *int32)) {
+func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellAreaContext, int, *int, *int)) {
 	if cb == nil {
 		x.xGetPreferredHeightForWidth = 0
 	} else {
-		x.xGetPreferredHeightForWidth = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int32, MinimumHeightVarp *int32, NaturalHeightVarp *int32) {
+		x.xGetPreferredHeightForWidth = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int, MinimumHeightVarp *int, NaturalHeightVarp *int) {
 			cb(CellAreaContextNewFromInternalPtr(ContextVarp), WidthVarp, MinimumHeightVarp, NaturalHeightVarp)
 		})
 	}
@@ -111,13 +111,13 @@ func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellA
 // Returns the aligned height for the given
 //
 //	width that context must store while collecting sizes for it’s rows.
-func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaContext, int32, *int32, *int32) {
+func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaContext, int, *int, *int) {
 	if x.xGetPreferredHeightForWidth == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, WidthVarp int32, MinimumHeightVarp *int32, NaturalHeightVarp *int32)
+	var rawCallback func(ContextVarp uintptr, WidthVarp int, MinimumHeightVarp *int, NaturalHeightVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xGetPreferredHeightForWidth)
-	return func(ContextVar *CellAreaContext, WidthVar int32, MinimumHeightVar *int32, NaturalHeightVar *int32) {
+	return func(ContextVar *CellAreaContext, WidthVar int, MinimumHeightVar *int, NaturalHeightVar *int) {
 		rawCallback(ContextVar.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
 	}
 }
@@ -126,11 +126,11 @@ func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaCon
 // Returns the aligned width for the given
 //
 //	height that context must store while collecting sizes for it’s rows.
-func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellAreaContext, int32, *int32, *int32)) {
+func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellAreaContext, int, *int, *int)) {
 	if cb == nil {
 		x.xGetPreferredWidthForHeight = 0
 	} else {
-		x.xGetPreferredWidthForHeight = purego.NewCallback(func(ContextVarp uintptr, HeightVarp int32, MinimumWidthVarp *int32, NaturalWidthVarp *int32) {
+		x.xGetPreferredWidthForHeight = purego.NewCallback(func(ContextVarp uintptr, HeightVarp int, MinimumWidthVarp *int, NaturalWidthVarp *int) {
 			cb(CellAreaContextNewFromInternalPtr(ContextVarp), HeightVarp, MinimumWidthVarp, NaturalWidthVarp)
 		})
 	}
@@ -140,13 +140,13 @@ func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellA
 // Returns the aligned width for the given
 //
 //	height that context must store while collecting sizes for it’s rows.
-func (x *CellAreaContextClass) GetGetPreferredWidthForHeight() func(*CellAreaContext, int32, *int32, *int32) {
+func (x *CellAreaContextClass) GetGetPreferredWidthForHeight() func(*CellAreaContext, int, *int, *int) {
 	if x.xGetPreferredWidthForHeight == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, HeightVarp int32, MinimumWidthVarp *int32, NaturalWidthVarp *int32)
+	var rawCallback func(ContextVarp uintptr, HeightVarp int, MinimumWidthVarp *int, NaturalWidthVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xGetPreferredWidthForHeight)
-	return func(ContextVar *CellAreaContext, HeightVar int32, MinimumWidthVar *int32, NaturalWidthVar *int32) {
+	return func(ContextVar *CellAreaContext, HeightVar int, MinimumWidthVar *int, NaturalWidthVar *int) {
 		rawCallback(ContextVar.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
 	}
 }
@@ -187,7 +187,7 @@ func CellAreaContextNewFromInternalPtr(ptr uintptr) *CellAreaContext {
 	return cls
 }
 
-var xCellAreaContextAllocate func(uintptr, int32, int32)
+var xCellAreaContextAllocate func(uintptr, int, int)
 
 // Allocates a width and/or a height for all rows which are to be
 // rendered with @context.
@@ -199,18 +199,18 @@ var xCellAreaContextAllocate func(uintptr, int32, int32)
 // and vertical orientations producing a homogeneous effect of the
 // rows. This is generally the case for `GtkTreeView` when
 // `GtkTreeView:fixed-height-mode` is enabled.
-func (x *CellAreaContext) Allocate(WidthVar int32, HeightVar int32) {
+func (x *CellAreaContext) Allocate(WidthVar int, HeightVar int) {
 	xCellAreaContextAllocate(x.GoPointer(), WidthVar, HeightVar)
 }
 
-var xCellAreaContextGetAllocation func(uintptr, *int32, *int32)
+var xCellAreaContextGetAllocation func(uintptr, *int, *int)
 
 // Fetches the current allocation size for @context.
 //
 // If the context was not allocated in width or height, or if the
 // context was recently reset with gtk_cell_area_context_reset(),
 // the returned value will be -1.
-func (x *CellAreaContext) GetAllocation(WidthVar *int32, HeightVar *int32) {
+func (x *CellAreaContext) GetAllocation(WidthVar *int, HeightVar *int) {
 	xCellAreaContextGetAllocation(x.GoPointer(), WidthVar, HeightVar)
 }
 
@@ -240,51 +240,51 @@ func (x *CellAreaContext) GetArea() *CellArea {
 	return cls
 }
 
-var xCellAreaContextGetPreferredHeight func(uintptr, *int32, *int32)
+var xCellAreaContextGetPreferredHeight func(uintptr, *int, *int)
 
 // Gets the accumulative preferred height for all rows which have been
 // requested with this context.
 //
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are 0.
-func (x *CellAreaContext) GetPreferredHeight(MinimumHeightVar *int32, NaturalHeightVar *int32) {
+func (x *CellAreaContext) GetPreferredHeight(MinimumHeightVar *int, NaturalHeightVar *int) {
 	xCellAreaContextGetPreferredHeight(x.GoPointer(), MinimumHeightVar, NaturalHeightVar)
 }
 
-var xCellAreaContextGetPreferredHeightForWidth func(uintptr, int32, *int32, *int32)
+var xCellAreaContextGetPreferredHeightForWidth func(uintptr, int, *int, *int)
 
 // Gets the accumulative preferred height for @width for all rows
 // which have been requested for the same said @width with this context.
 //
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are -1.
-func (x *CellAreaContext) GetPreferredHeightForWidth(WidthVar int32, MinimumHeightVar *int32, NaturalHeightVar *int32) {
+func (x *CellAreaContext) GetPreferredHeightForWidth(WidthVar int, MinimumHeightVar *int, NaturalHeightVar *int) {
 	xCellAreaContextGetPreferredHeightForWidth(x.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
 }
 
-var xCellAreaContextGetPreferredWidth func(uintptr, *int32, *int32)
+var xCellAreaContextGetPreferredWidth func(uintptr, *int, *int)
 
 // Gets the accumulative preferred width for all rows which have been
 // requested with this context.
 //
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are 0.
-func (x *CellAreaContext) GetPreferredWidth(MinimumWidthVar *int32, NaturalWidthVar *int32) {
+func (x *CellAreaContext) GetPreferredWidth(MinimumWidthVar *int, NaturalWidthVar *int) {
 	xCellAreaContextGetPreferredWidth(x.GoPointer(), MinimumWidthVar, NaturalWidthVar)
 }
 
-var xCellAreaContextGetPreferredWidthForHeight func(uintptr, int32, *int32, *int32)
+var xCellAreaContextGetPreferredWidthForHeight func(uintptr, int, *int, *int)
 
 // Gets the accumulative preferred width for @height for all rows which
 // have been requested for the same said @height with this context.
 //
 // After gtk_cell_area_context_reset() is called and/or before ever
 // requesting the size of a `GtkCellArea`, the returned values are -1.
-func (x *CellAreaContext) GetPreferredWidthForHeight(HeightVar int32, MinimumWidthVar *int32, NaturalWidthVar *int32) {
+func (x *CellAreaContext) GetPreferredWidthForHeight(HeightVar int, MinimumWidthVar *int, NaturalWidthVar *int) {
 	xCellAreaContextGetPreferredWidthForHeight(x.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
 }
 
-var xCellAreaContextPushPreferredHeight func(uintptr, int32, int32)
+var xCellAreaContextPushPreferredHeight func(uintptr, int, int)
 
 // Causes the minimum and/or natural height to grow if the new
 // proposed sizes exceed the current minimum and natural height.
@@ -293,11 +293,11 @@ var xCellAreaContextPushPreferredHeight func(uintptr, int32, int32)
 // the request process over a series of `GtkTreeModel` rows to
 // progressively push the requested height over a series of
 // gtk_cell_area_get_preferred_height() requests.
-func (x *CellAreaContext) PushPreferredHeight(MinimumHeightVar int32, NaturalHeightVar int32) {
+func (x *CellAreaContext) PushPreferredHeight(MinimumHeightVar int, NaturalHeightVar int) {
 	xCellAreaContextPushPreferredHeight(x.GoPointer(), MinimumHeightVar, NaturalHeightVar)
 }
 
-var xCellAreaContextPushPreferredWidth func(uintptr, int32, int32)
+var xCellAreaContextPushPreferredWidth func(uintptr, int, int)
 
 // Causes the minimum and/or natural width to grow if the new
 // proposed sizes exceed the current minimum and natural width.
@@ -306,7 +306,7 @@ var xCellAreaContextPushPreferredWidth func(uintptr, int32, int32)
 // the request process over a series of `GtkTreeModel` rows to
 // progressively push the requested width over a series of
 // gtk_cell_area_get_preferred_width() requests.
-func (x *CellAreaContext) PushPreferredWidth(MinimumWidthVar int32, NaturalWidthVar int32) {
+func (x *CellAreaContext) PushPreferredWidth(MinimumWidthVar int, NaturalWidthVar int) {
 	xCellAreaContextPushPreferredWidth(x.GoPointer(), MinimumWidthVar, NaturalWidthVar)
 }
 
@@ -353,40 +353,40 @@ func (c *CellAreaContext) SetGoPointer(ptr uintptr) {
 // The minimum height for the `GtkCellArea` in this context
 // for all `GtkTreeModel` rows that this context was requested
 // for using gtk_cell_area_get_preferred_height().
-func (x *CellAreaContext) GetPropertyMinimumHeight() int32 {
+func (x *CellAreaContext) GetPropertyMinimumHeight() int {
 	var v gobject.Value
 	x.GetProperty("minimum-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyMinimumWidth gets the "minimum-width" property.
 // The minimum width for the `GtkCellArea` in this context
 // for all `GtkTreeModel` rows that this context was requested
 // for using gtk_cell_area_get_preferred_width().
-func (x *CellAreaContext) GetPropertyMinimumWidth() int32 {
+func (x *CellAreaContext) GetPropertyMinimumWidth() int {
 	var v gobject.Value
 	x.GetProperty("minimum-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyNaturalHeight gets the "natural-height" property.
 // The natural height for the `GtkCellArea` in this context
 // for all `GtkTreeModel` rows that this context was requested
 // for using gtk_cell_area_get_preferred_height().
-func (x *CellAreaContext) GetPropertyNaturalHeight() int32 {
+func (x *CellAreaContext) GetPropertyNaturalHeight() int {
 	var v gobject.Value
 	x.GetProperty("natural-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyNaturalWidth gets the "natural-width" property.
 // The natural width for the `GtkCellArea` in this context
 // for all `GtkTreeModel` rows that this context was requested
 // for using gtk_cell_area_get_preferred_width().
-func (x *CellAreaContext) GetPropertyNaturalWidth() int32 {
+func (x *CellAreaContext) GetPropertyNaturalWidth() int {
 	var v gobject.Value
 	x.GetProperty("natural-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 func init() {

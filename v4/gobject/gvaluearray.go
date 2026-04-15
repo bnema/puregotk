@@ -41,11 +41,11 @@ import (
 type ValueArray struct {
 	_ structs.HostLayout
 
-	NValues uint32
+	NValues uint
 
 	Values *Value
 
-	NPrealloced uint32
+	NPrealloced uint
 }
 
 var xValueArrayGLibType func() types.GType
@@ -58,12 +58,12 @@ func (x *ValueArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewValueArray func(uint32) uintptr
+var xNewValueArray func(uint) uintptr
 
 // Allocate and initialize a new #GValueArray, optionally preserve space
 // for @n_prealloced elements. New arrays always contain 0 elements,
 // regardless of the value of @n_prealloced.
-func NewValueArray(NPreallocedVar uint32) *ValueArray {
+func NewValueArray(NPreallocedVar uint) *ValueArray {
 	cret := xNewValueArray(NPreallocedVar)
 	if cret == 0 {
 		return nil
@@ -102,10 +102,10 @@ func (x *ValueArray) Free() {
 	xValueArrayFree(x.GoPointer())
 }
 
-var xValueArrayGetNth func(uintptr, uint32) uintptr
+var xValueArrayGetNth func(uintptr, uint) uintptr
 
 // Return a pointer to the value at @index_ contained in @value_array.
-func (x *ValueArray) GetNth(IndexVar uint32) *Value {
+func (x *ValueArray) GetNth(IndexVar uint) *Value {
 	cret := xValueArrayGetNth(x.GoPointer(), IndexVar)
 	if cret == 0 {
 		return nil
@@ -113,11 +113,11 @@ func (x *ValueArray) GetNth(IndexVar uint32) *Value {
 	return (*Value)(unsafe.Pointer(cret))
 }
 
-var xValueArrayInsert func(uintptr, uint32, *Value) uintptr
+var xValueArrayInsert func(uintptr, uint, *Value) uintptr
 
 // Insert a copy of @value at specified position into @value_array. If @value
 // is %NULL, an uninitialized value is inserted.
-func (x *ValueArray) Insert(IndexVar uint32, ValueVar *Value) *ValueArray {
+func (x *ValueArray) Insert(IndexVar uint, ValueVar *Value) *ValueArray {
 	cret := xValueArrayInsert(x.GoPointer(), IndexVar, ValueVar)
 	if cret == 0 {
 		return nil
@@ -137,10 +137,10 @@ func (x *ValueArray) Prepend(ValueVar *Value) *ValueArray {
 	return (*ValueArray)(unsafe.Pointer(cret))
 }
 
-var xValueArrayRemove func(uintptr, uint32) uintptr
+var xValueArrayRemove func(uintptr, uint) uintptr
 
 // Remove the value at position @index_ from @value_array.
-func (x *ValueArray) Remove(IndexVar uint32) *ValueArray {
+func (x *ValueArray) Remove(IndexVar uint) *ValueArray {
 	cret := xValueArrayRemove(x.GoPointer(), IndexVar)
 	if cret == 0 {
 		return nil

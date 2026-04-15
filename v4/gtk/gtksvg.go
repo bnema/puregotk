@@ -43,7 +43,7 @@ func (x *SvgLocation) GoPointer() uintptr {
 
 const (
 	// The `GtkSvgFeatures` that are enabled by default.
-	SVG_DEFAULT_FEATURES int32 = 15
+	SVG_DEFAULT_FEATURES int = 15
 )
 
 // Features of the SVG renderer that can be enabled or disabled.
@@ -378,15 +378,15 @@ func (x *Svg) GetFeatures() SvgFeatures {
 	return cret
 }
 
-var xSvgGetState func(uintptr) uint32
+var xSvgGetState func(uintptr) uint
 
 // Gets the current state of the paintable.
-func (x *Svg) GetState() uint32 {
+func (x *Svg) GetState() uint {
 	cret := xSvgGetState(x.GoPointer())
 	return cret
 }
 
-var xSvgGetStateNames func(uintptr, *uint32) []string
+var xSvgGetStateNames func(uintptr, *uint) []string
 
 // Returns a `NULL`-terminated array of
 // state names, if available.
@@ -395,7 +395,7 @@ var xSvgGetStateNames func(uintptr, *uint32) []string
 // contained in it will only be valid until the
 // `GtkSvg` is cleared or reloaded, so if you
 // want to keep it around, you should make a copy.
-func (x *Svg) GetStateNames(LengthVar *uint32) []string {
+func (x *Svg) GetStateNames(LengthVar *uint) []string {
 	cret := xSvgGetStateNames(x.GoPointer(), LengthVar)
 	return cret
 }
@@ -489,7 +489,7 @@ func (x *Svg) SetFrameClock(ClockVar *gdk.FrameClock) {
 	xSvgSetFrameClock(x.GoPointer(), ClockVar.GoPointer())
 }
 
-var xSvgSetState func(uintptr, uint32)
+var xSvgSetState func(uintptr, uint)
 
 // Sets the state of the paintable.
 //
@@ -497,7 +497,7 @@ var xSvgSetState func(uintptr, uint32)
 // will apply transitions that are defined in the SVG. If
 // the paintable is not playing, the state change will take
 // effect instantaneously.
-func (x *Svg) SetState(StateVar uint32) {
+func (x *Svg) SetState(StateVar uint) {
 	xSvgSetState(x.GoPointer(), StateVar)
 }
 
@@ -569,7 +569,7 @@ func (x *Svg) GetPropertyPlaying() bool {
 func (x *Svg) SetPropertyResource(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource", &v)
 }
 
@@ -588,10 +588,10 @@ func (x *Svg) GetPropertyResource() string {
 // The current state of the renderer.
 //
 // This can be a number between 0 and 63.
-func (x *Svg) SetPropertyState(value uint32) {
+func (x *Svg) SetPropertyState(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("state", &v)
 }
 
@@ -599,10 +599,10 @@ func (x *Svg) SetPropertyState(value uint32) {
 // The current state of the renderer.
 //
 // This can be a number between 0 and 63.
-func (x *Svg) GetPropertyState() uint32 {
+func (x *Svg) GetPropertyState() uint {
 	var v gobject.Value
 	x.GetProperty("state", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyWeight sets the "weight" property.
@@ -645,7 +645,7 @@ func (x *Svg) GetPropertyWeight() float64 {
 //	changing the paintable state definitively isn't.
 //
 //	If in doubt, defer to an idle.
-func (x *Svg) ConnectError(cb *func(Svg, *glib.Error)) uint32 {
+func (x *Svg) ConnectError(cb *func(Svg, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
@@ -742,7 +742,7 @@ func (x *Svg) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *Svg) GetIntrinsicHeight() int32 {
+func (x *Svg) GetIntrinsicHeight() int {
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -757,7 +757,7 @@ func (x *Svg) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *Svg) GetIntrinsicWidth() int32 {
+func (x *Svg) GetIntrinsicWidth() int {
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }

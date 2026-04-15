@@ -247,7 +247,7 @@ func (c *FrameClock) SetGoPointer(ptr uintptr) {
 // This signal ends processing of the frame.
 //
 // Applications should generally not handle this signal.
-func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
@@ -272,7 +272,7 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 // Begins processing of the frame.
 //
 // Applications should generally not handle this signal.
-func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
@@ -298,7 +298,7 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 // compressed together.
 //
 // Applications should not handle this signal.
-func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
@@ -325,7 +325,7 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 //
 // Any work to update sizes and positions of application elements
 // should be performed. GTK normally handles this internally.
-func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
@@ -354,7 +354,7 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 // emits [signal@Gdk.Surface::render] signals which are turned into
 // [GtkWidget::snapshot](../gtk4/signal.Widget.snapshot.html) signals
 // by GTK.
-func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
@@ -380,7 +380,7 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 //
 // This signal is handled internally by GTK to resume normal
 // event processing. Applications should not handle this signal.
-func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
@@ -409,7 +409,7 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 // Applications can connect directly to this signal, or use
 // [gtk_widget_add_tick_callback()](../gtk4/method.Widget.add_tick_callback.html)
 // as a more convenient interface.
-func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
+func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)

@@ -144,15 +144,18 @@ func (x *CssProvider) LoadFromString(StringVar string) {
 	xCssProviderLoadFromString(x.GoPointer(), StringVar)
 }
 
-var xCssProviderLoadNamed func(uintptr, string, string)
+var xCssProviderLoadNamed func(uintptr, string, uintptr)
 
 // Loads a theme from the usual theme paths.
 //
 // The actual process of finding the theme might change between
 // releases, but it is guaranteed that this function uses the same
 // mechanism to load the theme that GTK uses for loading its own theme.
-func (x *CssProvider) LoadNamed(NameVar string, VariantVar string) {
-	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVar)
+func (x *CssProvider) LoadNamed(NameVar string, VariantVar *string) {
+	VariantVarPtr := core.GStrdupNullable(VariantVar)
+	defer core.GFreeNullable(VariantVarPtr)
+
+	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVarPtr)
 }
 
 var xCssProviderToString func(uintptr) string
@@ -199,7 +202,7 @@ func (c *CssProvider) SetGoPointer(ptr uintptr) {
 // Note that this signal may be emitted at any time as the css provider
 // may opt to defer parsing parts or all of the input to a later time
 // than when a loading function was called.
-func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.Error)) uint32 {
+func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)

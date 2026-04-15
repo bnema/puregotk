@@ -158,7 +158,7 @@ func (c *EventControllerScroll) SetGoPointer(ptr uintptr) {
 // @vel_x and @vel_y express the initial velocity that was
 // imprinted by the scroll events. @vel_x and @vel_y are expressed in
 // pixels/ms.
-func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll, float64, float64)) uint32 {
+func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
@@ -185,7 +185,7 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 //
 // For the representation unit of the deltas, see
 // [method@Gtk.EventControllerScroll.get_unit].
-func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, float64, float64) bool) uint32 {
+func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, float64, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
@@ -210,7 +210,7 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 // Signals that a new scrolling operation has begun.
 //
 // It will only be emitted on devices capable of it.
-func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScroll)) uint32 {
+func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScroll)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
@@ -235,7 +235,7 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 // Signals that a scrolling operation has finished.
 //
 // It will only be emitted on devices capable of it.
-func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)) uint32 {
+func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)

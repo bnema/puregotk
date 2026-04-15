@@ -203,19 +203,19 @@ func (x *Settings) GetPropertyGtkCursorBlink() bool {
 
 // SetPropertyGtkCursorBlinkTime sets the "gtk-cursor-blink-time" property.
 // Length of the cursor blink cycle, in milliseconds.
-func (x *Settings) SetPropertyGtkCursorBlinkTime(value int32) {
+func (x *Settings) SetPropertyGtkCursorBlinkTime(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-cursor-blink-time", &v)
 }
 
 // GetPropertyGtkCursorBlinkTime gets the "gtk-cursor-blink-time" property.
 // Length of the cursor blink cycle, in milliseconds.
-func (x *Settings) GetPropertyGtkCursorBlinkTime() int32 {
+func (x *Settings) GetPropertyGtkCursorBlinkTime() int {
 	var v gobject.Value
 	x.GetProperty("gtk-cursor-blink-time", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkCursorBlinkTimeout sets the "gtk-cursor-blink-timeout" property.
@@ -225,10 +225,10 @@ func (x *Settings) GetPropertyGtkCursorBlinkTime() int32 {
 //
 // Setting this to zero has the same effect as setting
 // [property@Gtk.Settings:gtk-cursor-blink] to %FALSE.
-func (x *Settings) SetPropertyGtkCursorBlinkTimeout(value int32) {
+func (x *Settings) SetPropertyGtkCursorBlinkTimeout(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-cursor-blink-timeout", &v)
 }
 
@@ -239,10 +239,10 @@ func (x *Settings) SetPropertyGtkCursorBlinkTimeout(value int32) {
 //
 // Setting this to zero has the same effect as setting
 // [property@Gtk.Settings:gtk-cursor-blink] to %FALSE.
-func (x *Settings) GetPropertyGtkCursorBlinkTimeout() int32 {
+func (x *Settings) GetPropertyGtkCursorBlinkTimeout() int {
 	var v gobject.Value
 	x.GetProperty("gtk-cursor-blink-timeout", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkCursorThemeName sets the "gtk-cursor-theme-name" property.
@@ -252,7 +252,7 @@ func (x *Settings) GetPropertyGtkCursorBlinkTimeout() int32 {
 func (x *Settings) SetPropertyGtkCursorThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-cursor-theme-name", &v)
 }
 
@@ -270,10 +270,10 @@ func (x *Settings) GetPropertyGtkCursorThemeName() string {
 // The size to use for cursors.
 //
 // 0 means to use the default size.
-func (x *Settings) SetPropertyGtkCursorThemeSize(value int32) {
+func (x *Settings) SetPropertyGtkCursorThemeSize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-cursor-theme-size", &v)
 }
 
@@ -281,10 +281,10 @@ func (x *Settings) SetPropertyGtkCursorThemeSize(value int32) {
 // The size to use for cursors.
 //
 // 0 means to use the default size.
-func (x *Settings) GetPropertyGtkCursorThemeSize() int32 {
+func (x *Settings) GetPropertyGtkCursorThemeSize() int {
 	var v gobject.Value
 	x.GetProperty("gtk-cursor-theme-size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkDecorationLayout sets the "gtk-decoration-layout" property.
@@ -311,7 +311,7 @@ func (x *Settings) GetPropertyGtkCursorThemeSize() int32 {
 func (x *Settings) SetPropertyGtkDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-decoration-layout", &v)
 }
 
@@ -371,57 +371,57 @@ func (x *Settings) GetPropertyGtkDialogsUseHeader() bool {
 
 // SetPropertyGtkDndDragThreshold sets the "gtk-dnd-drag-threshold" property.
 // The number of pixels the cursor can move before dragging.
-func (x *Settings) SetPropertyGtkDndDragThreshold(value int32) {
+func (x *Settings) SetPropertyGtkDndDragThreshold(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-dnd-drag-threshold", &v)
 }
 
 // GetPropertyGtkDndDragThreshold gets the "gtk-dnd-drag-threshold" property.
 // The number of pixels the cursor can move before dragging.
-func (x *Settings) GetPropertyGtkDndDragThreshold() int32 {
+func (x *Settings) GetPropertyGtkDndDragThreshold() int {
 	var v gobject.Value
 	x.GetProperty("gtk-dnd-drag-threshold", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkDoubleClickDistance sets the "gtk-double-click-distance" property.
 // The maximum distance allowed between two clicks for them to be considered
 // a double click, in pixels.
-func (x *Settings) SetPropertyGtkDoubleClickDistance(value int32) {
+func (x *Settings) SetPropertyGtkDoubleClickDistance(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-double-click-distance", &v)
 }
 
 // GetPropertyGtkDoubleClickDistance gets the "gtk-double-click-distance" property.
 // The maximum distance allowed between two clicks for them to be considered
 // a double click, in pixels.
-func (x *Settings) GetPropertyGtkDoubleClickDistance() int32 {
+func (x *Settings) GetPropertyGtkDoubleClickDistance() int {
 	var v gobject.Value
 	x.GetProperty("gtk-double-click-distance", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkDoubleClickTime sets the "gtk-double-click-time" property.
 // The maximum time to allow between two clicks for them to be considered
 // a double click, in milliseconds.
-func (x *Settings) SetPropertyGtkDoubleClickTime(value int32) {
+func (x *Settings) SetPropertyGtkDoubleClickTime(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-double-click-time", &v)
 }
 
 // GetPropertyGtkDoubleClickTime gets the "gtk-double-click-time" property.
 // The maximum time to allow between two clicks for them to be considered
 // a double click, in milliseconds.
-func (x *Settings) GetPropertyGtkDoubleClickTime() int32 {
+func (x *Settings) GetPropertyGtkDoubleClickTime() int {
 	var v gobject.Value
 	x.GetProperty("gtk-double-click-time", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkEnableAccels sets the "gtk-enable-accels" property.
@@ -543,10 +543,10 @@ func (x *Settings) GetPropertyGtkEnablePrimaryPaste() bool {
 //
 // This value is in milliseconds. 0 disables showing the
 // last char. 600 is a good value for enabling it.
-func (x *Settings) SetPropertyGtkEntryPasswordHintTimeout(value uint32) {
+func (x *Settings) SetPropertyGtkEntryPasswordHintTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("gtk-entry-password-hint-timeout", &v)
 }
 
@@ -556,10 +556,10 @@ func (x *Settings) SetPropertyGtkEntryPasswordHintTimeout(value uint32) {
 //
 // This value is in milliseconds. 0 disables showing the
 // last char. 600 is a good value for enabling it.
-func (x *Settings) GetPropertyGtkEntryPasswordHintTimeout() uint32 {
+func (x *Settings) GetPropertyGtkEntryPasswordHintTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("gtk-entry-password-hint-timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyGtkEntrySelectOnFocus sets the "gtk-entry-select-on-focus" property.
@@ -613,7 +613,7 @@ func (x *Settings) GetPropertyGtkErrorBell() bool {
 func (x *Settings) SetPropertyGtkFontName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-font-name", &v)
 }
 
@@ -629,19 +629,19 @@ func (x *Settings) GetPropertyGtkFontName() string {
 
 // SetPropertyGtkFontconfigTimestamp sets the "gtk-fontconfig-timestamp" property.
 // Timestamp of the current fontconfig configuration.
-func (x *Settings) SetPropertyGtkFontconfigTimestamp(value uint32) {
+func (x *Settings) SetPropertyGtkFontconfigTimestamp(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("gtk-fontconfig-timestamp", &v)
 }
 
 // GetPropertyGtkFontconfigTimestamp gets the "gtk-fontconfig-timestamp" property.
 // Timestamp of the current fontconfig configuration.
-func (x *Settings) GetPropertyGtkFontconfigTimestamp() uint32 {
+func (x *Settings) GetPropertyGtkFontconfigTimestamp() uint {
 	var v gobject.Value
 	x.GetProperty("gtk-fontconfig-timestamp", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyGtkHintFontMetrics sets the "gtk-hint-font-metrics" property.
@@ -675,7 +675,7 @@ func (x *Settings) GetPropertyGtkHintFontMetrics() bool {
 func (x *Settings) SetPropertyGtkIconThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-icon-theme-name", &v)
 }
 
@@ -702,7 +702,7 @@ func (x *Settings) GetPropertyGtkIconThemeName() string {
 func (x *Settings) SetPropertyGtkImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-im-module", &v)
 }
 
@@ -767,10 +767,10 @@ func (x *Settings) GetPropertyGtkLabelSelectOnFocus() bool {
 // The time for a button or touch press to be considered a “long press”.
 //
 // See [class@Gtk.GestureLongPress].
-func (x *Settings) SetPropertyGtkLongPressTime(value uint32) {
+func (x *Settings) SetPropertyGtkLongPressTime(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("gtk-long-press-time", &v)
 }
 
@@ -778,10 +778,10 @@ func (x *Settings) SetPropertyGtkLongPressTime(value uint32) {
 // The time for a button or touch press to be considered a “long press”.
 //
 // See [class@Gtk.GestureLongPress].
-func (x *Settings) GetPropertyGtkLongPressTime() uint32 {
+func (x *Settings) GetPropertyGtkLongPressTime() uint {
 	var v gobject.Value
 	x.GetProperty("gtk-long-press-time", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyGtkOverlayScrolling sets the "gtk-overlay-scrolling" property.
@@ -851,7 +851,7 @@ func (x *Settings) GetPropertyGtkPrimaryButtonWarpsSlider() bool {
 func (x *Settings) SetPropertyGtkPrintBackends(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-print-backends", &v)
 }
 
@@ -881,7 +881,7 @@ func (x *Settings) GetPropertyGtkPrintBackends() string {
 func (x *Settings) SetPropertyGtkPrintPreviewCommand(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-print-preview-command", &v)
 }
 
@@ -932,10 +932,10 @@ func (x *Settings) GetPropertyGtkRecentFilesEnabled() bool {
 // Items older than this setting will be excised from the list.
 // If set to 0, the list will always be empty; if set to -1, no
 // item will be removed.
-func (x *Settings) SetPropertyGtkRecentFilesMaxAge(value int32) {
+func (x *Settings) SetPropertyGtkRecentFilesMaxAge(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-recent-files-max-age", &v)
 }
 
@@ -946,10 +946,10 @@ func (x *Settings) SetPropertyGtkRecentFilesMaxAge(value int32) {
 // Items older than this setting will be excised from the list.
 // If set to 0, the list will always be empty; if set to -1, no
 // item will be removed.
-func (x *Settings) GetPropertyGtkRecentFilesMaxAge() int32 {
+func (x *Settings) GetPropertyGtkRecentFilesMaxAge() int {
 	var v gobject.Value
 	x.GetProperty("gtk-recent-files-max-age", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkShellShowsAppMenu sets the "gtk-shell-shows-app-menu" property.
@@ -1037,7 +1037,7 @@ func (x *Settings) GetPropertyGtkShowStatusShapes() bool {
 func (x *Settings) SetPropertyGtkSoundThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-sound-theme-name", &v)
 }
 
@@ -1082,7 +1082,7 @@ func (x *Settings) GetPropertyGtkSplitCursor() bool {
 func (x *Settings) SetPropertyGtkThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-theme-name", &v)
 }
 
@@ -1106,7 +1106,7 @@ func (x *Settings) GetPropertyGtkThemeName() string {
 func (x *Settings) SetPropertyGtkTitlebarDoubleClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-double-click", &v)
 }
 
@@ -1131,7 +1131,7 @@ func (x *Settings) GetPropertyGtkTitlebarDoubleClick() string {
 func (x *Settings) SetPropertyGtkTitlebarMiddleClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-middle-click", &v)
 }
 
@@ -1156,7 +1156,7 @@ func (x *Settings) GetPropertyGtkTitlebarMiddleClick() string {
 func (x *Settings) SetPropertyGtkTitlebarRightClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-right-click", &v)
 }
 
@@ -1176,10 +1176,10 @@ func (x *Settings) GetPropertyGtkTitlebarRightClick() string {
 // Whether to antialias fonts.
 //
 // The values are 0 for no, 1 for yes, or -1 for the system default.
-func (x *Settings) SetPropertyGtkXftAntialias(value int32) {
+func (x *Settings) SetPropertyGtkXftAntialias(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-xft-antialias", &v)
 }
 
@@ -1187,20 +1187,20 @@ func (x *Settings) SetPropertyGtkXftAntialias(value int32) {
 // Whether to antialias fonts.
 //
 // The values are 0 for no, 1 for yes, or -1 for the system default.
-func (x *Settings) GetPropertyGtkXftAntialias() int32 {
+func (x *Settings) GetPropertyGtkXftAntialias() int {
 	var v gobject.Value
 	x.GetProperty("gtk-xft-antialias", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkXftDpi sets the "gtk-xft-dpi" property.
 // The font resolution, in 1024 * dots/inch.
 //
 // -1 to use the default value.
-func (x *Settings) SetPropertyGtkXftDpi(value int32) {
+func (x *Settings) SetPropertyGtkXftDpi(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-xft-dpi", &v)
 }
 
@@ -1208,20 +1208,20 @@ func (x *Settings) SetPropertyGtkXftDpi(value int32) {
 // The font resolution, in 1024 * dots/inch.
 //
 // -1 to use the default value.
-func (x *Settings) GetPropertyGtkXftDpi() int32 {
+func (x *Settings) GetPropertyGtkXftDpi() int {
 	var v gobject.Value
 	x.GetProperty("gtk-xft-dpi", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkXftHinting sets the "gtk-xft-hinting" property.
 // Whether to enable font hinting.
 //
 // The values are 0 for no, 1 for yes, or -1 for the system default.
-func (x *Settings) SetPropertyGtkXftHinting(value int32) {
+func (x *Settings) SetPropertyGtkXftHinting(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("gtk-xft-hinting", &v)
 }
 
@@ -1229,10 +1229,10 @@ func (x *Settings) SetPropertyGtkXftHinting(value int32) {
 // Whether to enable font hinting.
 //
 // The values are 0 for no, 1 for yes, or -1 for the system default.
-func (x *Settings) GetPropertyGtkXftHinting() int32 {
+func (x *Settings) GetPropertyGtkXftHinting() int {
 	var v gobject.Value
 	x.GetProperty("gtk-xft-hinting", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyGtkXftHintstyle sets the "gtk-xft-hintstyle" property.
@@ -1243,7 +1243,7 @@ func (x *Settings) GetPropertyGtkXftHinting() int32 {
 func (x *Settings) SetPropertyGtkXftHintstyle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-xft-hintstyle", &v)
 }
 
@@ -1268,7 +1268,7 @@ func (x *Settings) GetPropertyGtkXftHintstyle() string {
 func (x *Settings) SetPropertyGtkXftRgba(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-xft-rgba", &v)
 }
 

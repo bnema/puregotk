@@ -10,7 +10,7 @@ import (
 	"github.com/bnema/puregotk/v4/pango"
 )
 
-var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) uintptr
+var xPangoLayoutGetClipRegion func(uintptr, int, int, int, int) uintptr
 
 // Obtains a clip region which contains the areas where the given ranges
 // of text would be drawn.
@@ -22,7 +22,7 @@ var xPangoLayoutGetClipRegion func(uintptr, int32, int32, int32, int32) uintptr
 // ranges, not ink extents. So the drawn layout may in fact touch areas out of
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
-func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int32, YOriginVar int32, IndexRangesVar int32, NRangesVar int32) *cairo.Region {
+func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int, YOriginVar int, IndexRangesVar int, NRangesVar int) *cairo.Region {
 	cret := xPangoLayoutGetClipRegion(LayoutVar.GoPointer(), XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
 	if cret == 0 {
 		return nil
@@ -30,7 +30,7 @@ func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int32, YOrigin
 	return (*cairo.Region)(unsafe.Pointer(cret))
 }
 
-var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32, int32) uintptr
+var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int, int, []int, int) uintptr
 
 // Obtains a clip region which contains the areas where the given
 // ranges of text would be drawn.
@@ -47,7 +47,7 @@ var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int32, int32, []int32,
 // ranges, not ink extents. So the drawn line may in fact touch areas out of
 // the clip region.  The clip region is mainly useful for highlightling parts
 // of text, such as when text is selected.
-func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int32, YOriginVar int32, IndexRangesVar []int32, NRangesVar int32) *cairo.Region {
+func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int, YOriginVar int, IndexRangesVar []int, NRangesVar int) *cairo.Region {
 	cret := xPangoLayoutLineGetClipRegion(LineVar, XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
 	if cret == 0 {
 		return nil

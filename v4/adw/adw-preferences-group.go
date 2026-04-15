@@ -138,12 +138,12 @@ func (x *PreferencesGroup) GetHeaderSuffix() *gtk.Widget {
 	return cls
 }
 
-var xPreferencesGroupGetRow func(uintptr, uint32) uintptr
+var xPreferencesGroupGetRow func(uintptr, uint) uintptr
 
 // Gets the row at @index.
 //
 // Can return `NULL` if @index is larger than the number of rows in the group.
-func (x *PreferencesGroup) GetRow(IndexVar uint32) *gtk.Widget {
+func (x *PreferencesGroup) GetRow(IndexVar uint) *gtk.Widget {
 	var cls *gtk.Widget
 
 	cret := xPreferencesGroupGetRow(x.GoPointer(), IndexVar)
@@ -180,11 +180,14 @@ func (x *PreferencesGroup) Remove(ChildVar *gtk.Widget) {
 	xPreferencesGroupRemove(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xPreferencesGroupSetDescription func(uintptr, string)
+var xPreferencesGroupSetDescription func(uintptr, uintptr)
 
 // Sets the description for @self.
-func (x *PreferencesGroup) SetDescription(DescriptionVar string) {
-	xPreferencesGroupSetDescription(x.GoPointer(), DescriptionVar)
+func (x *PreferencesGroup) SetDescription(DescriptionVar *string) {
+	DescriptionVarPtr := core.GStrdupNullable(DescriptionVar)
+	defer core.GFreeNullable(DescriptionVarPtr)
+
+	xPreferencesGroupSetDescription(x.GoPointer(), DescriptionVarPtr)
 }
 
 var xPreferencesGroupSetHeaderSuffix func(uintptr, uintptr)
@@ -232,7 +235,7 @@ func (c *PreferencesGroup) SetGoPointer(ptr uintptr) {
 func (x *PreferencesGroup) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -274,7 +277,7 @@ func (x *PreferencesGroup) GetPropertySeparateRows() bool {
 func (x *PreferencesGroup) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -352,7 +355,7 @@ func (x *PreferencesGroup) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesGroup) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *PreferencesGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -468,7 +471,7 @@ func (x *PreferencesGroup) UpdateProperty(FirstPropertyVar gtk.AccessiblePropert
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesGroup) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *PreferencesGroup) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -500,7 +503,7 @@ func (x *PreferencesGroup) UpdateRelation(FirstRelationVar gtk.AccessibleRelatio
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesGroup) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *PreferencesGroup) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -533,7 +536,7 @@ func (x *PreferencesGroup) UpdateState(FirstStateVar gtk.AccessibleState, varArg
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesGroup) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *PreferencesGroup) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

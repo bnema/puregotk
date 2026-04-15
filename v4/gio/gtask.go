@@ -721,10 +721,10 @@ func (x *Task) GetName() string {
 	return cret
 }
 
-var xTaskGetPriority func(uintptr) int32
+var xTaskGetPriority func(uintptr) int
 
 // Gets @task's priority
-func (x *Task) GetPriority() int32 {
+func (x *Task) GetPriority() int {
 	cret := xTaskGetPriority(x.GoPointer())
 	return cret
 }
@@ -907,7 +907,7 @@ func (x *Task) ReturnInt(ResultVar int) {
 	xTaskReturnInt(x.GoPointer(), ResultVar)
 }
 
-var xTaskReturnNewError func(uintptr, glib.Quark, int32, string, ...interface{})
+var xTaskReturnNewError func(uintptr, glib.Quark, int, string, ...interface{})
 
 // Sets @task's result to a new #GError created from @domain, @code,
 // @format, and the remaining arguments, and completes the task (see
@@ -915,11 +915,11 @@ var xTaskReturnNewError func(uintptr, glib.Quark, int32, string, ...interface{})
 // means).
 //
 // See also g_task_return_error().
-func (x *Task) ReturnNewError(DomainVar glib.Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) {
+func (x *Task) ReturnNewError(DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 	xTaskReturnNewError(x.GoPointer(), DomainVar, CodeVar, FormatVar, varArgs...)
 }
 
-var xTaskReturnNewErrorLiteral func(uintptr, glib.Quark, int32, string)
+var xTaskReturnNewErrorLiteral func(uintptr, glib.Quark, int, string)
 
 // Sets @task’s result to a new [type@GLib.Error] created from @domain, @code,
 // @message and completes the task.
@@ -928,7 +928,7 @@ var xTaskReturnNewErrorLiteral func(uintptr, glib.Quark, int32, string)
 // ‘completing the task’ means.
 //
 // See also [method@Gio.Task.return_new_error].
-func (x *Task) ReturnNewErrorLiteral(DomainVar glib.Quark, CodeVar int32, MessageVar string) {
+func (x *Task) ReturnNewErrorLiteral(DomainVar glib.Quark, CodeVar int, MessageVar string) {
 	xTaskReturnNewErrorLiteral(x.GoPointer(), DomainVar, CodeVar, MessageVar)
 }
 
@@ -1055,7 +1055,7 @@ func (x *Task) SetCheckCancellable(CheckCancellableVar bool) {
 	xTaskSetCheckCancellable(x.GoPointer(), CheckCancellableVar)
 }
 
-var xTaskSetName func(uintptr, string)
+var xTaskSetName func(uintptr, uintptr)
 
 // Sets @task’s name, used in debugging and profiling. The name defaults to
 // %NULL.
@@ -1066,11 +1066,14 @@ var xTaskSetName func(uintptr, string)
 //
 // This function may only be called before the @task is first used in a thread
 // other than the one it was constructed in.
-func (x *Task) SetName(NameVar string) {
-	xTaskSetName(x.GoPointer(), NameVar)
+func (x *Task) SetName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xTaskSetName(x.GoPointer(), NameVarPtr)
 }
 
-var xTaskSetPriority func(uintptr, int32)
+var xTaskSetPriority func(uintptr, int)
 
 // Sets @task's priority. If you do not call this, it will default to
 // %G_PRIORITY_DEFAULT.
@@ -1079,7 +1082,7 @@ var xTaskSetPriority func(uintptr, int32)
 // g_task_attach_source() and the scheduling of tasks run in threads,
 // and can also be explicitly retrieved later via
 // g_task_get_priority().
-func (x *Task) SetPriority(PriorityVar int32) {
+func (x *Task) SetPriority(PriorityVar int) {
 	xTaskSetPriority(x.GoPointer(), PriorityVar)
 }
 
@@ -1136,7 +1139,7 @@ func (x *Task) SetSourceTag(SourceTagVar uintptr) {
 	xTaskSetSourceTag(x.GoPointer(), SourceTagVar)
 }
 
-var xTaskSetStaticName func(uintptr, string)
+var xTaskSetStaticName func(uintptr, uintptr)
 
 // Sets @task’s name, used in debugging and profiling.
 //
@@ -1144,8 +1147,11 @@ var xTaskSetStaticName func(uintptr, string)
 //
 // This function is called automatically by [method@Gio.Task.set_source_tag]
 // unless a name is set.
-func (x *Task) SetStaticName(NameVar string) {
-	xTaskSetStaticName(x.GoPointer(), NameVar)
+func (x *Task) SetStaticName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xTaskSetStaticName(x.GoPointer(), NameVarPtr)
 }
 
 var xTaskSetTaskData func(uintptr, uintptr, uintptr)
@@ -1248,7 +1254,7 @@ func TaskReportError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCal
 	xTaskReportError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, ErrorVar)
 }
 
-var xTaskReportNewError func(uintptr, uintptr, uintptr, uintptr, glib.Quark, int32, string, ...interface{})
+var xTaskReportNewError func(uintptr, uintptr, uintptr, uintptr, glib.Quark, int, string, ...interface{})
 
 // Creates a #GTask and then immediately calls
 // g_task_return_new_error() on it. Use this in the wrapper function
@@ -1259,7 +1265,7 @@ var xTaskReportNewError func(uintptr, uintptr, uintptr, uintptr, glib.Quark, int
 // appropriately if so.
 //
 // See also g_task_report_error().
-func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, DomainVar glib.Quark, CodeVar int32, FormatVar string, varArgs ...interface{}) {
+func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 	xTaskReportNewError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
 }
 

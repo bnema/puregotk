@@ -53,17 +53,20 @@ func (x *RecentInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xRecentInfoCreateAppInfo func(uintptr, string, **glib.Error) uintptr
+var xRecentInfoCreateAppInfo func(uintptr, uintptr, **glib.Error) uintptr
 
 // Creates a `GAppInfo` for the specified `GtkRecentInfo`
 //
 // In case of error, @error will be set either with a
 // %GTK_RECENT_MANAGER_ERROR or a %G_IO_ERROR
-func (x *RecentInfo) CreateAppInfo(AppNameVar string) (*gio.AppInfoBase, error) {
+func (x *RecentInfo) CreateAppInfo(AppNameVar *string) (*gio.AppInfoBase, error) {
 	var cls *gio.AppInfoBase
 	var cerr *glib.Error
 
-	cret := xRecentInfoCreateAppInfo(x.GoPointer(), AppNameVar, &cerr)
+	AppNameVarPtr := core.GStrdupNullable(AppNameVar)
+	defer core.GFreeNullable(AppNameVarPtr)
+
+	cret := xRecentInfoCreateAppInfo(x.GoPointer(), AppNameVarPtr, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -98,23 +101,23 @@ func (x *RecentInfo) GetAdded() *glib.DateTime {
 	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
-var xRecentInfoGetAge func(uintptr) int32
+var xRecentInfoGetAge func(uintptr) int
 
 // Gets the number of days elapsed since the last update
 // of the resource pointed by @info.
-func (x *RecentInfo) GetAge() int32 {
+func (x *RecentInfo) GetAge() int {
 	cret := xRecentInfoGetAge(x.GoPointer())
 	return cret
 }
 
-var xRecentInfoGetApplicationInfo func(uintptr, string, *string, *uint32, **glib.DateTime) bool
+var xRecentInfoGetApplicationInfo func(uintptr, string, *string, *uint, **glib.DateTime) bool
 
 // Gets the data regarding the application that has registered the resource
 // pointed by @info.
 //
 // If the command line contains any escape characters defined inside the
 // storage specification, they will be expanded.
-func (x *RecentInfo) GetApplicationInfo(AppNameVar string, AppExecVar *string, CountVar *uint32, StampVar **glib.DateTime) bool {
+func (x *RecentInfo) GetApplicationInfo(AppNameVar string, AppExecVar *string, CountVar *uint, StampVar **glib.DateTime) bool {
 	cret := xRecentInfoGetApplicationInfo(x.GoPointer(), AppNameVar, AppExecVar, CountVar, StampVar)
 	return cret
 }
@@ -678,26 +681,29 @@ func (x *RecentManager) LookupItem(UriVar string) (*RecentInfo, error) {
 	return (*RecentInfo)(unsafe.Pointer(cret)), nil
 }
 
-var xRecentManagerMoveItem func(uintptr, string, string, **glib.Error) bool
+var xRecentManagerMoveItem func(uintptr, string, uintptr, **glib.Error) bool
 
 // Changes the location of a recently used resource from @uri to @new_uri.
 //
 // Please note that this function will not affect the resource pointed
 // by the URIs, but only the URI used in the recently used resources list.
-func (x *RecentManager) MoveItem(UriVar string, NewUriVar string) (bool, error) {
+func (x *RecentManager) MoveItem(UriVar string, NewUriVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, NewUriVar, &cerr)
+	NewUriVarPtr := core.GStrdupNullable(NewUriVar)
+	defer core.GFreeNullable(NewUriVarPtr)
+
+	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, NewUriVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xRecentManagerPurgeItems func(uintptr, **glib.Error) int32
+var xRecentManagerPurgeItems func(uintptr, **glib.Error) int
 
 // Purges every item from the recently used resources list.
-func (x *RecentManager) PurgeItems() (int32, error) {
+func (x *RecentManager) PurgeItems() (int, error) {
 	var cerr *glib.Error
 
 	cret := xRecentManagerPurgeItems(x.GoPointer(), &cerr)
@@ -738,7 +744,7 @@ func (c *RecentManager) SetGoPointer(ptr uintptr) {
 func (x *RecentManager) SetPropertyFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("filename", &v)
 }
 
@@ -753,10 +759,10 @@ func (x *RecentManager) GetPropertyFilename() string {
 
 // GetPropertySize gets the "size" property.
 // The size of the recently used resources list.
-func (x *RecentManager) GetPropertySize() int32 {
+func (x *RecentManager) GetPropertySize() int {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when the current recently used resources manager changes
@@ -764,7 +770,7 @@ func (x *RecentManager) GetPropertySize() int32 {
 //
 // This can happen either by calling [method@Gtk.RecentManager.add_item]
 // or by another application.
-func (x *RecentManager) ConnectChanged(cb *func(RecentManager)) uint32 {
+func (x *RecentManager) ConnectChanged(cb *func(RecentManager)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

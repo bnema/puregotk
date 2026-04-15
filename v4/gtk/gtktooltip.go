@@ -82,33 +82,42 @@ func (x *Tooltip) SetIconFromGicon(GiconVar gio.Icon) {
 	xTooltipSetIconFromGicon(x.GoPointer(), GiconVar.GoPointer())
 }
 
-var xTooltipSetIconFromIconName func(uintptr, string)
+var xTooltipSetIconFromIconName func(uintptr, uintptr)
 
 // Sets the icon of the tooltip (which is in front of the text) to be
 // the icon indicated by @icon_name with the size indicated
 // by @size.  If @icon_name is %NULL, the image will be hidden.
-func (x *Tooltip) SetIconFromIconName(IconNameVar string) {
-	xTooltipSetIconFromIconName(x.GoPointer(), IconNameVar)
+func (x *Tooltip) SetIconFromIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xTooltipSetIconFromIconName(x.GoPointer(), IconNameVarPtr)
 }
 
-var xTooltipSetMarkup func(uintptr, string)
+var xTooltipSetMarkup func(uintptr, uintptr)
 
 // Sets the text of the tooltip to be @markup.
 //
 // The string must be marked up with Pango markup.
 // If @markup is %NULL, the label will be hidden.
-func (x *Tooltip) SetMarkup(MarkupVar string) {
-	xTooltipSetMarkup(x.GoPointer(), MarkupVar)
+func (x *Tooltip) SetMarkup(MarkupVar *string) {
+	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
+	defer core.GFreeNullable(MarkupVarPtr)
+
+	xTooltipSetMarkup(x.GoPointer(), MarkupVarPtr)
 }
 
-var xTooltipSetText func(uintptr, string)
+var xTooltipSetText func(uintptr, uintptr)
 
 // Sets the text of the tooltip to be @text.
 //
 // If @text is %NULL, the label will be hidden.
 // See also [method@Gtk.Tooltip.set_markup].
-func (x *Tooltip) SetText(TextVar string) {
-	xTooltipSetText(x.GoPointer(), TextVar)
+func (x *Tooltip) SetText(TextVar *string) {
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	xTooltipSetText(x.GoPointer(), TextVarPtr)
 }
 
 var xTooltipSetTipArea func(uintptr, *gdk.Rectangle)

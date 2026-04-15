@@ -157,15 +157,18 @@ func (x *ViewStack) Add(ChildVar *gtk.Widget) *ViewStackPage {
 	return cls
 }
 
-var xViewStackAddNamed func(uintptr, uintptr, string) uintptr
+var xViewStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name.
-func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar string) *ViewStackPage {
+func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar *string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -176,16 +179,19 @@ func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar string) *ViewStackPag
 	return cls
 }
 
-var xViewStackAddTitled func(uintptr, uintptr, string, string) uintptr
+var xViewStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name. The @title will be used by
 // [class@ViewSwitcher] to represent @child, so it should be short.
-func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar string, TitleVar string) *ViewStackPage {
+func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar *string, TitleVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar)
 
 	if cret == 0 {
 		return nil
@@ -196,16 +202,19 @@ func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar string, TitleVar str
 	return cls
 }
 
-var xViewStackAddTitledWithIcon func(uintptr, uintptr, string, string, string) uintptr
+var xViewStackAddTitledWithIcon func(uintptr, uintptr, uintptr, string, string) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name. The @title and @icon_name will be used
 // by [class@ViewSwitcher] to represent @child.
-func (x *ViewStack) AddTitledWithIcon(ChildVar *gtk.Widget, NameVar string, TitleVar string, IconNameVar string) *ViewStackPage {
+func (x *ViewStack) AddTitledWithIcon(ChildVar *gtk.Widget, NameVar *string, TitleVar string, IconNameVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar, IconNameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar, IconNameVar)
 
 	if cret == 0 {
 		return nil
@@ -294,10 +303,10 @@ func (x *ViewStack) GetPages() *gtk.SelectionModelBase {
 	return cls
 }
 
-var xViewStackGetTransitionDuration func(uintptr) uint32
+var xViewStackGetTransitionDuration func(uintptr) uint
 
 // Gets the transition animation duration for @self.
-func (x *ViewStack) GetTransitionDuration() uint32 {
+func (x *ViewStack) GetTransitionDuration() uint {
 	cret := xViewStackGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -374,12 +383,12 @@ func (x *ViewStack) SetHhomogeneous(HhomogeneousVar bool) {
 	xViewStackSetHhomogeneous(x.GoPointer(), HhomogeneousVar)
 }
 
-var xViewStackSetTransitionDuration func(uintptr, uint32)
+var xViewStackSetTransitionDuration func(uintptr, uint)
 
 // Sets the transition animation duration for @self.
 //
 // Only used when [property@ViewStack:enable-transitions] is set to `TRUE`.
-func (x *ViewStack) SetTransitionDuration(DurationVar uint32) {
+func (x *ViewStack) SetTransitionDuration(DurationVar uint) {
 	xViewStackSetTransitionDuration(x.GoPointer(), DurationVar)
 }
 
@@ -481,10 +490,10 @@ func (x *ViewStack) GetPropertyHhomogeneous() bool {
 // The transition animation duration, in milliseconds.
 //
 // Only used when [property@ViewStack:enable-transitions] is set to `TRUE`.
-func (x *ViewStack) SetPropertyTransitionDuration(value uint32) {
+func (x *ViewStack) SetPropertyTransitionDuration(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("transition-duration", &v)
 }
 
@@ -492,10 +501,10 @@ func (x *ViewStack) SetPropertyTransitionDuration(value uint32) {
 // The transition animation duration, in milliseconds.
 //
 // Only used when [property@ViewStack:enable-transitions] is set to `TRUE`.
-func (x *ViewStack) GetPropertyTransitionDuration() uint32 {
+func (x *ViewStack) GetPropertyTransitionDuration() uint {
 	var v gobject.Value
 	x.GetProperty("transition-duration", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyTransitionRunning gets the "transition-running" property.
@@ -546,7 +555,7 @@ func (x *ViewStack) GetPropertyVhomogeneous() bool {
 func (x *ViewStack) SetPropertyVisibleChildName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-child-name", &v)
 }
 
@@ -626,7 +635,7 @@ func (x *ViewStack) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ViewStack) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ViewStack) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -742,7 +751,7 @@ func (x *ViewStack) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStack) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ViewStack) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -774,7 +783,7 @@ func (x *ViewStack) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStack) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ViewStack) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -807,7 +816,7 @@ func (x *ViewStack) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStack) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ViewStack) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -837,10 +846,10 @@ func ViewStackPageNewFromInternalPtr(ptr uintptr) *ViewStackPage {
 	return cls
 }
 
-var xViewStackPageGetBadgeNumber func(uintptr) uint32
+var xViewStackPageGetBadgeNumber func(uintptr) uint
 
 // Gets the badge number for this page.
-func (x *ViewStackPage) GetBadgeNumber() uint32 {
+func (x *ViewStackPage) GetBadgeNumber() uint {
 	cret := xViewStackPageGetBadgeNumber(x.GoPointer())
 	return cret
 }
@@ -929,7 +938,7 @@ func (x *ViewStackPage) GetVisible() bool {
 	return cret
 }
 
-var xViewStackPageSetBadgeNumber func(uintptr, uint32)
+var xViewStackPageSetBadgeNumber func(uintptr, uint)
 
 // Sets the badge number for this page.
 //
@@ -937,22 +946,28 @@ var xViewStackPageSetBadgeNumber func(uintptr, uint32)
 // commonly used to display a number of unread items within the page.
 //
 // It can be used together with [property@ViewStack{age}:needs-attention].
-func (x *ViewStackPage) SetBadgeNumber(BadgeNumberVar uint32) {
+func (x *ViewStackPage) SetBadgeNumber(BadgeNumberVar uint) {
 	xViewStackPageSetBadgeNumber(x.GoPointer(), BadgeNumberVar)
 }
 
-var xViewStackPageSetIconName func(uintptr, string)
+var xViewStackPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name of the page.
-func (x *ViewStackPage) SetIconName(IconNameVar string) {
-	xViewStackPageSetIconName(x.GoPointer(), IconNameVar)
+func (x *ViewStackPage) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xViewStackPageSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
-var xViewStackPageSetName func(uintptr, string)
+var xViewStackPageSetName func(uintptr, uintptr)
 
 // Sets the name of the page.
-func (x *ViewStackPage) SetName(NameVar string) {
-	xViewStackPageSetName(x.GoPointer(), NameVar)
+func (x *ViewStackPage) SetName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xViewStackPageSetName(x.GoPointer(), NameVarPtr)
 }
 
 var xViewStackPageSetNeedsAttention func(uintptr, bool)
@@ -964,13 +979,16 @@ func (x *ViewStackPage) SetNeedsAttention(NeedsAttentionVar bool) {
 	xViewStackPageSetNeedsAttention(x.GoPointer(), NeedsAttentionVar)
 }
 
-var xViewStackPageSetSectionTitle func(uintptr, string)
+var xViewStackPageSetSectionTitle func(uintptr, uintptr)
 
 // Sets the section title for @self.
 //
 // Does nothing unless [property@ViewStackPage:starts-section] is set.
-func (x *ViewStackPage) SetSectionTitle(SectionTitleVar string) {
-	xViewStackPageSetSectionTitle(x.GoPointer(), SectionTitleVar)
+func (x *ViewStackPage) SetSectionTitle(SectionTitleVar *string) {
+	SectionTitleVarPtr := core.GStrdupNullable(SectionTitleVar)
+	defer core.GFreeNullable(SectionTitleVarPtr)
+
+	xViewStackPageSetSectionTitle(x.GoPointer(), SectionTitleVarPtr)
 }
 
 var xViewStackPageSetStartsSection func(uintptr, bool)
@@ -986,11 +1004,14 @@ func (x *ViewStackPage) SetStartsSection(StartsSectionVar bool) {
 	xViewStackPageSetStartsSection(x.GoPointer(), StartsSectionVar)
 }
 
-var xViewStackPageSetTitle func(uintptr, string)
+var xViewStackPageSetTitle func(uintptr, uintptr)
 
 // Sets the page title.
-func (x *ViewStackPage) SetTitle(TitleVar string) {
-	xViewStackPageSetTitle(x.GoPointer(), TitleVar)
+func (x *ViewStackPage) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xViewStackPageSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
 var xViewStackPageSetUseUnderline func(uintptr, bool)
@@ -1028,10 +1049,10 @@ func (c *ViewStackPage) SetGoPointer(ptr uintptr) {
 // commonly used to display a number of unread items within the page.
 //
 // It can be used together with [property@ViewStack{age}:needs-attention].
-func (x *ViewStackPage) SetPropertyBadgeNumber(value uint32) {
+func (x *ViewStackPage) SetPropertyBadgeNumber(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("badge-number", &v)
 }
 
@@ -1042,10 +1063,10 @@ func (x *ViewStackPage) SetPropertyBadgeNumber(value uint32) {
 // commonly used to display a number of unread items within the page.
 //
 // It can be used together with [property@ViewStack{age}:needs-attention].
-func (x *ViewStackPage) GetPropertyBadgeNumber() uint32 {
+func (x *ViewStackPage) GetPropertyBadgeNumber() uint {
 	var v gobject.Value
 	x.GetProperty("badge-number", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyIconName sets the "icon-name" property.
@@ -1053,7 +1074,7 @@ func (x *ViewStackPage) GetPropertyBadgeNumber() uint32 {
 func (x *ViewStackPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -1070,7 +1091,7 @@ func (x *ViewStackPage) GetPropertyIconName() string {
 func (x *ViewStackPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -1110,7 +1131,7 @@ func (x *ViewStackPage) GetPropertyNeedsAttention() bool {
 func (x *ViewStackPage) SetPropertySectionTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("section-title", &v)
 }
 
@@ -1158,7 +1179,7 @@ func (x *ViewStackPage) GetPropertyStartsSection() bool {
 func (x *ViewStackPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -1276,7 +1297,7 @@ func (x *ViewStackPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ViewStackPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ViewStackPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1392,7 +1413,7 @@ func (x *ViewStackPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, 
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStackPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ViewStackPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1424,7 +1445,7 @@ func (x *ViewStackPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, 
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStackPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ViewStackPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1457,7 +1478,7 @@ func (x *ViewStackPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs .
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewStackPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ViewStackPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1523,10 +1544,10 @@ func (c *ViewStackPages) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *ViewStackPages) GetPropertyNItems() uint32 {
+func (x *ViewStackPages) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -1538,7 +1559,7 @@ func (x *ViewStackPages) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *ViewStackPages) GetItem(PositionVar uint32) uintptr {
+func (x *ViewStackPages) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -1561,7 +1582,7 @@ func (x *ViewStackPages) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *ViewStackPages) GetNItems() uint32 {
+func (x *ViewStackPages) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -1578,7 +1599,7 @@ func (x *ViewStackPages) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *ViewStackPages) GetObject(PositionVar uint32) *gobject.Object {
+func (x *ViewStackPages) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -1611,7 +1632,7 @@ func (x *ViewStackPages) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *ViewStackPages) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *ViewStackPages) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
@@ -1620,7 +1641,7 @@ func (x *ViewStackPages) ItemsChanged(PositionVar uint32, RemovedVar uint32, Add
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *ViewStackPages) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
+func (x *ViewStackPages) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 	gtk.XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 }
 
@@ -1639,7 +1660,7 @@ func (x *ViewStackPages) GetSection(PositionVar uint32, OutStartVar *uint32, Out
 // in a larger range, that the larger range is included in the emission
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
-func (x *ViewStackPages) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
+func (x *ViewStackPages) SectionsChanged(PositionVar uint, NItemsVar uint) {
 	gtk.XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 
@@ -1663,7 +1684,7 @@ func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 // interested in part of the model's selected state. A common use
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
-func (x *ViewStackPages) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *gtk.Bitset {
+func (x *ViewStackPages) GetSelectionInRange(PositionVar uint, NItemsVar uint) *gtk.Bitset {
 	cret := gtk.XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
 	if cret == 0 {
 		return nil
@@ -1672,7 +1693,7 @@ func (x *ViewStackPages) GetSelectionInRange(PositionVar uint32, NItemsVar uint3
 }
 
 // Checks if the given item is selected.
-func (x *ViewStackPages) IsSelected(PositionVar uint32) bool {
+func (x *ViewStackPages) IsSelected(PositionVar uint) bool {
 	cret := gtk.XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -1684,13 +1705,13 @@ func (x *ViewStackPages) SelectAll() bool {
 }
 
 // Requests to select an item in the model.
-func (x *ViewStackPages) SelectItem(PositionVar uint32, UnselectRestVar bool) bool {
+func (x *ViewStackPages) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 	cret := gtk.XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
-func (x *ViewStackPages) SelectRange(PositionVar uint32, NItemsVar uint32, UnselectRestVar bool) bool {
+func (x *ViewStackPages) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 	cret := gtk.XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -1699,7 +1720,7 @@ func (x *ViewStackPages) SelectRange(PositionVar uint32, NItemsVar uint32, Unsel
 //
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
-func (x *ViewStackPages) SelectionChanged(PositionVar uint32, NItemsVar uint32) {
+func (x *ViewStackPages) SelectionChanged(PositionVar uint, NItemsVar uint) {
 	gtk.XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 
@@ -1751,13 +1772,13 @@ func (x *ViewStackPages) UnselectAll() bool {
 }
 
 // Requests to unselect an item in the model.
-func (x *ViewStackPages) UnselectItem(PositionVar uint32) bool {
+func (x *ViewStackPages) UnselectItem(PositionVar uint) bool {
 	cret := gtk.XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
-func (x *ViewStackPages) UnselectRange(PositionVar uint32, NItemsVar uint32) bool {
+func (x *ViewStackPages) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 	cret := gtk.XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }

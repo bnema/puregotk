@@ -506,7 +506,7 @@ func (x *TabPage) GetPropertyIndicatorActivatable() bool {
 func (x *TabPage) SetPropertyIndicatorTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("indicator-tooltip", &v)
 }
 
@@ -532,7 +532,7 @@ func (x *TabPage) GetPropertyIndicatorTooltip() string {
 func (x *TabPage) SetPropertyKeyword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("keyword", &v)
 }
 
@@ -748,7 +748,7 @@ func (x *TabPage) GetPropertyThumbnailYalign() float32 {
 func (x *TabPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -777,7 +777,7 @@ func (x *TabPage) GetPropertyTitle() string {
 func (x *TabPage) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip", &v)
 }
 
@@ -860,7 +860,7 @@ func (x *TabPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *TabPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -976,7 +976,7 @@ func (x *TabPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *TabPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1008,7 +1008,7 @@ func (x *TabPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *TabPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1041,7 +1041,7 @@ func (x *TabPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *TabPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1298,28 +1298,28 @@ func (x *TabView) GetMenuModel() *gio.MenuModel {
 	return cls
 }
 
-var xTabViewGetNPages func(uintptr) int32
+var xTabViewGetNPages func(uintptr) int
 
 // Gets the number of pages in @self.
-func (x *TabView) GetNPages() int32 {
+func (x *TabView) GetNPages() int {
 	cret := xTabViewGetNPages(x.GoPointer())
 	return cret
 }
 
-var xTabViewGetNPinnedPages func(uintptr) int32
+var xTabViewGetNPinnedPages func(uintptr) int
 
 // Gets the number of pinned pages in @self.
 //
 // See [method@TabView.set_page_pinned].
-func (x *TabView) GetNPinnedPages() int32 {
+func (x *TabView) GetNPinnedPages() int {
 	cret := xTabViewGetNPinnedPages(x.GoPointer())
 	return cret
 }
 
-var xTabViewGetNthPage func(uintptr, int32) uintptr
+var xTabViewGetNthPage func(uintptr, int) uintptr
 
 // Gets the [class@TabPage] representing the child at @position.
-func (x *TabView) GetNthPage(PositionVar int32) *TabPage {
+func (x *TabView) GetNthPage(PositionVar int) *TabPage {
 	var cls *TabPage
 
 	cret := xTabViewGetNthPage(x.GoPointer(), PositionVar)
@@ -1350,10 +1350,10 @@ func (x *TabView) GetPage(ChildVar *gtk.Widget) *TabPage {
 	return cls
 }
 
-var xTabViewGetPagePosition func(uintptr, uintptr) int32
+var xTabViewGetPagePosition func(uintptr, uintptr) int
 
 // Finds the position of @page in @self, starting from 0.
-func (x *TabView) GetPagePosition(PageVar *TabPage) int32 {
+func (x *TabView) GetPagePosition(PageVar *TabPage) int {
 	cret := xTabViewGetPagePosition(x.GoPointer(), PageVar.GoPointer())
 	return cret
 }
@@ -1407,13 +1407,13 @@ func (x *TabView) GetShortcuts() TabViewShortcuts {
 	return cret
 }
 
-var xTabViewInsert func(uintptr, uintptr, int32) uintptr
+var xTabViewInsert func(uintptr, uintptr, int) uintptr
 
 // Inserts a non-pinned page at @position.
 //
 // It's an error to try to insert a page before a pinned page, in that case
 // [method@TabView.insert_pinned] should be used instead.
-func (x *TabView) Insert(ChildVar *gtk.Widget, PositionVar int32) *TabPage {
+func (x *TabView) Insert(ChildVar *gtk.Widget, PositionVar int) *TabPage {
 	var cls *TabPage
 
 	cret := xTabViewInsert(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
@@ -1427,13 +1427,13 @@ func (x *TabView) Insert(ChildVar *gtk.Widget, PositionVar int32) *TabPage {
 	return cls
 }
 
-var xTabViewInsertPinned func(uintptr, uintptr, int32) uintptr
+var xTabViewInsertPinned func(uintptr, uintptr, int) uintptr
 
 // Inserts a pinned page at @position.
 //
 // It's an error to try to insert a pinned page after a non-pinned page, in
 // that case [method@TabView.insert] should be used instead.
-func (x *TabView) InsertPinned(ChildVar *gtk.Widget, PositionVar int32) *TabPage {
+func (x *TabView) InsertPinned(ChildVar *gtk.Widget, PositionVar int) *TabPage {
 	var cls *TabPage
 
 	cret := xTabViewInsertPinned(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
@@ -1532,13 +1532,13 @@ func (x *TabView) ReorderLast(PageVar *TabPage) bool {
 	return cret
 }
 
-var xTabViewReorderPage func(uintptr, uintptr, int32) bool
+var xTabViewReorderPage func(uintptr, uintptr, int) bool
 
 // Reorders @page to @position.
 //
 // It's a programmer error to try to reorder a pinned page after a non-pinned
 // one, or a non-pinned page before a pinned one.
-func (x *TabView) ReorderPage(PageVar *TabPage, PositionVar int32) bool {
+func (x *TabView) ReorderPage(PageVar *TabPage, PositionVar int) bool {
 	cret := xTabViewReorderPage(x.GoPointer(), PageVar.GoPointer(), PositionVar)
 	return cret
 }
@@ -1647,7 +1647,7 @@ func (x *TabView) SetShortcuts(ShortcutsVar TabViewShortcuts) {
 	xTabViewSetShortcuts(x.GoPointer(), ShortcutsVar)
 }
 
-var xTabViewTransferPage func(uintptr, uintptr, uintptr, int32)
+var xTabViewTransferPage func(uintptr, uintptr, uintptr, int)
 
 // Transfers @page from @self to @other_view.
 //
@@ -1655,7 +1655,7 @@ var xTabViewTransferPage func(uintptr, uintptr, uintptr, int32)
 //
 // It's a programmer error to try to insert a pinned page after a non-pinned
 // one, or a non-pinned page before a pinned one.
-func (x *TabView) TransferPage(PageVar *TabPage, OtherViewVar *TabView, PositionVar int32) {
+func (x *TabView) TransferPage(PageVar *TabPage, OtherViewVar *TabView, PositionVar int) {
 	xTabViewTransferPage(x.GoPointer(), PageVar.GoPointer(), OtherViewVar.GoPointer(), PositionVar)
 }
 
@@ -1686,20 +1686,20 @@ func (x *TabView) GetPropertyIsTransferringPage() bool {
 
 // GetPropertyNPages gets the "n-pages" property.
 // The number of pages in the tab view.
-func (x *TabView) GetPropertyNPages() int32 {
+func (x *TabView) GetPropertyNPages() int {
 	var v gobject.Value
 	x.GetProperty("n-pages", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyNPinnedPages gets the "n-pinned-pages" property.
 // The number of pinned pages in the tab view.
 //
 // See [method@TabView.set_page_pinned].
-func (x *TabView) GetPropertyNPinnedPages() int32 {
+func (x *TabView) GetPropertyNPinnedPages() int {
 	var v gobject.Value
 	x.GetProperty("n-pinned-pages", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted after [method@TabView.close_page] has been called for @page.
@@ -1734,7 +1734,7 @@ func (x *TabView) GetPropertyNPinnedPages() int32 {
 //
 // The signal handler should return [const@Gdk.EVENT_STOP] to stop propagation
 // or [const@Gdk.EVENT_PROPAGATE] to invoke the default handler.
-func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
+func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
@@ -1762,7 +1762,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 //
 // The signal handler is expected to create a new window, position it as
 // needed and return its `AdwTabView` that the page will be transferred into.
-func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
+func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
@@ -1789,7 +1789,7 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
 //
 // See [property@TabPage:indicator-icon] and
 // [property@TabPage:indicator-activatable].
-func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
+func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
@@ -1815,7 +1815,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
 //
 // A typical reason to connect to this signal would be to connect to page
 // signals for things such as updating window title.
-func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 {
+func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
@@ -1823,7 +1823,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
+	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int) {
 		fa := TabView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1846,7 +1846,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int32)) uint32 
 // this function as the child might merely be moved to another window; use
 // child dispose handler for that or do it in sync with your
 // [method@TabView.close_page_finish] calls.
-func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int32)) uint32 {
+func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
@@ -1854,7 +1854,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int32)) uint32 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
+	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int) {
 		fa := TabView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1869,7 +1869,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int32)) uint32 
 }
 
 // Emitted after @page has been reordered to @position.
-func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32 {
+func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
@@ -1877,7 +1877,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int32) {
+	fcb := func(clsPtr uintptr, PageVarp uintptr, PositionVarp int) {
 		fa := TabView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1897,7 +1897,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int32)) uint32
 //
 // It can be used to set up menu actions before showing the menu, for example
 // disable actions not applicable to @page.
-func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint32 {
+func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
@@ -1985,7 +1985,7 @@ func (x *TabView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *TabView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -2101,7 +2101,7 @@ func (x *TabView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *TabView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -2133,7 +2133,7 @@ func (x *TabView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *TabView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -2166,7 +2166,7 @@ func (x *TabView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *TabView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *TabView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

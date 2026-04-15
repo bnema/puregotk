@@ -65,10 +65,10 @@ func (x *Quad) Free() {
 	xQuadFree(x.GoPointer())
 }
 
-var xQuadGetPoint func(uintptr, uint32) uintptr
+var xQuadGetPoint func(uintptr, uint) uintptr
 
 // Retrieves the point of a #graphene_quad_t at the given index.
-func (x *Quad) GetPoint(IndexVar uint32) *Point {
+func (x *Quad) GetPoint(IndexVar uint) *Point {
 	cret := xQuadGetPoint(x.GoPointer(), IndexVar)
 	if cret == 0 {
 		return nil

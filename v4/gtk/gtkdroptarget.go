@@ -366,7 +366,7 @@ func (x *DropTarget) GetPropertyValue() uintptr {
 // [property@Gtk.DropTarget:preload] property should be set and the value
 // should be inspected via the ::notify:value signal, calling
 // [method@Gtk.DropTarget.reject] if required.
-func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint32 {
+func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
@@ -397,7 +397,7 @@ func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint32 {
 // Otherwise, the handler returns %TRUE. In this case, this handler will
 // accept the drop. The handler is responsible for using the given @value
 // and performing the drop operation.
-func (x *DropTarget) ConnectDrop(cb *func(DropTarget, uintptr, float64, float64) bool) uint32 {
+func (x *DropTarget) ConnectDrop(cb *func(DropTarget, uintptr, float64, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
@@ -422,7 +422,7 @@ func (x *DropTarget) ConnectDrop(cb *func(DropTarget, uintptr, float64, float64)
 // Emitted on the drop site when the pointer enters the widget.
 //
 // It can be used to set up custom highlighting.
-func (x *DropTarget) ConnectEnter(cb *func(DropTarget, float64, float64) gdk.DragAction) uint32 {
+func (x *DropTarget) ConnectEnter(cb *func(DropTarget, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
@@ -448,7 +448,7 @@ func (x *DropTarget) ConnectEnter(cb *func(DropTarget, float64, float64) gdk.Dra
 //
 // Its main purpose it to undo things done in
 // [signal@Gtk.DropTarget::enter].
-func (x *DropTarget) ConnectLeave(cb *func(DropTarget)) uint32 {
+func (x *DropTarget) ConnectLeave(cb *func(DropTarget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
@@ -471,7 +471,7 @@ func (x *DropTarget) ConnectLeave(cb *func(DropTarget)) uint32 {
 }
 
 // Emitted while the pointer is moving over the drop target.
-func (x *DropTarget) ConnectMotion(cb *func(DropTarget, float64, float64) gdk.DragAction) uint32 {
+func (x *DropTarget) ConnectMotion(cb *func(DropTarget, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)

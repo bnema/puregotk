@@ -220,7 +220,7 @@ func NewValueFromJson(ContextVar *Context, JsonVar string) *Value {
 	return cls
 }
 
-var xNewValueFunction func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, ...interface{}) uintptr
+var xNewValueFunction func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType, uint, ...interface{}) uintptr
 
 // Create a function in @context. If @name is %NULL an anonymous function will be created.
 // When the function is called by JavaScript or jsc_value_function_call(), @callback is called
@@ -231,10 +231,13 @@ var xNewValueFunction func(uintptr, string, uintptr, uintptr, uintptr, types.GTy
 // %G_TYPE_POINTER instead of the actual boxed #GType to ensure that the instance owned by #JSCClass is used.
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as instance parameter.
-func NewValueFunction(ContextVar *Context, NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint32, varArgs ...interface{}) *Value {
+func NewValueFunction(ContextVar *Context, NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) *Value {
 	var cls *Value
 
-	cret := xNewValueFunction(ContextVar.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewValueFunction(ContextVar.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -244,7 +247,7 @@ func NewValueFunction(ContextVar *Context, NameVar string, CallbackVar *gobject.
 	return cls
 }
 
-var xNewValueFunctionVariadic func(uintptr, string, uintptr, uintptr, uintptr, types.GType) uintptr
+var xNewValueFunctionVariadic func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType) uintptr
 
 // Create a function in @context. If @name is %NULL an anonymous function will be created.
 // When the function is called by JavaScript or jsc_value_function_call(), @callback is called
@@ -255,10 +258,13 @@ var xNewValueFunctionVariadic func(uintptr, string, uintptr, uintptr, uintptr, t
 // %G_TYPE_POINTER instead of the actual boxed #GType to ensure that the instance owned by #JSCClass is used.
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as instance parameter.
-func NewValueFunctionVariadic(ContextVar *Context, NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType) *Value {
+func NewValueFunctionVariadic(ContextVar *Context, NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType) *Value {
 	var cls *Value
 
-	cret := xNewValueFunctionVariadic(ContextVar.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewValueFunctionVariadic(ContextVar.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
 
 	if cret == 0 {
 		return nil
@@ -268,7 +274,7 @@ func NewValueFunctionVariadic(ContextVar *Context, NameVar string, CallbackVar *
 	return cls
 }
 
-var xNewValueFunctionv func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, []types.GType) uintptr
+var xNewValueFunctionv func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType, uint, []types.GType) uintptr
 
 // Create a function in @context. If @name is %NULL an anonymous function will be created.
 // When the function is called by JavaScript or jsc_value_function_call(), @callback is called
@@ -279,10 +285,13 @@ var xNewValueFunctionv func(uintptr, string, uintptr, uintptr, uintptr, types.GT
 // %G_TYPE_POINTER instead of the actual boxed #GType to ensure that the instance owned by #JSCClass is used.
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as instance parameter.
-func NewValueFunctionv(ContextVar *Context, NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint32, ParameterTypesVar []types.GType) *Value {
+func NewValueFunctionv(ContextVar *Context, NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint, ParameterTypesVar []types.GType) *Value {
 	var cls *Value
 
-	cret := xNewValueFunctionv(ContextVar.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewValueFunctionv(ContextVar.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
 
 	if cret == 0 {
 		return nil
@@ -362,14 +371,17 @@ func NewValuePromise(ContextVar *Context, ExecutorVar *Executor, UserDataVar uin
 	return cls
 }
 
-var xNewValueString func(uintptr, string) uintptr
+var xNewValueString func(uintptr, uintptr) uintptr
 
 // Create a new #JSCValue from @string. If you need to create a #JSCValue from a
 // string containing null characters, use jsc_value_new_string_from_bytes() instead.
-func NewValueString(ContextVar *Context, StringVar string) *Value {
+func NewValueString(ContextVar *Context, StringVar *string) *Value {
 	var cls *Value
 
-	cret := xNewValueString(ContextVar.GoPointer(), StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
+
+	cret := xNewValueString(ContextVar.GoPointer(), StringVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -484,11 +496,11 @@ func (x *Value) ConstructorCall(FirstParameterTypeVar types.GType, varArgs ...in
 	return cls
 }
 
-var xValueConstructorCallv func(uintptr, uint32, []Value) uintptr
+var xValueConstructorCallv func(uintptr, uint, []Value) uintptr
 
 // Invoke &lt;function&gt;new&lt;/function&gt; with constructor referenced by @value. If @n_parameters
 // is 0 no parameters will be passed to the constructor.
-func (x *Value) ConstructorCallv(NParametersVar uint32, ParametersVar []Value) *Value {
+func (x *Value) ConstructorCallv(NParametersVar uint, ParametersVar []Value) *Value {
 	var cls *Value
 
 	cret := xValueConstructorCallv(x.GoPointer(), NParametersVar, ParametersVar)
@@ -521,14 +533,14 @@ func (x *Value) FunctionCall(FirstParameterTypeVar types.GType, varArgs ...inter
 	return cls
 }
 
-var xValueFunctionCallv func(uintptr, uint32, []Value) uintptr
+var xValueFunctionCallv func(uintptr, uint, []Value) uintptr
 
 // Call function referenced by @value, passing the given @parameters. If @n_parameters
 // is 0 no parameters will be passed to the function.
 //
 // This function always returns a #JSCValue, in case of void functions a #JSCValue referencing
 // &lt;function&gt;undefined&lt;/function&gt; is returned
-func (x *Value) FunctionCallv(NParametersVar uint32, ParametersVar []Value) *Value {
+func (x *Value) FunctionCallv(NParametersVar uint, ParametersVar []Value) *Value {
 	var cls *Value
 
 	cret := xValueFunctionCallv(x.GoPointer(), NParametersVar, ParametersVar)
@@ -736,10 +748,10 @@ func (x *Value) ObjectGetProperty(NameVar string) *Value {
 	return cls
 }
 
-var xValueObjectGetPropertyAtIndex func(uintptr, uint32) uintptr
+var xValueObjectGetPropertyAtIndex func(uintptr, uint) uintptr
 
 // Get property at @index from @value.
-func (x *Value) ObjectGetPropertyAtIndex(IndexVar uint32) *Value {
+func (x *Value) ObjectGetPropertyAtIndex(IndexVar uint) *Value {
 	var cls *Value
 
 	cret := xValueObjectGetPropertyAtIndex(x.GoPointer(), IndexVar)
@@ -783,7 +795,7 @@ func (x *Value) ObjectInvokeMethod(NameVar string, FirstParameterTypeVar types.G
 	return cls
 }
 
-var xValueObjectInvokeMethodv func(uintptr, string, uint32, []Value) uintptr
+var xValueObjectInvokeMethodv func(uintptr, string, uint, []Value) uintptr
 
 // Invoke method with @name on object referenced by @value, passing the given @parameters. If
 // @n_parameters is 0 no parameters will be passed to the method.
@@ -793,7 +805,7 @@ var xValueObjectInvokeMethodv func(uintptr, string, uint32, []Value) uintptr
 //
 // This function always returns a #JSCValue, in case of void methods a #JSCValue referencing
 // &lt;function&gt;undefined&lt;/function&gt; is returned.
-func (x *Value) ObjectInvokeMethodv(NameVar string, NParametersVar uint32, ParametersVar []Value) *Value {
+func (x *Value) ObjectInvokeMethodv(NameVar string, NParametersVar uint, ParametersVar []Value) *Value {
 	var cls *Value
 
 	cret := xValueObjectInvokeMethodv(x.GoPointer(), NameVar, NParametersVar, ParametersVar)
@@ -821,10 +833,10 @@ func (x *Value) ObjectSetProperty(NameVar string, PropertyVar *Value) {
 	xValueObjectSetProperty(x.GoPointer(), NameVar, PropertyVar.GoPointer())
 }
 
-var xValueObjectSetPropertyAtIndex func(uintptr, uint32, uintptr)
+var xValueObjectSetPropertyAtIndex func(uintptr, uint, uintptr)
 
 // Set @property at @index on @value.
-func (x *Value) ObjectSetPropertyAtIndex(IndexVar uint32, PropertyVar *Value) {
+func (x *Value) ObjectSetPropertyAtIndex(IndexVar uint, PropertyVar *Value) {
 	xValueObjectSetPropertyAtIndex(x.GoPointer(), IndexVar, PropertyVar.GoPointer())
 }
 
@@ -852,11 +864,11 @@ func (x *Value) ToInt32() int32 {
 	return cret
 }
 
-var xValueToJson func(uintptr, uint32) string
+var xValueToJson func(uintptr, uint) string
 
 // Create a JSON string of @value serialization. If @indent is 0, the resulting JSON will
 // not contain newlines. The size of the indent is clamped to 10 spaces.
-func (x *Value) ToJson(IndentVar uint32) string {
+func (x *Value) ToJson(IndentVar uint) string {
 	cret := xValueToJson(x.GoPointer(), IndentVar)
 	return cret
 }

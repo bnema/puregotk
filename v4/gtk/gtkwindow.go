@@ -442,7 +442,7 @@ func (x *Window) GetDecorated() bool {
 	return cret
 }
 
-var xWindowGetDefaultSize func(uintptr, *int32, *int32)
+var xWindowGetDefaultSize func(uintptr, *int, *int)
 
 // Gets the default size of the window.
 //
@@ -452,7 +452,7 @@ var xWindowGetDefaultSize func(uintptr, *int32, *int32)
 //
 // This function is the recommended way for [saving window state
 // across restarts of applications](https://developer.gnome.org/documentation/tutorials/save-state.html).
-func (x *Window) GetDefaultSize(WidthVar *int32, HeightVar *int32) {
+func (x *Window) GetDefaultSize(WidthVar *int, HeightVar *int) {
 	xWindowGetDefaultSize(x.GoPointer(), WidthVar, HeightVar)
 }
 
@@ -825,7 +825,7 @@ func (x *Window) SetDecorated(SettingVar bool) {
 	xWindowSetDecorated(x.GoPointer(), SettingVar)
 }
 
-var xWindowSetDefaultSize func(uintptr, int32, int32)
+var xWindowSetDefaultSize func(uintptr, int, int)
 
 // Sets the default size of a window.
 //
@@ -857,7 +857,7 @@ var xWindowSetDefaultSize func(uintptr, int32, int32)
 // [method@Gtk.Window.get_default_size]. Using the window allocation
 // directly will not work in all circumstances and can lead to growing
 // or shrinking windows.
-func (x *Window) SetDefaultSize(WidthVar int32, HeightVar int32) {
+func (x *Window) SetDefaultSize(WidthVar int, HeightVar int) {
 	xWindowSetDefaultSize(x.GoPointer(), WidthVar, HeightVar)
 }
 
@@ -956,7 +956,7 @@ func (x *Window) SetHideOnClose(SettingVar bool) {
 	xWindowSetHideOnClose(x.GoPointer(), SettingVar)
 }
 
-var xWindowSetIconName func(uintptr, string)
+var xWindowSetIconName func(uintptr, uintptr)
 
 // Sets the icon for the window from a named themed icon.
 //
@@ -965,8 +965,11 @@ var xWindowSetIconName func(uintptr, string)
 //
 // Note that this has nothing to do with the WM_ICON_NAME
 // property which is mentioned in the ICCCM.
-func (x *Window) SetIconName(NameVar string) {
-	xWindowSetIconName(x.GoPointer(), NameVar)
+func (x *Window) SetIconName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xWindowSetIconName(x.GoPointer(), NameVarPtr)
 }
 
 var xWindowSetMnemonicsVisible func(uintptr, bool)
@@ -1022,7 +1025,7 @@ func (x *Window) SetStartupId(StartupIdVar string) {
 	xWindowSetStartupId(x.GoPointer(), StartupIdVar)
 }
 
-var xWindowSetTitle func(uintptr, string)
+var xWindowSetTitle func(uintptr, uintptr)
 
 // Sets the title of the window.
 //
@@ -1034,8 +1037,11 @@ var xWindowSetTitle func(uintptr, string)
 // include the application name and current document filename, for example.
 //
 // Passing `NULL` does the same as setting the title to an empty string.
-func (x *Window) SetTitle(TitleVar string) {
-	xWindowSetTitle(x.GoPointer(), TitleVar)
+func (x *Window) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xWindowSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
 var xWindowSetTitlebar func(uintptr, uintptr)
@@ -1163,36 +1169,36 @@ func (x *Window) GetPropertyDecorated() bool {
 
 // SetPropertyDefaultHeight sets the "default-height" property.
 // The default height of the window.
-func (x *Window) SetPropertyDefaultHeight(value int32) {
+func (x *Window) SetPropertyDefaultHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("default-height", &v)
 }
 
 // GetPropertyDefaultHeight gets the "default-height" property.
 // The default height of the window.
-func (x *Window) GetPropertyDefaultHeight() int32 {
+func (x *Window) GetPropertyDefaultHeight() int {
 	var v gobject.Value
 	x.GetProperty("default-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyDefaultWidth sets the "default-width" property.
 // The default width of the window.
-func (x *Window) SetPropertyDefaultWidth(value int32) {
+func (x *Window) SetPropertyDefaultWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("default-width", &v)
 }
 
 // GetPropertyDefaultWidth gets the "default-width" property.
 // The default width of the window.
-func (x *Window) GetPropertyDefaultWidth() int32 {
+func (x *Window) GetPropertyDefaultWidth() int {
 	var v gobject.Value
 	x.GetProperty("default-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyDeletable sets the "deletable" property.
@@ -1326,7 +1332,7 @@ func (x *Window) GetPropertyHideOnClose() bool {
 func (x *Window) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -1439,7 +1445,7 @@ func (x *Window) GetPropertyResizable() bool {
 func (x *Window) SetPropertyStartupId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("startup-id", &v)
 }
 
@@ -1458,7 +1464,7 @@ func (x *Window) GetPropertySuspended() bool {
 func (x *Window) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -1475,7 +1481,7 @@ func (x *Window) GetPropertyTitle() string {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
+func (x *Window) ConnectActivateDefault(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
@@ -1503,7 +1509,7 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;␣&lt;/kbd&gt;.
-func (x *Window) ConnectActivateFocus(cb *func(Window)) uint32 {
+func (x *Window) ConnectActivateFocus(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
@@ -1526,7 +1532,7 @@ func (x *Window) ConnectActivateFocus(cb *func(Window)) uint32 {
 }
 
 // Emitted when the user clicks on the close button of the window.
-func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
+func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
@@ -1559,7 +1565,7 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;I&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;D&lt;/kbd&gt;.
-func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint32 {
+func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
@@ -1583,7 +1589,7 @@ func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint32 {
 
 // Emitted when the set of accelerators or mnemonics that
 // are associated with the window changes.
-func (x *Window) ConnectKeysChanged(cb *func(Window)) uint32 {
+func (x *Window) ConnectKeysChanged(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
@@ -1671,7 +1677,7 @@ func (x *Window) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Window) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1787,7 +1793,7 @@ func (x *Window) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Window) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Window) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1819,7 +1825,7 @@ func (x *Window) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Window) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Window) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1852,7 +1858,7 @@ func (x *Window) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Window) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Window) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

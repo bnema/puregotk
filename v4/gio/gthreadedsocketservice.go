@@ -212,11 +212,11 @@ func ThreadedSocketServiceNewFromInternalPtr(ptr uintptr) *ThreadedSocketService
 	return cls
 }
 
-var xNewThreadedSocketService func(int32) uintptr
+var xNewThreadedSocketService func(int) uintptr
 
 // Creates a new #GThreadedSocketService with no listeners. Listeners
 // must be added with one of the #GSocketListener "add" methods.
-func NewThreadedSocketService(MaxThreadsVar int32) *ThreadedSocketService {
+func NewThreadedSocketService(MaxThreadsVar int) *ThreadedSocketService {
 	var cls *ThreadedSocketService
 
 	cret := xNewThreadedSocketService(MaxThreadsVar)
@@ -242,26 +242,26 @@ func (c *ThreadedSocketService) SetGoPointer(ptr uintptr) {
 
 // SetPropertyMaxThreads sets the "max-threads" property.
 // The maximum number of threads handling clients for this service.
-func (x *ThreadedSocketService) SetPropertyMaxThreads(value int32) {
+func (x *ThreadedSocketService) SetPropertyMaxThreads(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-threads", &v)
 }
 
 // GetPropertyMaxThreads gets the "max-threads" property.
 // The maximum number of threads handling clients for this service.
-func (x *ThreadedSocketService) GetPropertyMaxThreads() int32 {
+func (x *ThreadedSocketService) GetPropertyMaxThreads() int {
 	var v gobject.Value
 	x.GetProperty("max-threads", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // The ::run signal is emitted in a worker thread in response to an
 // incoming connection. This thread is dedicated to handling
 // @connection and may perform blocking IO. The signal handler need
 // not return until the connection is closed.
-func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint32 {
+func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)

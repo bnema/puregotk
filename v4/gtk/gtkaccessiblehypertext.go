@@ -39,34 +39,34 @@ func (x *AccessibleHypertextInterface) GoPointer() uintptr {
 }
 
 // OverrideGetNLinks sets the "get_n_links" callback function.
-func (x *AccessibleHypertextInterface) OverrideGetNLinks(cb func(AccessibleHypertext) uint32) {
+func (x *AccessibleHypertextInterface) OverrideGetNLinks(cb func(AccessibleHypertext) uint) {
 	if cb == nil {
 		x.xGetNLinks = 0
 	} else {
-		x.xGetNLinks = purego.NewCallback(func(SelfVarp uintptr) uint32 {
+		x.xGetNLinks = purego.NewCallback(func(SelfVarp uintptr) uint {
 			return cb(&AccessibleHypertextBase{Ptr: SelfVarp})
 		})
 	}
 }
 
 // GetGetNLinks gets the "get_n_links" callback function.
-func (x *AccessibleHypertextInterface) GetGetNLinks() func(AccessibleHypertext) uint32 {
+func (x *AccessibleHypertextInterface) GetGetNLinks() func(AccessibleHypertext) uint {
 	if x.xGetNLinks == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr) uint32
+	var rawCallback func(SelfVarp uintptr) uint
 	purego.RegisterFunc(&rawCallback, x.xGetNLinks)
-	return func(SelfVar AccessibleHypertext) uint32 {
+	return func(SelfVar AccessibleHypertext) uint {
 		return rawCallback(SelfVar.GoPointer())
 	}
 }
 
 // OverrideGetLink sets the "get_link" callback function.
-func (x *AccessibleHypertextInterface) OverrideGetLink(cb func(AccessibleHypertext, uint32) *AccessibleHyperlink) {
+func (x *AccessibleHypertextInterface) OverrideGetLink(cb func(AccessibleHypertext, uint) *AccessibleHyperlink) {
 	if cb == nil {
 		x.xGetLink = 0
 	} else {
-		x.xGetLink = purego.NewCallback(func(SelfVarp uintptr, IndexVarp uint32) uintptr {
+		x.xGetLink = purego.NewCallback(func(SelfVarp uintptr, IndexVarp uint) uintptr {
 			ret := cb(&AccessibleHypertextBase{Ptr: SelfVarp}, IndexVarp)
 			if ret == nil {
 				return 0
@@ -77,13 +77,13 @@ func (x *AccessibleHypertextInterface) OverrideGetLink(cb func(AccessibleHyperte
 }
 
 // GetGetLink gets the "get_link" callback function.
-func (x *AccessibleHypertextInterface) GetGetLink() func(AccessibleHypertext, uint32) *AccessibleHyperlink {
+func (x *AccessibleHypertextInterface) GetGetLink() func(AccessibleHypertext, uint) *AccessibleHyperlink {
 	if x.xGetLink == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, IndexVarp uint32) uintptr
+	var rawCallback func(SelfVarp uintptr, IndexVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetLink)
-	return func(SelfVar AccessibleHypertext, IndexVar uint32) *AccessibleHyperlink {
+	return func(SelfVar AccessibleHypertext, IndexVar uint) *AccessibleHyperlink {
 		rawRet := rawCallback(SelfVar.GoPointer(), IndexVar)
 		if rawRet == 0 {
 			return nil
@@ -95,24 +95,24 @@ func (x *AccessibleHypertextInterface) GetGetLink() func(AccessibleHypertext, ui
 }
 
 // OverrideGetLinkAt sets the "get_link_at" callback function.
-func (x *AccessibleHypertextInterface) OverrideGetLinkAt(cb func(AccessibleHypertext, uint32) uint32) {
+func (x *AccessibleHypertextInterface) OverrideGetLinkAt(cb func(AccessibleHypertext, uint) uint) {
 	if cb == nil {
 		x.xGetLinkAt = 0
 	} else {
-		x.xGetLinkAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint32) uint32 {
+		x.xGetLinkAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint) uint {
 			return cb(&AccessibleHypertextBase{Ptr: SelfVarp}, OffsetVarp)
 		})
 	}
 }
 
 // GetGetLinkAt gets the "get_link_at" callback function.
-func (x *AccessibleHypertextInterface) GetGetLinkAt() func(AccessibleHypertext, uint32) uint32 {
+func (x *AccessibleHypertextInterface) GetGetLinkAt() func(AccessibleHypertext, uint) uint {
 	if x.xGetLinkAt == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, OffsetVarp uint32) uint32
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint) uint
 	purego.RegisterFunc(&rawCallback, x.xGetLinkAt)
-	return func(SelfVar AccessibleHypertext, OffsetVar uint32) uint32 {
+	return func(SelfVar AccessibleHypertext, OffsetVar uint) uint {
 		return rawCallback(SelfVar.GoPointer(), OffsetVar)
 	}
 }
@@ -169,13 +169,13 @@ func AccessibleHyperlinkNewFromInternalPtr(ptr uintptr) *AccessibleHyperlink {
 	return cls
 }
 
-var xNewAccessibleHyperlink func(uintptr, uint32, string, *AccessibleTextRange) uintptr
+var xNewAccessibleHyperlink func(uintptr, uint, string, *AccessibleTextRange) uintptr
 
 // Creates an accessible object that represents a hyperlink.
 //
 // This is meant to be used with an implementation of the
 // [iface@Gtk.AccessibleHypertext] interface.
-func NewAccessibleHyperlink(ParentVar AccessibleHypertext, IndexVar uint32, UriVar string, BoundsVar *AccessibleTextRange) *AccessibleHyperlink {
+func NewAccessibleHyperlink(ParentVar AccessibleHypertext, IndexVar uint, UriVar string, BoundsVar *AccessibleTextRange) *AccessibleHyperlink {
 	var cls *AccessibleHyperlink
 
 	cret := xNewAccessibleHyperlink(ParentVar.GoPointer(), IndexVar, UriVar, BoundsVar)
@@ -272,7 +272,7 @@ func (x *AccessibleHyperlink) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AccessibleHyperlink) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *AccessibleHyperlink) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -388,7 +388,7 @@ func (x *AccessibleHyperlink) UpdateProperty(FirstPropertyVar AccessibleProperty
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AccessibleHyperlink) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *AccessibleHyperlink) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -420,7 +420,7 @@ func (x *AccessibleHyperlink) UpdateRelation(FirstRelationVar AccessibleRelation
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AccessibleHyperlink) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *AccessibleHyperlink) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -453,7 +453,7 @@ func (x *AccessibleHyperlink) UpdateState(FirstStateVar AccessibleState, varArgs
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AccessibleHyperlink) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *AccessibleHyperlink) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

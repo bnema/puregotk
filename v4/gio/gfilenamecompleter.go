@@ -199,7 +199,7 @@ func (c *FilenameCompleter) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when the file name completion information comes available.
-func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)) uint32 {
+func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)

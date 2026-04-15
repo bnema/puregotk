@@ -31,27 +31,27 @@ type TextIter struct {
 
 	Dummy2 uintptr
 
-	Dummy3 int32
+	Dummy3 int
 
-	Dummy4 int32
+	Dummy4 int
 
-	Dummy5 int32
+	Dummy5 int
 
-	Dummy6 int32
+	Dummy6 int
 
-	Dummy7 int32
+	Dummy7 int
 
-	Dummy8 int32
+	Dummy8 int
 
 	Dummy9 uintptr
 
 	Dummy10 uintptr
 
-	Dummy11 int32
+	Dummy11 int
 
-	Dummy12 int32
+	Dummy12 int
 
-	Dummy13 int32
+	Dummy13 int
 
 	Dummy14 uintptr
 }
@@ -90,7 +90,7 @@ func (x *TextIter) BackwardChar() bool {
 	return cret
 }
 
-var xTextIterBackwardChars func(uintptr, int32) bool
+var xTextIterBackwardChars func(uintptr, int) bool
 
 // Moves @count characters backward, if possible.
 //
@@ -101,7 +101,7 @@ var xTextIterBackwardChars func(uintptr, int32) bool
 // onto a dereferenceable position; if the iterator didn’t move, or
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE.
-func (x *TextIter) BackwardChars(CountVar int32) bool {
+func (x *TextIter) BackwardChars(CountVar int) bool {
 	cret := xTextIterBackwardChars(x.GoPointer(), CountVar)
 	return cret
 }
@@ -114,12 +114,12 @@ func (x *TextIter) BackwardCursorPosition() bool {
 	return cret
 }
 
-var xTextIterBackwardCursorPositions func(uintptr, int32) bool
+var xTextIterBackwardCursorPositions func(uintptr, int) bool
 
 // Moves up to @count cursor positions.
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
-func (x *TextIter) BackwardCursorPositions(CountVar int32) bool {
+func (x *TextIter) BackwardCursorPositions(CountVar int) bool {
 	cret := xTextIterBackwardCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -149,7 +149,7 @@ func (x *TextIter) BackwardLine() bool {
 	return cret
 }
 
-var xTextIterBackwardLines func(uintptr, int32) bool
+var xTextIterBackwardLines func(uintptr, int) bool
 
 // Moves @count lines backward, if possible.
 //
@@ -161,7 +161,7 @@ var xTextIterBackwardLines func(uintptr, int32) bool
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves forward by 0 - @count lines.
-func (x *TextIter) BackwardLines(CountVar int32) bool {
+func (x *TextIter) BackwardLines(CountVar int) bool {
 	cret := xTextIterBackwardLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -191,12 +191,12 @@ func (x *TextIter) BackwardSentenceStart() bool {
 	return cret
 }
 
-var xTextIterBackwardSentenceStarts func(uintptr, int32) bool
+var xTextIterBackwardSentenceStarts func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.backward_sentence_start] up to @count times.
 //
 // If @count is negative, moves forward instead of backward.
-func (x *TextIter) BackwardSentenceStarts(CountVar int32) bool {
+func (x *TextIter) BackwardSentenceStarts(CountVar int) bool {
 	cret := xTextIterBackwardSentenceStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -227,12 +227,12 @@ func (x *TextIter) BackwardVisibleCursorPosition() bool {
 	return cret
 }
 
-var xTextIterBackwardVisibleCursorPositions func(uintptr, int32) bool
+var xTextIterBackwardVisibleCursorPositions func(uintptr, int) bool
 
 // Moves up to @count visible cursor positions.
 //
 // See [method@Gtk.TextIter.backward_cursor_position] for details.
-func (x *TextIter) BackwardVisibleCursorPositions(CountVar int32) bool {
+func (x *TextIter) BackwardVisibleCursorPositions(CountVar int) bool {
 	cret := xTextIterBackwardVisibleCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -253,7 +253,7 @@ func (x *TextIter) BackwardVisibleLine() bool {
 	return cret
 }
 
-var xTextIterBackwardVisibleLines func(uintptr, int32) bool
+var xTextIterBackwardVisibleLines func(uintptr, int) bool
 
 // Moves @count visible lines backward, if possible.
 //
@@ -265,7 +265,7 @@ var xTextIterBackwardVisibleLines func(uintptr, int32) bool
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves forward by 0 - @count lines.
-func (x *TextIter) BackwardVisibleLines(CountVar int32) bool {
+func (x *TextIter) BackwardVisibleLines(CountVar int) bool {
 	cret := xTextIterBackwardVisibleLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -284,10 +284,10 @@ func (x *TextIter) BackwardVisibleWordStart() bool {
 	return cret
 }
 
-var xTextIterBackwardVisibleWordStarts func(uintptr, int32) bool
+var xTextIterBackwardVisibleWordStarts func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.backward_visible_word_start] up to @count times.
-func (x *TextIter) BackwardVisibleWordStarts(CountVar int32) bool {
+func (x *TextIter) BackwardVisibleWordStarts(CountVar int) bool {
 	cret := xTextIterBackwardVisibleWordStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -306,10 +306,10 @@ func (x *TextIter) BackwardWordStart() bool {
 	return cret
 }
 
-var xTextIterBackwardWordStarts func(uintptr, int32) bool
+var xTextIterBackwardWordStarts func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.backward_word_start] up to @count times.
-func (x *TextIter) BackwardWordStarts(CountVar int32) bool {
+func (x *TextIter) BackwardWordStarts(CountVar int) bool {
 	cret := xTextIterBackwardWordStarts(x.GoPointer(), CountVar)
 	return cret
 }
@@ -329,14 +329,14 @@ func (x *TextIter) CanInsert(DefaultEditabilityVar bool) bool {
 	return cret
 }
 
-var xTextIterCompare func(uintptr, *TextIter) int32
+var xTextIterCompare func(uintptr, *TextIter) int
 
 // A qsort()-style function that returns negative if @lhs is less than
 // @rhs, positive if @lhs is greater than @rhs, and 0 if they’re equal.
 //
 // Ordering is in character offset order, i.e. the first character
 // in the buffer is less than the second character in the buffer.
-func (x *TextIter) Compare(RhsVar *TextIter) int32 {
+func (x *TextIter) Compare(RhsVar *TextIter) int {
 	cret := xTextIterCompare(x.GoPointer(), RhsVar)
 	return cret
 }
@@ -463,7 +463,7 @@ func (x *TextIter) ForwardChar() bool {
 	return cret
 }
 
-var xTextIterForwardChars func(uintptr, int32) bool
+var xTextIterForwardChars func(uintptr, int) bool
 
 // Moves @count characters if possible.
 //
@@ -474,7 +474,7 @@ var xTextIterForwardChars func(uintptr, int32) bool
 // @iter is different from its original position, and dereferenceable
 // (the last iterator in the buffer is not dereferenceable). If @count
 // is 0, the function does nothing and returns %FALSE.
-func (x *TextIter) ForwardChars(CountVar int32) bool {
+func (x *TextIter) ForwardChars(CountVar int) bool {
 	cret := xTextIterForwardChars(x.GoPointer(), CountVar)
 	return cret
 }
@@ -501,12 +501,12 @@ func (x *TextIter) ForwardCursorPosition() bool {
 	return cret
 }
 
-var xTextIterForwardCursorPositions func(uintptr, int32) bool
+var xTextIterForwardCursorPositions func(uintptr, int) bool
 
 // Moves up to @count cursor positions.
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
-func (x *TextIter) ForwardCursorPositions(CountVar int32) bool {
+func (x *TextIter) ForwardCursorPositions(CountVar int) bool {
 	cret := xTextIterForwardCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -536,7 +536,7 @@ func (x *TextIter) ForwardLine() bool {
 	return cret
 }
 
-var xTextIterForwardLines func(uintptr, int32) bool
+var xTextIterForwardLines func(uintptr, int) bool
 
 // Moves @count lines forward, if possible.
 //
@@ -548,7 +548,7 @@ var xTextIterForwardLines func(uintptr, int32) bool
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves backward by 0 - @count lines.
-func (x *TextIter) ForwardLines(CountVar int32) bool {
+func (x *TextIter) ForwardLines(CountVar int) bool {
 	cret := xTextIterForwardLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -584,12 +584,12 @@ func (x *TextIter) ForwardSentenceEnd() bool {
 	return cret
 }
 
-var xTextIterForwardSentenceEnds func(uintptr, int32) bool
+var xTextIterForwardSentenceEnds func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.forward_sentence_end] @count times.
 //
 // If @count is negative, moves backward instead of forward.
-func (x *TextIter) ForwardSentenceEnds(CountVar int32) bool {
+func (x *TextIter) ForwardSentenceEnds(CountVar int) bool {
 	cret := xTextIterForwardSentenceEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -649,12 +649,12 @@ func (x *TextIter) ForwardVisibleCursorPosition() bool {
 	return cret
 }
 
-var xTextIterForwardVisibleCursorPositions func(uintptr, int32) bool
+var xTextIterForwardVisibleCursorPositions func(uintptr, int) bool
 
 // Moves up to @count visible cursor positions.
 //
 // See [method@Gtk.TextIter.forward_cursor_position] for details.
-func (x *TextIter) ForwardVisibleCursorPositions(CountVar int32) bool {
+func (x *TextIter) ForwardVisibleCursorPositions(CountVar int) bool {
 	cret := xTextIterForwardVisibleCursorPositions(x.GoPointer(), CountVar)
 	return cret
 }
@@ -672,7 +672,7 @@ func (x *TextIter) ForwardVisibleLine() bool {
 	return cret
 }
 
-var xTextIterForwardVisibleLines func(uintptr, int32) bool
+var xTextIterForwardVisibleLines func(uintptr, int) bool
 
 // Moves @count visible lines forward, if possible.
 //
@@ -684,7 +684,7 @@ var xTextIterForwardVisibleLines func(uintptr, int32) bool
 // moved onto the end iterator, then %FALSE is returned. If @count is 0,
 // the function does nothing and returns %FALSE. If @count is negative,
 // moves backward by 0 - @count lines.
-func (x *TextIter) ForwardVisibleLines(CountVar int32) bool {
+func (x *TextIter) ForwardVisibleLines(CountVar int) bool {
 	cret := xTextIterForwardVisibleLines(x.GoPointer(), CountVar)
 	return cret
 }
@@ -703,10 +703,10 @@ func (x *TextIter) ForwardVisibleWordEnd() bool {
 	return cret
 }
 
-var xTextIterForwardVisibleWordEnds func(uintptr, int32) bool
+var xTextIterForwardVisibleWordEnds func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.forward_visible_word_end] up to @count times.
-func (x *TextIter) ForwardVisibleWordEnds(CountVar int32) bool {
+func (x *TextIter) ForwardVisibleWordEnds(CountVar int) bool {
 	cret := xTextIterForwardVisibleWordEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -725,10 +725,10 @@ func (x *TextIter) ForwardWordEnd() bool {
 	return cret
 }
 
-var xTextIterForwardWordEnds func(uintptr, int32) bool
+var xTextIterForwardWordEnds func(uintptr, int) bool
 
 // Calls [method@Gtk.TextIter.forward_word_end] up to @count times.
-func (x *TextIter) ForwardWordEnds(CountVar int32) bool {
+func (x *TextIter) ForwardWordEnds(CountVar int) bool {
 	cret := xTextIterForwardWordEnds(x.GoPointer(), CountVar)
 	return cret
 }
@@ -761,11 +761,11 @@ func (x *TextIter) GetBuffer() *TextBuffer {
 	return cls
 }
 
-var xTextIterGetBytesInLine func(uintptr) int32
+var xTextIterGetBytesInLine func(uintptr) int
 
 // Returns the number of bytes in the line containing @iter,
 // including the paragraph delimiters.
-func (x *TextIter) GetBytesInLine() int32 {
+func (x *TextIter) GetBytesInLine() int {
 	cret := xTextIterGetBytesInLine(x.GoPointer())
 	return cret
 }
@@ -786,11 +786,11 @@ func (x *TextIter) GetChar() uint32 {
 	return cret
 }
 
-var xTextIterGetCharsInLine func(uintptr) int32
+var xTextIterGetCharsInLine func(uintptr) int
 
 // Returns the number of characters in the line containing @iter,
 // including the paragraph delimiters.
-func (x *TextIter) GetCharsInLine() int32 {
+func (x *TextIter) GetCharsInLine() int {
 	cret := xTextIterGetCharsInLine(x.GoPointer())
 	return cret
 }
@@ -829,18 +829,18 @@ func (x *TextIter) GetLanguage() *pango.Language {
 	return (*pango.Language)(unsafe.Pointer(cret))
 }
 
-var xTextIterGetLine func(uintptr) int32
+var xTextIterGetLine func(uintptr) int
 
 // Returns the line number containing the iterator.
 //
 // Lines in a `GtkTextBuffer` are numbered beginning
 // with 0 for the first line in the buffer.
-func (x *TextIter) GetLine() int32 {
+func (x *TextIter) GetLine() int {
 	cret := xTextIterGetLine(x.GoPointer())
 	return cret
 }
 
-var xTextIterGetLineIndex func(uintptr) int32
+var xTextIterGetLineIndex func(uintptr) int
 
 // Returns the byte index of the iterator, counting
 // from the start of a newline-terminated line.
@@ -848,18 +848,18 @@ var xTextIterGetLineIndex func(uintptr) int32
 // Remember that `GtkTextBuffer` encodes text in
 // UTF-8, and that characters can require a variable
 // number of bytes to represent.
-func (x *TextIter) GetLineIndex() int32 {
+func (x *TextIter) GetLineIndex() int {
 	cret := xTextIterGetLineIndex(x.GoPointer())
 	return cret
 }
 
-var xTextIterGetLineOffset func(uintptr) int32
+var xTextIterGetLineOffset func(uintptr) int
 
 // Returns the character offset of the iterator,
 // counting from the start of a newline-terminated line.
 //
 // The first character on the line has offset 0.
-func (x *TextIter) GetLineOffset() int32 {
+func (x *TextIter) GetLineOffset() int {
 	cret := xTextIterGetLineOffset(x.GoPointer())
 	return cret
 }
@@ -881,7 +881,7 @@ func (x *TextIter) GetMarks() *glib.SList {
 	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xTextIterGetOffset func(uintptr) int32
+var xTextIterGetOffset func(uintptr) int
 
 // Returns the character offset of an iterator.
 //
@@ -889,7 +889,7 @@ var xTextIterGetOffset func(uintptr) int32
 // starting with 0 for the first character in the buffer.
 // Use [method@Gtk.TextBuffer.get_iter_at_offset] to convert
 // an offset back into an iterator.
-func (x *TextIter) GetOffset() int32 {
+func (x *TextIter) GetOffset() int {
 	cret := xTextIterGetOffset(x.GoPointer())
 	return cret
 }
@@ -979,24 +979,24 @@ func (x *TextIter) GetToggledTags(ToggledOnVar bool) *glib.SList {
 	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xTextIterGetVisibleLineIndex func(uintptr) int32
+var xTextIterGetVisibleLineIndex func(uintptr) int
 
 // Returns the number of bytes from the start of the
 // line to the given @iter, not counting bytes that
 // are invisible due to tags with the “invisible” flag
 // toggled on.
-func (x *TextIter) GetVisibleLineIndex() int32 {
+func (x *TextIter) GetVisibleLineIndex() int {
 	cret := xTextIterGetVisibleLineIndex(x.GoPointer())
 	return cret
 }
 
-var xTextIterGetVisibleLineOffset func(uintptr) int32
+var xTextIterGetVisibleLineOffset func(uintptr) int
 
 // Returns the offset in characters from the start of the
 // line to the given @iter, not counting characters that
 // are invisible due to tags with the “invisible” flag
 // toggled on.
-func (x *TextIter) GetVisibleLineOffset() int32 {
+func (x *TextIter) GetVisibleLineOffset() int {
 	cret := xTextIterGetVisibleLineOffset(x.GoPointer())
 	return cret
 }
@@ -1125,27 +1125,27 @@ func (x *TextIter) Order(SecondVar *TextIter) {
 	xTextIterOrder(x.GoPointer(), SecondVar)
 }
 
-var xTextIterSetLine func(uintptr, int32)
+var xTextIterSetLine func(uintptr, int)
 
 // Moves iterator @iter to the start of the line @line_number.
 //
 // If @line_number is negative or larger than or equal to the number of lines
 // in the buffer, moves @iter to the start of the last line in the buffer.
-func (x *TextIter) SetLine(LineNumberVar int32) {
+func (x *TextIter) SetLine(LineNumberVar int) {
 	xTextIterSetLine(x.GoPointer(), LineNumberVar)
 }
 
-var xTextIterSetLineIndex func(uintptr, int32)
+var xTextIterSetLineIndex func(uintptr, int)
 
 // Same as [method@Gtk.TextIter.set_line_offset], but works with a
 // byte index. The given byte index must be at
 // the start of a character, it can’t be in the middle of a UTF-8
 // encoded character.
-func (x *TextIter) SetLineIndex(ByteOnLineVar int32) {
+func (x *TextIter) SetLineIndex(ByteOnLineVar int) {
 	xTextIterSetLineIndex(x.GoPointer(), ByteOnLineVar)
 }
 
-var xTextIterSetLineOffset func(uintptr, int32)
+var xTextIterSetLineOffset func(uintptr, int)
 
 // Moves @iter within a line, to a new character (not byte) offset.
 //
@@ -1153,35 +1153,35 @@ var xTextIterSetLineOffset func(uintptr, int32)
 // of characters in the line; if equal, @iter moves to the start of the
 // next line. See [method@Gtk.TextIter.set_line_index] if you have a byte
 // index rather than a character offset.
-func (x *TextIter) SetLineOffset(CharOnLineVar int32) {
+func (x *TextIter) SetLineOffset(CharOnLineVar int) {
 	xTextIterSetLineOffset(x.GoPointer(), CharOnLineVar)
 }
 
-var xTextIterSetOffset func(uintptr, int32)
+var xTextIterSetOffset func(uintptr, int)
 
 // Sets @iter to point to @char_offset.
 //
 // @char_offset counts from the start
 // of the entire text buffer, starting with 0.
-func (x *TextIter) SetOffset(CharOffsetVar int32) {
+func (x *TextIter) SetOffset(CharOffsetVar int) {
 	xTextIterSetOffset(x.GoPointer(), CharOffsetVar)
 }
 
-var xTextIterSetVisibleLineIndex func(uintptr, int32)
+var xTextIterSetVisibleLineIndex func(uintptr, int)
 
 // Like [method@Gtk.TextIter.set_line_index], but the index is in visible
 // bytes, i.e. text with a tag making it invisible is not counted
 // in the index.
-func (x *TextIter) SetVisibleLineIndex(ByteOnLineVar int32) {
+func (x *TextIter) SetVisibleLineIndex(ByteOnLineVar int) {
 	xTextIterSetVisibleLineIndex(x.GoPointer(), ByteOnLineVar)
 }
 
-var xTextIterSetVisibleLineOffset func(uintptr, int32)
+var xTextIterSetVisibleLineOffset func(uintptr, int)
 
 // Like [method@Gtk.TextIter.set_line_offset], but the offset is in visible
 // characters, i.e. text with a tag making it invisible is not
 // counted in the offset.
-func (x *TextIter) SetVisibleLineOffset(CharOnLineVar int32) {
+func (x *TextIter) SetVisibleLineOffset(CharOnLineVar int) {
 	xTextIterSetVisibleLineOffset(x.GoPointer(), CharOnLineVar)
 }
 

@@ -78,10 +78,10 @@ func SpinRowNewFromInternalPtr(ptr uintptr) *SpinRow {
 	return cls
 }
 
-var xNewSpinRow func(uintptr, float64, uint32) uintptr
+var xNewSpinRow func(uintptr, float64, uint) uintptr
 
 // Creates a new `AdwSpinRow`.
-func NewSpinRow(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint32) *SpinRow {
+func NewSpinRow(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint) *SpinRow {
 	var cls *SpinRow
 
 	cret := xNewSpinRow(AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
@@ -123,13 +123,13 @@ func NewSpinRowWithRange(MinVar float64, MaxVar float64, StepVar float64) *SpinR
 	return cls
 }
 
-var xSpinRowConfigure func(uintptr, uintptr, float64, uint32)
+var xSpinRowConfigure func(uintptr, uintptr, float64, uint)
 
 // Changes the properties of an existing spin row.
 //
 // The adjustment, climb rate, and number of decimal places are updated
 // accordingly.
-func (x *SpinRow) Configure(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint32) {
+func (x *SpinRow) Configure(AdjustmentVar *gtk.Adjustment, ClimbRateVar float64, DigitsVar uint) {
 	xSpinRowConfigure(x.GoPointer(), AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
 }
 
@@ -158,10 +158,10 @@ func (x *SpinRow) GetClimbRate() float64 {
 	return cret
 }
 
-var xSpinRowGetDigits func(uintptr) uint32
+var xSpinRowGetDigits func(uintptr) uint
 
 // Gets the number of decimal places to display.
-func (x *SpinRow) GetDigits() uint32 {
+func (x *SpinRow) GetDigits() uint {
 	cret := xSpinRowGetDigits(x.GoPointer())
 	return cret
 }
@@ -220,10 +220,10 @@ func (x *SpinRow) SetClimbRate(ClimbRateVar float64) {
 	xSpinRowSetClimbRate(x.GoPointer(), ClimbRateVar)
 }
 
-var xSpinRowSetDigits func(uintptr, uint32)
+var xSpinRowSetDigits func(uintptr, uint)
 
 // Sets the number of decimal places to display.
-func (x *SpinRow) SetDigits(DigitsVar uint32) {
+func (x *SpinRow) SetDigits(DigitsVar uint) {
 	xSpinRowSetDigits(x.GoPointer(), DigitsVar)
 }
 
@@ -311,19 +311,19 @@ func (x *SpinRow) GetPropertyClimbRate() float64 {
 
 // SetPropertyDigits sets the "digits" property.
 // The number of decimal places to display.
-func (x *SpinRow) SetPropertyDigits(value uint32) {
+func (x *SpinRow) SetPropertyDigits(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("digits", &v)
 }
 
 // GetPropertyDigits gets the "digits" property.
 // The number of decimal places to display.
-func (x *SpinRow) GetPropertyDigits() uint32 {
+func (x *SpinRow) GetPropertyDigits() uint {
 	var v gobject.Value
 	x.GetProperty("digits", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyNumeric sets the "numeric" property.
@@ -402,7 +402,7 @@ func (x *SpinRow) GetPropertyWrap() bool {
 // The default conversion uses [func@GLib.strtod].
 //
 // See [signal@Gtk.SpinButton::input].
-func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
+func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
@@ -410,7 +410,7 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, NewValueVarp *float64) int32 {
+	fcb := func(clsPtr uintptr, NewValueVarp *float64) int {
 		fa := SpinRow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -427,7 +427,7 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int32) uint32 {
 // Emitted to tweak the formatting of the value for display.
 //
 // See [signal@Gtk.SpinButton::output].
-func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
+func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
@@ -452,7 +452,7 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 // Emitted right after the spinbutton wraps.
 //
 // See [signal@Gtk.SpinButton::wrapped].
-func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
+func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
@@ -540,7 +540,7 @@ func (x *SpinRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SpinRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *SpinRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -656,7 +656,7 @@ func (x *SpinRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SpinRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *SpinRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -688,7 +688,7 @@ func (x *SpinRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SpinRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *SpinRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -721,7 +721,7 @@ func (x *SpinRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *SpinRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *SpinRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -753,8 +753,11 @@ func (x *SpinRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *SpinRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *SpinRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.
@@ -866,7 +869,7 @@ func (x *SpinRow) DeleteSelection() {
 // the end of the text.
 //
 // Note that the positions are specified in characters, not bytes.
-func (x *SpinRow) DeleteText(StartPosVar int32, EndPosVar int32) {
+func (x *SpinRow) DeleteText(StartPosVar int, EndPosVar int) {
 	gtk.XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -892,7 +895,7 @@ func (x *SpinRow) GetAlignment() float32 {
 // the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SpinRow) GetChars(StartPosVar int32, EndPosVar int32) string {
+func (x *SpinRow) GetChars(StartPosVar int, EndPosVar int) string {
 	cret := gtk.XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -928,7 +931,7 @@ func (x *SpinRow) GetEnableUndo() bool {
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
-func (x *SpinRow) GetMaxWidthChars() int32 {
+func (x *SpinRow) GetMaxWidthChars() int {
 	cret := gtk.XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -937,7 +940,7 @@ func (x *SpinRow) GetMaxWidthChars() int32 {
 // to the start of the content of the editable.
 //
 // Note that this position is in characters, not in bytes.
-func (x *SpinRow) GetPosition() int32 {
+func (x *SpinRow) GetPosition() int {
 	cret := gtk.XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -949,7 +952,7 @@ func (x *SpinRow) GetPosition() int32 {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SpinRow) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
+func (x *SpinRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -964,7 +967,7 @@ func (x *SpinRow) GetText() string {
 
 // Gets the number of characters of space reserved
 // for the contents of the editable.
-func (x *SpinRow) GetWidthChars() int32 {
+func (x *SpinRow) GetWidthChars() int {
 	cret := gtk.XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -986,7 +989,7 @@ func (x *SpinRow) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *SpinRow) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
+func (x *SpinRow) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 	gtk.XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 }
 
@@ -998,7 +1001,7 @@ func (x *SpinRow) InsertText(TextVar string, LengthVar int32, PositionVar *int32
 // @start_pos to  the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SpinRow) SelectRegion(StartPosVar int32, EndPosVar int32) {
+func (x *SpinRow) SelectRegion(StartPosVar int, EndPosVar int) {
 	gtk.XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -1026,7 +1029,7 @@ func (x *SpinRow) SetEnableUndo(EnableUndoVar bool) {
 }
 
 // Sets the desired maximum width in characters of @editable.
-func (x *SpinRow) SetMaxWidthChars(NCharsVar int32) {
+func (x *SpinRow) SetMaxWidthChars(NCharsVar int) {
 	gtk.XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
 }
 
@@ -1037,7 +1040,7 @@ func (x *SpinRow) SetMaxWidthChars(NCharsVar int32) {
 // or equal to the number of characters in the editable. A value of -1
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
-func (x *SpinRow) SetPosition(PositionVar int32) {
+func (x *SpinRow) SetPosition(PositionVar int) {
 	gtk.XGtkEditableSetPosition(x.GoPointer(), PositionVar)
 }
 
@@ -1054,7 +1057,7 @@ func (x *SpinRow) SetText(TextVar string) {
 // Note that it changes the size request, the size can still
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
-func (x *SpinRow) SetWidthChars(NCharsVar int32) {
+func (x *SpinRow) SetWidthChars(NCharsVar int) {
 	gtk.XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
 }
 

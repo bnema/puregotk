@@ -109,7 +109,7 @@ func (x *FilterListModel) GetModel() *gio.ListModelBase {
 	return cls
 }
 
-var xFilterListModelGetPending func(uintptr) uint32
+var xFilterListModelGetPending func(uintptr) uint
 
 // Returns the number of items that have not been filtered yet.
 //
@@ -127,7 +127,7 @@ var xFilterListModelGetPending func(uintptr) uint32
 // If no filter operation is ongoing - in particular when
 // [property@Gtk.FilterListModel:incremental] is %FALSE - this
 // function returns 0.
-func (x *FilterListModel) GetPending() uint32 {
+func (x *FilterListModel) GetPending() uint {
 	cret := xFilterListModelGetPending(x.GoPointer())
 	return cret
 }
@@ -226,18 +226,18 @@ func (x *FilterListModel) GetPropertyIncremental() bool {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *FilterListModel) GetPropertyNItems() uint32 {
+func (x *FilterListModel) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyPending gets the "pending" property.
 // Number of items not yet filtered.
-func (x *FilterListModel) GetPropertyPending() uint32 {
+func (x *FilterListModel) GetPropertyPending() uint {
 	var v gobject.Value
 	x.GetProperty("pending", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyWatchItems sets the "watch-items" property.
@@ -266,7 +266,7 @@ func (x *FilterListModel) GetPropertyWatchItems() bool {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *FilterListModel) GetItem(PositionVar uint32) uintptr {
+func (x *FilterListModel) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -289,7 +289,7 @@ func (x *FilterListModel) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *FilterListModel) GetNItems() uint32 {
+func (x *FilterListModel) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -306,7 +306,7 @@ func (x *FilterListModel) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *FilterListModel) GetObject(PositionVar uint32) *gobject.Object {
+func (x *FilterListModel) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -339,7 +339,7 @@ func (x *FilterListModel) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *FilterListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *FilterListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
@@ -348,7 +348,7 @@ func (x *FilterListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, Ad
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *FilterListModel) GetSection(PositionVar uint32, OutStartVar *uint32, OutEndVar *uint32) {
+func (x *FilterListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 }
 
@@ -367,7 +367,7 @@ func (x *FilterListModel) GetSection(PositionVar uint32, OutStartVar *uint32, Ou
 // in a larger range, that the larger range is included in the emission
 // of the [signal@Gio.ListModel::items-changed] instead of emitting
 // two signals.
-func (x *FilterListModel) SectionsChanged(PositionVar uint32, NItemsVar uint32) {
+func (x *FilterListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 

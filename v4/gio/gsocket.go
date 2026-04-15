@@ -400,7 +400,7 @@ func NewSocket(FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar SocketPro
 	return cls, cerr
 }
 
-var xNewSocketFromFd func(int32, **glib.Error) uintptr
+var xNewSocketFromFd func(int, **glib.Error) uintptr
 
 // Creates a new #GSocket from a native file descriptor
 // or winsock SOCKET handle.
@@ -415,7 +415,7 @@ var xNewSocketFromFd func(int32, **glib.Error) uintptr
 //
 // Since GLib 2.46, it is no longer a fatal error to call this on a non-socket
 // descriptor.  Instead, a GError will be set with code %G_IO_ERROR_FAILED
-func NewSocketFromFd(FdVar int32) (*Socket, error) {
+func NewSocketFromFd(FdVar int) (*Socket, error) {
 	var cls *Socket
 	var cerr *glib.Error
 
@@ -786,14 +786,14 @@ func (x *Socket) GetFamily() SocketFamily {
 	return cret
 }
 
-var xSocketGetFd func(uintptr) int32
+var xSocketGetFd func(uintptr) int
 
 // Returns the underlying OS socket object. On unix this
 // is a socket file descriptor, and on Windows this is
 // a Winsock2 SOCKET handle. This may be useful for
 // doing platform specific or otherwise unusual operations
 // on the socket.
-func (x *Socket) GetFd() int32 {
+func (x *Socket) GetFd() int {
 	cret := xSocketGetFd(x.GoPointer())
 	return cret
 }
@@ -807,11 +807,11 @@ func (x *Socket) GetKeepalive() bool {
 	return cret
 }
 
-var xSocketGetListenBacklog func(uintptr) int32
+var xSocketGetListenBacklog func(uintptr) int
 
 // Gets the listen backlog setting of the socket. For details on this,
 // see g_socket_set_listen_backlog().
-func (x *Socket) GetListenBacklog() int32 {
+func (x *Socket) GetListenBacklog() int {
 	cret := xSocketGetListenBacklog(x.GoPointer())
 	return cret
 }
@@ -848,16 +848,16 @@ func (x *Socket) GetMulticastLoopback() bool {
 	return cret
 }
 
-var xSocketGetMulticastTtl func(uintptr) uint32
+var xSocketGetMulticastTtl func(uintptr) uint
 
 // Gets the multicast time-to-live setting on @socket; see
 // g_socket_set_multicast_ttl() for more details.
-func (x *Socket) GetMulticastTtl() uint32 {
+func (x *Socket) GetMulticastTtl() uint {
 	cret := xSocketGetMulticastTtl(x.GoPointer())
 	return cret
 }
 
-var xSocketGetOption func(uintptr, int32, int32, *int32, **glib.Error) bool
+var xSocketGetOption func(uintptr, int, int, *int, **glib.Error) bool
 
 // Gets the value of an integer-valued option on @socket, as with
 // getsockopt(). (If you need to fetch a  non-integer-valued option,
@@ -872,7 +872,7 @@ var xSocketGetOption func(uintptr, int32, int32, *int32, **glib.Error) bool
 // Note that even for socket options that are a single byte in size,
 // @value is still a pointer to a #gint variable, not a #guchar;
 // g_socket_get_option() will handle the conversion internally.
-func (x *Socket) GetOption(LevelVar int32, OptnameVar int32, ValueVar *int32) (bool, error) {
+func (x *Socket) GetOption(LevelVar int, OptnameVar int, ValueVar *int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketGetOption(x.GoPointer(), LevelVar, OptnameVar, ValueVar, &cerr)
@@ -920,20 +920,20 @@ func (x *Socket) GetSocketType() SocketType {
 	return cret
 }
 
-var xSocketGetTimeout func(uintptr) uint32
+var xSocketGetTimeout func(uintptr) uint
 
 // Gets the timeout setting of the socket. For details on this, see
 // g_socket_set_timeout().
-func (x *Socket) GetTimeout() uint32 {
+func (x *Socket) GetTimeout() uint {
 	cret := xSocketGetTimeout(x.GoPointer())
 	return cret
 }
 
-var xSocketGetTtl func(uintptr) uint32
+var xSocketGetTtl func(uintptr) uint
 
 // Gets the unicast time-to-live setting on @socket; see
 // g_socket_set_ttl() for more details.
-func (x *Socket) GetTtl() uint32 {
+func (x *Socket) GetTtl() uint {
 	cret := xSocketGetTtl(x.GoPointer())
 	return cret
 }
@@ -960,7 +960,7 @@ func (x *Socket) IsConnected() bool {
 	return cret
 }
 
-var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error) bool
+var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error) bool
 
 // Registers @socket to receive multicast messages sent to @group.
 // @socket must be a %G_SOCKET_TYPE_DATAGRAM socket, and must have
@@ -976,17 +976,20 @@ var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error)
 //
 // To bind to a given source-specific multicast address, use
 // g_socket_join_multicast_group_ssm() instead.
-func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar string) (bool, error) {
+func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketJoinMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVar, &cerr)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
+
+	cret := xSocketJoinMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.Error) bool
+var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
 
 // Registers @socket to receive multicast messages sent to @group.
 // @socket must be a %G_SOCKET_TYPE_DATAGRAM socket, and must have
@@ -1003,17 +1006,20 @@ var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.
 // Note that this function can be called multiple times for the same
 // @group with different @source_specific in order to receive multicast
 // packets from more than one source.
-func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar string) (bool, error) {
+func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVar, &cerr)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
+
+	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error) bool
+var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error) bool
 
 // Removes @socket from the multicast group defined by @group, @iface,
 // and @source_specific (which must all have the same values they had
@@ -1024,17 +1030,20 @@ var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error
 //
 // To unbind to a given source-specific multicast address, use
 // g_socket_leave_multicast_group_ssm() instead.
-func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar string) (bool, error) {
+func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketLeaveMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVar, &cerr)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
+
+	cret := xSocketLeaveMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.Error) bool
+var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
 
 // Removes @socket from the multicast group defined by @group, @iface,
 // and @source_specific (which must all have the same values they had
@@ -1042,10 +1051,13 @@ var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib
 //
 // @socket remains bound to its address and port, and can still receive
 // unicast messages after calling this.
-func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar string) (bool, error) {
+func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVar, &cerr)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
+
+	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1179,7 +1191,7 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, Size
 	return cret, cerr
 }
 
-var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int32, *uintptr, *int32, *int32, uintptr, **glib.Error) int
+var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *uintptr, *int, *int, uintptr, **glib.Error) int
 
 // Receive data from a socket.  For receiving multiple messages, see
 // g_socket_receive_messages(); for easier use, see
@@ -1240,7 +1252,7 @@ var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int32, *
 // %G_IO_IN condition.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int32, MessagesVar *uintptr, NumMessagesVar *int32, FlagsVar *int32, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar *uintptr, NumMessagesVar *int, FlagsVar *int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
@@ -1250,7 +1262,7 @@ func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVe
 	return cret, cerr
 }
 
-var xSocketReceiveMessages func(uintptr, []InputMessage, uint32, int32, uintptr, **glib.Error) int32
+var xSocketReceiveMessages func(uintptr, []InputMessage, uint, int, uintptr, **glib.Error) int
 
 // Receive multiple data messages from @socket in one go.  This is the most
 // complicated and fully-featured version of this call. For easier use, see
@@ -1300,7 +1312,7 @@ var xSocketReceiveMessages func(uintptr, []InputMessage, uint32, int32, uintptr,
 // On error -1 is returned and @error is set accordingly. An error will only
 // be returned if zero messages could be received; otherwise the number of
 // messages successfully received before the error will be returned.
-func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint32, FlagsVar int32, CancellableVar *Cancellable) (int32, error) {
+func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
@@ -1351,7 +1363,7 @@ func (x *Socket) Send(BufferVar []byte, SizeVar uint, CancellableVar *Cancellabl
 	return cret, cerr
 }
 
-var xSocketSendMessage func(uintptr, uintptr, []OutputVector, int32, uintptr, int32, int32, uintptr, **glib.Error) int
+var xSocketSendMessage func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, uintptr, **glib.Error) int
 
 // Send data to @address on @socket.  For sending multiple messages see
 // g_socket_send_messages(); for easier use, see
@@ -1395,7 +1407,7 @@ var xSocketSendMessage func(uintptr, uintptr, []OutputVector, int32, uintptr, in
 // function.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int32, MessagesVar uintptr, NumMessagesVar int32, FlagsVar int32, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketSendMessage(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
@@ -1405,7 +1417,7 @@ func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVecto
 	return cret, cerr
 }
 
-var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int32, uintptr, int32, int32, int64, *uint, uintptr, **glib.Error) PollableReturn
+var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, int64, *uint, uintptr, **glib.Error) PollableReturn
 
 // This behaves exactly the same as g_socket_send_message(), except that
 // the choice of timeout behavior is determined by the @timeout_us argument
@@ -1414,7 +1426,7 @@ var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int32, 
 // On error %G_POLLABLE_RETURN_FAILED is returned and @error is set accordingly, or
 // if the socket is currently not writable %G_POLLABLE_RETURN_WOULD_BLOCK is
 // returned. @bytes_written will contain 0 in both cases.
-func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int32, MessagesVar uintptr, NumMessagesVar int32, FlagsVar int32, TimeoutUsVar int64, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
+func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, TimeoutUsVar int64, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
 	cret := xSocketSendMessageWithTimeout(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, TimeoutUsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -1424,7 +1436,7 @@ func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []
 	return cret, cerr
 }
 
-var xSocketSendMessages func(uintptr, []OutputMessage, uint32, int32, uintptr, **glib.Error) int32
+var xSocketSendMessages func(uintptr, []OutputMessage, uint, int, uintptr, **glib.Error) int
 
 // Send multiple data messages from @socket in one go.  This is the most
 // complicated and fully-featured version of this call. For easier use, see
@@ -1460,7 +1472,7 @@ var xSocketSendMessages func(uintptr, []OutputMessage, uint32, int32, uintptr, *
 // On error -1 is returned and @error is set accordingly. An error will only
 // be returned if zero messages could be sent; otherwise the number of messages
 // successfully sent before the error will be returned.
-func (x *Socket) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint32, FlagsVar int32, CancellableVar *Cancellable) (int32, error) {
+func (x *Socket) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
@@ -1546,7 +1558,7 @@ func (x *Socket) SetKeepalive(KeepaliveVar bool) {
 	xSocketSetKeepalive(x.GoPointer(), KeepaliveVar)
 }
 
-var xSocketSetListenBacklog func(uintptr, int32)
+var xSocketSetListenBacklog func(uintptr, int)
 
 // Sets the maximum number of outstanding connections allowed
 // when listening on this socket. If more clients than this are
@@ -1555,7 +1567,7 @@ var xSocketSetListenBacklog func(uintptr, int32)
 //
 // Note that this must be called before g_socket_listen() and has no
 // effect if called after that.
-func (x *Socket) SetListenBacklog(BacklogVar int32) {
+func (x *Socket) SetListenBacklog(BacklogVar int) {
 	xSocketSetListenBacklog(x.GoPointer(), BacklogVar)
 }
 
@@ -1568,16 +1580,16 @@ func (x *Socket) SetMulticastLoopback(LoopbackVar bool) {
 	xSocketSetMulticastLoopback(x.GoPointer(), LoopbackVar)
 }
 
-var xSocketSetMulticastTtl func(uintptr, uint32)
+var xSocketSetMulticastTtl func(uintptr, uint)
 
 // Sets the time-to-live for outgoing multicast datagrams on @socket.
 // By default, this is 1, meaning that multicast packets will not leave
 // the local network.
-func (x *Socket) SetMulticastTtl(TtlVar uint32) {
+func (x *Socket) SetMulticastTtl(TtlVar uint) {
 	xSocketSetMulticastTtl(x.GoPointer(), TtlVar)
 }
 
-var xSocketSetOption func(uintptr, int32, int32, int32, **glib.Error) bool
+var xSocketSetOption func(uintptr, int, int, int, **glib.Error) bool
 
 // Sets the value of an integer-valued option on @socket, as with
 // setsockopt(). (If you need to set a non-integer-valued option,
@@ -1588,7 +1600,7 @@ var xSocketSetOption func(uintptr, int32, int32, int32, **glib.Error) bool
 // standard/portable socket options. For unusual socket protocols or
 // platform-dependent options, you may need to include additional
 // headers.
-func (x *Socket) SetOption(LevelVar int32, OptnameVar int32, ValueVar int32) (bool, error) {
+func (x *Socket) SetOption(LevelVar int, OptnameVar int, ValueVar int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketSetOption(x.GoPointer(), LevelVar, OptnameVar, ValueVar, &cerr)
@@ -1598,7 +1610,7 @@ func (x *Socket) SetOption(LevelVar int32, OptnameVar int32, ValueVar int32) (bo
 	return cret, cerr
 }
 
-var xSocketSetTimeout func(uintptr, uint32)
+var xSocketSetTimeout func(uintptr, uint)
 
 // Sets the time in seconds after which I/O operations on @socket will
 // time out if they have not yet completed.
@@ -1620,15 +1632,15 @@ var xSocketSetTimeout func(uintptr, uint32)
 //
 // Note that if an I/O operation is interrupted by a signal, this may
 // cause the timeout to be reset.
-func (x *Socket) SetTimeout(TimeoutVar uint32) {
+func (x *Socket) SetTimeout(TimeoutVar uint) {
 	xSocketSetTimeout(x.GoPointer(), TimeoutVar)
 }
 
-var xSocketSetTtl func(uintptr, uint32)
+var xSocketSetTtl func(uintptr, uint)
 
 // Sets the time-to-live for outgoing unicast packets on @socket.
 // By default the platform-specific default value is used.
-func (x *Socket) SetTtl(TtlVar uint32) {
+func (x *Socket) SetTtl(TtlVar uint) {
 	xSocketSetTtl(x.GoPointer(), TtlVar)
 }
 
@@ -1721,19 +1733,19 @@ func (x *Socket) GetPropertyBroadcast() bool {
 
 // SetPropertyFd sets the "fd" property.
 // The socket’s file descriptor.
-func (x *Socket) SetPropertyFd(value int32) {
+func (x *Socket) SetPropertyFd(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("fd", &v)
 }
 
 // GetPropertyFd gets the "fd" property.
 // The socket’s file descriptor.
-func (x *Socket) GetPropertyFd() int32 {
+func (x *Socket) GetPropertyFd() int {
 	var v gobject.Value
 	x.GetProperty("fd", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyKeepalive sets the "keepalive" property.
@@ -1755,19 +1767,19 @@ func (x *Socket) GetPropertyKeepalive() bool {
 
 // SetPropertyListenBacklog sets the "listen-backlog" property.
 // The number of outstanding connections in the listen queue.
-func (x *Socket) SetPropertyListenBacklog(value int32) {
+func (x *Socket) SetPropertyListenBacklog(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("listen-backlog", &v)
 }
 
 // GetPropertyListenBacklog gets the "listen-backlog" property.
 // The number of outstanding connections in the listen queue.
-func (x *Socket) GetPropertyListenBacklog() int32 {
+func (x *Socket) GetPropertyListenBacklog() int {
 	var v gobject.Value
 	x.GetProperty("listen-backlog", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyMulticastLoopback sets the "multicast-loopback" property.
@@ -1789,53 +1801,53 @@ func (x *Socket) GetPropertyMulticastLoopback() bool {
 
 // SetPropertyMulticastTtl sets the "multicast-ttl" property.
 // Time-to-live out outgoing multicast packets
-func (x *Socket) SetPropertyMulticastTtl(value uint32) {
+func (x *Socket) SetPropertyMulticastTtl(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("multicast-ttl", &v)
 }
 
 // GetPropertyMulticastTtl gets the "multicast-ttl" property.
 // Time-to-live out outgoing multicast packets
-func (x *Socket) GetPropertyMulticastTtl() uint32 {
+func (x *Socket) GetPropertyMulticastTtl() uint {
 	var v gobject.Value
 	x.GetProperty("multicast-ttl", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTimeout sets the "timeout" property.
 // The timeout in seconds on socket I/O
-func (x *Socket) SetPropertyTimeout(value uint32) {
+func (x *Socket) SetPropertyTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("timeout", &v)
 }
 
 // GetPropertyTimeout gets the "timeout" property.
 // The timeout in seconds on socket I/O
-func (x *Socket) GetPropertyTimeout() uint32 {
+func (x *Socket) GetPropertyTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTtl sets the "ttl" property.
 // Time-to-live for outgoing unicast packets
-func (x *Socket) SetPropertyTtl(value uint32) {
+func (x *Socket) SetPropertyTtl(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("ttl", &v)
 }
 
 // GetPropertyTtl gets the "ttl" property.
 // Time-to-live for outgoing unicast packets
-func (x *Socket) GetPropertyTtl() uint32 {
+func (x *Socket) GetPropertyTtl() uint {
 	var v gobject.Value
 	x.GetProperty("ttl", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Initializes the object implementing the interface.

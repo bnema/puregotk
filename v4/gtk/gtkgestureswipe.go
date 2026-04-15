@@ -90,7 +90,7 @@ func (c *GestureSwipe) SetGoPointer(ptr uintptr) {
 // Emitted when the recognized gesture is finished.
 //
 // Velocity and direction are a product of previously recorded events.
-func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint32 {
+func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)

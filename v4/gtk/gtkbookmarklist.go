@@ -46,13 +46,19 @@ func BookmarkListNewFromInternalPtr(ptr uintptr) *BookmarkList {
 	return cls
 }
 
-var xNewBookmarkList func(string, string) uintptr
+var xNewBookmarkList func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkBookmarkList` with the given @attributes.
-func NewBookmarkList(FilenameVar string, AttributesVar string) *BookmarkList {
+func NewBookmarkList(FilenameVar *string, AttributesVar *string) *BookmarkList {
 	var cls *BookmarkList
 
-	cret := xNewBookmarkList(FilenameVar, AttributesVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
+
+	cret := xNewBookmarkList(FilenameVarPtr, AttributesVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -79,10 +85,10 @@ func (x *BookmarkList) GetFilename() string {
 	return cret
 }
 
-var xBookmarkListGetIoPriority func(uintptr) int32
+var xBookmarkListGetIoPriority func(uintptr) int
 
 // Gets the IO priority to use while loading file.
-func (x *BookmarkList) GetIoPriority() int32 {
+func (x *BookmarkList) GetIoPriority() int {
 	cret := xBookmarkListGetIoPriority(x.GoPointer())
 	return cret
 }
@@ -99,22 +105,25 @@ func (x *BookmarkList) IsLoading() bool {
 	return cret
 }
 
-var xBookmarkListSetAttributes func(uintptr, string)
+var xBookmarkListSetAttributes func(uintptr, uintptr)
 
 // Sets the @attributes to be enumerated and starts the enumeration.
 //
 // If @attributes is %NULL, no attributes will be queried, but a list
 // of `GFileInfo`s will still be created.
-func (x *BookmarkList) SetAttributes(AttributesVar string) {
-	xBookmarkListSetAttributes(x.GoPointer(), AttributesVar)
+func (x *BookmarkList) SetAttributes(AttributesVar *string) {
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
+
+	xBookmarkListSetAttributes(x.GoPointer(), AttributesVarPtr)
 }
 
-var xBookmarkListSetIoPriority func(uintptr, int32)
+var xBookmarkListSetIoPriority func(uintptr, int)
 
 // Sets the IO priority to use while loading files.
 //
 // The default IO priority is %G_PRIORITY_DEFAULT.
-func (x *BookmarkList) SetIoPriority(IoPriorityVar int32) {
+func (x *BookmarkList) SetIoPriority(IoPriorityVar int) {
 	xBookmarkListSetIoPriority(x.GoPointer(), IoPriorityVar)
 }
 
@@ -134,7 +143,7 @@ func (c *BookmarkList) SetGoPointer(ptr uintptr) {
 func (x *BookmarkList) SetPropertyAttributes(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("attributes", &v)
 }
 
@@ -151,7 +160,7 @@ func (x *BookmarkList) GetPropertyAttributes() string {
 func (x *BookmarkList) SetPropertyFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("filename", &v)
 }
 
@@ -165,19 +174,19 @@ func (x *BookmarkList) GetPropertyFilename() string {
 
 // SetPropertyIoPriority sets the "io-priority" property.
 // Priority used when loading.
-func (x *BookmarkList) SetPropertyIoPriority(value int32) {
+func (x *BookmarkList) SetPropertyIoPriority(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("io-priority", &v)
 }
 
 // GetPropertyIoPriority gets the "io-priority" property.
 // Priority used when loading.
-func (x *BookmarkList) GetPropertyIoPriority() int32 {
+func (x *BookmarkList) GetPropertyIoPriority() int {
 	var v gobject.Value
 	x.GetProperty("io-priority", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyLoading gets the "loading" property.
@@ -190,10 +199,10 @@ func (x *BookmarkList) GetPropertyLoading() bool {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *BookmarkList) GetPropertyNItems() uint32 {
+func (x *BookmarkList) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -205,7 +214,7 @@ func (x *BookmarkList) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *BookmarkList) GetItem(PositionVar uint32) uintptr {
+func (x *BookmarkList) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -228,7 +237,7 @@ func (x *BookmarkList) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *BookmarkList) GetNItems() uint32 {
+func (x *BookmarkList) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -245,7 +254,7 @@ func (x *BookmarkList) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *BookmarkList) GetObject(PositionVar uint32) *gobject.Object {
+func (x *BookmarkList) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -278,7 +287,7 @@ func (x *BookmarkList) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *BookmarkList) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *BookmarkList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

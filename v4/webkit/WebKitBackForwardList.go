@@ -81,10 +81,10 @@ func (x *BackForwardList) GetBackList() *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xBackForwardListGetBackListWithLimit func(uintptr, uint32) uintptr
+var xBackForwardListGetBackListWithLimit func(uintptr, uint) uintptr
 
 // Obtain a list up to some number of items preceding the current one.
-func (x *BackForwardList) GetBackListWithLimit(LimitVar uint32) *glib.List {
+func (x *BackForwardList) GetBackListWithLimit(LimitVar uint) *glib.List {
 	cret := xBackForwardListGetBackListWithLimit(x.GoPointer(), LimitVar)
 	if cret == 0 {
 		return nil
@@ -137,10 +137,10 @@ func (x *BackForwardList) GetForwardList() *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xBackForwardListGetForwardListWithLimit func(uintptr, uint32) uintptr
+var xBackForwardListGetForwardListWithLimit func(uintptr, uint) uintptr
 
 // Obtain a list up to some number of items following the current one.
-func (x *BackForwardList) GetForwardListWithLimit(LimitVar uint32) *glib.List {
+func (x *BackForwardList) GetForwardListWithLimit(LimitVar uint) *glib.List {
 	cret := xBackForwardListGetForwardListWithLimit(x.GoPointer(), LimitVar)
 	if cret == 0 {
 		return nil
@@ -148,18 +148,18 @@ func (x *BackForwardList) GetForwardListWithLimit(LimitVar uint32) *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xBackForwardListGetLength func(uintptr) uint32
+var xBackForwardListGetLength func(uintptr) uint
 
 // Obtain the amount of items in the list.
-func (x *BackForwardList) GetLength() uint32 {
+func (x *BackForwardList) GetLength() uint {
 	cret := xBackForwardListGetLength(x.GoPointer())
 	return cret
 }
 
-var xBackForwardListGetNthItem func(uintptr, int32) uintptr
+var xBackForwardListGetNthItem func(uintptr, int) uintptr
 
 // Returns the item at a given index relative to the current item.
-func (x *BackForwardList) GetNthItem(IndexVar int32) *BackForwardListItem {
+func (x *BackForwardList) GetNthItem(IndexVar int) *BackForwardListItem {
 	var cls *BackForwardListItem
 
 	cret := xBackForwardListGetNthItem(x.GoPointer(), IndexVar)
@@ -189,7 +189,7 @@ func (c *BackForwardList) SetGoPointer(ptr uintptr) {
 // items are removed. Note that both @item_added and @items_removed can
 // %NULL when only the current item is updated. Items are only removed
 // when the list is cleared or the maximum items limit is reached.
-func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uintptr)) uint32 {
+func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

@@ -326,7 +326,7 @@ func (x *Display) ListSeats() *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xDisplayMapKeycode func(uintptr, uint32, *uintptr, *[]uint32, *int32) bool
+var xDisplayMapKeycode func(uintptr, uint, *uintptr, *[]uint, *int) bool
 
 // Returns the keyvals bound to @keycode.
 //
@@ -337,12 +337,12 @@ var xDisplayMapKeycode func(uintptr, uint32, *uintptr, *[]uint32, *int32) bool
 // keyboard group and level.
 //
 // Free the returned arrays with g_free().
-func (x *Display) MapKeycode(KeycodeVar uint32, KeysVar *uintptr, KeyvalsVar *[]uint32, NEntriesVar *int32) bool {
+func (x *Display) MapKeycode(KeycodeVar uint, KeysVar *uintptr, KeyvalsVar *[]uint, NEntriesVar *int) bool {
 	cret := xDisplayMapKeycode(x.GoPointer(), KeycodeVar, KeysVar, KeyvalsVar, NEntriesVar)
 	return cret
 }
 
-var xDisplayMapKeyval func(uintptr, uint32, *uintptr, *int32) bool
+var xDisplayMapKeyval func(uintptr, uint, *uintptr, *int) bool
 
 // Obtains a list of keycode/group/level combinations that will
 // generate @keyval.
@@ -359,7 +359,7 @@ var xDisplayMapKeyval func(uintptr, uint32, *uintptr, *int32) bool
 // keyboard group. The level is computed from the modifier mask.
 //
 // The returned array should be freed with g_free().
-func (x *Display) MapKeyval(KeyvalVar uint32, KeysVar *uintptr, NKeysVar *int32) bool {
+func (x *Display) MapKeyval(KeyvalVar uint, KeysVar *uintptr, NKeysVar *int) bool {
 	cret := xDisplayMapKeyval(x.GoPointer(), KeyvalVar, KeysVar, NKeysVar)
 	return cret
 }
@@ -450,7 +450,7 @@ func (x *Display) Sync() {
 	xDisplaySync(x.GoPointer())
 }
 
-var xDisplayTranslateKey func(uintptr, uint32, ModifierType, int32, *uint32, *int32, *int32, *ModifierType) bool
+var xDisplayTranslateKey func(uintptr, uint, ModifierType, int, *uint, *int, *int, *ModifierType) bool
 
 // Translates the contents of a `GdkEventKey` into a keyval, effective group,
 // and level.
@@ -471,7 +471,7 @@ var xDisplayTranslateKey func(uintptr, uint32, ModifierType, int32, *uint32, *in
 // This function should rarely be needed, since `GdkEventKey` already
 // contains the translated keyval. It is exported for the benefit of
 // virtualized test environments.
-func (x *Display) TranslateKey(KeycodeVar uint32, StateVar ModifierType, GroupVar int32, KeyvalVar *uint32, EffectiveGroupVar *int32, LevelVar *int32, ConsumedVar *ModifierType) bool {
+func (x *Display) TranslateKey(KeycodeVar uint, StateVar ModifierType, GroupVar int, KeyvalVar *uint, EffectiveGroupVar *int, LevelVar *int, ConsumedVar *ModifierType) bool {
 	cret := xDisplayTranslateKey(x.GoPointer(), KeycodeVar, StateVar, GroupVar, KeyvalVar, EffectiveGroupVar, LevelVar, ConsumedVar)
 	return cret
 }
@@ -528,7 +528,7 @@ func (x *Display) GetPropertyShadowWidth() bool {
 }
 
 // Emitted when the connection to the windowing system for @display is closed.
-func (x *Display) ConnectClosed(cb *func(Display, bool)) uint32 {
+func (x *Display) ConnectClosed(cb *func(Display, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -551,7 +551,7 @@ func (x *Display) ConnectClosed(cb *func(Display, bool)) uint32 {
 }
 
 // Emitted when the connection to the windowing system for @display is opened.
-func (x *Display) ConnectOpened(cb *func(Display)) uint32 {
+func (x *Display) ConnectOpened(cb *func(Display)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "opened", cbRefPtr)
@@ -574,7 +574,7 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint32 {
 }
 
 // Emitted whenever a new seat is made known to the windowing system.
-func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint32 {
+func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-added", cbRefPtr)
@@ -597,7 +597,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint32 {
 }
 
 // Emitted whenever a seat is removed by the windowing system.
-func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint32 {
+func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "seat-removed", cbRefPtr)
@@ -620,7 +620,7 @@ func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint32 {
 }
 
 // Emitted whenever a setting changes its value.
-func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint32 {
+func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "setting-changed", cbRefPtr)
@@ -663,15 +663,18 @@ func DisplayGetDefault() *Display {
 	return cls
 }
 
-var xDisplayOpen func(string) uintptr
+var xDisplayOpen func(uintptr) uintptr
 
 // Opens a display.
 //
 // If opening the display fails, `NULL` is returned.
-func DisplayOpen(DisplayNameVar string) *Display {
+func DisplayOpen(DisplayNameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayOpen(DisplayNameVar)
+	DisplayNameVarPtr := core.GStrdupNullable(DisplayNameVar)
+	defer core.GFreeNullable(DisplayNameVarPtr)
+
+	cret := xDisplayOpen(DisplayNameVarPtr)
 
 	if cret == 0 {
 		return nil

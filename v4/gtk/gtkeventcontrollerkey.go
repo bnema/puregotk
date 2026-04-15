@@ -67,12 +67,12 @@ func (x *EventControllerKey) Forward(WidgetVar *Widget) bool {
 	return cret
 }
 
-var xEventControllerKeyGetGroup func(uintptr) uint32
+var xEventControllerKeyGetGroup func(uintptr) uint
 
 // Gets the key group of the current event of this @controller.
 //
 // See [method@Gdk.KeyEvent.get_layout].
-func (x *EventControllerKey) GetGroup() uint32 {
+func (x *EventControllerKey) GetGroup() uint {
 	cret := xEventControllerKeyGetGroup(x.GoPointer())
 	return cret
 }
@@ -117,7 +117,7 @@ func (c *EventControllerKey) SetGoPointer(ptr uintptr) {
 //
 // See [method@Gtk.EventControllerKey.set_im_context] and
 // [method@Gtk.IMContext.filter_keypress].
-func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint32 {
+func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
@@ -140,7 +140,7 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint3
 }
 
 // Emitted whenever a key is pressed.
-func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint32, uint32, gdk.ModifierType) bool) uint32 {
+func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint, uint, gdk.ModifierType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
@@ -148,7 +148,7 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeyvalVarp uint32, KeycodeVarp uint32, StateVarp gdk.ModifierType) bool {
+	fcb := func(clsPtr uintptr, KeyvalVarp uint, KeycodeVarp uint, StateVarp gdk.ModifierType) bool {
 		fa := EventControllerKey{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -163,7 +163,7 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 }
 
 // Emitted whenever a key is released.
-func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uint32, uint32, gdk.ModifierType)) uint32 {
+func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uint, uint, gdk.ModifierType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
@@ -171,7 +171,7 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeyvalVarp uint32, KeycodeVarp uint32, StateVarp gdk.ModifierType) {
+	fcb := func(clsPtr uintptr, KeyvalVarp uint, KeycodeVarp uint, StateVarp gdk.ModifierType) {
 		fa := EventControllerKey{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -186,7 +186,7 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 }
 
 // Emitted whenever the state of modifier keys and pointer buttons change.
-func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.ModifierType) bool) uint32 {
+func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.ModifierType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)

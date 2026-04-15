@@ -89,10 +89,10 @@ func (x *MemoryPressureSettings) GetKillThreshold() float64 {
 	return cret
 }
 
-var xMemoryPressureSettingsGetMemoryLimit func(uintptr) uint32
+var xMemoryPressureSettingsGetMemoryLimit func(uintptr) uint
 
 // Gets the memory usage limit.
-func (x *MemoryPressureSettings) GetMemoryLimit() uint32 {
+func (x *MemoryPressureSettings) GetMemoryLimit() uint {
 	cret := xMemoryPressureSettingsGetMemoryLimit(x.GoPointer())
 	return cret
 }
@@ -139,12 +139,12 @@ func (x *MemoryPressureSettings) SetKillThreshold(ValueVar float64) {
 	xMemoryPressureSettingsSetKillThreshold(x.GoPointer(), ValueVar)
 }
 
-var xMemoryPressureSettingsSetMemoryLimit func(uintptr, uint32)
+var xMemoryPressureSettingsSetMemoryLimit func(uintptr, uint)
 
 // Sets @memory_limit the memory limit value to @settings.
 //
 // The default value is the system's RAM size with a maximum of 3GB.
-func (x *MemoryPressureSettings) SetMemoryLimit(MemoryLimitVar uint32) {
+func (x *MemoryPressureSettings) SetMemoryLimit(MemoryLimitVar uint) {
 	xMemoryPressureSettingsSetMemoryLimit(x.GoPointer(), MemoryLimitVar)
 }
 

@@ -120,12 +120,12 @@ func (x *ListItem) GetItem() *gobject.Object {
 	return cls
 }
 
-var xListItemGetPosition func(uintptr) uint32
+var xListItemGetPosition func(uintptr) uint
 
 // Gets the position in the model that @self currently displays.
 //
 // If @self is unbound, `GTK_INVALID_LIST_POSITION` is returned.
-func (x *ListItem) GetPosition() uint32 {
+func (x *ListItem) GetPosition() uint {
 	cret := xListItemGetPosition(x.GoPointer())
 	return cret
 }
@@ -245,7 +245,7 @@ func (c *ListItem) SetGoPointer(ptr uintptr) {
 func (x *ListItem) SetPropertyAccessibleDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-description", &v)
 }
 
@@ -262,7 +262,7 @@ func (x *ListItem) GetPropertyAccessibleDescription() string {
 func (x *ListItem) SetPropertyAccessibleLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-label", &v)
 }
 
@@ -310,10 +310,10 @@ func (x *ListItem) GetPropertyFocusable() bool {
 
 // GetPropertyPosition gets the "position" property.
 // Position of the item.
-func (x *ListItem) GetPropertyPosition() uint32 {
+func (x *ListItem) GetPropertyPosition() uint {
 	var v gobject.Value
 	x.GetProperty("position", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertySelectable sets the "selectable" property.

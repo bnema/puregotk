@@ -25,7 +25,7 @@ const (
 	// Indicates an [class@Animation] with an infinite duration.
 	//
 	// This value is mostly used internally.
-	DURATION_INFINITE uint32 = 4294967295
+	DURATION_INFINITE uint = 4294967295
 )
 
 // Describes the possible states of an [class@Animation].
@@ -329,7 +329,7 @@ func (x *Animation) GetPropertyValue() float64 {
 
 // This signal is emitted when the animation has been completed, either on its
 // own or via calling [method@Animation.skip].
-func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {
+func (x *Animation) ConnectDone(cb *func(Animation)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)

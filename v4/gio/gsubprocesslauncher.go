@@ -154,7 +154,7 @@ func (x *SubprocessLauncher) SetFlags(FlagsVar SubprocessFlags) {
 	xSubprocessLauncherSetFlags(x.GoPointer(), FlagsVar)
 }
 
-var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
+var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stderr for spawned processes.
 //
@@ -170,11 +170,14 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stderr elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStderrFilePath(PathVar string) {
-	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVar)
+func (x *SubprocessLauncher) SetStderrFilePath(PathVar *string) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVarPtr)
 }
 
-var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdin for spawned processes.
 //
@@ -186,11 +189,14 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
 // the launcher flags contain any flags directing stdin elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdinFilePath(PathVar string) {
-	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVar)
+func (x *SubprocessLauncher) SetStdinFilePath(PathVar *string) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVarPtr)
 }
 
-var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdout for spawned processes.
 //
@@ -203,8 +209,11 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stdout elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdoutFilePath(PathVar string) {
-	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVar)
+func (x *SubprocessLauncher) SetStdoutFilePath(PathVar *string) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVarPtr)
 }
 
 var xSubprocessLauncherSetenv func(uintptr, string, string, bool)
@@ -255,7 +264,7 @@ func (x *SubprocessLauncher) Spawnv(ArgvVar []string) (*Subprocess, error) {
 	return cls, cerr
 }
 
-var xSubprocessLauncherTakeFd func(uintptr, int32, int32)
+var xSubprocessLauncherTakeFd func(uintptr, int, int)
 
 // Transfer an arbitrary file descriptor from parent process to the
 // child.  This function takes ownership of the @source_fd; it will be closed
@@ -269,11 +278,11 @@ var xSubprocessLauncherTakeFd func(uintptr, int32, int32)
 // An example use case is GNUPG, which has a command line argument
 // `--passphrase-fd` providing a file descriptor number where it expects
 // the passphrase to be written.
-func (x *SubprocessLauncher) TakeFd(SourceFdVar int32, TargetFdVar int32) {
+func (x *SubprocessLauncher) TakeFd(SourceFdVar int, TargetFdVar int) {
 	xSubprocessLauncherTakeFd(x.GoPointer(), SourceFdVar, TargetFdVar)
 }
 
-var xSubprocessLauncherTakeStderrFd func(uintptr, int32)
+var xSubprocessLauncherTakeStderrFd func(uintptr, int)
 
 // Sets the file descriptor to use as the stderr for spawned processes.
 //
@@ -291,11 +300,11 @@ var xSubprocessLauncherTakeStderrFd func(uintptr, int32)
 // if the launcher flags contain any flags directing stderr elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) TakeStderrFd(FdVar int32) {
+func (x *SubprocessLauncher) TakeStderrFd(FdVar int) {
 	xSubprocessLauncherTakeStderrFd(x.GoPointer(), FdVar)
 }
 
-var xSubprocessLauncherTakeStdinFd func(uintptr, int32)
+var xSubprocessLauncherTakeStdinFd func(uintptr, int)
 
 // Sets the file descriptor to use as the stdin for spawned processes.
 //
@@ -315,11 +324,11 @@ var xSubprocessLauncherTakeStdinFd func(uintptr, int32)
 // the launcher flags contain any flags directing stdin elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) TakeStdinFd(FdVar int32) {
+func (x *SubprocessLauncher) TakeStdinFd(FdVar int) {
 	xSubprocessLauncherTakeStdinFd(x.GoPointer(), FdVar)
 }
 
-var xSubprocessLauncherTakeStdoutFd func(uintptr, int32)
+var xSubprocessLauncherTakeStdoutFd func(uintptr, int)
 
 // Sets the file descriptor to use as the stdout for spawned processes.
 //
@@ -338,7 +347,7 @@ var xSubprocessLauncherTakeStdoutFd func(uintptr, int32)
 // if the launcher flags contain any flags directing stdout elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) TakeStdoutFd(FdVar int32) {
+func (x *SubprocessLauncher) TakeStdoutFd(FdVar int) {
 	xSubprocessLauncherTakeStdoutFd(x.GoPointer(), FdVar)
 }
 

@@ -42,7 +42,7 @@ func (x *IConv) GIconv(InbufVar string, InbytesLeftVar *uint, OutbufVar string, 
 	return cret
 }
 
-var xIConvClose func(uintptr) int32
+var xIConvClose func(uintptr) int
 
 // Same as the standard UNIX routine iconv_close(), but
 // may be implemented via libiconv on UNIX flavors that lack
@@ -52,7 +52,7 @@ var xIConvClose func(uintptr) int32
 //
 // GLib provides g_convert() and g_locale_to_utf8() which are likely
 // more convenient than the raw iconv wrappers.
-func (x *IConv) Close() int32 {
+func (x *IConv) Close() int {
 	cret := xIConvClose(x.GoPointer())
 	return cret
 }
@@ -257,14 +257,17 @@ func FilenameFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, Byte
 	return cret, cerr
 }
 
-var xFilenameToUri func(string, string, **Error) string
+var xFilenameToUri func(string, uintptr, **Error) string
 
 // Converts an absolute filename to an escaped ASCII-encoded URI, with the path
 // component following Section 3.3. of RFC 2396.
-func FilenameToUri(FilenameVar string, HostnameVar string) (string, error) {
+func FilenameToUri(FilenameVar string, HostnameVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xFilenameToUri(FilenameVar, HostnameVar, &cerr)
+	HostnameVarPtr := core.GStrdupNullable(HostnameVar)
+	defer core.GFreeNullable(HostnameVarPtr)
+
+	cret := xFilenameToUri(FilenameVar, HostnameVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

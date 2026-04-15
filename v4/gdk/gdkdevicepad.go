@@ -37,10 +37,10 @@ func (x *DevicePadInterface) GoPointer() uintptr {
 type DevicePad interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int32) int32
-	GetGroupNModes(GroupIdxVar int32) int32
-	GetNFeatures(FeatureVar DevicePadFeature) int32
-	GetNGroups() int32
+	GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int) int
+	GetGroupNModes(GroupIdxVar int) int
+	GetNFeatures(FeatureVar DevicePadFeature) int
+	GetNGroups() int
 }
 
 var xDevicePadGLibType func() types.GType
@@ -67,19 +67,19 @@ func (x *DevicePadBase) SetGoPointer(ptr uintptr) {
 // Returns the group the given @feature and @idx belong to.
 //
 // f the feature or index do not exist in @pad, -1 is returned.
-func (x *DevicePadBase) GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int32) int32 {
+func (x *DevicePadBase) GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int) int {
 	cret := XGdkDevicePadGetFeatureGroup(x.GoPointer(), FeatureVar, FeatureIdxVar)
 	return cret
 }
 
 // Returns the number of modes that @group may have.
-func (x *DevicePadBase) GetGroupNModes(GroupIdxVar int32) int32 {
+func (x *DevicePadBase) GetGroupNModes(GroupIdxVar int) int {
 	cret := XGdkDevicePadGetGroupNModes(x.GoPointer(), GroupIdxVar)
 	return cret
 }
 
 // Returns the number of features a tablet pad has.
-func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int32 {
+func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int {
 	cret := XGdkDevicePadGetNFeatures(x.GoPointer(), FeatureVar)
 	return cret
 }
@@ -89,16 +89,16 @@ func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int32 {
 // Pads have at least one group. A pad group is a subcollection of
 // buttons/strip/rings that is affected collectively by a same
 // current mode.
-func (x *DevicePadBase) GetNGroups() int32 {
+func (x *DevicePadBase) GetNGroups() int {
 	cret := XGdkDevicePadGetNGroups(x.GoPointer())
 	return cret
 }
 
 var (
-	XGdkDevicePadGetFeatureGroup func(uintptr, DevicePadFeature, int32) int32
-	XGdkDevicePadGetGroupNModes  func(uintptr, int32) int32
-	XGdkDevicePadGetNFeatures    func(uintptr, DevicePadFeature) int32
-	XGdkDevicePadGetNGroups      func(uintptr) int32
+	XGdkDevicePadGetFeatureGroup func(uintptr, DevicePadFeature, int) int
+	XGdkDevicePadGetGroupNModes  func(uintptr, int) int
+	XGdkDevicePadGetNFeatures    func(uintptr, DevicePadFeature) int
+	XGdkDevicePadGetNGroups      func(uintptr) int
 )
 
 // A pad feature.

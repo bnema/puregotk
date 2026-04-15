@@ -118,10 +118,10 @@ func (x *Monitor) GetGeometry(GeometryVar *Rectangle) {
 	xMonitorGetGeometry(x.GoPointer(), GeometryVar)
 }
 
-var xMonitorGetHeightMm func(uintptr) int32
+var xMonitorGetHeightMm func(uintptr) int
 
 // Gets the height in millimeters of the monitor.
-func (x *Monitor) GetHeightMm() int32 {
+func (x *Monitor) GetHeightMm() int {
 	cret := xMonitorGetHeightMm(x.GoPointer())
 	return cret
 }
@@ -148,13 +148,13 @@ func (x *Monitor) GetModel() string {
 	return cret
 }
 
-var xMonitorGetRefreshRate func(uintptr) int32
+var xMonitorGetRefreshRate func(uintptr) int
 
 // Gets the refresh rate of the monitor, if available.
 //
 // The value is in milli-Hertz, so a refresh rate of 60Hz
 // is returned as 60000.
-func (x *Monitor) GetRefreshRate() int32 {
+func (x *Monitor) GetRefreshRate() int {
 	cret := xMonitorGetRefreshRate(x.GoPointer())
 	return cret
 }
@@ -172,7 +172,7 @@ func (x *Monitor) GetScale() float64 {
 	return cret
 }
 
-var xMonitorGetScaleFactor func(uintptr) int32
+var xMonitorGetScaleFactor func(uintptr) int
 
 // Gets the internal scale factor that maps from monitor coordinates
 // to device pixels.
@@ -183,7 +183,7 @@ var xMonitorGetScaleFactor func(uintptr) int32
 // This can be used if you want to create pixel based data for a
 // particular monitor, but most of the time you’re drawing to a surface
 // where it is better to use [method@Gdk.Surface.get_scale_factor] instead.
-func (x *Monitor) GetScaleFactor() int32 {
+func (x *Monitor) GetScaleFactor() int {
 	cret := xMonitorGetScaleFactor(x.GoPointer())
 	return cret
 }
@@ -197,10 +197,10 @@ func (x *Monitor) GetSubpixelLayout() SubpixelLayout {
 	return cret
 }
 
-var xMonitorGetWidthMm func(uintptr) int32
+var xMonitorGetWidthMm func(uintptr) int
 
 // Gets the width in millimeters of the monitor.
-func (x *Monitor) GetWidthMm() int32 {
+func (x *Monitor) GetWidthMm() int {
 	cret := xMonitorGetWidthMm(x.GoPointer())
 	return cret
 }
@@ -254,10 +254,10 @@ func (x *Monitor) GetPropertyGeometry() uintptr {
 
 // GetPropertyHeightMm gets the "height-mm" property.
 // The height of the monitor, in millimeters.
-func (x *Monitor) GetPropertyHeightMm() int32 {
+func (x *Monitor) GetPropertyHeightMm() int {
 	var v gobject.Value
 	x.GetProperty("height-mm", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyManufacturer gets the "manufacturer" property.
@@ -278,10 +278,10 @@ func (x *Monitor) GetPropertyModel() string {
 
 // GetPropertyRefreshRate gets the "refresh-rate" property.
 // The refresh rate, in milli-Hertz.
-func (x *Monitor) GetPropertyRefreshRate() int32 {
+func (x *Monitor) GetPropertyRefreshRate() int {
 	var v gobject.Value
 	x.GetProperty("refresh-rate", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyScale gets the "scale" property.
@@ -297,10 +297,10 @@ func (x *Monitor) GetPropertyScale() float64 {
 //
 // The scale factor is the next larger integer,
 // compared to [property@Gdk.Surface:scale].
-func (x *Monitor) GetPropertyScaleFactor() int32 {
+func (x *Monitor) GetPropertyScaleFactor() int {
 	var v gobject.Value
 	x.GetProperty("scale-factor", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyValid gets the "valid" property.
@@ -313,14 +313,14 @@ func (x *Monitor) GetPropertyValid() bool {
 
 // GetPropertyWidthMm gets the "width-mm" property.
 // The width of the monitor, in millimeters.
-func (x *Monitor) GetPropertyWidthMm() int32 {
+func (x *Monitor) GetPropertyWidthMm() int {
 	var v gobject.Value
 	x.GetProperty("width-mm", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when the output represented by @monitor gets disconnected.
-func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint32 {
+func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "invalidate", cbRefPtr)

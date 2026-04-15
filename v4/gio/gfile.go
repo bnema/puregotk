@@ -268,11 +268,11 @@ func (x *FileIface) GetDup() func(File) *FileBase {
 
 // OverrideHash sets the "hash" callback function.
 // Creates a hash of a #GFile.
-func (x *FileIface) OverrideHash(cb func(File) uint32) {
+func (x *FileIface) OverrideHash(cb func(File) uint) {
 	if cb == nil {
 		x.xHash = 0
 	} else {
-		x.xHash = purego.NewCallback(func(FileVarp uintptr) uint32 {
+		x.xHash = purego.NewCallback(func(FileVarp uintptr) uint {
 			return cb(&FileBase{Ptr: FileVarp})
 		})
 	}
@@ -280,13 +280,13 @@ func (x *FileIface) OverrideHash(cb func(File) uint32) {
 
 // GetHash gets the "hash" callback function.
 // Creates a hash of a #GFile.
-func (x *FileIface) GetHash() func(File) uint32 {
+func (x *FileIface) GetHash() func(File) uint {
 	if x.xHash == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr) uint32
+	var rawCallback func(FileVarp uintptr) uint
 	purego.RegisterFunc(&rawCallback, x.xHash)
-	return func(FileVar File) uint32 {
+	return func(FileVar File) uint {
 		return rawCallback(FileVar.GoPointer())
 	}
 }
@@ -683,11 +683,11 @@ func (x *FileIface) GetEnumerateChildren() func(File, string, FileQueryInfoFlags
 
 // OverrideEnumerateChildrenAsync sets the "enumerate_children_async" callback function.
 // Asynchronously gets a #GFileEnumerator with the children of a #GFile.
-func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xEnumerateChildrenAsync = 0
 	} else {
-		x.xEnumerateChildrenAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xEnumerateChildrenAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -695,13 +695,13 @@ func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQue
 
 // GetEnumerateChildrenAsync gets the "enumerate_children_async" callback function.
 // Asynchronously gets a #GFileEnumerator with the children of a #GFile.
-func (x *FileIface) GetEnumerateChildrenAsync() func(File, string, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetEnumerateChildrenAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEnumerateChildrenAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xEnumerateChildrenAsync)
-	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -778,11 +778,11 @@ func (x *FileIface) GetQueryInfo() func(File, string, FileQueryInfoFlags, *Cance
 
 // OverrideQueryInfoAsync sets the "query_info_async" callback function.
 // Asynchronously gets the #GFileInfo for a #GFile.
-func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xQueryInfoAsync = 0
 	} else {
-		x.xQueryInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xQueryInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -790,13 +790,13 @@ func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFl
 
 // GetQueryInfoAsync gets the "query_info_async" callback function.
 // Asynchronously gets the #GFileInfo for a #GFile.
-func (x *FileIface) GetQueryInfoAsync() func(File, string, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetQueryInfoAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xQueryInfoAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xQueryInfoAsync)
-	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -873,11 +873,11 @@ func (x *FileIface) GetQueryFilesystemInfo() func(File, string, *Cancellable) *F
 
 // OverrideQueryFilesystemInfoAsync sets the "query_filesystem_info_async" callback function.
 // Asynchronously gets a #GFileInfo for the file system #GFile is on.
-func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xQueryFilesystemInfoAsync = 0
 	} else {
-		x.xQueryFilesystemInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xQueryFilesystemInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -885,13 +885,13 @@ func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int32
 
 // GetQueryFilesystemInfoAsync gets the "query_filesystem_info_async" callback function.
 // Asynchronously gets a #GFileInfo for the file system #GFile is on.
-func (x *FileIface) GetQueryFilesystemInfoAsync() func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetQueryFilesystemInfoAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xQueryFilesystemInfoAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xQueryFilesystemInfoAsync)
-	return func(FileVar File, AttributesVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -968,11 +968,11 @@ func (x *FileIface) GetFindEnclosingMount() func(File, *Cancellable) *MountBase 
 
 // OverrideFindEnclosingMountAsync sets the "find_enclosing_mount_async" callback function.
 // Asynchronously gets the #GMount for a #GFile.
-func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xFindEnclosingMountAsync = 0
 	} else {
-		x.xFindEnclosingMountAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xFindEnclosingMountAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -980,13 +980,13 @@ func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int32, *Cancel
 
 // GetFindEnclosingMountAsync gets the "find_enclosing_mount_async" callback function.
 // Asynchronously gets the #GMount for a #GFile.
-func (x *FileIface) GetFindEnclosingMountAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetFindEnclosingMountAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xFindEnclosingMountAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xFindEnclosingMountAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1063,11 +1063,11 @@ func (x *FileIface) GetSetDisplayName() func(File, string, *Cancellable) *FileBa
 
 // OverrideSetDisplayNameAsync sets the "set_display_name_async" callback function.
 // Asynchronously sets a #GFile's display name.
-func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xSetDisplayNameAsync = 0
 	} else {
-		x.xSetDisplayNameAsync = purego.NewCallback(func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xSetDisplayNameAsync = purego.NewCallback(func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, DisplayNameVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1075,13 +1075,13 @@ func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int32, *Ca
 
 // GetSetDisplayNameAsync gets the "set_display_name_async" callback function.
 // Asynchronously sets a #GFile's display name.
-func (x *FileIface) GetSetDisplayNameAsync() func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetSetDisplayNameAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSetDisplayNameAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetDisplayNameAsync)
-	return func(FileVar File, DisplayNameVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, DisplayNameVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), DisplayNameVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1339,11 +1339,11 @@ func (x *FileIface) GetSetAttributesFromInfo() func(File, *FileInfo, FileQueryIn
 
 // OverrideSetAttributesAsync sets the "set_attributes_async" callback function.
 // Asynchronously sets a file's attributes.
-func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xSetAttributesAsync = 0
 	} else {
-		x.xSetAttributesAsync = purego.NewCallback(func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xSetAttributesAsync = purego.NewCallback(func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, FileInfoNewFromInternalPtr(InfoVarp), FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1351,13 +1351,13 @@ func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQuer
 
 // GetSetAttributesAsync gets the "set_attributes_async" callback function.
 // Asynchronously sets a file's attributes.
-func (x *FileIface) GetSetAttributesAsync() func(File, *FileInfo, FileQueryInfoFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetSetAttributesAsync() func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSetAttributesAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetAttributesAsync)
-	return func(FileVar File, InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), InfoVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1424,11 +1424,11 @@ func (x *FileIface) GetReadFn() func(File, *Cancellable) *FileInputStream {
 
 // OverrideReadAsync sets the "read_async" callback function.
 // Asynchronously reads a file.
-func (x *FileIface) OverrideReadAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideReadAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xReadAsync = 0
 	} else {
-		x.xReadAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xReadAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1436,13 +1436,13 @@ func (x *FileIface) OverrideReadAsync(cb func(File, int32, *Cancellable, *AsyncR
 
 // GetReadAsync gets the "read_async" callback function.
 // Asynchronously reads a file.
-func (x *FileIface) GetReadAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetReadAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReadAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xReadAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1519,11 +1519,11 @@ func (x *FileIface) GetAppendTo() func(File, FileCreateFlags, *Cancellable) *Fil
 
 // OverrideAppendToAsync sets the "append_to_async" callback function.
 // Asynchronously writes to the end of a file.
-func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xAppendToAsync = 0
 	} else {
-		x.xAppendToAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xAppendToAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1531,13 +1531,13 @@ func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int32, 
 
 // GetAppendToAsync gets the "append_to_async" callback function.
 // Asynchronously writes to the end of a file.
-func (x *FileIface) GetAppendToAsync() func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetAppendToAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xAppendToAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xAppendToAsync)
-	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1614,11 +1614,11 @@ func (x *FileIface) GetCreate() func(File, FileCreateFlags, *Cancellable) *FileO
 
 // OverrideCreateAsync sets the "create_async" callback function.
 // Asynchronously creates a file.
-func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCreateAsync = 0
 	} else {
-		x.xCreateAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xCreateAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1626,13 +1626,13 @@ func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int32, *C
 
 // GetCreateAsync gets the "create_async" callback function.
 // Asynchronously creates a file.
-func (x *FileIface) GetCreateAsync() func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetCreateAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCreateAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xCreateAsync)
-	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1709,11 +1709,11 @@ func (x *FileIface) GetReplace() func(File, string, bool, FileCreateFlags, *Canc
 
 // OverrideReplaceAsync sets the "replace_async" callback function.
 // Asynchronously replaces the contents of a file.
-func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xReplaceAsync = 0
 	} else {
-		x.xReplaceAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xReplaceAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1721,13 +1721,13 @@ func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateF
 
 // GetReplaceAsync gets the "replace_async" callback function.
 // Asynchronously replaces the contents of a file.
-func (x *FileIface) GetReplaceAsync() func(File, string, bool, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetReplaceAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReplaceAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xReplaceAsync)
-	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1794,11 +1794,11 @@ func (x *FileIface) GetDeleteFile() func(File, *Cancellable) bool {
 
 // OverrideDeleteFileAsync sets the "delete_file_async" callback function.
 // Asynchronously deletes a file.
-func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xDeleteFileAsync = 0
 	} else {
-		x.xDeleteFileAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xDeleteFileAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1806,13 +1806,13 @@ func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int32, *Cancellable, *
 
 // GetDeleteFileAsync gets the "delete_file_async" callback function.
 // Asynchronously deletes a file.
-func (x *FileIface) GetDeleteFileAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetDeleteFileAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xDeleteFileAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xDeleteFileAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1869,11 +1869,11 @@ func (x *FileIface) GetTrash() func(File, *Cancellable) bool {
 
 // OverrideTrashAsync sets the "trash_async" callback function.
 // Asynchronously sends a #GFile to the Trash location.
-func (x *FileIface) OverrideTrashAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideTrashAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xTrashAsync = 0
 	} else {
-		x.xTrashAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xTrashAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1881,13 +1881,13 @@ func (x *FileIface) OverrideTrashAsync(cb func(File, int32, *Cancellable, *Async
 
 // GetTrashAsync gets the "trash_async" callback function.
 // Asynchronously sends a #GFile to the Trash location.
-func (x *FileIface) GetTrashAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetTrashAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xTrashAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xTrashAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -1944,11 +1944,11 @@ func (x *FileIface) GetMakeDirectory() func(File, *Cancellable) bool {
 
 // OverrideMakeDirectoryAsync sets the "make_directory_async" callback function.
 // Asynchronously makes a directory.
-func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xMakeDirectoryAsync = 0
 	} else {
-		x.xMakeDirectoryAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xMakeDirectoryAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -1956,13 +1956,13 @@ func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int32, *Cancellable
 
 // GetMakeDirectoryAsync gets the "make_directory_async" callback function.
 // Asynchronously makes a directory.
-func (x *FileIface) GetMakeDirectoryAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetMakeDirectoryAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMakeDirectoryAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xMakeDirectoryAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2023,11 +2023,11 @@ func (x *FileIface) GetMakeSymbolicLink() func(File, string, *Cancellable) bool 
 
 // OverrideMakeSymbolicLinkAsync sets the "make_symbolic_link_async" callback function.
 // Asynchronously makes a symbolic link
-func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xMakeSymbolicLinkAsync = 0
 	} else {
-		x.xMakeSymbolicLinkAsync = purego.NewCallback(func(FileVarp uintptr, SymlinkValueVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xMakeSymbolicLinkAsync = purego.NewCallback(func(FileVarp uintptr, SymlinkValueVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, SymlinkValueVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2035,13 +2035,13 @@ func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func(File, string, int32, *
 
 // GetMakeSymbolicLinkAsync gets the "make_symbolic_link_async" callback function.
 // Asynchronously makes a symbolic link
-func (x *FileIface) GetMakeSymbolicLinkAsync() func(File, string, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetMakeSymbolicLinkAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMakeSymbolicLinkAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, SymlinkValueVarp string, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, SymlinkValueVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xMakeSymbolicLinkAsync)
-	return func(FileVar File, SymlinkValueVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, SymlinkValueVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), SymlinkValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2104,11 +2104,11 @@ func (x *FileIface) GetCopy() func(File, File, FileCopyFlags, *Cancellable, *Fil
 
 // OverrideCopyAsync sets the "copy_async" callback function.
 // Asynchronously copies a file.
-func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int32, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCopyAsync = 0
 	} else {
-		x.xCopyAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xCopyAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2116,13 +2116,13 @@ func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int32, 
 
 // GetCopyAsync gets the "copy_async" callback function.
 // Asynchronously copies a file.
-func (x *FileIface) GetCopyAsync() func(File, File, FileCopyFlags, int32, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetCopyAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xCopyAsync == 0 {
 		return nil
 	}
-	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xCopyAsync)
-	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2179,11 +2179,11 @@ func (x *FileIface) GetMove() func(File, File, FileCopyFlags, *Cancellable, *Fil
 
 // OverrideMoveAsync sets the "move_async" callback function.
 // Asynchronously moves a file. Since: 2.72
-func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int32, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xMoveAsync = 0
 	} else {
-		x.xMoveAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xMoveAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2191,13 +2191,13 @@ func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int32, 
 
 // GetMoveAsync gets the "move_async" callback function.
 // Asynchronously moves a file. Since: 2.72
-func (x *FileIface) GetMoveAsync() func(File, File, FileCopyFlags, int32, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetMoveAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xMoveAsync == 0 {
 		return nil
 	}
-	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xMoveAsync)
-	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2544,11 +2544,11 @@ func (x *FileIface) GetOpenReadwrite() func(File, *Cancellable) *FileIOStream {
 
 // OverrideOpenReadwriteAsync sets the "open_readwrite_async" callback function.
 // Asynchronously opens file read/write. Since 2.22.
-func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xOpenReadwriteAsync = 0
 	} else {
-		x.xOpenReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xOpenReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2556,13 +2556,13 @@ func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int32, *Cancellable
 
 // GetOpenReadwriteAsync gets the "open_readwrite_async" callback function.
 // Asynchronously opens file read/write. Since 2.22.
-func (x *FileIface) GetOpenReadwriteAsync() func(File, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetOpenReadwriteAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xOpenReadwriteAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xOpenReadwriteAsync)
-	return func(FileVar File, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2639,11 +2639,11 @@ func (x *FileIface) GetCreateReadwrite() func(File, FileCreateFlags, *Cancellabl
 
 // OverrideCreateReadwriteAsync sets the "create_readwrite_async" callback function.
 // Asynchronously creates file read/write. Since 2.22.
-func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCreateReadwriteAsync = 0
 	} else {
-		x.xCreateReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xCreateReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2651,13 +2651,13 @@ func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, 
 
 // GetCreateReadwriteAsync gets the "create_readwrite_async" callback function.
 // Asynchronously creates file read/write. Since 2.22.
-func (x *FileIface) GetCreateReadwriteAsync() func(File, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetCreateReadwriteAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCreateReadwriteAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xCreateReadwriteAsync)
-	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -2734,11 +2734,11 @@ func (x *FileIface) GetReplaceReadwrite() func(File, string, bool, FileCreateFla
 
 // OverrideReplaceReadwriteAsync sets the "replace_readwrite_async" callback function.
 // Asynchronously replaces file read/write. Since 2.22.
-func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xReplaceReadwriteAsync = 0
 	} else {
-		x.xReplaceReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xReplaceReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -2746,13 +2746,13 @@ func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, Fi
 
 // GetReplaceReadwriteAsync gets the "replace_readwrite_async" callback function.
 // Asynchronously replaces file read/write. Since 2.22.
-func (x *FileIface) GetReplaceReadwriteAsync() func(File, string, bool, FileCreateFlags, int32, *Cancellable, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetReplaceReadwriteAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReplaceReadwriteAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int32, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xReplaceReadwriteAsync)
-	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -3069,11 +3069,11 @@ func (x *FileIface) GetMeasureDiskUsage() func(File, FileMeasureFlags, *Cancella
 
 // OverrideMeasureDiskUsageAsync sets the "measure_disk_usage_async" callback function.
 // Asynchronously recursively measures the disk usage of @file. Since 2.38
-func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags, int32, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xMeasureDiskUsageAsync = 0
 	} else {
-		x.xMeasureDiskUsageAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xMeasureDiskUsageAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileMeasureProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
@@ -3081,13 +3081,13 @@ func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags
 
 // GetMeasureDiskUsageAsync gets the "measure_disk_usage_async" callback function.
 // Asynchronously recursively measures the disk usage of @file. Since 2.38
-func (x *FileIface) GetMeasureDiskUsageAsync() func(File, FileMeasureFlags, int32, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+func (x *FileIface) GetMeasureDiskUsageAsync() func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xMeasureDiskUsageAsync == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int32, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsageAsync)
-	return func(FileVar File, FlagsVar FileMeasureFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(FileVar File, FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
@@ -3237,22 +3237,22 @@ type File interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	AppendTo(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
-	AppendToAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	AppendToAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	AppendToFinish(ResVar AsyncResult) (*FileOutputStream, error)
 	BuildAttributeListForCopy(FlagsVar FileCopyFlags, CancellableVar *Cancellable) (string, error)
 	Copy(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error)
-	CopyAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CopyAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure)
+	CopyAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	CopyAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure)
 	CopyAttributes(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable) (bool, error)
 	CopyFinish(ResVar AsyncResult) (bool, error)
 	Create(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
-	CreateAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	CreateAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	CreateFinish(ResVar AsyncResult) (*FileOutputStream, error)
 	CreateReadwrite(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
-	CreateReadwriteAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	CreateReadwriteAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	CreateReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	Delete(CancellableVar *Cancellable) (bool, error)
-	DeleteAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	DeleteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	DeleteFinish(ResultVar AsyncResult) (bool, error)
 	Dup() *FileBase
 	EjectMountable(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
@@ -3260,11 +3260,11 @@ type File interface {
 	EjectMountableWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	EjectMountableWithOperationFinish(ResultVar AsyncResult) (bool, error)
 	EnumerateChildren(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (*FileEnumerator, error)
-	EnumerateChildrenAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	EnumerateChildrenAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	EnumerateChildrenFinish(ResVar AsyncResult) (*FileEnumerator, error)
 	Equal(File2Var File) bool
 	FindEnclosingMount(CancellableVar *Cancellable) (*MountBase, error)
-	FindEnclosingMountAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	FindEnclosingMountAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	FindEnclosingMountFinish(ResVar AsyncResult) (*MountBase, error)
 	GetBasename() string
 	GetChild(NameVar string) *FileBase
@@ -3278,7 +3278,7 @@ type File interface {
 	HasParent(ParentVar File) bool
 	HasPrefix(PrefixVar File) bool
 	HasUriScheme(UriSchemeVar string) bool
-	Hash() uint32
+	Hash() uint
 	IsNative() bool
 	LoadBytes(CancellableVar *Cancellable, EtagOutVar *string) (*glib.Bytes, error)
 	LoadBytesAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
@@ -3289,14 +3289,14 @@ type File interface {
 	LoadPartialContentsAsync(CancellableVar *Cancellable, ReadMoreCallbackVar *FileReadMoreCallback, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error)
 	MakeDirectory(CancellableVar *Cancellable) (bool, error)
-	MakeDirectoryAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	MakeDirectoryAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MakeDirectoryFinish(ResultVar AsyncResult) (bool, error)
 	MakeDirectoryWithParents(CancellableVar *Cancellable) (bool, error)
 	MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Cancellable) (bool, error)
-	MakeSymbolicLinkAsync(SymlinkValueVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	MakeSymbolicLinkAsync(SymlinkValueVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MakeSymbolicLinkFinish(ResultVar AsyncResult) (bool, error)
 	MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error)
-	MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error)
 	Monitor(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
 	MonitorDirectory(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
@@ -3306,40 +3306,40 @@ type File interface {
 	MountMountable(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MountMountableFinish(ResultVar AsyncResult) (*FileBase, error)
 	Move(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error)
-	MoveAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MoveAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure)
+	MoveAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	MoveAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure)
 	MoveFinish(ResultVar AsyncResult) (bool, error)
 	OpenReadwrite(CancellableVar *Cancellable) (*FileIOStream, error)
-	OpenReadwriteAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	OpenReadwriteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	OpenReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	PeekPath() string
 	PollMountable(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	PollMountableFinish(ResultVar AsyncResult) (bool, error)
 	QueryDefaultHandler(CancellableVar *Cancellable) (*AppInfoBase, error)
-	QueryDefaultHandlerAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	QueryDefaultHandlerAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	QueryDefaultHandlerFinish(ResultVar AsyncResult) (*AppInfoBase, error)
 	QueryExists(CancellableVar *Cancellable) bool
 	QueryFileType(FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) FileType
 	QueryFilesystemInfo(AttributesVar string, CancellableVar *Cancellable) (*FileInfo, error)
-	QueryFilesystemInfoAsync(AttributesVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	QueryFilesystemInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	QueryFilesystemInfoFinish(ResVar AsyncResult) (*FileInfo, error)
 	QueryInfo(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (*FileInfo, error)
-	QueryInfoAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	QueryInfoAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	QueryInfoFinish(ResVar AsyncResult) (*FileInfo, error)
 	QuerySettableAttributes(CancellableVar *Cancellable) (*FileAttributeInfoList, error)
 	QueryWritableNamespaces(CancellableVar *Cancellable) (*FileAttributeInfoList, error)
 	Read(CancellableVar *Cancellable) (*FileInputStream, error)
-	ReadAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReadAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReadFinish(ResVar AsyncResult) (*FileInputStream, error)
-	Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
-	ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error)
-	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
+	ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error)
+	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar *string) (bool, error)
 	ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error)
-	ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
-	ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
+	ReplaceReadwriteAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	ResolveRelativePath(RelativePathVar string) *FileBase
 	SetAttribute(AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
@@ -3349,11 +3349,11 @@ type File interface {
 	SetAttributeString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
 	SetAttributeUint32(AttributeVar string, ValueVar uint32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
 	SetAttributeUint64(AttributeVar string, ValueVar uint64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
-	SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo) (bool, error)
 	SetAttributesFromInfo(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
 	SetDisplayName(DisplayNameVar string, CancellableVar *Cancellable) (*FileBase, error)
-	SetDisplayNameAsync(DisplayNameVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	SetDisplayNameAsync(DisplayNameVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	SetDisplayNameFinish(ResVar AsyncResult) (*FileBase, error)
 	StartMountable(FlagsVar DriveStartFlags, StartOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	StartMountableFinish(ResultVar AsyncResult) (bool, error)
@@ -3361,7 +3361,7 @@ type File interface {
 	StopMountableFinish(ResultVar AsyncResult) (bool, error)
 	SupportsThreadContexts() bool
 	Trash(CancellableVar *Cancellable) (bool, error)
-	TrashAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	TrashAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	TrashFinish(ResultVar AsyncResult) (bool, error)
 	UnmountMountable(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	UnmountMountableFinish(ResultVar AsyncResult) (bool, error)
@@ -3432,7 +3432,7 @@ func (x *FileBase) AppendTo(FlagsVar FileCreateFlags, CancellableVar *Cancellabl
 // When the operation is finished, @callback will be called.
 // You can then call g_file_append_to_finish() to get the result
 // of the operation.
-func (x *FileBase) AppendToAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) AppendToAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileAppendToAsync(x.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -3534,13 +3534,13 @@ func (x *FileBase) Copy(DestinationVar File, FlagsVar FileCopyFlags, Cancellable
 //
 // When the operation is finished, @callback will be called. You can then call
 // g_file_copy_finish() to get the result of the operation.
-func (x *FileBase) CopyAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) CopyAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileCopyAsync(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Version of [method@Gio.File.copy_async] using closures instead of callbacks for
 // easier binding in other languages.
-func (x *FileBase) CopyAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure) {
+func (x *FileBase) CopyAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure) {
 	XGFileCopyAsyncWithClosures(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), ProgressCallbackClosureVar, ReadyCallbackClosureVar)
 }
 
@@ -3618,7 +3618,7 @@ func (x *FileBase) Create(FlagsVar FileCreateFlags, CancellableVar *Cancellable)
 // When the operation is finished, @callback will be called.
 // You can then call g_file_create_finish() to get the result
 // of the operation.
-func (x *FileBase) CreateAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) CreateAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileCreateAsync(x.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -3690,7 +3690,7 @@ func (x *FileBase) CreateReadwrite(FlagsVar FileCreateFlags, CancellableVar *Can
 // When the operation is finished, @callback will be called.
 // You can then call g_file_create_readwrite_finish() to get
 // the result of the operation.
-func (x *FileBase) CreateReadwriteAsync(FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) CreateReadwriteAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileCreateReadwriteAsync(x.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -3749,7 +3749,7 @@ func (x *FileBase) Delete(CancellableVar *Cancellable) (bool, error) {
 // Asynchronously delete a file. If the @file is a directory, it will
 // only be deleted if it is empty.  This has the same semantics as
 // g_unlink().
-func (x *FileBase) DeleteAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) DeleteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileDeleteAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -3887,7 +3887,7 @@ func (x *FileBase) EnumerateChildren(AttributesVar string, FlagsVar FileQueryInf
 // When the operation is finished, @callback will be called. You can
 // then call g_file_enumerate_children_finish() to get the result of
 // the operation.
-func (x *FileBase) EnumerateChildrenAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) EnumerateChildrenAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileEnumerateChildrenAsync(x.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -3964,7 +3964,7 @@ func (x *FileBase) FindEnclosingMount(CancellableVar *Cancellable) (*MountBase, 
 // When the operation is finished, @callback will be called.
 // You can then call g_file_find_enclosing_mount_finish() to
 // get the result of the operation.
-func (x *FileBase) FindEnclosingMountAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) FindEnclosingMountAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileFindEnclosingMountAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4168,7 +4168,7 @@ func (x *FileBase) HasUriScheme(UriSchemeVar string) bool {
 // Creates a hash value for a #GFile.
 //
 // This call does no blocking I/O.
-func (x *FileBase) Hash() uint32 {
+func (x *FileBase) Hash() uint {
 	cret := XGFileHash(x.GoPointer())
 	return cret
 }
@@ -4358,7 +4358,7 @@ func (x *FileBase) MakeDirectory(CancellableVar *Cancellable) (bool, error) {
 }
 
 // Asynchronously creates a directory.
-func (x *FileBase) MakeDirectoryAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) MakeDirectoryAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileMakeDirectoryAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4415,7 +4415,7 @@ func (x *FileBase) MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Canc
 
 // Asynchronously creates a symbolic link named @file which contains the
 // string @symlink_value.
-func (x *FileBase) MakeSymbolicLinkAsync(SymlinkValueVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) MakeSymbolicLinkAsync(SymlinkValueVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileMakeSymbolicLinkAsync(x.GoPointer(), SymlinkValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4463,7 +4463,7 @@ func (x *FileBase) MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *C
 //
 // This is the asynchronous version of g_file_measure_disk_usage().  See
 // there for more information.
-func (x *FileBase) MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileMeasureDiskUsageAsync(x.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4676,13 +4676,13 @@ func (x *FileBase) Move(DestinationVar File, FlagsVar FileCopyFlags, Cancellable
 //
 // When the operation is finished, @callback will be called. You can then call
 // g_file_move_finish() to get the result of the operation.
-func (x *FileBase) MoveAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) MoveAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileMoveAsync(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Version of [method@Gio.File.move_async] using closures instead of callbacks for
 // easier binding in other languages.
-func (x *FileBase) MoveAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int32, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure) {
+func (x *FileBase) MoveAsyncWithClosures(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackClosureVar *gobject.Closure, ReadyCallbackClosureVar *gobject.Closure) {
 	XGFileMoveAsyncWithClosures(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), ProgressCallbackClosureVar, ReadyCallbackClosureVar)
 }
 
@@ -4739,7 +4739,7 @@ func (x *FileBase) OpenReadwrite(CancellableVar *Cancellable) (*FileIOStream, er
 // When the operation is finished, @callback will be called.
 // You can then call g_file_open_readwrite_finish() to get
 // the result of the operation.
-func (x *FileBase) OpenReadwriteAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) OpenReadwriteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileOpenReadwriteAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4825,7 +4825,7 @@ func (x *FileBase) QueryDefaultHandler(CancellableVar *Cancellable) (*AppInfoBas
 }
 
 // Async version of g_file_query_default_handler().
-func (x *FileBase) QueryDefaultHandlerAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) QueryDefaultHandlerAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileQueryDefaultHandlerAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -4940,7 +4940,7 @@ func (x *FileBase) QueryFilesystemInfo(AttributesVar string, CancellableVar *Can
 // When the operation is finished, @callback will be called. You can
 // then call g_file_query_info_finish() to get the result of the
 // operation.
-func (x *FileBase) QueryFilesystemInfoAsync(AttributesVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) QueryFilesystemInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileQueryFilesystemInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5032,7 +5032,7 @@ func (x *FileBase) QueryInfo(AttributesVar string, FlagsVar FileQueryInfoFlags, 
 //
 // When the operation is finished, @callback will be called. You can
 // then call g_file_query_info_finish() to get the result of the operation.
-func (x *FileBase) QueryInfoAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) QueryInfoAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileQueryInfoAsync(x.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5134,7 +5134,7 @@ func (x *FileBase) Read(CancellableVar *Cancellable) (*FileInputStream, error) {
 // When the operation is finished, @callback will be called.
 // You can then call g_file_read_finish() to get the result
 // of the operation.
-func (x *FileBase) ReadAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) ReadAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileReadAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5198,11 +5198,14 @@ func (x *FileBase) ReadFinish(ResVar AsyncResult) (*FileInputStream, error) {
 // %G_IO_ERROR_INVALID_FILENAME error, and if the name is to long
 // %G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors are
 // possible too, and depend on what kind of filesystem the file is on.
-func (x *FileBase) Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error) {
+func (x *FileBase) Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error) {
 	var cls *FileOutputStream
 	var cerr *glib.Error
 
-	cret := XGFileReplace(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	cret := XGFileReplace(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5224,8 +5227,11 @@ func (x *FileBase) Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCrea
 // When the operation is finished, @callback will be called.
 // You can then call g_file_replace_finish() to get the result
 // of the operation.
-func (x *FileBase) ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	XGFileReplaceAsync(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *FileBase) ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	XGFileReplaceAsync(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Replaces the contents of @file with @contents of @length bytes.
@@ -5244,10 +5250,13 @@ func (x *FileBase) ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar Fil
 //
 // The returned @new_etag can be used to verify that the file hasn't
 // changed the next time it is saved over.
-func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
+func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, EtagVar, MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, EtagVarPtr, MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5273,8 +5282,11 @@ func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar s
 // until @callback is called. See g_file_replace_contents_bytes_async()
 // for a #GBytes version that will automatically hold a reference to the
 // contents (without copying) for the duration of the call.
-func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Same as g_file_replace_contents_async() but takes a #GBytes input instead.
@@ -5285,8 +5297,11 @@ func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, Etag
 // When this operation has completed, @callback will be called with
 // @user_user data, and the operation can be finalized with
 // g_file_replace_contents_finish().
-func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes an asynchronous replace of the given @file. See
@@ -5331,11 +5346,14 @@ func (x *FileBase) ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error) 
 // Note that in many non-local file cases read and write streams are not
 // supported, so make sure you really need to do read and write streaming,
 // rather than just opening for reading or writing.
-func (x *FileBase) ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error) {
+func (x *FileBase) ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error) {
 	var cls *FileIOStream
 	var cerr *glib.Error
 
-	cret := XGFileReplaceReadwrite(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	cret := XGFileReplaceReadwrite(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5358,8 +5376,11 @@ func (x *FileBase) ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar
 // When the operation is finished, @callback will be called.
 // You can then call g_file_replace_readwrite_finish() to get
 // the result of the operation.
-func (x *FileBase) ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	XGFileReplaceReadwriteAsync(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *FileBase) ReplaceReadwriteAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	EtagVarPtr := core.GStrdupNullable(EtagVar)
+	defer core.GFreeNullable(EtagVarPtr)
+
+	XGFileReplaceReadwriteAsync(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 // Finishes an asynchronous file replace operation started with
@@ -5523,7 +5544,7 @@ func (x *FileBase) SetAttributeUint64(AttributeVar string, ValueVar uint64, Flag
 // When the operation is finished, @callback will be called.
 // You can then call g_file_set_attributes_finish() to get
 // the result of the operation.
-func (x *FileBase) SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileSetAttributesAsync(x.GoPointer(), InfoVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5600,7 +5621,7 @@ func (x *FileBase) SetDisplayName(DisplayNameVar string, CancellableVar *Cancell
 // When the operation is finished, @callback will be called.
 // You can then call g_file_set_display_name_finish() to get
 // the result of the operation.
-func (x *FileBase) SetDisplayNameAsync(DisplayNameVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) SetDisplayNameAsync(DisplayNameVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileSetDisplayNameAsync(x.GoPointer(), DisplayNameVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5712,7 +5733,7 @@ func (x *FileBase) Trash(CancellableVar *Cancellable) (bool, error) {
 }
 
 // Asynchronously sends @file to the Trash location, if possible.
-func (x *FileBase) TrashAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) TrashAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGFileTrashAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -5785,22 +5806,22 @@ func (x *FileBase) UnmountMountableWithOperationFinish(ResultVar AsyncResult) (b
 
 var (
 	XGFileAppendTo                            func(uintptr, FileCreateFlags, uintptr, **glib.Error) uintptr
-	XGFileAppendToAsync                       func(uintptr, FileCreateFlags, int32, uintptr, uintptr, uintptr)
+	XGFileAppendToAsync                       func(uintptr, FileCreateFlags, int, uintptr, uintptr, uintptr)
 	XGFileAppendToFinish                      func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileBuildAttributeListForCopy           func(uintptr, FileCopyFlags, uintptr, **glib.Error) string
 	XGFileCopy                                func(uintptr, uintptr, FileCopyFlags, uintptr, uintptr, uintptr, **glib.Error) bool
-	XGFileCopyAsync                           func(uintptr, uintptr, FileCopyFlags, int32, uintptr, uintptr, uintptr, uintptr, uintptr)
-	XGFileCopyAsyncWithClosures               func(uintptr, uintptr, FileCopyFlags, int32, uintptr, *gobject.Closure, *gobject.Closure)
+	XGFileCopyAsync                           func(uintptr, uintptr, FileCopyFlags, int, uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGFileCopyAsyncWithClosures               func(uintptr, uintptr, FileCopyFlags, int, uintptr, *gobject.Closure, *gobject.Closure)
 	XGFileCopyAttributes                      func(uintptr, uintptr, FileCopyFlags, uintptr, **glib.Error) bool
 	XGFileCopyFinish                          func(uintptr, uintptr, **glib.Error) bool
 	XGFileCreate                              func(uintptr, FileCreateFlags, uintptr, **glib.Error) uintptr
-	XGFileCreateAsync                         func(uintptr, FileCreateFlags, int32, uintptr, uintptr, uintptr)
+	XGFileCreateAsync                         func(uintptr, FileCreateFlags, int, uintptr, uintptr, uintptr)
 	XGFileCreateFinish                        func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileCreateReadwrite                     func(uintptr, FileCreateFlags, uintptr, **glib.Error) uintptr
-	XGFileCreateReadwriteAsync                func(uintptr, FileCreateFlags, int32, uintptr, uintptr, uintptr)
+	XGFileCreateReadwriteAsync                func(uintptr, FileCreateFlags, int, uintptr, uintptr, uintptr)
 	XGFileCreateReadwriteFinish               func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileDelete                              func(uintptr, uintptr, **glib.Error) bool
-	XGFileDeleteAsync                         func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileDeleteAsync                         func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileDeleteFinish                        func(uintptr, uintptr, **glib.Error) bool
 	XGFileDup                                 func(uintptr) uintptr
 	XGFileEjectMountable                      func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr)
@@ -5808,11 +5829,11 @@ var (
 	XGFileEjectMountableWithOperation         func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr, uintptr)
 	XGFileEjectMountableWithOperationFinish   func(uintptr, uintptr, **glib.Error) bool
 	XGFileEnumerateChildren                   func(uintptr, string, FileQueryInfoFlags, uintptr, **glib.Error) uintptr
-	XGFileEnumerateChildrenAsync              func(uintptr, string, FileQueryInfoFlags, int32, uintptr, uintptr, uintptr)
+	XGFileEnumerateChildrenAsync              func(uintptr, string, FileQueryInfoFlags, int, uintptr, uintptr, uintptr)
 	XGFileEnumerateChildrenFinish             func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileEqual                               func(uintptr, uintptr) bool
 	XGFileFindEnclosingMount                  func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileFindEnclosingMountAsync             func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileFindEnclosingMountAsync             func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileFindEnclosingMountFinish            func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileGetBasename                         func(uintptr) string
 	XGFileGetChild                            func(uintptr, string) uintptr
@@ -5826,7 +5847,7 @@ var (
 	XGFileHasParent                           func(uintptr, uintptr) bool
 	XGFileHasPrefix                           func(uintptr, uintptr) bool
 	XGFileHasUriScheme                        func(uintptr, string) bool
-	XGFileHash                                func(uintptr) uint32
+	XGFileHash                                func(uintptr) uint
 	XGFileIsNative                            func(uintptr) bool
 	XGFileLoadBytes                           func(uintptr, uintptr, *string, **glib.Error) uintptr
 	XGFileLoadBytesAsync                      func(uintptr, uintptr, uintptr, uintptr)
@@ -5837,14 +5858,14 @@ var (
 	XGFileLoadPartialContentsAsync            func(uintptr, uintptr, uintptr, uintptr, uintptr)
 	XGFileLoadPartialContentsFinish           func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
 	XGFileMakeDirectory                       func(uintptr, uintptr, **glib.Error) bool
-	XGFileMakeDirectoryAsync                  func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileMakeDirectoryAsync                  func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileMakeDirectoryFinish                 func(uintptr, uintptr, **glib.Error) bool
 	XGFileMakeDirectoryWithParents            func(uintptr, uintptr, **glib.Error) bool
 	XGFileMakeSymbolicLink                    func(uintptr, string, uintptr, **glib.Error) bool
-	XGFileMakeSymbolicLinkAsync               func(uintptr, string, int32, uintptr, uintptr, uintptr)
+	XGFileMakeSymbolicLinkAsync               func(uintptr, string, int, uintptr, uintptr, uintptr)
 	XGFileMakeSymbolicLinkFinish              func(uintptr, uintptr, **glib.Error) bool
 	XGFileMeasureDiskUsage                    func(uintptr, FileMeasureFlags, uintptr, uintptr, uintptr, *uint64, *uint64, *uint64, **glib.Error) bool
-	XGFileMeasureDiskUsageAsync               func(uintptr, FileMeasureFlags, int32, uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGFileMeasureDiskUsageAsync               func(uintptr, FileMeasureFlags, int, uintptr, uintptr, uintptr, uintptr, uintptr)
 	XGFileMeasureDiskUsageFinish              func(uintptr, uintptr, *uint64, *uint64, *uint64, **glib.Error) bool
 	XGFileMonitor                             func(uintptr, FileMonitorFlags, uintptr, **glib.Error) uintptr
 	XGFileMonitorDirectory                    func(uintptr, FileMonitorFlags, uintptr, **glib.Error) uintptr
@@ -5854,40 +5875,40 @@ var (
 	XGFileMountMountable                      func(uintptr, MountMountFlags, uintptr, uintptr, uintptr, uintptr)
 	XGFileMountMountableFinish                func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileMove                                func(uintptr, uintptr, FileCopyFlags, uintptr, uintptr, uintptr, **glib.Error) bool
-	XGFileMoveAsync                           func(uintptr, uintptr, FileCopyFlags, int32, uintptr, uintptr, uintptr, uintptr, uintptr)
-	XGFileMoveAsyncWithClosures               func(uintptr, uintptr, FileCopyFlags, int32, uintptr, *gobject.Closure, *gobject.Closure)
+	XGFileMoveAsync                           func(uintptr, uintptr, FileCopyFlags, int, uintptr, uintptr, uintptr, uintptr, uintptr)
+	XGFileMoveAsyncWithClosures               func(uintptr, uintptr, FileCopyFlags, int, uintptr, *gobject.Closure, *gobject.Closure)
 	XGFileMoveFinish                          func(uintptr, uintptr, **glib.Error) bool
 	XGFileOpenReadwrite                       func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileOpenReadwriteAsync                  func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileOpenReadwriteAsync                  func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileOpenReadwriteFinish                 func(uintptr, uintptr, **glib.Error) uintptr
 	XGFilePeekPath                            func(uintptr) string
 	XGFilePollMountable                       func(uintptr, uintptr, uintptr, uintptr)
 	XGFilePollMountableFinish                 func(uintptr, uintptr, **glib.Error) bool
 	XGFileQueryDefaultHandler                 func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileQueryDefaultHandlerAsync            func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileQueryDefaultHandlerAsync            func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileQueryDefaultHandlerFinish           func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileQueryExists                         func(uintptr, uintptr) bool
 	XGFileQueryFileType                       func(uintptr, FileQueryInfoFlags, uintptr) FileType
 	XGFileQueryFilesystemInfo                 func(uintptr, string, uintptr, **glib.Error) uintptr
-	XGFileQueryFilesystemInfoAsync            func(uintptr, string, int32, uintptr, uintptr, uintptr)
+	XGFileQueryFilesystemInfoAsync            func(uintptr, string, int, uintptr, uintptr, uintptr)
 	XGFileQueryFilesystemInfoFinish           func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileQueryInfo                           func(uintptr, string, FileQueryInfoFlags, uintptr, **glib.Error) uintptr
-	XGFileQueryInfoAsync                      func(uintptr, string, FileQueryInfoFlags, int32, uintptr, uintptr, uintptr)
+	XGFileQueryInfoAsync                      func(uintptr, string, FileQueryInfoFlags, int, uintptr, uintptr, uintptr)
 	XGFileQueryInfoFinish                     func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileQuerySettableAttributes             func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileQueryWritableNamespaces             func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileRead                                func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileReadAsync                           func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileReadAsync                           func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileReadFinish                          func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileReplace                             func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
-	XGFileReplaceAsync                        func(uintptr, string, bool, FileCreateFlags, int32, uintptr, uintptr, uintptr)
-	XGFileReplaceContents                     func(uintptr, string, uint, string, bool, FileCreateFlags, *string, uintptr, **glib.Error) bool
-	XGFileReplaceContentsAsync                func(uintptr, string, uint, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
-	XGFileReplaceContentsBytesAsync           func(uintptr, *glib.Bytes, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
+	XGFileReplace                             func(uintptr, uintptr, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
+	XGFileReplaceAsync                        func(uintptr, uintptr, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
+	XGFileReplaceContents                     func(uintptr, string, uint, uintptr, bool, FileCreateFlags, *string, uintptr, **glib.Error) bool
+	XGFileReplaceContentsAsync                func(uintptr, string, uint, uintptr, bool, FileCreateFlags, uintptr, uintptr, uintptr)
+	XGFileReplaceContentsBytesAsync           func(uintptr, *glib.Bytes, uintptr, bool, FileCreateFlags, uintptr, uintptr, uintptr)
 	XGFileReplaceContentsFinish               func(uintptr, uintptr, *string, **glib.Error) bool
 	XGFileReplaceFinish                       func(uintptr, uintptr, **glib.Error) uintptr
-	XGFileReplaceReadwrite                    func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
-	XGFileReplaceReadwriteAsync               func(uintptr, string, bool, FileCreateFlags, int32, uintptr, uintptr, uintptr)
+	XGFileReplaceReadwrite                    func(uintptr, uintptr, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
+	XGFileReplaceReadwriteAsync               func(uintptr, uintptr, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
 	XGFileReplaceReadwriteFinish              func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileResolveRelativePath                 func(uintptr, string) uintptr
 	XGFileSetAttribute                        func(uintptr, string, FileAttributeType, uintptr, FileQueryInfoFlags, uintptr, **glib.Error) bool
@@ -5897,11 +5918,11 @@ var (
 	XGFileSetAttributeString                  func(uintptr, string, string, FileQueryInfoFlags, uintptr, **glib.Error) bool
 	XGFileSetAttributeUint32                  func(uintptr, string, uint32, FileQueryInfoFlags, uintptr, **glib.Error) bool
 	XGFileSetAttributeUint64                  func(uintptr, string, uint64, FileQueryInfoFlags, uintptr, **glib.Error) bool
-	XGFileSetAttributesAsync                  func(uintptr, uintptr, FileQueryInfoFlags, int32, uintptr, uintptr, uintptr)
+	XGFileSetAttributesAsync                  func(uintptr, uintptr, FileQueryInfoFlags, int, uintptr, uintptr, uintptr)
 	XGFileSetAttributesFinish                 func(uintptr, uintptr, **FileInfo, **glib.Error) bool
 	XGFileSetAttributesFromInfo               func(uintptr, uintptr, FileQueryInfoFlags, uintptr, **glib.Error) bool
 	XGFileSetDisplayName                      func(uintptr, string, uintptr, **glib.Error) uintptr
-	XGFileSetDisplayNameAsync                 func(uintptr, string, int32, uintptr, uintptr, uintptr)
+	XGFileSetDisplayNameAsync                 func(uintptr, string, int, uintptr, uintptr, uintptr)
 	XGFileSetDisplayNameFinish                func(uintptr, uintptr, **glib.Error) uintptr
 	XGFileStartMountable                      func(uintptr, DriveStartFlags, uintptr, uintptr, uintptr, uintptr)
 	XGFileStartMountableFinish                func(uintptr, uintptr, **glib.Error) bool
@@ -5909,7 +5930,7 @@ var (
 	XGFileStopMountableFinish                 func(uintptr, uintptr, **glib.Error) bool
 	XGFileSupportsThreadContexts              func(uintptr) bool
 	XGFileTrash                               func(uintptr, uintptr, **glib.Error) bool
-	XGFileTrashAsync                          func(uintptr, int32, uintptr, uintptr, uintptr)
+	XGFileTrashAsync                          func(uintptr, int, uintptr, uintptr, uintptr)
 	XGFileTrashFinish                         func(uintptr, uintptr, **glib.Error) bool
 	XGFileUnmountMountable                    func(uintptr, MountUnmountFlags, uintptr, uintptr, uintptr)
 	XGFileUnmountMountableFinish              func(uintptr, uintptr, **glib.Error) bool
@@ -6029,7 +6050,7 @@ func FileNewForUri(UriVar string) *FileBase {
 	return cls
 }
 
-var xFileNewTmp func(string, **FileIOStream, **glib.Error) uintptr
+var xFileNewTmp func(uintptr, **FileIOStream, **glib.Error) uintptr
 
 // Opens a file in the preferred directory for temporary files (as
 // returned by g_get_tmp_dir()) and returns a #GFile and
@@ -6041,11 +6062,14 @@ var xFileNewTmp func(string, **FileIOStream, **glib.Error) uintptr
 //
 // Unlike the other #GFile constructors, this will return %NULL if
 // a temporary file could not be created.
-func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
+func FileNewTmp(TmplVar *string, IostreamVar **FileIOStream) (*FileBase, error) {
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmp(TmplVar, IostreamVar, &cerr)
+	TmplVarPtr := core.GStrdupNullable(TmplVar)
+	defer core.GFreeNullable(TmplVarPtr)
+
+	cret := xFileNewTmp(TmplVarPtr, IostreamVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -6058,7 +6082,7 @@ func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
 	return cls, cerr
 }
 
-var xFileNewTmpAsync func(string, int32, uintptr, uintptr, uintptr)
+var xFileNewTmpAsync func(uintptr, int, uintptr, uintptr, uintptr)
 
 // Asynchronously opens a file in the preferred directory for temporary files
 //
@@ -6067,11 +6091,14 @@ var xFileNewTmpAsync func(string, int32, uintptr, uintptr, uintptr)
 // @tmpl should be a string in the GLib file name encoding
 // containing a sequence of six 'X' characters, and containing no
 // directory components. If it is %NULL, a default template is used.
-func FileNewTmpAsync(TmplVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xFileNewTmpAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func FileNewTmpAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	TmplVarPtr := core.GStrdupNullable(TmplVar)
+	defer core.GFreeNullable(TmplVarPtr)
+
+	xFileNewTmpAsync(TmplVarPtr, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
-var xFileNewTmpDirAsync func(string, int32, uintptr, uintptr, uintptr)
+var xFileNewTmpDirAsync func(uintptr, int, uintptr, uintptr, uintptr)
 
 // Asynchronously creates a directory in the preferred directory for
 // temporary files (as returned by g_get_tmp_dir()) as g_dir_make_tmp().
@@ -6079,8 +6106,11 @@ var xFileNewTmpDirAsync func(string, int32, uintptr, uintptr, uintptr)
 // @tmpl should be a string in the GLib file name encoding
 // containing a sequence of six 'X' characters, and containing no
 // directory components. If it is %NULL, a default template is used.
-func FileNewTmpDirAsync(TmplVar string, IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xFileNewTmpDirAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func FileNewTmpDirAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	TmplVarPtr := core.GStrdupNullable(TmplVar)
+	defer core.GFreeNullable(TmplVarPtr)
+
+	xFileNewTmpDirAsync(TmplVarPtr, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xFileNewTmpDirFinish func(uintptr, **glib.Error) uintptr

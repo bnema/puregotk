@@ -59,11 +59,11 @@ func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
 
 // OverrideResize sets the "resize" callback function.
 // class closeure for the `GtkGLArea::resize` signal
-func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int32, int32)) {
+func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
 	if cb == nil {
 		x.xResize = 0
 	} else {
-		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int32, HeightVarp int32) {
+		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int, HeightVarp int) {
 			cb(GLAreaNewFromInternalPtr(AreaVarp), WidthVarp, HeightVarp)
 		})
 	}
@@ -71,13 +71,13 @@ func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int32, int32)) {
 
 // GetResize gets the "resize" callback function.
 // class closeure for the `GtkGLArea::resize` signal
-func (x *GLAreaClass) GetResize() func(*GLArea, int32, int32) {
+func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
 	if x.xResize == 0 {
 		return nil
 	}
-	var rawCallback func(AreaVarp uintptr, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(AreaVarp uintptr, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xResize)
-	return func(AreaVar *GLArea, WidthVar int32, HeightVar int32) {
+	return func(AreaVar *GLArea, WidthVar int, HeightVar int) {
 		rawCallback(AreaVar.GoPointer(), WidthVar, HeightVar)
 	}
 }
@@ -360,12 +360,12 @@ func (x *GLArea) GetHasStencilBuffer() bool {
 	return cret
 }
 
-var xGLAreaGetRequiredVersion func(uintptr, *int32, *int32)
+var xGLAreaGetRequiredVersion func(uintptr, *int, *int)
 
 // Retrieves the required version of OpenGL.
 //
 // See [method@Gtk.GLArea.set_required_version].
-func (x *GLArea) GetRequiredVersion(MajorVar *int32, MinorVar *int32) {
+func (x *GLArea) GetRequiredVersion(MajorVar *int, MinorVar *int) {
 	xGLAreaGetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
 }
 
@@ -468,13 +468,13 @@ func (x *GLArea) SetHasStencilBuffer(HasStencilBufferVar bool) {
 	xGLAreaSetHasStencilBuffer(x.GoPointer(), HasStencilBufferVar)
 }
 
-var xGLAreaSetRequiredVersion func(uintptr, int32, int32)
+var xGLAreaSetRequiredVersion func(uintptr, int, int)
 
 // Sets the required version of OpenGL to be used when creating
 // the context for the widget.
 //
 // This function must be called before the area has been realized.
-func (x *GLArea) SetRequiredVersion(MajorVar int32, MinorVar int32) {
+func (x *GLArea) SetRequiredVersion(MajorVar int, MinorVar int) {
 	xGLAreaSetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
 }
 
@@ -608,7 +608,7 @@ func (x *GLArea) GetPropertyUseEs() bool {
 // If context creation fails then the signal handler can use
 // [method@Gtk.GLArea.set_error] to register a more detailed error
 // of how the construction failed.
-func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
+func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
@@ -635,7 +635,7 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
 //
 // The @context is bound to the @area prior to emitting this function,
 // and the buffers are painted to the window once the emission terminates.
-func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
+func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
@@ -668,7 +668,7 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
 // is emitted.
 //
 // The default handler sets up the GL viewport.
-func (x *GLArea) ConnectResize(cb *func(GLArea, int32, int32)) uint32 {
+func (x *GLArea) ConnectResize(cb *func(GLArea, int, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
@@ -676,7 +676,7 @@ func (x *GLArea) ConnectResize(cb *func(GLArea, int32, int32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
+	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
 		fa := GLArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -756,7 +756,7 @@ func (x *GLArea) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *GLArea) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *GLArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -872,7 +872,7 @@ func (x *GLArea) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GLArea) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *GLArea) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -904,7 +904,7 @@ func (x *GLArea) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GLArea) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *GLArea) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -937,7 +937,7 @@ func (x *GLArea) UpdateState(FirstStateVar AccessibleState, varArgs ...interface
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GLArea) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *GLArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

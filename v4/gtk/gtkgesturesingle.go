@@ -49,21 +49,21 @@ func GestureSingleNewFromInternalPtr(ptr uintptr) *GestureSingle {
 	return cls
 }
 
-var xGestureSingleGetButton func(uintptr) uint32
+var xGestureSingleGetButton func(uintptr) uint
 
 // Returns the button number @gesture listens for.
 //
 // If this is 0, the gesture reacts to any button press.
-func (x *GestureSingle) GetButton() uint32 {
+func (x *GestureSingle) GetButton() uint {
 	cret := xGestureSingleGetButton(x.GoPointer())
 	return cret
 }
 
-var xGestureSingleGetCurrentButton func(uintptr) uint32
+var xGestureSingleGetCurrentButton func(uintptr) uint
 
 // Returns the button number currently interacting
 // with @gesture, or 0 if there is none.
-func (x *GestureSingle) GetCurrentButton() uint32 {
+func (x *GestureSingle) GetCurrentButton() uint {
 	cret := xGestureSingleGetCurrentButton(x.GoPointer())
 	return cret
 }
@@ -100,14 +100,14 @@ func (x *GestureSingle) GetTouchOnly() bool {
 	return cret
 }
 
-var xGestureSingleSetButton func(uintptr, uint32)
+var xGestureSingleSetButton func(uintptr, uint)
 
 // Sets the button number @gesture listens to.
 //
 // If non-0, every button press from a different button
 // number will be ignored. Touch events implicitly match
 // with button 1.
-func (x *GestureSingle) SetButton(ButtonVar uint32) {
+func (x *GestureSingle) SetButton(ButtonVar uint) {
 	xGestureSingleSetButton(x.GoPointer(), ButtonVar)
 }
 
@@ -146,19 +146,19 @@ func (c *GestureSingle) SetGoPointer(ptr uintptr) {
 
 // SetPropertyButton sets the "button" property.
 // Mouse button number to listen to, or 0 to listen for any button.
-func (x *GestureSingle) SetPropertyButton(value uint32) {
+func (x *GestureSingle) SetPropertyButton(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("button", &v)
 }
 
 // GetPropertyButton gets the "button" property.
 // Mouse button number to listen to, or 0 to listen for any button.
-func (x *GestureSingle) GetPropertyButton() uint32 {
+func (x *GestureSingle) GetPropertyButton() uint {
 	var v gobject.Value
 	x.GetProperty("button", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyExclusive sets the "exclusive" property.

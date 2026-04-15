@@ -97,7 +97,7 @@ func (c *AnyFilter) SetGoPointer(ptr uintptr) {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *AnyFilter) GetItem(PositionVar uint32) uintptr {
+func (x *AnyFilter) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -120,7 +120,7 @@ func (x *AnyFilter) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *AnyFilter) GetNItems() uint32 {
+func (x *AnyFilter) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -137,7 +137,7 @@ func (x *AnyFilter) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *AnyFilter) GetObject(PositionVar uint32) *gobject.Object {
+func (x *AnyFilter) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -170,7 +170,7 @@ func (x *AnyFilter) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *AnyFilter) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *AnyFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
@@ -244,7 +244,7 @@ func (c *EveryFilter) SetGoPointer(ptr uintptr) {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *EveryFilter) GetItem(PositionVar uint32) uintptr {
+func (x *EveryFilter) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -267,7 +267,7 @@ func (x *EveryFilter) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *EveryFilter) GetNItems() uint32 {
+func (x *EveryFilter) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -284,7 +284,7 @@ func (x *EveryFilter) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *EveryFilter) GetObject(PositionVar uint32) *gobject.Object {
+func (x *EveryFilter) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -317,7 +317,7 @@ func (x *EveryFilter) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *EveryFilter) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *EveryFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
@@ -354,13 +354,13 @@ func (x *MultiFilter) Append(FilterVar *Filter) {
 	xMultiFilterAppend(x.GoPointer(), FilterVar.GoPointer())
 }
 
-var xMultiFilterRemove func(uintptr, uint32)
+var xMultiFilterRemove func(uintptr, uint)
 
 // Removes a filter.
 //
 // If @position is larger than the number of filters,
 // nothing happens.
-func (x *MultiFilter) Remove(PositionVar uint32) {
+func (x *MultiFilter) Remove(PositionVar uint) {
 	xMultiFilterRemove(x.GoPointer(), PositionVar)
 }
 
@@ -379,10 +379,10 @@ func (c *MultiFilter) SetGoPointer(ptr uintptr) {
 // The number of items.
 //
 // See [method@Gio.ListModel.get_n_items].
-func (x *MultiFilter) GetPropertyNItems() uint32 {
+func (x *MultiFilter) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -394,7 +394,7 @@ func (x *MultiFilter) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *MultiFilter) GetItem(PositionVar uint32) uintptr {
+func (x *MultiFilter) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -417,7 +417,7 @@ func (x *MultiFilter) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *MultiFilter) GetNItems() uint32 {
+func (x *MultiFilter) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -434,7 +434,7 @@ func (x *MultiFilter) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *MultiFilter) GetObject(PositionVar uint32) *gobject.Object {
+func (x *MultiFilter) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -467,7 +467,7 @@ func (x *MultiFilter) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *MultiFilter) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *MultiFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

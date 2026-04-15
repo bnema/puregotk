@@ -70,13 +70,19 @@ func NewDBusMessageFromBlob(BlobVar []byte, BlobLenVar uint, CapabilitiesVar DBu
 	return cls, cerr
 }
 
-var xNewDBusMessageMethodCall func(string, string, string, string) uintptr
+var xNewDBusMessageMethodCall func(uintptr, string, uintptr, string) uintptr
 
 // Creates a new #GDBusMessage for a method call.
-func NewDBusMessageMethodCall(NameVar string, PathVar string, InterfaceVar string, MethodVar string) *DBusMessage {
+func NewDBusMessageMethodCall(NameVar *string, PathVar string, InterfaceVar *string, MethodVar string) *DBusMessage {
 	var cls *DBusMessage
 
-	cret := xNewDBusMessageMethodCall(NameVar, PathVar, InterfaceVar, MethodVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	InterfaceVarPtr := core.GStrdupNullable(InterfaceVar)
+	defer core.GFreeNullable(InterfaceVarPtr)
+
+	cret := xNewDBusMessageMethodCall(NameVarPtr, PathVar, InterfaceVarPtr, MethodVar)
 
 	if cret == 0 {
 		return nil
@@ -393,7 +399,7 @@ func (x *DBusMessage) NewMethodReply() *DBusMessage {
 	return cls
 }
 
-var xDBusMessagePrint func(uintptr, uint32) string
+var xDBusMessagePrint func(uintptr, uint) string
 
 // Produces a human-readable multi-line description of @message.
 //
@@ -435,7 +441,7 @@ var xDBusMessagePrint func(uintptr, uint32) string
 //	fd 12: dev=0:10,mode=020620,ino=5,uid=500,gid=5,rdev=136:2,size=0,atime=1273085037,mtime=1273085851,ctime=1272982635
 //
 // ```
-func (x *DBusMessage) Print(IndentVar uint32) string {
+func (x *DBusMessage) Print(IndentVar uint) string {
 	cret := xDBusMessagePrint(x.GoPointer(), IndentVar)
 	return cret
 }
@@ -458,11 +464,14 @@ func (x *DBusMessage) SetByteOrder(ByteOrderVar DBusMessageByteOrder) {
 	xDBusMessageSetByteOrder(x.GoPointer(), ByteOrderVar)
 }
 
-var xDBusMessageSetDestination func(uintptr, string)
+var xDBusMessageSetDestination func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION header field.
-func (x *DBusMessage) SetDestination(ValueVar string) {
-	xDBusMessageSetDestination(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetDestination(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetDestination(x.GoPointer(), ValueVarPtr)
 }
 
 var xDBusMessageSetErrorName func(uintptr, string)
@@ -488,18 +497,24 @@ func (x *DBusMessage) SetHeader(HeaderFieldVar DBusMessageHeaderField, ValueVar 
 	xDBusMessageSetHeader(x.GoPointer(), HeaderFieldVar, ValueVar)
 }
 
-var xDBusMessageSetInterface func(uintptr, string)
+var xDBusMessageSetInterface func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE header field.
-func (x *DBusMessage) SetInterface(ValueVar string) {
-	xDBusMessageSetInterface(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetInterface(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetInterface(x.GoPointer(), ValueVarPtr)
 }
 
-var xDBusMessageSetMember func(uintptr, string)
+var xDBusMessageSetMember func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_MEMBER header field.
-func (x *DBusMessage) SetMember(ValueVar string) {
-	xDBusMessageSetMember(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetMember(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetMember(x.GoPointer(), ValueVarPtr)
 }
 
 var xDBusMessageSetMessageType func(uintptr, DBusMessageType)
@@ -516,11 +531,14 @@ func (x *DBusMessage) SetNumUnixFds(ValueVar uint32) {
 	xDBusMessageSetNumUnixFds(x.GoPointer(), ValueVar)
 }
 
-var xDBusMessageSetPath func(uintptr, string)
+var xDBusMessageSetPath func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_PATH header field.
-func (x *DBusMessage) SetPath(ValueVar string) {
-	xDBusMessageSetPath(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetPath(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetPath(x.GoPointer(), ValueVarPtr)
 }
 
 var xDBusMessageSetReplySerial func(uintptr, uint32)
@@ -530,11 +548,14 @@ func (x *DBusMessage) SetReplySerial(ValueVar uint32) {
 	xDBusMessageSetReplySerial(x.GoPointer(), ValueVar)
 }
 
-var xDBusMessageSetSender func(uintptr, string)
+var xDBusMessageSetSender func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_SENDER header field.
-func (x *DBusMessage) SetSender(ValueVar string) {
-	xDBusMessageSetSender(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetSender(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetSender(x.GoPointer(), ValueVarPtr)
 }
 
 var xDBusMessageSetSerial func(uintptr, uint32)
@@ -547,11 +568,14 @@ func (x *DBusMessage) SetSerial(SerialVar uint32) {
 	xDBusMessageSetSerial(x.GoPointer(), SerialVar)
 }
 
-var xDBusMessageSetSignature func(uintptr, string)
+var xDBusMessageSetSignature func(uintptr, uintptr)
 
 // Convenience setter for the %G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE header field.
-func (x *DBusMessage) SetSignature(ValueVar string) {
-	xDBusMessageSetSignature(x.GoPointer(), ValueVar)
+func (x *DBusMessage) SetSignature(ValueVar *string) {
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
+
+	xDBusMessageSetSignature(x.GoPointer(), ValueVarPtr)
 }
 
 var xDBusMessageSetUnixFdList func(uintptr, uintptr)

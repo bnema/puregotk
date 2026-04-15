@@ -40,12 +40,15 @@ func (x *OptionContext) AddGroup(GroupVar *OptionGroup) {
 	xOptionContextAddGroup(x.GoPointer(), GroupVar)
 }
 
-var xOptionContextAddMainEntries func(uintptr, []OptionEntry, string)
+var xOptionContextAddMainEntries func(uintptr, []OptionEntry, uintptr)
 
 // A convenience function which creates a main group if it doesn't
 // exist, adds the @entries to it and sets the translation domain.
-func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar string) {
-	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, TranslationDomainVar)
+func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar *string) {
+	TranslationDomainVarPtr := core.GStrdupNullable(TranslationDomainVar)
+	defer core.GFreeNullable(TranslationDomainVarPtr)
+
+	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, TranslationDomainVarPtr)
 }
 
 var xOptionContextFree func(uintptr)
@@ -128,7 +131,7 @@ func (x *OptionContext) GetSummary() string {
 	return cret
 }
 
-var xOptionContextParse func(uintptr, *int32, *[]string, **Error) bool
+var xOptionContextParse func(uintptr, *int, *[]string, **Error) bool
 
 // Parses the command line arguments, recognizing options
 // which have been added to @context. A side-effect of
@@ -151,7 +154,7 @@ var xOptionContextParse func(uintptr, *int32, *[]string, **Error) bool
 // Note that function depends on the
 // [current locale](running.html#locale) for automatic
 // character set conversion of string and filename arguments.
-func (x *OptionContext) Parse(ArgcVar *int32, ArgvVar *[]string) (bool, error) {
+func (x *OptionContext) Parse(ArgcVar *int, ArgvVar *[]string) (bool, error) {
 	var cerr *Error
 
 	cret := xOptionContextParse(x.GoPointer(), ArgcVar, ArgvVar, &cerr)
@@ -189,15 +192,18 @@ func (x *OptionContext) ParseStrv(ArgumentsVar *[]string) (bool, error) {
 	return cret, cerr
 }
 
-var xOptionContextSetDescription func(uintptr, string)
+var xOptionContextSetDescription func(uintptr, uintptr)
 
 // Adds a string to be displayed in `--help` output after the list
 // of options. This text often includes a bug reporting address.
 //
 // Note that the summary is translated (see
 // g_option_context_set_translate_func()).
-func (x *OptionContext) SetDescription(DescriptionVar string) {
-	xOptionContextSetDescription(x.GoPointer(), DescriptionVar)
+func (x *OptionContext) SetDescription(DescriptionVar *string) {
+	DescriptionVarPtr := core.GStrdupNullable(DescriptionVar)
+	defer core.GFreeNullable(DescriptionVarPtr)
+
+	xOptionContextSetDescription(x.GoPointer(), DescriptionVarPtr)
 }
 
 var xOptionContextSetHelpEnabled func(uintptr, bool)
@@ -263,7 +269,7 @@ func (x *OptionContext) SetStrictPosix(StrictPosixVar bool) {
 	xOptionContextSetStrictPosix(x.GoPointer(), StrictPosixVar)
 }
 
-var xOptionContextSetSummary func(uintptr, string)
+var xOptionContextSetSummary func(uintptr, uintptr)
 
 // Adds a string to be displayed in `--help` output before the list
 // of options. This is typically a summary of the program functionality.
@@ -271,8 +277,11 @@ var xOptionContextSetSummary func(uintptr, string)
 // Note that the summary is translated (see
 // g_option_context_set_translate_func() and
 // g_option_context_set_translation_domain()).
-func (x *OptionContext) SetSummary(SummaryVar string) {
-	xOptionContextSetSummary(x.GoPointer(), SummaryVar)
+func (x *OptionContext) SetSummary(SummaryVar *string) {
+	SummaryVarPtr := core.GStrdupNullable(SummaryVar)
+	defer core.GFreeNullable(SummaryVarPtr)
+
+	xOptionContextSetSummary(x.GoPointer(), SummaryVarPtr)
 }
 
 var xOptionContextSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)

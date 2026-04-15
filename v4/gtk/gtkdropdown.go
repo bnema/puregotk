@@ -246,10 +246,10 @@ func (x *DropDown) GetSearchMatchMode() StringFilterMatchMode {
 	return cret
 }
 
-var xDropDownGetSelected func(uintptr) uint32
+var xDropDownGetSelected func(uintptr) uint
 
 // Gets the position of the selected item.
-func (x *DropDown) GetSelected() uint32 {
+func (x *DropDown) GetSelected() uint {
 	cret := xDropDownGetSelected(x.GoPointer())
 	return cret
 }
@@ -335,10 +335,10 @@ func (x *DropDown) SetSearchMatchMode(SearchMatchModeVar StringFilterMatchMode) 
 	xDropDownSetSearchMatchMode(x.GoPointer(), SearchMatchModeVar)
 }
 
-var xDropDownSetSelected func(uintptr, uint32)
+var xDropDownSetSelected func(uintptr, uint)
 
 // Selects the item at the given position.
-func (x *DropDown) SetSelected(PositionVar uint32) {
+func (x *DropDown) SetSelected(PositionVar uint) {
 	xDropDownSetSelected(x.GoPointer(), PositionVar)
 }
 
@@ -388,10 +388,10 @@ func (x *DropDown) GetPropertyEnableSearch() bool {
 //
 // If no item is selected, the property has the value
 // %GTK_INVALID_LIST_POSITION.
-func (x *DropDown) SetPropertySelected(value uint32) {
+func (x *DropDown) SetPropertySelected(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("selected", &v)
 }
 
@@ -400,10 +400,10 @@ func (x *DropDown) SetPropertySelected(value uint32) {
 //
 // If no item is selected, the property has the value
 // %GTK_INVALID_LIST_POSITION.
-func (x *DropDown) GetPropertySelected() uint32 {
+func (x *DropDown) GetPropertySelected() uint {
 	var v gobject.Value
 	x.GetProperty("selected", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyShowArrow sets the "show-arrow" property.
@@ -427,7 +427,7 @@ func (x *DropDown) GetPropertyShowArrow() bool {
 //
 // The `::activate` signal on `GtkDropDown` is an action signal and
 // emitting it causes the drop down to pop up its dropdown.
-func (x *DropDown) ConnectActivate(cb *func(DropDown)) uint32 {
+func (x *DropDown) ConnectActivate(cb *func(DropDown)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -515,7 +515,7 @@ func (x *DropDown) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *DropDown) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *DropDown) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -631,7 +631,7 @@ func (x *DropDown) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DropDown) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *DropDown) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -663,7 +663,7 @@ func (x *DropDown) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DropDown) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *DropDown) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -696,7 +696,7 @@ func (x *DropDown) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DropDown) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *DropDown) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

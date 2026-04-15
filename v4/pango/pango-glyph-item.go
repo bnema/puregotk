@@ -24,11 +24,11 @@ type GlyphItem struct {
 
 	Glyphs *GlyphString
 
-	YOffset int32
+	YOffset int
 
-	StartXOffset int32
+	StartXOffset int
 
-	EndXOffset int32
+	EndXOffset int
 }
 
 var xGlyphItemGLibType func() types.GType
@@ -86,7 +86,7 @@ func (x *GlyphItem) Free() {
 	xGlyphItemFree(x.GoPointer())
 }
 
-var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int32)
+var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int)
 
 // Given a `PangoGlyphItem` and the corresponding text, determine the
 // width corresponding to each character.
@@ -95,19 +95,19 @@ var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int32)
 // entire cluster is divided equally among the characters.
 //
 // See also [method@Pango.GlyphString.get_logical_widths].
-func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar *[]int32) {
+func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar *[]int) {
 	xGlyphItemGetLogicalWidths(x.GoPointer(), TextVar, LogicalWidthsVar)
 }
 
-var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int32)
+var xGlyphItemLetterSpace func(uintptr, string, []LogAttr, int)
 
 // Adds spacing between the graphemes of @glyph_item to
 // give the effect of typographic letter spacing.
-func (x *GlyphItem) LetterSpace(TextVar string, LogAttrsVar []LogAttr, LetterSpacingVar int32) {
+func (x *GlyphItem) LetterSpace(TextVar string, LogAttrsVar []LogAttr, LetterSpacingVar int) {
 	xGlyphItemLetterSpace(x.GoPointer(), TextVar, LogAttrsVar, LetterSpacingVar)
 }
 
-var xGlyphItemSplit func(uintptr, string, int32) uintptr
+var xGlyphItemSplit func(uintptr, string, int) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -120,7 +120,7 @@ var xGlyphItemSplit func(uintptr, string, int32) uintptr
 //
 // This function is similar in function to pango_item_split() (and uses
 // it internally.)
-func (x *GlyphItem) Split(TextVar string, SplitIndexVar int32) *GlyphItem {
+func (x *GlyphItem) Split(TextVar string, SplitIndexVar int) *GlyphItem {
 	cret := xGlyphItemSplit(x.GoPointer(), TextVar, SplitIndexVar)
 	if cret == 0 {
 		return nil
@@ -178,17 +178,17 @@ type GlyphItemIter struct {
 
 	Text uintptr
 
-	StartGlyph int32
+	StartGlyph int
 
-	StartIndex int32
+	StartIndex int
 
-	StartChar int32
+	StartChar int
 
-	EndGlyph int32
+	EndGlyph int
 
-	EndIndex int32
+	EndIndex int
 
-	EndChar int32
+	EndChar int
 }
 
 var xGlyphItemIterGLibType func() types.GType

@@ -16,7 +16,7 @@ type Array struct {
 
 	Data uintptr
 
-	Len uint32
+	Len uint
 }
 
 var xArrayGLibType func() types.GType
@@ -35,7 +35,7 @@ type ByteArray struct {
 
 	Data byte
 
-	Len uint32
+	Len uint
 }
 
 var xByteArrayGLibType func() types.GType
@@ -181,7 +181,7 @@ func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNoti
 	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xBytesCompare func(uintptr, uintptr) int32
+var xBytesCompare func(uintptr, uintptr) int
 
 // Compares the two [struct@GLib.Bytes] values.
 //
@@ -193,7 +193,7 @@ var xBytesCompare func(uintptr, uintptr) int32
 // the longer one. Otherwise the first byte where both differ is used for
 // comparison. If @bytes1 has a smaller value at that position it is
 // considered less, otherwise greater than @bytes2.
-func (x *Bytes) Compare(Bytes2Var uintptr) int32 {
+func (x *Bytes) Compare(Bytes2Var uintptr) int {
 	cret := xBytesCompare(x.GoPointer(), Bytes2Var)
 	return cret
 }
@@ -264,14 +264,14 @@ func (x *Bytes) GetSize() uint {
 	return cret
 }
 
-var xBytesHash func(uintptr) uint32
+var xBytesHash func(uintptr) uint
 
 // Creates an integer hash code for the byte data in the [struct@GLib.Bytes].
 //
 // This function can be passed to [func@GLib.HashTable.new] as the
 // @key_hash_func parameter, when using non-`NULL` `GBytes` pointers as keys in
 // a [struct@GLib.HashTable].
-func (x *Bytes) Hash() uint32 {
+func (x *Bytes) Hash() uint {
 	cret := xBytesHash(x.GoPointer())
 	return cret
 }
@@ -339,7 +339,7 @@ type PtrArray struct {
 
 	Pdata uintptr
 
-	Len uint32
+	Len uint
 }
 
 var xPtrArrayGLibType func() types.GType
@@ -402,11 +402,11 @@ func ArrayNewTakeZeroTerminated(DataVar uintptr, ClearVar bool, ElementSizeVar u
 	return cret
 }
 
-var xByteArrayAppend func([]byte, []byte, uint32) uintptr
+var xByteArrayAppend func([]byte, []byte, uint) uintptr
 
 // Adds the given bytes to the end of the `GByteArray`.
 // The array will grow in size automatically if necessary.
-func ByteArrayAppend(ArrayVar []byte, DataVar []byte, LenVar uint32) uintptr {
+func ByteArrayAppend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 	cret := xByteArrayAppend(ArrayVar, DataVar, LenVar)
 	return cret
 }
@@ -464,11 +464,11 @@ func ByteArrayNewTake(DataVar []byte, LenVar uint) uintptr {
 	return cret
 }
 
-var xByteArrayPrepend func([]byte, []byte, uint32) uintptr
+var xByteArrayPrepend func([]byte, []byte, uint) uintptr
 
 // Adds the given data to the start of the `GByteArray`.
 // The array will grow in size automatically if necessary.
-func ByteArrayPrepend(ArrayVar []byte, DataVar []byte, LenVar uint32) uintptr {
+func ByteArrayPrepend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 	cret := xByteArrayPrepend(ArrayVar, DataVar, LenVar)
 	return cret
 }
@@ -482,50 +482,50 @@ func ByteArrayRef(ArrayVar []byte) uintptr {
 	return cret
 }
 
-var xByteArrayRemoveIndex func([]byte, uint32) uintptr
+var xByteArrayRemoveIndex func([]byte, uint) uintptr
 
 // Removes the byte at the given index from a `GByteArray`.
 // The following bytes are moved down one place.
-func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint32) uintptr {
+func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
 	cret := xByteArrayRemoveIndex(ArrayVar, IndexVar)
 	return cret
 }
 
-var xByteArrayRemoveIndexFast func([]byte, uint32) uintptr
+var xByteArrayRemoveIndexFast func([]byte, uint) uintptr
 
 // Removes the byte at the given index from a `GByteArray`. The last
 // element in the array is used to fill in the space, so this function
 // does not preserve the order of the `GByteArray`. But it is faster
 // than [func@GLib.ByteArray.remove_index].
-func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint32) uintptr {
+func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
 	cret := xByteArrayRemoveIndexFast(ArrayVar, IndexVar)
 	return cret
 }
 
-var xByteArrayRemoveRange func([]byte, uint32, uint32) uintptr
+var xByteArrayRemoveRange func([]byte, uint, uint) uintptr
 
 // Removes the given number of bytes starting at the given index from a
 // `GByteArray`. The following elements are moved to close the gap.
-func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint32, LengthVar uint32) uintptr {
+func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintptr {
 	cret := xByteArrayRemoveRange(ArrayVar, IndexVar, LengthVar)
 	return cret
 }
 
-var xByteArraySetSize func([]byte, uint32) uintptr
+var xByteArraySetSize func([]byte, uint) uintptr
 
 // Sets the size of the `GByteArray`, expanding it if necessary.
-func ByteArraySetSize(ArrayVar []byte, LengthVar uint32) uintptr {
+func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
 	cret := xByteArraySetSize(ArrayVar, LengthVar)
 	return cret
 }
 
-var xByteArraySizedNew func(uint32) uintptr
+var xByteArraySizedNew func(uint) uintptr
 
 // Creates a new `GByteArray` with @reserved_size bytes preallocated.
 // This avoids frequent reallocation, if you are going to add many
 // bytes to the array. Note however that the size of the array is still
 // 0.
-func ByteArraySizedNew(ReservedSizeVar uint32) uintptr {
+func ByteArraySizedNew(ReservedSizeVar uint) uintptr {
 	cret := xByteArraySizedNew(ReservedSizeVar)
 	return cret
 }
@@ -574,7 +574,7 @@ func ByteArrayUnref(ArrayVar []byte) {
 	xByteArrayUnref(ArrayVar)
 }
 
-var xPtrArrayFind func([]uintptr, uintptr, *uint32) bool
+var xPtrArrayFind func([]uintptr, uintptr, *uint) bool
 
 // Checks whether @needle exists in @haystack. If the element is found, true
 // is returned and the element’s index is returned in @index_ (if non-`NULL`).
@@ -584,12 +584,12 @@ var xPtrArrayFind func([]uintptr, uintptr, *uint32) bool
 // This does pointer comparisons only. If you want to use more complex equality
 // checks, such as string comparisons, use
 // [func@GLib.PtrArray.find_with_equal_func].
-func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar *uint32) bool {
+func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar *uint) bool {
 	cret := xPtrArrayFind(HaystackVar, NeedleVar, IndexVar)
 	return cret
 }
 
-var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, *uint32) bool
+var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, *uint) bool
 
 // Checks whether @needle exists in @haystack, using the given @equal_func.
 // If the element is found, true is returned and the element’s index is
@@ -600,7 +600,7 @@ var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, *uint32) bool
 // @equal_func is called with the element from the array as its first parameter,
 // and @needle as its second parameter. If @equal_func is `NULL`, pointer
 // equality is used.
-func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFuncVar *EqualFunc, IndexVar *uint32) bool {
+func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFuncVar *EqualFunc, IndexVar *uint) bool {
 	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, NewCallbackNullable(EqualFuncVar), IndexVar)
 	return cret
 }

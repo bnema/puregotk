@@ -149,7 +149,7 @@ func (x *Banner) GetUseMarkup() bool {
 	return cret
 }
 
-var xBannerSetButtonLabel func(uintptr, string)
+var xBannerSetButtonLabel func(uintptr, uintptr)
 
 // Sets the button label for @self.
 //
@@ -157,8 +157,11 @@ var xBannerSetButtonLabel func(uintptr, string)
 //
 // The button can be used with a `GAction`, or with the
 // [signal@Banner::button-clicked] signal.
-func (x *Banner) SetButtonLabel(LabelVar string) {
-	xBannerSetButtonLabel(x.GoPointer(), LabelVar)
+func (x *Banner) SetButtonLabel(LabelVar *string) {
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	xBannerSetButtonLabel(x.GoPointer(), LabelVarPtr)
 }
 
 var xBannerSetButtonStyle func(uintptr, BannerButtonStyle)
@@ -225,7 +228,7 @@ func (c *Banner) SetGoPointer(ptr uintptr) {
 func (x *Banner) SetPropertyButtonLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("button-label", &v)
 }
 
@@ -266,7 +269,7 @@ func (x *Banner) GetPropertyRevealed() bool {
 func (x *Banner) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -304,7 +307,7 @@ func (x *Banner) GetPropertyUseMarkup() bool {
 // This signal is emitted after the action button has been clicked.
 //
 // It can be used as an alternative to setting an action.
-func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
+func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
@@ -392,7 +395,7 @@ func (x *Banner) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Banner) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Banner) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -508,7 +511,7 @@ func (x *Banner) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Banner) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Banner) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -540,7 +543,7 @@ func (x *Banner) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Banner) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Banner) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -573,7 +576,7 @@ func (x *Banner) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Banner) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *Banner) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -605,8 +608,11 @@ func (x *Banner) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *Banner) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *Banner) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

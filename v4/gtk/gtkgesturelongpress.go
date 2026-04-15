@@ -115,7 +115,7 @@ func (x *GestureLongPress) GetPropertyDelayFactor() float64 {
 
 // Emitted whenever a press moved too far, or was released
 // before [signal@Gtk.GestureLongPress::pressed] happened.
-func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
+func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
@@ -139,7 +139,7 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 
 // Emitted whenever a press goes unmoved/unreleased longer than
 // what the GTK defaults tell.
-func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, float64)) uint32 {
+func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)

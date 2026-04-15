@@ -81,18 +81,18 @@ func NewClampLayout() *ClampLayout {
 	return cls
 }
 
-var xClampLayoutGetMaximumSize func(uintptr) int32
+var xClampLayoutGetMaximumSize func(uintptr) int
 
 // Gets the maximum size allocated to the children.
-func (x *ClampLayout) GetMaximumSize() int32 {
+func (x *ClampLayout) GetMaximumSize() int {
 	cret := xClampLayoutGetMaximumSize(x.GoPointer())
 	return cret
 }
 
-var xClampLayoutGetTighteningThreshold func(uintptr) int32
+var xClampLayoutGetTighteningThreshold func(uintptr) int
 
 // Gets the size above which the children are clamped.
-func (x *ClampLayout) GetTighteningThreshold() int32 {
+func (x *ClampLayout) GetTighteningThreshold() int {
 	cret := xClampLayoutGetTighteningThreshold(x.GoPointer())
 	return cret
 }
@@ -105,16 +105,16 @@ func (x *ClampLayout) GetUnit() LengthUnit {
 	return cret
 }
 
-var xClampLayoutSetMaximumSize func(uintptr, int32)
+var xClampLayoutSetMaximumSize func(uintptr, int)
 
 // Sets the maximum size allocated to the children.
 //
 // It is the width if the layout is horizontal, or the height if it is vertical.
-func (x *ClampLayout) SetMaximumSize(MaximumSizeVar int32) {
+func (x *ClampLayout) SetMaximumSize(MaximumSizeVar int) {
 	xClampLayoutSetMaximumSize(x.GoPointer(), MaximumSizeVar)
 }
 
-var xClampLayoutSetTighteningThreshold func(uintptr, int32)
+var xClampLayoutSetTighteningThreshold func(uintptr, int)
 
 // Sets the size above which the children are clamped.
 //
@@ -130,7 +130,7 @@ var xClampLayoutSetTighteningThreshold func(uintptr, int32)
 //
 // Effectively, tightening the grip on a child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
-func (x *ClampLayout) SetTighteningThreshold(TighteningThresholdVar int32) {
+func (x *ClampLayout) SetTighteningThreshold(TighteningThresholdVar int) {
 	xClampLayoutSetTighteningThreshold(x.GoPointer(), TighteningThresholdVar)
 }
 
@@ -159,10 +159,10 @@ func (c *ClampLayout) SetGoPointer(ptr uintptr) {
 //
 // It is the width if the layout is horizontal, or the height if it is
 // vertical.
-func (x *ClampLayout) SetPropertyMaximumSize(value int32) {
+func (x *ClampLayout) SetPropertyMaximumSize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("maximum-size", &v)
 }
 
@@ -171,10 +171,10 @@ func (x *ClampLayout) SetPropertyMaximumSize(value int32) {
 //
 // It is the width if the layout is horizontal, or the height if it is
 // vertical.
-func (x *ClampLayout) GetPropertyMaximumSize() int32 {
+func (x *ClampLayout) GetPropertyMaximumSize() int {
 	var v gobject.Value
 	x.GetProperty("maximum-size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyTighteningThreshold sets the "tightening-threshold" property.
@@ -192,10 +192,10 @@ func (x *ClampLayout) GetPropertyMaximumSize() int32 {
 //
 // Effectively, tightening the grip on a child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
-func (x *ClampLayout) SetPropertyTighteningThreshold(value int32) {
+func (x *ClampLayout) SetPropertyTighteningThreshold(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("tightening-threshold", &v)
 }
 
@@ -214,10 +214,10 @@ func (x *ClampLayout) SetPropertyTighteningThreshold(value int32) {
 //
 // Effectively, tightening the grip on a child before it reaches its maximum
 // size makes transitions to and from the maximum size smoother when resizing.
-func (x *ClampLayout) GetPropertyTighteningThreshold() int32 {
+func (x *ClampLayout) GetPropertyTighteningThreshold() int {
 	var v gobject.Value
 	x.GetProperty("tightening-threshold", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Retrieves the orientation of the @orientable.

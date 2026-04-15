@@ -208,29 +208,35 @@ func (x *Subprocess) CommunicateFinish(ResultVar AsyncResult, StdoutBufVar **gli
 	return cret, cerr
 }
 
-var xSubprocessCommunicateUtf8 func(uintptr, string, uintptr, *string, *string, **glib.Error) bool
+var xSubprocessCommunicateUtf8 func(uintptr, uintptr, uintptr, *string, *string, **glib.Error) bool
 
 // Like g_subprocess_communicate(), but validates the output of the
 // process as UTF-8, and returns it as a regular NUL terminated string.
 //
 // On error, @stdout_buf and @stderr_buf will be set to undefined values and
 // should not be used.
-func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
+func (x *Subprocess) CommunicateUtf8(StdinBufVar *string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+	StdinBufVarPtr := core.GStrdupNullable(StdinBufVar)
+	defer core.GFreeNullable(StdinBufVarPtr)
+
+	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uintptr)
+var xSubprocessCommunicateUtf8Async func(uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronous version of g_subprocess_communicate_utf8().  Complete
 // invocation with g_subprocess_communicate_utf8_finish().
-func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *Subprocess) CommunicateUtf8Async(StdinBufVar *string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	StdinBufVarPtr := core.GStrdupNullable(StdinBufVar)
+	defer core.GFreeNullable(StdinBufVarPtr)
+
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xSubprocessCommunicateUtf8Finish func(uintptr, uintptr, *string, *string, **glib.Error) bool
@@ -259,7 +265,7 @@ func (x *Subprocess) ForceExit() {
 	xSubprocessForceExit(x.GoPointer())
 }
 
-var xSubprocessGetExitStatus func(uintptr) int32
+var xSubprocessGetExitStatus func(uintptr) int
 
 // Check the exit status of the subprocess, given that it exited
 // normally.  This is the value passed to the exit() system call or the
@@ -269,7 +275,7 @@ var xSubprocessGetExitStatus func(uintptr) int32
 //
 // It is an error to call this function before g_subprocess_wait() and
 // unless g_subprocess_get_if_exited() returned %TRUE.
-func (x *Subprocess) GetExitStatus() int32 {
+func (x *Subprocess) GetExitStatus() int {
 	cret := xSubprocessGetExitStatus(x.GoPointer())
 	return cret
 }
@@ -311,7 +317,7 @@ func (x *Subprocess) GetIfSignaled() bool {
 	return cret
 }
 
-var xSubprocessGetStatus func(uintptr) int32
+var xSubprocessGetStatus func(uintptr) int
 
 // Gets the raw status code of the process, as from waitpid().
 //
@@ -324,7 +330,7 @@ var xSubprocessGetStatus func(uintptr) int32
 //
 // It is an error to call this function before g_subprocess_wait() has
 // returned.
-func (x *Subprocess) GetStatus() int32 {
+func (x *Subprocess) GetStatus() int {
 	cret := xSubprocessGetStatus(x.GoPointer())
 	return cret
 }
@@ -405,7 +411,7 @@ func (x *Subprocess) GetSuccessful() bool {
 	return cret
 }
 
-var xSubprocessGetTermSig func(uintptr) int32
+var xSubprocessGetTermSig func(uintptr) int
 
 // Get the signal number that caused the subprocess to terminate, given
 // that it terminated due to a signal.
@@ -414,12 +420,12 @@ var xSubprocessGetTermSig func(uintptr) int32
 //
 // It is an error to call this function before g_subprocess_wait() and
 // unless g_subprocess_get_if_signaled() returned %TRUE.
-func (x *Subprocess) GetTermSig() int32 {
+func (x *Subprocess) GetTermSig() int {
 	cret := xSubprocessGetTermSig(x.GoPointer())
 	return cret
 }
 
-var xSubprocessSendSignal func(uintptr, int32)
+var xSubprocessSendSignal func(uintptr, int)
 
 // Sends the UNIX signal @signal_num to the subprocess, if it is still
 // running.
@@ -428,7 +434,7 @@ var xSubprocessSendSignal func(uintptr, int32)
 // be signalled.
 //
 // This API is not available on Windows.
-func (x *Subprocess) SendSignal(SignalNumVar int32) {
+func (x *Subprocess) SendSignal(SignalNumVar int) {
 	xSubprocessSendSignal(x.GoPointer(), SignalNumVar)
 }
 

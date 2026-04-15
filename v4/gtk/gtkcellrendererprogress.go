@@ -84,10 +84,10 @@ func (x *CellRendererProgress) GetPropertyInverted() bool {
 //
 // To indicate that the activity has not started yet, set the property
 // to zero. To indicate completion, set the property to %G_MAXINT.
-func (x *CellRendererProgress) SetPropertyPulse(value int32) {
+func (x *CellRendererProgress) SetPropertyPulse(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("pulse", &v)
 }
 
@@ -102,10 +102,10 @@ func (x *CellRendererProgress) SetPropertyPulse(value int32) {
 //
 // To indicate that the activity has not started yet, set the property
 // to zero. To indicate completion, set the property to %G_MAXINT.
-func (x *CellRendererProgress) GetPropertyPulse() int32 {
+func (x *CellRendererProgress) GetPropertyPulse() int {
 	var v gobject.Value
 	x.GetProperty("pulse", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyText sets the "text" property.
@@ -116,7 +116,7 @@ func (x *CellRendererProgress) GetPropertyPulse() int32 {
 func (x *CellRendererProgress) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -176,20 +176,20 @@ func (x *CellRendererProgress) GetPropertyTextYalign() float32 {
 // SetPropertyValue sets the "value" property.
 // The "value" property determines the percentage to which the
 // progress bar will be "filled in".
-func (x *CellRendererProgress) SetPropertyValue(value int32) {
+func (x *CellRendererProgress) SetPropertyValue(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("value", &v)
 }
 
 // GetPropertyValue gets the "value" property.
 // The "value" property determines the percentage to which the
 // progress bar will be "filled in".
-func (x *CellRendererProgress) GetPropertyValue() int32 {
+func (x *CellRendererProgress) GetPropertyValue() int {
 	var v gobject.Value
 	x.GetProperty("value", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Retrieves the orientation of the @orientable.

@@ -130,18 +130,18 @@ func (x *GridView) GetFactory() *ListItemFactory {
 	return cls
 }
 
-var xGridViewGetMaxColumns func(uintptr) uint32
+var xGridViewGetMaxColumns func(uintptr) uint
 
 // Gets the maximum number of columns that the grid will use.
-func (x *GridView) GetMaxColumns() uint32 {
+func (x *GridView) GetMaxColumns() uint {
 	cret := xGridViewGetMaxColumns(x.GoPointer())
 	return cret
 }
 
-var xGridViewGetMinColumns func(uintptr) uint32
+var xGridViewGetMinColumns func(uintptr) uint
 
 // Gets the minimum number of columns that the grid will use.
-func (x *GridView) GetMinColumns() uint32 {
+func (x *GridView) GetMinColumns() uint {
 	cret := xGridViewGetMinColumns(x.GoPointer())
 	return cret
 }
@@ -180,14 +180,14 @@ func (x *GridView) GetTabBehavior() ListTabBehavior {
 	return cret
 }
 
-var xGridViewScrollTo func(uintptr, uint32, ListScrollFlags, *ScrollInfo)
+var xGridViewScrollTo func(uintptr, uint, ListScrollFlags, *ScrollInfo)
 
 // Scrolls to the item at the given position and performs the actions
 // specified in @flags.
 //
 // This function works no matter if the gridview is shown or focused.
 // If it isn't, then the changes will take effect once that happens.
-func (x *GridView) ScrollTo(PosVar uint32, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
+func (x *GridView) ScrollTo(PosVar uint, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
 	xGridViewScrollTo(x.GoPointer(), PosVar, FlagsVar, ScrollVar)
 }
 
@@ -205,7 +205,7 @@ func (x *GridView) SetFactory(FactoryVar *ListItemFactory) {
 	xGridViewSetFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
-var xGridViewSetMaxColumns func(uintptr, uint32)
+var xGridViewSetMaxColumns func(uintptr, uint)
 
 // Sets the maximum number of columns to use.
 //
@@ -213,11 +213,11 @@ var xGridViewSetMaxColumns func(uintptr, uint32)
 //
 // If @max_columns is smaller than the minimum set via
 // [method@Gtk.GridView.set_min_columns], that value is used instead.
-func (x *GridView) SetMaxColumns(MaxColumnsVar uint32) {
+func (x *GridView) SetMaxColumns(MaxColumnsVar uint) {
 	xGridViewSetMaxColumns(x.GoPointer(), MaxColumnsVar)
 }
 
-var xGridViewSetMinColumns func(uintptr, uint32)
+var xGridViewSetMinColumns func(uintptr, uint)
 
 // Sets the minimum number of columns to use.
 //
@@ -225,7 +225,7 @@ var xGridViewSetMinColumns func(uintptr, uint32)
 //
 // If @min_columns is smaller than the minimum set via
 // [method@Gtk.GridView.set_max_columns], that value is ignored.
-func (x *GridView) SetMinColumns(MinColumnsVar uint32) {
+func (x *GridView) SetMinColumns(MinColumnsVar uint) {
 	xGridViewSetMinColumns(x.GoPointer(), MinColumnsVar)
 }
 
@@ -286,10 +286,10 @@ func (x *GridView) GetPropertyEnableRubberband() bool {
 //
 // If this number is smaller than [property@Gtk.GridView:min-columns],
 // that value is used instead.
-func (x *GridView) SetPropertyMaxColumns(value uint32) {
+func (x *GridView) SetPropertyMaxColumns(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("max-columns", &v)
 }
 
@@ -298,27 +298,27 @@ func (x *GridView) SetPropertyMaxColumns(value uint32) {
 //
 // If this number is smaller than [property@Gtk.GridView:min-columns],
 // that value is used instead.
-func (x *GridView) GetPropertyMaxColumns() uint32 {
+func (x *GridView) GetPropertyMaxColumns() uint {
 	var v gobject.Value
 	x.GetProperty("max-columns", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyMinColumns sets the "min-columns" property.
 // Minimum number of columns per row.
-func (x *GridView) SetPropertyMinColumns(value uint32) {
+func (x *GridView) SetPropertyMinColumns(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("min-columns", &v)
 }
 
 // GetPropertyMinColumns gets the "min-columns" property.
 // Minimum number of columns per row.
-func (x *GridView) GetPropertyMinColumns() uint32 {
+func (x *GridView) GetPropertyMinColumns() uint {
 	var v gobject.Value
 	x.GetProperty("min-columns", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertySingleClickActivate sets the "single-click-activate" property.
@@ -344,7 +344,7 @@ func (x *GridView) GetPropertySingleClickActivate() bool {
 // This allows for a convenient way to handle activation in a gridview.
 // See [property@Gtk.ListItem:activatable] for details on how to use
 // this signal.
-func (x *GridView) ConnectActivate(cb *func(GridView, uint32)) uint32 {
+func (x *GridView) ConnectActivate(cb *func(GridView, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -352,7 +352,7 @@ func (x *GridView) ConnectActivate(cb *func(GridView, uint32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PositionVarp uint32) {
+	fcb := func(clsPtr uintptr, PositionVarp uint) {
 		fa := GridView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -432,7 +432,7 @@ func (x *GridView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *GridView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *GridView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -548,7 +548,7 @@ func (x *GridView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GridView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *GridView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -580,7 +580,7 @@ func (x *GridView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GridView) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *GridView) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -613,7 +613,7 @@ func (x *GridView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *GridView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *GridView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

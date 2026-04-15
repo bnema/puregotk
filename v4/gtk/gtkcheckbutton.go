@@ -180,13 +180,16 @@ func NewCheckButton() *CheckButton {
 	return cls
 }
 
-var xNewCheckButtonWithLabel func(string) uintptr
+var xNewCheckButtonWithLabel func(uintptr) uintptr
 
 // Creates a new `GtkCheckButton` with the given text.
-func NewCheckButtonWithLabel(LabelVar string) *CheckButton {
+func NewCheckButtonWithLabel(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	cret := xNewCheckButtonWithLabel(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewCheckButtonWithLabel(LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -197,13 +200,16 @@ func NewCheckButtonWithLabel(LabelVar string) *CheckButton {
 	return cls
 }
 
-var xNewCheckButtonWithMnemonic func(string) uintptr
+var xNewCheckButtonWithMnemonic func(uintptr) uintptr
 
 // Creates a new `GtkCheckButton` with the given text and a mnemonic.
-func NewCheckButtonWithMnemonic(LabelVar string) *CheckButton {
+func NewCheckButtonWithMnemonic(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	cret := xNewCheckButtonWithMnemonic(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewCheckButtonWithMnemonic(LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -314,15 +320,18 @@ func (x *CheckButton) SetInconsistent(InconsistentVar bool) {
 	xCheckButtonSetInconsistent(x.GoPointer(), InconsistentVar)
 }
 
-var xCheckButtonSetLabel func(uintptr, string)
+var xCheckButtonSetLabel func(uintptr, uintptr)
 
 // Sets the text of @self.
 //
 // If [property@Gtk.CheckButton:use-underline] is %TRUE, an underscore
 // in @label is interpreted as mnemonic indicator, see
 // [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
-func (x *CheckButton) SetLabel(LabelVar string) {
-	xCheckButtonSetLabel(x.GoPointer(), LabelVar)
+func (x *CheckButton) SetLabel(LabelVar *string) {
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	xCheckButtonSetLabel(x.GoPointer(), LabelVarPtr)
 }
 
 var xCheckButtonSetUseUnderline func(uintptr, bool)
@@ -398,7 +407,7 @@ func (x *CheckButton) GetPropertyInconsistent() bool {
 func (x *CheckButton) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -439,7 +448,7 @@ func (x *CheckButton) GetPropertyUseUnderline() bool {
 //
 // The default bindings for this signal are all forms of the
 // &lt;kbd&gt;␣&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt; keys.
-func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint32 {
+func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -463,7 +472,7 @@ func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint32 {
 
 // Emitted when the buttons's [property@Gtk.CheckButton:active]
 // property changes.
-func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint32 {
+func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
@@ -551,7 +560,7 @@ func (x *CheckButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *CheckButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *CheckButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -667,7 +676,7 @@ func (x *CheckButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *CheckButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *CheckButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -699,7 +708,7 @@ func (x *CheckButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *CheckButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *CheckButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -732,7 +741,7 @@ func (x *CheckButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *CheckButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *CheckButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -764,8 +773,11 @@ func (x *CheckButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *CheckButton) SetActionName(ActionNameVar string) {
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *CheckButton) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

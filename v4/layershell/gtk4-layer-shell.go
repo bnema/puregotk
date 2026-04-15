@@ -78,9 +78,9 @@ func GetAnchor(WindowVar *gtk.Window, EdgeVar Edge) bool {
 	return cret
 }
 
-var xGetExclusiveZone func(uintptr) int32
+var xGetExclusiveZone func(uintptr) int
 
-func GetExclusiveZone(WindowVar *gtk.Window) int32 {
+func GetExclusiveZone(WindowVar *gtk.Window) int {
 	cret := xGetExclusiveZone(WindowVar.GoPointer())
 	return cret
 }
@@ -99,30 +99,30 @@ func GetLayer(WindowVar *gtk.Window) Layer {
 	return cret
 }
 
-var xGetMajorVersion func() uint32
+var xGetMajorVersion func() uint
 
-func GetMajorVersion() uint32 {
+func GetMajorVersion() uint {
 	cret := xGetMajorVersion()
 	return cret
 }
 
-var xGetMargin func(uintptr, Edge) int32
+var xGetMargin func(uintptr, Edge) int
 
-func GetMargin(WindowVar *gtk.Window, EdgeVar Edge) int32 {
+func GetMargin(WindowVar *gtk.Window, EdgeVar Edge) int {
 	cret := xGetMargin(WindowVar.GoPointer(), EdgeVar)
 	return cret
 }
 
-var xGetMicroVersion func() uint32
+var xGetMicroVersion func() uint
 
-func GetMicroVersion() uint32 {
+func GetMicroVersion() uint {
 	cret := xGetMicroVersion()
 	return cret
 }
 
-var xGetMinorVersion func() uint32
+var xGetMinorVersion func() uint
 
-func GetMinorVersion() uint32 {
+func GetMinorVersion() uint {
 	cret := xGetMinorVersion()
 	return cret
 }
@@ -154,10 +154,10 @@ func GetNamespace(WindowVar *gtk.Window) string {
 	return cret
 }
 
-var xGetProtocolVersion func() uint32
+var xGetProtocolVersion func() uint
 
 // May block for a Wayland roundtrip the first time it's called.
-func GetProtocolVersion() uint32 {
+func GetProtocolVersion() uint {
 	cret := xGetProtocolVersion()
 	return cret
 }
@@ -210,7 +210,7 @@ func SetAnchor(WindowVar *gtk.Window, EdgeVar Edge, AnchorToEdgeVar bool) {
 	xSetAnchor(WindowVar.GoPointer(), EdgeVar, AnchorToEdgeVar)
 }
 
-var xSetExclusiveZone func(uintptr, int32)
+var xSetExclusiveZone func(uintptr, int)
 
 // Has no effect unless the surface is anchored to an edge. Requests that the compositor
 // does not place other surfaces within the given exclusive zone of the anchored edge.
@@ -218,7 +218,7 @@ var xSetExclusiveZone func(uintptr, int32)
 // wlr-layer-shell-unstable-v1.xml for details.
 //
 // Default is 0
-func SetExclusiveZone(WindowVar *gtk.Window, ExclusiveZoneVar int32) {
+func SetExclusiveZone(WindowVar *gtk.Window, ExclusiveZoneVar int) {
 	xSetExclusiveZone(WindowVar.GoPointer(), ExclusiveZoneVar)
 }
 
@@ -244,13 +244,13 @@ func SetLayer(WindowVar *gtk.Window, LayerVar Layer) {
 	xSetLayer(WindowVar.GoPointer(), LayerVar)
 }
 
-var xSetMargin func(uintptr, Edge, int32)
+var xSetMargin func(uintptr, Edge, int)
 
 // Set the margin for a specific @edge of a @window. Effects both surface's distance from
 // the edge and its exclusive zone size(if auto exclusive zone enabled).
 //
 // Default is 0 for each #GtkLayerShellEdge
-func SetMargin(WindowVar *gtk.Window, EdgeVar Edge, MarginSizeVar int32) {
+func SetMargin(WindowVar *gtk.Window, EdgeVar Edge, MarginSizeVar int) {
 	xSetMargin(WindowVar.GoPointer(), EdgeVar, MarginSizeVar)
 }
 
@@ -264,7 +264,7 @@ func SetMonitor(WindowVar *gtk.Window, MonitorVar *gdk.Monitor) {
 	xSetMonitor(WindowVar.GoPointer(), MonitorVar.GoPointer())
 }
 
-var xSetNamespace func(uintptr, string)
+var xSetNamespace func(uintptr, uintptr)
 
 // Set the "namespace" of the surface.
 //
@@ -274,8 +274,11 @@ var xSetNamespace func(uintptr, string)
 // the change can take effect.
 //
 // Default is "gtk4-layer-shell" (which will be used if set to %NULL)
-func SetNamespace(WindowVar *gtk.Window, NameSpaceVar string) {
-	xSetNamespace(WindowVar.GoPointer(), NameSpaceVar)
+func SetNamespace(WindowVar *gtk.Window, NameSpaceVar *string) {
+	NameSpaceVarPtr := core.GStrdupNullable(NameSpaceVar)
+	defer core.GFreeNullable(NameSpaceVarPtr)
+
+	xSetNamespace(WindowVar.GoPointer(), NameSpaceVarPtr)
 }
 
 var xSetRespectClose func(uintptr, bool)

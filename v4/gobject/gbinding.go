@@ -301,7 +301,7 @@ func (c *Binding) SetGoPointer(ptr uintptr) {
 func (x *Binding) SetPropertySourceProperty(value string) {
 	var v Value
 	v.Init(TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("source-property", &v)
 }
 
@@ -326,7 +326,7 @@ func (x *Binding) GetPropertySourceProperty() string {
 func (x *Binding) SetPropertyTargetProperty(value string) {
 	var v Value
 	v.Init(TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("target-property", &v)
 }
 

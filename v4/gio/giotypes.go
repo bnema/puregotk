@@ -255,10 +255,10 @@ func (x *IOExtension) GetName() string {
 	return cret
 }
 
-var xIOExtensionGetPriority func(uintptr) int32
+var xIOExtensionGetPriority func(uintptr) int
 
 // Gets the priority with which @extension was registered.
-func (x *IOExtension) GetPriority() int32 {
+func (x *IOExtension) GetPriority() int {
 	cret := xIOExtensionGetPriority(x.GoPointer())
 	return cret
 }
@@ -451,7 +451,7 @@ type InputMessage struct {
 
 	Vectors []InputVector
 
-	NumVectors uint32
+	NumVectors uint
 
 	BytesReceived uint
 
@@ -459,7 +459,7 @@ type InputMessage struct {
 
 	ControlMessages uintptr
 
-	NumControlMessages uint32
+	NumControlMessages uint
 }
 
 func (x *InputMessage) GoPointer() uintptr {
@@ -496,13 +496,13 @@ type OutputMessage struct {
 
 	Vectors *OutputVector
 
-	NumVectors uint32
+	NumVectors uint
 
-	BytesSent uint32
+	BytesSent uint
 
 	ControlMessages uintptr
 
-	NumControlMessages uint32
+	NumControlMessages uint
 }
 
 func (x *OutputMessage) GoPointer() uintptr {

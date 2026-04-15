@@ -347,14 +347,17 @@ func (x *MediaFile) SetFile(FileVar gio.File) {
 	xMediaFileSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
-var xMediaFileSetFilename func(uintptr, string)
+var xMediaFileSetFilename func(uintptr, uintptr)
 
 // Sets the `GtkMediaFile` to play the given file.
 //
 // This is a utility function that converts the given @filename
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
-func (x *MediaFile) SetFilename(FilenameVar string) {
-	xMediaFileSetFilename(x.GoPointer(), FilenameVar)
+func (x *MediaFile) SetFilename(FilenameVar *string) {
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	xMediaFileSetFilename(x.GoPointer(), FilenameVarPtr)
 }
 
 var xMediaFileSetInputStream func(uintptr, uintptr)
@@ -369,14 +372,17 @@ func (x *MediaFile) SetInputStream(StreamVar *gio.InputStream) {
 	xMediaFileSetInputStream(x.GoPointer(), StreamVar.GoPointer())
 }
 
-var xMediaFileSetResource func(uintptr, string)
+var xMediaFileSetResource func(uintptr, uintptr)
 
 // Sets the `GtkMediaFile` to play the given resource.
 //
 // This is a utility function that converts the given @resource_path
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
-func (x *MediaFile) SetResource(ResourcePathVar string) {
-	xMediaFileSetResource(x.GoPointer(), ResourcePathVar)
+func (x *MediaFile) SetResource(ResourcePathVar *string) {
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	xMediaFileSetResource(x.GoPointer(), ResourcePathVarPtr)
 }
 
 func (c *MediaFile) GoPointer() uintptr {
@@ -465,7 +471,7 @@ func (x *MediaFile) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *MediaFile) GetIntrinsicHeight() int32 {
+func (x *MediaFile) GetIntrinsicHeight() int {
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -480,7 +486,7 @@ func (x *MediaFile) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *MediaFile) GetIntrinsicWidth() int32 {
+func (x *MediaFile) GetIntrinsicWidth() int {
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }

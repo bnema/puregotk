@@ -31,9 +31,9 @@ type Scanner struct {
 
 	UserData uintptr
 
-	MaxParseErrors uint32
+	MaxParseErrors uint
 
-	ParseErrors uint32
+	ParseErrors uint
 
 	InputName uintptr
 
@@ -45,17 +45,17 @@ type Scanner struct {
 
 	Value TokenValue
 
-	Line uint32
+	Line uint
 
-	Position uint32
+	Position uint
 
 	NextToken TokenType
 
 	NextValue TokenValue
 
-	NextLine uint32
+	NextLine uint
 
-	NextPosition uint32
+	NextPosition uint
 
 	SymbolTable *HashTable
 
@@ -67,7 +67,7 @@ type Scanner struct {
 
 	Buffer uintptr
 
-	ScopeId uint32
+	ScopeId uint
 
 	MsgHandler ScannerMsgFunc
 }
@@ -76,22 +76,22 @@ func (x *Scanner) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xScannerCurLine func(uintptr) uint32
+var xScannerCurLine func(uintptr) uint
 
 // Returns the current line in the input stream (counting
 // from 1). This is the line of the last token parsed via
 // g_scanner_get_next_token().
-func (x *Scanner) CurLine() uint32 {
+func (x *Scanner) CurLine() uint {
 	cret := xScannerCurLine(x.GoPointer())
 	return cret
 }
 
-var xScannerCurPosition func(uintptr) uint32
+var xScannerCurPosition func(uintptr) uint
 
 // Returns the current position in the current line (counting
 // from 0). This is the position of the last token parsed via
 // g_scanner_get_next_token().
-func (x *Scanner) CurPosition() uint32 {
+func (x *Scanner) CurPosition() uint {
 	cret := xScannerCurPosition(x.GoPointer())
 	return cret
 }
@@ -148,17 +148,17 @@ func (x *Scanner) GetNextToken() TokenType {
 	return cret
 }
 
-var xScannerInputFile func(uintptr, int32)
+var xScannerInputFile func(uintptr, int)
 
 // Prepares to scan a file.
-func (x *Scanner) InputFile(InputFdVar int32) {
+func (x *Scanner) InputFile(InputFdVar int) {
 	xScannerInputFile(x.GoPointer(), InputFdVar)
 }
 
-var xScannerInputText func(uintptr, string, uint32)
+var xScannerInputText func(uintptr, string, uint)
 
 // Prepares to scan a text buffer.
-func (x *Scanner) InputText(TextVar string, TextLenVar uint32) {
+func (x *Scanner) InputText(TextVar string, TextLenVar uint) {
 	xScannerInputText(x.GoPointer(), TextVar, TextLenVar)
 }
 
@@ -190,43 +190,43 @@ func (x *Scanner) PeekNextToken() TokenType {
 	return cret
 }
 
-var xScannerScopeAddSymbol func(uintptr, uint32, string, uintptr)
+var xScannerScopeAddSymbol func(uintptr, uint, string, uintptr)
 
 // Adds a symbol to the given scope.
-func (x *Scanner) ScopeAddSymbol(ScopeIdVar uint32, SymbolVar string, ValueVar uintptr) {
+func (x *Scanner) ScopeAddSymbol(ScopeIdVar uint, SymbolVar string, ValueVar uintptr) {
 	xScannerScopeAddSymbol(x.GoPointer(), ScopeIdVar, SymbolVar, ValueVar)
 }
 
-var xScannerScopeForeachSymbol func(uintptr, uint32, uintptr, uintptr)
+var xScannerScopeForeachSymbol func(uintptr, uint, uintptr, uintptr)
 
 // Calls the given function for each of the symbol/value pairs
 // in the given scope of the #GScanner. The function is passed
 // the symbol and value of each pair, and the given @user_data
 // parameter.
-func (x *Scanner) ScopeForeachSymbol(ScopeIdVar uint32, FuncVar *HFunc, UserDataVar uintptr) {
+func (x *Scanner) ScopeForeachSymbol(ScopeIdVar uint, FuncVar *HFunc, UserDataVar uintptr) {
 	xScannerScopeForeachSymbol(x.GoPointer(), ScopeIdVar, NewCallback(FuncVar), UserDataVar)
 }
 
-var xScannerScopeLookupSymbol func(uintptr, uint32, string) uintptr
+var xScannerScopeLookupSymbol func(uintptr, uint, string) uintptr
 
 // Looks up a symbol in a scope and return its value. If the
 // symbol is not bound in the scope, %NULL is returned.
-func (x *Scanner) ScopeLookupSymbol(ScopeIdVar uint32, SymbolVar string) uintptr {
+func (x *Scanner) ScopeLookupSymbol(ScopeIdVar uint, SymbolVar string) uintptr {
 	cret := xScannerScopeLookupSymbol(x.GoPointer(), ScopeIdVar, SymbolVar)
 	return cret
 }
 
-var xScannerScopeRemoveSymbol func(uintptr, uint32, string)
+var xScannerScopeRemoveSymbol func(uintptr, uint, string)
 
 // Removes a symbol from a scope.
-func (x *Scanner) ScopeRemoveSymbol(ScopeIdVar uint32, SymbolVar string) {
+func (x *Scanner) ScopeRemoveSymbol(ScopeIdVar uint, SymbolVar string) {
 	xScannerScopeRemoveSymbol(x.GoPointer(), ScopeIdVar, SymbolVar)
 }
 
-var xScannerSetScope func(uintptr, uint32) uint32
+var xScannerSetScope func(uintptr, uint) uint
 
 // Sets the current scope.
-func (x *Scanner) SetScope(ScopeIdVar uint32) uint32 {
+func (x *Scanner) SetScope(ScopeIdVar uint) uint {
 	cret := xScannerSetScope(x.GoPointer(), ScopeIdVar)
 	return cret
 }
@@ -241,7 +241,7 @@ func (x *Scanner) SyncFileOffset() {
 	xScannerSyncFileOffset(x.GoPointer())
 }
 
-var xScannerUnexpToken func(uintptr, TokenType, string, string, string, string, int32)
+var xScannerUnexpToken func(uintptr, TokenType, string, string, string, string, int)
 
 // Outputs a message through the scanner's msg_handler,
 // resulting from an unexpected token in the input stream.
@@ -250,7 +250,7 @@ var xScannerUnexpToken func(uintptr, TokenType, string, string, string, string, 
 // call to g_scanner_get_next_token(), as g_scanner_unexp_token()
 // evaluates the scanner's current token (not the peeked token)
 // to construct part of the message.
-func (x *Scanner) UnexpToken(ExpectedTokenVar TokenType, IdentifierSpecVar string, SymbolSpecVar string, SymbolNameVar string, MessageVar string, IsErrorVar int32) {
+func (x *Scanner) UnexpToken(ExpectedTokenVar TokenType, IdentifierSpecVar string, SymbolSpecVar string, SymbolNameVar string, MessageVar string, IsErrorVar int) {
 	xScannerUnexpToken(x.GoPointer(), ExpectedTokenVar, IdentifierSpecVar, SymbolSpecVar, SymbolNameVar, MessageVar, IsErrorVar)
 }
 
@@ -275,51 +275,51 @@ type ScannerConfig struct {
 
 	CpairCommentSingle uintptr
 
-	CaseSensitive uint32
+	CaseSensitive uint
 
-	SkipCommentMulti uint32
+	SkipCommentMulti uint
 
-	SkipCommentSingle uint32
+	SkipCommentSingle uint
 
-	ScanCommentMulti uint32
+	ScanCommentMulti uint
 
-	ScanIdentifier uint32
+	ScanIdentifier uint
 
-	ScanIdentifier1char uint32
+	ScanIdentifier1char uint
 
-	ScanIdentifierNULL uint32
+	ScanIdentifierNULL uint
 
-	ScanSymbols uint32
+	ScanSymbols uint
 
-	ScanBinary uint32
+	ScanBinary uint
 
-	ScanOctal uint32
+	ScanOctal uint
 
-	ScanFloat uint32
+	ScanFloat uint
 
-	ScanHex uint32
+	ScanHex uint
 
-	ScanHexDollar uint32
+	ScanHexDollar uint
 
-	ScanStringSq uint32
+	ScanStringSq uint
 
-	ScanStringDq uint32
+	ScanStringDq uint
 
-	Numbers2Int uint32
+	Numbers2Int uint
 
-	Int2Float uint32
+	Int2Float uint
 
-	Identifier2String uint32
+	Identifier2String uint
 
-	Char2Token uint32
+	Char2Token uint
 
-	Symbol2Token uint32
+	Symbol2Token uint
 
-	Scope0Fallback uint32
+	Scope0Fallback uint
 
-	StoreInt64 uint32
+	StoreInt64 uint
 
-	PaddingDummy uint32
+	PaddingDummy uint
 }
 
 func (x *ScannerConfig) GoPointer() uintptr {

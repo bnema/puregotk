@@ -115,7 +115,7 @@ func (c *Instance) SetGoPointer(ptr uintptr) {
 }
 
 // The ::failed signal is fired when the lock could not be acquired.
-func (x *Instance) ConnectFailed(cb *func(Instance)) uint32 {
+func (x *Instance) ConnectFailed(cb *func(Instance)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
@@ -138,7 +138,7 @@ func (x *Instance) ConnectFailed(cb *func(Instance)) uint32 {
 }
 
 // The ::locked signal is fired when the screen is successfully locked.
-func (x *Instance) ConnectLocked(cb *func(Instance)) uint32 {
+func (x *Instance) ConnectLocked(cb *func(Instance)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "locked", cbRefPtr)
@@ -167,7 +167,7 @@ func (x *Instance) ConnectLocked(cb *func(Instance)) uint32 {
 // This API does not directly tell you when a monitor is removed (GTK APIs can be used for that), however the window you
 // send to gtk_session_lock_instance_assign_window_to_monitor() will be automatically unmapped and dereferenced when its
 // monitor is removed or the screen is unlocked.
-func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint32 {
+func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "monitor", cbRefPtr)
@@ -191,7 +191,7 @@ func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint32 {
 
 // The ::unlocked signal is fired when the session is unlocked, which may have been caused by a call to
 // gtk_session_lock_instance_unlock() or by the compositor.
-func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint32 {
+func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "unlocked", cbRefPtr)

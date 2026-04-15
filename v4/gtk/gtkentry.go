@@ -291,11 +291,11 @@ func (x *Entry) GetCompletion() *EntryCompletion {
 	return cls
 }
 
-var xEntryGetCurrentIconDragSource func(uintptr) int32
+var xEntryGetCurrentIconDragSource func(uintptr) int
 
 // Returns the index of the icon which is the source of the
 // current  DND operation, or -1.
-func (x *Entry) GetCurrentIconDragSource() int32 {
+func (x *Entry) GetCurrentIconDragSource() int {
 	cret := xEntryGetCurrentIconDragSource(x.GoPointer())
 	return cret
 }
@@ -348,7 +348,7 @@ func (x *Entry) GetIconArea(IconPosVar EntryIconPosition, IconAreaVar *gdk.Recta
 	xEntryGetIconArea(x.GoPointer(), IconPosVar, IconAreaVar)
 }
 
-var xEntryGetIconAtPos func(uintptr, int32, int32) int32
+var xEntryGetIconAtPos func(uintptr, int, int) int
 
 // Finds the icon at the given position and return its index.
 //
@@ -356,7 +356,7 @@ var xEntryGetIconAtPos func(uintptr, int32, int32) int32
 // top left corner. If @x, @y doesn’t lie inside an icon,
 // -1 is returned. This function is intended for use in a
 // [signal@Gtk.Widget::query-tooltip] signal handler.
-func (x *Entry) GetIconAtPos(XVar int32, YVar int32) int32 {
+func (x *Entry) GetIconAtPos(XVar int, YVar int) int {
 	cret := xEntryGetIconAtPos(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -474,12 +474,12 @@ func (x *Entry) GetInvisibleChar() uint32 {
 	return cret
 }
 
-var xEntryGetMaxLength func(uintptr) int32
+var xEntryGetMaxLength func(uintptr) int
 
 // Retrieves the maximum allowed length of the text in @entry.
 //
 // See [method@Gtk.Entry.set_max_length].
-func (x *Entry) GetMaxLength() int32 {
+func (x *Entry) GetMaxLength() int {
 	cret := xEntryGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -706,7 +706,7 @@ func (x *Entry) SetIconFromGicon(IconPosVar EntryIconPosition, IconVar gio.Icon)
 	xEntrySetIconFromGicon(x.GoPointer(), IconPosVar, IconVar.GoPointer())
 }
 
-var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, string)
+var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, uintptr)
 
 // Sets the icon shown in the entry at the specified position
 // from the current icon theme.
@@ -716,8 +716,11 @@ var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, string)
 //
 // If @icon_name is %NULL, no icon will be shown in the
 // specified position.
-func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar string) {
-	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, IconNameVar)
+func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, IconNameVarPtr)
 }
 
 var xEntrySetIconFromPaintable func(uintptr, EntryIconPosition, uintptr)
@@ -736,7 +739,7 @@ func (x *Entry) SetIconSensitive(IconPosVar EntryIconPosition, SensitiveVar bool
 	xEntrySetIconSensitive(x.GoPointer(), IconPosVar, SensitiveVar)
 }
 
-var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, string)
+var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, uintptr)
 
 // Sets @tooltip as the contents of the tooltip for the icon at
 // the specified position.
@@ -747,11 +750,14 @@ var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, string)
 //
 // See also [method@Gtk.Widget.set_tooltip_markup] and
 // [method@Gtk.Entry.set_icon_tooltip_text].
-func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar string) {
-	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, TooltipVar)
+func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar *string) {
+	TooltipVarPtr := core.GStrdupNullable(TooltipVar)
+	defer core.GFreeNullable(TooltipVarPtr)
+
+	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, TooltipVarPtr)
 }
 
-var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, string)
+var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, uintptr)
 
 // Sets @tooltip as the contents of the tooltip for the icon
 // at the specified position.
@@ -770,8 +776,11 @@ var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, string)
 // [property@Gtk.Widget:has-tooltip] back to %TRUE, or
 // setting at least one non-empty tooltip on any icon
 // achieves the same result.
-func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar string) {
-	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, TooltipVar)
+func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar *string) {
+	TooltipVarPtr := core.GStrdupNullable(TooltipVar)
+	defer core.GFreeNullable(TooltipVarPtr)
+
+	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, TooltipVarPtr)
 }
 
 var xEntrySetInputHints func(uintptr, InputHints)
@@ -806,7 +815,7 @@ func (x *Entry) SetInvisibleChar(ChVar uint32) {
 	xEntrySetInvisibleChar(x.GoPointer(), ChVar)
 }
 
-var xEntrySetMaxLength func(uintptr, int32)
+var xEntrySetMaxLength func(uintptr, int)
 
 // Sets the maximum allowed length of the contents of the widget.
 //
@@ -815,7 +824,7 @@ var xEntrySetMaxLength func(uintptr, int32)
 //
 // This is equivalent to getting @entry's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.set_max_length] on it.
-func (x *Entry) SetMaxLength(MaxVar int32) {
+func (x *Entry) SetMaxLength(MaxVar int) {
 	xEntrySetMaxLength(x.GoPointer(), MaxVar)
 }
 
@@ -838,14 +847,17 @@ func (x *Entry) SetOverwriteMode(OverwriteVar bool) {
 	xEntrySetOverwriteMode(x.GoPointer(), OverwriteVar)
 }
 
-var xEntrySetPlaceholderText func(uintptr, string)
+var xEntrySetPlaceholderText func(uintptr, uintptr)
 
 // Sets text to be displayed in @entry when it is empty.
 //
 // This can be used to give a visual hint of the expected
 // contents of the `GtkEntry`.
-func (x *Entry) SetPlaceholderText(TextVar string) {
-	xEntrySetPlaceholderText(x.GoPointer(), TextVar)
+func (x *Entry) SetPlaceholderText(TextVar *string) {
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	xEntrySetPlaceholderText(x.GoPointer(), TextVarPtr)
 }
 
 var xEntrySetProgressFraction func(uintptr, float64)
@@ -1008,7 +1020,7 @@ func (x *Entry) GetPropertyHasFrame() bool {
 func (x *Entry) SetPropertyImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("im-module", &v)
 }
 
@@ -1028,19 +1040,19 @@ func (x *Entry) GetPropertyImModule() string {
 
 // SetPropertyInvisibleChar sets the "invisible-char" property.
 // The character to use when masking entry contents (“password mode”).
-func (x *Entry) SetPropertyInvisibleChar(value uint32) {
+func (x *Entry) SetPropertyInvisibleChar(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("invisible-char", &v)
 }
 
 // GetPropertyInvisibleChar gets the "invisible-char" property.
 // The character to use when masking entry contents (“password mode”).
-func (x *Entry) GetPropertyInvisibleChar() uint32 {
+func (x *Entry) GetPropertyInvisibleChar() uint {
 	var v gobject.Value
 	x.GetProperty("invisible-char", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyInvisibleCharSet sets the "invisible-char-set" property.
@@ -1062,19 +1074,19 @@ func (x *Entry) GetPropertyInvisibleCharSet() bool {
 
 // SetPropertyMaxLength sets the "max-length" property.
 // Maximum number of characters for this entry.
-func (x *Entry) SetPropertyMaxLength(value int32) {
+func (x *Entry) SetPropertyMaxLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-length", &v)
 }
 
 // GetPropertyMaxLength gets the "max-length" property.
 // Maximum number of characters for this entry.
-func (x *Entry) GetPropertyMaxLength() int32 {
+func (x *Entry) GetPropertyMaxLength() int {
 	var v gobject.Value
 	x.GetProperty("max-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyMenuEntryIconPrimaryText sets the "menu-entry-icon-primary-text" property.
@@ -1093,7 +1105,7 @@ func (x *Entry) GetPropertyMaxLength() int32 {
 func (x *Entry) SetPropertyMenuEntryIconPrimaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-entry-icon-primary-text", &v)
 }
 
@@ -1132,7 +1144,7 @@ func (x *Entry) GetPropertyMenuEntryIconPrimaryText() string {
 func (x *Entry) SetPropertyMenuEntryIconSecondaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-entry-icon-secondary-text", &v)
 }
 
@@ -1178,7 +1190,7 @@ func (x *Entry) GetPropertyOverwriteMode() bool {
 func (x *Entry) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
@@ -1227,7 +1239,7 @@ func (x *Entry) GetPropertyPrimaryIconActivatable() bool {
 func (x *Entry) SetPropertyPrimaryIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-name", &v)
 }
 
@@ -1277,7 +1289,7 @@ func (x *Entry) GetPropertyPrimaryIconSensitive() bool {
 func (x *Entry) SetPropertyPrimaryIconTooltipMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-tooltip-markup", &v)
 }
 
@@ -1298,7 +1310,7 @@ func (x *Entry) GetPropertyPrimaryIconTooltipMarkup() string {
 func (x *Entry) SetPropertyPrimaryIconTooltipText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-tooltip-text", &v)
 }
 
@@ -1354,10 +1366,10 @@ func (x *Entry) GetPropertyProgressPulseStep() float64 {
 
 // GetPropertyScrollOffset gets the "scroll-offset" property.
 // Number of pixels of the entry scrolled off the screen to the left.
-func (x *Entry) GetPropertyScrollOffset() int32 {
+func (x *Entry) GetPropertyScrollOffset() int {
 	var v gobject.Value
 	x.GetProperty("scroll-offset", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertySecondaryIconActivatable sets the "secondary-icon-activatable" property.
@@ -1396,7 +1408,7 @@ func (x *Entry) GetPropertySecondaryIconActivatable() bool {
 func (x *Entry) SetPropertySecondaryIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-name", &v)
 }
 
@@ -1446,7 +1458,7 @@ func (x *Entry) GetPropertySecondaryIconSensitive() bool {
 func (x *Entry) SetPropertySecondaryIconTooltipMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-tooltip-markup", &v)
 }
 
@@ -1467,7 +1479,7 @@ func (x *Entry) GetPropertySecondaryIconTooltipMarkup() string {
 func (x *Entry) SetPropertySecondaryIconTooltipText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-tooltip-text", &v)
 }
 
@@ -1519,10 +1531,10 @@ func (x *Entry) GetPropertyTabs() uintptr {
 
 // GetPropertyTextLength gets the "text-length" property.
 // The length of the text in the `GtkEntry`.
-func (x *Entry) GetPropertyTextLength() uint32 {
+func (x *Entry) GetPropertyTextLength() uint {
 	var v gobject.Value
 	x.GetProperty("text-length", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTruncateMultiline sets the "truncate-multiline" property.
@@ -1564,7 +1576,7 @@ func (x *Entry) GetPropertyVisibility() bool {
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the Enter key.
-func (x *Entry) ConnectActivate(cb *func(Entry)) uint32 {
+func (x *Entry) ConnectActivate(cb *func(Entry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -1587,7 +1599,7 @@ func (x *Entry) ConnectActivate(cb *func(Entry)) uint32 {
 }
 
 // Emitted when an activatable icon is clicked.
-func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint32 {
+func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
@@ -1611,7 +1623,7 @@ func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint32 {
 
 // Emitted on the button release from a mouse click
 // over an activatable icon.
-func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint32 {
+func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
@@ -1699,7 +1711,7 @@ func (x *Entry) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Entry) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Entry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1815,7 +1827,7 @@ func (x *Entry) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Entry) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Entry) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1847,7 +1859,7 @@ func (x *Entry) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Entry) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Entry) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1880,7 +1892,7 @@ func (x *Entry) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Entry) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Entry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1973,7 +1985,7 @@ func (x *Entry) DeleteSelection() {
 // the end of the text.
 //
 // Note that the positions are specified in characters, not bytes.
-func (x *Entry) DeleteText(StartPosVar int32, EndPosVar int32) {
+func (x *Entry) DeleteText(StartPosVar int, EndPosVar int) {
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -1993,7 +2005,7 @@ func (x *Entry) FinishDelegate() {
 // the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Entry) GetChars(StartPosVar int32, EndPosVar int32) string {
+func (x *Entry) GetChars(StartPosVar int, EndPosVar int) string {
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -2029,7 +2041,7 @@ func (x *Entry) GetEnableUndo() bool {
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
-func (x *Entry) GetMaxWidthChars() int32 {
+func (x *Entry) GetMaxWidthChars() int {
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -2038,7 +2050,7 @@ func (x *Entry) GetMaxWidthChars() int32 {
 // to the start of the content of the editable.
 //
 // Note that this position is in characters, not in bytes.
-func (x *Entry) GetPosition() int32 {
+func (x *Entry) GetPosition() int {
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -2050,7 +2062,7 @@ func (x *Entry) GetPosition() int32 {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Entry) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
+func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -2065,7 +2077,7 @@ func (x *Entry) GetText() string {
 
 // Gets the number of characters of space reserved
 // for the contents of the editable.
-func (x *Entry) GetWidthChars() int32 {
+func (x *Entry) GetWidthChars() int {
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -2087,7 +2099,7 @@ func (x *Entry) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *Entry) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
+func (x *Entry) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 }
 
@@ -2099,7 +2111,7 @@ func (x *Entry) InsertText(TextVar string, LengthVar int32, PositionVar *int32) 
 // @start_pos to  the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Entry) SelectRegion(StartPosVar int32, EndPosVar int32) {
+func (x *Entry) SelectRegion(StartPosVar int, EndPosVar int) {
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -2119,7 +2131,7 @@ func (x *Entry) SetEnableUndo(EnableUndoVar bool) {
 }
 
 // Sets the desired maximum width in characters of @editable.
-func (x *Entry) SetMaxWidthChars(NCharsVar int32) {
+func (x *Entry) SetMaxWidthChars(NCharsVar int) {
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
 }
 
@@ -2130,7 +2142,7 @@ func (x *Entry) SetMaxWidthChars(NCharsVar int32) {
 // or equal to the number of characters in the editable. A value of -1
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
-func (x *Entry) SetPosition(PositionVar int32) {
+func (x *Entry) SetPosition(PositionVar int) {
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
 }
 
@@ -2147,7 +2159,7 @@ func (x *Entry) SetText(TextVar string) {
 // Note that it changes the size request, the size can still
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
-func (x *Entry) SetWidthChars(NCharsVar int32) {
+func (x *Entry) SetWidthChars(NCharsVar int) {
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
 }
 

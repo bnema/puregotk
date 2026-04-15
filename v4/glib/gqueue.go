@@ -18,7 +18,7 @@ type Queue struct {
 
 	Tail *List
 
-	Length uint32
+	Length uint
 }
 
 func (x *Queue) GoPointer() uintptr {
@@ -123,18 +123,18 @@ func (x *Queue) FreeFull(FreeFuncVar *DestroyNotify) {
 	xQueueFreeFull(x.GoPointer(), NewCallback(FreeFuncVar))
 }
 
-var xQueueGetLength func(uintptr) uint32
+var xQueueGetLength func(uintptr) uint
 
 // Returns the number of items in @queue.
-func (x *Queue) GetLength() uint32 {
+func (x *Queue) GetLength() uint {
 	cret := xQueueGetLength(x.GoPointer())
 	return cret
 }
 
-var xQueueIndex func(uintptr, uintptr) int32
+var xQueueIndex func(uintptr, uintptr) int
 
 // Returns the position of the first element in @queue which contains @data.
-func (x *Queue) Index(DataVar uintptr) int32 {
+func (x *Queue) Index(DataVar uintptr) int {
 	cret := xQueueIndex(x.GoPointer(), DataVar)
 	return cret
 }
@@ -202,10 +202,10 @@ func (x *Queue) IsEmpty() bool {
 	return cret
 }
 
-var xQueueLinkIndex func(uintptr, *List) int32
+var xQueueLinkIndex func(uintptr, *List) int
 
 // Returns the position of @link_ in @queue.
-func (x *Queue) LinkIndex(LinkVar *List) int32 {
+func (x *Queue) LinkIndex(LinkVar *List) int {
 	cret := xQueueLinkIndex(x.GoPointer(), LinkVar)
 	return cret
 }
@@ -229,18 +229,18 @@ func (x *Queue) PeekHeadLink() *List {
 	return (*List)(unsafe.Pointer(cret))
 }
 
-var xQueuePeekNth func(uintptr, uint32) uintptr
+var xQueuePeekNth func(uintptr, uint) uintptr
 
 // Returns the @n'th element of @queue.
-func (x *Queue) PeekNth(NVar uint32) uintptr {
+func (x *Queue) PeekNth(NVar uint) uintptr {
 	cret := xQueuePeekNth(x.GoPointer(), NVar)
 	return cret
 }
 
-var xQueuePeekNthLink func(uintptr, uint32) uintptr
+var xQueuePeekNthLink func(uintptr, uint) uintptr
 
 // Returns the link at the given position
-func (x *Queue) PeekNthLink(NVar uint32) *List {
+func (x *Queue) PeekNthLink(NVar uint) *List {
 	cret := xQueuePeekNthLink(x.GoPointer(), NVar)
 	if cret == 0 {
 		return nil
@@ -286,18 +286,18 @@ func (x *Queue) PopHeadLink() *List {
 	return (*List)(unsafe.Pointer(cret))
 }
 
-var xQueuePopNth func(uintptr, uint32) uintptr
+var xQueuePopNth func(uintptr, uint) uintptr
 
 // Removes the @n'th element of @queue and returns its data.
-func (x *Queue) PopNth(NVar uint32) uintptr {
+func (x *Queue) PopNth(NVar uint) uintptr {
 	cret := xQueuePopNth(x.GoPointer(), NVar)
 	return cret
 }
 
-var xQueuePopNthLink func(uintptr, uint32) uintptr
+var xQueuePopNthLink func(uintptr, uint) uintptr
 
 // Removes and returns the link at the given position.
-func (x *Queue) PopNthLink(NVar uint32) *List {
+func (x *Queue) PopNthLink(NVar uint) *List {
 	cret := xQueuePopNthLink(x.GoPointer(), NVar)
 	if cret == 0 {
 		return nil
@@ -338,17 +338,17 @@ func (x *Queue) PushHeadLink(LinkVar *List) {
 	xQueuePushHeadLink(x.GoPointer(), LinkVar)
 }
 
-var xQueuePushNth func(uintptr, uintptr, int32)
+var xQueuePushNth func(uintptr, uintptr, int)
 
 // Inserts a new element into @queue at the given position.
-func (x *Queue) PushNth(DataVar uintptr, NVar int32) {
+func (x *Queue) PushNth(DataVar uintptr, NVar int) {
 	xQueuePushNth(x.GoPointer(), DataVar, NVar)
 }
 
-var xQueuePushNthLink func(uintptr, int32, *List)
+var xQueuePushNthLink func(uintptr, int, *List)
 
 // Inserts @link into @queue at the given position.
-func (x *Queue) PushNthLink(NVar int32, LinkVar *List) {
+func (x *Queue) PushNthLink(NVar int, LinkVar *List) {
 	xQueuePushNthLink(x.GoPointer(), NVar, LinkVar)
 }
 
@@ -374,10 +374,10 @@ func (x *Queue) Remove(DataVar uintptr) bool {
 	return cret
 }
 
-var xQueueRemoveAll func(uintptr, uintptr) uint32
+var xQueueRemoveAll func(uintptr, uintptr) uint
 
 // Remove all elements whose data equals @data from @queue.
-func (x *Queue) RemoveAll(DataVar uintptr) uint32 {
+func (x *Queue) RemoveAll(DataVar uintptr) uint {
 	cret := xQueueRemoveAll(x.GoPointer(), DataVar)
 	return cret
 }

@@ -18,7 +18,7 @@ type HookCheckMarshaller func(*Hook, uintptr) bool
 
 // Defines the type of function used to compare #GHook elements in
 // g_hook_insert_sorted().
-type HookCompareFunc func(*Hook, *Hook) int32
+type HookCompareFunc func(*Hook, *Hook) int
 
 // Defines the type of function to be called when a hook in a
 // list of hooks gets finalized.
@@ -44,11 +44,11 @@ type Hook struct {
 
 	Prev *Hook
 
-	RefCount uint32
+	RefCount uint
 
-	HookId uint32
+	HookId uint
 
-	Flags uint32
+	Flags uint
 
 	Func uintptr
 
@@ -59,11 +59,11 @@ func (x *Hook) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xHookCompareIds func(uintptr, *Hook) int32
+var xHookCompareIds func(uintptr, *Hook) int
 
 // Compares the ids of two #GHook elements, returning a negative value
 // if the second id is greater than the first.
-func (x *Hook) CompareIds(SiblingVar *Hook) int32 {
+func (x *Hook) CompareIds(SiblingVar *Hook) int {
 	cret := xHookCompareIds(x.GoPointer(), SiblingVar)
 	return cret
 }
@@ -72,11 +72,11 @@ func (x *Hook) CompareIds(SiblingVar *Hook) int32 {
 type HookList struct {
 	_ structs.HostLayout
 
-	SeqId uint32
+	SeqId uint
 
-	HookSize uint32
+	HookSize uint
 
-	IsSetup uint32
+	IsSetup uint
 
 	Hooks *Hook
 
@@ -98,11 +98,11 @@ func (x *HookList) Clear() {
 	xHookListClear(x.GoPointer())
 }
 
-var xHookListInit func(uintptr, uint32)
+var xHookListInit func(uintptr, uint)
 
 // Initializes a #GHookList.
 // This must be called before the #GHookList is used.
-func (x *HookList) Init(HookSizeVar uint32) {
+func (x *HookList) Init(HookSizeVar uint) {
 	xHookListInit(x.GoPointer(), HookSizeVar)
 }
 
@@ -141,7 +141,7 @@ const (
 	// use be the #GHook implementation, i.e.
 	// `1 &lt;&lt; G_HOOK_FLAG_USER_SHIFT` is the first
 	// bit which can be used for application-defined flags.
-	HOOK_FLAG_USER_SHIFT int32 = 4
+	HOOK_FLAG_USER_SHIFT int = 4
 )
 
 // Flags used internally in the #GHook implementation.
@@ -157,10 +157,10 @@ const (
 	GHookFlagReserved1Value HookFlagMask = 4
 )
 
-var xHookDestroy func(*HookList, uint32) bool
+var xHookDestroy func(*HookList, uint) bool
 
 // Destroys a #GHook, given its ID.
-func HookDestroy(HookListVar *HookList, HookIdVar uint32) bool {
+func HookDestroy(HookListVar *HookList, HookIdVar uint) bool {
 	cret := xHookDestroy(HookListVar, HookIdVar)
 	return cret
 }

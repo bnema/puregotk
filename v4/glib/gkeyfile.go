@@ -228,7 +228,7 @@ func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar *
 	return cret, cerr
 }
 
-var xKeyFileGetComment func(uintptr, string, string, **Error) string
+var xKeyFileGetComment func(uintptr, uintptr, uintptr, **Error) string
 
 // Retrieves a comment above @key from @group_name.
 //
@@ -239,10 +239,16 @@ var xKeyFileGetComment func(uintptr, string, string, **Error) string
 // Note that the returned string does not include the `#` comment markers,
 // but does include any whitespace after them (on each line). It includes
 // the line breaks between lines, but does not include the final line break.
-func (x *KeyFile) GetComment(GroupNameVar string, KeyVar string) (string, error) {
+func (x *KeyFile) GetComment(GroupNameVar *string, KeyVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetComment(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
+
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
+
+	cret := xKeyFileGetComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -312,7 +318,7 @@ func (x *KeyFile) GetInt64(GroupNameVar string, KeyVar string) (int64, error) {
 	return cret, cerr
 }
 
-var xKeyFileGetInteger func(uintptr, string, string, **Error) int32
+var xKeyFileGetInteger func(uintptr, string, string, **Error) int
 
 // Returns the value associated with @key under @group_name as an
 // integer.
@@ -321,7 +327,7 @@ var xKeyFileGetInteger func(uintptr, string, string, **Error) int32
 // returned. Likewise, if the value associated with @key cannot be interpreted
 // as an integer, or is out of range for a `gint`, then
 // [error@GLib.KeyFileError.INVALID_VALUE] is returned.
-func (x *KeyFile) GetInteger(GroupNameVar string, KeyVar string) (int32, error) {
+func (x *KeyFile) GetInteger(GroupNameVar string, KeyVar string) (int, error) {
 	var cerr *Error
 
 	cret := xKeyFileGetInteger(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
@@ -367,7 +373,7 @@ func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar *uint) ([]string, error
 	return cret, cerr
 }
 
-var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
+var xKeyFileGetLocaleForKey func(uintptr, string, string, uintptr) string
 
 // Returns the actual locale which the result of
 // [method@GLib.KeyFile.get_locale_string] or
@@ -378,12 +384,15 @@ var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
 // @group_name, @key and @locale, the result of those functions will
 // have originally been tagged with the locale that is the result of
 // this function.
-func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar string) string {
-	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar)
+func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar *string) string {
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
+
+	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr)
 	return cret
 }
 
-var xKeyFileGetLocaleString func(uintptr, string, string, string, **Error) string
+var xKeyFileGetLocaleString func(uintptr, string, string, uintptr, **Error) string
 
 // Returns the value associated with @key under @group_name
 // translated in the given @locale if available.
@@ -401,17 +410,20 @@ var xKeyFileGetLocaleString func(uintptr, string, string, string, **Error) strin
 // returned. If the value associated
 // with @key cannot be interpreted or no suitable translation can
 // be found then the untranslated value is returned.
-func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar string) (string, error) {
+func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, &cerr)
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
+
+	cret := xKeyFileGetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xKeyFileGetLocaleStringList func(uintptr, string, string, string, *uint, **Error) []string
+var xKeyFileGetLocaleStringList func(uintptr, string, string, uintptr, *uint, **Error) []string
 
 // Returns the values associated with @key under @group_name
 // translated in the given @locale if available.
@@ -431,10 +443,13 @@ var xKeyFileGetLocaleStringList func(uintptr, string, string, string, *uint, **E
 // can be found then the untranslated values are returned. The
 // returned array is `NULL`-terminated, so @length may optionally
 // be `NULL`.
-func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar string, LengthVar *uint) ([]string, error) {
+func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar *string, LengthVar *uint) ([]string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, LengthVar, &cerr)
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
+
+	cret := xKeyFileGetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr, LengthVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -663,17 +678,23 @@ func (x *KeyFile) Ref() *KeyFile {
 	return (*KeyFile)(unsafe.Pointer(cret))
 }
 
-var xKeyFileRemoveComment func(uintptr, string, string, **Error) bool
+var xKeyFileRemoveComment func(uintptr, uintptr, uintptr, **Error) bool
 
 // Removes a comment above @key from @group_name.
 //
 // If @key is `NULL` then @comment will be removed above @group_name.
 // If both @key and @group_name are `NULL`, then @comment will
 // be removed above the first group in the file.
-func (x *KeyFile) RemoveComment(GroupNameVar string, KeyVar string) (bool, error) {
+func (x *KeyFile) RemoveComment(GroupNameVar *string, KeyVar *string) (bool, error) {
 	var cerr *Error
 
-	cret := xKeyFileRemoveComment(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
+
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
+
+	cret := xKeyFileRemoveComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -747,7 +768,7 @@ func (x *KeyFile) SetBooleanList(GroupNameVar string, KeyVar string, ListVar []b
 	xKeyFileSetBooleanList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
 }
 
-var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
+var xKeyFileSetComment func(uintptr, uintptr, uintptr, string, **Error) bool
 
 // Places a comment above @key from @group_name.
 //
@@ -762,10 +783,16 @@ var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
 //
 // Note that this function prepends a `#` comment marker to
 // each line of @comment.
-func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar string) (bool, error) {
+func (x *KeyFile) SetComment(GroupNameVar *string, KeyVar *string, CommentVar string) (bool, error) {
 	var cerr *Error
 
-	cret := xKeyFileSetComment(x.GoPointer(), GroupNameVar, KeyVar, CommentVar, &cerr)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
+
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
+
+	cret := xKeyFileSetComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, CommentVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -799,21 +826,21 @@ func (x *KeyFile) SetInt64(GroupNameVar string, KeyVar string, ValueVar int64) {
 	xKeyFileSetInt64(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
 }
 
-var xKeyFileSetInteger func(uintptr, string, string, int32)
+var xKeyFileSetInteger func(uintptr, string, string, int)
 
 // Associates a new integer value with @key under @group_name.
 //
 // If @key cannot be found then it is created.
-func (x *KeyFile) SetInteger(GroupNameVar string, KeyVar string, ValueVar int32) {
+func (x *KeyFile) SetInteger(GroupNameVar string, KeyVar string, ValueVar int) {
 	xKeyFileSetInteger(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
 }
 
-var xKeyFileSetIntegerList func(uintptr, string, string, []int32, uint)
+var xKeyFileSetIntegerList func(uintptr, string, string, []int, uint)
 
 // Associates a list of integer values with @key under @group_name.
 //
 // If @key cannot be found then it is created.
-func (x *KeyFile) SetIntegerList(GroupNameVar string, KeyVar string, ListVar []int32, LengthVar uint) {
+func (x *KeyFile) SetIntegerList(GroupNameVar string, KeyVar string, ListVar []int, LengthVar uint) {
 	xKeyFileSetIntegerList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
 }
 

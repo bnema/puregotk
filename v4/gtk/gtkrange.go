@@ -243,13 +243,13 @@ func (x *Range) GetRestrictToFillLevel() bool {
 	return cret
 }
 
-var xRangeGetRoundDigits func(uintptr) int32
+var xRangeGetRoundDigits func(uintptr) int
 
 // Gets the number of digits to round the value to when
 // it changes.
 //
 // See [signal@Gtk.Range::change-value].
-func (x *Range) GetRoundDigits() int32 {
+func (x *Range) GetRoundDigits() int {
 	cret := xRangeGetRoundDigits(x.GoPointer())
 	return cret
 }
@@ -262,13 +262,13 @@ func (x *Range) GetShowFillLevel() bool {
 	return cret
 }
 
-var xRangeGetSliderRange func(uintptr, *int32, *int32)
+var xRangeGetSliderRange func(uintptr, *int, *int)
 
 // This function returns sliders range along the long dimension,
 // in widget-&gt;window coordinates.
 //
 // This function is useful mainly for `GtkRange` subclasses.
-func (x *Range) GetSliderRange(SliderStartVar *int32, SliderEndVar *int32) {
+func (x *Range) GetSliderRange(SliderStartVar *int, SliderEndVar *int) {
 	xRangeGetSliderRange(x.GoPointer(), SliderStartVar, SliderEndVar)
 }
 
@@ -384,13 +384,13 @@ func (x *Range) SetRestrictToFillLevel(RestrictToFillLevelVar bool) {
 	xRangeSetRestrictToFillLevel(x.GoPointer(), RestrictToFillLevelVar)
 }
 
-var xRangeSetRoundDigits func(uintptr, int32)
+var xRangeSetRoundDigits func(uintptr, int)
 
 // Sets the number of digits to round the value to when
 // it changes.
 //
 // See [signal@Gtk.Range::change-value].
-func (x *Range) SetRoundDigits(RoundDigitsVar int32) {
+func (x *Range) SetRoundDigits(RoundDigitsVar int) {
 	xRangeSetRoundDigits(x.GoPointer(), RoundDigitsVar)
 }
 
@@ -494,10 +494,10 @@ func (x *Range) GetPropertyRestrictToFillLevel() bool {
 // it changes.
 //
 // See [signal@Gtk.Range::change-value].
-func (x *Range) SetPropertyRoundDigits(value int32) {
+func (x *Range) SetPropertyRoundDigits(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("round-digits", &v)
 }
 
@@ -506,10 +506,10 @@ func (x *Range) SetPropertyRoundDigits(value int32) {
 // it changes.
 //
 // See [signal@Gtk.Range::change-value].
-func (x *Range) GetPropertyRoundDigits() int32 {
+func (x *Range) GetPropertyRoundDigits() int {
 	var v gobject.Value
 	x.GetProperty("round-digits", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyShowFillLevel sets the "show-fill-level" property.
@@ -533,7 +533,7 @@ func (x *Range) GetPropertyShowFillLevel() bool {
 
 // Emitted before clamping a value, to give the application a
 // chance to adjust the bounds.
-func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
+func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
@@ -567,7 +567,7 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
 // the ::change-value signal is responsible for clamping the value
 // to the desired number of decimal digits; the default GTK
 // handler clamps the value based on [property@Gtk.Range:round-digits].
-func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) uint32 {
+func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
@@ -592,7 +592,7 @@ func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) ui
 // Virtual function that moves the slider.
 //
 // Used for keybindings.
-func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint32 {
+func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
@@ -615,7 +615,7 @@ func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint32 {
 }
 
 // Emitted when the range value changes.
-func (x *Range) ConnectValueChanged(cb *func(Range)) uint32 {
+func (x *Range) ConnectValueChanged(cb *func(Range)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
@@ -703,7 +703,7 @@ func (x *Range) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Range) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Range) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -819,7 +819,7 @@ func (x *Range) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Range) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Range) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -851,7 +851,7 @@ func (x *Range) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Range) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Range) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -884,7 +884,7 @@ func (x *Range) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Range) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Range) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -80,18 +80,18 @@ func (x *TextNode) GetFont() *pango.Font {
 	return cls
 }
 
-var xTextNodeGetGlyphs func(uintptr, *uint32) uintptr
+var xTextNodeGetGlyphs func(uintptr, *uint) uintptr
 
 // Retrieves the glyph information in the @node.
-func (x *TextNode) GetGlyphs(NGlyphsVar *uint32) uintptr {
+func (x *TextNode) GetGlyphs(NGlyphsVar *uint) uintptr {
 	cret := xTextNodeGetGlyphs(x.GoPointer(), NGlyphsVar)
 	return cret
 }
 
-var xTextNodeGetNumGlyphs func(uintptr) uint32
+var xTextNodeGetNumGlyphs func(uintptr) uint
 
 // Retrieves the number of glyphs in the text node.
-func (x *TextNode) GetNumGlyphs() uint32 {
+func (x *TextNode) GetNumGlyphs() uint {
 	cret := xTextNodeGetNumGlyphs(x.GoPointer())
 	return cret
 }

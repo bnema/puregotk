@@ -6,7 +6,7 @@ import (
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xBitLock func(uintptr, int32)
+var xBitLock func(uintptr, int)
 
 // Sets the indicated @lock_bit in @address.  If the bit is already
 // set, this call will block until g_bit_unlock() unsets the
@@ -22,22 +22,22 @@ var xBitLock func(uintptr, int32)
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitLock(AddressVar uintptr, LockBitVar int32) {
+func BitLock(AddressVar uintptr, LockBitVar int) {
 	xBitLock(AddressVar, LockBitVar)
 }
 
-var xBitLockAndGet func(uintptr, uint32, *int32)
+var xBitLockAndGet func(uintptr, uint, *int)
 
 // Sets the indicated @lock_bit in @address and atomically returns the new value.
 //
 // This is like [func@GLib.bit_lock], except it can atomically return the new value at
 // @address (right after obtaining the lock). Thus the value returned in @out_val
 // always has the @lock_bit set.
-func BitLockAndGet(AddressVar uintptr, LockBitVar uint32, OutValVar *int32) {
+func BitLockAndGet(AddressVar uintptr, LockBitVar uint, OutValVar *int) {
 	xBitLockAndGet(AddressVar, LockBitVar, OutValVar)
 }
 
-var xBitTrylock func(uintptr, int32) bool
+var xBitTrylock func(uintptr, int) bool
 
 // Sets the indicated @lock_bit in @address, returning %TRUE if
 // successful.  If the bit is already set, returns %FALSE immediately.
@@ -52,12 +52,12 @@ var xBitTrylock func(uintptr, int32) bool
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitTrylock(AddressVar uintptr, LockBitVar int32) bool {
+func BitTrylock(AddressVar uintptr, LockBitVar int) bool {
 	cret := xBitTrylock(AddressVar, LockBitVar)
 	return cret
 }
 
-var xBitUnlock func(uintptr, int32)
+var xBitUnlock func(uintptr, int)
 
 // Clears the indicated @lock_bit in @address.  If another thread is
 // currently blocked in g_bit_lock() on this same bit then it will be
@@ -67,11 +67,11 @@ var xBitUnlock func(uintptr, int32)
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitUnlock(AddressVar uintptr, LockBitVar int32) {
+func BitUnlock(AddressVar uintptr, LockBitVar int) {
 	xBitUnlock(AddressVar, LockBitVar)
 }
 
-var xBitUnlockAndSet func(uintptr, uint32, int32, int32)
+var xBitUnlockAndSet func(uintptr, uint, int, int)
 
 // This is like [func@GLib.bit_unlock] but also atomically sets @address to
 // @val.
@@ -81,11 +81,11 @@ var xBitUnlockAndSet func(uintptr, uint32, int32, int32)
 //
 // Note that the @lock_bit bit will always be unset regardless of
 // @val, @preserve_mask and the currently set value in @address.
-func BitUnlockAndSet(AddressVar uintptr, LockBitVar uint32, NewValVar int32, PreserveMaskVar int32) {
+func BitUnlockAndSet(AddressVar uintptr, LockBitVar uint, NewValVar int, PreserveMaskVar int) {
 	xBitUnlockAndSet(AddressVar, LockBitVar, NewValVar, PreserveMaskVar)
 }
 
-var xPointerBitLock func(uintptr, int32)
+var xPointerBitLock func(uintptr, int)
 
 // This is equivalent to g_bit_lock, but working on pointers (or other
 // pointer-sized values).
@@ -95,31 +95,31 @@ var xPointerBitLock func(uintptr, int32)
 //
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func PointerBitLock(AddressVar uintptr, LockBitVar int32) {
+func PointerBitLock(AddressVar uintptr, LockBitVar int) {
 	xPointerBitLock(AddressVar, LockBitVar)
 }
 
-var xPointerBitLockAndGet func(uintptr, uint32, *uintptr)
+var xPointerBitLockAndGet func(uintptr, uint, *uintptr)
 
 // This is equivalent to g_bit_lock, but working on pointers (or other
 // pointer-sized values).
 //
 // For portability reasons, you may only lock on the bottom 32 bits of
 // the pointer.
-func PointerBitLockAndGet(AddressVar uintptr, LockBitVar uint32, OutPtrVar *uintptr) {
+func PointerBitLockAndGet(AddressVar uintptr, LockBitVar uint, OutPtrVar *uintptr) {
 	xPointerBitLockAndGet(AddressVar, LockBitVar, OutPtrVar)
 }
 
-var xPointerBitLockMaskPtr func(uintptr, uint32, bool, uintptr, uintptr) uintptr
+var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
 
 // This mangles @ptr as g_pointer_bit_lock() and g_pointer_bit_unlock()
 // do.
-func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint32, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
+func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
 	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
 	return cret
 }
 
-var xPointerBitTrylock func(uintptr, int32) bool
+var xPointerBitTrylock func(uintptr, int) bool
 
 // This is equivalent to g_bit_trylock(), but working on pointers (or
 // other pointer-sized values).
@@ -129,12 +129,12 @@ var xPointerBitTrylock func(uintptr, int32) bool
 //
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func PointerBitTrylock(AddressVar uintptr, LockBitVar int32) bool {
+func PointerBitTrylock(AddressVar uintptr, LockBitVar int) bool {
 	cret := xPointerBitTrylock(AddressVar, LockBitVar)
 	return cret
 }
 
-var xPointerBitUnlock func(uintptr, int32)
+var xPointerBitUnlock func(uintptr, int)
 
 // This is equivalent to g_bit_unlock, but working on pointers (or other
 // pointer-sized values).
@@ -144,11 +144,11 @@ var xPointerBitUnlock func(uintptr, int32)
 //
 // While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func PointerBitUnlock(AddressVar uintptr, LockBitVar int32) {
+func PointerBitUnlock(AddressVar uintptr, LockBitVar int) {
 	xPointerBitUnlock(AddressVar, LockBitVar)
 }
 
-var xPointerBitUnlockAndSet func(uintptr, uint32, uintptr, uintptr)
+var xPointerBitUnlockAndSet func(uintptr, uint, uintptr, uintptr)
 
 // This is equivalent to g_pointer_bit_unlock() and atomically setting
 // the pointer value.
@@ -157,7 +157,7 @@ var xPointerBitUnlockAndSet func(uintptr, uint32, uintptr, uintptr)
 // pointer that was set is not identical to @ptr, an assertion fails. In other
 // words, @ptr must have @lock_bit unset. This also means, you usually can
 // only use this on the lowest bits.
-func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint32, PtrVar uintptr, PreserveMaskVar uintptr) {
+func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint, PtrVar uintptr, PreserveMaskVar uintptr) {
 	xPointerBitUnlockAndSet(AddressVar, LockBitVar, PtrVar, PreserveMaskVar)
 }
 

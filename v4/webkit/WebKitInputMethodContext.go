@@ -174,24 +174,24 @@ func (x *InputMethodContextClass) GetCommitted() func(*InputMethodContext, strin
 }
 
 // OverrideDeleteSurrounding sets the "delete_surrounding" callback function.
-func (x *InputMethodContextClass) OverrideDeleteSurrounding(cb func(*InputMethodContext, int32, uint32)) {
+func (x *InputMethodContextClass) OverrideDeleteSurrounding(cb func(*InputMethodContext, int, uint)) {
 	if cb == nil {
 		x.xDeleteSurrounding = 0
 	} else {
-		x.xDeleteSurrounding = purego.NewCallback(func(ContextVarp uintptr, OffsetVarp int32, NCharsVarp uint32) {
+		x.xDeleteSurrounding = purego.NewCallback(func(ContextVarp uintptr, OffsetVarp int, NCharsVarp uint) {
 			cb(InputMethodContextNewFromInternalPtr(ContextVarp), OffsetVarp, NCharsVarp)
 		})
 	}
 }
 
 // GetDeleteSurrounding gets the "delete_surrounding" callback function.
-func (x *InputMethodContextClass) GetDeleteSurrounding() func(*InputMethodContext, int32, uint32) {
+func (x *InputMethodContextClass) GetDeleteSurrounding() func(*InputMethodContext, int, uint) {
 	if x.xDeleteSurrounding == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, OffsetVarp int32, NCharsVarp uint32)
+	var rawCallback func(ContextVarp uintptr, OffsetVarp int, NCharsVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xDeleteSurrounding)
-	return func(ContextVar *InputMethodContext, OffsetVar int32, NCharsVar uint32) {
+	return func(ContextVar *InputMethodContext, OffsetVar int, NCharsVar uint) {
 		rawCallback(ContextVar.GoPointer(), OffsetVar, NCharsVar)
 	}
 }
@@ -232,11 +232,11 @@ func (x *InputMethodContextClass) GetSetEnablePreedit() func(*InputMethodContext
 //	position. Any input method which composes complex characters or any
 //	other compositions from multiple sequential key presses should override
 //	this method to provide feedback.
-func (x *InputMethodContextClass) OverrideGetPreedit(cb func(*InputMethodContext, *string, **glib.List, *uint32)) {
+func (x *InputMethodContextClass) OverrideGetPreedit(cb func(*InputMethodContext, *string, **glib.List, *uint)) {
 	if cb == nil {
 		x.xGetPreedit = 0
 	} else {
-		x.xGetPreedit = purego.NewCallback(func(ContextVarp uintptr, TextVarp *string, UnderlinesVarp **glib.List, CursorOffsetVarp *uint32) {
+		x.xGetPreedit = purego.NewCallback(func(ContextVarp uintptr, TextVarp *string, UnderlinesVarp **glib.List, CursorOffsetVarp *uint) {
 			cb(InputMethodContextNewFromInternalPtr(ContextVarp), TextVarp, UnderlinesVarp, CursorOffsetVarp)
 		})
 	}
@@ -249,13 +249,13 @@ func (x *InputMethodContextClass) OverrideGetPreedit(cb func(*InputMethodContext
 //	position. Any input method which composes complex characters or any
 //	other compositions from multiple sequential key presses should override
 //	this method to provide feedback.
-func (x *InputMethodContextClass) GetGetPreedit() func(*InputMethodContext, *string, **glib.List, *uint32) {
+func (x *InputMethodContextClass) GetGetPreedit() func(*InputMethodContext, *string, **glib.List, *uint) {
 	if x.xGetPreedit == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, TextVarp *string, UnderlinesVarp **glib.List, CursorOffsetVarp *uint32)
+	var rawCallback func(ContextVarp uintptr, TextVarp *string, UnderlinesVarp **glib.List, CursorOffsetVarp *uint)
 	purego.RegisterFunc(&rawCallback, x.xGetPreedit)
-	return func(ContextVar *InputMethodContext, TextVar *string, UnderlinesVar **glib.List, CursorOffsetVar *uint32) {
+	return func(ContextVar *InputMethodContext, TextVar *string, UnderlinesVar **glib.List, CursorOffsetVar *uint) {
 		rawCallback(ContextVar.GoPointer(), TextVar, UnderlinesVar, CursorOffsetVar)
 	}
 }
@@ -364,11 +364,11 @@ func (x *InputMethodContextClass) GetNotifyFocusOut() func(*InputMethodContext) 
 //
 //	to inform the input method of the current cursor location relative to
 //	the client window.
-func (x *InputMethodContextClass) OverrideNotifyCursorArea(cb func(*InputMethodContext, int32, int32, int32, int32)) {
+func (x *InputMethodContextClass) OverrideNotifyCursorArea(cb func(*InputMethodContext, int, int, int, int)) {
 	if cb == nil {
 		x.xNotifyCursorArea = 0
 	} else {
-		x.xNotifyCursorArea = purego.NewCallback(func(ContextVarp uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32) {
+		x.xNotifyCursorArea = purego.NewCallback(func(ContextVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
 			cb(InputMethodContextNewFromInternalPtr(ContextVarp), XVarp, YVarp, WidthVarp, HeightVarp)
 		})
 	}
@@ -379,13 +379,13 @@ func (x *InputMethodContextClass) OverrideNotifyCursorArea(cb func(*InputMethodC
 //
 //	to inform the input method of the current cursor location relative to
 //	the client window.
-func (x *InputMethodContextClass) GetNotifyCursorArea() func(*InputMethodContext, int32, int32, int32, int32) {
+func (x *InputMethodContextClass) GetNotifyCursorArea() func(*InputMethodContext, int, int, int, int) {
 	if x.xNotifyCursorArea == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(ContextVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xNotifyCursorArea)
-	return func(ContextVar *InputMethodContext, XVar int32, YVar int32, WidthVar int32, HeightVar int32) {
+	return func(ContextVar *InputMethodContext, XVar int, YVar int, WidthVar int, HeightVar int) {
 		rawCallback(ContextVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	}
 }
@@ -395,11 +395,11 @@ func (x *InputMethodContextClass) GetNotifyCursorArea() func(*InputMethodContext
 //
 //	update the context surrounding the cursor. The provided text should not include
 //	the preedit string.
-func (x *InputMethodContextClass) OverrideNotifySurrounding(cb func(*InputMethodContext, string, uint32, uint32, uint32)) {
+func (x *InputMethodContextClass) OverrideNotifySurrounding(cb func(*InputMethodContext, string, uint, uint, uint)) {
 	if cb == nil {
 		x.xNotifySurrounding = 0
 	} else {
-		x.xNotifySurrounding = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, LengthVarp uint32, CursorIndexVarp uint32, SelectionIndexVarp uint32) {
+		x.xNotifySurrounding = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, LengthVarp uint, CursorIndexVarp uint, SelectionIndexVarp uint) {
 			cb(InputMethodContextNewFromInternalPtr(ContextVarp), TextVarp, LengthVarp, CursorIndexVarp, SelectionIndexVarp)
 		})
 	}
@@ -410,13 +410,13 @@ func (x *InputMethodContextClass) OverrideNotifySurrounding(cb func(*InputMethod
 //
 //	update the context surrounding the cursor. The provided text should not include
 //	the preedit string.
-func (x *InputMethodContextClass) GetNotifySurrounding() func(*InputMethodContext, string, uint32, uint32, uint32) {
+func (x *InputMethodContextClass) GetNotifySurrounding() func(*InputMethodContext, string, uint, uint, uint) {
 	if x.xNotifySurrounding == 0 {
 		return nil
 	}
-	var rawCallback func(ContextVarp uintptr, TextVarp string, LengthVarp uint32, CursorIndexVarp uint32, SelectionIndexVarp uint32)
+	var rawCallback func(ContextVarp uintptr, TextVarp string, LengthVarp uint, CursorIndexVarp uint, SelectionIndexVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xNotifySurrounding)
-	return func(ContextVar *InputMethodContext, TextVar string, LengthVar uint32, CursorIndexVar uint32, SelectionIndexVar uint32) {
+	return func(ContextVar *InputMethodContext, TextVar string, LengthVar uint, CursorIndexVar uint, SelectionIndexVar uint) {
 		rawCallback(ContextVar.GoPointer(), TextVar, LengthVar, CursorIndexVar, SelectionIndexVar)
 	}
 }
@@ -843,10 +843,10 @@ func (x *InputMethodUnderline) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewInputMethodUnderline func(uint32, uint32) uintptr
+var xNewInputMethodUnderline func(uint, uint) uintptr
 
 // Create a new #WebKitInputMethodUnderline for the given range in preedit string
-func NewInputMethodUnderline(StartOffsetVar uint32, EndOffsetVar uint32) *InputMethodUnderline {
+func NewInputMethodUnderline(StartOffsetVar uint, EndOffsetVar uint) *InputMethodUnderline {
 	cret := xNewInputMethodUnderline(StartOffsetVar, EndOffsetVar)
 	if cret == 0 {
 		return nil
@@ -989,20 +989,20 @@ func (x *InputMethodContext) GetInputPurpose() InputPurpose {
 	return cret
 }
 
-var xInputMethodContextGetPreedit func(uintptr, *string, **glib.List, *uint32)
+var xInputMethodContextGetPreedit func(uintptr, *string, **glib.List, *uint)
 
 // Get the pre-edit string and a list of WebKitInputMethodUnderline.
 //
 // Get the current pre-edit string for the @context, and a list of WebKitInputMethodUnderline to apply to the string.
 // The string will be displayed inserted at @cursor_offset.
-func (x *InputMethodContext) GetPreedit(TextVar *string, UnderlinesVar **glib.List, CursorOffsetVar *uint32) {
+func (x *InputMethodContext) GetPreedit(TextVar *string, UnderlinesVar **glib.List, CursorOffsetVar *uint) {
 	xInputMethodContextGetPreedit(x.GoPointer(), TextVar, UnderlinesVar, CursorOffsetVar)
 }
 
-var xInputMethodContextNotifyCursorArea func(uintptr, int32, int32, int32, int32)
+var xInputMethodContextNotifyCursorArea func(uintptr, int, int, int, int)
 
 // Notify @context that cursor area changed in input associated.
-func (x *InputMethodContext) NotifyCursorArea(XVar int32, YVar int32, WidthVar int32, HeightVar int32) {
+func (x *InputMethodContext) NotifyCursorArea(XVar int, YVar int, WidthVar int, HeightVar int) {
 	xInputMethodContextNotifyCursorArea(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 }
 
@@ -1020,12 +1020,12 @@ func (x *InputMethodContext) NotifyFocusOut() {
 	xInputMethodContextNotifyFocusOut(x.GoPointer())
 }
 
-var xInputMethodContextNotifySurrounding func(uintptr, string, int32, uint32, uint32)
+var xInputMethodContextNotifySurrounding func(uintptr, string, int, uint, uint)
 
 // Notify @context that the context surrounding the cursor has changed.
 //
 // If there's no selection @selection_index is the same as @cursor_index.
-func (x *InputMethodContext) NotifySurrounding(TextVar string, LengthVar int32, CursorIndexVar uint32, SelectionIndexVar uint32) {
+func (x *InputMethodContext) NotifySurrounding(TextVar string, LengthVar int, CursorIndexVar uint, SelectionIndexVar uint) {
 	xInputMethodContextNotifySurrounding(x.GoPointer(), TextVar, LengthVar, CursorIndexVar, SelectionIndexVar)
 }
 
@@ -1073,7 +1073,7 @@ func (c *InputMethodContext) SetGoPointer(ptr uintptr) {
 // Emitted when a complete input sequence has been entered by the user.
 // This can be a single character immediately after a key press or the
 // final result of preediting.
-func (x *InputMethodContext) ConnectCommitted(cb *func(InputMethodContext, string)) uint32 {
+func (x *InputMethodContext) ConnectCommitted(cb *func(InputMethodContext, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "committed", cbRefPtr)
@@ -1097,7 +1097,7 @@ func (x *InputMethodContext) ConnectCommitted(cb *func(InputMethodContext, strin
 
 // Emitted when the input method wants to delete the context surrounding the cursor.
 // If @offset is a negative value, it means a position before the cursor.
-func (x *InputMethodContext) ConnectDeleteSurrounding(cb *func(InputMethodContext, int32, uint32)) uint32 {
+func (x *InputMethodContext) ConnectDeleteSurrounding(cb *func(InputMethodContext, int, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "delete-surrounding", cbRefPtr)
@@ -1105,7 +1105,7 @@ func (x *InputMethodContext) ConnectDeleteSurrounding(cb *func(InputMethodContex
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, OffsetVarp int32, NCharsVarp uint32) {
+	fcb := func(clsPtr uintptr, OffsetVarp int, NCharsVarp uint) {
 		fa := InputMethodContext{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1122,7 +1122,7 @@ func (x *InputMethodContext) ConnectDeleteSurrounding(cb *func(InputMethodContex
 // Emitted whenever the preedit sequence currently being entered has changed.
 // It is also emitted at the end of a preedit sequence, in which case
 // webkit_input_method_context_get_preedit() returns the empty string.
-func (x *InputMethodContext) ConnectPreeditChanged(cb *func(InputMethodContext)) uint32 {
+func (x *InputMethodContext) ConnectPreeditChanged(cb *func(InputMethodContext)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
@@ -1145,7 +1145,7 @@ func (x *InputMethodContext) ConnectPreeditChanged(cb *func(InputMethodContext))
 }
 
 // Emitted when a preediting sequence has been completed or canceled.
-func (x *InputMethodContext) ConnectPreeditFinished(cb *func(InputMethodContext)) uint32 {
+func (x *InputMethodContext) ConnectPreeditFinished(cb *func(InputMethodContext)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-finished", cbRefPtr)
@@ -1168,7 +1168,7 @@ func (x *InputMethodContext) ConnectPreeditFinished(cb *func(InputMethodContext)
 }
 
 // Emitted when a new preediting sequence starts.
-func (x *InputMethodContext) ConnectPreeditStarted(cb *func(InputMethodContext)) uint32 {
+func (x *InputMethodContext) ConnectPreeditStarted(cb *func(InputMethodContext)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-started", cbRefPtr)

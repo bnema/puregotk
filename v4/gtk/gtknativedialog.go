@@ -39,11 +39,11 @@ func (x *NativeDialogClass) GoPointer() uintptr {
 
 // OverrideResponse sets the "response" callback function.
 // class handler for the `GtkNativeDialog::response` signal
-func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int32)) {
+func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int)) {
 	if cb == nil {
 		x.xResponse = 0
 	} else {
-		x.xResponse = purego.NewCallback(func(SelfVarp uintptr, ResponseIdVarp int32) {
+		x.xResponse = purego.NewCallback(func(SelfVarp uintptr, ResponseIdVarp int) {
 			cb(NativeDialogNewFromInternalPtr(SelfVarp), ResponseIdVarp)
 		})
 	}
@@ -51,13 +51,13 @@ func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int32)) {
 
 // GetResponse gets the "response" callback function.
 // class handler for the `GtkNativeDialog::response` signal
-func (x *NativeDialogClass) GetResponse() func(*NativeDialog, int32) {
+func (x *NativeDialogClass) GetResponse() func(*NativeDialog, int) {
 	if x.xResponse == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, ResponseIdVarp int32)
+	var rawCallback func(SelfVarp uintptr, ResponseIdVarp int)
 	purego.RegisterFunc(&rawCallback, x.xResponse)
-	return func(SelfVar *NativeDialog, ResponseIdVar int32) {
+	return func(SelfVar *NativeDialog, ResponseIdVar int) {
 		rawCallback(SelfVar.GoPointer(), ResponseIdVar)
 	}
 }
@@ -383,7 +383,7 @@ func (x *NativeDialog) GetPropertyModal() bool {
 func (x *NativeDialog) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -418,7 +418,7 @@ func (x *NativeDialog) GetPropertyVisible() bool {
 //
 // If you call [method@Gtk.NativeDialog.hide] before the user
 // responds to the dialog this signal will not be emitted.
-func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int32)) uint32 {
+func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
@@ -426,7 +426,7 @@ func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ResponseIdVarp int32) {
+	fcb := func(clsPtr uintptr, ResponseIdVarp int) {
 		fa := NativeDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

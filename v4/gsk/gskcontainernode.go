@@ -25,12 +25,12 @@ func ContainerNodeNewFromInternalPtr(ptr uintptr) *ContainerNode {
 	return cls
 }
 
-var xNewContainerNode func(uintptr, uint32) uintptr
+var xNewContainerNode func(uintptr, uint) uintptr
 
 // Creates a new `GskRenderNode` instance for holding the given @children.
 //
 // The new node will acquire a reference to each of the children.
-func NewContainerNode(ChildrenVar uintptr, NChildrenVar uint32) *ContainerNode {
+func NewContainerNode(ChildrenVar uintptr, NChildrenVar uint) *ContainerNode {
 	var cls *ContainerNode
 
 	cret := xNewContainerNode(ChildrenVar, NChildrenVar)
@@ -43,10 +43,10 @@ func NewContainerNode(ChildrenVar uintptr, NChildrenVar uint32) *ContainerNode {
 	return cls
 }
 
-var xContainerNodeGetChild func(uintptr, uint32) uintptr
+var xContainerNodeGetChild func(uintptr, uint) uintptr
 
 // Gets one of the children of @container.
-func (x *ContainerNode) GetChild(IdxVar uint32) *RenderNode {
+func (x *ContainerNode) GetChild(IdxVar uint) *RenderNode {
 	var cls *RenderNode
 
 	cret := xContainerNodeGetChild(x.GoPointer(), IdxVar)
@@ -60,10 +60,10 @@ func (x *ContainerNode) GetChild(IdxVar uint32) *RenderNode {
 	return cls
 }
 
-var xContainerNodeGetNChildren func(uintptr) uint32
+var xContainerNodeGetNChildren func(uintptr) uint
 
 // Retrieves the number of direct children of @node.
-func (x *ContainerNode) GetNChildren() uint32 {
+func (x *ContainerNode) GetNChildren() uint {
 	cret := xContainerNodeGetNChildren(x.GoPointer())
 	return cret
 }

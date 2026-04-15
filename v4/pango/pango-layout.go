@@ -66,13 +66,13 @@ func (x *LayoutIter) Free() {
 	xLayoutIterFree(x.GoPointer())
 }
 
-var xLayoutIterGetBaseline func(uintptr) int32
+var xLayoutIterGetBaseline func(uintptr) int
 
 // Gets the Y position of the current line's baseline, in layout
 // coordinates.
 //
 // Layout coordinates have the origin at the top left of the entire layout.
-func (x *LayoutIter) GetBaseline() int32 {
+func (x *LayoutIter) GetBaseline() int {
 	cret := xLayoutIterGetBaseline(x.GoPointer())
 	return cret
 }
@@ -98,7 +98,7 @@ func (x *LayoutIter) GetClusterExtents(InkRectVar *Rectangle, LogicalRectVar *Re
 	xLayoutIterGetClusterExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutIterGetIndex func(uintptr) int32
+var xLayoutIterGetIndex func(uintptr) int
 
 // Gets the current byte index.
 //
@@ -106,7 +106,7 @@ var xLayoutIterGetIndex func(uintptr) int32
 // not logical order, so indexes may not be sequential. Also,
 // the index may be equal to the length of the text in the
 // layout, if on the %NULL run (see [method@Pango.LayoutIter.get_run]).
-func (x *LayoutIter) GetIndex() int32 {
+func (x *LayoutIter) GetIndex() int {
 	cret := xLayoutIterGetIndex(x.GoPointer())
 	return cret
 }
@@ -177,7 +177,7 @@ func (x *LayoutIter) GetLineReadonly() *LayoutLine {
 	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
-var xLayoutIterGetLineYrange func(uintptr, *int32, *int32)
+var xLayoutIterGetLineYrange func(uintptr, *int, *int)
 
 // Divides the vertical space in the `PangoLayout` being iterated over
 // between the lines in the layout, and returns the space belonging to
@@ -190,7 +190,7 @@ var xLayoutIterGetLineYrange func(uintptr, *int32, *int32)
 //
 // Note: Since 1.44, Pango uses line heights for placing lines, and there
 // may be gaps between the ranges returned by this function.
-func (x *LayoutIter) GetLineYrange(Y0Var *int32, Y1Var *int32) {
+func (x *LayoutIter) GetLineYrange(Y0Var *int, Y1Var *int) {
 	xLayoutIterGetLineYrange(x.GoPointer(), Y0Var, Y1Var)
 }
 
@@ -213,7 +213,7 @@ func (x *LayoutIter) GetRun() *LayoutRun {
 	return (*LayoutRun)(unsafe.Pointer(cret))
 }
 
-var xLayoutIterGetRunBaseline func(uintptr) int32
+var xLayoutIterGetRunBaseline func(uintptr) int
 
 // Gets the Y position of the current run's baseline, in layout
 // coordinates.
@@ -222,7 +222,7 @@ var xLayoutIterGetRunBaseline func(uintptr) int32
 //
 // The run baseline can be different from the line baseline, for
 // example due to superscript or subscript positioning.
-func (x *LayoutIter) GetRunBaseline() int32 {
+func (x *LayoutIter) GetRunBaseline() int {
 	cret := xLayoutIterGetRunBaseline(x.GoPointer())
 	return cret
 }
@@ -313,9 +313,9 @@ type LayoutLine struct {
 
 	Runs *glib.SList
 
-	IsParagraphStart uint32
+	IsParagraphStart uint
 
-	ResolvedDir uint32
+	ResolvedDir uint
 }
 
 var xLayoutLineGLibType func() types.GType
@@ -338,7 +338,7 @@ func (x *LayoutLine) GetExtents(InkRectVar *Rectangle, LogicalRectVar *Rectangle
 	xLayoutLineGetExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutLineGetHeight func(uintptr, *int32)
+var xLayoutLineGetHeight func(uintptr, *int)
 
 // Computes the height of the line, as the maximum of the heights
 // of fonts used in this line.
@@ -347,14 +347,14 @@ var xLayoutLineGetHeight func(uintptr, *int32)
 // of text is influenced by other factors, such as
 // [method@Pango.Layout.set_spacing] and
 // [method@Pango.Layout.set_line_spacing].
-func (x *LayoutLine) GetHeight(HeightVar *int32) {
+func (x *LayoutLine) GetHeight(HeightVar *int) {
 	xLayoutLineGetHeight(x.GoPointer(), HeightVar)
 }
 
-var xLayoutLineGetLength func(uintptr) int32
+var xLayoutLineGetLength func(uintptr) int
 
 // Returns the length of the line, in bytes.
-func (x *LayoutLine) GetLength() int32 {
+func (x *LayoutLine) GetLength() int {
 	cret := xLayoutLineGetLength(x.GoPointer())
 	return cret
 }
@@ -379,16 +379,16 @@ func (x *LayoutLine) GetResolvedDirection() Direction {
 	return cret
 }
 
-var xLayoutLineGetStartIndex func(uintptr) int32
+var xLayoutLineGetStartIndex func(uintptr) int
 
 // Returns the start index of the line, as byte index
 // into the text of the layout.
-func (x *LayoutLine) GetStartIndex() int32 {
+func (x *LayoutLine) GetStartIndex() int {
 	cret := xLayoutLineGetStartIndex(x.GoPointer())
 	return cret
 }
 
-var xLayoutLineGetXRanges func(uintptr, int32, int32, *[]int32, *int32)
+var xLayoutLineGetXRanges func(uintptr, int, int, *[]int, *int)
 
 // Gets a list of visual ranges corresponding to a given logical range.
 //
@@ -396,14 +396,14 @@ var xLayoutLineGetXRanges func(uintptr, int32, int32, *[]int32, *int32)
 // ranges which are adjacent. The ranges will be sorted from left to
 // right. The ranges are with respect to the left edge of the entire
 // layout, not with respect to the line.
-func (x *LayoutLine) GetXRanges(StartIndexVar int32, EndIndexVar int32, RangesVar *[]int32, NRangesVar *int32) {
+func (x *LayoutLine) GetXRanges(StartIndexVar int, EndIndexVar int, RangesVar *[]int, NRangesVar *int) {
 	xLayoutLineGetXRanges(x.GoPointer(), StartIndexVar, EndIndexVar, RangesVar, NRangesVar)
 }
 
-var xLayoutLineIndexToX func(uintptr, int32, bool, *int32)
+var xLayoutLineIndexToX func(uintptr, int, bool, *int)
 
 // Converts an index within a line to a X position.
-func (x *LayoutLine) IndexToX(IndexVar int32, TrailingVar bool, XPosVar *int32) {
+func (x *LayoutLine) IndexToX(IndexVar int, TrailingVar bool, XPosVar *int) {
 	xLayoutLineIndexToX(x.GoPointer(), IndexVar, TrailingVar, XPosVar)
 }
 
@@ -436,7 +436,7 @@ func (x *LayoutLine) Unref() {
 	xLayoutLineUnref(x.GoPointer())
 }
 
-var xLayoutLineXToIndex func(uintptr, int32, *int32, *int32) bool
+var xLayoutLineXToIndex func(uintptr, int, *int, *int) bool
 
 // Converts from x offset to the byte index of the corresponding character
 // within the text of the layout.
@@ -449,7 +449,7 @@ var xLayoutLineXToIndex func(uintptr, int32, *int32, *int32) bool
 // left of the line results in @index_ pointing to the (logical) last grapheme
 // in the line and @trailing being set to the number of characters in that
 // grapheme. The reverse is true for a left-to-right line.
-func (x *LayoutLine) XToIndex(XPosVar int32, IndexVar *int32, TrailingVar *int32) bool {
+func (x *LayoutLine) XToIndex(XPosVar int, IndexVar *int, TrailingVar *int) bool {
 	cret := xLayoutLineXToIndex(x.GoPointer(), XPosVar, IndexVar, TrailingVar)
 	return cret
 }
@@ -735,15 +735,15 @@ func (x *Layout) GetAutoDir() bool {
 	return cret
 }
 
-var xLayoutGetBaseline func(uintptr) int32
+var xLayoutGetBaseline func(uintptr) int
 
 // Gets the Y position of baseline of the first line in @layout.
-func (x *Layout) GetBaseline() int32 {
+func (x *Layout) GetBaseline() int {
 	cret := xLayoutGetBaseline(x.GoPointer())
 	return cret
 }
 
-var xLayoutGetCaretPos func(uintptr, int32, *Rectangle, *Rectangle)
+var xLayoutGetCaretPos func(uintptr, int, *Rectangle, *Rectangle)
 
 // Given an index within a layout, determines the positions that of the
 // strong and weak cursors if the insertion point is at that index.
@@ -758,15 +758,15 @@ var xLayoutGetCaretPos func(uintptr, int32, *Rectangle, *Rectangle)
 //	&lt;img alt="Caret metrics" src="caret-metrics-light.png"&gt;
 //
 // &lt;/picture&gt;
-func (x *Layout) GetCaretPos(IndexVar int32, StrongPosVar *Rectangle, WeakPosVar *Rectangle) {
+func (x *Layout) GetCaretPos(IndexVar int, StrongPosVar *Rectangle, WeakPosVar *Rectangle) {
 	xLayoutGetCaretPos(x.GoPointer(), IndexVar, StrongPosVar, WeakPosVar)
 }
 
-var xLayoutGetCharacterCount func(uintptr) int32
+var xLayoutGetCharacterCount func(uintptr) int
 
 // Returns the number of Unicode characters in the
 // the text of @layout.
-func (x *Layout) GetCharacterCount() int32 {
+func (x *Layout) GetCharacterCount() int {
 	cret := xLayoutGetCharacterCount(x.GoPointer())
 	return cret
 }
@@ -788,7 +788,7 @@ func (x *Layout) GetContext() *Context {
 	return cls
 }
 
-var xLayoutGetCursorPos func(uintptr, int32, *Rectangle, *Rectangle)
+var xLayoutGetCursorPos func(uintptr, int, *Rectangle, *Rectangle)
 
 // Given an index within a layout, determines the positions that of the
 // strong and weak cursors if the insertion point is at that index.
@@ -821,14 +821,14 @@ var xLayoutGetCursorPos func(uintptr, int32, *Rectangle, *Rectangle)
 // cursor to the left. Typing a 'c' in this situation will insert the
 // character after the 'b', and typing another Hebrew character, like 'ג',
 // will insert it at the end.
-func (x *Layout) GetCursorPos(IndexVar int32, StrongPosVar *Rectangle, WeakPosVar *Rectangle) {
+func (x *Layout) GetCursorPos(IndexVar int, StrongPosVar *Rectangle, WeakPosVar *Rectangle) {
 	xLayoutGetCursorPos(x.GoPointer(), IndexVar, StrongPosVar, WeakPosVar)
 }
 
-var xLayoutGetDirection func(uintptr, int32) Direction
+var xLayoutGetDirection func(uintptr, int) Direction
 
 // Gets the text direction at the given character position in @layout.
-func (x *Layout) GetDirection(IndexVar int32) Direction {
+func (x *Layout) GetDirection(IndexVar int) Direction {
 	cret := xLayoutGetDirection(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -873,22 +873,22 @@ func (x *Layout) GetFontDescription() *FontDescription {
 	return (*FontDescription)(unsafe.Pointer(cret))
 }
 
-var xLayoutGetHeight func(uintptr) int32
+var xLayoutGetHeight func(uintptr) int
 
 // Gets the height of layout used for ellipsization.
 //
 // See [method@Pango.Layout.set_height] for details.
-func (x *Layout) GetHeight() int32 {
+func (x *Layout) GetHeight() int {
 	cret := xLayoutGetHeight(x.GoPointer())
 	return cret
 }
 
-var xLayoutGetIndent func(uintptr) int32
+var xLayoutGetIndent func(uintptr) int
 
 // Gets the paragraph indent width in Pango units.
 //
 // A negative value indicates a hanging indentation.
-func (x *Layout) GetIndent() int32 {
+func (x *Layout) GetIndent() int {
 	cret := xLayoutGetIndent(x.GoPointer())
 	return cret
 }
@@ -922,13 +922,13 @@ func (x *Layout) GetJustifyLastLine() bool {
 	return cret
 }
 
-var xLayoutGetLine func(uintptr, int32) uintptr
+var xLayoutGetLine func(uintptr, int) uintptr
 
 // Retrieves a particular line from a `PangoLayout`.
 //
 // Use the faster [method@Pango.Layout.get_line_readonly] if you do not
 // plan to modify the contents of the line (glyphs, glyph widths, etc.).
-func (x *Layout) GetLine(LineVar int32) *LayoutLine {
+func (x *Layout) GetLine(LineVar int) *LayoutLine {
 	cret := xLayoutGetLine(x.GoPointer(), LineVar)
 	if cret == 0 {
 		return nil
@@ -936,22 +936,22 @@ func (x *Layout) GetLine(LineVar int32) *LayoutLine {
 	return (*LayoutLine)(unsafe.Pointer(cret))
 }
 
-var xLayoutGetLineCount func(uintptr) int32
+var xLayoutGetLineCount func(uintptr) int
 
 // Retrieves the count of lines for the @layout.
-func (x *Layout) GetLineCount() int32 {
+func (x *Layout) GetLineCount() int {
 	cret := xLayoutGetLineCount(x.GoPointer())
 	return cret
 }
 
-var xLayoutGetLineReadonly func(uintptr, int32) uintptr
+var xLayoutGetLineReadonly func(uintptr, int) uintptr
 
 // Retrieves a particular line from a `PangoLayout`.
 //
 // This is a faster alternative to [method@Pango.Layout.get_line],
 // but the user is not expected to modify the contents of the line
 // (glyphs, glyph widths, etc.).
-func (x *Layout) GetLineReadonly(LineVar int32) *LayoutLine {
+func (x *Layout) GetLineReadonly(LineVar int) *LayoutLine {
 	cret := xLayoutGetLineReadonly(x.GoPointer(), LineVar)
 	if cret == 0 {
 		return nil
@@ -998,15 +998,15 @@ func (x *Layout) GetLinesReadonly() *glib.SList {
 	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xLayoutGetLogAttrs func(uintptr, *uintptr, *int32)
+var xLayoutGetLogAttrs func(uintptr, *uintptr, *int)
 
 // Retrieves an array of logical attributes for each character in
 // the @layout.
-func (x *Layout) GetLogAttrs(AttrsVar *uintptr, NAttrsVar *int32) {
+func (x *Layout) GetLogAttrs(AttrsVar *uintptr, NAttrsVar *int) {
 	xLayoutGetLogAttrs(x.GoPointer(), AttrsVar, NAttrsVar)
 }
 
-var xLayoutGetLogAttrsReadonly func(uintptr, *int32) uintptr
+var xLayoutGetLogAttrsReadonly func(uintptr, *int) uintptr
 
 // Retrieves an array of logical attributes for each character in
 // the @layout.
@@ -1019,7 +1019,7 @@ var xLayoutGetLogAttrsReadonly func(uintptr, *int32) uintptr
 // than the total number of characters in the layout, since there
 // need to be attributes corresponding to both the position before
 // the first character and the position after the last character.
-func (x *Layout) GetLogAttrsReadonly(NAttrsVar *int32) uintptr {
+func (x *Layout) GetLogAttrsReadonly(NAttrsVar *int) uintptr {
 	cret := xLayoutGetLogAttrsReadonly(x.GoPointer(), NAttrsVar)
 	return cret
 }
@@ -1036,7 +1036,7 @@ func (x *Layout) GetPixelExtents(InkRectVar *Rectangle, LogicalRectVar *Rectangl
 	xLayoutGetPixelExtents(x.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xLayoutGetPixelSize func(uintptr, *int32, *int32)
+var xLayoutGetPixelSize func(uintptr, *int, *int)
 
 // Determines the logical width and height of a `PangoLayout` in device
 // units.
@@ -1044,11 +1044,11 @@ var xLayoutGetPixelSize func(uintptr, *int32, *int32)
 // [method@Pango.Layout.get_size] returns the width and height
 // scaled by %PANGO_SCALE. This is simply a convenience function
 // around [method@Pango.Layout.get_pixel_extents].
-func (x *Layout) GetPixelSize(WidthVar *int32, HeightVar *int32) {
+func (x *Layout) GetPixelSize(WidthVar *int, HeightVar *int) {
 	xLayoutGetPixelSize(x.GoPointer(), WidthVar, HeightVar)
 }
 
-var xLayoutGetSerial func(uintptr) uint32
+var xLayoutGetSerial func(uintptr) uint
 
 // Returns the current serial number of @layout.
 //
@@ -1062,7 +1062,7 @@ var xLayoutGetSerial func(uintptr) uint32
 // and is useful for example to decide whether a layout needs redrawing.
 // To force the serial to be increased, use
 // [method@Pango.Layout.context_changed].
-func (x *Layout) GetSerial() uint32 {
+func (x *Layout) GetSerial() uint {
 	cret := xLayoutGetSerial(x.GoPointer())
 	return cret
 }
@@ -1077,20 +1077,20 @@ func (x *Layout) GetSingleParagraphMode() bool {
 	return cret
 }
 
-var xLayoutGetSize func(uintptr, *int32, *int32)
+var xLayoutGetSize func(uintptr, *int, *int)
 
 // Determines the logical width and height of a `PangoLayout` in Pango
 // units.
 //
 // This is simply a convenience function around [method@Pango.Layout.get_extents].
-func (x *Layout) GetSize(WidthVar *int32, HeightVar *int32) {
+func (x *Layout) GetSize(WidthVar *int, HeightVar *int) {
 	xLayoutGetSize(x.GoPointer(), WidthVar, HeightVar)
 }
 
-var xLayoutGetSpacing func(uintptr) int32
+var xLayoutGetSpacing func(uintptr) int
 
 // Gets the amount of spacing between the lines of the layout.
-func (x *Layout) GetSpacing() int32 {
+func (x *Layout) GetSpacing() int {
 	cret := xLayoutGetSpacing(x.GoPointer())
 	return cret
 }
@@ -1121,7 +1121,7 @@ func (x *Layout) GetText() string {
 	return cret
 }
 
-var xLayoutGetUnknownGlyphsCount func(uintptr) int32
+var xLayoutGetUnknownGlyphsCount func(uintptr) int
 
 // Counts the number of unknown glyphs in @layout.
 //
@@ -1129,15 +1129,15 @@ var xLayoutGetUnknownGlyphsCount func(uintptr) int32
 // available to render all characters in a certain string, or when
 // used in combination with %PANGO_ATTR_FALLBACK, to check if a
 // certain font supports all the characters in the string.
-func (x *Layout) GetUnknownGlyphsCount() int32 {
+func (x *Layout) GetUnknownGlyphsCount() int {
 	cret := xLayoutGetUnknownGlyphsCount(x.GoPointer())
 	return cret
 }
 
-var xLayoutGetWidth func(uintptr) int32
+var xLayoutGetWidth func(uintptr) int
 
 // Gets the width to which the lines of the `PangoLayout` should wrap.
-func (x *Layout) GetWidth() int32 {
+func (x *Layout) GetWidth() int {
 	cret := xLayoutGetWidth(x.GoPointer())
 	return cret
 }
@@ -1153,16 +1153,16 @@ func (x *Layout) GetWrap() WrapMode {
 	return cret
 }
 
-var xLayoutIndexToLineX func(uintptr, int32, bool, *int32, *int32)
+var xLayoutIndexToLineX func(uintptr, int, bool, *int, *int)
 
 // Converts from byte @index_ within the @layout to line and X position.
 //
 // The X position is measured from the left edge of the line.
-func (x *Layout) IndexToLineX(IndexVar int32, TrailingVar bool, LineVar *int32, XPosVar *int32) {
+func (x *Layout) IndexToLineX(IndexVar int, TrailingVar bool, LineVar *int, XPosVar *int) {
 	xLayoutIndexToLineX(x.GoPointer(), IndexVar, TrailingVar, LineVar, XPosVar)
 }
 
-var xLayoutIndexToPos func(uintptr, int32, *Rectangle)
+var xLayoutIndexToPos func(uintptr, int, *Rectangle)
 
 // Converts from an index within a `PangoLayout` to the onscreen position
 // corresponding to the grapheme at that index.
@@ -1171,7 +1171,7 @@ var xLayoutIndexToPos func(uintptr, int32, *Rectangle)
 // always the leading edge of the grapheme and `pos-&gt;x + pos-&gt;width` the
 // trailing edge of the grapheme. If the directionality of the grapheme
 // is right-to-left, then `pos-&gt;width` will be negative.
-func (x *Layout) IndexToPos(IndexVar int32, PosVar *Rectangle) {
+func (x *Layout) IndexToPos(IndexVar int, PosVar *Rectangle) {
 	xLayoutIndexToPos(x.GoPointer(), IndexVar, PosVar)
 }
 
@@ -1200,7 +1200,7 @@ func (x *Layout) IsWrapped() bool {
 	return cret
 }
 
-var xLayoutMoveCursorVisually func(uintptr, bool, int32, int32, int32, *int32, *int32)
+var xLayoutMoveCursorVisually func(uintptr, bool, int, int, int, *int, *int)
 
 // Computes a new cursor position from an old position and a direction.
 //
@@ -1217,7 +1217,7 @@ var xLayoutMoveCursorVisually func(uintptr, bool, int32, int32, int32, *int32, *
 // Motion here is in cursor positions, not in characters, so a single
 // call to this function may move the cursor over multiple characters
 // when multiple characters combine to form a single grapheme.
-func (x *Layout) MoveCursorVisually(StrongVar bool, OldIndexVar int32, OldTrailingVar int32, DirectionVar int32, NewIndexVar *int32, NewTrailingVar *int32) {
+func (x *Layout) MoveCursorVisually(StrongVar bool, OldIndexVar int, OldTrailingVar int, DirectionVar int, NewIndexVar *int, NewTrailingVar *int) {
 	xLayoutMoveCursorVisually(x.GoPointer(), StrongVar, OldIndexVar, OldTrailingVar, DirectionVar, NewIndexVar, NewTrailingVar)
 }
 
@@ -1311,7 +1311,7 @@ func (x *Layout) SetFontDescription(DescVar *FontDescription) {
 	xLayoutSetFontDescription(x.GoPointer(), DescVar)
 }
 
-var xLayoutSetHeight func(uintptr, int32)
+var xLayoutSetHeight func(uintptr, int)
 
 // Sets the height to which the `PangoLayout` should be ellipsized at.
 //
@@ -1338,11 +1338,11 @@ var xLayoutSetHeight func(uintptr, int32)
 // The behavior is undefined if a height other than -1 is set and
 // ellipsization mode is set to %PANGO_ELLIPSIZE_NONE, and may change in the
 // future.
-func (x *Layout) SetHeight(HeightVar int32) {
+func (x *Layout) SetHeight(HeightVar int) {
 	xLayoutSetHeight(x.GoPointer(), HeightVar)
 }
 
-var xLayoutSetIndent func(uintptr, int32)
+var xLayoutSetIndent func(uintptr, int)
 
 // Sets the width in Pango units to indent each paragraph.
 //
@@ -1354,7 +1354,7 @@ var xLayoutSetIndent func(uintptr, int32)
 // %PANGO_ALIGN_CENTER.
 //
 // The default value is 0.
-func (x *Layout) SetIndent(IndentVar int32) {
+func (x *Layout) SetIndent(IndentVar int) {
 	xLayoutSetIndent(x.GoPointer(), IndentVar)
 }
 
@@ -1416,7 +1416,7 @@ func (x *Layout) SetLineSpacing(FactorVar float32) {
 	xLayoutSetLineSpacing(x.GoPointer(), FactorVar)
 }
 
-var xLayoutSetMarkup func(uintptr, string, int32)
+var xLayoutSetMarkup func(uintptr, string, int)
 
 // Sets the layout text and attribute list from marked-up text.
 //
@@ -1426,11 +1426,11 @@ var xLayoutSetMarkup func(uintptr, string, int32)
 //
 // This is the same as [method@Pango.Layout.set_markup_with_accel],
 // but the markup text isn't scanned for accelerators.
-func (x *Layout) SetMarkup(MarkupVar string, LengthVar int32) {
+func (x *Layout) SetMarkup(MarkupVar string, LengthVar int) {
 	xLayoutSetMarkup(x.GoPointer(), MarkupVar, LengthVar)
 }
 
-var xLayoutSetMarkupWithAccel func(uintptr, string, int32, uint32, *uint32)
+var xLayoutSetMarkupWithAccel func(uintptr, string, int, uint32, *uint32)
 
 // Sets the layout text and attribute list from marked-up text.
 //
@@ -1445,7 +1445,7 @@ var xLayoutSetMarkupWithAccel func(uintptr, string, int32, uint32, *uint32)
 // and the first character so marked will be returned in @accel_char.
 // Two @accel_marker characters following each other produce a single
 // literal @accel_marker character.
-func (x *Layout) SetMarkupWithAccel(MarkupVar string, LengthVar int32, AccelMarkerVar uint32, AccelCharVar *uint32) {
+func (x *Layout) SetMarkupWithAccel(MarkupVar string, LengthVar int, AccelMarkerVar uint32, AccelCharVar *uint32) {
 	xLayoutSetMarkupWithAccel(x.GoPointer(), MarkupVar, LengthVar, AccelMarkerVar, AccelCharVar)
 }
 
@@ -1463,7 +1463,7 @@ func (x *Layout) SetSingleParagraphMode(SettingVar bool) {
 	xLayoutSetSingleParagraphMode(x.GoPointer(), SettingVar)
 }
 
-var xLayoutSetSpacing func(uintptr, int32)
+var xLayoutSetSpacing func(uintptr, int)
 
 // Sets the amount of spacing in Pango units between
 // the lines of the layout.
@@ -1481,7 +1481,7 @@ var xLayoutSetSpacing func(uintptr, int32)
 //
 // Note: for semantics that are closer to the CSS line-height
 // property, see [func@Pango.attr_line_height_new].
-func (x *Layout) SetSpacing(SpacingVar int32) {
+func (x *Layout) SetSpacing(SpacingVar int) {
 	xLayoutSetSpacing(x.GoPointer(), SpacingVar)
 }
 
@@ -1504,7 +1504,7 @@ func (x *Layout) SetTabs(TabsVar *TabArray) {
 	xLayoutSetTabs(x.GoPointer(), TabsVar)
 }
 
-var xLayoutSetText func(uintptr, string, int32)
+var xLayoutSetText func(uintptr, string, int)
 
 // Sets the text of the layout.
 //
@@ -1516,17 +1516,17 @@ var xLayoutSetText func(uintptr, string, int32)
 // may want to call [method@Pango.Layout.set_attributes] to clear the
 // attributes set on the layout from the markup as this function does
 // not clear attributes.
-func (x *Layout) SetText(TextVar string, LengthVar int32) {
+func (x *Layout) SetText(TextVar string, LengthVar int) {
 	xLayoutSetText(x.GoPointer(), TextVar, LengthVar)
 }
 
-var xLayoutSetWidth func(uintptr, int32)
+var xLayoutSetWidth func(uintptr, int)
 
 // Sets the width to which the lines of the `PangoLayout` should wrap or
 // get ellipsized.
 //
 // The default value is -1: no width set.
-func (x *Layout) SetWidth(WidthVar int32) {
+func (x *Layout) SetWidth(WidthVar int) {
 	xLayoutSetWidth(x.GoPointer(), WidthVar)
 }
 
@@ -1564,7 +1564,7 @@ func (x *Layout) WriteToFile(FlagsVar LayoutSerializeFlags, FilenameVar string) 
 	return cret, cerr
 }
 
-var xLayoutXyToIndex func(uintptr, int32, int32, *int32, *int32) bool
+var xLayoutXyToIndex func(uintptr, int, int, *int, *int) bool
 
 // Converts from X and Y position within a layout to the byte index to the
 // character at that logical position.
@@ -1575,7 +1575,7 @@ var xLayoutXyToIndex func(uintptr, int32, int32, *int32, *int32) bool
 // chosen as described for [method@Pango.LayoutLine.x_to_index]. If either
 // the X or Y positions were not inside the layout, then the function returns
 // %FALSE; on an exact hit, it returns %TRUE.
-func (x *Layout) XyToIndex(XVar int32, YVar int32, IndexVar *int32, TrailingVar *int32) bool {
+func (x *Layout) XyToIndex(XVar int, YVar int, IndexVar *int, TrailingVar *int) bool {
 	cret := xLayoutXyToIndex(x.GoPointer(), XVar, YVar, IndexVar, TrailingVar)
 	return cret
 }

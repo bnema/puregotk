@@ -70,14 +70,17 @@ func NewShortcut(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction) *Shortc
 	return cls
 }
 
-var xNewShortcutWithArguments func(uintptr, uintptr, string, ...interface{}) uintptr
+var xNewShortcutWithArguments func(uintptr, uintptr, uintptr, ...interface{}) uintptr
 
 // Creates a new `GtkShortcut` that is triggered by @trigger and then activates
 // @action with arguments given by @format_string.
-func NewShortcutWithArguments(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction, FormatStringVar string, varArgs ...interface{}) *Shortcut {
+func NewShortcutWithArguments(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction, FormatStringVar *string, varArgs ...interface{}) *Shortcut {
 	var cls *Shortcut
 
-	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), FormatStringVar, varArgs...)
+	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
+	defer core.GFreeNullable(FormatStringVarPtr)
+
+	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), FormatStringVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil

@@ -820,7 +820,7 @@ func (c *VolumeMonitor) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a drive changes.
-func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-changed", cbRefPtr)
@@ -843,7 +843,7 @@ func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) ui
 }
 
 // Emitted when a drive is connected to the system.
-func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-connected", cbRefPtr)
@@ -866,7 +866,7 @@ func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) 
 }
 
 // Emitted when a drive is disconnected from the system.
-func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-disconnected", cbRefPtr)
@@ -889,7 +889,7 @@ func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr
 }
 
 // Emitted when the eject button is pressed on @drive.
-func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-eject-button", cbRefPtr)
@@ -912,7 +912,7 @@ func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)
 }
 
 // Emitted when the stop button is pressed on @drive.
-func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-stop-button", cbRefPtr)
@@ -935,7 +935,7 @@ func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr))
 }
 
 // Emitted when a mount is added.
-func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-added", cbRefPtr)
@@ -958,7 +958,7 @@ func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint
 }
 
 // Emitted when a mount changes.
-func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-changed", cbRefPtr)
@@ -984,7 +984,7 @@ func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) ui
 //
 // This signal depends on the backend and is only emitted if
 // GIO was used to unmount.
-func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-pre-unmount", cbRefPtr)
@@ -1007,7 +1007,7 @@ func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr))
 }
 
 // Emitted when a mount is removed.
-func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-removed", cbRefPtr)
@@ -1030,7 +1030,7 @@ func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) ui
 }
 
 // Emitted when a mountable volume is added to the system.
-func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-added", cbRefPtr)
@@ -1053,7 +1053,7 @@ func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uin
 }
 
 // Emitted when mountable volume is changed.
-func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-changed", cbRefPtr)
@@ -1076,7 +1076,7 @@ func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) u
 }
 
 // Emitted when a mountable volume is removed from the system.
-func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-removed", cbRefPtr)

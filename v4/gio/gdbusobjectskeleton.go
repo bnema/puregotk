@@ -159,7 +159,7 @@ func (c *DBusObjectSkeleton) SetGoPointer(ptr uintptr) {
 func (x *DBusObjectSkeleton) SetPropertyGObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-object-path", &v)
 }
 
@@ -179,7 +179,7 @@ func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
 // except that it is for the enclosing object.
 //
 // The default class handler just returns %TRUE.
-func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint32 {
+func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)

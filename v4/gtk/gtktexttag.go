@@ -65,13 +65,16 @@ func TextTagNewFromInternalPtr(ptr uintptr) *TextTag {
 	return cls
 }
 
-var xNewTextTag func(string) uintptr
+var xNewTextTag func(uintptr) uintptr
 
 // Creates a `GtkTextTag`.
-func NewTextTag(NameVar string) *TextTag {
+func NewTextTag(NameVar *string) *TextTag {
 	var cls *TextTag
 
-	cret := xNewTextTag(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewTextTag(NameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -92,15 +95,15 @@ func (x *TextTag) Changed(SizeChangedVar bool) {
 	xTextTagChanged(x.GoPointer(), SizeChangedVar)
 }
 
-var xTextTagGetPriority func(uintptr) int32
+var xTextTagGetPriority func(uintptr) int
 
 // Get the tag priority.
-func (x *TextTag) GetPriority() int32 {
+func (x *TextTag) GetPriority() int {
 	cret := xTextTagGetPriority(x.GoPointer())
 	return cret
 }
 
-var xTextTagSetPriority func(uintptr, int32)
+var xTextTagSetPriority func(uintptr, int)
 
 // Sets the priority of a `GtkTextTag`.
 //
@@ -116,7 +119,7 @@ var xTextTagSetPriority func(uintptr, int32)
 // precedence of a set of tags is the order in which they were added
 // to the table, or created with [method@Gtk.TextBuffer.create_tag],
 // which adds the tag to the buffer’s table automatically.
-func (x *TextTag) SetPriority(PriorityVar int32) {
+func (x *TextTag) SetPriority(PriorityVar int) {
 	xTextTagSetPriority(x.GoPointer(), PriorityVar)
 }
 
@@ -195,7 +198,7 @@ func (x *TextTag) GetPropertyAllowBreaksSet() bool {
 func (x *TextTag) SetPropertyBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("background", &v)
 }
 
@@ -348,7 +351,7 @@ func (x *TextTag) GetPropertyFallbackSet() bool {
 func (x *TextTag) SetPropertyFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("family", &v)
 }
 
@@ -385,7 +388,7 @@ func (x *TextTag) GetPropertyFamilySet() bool {
 func (x *TextTag) SetPropertyFont(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font", &v)
 }
 
@@ -422,7 +425,7 @@ func (x *TextTag) GetPropertyFontDesc() uintptr {
 func (x *TextTag) SetPropertyFontFeatures(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font-features", &v)
 }
 
@@ -456,7 +459,7 @@ func (x *TextTag) GetPropertyFontFeaturesSet() bool {
 func (x *TextTag) SetPropertyForeground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("foreground", &v)
 }
 
@@ -500,10 +503,10 @@ func (x *TextTag) GetPropertyForegroundSet() bool {
 // A negative value of indent will produce a hanging indentation.
 // That is, the first line will have the full width, and subsequent
 // lines will be indented by the absolute value of indent.
-func (x *TextTag) SetPropertyIndent(value int32) {
+func (x *TextTag) SetPropertyIndent(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("indent", &v)
 }
 
@@ -513,10 +516,10 @@ func (x *TextTag) SetPropertyIndent(value int32) {
 // A negative value of indent will produce a hanging indentation.
 // That is, the first line will have the full width, and subsequent
 // lines will be indented by the absolute value of indent.
-func (x *TextTag) GetPropertyIndent() int32 {
+func (x *TextTag) GetPropertyIndent() int {
 	var v gobject.Value
 	x.GetProperty("indent", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyIndentSet sets the "indent-set" property.
@@ -640,7 +643,7 @@ func (x *TextTag) GetPropertyJustificationSet() bool {
 func (x *TextTag) SetPropertyLanguage(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("language", &v)
 }
 
@@ -677,19 +680,19 @@ func (x *TextTag) GetPropertyLanguageSet() bool {
 
 // SetPropertyLeftMargin sets the "left-margin" property.
 // Width of the left margin in pixels.
-func (x *TextTag) SetPropertyLeftMargin(value int32) {
+func (x *TextTag) SetPropertyLeftMargin(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("left-margin", &v)
 }
 
 // GetPropertyLeftMargin gets the "left-margin" property.
 // Width of the left margin in pixels.
-func (x *TextTag) GetPropertyLeftMargin() int32 {
+func (x *TextTag) GetPropertyLeftMargin() int {
 	var v gobject.Value
 	x.GetProperty("left-margin", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyLeftMarginSet sets the "left-margin-set" property.
@@ -711,19 +714,19 @@ func (x *TextTag) GetPropertyLeftMarginSet() bool {
 
 // SetPropertyLetterSpacing sets the "letter-spacing" property.
 // Extra spacing between graphemes, in Pango units.
-func (x *TextTag) SetPropertyLetterSpacing(value int32) {
+func (x *TextTag) SetPropertyLetterSpacing(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("letter-spacing", &v)
 }
 
 // GetPropertyLetterSpacing gets the "letter-spacing" property.
 // Extra spacing between graphemes, in Pango units.
-func (x *TextTag) GetPropertyLetterSpacing() int32 {
+func (x *TextTag) GetPropertyLetterSpacing() int {
 	var v gobject.Value
 	x.GetProperty("letter-spacing", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyLetterSpacingSet sets the "letter-spacing-set" property.
@@ -784,7 +787,7 @@ func (x *TextTag) GetPropertyLineHeightSet() bool {
 func (x *TextTag) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -858,7 +861,7 @@ func (x *TextTag) GetPropertyOverlineSet() bool {
 func (x *TextTag) SetPropertyParagraphBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("paragraph-background", &v)
 }
 
@@ -898,19 +901,19 @@ func (x *TextTag) GetPropertyParagraphBackgroundSet() bool {
 
 // SetPropertyPixelsAboveLines sets the "pixels-above-lines" property.
 // Pixels of blank space above paragraphs.
-func (x *TextTag) SetPropertyPixelsAboveLines(value int32) {
+func (x *TextTag) SetPropertyPixelsAboveLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("pixels-above-lines", &v)
 }
 
 // GetPropertyPixelsAboveLines gets the "pixels-above-lines" property.
 // Pixels of blank space above paragraphs.
-func (x *TextTag) GetPropertyPixelsAboveLines() int32 {
+func (x *TextTag) GetPropertyPixelsAboveLines() int {
 	var v gobject.Value
 	x.GetProperty("pixels-above-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPixelsAboveLinesSet sets the "pixels-above-lines-set" property.
@@ -932,19 +935,19 @@ func (x *TextTag) GetPropertyPixelsAboveLinesSet() bool {
 
 // SetPropertyPixelsBelowLines sets the "pixels-below-lines" property.
 // Pixels of blank space below paragraphs.
-func (x *TextTag) SetPropertyPixelsBelowLines(value int32) {
+func (x *TextTag) SetPropertyPixelsBelowLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("pixels-below-lines", &v)
 }
 
 // GetPropertyPixelsBelowLines gets the "pixels-below-lines" property.
 // Pixels of blank space below paragraphs.
-func (x *TextTag) GetPropertyPixelsBelowLines() int32 {
+func (x *TextTag) GetPropertyPixelsBelowLines() int {
 	var v gobject.Value
 	x.GetProperty("pixels-below-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPixelsBelowLinesSet sets the "pixels-below-lines-set" property.
@@ -966,19 +969,19 @@ func (x *TextTag) GetPropertyPixelsBelowLinesSet() bool {
 
 // SetPropertyPixelsInsideWrap sets the "pixels-inside-wrap" property.
 // Pixels of blank space between wrapped lines in a paragraph.
-func (x *TextTag) SetPropertyPixelsInsideWrap(value int32) {
+func (x *TextTag) SetPropertyPixelsInsideWrap(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("pixels-inside-wrap", &v)
 }
 
 // GetPropertyPixelsInsideWrap gets the "pixels-inside-wrap" property.
 // Pixels of blank space between wrapped lines in a paragraph.
-func (x *TextTag) GetPropertyPixelsInsideWrap() int32 {
+func (x *TextTag) GetPropertyPixelsInsideWrap() int {
 	var v gobject.Value
 	x.GetProperty("pixels-inside-wrap", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPixelsInsideWrapSet sets the "pixels-inside-wrap-set" property.
@@ -1000,19 +1003,19 @@ func (x *TextTag) GetPropertyPixelsInsideWrapSet() bool {
 
 // SetPropertyRightMargin sets the "right-margin" property.
 // Width of the right margin, in pixels.
-func (x *TextTag) SetPropertyRightMargin(value int32) {
+func (x *TextTag) SetPropertyRightMargin(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("right-margin", &v)
 }
 
 // GetPropertyRightMargin gets the "right-margin" property.
 // Width of the right margin, in pixels.
-func (x *TextTag) GetPropertyRightMargin() int32 {
+func (x *TextTag) GetPropertyRightMargin() int {
 	var v gobject.Value
 	x.GetProperty("right-margin", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyRightMarginSet sets the "right-margin-set" property.
@@ -1036,10 +1039,10 @@ func (x *TextTag) GetPropertyRightMarginSet() bool {
 // Offset of text above the baseline, in Pango units.
 //
 // Negative values go below the baseline.
-func (x *TextTag) SetPropertyRise(value int32) {
+func (x *TextTag) SetPropertyRise(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("rise", &v)
 }
 
@@ -1047,10 +1050,10 @@ func (x *TextTag) SetPropertyRise(value int32) {
 // Offset of text above the baseline, in Pango units.
 //
 // Negative values go below the baseline.
-func (x *TextTag) GetPropertyRise() int32 {
+func (x *TextTag) GetPropertyRise() int {
 	var v gobject.Value
 	x.GetProperty("rise", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyRiseSet sets the "rise-set" property.
@@ -1167,19 +1170,19 @@ func (x *TextTag) GetPropertyShowSpacesSet() bool {
 
 // SetPropertySize sets the "size" property.
 // Font size in Pango units.
-func (x *TextTag) SetPropertySize(value int32) {
+func (x *TextTag) SetPropertySize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("size", &v)
 }
 
 // GetPropertySize gets the "size" property.
 // Font size in Pango units.
-func (x *TextTag) GetPropertySize() int32 {
+func (x *TextTag) GetPropertySize() int {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertySizePoints sets the "size-points" property.
@@ -1455,19 +1458,19 @@ func (x *TextTag) GetPropertyVariantSet() bool {
 
 // SetPropertyWeight sets the "weight" property.
 // Font weight as an integer.
-func (x *TextTag) SetPropertyWeight(value int32) {
+func (x *TextTag) SetPropertyWeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("weight", &v)
 }
 
 // GetPropertyWeight gets the "weight" property.
 // Font weight as an integer.
-func (x *TextTag) GetPropertyWeight() int32 {
+func (x *TextTag) GetPropertyWeight() int {
 	var v gobject.Value
 	x.GetProperty("weight", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWeightSet sets the "weight-set" property.

@@ -13,12 +13,12 @@ var callbacks = struct {
 	sync.RWMutex
 	refs              map[uintptr]uintptr
 	closures          map[uintptr]interface{}
-	handlerToCallback map[uint32]uintptr
+	handlerToCallback map[uint]uintptr
 	callbackRefCount  map[uintptr]int
 }{
 	refs:              make(map[uintptr]uintptr),
 	closures:          make(map[uintptr]interface{}),
-	handlerToCallback: make(map[uint32]uintptr),
+	handlerToCallback: make(map[uint]uintptr),
 	callbackRefCount:  make(map[uintptr]int),
 }
 
@@ -81,7 +81,7 @@ func releaseCallback(cbPtr uintptr) {
 
 // SaveHandlerMapping records a signal handler ID → callback pointer mapping so
 // DisconnectSignal can clean up the callback registry.
-func SaveHandlerMapping(handlerID uint32, cbPtr uintptr) {
+func SaveHandlerMapping(handlerID uint, cbPtr uintptr) {
 	if handlerID == 0 {
 		return
 	}
@@ -99,7 +99,7 @@ func SaveHandlerMapping(handlerID uint32, cbPtr uintptr) {
 }
 
 // RemoveCallbackByHandler removes a callback from the registry using a signal handler ID.
-func RemoveCallbackByHandler(handlerID uint32) {
+func RemoveCallbackByHandler(handlerID uint) {
 	callbacks.Lock()
 	if cbPtr, ok := callbacks.handlerToCallback[handlerID]; ok {
 		delete(callbacks.handlerToCallback, handlerID)
@@ -117,9 +117,9 @@ type trackedSourceEntry struct {
 
 var trackedSources = struct {
 	sync.RWMutex
-	entries map[uint32]trackedSourceEntry
+	entries map[uint]trackedSourceEntry
 }{
-	entries: make(map[uint32]trackedSourceEntry),
+	entries: make(map[uint]trackedSourceEntry),
 }
 
 var (
@@ -128,7 +128,7 @@ var (
 	childWatchFuncTrampolineCb uintptr
 )
 
-func currentTrackedSourceID() uint32 {
+func currentTrackedSourceID() uint {
 	src := MainCurrentSource()
 	if src == nil {
 		return 0
@@ -136,7 +136,7 @@ func currentTrackedSourceID() uint32 {
 	return src.GetId()
 }
 
-func getTrackedSourceEntry() (uint32, trackedSourceEntry, bool) {
+func getTrackedSourceEntry() (uint, trackedSourceEntry, bool) {
 	sourceID := currentTrackedSourceID()
 	if sourceID == 0 {
 		return 0, trackedSourceEntry{}, false
@@ -147,7 +147,7 @@ func getTrackedSourceEntry() (uint32, trackedSourceEntry, bool) {
 	return sourceID, entry, ok
 }
 
-func trackSourceFunc(sourceID uint32, fn *SourceFunc, data uintptr) {
+func trackSourceFunc(sourceID uint, fn *SourceFunc, data uintptr) {
 	if sourceID == 0 || fn == nil {
 		return
 	}
@@ -156,7 +156,7 @@ func trackSourceFunc(sourceID uint32, fn *SourceFunc, data uintptr) {
 	trackedSources.Unlock()
 }
 
-func trackSourceOnceFunc(sourceID uint32, fn *SourceOnceFunc, data uintptr) {
+func trackSourceOnceFunc(sourceID uint, fn *SourceOnceFunc, data uintptr) {
 	if sourceID == 0 || fn == nil {
 		return
 	}
@@ -165,7 +165,7 @@ func trackSourceOnceFunc(sourceID uint32, fn *SourceOnceFunc, data uintptr) {
 	trackedSources.Unlock()
 }
 
-func trackChildWatchFunc(sourceID uint32, fn *ChildWatchFunc, data uintptr) {
+func trackChildWatchFunc(sourceID uint, fn *ChildWatchFunc, data uintptr) {
 	if sourceID == 0 || fn == nil {
 		return
 	}
@@ -174,7 +174,7 @@ func trackChildWatchFunc(sourceID uint32, fn *ChildWatchFunc, data uintptr) {
 	trackedSources.Unlock()
 }
 
-func removeTrackedSource(sourceID uint32) {
+func removeTrackedSource(sourceID uint) {
 	if sourceID == 0 {
 		return
 	}
@@ -183,7 +183,7 @@ func removeTrackedSource(sourceID uint32) {
 	trackedSources.Unlock()
 }
 
-func trackedSourceIDByUserData(data uintptr) uint32 {
+func trackedSourceIDByUserData(data uintptr) uint {
 	ctx := MainContextDefault()
 	if ctx == nil {
 		return 0
@@ -223,7 +223,7 @@ func initSourceTrampolines() {
 			return
 		}
 		removeTrackedSource(sourceID)
-		entry.childWatchFunc(pid, waitStatus, data)
+		entry.childWatchFunc(pid, int(waitStatus), data)
 	})
 }
 

@@ -259,14 +259,14 @@ func (x *ListView) GetTabBehavior() ListTabBehavior {
 	return cret
 }
 
-var xListViewScrollTo func(uintptr, uint32, ListScrollFlags, *ScrollInfo)
+var xListViewScrollTo func(uintptr, uint, ListScrollFlags, *ScrollInfo)
 
 // Scrolls to the item at the given position and performs the actions
 // specified in @flags.
 //
 // This function works no matter if the listview is shown or focused.
 // If it isn't, then the changes will take effect once that happens.
-func (x *ListView) ScrollTo(PosVar uint32, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
+func (x *ListView) ScrollTo(PosVar uint, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
 	xListViewScrollTo(x.GoPointer(), PosVar, FlagsVar, ScrollVar)
 }
 
@@ -401,7 +401,7 @@ func (x *ListView) GetPropertySingleClickActivate() bool {
 // This allows for a convenient way to handle activation in a listview.
 // See [method@Gtk.ListItem.set_activatable] for details on how to use
 // this signal.
-func (x *ListView) ConnectActivate(cb *func(ListView, uint32)) uint32 {
+func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -409,7 +409,7 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PositionVarp uint32) {
+	fcb := func(clsPtr uintptr, PositionVarp uint) {
 		fa := ListView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -489,7 +489,7 @@ func (x *ListView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ListView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -605,7 +605,7 @@ func (x *ListView) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ListView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -637,7 +637,7 @@ func (x *ListView) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListView) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ListView) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -670,7 +670,7 @@ func (x *ListView) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ListView) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ListView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -340,24 +340,24 @@ func (c *SocketConnection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xSocketConnectionFactoryLookupType func(SocketFamily, SocketType, int32) types.GType
+var xSocketConnectionFactoryLookupType func(SocketFamily, SocketType, int) types.GType
 
 // Looks up the #GType to be used when creating socket connections on
 // sockets with the specified @family, @type and @protocol_id.
 //
 // If no type is registered, the #GSocketConnection base type is returned.
-func SocketConnectionFactoryLookupType(FamilyVar SocketFamily, TypeVar SocketType, ProtocolIdVar int32) types.GType {
+func SocketConnectionFactoryLookupType(FamilyVar SocketFamily, TypeVar SocketType, ProtocolIdVar int) types.GType {
 	cret := xSocketConnectionFactoryLookupType(FamilyVar, TypeVar, ProtocolIdVar)
 	return cret
 }
 
-var xSocketConnectionFactoryRegisterType func(types.GType, SocketFamily, SocketType, int32)
+var xSocketConnectionFactoryRegisterType func(types.GType, SocketFamily, SocketType, int)
 
 // Looks up the #GType to be used when creating socket connections on
 // sockets with the specified @family, @type and @protocol.
 //
 // If no type is registered, the #GSocketConnection base type is returned.
-func SocketConnectionFactoryRegisterType(GTypeVar types.GType, FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar int32) {
+func SocketConnectionFactoryRegisterType(GTypeVar types.GType, FamilyVar SocketFamily, TypeVar SocketType, ProtocolVar int) {
 	xSocketConnectionFactoryRegisterType(GTypeVar, FamilyVar, TypeVar, ProtocolVar)
 }
 

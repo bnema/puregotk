@@ -179,7 +179,7 @@ func SimpleProxyResolverNewFromInternalPtr(ptr uintptr) *SimpleProxyResolver {
 	return cls
 }
 
-var xSimpleProxyResolverSetDefaultProxy func(uintptr, string)
+var xSimpleProxyResolverSetDefaultProxy func(uintptr, uintptr)
 
 // Sets the default proxy on @resolver, to be used for any URIs that
 // don't match #GSimpleProxyResolver:ignore-hosts or a proxy set
@@ -188,8 +188,11 @@ var xSimpleProxyResolverSetDefaultProxy func(uintptr, string)
 // If @default_proxy starts with "socks://",
 // #GSimpleProxyResolver will treat it as referring to all three of
 // the socks5, socks4a, and socks4 proxy types.
-func (x *SimpleProxyResolver) SetDefaultProxy(DefaultProxyVar string) {
-	xSimpleProxyResolverSetDefaultProxy(x.GoPointer(), DefaultProxyVar)
+func (x *SimpleProxyResolver) SetDefaultProxy(DefaultProxyVar *string) {
+	DefaultProxyVarPtr := core.GStrdupNullable(DefaultProxyVar)
+	defer core.GFreeNullable(DefaultProxyVarPtr)
+
+	xSimpleProxyResolverSetDefaultProxy(x.GoPointer(), DefaultProxyVarPtr)
 }
 
 var xSimpleProxyResolverSetIgnoreHosts func(uintptr, []string)
@@ -238,7 +241,7 @@ func (c *SimpleProxyResolver) SetGoPointer(ptr uintptr) {
 func (x *SimpleProxyResolver) SetPropertyDefaultProxy(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-proxy", &v)
 }
 
@@ -391,16 +394,19 @@ func (x *SimpleProxyResolver) LookupFinish(ResultVar AsyncResult) ([]string, err
 	return cret, cerr
 }
 
-var xSimpleProxyResolverNew func(string, []string) uintptr
+var xSimpleProxyResolverNew func(uintptr, []string) uintptr
 
 // Creates a new #GSimpleProxyResolver. See
 // #GSimpleProxyResolver:default-proxy and
 // #GSimpleProxyResolver:ignore-hosts for more details on how the
 // arguments are interpreted.
-func SimpleProxyResolverNew(DefaultProxyVar string, IgnoreHostsVar []string) *ProxyResolverBase {
+func SimpleProxyResolverNew(DefaultProxyVar *string, IgnoreHostsVar []string) *ProxyResolverBase {
 	var cls *ProxyResolverBase
 
-	cret := xSimpleProxyResolverNew(DefaultProxyVar, IgnoreHostsVar)
+	DefaultProxyVarPtr := core.GStrdupNullable(DefaultProxyVar)
+	defer core.GFreeNullable(DefaultProxyVarPtr)
+
+	cret := xSimpleProxyResolverNew(DefaultProxyVarPtr, IgnoreHostsVar)
 
 	if cret == 0 {
 		return nil

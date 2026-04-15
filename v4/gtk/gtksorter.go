@@ -437,7 +437,7 @@ func (c *Sorter) SetGoPointer(ptr uintptr) {
 // Depending on the @change parameter, it may be possible to update
 // the sort order without a full resorting. Refer to the
 // [enum@Gtk.SorterChange] documentation for details.
-func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint32 {
+func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

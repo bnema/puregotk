@@ -31,7 +31,7 @@ type FlowBoxForeachFunc func(uintptr, uintptr, uintptr)
 
 // A function to compare two children to determine which
 // should come first.
-type FlowBoxSortFunc func(uintptr, uintptr, uintptr) int32
+type FlowBoxSortFunc func(uintptr, uintptr, uintptr) int
 
 type FlowBoxChildClass struct {
 	_ structs.HostLayout
@@ -206,10 +206,10 @@ func (x *FlowBox) GetActivateOnSingleClick() bool {
 	return cret
 }
 
-var xFlowBoxGetChildAtIndex func(uintptr, int32) uintptr
+var xFlowBoxGetChildAtIndex func(uintptr, int) uintptr
 
 // Gets the nth child in the @box.
-func (x *FlowBox) GetChildAtIndex(IdxVar int32) *FlowBoxChild {
+func (x *FlowBox) GetChildAtIndex(IdxVar int) *FlowBoxChild {
 	var cls *FlowBoxChild
 
 	cret := xFlowBoxGetChildAtIndex(x.GoPointer(), IdxVar)
@@ -223,12 +223,12 @@ func (x *FlowBox) GetChildAtIndex(IdxVar int32) *FlowBoxChild {
 	return cls
 }
 
-var xFlowBoxGetChildAtPos func(uintptr, int32, int32) uintptr
+var xFlowBoxGetChildAtPos func(uintptr, int, int) uintptr
 
 // Gets the child in the (@x, @y) position.
 //
 // Both @x and @y are assumed to be relative to the origin of @box.
-func (x *FlowBox) GetChildAtPos(XVar int32, YVar int32) *FlowBoxChild {
+func (x *FlowBox) GetChildAtPos(XVar int, YVar int) *FlowBoxChild {
 	var cls *FlowBoxChild
 
 	cret := xFlowBoxGetChildAtPos(x.GoPointer(), XVar, YVar)
@@ -242,10 +242,10 @@ func (x *FlowBox) GetChildAtPos(XVar int32, YVar int32) *FlowBoxChild {
 	return cls
 }
 
-var xFlowBoxGetColumnSpacing func(uintptr) uint32
+var xFlowBoxGetColumnSpacing func(uintptr) uint
 
 // Gets the horizontal spacing.
-func (x *FlowBox) GetColumnSpacing() uint32 {
+func (x *FlowBox) GetColumnSpacing() uint {
 	cret := xFlowBoxGetColumnSpacing(x.GoPointer())
 	return cret
 }
@@ -258,26 +258,26 @@ func (x *FlowBox) GetHomogeneous() bool {
 	return cret
 }
 
-var xFlowBoxGetMaxChildrenPerLine func(uintptr) uint32
+var xFlowBoxGetMaxChildrenPerLine func(uintptr) uint
 
 // Gets the maximum number of children per line.
-func (x *FlowBox) GetMaxChildrenPerLine() uint32 {
+func (x *FlowBox) GetMaxChildrenPerLine() uint {
 	cret := xFlowBoxGetMaxChildrenPerLine(x.GoPointer())
 	return cret
 }
 
-var xFlowBoxGetMinChildrenPerLine func(uintptr) uint32
+var xFlowBoxGetMinChildrenPerLine func(uintptr) uint
 
 // Gets the minimum number of children per line.
-func (x *FlowBox) GetMinChildrenPerLine() uint32 {
+func (x *FlowBox) GetMinChildrenPerLine() uint {
 	cret := xFlowBoxGetMinChildrenPerLine(x.GoPointer())
 	return cret
 }
 
-var xFlowBoxGetRowSpacing func(uintptr) uint32
+var xFlowBoxGetRowSpacing func(uintptr) uint
 
 // Gets the vertical spacing.
-func (x *FlowBox) GetRowSpacing() uint32 {
+func (x *FlowBox) GetRowSpacing() uint {
 	cret := xFlowBoxGetRowSpacing(x.GoPointer())
 	return cret
 }
@@ -301,7 +301,7 @@ func (x *FlowBox) GetSelectionMode() SelectionMode {
 	return cret
 }
 
-var xFlowBoxInsert func(uintptr, uintptr, int32)
+var xFlowBoxInsert func(uintptr, uintptr, int)
 
 // Inserts the @widget into @box at @position.
 //
@@ -310,7 +310,7 @@ var xFlowBoxInsert func(uintptr, uintptr, int32)
 //
 // If @position is -1, or larger than the total number of children
 // in the @box, then the @widget will be appended to the end.
-func (x *FlowBox) Insert(WidgetVar *Widget, PositionVar int32) {
+func (x *FlowBox) Insert(WidgetVar *Widget, PositionVar int) {
 	xFlowBoxInsert(x.GoPointer(), WidgetVar.GoPointer(), PositionVar)
 }
 
@@ -399,10 +399,10 @@ func (x *FlowBox) SetActivateOnSingleClick(SingleVar bool) {
 	xFlowBoxSetActivateOnSingleClick(x.GoPointer(), SingleVar)
 }
 
-var xFlowBoxSetColumnSpacing func(uintptr, uint32)
+var xFlowBoxSetColumnSpacing func(uintptr, uint)
 
 // Sets the horizontal space to add between children.
-func (x *FlowBox) SetColumnSpacing(SpacingVar uint32) {
+func (x *FlowBox) SetColumnSpacing(SpacingVar uint) {
 	xFlowBoxSetColumnSpacing(x.GoPointer(), SpacingVar)
 }
 
@@ -450,7 +450,7 @@ func (x *FlowBox) SetHomogeneous(HomogeneousVar bool) {
 	xFlowBoxSetHomogeneous(x.GoPointer(), HomogeneousVar)
 }
 
-var xFlowBoxSetMaxChildrenPerLine func(uintptr, uint32)
+var xFlowBoxSetMaxChildrenPerLine func(uintptr, uint)
 
 // Sets the maximum number of children to request and
 // allocate space for in @box’s orientation.
@@ -458,22 +458,22 @@ var xFlowBoxSetMaxChildrenPerLine func(uintptr, uint32)
 // Setting the maximum number of children per line
 // limits the overall natural size request to be no more
 // than @n_children children long in the given orientation.
-func (x *FlowBox) SetMaxChildrenPerLine(NChildrenVar uint32) {
+func (x *FlowBox) SetMaxChildrenPerLine(NChildrenVar uint) {
 	xFlowBoxSetMaxChildrenPerLine(x.GoPointer(), NChildrenVar)
 }
 
-var xFlowBoxSetMinChildrenPerLine func(uintptr, uint32)
+var xFlowBoxSetMinChildrenPerLine func(uintptr, uint)
 
 // Sets the minimum number of children to line up
 // in @box’s orientation before flowing.
-func (x *FlowBox) SetMinChildrenPerLine(NChildrenVar uint32) {
+func (x *FlowBox) SetMinChildrenPerLine(NChildrenVar uint) {
 	xFlowBoxSetMinChildrenPerLine(x.GoPointer(), NChildrenVar)
 }
 
-var xFlowBoxSetRowSpacing func(uintptr, uint32)
+var xFlowBoxSetRowSpacing func(uintptr, uint)
 
 // Sets the vertical space to add between children.
-func (x *FlowBox) SetRowSpacing(SpacingVar uint32) {
+func (x *FlowBox) SetRowSpacing(SpacingVar uint) {
 	xFlowBoxSetRowSpacing(x.GoPointer(), SpacingVar)
 }
 
@@ -583,19 +583,19 @@ func (x *FlowBox) GetPropertyActivateOnSingleClick() bool {
 
 // SetPropertyColumnSpacing sets the "column-spacing" property.
 // The amount of horizontal space between two children.
-func (x *FlowBox) SetPropertyColumnSpacing(value uint32) {
+func (x *FlowBox) SetPropertyColumnSpacing(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("column-spacing", &v)
 }
 
 // GetPropertyColumnSpacing gets the "column-spacing" property.
 // The amount of horizontal space between two children.
-func (x *FlowBox) GetPropertyColumnSpacing() uint32 {
+func (x *FlowBox) GetPropertyColumnSpacing() uint {
 	var v gobject.Value
 	x.GetProperty("column-spacing", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyHomogeneous sets the "homogeneous" property.
@@ -620,20 +620,20 @@ func (x *FlowBox) GetPropertyHomogeneous() bool {
 // SetPropertyMaxChildrenPerLine sets the "max-children-per-line" property.
 // The maximum amount of children to request space for consecutively
 // in the given orientation.
-func (x *FlowBox) SetPropertyMaxChildrenPerLine(value uint32) {
+func (x *FlowBox) SetPropertyMaxChildrenPerLine(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("max-children-per-line", &v)
 }
 
 // GetPropertyMaxChildrenPerLine gets the "max-children-per-line" property.
 // The maximum amount of children to request space for consecutively
 // in the given orientation.
-func (x *FlowBox) GetPropertyMaxChildrenPerLine() uint32 {
+func (x *FlowBox) GetPropertyMaxChildrenPerLine() uint {
 	var v gobject.Value
 	x.GetProperty("max-children-per-line", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyMinChildrenPerLine sets the "min-children-per-line" property.
@@ -643,10 +643,10 @@ func (x *FlowBox) GetPropertyMaxChildrenPerLine() uint32 {
 // Setting the minimum children per line ensures
 // that a reasonably small height will be requested
 // for the overall minimum width of the box.
-func (x *FlowBox) SetPropertyMinChildrenPerLine(value uint32) {
+func (x *FlowBox) SetPropertyMinChildrenPerLine(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("min-children-per-line", &v)
 }
 
@@ -657,33 +657,33 @@ func (x *FlowBox) SetPropertyMinChildrenPerLine(value uint32) {
 // Setting the minimum children per line ensures
 // that a reasonably small height will be requested
 // for the overall minimum width of the box.
-func (x *FlowBox) GetPropertyMinChildrenPerLine() uint32 {
+func (x *FlowBox) GetPropertyMinChildrenPerLine() uint {
 	var v gobject.Value
 	x.GetProperty("min-children-per-line", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyRowSpacing sets the "row-spacing" property.
 // The amount of vertical space between two children.
-func (x *FlowBox) SetPropertyRowSpacing(value uint32) {
+func (x *FlowBox) SetPropertyRowSpacing(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("row-spacing", &v)
 }
 
 // GetPropertyRowSpacing gets the "row-spacing" property.
 // The amount of vertical space between two children.
-func (x *FlowBox) GetPropertyRowSpacing() uint32 {
+func (x *FlowBox) GetPropertyRowSpacing() uint {
 	var v gobject.Value
 	x.GetProperty("row-spacing", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Emitted when the user activates the @box.
 //
 // This is a [keybinding signal](class.SignalAction.html).
-func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
@@ -706,7 +706,7 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint32 {
 }
 
 // Emitted when a child has been activated by the user.
-func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
+func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
@@ -744,7 +744,7 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
 //     move by individual children
 //   - &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the box
 //   - &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt; move vertically by pages
-func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int32, bool, bool) bool) uint32 {
+func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
@@ -752,7 +752,7 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int32, bool,
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int32, ExtendVarp bool, ModifyVarp bool) bool {
+	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) bool {
 		fa := FlowBox{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -772,7 +772,7 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int32, bool,
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
@@ -799,7 +799,7 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
 // Use [method@Gtk.FlowBox.selected_foreach] or
 // [method@Gtk.FlowBox.get_selected_children] to obtain the
 // selected children.
-func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
@@ -826,7 +826,7 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Space&lt;/kbd&gt;.
-func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
@@ -854,7 +854,7 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
@@ -942,7 +942,7 @@ func (x *FlowBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FlowBox) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *FlowBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1058,7 +1058,7 @@ func (x *FlowBox) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBox) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *FlowBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1090,7 +1090,7 @@ func (x *FlowBox) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBox) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *FlowBox) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1123,7 +1123,7 @@ func (x *FlowBox) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBox) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *FlowBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1228,10 +1228,10 @@ func (x *FlowBoxChild) GetChild() *Widget {
 	return cls
 }
 
-var xFlowBoxChildGetIndex func(uintptr) int32
+var xFlowBoxChildGetIndex func(uintptr) int
 
 // Gets the current index of the @child in its `GtkFlowBox` container.
-func (x *FlowBoxChild) GetIndex() int32 {
+func (x *FlowBoxChild) GetIndex() int {
 	cret := xFlowBoxChildGetIndex(x.GoPointer())
 	return cret
 }
@@ -1272,7 +1272,7 @@ func (c *FlowBoxChild) SetGoPointer(ptr uintptr) {
 // but it can be used by applications for their own purposes.
 //
 // The default bindings are &lt;kbd&gt;Space&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt;.
-func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint32 {
+func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -1360,7 +1360,7 @@ func (x *FlowBoxChild) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FlowBoxChild) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *FlowBoxChild) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1476,7 +1476,7 @@ func (x *FlowBoxChild) UpdateProperty(FirstPropertyVar AccessibleProperty, varAr
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBoxChild) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *FlowBoxChild) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1508,7 +1508,7 @@ func (x *FlowBoxChild) UpdateRelation(FirstRelationVar AccessibleRelation, varAr
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBoxChild) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *FlowBoxChild) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1541,7 +1541,7 @@ func (x *FlowBoxChild) UpdateState(FirstStateVar AccessibleState, varArgs ...int
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *FlowBoxChild) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *FlowBoxChild) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

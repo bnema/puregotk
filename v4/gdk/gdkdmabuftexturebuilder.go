@@ -173,10 +173,10 @@ func (x *DmabufTextureBuilder) GetDisplay() *Display {
 	return cls
 }
 
-var xDmabufTextureBuilderGetFd func(uintptr, uint32) int32
+var xDmabufTextureBuilderGetFd func(uintptr, uint) int
 
 // Gets the file descriptor for a plane.
-func (x *DmabufTextureBuilder) GetFd(PlaneVar uint32) int32 {
+func (x *DmabufTextureBuilder) GetFd(PlaneVar uint) int {
 	cret := xDmabufTextureBuilderGetFd(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -192,11 +192,11 @@ func (x *DmabufTextureBuilder) GetFourcc() uint32 {
 	return cret
 }
 
-var xDmabufTextureBuilderGetHeight func(uintptr) uint32
+var xDmabufTextureBuilderGetHeight func(uintptr) uint
 
 // Gets the height previously set via gdk_dmabuf_texture_builder_set_height() or
 // 0 if the height wasn't set.
-func (x *DmabufTextureBuilder) GetHeight() uint32 {
+func (x *DmabufTextureBuilder) GetHeight() uint {
 	cret := xDmabufTextureBuilderGetHeight(x.GoPointer())
 	return cret
 }
@@ -209,18 +209,18 @@ func (x *DmabufTextureBuilder) GetModifier() uint64 {
 	return cret
 }
 
-var xDmabufTextureBuilderGetNPlanes func(uintptr) uint32
+var xDmabufTextureBuilderGetNPlanes func(uintptr) uint
 
 // Gets the number of planes.
-func (x *DmabufTextureBuilder) GetNPlanes() uint32 {
+func (x *DmabufTextureBuilder) GetNPlanes() uint {
 	cret := xDmabufTextureBuilderGetNPlanes(x.GoPointer())
 	return cret
 }
 
-var xDmabufTextureBuilderGetOffset func(uintptr, uint32) uint32
+var xDmabufTextureBuilderGetOffset func(uintptr, uint) uint
 
 // Gets the offset value for a plane.
-func (x *DmabufTextureBuilder) GetOffset(PlaneVar uint32) uint32 {
+func (x *DmabufTextureBuilder) GetOffset(PlaneVar uint) uint {
 	cret := xDmabufTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -233,10 +233,10 @@ func (x *DmabufTextureBuilder) GetPremultiplied() bool {
 	return cret
 }
 
-var xDmabufTextureBuilderGetStride func(uintptr, uint32) uint32
+var xDmabufTextureBuilderGetStride func(uintptr, uint) uint
 
 // Gets the stride value for a plane.
-func (x *DmabufTextureBuilder) GetStride(PlaneVar uint32) uint32 {
+func (x *DmabufTextureBuilder) GetStride(PlaneVar uint) uint {
 	cret := xDmabufTextureBuilderGetStride(x.GoPointer(), PlaneVar)
 	return cret
 }
@@ -271,11 +271,11 @@ func (x *DmabufTextureBuilder) GetUpdateTexture() *Texture {
 	return cls
 }
 
-var xDmabufTextureBuilderGetWidth func(uintptr) uint32
+var xDmabufTextureBuilderGetWidth func(uintptr) uint
 
 // Gets the width previously set via gdk_dmabuf_texture_builder_set_width() or
 // 0 if the width wasn't set.
-func (x *DmabufTextureBuilder) GetWidth() uint32 {
+func (x *DmabufTextureBuilder) GetWidth() uint {
 	cret := xDmabufTextureBuilderGetWidth(x.GoPointer())
 	return cret
 }
@@ -302,10 +302,10 @@ func (x *DmabufTextureBuilder) SetDisplay(DisplayVar *Display) {
 	xDmabufTextureBuilderSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
 }
 
-var xDmabufTextureBuilderSetFd func(uintptr, uint32, int32)
+var xDmabufTextureBuilderSetFd func(uintptr, uint, int)
 
 // Sets the file descriptor for a plane.
-func (x *DmabufTextureBuilder) SetFd(PlaneVar uint32, FdVar int32) {
+func (x *DmabufTextureBuilder) SetFd(PlaneVar uint, FdVar int) {
 	xDmabufTextureBuilderSetFd(x.GoPointer(), PlaneVar, FdVar)
 }
 
@@ -320,12 +320,12 @@ func (x *DmabufTextureBuilder) SetFourcc(FourccVar uint32) {
 	xDmabufTextureBuilderSetFourcc(x.GoPointer(), FourccVar)
 }
 
-var xDmabufTextureBuilderSetHeight func(uintptr, uint32)
+var xDmabufTextureBuilderSetHeight func(uintptr, uint)
 
 // Sets the height of the texture.
 //
 // The height must be set before calling [method@Gdk.DmabufTextureBuilder.build].
-func (x *DmabufTextureBuilder) SetHeight(HeightVar uint32) {
+func (x *DmabufTextureBuilder) SetHeight(HeightVar uint) {
 	xDmabufTextureBuilderSetHeight(x.GoPointer(), HeightVar)
 }
 
@@ -336,17 +336,17 @@ func (x *DmabufTextureBuilder) SetModifier(ModifierVar uint64) {
 	xDmabufTextureBuilderSetModifier(x.GoPointer(), ModifierVar)
 }
 
-var xDmabufTextureBuilderSetNPlanes func(uintptr, uint32)
+var xDmabufTextureBuilderSetNPlanes func(uintptr, uint)
 
 // Sets the number of planes of the texture.
-func (x *DmabufTextureBuilder) SetNPlanes(NPlanesVar uint32) {
+func (x *DmabufTextureBuilder) SetNPlanes(NPlanesVar uint) {
 	xDmabufTextureBuilderSetNPlanes(x.GoPointer(), NPlanesVar)
 }
 
-var xDmabufTextureBuilderSetOffset func(uintptr, uint32, uint32)
+var xDmabufTextureBuilderSetOffset func(uintptr, uint, uint)
 
 // Sets the offset for a plane.
-func (x *DmabufTextureBuilder) SetOffset(PlaneVar uint32, OffsetVar uint32) {
+func (x *DmabufTextureBuilder) SetOffset(PlaneVar uint, OffsetVar uint) {
 	xDmabufTextureBuilderSetOffset(x.GoPointer(), PlaneVar, OffsetVar)
 }
 
@@ -360,12 +360,12 @@ func (x *DmabufTextureBuilder) SetPremultiplied(PremultipliedVar bool) {
 	xDmabufTextureBuilderSetPremultiplied(x.GoPointer(), PremultipliedVar)
 }
 
-var xDmabufTextureBuilderSetStride func(uintptr, uint32, uint32)
+var xDmabufTextureBuilderSetStride func(uintptr, uint, uint)
 
 // Sets the stride for a plane.
 //
 // The stride must be set for all planes before calling [method@Gdk.DmabufTextureBuilder.build].
-func (x *DmabufTextureBuilder) SetStride(PlaneVar uint32, StrideVar uint32) {
+func (x *DmabufTextureBuilder) SetStride(PlaneVar uint, StrideVar uint) {
 	xDmabufTextureBuilderSetStride(x.GoPointer(), PlaneVar, StrideVar)
 }
 
@@ -393,12 +393,12 @@ func (x *DmabufTextureBuilder) SetUpdateTexture(TextureVar *Texture) {
 	xDmabufTextureBuilderSetUpdateTexture(x.GoPointer(), TextureVar.GoPointer())
 }
 
-var xDmabufTextureBuilderSetWidth func(uintptr, uint32)
+var xDmabufTextureBuilderSetWidth func(uintptr, uint)
 
 // Sets the width of the texture.
 //
 // The width must be set before calling [method@Gdk.DmabufTextureBuilder.build].
-func (x *DmabufTextureBuilder) SetWidth(WidthVar uint32) {
+func (x *DmabufTextureBuilder) SetWidth(WidthVar uint) {
 	xDmabufTextureBuilderSetWidth(x.GoPointer(), WidthVar)
 }
 
@@ -432,36 +432,36 @@ func (x *DmabufTextureBuilder) GetPropertyColorState() uintptr {
 
 // SetPropertyFourcc sets the "fourcc" property.
 // The format of the texture, as a fourcc value.
-func (x *DmabufTextureBuilder) SetPropertyFourcc(value uint32) {
+func (x *DmabufTextureBuilder) SetPropertyFourcc(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("fourcc", &v)
 }
 
 // GetPropertyFourcc gets the "fourcc" property.
 // The format of the texture, as a fourcc value.
-func (x *DmabufTextureBuilder) GetPropertyFourcc() uint32 {
+func (x *DmabufTextureBuilder) GetPropertyFourcc() uint {
 	var v gobject.Value
 	x.GetProperty("fourcc", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyHeight sets the "height" property.
 // The height of the texture.
-func (x *DmabufTextureBuilder) SetPropertyHeight(value uint32) {
+func (x *DmabufTextureBuilder) SetPropertyHeight(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("height", &v)
 }
 
 // GetPropertyHeight gets the "height" property.
 // The height of the texture.
-func (x *DmabufTextureBuilder) GetPropertyHeight() uint32 {
+func (x *DmabufTextureBuilder) GetPropertyHeight() uint {
 	var v gobject.Value
 	x.GetProperty("height", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyModifier sets the "modifier" property.
@@ -486,10 +486,10 @@ func (x *DmabufTextureBuilder) GetPropertyModifier() uint64 {
 //
 // Note that you can set properties for other planes,
 // but they will be ignored when constructing the texture.
-func (x *DmabufTextureBuilder) SetPropertyNPlanes(value uint32) {
+func (x *DmabufTextureBuilder) SetPropertyNPlanes(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("n-planes", &v)
 }
 
@@ -498,10 +498,10 @@ func (x *DmabufTextureBuilder) SetPropertyNPlanes(value uint32) {
 //
 // Note that you can set properties for other planes,
 // but they will be ignored when constructing the texture.
-func (x *DmabufTextureBuilder) GetPropertyNPlanes() uint32 {
+func (x *DmabufTextureBuilder) GetPropertyNPlanes() uint {
 	var v gobject.Value
 	x.GetProperty("n-planes", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyPremultiplied sets the "premultiplied" property.
@@ -544,19 +544,19 @@ func (x *DmabufTextureBuilder) GetPropertyUpdateRegion() uintptr {
 
 // SetPropertyWidth sets the "width" property.
 // The width of the texture.
-func (x *DmabufTextureBuilder) SetPropertyWidth(value uint32) {
+func (x *DmabufTextureBuilder) SetPropertyWidth(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("width", &v)
 }
 
 // GetPropertyWidth gets the "width" property.
 // The width of the texture.
-func (x *DmabufTextureBuilder) GetPropertyWidth() uint32 {
+func (x *DmabufTextureBuilder) GetPropertyWidth() uint {
 	var v gobject.Value
 	x.GetProperty("width", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 func init() {

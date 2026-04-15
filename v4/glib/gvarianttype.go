@@ -267,7 +267,7 @@ func NewVariantTypeMaybe(ElementVar *VariantType) *VariantType {
 	return (*VariantType)(unsafe.Pointer(cret))
 }
 
-var xNewVariantTypeTuple func(uintptr, int32) uintptr
+var xNewVariantTypeTuple func(uintptr, int) uintptr
 
 // Constructs a new tuple type, from @items.
 //
@@ -275,7 +275,7 @@ var xNewVariantTypeTuple func(uintptr, int32) uintptr
 // @items is `NULL`-terminated.
 //
 // It is appropriate to call [method@GLib.VariantType.free] on the return value.
-func NewVariantTypeTuple(ItemsVar uintptr, LengthVar int32) *VariantType {
+func NewVariantTypeTuple(ItemsVar uintptr, LengthVar int) *VariantType {
 	cret := xNewVariantTypeTuple(ItemsVar, LengthVar)
 	if cret == 0 {
 		return nil
@@ -386,14 +386,14 @@ func (x *VariantType) GetStringLength() uint {
 	return cret
 }
 
-var xVariantTypeHash func(uintptr) uint32
+var xVariantTypeHash func(uintptr) uint
 
 // Hashes @type.
 //
 // The argument type of @type is only `gconstpointer` to allow use with
 // [type@GLib.HashTable] without function pointer casting.  A valid
 // [type@GLib.VariantType] must be provided.
-func (x *VariantType) Hash() uint32 {
+func (x *VariantType) Hash() uint {
 	cret := xVariantTypeHash(x.GoPointer())
 	return cret
 }
@@ -630,7 +630,7 @@ func VariantTypeStringIsValid(TypeStringVar string) bool {
 	return cret
 }
 
-var xVariantTypeStringScan func(string, string, *string) bool
+var xVariantTypeStringScan func(string, uintptr, *string) bool
 
 // Scan for a single complete and valid GVariant type string in @string.
 //
@@ -646,8 +646,11 @@ var xVariantTypeStringScan func(string, string, *string) bool
 //
 // For the simple case of checking if a string is a valid type string,
 // see [func@GLib.VariantType.string_is_valid].
-func VariantTypeStringScan(StringVar string, LimitVar string, EndptrVar *string) bool {
-	cret := xVariantTypeStringScan(StringVar, LimitVar, EndptrVar)
+func VariantTypeStringScan(StringVar string, LimitVar *string, EndptrVar *string) bool {
+	LimitVarPtr := core.GStrdupNullable(LimitVar)
+	defer core.GFreeNullable(LimitVarPtr)
+
+	cret := xVariantTypeStringScan(StringVar, LimitVarPtr, EndptrVar)
 	return cret
 }
 

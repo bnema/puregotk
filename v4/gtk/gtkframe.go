@@ -112,15 +112,18 @@ func FrameNewFromInternalPtr(ptr uintptr) *Frame {
 	return cls
 }
 
-var xNewFrame func(string) uintptr
+var xNewFrame func(uintptr) uintptr
 
 // Creates a new `GtkFrame`, with optional label @label.
 //
 // If @label is %NULL, the label is omitted.
-func NewFrame(LabelVar string) *Frame {
+func NewFrame(LabelVar *string) *Frame {
 	var cls *Frame
 
-	cret := xNewFrame(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewFrame(LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -191,12 +194,15 @@ func (x *Frame) SetChild(ChildVar *Widget) {
 	xFrameSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xFrameSetLabel func(uintptr, string)
+var xFrameSetLabel func(uintptr, uintptr)
 
 // Creates a new `GtkLabel` with the @label and sets it as the frame's
 // label widget.
-func (x *Frame) SetLabel(LabelVar string) {
-	xFrameSetLabel(x.GoPointer(), LabelVar)
+func (x *Frame) SetLabel(LabelVar *string) {
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	xFrameSetLabel(x.GoPointer(), LabelVarPtr)
 }
 
 var xFrameSetLabelAlign func(uintptr, float32)
@@ -234,7 +240,7 @@ func (c *Frame) SetGoPointer(ptr uintptr) {
 func (x *Frame) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -329,7 +335,7 @@ func (x *Frame) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Frame) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Frame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -445,7 +451,7 @@ func (x *Frame) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Frame) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Frame) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -477,7 +483,7 @@ func (x *Frame) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Frame) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Frame) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -510,7 +516,7 @@ func (x *Frame) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Frame) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Frame) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

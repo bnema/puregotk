@@ -10,15 +10,15 @@ const (
 	// Like [func@get_major_version], but from the headers used at application
 	// compile time, rather than from the library linked against at application run
 	// time.
-	MAJOR_VERSION int32 = 3
+	MAJOR_VERSION int = 3
 	// Like [func@get_micro_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int32 = 6
+	MICRO_VERSION int = 6
 	// Like [func@get_minor_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MINOR_VERSION int32 = 6
+	MINOR_VERSION int = 6
 	// A macro that should be defined by the user prior to including
 	// `libsoup.h`.
 	//
@@ -32,22 +32,22 @@ const (
 	// functions, then using functions that were deprecated in version
 	// %SOUP_VERSION_MIN_REQUIRED or earlier will cause warnings (but
 	// using functions deprecated in later releases will not).
-	VERSION_MIN_REQUIRED int32 = 2
+	VERSION_MIN_REQUIRED int = 2
 )
 
-var xCheckVersion func(uint32, uint32, uint32) bool
+var xCheckVersion func(uint, uint, uint) bool
 
 // Like [func@CHECK_VERSION], but the check for soup_check_version is
 // at runtime instead of compile time.
 //
 // This is useful for compiling against older versions of libsoup, but using
 // features from newer versions.
-func CheckVersion(MajorVar uint32, MinorVar uint32, MicroVar uint32) bool {
+func CheckVersion(MajorVar uint, MinorVar uint, MicroVar uint) bool {
 	cret := xCheckVersion(MajorVar, MinorVar, MicroVar)
 	return cret
 }
 
-var xGetMajorVersion func() uint32
+var xGetMajorVersion func() uint
 
 // Returns the major version number of the libsoup library.
 //
@@ -57,12 +57,12 @@ var xGetMajorVersion func() uint32
 // your code is running against. Contrast with the #SOUP_MAJOR_VERSION
 // macro, which represents the major version of the libsoup headers you
 // have included when compiling your code.
-func GetMajorVersion() uint32 {
+func GetMajorVersion() uint {
 	cret := xGetMajorVersion()
 	return cret
 }
 
-var xGetMicroVersion func() uint32
+var xGetMicroVersion func() uint
 
 // Returns the micro version number of the libsoup library.
 //
@@ -72,12 +72,12 @@ var xGetMicroVersion func() uint32
 // your code is running against. Contrast with the #SOUP_MICRO_VERSION
 // macro, which represents the micro version of the libsoup headers you
 // have included when compiling your code.
-func GetMicroVersion() uint32 {
+func GetMicroVersion() uint {
 	cret := xGetMicroVersion()
 	return cret
 }
 
-var xGetMinorVersion func() uint32
+var xGetMinorVersion func() uint
 
 // Returns the minor version number of the libsoup library.
 //
@@ -87,7 +87,7 @@ var xGetMinorVersion func() uint32
 // your code is running against. Contrast with the #SOUP_MINOR_VERSION
 // macro, which represents the minor version of the libsoup headers you
 // have included when compiling your code.
-func GetMinorVersion() uint32 {
+func GetMinorVersion() uint {
 	cret := xGetMinorVersion()
 	return cret
 }

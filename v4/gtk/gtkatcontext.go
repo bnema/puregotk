@@ -100,7 +100,7 @@ func (c *ATContext) SetGoPointer(ptr uintptr) {
 
 // Emitted when the attributes of the accessible for the
 // `GtkATContext` instance change.
-func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint32 {
+func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "state-change", cbRefPtr)

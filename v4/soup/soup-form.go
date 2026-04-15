@@ -33,7 +33,7 @@ func FormDecode(EncodedFormVar string) *glib.HashTable {
 	return (*glib.HashTable)(unsafe.Pointer(cret))
 }
 
-var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes) uintptr
+var xFormDecodeMultipart func(*Multipart, uintptr, *string, *string, **glib.Bytes) uintptr
 
 // Decodes the "multipart/form-data" request in @multipart.
 //
@@ -54,8 +54,11 @@ var xFormDecodeMultipart func(*Multipart, string, *string, *string, **glib.Bytes
 // If you have a form with more than one file upload control, you will
 // need to decode it manually, using [ctor@Multipart.new_from_message]
 // and [method@Multipart.get_part].
-func FormDecodeMultipart(MultipartVar *Multipart, FileControlNameVar string, FilenameVar *string, ContentTypeVar *string, FileVar **glib.Bytes) *glib.HashTable {
-	cret := xFormDecodeMultipart(MultipartVar, FileControlNameVar, FilenameVar, ContentTypeVar, FileVar)
+func FormDecodeMultipart(MultipartVar *Multipart, FileControlNameVar *string, FilenameVar *string, ContentTypeVar *string, FileVar **glib.Bytes) *glib.HashTable {
+	FileControlNameVarPtr := core.GStrdupNullable(FileControlNameVar)
+	defer core.GFreeNullable(FileControlNameVarPtr)
+
+	cret := xFormDecodeMultipart(MultipartVar, FileControlNameVarPtr, FilenameVar, ContentTypeVar, FileVar)
 	if cret == 0 {
 		return nil
 	}

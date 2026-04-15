@@ -84,13 +84,16 @@ func (x *URISchemeResponse) SetHttpHeaders(HeadersVar *soup.MessageHeaders) {
 	xURISchemeResponseSetHttpHeaders(x.GoPointer(), HeadersVar)
 }
 
-var xURISchemeResponseSetStatus func(uintptr, uint32, string)
+var xURISchemeResponseSetStatus func(uintptr, uint, uintptr)
 
 // Sets the status code and reason phrase for the @response.
 //
 // If @status_code is a known value and @reason_phrase is %NULL, the @reason_phrase will be set automatically.
-func (x *URISchemeResponse) SetStatus(StatusCodeVar uint32, ReasonPhraseVar string) {
-	xURISchemeResponseSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVar)
+func (x *URISchemeResponse) SetStatus(StatusCodeVar uint, ReasonPhraseVar *string) {
+	ReasonPhraseVarPtr := core.GStrdupNullable(ReasonPhraseVar)
+	defer core.GFreeNullable(ReasonPhraseVarPtr)
+
+	xURISchemeResponseSetStatus(x.GoPointer(), StatusCodeVar, ReasonPhraseVarPtr)
 }
 
 func (c *URISchemeResponse) GoPointer() uintptr {

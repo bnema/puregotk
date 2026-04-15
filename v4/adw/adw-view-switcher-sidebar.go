@@ -237,7 +237,7 @@ func (c *ViewSwitcherSidebar) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when an item has been activated.
-func (x *ViewSwitcherSidebar) ConnectActivated(cb *func(ViewSwitcherSidebar)) uint32 {
+func (x *ViewSwitcherSidebar) ConnectActivated(cb *func(ViewSwitcherSidebar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
@@ -325,7 +325,7 @@ func (x *ViewSwitcherSidebar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ViewSwitcherSidebar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ViewSwitcherSidebar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -441,7 +441,7 @@ func (x *ViewSwitcherSidebar) UpdateProperty(FirstPropertyVar gtk.AccessibleProp
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewSwitcherSidebar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ViewSwitcherSidebar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -473,7 +473,7 @@ func (x *ViewSwitcherSidebar) UpdateRelation(FirstRelationVar gtk.AccessibleRela
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewSwitcherSidebar) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ViewSwitcherSidebar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -506,7 +506,7 @@ func (x *ViewSwitcherSidebar) UpdateState(FirstStateVar gtk.AccessibleState, var
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ViewSwitcherSidebar) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ViewSwitcherSidebar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

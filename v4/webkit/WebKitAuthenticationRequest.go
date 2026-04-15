@@ -137,10 +137,10 @@ func (x *AuthenticationRequest) GetHost() string {
 	return cret
 }
 
-var xAuthenticationRequestGetPort func(uintptr) uint32
+var xAuthenticationRequestGetPort func(uintptr) uint
 
 // Get the port that this authentication challenge is applicable to.
-func (x *AuthenticationRequest) GetPort() uint32 {
+func (x *AuthenticationRequest) GetPort() uint {
 	cret := xAuthenticationRequestGetPort(x.GoPointer())
 	return cret
 }
@@ -249,7 +249,7 @@ func (c *AuthenticationRequest) SetGoPointer(ptr uintptr) {
 // This signal is emitted when the user authentication request succeeded.
 // Applications handling their own credential storage should connect to
 // this signal to save the credentials.
-func (x *AuthenticationRequest) ConnectAuthenticated(cb *func(AuthenticationRequest, uintptr)) uint32 {
+func (x *AuthenticationRequest) ConnectAuthenticated(cb *func(AuthenticationRequest, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authenticated", cbRefPtr)
@@ -274,7 +274,7 @@ func (x *AuthenticationRequest) ConnectAuthenticated(cb *func(AuthenticationRequ
 // This signal is emitted when the user authentication request is
 // cancelled. It allows the application to dismiss its authentication
 // dialog in case of page load failure for example.
-func (x *AuthenticationRequest) ConnectCancelled(cb *func(AuthenticationRequest)) uint32 {
+func (x *AuthenticationRequest) ConnectCancelled(cb *func(AuthenticationRequest)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)

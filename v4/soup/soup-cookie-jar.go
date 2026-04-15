@@ -402,7 +402,7 @@ func (x *CookieJar) GetPropertyReadOnly() bool {
 // @new_cookie will be %NULL. If a cookie has been changed,
 // @old_cookie will contain its old value, and @new_cookie its
 // new value.
-func (x *CookieJar) ConnectChanged(cb *func(CookieJar, uintptr, uintptr)) uint32 {
+func (x *CookieJar) ConnectChanged(cb *func(CookieJar, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

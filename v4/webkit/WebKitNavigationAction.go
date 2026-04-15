@@ -54,24 +54,24 @@ func (x *NavigationAction) GetFrameName() string {
 	return cret
 }
 
-var xNavigationActionGetModifiers func(uintptr) uint32
+var xNavigationActionGetModifiers func(uintptr) uint
 
 // Return the modifier keys.
 //
 // Return a bitmask of #GdkModifierType values describing the modifier keys that were in effect
 // when the navigation was requested
-func (x *NavigationAction) GetModifiers() uint32 {
+func (x *NavigationAction) GetModifiers() uint {
 	cret := xNavigationActionGetModifiers(x.GoPointer())
 	return cret
 }
 
-var xNavigationActionGetMouseButton func(uintptr) uint32
+var xNavigationActionGetMouseButton func(uintptr) uint
 
 // Return the number of the mouse button that triggered the navigation.
 //
 // Return the number of the mouse button that triggered the navigation, or 0 if
 // the navigation was not started by a mouse event.
-func (x *NavigationAction) GetMouseButton() uint32 {
+func (x *NavigationAction) GetMouseButton() uint {
 	cret := xNavigationActionGetMouseButton(x.GoPointer())
 	return cret
 }

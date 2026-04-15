@@ -69,11 +69,11 @@ func (x *RGBA) Free() {
 	xRGBAFree(x.GoPointer())
 }
 
-var xRGBAHash func(uintptr) uint32
+var xRGBAHash func(uintptr) uint
 
 // A hash function suitable for using for a hash
 // table that stores `GdkRGBA`s.
-func (x *RGBA) Hash() uint32 {
+func (x *RGBA) Hash() uint {
 	cret := xRGBAHash(x.GoPointer())
 	return cret
 }

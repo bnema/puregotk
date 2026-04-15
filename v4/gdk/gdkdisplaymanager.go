@@ -143,13 +143,16 @@ func (x *DisplayManager) ListDisplays() *glib.SList {
 	return (*glib.SList)(unsafe.Pointer(cret))
 }
 
-var xDisplayManagerOpenDisplay func(uintptr, string) uintptr
+var xDisplayManagerOpenDisplay func(uintptr, uintptr) uintptr
 
 // Opens a display.
-func (x *DisplayManager) OpenDisplay(NameVar string) *Display {
+func (x *DisplayManager) OpenDisplay(NameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayManagerOpenDisplay(x.GoPointer(), NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xDisplayManagerOpenDisplay(x.GoPointer(), NameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -179,7 +182,7 @@ func (c *DisplayManager) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a display is opened.
-func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint32 {
+func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)

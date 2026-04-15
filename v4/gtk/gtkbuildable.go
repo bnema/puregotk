@@ -435,13 +435,13 @@ func (x *BuildableParseContext) GetElementStack() []string {
 	return cret
 }
 
-var xBuildableParseContextGetPosition func(uintptr, *int32, *int32)
+var xBuildableParseContextGetPosition func(uintptr, *int, *int)
 
 // Retrieves the current line number and the number of the character on
 // that line. Intended for use in error messages; there are no strict
 // semantics for what constitutes the "current" line number other than
 // "the best number we could come up with for error messages."
-func (x *BuildableParseContext) GetPosition(LineNumberVar *int32, CharNumberVar *int32) {
+func (x *BuildableParseContext) GetPosition(LineNumberVar *int, CharNumberVar *int) {
 	xBuildableParseContextGetPosition(x.GoPointer(), LineNumberVar, CharNumberVar)
 }
 

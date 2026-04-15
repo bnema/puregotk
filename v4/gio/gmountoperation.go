@@ -468,10 +468,10 @@ func (x *MountOperation) GetAnonymous() bool {
 	return cret
 }
 
-var xMountOperationGetChoice func(uintptr) int32
+var xMountOperationGetChoice func(uintptr) int
 
 // Gets a choice from the mount operation.
-func (x *MountOperation) GetChoice() int32 {
+func (x *MountOperation) GetChoice() int {
 	cret := xMountOperationGetChoice(x.GoPointer())
 	return cret
 }
@@ -518,10 +518,10 @@ func (x *MountOperation) GetPasswordSave() PasswordSave {
 	return cret
 }
 
-var xMountOperationGetPim func(uintptr) uint32
+var xMountOperationGetPim func(uintptr) uint
 
 // Gets a PIM from the mount operation.
-func (x *MountOperation) GetPim() uint32 {
+func (x *MountOperation) GetPim() uint {
 	cret := xMountOperationGetPim(x.GoPointer())
 	return cret
 }
@@ -548,18 +548,21 @@ func (x *MountOperation) SetAnonymous(AnonymousVar bool) {
 	xMountOperationSetAnonymous(x.GoPointer(), AnonymousVar)
 }
 
-var xMountOperationSetChoice func(uintptr, int32)
+var xMountOperationSetChoice func(uintptr, int)
 
 // Sets a default choice for the mount operation.
-func (x *MountOperation) SetChoice(ChoiceVar int32) {
+func (x *MountOperation) SetChoice(ChoiceVar int) {
 	xMountOperationSetChoice(x.GoPointer(), ChoiceVar)
 }
 
-var xMountOperationSetDomain func(uintptr, string)
+var xMountOperationSetDomain func(uintptr, uintptr)
 
 // Sets the mount operation's domain.
-func (x *MountOperation) SetDomain(DomainVar string) {
-	xMountOperationSetDomain(x.GoPointer(), DomainVar)
+func (x *MountOperation) SetDomain(DomainVar *string) {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	xMountOperationSetDomain(x.GoPointer(), DomainVarPtr)
 }
 
 var xMountOperationSetIsTcryptHiddenVolume func(uintptr, bool)
@@ -576,11 +579,14 @@ func (x *MountOperation) SetIsTcryptSystemVolume(SystemVolumeVar bool) {
 	xMountOperationSetIsTcryptSystemVolume(x.GoPointer(), SystemVolumeVar)
 }
 
-var xMountOperationSetPassword func(uintptr, string)
+var xMountOperationSetPassword func(uintptr, uintptr)
 
 // Sets the mount operation's password to @password.
-func (x *MountOperation) SetPassword(PasswordVar string) {
-	xMountOperationSetPassword(x.GoPointer(), PasswordVar)
+func (x *MountOperation) SetPassword(PasswordVar *string) {
+	PasswordVarPtr := core.GStrdupNullable(PasswordVar)
+	defer core.GFreeNullable(PasswordVarPtr)
+
+	xMountOperationSetPassword(x.GoPointer(), PasswordVarPtr)
 }
 
 var xMountOperationSetPasswordSave func(uintptr, PasswordSave)
@@ -590,18 +596,21 @@ func (x *MountOperation) SetPasswordSave(SaveVar PasswordSave) {
 	xMountOperationSetPasswordSave(x.GoPointer(), SaveVar)
 }
 
-var xMountOperationSetPim func(uintptr, uint32)
+var xMountOperationSetPim func(uintptr, uint)
 
 // Sets the mount operation's PIM to @pim.
-func (x *MountOperation) SetPim(PimVar uint32) {
+func (x *MountOperation) SetPim(PimVar uint) {
 	xMountOperationSetPim(x.GoPointer(), PimVar)
 }
 
-var xMountOperationSetUsername func(uintptr, string)
+var xMountOperationSetUsername func(uintptr, uintptr)
 
 // Sets the user name within @op to @username.
-func (x *MountOperation) SetUsername(UsernameVar string) {
-	xMountOperationSetUsername(x.GoPointer(), UsernameVar)
+func (x *MountOperation) SetUsername(UsernameVar *string) {
+	UsernameVarPtr := core.GStrdupNullable(UsernameVar)
+	defer core.GFreeNullable(UsernameVarPtr)
+
+	xMountOperationSetUsername(x.GoPointer(), UsernameVarPtr)
 }
 
 func (c *MountOperation) GoPointer() uintptr {
@@ -635,20 +644,20 @@ func (x *MountOperation) GetPropertyAnonymous() bool {
 // SetPropertyChoice sets the "choice" property.
 // The index of the user's choice when a question is asked during the
 // mount operation. See the #GMountOperation::ask-question signal.
-func (x *MountOperation) SetPropertyChoice(value int32) {
+func (x *MountOperation) SetPropertyChoice(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("choice", &v)
 }
 
 // GetPropertyChoice gets the "choice" property.
 // The index of the user's choice when a question is asked during the
 // mount operation. See the #GMountOperation::ask-question signal.
-func (x *MountOperation) GetPropertyChoice() int32 {
+func (x *MountOperation) GetPropertyChoice() int {
 	var v gobject.Value
 	x.GetProperty("choice", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyDomain sets the "domain" property.
@@ -656,7 +665,7 @@ func (x *MountOperation) GetPropertyChoice() int32 {
 func (x *MountOperation) SetPropertyDomain(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("domain", &v)
 }
 
@@ -718,7 +727,7 @@ func (x *MountOperation) GetPropertyIsTcryptSystemVolume() bool {
 func (x *MountOperation) SetPropertyPassword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("password", &v)
 }
 
@@ -734,20 +743,20 @@ func (x *MountOperation) GetPropertyPassword() string {
 // SetPropertyPim sets the "pim" property.
 // The VeraCrypt PIM value, when unlocking a VeraCrypt volume. See
 // [the VeraCrypt documentation](https://www.veracrypt.fr/en/Personal%20Iterations%20Multiplier%20(PIM).html).
-func (x *MountOperation) SetPropertyPim(value uint32) {
+func (x *MountOperation) SetPropertyPim(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("pim", &v)
 }
 
 // GetPropertyPim gets the "pim" property.
 // The VeraCrypt PIM value, when unlocking a VeraCrypt volume. See
 // [the VeraCrypt documentation](https://www.veracrypt.fr/en/Personal%20Iterations%20Multiplier%20(PIM).html).
-func (x *MountOperation) GetPropertyPim() uint32 {
+func (x *MountOperation) GetPropertyPim() uint {
 	var v gobject.Value
 	x.GetProperty("pim", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyUsername sets the "username" property.
@@ -756,7 +765,7 @@ func (x *MountOperation) GetPropertyPim() uint32 {
 func (x *MountOperation) SetPropertyUsername(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("username", &v)
 }
 
@@ -774,7 +783,7 @@ func (x *MountOperation) GetPropertyUsername() string {
 //
 // Implementations of GMountOperation should handle this signal
 // by dismissing open password dialogs.
-func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
+func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
@@ -801,7 +810,7 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint32 {
+func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
@@ -829,7 +838,7 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint32 {
+func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
@@ -852,7 +861,7 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 }
 
 // Emitted when the user has replied to the mount operation.
-func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint32 {
+func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
@@ -886,7 +895,7 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint32 {
+func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
@@ -924,7 +933,7 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint32 {
+func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)

@@ -84,7 +84,7 @@ func DeviceNewFromInternalPtr(ptr uintptr) *Device {
 	return cls
 }
 
-var xDeviceGetActiveLayoutIndex func(uintptr) int32
+var xDeviceGetActiveLayoutIndex func(uintptr) int
 
 // Retrieves the index of the active layout of the keyboard.
 //
@@ -92,7 +92,7 @@ var xDeviceGetActiveLayoutIndex func(uintptr) int32
 // return -1;
 //
 // This is only relevant for keyboard devices.
-func (x *Device) GetActiveLayoutIndex() int32 {
+func (x *Device) GetActiveLayoutIndex() int {
 	cret := xDeviceGetActiveLayoutIndex(x.GoPointer())
 	return cret
 }
@@ -203,10 +203,10 @@ func (x *Device) GetNumLockState() bool {
 	return cret
 }
 
-var xDeviceGetNumTouches func(uintptr) uint32
+var xDeviceGetNumTouches func(uintptr) uint
 
 // Retrieves the number of touch points associated to @device.
-func (x *Device) GetNumTouches() uint32 {
+func (x *Device) GetNumTouches() uint {
 	cret := xDeviceGetNumTouches(x.GoPointer())
 	return cret
 }
@@ -355,10 +355,10 @@ func (c *Device) SetGoPointer(ptr uintptr) {
 // Will be -1 if there is no valid active layout.
 //
 // This is only relevant for keyboard devices.
-func (x *Device) GetPropertyActiveLayoutIndex() int32 {
+func (x *Device) GetPropertyActiveLayoutIndex() int {
 	var v gobject.Value
 	x.GetProperty("active-layout-index", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyCapsLockState gets the "caps-lock-state" property.
@@ -410,10 +410,10 @@ func (x *Device) GetPropertyLayoutNames() []string {
 
 // GetPropertyNAxes gets the "n-axes" property.
 // Number of axes in the device.
-func (x *Device) GetPropertyNAxes() uint32 {
+func (x *Device) GetPropertyNAxes() uint {
 	var v gobject.Value
 	x.GetProperty("n-axes", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyName sets the "name" property.
@@ -421,7 +421,7 @@ func (x *Device) GetPropertyNAxes() uint32 {
 func (x *Device) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -448,10 +448,10 @@ func (x *Device) GetPropertyNumLockState() bool {
 //
 // Will be 0 if the device is not a touch device or if the number
 // of touches is unknown.
-func (x *Device) SetPropertyNumTouches(value uint32) {
+func (x *Device) SetPropertyNumTouches(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("num-touches", &v)
 }
 
@@ -460,10 +460,10 @@ func (x *Device) SetPropertyNumTouches(value uint32) {
 //
 // Will be 0 if the device is not a touch device or if the number
 // of touches is unknown.
-func (x *Device) GetPropertyNumTouches() uint32 {
+func (x *Device) GetPropertyNumTouches() uint {
 	var v gobject.Value
 	x.GetProperty("num-touches", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyProductId sets the "product-id" property.
@@ -473,7 +473,7 @@ func (x *Device) GetPropertyNumTouches() uint32 {
 func (x *Device) SetPropertyProductId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("product-id", &v)
 }
 
@@ -504,7 +504,7 @@ func (x *Device) GetPropertyScrollLockState() bool {
 func (x *Device) SetPropertyVendorId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("vendor-id", &v)
 }
 
@@ -525,7 +525,7 @@ func (x *Device) GetPropertyVendorId() string {
 // example, user switches from the USB mouse to a tablet); in
 // that case the logical device will change to reflect the axes
 // and keys on the new physical device.
-func (x *Device) ConnectChanged(cb *func(Device)) uint32 {
+func (x *Device) ConnectChanged(cb *func(Device)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
@@ -548,7 +548,7 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint32 {
 }
 
 // Emitted on pen/eraser devices whenever tools enter or leave proximity.
-func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint32 {
+func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)

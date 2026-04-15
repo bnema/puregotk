@@ -260,7 +260,7 @@ func (c *DebugControllerDBus) SetGoPointer(ptr uintptr) {
 // Signal handlers must not modify @invocation, or cause it to return a value.
 //
 // The default class handler just returns %TRUE.
-func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint32 {
+func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)

@@ -185,7 +185,7 @@ func (x *RectangleInt) GoPointer() uintptr {
 type Glyph struct {
 	_ structs.HostLayout
 
-	Index uint32
+	Index uint
 
 	X float64
 
@@ -205,9 +205,9 @@ func (x *Glyph) GoPointer() uintptr {
 type TextCluster struct {
 	_ structs.HostLayout
 
-	NumBytes int32
+	NumBytes int
 
-	NumGlyphs int32
+	NumGlyphs int
 }
 
 var xTextClusterGLibType func() types.GType

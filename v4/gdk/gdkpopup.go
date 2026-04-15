@@ -31,11 +31,11 @@ type Popup interface {
 	SetGoPointer(uintptr)
 	GetAutohide() bool
 	GetParent() *Surface
-	GetPositionX() int32
-	GetPositionY() int32
+	GetPositionX() int
+	GetPositionY() int
 	GetRectAnchor() Gravity
 	GetSurfaceAnchor() Gravity
-	Present(WidthVar int32, HeightVar int32, LayoutVar *PopupLayout) bool
+	Present(WidthVar int, HeightVar int, LayoutVar *PopupLayout) bool
 }
 
 var xPopupGLibType func() types.GType
@@ -81,13 +81,13 @@ func (x *PopupBase) GetParent() *Surface {
 }
 
 // Obtains the position of the popup relative to its parent.
-func (x *PopupBase) GetPositionX() int32 {
+func (x *PopupBase) GetPositionX() int {
 	cret := XGdkPopupGetPositionX(x.GoPointer())
 	return cret
 }
 
 // Obtains the position of the popup relative to its parent.
-func (x *PopupBase) GetPositionY() int32 {
+func (x *PopupBase) GetPositionY() int {
 	cret := XGdkPopupGetPositionY(x.GoPointer())
 	return cret
 }
@@ -125,7 +125,7 @@ func (x *PopupBase) GetSurfaceAnchor() Gravity {
 // Presenting may fail, for example if the @popup is set to autohide
 // and is immediately hidden upon being presented. If presenting failed,
 // the [signal@Gdk.Surface::layout] signal will not me emitted.
-func (x *PopupBase) Present(WidthVar int32, HeightVar int32, LayoutVar *PopupLayout) bool {
+func (x *PopupBase) Present(WidthVar int, HeightVar int, LayoutVar *PopupLayout) bool {
 	cret := XGdkPopupPresent(x.GoPointer(), WidthVar, HeightVar, LayoutVar)
 	return cret
 }
@@ -154,11 +154,11 @@ func (x *PopupBase) GetPropertyAutohide() bool {
 var (
 	XGdkPopupGetAutohide      func(uintptr) bool
 	XGdkPopupGetParent        func(uintptr) uintptr
-	XGdkPopupGetPositionX     func(uintptr) int32
-	XGdkPopupGetPositionY     func(uintptr) int32
+	XGdkPopupGetPositionX     func(uintptr) int
+	XGdkPopupGetPositionY     func(uintptr) int
 	XGdkPopupGetRectAnchor    func(uintptr) Gravity
 	XGdkPopupGetSurfaceAnchor func(uintptr) Gravity
-	XGdkPopupPresent          func(uintptr, int32, int32, *PopupLayout) bool
+	XGdkPopupPresent          func(uintptr, int, int, *PopupLayout) bool
 )
 
 func init() {

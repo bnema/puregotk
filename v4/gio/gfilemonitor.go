@@ -263,11 +263,11 @@ func (x *FileMonitor) IsCancelled() bool {
 	return cret
 }
 
-var xFileMonitorSetRateLimit func(uintptr, int32)
+var xFileMonitorSetRateLimit func(uintptr, int)
 
 // Sets the rate limit to which the @monitor will report
 // consecutive change events to the same file.
-func (x *FileMonitor) SetRateLimit(LimitMsecsVar int32) {
+func (x *FileMonitor) SetRateLimit(LimitMsecsVar int) {
 	xFileMonitorSetRateLimit(x.GoPointer(), LimitMsecsVar)
 }
 
@@ -292,19 +292,19 @@ func (x *FileMonitor) GetPropertyCancelled() bool {
 
 // SetPropertyRateLimit sets the "rate-limit" property.
 // The limit of the monitor to watch for changes, in milliseconds.
-func (x *FileMonitor) SetPropertyRateLimit(value int32) {
+func (x *FileMonitor) SetPropertyRateLimit(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("rate-limit", &v)
 }
 
 // GetPropertyRateLimit gets the "rate-limit" property.
 // The limit of the monitor to watch for changes, in milliseconds.
-func (x *FileMonitor) GetPropertyRateLimit() int32 {
+func (x *FileMonitor) GetPropertyRateLimit() int {
 	var v gobject.Value
 	x.GetProperty("rate-limit", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when @file has been changed.
@@ -335,7 +335,7 @@ func (x *FileMonitor) GetPropertyRateLimit() int32 {
 // old path, and @other_file will be set to a #GFile containing the new path.
 //
 // In all the other cases, @other_file will be set to #NULL.
-func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, FileMonitorEvent)) uint32 {
+func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, FileMonitorEvent)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

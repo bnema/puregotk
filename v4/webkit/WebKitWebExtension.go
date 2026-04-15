@@ -473,7 +473,7 @@ func (x *WebExtension) GetPropertyOptionalPermissions() []string {
 func (x *WebExtension) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 

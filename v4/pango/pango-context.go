@@ -208,7 +208,7 @@ func (x *Context) GetRoundGlyphPositions() bool {
 	return cret
 }
 
-var xContextGetSerial func(uintptr) uint32
+var xContextGetSerial func(uintptr) uint
 
 // Returns the current serial number of @context.
 //
@@ -222,15 +222,15 @@ var xContextGetSerial func(uintptr) uint32
 // This can be used to automatically detect changes to a `PangoContext`,
 // and is only useful when implementing objects that need update when their
 // `PangoContext` changes, like `PangoLayout`.
-func (x *Context) GetSerial() uint32 {
+func (x *Context) GetSerial() uint {
 	cret := xContextGetSerial(x.GoPointer())
 	return cret
 }
 
-var xContextListFamilies func(uintptr, *uintptr, *int32)
+var xContextListFamilies func(uintptr, *uintptr, *int)
 
 // List all families for a context.
-func (x *Context) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int32) {
+func (x *Context) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int) {
 	xContextListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
 }
 

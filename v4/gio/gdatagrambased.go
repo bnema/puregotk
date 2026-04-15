@@ -38,11 +38,11 @@ func (x *DatagramBasedInterface) GoPointer() uintptr {
 
 // OverrideReceiveMessages sets the "receive_messages" callback function.
 // Virtual method for g_datagram_based_receive_messages().
-func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, []InputMessage, uint32, int32, int64, *Cancellable) int32) {
+func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int) {
 	if cb == nil {
 		x.xReceiveMessages = 0
 	} else {
-		x.xReceiveMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint32, FlagsVarp int32, TimeoutVarp int64, CancellableVarp uintptr) int32 {
+		x.xReceiveMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int {
 			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, MessagesVarp, NumMessagesVarp, FlagsVarp, TimeoutVarp, CancellableNewFromInternalPtr(CancellableVarp))
 		})
 	}
@@ -50,24 +50,24 @@ func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, 
 
 // GetReceiveMessages gets the "receive_messages" callback function.
 // Virtual method for g_datagram_based_receive_messages().
-func (x *DatagramBasedInterface) GetReceiveMessages() func(DatagramBased, []InputMessage, uint32, int32, int64, *Cancellable) int32 {
+func (x *DatagramBasedInterface) GetReceiveMessages() func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int {
 	if x.xReceiveMessages == 0 {
 		return nil
 	}
-	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint32, FlagsVarp int32, TimeoutVarp int64, CancellableVarp uintptr) int32
+	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xReceiveMessages)
-	return func(DatagramBasedVar DatagramBased, MessagesVar []InputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) int32 {
+	return func(DatagramBasedVar DatagramBased, MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int {
 		return rawCallback(DatagramBasedVar.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer())
 	}
 }
 
 // OverrideSendMessages sets the "send_messages" callback function.
 // Virtual method for g_datagram_based_send_messages().
-func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []OutputMessage, uint32, int32, int64, *Cancellable) int32) {
+func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int) {
 	if cb == nil {
 		x.xSendMessages = 0
 	} else {
-		x.xSendMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint32, FlagsVarp int32, TimeoutVarp int64, CancellableVarp uintptr) int32 {
+		x.xSendMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int {
 			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, MessagesVarp, NumMessagesVarp, FlagsVarp, TimeoutVarp, CancellableNewFromInternalPtr(CancellableVarp))
 		})
 	}
@@ -75,13 +75,13 @@ func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []O
 
 // GetSendMessages gets the "send_messages" callback function.
 // Virtual method for g_datagram_based_send_messages().
-func (x *DatagramBasedInterface) GetSendMessages() func(DatagramBased, []OutputMessage, uint32, int32, int64, *Cancellable) int32 {
+func (x *DatagramBasedInterface) GetSendMessages() func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int {
 	if x.xSendMessages == 0 {
 		return nil
 	}
-	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint32, FlagsVarp int32, TimeoutVarp int64, CancellableVarp uintptr) int32
+	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xSendMessages)
-	return func(DatagramBasedVar DatagramBased, MessagesVar []OutputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) int32 {
+	return func(DatagramBasedVar DatagramBased, MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int {
 		return rawCallback(DatagramBasedVar.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer())
 	}
 }
@@ -228,8 +228,8 @@ type DatagramBased interface {
 	ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition
 	ConditionWait(ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) (bool, error)
 	CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source
-	ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) (int32, error)
-	SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) (int32, error)
+	ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error)
+	SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error)
 }
 
 var xDatagramBasedGLibType func() types.GType
@@ -382,7 +382,7 @@ func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, Cancella
 // messages successfully received before the error will be returned. If
 // @cancellable is cancelled, %G_IO_ERROR_CANCELLED is returned as with any
 // other error.
-func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) (int32, error) {
+func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
@@ -433,7 +433,7 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 // be returned if zero messages could be sent; otherwise the number of messages
 // successfully sent before the error will be returned. If @cancellable is
 // cancelled, %G_IO_ERROR_CANCELLED is returned as with any other error.
-func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint32, FlagsVar int32, TimeoutVar int64, CancellableVar *Cancellable) (int32, error) {
+func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
@@ -447,8 +447,8 @@ var (
 	XGDatagramBasedConditionCheck  func(uintptr, glib.IOCondition) glib.IOCondition
 	XGDatagramBasedConditionWait   func(uintptr, glib.IOCondition, int64, uintptr, **glib.Error) bool
 	XGDatagramBasedCreateSource    func(uintptr, glib.IOCondition, uintptr) uintptr
-	XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
-	XGDatagramBasedSendMessages    func(uintptr, []OutputMessage, uint32, int32, int64, uintptr, **glib.Error) int32
+	XGDatagramBasedReceiveMessages func(uintptr, []InputMessage, uint, int, int64, uintptr, **glib.Error) int
+	XGDatagramBasedSendMessages    func(uintptr, []OutputMessage, uint, int, int64, uintptr, **glib.Error) int
 )
 
 func init() {

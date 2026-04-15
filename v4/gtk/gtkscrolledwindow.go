@@ -255,34 +255,34 @@ func (x *ScrolledWindow) GetKineticScrolling() bool {
 	return cret
 }
 
-var xScrolledWindowGetMaxContentHeight func(uintptr) int32
+var xScrolledWindowGetMaxContentHeight func(uintptr) int
 
 // Returns the maximum content height set.
-func (x *ScrolledWindow) GetMaxContentHeight() int32 {
+func (x *ScrolledWindow) GetMaxContentHeight() int {
 	cret := xScrolledWindowGetMaxContentHeight(x.GoPointer())
 	return cret
 }
 
-var xScrolledWindowGetMaxContentWidth func(uintptr) int32
+var xScrolledWindowGetMaxContentWidth func(uintptr) int
 
 // Returns the maximum content width set.
-func (x *ScrolledWindow) GetMaxContentWidth() int32 {
+func (x *ScrolledWindow) GetMaxContentWidth() int {
 	cret := xScrolledWindowGetMaxContentWidth(x.GoPointer())
 	return cret
 }
 
-var xScrolledWindowGetMinContentHeight func(uintptr) int32
+var xScrolledWindowGetMinContentHeight func(uintptr) int
 
 // Gets the minimal content height of @scrolled_window.
-func (x *ScrolledWindow) GetMinContentHeight() int32 {
+func (x *ScrolledWindow) GetMinContentHeight() int {
 	cret := xScrolledWindowGetMinContentHeight(x.GoPointer())
 	return cret
 }
 
-var xScrolledWindowGetMinContentWidth func(uintptr) int32
+var xScrolledWindowGetMinContentWidth func(uintptr) int
 
 // Gets the minimum content width of @scrolled_window.
-func (x *ScrolledWindow) GetMinContentWidth() int32 {
+func (x *ScrolledWindow) GetMinContentWidth() int {
 	cret := xScrolledWindowGetMinContentWidth(x.GoPointer())
 	return cret
 }
@@ -403,7 +403,7 @@ func (x *ScrolledWindow) SetKineticScrolling(KineticScrollingVar bool) {
 	xScrolledWindowSetKineticScrolling(x.GoPointer(), KineticScrollingVar)
 }
 
-var xScrolledWindowSetMaxContentHeight func(uintptr, int32)
+var xScrolledWindowSetMaxContentHeight func(uintptr, int)
 
 // Sets the maximum height that @scrolled_window should keep visible.
 //
@@ -412,11 +412,11 @@ var xScrolledWindowSetMaxContentHeight func(uintptr, int32)
 //
 // It is a programming error to set the maximum content height to a value
 // smaller than [property@Gtk.ScrolledWindow:min-content-height].
-func (x *ScrolledWindow) SetMaxContentHeight(HeightVar int32) {
+func (x *ScrolledWindow) SetMaxContentHeight(HeightVar int) {
 	xScrolledWindowSetMaxContentHeight(x.GoPointer(), HeightVar)
 }
 
-var xScrolledWindowSetMaxContentWidth func(uintptr, int32)
+var xScrolledWindowSetMaxContentWidth func(uintptr, int)
 
 // Sets the maximum width that @scrolled_window should keep visible.
 //
@@ -425,11 +425,11 @@ var xScrolledWindowSetMaxContentWidth func(uintptr, int32)
 //
 // It is a programming error to set the maximum content width to a
 // value smaller than [property@Gtk.ScrolledWindow:min-content-width].
-func (x *ScrolledWindow) SetMaxContentWidth(WidthVar int32) {
+func (x *ScrolledWindow) SetMaxContentWidth(WidthVar int) {
 	xScrolledWindowSetMaxContentWidth(x.GoPointer(), WidthVar)
 }
 
-var xScrolledWindowSetMinContentHeight func(uintptr, int32)
+var xScrolledWindowSetMinContentHeight func(uintptr, int)
 
 // Sets the minimum height that @scrolled_window should keep visible.
 //
@@ -438,11 +438,11 @@ var xScrolledWindowSetMinContentHeight func(uintptr, int32)
 //
 // It is a programming error to set the minimum content height to a
 // value greater than [property@Gtk.ScrolledWindow:max-content-height].
-func (x *ScrolledWindow) SetMinContentHeight(HeightVar int32) {
+func (x *ScrolledWindow) SetMinContentHeight(HeightVar int) {
 	xScrolledWindowSetMinContentHeight(x.GoPointer(), HeightVar)
 }
 
-var xScrolledWindowSetMinContentWidth func(uintptr, int32)
+var xScrolledWindowSetMinContentWidth func(uintptr, int)
 
 // Sets the minimum width that @scrolled_window should keep visible.
 //
@@ -451,7 +451,7 @@ var xScrolledWindowSetMinContentWidth func(uintptr, int32)
 //
 // It is a programming error to set the minimum content width to a
 // value greater than [property@Gtk.ScrolledWindow:max-content-width].
-func (x *ScrolledWindow) SetMinContentWidth(WidthVar int32) {
+func (x *ScrolledWindow) SetMinContentWidth(WidthVar int) {
 	xScrolledWindowSetMinContentWidth(x.GoPointer(), WidthVar)
 }
 
@@ -576,70 +576,70 @@ func (x *ScrolledWindow) GetPropertyKineticScrolling() bool {
 
 // SetPropertyMaxContentHeight sets the "max-content-height" property.
 // The maximum content height of @scrolled_window.
-func (x *ScrolledWindow) SetPropertyMaxContentHeight(value int32) {
+func (x *ScrolledWindow) SetPropertyMaxContentHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-content-height", &v)
 }
 
 // GetPropertyMaxContentHeight gets the "max-content-height" property.
 // The maximum content height of @scrolled_window.
-func (x *ScrolledWindow) GetPropertyMaxContentHeight() int32 {
+func (x *ScrolledWindow) GetPropertyMaxContentHeight() int {
 	var v gobject.Value
 	x.GetProperty("max-content-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyMaxContentWidth sets the "max-content-width" property.
 // The maximum content width of @scrolled_window.
-func (x *ScrolledWindow) SetPropertyMaxContentWidth(value int32) {
+func (x *ScrolledWindow) SetPropertyMaxContentWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-content-width", &v)
 }
 
 // GetPropertyMaxContentWidth gets the "max-content-width" property.
 // The maximum content width of @scrolled_window.
-func (x *ScrolledWindow) GetPropertyMaxContentWidth() int32 {
+func (x *ScrolledWindow) GetPropertyMaxContentWidth() int {
 	var v gobject.Value
 	x.GetProperty("max-content-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyMinContentHeight sets the "min-content-height" property.
 // The minimum content height of @scrolled_window.
-func (x *ScrolledWindow) SetPropertyMinContentHeight(value int32) {
+func (x *ScrolledWindow) SetPropertyMinContentHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("min-content-height", &v)
 }
 
 // GetPropertyMinContentHeight gets the "min-content-height" property.
 // The minimum content height of @scrolled_window.
-func (x *ScrolledWindow) GetPropertyMinContentHeight() int32 {
+func (x *ScrolledWindow) GetPropertyMinContentHeight() int {
 	var v gobject.Value
 	x.GetProperty("min-content-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyMinContentWidth sets the "min-content-width" property.
 // The minimum content width of @scrolled_window.
-func (x *ScrolledWindow) SetPropertyMinContentWidth(value int32) {
+func (x *ScrolledWindow) SetPropertyMinContentWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("min-content-width", &v)
 }
 
 // GetPropertyMinContentWidth gets the "min-content-width" property.
 // The minimum content width of @scrolled_window.
-func (x *ScrolledWindow) GetPropertyMinContentWidth() int32 {
+func (x *ScrolledWindow) GetPropertyMinContentWidth() int {
 	var v gobject.Value
 	x.GetProperty("min-content-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyOverlayScrolling sets the "overlay-scrolling" property.
@@ -732,7 +732,7 @@ func (x *ScrolledWindow) GetPropertyPropagateNaturalWidth() bool {
 //
 // Note: The @pos argument is LTR/RTL aware, so callers should be
 // aware too if intending to provide behavior on horizontal edges.
-func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionType)) uint32 {
+func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "edge-overshot", cbRefPtr)
@@ -763,7 +763,7 @@ func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionTy
 //
 // Note: The @pos argument is LTR/RTL aware, so callers should be
 // aware too if intending to provide behavior on horizontal edges.
-func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionType)) uint32 {
+func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "edge-reached", cbRefPtr)
@@ -793,7 +793,7 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; to move forward and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;` to move backward.
-func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionType)) uint32 {
+func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
@@ -821,7 +821,7 @@ func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionT
 //
 // The horizontal or vertical adjustment is updated which triggers a
 // signal that the scrolled window’s child may listen to and scroll itself.
-func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType, bool) bool) uint32 {
+func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-child", cbRefPtr)
@@ -909,7 +909,7 @@ func (x *ScrolledWindow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ScrolledWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ScrolledWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1025,7 +1025,7 @@ func (x *ScrolledWindow) UpdateProperty(FirstPropertyVar AccessibleProperty, var
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ScrolledWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ScrolledWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1057,7 +1057,7 @@ func (x *ScrolledWindow) UpdateRelation(FirstRelationVar AccessibleRelation, var
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ScrolledWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ScrolledWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1090,7 +1090,7 @@ func (x *ScrolledWindow) UpdateState(FirstStateVar AccessibleState, varArgs ...i
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ScrolledWindow) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ScrolledWindow) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

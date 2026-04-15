@@ -173,7 +173,7 @@ func (x *IMMulticontext) GetContextId() string {
 	return cret
 }
 
-var xIMMulticontextSetContextId func(uintptr, string)
+var xIMMulticontextSetContextId func(uintptr, uintptr)
 
 // Sets the context id for @context.
 //
@@ -183,8 +183,11 @@ var xIMMulticontextSetContextId func(uintptr, string)
 // Setting this to a non-%NULL value overrides the system-wide
 // IM module setting. See the [property@Gtk.Settings:gtk-im-module]
 // property.
-func (x *IMMulticontext) SetContextId(ContextIdVar string) {
-	xIMMulticontextSetContextId(x.GoPointer(), ContextIdVar)
+func (x *IMMulticontext) SetContextId(ContextIdVar *string) {
+	ContextIdVarPtr := core.GStrdupNullable(ContextIdVar)
+	defer core.GFreeNullable(ContextIdVarPtr)
+
+	xIMMulticontextSetContextId(x.GoPointer(), ContextIdVarPtr)
 }
 
 func (c *IMMulticontext) GoPointer() uintptr {

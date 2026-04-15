@@ -132,7 +132,7 @@ func (x *Surface) CreateGlContext() (*GLContext, error) {
 	return cls, cerr
 }
 
-var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int32, int32) uintptr
+var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int, int) uintptr
 
 // Create a new Cairo surface that is as compatible as possible with the
 // given @surface.
@@ -149,7 +149,7 @@ var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int32, int32) uint
 // This function always returns a valid pointer, but it will return a
 // pointer to a “nil” surface if @other is already in an error state
 // or any other error occurs.
-func (x *Surface) CreateSimilarSurface(ContentVar cairo.Content, WidthVar int32, HeightVar int32) *cairo.Surface {
+func (x *Surface) CreateSimilarSurface(ContentVar cairo.Content, WidthVar int, HeightVar int) *cairo.Surface {
 	cret := xSurfaceCreateSimilarSurface(x.GoPointer(), ContentVar, WidthVar, HeightVar)
 	if cret == 0 {
 		return nil
@@ -286,13 +286,13 @@ func (x *Surface) GetFrameClock() *FrameClock {
 	return cls
 }
 
-var xSurfaceGetHeight func(uintptr) int32
+var xSurfaceGetHeight func(uintptr) int
 
 // Returns the height of the given @surface.
 //
 // Surface size is reported in ”application pixels”, not
 // ”device pixels” (see [method@Gdk.Surface.get_scale_factor]).
-func (x *Surface) GetHeight() int32 {
+func (x *Surface) GetHeight() int {
 	cret := xSurfaceGetHeight(x.GoPointer())
 	return cret
 }
@@ -326,7 +326,7 @@ func (x *Surface) GetScale() float64 {
 	return cret
 }
 
-var xSurfaceGetScaleFactor func(uintptr) int32
+var xSurfaceGetScaleFactor func(uintptr) int
 
 // Returns the internal scale factor that maps from surface coordinates
 // to the actual device pixels.
@@ -339,18 +339,18 @@ var xSurfaceGetScaleFactor func(uintptr) int32
 // use a pixel resource with higher resolution data.
 //
 // The scale factor may change during the lifetime of the surface.
-func (x *Surface) GetScaleFactor() int32 {
+func (x *Surface) GetScaleFactor() int {
 	cret := xSurfaceGetScaleFactor(x.GoPointer())
 	return cret
 }
 
-var xSurfaceGetWidth func(uintptr) int32
+var xSurfaceGetWidth func(uintptr) int
 
 // Returns the width of the given @surface.
 //
 // Surface size is reported in ”application pixels”, not
 // ”device pixels” (see [method@Gdk.Surface.get_scale_factor]).
-func (x *Surface) GetWidth() int32 {
+func (x *Surface) GetWidth() int {
 	cret := xSurfaceGetWidth(x.GoPointer())
 	return cret
 }
@@ -487,10 +487,10 @@ func (c *Surface) SetGoPointer(ptr uintptr) {
 
 // GetPropertyHeight gets the "height" property.
 // The height of the surface, in pixels.
-func (x *Surface) GetPropertyHeight() int32 {
+func (x *Surface) GetPropertyHeight() int {
 	var v gobject.Value
 	x.GetProperty("height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyMapped gets the "mapped" property.
@@ -514,22 +514,22 @@ func (x *Surface) GetPropertyScale() float64 {
 //
 // The scale factor is the next larger integer,
 // compared to [property@Gdk.Surface:scale].
-func (x *Surface) GetPropertyScaleFactor() int32 {
+func (x *Surface) GetPropertyScaleFactor() int {
 	var v gobject.Value
 	x.GetProperty("scale-factor", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyWidth gets the "width" property.
 // The width of the surface in pixels.
-func (x *Surface) GetPropertyWidth() int32 {
+func (x *Surface) GetPropertyWidth() int {
 	var v gobject.Value
 	x.GetProperty("width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when @surface starts being present on the monitor.
-func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint32 {
+func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter-monitor", cbRefPtr)
@@ -552,7 +552,7 @@ func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint32 {
 }
 
 // Emitted when GDK receives an input event for @surface.
-func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint32 {
+func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
@@ -579,7 +579,7 @@ func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint32 {
 //
 // Surface size is reported in ”application pixels”, not
 // ”device pixels” (see gdk_surface_get_scale_factor()).
-func (x *Surface) ConnectLayout(cb *func(Surface, int32, int32)) uint32 {
+func (x *Surface) ConnectLayout(cb *func(Surface, int, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
@@ -587,7 +587,7 @@ func (x *Surface) ConnectLayout(cb *func(Surface, int32, int32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
+	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
 		fa := Surface{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -602,7 +602,7 @@ func (x *Surface) ConnectLayout(cb *func(Surface, int32, int32)) uint32 {
 }
 
 // Emitted when @surface stops being present on the monitor.
-func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint32 {
+func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave-monitor", cbRefPtr)
@@ -625,7 +625,7 @@ func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint32 {
 }
 
 // Emitted when part of the surface needs to be redrawn.
-func (x *Surface) ConnectRender(cb *func(Surface, uintptr) bool) uint32 {
+func (x *Surface) ConnectRender(cb *func(Surface, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)

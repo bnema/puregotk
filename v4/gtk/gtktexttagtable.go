@@ -95,10 +95,10 @@ func (x *TextTagTable) Foreach(FuncVar *TextTagTableForeach, DataVar uintptr) {
 	xTextTagTableForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
-var xTextTagTableGetSize func(uintptr) int32
+var xTextTagTableGetSize func(uintptr) int
 
 // Returns the size of the table (number of tags)
-func (x *TextTagTable) GetSize() int32 {
+func (x *TextTagTable) GetSize() int {
 	cret := xTextTagTableGetSize(x.GoPointer())
 	return cret
 }
@@ -144,7 +144,7 @@ func (c *TextTagTable) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted every time a new tag is added in the `GtkTextTagTable`.
-func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
+func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
@@ -167,7 +167,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
 }
 
 // Emitted every time a tag in the `GtkTextTagTable` changes.
-func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint32 {
+func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
@@ -193,7 +193,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 //
 // The @tag is still valid by the time the signal is emitted, but
 // it is not associated with a tag table any more.
-func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32 {
+func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)

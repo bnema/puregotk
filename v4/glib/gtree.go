@@ -115,14 +115,14 @@ func (x *Tree) ForeachNode(FuncVar *TraverseNodeFunc, UserDataVar uintptr) {
 	xTreeForeachNode(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
 }
 
-var xTreeHeight func(uintptr) int32
+var xTreeHeight func(uintptr) int
 
 // Gets the height of a #GTree.
 //
 // If the #GTree contains no nodes, the height is 0.
 // If the #GTree contains only one root node the height is 1.
 // If the root node has children the height is 2, etc.
-func (x *Tree) Height() int32 {
+func (x *Tree) Height() int {
 	cret := xTreeHeight(x.GoPointer())
 	return cret
 }
@@ -210,10 +210,10 @@ func (x *Tree) LowerBound(KeyVar uintptr) *TreeNode {
 	return (*TreeNode)(unsafe.Pointer(cret))
 }
 
-var xTreeNnodes func(uintptr) int32
+var xTreeNnodes func(uintptr) int
 
 // Gets the number of nodes in a #GTree.
-func (x *Tree) Nnodes() int32 {
+func (x *Tree) Nnodes() int {
 	cret := xTreeNnodes(x.GoPointer())
 	return cret
 }

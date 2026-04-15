@@ -172,18 +172,18 @@ func (x *Value) GetDouble() float64 {
 	return cret
 }
 
-var xValueGetEnum func(uintptr) int32
+var xValueGetEnum func(uintptr) int
 
 // Get the contents of a %G_TYPE_ENUM #GValue.
-func (x *Value) GetEnum() int32 {
+func (x *Value) GetEnum() int {
 	cret := xValueGetEnum(x.GoPointer())
 	return cret
 }
 
-var xValueGetFlags func(uintptr) uint32
+var xValueGetFlags func(uintptr) uint
 
 // Get the contents of a %G_TYPE_FLAGS #GValue.
-func (x *Value) GetFlags() uint32 {
+func (x *Value) GetFlags() uint {
 	cret := xValueGetFlags(x.GoPointer())
 	return cret
 }
@@ -204,10 +204,10 @@ func (x *Value) GetGtype() types.GType {
 	return cret
 }
 
-var xValueGetInt func(uintptr) int32
+var xValueGetInt func(uintptr) int
 
 // Get the contents of a %G_TYPE_INT #GValue.
-func (x *Value) GetInt() int32 {
+func (x *Value) GetInt() int {
 	cret := xValueGetInt(x.GoPointer())
 	return cret
 }
@@ -220,10 +220,10 @@ func (x *Value) GetInt64() int64 {
 	return cret
 }
 
-var xValueGetLong func(uintptr) int32
+var xValueGetLong func(uintptr) int
 
 // Get the contents of a %G_TYPE_LONG #GValue.
-func (x *Value) GetLong() int32 {
+func (x *Value) GetLong() int {
 	cret := xValueGetLong(x.GoPointer())
 	return cret
 }
@@ -294,10 +294,10 @@ func (x *Value) GetUchar() byte {
 	return cret
 }
 
-var xValueGetUint func(uintptr) uint32
+var xValueGetUint func(uintptr) uint
 
 // Get the contents of a %G_TYPE_UINT #GValue.
-func (x *Value) GetUint() uint32 {
+func (x *Value) GetUint() uint {
 	cret := xValueGetUint(x.GoPointer())
 	return cret
 }
@@ -310,10 +310,10 @@ func (x *Value) GetUint64() uint64 {
 	return cret
 }
 
-var xValueGetUlong func(uintptr) uint32
+var xValueGetUlong func(uintptr) uint
 
 // Get the contents of a %G_TYPE_ULONG #GValue.
-func (x *Value) GetUlong() uint32 {
+func (x *Value) GetUlong() uint {
 	cret := xValueGetUlong(x.GoPointer())
 	return cret
 }
@@ -430,17 +430,17 @@ func (x *Value) SetDouble(VDoubleVar float64) {
 	xValueSetDouble(x.GoPointer(), VDoubleVar)
 }
 
-var xValueSetEnum func(uintptr, int32)
+var xValueSetEnum func(uintptr, int)
 
 // Set the contents of a %G_TYPE_ENUM #GValue to @v_enum.
-func (x *Value) SetEnum(VEnumVar int32) {
+func (x *Value) SetEnum(VEnumVar int) {
 	xValueSetEnum(x.GoPointer(), VEnumVar)
 }
 
-var xValueSetFlags func(uintptr, uint32)
+var xValueSetFlags func(uintptr, uint)
 
 // Set the contents of a %G_TYPE_FLAGS #GValue to @v_flags.
-func (x *Value) SetFlags(VFlagsVar uint32) {
+func (x *Value) SetFlags(VFlagsVar uint) {
 	xValueSetFlags(x.GoPointer(), VFlagsVar)
 }
 
@@ -468,10 +468,10 @@ func (x *Value) SetInstance(InstanceVar uintptr) {
 	xValueSetInstance(x.GoPointer(), InstanceVar)
 }
 
-var xValueSetInt func(uintptr, int32)
+var xValueSetInt func(uintptr, int)
 
 // Set the contents of a %G_TYPE_INT #GValue to @v_int.
-func (x *Value) SetInt(VIntVar int32) {
+func (x *Value) SetInt(VIntVar int) {
 	xValueSetInt(x.GoPointer(), VIntVar)
 }
 
@@ -482,19 +482,22 @@ func (x *Value) SetInt64(VInt64Var int64) {
 	xValueSetInt64(x.GoPointer(), VInt64Var)
 }
 
-var xValueSetInternedString func(uintptr, string)
+var xValueSetInternedString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to @v_string.  The string is
 // assumed to be static and interned (canonical, for example from
 // g_intern_string()), and is thus not duplicated when setting the #GValue.
-func (x *Value) SetInternedString(VStringVar string) {
-	xValueSetInternedString(x.GoPointer(), VStringVar)
+func (x *Value) SetInternedString(VStringVar *string) {
+	VStringVarPtr := core.GStrdupNullable(VStringVar)
+	defer core.GFreeNullable(VStringVarPtr)
+
+	xValueSetInternedString(x.GoPointer(), VStringVarPtr)
 }
 
-var xValueSetLong func(uintptr, int32)
+var xValueSetLong func(uintptr, int)
 
 // Set the contents of a %G_TYPE_LONG #GValue to @v_long.
-func (x *Value) SetLong(VLongVar int32) {
+func (x *Value) SetLong(VLongVar int) {
 	xValueSetLong(x.GoPointer(), VLongVar)
 }
 
@@ -560,7 +563,7 @@ func (x *Value) SetStaticBoxed(VBoxedVar uintptr) {
 	xValueSetStaticBoxed(x.GoPointer(), VBoxedVar)
 }
 
-var xValueSetStaticString func(uintptr, string)
+var xValueSetStaticString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to @v_string.
 // The string is assumed to be static, and is thus not duplicated
@@ -568,22 +571,31 @@ var xValueSetStaticString func(uintptr, string)
 //
 // If the the string is a canonical string, using g_value_set_interned_string()
 // is more appropriate.
-func (x *Value) SetStaticString(VStringVar string) {
-	xValueSetStaticString(x.GoPointer(), VStringVar)
+func (x *Value) SetStaticString(VStringVar *string) {
+	VStringVarPtr := core.GStrdupNullable(VStringVar)
+	defer core.GFreeNullable(VStringVarPtr)
+
+	xValueSetStaticString(x.GoPointer(), VStringVarPtr)
 }
 
-var xValueSetString func(uintptr, string)
+var xValueSetString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to a copy of @v_string.
-func (x *Value) SetString(VStringVar string) {
-	xValueSetString(x.GoPointer(), VStringVar)
+func (x *Value) SetString(VStringVar *string) {
+	VStringVarPtr := core.GStrdupNullable(VStringVar)
+	defer core.GFreeNullable(VStringVarPtr)
+
+	xValueSetString(x.GoPointer(), VStringVarPtr)
 }
 
-var xValueSetStringTakeOwnership func(uintptr, string)
+var xValueSetStringTakeOwnership func(uintptr, uintptr)
 
 // This is an internal function introduced mainly for C marshallers.
-func (x *Value) SetStringTakeOwnership(VStringVar string) {
-	xValueSetStringTakeOwnership(x.GoPointer(), VStringVar)
+func (x *Value) SetStringTakeOwnership(VStringVar *string) {
+	VStringVarPtr := core.GStrdupNullable(VStringVar)
+	defer core.GFreeNullable(VStringVarPtr)
+
+	xValueSetStringTakeOwnership(x.GoPointer(), VStringVarPtr)
 }
 
 var xValueSetUchar func(uintptr, byte)
@@ -593,10 +605,10 @@ func (x *Value) SetUchar(VUcharVar byte) {
 	xValueSetUchar(x.GoPointer(), VUcharVar)
 }
 
-var xValueSetUint func(uintptr, uint32)
+var xValueSetUint func(uintptr, uint)
 
 // Set the contents of a %G_TYPE_UINT #GValue to @v_uint.
-func (x *Value) SetUint(VUintVar uint32) {
+func (x *Value) SetUint(VUintVar uint) {
 	xValueSetUint(x.GoPointer(), VUintVar)
 }
 
@@ -607,10 +619,10 @@ func (x *Value) SetUint64(VUint64Var uint64) {
 	xValueSetUint64(x.GoPointer(), VUint64Var)
 }
 
-var xValueSetUlong func(uintptr, uint32)
+var xValueSetUlong func(uintptr, uint)
 
 // Set the contents of a %G_TYPE_ULONG #GValue to @v_ulong.
-func (x *Value) SetUlong(VUlongVar uint32) {
+func (x *Value) SetUlong(VUlongVar uint) {
 	xValueSetUlong(x.GoPointer(), VUlongVar)
 }
 
@@ -669,11 +681,14 @@ func (x *Value) TakeParam(ParamVar *ParamSpec) {
 	xValueTakeParam(x.GoPointer(), ParamVar.GoPointer())
 }
 
-var xValueTakeString func(uintptr, string)
+var xValueTakeString func(uintptr, uintptr)
 
 // Sets the contents of a %G_TYPE_STRING #GValue to @v_string.
-func (x *Value) TakeString(VStringVar string) {
-	xValueTakeString(x.GoPointer(), VStringVar)
+func (x *Value) TakeString(VStringVar *string) {
+	VStringVarPtr := core.GStrdupNullable(VStringVar)
+	defer core.GFreeNullable(VStringVarPtr)
+
+	xValueTakeString(x.GoPointer(), VStringVarPtr)
 }
 
 var xValueTakeVariant func(uintptr, *glib.Variant)
@@ -733,7 +748,7 @@ const (
 	// This flag should be checked by implementations of
 	// [callback@GObject.TypeValueFreeFunc], [callback@GObject.TypeValueCollectFunc]
 	// and [callback@GObject.TypeValueLCopyFunc].
-	VALUE_INTERNED_STRING int32 = 268435456
+	VALUE_INTERNED_STRING int = 268435456
 	// Flag to indicate that allocated data in a [struct@GObject.Value] shouldn’t be
 	// copied.
 	//
@@ -746,7 +761,7 @@ const (
 	// This flag should be checked by implementations of
 	// [callback@GObject.TypeValueFreeFunc], [callback@GObject.TypeValueCollectFunc]
 	// and [callback@GObject.TypeValueLCopyFunc].
-	VALUE_NOCOPY_CONTENTS int32 = 134217728
+	VALUE_NOCOPY_CONTENTS int = 134217728
 )
 
 var xValueRegisterTransformFunc func(types.GType, types.GType, uintptr)

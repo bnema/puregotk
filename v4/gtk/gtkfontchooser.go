@@ -112,24 +112,24 @@ func (x *FontChooserIface) GetGetFontFace() func(FontChooser) *pango.FontFace {
 }
 
 // OverrideGetFontSize sets the "get_font_size" callback function.
-func (x *FontChooserIface) OverrideGetFontSize(cb func(FontChooser) int32) {
+func (x *FontChooserIface) OverrideGetFontSize(cb func(FontChooser) int) {
 	if cb == nil {
 		x.xGetFontSize = 0
 	} else {
-		x.xGetFontSize = purego.NewCallback(func(FontchooserVarp uintptr) int32 {
+		x.xGetFontSize = purego.NewCallback(func(FontchooserVarp uintptr) int {
 			return cb(&FontChooserBase{Ptr: FontchooserVarp})
 		})
 	}
 }
 
 // GetGetFontSize gets the "get_font_size" callback function.
-func (x *FontChooserIface) GetGetFontSize() func(FontChooser) int32 {
+func (x *FontChooserIface) GetGetFontSize() func(FontChooser) int {
 	if x.xGetFontSize == 0 {
 		return nil
 	}
-	var rawCallback func(FontchooserVarp uintptr) int32
+	var rawCallback func(FontchooserVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetFontSize)
-	return func(FontchooserVar FontChooser) int32 {
+	return func(FontchooserVar FontChooser) int {
 		return rawCallback(FontchooserVar.GoPointer())
 	}
 }
@@ -251,7 +251,7 @@ type FontChooser interface {
 	GetFontFamily() *pango.FontFamily
 	GetFontFeatures() string
 	GetFontMap() *pango.FontMap
-	GetFontSize() int32
+	GetFontSize() int
 	GetLanguage() string
 	GetLevel() FontChooserLevel
 	GetPreviewText() string
@@ -383,7 +383,7 @@ func (x *FontChooserBase) GetFontMap() *pango.FontMap {
 }
 
 // The selected font size.
-func (x *FontChooserBase) GetFontSize() int32 {
+func (x *FontChooserBase) GetFontSize() int {
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
 	return cret
 }
@@ -486,7 +486,7 @@ func (x *FontChooserBase) SetPropertyFont(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("font", &v)
 }
 
@@ -541,7 +541,7 @@ func (x *FontChooserBase) SetPropertyLanguage(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("language", &v)
 }
 
@@ -562,7 +562,7 @@ func (x *FontChooserBase) SetPropertyPreviewText(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("preview-text", &v)
 }
 
@@ -604,7 +604,7 @@ var (
 	XGtkFontChooserGetFontFamily       func(uintptr) uintptr
 	XGtkFontChooserGetFontFeatures     func(uintptr) string
 	XGtkFontChooserGetFontMap          func(uintptr) uintptr
-	XGtkFontChooserGetFontSize         func(uintptr) int32
+	XGtkFontChooserGetFontSize         func(uintptr) int
 	XGtkFontChooserGetLanguage         func(uintptr) string
 	XGtkFontChooserGetLevel            func(uintptr) FontChooserLevel
 	XGtkFontChooserGetPreviewText      func(uintptr) string

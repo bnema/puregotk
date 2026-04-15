@@ -62,7 +62,7 @@ func OnErrorQuery(PrgNameVar string) {
 	xOnErrorQuery(PrgNameVar)
 }
 
-var xOnErrorStackTrace func(string)
+var xOnErrorStackTrace func(uintptr)
 
 // Invokes gdb, which attaches to the current process and shows a
 // stack trace. Called by g_on_error_query() when the "[S]tack trace"
@@ -77,8 +77,11 @@ var xOnErrorStackTrace func(string)
 // exception, which will crash the program. If the `G_DEBUGGER` environment
 // variable is set, a debugger will be invoked to attach and
 // handle that exception (see [Running GLib Applications](running.html)).
-func OnErrorStackTrace(PrgNameVar string) {
-	xOnErrorStackTrace(PrgNameVar)
+func OnErrorStackTrace(PrgNameVar *string) {
+	PrgNameVarPtr := core.GStrdupNullable(PrgNameVar)
+	defer core.GFreeNullable(PrgNameVarPtr)
+
+	xOnErrorStackTrace(PrgNameVarPtr)
 }
 
 func init() {

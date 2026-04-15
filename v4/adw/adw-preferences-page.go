@@ -116,12 +116,12 @@ func (x *PreferencesPage) GetDescriptionCentered() bool {
 	return cret
 }
 
-var xPreferencesPageGetGroup func(uintptr, uint32) uintptr
+var xPreferencesPageGetGroup func(uintptr, uint) uintptr
 
 // Gets the group at @index.
 //
 // Can return `NULL` if @index is larger than the number of groups in the page.
-func (x *PreferencesPage) GetGroup(IndexVar uint32) *PreferencesGroup {
+func (x *PreferencesPage) GetGroup(IndexVar uint) *PreferencesGroup {
 	var cls *PreferencesGroup
 
 	cret := xPreferencesPageGetGroup(x.GoPointer(), IndexVar)
@@ -167,13 +167,13 @@ func (x *PreferencesPage) GetUseUnderline() bool {
 	return cret
 }
 
-var xPreferencesPageInsert func(uintptr, uintptr, int32)
+var xPreferencesPageInsert func(uintptr, uintptr, int)
 
 // Inserts a preferences group to @self at @index.
 //
 // If @index is negative or larger than the number of groups, appends the group,
 // same as [method@PreferencesPage.add].
-func (x *PreferencesPage) Insert(GroupVar *PreferencesGroup, IndexVar int32) {
+func (x *PreferencesPage) Insert(GroupVar *PreferencesGroup, IndexVar int) {
 	xPreferencesPageInsert(x.GoPointer(), GroupVar.GoPointer(), IndexVar)
 }
 
@@ -214,18 +214,24 @@ func (x *PreferencesPage) SetDescriptionCentered(CenteredVar bool) {
 	xPreferencesPageSetDescriptionCentered(x.GoPointer(), CenteredVar)
 }
 
-var xPreferencesPageSetIconName func(uintptr, string)
+var xPreferencesPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *PreferencesPage) SetIconName(IconNameVar string) {
-	xPreferencesPageSetIconName(x.GoPointer(), IconNameVar)
+func (x *PreferencesPage) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xPreferencesPageSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
-var xPreferencesPageSetName func(uintptr, string)
+var xPreferencesPageSetName func(uintptr, uintptr)
 
 // Sets the name of @self.
-func (x *PreferencesPage) SetName(NameVar string) {
-	xPreferencesPageSetName(x.GoPointer(), NameVar)
+func (x *PreferencesPage) SetName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xPreferencesPageSetName(x.GoPointer(), NameVarPtr)
 }
 
 var xPreferencesPageSetTitle func(uintptr, string)
@@ -258,7 +264,7 @@ func (c *PreferencesPage) SetGoPointer(ptr uintptr) {
 func (x *PreferencesPage) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -292,7 +298,7 @@ func (x *PreferencesPage) GetPropertyDescriptionCentered() bool {
 func (x *PreferencesPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -309,7 +315,7 @@ func (x *PreferencesPage) GetPropertyIconName() string {
 func (x *PreferencesPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -326,7 +332,7 @@ func (x *PreferencesPage) GetPropertyName() string {
 func (x *PreferencesPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -421,7 +427,7 @@ func (x *PreferencesPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *PreferencesPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -537,7 +543,7 @@ func (x *PreferencesPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *PreferencesPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -569,7 +575,7 @@ func (x *PreferencesPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *PreferencesPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -602,7 +608,7 @@ func (x *PreferencesPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PreferencesPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *PreferencesPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

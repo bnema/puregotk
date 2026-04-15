@@ -223,11 +223,14 @@ func (x *LevelBar) GetMode() LevelBarMode {
 	return cret
 }
 
-var xLevelBarGetOffsetValue func(uintptr, string, *float64) bool
+var xLevelBarGetOffsetValue func(uintptr, uintptr, *float64) bool
 
 // Fetches the value specified for the offset marker @name in @self.
-func (x *LevelBar) GetOffsetValue(NameVar string, ValueVar *float64) bool {
-	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVar, ValueVar)
+func (x *LevelBar) GetOffsetValue(NameVar *string, ValueVar *float64) bool {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVarPtr, ValueVar)
 	return cret
 }
 
@@ -239,14 +242,17 @@ func (x *LevelBar) GetValue() float64 {
 	return cret
 }
 
-var xLevelBarRemoveOffsetValue func(uintptr, string)
+var xLevelBarRemoveOffsetValue func(uintptr, uintptr)
 
 // Removes an offset marker from a `GtkLevelBar`.
 //
 // The marker must have been previously added with
 // [method@Gtk.LevelBar.add_offset_value].
-func (x *LevelBar) RemoveOffsetValue(NameVar string) {
-	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVar)
+func (x *LevelBar) RemoveOffsetValue(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVarPtr)
 }
 
 var xLevelBarSetInverted func(uintptr, bool)
@@ -383,7 +389,7 @@ func (x *LevelBar) GetPropertyValue() float64 {
 // The signal supports detailed connections; you can connect to the
 // detailed signal "changed::x" in order to only receive callbacks when
 // the value of offset "x" changes.
-func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
+func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
@@ -471,7 +477,7 @@ func (x *LevelBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LevelBar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *LevelBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -587,7 +593,7 @@ func (x *LevelBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LevelBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *LevelBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -619,7 +625,7 @@ func (x *LevelBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LevelBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *LevelBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -652,7 +658,7 @@ func (x *LevelBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LevelBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *LevelBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

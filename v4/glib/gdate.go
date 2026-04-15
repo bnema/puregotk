@@ -52,17 +52,17 @@ import (
 type Date struct {
 	_ structs.HostLayout
 
-	JulianDays uint32
+	JulianDays uint
 
-	Julian uint32
+	Julian uint
 
-	Dmy uint32
+	Dmy uint
 
-	Day uint32
+	Day uint
 
-	Month uint32
+	Month uint
 
-	Year uint32
+	Year uint
 }
 
 var xDateGLibType func() types.GType
@@ -119,33 +119,33 @@ func NewDateJulian(JulianDayVar uint32) *Date {
 	return (*Date)(unsafe.Pointer(cret))
 }
 
-var xDateAddDays func(uintptr, uint32)
+var xDateAddDays func(uintptr, uint)
 
 // Increments a date some number of days.
 // To move forward by weeks, add weeks*7 days.
 // The date must be valid.
-func (x *Date) AddDays(NDaysVar uint32) {
+func (x *Date) AddDays(NDaysVar uint) {
 	xDateAddDays(x.GoPointer(), NDaysVar)
 }
 
-var xDateAddMonths func(uintptr, uint32)
+var xDateAddMonths func(uintptr, uint)
 
 // Increments a date by some number of months.
 // If the day of the month is greater than 28,
 // this routine may change the day of the month
 // (because the destination month may not have
 // the current day in it). The date must be valid.
-func (x *Date) AddMonths(NMonthsVar uint32) {
+func (x *Date) AddMonths(NMonthsVar uint) {
 	xDateAddMonths(x.GoPointer(), NMonthsVar)
 }
 
-var xDateAddYears func(uintptr, uint32)
+var xDateAddYears func(uintptr, uint)
 
 // Increments a date by some number of years.
 // If the date is February 29, and the destination
 // year is not a leap year, the date will be changed
 // to February 28. The date must be valid.
-func (x *Date) AddYears(NYearsVar uint32) {
+func (x *Date) AddYears(NYearsVar uint) {
 	xDateAddYears(x.GoPointer(), NYearsVar)
 }
 
@@ -160,21 +160,21 @@ func (x *Date) Clamp(MinDateVar *Date, MaxDateVar *Date) {
 	xDateClamp(x.GoPointer(), MinDateVar, MaxDateVar)
 }
 
-var xDateClear func(uintptr, uint32)
+var xDateClear func(uintptr, uint)
 
 // Initializes one or more #GDate structs to a safe but invalid
 // state. The cleared dates will not represent an existing date, but will
 // not contain garbage. Useful to init a date declared on the stack.
 // Validity can be tested with g_date_valid().
-func (x *Date) Clear(NDatesVar uint32) {
+func (x *Date) Clear(NDatesVar uint) {
 	xDateClear(x.GoPointer(), NDatesVar)
 }
 
-var xDateCompare func(uintptr, *Date) int32
+var xDateCompare func(uintptr, *Date) int
 
 // qsort()-style comparison function for dates.
 // Both dates must be valid.
-func (x *Date) Compare(RhsVar *Date) int32 {
+func (x *Date) Compare(RhsVar *Date) int {
 	cret := xDateCompare(x.GoPointer(), RhsVar)
 	return cret
 }
@@ -192,12 +192,12 @@ func (x *Date) Copy() *Date {
 	return (*Date)(unsafe.Pointer(cret))
 }
 
-var xDateDaysBetween func(uintptr, *Date) int32
+var xDateDaysBetween func(uintptr, *Date) int
 
 // Computes the number of days between two dates.
 // If @date2 is prior to @date1, the returned value is negative.
 // Both dates must be valid.
-func (x *Date) DaysBetween(Date2Var *Date) int32 {
+func (x *Date) DaysBetween(Date2Var *Date) int {
 	cret := xDateDaysBetween(x.GoPointer(), Date2Var)
 	return cret
 }
@@ -217,20 +217,20 @@ func (x *Date) GetDay() DateDay {
 	return cret
 }
 
-var xDateGetDayOfYear func(uintptr) uint32
+var xDateGetDayOfYear func(uintptr) uint
 
 // Returns the day of the year, where Jan 1 is the first day of the
 // year. The date must be valid.
-func (x *Date) GetDayOfYear() uint32 {
+func (x *Date) GetDayOfYear() uint {
 	cret := xDateGetDayOfYear(x.GoPointer())
 	return cret
 }
 
-var xDateGetIso8601WeekOfYear func(uintptr) uint32
+var xDateGetIso8601WeekOfYear func(uintptr) uint
 
 // Returns the week of the year, where weeks are interpreted according
 // to ISO 8601.
-func (x *Date) GetIso8601WeekOfYear() uint32 {
+func (x *Date) GetIso8601WeekOfYear() uint {
 	cret := xDateGetIso8601WeekOfYear(x.GoPointer())
 	return cret
 }
@@ -246,12 +246,12 @@ func (x *Date) GetJulian() uint32 {
 	return cret
 }
 
-var xDateGetMondayWeekOfYear func(uintptr) uint32
+var xDateGetMondayWeekOfYear func(uintptr) uint
 
 // Returns the week of the year, where weeks are understood to start on
 // Monday. If the date is before the first Monday of the year, return 0.
 // The date must be valid.
-func (x *Date) GetMondayWeekOfYear() uint32 {
+func (x *Date) GetMondayWeekOfYear() uint {
 	cret := xDateGetMondayWeekOfYear(x.GoPointer())
 	return cret
 }
@@ -264,17 +264,17 @@ func (x *Date) GetMonth() DateMonth {
 	return cret
 }
 
-var xDateGetSundayWeekOfYear func(uintptr) uint32
+var xDateGetSundayWeekOfYear func(uintptr) uint
 
 // Returns the week of the year during which this date falls, if
 // weeks are understood to begin on Sunday. The date must be valid.
 // Can return 0 if the day is before the first Sunday of the year.
-func (x *Date) GetSundayWeekOfYear() uint32 {
+func (x *Date) GetSundayWeekOfYear() uint {
 	cret := xDateGetSundayWeekOfYear(x.GoPointer())
 	return cret
 }
 
-var xDateGetWeekOfYear func(uintptr, DateWeekday) uint32
+var xDateGetWeekOfYear func(uintptr, DateWeekday) uint
 
 // Calculates the week of the year during which this date falls.
 //
@@ -284,7 +284,7 @@ var xDateGetWeekOfYear func(uintptr, DateWeekday) uint32
 // If @date is before the start of the first week of the year (for example,
 // before the first Monday in January if @first_day_of_week is
 // [enum@GLib.DateWeekday.MONDAY]) then zero will be returned.
-func (x *Date) GetWeekOfYear(FirstDayOfWeekVar DateWeekday) uint32 {
+func (x *Date) GetWeekOfYear(FirstDayOfWeekVar DateWeekday) uint {
 	cret := xDateGetWeekOfYear(x.GoPointer(), FirstDayOfWeekVar)
 	return cret
 }
@@ -427,33 +427,33 @@ func (x *Date) SetYear(YearVar DateYear) {
 	xDateSetYear(x.GoPointer(), YearVar)
 }
 
-var xDateSubtractDays func(uintptr, uint32)
+var xDateSubtractDays func(uintptr, uint)
 
 // Moves a date some number of days into the past.
 // To move by weeks, just move by weeks*7 days.
 // The date must be valid.
-func (x *Date) SubtractDays(NDaysVar uint32) {
+func (x *Date) SubtractDays(NDaysVar uint) {
 	xDateSubtractDays(x.GoPointer(), NDaysVar)
 }
 
-var xDateSubtractMonths func(uintptr, uint32)
+var xDateSubtractMonths func(uintptr, uint)
 
 // Moves a date some number of months into the past.
 // If the current day of the month doesn't exist in
 // the destination month, the day of the month
 // may change. The date must be valid.
-func (x *Date) SubtractMonths(NMonthsVar uint32) {
+func (x *Date) SubtractMonths(NMonthsVar uint) {
 	xDateSubtractMonths(x.GoPointer(), NMonthsVar)
 }
 
-var xDateSubtractYears func(uintptr, uint32)
+var xDateSubtractYears func(uintptr, uint)
 
 // Moves a date some number of years into the past.
 // If the current day doesn't exist in the destination
 // year (i.e. it's February 29 and you move to a non-leap-year)
 // then the day is changed to February 29. The date
 // must be valid.
-func (x *Date) SubtractYears(NYearsVar uint32) {
+func (x *Date) SubtractYears(NYearsVar uint) {
 	xDateSubtractYears(x.GoPointer(), NYearsVar)
 }
 
@@ -514,11 +514,11 @@ type Time = int32
 
 const (
 	// Represents an invalid #GDateDay.
-	DATE_BAD_DAY int32 = 0
+	DATE_BAD_DAY int = 0
 	// Represents an invalid Julian day number.
-	DATE_BAD_JULIAN int32 = 0
+	DATE_BAD_JULIAN int = 0
 	// Represents an invalid year.
-	DATE_BAD_YEAR int32 = 0
+	DATE_BAD_YEAR int = 0
 )
 
 // This enumeration isn't used in the API, but may be useful if you need

@@ -25,12 +25,12 @@ func (x *Dir) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xDirOpen func(string, uint32, **Error) uintptr
+var xDirOpen func(string, uint, **Error) uintptr
 
 // Opens a directory for reading. The names of the files in the
 // directory can then be retrieved using g_dir_read_name().  Note
 // that the ordering is not defined.
-func DirOpen(PathVar string, FlagsVar uint32) (*Dir, error) {
+func DirOpen(PathVar string, FlagsVar uint) (*Dir, error) {
 	var cerr *Error
 
 	cret := xDirOpen(PathVar, FlagsVar, &cerr)

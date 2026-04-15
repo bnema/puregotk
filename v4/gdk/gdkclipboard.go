@@ -106,14 +106,14 @@ func (x *Clipboard) IsLocal() bool {
 	return cret
 }
 
-var xClipboardReadAsync func(uintptr, []string, int32, uintptr, uintptr, uintptr)
+var xClipboardReadAsync func(uintptr, []string, int, uintptr, uintptr, uintptr)
 
 // Asynchronously requests an input stream to read the @clipboard's
 // contents from.
 //
 // The clipboard will choose the most suitable mime type from the given list
 // to fulfill the request, preferring the ones listed first.
-func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -198,7 +198,7 @@ func (x *Clipboard) ReadTextureFinish(ResultVar gio.AsyncResult) (*Texture, erro
 	return cls, cerr
 }
 
-var xClipboardReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uintptr)
+var xClipboardReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, uintptr)
 
 // Asynchronously request the @clipboard contents converted to the given
 // @type.
@@ -206,7 +206,7 @@ var xClipboardReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr,
 // For local clipboard contents that are available in the given `GType`,
 // the value will be copied directly. Otherwise, GDK will try to use
 // [func@content_deserialize_async] to convert the clipboard's data.
-func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -292,7 +292,7 @@ func (x *Clipboard) SetValue(ValueVar *gobject.Value) {
 	xClipboardSetValue(x.GoPointer(), ValueVar)
 }
 
-var xClipboardStoreAsync func(uintptr, int32, uintptr, uintptr, uintptr)
+var xClipboardStoreAsync func(uintptr, int, uintptr, uintptr, uintptr)
 
 // Asynchronously instructs the @clipboard to store its contents remotely.
 //
@@ -306,7 +306,7 @@ var xClipboardStoreAsync func(uintptr, int32, uintptr, uintptr, uintptr)
 // This function is called automatically when a
 // [GtkApplication](../gtk4/class.Application.html)
 // is shut down, so you likely don't need to call it.
-func (x *Clipboard) StoreAsync(IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Clipboard) StoreAsync(IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -353,7 +353,7 @@ func (x *Clipboard) GetPropertyLocal() bool {
 }
 
 // Emitted when the clipboard changes ownership.
-func (x *Clipboard) ConnectChanged(cb *func(Clipboard)) uint32 {
+func (x *Clipboard) ConnectChanged(cb *func(Clipboard)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

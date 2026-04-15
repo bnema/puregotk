@@ -127,7 +127,7 @@ func NewInfoBar() *InfoBar {
 	return cls
 }
 
-var xNewInfoBarWithButtons func(string, ...interface{}) uintptr
+var xNewInfoBarWithButtons func(uintptr, ...interface{}) uintptr
 
 // Creates a new `GtkInfoBar` with buttons.
 //
@@ -137,10 +137,13 @@ var xNewInfoBarWithButtons func(string, ...interface{}) uintptr
 // user clicks one of these dialog buttons, GtkInfoBar will emit
 // the [signal@Gtk.InfoBar::response] signal with the corresponding
 // response ID.
-func NewInfoBarWithButtons(FirstButtonTextVar string, varArgs ...interface{}) *InfoBar {
+func NewInfoBarWithButtons(FirstButtonTextVar *string, varArgs ...interface{}) *InfoBar {
 	var cls *InfoBar
 
-	cret := xNewInfoBarWithButtons(FirstButtonTextVar, varArgs...)
+	FirstButtonTextVarPtr := core.GStrdupNullable(FirstButtonTextVar)
+	defer core.GFreeNullable(FirstButtonTextVarPtr)
+
+	cret := xNewInfoBarWithButtons(FirstButtonTextVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -151,7 +154,7 @@ func NewInfoBarWithButtons(FirstButtonTextVar string, varArgs ...interface{}) *I
 	return cls
 }
 
-var xInfoBarAddActionWidget func(uintptr, uintptr, int32)
+var xInfoBarAddActionWidget func(uintptr, uintptr, int)
 
 // Add an activatable widget to the action area of a `GtkInfoBar`.
 //
@@ -159,11 +162,11 @@ var xInfoBarAddActionWidget func(uintptr, uintptr, int32)
 // [signal@Gtk.InfoBar::response] signal on the message area
 // when the widget is activated. The widget is appended to the
 // end of the message areas action area.
-func (x *InfoBar) AddActionWidget(ChildVar *Widget, ResponseIdVar int32) {
+func (x *InfoBar) AddActionWidget(ChildVar *Widget, ResponseIdVar int) {
 	xInfoBarAddActionWidget(x.GoPointer(), ChildVar.GoPointer(), ResponseIdVar)
 }
 
-var xInfoBarAddButton func(uintptr, string, int32) uintptr
+var xInfoBarAddButton func(uintptr, string, int) uintptr
 
 // Adds a button with the given text.
 //
@@ -171,7 +174,7 @@ var xInfoBarAddButton func(uintptr, string, int32) uintptr
 // signal with the given response_id. The button is appended to the
 // end of the info bar's action area. The button widget is returned,
 // but usually you don't need it.
-func (x *InfoBar) AddButton(ButtonTextVar string, ResponseIdVar int32) *Button {
+func (x *InfoBar) AddButton(ButtonTextVar string, ResponseIdVar int) *Button {
 	var cls *Button
 
 	cret := xInfoBarAddButton(x.GoPointer(), ButtonTextVar, ResponseIdVar)
@@ -245,14 +248,14 @@ func (x *InfoBar) RemoveChild(WidgetVar *Widget) {
 	xInfoBarRemoveChild(x.GoPointer(), WidgetVar.GoPointer())
 }
 
-var xInfoBarResponse func(uintptr, int32)
+var xInfoBarResponse func(uintptr, int)
 
 // Emits the “response” signal with the given @response_id.
-func (x *InfoBar) Response(ResponseIdVar int32) {
+func (x *InfoBar) Response(ResponseIdVar int) {
 	xInfoBarResponse(x.GoPointer(), ResponseIdVar)
 }
 
-var xInfoBarSetDefaultResponse func(uintptr, int32)
+var xInfoBarSetDefaultResponse func(uintptr, int)
 
 // Sets the last widget in the info bar’s action area with
 // the given response_id as the default widget for the dialog.
@@ -261,7 +264,7 @@ var xInfoBarSetDefaultResponse func(uintptr, int32)
 //
 // Note that this function currently requires @info_bar to
 // be added to a widget hierarchy.
-func (x *InfoBar) SetDefaultResponse(ResponseIdVar int32) {
+func (x *InfoBar) SetDefaultResponse(ResponseIdVar int) {
 	xInfoBarSetDefaultResponse(x.GoPointer(), ResponseIdVar)
 }
 
@@ -274,14 +277,14 @@ func (x *InfoBar) SetMessageType(MessageTypeVar MessageType) {
 	xInfoBarSetMessageType(x.GoPointer(), MessageTypeVar)
 }
 
-var xInfoBarSetResponseSensitive func(uintptr, int32, bool)
+var xInfoBarSetResponseSensitive func(uintptr, int, bool)
 
 // Sets the sensitivity of action widgets for @response_id.
 //
 // Calls `gtk_widget_set_sensitive (widget, setting)` for each
 // widget in the info bars’s action area with the given @response_id.
 // A convenient way to sensitize/desensitize buttons.
-func (x *InfoBar) SetResponseSensitive(ResponseIdVar int32, SettingVar bool) {
+func (x *InfoBar) SetResponseSensitive(ResponseIdVar int, SettingVar bool) {
 	xInfoBarSetResponseSensitive(x.GoPointer(), ResponseIdVar, SettingVar)
 }
 
@@ -358,7 +361,7 @@ func (x *InfoBar) GetPropertyShowCloseButton() bool {
 // The ::close signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is the Escape key.
-func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint32 {
+func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
@@ -385,7 +388,7 @@ func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint32 {
 // The signal is also emitted when the application programmer
 // calls [method@Gtk.InfoBar.response]. The @response_id depends
 // on which action widget was clicked.
-func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int32)) uint32 {
+func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
@@ -393,7 +396,7 @@ func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ResponseIdVarp int32) {
+	fcb := func(clsPtr uintptr, ResponseIdVarp int) {
 		fa := InfoBar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -473,7 +476,7 @@ func (x *InfoBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *InfoBar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *InfoBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -589,7 +592,7 @@ func (x *InfoBar) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *InfoBar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *InfoBar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -621,7 +624,7 @@ func (x *InfoBar) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *InfoBar) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *InfoBar) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -654,7 +657,7 @@ func (x *InfoBar) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *InfoBar) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *InfoBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

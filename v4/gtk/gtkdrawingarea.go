@@ -17,7 +17,7 @@ import (
 //
 // This function should exclusively redraw the contents of the drawing area
 // and must not call any widget functions that cause changes.
-type DrawingAreaDrawFunc func(uintptr, *cairo.Context, int32, int32, uintptr)
+type DrawingAreaDrawFunc func(uintptr, *cairo.Context, int, int, uintptr)
 
 type DrawingAreaClass struct {
 	_ structs.HostLayout
@@ -34,24 +34,24 @@ func (x *DrawingAreaClass) GoPointer() uintptr {
 }
 
 // OverrideResize sets the "resize" callback function.
-func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int32, int32)) {
+func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int, int)) {
 	if cb == nil {
 		x.xResize = 0
 	} else {
-		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int32, HeightVarp int32) {
+		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int, HeightVarp int) {
 			cb(DrawingAreaNewFromInternalPtr(AreaVarp), WidthVarp, HeightVarp)
 		})
 	}
 }
 
 // GetResize gets the "resize" callback function.
-func (x *DrawingAreaClass) GetResize() func(*DrawingArea, int32, int32) {
+func (x *DrawingAreaClass) GetResize() func(*DrawingArea, int, int) {
 	if x.xResize == 0 {
 		return nil
 	}
-	var rawCallback func(AreaVarp uintptr, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(AreaVarp uintptr, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xResize)
-	return func(AreaVar *DrawingArea, WidthVar int32, HeightVar int32) {
+	return func(AreaVar *DrawingArea, WidthVar int, HeightVar int) {
 		rawCallback(AreaVar.GoPointer(), WidthVar, HeightVar)
 	}
 }
@@ -176,23 +176,23 @@ func NewDrawingArea() *DrawingArea {
 	return cls
 }
 
-var xDrawingAreaGetContentHeight func(uintptr) int32
+var xDrawingAreaGetContentHeight func(uintptr) int
 
 // Retrieves the content height of the `GtkDrawingArea`.
-func (x *DrawingArea) GetContentHeight() int32 {
+func (x *DrawingArea) GetContentHeight() int {
 	cret := xDrawingAreaGetContentHeight(x.GoPointer())
 	return cret
 }
 
-var xDrawingAreaGetContentWidth func(uintptr) int32
+var xDrawingAreaGetContentWidth func(uintptr) int
 
 // Retrieves the content width of the `GtkDrawingArea`.
-func (x *DrawingArea) GetContentWidth() int32 {
+func (x *DrawingArea) GetContentWidth() int {
 	cret := xDrawingAreaGetContentWidth(x.GoPointer())
 	return cret
 }
 
-var xDrawingAreaSetContentHeight func(uintptr, int32)
+var xDrawingAreaSetContentHeight func(uintptr, int)
 
 // Sets the desired height of the contents of the drawing area.
 //
@@ -202,11 +202,11 @@ var xDrawingAreaSetContentHeight func(uintptr, int32)
 // [method@Gtk.Widget.set_valign] to avoid that.
 //
 // If the height is set to 0 (the default), the drawing area may disappear.
-func (x *DrawingArea) SetContentHeight(HeightVar int32) {
+func (x *DrawingArea) SetContentHeight(HeightVar int) {
 	xDrawingAreaSetContentHeight(x.GoPointer(), HeightVar)
 }
 
-var xDrawingAreaSetContentWidth func(uintptr, int32)
+var xDrawingAreaSetContentWidth func(uintptr, int)
 
 // Sets the desired width of the contents of the drawing area.
 //
@@ -216,7 +216,7 @@ var xDrawingAreaSetContentWidth func(uintptr, int32)
 // [method@Gtk.Widget.set_halign] to avoid that.
 //
 // If the width is set to 0 (the default), the drawing area may disappear.
-func (x *DrawingArea) SetContentWidth(WidthVar int32) {
+func (x *DrawingArea) SetContentWidth(WidthVar int) {
 	xDrawingAreaSetContentWidth(x.GoPointer(), WidthVar)
 }
 
@@ -253,36 +253,36 @@ func (c *DrawingArea) SetGoPointer(ptr uintptr) {
 
 // SetPropertyContentHeight sets the "content-height" property.
 // The content height.
-func (x *DrawingArea) SetPropertyContentHeight(value int32) {
+func (x *DrawingArea) SetPropertyContentHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("content-height", &v)
 }
 
 // GetPropertyContentHeight gets the "content-height" property.
 // The content height.
-func (x *DrawingArea) GetPropertyContentHeight() int32 {
+func (x *DrawingArea) GetPropertyContentHeight() int {
 	var v gobject.Value
 	x.GetProperty("content-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyContentWidth sets the "content-width" property.
 // The content width.
-func (x *DrawingArea) SetPropertyContentWidth(value int32) {
+func (x *DrawingArea) SetPropertyContentWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("content-width", &v)
 }
 
 // GetPropertyContentWidth gets the "content-width" property.
 // The content width.
-func (x *DrawingArea) GetPropertyContentWidth() int32 {
+func (x *DrawingArea) GetPropertyContentWidth() int {
 	var v gobject.Value
 	x.GetProperty("content-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted once when the widget is realized, and then each time the widget
@@ -290,7 +290,7 @@ func (x *DrawingArea) GetPropertyContentWidth() int32 {
 //
 // This is useful in order to keep state up to date with the widget size,
 // like for instance a backing surface.
-func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int32, int32)) uint32 {
+func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
@@ -298,7 +298,7 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int32, int32)) uint32 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
+	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
 		fa := DrawingArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -378,7 +378,7 @@ func (x *DrawingArea) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *DrawingArea) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *DrawingArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -494,7 +494,7 @@ func (x *DrawingArea) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DrawingArea) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *DrawingArea) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -526,7 +526,7 @@ func (x *DrawingArea) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DrawingArea) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *DrawingArea) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -559,7 +559,7 @@ func (x *DrawingArea) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *DrawingArea) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *DrawingArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

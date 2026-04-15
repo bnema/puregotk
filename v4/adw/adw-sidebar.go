@@ -333,7 +333,7 @@ func (x *Sidebar) GetFilter() *gtk.Filter {
 	return cls
 }
 
-var xSidebarGetItem func(uintptr, uint32) uintptr
+var xSidebarGetItem func(uintptr, uint) uintptr
 
 // Gets the item at @index within @self.
 //
@@ -341,7 +341,7 @@ var xSidebarGetItem func(uintptr, uint32) uintptr
 // returned by [method@SidebarItem.get_index].
 //
 // Can return `NULL` if @index is larger or equal to the number of items.
-func (x *Sidebar) GetItem(IndexVar uint32) *SidebarItem {
+func (x *Sidebar) GetItem(IndexVar uint) *SidebarItem {
 	var cls *SidebarItem
 
 	cret := xSidebarGetItem(x.GoPointer(), IndexVar)
@@ -423,12 +423,12 @@ func (x *Sidebar) GetPlaceholder() *gtk.Widget {
 	return cls
 }
 
-var xSidebarGetSection func(uintptr, uint32) uintptr
+var xSidebarGetSection func(uintptr, uint) uintptr
 
 // Gets the section at @index within @self.
 //
 // Can return `NULL` if @index is larger or equal to the number of sections.
-func (x *Sidebar) GetSection(IndexVar uint32) *SidebarSection {
+func (x *Sidebar) GetSection(IndexVar uint) *SidebarSection {
 	var cls *SidebarSection
 
 	cret := xSidebarGetSection(x.GoPointer(), IndexVar)
@@ -462,12 +462,12 @@ func (x *Sidebar) GetSections() *gio.ListModelBase {
 	return cls
 }
 
-var xSidebarGetSelected func(uintptr) uint32
+var xSidebarGetSelected func(uintptr) uint
 
 // Gets the index of the currently selected item.
 //
 // See also: [method@Sidebar.get_selected_item].
-func (x *Sidebar) GetSelected() uint32 {
+func (x *Sidebar) GetSelected() uint {
 	cret := xSidebarGetSelected(x.GoPointer())
 	return cret
 }
@@ -494,13 +494,13 @@ func (x *Sidebar) GetSelectedItem() *SidebarItem {
 	return cls
 }
 
-var xSidebarInsert func(uintptr, uintptr, int32)
+var xSidebarInsert func(uintptr, uintptr, int)
 
 // Inserts @section at @position to @self.
 //
 // If @position is -1, or larger than the total number of sections in @self,
 // the section will be appended to the end.
-func (x *Sidebar) Insert(SectionVar *SidebarSection, PositionVar int32) {
+func (x *Sidebar) Insert(SectionVar *SidebarSection, PositionVar int) {
 	xSidebarInsert(x.GoPointer(), SectionVar.GoPointer(), PositionVar)
 }
 
@@ -595,7 +595,7 @@ func (x *Sidebar) SetPlaceholder(PlaceholderVar *gtk.Widget) {
 	xSidebarSetPlaceholder(x.GoPointer(), PlaceholderVar.GoPointer())
 }
 
-var xSidebarSetSelected func(uintptr, uint32)
+var xSidebarSetSelected func(uintptr, uint)
 
 // Selects the item at @selected.
 //
@@ -606,7 +606,7 @@ var xSidebarSetSelected func(uintptr, uint32)
 // selected once the mode is changed to [enum@Adw.SidebarMode.sidebar].
 //
 // See also: [property@Sidebar:selected-item].
-func (x *Sidebar) SetSelected(SelectedVar uint32) {
+func (x *Sidebar) SetSelected(SelectedVar uint) {
 	xSidebarSetSelected(x.GoPointer(), SelectedVar)
 }
 
@@ -663,10 +663,10 @@ func (x *Sidebar) GetPropertyDropPreload() bool {
 // selected once the mode is changed to [enum@Adw.SidebarMode.sidebar].
 //
 // See also: [property@Sidebar:selected-item].
-func (x *Sidebar) SetPropertySelected(value uint32) {
+func (x *Sidebar) SetPropertySelected(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("selected", &v)
 }
 
@@ -680,14 +680,14 @@ func (x *Sidebar) SetPropertySelected(value uint32) {
 // selected once the mode is changed to [enum@Adw.SidebarMode.sidebar].
 //
 // See also: [property@Sidebar:selected-item].
-func (x *Sidebar) GetPropertySelected() uint32 {
+func (x *Sidebar) GetPropertySelected() uint {
 	var v gobject.Value
 	x.GetProperty("selected", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Emitted when an item at @index has been activated.
-func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
+func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
@@ -695,7 +695,7 @@ func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, IndexVarp uint32) {
+	fcb := func(clsPtr uintptr, IndexVarp uint) {
 		fa := Sidebar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -715,7 +715,7 @@ func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint32)) uint32 {
 // [method@Sidebar.setup_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction) bool) uint32 {
+func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint, uintptr, gdk.DragAction) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
@@ -723,7 +723,7 @@ func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction)
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, IndexVarp uint32, ValueVarp uintptr, PreferredActionVarp gdk.DragAction) bool {
+	fcb := func(clsPtr uintptr, IndexVarp uint, ValueVarp uintptr, PreferredActionVarp gdk.DragAction) bool {
 		fa := Sidebar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -743,7 +743,7 @@ func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint32, uintptr, gdk.DragAction)
 // [property@Sidebar:drop-preload] is set to `FALSE`.
 //
 // See [signal@Gtk.DropTarget::enter].
-func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uint32 {
+func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-enter", cbRefPtr)
@@ -751,7 +751,7 @@ func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, IndexVarp uint32) gdk.DragAction {
+	fcb := func(clsPtr uintptr, IndexVarp uint) gdk.DragAction {
 		fa := Sidebar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -774,7 +774,7 @@ func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint32) gdk.DragAction) uin
 // [method@Sidebar.setup_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.DragAction) uint32 {
+func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-value-loaded", cbRefPtr)
@@ -782,7 +782,7 @@ func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, IndexVarp uint32, ValueVarp uintptr) gdk.DragAction {
+	fcb := func(clsPtr uintptr, IndexVarp uint, ValueVarp uintptr) gdk.DragAction {
 		fa := Sidebar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -802,7 +802,7 @@ func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint32, uintptr) gdk.
 //
 // It can be used to set up menu actions before showing the menu, for example
 // disable actions not applicable to @item.
-func (x *Sidebar) ConnectSetupMenu(cb *func(Sidebar, uintptr)) uint32 {
+func (x *Sidebar) ConnectSetupMenu(cb *func(Sidebar, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
@@ -890,7 +890,7 @@ func (x *Sidebar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Sidebar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Sidebar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1006,7 +1006,7 @@ func (x *Sidebar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Sidebar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Sidebar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1038,7 +1038,7 @@ func (x *Sidebar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Sidebar) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Sidebar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1071,7 +1071,7 @@ func (x *Sidebar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Sidebar) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *Sidebar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -50,11 +50,14 @@ func URISchemeRequestNewFromInternalPtr(ptr uintptr) *URISchemeRequest {
 	return cls
 }
 
-var xURISchemeRequestFinish func(uintptr, uintptr, int64, string)
+var xURISchemeRequestFinish func(uintptr, uintptr, int64, uintptr)
 
 // Finish a #WebKitURISchemeRequest by setting the contents of the request and its mime type.
-func (x *URISchemeRequest) Finish(StreamVar *gio.InputStream, StreamLengthVar int64, ContentTypeVar string) {
-	xURISchemeRequestFinish(x.GoPointer(), StreamVar.GoPointer(), StreamLengthVar, ContentTypeVar)
+func (x *URISchemeRequest) Finish(StreamVar *gio.InputStream, StreamLengthVar int64, ContentTypeVar *string) {
+	ContentTypeVarPtr := core.GStrdupNullable(ContentTypeVar)
+	defer core.GFreeNullable(ContentTypeVarPtr)
+
+	xURISchemeRequestFinish(x.GoPointer(), StreamVar.GoPointer(), StreamLengthVar, ContentTypeVarPtr)
 }
 
 var xURISchemeRequestFinishError func(uintptr, *glib.Error)

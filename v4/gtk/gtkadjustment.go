@@ -513,7 +513,7 @@ func (x *Adjustment) GetPropertyValue() float64 {
 //
 // Note that the [property@Gtk.Adjustment:value] property is
 // covered by the [signal@Gtk.Adjustment::value-changed] signal.
-func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint32 {
+func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
@@ -536,7 +536,7 @@ func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint32 {
 }
 
 // Emitted when the value has been changed.
-func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint32 {
+func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)

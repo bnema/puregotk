@@ -64,13 +64,19 @@ func NewMultipartFromMessage(HeadersVar *MessageHeaders, BodyVar *glib.Bytes) *M
 	return (*Multipart)(unsafe.Pointer(cret))
 }
 
-var xMultipartAppendFormFile func(uintptr, string, string, string, *glib.Bytes)
+var xMultipartAppendFormFile func(uintptr, string, uintptr, uintptr, *glib.Bytes)
 
 // Adds a new MIME part containing @body to @multipart
 //
 // Uses "Content-Disposition: form-data", as per the HTML forms specification.
-func (x *Multipart) AppendFormFile(ControlNameVar string, FilenameVar string, ContentTypeVar string, BodyVar *glib.Bytes) {
-	xMultipartAppendFormFile(x.GoPointer(), ControlNameVar, FilenameVar, ContentTypeVar, BodyVar)
+func (x *Multipart) AppendFormFile(ControlNameVar string, FilenameVar *string, ContentTypeVar *string, BodyVar *glib.Bytes) {
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	ContentTypeVarPtr := core.GStrdupNullable(ContentTypeVar)
+	defer core.GFreeNullable(ContentTypeVarPtr)
+
+	xMultipartAppendFormFile(x.GoPointer(), ControlNameVar, FilenameVarPtr, ContentTypeVarPtr, BodyVar)
 }
 
 var xMultipartAppendFormString func(uintptr, string, string)
@@ -100,18 +106,18 @@ func (x *Multipart) Free() {
 	xMultipartFree(x.GoPointer())
 }
 
-var xMultipartGetLength func(uintptr) int32
+var xMultipartGetLength func(uintptr) int
 
 // Gets the number of body parts in @multipart.
-func (x *Multipart) GetLength() int32 {
+func (x *Multipart) GetLength() int {
 	cret := xMultipartGetLength(x.GoPointer())
 	return cret
 }
 
-var xMultipartGetPart func(uintptr, int32, **MessageHeaders, **glib.Bytes) bool
+var xMultipartGetPart func(uintptr, int, **MessageHeaders, **glib.Bytes) bool
 
 // Gets the indicated body part from @multipart.
-func (x *Multipart) GetPart(PartVar int32, HeadersVar **MessageHeaders, BodyVar **glib.Bytes) bool {
+func (x *Multipart) GetPart(PartVar int, HeadersVar **MessageHeaders, BodyVar **glib.Bytes) bool {
 	cret := xMultipartGetPart(x.GoPointer(), PartVar, HeadersVar, BodyVar)
 	return cret
 }

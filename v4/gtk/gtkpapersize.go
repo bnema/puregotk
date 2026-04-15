@@ -36,7 +36,7 @@ func (x *PaperSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewPaperSize func(string) uintptr
+var xNewPaperSize func(uintptr) uintptr
 
 // Creates a new `GtkPaperSize` object by parsing a
 // [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
@@ -44,8 +44,11 @@ var xNewPaperSize func(string) uintptr
 //
 // If @name is %NULL, the default paper size is returned,
 // see [func@Gtk.PaperSize.get_default].
-func NewPaperSize(NameVar string) *PaperSize {
-	cret := xNewPaperSize(NameVar)
+func NewPaperSize(NameVar *string) *PaperSize {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewPaperSize(NameVarPtr)
 	if cret == 0 {
 		return nil
 	}
@@ -94,14 +97,17 @@ func NewPaperSizeFromIpp(IppNameVar string, WidthVar float64, HeightVar float64)
 	return (*PaperSize)(unsafe.Pointer(cret))
 }
 
-var xNewPaperSizeFromKeyFile func(*glib.KeyFile, string, **glib.Error) uintptr
+var xNewPaperSizeFromKeyFile func(*glib.KeyFile, uintptr, **glib.Error) uintptr
 
 // Reads a paper size from the group @group_name in the key file
 // @key_file.
-func NewPaperSizeFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (*PaperSize, error) {
+func NewPaperSizeFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (*PaperSize, error) {
 	var cerr *glib.Error
 
-	cret := xNewPaperSizeFromKeyFile(KeyFileVar, GroupNameVar, &cerr)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
+
+	cret := xNewPaperSizeFromKeyFile(KeyFileVar, GroupNameVarPtr, &cerr)
 	if cerr != nil {
 		return nil, cerr
 	}

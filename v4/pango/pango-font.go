@@ -222,24 +222,24 @@ func (x *FontClass) GetDescribeAbsolute() func(*Font) *FontDescription {
 }
 
 // OverrideGetFeatures sets the "get_features" callback function.
-func (x *FontClass) OverrideGetFeatures(cb func(*Font, *[]uintptr, uint32, *uint32)) {
+func (x *FontClass) OverrideGetFeatures(cb func(*Font, *[]uintptr, uint, *uint)) {
 	if cb == nil {
 		x.xGetFeatures = 0
 	} else {
-		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint32, NumFeaturesVarp *uint32) {
+		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp *uint) {
 			cb(FontNewFromInternalPtr(FontVarp), FeaturesVarp, LenVarp, NumFeaturesVarp)
 		})
 	}
 }
 
 // GetGetFeatures gets the "get_features" callback function.
-func (x *FontClass) GetGetFeatures() func(*Font, *[]uintptr, uint32, *uint32) {
+func (x *FontClass) GetGetFeatures() func(*Font, *[]uintptr, uint, *uint) {
 	if x.xGetFeatures == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint32, NumFeaturesVarp *uint32)
+	var rawCallback func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp *uint)
 	purego.RegisterFunc(&rawCallback, x.xGetFeatures)
-	return func(FontVar *Font, FeaturesVar *[]uintptr, LenVar uint32, NumFeaturesVar *uint32) {
+	return func(FontVar *Font, FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar *uint) {
 		rawCallback(FontVar.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 	}
 }
@@ -413,12 +413,12 @@ func (x *FontDescription) GetSetFields() FontMask {
 	return cret
 }
 
-var xFontDescriptionGetSize func(uintptr) int32
+var xFontDescriptionGetSize func(uintptr) int
 
 // Gets the size field of a font description.
 //
 // See [method@Pango.FontDescription.set_size].
-func (x *FontDescription) GetSize() int32 {
+func (x *FontDescription) GetSize() int {
 	cret := xFontDescriptionGetSize(x.GoPointer())
 	return cret
 }
@@ -485,13 +485,13 @@ func (x *FontDescription) GetWeight() Weight {
 	return cret
 }
 
-var xFontDescriptionHash func(uintptr) uint32
+var xFontDescriptionHash func(uintptr) uint
 
 // Computes a hash of a `PangoFontDescription` structure.
 //
 // This is suitable to be used, for example, as an argument
 // to g_hash_table_new(). The hash value is independent of @desc-&gt;mask.
-func (x *FontDescription) Hash() uint32 {
+func (x *FontDescription) Hash() uint {
 	cret := xFontDescriptionHash(x.GoPointer())
 	return cret
 }
@@ -569,7 +569,7 @@ func (x *FontDescription) SetFamilyStatic(FamilyVar string) {
 	xFontDescriptionSetFamilyStatic(x.GoPointer(), FamilyVar)
 }
 
-var xFontDescriptionSetFeatures func(uintptr, string)
+var xFontDescriptionSetFeatures func(uintptr, uintptr)
 
 // Sets the features field of a font description.
 //
@@ -595,8 +595,11 @@ var xFontDescriptionSetFeatures func(uintptr, string)
 // [hb_ot_layout_table_get_feature_tags](https://harfbuzz.github.io/harfbuzz-hb-ot-layout.html#hb-ot-layout-table-get-feature-tags).
 //
 // Features that are not supported by the font are silently ignored.
-func (x *FontDescription) SetFeatures(FeaturesVar string) {
-	xFontDescriptionSetFeatures(x.GoPointer(), FeaturesVar)
+func (x *FontDescription) SetFeatures(FeaturesVar *string) {
+	FeaturesVarPtr := core.GStrdupNullable(FeaturesVar)
+	defer core.GFreeNullable(FeaturesVarPtr)
+
+	xFontDescriptionSetFeatures(x.GoPointer(), FeaturesVarPtr)
 }
 
 var xFontDescriptionSetFeaturesStatic func(uintptr, string)
@@ -628,13 +631,13 @@ func (x *FontDescription) SetGravity(GravityVar Gravity) {
 	xFontDescriptionSetGravity(x.GoPointer(), GravityVar)
 }
 
-var xFontDescriptionSetSize func(uintptr, int32)
+var xFontDescriptionSetSize func(uintptr, int)
 
 // Sets the size field of a font description in fractional points.
 //
 // This is mutually exclusive with
 // [method@Pango.FontDescription.set_absolute_size].
-func (x *FontDescription) SetSize(SizeVar int32) {
+func (x *FontDescription) SetSize(SizeVar int) {
 	xFontDescriptionSetSize(x.GoPointer(), SizeVar)
 }
 
@@ -674,7 +677,7 @@ func (x *FontDescription) SetVariant(VariantVar Variant) {
 	xFontDescriptionSetVariant(x.GoPointer(), VariantVar)
 }
 
-var xFontDescriptionSetVariations func(uintptr, string)
+var xFontDescriptionSetVariations func(uintptr, uintptr)
 
 // Sets the variations field of a font description.
 //
@@ -692,8 +695,11 @@ var xFontDescriptionSetVariations func(uintptr, string)
 // Pango does not currently have a way to find supported axes of
 // a font. Both harfbuzz and freetype have API for this. See
 // for example [hb_ot_var_get_axis_infos](https://harfbuzz.github.io/harfbuzz-hb-ot-var.html#hb-ot-var-get-axis-infos).
-func (x *FontDescription) SetVariations(VariationsVar string) {
-	xFontDescriptionSetVariations(x.GoPointer(), VariationsVar)
+func (x *FontDescription) SetVariations(VariationsVar *string) {
+	VariationsVarPtr := core.GStrdupNullable(VariationsVar)
+	defer core.GFreeNullable(VariationsVarPtr)
+
+	xFontDescriptionSetVariations(x.GoPointer(), VariationsVarPtr)
 }
 
 var xFontDescriptionSetVariationsStatic func(uintptr, string)
@@ -836,24 +842,24 @@ func (x *FontFaceClass) GetDescribe() func(*FontFace) *FontDescription {
 }
 
 // OverrideListSizes sets the "list_sizes" callback function.
-func (x *FontFaceClass) OverrideListSizes(cb func(*FontFace, *[]int32, *int32)) {
+func (x *FontFaceClass) OverrideListSizes(cb func(*FontFace, *[]int, *int)) {
 	if cb == nil {
 		x.xListSizes = 0
 	} else {
-		x.xListSizes = purego.NewCallback(func(FaceVarp uintptr, SizesVarp *[]int32, NSizesVarp *int32) {
+		x.xListSizes = purego.NewCallback(func(FaceVarp uintptr, SizesVarp *[]int, NSizesVarp *int) {
 			cb(FontFaceNewFromInternalPtr(FaceVarp), SizesVarp, NSizesVarp)
 		})
 	}
 }
 
 // GetListSizes gets the "list_sizes" callback function.
-func (x *FontFaceClass) GetListSizes() func(*FontFace, *[]int32, *int32) {
+func (x *FontFaceClass) GetListSizes() func(*FontFace, *[]int, *int) {
 	if x.xListSizes == 0 {
 		return nil
 	}
-	var rawCallback func(FaceVarp uintptr, SizesVarp *[]int32, NSizesVarp *int32)
+	var rawCallback func(FaceVarp uintptr, SizesVarp *[]int, NSizesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListSizes)
-	return func(FaceVar *FontFace, SizesVar *[]int32, NSizesVar *int32) {
+	return func(FaceVar *FontFace, SizesVar *[]int, NSizesVar *int) {
 		rawCallback(FaceVar.GoPointer(), SizesVar, NSizesVar)
 	}
 }
@@ -983,24 +989,24 @@ func (x *FontFamilyClass) GoPointer() uintptr {
 }
 
 // OverrideListFaces sets the "list_faces" callback function.
-func (x *FontFamilyClass) OverrideListFaces(cb func(*FontFamily, *uintptr, *int32)) {
+func (x *FontFamilyClass) OverrideListFaces(cb func(*FontFamily, *uintptr, *int)) {
 	if cb == nil {
 		x.xListFaces = 0
 	} else {
-		x.xListFaces = purego.NewCallback(func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int32) {
+		x.xListFaces = purego.NewCallback(func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int) {
 			cb(FontFamilyNewFromInternalPtr(FamilyVarp), FacesVarp, NFacesVarp)
 		})
 	}
 }
 
 // GetListFaces gets the "list_faces" callback function.
-func (x *FontFamilyClass) GetListFaces() func(*FontFamily, *uintptr, *int32) {
+func (x *FontFamilyClass) GetListFaces() func(*FontFamily, *uintptr, *int) {
 	if x.xListFaces == 0 {
 		return nil
 	}
-	var rawCallback func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int32)
+	var rawCallback func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListFaces)
-	return func(FamilyVar *FontFamily, FacesVar *uintptr, NFacesVar *int32) {
+	return func(FamilyVar *FontFamily, FacesVar *uintptr, NFacesVar *int) {
 		rawCallback(FamilyVar.GoPointer(), FacesVar, NFacesVar)
 	}
 }
@@ -1149,25 +1155,25 @@ func (x *FontFamilyClass) GetPangoReserved2() func() {
 type FontMetrics struct {
 	_ structs.HostLayout
 
-	RefCount uint32
+	RefCount uint
 
-	Ascent int32
+	Ascent int
 
-	Descent int32
+	Descent int
 
-	Height int32
+	Height int
 
-	ApproximateCharWidth int32
+	ApproximateCharWidth int
 
-	ApproximateDigitWidth int32
+	ApproximateDigitWidth int
 
-	UnderlinePosition int32
+	UnderlinePosition int
 
-	UnderlineThickness int32
+	UnderlineThickness int
 
-	StrikethroughPosition int32
+	StrikethroughPosition int
 
-	StrikethroughThickness int32
+	StrikethroughThickness int
 }
 
 var xFontMetricsGLibType func() types.GType
@@ -1180,19 +1186,19 @@ func (x *FontMetrics) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xFontMetricsGetApproximateCharWidth func(uintptr) int32
+var xFontMetricsGetApproximateCharWidth func(uintptr) int
 
 // Gets the approximate character width for a font metrics structure.
 //
 // This is merely a representative value useful, for example, for
 // determining the initial size for a window. Actual characters in
 // text will be wider and narrower than this.
-func (x *FontMetrics) GetApproximateCharWidth() int32 {
+func (x *FontMetrics) GetApproximateCharWidth() int {
 	cret := xFontMetricsGetApproximateCharWidth(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetApproximateDigitWidth func(uintptr) int32
+var xFontMetricsGetApproximateDigitWidth func(uintptr) int
 
 // Gets the approximate digit width for a font metrics structure.
 //
@@ -1201,12 +1207,12 @@ var xFontMetricsGetApproximateDigitWidth func(uintptr) int32
 // text can be wider or narrower than this, though this value
 // is generally somewhat more accurate than the result of
 // pango_font_metrics_get_approximate_char_width() for digits.
-func (x *FontMetrics) GetApproximateDigitWidth() int32 {
+func (x *FontMetrics) GetApproximateDigitWidth() int {
 	cret := xFontMetricsGetApproximateDigitWidth(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetAscent func(uintptr) int32
+var xFontMetricsGetAscent func(uintptr) int
 
 // Gets the ascent from a font metrics structure.
 //
@@ -1214,12 +1220,12 @@ var xFontMetricsGetAscent func(uintptr) int32
 // of a line of text. (The logical top may be above or below the top
 // of the actual drawn ink. It is necessary to lay out the text to
 // figure where the ink will be.)
-func (x *FontMetrics) GetAscent() int32 {
+func (x *FontMetrics) GetAscent() int {
 	cret := xFontMetricsGetAscent(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetDescent func(uintptr) int32
+var xFontMetricsGetDescent func(uintptr) int
 
 // Gets the descent from a font metrics structure.
 //
@@ -1227,12 +1233,12 @@ var xFontMetricsGetDescent func(uintptr) int32
 // of a line of text. (The logical bottom may be above or below the
 // bottom of the actual drawn ink. It is necessary to lay out the text
 // to figure where the ink will be.)
-func (x *FontMetrics) GetDescent() int32 {
+func (x *FontMetrics) GetDescent() int {
 	cret := xFontMetricsGetDescent(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetHeight func(uintptr) int32
+var xFontMetricsGetHeight func(uintptr) int
 
 // Gets the line height from a font metrics structure.
 //
@@ -1240,46 +1246,46 @@ var xFontMetricsGetHeight func(uintptr) int32
 // baselines in wrapped text using this font.
 //
 // If the line height is not available, 0 is returned.
-func (x *FontMetrics) GetHeight() int32 {
+func (x *FontMetrics) GetHeight() int {
 	cret := xFontMetricsGetHeight(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetStrikethroughPosition func(uintptr) int32
+var xFontMetricsGetStrikethroughPosition func(uintptr) int
 
 // Gets the suggested position to draw the strikethrough.
 //
 // The value returned is the distance *above* the
 // baseline of the top of the strikethrough.
-func (x *FontMetrics) GetStrikethroughPosition() int32 {
+func (x *FontMetrics) GetStrikethroughPosition() int {
 	cret := xFontMetricsGetStrikethroughPosition(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetStrikethroughThickness func(uintptr) int32
+var xFontMetricsGetStrikethroughThickness func(uintptr) int
 
 // Gets the suggested thickness to draw for the strikethrough.
-func (x *FontMetrics) GetStrikethroughThickness() int32 {
+func (x *FontMetrics) GetStrikethroughThickness() int {
 	cret := xFontMetricsGetStrikethroughThickness(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetUnderlinePosition func(uintptr) int32
+var xFontMetricsGetUnderlinePosition func(uintptr) int
 
 // Gets the suggested position to draw the underline.
 //
 // The value returned is the distance *above* the baseline of the top
 // of the underline. Since most fonts have underline positions beneath
 // the baseline, this value is typically negative.
-func (x *FontMetrics) GetUnderlinePosition() int32 {
+func (x *FontMetrics) GetUnderlinePosition() int {
 	cret := xFontMetricsGetUnderlinePosition(x.GoPointer())
 	return cret
 }
 
-var xFontMetricsGetUnderlineThickness func(uintptr) int32
+var xFontMetricsGetUnderlineThickness func(uintptr) int
 
 // Gets the suggested thickness to draw for the underline.
-func (x *FontMetrics) GetUnderlineThickness() int32 {
+func (x *FontMetrics) GetUnderlineThickness() int {
 	cret := xFontMetricsGetUnderlineThickness(x.GoPointer())
 	return cret
 }
@@ -1648,7 +1654,7 @@ func (x *Font) GetFace() *FontFace {
 	return cls
 }
 
-var xFontGetFeatures func(uintptr, *[]uintptr, uint32, *uint32)
+var xFontGetFeatures func(uintptr, *[]uintptr, uint, *uint)
 
 // Obtain the OpenType features that are provided by the font.
 //
@@ -1657,7 +1663,7 @@ var xFontGetFeatures func(uintptr, *[]uintptr, uint32, *uint32)
 //
 // Note that this does not include OpenType features which the
 // rendering system enables by default.
-func (x *Font) GetFeatures(FeaturesVar *[]uintptr, LenVar uint32, NumFeaturesVar *uint32) {
+func (x *Font) GetFeatures(FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar *uint) {
 	xFontGetFeatures(x.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 }
 
@@ -1788,10 +1794,10 @@ func (c *Font) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xFontDescriptionsFree func(uintptr, int32)
+var xFontDescriptionsFree func(uintptr, int)
 
 // Frees an array of font descriptions.
-func FontDescriptionsFree(DescsVar uintptr, NDescsVar int32) {
+func FontDescriptionsFree(DescsVar uintptr, NDescsVar int) {
 	xFontDescriptionsFree(DescsVar, NDescsVar)
 }
 
@@ -1895,7 +1901,7 @@ func (x *FontFace) IsSynthesized() bool {
 	return cret
 }
 
-var xFontFaceListSizes func(uintptr, *[]int32, *int32)
+var xFontFaceListSizes func(uintptr, *[]int, *int)
 
 // List the available sizes for a font.
 //
@@ -1903,7 +1909,7 @@ var xFontFaceListSizes func(uintptr, *[]int32, *int32)
 // %NULL at the location pointed to by @sizes and 0 at the location pointed
 // to by @n_sizes. The sizes returned are in Pango units and are sorted
 // in ascending order.
-func (x *FontFace) ListSizes(SizesVar *[]int32, NSizesVar *int32) {
+func (x *FontFace) ListSizes(SizesVar *[]int, NSizesVar *int) {
 	xFontFaceListSizes(x.GoPointer(), SizesVar, NSizesVar)
 }
 
@@ -1939,13 +1945,16 @@ func FontFamilyNewFromInternalPtr(ptr uintptr) *FontFamily {
 	return cls
 }
 
-var xFontFamilyGetFace func(uintptr, string) uintptr
+var xFontFamilyGetFace func(uintptr, uintptr) uintptr
 
 // Gets the `PangoFontFace` of @family with the given name.
-func (x *FontFamily) GetFace(NameVar string) *FontFace {
+func (x *FontFamily) GetFace(NameVar *string) *FontFace {
 	var cls *FontFace
 
-	cret := xFontFamilyGetFace(x.GoPointer(), NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xFontFamilyGetFace(x.GoPointer(), NameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -2001,7 +2010,7 @@ func (x *FontFamily) IsVariable() bool {
 	return cret
 }
 
-var xFontFamilyListFaces func(uintptr, *uintptr, *int32)
+var xFontFamilyListFaces func(uintptr, *uintptr, *int)
 
 // Lists the different font faces that make up @family.
 //
@@ -2013,7 +2022,7 @@ var xFontFamilyListFaces func(uintptr, *uintptr, *int32)
 //
 // `PangoFontFamily` also implemented the [iface@Gio.ListModel] interface
 // for enumerating faces.
-func (x *FontFamily) ListFaces(FacesVar *uintptr, NFacesVar *int32) {
+func (x *FontFamily) ListFaces(FacesVar *uintptr, NFacesVar *int) {
 	xFontFamilyListFaces(x.GoPointer(), FacesVar, NFacesVar)
 }
 
@@ -2046,10 +2055,10 @@ func (x *FontFamily) GetPropertyIsVariable() bool {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items contained in this list.
-func (x *FontFamily) GetPropertyNItems() uint32 {
+func (x *FontFamily) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyName gets the "name" property.
@@ -2069,7 +2078,7 @@ func (x *FontFamily) GetPropertyName() string {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *FontFamily) GetItem(PositionVar uint32) uintptr {
+func (x *FontFamily) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -2092,7 +2101,7 @@ func (x *FontFamily) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *FontFamily) GetNItems() uint32 {
+func (x *FontFamily) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -2109,7 +2118,7 @@ func (x *FontFamily) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *FontFamily) GetObject(PositionVar uint32) *gobject.Object {
+func (x *FontFamily) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -2142,7 +2151,7 @@ func (x *FontFamily) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *FontFamily) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *FontFamily) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

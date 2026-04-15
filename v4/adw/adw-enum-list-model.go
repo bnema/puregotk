@@ -65,10 +65,10 @@ func (x *EnumListItem) GetNick() string {
 	return cret
 }
 
-var xEnumListItemGetValue func(uintptr) int32
+var xEnumListItemGetValue func(uintptr) int
 
 // Gets the enum value.
-func (x *EnumListItem) GetValue() int32 {
+func (x *EnumListItem) GetValue() int {
 	cret := xEnumListItemGetValue(x.GoPointer())
 	return cret
 }
@@ -102,10 +102,10 @@ func (x *EnumListItem) GetPropertyNick() string {
 
 // GetPropertyValue gets the "value" property.
 // The enum value.
-func (x *EnumListItem) GetPropertyValue() int32 {
+func (x *EnumListItem) GetPropertyValue() int {
 	var v gobject.Value
 	x.GetProperty("value", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // A [iface@Gio.ListModel] representing values of a given enum.
@@ -143,12 +143,12 @@ func NewEnumListModel(EnumTypeVar types.GType) *EnumListModel {
 	return cls
 }
 
-var xEnumListModelFindPosition func(uintptr, int32) uint32
+var xEnumListModelFindPosition func(uintptr, int) uint
 
 // Finds the position of a given enum value in @self.
 //
 // If the value is not found, [const@Gtk.INVALID_LIST_POSITION] is returned.
-func (x *EnumListModel) FindPosition(ValueVar int32) uint32 {
+func (x *EnumListModel) FindPosition(ValueVar int) uint {
 	cret := xEnumListModelFindPosition(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -174,10 +174,10 @@ func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *EnumListModel) GetPropertyNItems() uint32 {
+func (x *EnumListModel) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -189,7 +189,7 @@ func (x *EnumListModel) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *EnumListModel) GetItem(PositionVar uint32) uintptr {
+func (x *EnumListModel) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -212,7 +212,7 @@ func (x *EnumListModel) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *EnumListModel) GetNItems() uint32 {
+func (x *EnumListModel) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -229,7 +229,7 @@ func (x *EnumListModel) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *EnumListModel) GetObject(PositionVar uint32) *gobject.Object {
+func (x *EnumListModel) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -262,7 +262,7 @@ func (x *EnumListModel) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *EnumListModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *EnumListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

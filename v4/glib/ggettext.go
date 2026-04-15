@@ -6,18 +6,21 @@ import (
 	"github.com/bnema/puregotk/pkg/core"
 )
 
-var xDcgettext func(string, string, int32) string
+var xDcgettext func(uintptr, string, int) string
 
 // This is a variant of g_dgettext() that allows specifying a locale
 // category instead of always using `LC_MESSAGES`. See g_dgettext() for
 // more information about how this functions differs from calling
 // dcgettext() directly.
-func Dcgettext(DomainVar string, MsgidVar string, CategoryVar int32) string {
-	cret := xDcgettext(DomainVar, MsgidVar, CategoryVar)
+func Dcgettext(DomainVar *string, MsgidVar string, CategoryVar int) string {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	cret := xDcgettext(DomainVarPtr, MsgidVar, CategoryVar)
 	return cret
 }
 
-var xDgettext func(string, string) string
+var xDgettext func(uintptr, string) string
 
 // This function is a wrapper of dgettext() which does not translate
 // the message if the default domain as set with textdomain() has no
@@ -51,12 +54,15 @@ var xDgettext func(string, string) string
 //
 // Applications should normally not use this function directly,
 // but use the _() macro for translations.
-func Dgettext(DomainVar string, MsgidVar string) string {
-	cret := xDgettext(DomainVar, MsgidVar)
+func Dgettext(DomainVar *string, MsgidVar string) string {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	cret := xDgettext(DomainVarPtr, MsgidVar)
 	return cret
 }
 
-var xDngettext func(string, string, string, uint32) string
+var xDngettext func(uintptr, string, string, uint) string
 
 // This function is a wrapper of dngettext() which does not translate
 // the message if the default domain as set with textdomain() has no
@@ -64,12 +70,15 @@ var xDngettext func(string, string, string, uint32) string
 //
 // See g_dgettext() for details of how this differs from dngettext()
 // proper.
-func Dngettext(DomainVar string, MsgidVar string, MsgidPluralVar string, NVar uint32) string {
-	cret := xDngettext(DomainVar, MsgidVar, MsgidPluralVar, NVar)
+func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar uint) string {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	cret := xDngettext(DomainVarPtr, MsgidVar, MsgidPluralVar, NVar)
 	return cret
 }
 
-var xDpgettext func(string, string, uint) string
+var xDpgettext func(uintptr, string, uint) string
 
 // This function is a variant of g_dgettext() which supports
 // a disambiguating message context. GNU gettext uses the
@@ -84,12 +93,15 @@ var xDpgettext func(string, string, uint) string
 //
 // Applications should normally not use this function directly,
 // but use the C_() macro for translations with context.
-func Dpgettext(DomainVar string, MsgctxtidVar string, MsgidoffsetVar uint) string {
-	cret := xDpgettext(DomainVar, MsgctxtidVar, MsgidoffsetVar)
+func Dpgettext(DomainVar *string, MsgctxtidVar string, MsgidoffsetVar uint) string {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	cret := xDpgettext(DomainVarPtr, MsgctxtidVar, MsgidoffsetVar)
 	return cret
 }
 
-var xDpgettext2 func(string, string, string) string
+var xDpgettext2 func(uintptr, string, string) string
 
 // This function is a variant of g_dgettext() which supports
 // a disambiguating message context. GNU gettext uses the
@@ -101,8 +113,11 @@ var xDpgettext2 func(string, string, string) string
 //
 // This function differs from C_() in that it is not a macro and
 // thus you may use non-string-literals as context and msgid arguments.
-func Dpgettext2(DomainVar string, ContextVar string, MsgidVar string) string {
-	cret := xDpgettext2(DomainVar, ContextVar, MsgidVar)
+func Dpgettext2(DomainVar *string, ContextVar string, MsgidVar string) string {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	cret := xDpgettext2(DomainVarPtr, ContextVar, MsgidVar)
 	return cret
 }
 

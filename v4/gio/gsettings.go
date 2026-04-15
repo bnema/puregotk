@@ -124,24 +124,24 @@ func (x *SettingsClass) GetWritableChangeEvent() func(*Settings, glib.Quark) boo
 }
 
 // OverrideChangeEvent sets the "change_event" callback function.
-func (x *SettingsClass) OverrideChangeEvent(cb func(*Settings, *glib.Quark, int32) bool) {
+func (x *SettingsClass) OverrideChangeEvent(cb func(*Settings, *glib.Quark, int) bool) {
 	if cb == nil {
 		x.xChangeEvent = 0
 	} else {
-		x.xChangeEvent = purego.NewCallback(func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int32) bool {
+		x.xChangeEvent = purego.NewCallback(func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int) bool {
 			return cb(SettingsNewFromInternalPtr(SettingsVarp), KeysVarp, NKeysVarp)
 		})
 	}
 }
 
 // GetChangeEvent gets the "change_event" callback function.
-func (x *SettingsClass) GetChangeEvent() func(*Settings, *glib.Quark, int32) bool {
+func (x *SettingsClass) GetChangeEvent() func(*Settings, *glib.Quark, int) bool {
 	if x.xChangeEvent == 0 {
 		return nil
 	}
-	var rawCallback func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int32) bool
+	var rawCallback func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int) bool
 	purego.RegisterFunc(&rawCallback, x.xChangeEvent)
-	return func(SettingsVar *Settings, KeysVar *glib.Quark, NKeysVar int32) bool {
+	return func(SettingsVar *Settings, KeysVar *glib.Quark, NKeysVar int) bool {
 		return rawCallback(SettingsVar.GoPointer(), KeysVar, NKeysVar)
 	}
 }
@@ -629,7 +629,7 @@ func NewSettings(SchemaIdVar string) *Settings {
 	return cls
 }
 
-var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
+var xNewSettingsFull func(*SettingsSchema, uintptr, uintptr) uintptr
 
 // Creates a new [class@Gio.Settings] object with a given schema, backend and
 // path.
@@ -654,10 +654,13 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
 // error if @path is `NULL` and the schema has no path of its own or if
 // @path is non-`NULL` and not equal to the path that the schema does
 // have.
-func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar string) *Settings {
+func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar *string) *Settings {
 	var cls *Settings
 
-	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVar)
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -959,7 +962,7 @@ func (x *Settings) GetDouble(KeyVar string) float64 {
 	return cret
 }
 
-var xSettingsGetEnum func(uintptr, string) int32
+var xSettingsGetEnum func(uintptr, string) int
 
 // Gets the value that is stored in @settings for @key and converts it
 // to the enum value that it represents.
@@ -973,12 +976,12 @@ var xSettingsGetEnum func(uintptr, string) int32
 // If the value stored in the configuration database is not a valid
 // value for the enumerated type then this function will return the
 // default value.
-func (x *Settings) GetEnum(KeyVar string) int32 {
+func (x *Settings) GetEnum(KeyVar string) int {
 	cret := xSettingsGetEnum(x.GoPointer(), KeyVar)
 	return cret
 }
 
-var xSettingsGetFlags func(uintptr, string) uint32
+var xSettingsGetFlags func(uintptr, string) uint
 
 // Gets the value that is stored in @settings for @key and converts it
 // to the flags value that it represents.
@@ -992,7 +995,7 @@ var xSettingsGetFlags func(uintptr, string) uint32
 // If the value stored in the configuration database is not a valid
 // value for the flags type then this function will return the default
 // value.
-func (x *Settings) GetFlags(KeyVar string) uint32 {
+func (x *Settings) GetFlags(KeyVar string) uint {
 	cret := xSettingsGetFlags(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1009,7 +1012,7 @@ func (x *Settings) GetHasUnapplied() bool {
 	return cret
 }
 
-var xSettingsGetInt func(uintptr, string) int32
+var xSettingsGetInt func(uintptr, string) int
 
 // Gets the value that is stored at @key in @settings.
 //
@@ -1017,7 +1020,7 @@ var xSettingsGetInt func(uintptr, string) int32
 //
 // It is a programmer error to give a @key that isn’t specified as
 // having an `i` type in the schema for @settings (see [struct@GLib.VariantType]).
-func (x *Settings) GetInt(KeyVar string) int32 {
+func (x *Settings) GetInt(KeyVar string) int {
 	cret := xSettingsGetInt(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1104,7 +1107,7 @@ func (x *Settings) GetStrv(KeyVar string) []string {
 	return cret
 }
 
-var xSettingsGetUint func(uintptr, string) uint32
+var xSettingsGetUint func(uintptr, string) uint
 
 // Gets the value that is stored at @key in @settings.
 //
@@ -1113,7 +1116,7 @@ var xSettingsGetUint func(uintptr, string) uint32
 //
 // It is a programmer error to give a @key that isn’t specified as
 // having a `u` type in the schema for @settings (see [struct@GLib.VariantType]).
-func (x *Settings) GetUint(KeyVar string) uint32 {
+func (x *Settings) GetUint(KeyVar string) uint {
 	cret := xSettingsGetUint(x.GoPointer(), KeyVar)
 	return cret
 }
@@ -1289,7 +1292,7 @@ func (x *Settings) SetDouble(KeyVar string, ValueVar float64) bool {
 	return cret
 }
 
-var xSettingsSetEnum func(uintptr, string, int32) bool
+var xSettingsSetEnum func(uintptr, string, int) bool
 
 // Looks up the enumerated type nick for @value and writes it to @key,
 // within @settings.
@@ -1301,12 +1304,12 @@ var xSettingsSetEnum func(uintptr, string, int32) bool
 // After performing the write, accessing @key directly with
 // [method@Gio.Settings.get_string] will return the ‘nick’ associated with
 // @value.
-func (x *Settings) SetEnum(KeyVar string, ValueVar int32) bool {
+func (x *Settings) SetEnum(KeyVar string, ValueVar int) bool {
 	cret := xSettingsSetEnum(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
 
-var xSettingsSetFlags func(uintptr, string, uint32) bool
+var xSettingsSetFlags func(uintptr, string, uint) bool
 
 // Looks up the flags type nicks for the bits specified by @value, puts
 // them in an array of strings and writes the array to @key, within
@@ -1319,12 +1322,12 @@ var xSettingsSetFlags func(uintptr, string, uint32) bool
 // After performing the write, accessing @key directly with
 // [method@Gio.Settings.get_strv] will return an array of ‘nicks’; one for each
 // bit in @value.
-func (x *Settings) SetFlags(KeyVar string, ValueVar uint32) bool {
+func (x *Settings) SetFlags(KeyVar string, ValueVar uint) bool {
 	cret := xSettingsSetFlags(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
 
-var xSettingsSetInt func(uintptr, string, int32) bool
+var xSettingsSetInt func(uintptr, string, int) bool
 
 // Sets @key in @settings to @value.
 //
@@ -1332,7 +1335,7 @@ var xSettingsSetInt func(uintptr, string, int32) bool
 //
 // It is a programmer error to give a @key that isn’t specified as
 // having an `i` type in the schema for @settings (see [struct@GLib.VariantType]).
-func (x *Settings) SetInt(KeyVar string, ValueVar int32) bool {
+func (x *Settings) SetInt(KeyVar string, ValueVar int) bool {
 	cret := xSettingsSetInt(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
@@ -1377,7 +1380,7 @@ func (x *Settings) SetStrv(KeyVar string, ValueVar []string) bool {
 	return cret
 }
 
-var xSettingsSetUint func(uintptr, string, uint32) bool
+var xSettingsSetUint func(uintptr, string, uint) bool
 
 // Sets @key in @settings to @value.
 //
@@ -1386,7 +1389,7 @@ var xSettingsSetUint func(uintptr, string, uint32) bool
 //
 // It is a programmer error to give a @key that isn’t specified as
 // having a `u` type in the schema for @settings (see [struct@GLib.VariantType]).
-func (x *Settings) SetUint(KeyVar string, ValueVar uint32) bool {
+func (x *Settings) SetUint(KeyVar string, ValueVar uint) bool {
 	cret := xSettingsSetUint(x.GoPointer(), KeyVar, ValueVar)
 	return cret
 }
@@ -1454,7 +1457,7 @@ func (x *Settings) GetPropertyHasUnapplied() bool {
 func (x *Settings) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 
@@ -1479,7 +1482,7 @@ func (x *Settings) GetPropertyPath() string {
 func (x *Settings) SetPropertySchema(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema", &v)
 }
 
@@ -1505,7 +1508,7 @@ func (x *Settings) GetPropertySchema() string {
 func (x *Settings) SetPropertySchemaId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema-id", &v)
 }
 
@@ -1565,7 +1568,7 @@ func (x *Settings) GetPropertySettingsSchema() uintptr {
 // The default handler for this signal invokes the [signal@Gio.Settings::changed] signal
 // for each affected key.  If any other connected handler returns
 // true then this default functionality will be suppressed.
-func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int32) bool) uint32 {
+func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
@@ -1573,7 +1576,7 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int32) bool) u
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeysVarp uintptr, NKeysVarp int32) bool {
+	fcb := func(clsPtr uintptr, KeysVarp uintptr, NKeysVarp int) bool {
 		fa := Settings{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1598,7 +1601,7 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int32) bool) u
 //
 // Note that @settings only emits this signal if you have read @key at
 // least once while a signal handler was already connected for @key.
-func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
@@ -1639,7 +1642,7 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 // example, a new mandatory setting is introduced).  If any other
 // connected handler returns true then this default functionality
 // will be suppressed.
-func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint32) bool) uint32 {
+func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
@@ -1647,7 +1650,7 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint32) bool) u
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, KeyVarp uint32) bool {
+	fcb := func(clsPtr uintptr, KeyVarp uint) bool {
 		fa := Settings{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1669,7 +1672,7 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint32) bool) u
 // This signal supports detailed connections.  You can connect to the
 // detailed signal `writable-changed::x` in order to only receive
 // callbacks when the writability of `x` changes.
-func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)

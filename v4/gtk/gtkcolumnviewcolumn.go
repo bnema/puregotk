@@ -48,7 +48,7 @@ func ColumnViewColumnNewFromInternalPtr(ptr uintptr) *ColumnViewColumn {
 	return cls
 }
 
-var xNewColumnViewColumn func(string, uintptr) uintptr
+var xNewColumnViewColumn func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkColumnViewColumn` that uses the given @factory for
 // mapping items to widgets.
@@ -63,10 +63,13 @@ var xNewColumnViewColumn func(string, uintptr) uintptr
 //	gtk_builder_list_item_factory_new_from_resource ("/name.ui"));
 //
 // ```
-func NewColumnViewColumn(TitleVar string, FactoryVar *ListItemFactory) *ColumnViewColumn {
+func NewColumnViewColumn(TitleVar *string, FactoryVar *ListItemFactory) *ColumnViewColumn {
 	var cls *ColumnViewColumn
 
-	cret := xNewColumnViewColumn(TitleVar, FactoryVar.GoPointer())
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -121,10 +124,10 @@ func (x *ColumnViewColumn) GetFactory() *ListItemFactory {
 	return cls
 }
 
-var xColumnViewColumnGetFixedWidth func(uintptr) int32
+var xColumnViewColumnGetFixedWidth func(uintptr) int
 
 // Gets the fixed width of the column.
-func (x *ColumnViewColumn) GetFixedWidth() int32 {
+func (x *ColumnViewColumn) GetFixedWidth() int {
 	cret := xColumnViewColumnGetFixedWidth(x.GoPointer())
 	return cret
 }
@@ -214,7 +217,7 @@ func (x *ColumnViewColumn) SetFactory(FactoryVar *ListItemFactory) {
 	xColumnViewColumnSetFactory(x.GoPointer(), FactoryVar.GoPointer())
 }
 
-var xColumnViewColumnSetFixedWidth func(uintptr, int32)
+var xColumnViewColumnSetFixedWidth func(uintptr, int)
 
 // Sets the fixed width of the column.
 //
@@ -222,7 +225,7 @@ var xColumnViewColumnSetFixedWidth func(uintptr, int32)
 //
 // Setting a fixed width overrides the automatically calculated
 // width. Interactive resizing also sets the “fixed-width” property.
-func (x *ColumnViewColumn) SetFixedWidth(FixedWidthVar int32) {
+func (x *ColumnViewColumn) SetFixedWidth(FixedWidthVar int) {
 	xColumnViewColumnSetFixedWidth(x.GoPointer(), FixedWidthVar)
 }
 
@@ -234,7 +237,7 @@ func (x *ColumnViewColumn) SetHeaderMenu(MenuVar *gio.MenuModel) {
 	xColumnViewColumnSetHeaderMenu(x.GoPointer(), MenuVar.GoPointer())
 }
 
-var xColumnViewColumnSetId func(uintptr, string)
+var xColumnViewColumnSetId func(uintptr, uintptr)
 
 // Sets the id of this column.
 //
@@ -242,8 +245,11 @@ var xColumnViewColumnSetId func(uintptr, string)
 // storing column view configuration.
 //
 // It is up to callers to ensure uniqueness of IDs.
-func (x *ColumnViewColumn) SetId(IdVar string) {
-	xColumnViewColumnSetId(x.GoPointer(), IdVar)
+func (x *ColumnViewColumn) SetId(IdVar *string) {
+	IdVarPtr := core.GStrdupNullable(IdVar)
+	defer core.GFreeNullable(IdVarPtr)
+
+	xColumnViewColumnSetId(x.GoPointer(), IdVarPtr)
 }
 
 var xColumnViewColumnSetResizable func(uintptr, bool)
@@ -269,15 +275,18 @@ func (x *ColumnViewColumn) SetSorter(SorterVar *Sorter) {
 	xColumnViewColumnSetSorter(x.GoPointer(), SorterVar.GoPointer())
 }
 
-var xColumnViewColumnSetTitle func(uintptr, string)
+var xColumnViewColumnSetTitle func(uintptr, uintptr)
 
 // Sets the title of this column.
 //
 // The title is displayed in the header of a `GtkColumnView`
 // for this column and is therefore user-facing text that should
 // be translated.
-func (x *ColumnViewColumn) SetTitle(TitleVar string) {
-	xColumnViewColumnSetTitle(x.GoPointer(), TitleVar)
+func (x *ColumnViewColumn) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xColumnViewColumnSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
 var xColumnViewColumnSetVisible func(uintptr, bool)
@@ -318,20 +327,20 @@ func (x *ColumnViewColumn) GetPropertyExpand() bool {
 // SetPropertyFixedWidth sets the "fixed-width" property.
 // If not -1, this is the width that the column is allocated,
 // regardless of the size of its content.
-func (x *ColumnViewColumn) SetPropertyFixedWidth(value int32) {
+func (x *ColumnViewColumn) SetPropertyFixedWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("fixed-width", &v)
 }
 
 // GetPropertyFixedWidth gets the "fixed-width" property.
 // If not -1, this is the width that the column is allocated,
 // regardless of the size of its content.
-func (x *ColumnViewColumn) GetPropertyFixedWidth() int32 {
+func (x *ColumnViewColumn) GetPropertyFixedWidth() int {
 	var v gobject.Value
 	x.GetProperty("fixed-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyId sets the "id" property.
@@ -345,7 +354,7 @@ func (x *ColumnViewColumn) GetPropertyFixedWidth() int32 {
 func (x *ColumnViewColumn) SetPropertyId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("id", &v)
 }
 
@@ -385,7 +394,7 @@ func (x *ColumnViewColumn) GetPropertyResizable() bool {
 func (x *ColumnViewColumn) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

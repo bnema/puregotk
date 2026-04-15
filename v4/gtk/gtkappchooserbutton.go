@@ -198,7 +198,7 @@ func (c *AppChooserButton) SetGoPointer(ptr uintptr) {
 func (x *AppChooserButton) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -272,7 +272,7 @@ func (x *AppChooserButton) GetPropertyShowDialogItem() bool {
 //
 // The `::activate` signal on `GtkAppChooserButton` is an action signal and
 // emitting it causes the button to pop up its dialog.
-func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
+func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -295,7 +295,7 @@ func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
 }
 
 // Emitted when the active application changes.
-func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
+func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
@@ -321,7 +321,7 @@ func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
 //
 // Use [method@Gtk.AppChooserButton.append_custom_item],
 // to add custom items.
-func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton, string)) uint32 {
+func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
@@ -409,7 +409,7 @@ func (x *AppChooserButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AppChooserButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *AppChooserButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -525,7 +525,7 @@ func (x *AppChooserButton) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AppChooserButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *AppChooserButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -557,7 +557,7 @@ func (x *AppChooserButton) UpdateRelation(FirstRelationVar AccessibleRelation, v
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AppChooserButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *AppChooserButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -590,7 +590,7 @@ func (x *AppChooserButton) UpdateState(FirstStateVar AccessibleState, varArgs ..
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AppChooserButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *AppChooserButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

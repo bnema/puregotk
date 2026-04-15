@@ -62,7 +62,7 @@ func (x *AppLaunchContext) GetDisplay() *Display {
 	return cls
 }
 
-var xAppLaunchContextSetDesktop func(uintptr, int32)
+var xAppLaunchContextSetDesktop func(uintptr, int)
 
 // Sets the workspace on which applications will be launched.
 //
@@ -77,7 +77,7 @@ var xAppLaunchContextSetDesktop func(uintptr, int32)
 // When the workspace is not specified or @desktop is set to -1,
 // it is up to the window manager to pick one, typically it will
 // be the current workspace.
-func (x *AppLaunchContext) SetDesktop(DesktopVar int32) {
+func (x *AppLaunchContext) SetDesktop(DesktopVar int) {
 	xAppLaunchContextSetDesktop(x.GoPointer(), DesktopVar)
 }
 
@@ -94,7 +94,7 @@ func (x *AppLaunchContext) SetIcon(IconVar gio.Icon) {
 	xAppLaunchContextSetIcon(x.GoPointer(), IconVar.GoPointer())
 }
 
-var xAppLaunchContextSetIconName func(uintptr, string)
+var xAppLaunchContextSetIconName func(uintptr, uintptr)
 
 // Sets the icon for applications that are launched with this context.
 //
@@ -105,8 +105,11 @@ var xAppLaunchContextSetIconName func(uintptr, string)
 // If neither @icon or @icon_name is set, the icon is taken from either
 // the file that is passed to launched application or from the `GAppInfo`
 // for the launched application itself.
-func (x *AppLaunchContext) SetIconName(IconNameVar string) {
-	xAppLaunchContextSetIconName(x.GoPointer(), IconNameVar)
+func (x *AppLaunchContext) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xAppLaunchContextSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xAppLaunchContextSetTimestamp func(uintptr, uint32)

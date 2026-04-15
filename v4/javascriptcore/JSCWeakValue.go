@@ -85,7 +85,7 @@ func (c *WeakValue) SetGoPointer(ptr uintptr) {
 }
 
 // This signal is emitted when the JavaScript value is destroyed.
-func (x *WeakValue) ConnectCleared(cb *func(WeakValue)) uint32 {
+func (x *WeakValue) ConnectCleared(cb *func(WeakValue)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cleared", cbRefPtr)

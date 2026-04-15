@@ -78,7 +78,7 @@ func (x *PatternSpec) Free() {
 	xPatternSpecFree(x.GoPointer())
 }
 
-var xPatternSpecMatch func(uintptr, uint, string, string) bool
+var xPatternSpecMatch func(uintptr, uint, string, uintptr) bool
 
 // Matches a string against a compiled pattern.
 //
@@ -99,8 +99,11 @@ var xPatternSpecMatch func(uintptr, uint, string, string) bool
 // not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
-func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar string) bool {
-	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVar)
+func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
+	StringReversedVarPtr := core.GStrdupNullable(StringReversedVar)
+	defer core.GFreeNullable(StringReversedVarPtr)
+
+	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVarPtr)
 	return cret
 }
 
@@ -116,7 +119,7 @@ func (x *PatternSpec) MatchString(StringVar string) bool {
 	return cret
 }
 
-var xPatternMatch func(*PatternSpec, uint32, string, string) bool
+var xPatternMatch func(*PatternSpec, uint, string, uintptr) bool
 
 // Matches a string against a compiled pattern.
 //
@@ -137,8 +140,11 @@ var xPatternMatch func(*PatternSpec, uint32, string, string) bool
 // not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
-func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint32, StringVar string, StringReversedVar string) bool {
-	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVar)
+func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
+	StringReversedVarPtr := core.GStrdupNullable(StringReversedVar)
+	defer core.GFreeNullable(StringReversedVarPtr)
+
+	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVarPtr)
 	return cret
 }
 

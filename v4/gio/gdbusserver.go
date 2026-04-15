@@ -160,7 +160,7 @@ func (x *DBusServer) GetPropertyActive() bool {
 func (x *DBusServer) SetPropertyAddress(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("address", &v)
 }
 
@@ -187,7 +187,7 @@ func (x *DBusServer) GetPropertyClientAddress() string {
 func (x *DBusServer) SetPropertyGuid(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("guid", &v)
 }
 
@@ -222,7 +222,7 @@ func (x *DBusServer) GetPropertyGuid() string {
 // before incoming messages on @connection are processed. This means
 // that it's suitable to call g_dbus_connection_register_object() or
 // similar from the signal handler.
-func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint32 {
+func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)

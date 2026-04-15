@@ -284,7 +284,7 @@ func ClassNewFromInternalPtr(ptr uintptr) *Class {
 	return cls
 }
 
-var xClassAddConstructor func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, ...interface{}) uintptr
+var xClassAddConstructor func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType, uint, ...interface{}) uintptr
 
 // Add a constructor to @jsc_class. If @name is %NULL, the class name will be used. When &lt;function&gt;new&lt;/function&gt;
 // is used with the constructor or jsc_value_constructor_call() is called, @callback is invoked receiving the
@@ -296,10 +296,13 @@ var xClassAddConstructor func(uintptr, string, uintptr, uintptr, uintptr, types.
 //
 // Note that the value returned by @callback is adopted by @jsc_class, and the #GDestroyNotify passed to
 // jsc_context_register_class() is responsible for disposing of it.
-func (x *Class) AddConstructor(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint32, varArgs ...interface{}) *Value {
+func (x *Class) AddConstructor(NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) *Value {
 	var cls *Value
 
-	cret := xClassAddConstructor(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xClassAddConstructor(x.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -309,7 +312,7 @@ func (x *Class) AddConstructor(NameVar string, CallbackVar *gobject.Callback, Us
 	return cls
 }
 
-var xClassAddConstructorVariadic func(uintptr, string, uintptr, uintptr, uintptr, types.GType) uintptr
+var xClassAddConstructorVariadic func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType) uintptr
 
 // Add a constructor to @jsc_class. If @name is %NULL, the class name will be used. When &lt;function&gt;new&lt;/function&gt;
 // is used with the constructor or jsc_value_constructor_call() is called, @callback is invoked receiving
@@ -321,10 +324,13 @@ var xClassAddConstructorVariadic func(uintptr, string, uintptr, uintptr, uintptr
 //
 // Note that the value returned by @callback is adopted by @jsc_class, and the #GDestroyNotify passed to
 // jsc_context_register_class() is responsible for disposing of it.
-func (x *Class) AddConstructorVariadic(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType) *Value {
+func (x *Class) AddConstructorVariadic(NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType) *Value {
 	var cls *Value
 
-	cret := xClassAddConstructorVariadic(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xClassAddConstructorVariadic(x.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
 
 	if cret == 0 {
 		return nil
@@ -334,7 +340,7 @@ func (x *Class) AddConstructorVariadic(NameVar string, CallbackVar *gobject.Call
 	return cls
 }
 
-var xClassAddConstructorv func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, []types.GType) uintptr
+var xClassAddConstructorv func(uintptr, uintptr, uintptr, uintptr, uintptr, types.GType, uint, []types.GType) uintptr
 
 // Add a constructor to @jsc_class. If @name is %NULL, the class name will be used. When &lt;function&gt;new&lt;/function&gt;
 // is used with the constructor or jsc_value_constructor_call() is called, @callback is invoked receiving the
@@ -346,10 +352,13 @@ var xClassAddConstructorv func(uintptr, string, uintptr, uintptr, uintptr, types
 //
 // Note that the value returned by @callback is adopted by @jsc_class, and the #GDestroyNotify passed to
 // jsc_context_register_class() is responsible for disposing of it.
-func (x *Class) AddConstructorv(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint32, ParameterTypesVar []types.GType) *Value {
+func (x *Class) AddConstructorv(NameVar *string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint, ParameterTypesVar []types.GType) *Value {
 	var cls *Value
 
-	cret := xClassAddConstructorv(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xClassAddConstructorv(x.GoPointer(), NameVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
 
 	if cret == 0 {
 		return nil
@@ -359,7 +368,7 @@ func (x *Class) AddConstructorv(NameVar string, CallbackVar *gobject.Callback, U
 	return cls
 }
 
-var xClassAddMethod func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, ...interface{})
+var xClassAddMethod func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint, ...interface{})
 
 // Add method with @name to @jsc_class. When the method is called by JavaScript or jsc_value_object_invoke_method(),
 // @callback is called receiving the class instance as first parameter, followed by the method parameters and then
@@ -370,7 +379,7 @@ var xClassAddMethod func(uintptr, string, uintptr, uintptr, uintptr, types.GType
 // %G_TYPE_POINTER instead of the actual boxed #GType to ensure that the instance owned by #JSCClass is used.
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
-func (x *Class) AddMethod(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint32, varArgs ...interface{}) {
+func (x *Class) AddMethod(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) {
 	xClassAddMethod(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParamsVar, varArgs...)
 }
 
@@ -389,7 +398,7 @@ func (x *Class) AddMethodVariadic(NameVar string, CallbackVar *gobject.Callback,
 	xClassAddMethodVariadic(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar)
 }
 
-var xClassAddMethodv func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint32, []types.GType)
+var xClassAddMethodv func(uintptr, string, uintptr, uintptr, uintptr, types.GType, uint, []types.GType)
 
 // Add method with @name to @jsc_class. When the method is called by JavaScript or jsc_value_object_invoke_method(),
 // @callback is called receiving the class instance as first parameter, followed by the method parameters and then
@@ -400,7 +409,7 @@ var xClassAddMethodv func(uintptr, string, uintptr, uintptr, uintptr, types.GTyp
 // %G_TYPE_POINTER instead of the actual boxed #GType to ensure that the instance owned by #JSCClass is used.
 // If you really want to return a new copy of the boxed type, use #JSC_TYPE_VALUE and return a #JSCValue created
 // with jsc_value_new_object() that receives the copy as the instance parameter.
-func (x *Class) AddMethodv(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint32, ParameterTypesVar []types.GType) {
+func (x *Class) AddMethodv(NameVar string, CallbackVar *gobject.Callback, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify, ReturnTypeVar types.GType, NParametersVar uint, ParameterTypesVar []types.GType) {
 	xClassAddMethodv(x.GoPointer(), NameVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar), ReturnTypeVar, NParametersVar, ParameterTypesVar)
 }
 
@@ -461,7 +470,7 @@ func (c *Class) SetGoPointer(ptr uintptr) {
 func (x *Class) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

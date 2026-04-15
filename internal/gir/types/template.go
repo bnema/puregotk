@@ -27,6 +27,12 @@ type GErrorParam struct {
 	GoType string
 }
 
+// NullableStringParam tracks a nullable string argument that needs a temporary
+// C string when Go calls into C.
+type NullableStringParam struct {
+	Name string
+}
+
 type funcArgsTemplate struct {
 	// Pure are the arguments as passed directly to PureGo
 	// The pure Call is a special case that contains the arguments for a callback call
@@ -37,9 +43,27 @@ type funcArgsTemplate struct {
 
 	// GErrors tracks signal parameters that should be surfaced as *glib.Error.
 	GErrors []GErrorParam
+
+	// NullableStrings tracks Go->C nullable string params that need temporary C strings.
+	NullableStrings []NullableStringParam
 }
 
-func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, imps *ImportSet) {
+// ArgContext indicates whether arguments are flowing from Go->C or C->Go.
+type ArgContext int
+
+const (
+	ArgsFromGoToC ArgContext = iota
+	ArgsFromCToGo
+)
+
+func isStringType(t string) bool {
+	if strings.HasPrefix(t, "[]") {
+		return false
+	}
+	return strings.TrimLeft(t, "*") == "string"
+}
+
+func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext, imps *ImportSet) {
 	c := n
 	stars := strings.Count(t, "*")
 	gobjectNs := "gobject."
@@ -59,6 +83,12 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 		}
 		c = n
 	} else {
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			imps.AddCore()
+			t = "*string"
+			c = n + "Ptr"
+			f.NullableStrings = append(f.NullableStrings, NullableStringParam{Name: n})
+		}
 		switch k {
 		case CallbackType:
 			// Destroy/notify callbacks are effectively optional even when GIR omits
@@ -110,7 +140,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	imps.TrackGoType(t)
 }
 
-func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
+func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext) {
 	n += "p"
 	c := n
 	stars := strings.Count(t, "*")
@@ -123,6 +153,9 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
 		}
 		c = n
 	} else {
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			t = "uintptr"
+		}
 		switch k {
 		case RecordsType:
 			if stars == 0 {
@@ -209,7 +242,7 @@ func isGoPrimitive(typeName string) bool {
 	return false
 }
 
-func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, imps *ImportSet) {
+func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, ctx ArgContext, imps *ImportSet) {
 	// get the lookup namespace
 	// as if the interface namespace is non-empty
 	// means we can also lookup in the namespace of the interface
@@ -236,8 +269,8 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	// GIR "inout" parameters are also pointer-bearing at the ABI/API level.
 	isOut := p.Direction == "out" || p.Direction == "inout"
 
-	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, imps)
-	f.AddPure(goType, varName, kind, isOut)
+	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, imps)
+	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx)
 
 	// Signal callbacks with GError* parameters should expose *glib.Error in the
 	// public API even though the raw callback ABI still uses a pointer value.

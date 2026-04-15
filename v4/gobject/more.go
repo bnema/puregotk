@@ -33,7 +33,7 @@ func IncreaseRef(a uintptr) {
 	xObjectRefSink(a)
 }
 
-func SignalConnect(a uintptr, b string, c uintptr) uint32 {
+func SignalConnect(a uintptr, b string, c uintptr) uint {
 	return xSignalConnectData(a, b, c, 0, 0, 0)
 }
 
@@ -41,7 +41,7 @@ func (o Object) Cast(v Ptr) {
 	v.SetGoPointer(o.GoPointer())
 }
 
-func (o Object) ConnectSignal(signal string, cb *func()) uint32 {
+func (o Object) ConnectSignal(signal string, cb *func()) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(o.GoPointer(), signal, cbRefPtr)
@@ -56,13 +56,13 @@ func (o Object) ConnectSignal(signal string, cb *func()) uint32 {
 	return handlerID
 }
 
-func (o Object) DisconnectSignal(handler uint32) {
+func (o Object) DisconnectSignal(handler uint) {
 	SignalHandlerDisconnect(&o, handler)
 	glib.RemoveCallbackByHandler(handler)
 }
 
 // ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
-func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, *ParamSpec)) uint32 {
+func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, *ParamSpec)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("notify::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {

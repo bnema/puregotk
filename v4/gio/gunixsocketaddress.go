@@ -84,11 +84,11 @@ func NewUnixSocketAddress(PathVar string) *UnixSocketAddress {
 	return cls
 }
 
-var xNewUnixSocketAddressAbstract func([]byte, int32) uintptr
+var xNewUnixSocketAddressAbstract func([]byte, int) uintptr
 
 // Creates a new %G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED
 // #GUnixSocketAddress for @path.
-func NewUnixSocketAddressAbstract(PathVar []byte, PathLenVar int32) *UnixSocketAddress {
+func NewUnixSocketAddressAbstract(PathVar []byte, PathLenVar int) *UnixSocketAddress {
 	var cls *UnixSocketAddress
 
 	cret := xNewUnixSocketAddressAbstract(PathVar, PathLenVar)
@@ -101,7 +101,7 @@ func NewUnixSocketAddressAbstract(PathVar []byte, PathLenVar int32) *UnixSocketA
 	return cls
 }
 
-var xNewUnixSocketAddressWithType func([]byte, int32, UnixSocketAddressType) uintptr
+var xNewUnixSocketAddressWithType func([]byte, int, UnixSocketAddressType) uintptr
 
 // Creates a new #GUnixSocketAddress of type @type with name @path.
 //
@@ -134,7 +134,7 @@ var xNewUnixSocketAddressWithType func([]byte, int32, UnixSocketAddressType) uin
 // when connecting to a server created by another process, you must
 // use the appropriate type corresponding to how that process created
 // its listening socket.
-func NewUnixSocketAddressWithType(PathVar []byte, PathLenVar int32, TypeVar UnixSocketAddressType) *UnixSocketAddress {
+func NewUnixSocketAddressWithType(PathVar []byte, PathLenVar int, TypeVar UnixSocketAddressType) *UnixSocketAddress {
 	var cls *UnixSocketAddress
 
 	cret := xNewUnixSocketAddressWithType(PathVar, PathLenVar, TypeVar)
@@ -219,7 +219,7 @@ func (x *UnixSocketAddress) GetPropertyAbstract() bool {
 func (x *UnixSocketAddress) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 

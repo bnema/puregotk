@@ -57,6 +57,10 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -69,6 +73,10 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -158,6 +166,10 @@ func (x *{{.Name}}Base) SetGoPointer(ptr uintptr) {
 {{.Doc}}
 func (x *{{$outer.Name}}Base) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret := {{end}}{{.Namespace}}X{{.FullName}}(x.GoPointer() {{convcd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -311,6 +323,10 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      return cret
      {{- else}}
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
      {{- end}}
@@ -347,6 +363,10 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -359,6 +379,10 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -400,7 +424,7 @@ func (c *{{.Name}}) SetGoPointer(ptr uintptr) {
 {{range .Signals -}}
 
 {{.Doc}}
-func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}}) uint32 {
+func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}}) uint {
      cbPtr := uintptr(unsafe.Pointer(cb))
      if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback(cbPtr); ok {
           handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
@@ -434,6 +458,10 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret := {{end}} {{.Namespace}}X{{.FullName}}(x.GoPointer() {{convcd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
 }
@@ -519,6 +547,10 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      return cret
      {{- else}}
      {{.Ret.Preamble $NotGLib}}
+     {{range .Args.NullableStrings}}
+     {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
+     defer core.GFreeNullable({{.Name}}Ptr)
+     {{end}}
      {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
      {{.Ret.Fmt $NotGObject}}
      {{- end}}

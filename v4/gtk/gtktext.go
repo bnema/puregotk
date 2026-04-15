@@ -287,7 +287,7 @@ func (x *Text) GetInvisibleChar() uint32 {
 	return cret
 }
 
-var xTextGetMaxLength func(uintptr) int32
+var xTextGetMaxLength func(uintptr) int
 
 // Retrieves the maximum allowed length of the contents.
 //
@@ -295,7 +295,7 @@ var xTextGetMaxLength func(uintptr) int32
 //
 // This is equivalent to getting @self's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.get_max_length] on it.
-func (x *Text) GetMaxLength() int32 {
+func (x *Text) GetMaxLength() int {
 	cret := xTextGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -459,7 +459,7 @@ func (x *Text) SetInvisibleChar(ChVar uint32) {
 	xTextSetInvisibleChar(x.GoPointer(), ChVar)
 }
 
-var xTextSetMaxLength func(uintptr, int32)
+var xTextSetMaxLength func(uintptr, int)
 
 // Sets the maximum allowed length of the contents.
 //
@@ -468,7 +468,7 @@ var xTextSetMaxLength func(uintptr, int32)
 //
 // This is equivalent to getting @self's `GtkEntryBuffer` and
 // calling [method@Gtk.EntryBuffer.set_max_length] on it.
-func (x *Text) SetMaxLength(LengthVar int32) {
+func (x *Text) SetMaxLength(LengthVar int) {
 	xTextSetMaxLength(x.GoPointer(), LengthVar)
 }
 
@@ -479,15 +479,18 @@ func (x *Text) SetOverwriteMode(OverwriteVar bool) {
 	xTextSetOverwriteMode(x.GoPointer(), OverwriteVar)
 }
 
-var xTextSetPlaceholderText func(uintptr, string)
+var xTextSetPlaceholderText func(uintptr, uintptr)
 
 // Sets the text to be displayed when the text widget is
 // empty and unfocused.
 //
 // This can be used to give a visual hint of the expected
 // contents of the text widget.
-func (x *Text) SetPlaceholderText(TextVar string) {
-	xTextSetPlaceholderText(x.GoPointer(), TextVar)
+func (x *Text) SetPlaceholderText(TextVar *string) {
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	xTextSetPlaceholderText(x.GoPointer(), TextVarPtr)
 }
 
 var xTextSetPropagateTextWidth func(uintptr, bool)
@@ -623,7 +626,7 @@ func (x *Text) GetPropertyEnableEmojiCompletion() bool {
 func (x *Text) SetPropertyImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("im-module", &v)
 }
 
@@ -643,19 +646,19 @@ func (x *Text) GetPropertyImModule() string {
 
 // SetPropertyInvisibleChar sets the "invisible-char" property.
 // The character to used when masking contents (in “password mode”).
-func (x *Text) SetPropertyInvisibleChar(value uint32) {
+func (x *Text) SetPropertyInvisibleChar(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("invisible-char", &v)
 }
 
 // GetPropertyInvisibleChar gets the "invisible-char" property.
 // The character to used when masking contents (in “password mode”).
-func (x *Text) GetPropertyInvisibleChar() uint32 {
+func (x *Text) GetPropertyInvisibleChar() uint {
 	var v gobject.Value
 	x.GetProperty("invisible-char", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyInvisibleCharSet sets the "invisible-char-set" property.
@@ -679,10 +682,10 @@ func (x *Text) GetPropertyInvisibleCharSet() bool {
 // Maximum number of characters that are allowed.
 //
 // Zero indicates no limit.
-func (x *Text) SetPropertyMaxLength(value int32) {
+func (x *Text) SetPropertyMaxLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-length", &v)
 }
 
@@ -690,10 +693,10 @@ func (x *Text) SetPropertyMaxLength(value int32) {
 // Maximum number of characters that are allowed.
 //
 // Zero indicates no limit.
-func (x *Text) GetPropertyMaxLength() int32 {
+func (x *Text) GetPropertyMaxLength() int {
 	var v gobject.Value
 	x.GetProperty("max-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyOverwriteMode sets the "overwrite-mode" property.
@@ -719,7 +722,7 @@ func (x *Text) GetPropertyOverwriteMode() bool {
 func (x *Text) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
@@ -751,10 +754,10 @@ func (x *Text) GetPropertyPropagateTextWidth() bool {
 
 // GetPropertyScrollOffset gets the "scroll-offset" property.
 // Number of pixels scrolled of the screen to the left.
-func (x *Text) GetPropertyScrollOffset() int32 {
+func (x *Text) GetPropertyScrollOffset() int {
 	var v gobject.Value
 	x.GetProperty("scroll-offset", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyTabs sets the "tabs" property.
@@ -812,7 +815,7 @@ func (x *Text) GetPropertyVisibility() bool {
 //
 // The default bindings for this signal are all forms
 // of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
+func (x *Text) ConnectActivate(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -840,7 +843,7 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
 //
 // The default bindings for this signal are
 // &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Backspace&lt;/kbd&gt;.
-func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
+func (x *Text) ConnectBackspace(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
@@ -869,7 +872,7 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;c&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
@@ -898,7 +901,7 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;x&lt;/kbd&gt; and
 // &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;.
-func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectCutClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
@@ -931,7 +934,7 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 // The default bindings for this signal are &lt;kbd&gt;Delete&lt;/kbd&gt;
 // for deleting a character and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;
 // for deleting a word.
-func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int32)) uint32 {
+func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
@@ -939,7 +942,7 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int32)) uint32
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, TypeVarp DeleteType, CountVarp int32) {
+	fcb := func(clsPtr uintptr, TypeVarp DeleteType, CountVarp int) {
 		fa := Text{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -959,7 +962,7 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int32)) uint32
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // This signal has no default bindings.
-func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
+func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
@@ -988,7 +991,7 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;.&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;;&lt;/kbd&gt;
-func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
+func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
@@ -1030,7 +1033,7 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 //     move by individual characters/lines
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, etc. move by words/paragraphs
 //   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
-func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int32, bool)) uint32 {
+func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
@@ -1038,7 +1041,7 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int32, bool)) uint
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int32, ExtendVarp bool) {
+	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool) {
 		fa := Text{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1058,7 +1061,7 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int32, bool)) uint
 //
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;v&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
@@ -1085,7 +1088,7 @@ func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
 // If an input method is used, the typed text will not immediately
 // be committed to the buffer. So if you are interested in the text,
 // connect to this signal.
-func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
+func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
@@ -1112,7 +1115,7 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
+func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
@@ -1200,7 +1203,7 @@ func (x *Text) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Text) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Text) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1316,7 +1319,7 @@ func (x *Text) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...in
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Text) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Text) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1348,7 +1351,7 @@ func (x *Text) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...in
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Text) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Text) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1381,7 +1384,7 @@ func (x *Text) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{}
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Text) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Text) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1403,7 +1406,7 @@ func (x *Text) UpdateCaretPosition() {
 // Note: If the change is a deletion, this function must be called *before*
 // removing the contents, if it is an insertion, it must be called *after*
 // inserting the new contents.
-func (x *Text) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint32, EndVar uint32) {
+func (x *Text) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
 	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
 }
 
@@ -1481,7 +1484,7 @@ func (x *Text) DeleteSelection() {
 // the end of the text.
 //
 // Note that the positions are specified in characters, not bytes.
-func (x *Text) DeleteText(StartPosVar int32, EndPosVar int32) {
+func (x *Text) DeleteText(StartPosVar int, EndPosVar int) {
 	XGtkEditableDeleteText(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -1507,7 +1510,7 @@ func (x *Text) GetAlignment() float32 {
 // the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Text) GetChars(StartPosVar int32, EndPosVar int32) string {
+func (x *Text) GetChars(StartPosVar int, EndPosVar int) string {
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1543,7 +1546,7 @@ func (x *Text) GetEnableUndo() bool {
 }
 
 // Retrieves the desired maximum width of @editable, in characters.
-func (x *Text) GetMaxWidthChars() int32 {
+func (x *Text) GetMaxWidthChars() int {
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
 	return cret
 }
@@ -1552,7 +1555,7 @@ func (x *Text) GetMaxWidthChars() int32 {
 // to the start of the content of the editable.
 //
 // Note that this position is in characters, not in bytes.
-func (x *Text) GetPosition() int32 {
+func (x *Text) GetPosition() int {
 	cret := XGtkEditableGetPosition(x.GoPointer())
 	return cret
 }
@@ -1564,7 +1567,7 @@ func (x *Text) GetPosition() int32 {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Text) GetSelectionBounds(StartPosVar *int32, EndPosVar *int32) bool {
+func (x *Text) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
 }
@@ -1579,7 +1582,7 @@ func (x *Text) GetText() string {
 
 // Gets the number of characters of space reserved
 // for the contents of the editable.
-func (x *Text) GetWidthChars() int32 {
+func (x *Text) GetWidthChars() int {
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
 	return cret
 }
@@ -1601,7 +1604,7 @@ func (x *Text) InitDelegate() {
 // Note that the position is in characters, not in bytes.
 // The function updates @position to point after the newly
 // inserted text.
-func (x *Text) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
+func (x *Text) InsertText(TextVar string, LengthVar int, PositionVar *int) {
 	XGtkEditableInsertText(x.GoPointer(), TextVar, LengthVar, PositionVar)
 }
 
@@ -1613,7 +1616,7 @@ func (x *Text) InsertText(TextVar string, LengthVar int32, PositionVar *int32) {
 // @start_pos to  the end of the text.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Text) SelectRegion(StartPosVar int32, EndPosVar int32) {
+func (x *Text) SelectRegion(StartPosVar int, EndPosVar int) {
 	XGtkEditableSelectRegion(x.GoPointer(), StartPosVar, EndPosVar)
 }
 
@@ -1641,7 +1644,7 @@ func (x *Text) SetEnableUndo(EnableUndoVar bool) {
 }
 
 // Sets the desired maximum width in characters of @editable.
-func (x *Text) SetMaxWidthChars(NCharsVar int32) {
+func (x *Text) SetMaxWidthChars(NCharsVar int) {
 	XGtkEditableSetMaxWidthChars(x.GoPointer(), NCharsVar)
 }
 
@@ -1652,7 +1655,7 @@ func (x *Text) SetMaxWidthChars(NCharsVar int32) {
 // or equal to the number of characters in the editable. A value of -1
 // indicates that the position should be set after the last character
 // of the editable. Note that @position is in characters, not in bytes.
-func (x *Text) SetPosition(PositionVar int32) {
+func (x *Text) SetPosition(PositionVar int) {
 	XGtkEditableSetPosition(x.GoPointer(), PositionVar)
 }
 
@@ -1669,7 +1672,7 @@ func (x *Text) SetText(TextVar string) {
 // Note that it changes the size request, the size can still
 // be affected by how you pack the widget into containers.
 // If @n_chars is -1, the size reverts to the default size.
-func (x *Text) SetWidthChars(NCharsVar int32) {
+func (x *Text) SetWidthChars(NCharsVar int) {
 	XGtkEditableSetWidthChars(x.GoPointer(), NCharsVar)
 }
 

@@ -258,7 +258,7 @@ func (c *HSTSEnforcer) SetGoPointer(ptr uintptr) {
 //
 // Note that you shouldn't modify the policies from a callback to
 // this signal.
-func (x *HSTSEnforcer) ConnectChanged(cb *func(HSTSEnforcer, uintptr, uintptr)) uint32 {
+func (x *HSTSEnforcer) ConnectChanged(cb *func(HSTSEnforcer, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

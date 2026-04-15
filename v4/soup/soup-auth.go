@@ -19,7 +19,7 @@ type AuthClass struct {
 
 	SchemeName uintptr
 
-	Strength uint32
+	Strength uint
 
 	xUpdate uintptr
 
@@ -424,7 +424,7 @@ func (c *Auth) SetGoPointer(ptr uintptr) {
 func (x *Auth) SetPropertyAuthority(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("authority", &v)
 }
 
@@ -474,7 +474,7 @@ func (x *Auth) GetPropertyIsForProxy() bool {
 func (x *Auth) SetPropertyRealm(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("realm", &v)
 }
 

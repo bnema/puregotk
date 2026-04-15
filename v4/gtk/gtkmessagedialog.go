@@ -137,7 +137,7 @@ func MessageDialogNewFromInternalPtr(ptr uintptr) *MessageDialog {
 	return cls
 }
 
-var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, string, ...interface{}) uintptr
+var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, uintptr, ...interface{}) uintptr
 
 // Creates a new message dialog.
 //
@@ -145,10 +145,13 @@ var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, strin
 // When the user clicks a button a “response” signal is emitted with
 // response IDs from [enum@Gtk.ResponseType]. See [class@Gtk.Dialog]
 // for more details.
-func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar string, varArgs ...interface{}) *MessageDialog {
+func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVar, varArgs...)
+	MessageFormatVarPtr := core.GStrdupNullable(MessageFormatVar)
+	defer core.GFreeNullable(MessageFormatVarPtr)
+
+	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -159,7 +162,7 @@ func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageTy
 	return cls
 }
 
-var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsType, string, ...interface{}) uintptr
+var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsType, uintptr, ...interface{}) uintptr
 
 // Creates a new message dialog.
 //
@@ -193,10 +196,13 @@ var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsT
 //	markup);
 //
 // ```
-func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar string, varArgs ...interface{}) *MessageDialog {
+func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVar, varArgs...)
+	MessageFormatVarPtr := core.GStrdupNullable(MessageFormatVar)
+	defer core.GFreeNullable(MessageFormatVarPtr)
+
+	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -232,11 +238,14 @@ func (x *MessageDialog) FormatSecondaryMarkup(MessageFormatVar string, varArgs .
 	xMessageDialogFormatSecondaryMarkup(x.GoPointer(), MessageFormatVar, varArgs...)
 }
 
-var xMessageDialogFormatSecondaryText func(uintptr, string, ...interface{})
+var xMessageDialogFormatSecondaryText func(uintptr, uintptr, ...interface{})
 
 // Sets the secondary text of the message dialog.
-func (x *MessageDialog) FormatSecondaryText(MessageFormatVar string, varArgs ...interface{}) {
-	xMessageDialogFormatSecondaryText(x.GoPointer(), MessageFormatVar, varArgs...)
+func (x *MessageDialog) FormatSecondaryText(MessageFormatVar *string, varArgs ...interface{}) {
+	MessageFormatVarPtr := core.GStrdupNullable(MessageFormatVar)
+	defer core.GFreeNullable(MessageFormatVarPtr)
+
+	xMessageDialogFormatSecondaryText(x.GoPointer(), MessageFormatVarPtr, varArgs...)
 }
 
 var xMessageDialogGetMessageArea func(uintptr) uintptr
@@ -284,7 +293,7 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 func (x *MessageDialog) SetPropertySecondaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-text", &v)
 }
 
@@ -324,7 +333,7 @@ func (x *MessageDialog) GetPropertySecondaryUseMarkup() bool {
 func (x *MessageDialog) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -425,7 +434,7 @@ func (x *MessageDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MessageDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -541,7 +550,7 @@ func (x *MessageDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varA
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -573,7 +582,7 @@ func (x *MessageDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varA
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -606,7 +615,7 @@ func (x *MessageDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...in
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

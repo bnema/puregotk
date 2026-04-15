@@ -208,7 +208,7 @@ func MessageDialogNewFromInternalPtr(ptr uintptr) *MessageDialog {
 	return cls
 }
 
-var xNewMessageDialog func(uintptr, string, string) uintptr
+var xNewMessageDialog func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new `AdwMessageDialog`.
 //
@@ -226,10 +226,16 @@ var xNewMessageDialog func(uintptr, string, string) uintptr
 //	filename);
 //
 // ```
-func NewMessageDialog(ParentVar *gtk.Window, HeadingVar string, BodyVar string) *MessageDialog {
+func NewMessageDialog(ParentVar *gtk.Window, HeadingVar *string, BodyVar *string) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), HeadingVar, BodyVar)
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
+
+	BodyVarPtr := core.GStrdupNullable(BodyVar)
+	defer core.GFreeNullable(BodyVarPtr)
+
+	cret := xNewMessageDialog(ParentVar.GoPointer(), HeadingVarPtr, BodyVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -497,7 +503,7 @@ func (x *MessageDialog) SetCloseResponse(ResponseVar string) {
 	xMessageDialogSetCloseResponse(x.GoPointer(), ResponseVar)
 }
 
-var xMessageDialogSetDefaultResponse func(uintptr, string)
+var xMessageDialogSetDefaultResponse func(uintptr, uintptr)
 
 // Sets the ID of the default response of @self.
 //
@@ -508,8 +514,11 @@ var xMessageDialogSetDefaultResponse func(uintptr, string)
 // will be focused by default.
 //
 // See [property@Gtk.Window:default-widget].
-func (x *MessageDialog) SetDefaultResponse(ResponseVar string) {
-	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
+func (x *MessageDialog) SetDefaultResponse(ResponseVar *string) {
+	ResponseVarPtr := core.GStrdupNullable(ResponseVar)
+	defer core.GFreeNullable(ResponseVarPtr)
+
+	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVarPtr)
 }
 
 var xMessageDialogSetExtraChild func(uintptr, uintptr)
@@ -521,11 +530,14 @@ func (x *MessageDialog) SetExtraChild(ChildVar *gtk.Widget) {
 	xMessageDialogSetExtraChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xMessageDialogSetHeading func(uintptr, string)
+var xMessageDialogSetHeading func(uintptr, uintptr)
 
 // Sets the heading of @self.
-func (x *MessageDialog) SetHeading(HeadingVar string) {
-	xMessageDialogSetHeading(x.GoPointer(), HeadingVar)
+func (x *MessageDialog) SetHeading(HeadingVar *string) {
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
+
+	xMessageDialogSetHeading(x.GoPointer(), HeadingVarPtr)
 }
 
 var xMessageDialogSetHeadingUseMarkup func(uintptr, bool)
@@ -605,7 +617,7 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 func (x *MessageDialog) SetPropertyBody(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("body", &v)
 }
 
@@ -650,7 +662,7 @@ func (x *MessageDialog) GetPropertyBodyUseMarkup() bool {
 func (x *MessageDialog) SetPropertyCloseResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("close-response", &v)
 }
 
@@ -682,7 +694,7 @@ func (x *MessageDialog) GetPropertyCloseResponse() string {
 func (x *MessageDialog) SetPropertyDefaultResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-response", &v)
 }
 
@@ -707,7 +719,7 @@ func (x *MessageDialog) GetPropertyDefaultResponse() string {
 func (x *MessageDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -748,7 +760,7 @@ func (x *MessageDialog) GetPropertyHeadingUseMarkup() bool {
 // if the dialog was closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system
 // action, @response will be set to the value of
 // [property@MessageDialog:close-response].
-func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 {
+func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
@@ -836,7 +848,7 @@ func (x *MessageDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MessageDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -952,7 +964,7 @@ func (x *MessageDialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, 
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -984,7 +996,7 @@ func (x *MessageDialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, 
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1017,7 +1029,7 @@ func (x *MessageDialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs .
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *MessageDialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *MessageDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

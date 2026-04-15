@@ -47,7 +47,7 @@ func ProxyAddressNewFromInternalPtr(ptr uintptr) *ProxyAddress {
 	return cls
 }
 
-var xNewProxyAddress func(uintptr, uint16, string, string, uint16, string, string) uintptr
+var xNewProxyAddress func(uintptr, uint16, string, string, uint16, uintptr, uintptr) uintptr
 
 // Creates a new #GProxyAddress for @inetaddr with @protocol that should
 // tunnel through @dest_hostname and @dest_port.
@@ -55,10 +55,16 @@ var xNewProxyAddress func(uintptr, uint16, string, string, uint16, string, strin
 // (Note that this method doesn't set the #GProxyAddress:uri or
 // #GProxyAddress:destination-protocol fields; use g_object_new()
 // directly if you want to set those.)
-func NewProxyAddress(InetaddrVar *InetAddress, PortVar uint16, ProtocolVar string, DestHostnameVar string, DestPortVar uint16, UsernameVar string, PasswordVar string) *ProxyAddress {
+func NewProxyAddress(InetaddrVar *InetAddress, PortVar uint16, ProtocolVar string, DestHostnameVar string, DestPortVar uint16, UsernameVar *string, PasswordVar *string) *ProxyAddress {
 	var cls *ProxyAddress
 
-	cret := xNewProxyAddress(InetaddrVar.GoPointer(), PortVar, ProtocolVar, DestHostnameVar, DestPortVar, UsernameVar, PasswordVar)
+	UsernameVarPtr := core.GStrdupNullable(UsernameVar)
+	defer core.GFreeNullable(UsernameVarPtr)
+
+	PasswordVarPtr := core.GStrdupNullable(PasswordVar)
+	defer core.GFreeNullable(PasswordVarPtr)
+
+	cret := xNewProxyAddress(InetaddrVar.GoPointer(), PortVar, ProtocolVar, DestHostnameVar, DestPortVar, UsernameVarPtr, PasswordVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -145,7 +151,7 @@ func (c *ProxyAddress) SetGoPointer(ptr uintptr) {
 func (x *ProxyAddress) SetPropertyDestinationHostname(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("destination-hostname", &v)
 }
 
@@ -159,19 +165,19 @@ func (x *ProxyAddress) GetPropertyDestinationHostname() string {
 
 // SetPropertyDestinationPort sets the "destination-port" property.
 // The proxy destination port.
-func (x *ProxyAddress) SetPropertyDestinationPort(value uint32) {
+func (x *ProxyAddress) SetPropertyDestinationPort(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("destination-port", &v)
 }
 
 // GetPropertyDestinationPort gets the "destination-port" property.
 // The proxy destination port.
-func (x *ProxyAddress) GetPropertyDestinationPort() uint32 {
+func (x *ProxyAddress) GetPropertyDestinationPort() uint {
 	var v gobject.Value
 	x.GetProperty("destination-port", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyDestinationProtocol sets the "destination-protocol" property.
@@ -180,7 +186,7 @@ func (x *ProxyAddress) GetPropertyDestinationPort() uint32 {
 func (x *ProxyAddress) SetPropertyDestinationProtocol(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("destination-protocol", &v)
 }
 
@@ -198,7 +204,7 @@ func (x *ProxyAddress) GetPropertyDestinationProtocol() string {
 func (x *ProxyAddress) SetPropertyPassword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("password", &v)
 }
 
@@ -215,7 +221,7 @@ func (x *ProxyAddress) GetPropertyPassword() string {
 func (x *ProxyAddress) SetPropertyProtocol(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("protocol", &v)
 }
 
@@ -233,7 +239,7 @@ func (x *ProxyAddress) GetPropertyProtocol() string {
 func (x *ProxyAddress) SetPropertyUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("uri", &v)
 }
 
@@ -251,7 +257,7 @@ func (x *ProxyAddress) GetPropertyUri() string {
 func (x *ProxyAddress) SetPropertyUsername(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("username", &v)
 }
 

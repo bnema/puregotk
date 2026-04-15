@@ -247,7 +247,7 @@ func (x *StyleContext) AddClass(ClassNameVar string) {
 	xStyleContextAddClass(x.GoPointer(), ClassNameVar)
 }
 
-var xStyleContextAddProvider func(uintptr, uintptr, uint32)
+var xStyleContextAddProvider func(uintptr, uintptr, uint)
 
 // Adds a style provider to @context, to be used in style construction.
 //
@@ -259,7 +259,7 @@ var xStyleContextAddProvider func(uintptr, uintptr, uint32)
 // Note: If both priorities are the same, a `GtkStyleProvider`
 // added through this function takes precedence over another added
 // through [func@Gtk.StyleContext.add_provider_for_display].
-func (x *StyleContext) AddProvider(ProviderVar StyleProvider, PriorityVar uint32) {
+func (x *StyleContext) AddProvider(ProviderVar StyleProvider, PriorityVar uint) {
 	xStyleContextAddProvider(x.GoPointer(), ProviderVar.GoPointer(), PriorityVar)
 }
 
@@ -308,10 +308,10 @@ func (x *StyleContext) GetPadding(PaddingVar *Border) {
 	xStyleContextGetPadding(x.GoPointer(), PaddingVar)
 }
 
-var xStyleContextGetScale func(uintptr) int32
+var xStyleContextGetScale func(uintptr) int
 
 // Returns the scale used for assets.
-func (x *StyleContext) GetScale() int32 {
+func (x *StyleContext) GetScale() int {
 	cret := xStyleContextGetScale(x.GoPointer())
 	return cret
 }
@@ -400,10 +400,10 @@ func (x *StyleContext) SetDisplay(DisplayVar *gdk.Display) {
 	xStyleContextSetDisplay(x.GoPointer(), DisplayVar.GoPointer())
 }
 
-var xStyleContextSetScale func(uintptr, int32)
+var xStyleContextSetScale func(uintptr, int)
 
 // Sets the scale to use when getting image assets for the style.
-func (x *StyleContext) SetScale(ScaleVar int32) {
+func (x *StyleContext) SetScale(ScaleVar int) {
 	xStyleContextSetScale(x.GoPointer(), ScaleVar)
 }
 
@@ -442,7 +442,7 @@ func (c *StyleContext) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xStyleContextAddProviderForDisplay func(uintptr, uintptr, uint32)
+var xStyleContextAddProviderForDisplay func(uintptr, uintptr, uint)
 
 // Adds a global style provider to @display, which will be used
 // in style construction for all `GtkStyleContexts` under @display.
@@ -453,7 +453,7 @@ var xStyleContextAddProviderForDisplay func(uintptr, uintptr, uint32)
 // Note: If both priorities are the same, A `GtkStyleProvider`
 // added through [method@Gtk.StyleContext.add_provider] takes
 // precedence over another added through this function.
-func StyleContextAddProviderForDisplay(DisplayVar *gdk.Display, ProviderVar StyleProvider, PriorityVar uint32) {
+func StyleContextAddProviderForDisplay(DisplayVar *gdk.Display, ProviderVar StyleProvider, PriorityVar uint) {
 	xStyleContextAddProviderForDisplay(DisplayVar.GoPointer(), ProviderVar.GoPointer(), PriorityVar)
 }
 

@@ -98,10 +98,10 @@ func (c *SelectionFilterModel) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *SelectionFilterModel) GetPropertyNItems() uint32 {
+func (x *SelectionFilterModel) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -113,7 +113,7 @@ func (x *SelectionFilterModel) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *SelectionFilterModel) GetItem(PositionVar uint32) uintptr {
+func (x *SelectionFilterModel) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -136,7 +136,7 @@ func (x *SelectionFilterModel) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *SelectionFilterModel) GetNItems() uint32 {
+func (x *SelectionFilterModel) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -153,7 +153,7 @@ func (x *SelectionFilterModel) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *SelectionFilterModel) GetObject(PositionVar uint32) *gobject.Object {
+func (x *SelectionFilterModel) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -186,7 +186,7 @@ func (x *SelectionFilterModel) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *SelectionFilterModel) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *SelectionFilterModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

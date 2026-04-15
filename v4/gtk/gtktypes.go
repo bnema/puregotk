@@ -50,10 +50,10 @@ func NewBitsetEmpty() *Bitset {
 	return (*Bitset)(unsafe.Pointer(cret))
 }
 
-var xNewBitsetRange func(uint32, uint32) uintptr
+var xNewBitsetRange func(uint, uint) uintptr
 
 // Creates a bitset with the given range set.
-func NewBitsetRange(StartVar uint32, NItemsVar uint32) *Bitset {
+func NewBitsetRange(StartVar uint, NItemsVar uint) *Bitset {
 	cret := xNewBitsetRange(StartVar, NItemsVar)
 	if cret == 0 {
 		return nil
@@ -61,42 +61,42 @@ func NewBitsetRange(StartVar uint32, NItemsVar uint32) *Bitset {
 	return (*Bitset)(unsafe.Pointer(cret))
 }
 
-var xBitsetAdd func(uintptr, uint32) bool
+var xBitsetAdd func(uintptr, uint) bool
 
 // Adds @value to @self if it wasn't part of it before.
-func (x *Bitset) Add(ValueVar uint32) bool {
+func (x *Bitset) Add(ValueVar uint) bool {
 	cret := xBitsetAdd(x.GoPointer(), ValueVar)
 	return cret
 }
 
-var xBitsetAddRange func(uintptr, uint32, uint32)
+var xBitsetAddRange func(uintptr, uint, uint)
 
 // Adds all values from @start (inclusive) to @start + @n_items
 // (exclusive) in @self.
-func (x *Bitset) AddRange(StartVar uint32, NItemsVar uint32) {
+func (x *Bitset) AddRange(StartVar uint, NItemsVar uint) {
 	xBitsetAddRange(x.GoPointer(), StartVar, NItemsVar)
 }
 
-var xBitsetAddRangeClosed func(uintptr, uint32, uint32)
+var xBitsetAddRangeClosed func(uintptr, uint, uint)
 
 // Adds the closed range [@first, @last], so @first, @last and all
 // values in between. @first must be smaller than @last.
-func (x *Bitset) AddRangeClosed(FirstVar uint32, LastVar uint32) {
+func (x *Bitset) AddRangeClosed(FirstVar uint, LastVar uint) {
 	xBitsetAddRangeClosed(x.GoPointer(), FirstVar, LastVar)
 }
 
-var xBitsetAddRectangle func(uintptr, uint32, uint32, uint32, uint32)
+var xBitsetAddRectangle func(uintptr, uint, uint, uint, uint)
 
 // Interprets the values as a 2-dimensional boolean grid with the given @stride
 // and inside that grid, adds a rectangle with the given @width and @height.
-func (x *Bitset) AddRectangle(StartVar uint32, WidthVar uint32, HeightVar uint32, StrideVar uint32) {
+func (x *Bitset) AddRectangle(StartVar uint, WidthVar uint, HeightVar uint, StrideVar uint) {
 	xBitsetAddRectangle(x.GoPointer(), StartVar, WidthVar, HeightVar, StrideVar)
 }
 
-var xBitsetContains func(uintptr, uint32) bool
+var xBitsetContains func(uintptr, uint) bool
 
 // Checks if the given @value has been added to @self
-func (x *Bitset) Contains(ValueVar uint32) bool {
+func (x *Bitset) Contains(ValueVar uint) bool {
 	cret := xBitsetContains(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -134,32 +134,32 @@ func (x *Bitset) Equals(OtherVar *Bitset) bool {
 	return cret
 }
 
-var xBitsetGetMaximum func(uintptr) uint32
+var xBitsetGetMaximum func(uintptr) uint
 
 // Returns the largest value in @self.
 //
 // If @self is empty, 0 is returned.
-func (x *Bitset) GetMaximum() uint32 {
+func (x *Bitset) GetMaximum() uint {
 	cret := xBitsetGetMaximum(x.GoPointer())
 	return cret
 }
 
-var xBitsetGetMinimum func(uintptr) uint32
+var xBitsetGetMinimum func(uintptr) uint
 
 // Returns the smallest value in @self.
 //
 // If @self is empty, `G_MAXUINT` is returned.
-func (x *Bitset) GetMinimum() uint32 {
+func (x *Bitset) GetMinimum() uint {
 	cret := xBitsetGetMinimum(x.GoPointer())
 	return cret
 }
 
-var xBitsetGetNth func(uintptr, uint32) uint32
+var xBitsetGetNth func(uintptr, uint) uint
 
 // Returns the value of the @nth item in self.
 //
 // If @nth is &gt;= the size of @self, 0 is returned.
-func (x *Bitset) GetNth(NthVar uint32) uint32 {
+func (x *Bitset) GetNth(NthVar uint) uint {
 	cret := xBitsetGetNth(x.GoPointer(), NthVar)
 	return cret
 }
@@ -179,7 +179,7 @@ func (x *Bitset) GetSize() uint64 {
 	return cret
 }
 
-var xBitsetGetSizeInRange func(uintptr, uint32, uint32) uint64
+var xBitsetGetSizeInRange func(uintptr, uint, uint) uint64
 
 // Gets the number of values that are part of the set from @first to @last
 // (inclusive).
@@ -187,7 +187,7 @@ var xBitsetGetSizeInRange func(uintptr, uint32, uint32) uint64
 // Note that this function returns a `guint64`, because when all values are
 // set, the return value is `G_MAXUINT + 1`. Unless you are sure this cannot
 // happen (it can't with `GListModel`), be sure to use a 64bit type.
-func (x *Bitset) GetSizeInRange(FirstVar uint32, LastVar uint32) uint64 {
+func (x *Bitset) GetSizeInRange(FirstVar uint, LastVar uint) uint64 {
 	cret := xBitsetGetSizeInRange(x.GoPointer(), FirstVar, LastVar)
 	return cret
 }
@@ -223,10 +223,10 @@ func (x *Bitset) Ref() *Bitset {
 	return (*Bitset)(unsafe.Pointer(cret))
 }
 
-var xBitsetRemove func(uintptr, uint32) bool
+var xBitsetRemove func(uintptr, uint) bool
 
 // Removes @value from @self if it was part of it before.
-func (x *Bitset) Remove(ValueVar uint32) bool {
+func (x *Bitset) Remove(ValueVar uint) bool {
 	cret := xBitsetRemove(x.GoPointer(), ValueVar)
 	return cret
 }
@@ -238,49 +238,49 @@ func (x *Bitset) RemoveAll() {
 	xBitsetRemoveAll(x.GoPointer())
 }
 
-var xBitsetRemoveRange func(uintptr, uint32, uint32)
+var xBitsetRemoveRange func(uintptr, uint, uint)
 
 // Removes all values from @start (inclusive) to @start + @n_items (exclusive)
 // in @self.
-func (x *Bitset) RemoveRange(StartVar uint32, NItemsVar uint32) {
+func (x *Bitset) RemoveRange(StartVar uint, NItemsVar uint) {
 	xBitsetRemoveRange(x.GoPointer(), StartVar, NItemsVar)
 }
 
-var xBitsetRemoveRangeClosed func(uintptr, uint32, uint32)
+var xBitsetRemoveRangeClosed func(uintptr, uint, uint)
 
 // Removes the closed range [@first, @last], so @first, @last and all
 // values in between. @first must be smaller than @last.
-func (x *Bitset) RemoveRangeClosed(FirstVar uint32, LastVar uint32) {
+func (x *Bitset) RemoveRangeClosed(FirstVar uint, LastVar uint) {
 	xBitsetRemoveRangeClosed(x.GoPointer(), FirstVar, LastVar)
 }
 
-var xBitsetRemoveRectangle func(uintptr, uint32, uint32, uint32, uint32)
+var xBitsetRemoveRectangle func(uintptr, uint, uint, uint, uint)
 
 // Interprets the values as a 2-dimensional boolean grid with the given @stride
 // and inside that grid, removes a rectangle with the given @width and @height.
-func (x *Bitset) RemoveRectangle(StartVar uint32, WidthVar uint32, HeightVar uint32, StrideVar uint32) {
+func (x *Bitset) RemoveRectangle(StartVar uint, WidthVar uint, HeightVar uint, StrideVar uint) {
 	xBitsetRemoveRectangle(x.GoPointer(), StartVar, WidthVar, HeightVar, StrideVar)
 }
 
-var xBitsetShiftLeft func(uintptr, uint32)
+var xBitsetShiftLeft func(uintptr, uint)
 
 // Shifts all values in @self to the left by @amount.
 //
 // Values smaller than @amount are discarded.
-func (x *Bitset) ShiftLeft(AmountVar uint32) {
+func (x *Bitset) ShiftLeft(AmountVar uint) {
 	xBitsetShiftLeft(x.GoPointer(), AmountVar)
 }
 
-var xBitsetShiftRight func(uintptr, uint32)
+var xBitsetShiftRight func(uintptr, uint)
 
 // Shifts all values in @self to the right by @amount.
 //
 // Values that end up too large to be held in a #guint are discarded.
-func (x *Bitset) ShiftRight(AmountVar uint32) {
+func (x *Bitset) ShiftRight(AmountVar uint) {
 	xBitsetShiftRight(x.GoPointer(), AmountVar)
 }
 
-var xBitsetSplice func(uintptr, uint32, uint32, uint32)
+var xBitsetSplice func(uintptr, uint, uint, uint)
 
 // This is a support function for `GListModel` handling, by mirroring
 // the `GlistModel::items-changed` signal.
@@ -292,7 +292,7 @@ var xBitsetSplice func(uintptr, uint32, uint32, uint32)
 // Then, it "pastes" new room into the bitset by shifting all values
 // larger than @position by @added spaces to the right. This frees
 // up space that can then be filled.
-func (x *Bitset) Splice(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *Bitset) Splice(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	xBitsetSplice(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
@@ -428,7 +428,7 @@ const (
 	//
 	// Refer to each function's documentation for if this value is
 	// allowed and what it does.
-	INVALID_LIST_POSITION uint32 = 4294967295
+	INVALID_LIST_POSITION uint = 4294967295
 )
 
 func init() {

@@ -49,7 +49,7 @@ func (x *Cookie) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewCookie func(string, string, string, string, int32) uintptr
+var xNewCookie func(string, string, string, string, int) uintptr
 
 // Creates a new [struct@Cookie] with the given attributes.
 //
@@ -72,7 +72,7 @@ var xNewCookie func(string, string, string, string, int32) uintptr
 //
 // As of version 3.4.0 the default value of a cookie's same-site-policy
 // is %SOUP_SAME_SITE_POLICY_LAX.
-func NewCookie(NameVar string, ValueVar string, DomainVar string, PathVar string, MaxAgeVar int32) *Cookie {
+func NewCookie(NameVar string, ValueVar string, DomainVar string, PathVar string, MaxAgeVar int) *Cookie {
 	cret := xNewCookie(NameVar, ValueVar, DomainVar, PathVar, MaxAgeVar)
 	if cret == 0 {
 		return nil
@@ -228,7 +228,7 @@ func (x *Cookie) SetHttpOnly(HttpOnlyVar bool) {
 	xCookieSetHttpOnly(x.GoPointer(), HttpOnlyVar)
 }
 
-var xCookieSetMaxAge func(uintptr, int32)
+var xCookieSetMaxAge func(uintptr, int)
 
 // Sets @cookie's max age to @max_age.
 //
@@ -241,7 +241,7 @@ var xCookieSetMaxAge func(uintptr, int32)
 // already-expired.)
 //
 // This sets the same property as [method@Cookie.set_expires].
-func (x *Cookie) SetMaxAge(MaxAgeVar int32) {
+func (x *Cookie) SetMaxAge(MaxAgeVar int) {
 	xCookieSetMaxAge(x.GoPointer(), MaxAgeVar)
 }
 
@@ -335,7 +335,7 @@ func (x *HSTSPolicy) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewHSTSPolicy func(string, uint32, bool) uintptr
+var xNewHSTSPolicy func(string, uint, bool) uintptr
 
 // Creates a new [struct@HSTSPolicy] with the given attributes.
 //
@@ -348,7 +348,7 @@ var xNewHSTSPolicy func(string, uint32, bool) uintptr
 //
 // If @include_subdomains is %TRUE, the strict transport security policy
 // must also be enforced on all subdomains of @domain.
-func NewHSTSPolicy(DomainVar string, MaxAgeVar uint32, IncludeSubdomainsVar bool) *HSTSPolicy {
+func NewHSTSPolicy(DomainVar string, MaxAgeVar uint, IncludeSubdomainsVar bool) *HSTSPolicy {
 	cret := xNewHSTSPolicy(DomainVar, MaxAgeVar, IncludeSubdomainsVar)
 	if cret == 0 {
 		return nil
@@ -368,13 +368,13 @@ func NewHSTSPolicyFromResponse(MsgVar *Message) *HSTSPolicy {
 	return (*HSTSPolicy)(unsafe.Pointer(cret))
 }
 
-var xNewHSTSPolicyFull func(string, uint32, *glib.DateTime, bool) uintptr
+var xNewHSTSPolicyFull func(string, uint, *glib.DateTime, bool) uintptr
 
 // Full version of [ctor@HSTSPolicy.new], to use with an existing
 // expiration date.
 //
 // See [ctor@HSTSPolicy.new] for details.
-func NewHSTSPolicyFull(DomainVar string, MaxAgeVar uint32, ExpiresVar *glib.DateTime, IncludeSubdomainsVar bool) *HSTSPolicy {
+func NewHSTSPolicyFull(DomainVar string, MaxAgeVar uint, ExpiresVar *glib.DateTime, IncludeSubdomainsVar bool) *HSTSPolicy {
 	cret := xNewHSTSPolicyFull(DomainVar, MaxAgeVar, ExpiresVar, IncludeSubdomainsVar)
 	if cret == 0 {
 		return nil
@@ -450,10 +450,10 @@ func (x *HSTSPolicy) GetExpires() *glib.DateTime {
 	return (*glib.DateTime)(unsafe.Pointer(cret))
 }
 
-var xHSTSPolicyGetMaxAge func(uintptr) uint32
+var xHSTSPolicyGetMaxAge func(uintptr) uint
 
 // Returns the max age for @policy.
-func (x *HSTSPolicy) GetMaxAge() uint32 {
+func (x *HSTSPolicy) GetMaxAge() uint {
 	cret := xHSTSPolicyGetMaxAge(x.GoPointer())
 	return cret
 }

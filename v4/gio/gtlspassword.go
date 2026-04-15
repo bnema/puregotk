@@ -257,7 +257,7 @@ func (c *TlsPassword) SetGoPointer(ptr uintptr) {
 func (x *TlsPassword) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -274,7 +274,7 @@ func (x *TlsPassword) GetPropertyDescription() string {
 func (x *TlsPassword) SetPropertyWarning(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("warning", &v)
 }
 

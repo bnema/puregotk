@@ -264,10 +264,10 @@ func (x *Popover) GetMnemonicsVisible() bool {
 	return cret
 }
 
-var xPopoverGetOffset func(uintptr, *int32, *int32)
+var xPopoverGetOffset func(uintptr, *int, *int)
 
 // Gets the offset previous set with [method@Gtk.Popover.set_offset].
-func (x *Popover) GetOffset(XOffsetVar *int32, YOffsetVar *int32) {
+func (x *Popover) GetOffset(XOffsetVar *int, YOffsetVar *int) {
 	xPopoverGetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
 }
 
@@ -380,14 +380,14 @@ func (x *Popover) SetMnemonicsVisible(MnemonicsVisibleVar bool) {
 	xPopoverSetMnemonicsVisible(x.GoPointer(), MnemonicsVisibleVar)
 }
 
-var xPopoverSetOffset func(uintptr, int32, int32)
+var xPopoverSetOffset func(uintptr, int, int)
 
 // Sets the offset to use when calculating the position
 // of the popover.
 //
 // These values are used when preparing the [struct@Gdk.PopupLayout]
 // for positioning the popover.
-func (x *Popover) SetOffset(XOffsetVar int32, YOffsetVar int32) {
+func (x *Popover) SetOffset(XOffsetVar int, YOffsetVar int) {
 	xPopoverSetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
 }
 
@@ -519,7 +519,7 @@ func (x *Popover) GetPropertyPointingTo() uintptr {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Enter&lt;/kbd&gt;.
-func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
+func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
@@ -542,7 +542,7 @@ func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
 }
 
 // Emitted when the popover is closed.
-func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
+func (x *Popover) ConnectClosed(cb *func(Popover)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -630,7 +630,7 @@ func (x *Popover) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Popover) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Popover) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -746,7 +746,7 @@ func (x *Popover) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Popover) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Popover) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -778,7 +778,7 @@ func (x *Popover) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Popover) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Popover) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -811,7 +811,7 @@ func (x *Popover) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Popover) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Popover) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

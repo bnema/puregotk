@@ -51,47 +51,47 @@ func (x *EntryBufferClass) GoPointer() uintptr {
 }
 
 // OverrideInsertedText sets the "inserted_text" callback function.
-func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint32, string, uint32)) {
+func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint, string, uint)) {
 	if cb == nil {
 		x.xInsertedText = 0
 	} else {
-		x.xInsertedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32) {
+		x.xInsertedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) {
 			cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, CharsVarp, NCharsVarp)
 		})
 	}
 }
 
 // GetInsertedText gets the "inserted_text" callback function.
-func (x *EntryBufferClass) GetInsertedText() func(*EntryBuffer, uint32, string, uint32) {
+func (x *EntryBufferClass) GetInsertedText() func(*EntryBuffer, uint, string, uint) {
 	if x.xInsertedText == 0 {
 		return nil
 	}
-	var rawCallback func(BufferVarp uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32)
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xInsertedText)
-	return func(BufferVar *EntryBuffer, PositionVar uint32, CharsVar string, NCharsVar uint32) {
+	return func(BufferVar *EntryBuffer, PositionVar uint, CharsVar string, NCharsVar uint) {
 		rawCallback(BufferVar.GoPointer(), PositionVar, CharsVar, NCharsVar)
 	}
 }
 
 // OverrideDeletedText sets the "deleted_text" callback function.
-func (x *EntryBufferClass) OverrideDeletedText(cb func(*EntryBuffer, uint32, uint32)) {
+func (x *EntryBufferClass) OverrideDeletedText(cb func(*EntryBuffer, uint, uint)) {
 	if cb == nil {
 		x.xDeletedText = 0
 	} else {
-		x.xDeletedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint32, NCharsVarp uint32) {
+		x.xDeletedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) {
 			cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, NCharsVarp)
 		})
 	}
 }
 
 // GetDeletedText gets the "deleted_text" callback function.
-func (x *EntryBufferClass) GetDeletedText() func(*EntryBuffer, uint32, uint32) {
+func (x *EntryBufferClass) GetDeletedText() func(*EntryBuffer, uint, uint) {
 	if x.xDeletedText == 0 {
 		return nil
 	}
-	var rawCallback func(BufferVarp uintptr, PositionVarp uint32, NCharsVarp uint32)
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xDeletedText)
-	return func(BufferVar *EntryBuffer, PositionVar uint32, NCharsVar uint32) {
+	return func(BufferVar *EntryBuffer, PositionVar uint, NCharsVar uint) {
 		rawCallback(BufferVar.GoPointer(), PositionVar, NCharsVar)
 	}
 }
@@ -120,70 +120,70 @@ func (x *EntryBufferClass) GetGetText() func(*EntryBuffer, uint) string {
 }
 
 // OverrideGetLength sets the "get_length" callback function.
-func (x *EntryBufferClass) OverrideGetLength(cb func(*EntryBuffer) uint32) {
+func (x *EntryBufferClass) OverrideGetLength(cb func(*EntryBuffer) uint) {
 	if cb == nil {
 		x.xGetLength = 0
 	} else {
-		x.xGetLength = purego.NewCallback(func(BufferVarp uintptr) uint32 {
+		x.xGetLength = purego.NewCallback(func(BufferVarp uintptr) uint {
 			return cb(EntryBufferNewFromInternalPtr(BufferVarp))
 		})
 	}
 }
 
 // GetGetLength gets the "get_length" callback function.
-func (x *EntryBufferClass) GetGetLength() func(*EntryBuffer) uint32 {
+func (x *EntryBufferClass) GetGetLength() func(*EntryBuffer) uint {
 	if x.xGetLength == 0 {
 		return nil
 	}
-	var rawCallback func(BufferVarp uintptr) uint32
+	var rawCallback func(BufferVarp uintptr) uint
 	purego.RegisterFunc(&rawCallback, x.xGetLength)
-	return func(BufferVar *EntryBuffer) uint32 {
+	return func(BufferVar *EntryBuffer) uint {
 		return rawCallback(BufferVar.GoPointer())
 	}
 }
 
 // OverrideInsertText sets the "insert_text" callback function.
-func (x *EntryBufferClass) OverrideInsertText(cb func(*EntryBuffer, uint32, string, uint32) uint32) {
+func (x *EntryBufferClass) OverrideInsertText(cb func(*EntryBuffer, uint, string, uint) uint) {
 	if cb == nil {
 		x.xInsertText = 0
 	} else {
-		x.xInsertText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32) uint32 {
+		x.xInsertText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) uint {
 			return cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, CharsVarp, NCharsVarp)
 		})
 	}
 }
 
 // GetInsertText gets the "insert_text" callback function.
-func (x *EntryBufferClass) GetInsertText() func(*EntryBuffer, uint32, string, uint32) uint32 {
+func (x *EntryBufferClass) GetInsertText() func(*EntryBuffer, uint, string, uint) uint {
 	if x.xInsertText == 0 {
 		return nil
 	}
-	var rawCallback func(BufferVarp uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32) uint32
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) uint
 	purego.RegisterFunc(&rawCallback, x.xInsertText)
-	return func(BufferVar *EntryBuffer, PositionVar uint32, CharsVar string, NCharsVar uint32) uint32 {
+	return func(BufferVar *EntryBuffer, PositionVar uint, CharsVar string, NCharsVar uint) uint {
 		return rawCallback(BufferVar.GoPointer(), PositionVar, CharsVar, NCharsVar)
 	}
 }
 
 // OverrideDeleteText sets the "delete_text" callback function.
-func (x *EntryBufferClass) OverrideDeleteText(cb func(*EntryBuffer, uint32, uint32) uint32) {
+func (x *EntryBufferClass) OverrideDeleteText(cb func(*EntryBuffer, uint, uint) uint) {
 	if cb == nil {
 		x.xDeleteText = 0
 	} else {
-		x.xDeleteText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint32, NCharsVarp uint32) uint32 {
+		x.xDeleteText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) uint {
 			return cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, NCharsVarp)
 		})
 	}
 }
 
 // GetDeleteText gets the "delete_text" callback function.
-func (x *EntryBufferClass) GetDeleteText() func(*EntryBuffer, uint32, uint32) uint32 {
+func (x *EntryBufferClass) GetDeleteText() func(*EntryBuffer, uint, uint) uint {
 	if x.xDeleteText == 0 {
 		return nil
 	}
-	var rawCallback func(BufferVarp uintptr, PositionVarp uint32, NCharsVarp uint32) uint32
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) uint
 	purego.RegisterFunc(&rawCallback, x.xDeleteText)
-	return func(BufferVar *EntryBuffer, PositionVar uint32, NCharsVar uint32) uint32 {
+	return func(BufferVar *EntryBuffer, PositionVar uint, NCharsVar uint) uint {
 		return rawCallback(BufferVar.GoPointer(), PositionVar, NCharsVar)
 	}
 }
@@ -398,15 +398,18 @@ func EntryBufferNewFromInternalPtr(ptr uintptr) *EntryBuffer {
 	return cls
 }
 
-var xNewEntryBuffer func(string, int32) uintptr
+var xNewEntryBuffer func(uintptr, int) uintptr
 
 // Create a new `GtkEntryBuffer` object.
 //
 // Optionally, specify initial text to set in the buffer.
-func NewEntryBuffer(InitialCharsVar string, NInitialCharsVar int32) *EntryBuffer {
+func NewEntryBuffer(InitialCharsVar *string, NInitialCharsVar int) *EntryBuffer {
 	var cls *EntryBuffer
 
-	cret := xNewEntryBuffer(InitialCharsVar, NInitialCharsVar)
+	InitialCharsVarPtr := core.GStrdupNullable(InitialCharsVar)
+	defer core.GFreeNullable(InitialCharsVarPtr)
+
+	cret := xNewEntryBuffer(InitialCharsVarPtr, NInitialCharsVar)
 
 	if cret == 0 {
 		return nil
@@ -416,7 +419,7 @@ func NewEntryBuffer(InitialCharsVar string, NInitialCharsVar int32) *EntryBuffer
 	return cls
 }
 
-var xEntryBufferDeleteText func(uintptr, uint32, int32) uint32
+var xEntryBufferDeleteText func(uintptr, uint, int) uint
 
 // Deletes a sequence of characters from the buffer.
 //
@@ -429,22 +432,22 @@ var xEntryBufferDeleteText func(uintptr, uint32, int32) uint32
 //
 // Note that the positions are specified in characters,
 // not bytes.
-func (x *EntryBuffer) DeleteText(PositionVar uint32, NCharsVar int32) uint32 {
+func (x *EntryBuffer) DeleteText(PositionVar uint, NCharsVar int) uint {
 	cret := xEntryBufferDeleteText(x.GoPointer(), PositionVar, NCharsVar)
 	return cret
 }
 
-var xEntryBufferEmitDeletedText func(uintptr, uint32, uint32)
+var xEntryBufferEmitDeletedText func(uintptr, uint, uint)
 
 // Used when subclassing `GtkEntryBuffer`.
-func (x *EntryBuffer) EmitDeletedText(PositionVar uint32, NCharsVar uint32) {
+func (x *EntryBuffer) EmitDeletedText(PositionVar uint, NCharsVar uint) {
 	xEntryBufferEmitDeletedText(x.GoPointer(), PositionVar, NCharsVar)
 }
 
-var xEntryBufferEmitInsertedText func(uintptr, uint32, string, uint32)
+var xEntryBufferEmitInsertedText func(uintptr, uint, string, uint)
 
 // Used when subclassing `GtkEntryBuffer`.
-func (x *EntryBuffer) EmitInsertedText(PositionVar uint32, CharsVar string, NCharsVar uint32) {
+func (x *EntryBuffer) EmitInsertedText(PositionVar uint, CharsVar string, NCharsVar uint) {
 	xEntryBufferEmitInsertedText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
 }
 
@@ -458,18 +461,18 @@ func (x *EntryBuffer) GetBytes() uint {
 	return cret
 }
 
-var xEntryBufferGetLength func(uintptr) uint32
+var xEntryBufferGetLength func(uintptr) uint
 
 // Retrieves the length in characters of the buffer.
-func (x *EntryBuffer) GetLength() uint32 {
+func (x *EntryBuffer) GetLength() uint {
 	cret := xEntryBufferGetLength(x.GoPointer())
 	return cret
 }
 
-var xEntryBufferGetMaxLength func(uintptr) int32
+var xEntryBufferGetMaxLength func(uintptr) int
 
 // Retrieves the maximum allowed length of the text in @buffer.
-func (x *EntryBuffer) GetMaxLength() int32 {
+func (x *EntryBuffer) GetMaxLength() int {
 	cret := xEntryBufferGetMaxLength(x.GoPointer())
 	return cret
 }
@@ -485,7 +488,7 @@ func (x *EntryBuffer) GetText() string {
 	return cret
 }
 
-var xEntryBufferInsertText func(uintptr, uint32, string, int32) uint32
+var xEntryBufferInsertText func(uintptr, uint, string, int) uint
 
 // Inserts @n_chars characters of @chars into the contents of the
 // buffer, at position @position.
@@ -496,22 +499,22 @@ var xEntryBufferInsertText func(uintptr, uint32, string, int32) uint32
 // coerced to sane values.
 //
 // Note that the position and length are in characters, not in bytes.
-func (x *EntryBuffer) InsertText(PositionVar uint32, CharsVar string, NCharsVar int32) uint32 {
+func (x *EntryBuffer) InsertText(PositionVar uint, CharsVar string, NCharsVar int) uint {
 	cret := xEntryBufferInsertText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
 	return cret
 }
 
-var xEntryBufferSetMaxLength func(uintptr, int32)
+var xEntryBufferSetMaxLength func(uintptr, int)
 
 // Sets the maximum allowed length of the contents of the buffer.
 //
 // If the current contents are longer than the given length, then
 // they will be truncated to fit.
-func (x *EntryBuffer) SetMaxLength(MaxLengthVar int32) {
+func (x *EntryBuffer) SetMaxLength(MaxLengthVar int) {
 	xEntryBufferSetMaxLength(x.GoPointer(), MaxLengthVar)
 }
 
-var xEntryBufferSetText func(uintptr, string, int32)
+var xEntryBufferSetText func(uintptr, string, int)
 
 // Sets the text in the buffer.
 //
@@ -520,7 +523,7 @@ var xEntryBufferSetText func(uintptr, string, int32)
 // [method@Gtk.EntryBuffer.insert_text].
 //
 // Note that @n_chars is in characters, not in bytes.
-func (x *EntryBuffer) SetText(CharsVar string, NCharsVar int32) {
+func (x *EntryBuffer) SetText(CharsVar string, NCharsVar int) {
 	xEntryBufferSetText(x.GoPointer(), CharsVar, NCharsVar)
 }
 
@@ -537,27 +540,27 @@ func (c *EntryBuffer) SetGoPointer(ptr uintptr) {
 
 // GetPropertyLength gets the "length" property.
 // The length (in characters) of the text in buffer.
-func (x *EntryBuffer) GetPropertyLength() uint32 {
+func (x *EntryBuffer) GetPropertyLength() uint {
 	var v gobject.Value
 	x.GetProperty("length", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyMaxLength sets the "max-length" property.
 // The maximum length (in characters) of the text in the buffer.
-func (x *EntryBuffer) SetPropertyMaxLength(value int32) {
+func (x *EntryBuffer) SetPropertyMaxLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-length", &v)
 }
 
 // GetPropertyMaxLength gets the "max-length" property.
 // The maximum length (in characters) of the text in the buffer.
-func (x *EntryBuffer) GetPropertyMaxLength() int32 {
+func (x *EntryBuffer) GetPropertyMaxLength() int {
 	var v gobject.Value
 	x.GetProperty("max-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyText sets the "text" property.
@@ -565,7 +568,7 @@ func (x *EntryBuffer) GetPropertyMaxLength() int32 {
 func (x *EntryBuffer) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -581,7 +584,7 @@ func (x *EntryBuffer) GetPropertyText() string {
 //
 // If you want access to the text after the text has been modified,
 // use %G_CONNECT_AFTER.
-func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) uint32 {
+func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
@@ -589,7 +592,7 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PositionVarp uint32, NCharsVarp uint32) {
+	fcb := func(clsPtr uintptr, PositionVarp uint, NCharsVarp uint) {
 		fa := EntryBuffer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -604,7 +607,7 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint32, uint32)) 
 }
 
 // This signal is emitted after text is inserted into the buffer.
-func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint32, string, uint32)) uint32 {
+func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
@@ -612,7 +615,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint32, string, 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PositionVarp uint32, CharsVarp string, NCharsVarp uint32) {
+	fcb := func(clsPtr uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) {
 		fa := EntryBuffer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

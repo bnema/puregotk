@@ -333,7 +333,7 @@ func (x *Server) AddAuthDomain(AuthDomainVar *AuthDomain) {
 	xServerAddAuthDomain(x.GoPointer(), AuthDomainVar.GoPointer())
 }
 
-var xServerAddEarlyHandler func(uintptr, string, uintptr, uintptr, uintptr)
+var xServerAddEarlyHandler func(uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Adds an "early" handler to @server for requests prefixed by @path.
 //
@@ -361,11 +361,14 @@ var xServerAddEarlyHandler func(uintptr, string, uintptr, uintptr, uintptr)
 // long as you have not set the status-code by the time
 // [signal@ServerMessage::got-body] is emitted, the non-early handler will be
 // run as well.
-func (x *Server) AddEarlyHandler(PathVar string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xServerAddEarlyHandler(x.GoPointer(), PathVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
+func (x *Server) AddEarlyHandler(PathVar *string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	xServerAddEarlyHandler(x.GoPointer(), PathVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
-var xServerAddHandler func(uintptr, string, uintptr, uintptr, uintptr)
+var xServerAddHandler func(uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Adds a handler to @server for requests prefixed by @path.
 //
@@ -400,8 +403,11 @@ var xServerAddHandler func(uintptr, string, uintptr, uintptr, uintptr)
 // will automatically pause the message if it is using chunked encoding but no
 // more chunks are available.) When you are done, call
 // [method@MessageBody.complete] to indicate that no more chunks are coming.
-func (x *Server) AddHandler(PathVar string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xServerAddHandler(x.GoPointer(), PathVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
+func (x *Server) AddHandler(PathVar *string, CallbackVar *ServerCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	xServerAddHandler(x.GoPointer(), PathVarPtr, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xServerAddWebsocketExtension func(uintptr, types.GType)
@@ -418,7 +424,7 @@ func (x *Server) AddWebsocketExtension(ExtensionTypeVar types.GType) {
 	xServerAddWebsocketExtension(x.GoPointer(), ExtensionTypeVar)
 }
 
-var xServerAddWebsocketHandler func(uintptr, string, string, []string, uintptr, uintptr, uintptr)
+var xServerAddWebsocketHandler func(uintptr, uintptr, uintptr, []string, uintptr, uintptr, uintptr)
 
 // Adds a WebSocket handler to @server for requests prefixed by @path.
 //
@@ -438,8 +444,14 @@ var xServerAddWebsocketHandler func(uintptr, string, string, []string, uintptr, 
 // handled by adding a normal handler to @path, and having it perform
 // whatever checks are needed and
 // setting a failure status code if the handshake should be rejected.
-func (x *Server) AddWebsocketHandler(PathVar string, OriginVar string, ProtocolsVar []string, CallbackVar *ServerWebsocketCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
-	xServerAddWebsocketHandler(x.GoPointer(), PathVar, OriginVar, ProtocolsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
+func (x *Server) AddWebsocketHandler(PathVar *string, OriginVar *string, ProtocolsVar []string, CallbackVar *ServerWebsocketCallback, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
+
+	OriginVarPtr := core.GStrdupNullable(OriginVar)
+	defer core.GFreeNullable(OriginVarPtr)
+
+	xServerAddWebsocketHandler(x.GoPointer(), PathVarPtr, OriginVarPtr, ProtocolsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 }
 
 var xServerDisconnect func(uintptr)
@@ -579,7 +591,7 @@ func (x *Server) Listen(AddressVar *gio.SocketAddress, OptionsVar ServerListenOp
 	return cret, cerr
 }
 
-var xServerListenAll func(uintptr, uint32, ServerListenOptions, **glib.Error) bool
+var xServerListenAll func(uintptr, uint, ServerListenOptions, **glib.Error) bool
 
 // Attempts to set up @server to listen for connections on all interfaces
 // on the system.
@@ -592,7 +604,7 @@ var xServerListenAll func(uintptr, uint32, ServerListenOptions, **glib.Error) bo
 // what port it ended up choosing.
 //
 // See [method@Server.listen] for more details.
-func (x *Server) ListenAll(PortVar uint32, OptionsVar ServerListenOptions) (bool, error) {
+func (x *Server) ListenAll(PortVar uint, OptionsVar ServerListenOptions) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xServerListenAll(x.GoPointer(), PortVar, OptionsVar, &cerr)
@@ -602,7 +614,7 @@ func (x *Server) ListenAll(PortVar uint32, OptionsVar ServerListenOptions) (bool
 	return cret, cerr
 }
 
-var xServerListenLocal func(uintptr, uint32, ServerListenOptions, **glib.Error) bool
+var xServerListenLocal func(uintptr, uint, ServerListenOptions, **glib.Error) bool
 
 // Attempts to set up @server to listen for connections on "localhost".
 //
@@ -613,7 +625,7 @@ var xServerListenLocal func(uintptr, uint32, ServerListenOptions, **glib.Error) 
 // [method@Server.get_uris] to find out what port it ended up choosing.
 //
 // See [method@Server.listen] for more details.
-func (x *Server) ListenLocal(PortVar uint32, OptionsVar ServerListenOptions) (bool, error) {
+func (x *Server) ListenLocal(PortVar uint, OptionsVar ServerListenOptions) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xServerListenLocal(x.GoPointer(), PortVar, OptionsVar, &cerr)
@@ -773,7 +785,7 @@ func (x *Server) GetPropertyRawPaths() bool {
 func (x *Server) SetPropertyServerHeader(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("server-header", &v)
 }
 
@@ -820,7 +832,7 @@ func (x *Server) GetPropertyServerHeader() string {
 // emitted; the signal exists primarily to allow the server to
 // free any state that it may have allocated in
 // [signal@Server::request-started].
-func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
+func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-aborted", cbRefPtr)
@@ -844,7 +856,7 @@ func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint32 {
 
 // Emitted when the server has finished writing a response to
 // a request.
-func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
+func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-finished", cbRefPtr)
@@ -874,7 +886,7 @@ func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint32 {
 // before any (non-early) handlers are called for the message,
 // and if it sets the message's #status_code, then normal
 // handler processing will be skipped.
-func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
+func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-read", cbRefPtr)
@@ -908,7 +920,7 @@ func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint32 {
 // a [signal@Server::request-finished] signal. If a network error
 // occurs, the processing will instead end with
 // [signal@Server::request-aborted].
-func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint32 {
+func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "request-started", cbRefPtr)

@@ -55,11 +55,11 @@ func (x *ListModelInterface) GetGetItemType() func(ListModel) types.GType {
 
 // OverrideGetNItems sets the "get_n_items" callback function.
 // the virtual function pointer for g_list_model_get_n_items()
-func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint32) {
+func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint) {
 	if cb == nil {
 		x.xGetNItems = 0
 	} else {
-		x.xGetNItems = purego.NewCallback(func(ListVarp uintptr) uint32 {
+		x.xGetNItems = purego.NewCallback(func(ListVarp uintptr) uint {
 			return cb(&ListModelBase{Ptr: ListVarp})
 		})
 	}
@@ -67,24 +67,24 @@ func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint32) {
 
 // GetGetNItems gets the "get_n_items" callback function.
 // the virtual function pointer for g_list_model_get_n_items()
-func (x *ListModelInterface) GetGetNItems() func(ListModel) uint32 {
+func (x *ListModelInterface) GetGetNItems() func(ListModel) uint {
 	if x.xGetNItems == 0 {
 		return nil
 	}
-	var rawCallback func(ListVarp uintptr) uint32
+	var rawCallback func(ListVarp uintptr) uint
 	purego.RegisterFunc(&rawCallback, x.xGetNItems)
-	return func(ListVar ListModel) uint32 {
+	return func(ListVar ListModel) uint {
 		return rawCallback(ListVar.GoPointer())
 	}
 }
 
 // OverrideGetItem sets the "get_item" callback function.
 // the virtual function pointer for g_list_model_get_item()
-func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint32) *gobject.Object) {
+func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint) *gobject.Object) {
 	if cb == nil {
 		x.xGetItem = 0
 	} else {
-		x.xGetItem = purego.NewCallback(func(ListVarp uintptr, PositionVarp uint32) uintptr {
+		x.xGetItem = purego.NewCallback(func(ListVarp uintptr, PositionVarp uint) uintptr {
 			ret := cb(&ListModelBase{Ptr: ListVarp}, PositionVarp)
 			if ret == nil {
 				return 0
@@ -96,13 +96,13 @@ func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint32) *gobject
 
 // GetGetItem gets the "get_item" callback function.
 // the virtual function pointer for g_list_model_get_item()
-func (x *ListModelInterface) GetGetItem() func(ListModel, uint32) *gobject.Object {
+func (x *ListModelInterface) GetGetItem() func(ListModel, uint) *gobject.Object {
 	if x.xGetItem == 0 {
 		return nil
 	}
-	var rawCallback func(ListVarp uintptr, PositionVarp uint32) uintptr
+	var rawCallback func(ListVarp uintptr, PositionVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetItem)
-	return func(ListVar ListModel, PositionVar uint32) *gobject.Object {
+	return func(ListVar ListModel, PositionVar uint) *gobject.Object {
 		rawRet := rawCallback(ListVar.GoPointer(), PositionVar)
 		if rawRet == 0 {
 			return nil
@@ -184,11 +184,11 @@ func (x *ListModelInterface) GetGetItem() func(ListModel, uint32) *gobject.Objec
 type ListModel interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	GetItem(PositionVar uint32) uintptr
+	GetItem(PositionVar uint) uintptr
 	GetItemType() types.GType
-	GetNItems() uint32
-	GetObject(PositionVar uint32) *gobject.Object
-	ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32)
+	GetNItems() uint
+	GetObject(PositionVar uint) *gobject.Object
+	ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint)
 }
 
 var xListModelGLibType func() types.GType
@@ -221,7 +221,7 @@ func (x *ListModelBase) SetGoPointer(ptr uintptr) {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *ListModelBase) GetItem(PositionVar uint32) uintptr {
+func (x *ListModelBase) GetItem(PositionVar uint) uintptr {
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -244,7 +244,7 @@ func (x *ListModelBase) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *ListModelBase) GetNItems() uint32 {
+func (x *ListModelBase) GetNItems() uint {
 	cret := XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -261,7 +261,7 @@ func (x *ListModelBase) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *ListModelBase) GetObject(PositionVar uint32) *gobject.Object {
+func (x *ListModelBase) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -294,16 +294,16 @@ func (x *ListModelBase) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *ListModelBase) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *ListModelBase) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 
 var (
-	XGListModelGetItem      func(uintptr, uint32) uintptr
+	XGListModelGetItem      func(uintptr, uint) uintptr
 	XGListModelGetItemType  func(uintptr) types.GType
-	XGListModelGetNItems    func(uintptr) uint32
-	XGListModelGetObject    func(uintptr, uint32) uintptr
-	XGListModelItemsChanged func(uintptr, uint32, uint32, uint32)
+	XGListModelGetNItems    func(uintptr) uint
+	XGListModelGetObject    func(uintptr, uint) uintptr
+	XGListModelItemsChanged func(uintptr, uint, uint, uint)
 )
 
 func init() {

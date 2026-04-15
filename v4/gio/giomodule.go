@@ -49,14 +49,14 @@ func (x *IOModuleScope) Free() {
 	xIOModuleScopeFree(x.GoPointer())
 }
 
-var xIoExtensionPointImplement func(string, types.GType, string, int32) uintptr
+var xIoExtensionPointImplement func(string, types.GType, string, int) uintptr
 
 // Registers @type as extension for the extension point with name
 // @extension_point_name.
 //
 // If @type has already been registered as an extension for this
 // extension point, the existing #GIOExtension object is returned.
-func IoExtensionPointImplement(ExtensionPointNameVar string, TypeVar types.GType, ExtensionNameVar string, PriorityVar int32) *IOExtension {
+func IoExtensionPointImplement(ExtensionPointNameVar string, TypeVar types.GType, ExtensionNameVar string, PriorityVar int) *IOExtension {
 	cret := xIoExtensionPointImplement(ExtensionPointNameVar, TypeVar, ExtensionNameVar, PriorityVar)
 	if cret == 0 {
 		return nil

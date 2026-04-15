@@ -127,7 +127,7 @@ func (x *EventControllerFocus) GetPropertyIsFocus() bool {
 // in these cases, you can monitor the
 // [property@Gtk.EventControllerFocus:is-focus]
 // property for changes.
-func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint32 {
+func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
@@ -158,7 +158,7 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 // to a descendent). If you are interested in these cases, you
 // can monitor the [property@Gtk.EventControllerFocus:is-focus]
 // property for changes.
-func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint32 {
+func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)

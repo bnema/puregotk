@@ -136,7 +136,7 @@ func (x *GLContext) GetForwardCompatible() bool {
 	return cret
 }
 
-var xGLContextGetRequiredVersion func(uintptr, *int32, *int32)
+var xGLContextGetRequiredVersion func(uintptr, *int, *int)
 
 // Retrieves required OpenGL version set as a requirement for the @context
 // realization. It will not change even if a greater OpenGL version is supported
@@ -144,7 +144,7 @@ var xGLContextGetRequiredVersion func(uintptr, *int32, *int32)
 // [method@Gdk.GLContext.get_version] for the real version in use.
 //
 // See [method@Gdk.GLContext.set_required_version].
-func (x *GLContext) GetRequiredVersion(MajorVar *int32, MinorVar *int32) {
+func (x *GLContext) GetRequiredVersion(MajorVar *int, MinorVar *int) {
 	xGLContextGetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
 }
 
@@ -193,12 +193,12 @@ func (x *GLContext) GetUseEs() bool {
 	return cret
 }
 
-var xGLContextGetVersion func(uintptr, *int32, *int32)
+var xGLContextGetVersion func(uintptr, *int, *int)
 
 // Retrieves the OpenGL version of the @context.
 //
 // The @context must be realized prior to calling this function.
-func (x *GLContext) GetVersion(MajorVar *int32, MinorVar *int32) {
+func (x *GLContext) GetVersion(MajorVar *int, MinorVar *int) {
 	xGLContextGetVersion(x.GoPointer(), MajorVar, MinorVar)
 }
 
@@ -307,7 +307,7 @@ func (x *GLContext) SetForwardCompatible(CompatibleVar bool) {
 	xGLContextSetForwardCompatible(x.GoPointer(), CompatibleVar)
 }
 
-var xGLContextSetRequiredVersion func(uintptr, int32, int32)
+var xGLContextSetRequiredVersion func(uintptr, int, int)
 
 // Sets the major and minor version of OpenGL to request.
 //
@@ -318,11 +318,11 @@ var xGLContextSetRequiredVersion func(uintptr, int32, int32)
 //
 // The @context must not be realized or made current prior to calling
 // this function.
-func (x *GLContext) SetRequiredVersion(MajorVar int32, MinorVar int32) {
+func (x *GLContext) SetRequiredVersion(MajorVar int, MinorVar int) {
 	xGLContextSetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
 }
 
-var xGLContextSetUseEs func(uintptr, int32)
+var xGLContextSetUseEs func(uintptr, int)
 
 // Requests that GDK create an OpenGL ES context instead of an OpenGL one.
 //
@@ -337,7 +337,7 @@ var xGLContextSetUseEs func(uintptr, int32)
 // You should check the return value of [method@Gdk.GLContext.get_use_es]
 // after calling [method@Gdk.GLContext.realize] to decide whether to use
 // the OpenGL or OpenGL ES API, extensions, or shaders.
-func (x *GLContext) SetUseEs(UseEsVar int32) {
+func (x *GLContext) SetUseEs(UseEsVar int) {
 	xGLContextSetUseEs(x.GoPointer(), UseEsVar)
 }
 

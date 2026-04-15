@@ -334,22 +334,28 @@ func (x *AboutDialog) SetAuthors(AuthorsVar []string) {
 	xAboutDialogSetAuthors(x.GoPointer(), AuthorsVar)
 }
 
-var xAboutDialogSetComments func(uintptr, string)
+var xAboutDialogSetComments func(uintptr, uintptr)
 
 // Sets the comments string to display in the about dialog.
 //
 // This should be a short string of one or two lines.
-func (x *AboutDialog) SetComments(CommentsVar string) {
-	xAboutDialogSetComments(x.GoPointer(), CommentsVar)
+func (x *AboutDialog) SetComments(CommentsVar *string) {
+	CommentsVarPtr := core.GStrdupNullable(CommentsVar)
+	defer core.GFreeNullable(CommentsVarPtr)
+
+	xAboutDialogSetComments(x.GoPointer(), CommentsVarPtr)
 }
 
-var xAboutDialogSetCopyright func(uintptr, string)
+var xAboutDialogSetCopyright func(uintptr, uintptr)
 
 // Sets the copyright string to display in the about dialog.
 //
 // This should be a short string of one or two lines.
-func (x *AboutDialog) SetCopyright(CopyrightVar string) {
-	xAboutDialogSetCopyright(x.GoPointer(), CopyrightVar)
+func (x *AboutDialog) SetCopyright(CopyrightVar *string) {
+	CopyrightVarPtr := core.GStrdupNullable(CopyrightVar)
+	defer core.GFreeNullable(CopyrightVarPtr)
+
+	xAboutDialogSetCopyright(x.GoPointer(), CopyrightVarPtr)
 }
 
 var xAboutDialogSetDocumenters func(uintptr, []string)
@@ -360,14 +366,17 @@ func (x *AboutDialog) SetDocumenters(DocumentersVar []string) {
 	xAboutDialogSetDocumenters(x.GoPointer(), DocumentersVar)
 }
 
-var xAboutDialogSetLicense func(uintptr, string)
+var xAboutDialogSetLicense func(uintptr, uintptr)
 
 // Sets the license information to be displayed in the
 // about dialog.
 //
 // If `license` is `NULL`, the license page is hidden.
-func (x *AboutDialog) SetLicense(LicenseVar string) {
-	xAboutDialogSetLicense(x.GoPointer(), LicenseVar)
+func (x *AboutDialog) SetLicense(LicenseVar *string) {
+	LicenseVarPtr := core.GStrdupNullable(LicenseVar)
+	defer core.GFreeNullable(LicenseVarPtr)
+
+	xAboutDialogSetLicense(x.GoPointer(), LicenseVarPtr)
 }
 
 var xAboutDialogSetLicenseType func(uintptr, License)
@@ -388,24 +397,30 @@ func (x *AboutDialog) SetLogo(LogoVar gdk.Paintable) {
 	xAboutDialogSetLogo(x.GoPointer(), LogoVar.GoPointer())
 }
 
-var xAboutDialogSetLogoIconName func(uintptr, string)
+var xAboutDialogSetLogoIconName func(uintptr, uintptr)
 
 // Sets the icon name to be displayed as logo in the about dialog.
-func (x *AboutDialog) SetLogoIconName(IconNameVar string) {
-	xAboutDialogSetLogoIconName(x.GoPointer(), IconNameVar)
+func (x *AboutDialog) SetLogoIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xAboutDialogSetLogoIconName(x.GoPointer(), IconNameVarPtr)
 }
 
-var xAboutDialogSetProgramName func(uintptr, string)
+var xAboutDialogSetProgramName func(uintptr, uintptr)
 
 // Sets the name to display in the about dialog.
 //
 // If `name` is not set, the string returned
 // by `g_get_application_name()` is used.
-func (x *AboutDialog) SetProgramName(NameVar string) {
-	xAboutDialogSetProgramName(x.GoPointer(), NameVar)
+func (x *AboutDialog) SetProgramName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xAboutDialogSetProgramName(x.GoPointer(), NameVarPtr)
 }
 
-var xAboutDialogSetSystemInformation func(uintptr, string)
+var xAboutDialogSetSystemInformation func(uintptr, uintptr)
 
 // Sets the system information to be displayed in the about
 // dialog.
@@ -414,11 +429,14 @@ var xAboutDialogSetSystemInformation func(uintptr, string)
 // page is hidden.
 //
 // See [property@Gtk.AboutDialog:system-information].
-func (x *AboutDialog) SetSystemInformation(SystemInformationVar string) {
-	xAboutDialogSetSystemInformation(x.GoPointer(), SystemInformationVar)
+func (x *AboutDialog) SetSystemInformation(SystemInformationVar *string) {
+	SystemInformationVarPtr := core.GStrdupNullable(SystemInformationVar)
+	defer core.GFreeNullable(SystemInformationVarPtr)
+
+	xAboutDialogSetSystemInformation(x.GoPointer(), SystemInformationVarPtr)
 }
 
-var xAboutDialogSetTranslatorCredits func(uintptr, string)
+var xAboutDialogSetTranslatorCredits func(uintptr, uintptr)
 
 // Sets the translator credits string which is displayed in
 // the credits page.
@@ -440,22 +458,31 @@ var xAboutDialogSetTranslatorCredits func(uintptr, string)
 // for this purpose, since translators will already know the purpose of
 // that `msgid`, and since `GtkAboutDialog` will detect if “translator-credits”
 // is untranslated and omit translator credits.
-func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar string) {
-	xAboutDialogSetTranslatorCredits(x.GoPointer(), TranslatorCreditsVar)
+func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar *string) {
+	TranslatorCreditsVarPtr := core.GStrdupNullable(TranslatorCreditsVar)
+	defer core.GFreeNullable(TranslatorCreditsVarPtr)
+
+	xAboutDialogSetTranslatorCredits(x.GoPointer(), TranslatorCreditsVarPtr)
 }
 
-var xAboutDialogSetVersion func(uintptr, string)
+var xAboutDialogSetVersion func(uintptr, uintptr)
 
 // Sets the version string to display in the about dialog.
-func (x *AboutDialog) SetVersion(VersionVar string) {
-	xAboutDialogSetVersion(x.GoPointer(), VersionVar)
+func (x *AboutDialog) SetVersion(VersionVar *string) {
+	VersionVarPtr := core.GStrdupNullable(VersionVar)
+	defer core.GFreeNullable(VersionVarPtr)
+
+	xAboutDialogSetVersion(x.GoPointer(), VersionVarPtr)
 }
 
-var xAboutDialogSetWebsite func(uintptr, string)
+var xAboutDialogSetWebsite func(uintptr, uintptr)
 
 // Sets the URL to use for the website link.
-func (x *AboutDialog) SetWebsite(WebsiteVar string) {
-	xAboutDialogSetWebsite(x.GoPointer(), WebsiteVar)
+func (x *AboutDialog) SetWebsite(WebsiteVar *string) {
+	WebsiteVarPtr := core.GStrdupNullable(WebsiteVar)
+	defer core.GFreeNullable(WebsiteVarPtr)
+
+	xAboutDialogSetWebsite(x.GoPointer(), WebsiteVarPtr)
 }
 
 var xAboutDialogSetWebsiteLabel func(uintptr, string)
@@ -539,7 +566,7 @@ func (x *AboutDialog) GetPropertyAuthors() []string {
 func (x *AboutDialog) SetPropertyComments(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("comments", &v)
 }
 
@@ -560,7 +587,7 @@ func (x *AboutDialog) GetPropertyComments() string {
 func (x *AboutDialog) SetPropertyCopyright(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("copyright", &v)
 }
 
@@ -613,7 +640,7 @@ func (x *AboutDialog) GetPropertyDocumenters() []string {
 func (x *AboutDialog) SetPropertyLicense(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("license", &v)
 }
 
@@ -645,7 +672,7 @@ func (x *AboutDialog) GetPropertyLicense() string {
 func (x *AboutDialog) SetPropertyLogoIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("logo-icon-name", &v)
 }
 
@@ -667,7 +694,7 @@ func (x *AboutDialog) GetPropertyLogoIconName() string {
 func (x *AboutDialog) SetPropertyProgramName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("program-name", &v)
 }
 
@@ -695,7 +722,7 @@ func (x *AboutDialog) GetPropertyProgramName() string {
 func (x *AboutDialog) SetPropertySystemInformation(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("system-information", &v)
 }
 
@@ -725,7 +752,7 @@ func (x *AboutDialog) GetPropertySystemInformation() string {
 func (x *AboutDialog) SetPropertyTranslatorCredits(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("translator-credits", &v)
 }
 
@@ -747,7 +774,7 @@ func (x *AboutDialog) GetPropertyTranslatorCredits() string {
 func (x *AboutDialog) SetPropertyVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("version", &v)
 }
 
@@ -766,7 +793,7 @@ func (x *AboutDialog) GetPropertyVersion() string {
 func (x *AboutDialog) SetPropertyWebsite(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website", &v)
 }
 
@@ -785,7 +812,7 @@ func (x *AboutDialog) GetPropertyWebsite() string {
 func (x *AboutDialog) SetPropertyWebsiteLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website-label", &v)
 }
 
@@ -818,7 +845,7 @@ func (x *AboutDialog) GetPropertyWrapLicense() bool {
 //
 // Applications may connect to it to override the default behaviour,
 // which is to call [method@Gtk.FileLauncher.launch].
-func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint32 {
+func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
@@ -906,7 +933,7 @@ func (x *AboutDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AboutDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1022,7 +1049,7 @@ func (x *AboutDialog) UpdateProperty(FirstPropertyVar AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *AboutDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1054,7 +1081,7 @@ func (x *AboutDialog) UpdateRelation(FirstRelationVar AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *AboutDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1087,7 +1114,7 @@ func (x *AboutDialog) UpdateState(FirstStateVar AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

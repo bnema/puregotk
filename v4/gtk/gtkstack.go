@@ -174,15 +174,18 @@ func (x *Stack) AddChild(ChildVar *Widget) *StackPage {
 	return cls
 }
 
-var xStackAddNamed func(uintptr, uintptr, string) uintptr
+var xStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 
 // Adds a child to @stack.
 //
 // The child is identified by the @name.
-func (x *Stack) AddNamed(ChildVar *Widget, NameVar string) *StackPage {
+func (x *Stack) AddNamed(ChildVar *Widget, NameVar *string) *StackPage {
 	var cls *StackPage
 
-	cret := xStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -193,17 +196,20 @@ func (x *Stack) AddNamed(ChildVar *Widget, NameVar string) *StackPage {
 	return cls
 }
 
-var xStackAddTitled func(uintptr, uintptr, string, string) uintptr
+var xStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 
 // Adds a child to @stack.
 //
 // The child is identified by the @name. The @title
 // will be used by `GtkStackSwitcher` to represent
 // @child in a tab bar, so it should be short.
-func (x *Stack) AddTitled(ChildVar *Widget, NameVar string, TitleVar string) *StackPage {
+func (x *Stack) AddTitled(ChildVar *Widget, NameVar *string, TitleVar string) *StackPage {
 	var cls *StackPage
 
-	cret := xStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar)
 
 	if cret == 0 {
 		return nil
@@ -287,11 +293,11 @@ func (x *Stack) GetPages() *SelectionModelBase {
 	return cls
 }
 
-var xStackGetTransitionDuration func(uintptr) uint32
+var xStackGetTransitionDuration func(uintptr) uint
 
 // Returns the amount of time (in milliseconds) that
 // transitions between pages in @stack will take.
-func (x *Stack) GetTransitionDuration() uint32 {
+func (x *Stack) GetTransitionDuration() uint {
 	cret := xStackGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -382,11 +388,11 @@ func (x *Stack) SetInterpolateSize(InterpolateSizeVar bool) {
 	xStackSetInterpolateSize(x.GoPointer(), InterpolateSizeVar)
 }
 
-var xStackSetTransitionDuration func(uintptr, uint32)
+var xStackSetTransitionDuration func(uintptr, uint)
 
 // Sets the duration that transitions between pages in @stack
 // will take.
-func (x *Stack) SetTransitionDuration(DurationVar uint32) {
+func (x *Stack) SetTransitionDuration(DurationVar uint) {
 	xStackSetTransitionDuration(x.GoPointer(), DurationVar)
 }
 
@@ -503,19 +509,19 @@ func (x *Stack) GetPropertyInterpolateSize() bool {
 
 // SetPropertyTransitionDuration sets the "transition-duration" property.
 // The animation duration, in milliseconds.
-func (x *Stack) SetPropertyTransitionDuration(value uint32) {
+func (x *Stack) SetPropertyTransitionDuration(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("transition-duration", &v)
 }
 
 // GetPropertyTransitionDuration gets the "transition-duration" property.
 // The animation duration, in milliseconds.
-func (x *Stack) GetPropertyTransitionDuration() uint32 {
+func (x *Stack) GetPropertyTransitionDuration() uint {
 	var v gobject.Value
 	x.GetProperty("transition-duration", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyTransitionRunning gets the "transition-running" property.
@@ -548,7 +554,7 @@ func (x *Stack) GetPropertyVhomogeneous() bool {
 func (x *Stack) SetPropertyVisibleChildName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-child-name", &v)
 }
 
@@ -626,7 +632,7 @@ func (x *Stack) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Stack) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Stack) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -742,7 +748,7 @@ func (x *Stack) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Stack) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Stack) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -774,7 +780,7 @@ func (x *Stack) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Stack) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Stack) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -807,7 +813,7 @@ func (x *Stack) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Stack) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Stack) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -963,7 +969,7 @@ func (c *StackPage) SetGoPointer(ptr uintptr) {
 func (x *StackPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -980,7 +986,7 @@ func (x *StackPage) GetPropertyIconName() string {
 func (x *StackPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -1022,7 +1028,7 @@ func (x *StackPage) GetPropertyNeedsAttention() bool {
 func (x *StackPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -1134,7 +1140,7 @@ func (x *StackPage) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *StackPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *StackPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1250,7 +1256,7 @@ func (x *StackPage) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs 
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StackPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *StackPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1282,7 +1288,7 @@ func (x *StackPage) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs 
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StackPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *StackPage) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1315,7 +1321,7 @@ func (x *StackPage) UpdateState(FirstStateVar AccessibleState, varArgs ...interf
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StackPage) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *StackPage) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

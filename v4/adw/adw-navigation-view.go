@@ -277,7 +277,7 @@ func (x *NavigationPage) SetChild(ChildVar *gtk.Widget) {
 	xNavigationPageSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xNavigationPageSetTag func(uintptr, string)
+var xNavigationPageSetTag func(uintptr, uintptr)
 
 // Sets the tag for @self.
 //
@@ -289,8 +289,11 @@ var xNavigationPageSetTag func(uintptr, string)
 // Tags must be unique within each [class@NavigationView].
 //
 // The tag also must be set to use the `navigation.push` action.
-func (x *NavigationPage) SetTag(TagVar string) {
-	xNavigationPageSetTag(x.GoPointer(), TagVar)
+func (x *NavigationPage) SetTag(TagVar *string) {
+	TagVarPtr := core.GStrdupNullable(TagVar)
+	defer core.GFreeNullable(TagVarPtr)
+
+	xNavigationPageSetTag(x.GoPointer(), TagVarPtr)
 }
 
 var xNavigationPageSetTitle func(uintptr, string)
@@ -363,7 +366,7 @@ func (x *NavigationPage) GetPropertyCanPop() bool {
 func (x *NavigationPage) SetPropertyTag(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tag", &v)
 }
 
@@ -392,7 +395,7 @@ func (x *NavigationPage) GetPropertyTag() string {
 func (x *NavigationPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -412,7 +415,7 @@ func (x *NavigationPage) GetPropertyTitle() string {
 //
 // It will always be preceded by [signal@NavigationPage::hiding] or
 // [signal@NavigationPage::showing].
-func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
+func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
@@ -439,7 +442,7 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
 //
 // It will always be followed by [signal@NavigationPage::hidden] or
 // [signal@NavigationPage::shown].
-func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
+func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
@@ -466,7 +469,7 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
 //
 // It will always be followed by [signal@NavigationPage::shown] or
 // [signal@NavigationPage::hidden].
-func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
+func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
@@ -493,7 +496,7 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
 //
 // It will always be preceded by [signal@NavigationPage::showing] or
 // [signal@NavigationPage::hiding].
-func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint32 {
+func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
@@ -581,7 +584,7 @@ func (x *NavigationPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *NavigationPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *NavigationPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -697,7 +700,7 @@ func (x *NavigationPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty,
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *NavigationPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -729,7 +732,7 @@ func (x *NavigationPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation,
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *NavigationPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -762,7 +765,7 @@ func (x *NavigationPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs 
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *NavigationPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1197,7 +1200,7 @@ func (x *NavigationView) Remove(PageVar *NavigationPage) {
 	xNavigationViewRemove(x.GoPointer(), PageVar.GoPointer())
 }
 
-var xNavigationViewReplace func(uintptr, uintptr, int32)
+var xNavigationViewReplace func(uintptr, uintptr, int)
 
 // Replaces the current navigation stack with @pages.
 //
@@ -1214,11 +1217,11 @@ var xNavigationViewReplace func(uintptr, uintptr, int32)
 // The [signal@NavigationView::replaced] signal will be emitted.
 //
 // See [method@NavigationView.replace_with_tags].
-func (x *NavigationView) Replace(PagesVar uintptr, NPagesVar int32) {
+func (x *NavigationView) Replace(PagesVar uintptr, NPagesVar int) {
 	xNavigationViewReplace(x.GoPointer(), PagesVar, NPagesVar)
 }
 
-var xNavigationViewReplaceWithTags func(uintptr, []string, int32)
+var xNavigationViewReplaceWithTags func(uintptr, []string, int)
 
 // Replaces the current navigation stack with pages with the tags @tags.
 //
@@ -1235,7 +1238,7 @@ var xNavigationViewReplaceWithTags func(uintptr, []string, int32)
 // The [signal@NavigationView::replaced] signal will be emitted.
 //
 // See [method@NavigationView.replace] and [property@NavigationPage:tag].
-func (x *NavigationView) ReplaceWithTags(TagsVar []string, NTagsVar int32) {
+func (x *NavigationView) ReplaceWithTags(TagsVar []string, NTagsVar int) {
 	xNavigationViewReplaceWithTags(x.GoPointer(), TagsVar, NTagsVar)
 }
 
@@ -1415,7 +1418,7 @@ func (x *NavigationView) GetPropertyVisiblePageTag() string {
 // from a forward stack.
 //
 // Instead, it should be done in the [signal@NavigationView::pushed] handler.
-func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationPage) uint32 {
+func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationPage) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
@@ -1445,7 +1448,7 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 // When using [method@NavigationView.pop_to_page] or
 // [method@NavigationView.pop_to_tag], this signal is emitted for each of the
 // popped pages.
-func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32 {
+func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
@@ -1470,7 +1473,7 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32
 // Emitted after a page has been pushed to the navigation stack.
 //
 // See [method@NavigationView.push].
-func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
+func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
@@ -1495,7 +1498,7 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
 // Emitted after the navigation stack has been replaced.
 //
 // See [method@NavigationView.replace].
-func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint32 {
+func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
@@ -1541,7 +1544,7 @@ func (x *NavigationView) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int32) uintptr {
+func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
 }
@@ -1625,7 +1628,7 @@ func (x *NavigationView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *NavigationView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *NavigationView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1741,7 +1744,7 @@ func (x *NavigationView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty,
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *NavigationView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1773,7 +1776,7 @@ func (x *NavigationView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation,
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *NavigationView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1806,7 +1809,7 @@ func (x *NavigationView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs 
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *NavigationView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *NavigationView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

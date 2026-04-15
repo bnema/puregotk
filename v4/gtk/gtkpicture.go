@@ -132,16 +132,19 @@ func NewPictureForFile(FileVar gio.File) *Picture {
 	return cls
 }
 
-var xNewPictureForFilename func(string) uintptr
+var xNewPictureForFilename func(uintptr) uintptr
 
 // Creates a new `GtkPicture` displaying the file @filename.
 //
 // This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
 // See that function for details.
-func NewPictureForFilename(FilenameVar string) *Picture {
+func NewPictureForFilename(FilenameVar *string) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForFilename(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	cret := xNewPictureForFilename(FilenameVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -194,16 +197,19 @@ func NewPictureForPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Picture {
 	return cls
 }
 
-var xNewPictureForResource func(string) uintptr
+var xNewPictureForResource func(uintptr) uintptr
 
 // Creates a new `GtkPicture` displaying the resource at @resource_path.
 //
 // This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
 // See that function for details.
-func NewPictureForResource(ResourcePathVar string) *Picture {
+func NewPictureForResource(ResourcePathVar *string) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForResource(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	cret := xNewPictureForResource(ResourcePathVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -295,7 +301,7 @@ func (x *Picture) GetPaintable() *gdk.PaintableBase {
 	return cls
 }
 
-var xPictureSetAlternativeText func(uintptr, string)
+var xPictureSetAlternativeText func(uintptr, uintptr)
 
 // Sets an alternative textual description for the picture contents.
 //
@@ -304,8 +310,11 @@ var xPictureSetAlternativeText func(uintptr, string)
 // This text will be made available to accessibility tools.
 //
 // If the picture cannot be described textually, set this property to %NULL.
-func (x *Picture) SetAlternativeText(AlternativeTextVar string) {
-	xPictureSetAlternativeText(x.GoPointer(), AlternativeTextVar)
+func (x *Picture) SetAlternativeText(AlternativeTextVar *string) {
+	AlternativeTextVarPtr := core.GStrdupNullable(AlternativeTextVar)
+	defer core.GFreeNullable(AlternativeTextVarPtr)
+
+	xPictureSetAlternativeText(x.GoPointer(), AlternativeTextVarPtr)
 }
 
 var xPictureSetCanShrink func(uintptr, bool)
@@ -349,7 +358,7 @@ func (x *Picture) SetFile(FileVar gio.File) {
 	xPictureSetFile(x.GoPointer(), FileVar.GoPointer())
 }
 
-var xPictureSetFilename func(uintptr, string)
+var xPictureSetFilename func(uintptr, uintptr)
 
 // Makes @self load and display the given @filename.
 //
@@ -361,8 +370,11 @@ var xPictureSetFilename func(uintptr, string)
 //	Use a proper image loading framework such as libglycin, which can
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
-func (x *Picture) SetFilename(FilenameVar string) {
-	xPictureSetFilename(x.GoPointer(), FilenameVar)
+func (x *Picture) SetFilename(FilenameVar *string) {
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
+
+	xPictureSetFilename(x.GoPointer(), FilenameVarPtr)
 }
 
 var xPictureSetIsolateContents func(uintptr, bool)
@@ -417,14 +429,17 @@ func (x *Picture) SetPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 	xPictureSetPixbuf(x.GoPointer(), PixbufVar.GoPointer())
 }
 
-var xPictureSetResource func(uintptr, string)
+var xPictureSetResource func(uintptr, uintptr)
 
 // Makes @self load and display the resource at the given
 // @resource_path.
 //
 // This is a utility function that calls [method@Gtk.Picture.set_file].
-func (x *Picture) SetResource(ResourcePathVar string) {
-	xPictureSetResource(x.GoPointer(), ResourcePathVar)
+func (x *Picture) SetResource(ResourcePathVar *string) {
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
+
+	xPictureSetResource(x.GoPointer(), ResourcePathVarPtr)
 }
 
 func (c *Picture) GoPointer() uintptr {
@@ -443,7 +458,7 @@ func (c *Picture) SetGoPointer(ptr uintptr) {
 func (x *Picture) SetPropertyAlternativeText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("alternative-text", &v)
 }
 
@@ -574,7 +589,7 @@ func (x *Picture) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Picture) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Picture) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -690,7 +705,7 @@ func (x *Picture) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ..
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Picture) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Picture) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -722,7 +737,7 @@ func (x *Picture) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ..
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Picture) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Picture) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -755,7 +770,7 @@ func (x *Picture) UpdateState(FirstStateVar AccessibleState, varArgs ...interfac
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Picture) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Picture) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -154,22 +154,28 @@ func (x *StatusPage) SetChild(ChildVar *gtk.Widget) {
 	xStatusPageSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xStatusPageSetDescription func(uintptr, string)
+var xStatusPageSetDescription func(uintptr, uintptr)
 
 // Sets the description markup for @self.
 //
 // The description is displayed below the title. It is parsed as Pango markup.
-func (x *StatusPage) SetDescription(DescriptionVar string) {
-	xStatusPageSetDescription(x.GoPointer(), DescriptionVar)
+func (x *StatusPage) SetDescription(DescriptionVar *string) {
+	DescriptionVarPtr := core.GStrdupNullable(DescriptionVar)
+	defer core.GFreeNullable(DescriptionVarPtr)
+
+	xStatusPageSetDescription(x.GoPointer(), DescriptionVarPtr)
 }
 
-var xStatusPageSetIconName func(uintptr, string)
+var xStatusPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
 //
 // Changing this will set [property@StatusPage:paintable] to `NULL`.
-func (x *StatusPage) SetIconName(IconNameVar string) {
-	xStatusPageSetIconName(x.GoPointer(), IconNameVar)
+func (x *StatusPage) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xStatusPageSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xStatusPageSetPaintable func(uintptr, uintptr)
@@ -206,7 +212,7 @@ func (c *StatusPage) SetGoPointer(ptr uintptr) {
 func (x *StatusPage) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -225,7 +231,7 @@ func (x *StatusPage) GetPropertyDescription() string {
 func (x *StatusPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -246,7 +252,7 @@ func (x *StatusPage) GetPropertyIconName() string {
 func (x *StatusPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -326,7 +332,7 @@ func (x *StatusPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *StatusPage) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *StatusPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -442,7 +448,7 @@ func (x *StatusPage) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, var
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StatusPage) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *StatusPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -474,7 +480,7 @@ func (x *StatusPage) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, var
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StatusPage) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *StatusPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -507,7 +513,7 @@ func (x *StatusPage) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...i
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *StatusPage) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *StatusPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -156,11 +156,11 @@ func (x *Drop) GetSurface() *Surface {
 	return cls
 }
 
-var xDropReadAsync func(uintptr, []string, int32, uintptr, uintptr, uintptr)
+var xDropReadAsync func(uintptr, []string, int, uintptr, uintptr, uintptr)
 
 // Asynchronously read the dropped data from a `GdkDrop`
 // in a format that complies with one of the mime types.
-func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	xDropReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -191,7 +191,7 @@ func (x *Drop) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string) (*g
 	return cls, cerr
 }
 
-var xDropReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uintptr)
+var xDropReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, uintptr)
 
 // Asynchronously request the drag operation's contents converted
 // to the given @type.
@@ -199,7 +199,7 @@ var xDropReadValueAsync func(uintptr, types.GType, int32, uintptr, uintptr, uint
 // For local drag-and-drop operations that are available in the given
 // `GType`, the value will be copied directly. Otherwise, GDK will
 // try to use [func@Gdk.content_deserialize_async] to convert the data.
-func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	xDropReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 

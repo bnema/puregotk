@@ -258,7 +258,7 @@ func (x *Download) GetPropertyEstimatedProgress() float64 {
 // This signal is emitted after #WebKitDownload::decide-destination and before
 // #WebKitDownload::received-data to notify that destination file has been
 // created successfully at @destination.
-func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 {
+func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "created-destination", cbRefPtr)
@@ -291,7 +291,7 @@ func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint32 
 // This indicates intent to eventually call webkit_download_set_destination().
 // In this case, the download will not proceed until the destination is set
 // or cancelled with webkit_download_cancel().
-func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uint32 {
+func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "decide-destination", cbRefPtr)
@@ -319,7 +319,7 @@ func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uin
 // with webkit_download_cancel(), this signal is emitted with error
 // %WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER. The download operation finishes
 // after an error and #WebKitDownload::finished signal is emitted after this one.
-func (x *Download) ConnectFailed(cb *func(Download, *glib.Error)) uint32 {
+func (x *Download) ConnectFailed(cb *func(Download, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
@@ -343,7 +343,7 @@ func (x *Download) ConnectFailed(cb *func(Download, *glib.Error)) uint32 {
 
 // This signal is emitted when download finishes successfully or due to an error.
 // In case of errors #WebKitDownload::failed signal is emitted before this one.
-func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
+func (x *Download) ConnectFinished(cb *func(Download)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
@@ -368,7 +368,7 @@ func (x *Download) ConnectFinished(cb *func(Download)) uint32 {
 // This signal is emitted after response is received,
 // every time new data has been written to the destination. It's
 // useful to know the progress of the download operation.
-func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint32 {
+func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "received-data", cbRefPtr)

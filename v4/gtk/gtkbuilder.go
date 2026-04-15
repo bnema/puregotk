@@ -876,11 +876,14 @@ func (x *Builder) SetScope(ScopeVar BuilderScope) {
 	xBuilderSetScope(x.GoPointer(), ScopeVar.GoPointer())
 }
 
-var xBuilderSetTranslationDomain func(uintptr, string)
+var xBuilderSetTranslationDomain func(uintptr, uintptr)
 
 // Sets the translation domain of @builder.
-func (x *Builder) SetTranslationDomain(DomainVar string) {
-	xBuilderSetTranslationDomain(x.GoPointer(), DomainVar)
+func (x *Builder) SetTranslationDomain(DomainVar *string) {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	xBuilderSetTranslationDomain(x.GoPointer(), DomainVarPtr)
 }
 
 var xBuilderValueFromString func(uintptr, uintptr, string, *gobject.Value, **glib.Error) bool
@@ -948,7 +951,7 @@ func (c *Builder) SetGoPointer(ptr uintptr) {
 func (x *Builder) SetPropertyTranslationDomain(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("translation-domain", &v)
 }
 

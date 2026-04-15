@@ -381,7 +381,7 @@ func (x *ApplicationCommandLine) Done() {
 	xApplicationCommandLineDone(x.GoPointer())
 }
 
-var xApplicationCommandLineGetArguments func(uintptr, *int32) []string
+var xApplicationCommandLineGetArguments func(uintptr, *int) []string
 
 // Gets the list of arguments that was passed on the command line.
 //
@@ -394,7 +394,7 @@ var xApplicationCommandLineGetArguments func(uintptr, *int32) []string
 //
 // The return value is %NULL-terminated and should be freed using
 // g_strfreev().
-func (x *ApplicationCommandLine) GetArguments(ArgcVar *int32) []string {
+func (x *ApplicationCommandLine) GetArguments(ArgcVar *int) []string {
 	cret := xApplicationCommandLineGetArguments(x.GoPointer(), ArgcVar)
 	return cret
 }
@@ -436,11 +436,11 @@ func (x *ApplicationCommandLine) GetEnviron() []string {
 	return cret
 }
 
-var xApplicationCommandLineGetExitStatus func(uintptr) int32
+var xApplicationCommandLineGetExitStatus func(uintptr) int
 
 // Gets the exit status of @cmdline.  See
 // g_application_command_line_set_exit_status() for more information.
-func (x *ApplicationCommandLine) GetExitStatus() int32 {
+func (x *ApplicationCommandLine) GetExitStatus() int {
 	cret := xApplicationCommandLineGetExitStatus(x.GoPointer())
 	return cret
 }
@@ -585,7 +585,7 @@ func (x *ApplicationCommandLine) PrinterrLiteral(MessageVar string) {
 	xApplicationCommandLinePrinterrLiteral(x.GoPointer(), MessageVar)
 }
 
-var xApplicationCommandLineSetExitStatus func(uintptr, int32)
+var xApplicationCommandLineSetExitStatus func(uintptr, int)
 
 // Sets the exit status that will be used when the invoking process
 // exits.
@@ -611,7 +611,7 @@ var xApplicationCommandLineSetExitStatus func(uintptr, int32)
 //
 // This method is a no-op if g_application_command_line_done() has
 // been called.
-func (x *ApplicationCommandLine) SetExitStatus(ExitStatusVar int32) {
+func (x *ApplicationCommandLine) SetExitStatus(ExitStatusVar int) {
 	xApplicationCommandLineSetExitStatus(x.GoPointer(), ExitStatusVar)
 }
 

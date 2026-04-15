@@ -191,13 +191,22 @@ func FileChooserNativeNewFromInternalPtr(ptr uintptr) *FileChooserNative {
 	return cls
 }
 
-var xNewFileChooserNative func(string, uintptr, FileChooserAction, string, string) uintptr
+var xNewFileChooserNative func(uintptr, uintptr, FileChooserAction, uintptr, uintptr) uintptr
 
 // Creates a new `GtkFileChooserNative`.
-func NewFileChooserNative(TitleVar string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar string, CancelLabelVar string) *FileChooserNative {
+func NewFileChooserNative(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar *string, CancelLabelVar *string) *FileChooserNative {
 	var cls *FileChooserNative
 
-	cret := xNewFileChooserNative(TitleVar, ParentVar.GoPointer(), ActionVar, AcceptLabelVar, CancelLabelVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	AcceptLabelVarPtr := core.GStrdupNullable(AcceptLabelVar)
+	defer core.GFreeNullable(AcceptLabelVarPtr)
+
+	CancelLabelVarPtr := core.GStrdupNullable(CancelLabelVar)
+	defer core.GFreeNullable(CancelLabelVarPtr)
+
+	cret := xNewFileChooserNative(TitleVarPtr, ParentVar.GoPointer(), ActionVar, AcceptLabelVarPtr, CancelLabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -223,7 +232,7 @@ func (x *FileChooserNative) GetCancelLabel() string {
 	return cret
 }
 
-var xFileChooserNativeSetAcceptLabel func(uintptr, string)
+var xFileChooserNativeSetAcceptLabel func(uintptr, uintptr)
 
 // Sets the custom label text for the accept button.
 //
@@ -233,11 +242,14 @@ var xFileChooserNativeSetAcceptLabel func(uintptr, string)
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key should activate the button.
-func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar string) {
-	xFileChooserNativeSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
+func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar *string) {
+	AcceptLabelVarPtr := core.GStrdupNullable(AcceptLabelVar)
+	defer core.GFreeNullable(AcceptLabelVarPtr)
+
+	xFileChooserNativeSetAcceptLabel(x.GoPointer(), AcceptLabelVarPtr)
 }
 
-var xFileChooserNativeSetCancelLabel func(uintptr, string)
+var xFileChooserNativeSetCancelLabel func(uintptr, uintptr)
 
 // Sets the custom label text for the cancel button.
 //
@@ -247,8 +259,11 @@ var xFileChooserNativeSetCancelLabel func(uintptr, string)
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key should activate the button.
-func (x *FileChooserNative) SetCancelLabel(CancelLabelVar string) {
-	xFileChooserNativeSetCancelLabel(x.GoPointer(), CancelLabelVar)
+func (x *FileChooserNative) SetCancelLabel(CancelLabelVar *string) {
+	CancelLabelVarPtr := core.GStrdupNullable(CancelLabelVar)
+	defer core.GFreeNullable(CancelLabelVarPtr)
+
+	xFileChooserNativeSetCancelLabel(x.GoPointer(), CancelLabelVarPtr)
 }
 
 func (c *FileChooserNative) GoPointer() uintptr {
@@ -268,7 +283,7 @@ func (c *FileChooserNative) SetGoPointer(ptr uintptr) {
 func (x *FileChooserNative) SetPropertyAcceptLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accept-label", &v)
 }
 
@@ -287,7 +302,7 @@ func (x *FileChooserNative) GetPropertyAcceptLabel() string {
 func (x *FileChooserNative) SetPropertyCancelLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cancel-label", &v)
 }
 

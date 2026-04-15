@@ -162,7 +162,7 @@ func (x *SidebarSection) BindModel(ModelVar gio.ListModel, CreateItemFuncVar *Si
 	xSidebarSectionBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateItemFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
 }
 
-var xSidebarSectionGetItem func(uintptr, uint32) uintptr
+var xSidebarSectionGetItem func(uintptr, uint) uintptr
 
 // Gets the item at @index within @self.
 //
@@ -170,7 +170,7 @@ var xSidebarSectionGetItem func(uintptr, uint32) uintptr
 // returned by [method@SidebarItem.get_section_index].
 //
 // Can return `NULL` if @index is larger or equal to the number of items.
-func (x *SidebarSection) GetItem(IndexVar uint32) *SidebarItem {
+func (x *SidebarSection) GetItem(IndexVar uint) *SidebarItem {
 	var cls *SidebarItem
 
 	cret := xSidebarSectionGetItem(x.GoPointer(), IndexVar)
@@ -244,7 +244,7 @@ func (x *SidebarSection) GetTitle() string {
 	return cret
 }
 
-var xSidebarSectionInsert func(uintptr, uintptr, int32)
+var xSidebarSectionInsert func(uintptr, uintptr, int)
 
 // Inserts @item at @position to @self.
 //
@@ -252,7 +252,7 @@ var xSidebarSectionInsert func(uintptr, uintptr, int32)
 // the item will be appended to the end.
 //
 // Cannot be used while a model is bound via [method@SidebarSection.bind_model].
-func (x *SidebarSection) Insert(ItemVar *SidebarItem, PositionVar int32) {
+func (x *SidebarSection) Insert(ItemVar *SidebarItem, PositionVar int) {
 	xSidebarSectionInsert(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
 }
 
@@ -296,13 +296,16 @@ func (x *SidebarSection) SetMenuModel(MenuModelVar *gio.MenuModel) {
 	xSidebarSectionSetMenuModel(x.GoPointer(), MenuModelVar.GoPointer())
 }
 
-var xSidebarSectionSetTitle func(uintptr, string)
+var xSidebarSectionSetTitle func(uintptr, uintptr)
 
 // Sets the title of @self.
 //
 // If set, it will be displayed instead of the separator before the section.
-func (x *SidebarSection) SetTitle(TitleVar string) {
-	xSidebarSectionSetTitle(x.GoPointer(), TitleVar)
+func (x *SidebarSection) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xSidebarSectionSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
 func (c *SidebarSection) GoPointer() uintptr {
@@ -323,7 +326,7 @@ func (c *SidebarSection) SetGoPointer(ptr uintptr) {
 func (x *SidebarSection) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

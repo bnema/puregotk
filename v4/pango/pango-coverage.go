@@ -97,10 +97,10 @@ func (x *Coverage) Copy() *Coverage {
 	return cls
 }
 
-var xCoverageGet func(uintptr, int32) CoverageLevel
+var xCoverageGet func(uintptr, int) CoverageLevel
 
 // Determine whether a particular index is covered by @coverage.
-func (x *Coverage) Get(IndexVar int32) CoverageLevel {
+func (x *Coverage) Get(IndexVar int) CoverageLevel {
 	cret := xCoverageGet(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -130,17 +130,17 @@ func (x *Coverage) Ref() *Coverage {
 	return cls
 }
 
-var xCoverageSet func(uintptr, int32, CoverageLevel)
+var xCoverageSet func(uintptr, int, CoverageLevel)
 
 // Modify a particular index within @coverage
-func (x *Coverage) Set(IndexVar int32, LevelVar CoverageLevel) {
+func (x *Coverage) Set(IndexVar int, LevelVar CoverageLevel) {
 	xCoverageSet(x.GoPointer(), IndexVar, LevelVar)
 }
 
-var xCoverageToBytes func(uintptr, *[]byte, *int32)
+var xCoverageToBytes func(uintptr, *[]byte, *int)
 
 // Convert a `PangoCoverage` structure into a flat binary format.
-func (x *Coverage) ToBytes(BytesVar *[]byte, NBytesVar *int32) {
+func (x *Coverage) ToBytes(BytesVar *[]byte, NBytesVar *int) {
 	xCoverageToBytes(x.GoPointer(), BytesVar, NBytesVar)
 }
 
@@ -164,11 +164,11 @@ func (c *Coverage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xCoverageFromBytes func([]byte, int32) uintptr
+var xCoverageFromBytes func([]byte, int) uintptr
 
 // Convert data generated from [method@Pango.Coverage.to_bytes]
 // back to a `PangoCoverage`.
-func CoverageFromBytes(BytesVar []byte, NBytesVar int32) *Coverage {
+func CoverageFromBytes(BytesVar []byte, NBytesVar int) *Coverage {
 	var cls *Coverage
 
 	cret := xCoverageFromBytes(BytesVar, NBytesVar)

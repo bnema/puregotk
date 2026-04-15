@@ -44,7 +44,7 @@ func OptionMenuNewFromInternalPtr(ptr uintptr) *OptionMenu {
 	return cls
 }
 
-var xOptionMenuActivateItem func(uintptr, uint32)
+var xOptionMenuActivateItem func(uintptr, uint)
 
 // Activates the #WebKitOptionMenuItem at @index in @menu.
 //
@@ -52,7 +52,7 @@ var xOptionMenuActivateItem func(uintptr, uint32)
 // of the element making the item the active one. You are expected to close the menu with
 // webkit_option_menu_close() after activating an item, calling this function again will have no
 // effect.
-func (x *OptionMenu) ActivateItem(IndexVar uint32) {
+func (x *OptionMenu) ActivateItem(IndexVar uint) {
 	xOptionMenuActivateItem(x.GoPointer(), IndexVar)
 }
 
@@ -88,10 +88,10 @@ func (x *OptionMenu) GetEvent() *gdk.Event {
 	return cls
 }
 
-var xOptionMenuGetItem func(uintptr, uint32) uintptr
+var xOptionMenuGetItem func(uintptr, uint) uintptr
 
 // Returns the #WebKitOptionMenuItem at @index in @menu.
-func (x *OptionMenu) GetItem(IndexVar uint32) *OptionMenuItem {
+func (x *OptionMenu) GetItem(IndexVar uint) *OptionMenuItem {
 	cret := xOptionMenuGetItem(x.GoPointer(), IndexVar)
 	if cret == 0 {
 		return nil
@@ -99,15 +99,15 @@ func (x *OptionMenu) GetItem(IndexVar uint32) *OptionMenuItem {
 	return (*OptionMenuItem)(unsafe.Pointer(cret))
 }
 
-var xOptionMenuGetNItems func(uintptr) uint32
+var xOptionMenuGetNItems func(uintptr) uint
 
 // Gets the length of the @menu.
-func (x *OptionMenu) GetNItems() uint32 {
+func (x *OptionMenu) GetNItems() uint {
 	cret := xOptionMenuGetNItems(x.GoPointer())
 	return cret
 }
 
-var xOptionMenuSelectItem func(uintptr, uint32)
+var xOptionMenuSelectItem func(uintptr, uint)
 
 // Selects the #WebKitOptionMenuItem at @index in @menu.
 //
@@ -115,7 +115,7 @@ var xOptionMenuSelectItem func(uintptr, uint32)
 // text shown by the combo button, but it doesn't change the value of the element. You need to
 // explicitly activate the item with webkit_option_menu_select_item() or close the menu with
 // webkit_option_menu_close() in which case the currently selected item will be activated.
-func (x *OptionMenu) SelectItem(IndexVar uint32) {
+func (x *OptionMenu) SelectItem(IndexVar uint) {
 	xOptionMenuSelectItem(x.GoPointer(), IndexVar)
 }
 
@@ -133,7 +133,7 @@ func (c *OptionMenu) SetGoPointer(ptr uintptr) {
 // Emitted when closing a #WebKitOptionMenu is requested. This can happen
 // when the user explicitly calls webkit_option_menu_close() or when the
 // element is detached from the current page.
-func (x *OptionMenu) ConnectClose(cb *func(OptionMenu)) uint32 {
+func (x *OptionMenu) ConnectClose(cb *func(OptionMenu)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)

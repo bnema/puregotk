@@ -139,7 +139,7 @@ func (x *DropControllerMotion) GetPropertyIsPointer() bool {
 }
 
 // Signals that the pointer has entered the widget.
-func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float64, float64)) uint32 {
+func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
@@ -162,7 +162,7 @@ func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float
 }
 
 // Signals that the pointer has left the widget.
-func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint32 {
+func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
@@ -185,7 +185,7 @@ func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint
 }
 
 // Emitted when the pointer moves inside the widget.
-func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, float64, float64)) uint32 {
+func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)

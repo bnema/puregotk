@@ -249,18 +249,18 @@ func (x *Dialog) GetChild() *gtk.Widget {
 	return cls
 }
 
-var xDialogGetContentHeight func(uintptr) int32
+var xDialogGetContentHeight func(uintptr) int
 
 // Gets the height of the dialog's contents.
-func (x *Dialog) GetContentHeight() int32 {
+func (x *Dialog) GetContentHeight() int {
 	cret := xDialogGetContentHeight(x.GoPointer())
 	return cret
 }
 
-var xDialogGetContentWidth func(uintptr) int32
+var xDialogGetContentWidth func(uintptr) int
 
 // Gets the width of the dialog's contents.
-func (x *Dialog) GetContentWidth() int32 {
+func (x *Dialog) GetContentWidth() int {
 	cret := xDialogGetContentWidth(x.GoPointer())
 	return cret
 }
@@ -371,25 +371,25 @@ func (x *Dialog) SetChild(ChildVar *gtk.Widget) {
 	xDialogSetChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xDialogSetContentHeight func(uintptr, int32)
+var xDialogSetContentHeight func(uintptr, int)
 
 // Sets the height of the dialog's contents.
 //
 // Set it to -1 to reset it to the content's natural height.
 //
 // See also: [property@Gtk.Window:default-height]
-func (x *Dialog) SetContentHeight(ContentHeightVar int32) {
+func (x *Dialog) SetContentHeight(ContentHeightVar int) {
 	xDialogSetContentHeight(x.GoPointer(), ContentHeightVar)
 }
 
-var xDialogSetContentWidth func(uintptr, int32)
+var xDialogSetContentWidth func(uintptr, int)
 
 // Sets the width of the dialog's contents.
 //
 // Set it to -1 to reset it to the content's natural width.
 //
 // See also: [property@Gtk.Window:default-width]
-func (x *Dialog) SetContentWidth(ContentWidthVar int32) {
+func (x *Dialog) SetContentWidth(ContentWidthVar int) {
 	xDialogSetContentWidth(x.GoPointer(), ContentWidthVar)
 }
 
@@ -497,10 +497,10 @@ func (x *Dialog) GetPropertyCanClose() bool {
 // Set it to -1 to reset it to the content's natural height.
 //
 // See also: [property@Gtk.Window:default-height]
-func (x *Dialog) SetPropertyContentHeight(value int32) {
+func (x *Dialog) SetPropertyContentHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("content-height", &v)
 }
 
@@ -510,10 +510,10 @@ func (x *Dialog) SetPropertyContentHeight(value int32) {
 // Set it to -1 to reset it to the content's natural height.
 //
 // See also: [property@Gtk.Window:default-height]
-func (x *Dialog) GetPropertyContentHeight() int32 {
+func (x *Dialog) GetPropertyContentHeight() int {
 	var v gobject.Value
 	x.GetProperty("content-height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyContentWidth sets the "content-width" property.
@@ -522,10 +522,10 @@ func (x *Dialog) GetPropertyContentHeight() int32 {
 // Set it to -1 to reset it to the content's natural width.
 //
 // See also: [property@Gtk.Window:default-width]
-func (x *Dialog) SetPropertyContentWidth(value int32) {
+func (x *Dialog) SetPropertyContentWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("content-width", &v)
 }
 
@@ -535,10 +535,10 @@ func (x *Dialog) SetPropertyContentWidth(value int32) {
 // Set it to -1 to reset it to the content's natural width.
 //
 // See also: [property@Gtk.Window:default-width]
-func (x *Dialog) GetPropertyContentWidth() int32 {
+func (x *Dialog) GetPropertyContentWidth() int {
 	var v gobject.Value
 	x.GetProperty("content-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyFollowsContentSize sets the "follows-content-size" property.
@@ -575,7 +575,7 @@ func (x *Dialog) GetPropertyFollowsContentSize() bool {
 func (x *Dialog) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -590,7 +590,7 @@ func (x *Dialog) GetPropertyTitle() string {
 // Emitted when the close button or shortcut is used, or
 // [method@Dialog.close] is called while [property@Dialog:can-close] is set to
 // `FALSE`.
-func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint32 {
+func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
@@ -613,7 +613,7 @@ func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint32 {
 }
 
 // Emitted when the dialog is successfully closed.
-func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint32 {
+func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -701,7 +701,7 @@ func (x *Dialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Dialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -817,7 +817,7 @@ func (x *Dialog) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Dialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Dialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -849,7 +849,7 @@ func (x *Dialog) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Dialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Dialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -882,7 +882,7 @@ func (x *Dialog) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Dialog) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *Dialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

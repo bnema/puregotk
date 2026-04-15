@@ -217,7 +217,7 @@ func (x *DragSource) SetContent(ContentVar *gdk.ContentProvider) {
 	xDragSourceSetContent(x.GoPointer(), ContentVar.GoPointer())
 }
 
-var xDragSourceSetIcon func(uintptr, uintptr, int32, int32)
+var xDragSourceSetIcon func(uintptr, uintptr, int, int)
 
 // Sets a paintable to use as icon during DND operations.
 //
@@ -229,7 +229,7 @@ var xDragSourceSetIcon func(uintptr, uintptr, int32, int32)
 // This function can be called before a drag is started, or in
 // a [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] signal handler.
-func (x *DragSource) SetIcon(PaintableVar gdk.Paintable, HotXVar int32, HotYVar int32) {
+func (x *DragSource) SetIcon(PaintableVar gdk.Paintable, HotXVar int, HotYVar int) {
 	xDragSourceSetIcon(x.GoPointer(), PaintableVar.GoPointer(), HotXVar, HotYVar)
 }
 
@@ -248,7 +248,7 @@ func (c *DragSource) SetGoPointer(ptr uintptr) {
 //
 // It can be used to e.g. set a custom drag icon with
 // [method@Gtk.DragSource.set_icon].
-func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
+func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
@@ -275,7 +275,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 // The signal handler may handle a failed drag operation based on
 // the type of error. It should return %TRUE if the failure has been handled
 // and the default "drag operation failed" animation should not be shown.
-func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint32 {
+func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
@@ -302,7 +302,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 // A typical reason to connect to this signal is to undo
 // things done in [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] handlers.
-func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 {
+func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
@@ -330,7 +330,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 
 // to start. The default handler for this signal returns the value of
 // the [property@Gtk.DragSource:content] property, so if you set up that
 // property ahead of time, you don't need to connect to this signal.
-func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint32 {
+func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)

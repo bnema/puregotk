@@ -114,7 +114,7 @@ func (c *AutomationSession) SetGoPointer(ptr uintptr) {
 func (x *AutomationSession) SetPropertyId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("id", &v)
 }
 
@@ -138,7 +138,7 @@ func (x *AutomationSession) GetPropertyId() string {
 // a new web view added to a new window.
 // When creating a new web view and there's an active browsing context, the new window
 // or tab shouldn't be focused.
-func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) WebView) uint32 {
+func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) WebView) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
@@ -163,7 +163,7 @@ func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) Web
 
 // This signal is emitted when the given automation session is about to finish.
 // It allows clients to perform any cleanup tasks before the session is destroyed.
-func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint32 {
+func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)

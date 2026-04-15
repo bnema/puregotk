@@ -257,7 +257,11 @@ func PropertyScalarSet(notGObject bool, gvalueType, setMethod string) string {
 	if notGObject {
 		prefix = "gobject."
 	}
-	return prefix + gvalueType + ")\n\tv." + setMethod + "(value"
+	arg := "value"
+	if setMethod == "SetString" || setMethod == "SetStringTakeOwnership" {
+		arg = "&value"
+	}
+	return prefix + gvalueType + ")\n\tv." + setMethod + "(" + arg
 }
 
 // PropertyScalarGet returns the code for getting a scalar property value

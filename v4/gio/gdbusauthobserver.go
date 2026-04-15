@@ -140,7 +140,7 @@ func (c *DBusAuthObserver) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted to check if @mechanism is allowed to be used.
-func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, string) bool) uint32 {
+func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
@@ -164,7 +164,7 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 
 // Emitted to check if a peer that is successfully authenticated
 // is authorized.
-func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint32 {
+func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)

@@ -44,13 +44,16 @@ func PageSetupUnixDialogNewFromInternalPtr(ptr uintptr) *PageSetupUnixDialog {
 	return cls
 }
 
-var xNewPageSetupUnixDialog func(string, uintptr) uintptr
+var xNewPageSetupUnixDialog func(uintptr, uintptr) uintptr
 
 // Creates a new page setup dialog.
-func NewPageSetupUnixDialog(TitleVar string, ParentVar *Window) *PageSetupUnixDialog {
+func NewPageSetupUnixDialog(TitleVar *string, ParentVar *Window) *PageSetupUnixDialog {
 	var cls *PageSetupUnixDialog
 
-	cret := xNewPageSetupUnixDialog(TitleVar, ParentVar.GoPointer())
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	cret := xNewPageSetupUnixDialog(TitleVarPtr, ParentVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -188,7 +191,7 @@ func (x *PageSetupUnixDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PageSetupUnixDialog) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *PageSetupUnixDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -304,7 +307,7 @@ func (x *PageSetupUnixDialog) UpdateProperty(FirstPropertyVar AccessibleProperty
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PageSetupUnixDialog) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *PageSetupUnixDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -336,7 +339,7 @@ func (x *PageSetupUnixDialog) UpdateRelation(FirstRelationVar AccessibleRelation
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PageSetupUnixDialog) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *PageSetupUnixDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -369,7 +372,7 @@ func (x *PageSetupUnixDialog) UpdateState(FirstStateVar AccessibleState, varArgs
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *PageSetupUnixDialog) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *PageSetupUnixDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -140,7 +140,7 @@ const (
 	WebsocketStateClosedValue WebsocketState = 3
 )
 
-var xWebsocketClientPrepareHandshake func(uintptr, string, []string, []gobject.TypeClass)
+var xWebsocketClientPrepareHandshake func(uintptr, uintptr, []string, []gobject.TypeClass)
 
 // Adds the necessary headers to @msg to request a WebSocket
 // handshake including supported WebSocket extensions.
@@ -151,8 +151,11 @@ var xWebsocketClientPrepareHandshake func(uintptr, string, []string, []gobject.T
 // This is a low-level function; if you use
 // [method@Session.websocket_connect_async] to create a WebSocket connection, it
 // will call this for you.
-func WebsocketClientPrepareHandshake(MsgVar *Message, OriginVar string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass) {
-	xWebsocketClientPrepareHandshake(MsgVar.GoPointer(), OriginVar, ProtocolsVar, SupportedExtensionsVar)
+func WebsocketClientPrepareHandshake(MsgVar *Message, OriginVar *string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass) {
+	OriginVarPtr := core.GStrdupNullable(OriginVar)
+	defer core.GFreeNullable(OriginVarPtr)
+
+	xWebsocketClientPrepareHandshake(MsgVar.GoPointer(), OriginVarPtr, ProtocolsVar, SupportedExtensionsVar)
 }
 
 var xWebsocketClientVerifyHandshake func(uintptr, []gobject.TypeClass, **glib.List, **glib.Error) bool
@@ -186,7 +189,7 @@ func WebsocketErrorQuark() glib.Quark {
 	return cret
 }
 
-var xWebsocketServerCheckHandshake func(uintptr, string, []string, []gobject.TypeClass, **glib.Error) bool
+var xWebsocketServerCheckHandshake func(uintptr, uintptr, []string, []gobject.TypeClass, **glib.Error) bool
 
 // Examines the method and request headers in @msg and determines
 // whether @msg contains a valid handshake request.
@@ -205,17 +208,20 @@ var xWebsocketServerCheckHandshake func(uintptr, string, []string, []gobject.Typ
 // be useful if you need to perform more complicated validation; eg,
 // accepting multiple different Origins, or handling different protocols
 // depending on the path.
-func WebsocketServerCheckHandshake(MsgVar *ServerMessage, OriginVar string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass) (bool, error) {
+func WebsocketServerCheckHandshake(MsgVar *ServerMessage, OriginVar *string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xWebsocketServerCheckHandshake(MsgVar.GoPointer(), OriginVar, ProtocolsVar, SupportedExtensionsVar, &cerr)
+	OriginVarPtr := core.GStrdupNullable(OriginVar)
+	defer core.GFreeNullable(OriginVarPtr)
+
+	cret := xWebsocketServerCheckHandshake(MsgVar.GoPointer(), OriginVarPtr, ProtocolsVar, SupportedExtensionsVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xWebsocketServerProcessHandshake func(uintptr, string, []string, []gobject.TypeClass, **glib.List) bool
+var xWebsocketServerProcessHandshake func(uintptr, uintptr, []string, []gobject.TypeClass, **glib.List) bool
 
 // Examines the method and request headers in @msg and (assuming @msg
 // contains a valid handshake request), fills in the handshake
@@ -232,8 +238,11 @@ var xWebsocketServerProcessHandshake func(uintptr, string, []string, []gobject.T
 // This is a low-level function; if you use
 // [method@Server.add_websocket_handler] to handle accepting WebSocket
 // connections, it will call this for you.
-func WebsocketServerProcessHandshake(MsgVar *ServerMessage, ExpectedOriginVar string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass, AcceptedExtensionsVar **glib.List) bool {
-	cret := xWebsocketServerProcessHandshake(MsgVar.GoPointer(), ExpectedOriginVar, ProtocolsVar, SupportedExtensionsVar, AcceptedExtensionsVar)
+func WebsocketServerProcessHandshake(MsgVar *ServerMessage, ExpectedOriginVar *string, ProtocolsVar []string, SupportedExtensionsVar []gobject.TypeClass, AcceptedExtensionsVar **glib.List) bool {
+	ExpectedOriginVarPtr := core.GStrdupNullable(ExpectedOriginVar)
+	defer core.GFreeNullable(ExpectedOriginVarPtr)
+
+	cret := xWebsocketServerProcessHandshake(MsgVar.GoPointer(), ExpectedOriginVarPtr, ProtocolsVar, SupportedExtensionsVar, AcceptedExtensionsVar)
 	return cret
 }
 

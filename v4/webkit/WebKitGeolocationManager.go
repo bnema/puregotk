@@ -184,7 +184,7 @@ func (x *GeolocationManager) GetPropertyEnableHighAccuracy() bool {
 //
 // If the signal is not handled, WebKit will try to determine the position
 // using GeoClue if available.
-func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uint32 {
+func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "start", cbRefPtr)
@@ -208,7 +208,7 @@ func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uin
 
 // The signal is emitted to notify that @manager doesn't need to receive
 // position updates anymore.
-func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint32 {
+func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "stop", cbRefPtr)

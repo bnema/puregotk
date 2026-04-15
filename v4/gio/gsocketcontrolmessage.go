@@ -69,11 +69,11 @@ func (x *SocketControlMessageClass) GetGetSize() func(*SocketControlMessage) uin
 
 // OverrideGetLevel sets the "get_level" callback function.
 // gets the protocol of the message.
-func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessage) int32) {
+func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessage) int) {
 	if cb == nil {
 		x.xGetLevel = 0
 	} else {
-		x.xGetLevel = purego.NewCallback(func(MessageVarp uintptr) int32 {
+		x.xGetLevel = purego.NewCallback(func(MessageVarp uintptr) int {
 			return cb(SocketControlMessageNewFromInternalPtr(MessageVarp))
 		})
 	}
@@ -81,24 +81,24 @@ func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessa
 
 // GetGetLevel gets the "get_level" callback function.
 // gets the protocol of the message.
-func (x *SocketControlMessageClass) GetGetLevel() func(*SocketControlMessage) int32 {
+func (x *SocketControlMessageClass) GetGetLevel() func(*SocketControlMessage) int {
 	if x.xGetLevel == 0 {
 		return nil
 	}
-	var rawCallback func(MessageVarp uintptr) int32
+	var rawCallback func(MessageVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetLevel)
-	return func(MessageVar *SocketControlMessage) int32 {
+	return func(MessageVar *SocketControlMessage) int {
 		return rawCallback(MessageVar.GoPointer())
 	}
 }
 
 // OverrideGetType sets the "get_type" callback function.
 // gets the protocol specific type of the message.
-func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessage) int32) {
+func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessage) int) {
 	if cb == nil {
 		x.xGetType = 0
 	} else {
-		x.xGetType = purego.NewCallback(func(MessageVarp uintptr) int32 {
+		x.xGetType = purego.NewCallback(func(MessageVarp uintptr) int {
 			return cb(SocketControlMessageNewFromInternalPtr(MessageVarp))
 		})
 	}
@@ -106,13 +106,13 @@ func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessag
 
 // GetGetType gets the "get_type" callback function.
 // gets the protocol specific type of the message.
-func (x *SocketControlMessageClass) GetGetType() func(*SocketControlMessage) int32 {
+func (x *SocketControlMessageClass) GetGetType() func(*SocketControlMessage) int {
 	if x.xGetType == 0 {
 		return nil
 	}
-	var rawCallback func(MessageVarp uintptr) int32
+	var rawCallback func(MessageVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetType)
-	return func(MessageVar *SocketControlMessage) int32 {
+	return func(MessageVar *SocketControlMessage) int {
 		return rawCallback(MessageVar.GoPointer())
 	}
 }
@@ -144,11 +144,11 @@ func (x *SocketControlMessageClass) GetSerialize() func(*SocketControlMessage, u
 
 // OverrideDeserialize sets the "deserialize" callback function.
 // Tries to deserialize a message.
-func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int32, int32, uint, uintptr) *SocketControlMessage) {
+func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int, int, uint, uintptr) *SocketControlMessage) {
 	if cb == nil {
 		x.xDeserialize = 0
 	} else {
-		x.xDeserialize = purego.NewCallback(func(LevelVarp int32, TypeVarp int32, SizeVarp uint, DataVarp uintptr) uintptr {
+		x.xDeserialize = purego.NewCallback(func(LevelVarp int, TypeVarp int, SizeVarp uint, DataVarp uintptr) uintptr {
 			ret := cb(LevelVarp, TypeVarp, SizeVarp, DataVarp)
 			if ret == nil {
 				return 0
@@ -160,13 +160,13 @@ func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int32, int32, ui
 
 // GetDeserialize gets the "deserialize" callback function.
 // Tries to deserialize a message.
-func (x *SocketControlMessageClass) GetDeserialize() func(int32, int32, uint, uintptr) *SocketControlMessage {
+func (x *SocketControlMessageClass) GetDeserialize() func(int, int, uint, uintptr) *SocketControlMessage {
 	if x.xDeserialize == 0 {
 		return nil
 	}
-	var rawCallback func(LevelVarp int32, TypeVarp int32, SizeVarp uint, DataVarp uintptr) uintptr
+	var rawCallback func(LevelVarp int, TypeVarp int, SizeVarp uint, DataVarp uintptr) uintptr
 	purego.RegisterFunc(&rawCallback, x.xDeserialize)
-	return func(LevelVar int32, TypeVar int32, SizeVar uint, DataVar uintptr) *SocketControlMessage {
+	return func(LevelVar int, TypeVar int, SizeVar uint, DataVar uintptr) *SocketControlMessage {
 		rawRet := rawCallback(LevelVar, TypeVar, SizeVar, DataVar)
 		if rawRet == 0 {
 			return nil
@@ -336,20 +336,20 @@ func SocketControlMessageNewFromInternalPtr(ptr uintptr) *SocketControlMessage {
 	return cls
 }
 
-var xSocketControlMessageGetLevel func(uintptr) int32
+var xSocketControlMessageGetLevel func(uintptr) int
 
 // Returns the "level" (i.e. the originating protocol) of the control message.
 // This is often SOL_SOCKET.
-func (x *SocketControlMessage) GetLevel() int32 {
+func (x *SocketControlMessage) GetLevel() int {
 	cret := xSocketControlMessageGetLevel(x.GoPointer())
 	return cret
 }
 
-var xSocketControlMessageGetMsgType func(uintptr) int32
+var xSocketControlMessageGetMsgType func(uintptr) int
 
 // Returns the protocol specific type of the control message.
 // For instance, for UNIX fd passing this would be SCM_RIGHTS.
-func (x *SocketControlMessage) GetMsgType() int32 {
+func (x *SocketControlMessage) GetMsgType() int {
 	cret := xSocketControlMessageGetMsgType(x.GoPointer())
 	return cret
 }
@@ -386,7 +386,7 @@ func (c *SocketControlMessage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xSocketControlMessageDeserialize func(int32, int32, uint, uintptr) uintptr
+var xSocketControlMessageDeserialize func(int, int, uint, uintptr) uintptr
 
 // Tries to deserialize a socket control message of a given
 // @level and @type. This will ask all known (to GType) subclasses
@@ -395,7 +395,7 @@ var xSocketControlMessageDeserialize func(int32, int32, uint, uintptr) uintptr
 //
 // If there is no implementation for this kind of control message, %NULL
 // will be returned.
-func SocketControlMessageDeserialize(LevelVar int32, TypeVar int32, SizeVar uint, DataVar uintptr) *SocketControlMessage {
+func SocketControlMessageDeserialize(LevelVar int, TypeVar int, SizeVar uint, DataVar uintptr) *SocketControlMessage {
 	var cls *SocketControlMessage
 
 	cret := xSocketControlMessageDeserialize(LevelVar, TypeVar, SizeVar, DataVar)

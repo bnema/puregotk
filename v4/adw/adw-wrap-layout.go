@@ -183,10 +183,10 @@ func (x *WrapLayout) GetAlign() float32 {
 	return cret
 }
 
-var xWrapLayoutGetChildSpacing func(uintptr) int32
+var xWrapLayoutGetChildSpacing func(uintptr) int
 
 // Gets spacing between widgets on the same line.
-func (x *WrapLayout) GetChildSpacing() int32 {
+func (x *WrapLayout) GetChildSpacing() int {
 	cret := xWrapLayoutGetChildSpacing(x.GoPointer())
 	return cret
 }
@@ -223,10 +223,10 @@ func (x *WrapLayout) GetLineHomogeneous() bool {
 	return cret
 }
 
-var xWrapLayoutGetLineSpacing func(uintptr) int32
+var xWrapLayoutGetLineSpacing func(uintptr) int
 
 // Gets the spacing between lines.
-func (x *WrapLayout) GetLineSpacing() int32 {
+func (x *WrapLayout) GetLineSpacing() int {
 	cret := xWrapLayoutGetLineSpacing(x.GoPointer())
 	return cret
 }
@@ -239,10 +239,10 @@ func (x *WrapLayout) GetLineSpacingUnit() LengthUnit {
 	return cret
 }
 
-var xWrapLayoutGetNaturalLineLength func(uintptr) int32
+var xWrapLayoutGetNaturalLineLength func(uintptr) int
 
 // Gets the natural size for each line.
-func (x *WrapLayout) GetNaturalLineLength() int32 {
+func (x *WrapLayout) GetNaturalLineLength() int {
 	cret := xWrapLayoutGetNaturalLineLength(x.GoPointer())
 	return cret
 }
@@ -294,12 +294,12 @@ func (x *WrapLayout) SetAlign(AlignVar float32) {
 	xWrapLayoutSetAlign(x.GoPointer(), AlignVar)
 }
 
-var xWrapLayoutSetChildSpacing func(uintptr, int32)
+var xWrapLayoutSetChildSpacing func(uintptr, int)
 
 // Sets the spacing between widgets on the same line.
 //
 // See [property@WrapLayout:child-spacing-unit].
-func (x *WrapLayout) SetChildSpacing(ChildSpacingVar int32) {
+func (x *WrapLayout) SetChildSpacing(ChildSpacingVar int) {
 	xWrapLayoutSetChildSpacing(x.GoPointer(), ChildSpacingVar)
 }
 
@@ -354,12 +354,12 @@ func (x *WrapLayout) SetLineHomogeneous(HomogeneousVar bool) {
 	xWrapLayoutSetLineHomogeneous(x.GoPointer(), HomogeneousVar)
 }
 
-var xWrapLayoutSetLineSpacing func(uintptr, int32)
+var xWrapLayoutSetLineSpacing func(uintptr, int)
 
 // Sets the spacing between lines.
 //
 // See [property@WrapLayout:line-spacing-unit].
-func (x *WrapLayout) SetLineSpacing(LineSpacingVar int32) {
+func (x *WrapLayout) SetLineSpacing(LineSpacingVar int) {
 	xWrapLayoutSetLineSpacing(x.GoPointer(), LineSpacingVar)
 }
 
@@ -374,7 +374,7 @@ func (x *WrapLayout) SetLineSpacingUnit(UnitVar LengthUnit) {
 	xWrapLayoutSetLineSpacingUnit(x.GoPointer(), UnitVar)
 }
 
-var xWrapLayoutSetNaturalLineLength func(uintptr, int32)
+var xWrapLayoutSetNaturalLineLength func(uintptr, int)
 
 // Sets the natural size for each line.
 //
@@ -382,7 +382,7 @@ var xWrapLayoutSetNaturalLineLength func(uintptr, int32)
 // popovers.
 //
 // See [property@WrapLayout:natural-line-length-unit].
-func (x *WrapLayout) SetNaturalLineLength(NaturalLineLengthVar int32) {
+func (x *WrapLayout) SetNaturalLineLength(NaturalLineLengthVar int) {
 	xWrapLayoutSetNaturalLineLength(x.GoPointer(), NaturalLineLengthVar)
 }
 
@@ -478,10 +478,10 @@ func (x *WrapLayout) GetPropertyAlign() float32 {
 // The spacing between widgets on the same line.
 //
 // See [property@WrapLayout:child-spacing-unit].
-func (x *WrapLayout) SetPropertyChildSpacing(value int32) {
+func (x *WrapLayout) SetPropertyChildSpacing(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("child-spacing", &v)
 }
 
@@ -489,10 +489,10 @@ func (x *WrapLayout) SetPropertyChildSpacing(value int32) {
 // The spacing between widgets on the same line.
 //
 // See [property@WrapLayout:child-spacing-unit].
-func (x *WrapLayout) GetPropertyChildSpacing() int32 {
+func (x *WrapLayout) GetPropertyChildSpacing() int {
 	var v gobject.Value
 	x.GetProperty("child-spacing", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyJustifyLastLine sets the "justify-last-line" property.
@@ -537,10 +537,10 @@ func (x *WrapLayout) GetPropertyLineHomogeneous() bool {
 // The spacing between lines.
 //
 // See [property@WrapLayout:line-spacing-unit].
-func (x *WrapLayout) SetPropertyLineSpacing(value int32) {
+func (x *WrapLayout) SetPropertyLineSpacing(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("line-spacing", &v)
 }
 
@@ -548,10 +548,10 @@ func (x *WrapLayout) SetPropertyLineSpacing(value int32) {
 // The spacing between lines.
 //
 // See [property@WrapLayout:line-spacing-unit].
-func (x *WrapLayout) GetPropertyLineSpacing() int32 {
+func (x *WrapLayout) GetPropertyLineSpacing() int {
 	var v gobject.Value
 	x.GetProperty("line-spacing", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyNaturalLineLength sets the "natural-line-length" property.
@@ -561,10 +561,10 @@ func (x *WrapLayout) GetPropertyLineSpacing() int32 {
 // popovers.
 //
 // See [property@WrapLayout:natural-line-length-unit].
-func (x *WrapLayout) SetPropertyNaturalLineLength(value int32) {
+func (x *WrapLayout) SetPropertyNaturalLineLength(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("natural-line-length", &v)
 }
 
@@ -575,10 +575,10 @@ func (x *WrapLayout) SetPropertyNaturalLineLength(value int32) {
 // popovers.
 //
 // See [property@WrapLayout:natural-line-length-unit].
-func (x *WrapLayout) GetPropertyNaturalLineLength() int32 {
+func (x *WrapLayout) GetPropertyNaturalLineLength() int {
 	var v gobject.Value
 	x.GetProperty("natural-line-length", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWrapReverse sets the "wrap-reverse" property.

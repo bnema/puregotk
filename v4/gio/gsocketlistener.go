@@ -514,14 +514,14 @@ func (x *SocketListener) Close() {
 	xSocketListenerClose(x.GoPointer())
 }
 
-var xSocketListenerSetBacklog func(uintptr, int32)
+var xSocketListenerSetBacklog func(uintptr, int)
 
 // Sets the listen backlog on the sockets in the listener. This must be called
 // before adding any sockets, addresses or ports to the #GSocketListener (for
 // example, by calling g_socket_listener_add_inet_port()) to be effective.
 //
 // See g_socket_set_listen_backlog() for details
-func (x *SocketListener) SetBacklog(ListenBacklogVar int32) {
+func (x *SocketListener) SetBacklog(ListenBacklogVar int) {
 	xSocketListenerSetBacklog(x.GoPointer(), ListenBacklogVar)
 }
 
@@ -538,26 +538,26 @@ func (c *SocketListener) SetGoPointer(ptr uintptr) {
 
 // SetPropertyListenBacklog sets the "listen-backlog" property.
 // The number of outstanding connections in the listen queue.
-func (x *SocketListener) SetPropertyListenBacklog(value int32) {
+func (x *SocketListener) SetPropertyListenBacklog(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("listen-backlog", &v)
 }
 
 // GetPropertyListenBacklog gets the "listen-backlog" property.
 // The number of outstanding connections in the listen queue.
-func (x *SocketListener) GetPropertyListenBacklog() int32 {
+func (x *SocketListener) GetPropertyListenBacklog() int {
 	var v gobject.Value
 	x.GetProperty("listen-backlog", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Emitted when @listener's activity on @socket changes state.
 // Note that when @listener is used to listen on both IPv4 and
 // IPv6, a separate set of signals will be emitted for each, and
 // the order they happen in is undefined.
-func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint32 {
+func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)

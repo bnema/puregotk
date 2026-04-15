@@ -32,14 +32,17 @@ func ShowAboutWindow(ParentVar *gtk.Window, FirstPropertyNameVar string, varArgs
 	xShowAboutWindow(ParentVar.GoPointer(), FirstPropertyNameVar, varArgs...)
 }
 
-var xShowAboutWindowFromAppdata func(uintptr, string, string, string, ...interface{})
+var xShowAboutWindowFromAppdata func(uintptr, string, uintptr, string, ...interface{})
 
 // A convenience function for showing an application’s about window from
 // AppStream metadata.
 //
 // See [ctor@AboutWindow.new_from_appdata] for details.
-func ShowAboutWindowFromAppdata(ParentVar *gtk.Window, ResourcePathVar string, ReleaseNotesVersionVar string, FirstPropertyNameVar string, varArgs ...interface{}) {
-	xShowAboutWindowFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVar, FirstPropertyNameVar, varArgs...)
+func ShowAboutWindowFromAppdata(ParentVar *gtk.Window, ResourcePathVar string, ReleaseNotesVersionVar *string, FirstPropertyNameVar string, varArgs ...interface{}) {
+	ReleaseNotesVersionVarPtr := core.GStrdupNullable(ReleaseNotesVersionVar)
+	defer core.GFreeNullable(ReleaseNotesVersionVarPtr)
+
+	xShowAboutWindowFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVarPtr, FirstPropertyNameVar, varArgs...)
 }
 
 // A window showing information about the application.
@@ -246,7 +249,7 @@ func NewAboutWindow() *AboutWindow {
 	return cls
 }
 
-var xNewAboutWindowFromAppdata func(string, string) uintptr
+var xNewAboutWindowFromAppdata func(string, uintptr) uintptr
 
 // Creates a new `AdwAboutWindow` using AppStream metadata.
 //
@@ -269,10 +272,13 @@ var xNewAboutWindowFromAppdata func(string, string) uintptr
 // [property@AboutWindow:release-notes-version] is set to match it, while
 // [property@AboutWindow:release-notes] is set from the AppStream release
 // description for that version.
-func NewAboutWindowFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar string) *AboutWindow {
+func NewAboutWindowFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar *string) *AboutWindow {
 	var cls *AboutWindow
 
-	cret := xNewAboutWindowFromAppdata(ResourcePathVar, ReleaseNotesVersionVar)
+	ReleaseNotesVersionVarPtr := core.GStrdupNullable(ReleaseNotesVersionVar)
+	defer core.GFreeNullable(ReleaseNotesVersionVarPtr)
+
+	cret := xNewAboutWindowFromAppdata(ResourcePathVar, ReleaseNotesVersionVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -283,7 +289,7 @@ func NewAboutWindowFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar st
 	return cls
 }
 
-var xAboutWindowAddAcknowledgementSection func(uintptr, string, []string)
+var xAboutWindowAddAcknowledgementSection func(uintptr, uintptr, []string)
 
 // Adds a section to the Acknowledgements page.
 //
@@ -302,11 +308,14 @@ var xAboutWindowAddAcknowledgementSection func(uintptr, string, []string)
 // * [property@AboutWindow:documenters]
 // * [property@AboutWindow:translator-credits]
 // * [method@AboutWindow.add_credit_section]
-func (x *AboutWindow) AddAcknowledgementSection(NameVar string, PeopleVar []string) {
-	xAboutWindowAddAcknowledgementSection(x.GoPointer(), NameVar, PeopleVar)
+func (x *AboutWindow) AddAcknowledgementSection(NameVar *string, PeopleVar []string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xAboutWindowAddAcknowledgementSection(x.GoPointer(), NameVarPtr, PeopleVar)
 }
 
-var xAboutWindowAddCreditSection func(uintptr, string, []string)
+var xAboutWindowAddCreditSection func(uintptr, uintptr, []string)
 
 // Adds an extra section to the Credits page.
 //
@@ -323,11 +332,14 @@ var xAboutWindowAddCreditSection func(uintptr, string, []string)
 // * [property@AboutWindow:documenters]
 // * [property@AboutWindow:translator-credits]
 // * [method@AboutWindow.add_acknowledgement_section]
-func (x *AboutWindow) AddCreditSection(NameVar string, PeopleVar []string) {
-	xAboutWindowAddCreditSection(x.GoPointer(), NameVar, PeopleVar)
+func (x *AboutWindow) AddCreditSection(NameVar *string, PeopleVar []string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xAboutWindowAddCreditSection(x.GoPointer(), NameVarPtr, PeopleVar)
 }
 
-var xAboutWindowAddLegalSection func(uintptr, string, string, gtk.License, string)
+var xAboutWindowAddLegalSection func(uintptr, string, uintptr, gtk.License, uintptr)
 
 // Adds an extra section to the Legal page.
 //
@@ -374,8 +386,14 @@ var xAboutWindowAddLegalSection func(uintptr, string, string, gtk.License, strin
 //	"Something completely custom here.");
 //
 // ```
-func (x *AboutWindow) AddLegalSection(TitleVar string, CopyrightVar string, LicenseTypeVar gtk.License, LicenseVar string) {
-	xAboutWindowAddLegalSection(x.GoPointer(), TitleVar, CopyrightVar, LicenseTypeVar, LicenseVar)
+func (x *AboutWindow) AddLegalSection(TitleVar string, CopyrightVar *string, LicenseTypeVar gtk.License, LicenseVar *string) {
+	CopyrightVarPtr := core.GStrdupNullable(CopyrightVar)
+	defer core.GFreeNullable(CopyrightVarPtr)
+
+	LicenseVarPtr := core.GStrdupNullable(LicenseVar)
+	defer core.GFreeNullable(LicenseVarPtr)
+
+	xAboutWindowAddLegalSection(x.GoPointer(), TitleVar, CopyrightVarPtr, LicenseTypeVar, LicenseVarPtr)
 }
 
 var xAboutWindowAddLink func(uintptr, string, string)
@@ -900,7 +918,7 @@ func (c *AboutWindow) SetGoPointer(ptr uintptr) {
 func (x *AboutWindow) SetPropertyApplicationIcon(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("application-icon", &v)
 }
 
@@ -921,7 +939,7 @@ func (x *AboutWindow) GetPropertyApplicationIcon() string {
 func (x *AboutWindow) SetPropertyApplicationName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("application-name", &v)
 }
 
@@ -990,7 +1008,7 @@ func (x *AboutWindow) GetPropertyArtists() []string {
 func (x *AboutWindow) SetPropertyComments(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("comments", &v)
 }
 
@@ -1021,7 +1039,7 @@ func (x *AboutWindow) GetPropertyComments() string {
 func (x *AboutWindow) SetPropertyCopyright(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("copyright", &v)
 }
 
@@ -1057,7 +1075,7 @@ func (x *AboutWindow) GetPropertyCopyright() string {
 func (x *AboutWindow) SetPropertyDebugInfo(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("debug-info", &v)
 }
 
@@ -1089,7 +1107,7 @@ func (x *AboutWindow) GetPropertyDebugInfo() string {
 func (x *AboutWindow) SetPropertyDebugInfoFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("debug-info-filename", &v)
 }
 
@@ -1165,7 +1183,7 @@ func (x *AboutWindow) GetPropertyDesigners() []string {
 func (x *AboutWindow) SetPropertyDeveloperName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("developer-name", &v)
 }
 
@@ -1283,7 +1301,7 @@ func (x *AboutWindow) GetPropertyDocumenters() []string {
 func (x *AboutWindow) SetPropertyIssueUrl(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("issue-url", &v)
 }
 
@@ -1316,7 +1334,7 @@ func (x *AboutWindow) GetPropertyIssueUrl() string {
 func (x *AboutWindow) SetPropertyLicense(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("license", &v)
 }
 
@@ -1370,7 +1388,7 @@ func (x *AboutWindow) GetPropertyLicense() string {
 func (x *AboutWindow) SetPropertyReleaseNotes(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("release-notes", &v)
 }
 
@@ -1421,7 +1439,7 @@ func (x *AboutWindow) GetPropertyReleaseNotes() string {
 func (x *AboutWindow) SetPropertyReleaseNotesVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("release-notes-version", &v)
 }
 
@@ -1451,7 +1469,7 @@ func (x *AboutWindow) GetPropertyReleaseNotesVersion() string {
 func (x *AboutWindow) SetPropertySupportUrl(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("support-url", &v)
 }
 
@@ -1487,7 +1505,7 @@ func (x *AboutWindow) GetPropertySupportUrl() string {
 func (x *AboutWindow) SetPropertyTranslatorCredits(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("translator-credits", &v)
 }
 
@@ -1526,7 +1544,7 @@ func (x *AboutWindow) GetPropertyTranslatorCredits() string {
 func (x *AboutWindow) SetPropertyVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("version", &v)
 }
 
@@ -1553,7 +1571,7 @@ func (x *AboutWindow) GetPropertyVersion() string {
 func (x *AboutWindow) SetPropertyWebsite(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website", &v)
 }
 
@@ -1574,7 +1592,7 @@ func (x *AboutWindow) GetPropertyWebsite() string {
 //
 // Applications may connect to it to override the default behavior, which is
 // to call [func@Gtk.show_uri].
-func (x *AboutWindow) ConnectActivateLink(cb *func(AboutWindow, string) bool) uint32 {
+func (x *AboutWindow) ConnectActivateLink(cb *func(AboutWindow, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
@@ -1662,7 +1680,7 @@ func (x *AboutWindow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AboutWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *AboutWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1778,7 +1796,7 @@ func (x *AboutWindow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, va
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *AboutWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1810,7 +1828,7 @@ func (x *AboutWindow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, va
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *AboutWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1843,7 +1861,7 @@ func (x *AboutWindow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *AboutWindow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *AboutWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

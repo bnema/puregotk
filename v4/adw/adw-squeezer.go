@@ -193,10 +193,10 @@ func (x *Squeezer) GetSwitchThresholdPolicy() FoldThresholdPolicy {
 	return cret
 }
 
-var xSqueezerGetTransitionDuration func(uintptr) uint32
+var xSqueezerGetTransitionDuration func(uintptr) uint
 
 // Gets the transition animation duration for @self.
-func (x *Squeezer) GetTransitionDuration() uint32 {
+func (x *Squeezer) GetTransitionDuration() uint {
 	cret := xSqueezerGetTransitionDuration(x.GoPointer())
 	return cret
 }
@@ -311,10 +311,10 @@ func (x *Squeezer) SetSwitchThresholdPolicy(PolicyVar FoldThresholdPolicy) {
 	xSqueezerSetSwitchThresholdPolicy(x.GoPointer(), PolicyVar)
 }
 
-var xSqueezerSetTransitionDuration func(uintptr, uint32)
+var xSqueezerSetTransitionDuration func(uintptr, uint)
 
 // Sets the transition animation duration for @self.
-func (x *Squeezer) SetTransitionDuration(DurationVar uint32) {
+func (x *Squeezer) SetTransitionDuration(DurationVar uint) {
 	xSqueezerSetTransitionDuration(x.GoPointer(), DurationVar)
 }
 
@@ -441,19 +441,19 @@ func (x *Squeezer) GetPropertyInterpolateSize() bool {
 
 // SetPropertyTransitionDuration sets the "transition-duration" property.
 // The transition animation duration, in milliseconds.
-func (x *Squeezer) SetPropertyTransitionDuration(value uint32) {
+func (x *Squeezer) SetPropertyTransitionDuration(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("transition-duration", &v)
 }
 
 // GetPropertyTransitionDuration gets the "transition-duration" property.
 // The transition animation duration, in milliseconds.
-func (x *Squeezer) GetPropertyTransitionDuration() uint32 {
+func (x *Squeezer) GetPropertyTransitionDuration() uint {
 	var v gobject.Value
 	x.GetProperty("transition-duration", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyTransitionRunning gets the "transition-running" property.
@@ -592,7 +592,7 @@ func (x *Squeezer) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Squeezer) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Squeezer) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -708,7 +708,7 @@ func (x *Squeezer) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Squeezer) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Squeezer) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -740,7 +740,7 @@ func (x *Squeezer) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Squeezer) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Squeezer) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -773,7 +773,7 @@ func (x *Squeezer) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Squeezer) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *Squeezer) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

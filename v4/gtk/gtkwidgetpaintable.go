@@ -183,7 +183,7 @@ func (x *WidgetPaintable) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *WidgetPaintable) GetIntrinsicHeight() int32 {
+func (x *WidgetPaintable) GetIntrinsicHeight() int {
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -198,7 +198,7 @@ func (x *WidgetPaintable) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *WidgetPaintable) GetIntrinsicWidth() int32 {
+func (x *WidgetPaintable) GetIntrinsicWidth() int {
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }

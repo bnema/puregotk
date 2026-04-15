@@ -150,7 +150,7 @@ func (c *Seat) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a new input device is related to this seat.
-func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
@@ -173,7 +173,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
 }
 
 // Emitted when an input device is removed (e.g. unplugged).
-func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
@@ -202,7 +202,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
 // [signal@Gdk.Device::tool-changed] signal accordingly.
 //
 // A same tool may be used by several devices.
-func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
@@ -225,7 +225,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
 }
 
 // Emitted whenever a tool is no longer known to this @seat.
-func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)

@@ -152,10 +152,10 @@ func (x *ContextMenu) GetEvent() *gdk.Event {
 	return cls
 }
 
-var xContextMenuGetItemAtPosition func(uintptr, uint32) uintptr
+var xContextMenuGetItemAtPosition func(uintptr, uint) uintptr
 
 // Gets the item at the given position in the @menu.
-func (x *ContextMenu) GetItemAtPosition(PositionVar uint32) *ContextMenuItem {
+func (x *ContextMenu) GetItemAtPosition(PositionVar uint) *ContextMenuItem {
 	var cls *ContextMenuItem
 
 	cret := xContextMenuGetItemAtPosition(x.GoPointer(), PositionVar)
@@ -180,21 +180,21 @@ func (x *ContextMenu) GetItems() *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xContextMenuGetNItems func(uintptr) uint32
+var xContextMenuGetNItems func(uintptr) uint
 
 // Gets the length of the @menu.
-func (x *ContextMenu) GetNItems() uint32 {
+func (x *ContextMenu) GetNItems() uint {
 	cret := xContextMenuGetNItems(x.GoPointer())
 	return cret
 }
 
-var xContextMenuGetPosition func(uintptr, *int32, *int32) bool
+var xContextMenuGetPosition func(uintptr, *int, *int) bool
 
 // Gets the position in view coordinates where the context menu was triggered.
 //
 // This function only returns valid coordinates when called for a #WebKitContextMenu
 // passed to #WebKitWebView::context-menu signal.
-func (x *ContextMenu) GetPosition(XVar *int32, YVar *int32) bool {
+func (x *ContextMenu) GetPosition(XVar *int, YVar *int) bool {
 	cret := xContextMenuGetPosition(x.GoPointer(), XVar, YVar)
 	return cret
 }
@@ -213,14 +213,14 @@ func (x *ContextMenu) GetUserData() *glib.Variant {
 	return (*glib.Variant)(unsafe.Pointer(cret))
 }
 
-var xContextMenuInsert func(uintptr, uintptr, int32)
+var xContextMenuInsert func(uintptr, uintptr, int)
 
 // Inserts @item into the @menu at the given position.
 //
 // If @position is negative, or is larger than the number of items
 // in the #WebKitContextMenu, the item is added on to the end of
 // the @menu. The first position is 0.
-func (x *ContextMenu) Insert(ItemVar *ContextMenuItem, PositionVar int32) {
+func (x *ContextMenu) Insert(ItemVar *ContextMenuItem, PositionVar int) {
 	xContextMenuInsert(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
 }
 
@@ -241,7 +241,7 @@ func (x *ContextMenu) Last() *ContextMenuItem {
 	return cls
 }
 
-var xContextMenuMoveItem func(uintptr, uintptr, int32)
+var xContextMenuMoveItem func(uintptr, uintptr, int)
 
 // Moves @item to the given position in the @menu.
 //
@@ -249,7 +249,7 @@ var xContextMenuMoveItem func(uintptr, uintptr, int32)
 // in the #WebKitContextMenu, the item is added on to the end of
 // the @menu.
 // The first position is 0.
-func (x *ContextMenu) MoveItem(ItemVar *ContextMenuItem, PositionVar int32) {
+func (x *ContextMenu) MoveItem(ItemVar *ContextMenuItem, PositionVar int) {
 	xContextMenuMoveItem(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
 }
 

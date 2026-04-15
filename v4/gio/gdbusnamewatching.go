@@ -18,7 +18,7 @@ type BusNameAppearedCallback func(uintptr, string, string, uintptr)
 // %NULL.
 type BusNameVanishedCallback func(uintptr, string, uintptr)
 
-var xBusUnwatchName func(uint32)
+var xBusUnwatchName func(uint)
 
 // Stops watching a name.
 //
@@ -28,11 +28,11 @@ var xBusUnwatchName func(uint32)
 // until the #GDestroyNotify function passed to g_bus_watch_name() is called, in
 // order to avoid memory leaks through callbacks queued on the #GMainContext
 // after it’s stopped being iterated.
-func BusUnwatchName(WatcherIdVar uint32) {
+func BusUnwatchName(WatcherIdVar uint) {
 	xBusUnwatchName(WatcherIdVar)
 }
 
-var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, uintptr, uintptr) uint32
+var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, uintptr, uintptr) uint
 
 // Starts watching @name on the bus specified by @bus_type and calls
 // @name_appeared_handler and @name_vanished_handler when the name is
@@ -63,34 +63,34 @@ var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, u
 // Basically, the application should create object proxies in
 // @name_appeared_handler and destroy them again (if any) in
 // @name_vanished_handler.
-func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
+func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 	cret := xBusWatchName(BusTypeVar, NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
-var xBusWatchNameOnConnection func(uintptr, string, BusNameWatcherFlags, uintptr, uintptr, uintptr, uintptr) uint32
+var xBusWatchNameOnConnection func(uintptr, string, BusNameWatcherFlags, uintptr, uintptr, uintptr, uintptr) uint
 
 // Like g_bus_watch_name() but takes a #GDBusConnection instead of a
 // #GBusType.
-func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
+func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 	cret := xBusWatchNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
-var xBusWatchNameOnConnectionWithClosures func(uintptr, string, BusNameWatcherFlags, *gobject.Closure, *gobject.Closure) uint32
+var xBusWatchNameOnConnectionWithClosures func(uintptr, string, BusNameWatcherFlags, *gobject.Closure, *gobject.Closure) uint
 
 // Version of g_bus_watch_name_on_connection() using closures instead of callbacks for
 // easier binding in other languages.
-func BusWatchNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint32 {
+func BusWatchNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint {
 	cret := xBusWatchNameOnConnectionWithClosures(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
 	return cret
 }
 
-var xBusWatchNameWithClosures func(BusType, string, BusNameWatcherFlags, *gobject.Closure, *gobject.Closure) uint32
+var xBusWatchNameWithClosures func(BusType, string, BusNameWatcherFlags, *gobject.Closure, *gobject.Closure) uint
 
 // Version of g_bus_watch_name() using closures instead of callbacks for
 // easier binding in other languages.
-func BusWatchNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint32 {
+func BusWatchNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint {
 	cret := xBusWatchNameWithClosures(BusTypeVar, NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
 	return cret
 }

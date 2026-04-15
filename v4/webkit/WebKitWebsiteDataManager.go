@@ -391,7 +391,7 @@ func (c *WebsiteDataManager) SetGoPointer(ptr uintptr) {
 func (x *WebsiteDataManager) SetPropertyBaseCacheDirectory(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("base-cache-directory", &v)
 }
 
@@ -408,7 +408,7 @@ func (x *WebsiteDataManager) GetPropertyBaseCacheDirectory() string {
 func (x *WebsiteDataManager) SetPropertyBaseDataDirectory(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("base-data-directory", &v)
 }
 

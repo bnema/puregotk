@@ -88,10 +88,10 @@ func (x *CellRendererSpinner) GetPropertyActive() bool {
 //
 // By default, the `GtkSpinner` widget draws one full cycle of the animation,
 // consisting of 12 frames, in 750 milliseconds.
-func (x *CellRendererSpinner) SetPropertyPulse(value uint32) {
+func (x *CellRendererSpinner) SetPropertyPulse(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("pulse", &v)
 }
 
@@ -101,10 +101,10 @@ func (x *CellRendererSpinner) SetPropertyPulse(value uint32) {
 //
 // By default, the `GtkSpinner` widget draws one full cycle of the animation,
 // consisting of 12 frames, in 750 milliseconds.
-func (x *CellRendererSpinner) GetPropertyPulse() uint32 {
+func (x *CellRendererSpinner) GetPropertyPulse() uint {
 	var v gobject.Value
 	x.GetProperty("pulse", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 func init() {

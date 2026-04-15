@@ -556,10 +556,10 @@ func ResolverNewFromInternalPtr(ptr uintptr) *Resolver {
 	return cls
 }
 
-var xResolverGetTimeout func(uintptr) uint32
+var xResolverGetTimeout func(uintptr) uint
 
 // Get the timeout applied to all resolver lookups. See #GResolver:timeout.
-func (x *Resolver) GetTimeout() uint32 {
+func (x *Resolver) GetTimeout() uint {
 	cret := xResolverGetTimeout(x.GoPointer())
 	return cret
 }
@@ -871,10 +871,10 @@ func (x *Resolver) SetDefault() {
 	xResolverSetDefault(x.GoPointer())
 }
 
-var xResolverSetTimeout func(uintptr, uint32)
+var xResolverSetTimeout func(uintptr, uint)
 
 // Set the timeout applied to all resolver lookups. See #GResolver:timeout.
-func (x *Resolver) SetTimeout(TimeoutMsVar uint32) {
+func (x *Resolver) SetTimeout(TimeoutMsVar uint) {
 	xResolverSetTimeout(x.GoPointer(), TimeoutMsVar)
 }
 
@@ -900,10 +900,10 @@ func (c *Resolver) SetGoPointer(ptr uintptr) {
 //
 // No timeout was applied to lookups before this property was added in
 // GLib 2.78.
-func (x *Resolver) SetPropertyTimeout(value uint32) {
+func (x *Resolver) SetPropertyTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("timeout", &v)
 }
 
@@ -918,15 +918,15 @@ func (x *Resolver) SetPropertyTimeout(value uint32) {
 //
 // No timeout was applied to lookups before this property was added in
 // GLib 2.78.
-func (x *Resolver) GetPropertyTimeout() uint32 {
+func (x *Resolver) GetPropertyTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Emitted when the resolver notices that the system resolver
 // configuration has changed.
-func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
+func (x *Resolver) ConnectReload(cb *func(Resolver)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)

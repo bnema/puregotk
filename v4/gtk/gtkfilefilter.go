@@ -204,14 +204,17 @@ func (x *FileFilter) GetName() string {
 	return cret
 }
 
-var xFileFilterSetName func(uintptr, string)
+var xFileFilterSetName func(uintptr, uintptr)
 
 // Sets a human-readable name of the filter.
 //
 // This is the string that will be displayed in the user interface
 // if there is a selectable list of filters.
-func (x *FileFilter) SetName(NameVar string) {
-	xFileFilterSetName(x.GoPointer(), NameVar)
+func (x *FileFilter) SetName(NameVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	xFileFilterSetName(x.GoPointer(), NameVarPtr)
 }
 
 var xFileFilterToGvariant func(uintptr) uintptr
@@ -253,7 +256,7 @@ func (x *FileFilter) SetPropertyMimeTypes(value []string) {
 func (x *FileFilter) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

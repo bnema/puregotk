@@ -362,24 +362,24 @@ func (x *WebViewClass) GetPermissionRequest() func(*WebView, PermissionRequest) 
 }
 
 // OverrideMouseTargetChanged sets the "mouse_target_changed" callback function.
-func (x *WebViewClass) OverrideMouseTargetChanged(cb func(*WebView, *HitTestResult, uint32)) {
+func (x *WebViewClass) OverrideMouseTargetChanged(cb func(*WebView, *HitTestResult, uint)) {
 	if cb == nil {
 		x.xMouseTargetChanged = 0
 	} else {
-		x.xMouseTargetChanged = purego.NewCallback(func(WebViewVarp uintptr, HitTestResultVarp uintptr, ModifiersVarp uint32) {
+		x.xMouseTargetChanged = purego.NewCallback(func(WebViewVarp uintptr, HitTestResultVarp uintptr, ModifiersVarp uint) {
 			cb(WebViewNewFromInternalPtr(WebViewVarp), HitTestResultNewFromInternalPtr(HitTestResultVarp), ModifiersVarp)
 		})
 	}
 }
 
 // GetMouseTargetChanged gets the "mouse_target_changed" callback function.
-func (x *WebViewClass) GetMouseTargetChanged() func(*WebView, *HitTestResult, uint32) {
+func (x *WebViewClass) GetMouseTargetChanged() func(*WebView, *HitTestResult, uint) {
 	if x.xMouseTargetChanged == 0 {
 		return nil
 	}
-	var rawCallback func(WebViewVarp uintptr, HitTestResultVarp uintptr, ModifiersVarp uint32)
+	var rawCallback func(WebViewVarp uintptr, HitTestResultVarp uintptr, ModifiersVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xMouseTargetChanged)
-	return func(WebViewVar *WebView, HitTestResultVar *HitTestResult, ModifiersVar uint32) {
+	return func(WebViewVar *WebView, HitTestResultVar *HitTestResult, ModifiersVar uint) {
 		rawCallback(WebViewVar.GoPointer(), HitTestResultVar.GoPointer(), ModifiersVar)
 	}
 }
@@ -1775,7 +1775,7 @@ func NewWebView() *WebView {
 	return cls
 }
 
-var xWebViewCallAsyncJavascriptFunction func(uintptr, string, int, *glib.Variant, string, string, uintptr, uintptr, uintptr)
+var xWebViewCallAsyncJavascriptFunction func(uintptr, string, int, *glib.Variant, uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously call @body with @arguments in the script world with name @world_name of the main frame current context in @web_view.
 // The @arguments values must be one of the following types, or contain only the following GVariant types: number, string and dictionary.
@@ -1839,8 +1839,14 @@ var xWebViewCallAsyncJavascriptFunction func(uintptr, string, int, *glib.Variant
 //	}
 //
 // ```
-func (x *WebView) CallAsyncJavascriptFunction(BodyVar string, LengthVar int, ArgumentsVar *glib.Variant, WorldNameVar string, SourceUriVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-	xWebViewCallAsyncJavascriptFunction(x.GoPointer(), BodyVar, LengthVar, ArgumentsVar, WorldNameVar, SourceUriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *WebView) CallAsyncJavascriptFunction(BodyVar string, LengthVar int, ArgumentsVar *glib.Variant, WorldNameVar *string, SourceUriVar *string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+	WorldNameVarPtr := core.GStrdupNullable(WorldNameVar)
+	defer core.GFreeNullable(WorldNameVarPtr)
+
+	SourceUriVarPtr := core.GStrdupNullable(SourceUriVar)
+	defer core.GFreeNullable(SourceUriVarPtr)
+
+	xWebViewCallAsyncJavascriptFunction(x.GoPointer(), BodyVar, LengthVar, ArgumentsVar, WorldNameVarPtr, SourceUriVarPtr, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xWebViewCallAsyncJavascriptFunctionFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -1926,7 +1932,7 @@ func (x *WebView) DownloadUri(UriVar string) *Download {
 	return cls
 }
 
-var xWebViewEvaluateJavascript func(uintptr, string, int, string, string, uintptr, uintptr, uintptr)
+var xWebViewEvaluateJavascript func(uintptr, string, int, uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously evaluate @script in the script world with name @world_name of the main frame current context in @web_view.
 // If @world_name is %NULL, the default world is used. Any value that is not %NULL is a distinct world.
@@ -1987,8 +1993,14 @@ var xWebViewEvaluateJavascript func(uintptr, string, int, string, string, uintpt
 //	}
 //
 // ```
-func (x *WebView) EvaluateJavascript(ScriptVar string, LengthVar int, WorldNameVar string, SourceUriVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
-	xWebViewEvaluateJavascript(x.GoPointer(), ScriptVar, LengthVar, WorldNameVar, SourceUriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *WebView) EvaluateJavascript(ScriptVar string, LengthVar int, WorldNameVar *string, SourceUriVar *string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+	WorldNameVarPtr := core.GStrdupNullable(WorldNameVar)
+	defer core.GFreeNullable(WorldNameVarPtr)
+
+	SourceUriVarPtr := core.GStrdupNullable(SourceUriVar)
+	defer core.GFreeNullable(SourceUriVarPtr)
+
+	xWebViewEvaluateJavascript(x.GoPointer(), ScriptVar, LengthVar, WorldNameVarPtr, SourceUriVarPtr, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xWebViewEvaluateJavascriptFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -2664,7 +2676,7 @@ func (x *WebView) LeaveImmersiveMode() {
 	xWebViewLeaveImmersiveMode(x.GoPointer())
 }
 
-var xWebViewLoadAlternateHtml func(uintptr, string, string, string)
+var xWebViewLoadAlternateHtml func(uintptr, string, string, uintptr)
 
 // Load the given @content string for the URI @content_uri.
 //
@@ -2672,11 +2684,14 @@ var xWebViewLoadAlternateHtml func(uintptr, string, string, string)
 // When this method is called from #WebKitWebView::load-failed signal to show an
 // error page, then the back-forward list is maintained appropriately.
 // For everything else this method works the same way as webkit_web_view_load_html().
-func (x *WebView) LoadAlternateHtml(ContentVar string, ContentUriVar string, BaseUriVar string) {
-	xWebViewLoadAlternateHtml(x.GoPointer(), ContentVar, ContentUriVar, BaseUriVar)
+func (x *WebView) LoadAlternateHtml(ContentVar string, ContentUriVar string, BaseUriVar *string) {
+	BaseUriVarPtr := core.GStrdupNullable(BaseUriVar)
+	defer core.GFreeNullable(BaseUriVarPtr)
+
+	xWebViewLoadAlternateHtml(x.GoPointer(), ContentVar, ContentUriVar, BaseUriVarPtr)
 }
 
-var xWebViewLoadBytes func(uintptr, *glib.Bytes, string, string, string)
+var xWebViewLoadBytes func(uintptr, *glib.Bytes, uintptr, uintptr, uintptr)
 
 // Load the specified @bytes into @web_view using the given @mime_type and @encoding.
 //
@@ -2684,11 +2699,20 @@ var xWebViewLoadBytes func(uintptr, *glib.Bytes, string, string, string)
 // When @encoding is %NULL, it defaults to "UTF-8".
 // When @base_uri is %NULL, it defaults to "about:blank".
 // You can monitor the load operation by connecting to #WebKitWebView::load-changed signal.
-func (x *WebView) LoadBytes(BytesVar *glib.Bytes, MimeTypeVar string, EncodingVar string, BaseUriVar string) {
-	xWebViewLoadBytes(x.GoPointer(), BytesVar, MimeTypeVar, EncodingVar, BaseUriVar)
+func (x *WebView) LoadBytes(BytesVar *glib.Bytes, MimeTypeVar *string, EncodingVar *string, BaseUriVar *string) {
+	MimeTypeVarPtr := core.GStrdupNullable(MimeTypeVar)
+	defer core.GFreeNullable(MimeTypeVarPtr)
+
+	EncodingVarPtr := core.GStrdupNullable(EncodingVar)
+	defer core.GFreeNullable(EncodingVarPtr)
+
+	BaseUriVarPtr := core.GStrdupNullable(BaseUriVar)
+	defer core.GFreeNullable(BaseUriVarPtr)
+
+	xWebViewLoadBytes(x.GoPointer(), BytesVar, MimeTypeVarPtr, EncodingVarPtr, BaseUriVarPtr)
 }
 
-var xWebViewLoadHtml func(uintptr, string, string)
+var xWebViewLoadHtml func(uintptr, string, uintptr)
 
 // Load the given @content string with the specified @base_uri.
 //
@@ -2700,8 +2724,11 @@ var xWebViewLoadHtml func(uintptr, string, string)
 // directory than @base_uri you can build a data URI for them. When @base_uri is %NULL,
 // it defaults to "about:blank". The mime type of the document will be "text/html".
 // You can monitor the load operation by connecting to #WebKitWebView::load-changed signal.
-func (x *WebView) LoadHtml(ContentVar string, BaseUriVar string) {
-	xWebViewLoadHtml(x.GoPointer(), ContentVar, BaseUriVar)
+func (x *WebView) LoadHtml(ContentVar string, BaseUriVar *string) {
+	BaseUriVarPtr := core.GStrdupNullable(BaseUriVar)
+	defer core.GFreeNullable(BaseUriVarPtr)
+
+	xWebViewLoadHtml(x.GoPointer(), ContentVar, BaseUriVarPtr)
 }
 
 var xWebViewLoadPlainText func(uintptr, string)
@@ -2898,7 +2925,7 @@ func (x *WebView) SetCorsAllowlist(AllowlistVar []string) {
 	xWebViewSetCorsAllowlist(x.GoPointer(), AllowlistVar)
 }
 
-var xWebViewSetCustomCharset func(uintptr, string)
+var xWebViewSetCustomCharset func(uintptr, uintptr)
 
 // Sets the current custom character encoding override of @web_view.
 //
@@ -2906,8 +2933,11 @@ var xWebViewSetCustomCharset func(uintptr, string)
 // META tags. Calling this method will stop any current load operation and reload the
 // current page. Setting the custom character encoding to %NULL removes the character
 // encoding override.
-func (x *WebView) SetCustomCharset(CharsetVar string) {
-	xWebViewSetCustomCharset(x.GoPointer(), CharsetVar)
+func (x *WebView) SetCustomCharset(CharsetVar *string) {
+	CharsetVarPtr := core.GStrdupNullable(CharsetVar)
+	defer core.GFreeNullable(CharsetVarPtr)
+
+	xWebViewSetCustomCharset(x.GoPointer(), CharsetVarPtr)
 }
 
 var xWebViewSetDisplayCaptureState func(uintptr, MediaCaptureState)
@@ -3048,7 +3078,7 @@ func (c *WebView) SetGoPointer(ptr uintptr) {
 func (x *WebView) SetPropertyDefaultContentSecurityPolicy(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-content-security-policy", &v)
 }
 
@@ -3261,7 +3291,7 @@ func (x *WebView) GetPropertyZoomLevel() float64 {
 //
 // The default signal handler will run a default authentication
 // dialog asynchronously for the user to interact with.
-func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "authenticate", cbRefPtr)
@@ -3288,7 +3318,7 @@ func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint32 {
 // after trying to close the @web_view with webkit_web_view_try_close().
 // It is the owner's responsibility to handle this signal to hide or
 // destroy the #WebKitWebView, if necessary.
-func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
+func (x *WebView) ConnectClose(cb *func(WebView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
@@ -3351,7 +3381,7 @@ func (x *WebView) ConnectClose(cb *func(WebView)) uint32 {
 //
 // The proposed #WebKitContextMenu passed in @context_menu argument is only valid
 // during the signal emission.
-func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) uint32 {
+func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu", cbRefPtr)
@@ -3375,7 +3405,7 @@ func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) u
 
 // Emitted after #WebKitWebView::context-menu signal, if the context menu is shown,
 // to notify that the context menu is dismissed.
-func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
+func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "context-menu-dismissed", cbRefPtr)
@@ -3412,7 +3442,7 @@ func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint32 {
 //
 // For creating views as response to automation tools requests, see the
 // #WebKitAutomationSession::create-web-view signal.
-func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
+func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create", cbRefPtr)
@@ -3479,7 +3509,7 @@ func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint32 {
 // made explicitly, webkit_policy_decision_use() will be the default policy decision. The
 // default signal handler will simply call webkit_policy_decision_use(). Only the first
 // policy decision chosen for a given #WebKitPolicyDecision will have any affect.
-func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionType) bool) uint32 {
+func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "decide-policy", cbRefPtr)
@@ -3509,7 +3539,7 @@ func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionT
 // transition and eventually prepare the top-level window
 // (e.g. hide some widgets that would otherwise be part of the
 // full screen window).
-func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
+func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "enter-fullscreen", cbRefPtr)
@@ -3534,7 +3564,7 @@ func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint32 {
 // Prior to 2.46, this signal was emitted when insecure content was
 // loaded in a secure content. Since 2.46, this signal is generally
 // no longer emitted.
-func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureContentEvent)) uint32 {
+func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureContentEvent)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "insecure-content-detected", cbRefPtr)
@@ -3560,7 +3590,7 @@ func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureConte
 // window out of its full screen state. This signal can be used by
 // client code to restore widgets hidden during the
 // #WebKitWebView::enter-fullscreen stage for instance.
-func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
+func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "leave-fullscreen", cbRefPtr)
@@ -3629,7 +3659,7 @@ func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint32 {
 //	}
 //
 // ```
-func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
+func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "load-changed", cbRefPtr)
@@ -3661,7 +3691,7 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint32 {
 //
 // By default, if the signal is not handled, a stock error page will be displayed.
 // You need to handle the signal if you want to provide your own error page.
-func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, *glib.Error) bool) uint32 {
+func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, *glib.Error) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed", cbRefPtr)
@@ -3692,7 +3722,7 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, *glib.E
 //
 // If %FALSE is returned, #WebKitWebView::load-failed will be emitted. The load
 // will finish regardless of the returned value.
-func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintptr, gio.TlsCertificateFlags) bool) uint32 {
+func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintptr, gio.TlsCertificateFlags) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "load-failed-with-tls-errors", cbRefPtr)
@@ -3722,7 +3752,7 @@ func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintp
 // #GdkModifierType flags indicating the state of modifier keys.
 // The signal is emitted again when the mouse is moved out of the
 // current element with a new @hit_test_result.
-func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) uint32 {
+func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "mouse-target-changed", cbRefPtr)
@@ -3730,7 +3760,7 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, HitTestResultVarp uintptr, ModifiersVarp uint32) {
+	fcb := func(clsPtr uintptr, HitTestResultVarp uintptr, ModifiersVarp uint) {
 		fa := WebView{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -3793,7 +3823,7 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint32)) 
 // by the specific #WebKitPermissionRequest that could allow or deny it. Check the
 // documentation of classes implementing #WebKitPermissionRequest interface to know
 // their default action.
-func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "permission-request", cbRefPtr)
@@ -3824,7 +3854,7 @@ func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint
 //
 // You can connect to this signal and return %TRUE to cancel the print operation
 // or implement your own print dialog.
-func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "print", cbRefPtr)
@@ -3853,7 +3883,7 @@ func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint32 {
 // You can handle the query asynchronously by calling webkit_permission_state_query_ref() on
 // @query and returning %TRUE. If the last reference of @query is removed and the query has not
 // been handled, the query result will be set to %WEBKIT_QUERY_PERMISSION_PROMPT.
-func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "query-permission-state", cbRefPtr)
@@ -3881,7 +3911,7 @@ func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) u
 // size, position, whether the location, status and scrollbars
 // should be displayed, is already set on the #WebKitWindowProperties
 // of @web_view. See also webkit_web_view_get_window_properties().
-func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
+func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "ready-to-show", cbRefPtr)
@@ -3907,7 +3937,7 @@ func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint32 {
 // contains the #WebKitURIRequest that will be sent to the server.
 // You can monitor the load operation by connecting to the different signals
 // of @resource.
-func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)) uint32 {
+func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "resource-load-started", cbRefPtr)
@@ -3936,7 +3966,7 @@ func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)
 // new view to behave as modal. Once the signal is emitted a new
 // main loop will be run to block user interaction in the parent
 // #WebKitWebView until the new dialog is closed.
-func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
+func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "run-as-modal", cbRefPtr)
@@ -3971,7 +4001,7 @@ func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint32 {
 //
 // The default signal handler will asynchronously run a regular
 // #GtkColorChooser for the user to interact with.
-func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "run-color-chooser", cbRefPtr)
@@ -4004,7 +4034,7 @@ func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint32
 //
 // The default signal handler will asynchronously run a regular
 // #GtkFileChooserDialog for the user to interact with.
-func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "run-file-chooser", cbRefPtr)
@@ -4061,7 +4091,7 @@ func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint32 
 // webkit_script_dialog_close() when done.
 // If the last reference is removed on a #WebKitScriptDialog and the dialog has not been
 // closed, webkit_script_dialog_close() will be called.
-func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "script-dialog", cbRefPtr)
@@ -4089,7 +4119,7 @@ func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint32 {
 //
 // The default handler will emit a notification using libnotify, if built with
 // support for it.
-func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "show-notification", cbRefPtr)
@@ -4119,7 +4149,7 @@ func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint3
 // To handle this signal asynchronously you should keep a ref of the @menu.
 //
 // The default signal handler will pop up a #GtkMenu.
-func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool) uint32 {
+func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "show-option-menu", cbRefPtr)
@@ -4152,7 +4182,7 @@ func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool
 // webkit_form_submission_request_submit() when done to continue with the form submission.
 // If the last reference is removed on a #WebKitFormSubmissionRequest and the
 // form has not been submitted, webkit_form_submission_request_submit() will be called.
-func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
+func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "submit-form", cbRefPtr)
@@ -4182,7 +4212,7 @@ func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint32 {
 // @message and returning %TRUE. If the last reference of @message is removed
 // and the message has not been replied to, the operation in the #WebKitWebPage will
 // finish with error %WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE.
-func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) uint32 {
+func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "user-message-received", cbRefPtr)
@@ -4206,7 +4236,7 @@ func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) ui
 
 // This signal is emitted when the web process terminates abnormally due
 // to @reason.
-func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTerminationReason)) uint32 {
+func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTerminationReason)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "web-process-terminated", cbRefPtr)
@@ -4294,7 +4324,7 @@ func (x *WebView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *WebView) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *WebView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -4410,7 +4440,7 @@ func (x *WebView) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArg
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WebView) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *WebView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -4442,7 +4472,7 @@ func (x *WebView) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArg
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WebView) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *WebView) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -4475,7 +4505,7 @@ func (x *WebView) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inte
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WebView) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *WebView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

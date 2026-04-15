@@ -37,14 +37,14 @@ func GLTextureNewFromInternalPtr(ptr uintptr) *GLTexture {
 	return cls
 }
 
-var xNewGLTexture func(uintptr, uint32, int32, int32, uintptr, uintptr) uintptr
+var xNewGLTexture func(uintptr, uint, int, int, uintptr, uintptr) uintptr
 
 // Creates a new texture for an existing GL texture.
 //
 // Note that the GL texture must not be modified until @destroy is called,
 // which will happen when the GdkTexture object is finalized, or due to
 // an explicit call of [method@Gdk.GLTexture.release].
-func NewGLTexture(ContextVar *GLContext, IdVar uint32, WidthVar int32, HeightVar int32, DestroyVar *glib.DestroyNotify, DataVar uintptr) *GLTexture {
+func NewGLTexture(ContextVar *GLContext, IdVar uint, WidthVar int, HeightVar int, DestroyVar *glib.DestroyNotify, DataVar uintptr) *GLTexture {
 	var cls *GLTexture
 
 	cret := xNewGLTexture(ContextVar.GoPointer(), IdVar, WidthVar, HeightVar, glib.NewCallbackNullable(DestroyVar), DataVar)
@@ -154,7 +154,7 @@ func (x *GLTexture) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *GLTexture) GetIntrinsicHeight() int32 {
+func (x *GLTexture) GetIntrinsicHeight() int {
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -169,7 +169,7 @@ func (x *GLTexture) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *GLTexture) GetIntrinsicWidth() int32 {
+func (x *GLTexture) GetIntrinsicWidth() int {
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -218,7 +218,7 @@ func (x *GLTexture) Equal(Icon2Var gio.Icon) bool {
 }
 
 // Gets a hash for an icon.
-func (x *GLTexture) Hash() uint32 {
+func (x *GLTexture) Hash() uint {
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -259,7 +259,7 @@ func (x *GLTexture) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *GLTexture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
+func (x *GLTexture) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -279,7 +279,7 @@ func (x *GLTexture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Can
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
-func (x *GLTexture) LoadAsync(SizeVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *GLTexture) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 

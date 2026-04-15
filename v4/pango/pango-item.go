@@ -46,11 +46,11 @@ func (x *Analysis) GoPointer() uintptr {
 type Item struct {
 	_ structs.HostLayout
 
-	Offset int32
+	Offset int
 
-	Length int32
+	Length int
 
-	NumChars int32
+	NumChars int
 
 	Analysis uintptr
 }
@@ -111,7 +111,7 @@ func (x *Item) Free() {
 	xItemFree(x.GoPointer())
 }
 
-var xItemGetCharOffset func(uintptr) int32
+var xItemGetCharOffset func(uintptr) int
 
 // Returns the character offset of the item from the beginning
 // of the itemized text.
@@ -119,12 +119,12 @@ var xItemGetCharOffset func(uintptr) int32
 // If the item has not been obtained from Pango's itemization
 // machinery, then the character offset is not available. In
 // that case, this function returns -1.
-func (x *Item) GetCharOffset() int32 {
+func (x *Item) GetCharOffset() int {
 	cret := xItemGetCharOffset(x.GoPointer())
 	return cret
 }
 
-var xItemSplit func(uintptr, int32, int32) uintptr
+var xItemSplit func(uintptr, int, int) uintptr
 
 // Modifies @orig to cover only the text after @split_index, and
 // returns a new item that covers the text before @split_index that
@@ -138,7 +138,7 @@ var xItemSplit func(uintptr, int32, int32) uintptr
 // provided because the text used to generate the item isn't available,
 // so `pango_item_split()` can't count the char length of the split items
 // itself.
-func (x *Item) Split(SplitIndexVar int32, SplitOffsetVar int32) *Item {
+func (x *Item) Split(SplitIndexVar int, SplitOffsetVar int) *Item {
 	cret := xItemSplit(x.GoPointer(), SplitIndexVar, SplitOffsetVar)
 	if cret == 0 {
 		return nil
@@ -150,14 +150,14 @@ const (
 	// Whether the segment should be shifted to center around the baseline.
 	//
 	// This is mainly used in vertical writing directions.
-	ANALYSIS_FLAG_CENTERED_BASELINE int32 = 1
+	ANALYSIS_FLAG_CENTERED_BASELINE int = 1
 	// Whether this run holds ellipsized text.
-	ANALYSIS_FLAG_IS_ELLIPSIS int32 = 2
+	ANALYSIS_FLAG_IS_ELLIPSIS int = 2
 	// Whether to add a hyphen at the end of the run during shaping.
-	ANALYSIS_FLAG_NEED_HYPHEN int32 = 4
+	ANALYSIS_FLAG_NEED_HYPHEN int = 4
 )
 
-var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) uintptr
+var xItemize func(uintptr, string, int, int, *AttrList, *AttrIterator) uintptr
 
 // Breaks a piece of text into segments with consistent directional
 // level and font.
@@ -171,7 +171,7 @@ var xItemize func(uintptr, string, int32, int32, *AttrList, *AttrIterator) uintp
 // advanced to the range covering the position just after
 // @start_index + @length. (i.e. if itemizing in a loop, just keep passing
 // in the same @cached_iter).
-func Itemize(ContextVar *Context, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
+func Itemize(ContextVar *Context, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 	cret := xItemize(ContextVar.GoPointer(), TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
 	if cret == 0 {
 		return nil
@@ -179,14 +179,14 @@ func Itemize(ContextVar *Context, TextVar string, StartIndexVar int32, LengthVar
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xItemizeWithBaseDir func(uintptr, Direction, string, int32, int32, *AttrList, *AttrIterator) uintptr
+var xItemizeWithBaseDir func(uintptr, Direction, string, int, int, *AttrList, *AttrIterator) uintptr
 
 // Like `pango_itemize()`, but with an explicitly specified base direction.
 //
 // The base direction is used when computing bidirectional levels.
 // [func@itemize] gets the base direction from the `PangoContext`
 // (see [method@Pango.Context.set_base_dir]).
-func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int32, LengthVar int32, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
+func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 	cret := xItemizeWithBaseDir(ContextVar.GoPointer(), BaseDirVar, TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
 	if cret == 0 {
 		return nil

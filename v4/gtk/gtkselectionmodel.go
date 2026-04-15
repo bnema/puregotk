@@ -52,11 +52,11 @@ func (x *SelectionModelInterface) GoPointer() uintptr {
 
 // OverrideIsSelected sets the "is_selected" callback function.
 // Return if the item at the given position is selected.
-func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uint32) bool) {
+func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uint) bool) {
 	if cb == nil {
 		x.xIsSelected = 0
 	} else {
-		x.xIsSelected = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32) bool {
+		x.xIsSelected = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint) bool {
 			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp)
 		})
 	}
@@ -64,13 +64,13 @@ func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uin
 
 // GetIsSelected gets the "is_selected" callback function.
 // Return if the item at the given position is selected.
-func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint32) bool {
+func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint) bool {
 	if x.xIsSelected == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32) bool
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint) bool
 	purego.RegisterFunc(&rawCallback, x.xIsSelected)
-	return func(ModelVar SelectionModel, PositionVar uint32) bool {
+	return func(ModelVar SelectionModel, PositionVar uint) bool {
 		return rawCallback(ModelVar.GoPointer(), PositionVar)
 	}
 }
@@ -80,11 +80,11 @@ func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint32) b
 //
 //	items in the given range. By default, this function will call
 //	`GtkSelectionModel::is_selected()` on all items in the given range.
-func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionModel, uint32, uint32) *Bitset) {
+func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionModel, uint, uint) *Bitset) {
 	if cb == nil {
 		x.xGetSelectionInRange = 0
 	} else {
-		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) uintptr {
+		x.xGetSelectionInRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) uintptr {
 			ret := cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
 			if ret == nil {
 				return 0
@@ -99,13 +99,13 @@ func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionM
 //
 //	items in the given range. By default, this function will call
 //	`GtkSelectionModel::is_selected()` on all items in the given range.
-func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, uint32, uint32) *Bitset {
+func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, uint, uint) *Bitset {
 	if x.xGetSelectionInRange == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) uintptr
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetSelectionInRange)
-	return func(ModelVar SelectionModel, PositionVar uint32, NItemsVar uint32) *Bitset {
+	return func(ModelVar SelectionModel, PositionVar uint, NItemsVar uint) *Bitset {
 		rawRet := rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
 		if rawRet == 0 {
 			return nil
@@ -118,11 +118,11 @@ func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, 
 // Select the item in the given position. If the operation
 //
 //	is known to fail, return %FALSE.
-func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uint32, bool) bool) {
+func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uint, bool) bool) {
 	if cb == nil {
 		x.xSelectItem = 0
 	} else {
-		x.xSelectItem = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, UnselectRestVarp bool) bool {
+		x.xSelectItem = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, UnselectRestVarp bool) bool {
 			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, UnselectRestVarp)
 		})
 	}
@@ -132,13 +132,13 @@ func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uin
 // Select the item in the given position. If the operation
 //
 //	is known to fail, return %FALSE.
-func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint32, bool) bool {
+func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint, bool) bool {
 	if x.xSelectItem == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, UnselectRestVarp bool) bool
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint, UnselectRestVarp bool) bool
 	purego.RegisterFunc(&rawCallback, x.xSelectItem)
-	return func(ModelVar SelectionModel, PositionVar uint32, UnselectRestVar bool) bool {
+	return func(ModelVar SelectionModel, PositionVar uint, UnselectRestVar bool) bool {
 		return rawCallback(ModelVar.GoPointer(), PositionVar, UnselectRestVar)
 	}
 }
@@ -147,11 +147,11 @@ func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint32, b
 // Unselect the item in the given position. If the
 //
 //	operation is known to fail, return %FALSE.
-func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, uint32) bool) {
+func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, uint) bool) {
 	if cb == nil {
 		x.xUnselectItem = 0
 	} else {
-		x.xUnselectItem = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32) bool {
+		x.xUnselectItem = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint) bool {
 			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp)
 		})
 	}
@@ -161,13 +161,13 @@ func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, u
 // Unselect the item in the given position. If the
 //
 //	operation is known to fail, return %FALSE.
-func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint32) bool {
+func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint) bool {
 	if x.xUnselectItem == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32) bool
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint) bool
 	purego.RegisterFunc(&rawCallback, x.xUnselectItem)
-	return func(ModelVar SelectionModel, PositionVar uint32) bool {
+	return func(ModelVar SelectionModel, PositionVar uint) bool {
 		return rawCallback(ModelVar.GoPointer(), PositionVar)
 	}
 }
@@ -176,11 +176,11 @@ func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint32)
 // Select all items in the given range. If the operation
 //
 //	is unsupported or known to fail for all items, return %FALSE.
-func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, uint32, uint32, bool) bool) {
+func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, uint, uint, bool) bool) {
 	if cb == nil {
 		x.xSelectRange = 0
 	} else {
-		x.xSelectRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32, UnselectRestVarp bool) bool {
+		x.xSelectRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint, UnselectRestVarp bool) bool {
 			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp, UnselectRestVarp)
 		})
 	}
@@ -190,13 +190,13 @@ func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, ui
 // Select all items in the given range. If the operation
 //
 //	is unsupported or known to fail for all items, return %FALSE.
-func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint32, uint32, bool) bool {
+func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint, uint, bool) bool {
 	if x.xSelectRange == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32, UnselectRestVarp bool) bool
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint, UnselectRestVarp bool) bool
 	purego.RegisterFunc(&rawCallback, x.xSelectRange)
-	return func(ModelVar SelectionModel, PositionVar uint32, NItemsVar uint32, UnselectRestVar bool) bool {
+	return func(ModelVar SelectionModel, PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 		return rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	}
 }
@@ -206,11 +206,11 @@ func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint32, 
 //
 //	operation is unsupported or known to fail for all items, return
 //	%FALSE.
-func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, uint32, uint32) bool) {
+func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, uint, uint) bool) {
 	if cb == nil {
 		x.xUnselectRange = 0
 	} else {
-		x.xUnselectRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) bool {
+		x.xUnselectRange = purego.NewCallback(func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) bool {
 			return cb(&SelectionModelBase{Ptr: ModelVarp}, PositionVarp, NItemsVarp)
 		})
 	}
@@ -221,13 +221,13 @@ func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, 
 //
 //	operation is unsupported or known to fail for all items, return
 //	%FALSE.
-func (x *SelectionModelInterface) GetUnselectRange() func(SelectionModel, uint32, uint32) bool {
+func (x *SelectionModelInterface) GetUnselectRange() func(SelectionModel, uint, uint) bool {
 	if x.xUnselectRange == 0 {
 		return nil
 	}
-	var rawCallback func(ModelVarp uintptr, PositionVarp uint32, NItemsVarp uint32) bool
+	var rawCallback func(ModelVarp uintptr, PositionVarp uint, NItemsVarp uint) bool
 	purego.RegisterFunc(&rawCallback, x.xUnselectRange)
-	return func(ModelVar SelectionModel, PositionVar uint32, NItemsVar uint32) bool {
+	return func(ModelVar SelectionModel, PositionVar uint, NItemsVar uint) bool {
 		return rawCallback(ModelVar.GoPointer(), PositionVar, NItemsVar)
 	}
 }
@@ -362,16 +362,16 @@ type SelectionModel interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	GetSelection() *Bitset
-	GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *Bitset
-	IsSelected(PositionVar uint32) bool
+	GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset
+	IsSelected(PositionVar uint) bool
 	SelectAll() bool
-	SelectItem(PositionVar uint32, UnselectRestVar bool) bool
-	SelectRange(PositionVar uint32, NItemsVar uint32, UnselectRestVar bool) bool
-	SelectionChanged(PositionVar uint32, NItemsVar uint32)
+	SelectItem(PositionVar uint, UnselectRestVar bool) bool
+	SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool
+	SelectionChanged(PositionVar uint, NItemsVar uint)
 	SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool
 	UnselectAll() bool
-	UnselectItem(PositionVar uint32) bool
-	UnselectRange(PositionVar uint32, NItemsVar uint32) bool
+	UnselectItem(PositionVar uint) bool
+	UnselectRange(PositionVar uint, NItemsVar uint) bool
 }
 
 var xSelectionModelGLibType func() types.GType
@@ -415,7 +415,7 @@ func (x *SelectionModelBase) GetSelection() *Bitset {
 // interested in part of the model's selected state. A common use
 // case is in response to the [signal@Gtk.SelectionModel::selection-changed]
 // signal.
-func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint32, NItemsVar uint32) *Bitset {
+func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
 	if cret == 0 {
 		return nil
@@ -424,7 +424,7 @@ func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint32, NItemsVar u
 }
 
 // Checks if the given item is selected.
-func (x *SelectionModelBase) IsSelected(PositionVar uint32) bool {
+func (x *SelectionModelBase) IsSelected(PositionVar uint) bool {
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -436,13 +436,13 @@ func (x *SelectionModelBase) SelectAll() bool {
 }
 
 // Requests to select an item in the model.
-func (x *SelectionModelBase) SelectItem(PositionVar uint32, UnselectRestVar bool) bool {
+func (x *SelectionModelBase) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
 	return cret
 }
 
 // Requests to select a range of items in the model.
-func (x *SelectionModelBase) SelectRange(PositionVar uint32, NItemsVar uint32, UnselectRestVar bool) bool {
+func (x *SelectionModelBase) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
 	return cret
 }
@@ -451,7 +451,7 @@ func (x *SelectionModelBase) SelectRange(PositionVar uint32, NItemsVar uint32, U
 //
 // Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
-func (x *SelectionModelBase) SelectionChanged(PositionVar uint32, NItemsVar uint32) {
+func (x *SelectionModelBase) SelectionChanged(PositionVar uint, NItemsVar uint) {
 	XGtkSelectionModelSelectionChanged(x.GoPointer(), PositionVar, NItemsVar)
 }
 
@@ -503,29 +503,29 @@ func (x *SelectionModelBase) UnselectAll() bool {
 }
 
 // Requests to unselect an item in the model.
-func (x *SelectionModelBase) UnselectItem(PositionVar uint32) bool {
+func (x *SelectionModelBase) UnselectItem(PositionVar uint) bool {
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
 	return cret
 }
 
 // Requests to unselect a range of items in the model.
-func (x *SelectionModelBase) UnselectRange(PositionVar uint32, NItemsVar uint32) bool {
+func (x *SelectionModelBase) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
 	return cret
 }
 
 var (
 	XGtkSelectionModelGetSelection        func(uintptr) uintptr
-	XGtkSelectionModelGetSelectionInRange func(uintptr, uint32, uint32) uintptr
-	XGtkSelectionModelIsSelected          func(uintptr, uint32) bool
+	XGtkSelectionModelGetSelectionInRange func(uintptr, uint, uint) uintptr
+	XGtkSelectionModelIsSelected          func(uintptr, uint) bool
 	XGtkSelectionModelSelectAll           func(uintptr) bool
-	XGtkSelectionModelSelectItem          func(uintptr, uint32, bool) bool
-	XGtkSelectionModelSelectRange         func(uintptr, uint32, uint32, bool) bool
-	XGtkSelectionModelSelectionChanged    func(uintptr, uint32, uint32)
+	XGtkSelectionModelSelectItem          func(uintptr, uint, bool) bool
+	XGtkSelectionModelSelectRange         func(uintptr, uint, uint, bool) bool
+	XGtkSelectionModelSelectionChanged    func(uintptr, uint, uint)
 	XGtkSelectionModelSetSelection        func(uintptr, *Bitset, *Bitset) bool
 	XGtkSelectionModelUnselectAll         func(uintptr) bool
-	XGtkSelectionModelUnselectItem        func(uintptr, uint32) bool
-	XGtkSelectionModelUnselectRange       func(uintptr, uint32, uint32) bool
+	XGtkSelectionModelUnselectItem        func(uintptr, uint) bool
+	XGtkSelectionModelUnselectRange       func(uintptr, uint, uint) bool
 )
 
 func init() {

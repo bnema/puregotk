@@ -102,10 +102,10 @@ func (x *CellRendererCombo) GetPropertyHasEntry() bool {
 //
 // `GtkCellRendererCombo` automatically adds a text cell renderer for
 // this column to its combo box.
-func (x *CellRendererCombo) SetPropertyTextColumn(value int32) {
+func (x *CellRendererCombo) SetPropertyTextColumn(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("text-column", &v)
 }
 
@@ -119,10 +119,10 @@ func (x *CellRendererCombo) SetPropertyTextColumn(value int32) {
 //
 // `GtkCellRendererCombo` automatically adds a text cell renderer for
 // this column to its combo box.
-func (x *CellRendererCombo) GetPropertyTextColumn() int32 {
+func (x *CellRendererCombo) GetPropertyTextColumn() int {
 	var v gobject.Value
 	x.GetProperty("text-column", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // This signal is emitted each time after the user selected an item in
@@ -136,7 +136,7 @@ func (x *CellRendererCombo) GetPropertyTextColumn() int32 {
 // the tree view will immediately cease the editing operating.  This
 // means that you most probably want to refrain from changing the model
 // until the combo cell renderer emits the edited or editing_canceled signal.
-func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, uintptr)) uint32 {
+func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

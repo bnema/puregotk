@@ -149,7 +149,7 @@ func (x *SimpleAction) GetPropertyEnabled() bool {
 func (x *SimpleAction) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -220,7 +220,7 @@ func (x *SimpleAction) GetPropertyStateType() uintptr {
 // type, the default is to forward them directly to
 // #GSimpleAction::change-state.  This should allow almost all users
 // of #GSimpleAction to connect only one handler or the other.
-func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
+func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -278,7 +278,7 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 //
 // The handler need not set the state to the requested value.
 // It could set it to any value at all, or take some other action.
-func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint32 {
+func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)

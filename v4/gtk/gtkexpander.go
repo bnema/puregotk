@@ -126,13 +126,16 @@ func ExpanderNewFromInternalPtr(ptr uintptr) *Expander {
 	return cls
 }
 
-var xNewExpander func(string) uintptr
+var xNewExpander func(uintptr) uintptr
 
 // Creates a new expander using @label as the text of the label.
-func NewExpander(LabelVar string) *Expander {
+func NewExpander(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpander(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewExpander(LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -143,7 +146,7 @@ func NewExpander(LabelVar string) *Expander {
 	return cls
 }
 
-var xNewExpanderWithMnemonic func(string) uintptr
+var xNewExpanderWithMnemonic func(uintptr) uintptr
 
 // Creates a new expander using @label as the text of the label.
 //
@@ -153,10 +156,13 @@ var xNewExpanderWithMnemonic func(string) uintptr
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key activates the button.
-func NewExpanderWithMnemonic(LabelVar string) *Expander {
+func NewExpanderWithMnemonic(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpanderWithMnemonic(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewExpanderWithMnemonic(LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -267,13 +273,16 @@ func (x *Expander) SetExpanded(ExpandedVar bool) {
 	xExpanderSetExpanded(x.GoPointer(), ExpandedVar)
 }
 
-var xExpanderSetLabel func(uintptr, string)
+var xExpanderSetLabel func(uintptr, uintptr)
 
 // Sets the text of the label of the expander to @label.
 //
 // This will also clear any previously set labels.
-func (x *Expander) SetLabel(LabelVar string) {
-	xExpanderSetLabel(x.GoPointer(), LabelVar)
+func (x *Expander) SetLabel(LabelVar *string) {
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	xExpanderSetLabel(x.GoPointer(), LabelVarPtr)
 }
 
 var xExpanderSetLabelWidget func(uintptr, uintptr)
@@ -341,7 +350,7 @@ func (x *Expander) GetPropertyExpanded() bool {
 func (x *Expander) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -407,7 +416,7 @@ func (x *Expander) GetPropertyUseUnderline() bool {
 }
 
 // Activates the `GtkExpander`.
-func (x *Expander) ConnectActivate(cb *func(Expander)) uint32 {
+func (x *Expander) ConnectActivate(cb *func(Expander)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
@@ -495,7 +504,7 @@ func (x *Expander) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Expander) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Expander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -611,7 +620,7 @@ func (x *Expander) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Expander) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Expander) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -643,7 +652,7 @@ func (x *Expander) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Expander) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Expander) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -676,7 +685,7 @@ func (x *Expander) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Expander) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Expander) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -147,7 +147,7 @@ func (c *NetworkAddress) SetGoPointer(ptr uintptr) {
 func (x *NetworkAddress) SetPropertyHostname(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("hostname", &v)
 }
 
@@ -161,19 +161,19 @@ func (x *NetworkAddress) GetPropertyHostname() string {
 
 // SetPropertyPort sets the "port" property.
 // Network port.
-func (x *NetworkAddress) SetPropertyPort(value uint32) {
+func (x *NetworkAddress) SetPropertyPort(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("port", &v)
 }
 
 // GetPropertyPort gets the "port" property.
 // Network port.
-func (x *NetworkAddress) GetPropertyPort() uint32 {
+func (x *NetworkAddress) GetPropertyPort() uint {
 	var v gobject.Value
 	x.GetProperty("port", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyScheme sets the "scheme" property.
@@ -181,7 +181,7 @@ func (x *NetworkAddress) GetPropertyPort() uint32 {
 func (x *NetworkAddress) SetPropertyScheme(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("scheme", &v)
 }
 

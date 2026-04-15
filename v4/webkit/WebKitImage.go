@@ -59,26 +59,26 @@ func (x *Image) AsBytes() *glib.Bytes {
 	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xImageGetHeight func(uintptr) int32
+var xImageGetHeight func(uintptr) int
 
 // Get the @image height in pixels.
-func (x *Image) GetHeight() int32 {
+func (x *Image) GetHeight() int {
 	cret := xImageGetHeight(x.GoPointer())
 	return cret
 }
 
-var xImageGetStride func(uintptr) uint32
+var xImageGetStride func(uintptr) uint
 
 // Get the @image stride.
-func (x *Image) GetStride() uint32 {
+func (x *Image) GetStride() uint {
 	cret := xImageGetStride(x.GoPointer())
 	return cret
 }
 
-var xImageGetWidth func(uintptr) int32
+var xImageGetWidth func(uintptr) int
 
 // Get the @image width in pixels.
-func (x *Image) GetWidth() int32 {
+func (x *Image) GetWidth() int {
 	cret := xImageGetWidth(x.GoPointer())
 	return cret
 }
@@ -96,19 +96,19 @@ func (c *Image) SetGoPointer(ptr uintptr) {
 
 // SetPropertyHeight sets the "height" property.
 // The image height in pixels.
-func (x *Image) SetPropertyHeight(value int32) {
+func (x *Image) SetPropertyHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("height", &v)
 }
 
 // GetPropertyHeight gets the "height" property.
 // The image height in pixels.
-func (x *Image) GetPropertyHeight() int32 {
+func (x *Image) GetPropertyHeight() int {
 	var v gobject.Value
 	x.GetProperty("height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyStride sets the "stride" property.
@@ -116,10 +116,10 @@ func (x *Image) GetPropertyHeight() int32 {
 // memory occupied by each row of pixels in the image. Note that
 // the stride may be larger than the image width multiplied by the
 // amount of bytes used to represent each pixel.
-func (x *Image) SetPropertyStride(value uint32) {
+func (x *Image) SetPropertyStride(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("stride", &v)
 }
 
@@ -128,27 +128,27 @@ func (x *Image) SetPropertyStride(value uint32) {
 // memory occupied by each row of pixels in the image. Note that
 // the stride may be larger than the image width multiplied by the
 // amount of bytes used to represent each pixel.
-func (x *Image) GetPropertyStride() uint32 {
+func (x *Image) GetPropertyStride() uint {
 	var v gobject.Value
 	x.GetProperty("stride", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyWidth sets the "width" property.
 // The image width in pixels.
-func (x *Image) SetPropertyWidth(value int32) {
+func (x *Image) SetPropertyWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("width", &v)
 }
 
 // GetPropertyWidth gets the "width" property.
 // The image width in pixels.
-func (x *Image) GetPropertyWidth() int32 {
+func (x *Image) GetPropertyWidth() int {
 	var v gobject.Value
 	x.GetProperty("width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Checks if two icons are equal.
@@ -158,7 +158,7 @@ func (x *Image) Equal(Icon2Var gio.Icon) bool {
 }
 
 // Gets a hash for an icon.
-func (x *Image) Hash() uint32 {
+func (x *Image) Hash() uint {
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -199,7 +199,7 @@ func (x *Image) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *Image) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
+func (x *Image) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -219,7 +219,7 @@ func (x *Image) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cancell
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
-func (x *Image) LoadAsync(SizeVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Image) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 

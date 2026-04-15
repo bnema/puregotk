@@ -25,7 +25,7 @@ func (x *ToplevelSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xToplevelSizeGetBounds func(uintptr, *int32, *int32)
+var xToplevelSizeGetBounds func(uintptr, *int, *int)
 
 // Retrieves the bounds the toplevel is placed within.
 //
@@ -34,11 +34,11 @@ var xToplevelSizeGetBounds func(uintptr, *int32, *int32)
 // be equivalent to the dimensions of the work area or the monitor on which the
 // window is being presented on, or something else that limits the way a
 // toplevel can be presented.
-func (x *ToplevelSize) GetBounds(BoundsWidthVar *int32, BoundsHeightVar *int32) {
+func (x *ToplevelSize) GetBounds(BoundsWidthVar *int, BoundsHeightVar *int) {
 	xToplevelSizeGetBounds(x.GoPointer(), BoundsWidthVar, BoundsHeightVar)
 }
 
-var xToplevelSizeSetMinSize func(uintptr, int32, int32)
+var xToplevelSizeSetMinSize func(uintptr, int, int)
 
 // Sets the minimum size of the toplevel.
 //
@@ -49,11 +49,11 @@ var xToplevelSizeSetMinSize func(uintptr, int32, int32)
 //
 // The minimum size should be within the bounds (see
 // [method@Gdk.ToplevelSize.get_bounds]).
-func (x *ToplevelSize) SetMinSize(MinWidthVar int32, MinHeightVar int32) {
+func (x *ToplevelSize) SetMinSize(MinWidthVar int, MinHeightVar int) {
 	xToplevelSizeSetMinSize(x.GoPointer(), MinWidthVar, MinHeightVar)
 }
 
-var xToplevelSizeSetShadowWidth func(uintptr, int32, int32, int32, int32)
+var xToplevelSizeSetShadowWidth func(uintptr, int, int, int, int)
 
 // Sets the shadows size of the toplevel.
 //
@@ -63,11 +63,11 @@ var xToplevelSizeSetShadowWidth func(uintptr, int32, int32, int32, int32)
 //
 // Shadow width should only be set if
 // [method@Gtk.Display.supports_shadow_width] is %TRUE.
-func (x *ToplevelSize) SetShadowWidth(LeftVar int32, RightVar int32, TopVar int32, BottomVar int32) {
+func (x *ToplevelSize) SetShadowWidth(LeftVar int, RightVar int, TopVar int, BottomVar int) {
 	xToplevelSizeSetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
 }
 
-var xToplevelSizeSetSize func(uintptr, int32, int32)
+var xToplevelSizeSetSize func(uintptr, int, int)
 
 // Sets the size the toplevel prefers to be resized to.
 //
@@ -75,7 +75,7 @@ var xToplevelSizeSetSize func(uintptr, int32, int32)
 // [method@Gdk.ToplevelSize.get_bounds]). The set size should
 // be considered as a hint, and should not be assumed to be
 // respected by the windowing system, or backend.
-func (x *ToplevelSize) SetSize(WidthVar int32, HeightVar int32) {
+func (x *ToplevelSize) SetSize(WidthVar int, HeightVar int) {
 	xToplevelSizeSetSize(x.GoPointer(), WidthVar, HeightVar)
 }
 

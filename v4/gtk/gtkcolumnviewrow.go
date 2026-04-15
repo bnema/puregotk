@@ -92,12 +92,12 @@ func (x *ColumnViewRow) GetItem() *gobject.Object {
 	return cls
 }
 
-var xColumnViewRowGetPosition func(uintptr) uint32
+var xColumnViewRowGetPosition func(uintptr) uint
 
 // Gets the position in the model that @self currently displays.
 //
 // If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
-func (x *ColumnViewRow) GetPosition() uint32 {
+func (x *ColumnViewRow) GetPosition() uint {
 	cret := xColumnViewRowGetPosition(x.GoPointer())
 	return cret
 }
@@ -202,7 +202,7 @@ func (c *ColumnViewRow) SetGoPointer(ptr uintptr) {
 func (x *ColumnViewRow) SetPropertyAccessibleDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-description", &v)
 }
 
@@ -219,7 +219,7 @@ func (x *ColumnViewRow) GetPropertyAccessibleDescription() string {
 func (x *ColumnViewRow) SetPropertyAccessibleLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-label", &v)
 }
 
@@ -267,10 +267,10 @@ func (x *ColumnViewRow) GetPropertyFocusable() bool {
 
 // GetPropertyPosition gets the "position" property.
 // Position of the row.
-func (x *ColumnViewRow) GetPropertyPosition() uint32 {
+func (x *ColumnViewRow) GetPropertyPosition() uint {
 	var v gobject.Value
 	x.GetProperty("position", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertySelectable sets the "selectable" property.

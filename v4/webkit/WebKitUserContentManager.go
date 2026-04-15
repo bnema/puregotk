@@ -155,7 +155,7 @@ func (x *UserContentManager) AddStyleSheet(StylesheetVar *UserStyleSheet) {
 	xUserContentManagerAddStyleSheet(x.GoPointer(), StylesheetVar)
 }
 
-var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, string) bool
+var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, uintptr) bool
 
 // Registers a new user script message handler in script world.
 //
@@ -185,12 +185,15 @@ var xUserContentManagerRegisterScriptMessageHandler func(uintptr, string, string
 //
 // The registered handler can be unregistered by using
 // webkit_user_content_manager_unregister_script_message_handler().
-func (x *UserContentManager) RegisterScriptMessageHandler(NameVar string, WorldNameVar string) bool {
-	cret := xUserContentManagerRegisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVar)
+func (x *UserContentManager) RegisterScriptMessageHandler(NameVar string, WorldNameVar *string) bool {
+	WorldNameVarPtr := core.GStrdupNullable(WorldNameVar)
+	defer core.GFreeNullable(WorldNameVarPtr)
+
+	cret := xUserContentManagerRegisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVarPtr)
 	return cret
 }
 
-var xUserContentManagerRegisterScriptMessageHandlerWithReply func(uintptr, string, string) bool
+var xUserContentManagerRegisterScriptMessageHandlerWithReply func(uintptr, string, uintptr) bool
 
 // Registers a new user script message handler in script world with name @world_name.
 //
@@ -207,8 +210,11 @@ var xUserContentManagerRegisterScriptMessageHandlerWithReply func(uintptr, strin
 //
 // The registered handler can be unregistered by using
 // webkit_user_content_manager_unregister_script_message_handler().
-func (x *UserContentManager) RegisterScriptMessageHandlerWithReply(NameVar string, WorldNameVar string) bool {
-	cret := xUserContentManagerRegisterScriptMessageHandlerWithReply(x.GoPointer(), NameVar, WorldNameVar)
+func (x *UserContentManager) RegisterScriptMessageHandlerWithReply(NameVar string, WorldNameVar *string) bool {
+	WorldNameVarPtr := core.GStrdupNullable(WorldNameVar)
+	defer core.GFreeNullable(WorldNameVarPtr)
+
+	cret := xUserContentManagerRegisterScriptMessageHandlerWithReply(x.GoPointer(), NameVar, WorldNameVarPtr)
 	return cret
 }
 
@@ -273,7 +279,7 @@ func (x *UserContentManager) RemoveStyleSheet(StylesheetVar *UserStyleSheet) {
 	xUserContentManagerRemoveStyleSheet(x.GoPointer(), StylesheetVar)
 }
 
-var xUserContentManagerUnregisterScriptMessageHandler func(uintptr, string, string)
+var xUserContentManagerUnregisterScriptMessageHandler func(uintptr, string, uintptr)
 
 // Unregisters a previously registered message handler in script world with name @world_name.
 // If %NULL is passed as the @world_name, the default world will be used.
@@ -284,8 +290,11 @@ var xUserContentManagerUnregisterScriptMessageHandler func(uintptr, string, stri
 // unless the handler name is registered again.
 //
 // See also webkit_user_content_manager_register_script_message_handler().
-func (x *UserContentManager) UnregisterScriptMessageHandler(NameVar string, WorldNameVar string) {
-	xUserContentManagerUnregisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVar)
+func (x *UserContentManager) UnregisterScriptMessageHandler(NameVar string, WorldNameVar *string) {
+	WorldNameVarPtr := core.GStrdupNullable(WorldNameVar)
+	defer core.GFreeNullable(WorldNameVarPtr)
+
+	xUserContentManagerUnregisterScriptMessageHandler(x.GoPointer(), NameVar, WorldNameVarPtr)
 }
 
 func (c *UserContentManager) GoPointer() uintptr {
@@ -303,7 +312,7 @@ func (c *UserContentManager) SetGoPointer(ptr uintptr) {
 // &lt;code&gt;window.webkit.messageHandlers.&lt;name&gt;.postMessage()&lt;/code&gt;, after registering
 // &lt;code&gt;&lt;name&gt;&lt;/code&gt; using
 // webkit_user_content_manager_register_script_message_handler()
-func (x *UserContentManager) ConnectScriptMessageReceived(cb *func(UserContentManager, uintptr)) uint32 {
+func (x *UserContentManager) ConnectScriptMessageReceived(cb *func(UserContentManager, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "script-message-received", cbRefPtr)
@@ -337,7 +346,7 @@ func (x *UserContentManager) ConnectScriptMessageReceived(cb *func(UserContentMa
 //
 // It is possible to handle the reply asynchronously, by simply calling
 // g_object_ref() on the @reply and returning %TRUE.
-func (x *UserContentManager) ConnectScriptMessageWithReplyReceived(cb *func(UserContentManager, uintptr, uintptr) bool) uint32 {
+func (x *UserContentManager) ConnectScriptMessageWithReplyReceived(cb *func(UserContentManager, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "script-message-with-reply-received", cbRefPtr)

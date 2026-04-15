@@ -88,13 +88,16 @@ func NewLinkButton(UriVar string) *LinkButton {
 	return cls
 }
 
-var xNewLinkButtonWithLabel func(string, string) uintptr
+var xNewLinkButtonWithLabel func(string, uintptr) uintptr
 
 // Creates a new `GtkLinkButton` containing a label.
-func NewLinkButtonWithLabel(UriVar string, LabelVar string) *LinkButton {
+func NewLinkButtonWithLabel(UriVar string, LabelVar *string) *LinkButton {
 	var cls *LinkButton
 
-	cret := xNewLinkButtonWithLabel(UriVar, LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
+
+	cret := xNewLinkButtonWithLabel(UriVar, LabelVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -160,7 +163,7 @@ func (c *LinkButton) SetGoPointer(ptr uintptr) {
 func (x *LinkButton) SetPropertyUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("uri", &v)
 }
 
@@ -201,7 +204,7 @@ func (x *LinkButton) GetPropertyVisited() bool {
 // To override the default behavior, you can connect to the
 // ::activate-link signal and stop the propagation of the signal
 // by returning %TRUE from your handler.
-func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
+func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
@@ -289,7 +292,7 @@ func (x *LinkButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LinkButton) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *LinkButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -405,7 +408,7 @@ func (x *LinkButton) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LinkButton) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *LinkButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -437,7 +440,7 @@ func (x *LinkButton) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LinkButton) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *LinkButton) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -470,7 +473,7 @@ func (x *LinkButton) UpdateState(FirstStateVar AccessibleState, varArgs ...inter
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *LinkButton) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *LinkButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -502,8 +505,11 @@ func (x *LinkButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *LinkButton) SetActionName(ActionNameVar string) {
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *LinkButton) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

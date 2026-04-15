@@ -109,14 +109,14 @@ func (x *Sphere) Init(CenterVar *Point3D, RadiusVar float32) *Sphere {
 	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromPoints func(uintptr, uint32, []Point3D, *Point3D) uintptr
+var xSphereInitFromPoints func(uintptr, uint, []Point3D, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
 //
 // The center of the sphere can either be specified, or will be center
 // of the 3D volume that encompasses all @points.
-func (x *Sphere) InitFromPoints(NPointsVar uint32, PointsVar []Point3D, CenterVar *Point3D) *Sphere {
+func (x *Sphere) InitFromPoints(NPointsVar uint, PointsVar []Point3D, CenterVar *Point3D) *Sphere {
 	cret := xSphereInitFromPoints(x.GoPointer(), NPointsVar, PointsVar, CenterVar)
 	if cret == 0 {
 		return nil
@@ -124,14 +124,14 @@ func (x *Sphere) InitFromPoints(NPointsVar uint32, PointsVar []Point3D, CenterVa
 	return (*Sphere)(unsafe.Pointer(cret))
 }
 
-var xSphereInitFromVectors func(uintptr, uint32, []Vec3, *Point3D) uintptr
+var xSphereInitFromVectors func(uintptr, uint, []Vec3, *Point3D) uintptr
 
 // Initializes the given #graphene_sphere_t using the given array
 // of 3D coordinates so that the sphere includes them.
 //
 // The center of the sphere can either be specified, or will be center
 // of the 3D volume that encompasses all @vectors.
-func (x *Sphere) InitFromVectors(NVectorsVar uint32, VectorsVar []Vec3, CenterVar *Point3D) *Sphere {
+func (x *Sphere) InitFromVectors(NVectorsVar uint, VectorsVar []Vec3, CenterVar *Point3D) *Sphere {
 	cret := xSphereInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar, CenterVar)
 	if cret == 0 {
 		return nil

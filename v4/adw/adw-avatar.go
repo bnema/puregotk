@@ -68,13 +68,16 @@ func AvatarNewFromInternalPtr(ptr uintptr) *Avatar {
 	return cls
 }
 
-var xNewAvatar func(int32, string, bool) uintptr
+var xNewAvatar func(int, uintptr, bool) uintptr
 
 // Creates a new `AdwAvatar`.
-func NewAvatar(SizeVar int32, TextVar string, ShowInitialsVar bool) *Avatar {
+func NewAvatar(SizeVar int, TextVar *string, ShowInitialsVar bool) *Avatar {
 	var cls *Avatar
 
-	cret := xNewAvatar(SizeVar, TextVar, ShowInitialsVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	cret := xNewAvatar(SizeVar, TextVarPtr, ShowInitialsVar)
 
 	if cret == 0 {
 		return nil
@@ -85,12 +88,12 @@ func NewAvatar(SizeVar int32, TextVar string, ShowInitialsVar bool) *Avatar {
 	return cls
 }
 
-var xAvatarDrawToTexture func(uintptr, int32) uintptr
+var xAvatarDrawToTexture func(uintptr, int) uintptr
 
 // Renders @self into a [class@Gdk.Texture] at @scale_factor.
 //
 // This can be used to export the fallback avatar.
-func (x *Avatar) DrawToTexture(ScaleFactorVar int32) *gdk.Texture {
+func (x *Avatar) DrawToTexture(ScaleFactorVar int) *gdk.Texture {
 	var cls *gdk.Texture
 
 	cret := xAvatarDrawToTexture(x.GoPointer(), ScaleFactorVar)
@@ -136,10 +139,10 @@ func (x *Avatar) GetShowInitials() bool {
 	return cret
 }
 
-var xAvatarGetSize func(uintptr) int32
+var xAvatarGetSize func(uintptr) int
 
 // Gets the size of the avatar.
-func (x *Avatar) GetSize() int32 {
+func (x *Avatar) GetSize() int {
 	cret := xAvatarGetSize(x.GoPointer())
 	return cret
 }
@@ -161,13 +164,16 @@ func (x *Avatar) SetCustomImage(CustomImageVar gdk.Paintable) {
 	xAvatarSetCustomImage(x.GoPointer(), CustomImageVar.GoPointer())
 }
 
-var xAvatarSetIconName func(uintptr, string)
+var xAvatarSetIconName func(uintptr, uintptr)
 
 // Sets the name of an icon to use as a fallback.
 //
 // If no name is set, `adw-avatar-default-symbolic` will be used.
-func (x *Avatar) SetIconName(IconNameVar string) {
-	xAvatarSetIconName(x.GoPointer(), IconNameVar)
+func (x *Avatar) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xAvatarSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xAvatarSetShowInitials func(uintptr, bool)
@@ -179,21 +185,24 @@ func (x *Avatar) SetShowInitials(ShowInitialsVar bool) {
 	xAvatarSetShowInitials(x.GoPointer(), ShowInitialsVar)
 }
 
-var xAvatarSetSize func(uintptr, int32)
+var xAvatarSetSize func(uintptr, int)
 
 // Sets the size of the avatar.
-func (x *Avatar) SetSize(SizeVar int32) {
+func (x *Avatar) SetSize(SizeVar int) {
 	xAvatarSetSize(x.GoPointer(), SizeVar)
 }
 
-var xAvatarSetText func(uintptr, string)
+var xAvatarSetText func(uintptr, uintptr)
 
 // Sets the text used to generate the fallback initials and color.
 //
 // It's only used to generate the color if [property@Avatar:show-initials] is
 // `FALSE`.
-func (x *Avatar) SetText(TextVar string) {
-	xAvatarSetText(x.GoPointer(), TextVar)
+func (x *Avatar) SetText(TextVar *string) {
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
+
+	xAvatarSetText(x.GoPointer(), TextVarPtr)
 }
 
 func (c *Avatar) GoPointer() uintptr {
@@ -214,7 +223,7 @@ func (c *Avatar) SetGoPointer(ptr uintptr) {
 func (x *Avatar) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -251,19 +260,19 @@ func (x *Avatar) GetPropertyShowInitials() bool {
 
 // SetPropertySize sets the "size" property.
 // The size of the avatar.
-func (x *Avatar) SetPropertySize(value int32) {
+func (x *Avatar) SetPropertySize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("size", &v)
 }
 
 // GetPropertySize gets the "size" property.
 // The size of the avatar.
-func (x *Avatar) GetPropertySize() int32 {
+func (x *Avatar) GetPropertySize() int {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyText sets the "text" property.
@@ -274,7 +283,7 @@ func (x *Avatar) GetPropertySize() int32 {
 func (x *Avatar) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -355,7 +364,7 @@ func (x *Avatar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Avatar) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Avatar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -471,7 +480,7 @@ func (x *Avatar) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varArgs
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Avatar) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Avatar) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -503,7 +512,7 @@ func (x *Avatar) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varArgs
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Avatar) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Avatar) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -536,7 +545,7 @@ func (x *Avatar) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...inter
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Avatar) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *Avatar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

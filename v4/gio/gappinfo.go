@@ -1413,7 +1413,7 @@ var (
 	XGAppInfoSupportsUris             func(uintptr) bool
 )
 
-var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **glib.Error) uintptr
+var xAppInfoCreateFromCommandline func(string, uintptr, AppInfoCreateFlags, **glib.Error) uintptr
 
 // Creates a new [iface@Gio.AppInfo] from the given information.
 //
@@ -1424,11 +1424,14 @@ var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **gli
 // being swallowed by `Exec` key unquoting. See
 // [the specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html)
 // for exact quoting rules.
-func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
+func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar *string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
 	var cls *AppInfoBase
 	var cerr *glib.Error
 
-	cret := xAppInfoCreateFromCommandline(CommandlineVar, ApplicationNameVar, FlagsVar, &cerr)
+	ApplicationNameVarPtr := core.GStrdupNullable(ApplicationNameVar)
+	defer core.GFreeNullable(ApplicationNameVarPtr)
+
+	cret := xAppInfoCreateFromCommandline(CommandlineVar, ApplicationNameVarPtr, FlagsVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1735,7 +1738,7 @@ func (c *AppInfoMonitor) SetGoPointer(ptr uintptr) {
 
 // Signal emitted when the app info database changes, when applications are
 // installed or removed.
-func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint32 {
+func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
@@ -1908,7 +1911,7 @@ func (c *AppLaunchContext) SetGoPointer(ptr uintptr) {
 // Because a launch operation may involve spawning multiple instances of the
 // target application, you should expect this signal to be emitted multiple
 // times, one for each spawned instance.
-func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string)) uint32 {
+func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
@@ -1949,7 +1952,7 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 // Because a launch operation may involve spawning multiple instances of the
 // target application, you should expect this signal to be emitted multiple
 // times, one for each spawned instance.
-func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintptr, uintptr)) uint32 {
+func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
@@ -1992,7 +1995,7 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 // is emitted, GLib will call [func@GLib.spawn_close_pid]. If you need to
 // keep the [alias@GLib.Pid] after the signal has been emitted, then you can
 // duplicate `pid` using `DuplicateHandle()`.
-func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, uintptr)) uint32 {
+func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)

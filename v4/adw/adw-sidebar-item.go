@@ -130,7 +130,7 @@ func (x *SidebarItem) GetIconPaintable() *gdk.PaintableBase {
 	return cls
 }
 
-var xSidebarItemGetIndex func(uintptr) uint32
+var xSidebarItemGetIndex func(uintptr) uint
 
 // Gets index of @self within its [class@Sidebar].
 //
@@ -141,7 +141,7 @@ var xSidebarItemGetIndex func(uintptr) uint32
 //
 // The item can later be retrieved by passing this index into
 // [method@Sidebar.get_item].
-func (x *SidebarItem) GetIndex() uint32 {
+func (x *SidebarItem) GetIndex() uint {
 	cret := xSidebarItemGetIndex(x.GoPointer())
 	return cret
 }
@@ -163,7 +163,7 @@ func (x *SidebarItem) GetSection() *SidebarSection {
 	return cls
 }
 
-var xSidebarItemGetSectionIndex func(uintptr) uint32
+var xSidebarItemGetSectionIndex func(uintptr) uint
 
 // Gets index of @self within its [class@SidebarSection].
 //
@@ -171,7 +171,7 @@ var xSidebarItemGetSectionIndex func(uintptr) uint32
 //
 // The item can later be retrieved by passing this index into
 // [method@SidebarSection.get_item].
-func (x *SidebarItem) GetSectionIndex() uint32 {
+func (x *SidebarItem) GetSectionIndex() uint {
 	cret := xSidebarItemGetSectionIndex(x.GoPointer())
 	return cret
 }
@@ -253,13 +253,16 @@ func (x *SidebarItem) SetEnabled(EnabledVar bool) {
 	xSidebarItemSetEnabled(x.GoPointer(), EnabledVar)
 }
 
-var xSidebarItemSetIconName func(uintptr, string)
+var xSidebarItemSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @item.
 //
 // Mutually exclusive with [property@SidebarItem:icon-paintable].
-func (x *SidebarItem) SetIconName(IconNameVar string) {
-	xSidebarItemSetIconName(x.GoPointer(), IconNameVar)
+func (x *SidebarItem) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xSidebarItemSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xSidebarItemSetIconPaintable func(uintptr, uintptr)
@@ -271,11 +274,14 @@ func (x *SidebarItem) SetIconPaintable(PaintableVar gdk.Paintable) {
 	xSidebarItemSetIconPaintable(x.GoPointer(), PaintableVar.GoPointer())
 }
 
-var xSidebarItemSetSubtitle func(uintptr, string)
+var xSidebarItemSetSubtitle func(uintptr, uintptr)
 
 // Sets the subtitle of @self.
-func (x *SidebarItem) SetSubtitle(SubtitleVar string) {
-	xSidebarItemSetSubtitle(x.GoPointer(), SubtitleVar)
+func (x *SidebarItem) SetSubtitle(SubtitleVar *string) {
+	SubtitleVarPtr := core.GStrdupNullable(SubtitleVar)
+	defer core.GFreeNullable(SubtitleVarPtr)
+
+	xSidebarItemSetSubtitle(x.GoPointer(), SubtitleVarPtr)
 }
 
 var xSidebarItemSetSuffix func(uintptr, uintptr)
@@ -288,20 +294,26 @@ func (x *SidebarItem) SetSuffix(SuffixVar *gtk.Widget) {
 	xSidebarItemSetSuffix(x.GoPointer(), SuffixVar.GoPointer())
 }
 
-var xSidebarItemSetTitle func(uintptr, string)
+var xSidebarItemSetTitle func(uintptr, uintptr)
 
 // Sets the title of @self.
-func (x *SidebarItem) SetTitle(TitleVar string) {
-	xSidebarItemSetTitle(x.GoPointer(), TitleVar)
+func (x *SidebarItem) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xSidebarItemSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
-var xSidebarItemSetTooltip func(uintptr, string)
+var xSidebarItemSetTooltip func(uintptr, uintptr)
 
 // Sets the tooltip of @self.
 //
 // The tooltip can be marked up with the Pango text markup language.
-func (x *SidebarItem) SetTooltip(TooltipVar string) {
-	xSidebarItemSetTooltip(x.GoPointer(), TooltipVar)
+func (x *SidebarItem) SetTooltip(TooltipVar *string) {
+	TooltipVarPtr := core.GStrdupNullable(TooltipVar)
+	defer core.GFreeNullable(TooltipVarPtr)
+
+	xSidebarItemSetTooltip(x.GoPointer(), TooltipVarPtr)
 }
 
 var xSidebarItemSetUseUnderline func(uintptr, bool)
@@ -384,7 +396,7 @@ func (x *SidebarItem) GetPropertyEnabled() bool {
 func (x *SidebarItem) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -403,7 +415,7 @@ func (x *SidebarItem) GetPropertyIconName() string {
 func (x *SidebarItem) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -420,7 +432,7 @@ func (x *SidebarItem) GetPropertySubtitle() string {
 func (x *SidebarItem) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -439,7 +451,7 @@ func (x *SidebarItem) GetPropertyTitle() string {
 func (x *SidebarItem) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip", &v)
 }
 

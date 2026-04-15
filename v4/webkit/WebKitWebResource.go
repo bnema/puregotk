@@ -158,7 +158,7 @@ func (x *WebResource) GetPropertyUri() string {
 
 // This signal is emitted when an error occurs during the resource
 // load operation.
-func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint32 {
+func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
@@ -181,7 +181,7 @@ func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint32 {
 }
 
 // This signal is emitted when a TLS error occurs during the resource load operation.
-func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, gio.TlsCertificateFlags)) uint32 {
+func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, gio.TlsCertificateFlags)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "failed-with-tls-errors", cbRefPtr)
@@ -206,7 +206,7 @@ func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, 
 // This signal is emitted when the resource load finishes successfully
 // or due to an error. In case of errors #WebKitWebResource::failed signal
 // is emitted before this one.
-func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint32 {
+func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
@@ -234,7 +234,7 @@ func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint32 {
 // request sent to the server due to the redirection and the
 // @redirected_response parameter containing the response
 // received by the server for the initial request.
-func (x *WebResource) ConnectSentRequest(cb *func(WebResource, uintptr, uintptr)) uint32 {
+func (x *WebResource) ConnectSentRequest(cb *func(WebResource, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "sent-request", cbRefPtr)

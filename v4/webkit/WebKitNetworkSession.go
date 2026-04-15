@@ -40,7 +40,7 @@ func NetworkSessionNewFromInternalPtr(ptr uintptr) *NetworkSession {
 	return cls
 }
 
-var xNewNetworkSession func(string, string) uintptr
+var xNewNetworkSession func(uintptr, uintptr) uintptr
 
 // Creates a new #WebKitNetworkSession with a persistent #WebKitWebsiteDataManager.
 // The parameters @data_directory and @cache_directory will be used as construct
@@ -51,10 +51,16 @@ var xNewNetworkSession func(string, string) uintptr
 // non ephemeral sessions.
 //
 // It must be passed as construct parameter of a #WebKitWebView.
-func NewNetworkSession(DataDirectoryVar string, CacheDirectoryVar string) *NetworkSession {
+func NewNetworkSession(DataDirectoryVar *string, CacheDirectoryVar *string) *NetworkSession {
 	var cls *NetworkSession
 
-	cret := xNewNetworkSession(DataDirectoryVar, CacheDirectoryVar)
+	DataDirectoryVarPtr := core.GStrdupNullable(DataDirectoryVar)
+	defer core.GFreeNullable(DataDirectoryVarPtr)
+
+	CacheDirectoryVarPtr := core.GStrdupNullable(CacheDirectoryVar)
+	defer core.GFreeNullable(CacheDirectoryVarPtr)
+
+	cret := xNewNetworkSession(DataDirectoryVarPtr, CacheDirectoryVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -278,7 +284,7 @@ func (c *NetworkSession) SetGoPointer(ptr uintptr) {
 func (x *NetworkSession) SetPropertyCacheDirectory(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cache-directory", &v)
 }
 
@@ -287,7 +293,7 @@ func (x *NetworkSession) SetPropertyCacheDirectory(value string) {
 func (x *NetworkSession) SetPropertyDataDirectory(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("data-directory", &v)
 }
 
@@ -309,7 +315,7 @@ func (x *NetworkSession) GetPropertyIsEphemeral() bool {
 }
 
 // This signal is emitted when a new download request is made.
-func (x *NetworkSession) ConnectDownloadStarted(cb *func(NetworkSession, uintptr)) uint32 {
+func (x *NetworkSession) ConnectDownloadStarted(cb *func(NetworkSession, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "download-started", cbRefPtr)

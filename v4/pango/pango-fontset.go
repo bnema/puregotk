@@ -49,11 +49,11 @@ func (x *FontsetClass) GoPointer() uintptr {
 // a function to get the font in the fontset that contains the
 //
 //	best glyph for the given Unicode character; see [method@Pango.Fontset.get_font]
-func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint32) *Font) {
+func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint) *Font) {
 	if cb == nil {
 		x.xGetFont = 0
 	} else {
-		x.xGetFont = purego.NewCallback(func(FontsetVarp uintptr, WcVarp uint32) uintptr {
+		x.xGetFont = purego.NewCallback(func(FontsetVarp uintptr, WcVarp uint) uintptr {
 			ret := cb(FontsetNewFromInternalPtr(FontsetVarp), WcVarp)
 			if ret == nil {
 				return 0
@@ -67,13 +67,13 @@ func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint32) *Font) {
 // a function to get the font in the fontset that contains the
 //
 //	best glyph for the given Unicode character; see [method@Pango.Fontset.get_font]
-func (x *FontsetClass) GetGetFont() func(*Fontset, uint32) *Font {
+func (x *FontsetClass) GetGetFont() func(*Fontset, uint) *Font {
 	if x.xGetFont == 0 {
 		return nil
 	}
-	var rawCallback func(FontsetVarp uintptr, WcVarp uint32) uintptr
+	var rawCallback func(FontsetVarp uintptr, WcVarp uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetFont)
-	return func(FontsetVar *Fontset, WcVar uint32) *Font {
+	return func(FontsetVar *Fontset, WcVar uint) *Font {
 		rawRet := rawCallback(FontsetVar.GoPointer(), WcVar)
 		if rawRet == 0 {
 			return nil
@@ -307,11 +307,11 @@ func (x *Fontset) Foreach(FuncVar *FontsetForeachFunc, DataVar uintptr) {
 	xFontsetForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
 }
 
-var xFontsetGetFont func(uintptr, uint32) uintptr
+var xFontsetGetFont func(uintptr, uint) uintptr
 
 // Returns the font in the fontset that contains the best
 // glyph for a Unicode character.
-func (x *Fontset) GetFont(WcVar uint32) *Font {
+func (x *Fontset) GetFont(WcVar uint) *Font {
 	var cls *Font
 
 	cret := xFontsetGetFont(x.GoPointer(), WcVar)

@@ -50,22 +50,25 @@ func (x *TimeZone) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTimeZone func(string) uintptr
+var xNewTimeZone func(uintptr) uintptr
 
 // A version of g_time_zone_new_identifier() which returns the UTC time zone
 // if @identifier could not be parsed or loaded.
 //
 // If you need to check whether @identifier was loaded successfully, use
 // g_time_zone_new_identifier().
-func NewTimeZone(IdentifierVar string) *TimeZone {
-	cret := xNewTimeZone(IdentifierVar)
+func NewTimeZone(IdentifierVar *string) *TimeZone {
+	IdentifierVarPtr := core.GStrdupNullable(IdentifierVar)
+	defer core.GFreeNullable(IdentifierVarPtr)
+
+	cret := xNewTimeZone(IdentifierVarPtr)
 	if cret == 0 {
 		return nil
 	}
 	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xNewTimeZoneIdentifier func(string) uintptr
+var xNewTimeZoneIdentifier func(uintptr) uintptr
 
 // Creates a #GTimeZone corresponding to @identifier. If @identifier cannot be
 // parsed or loaded, %NULL is returned.
@@ -132,8 +135,11 @@ var xNewTimeZoneIdentifier func(string) uintptr
 //
 // You should release the return value by calling g_time_zone_unref()
 // when you are done with it.
-func NewTimeZoneIdentifier(IdentifierVar string) *TimeZone {
-	cret := xNewTimeZoneIdentifier(IdentifierVar)
+func NewTimeZoneIdentifier(IdentifierVar *string) *TimeZone {
+	IdentifierVarPtr := core.GStrdupNullable(IdentifierVar)
+	defer core.GFreeNullable(IdentifierVarPtr)
+
+	cret := xNewTimeZoneIdentifier(IdentifierVarPtr)
 	if cret == 0 {
 		return nil
 	}
@@ -196,7 +202,7 @@ func NewTimeZoneUtc() *TimeZone {
 	return (*TimeZone)(unsafe.Pointer(cret))
 }
 
-var xTimeZoneAdjustTime func(uintptr, TimeType, *int64) int32
+var xTimeZoneAdjustTime func(uintptr, TimeType, *int64) int
 
 // Finds an interval within @tz that corresponds to the given @time_,
 // possibly adjusting @time_ if required to fit into an interval.
@@ -214,12 +220,12 @@ var xTimeZoneAdjustTime func(uintptr, TimeType, *int64) int32
 // requested on March 14th 2010 in Toronto then this function would
 // adjust @time_ to be 03:00 and return the interval containing the
 // adjusted time.
-func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar *int64) int32 {
+func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar *int64) int {
 	cret := xTimeZoneAdjustTime(x.GoPointer(), TypeVar, TimeVar)
 	return cret
 }
 
-var xTimeZoneFindInterval func(uintptr, TimeType, int64) int32
+var xTimeZoneFindInterval func(uintptr, TimeType, int64) int
 
 // Finds an interval within @tz that corresponds to the given @time_.
 // The meaning of @time_ depends on @type.
@@ -239,12 +245,12 @@ var xTimeZoneFindInterval func(uintptr, TimeType, int64) int32
 // example, 02:00 on March 14th 2010 does not exist (due to the leap
 // forward to begin daylight savings time).  -1 is returned in that
 // case.
-func (x *TimeZone) FindInterval(TypeVar TimeType, TimeVar int64) int32 {
+func (x *TimeZone) FindInterval(TypeVar TimeType, TimeVar int64) int {
 	cret := xTimeZoneFindInterval(x.GoPointer(), TypeVar, TimeVar)
 	return cret
 }
 
-var xTimeZoneGetAbbreviation func(uintptr, int32) string
+var xTimeZoneGetAbbreviation func(uintptr, int) string
 
 // Determines the time zone abbreviation to be used during a particular
 // @interval of time in the time zone @tz.
@@ -252,7 +258,7 @@ var xTimeZoneGetAbbreviation func(uintptr, int32) string
 // For example, in Toronto this is currently "EST" during the winter
 // months and "EDT" during the summer months when daylight savings time
 // is in effect.
-func (x *TimeZone) GetAbbreviation(IntervalVar int32) string {
+func (x *TimeZone) GetAbbreviation(IntervalVar int) string {
 	cret := xTimeZoneGetAbbreviation(x.GoPointer(), IntervalVar)
 	return cret
 }
@@ -272,7 +278,7 @@ func (x *TimeZone) GetIdentifier() string {
 	return cret
 }
 
-var xTimeZoneGetOffset func(uintptr, int32) int32
+var xTimeZoneGetOffset func(uintptr, int) int32
 
 // Determines the offset to UTC in effect during a particular @interval
 // of time in the time zone @tz.
@@ -280,16 +286,16 @@ var xTimeZoneGetOffset func(uintptr, int32) int32
 // The offset is the number of seconds that you add to UTC time to
 // arrive at local time for @tz (ie: negative numbers for time zones
 // west of GMT, positive numbers for east).
-func (x *TimeZone) GetOffset(IntervalVar int32) int32 {
+func (x *TimeZone) GetOffset(IntervalVar int) int32 {
 	cret := xTimeZoneGetOffset(x.GoPointer(), IntervalVar)
 	return cret
 }
 
-var xTimeZoneIsDst func(uintptr, int32) bool
+var xTimeZoneIsDst func(uintptr, int) bool
 
 // Determines if daylight savings time is in effect during a particular
 // @interval of time in the time zone @tz.
-func (x *TimeZone) IsDst(IntervalVar int32) bool {
+func (x *TimeZone) IsDst(IntervalVar int) bool {
 	cret := xTimeZoneIsDst(x.GoPointer(), IntervalVar)
 	return cret
 }

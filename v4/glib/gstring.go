@@ -40,11 +40,14 @@ func (x *String) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewString func(string) uintptr
+var xNewString func(uintptr) uintptr
 
 // Creates a new #GString, initialized with the given string.
-func NewString(InitVar string) *String {
-	cret := xNewString(InitVar)
+func NewString(InitVar *string) *String {
+	InitVarPtr := core.GStrdupNullable(InitVar)
+	defer core.GFreeNullable(InitVarPtr)
+
+	cret := xNewString(InitVarPtr)
 	if cret == 0 {
 		return nil
 	}
@@ -68,15 +71,18 @@ func NewStringLen(InitVar string, LenVar int) *String {
 	return (*String)(unsafe.Pointer(cret))
 }
 
-var xNewStringTake func(string) uintptr
+var xNewStringTake func(uintptr) uintptr
 
 // Creates a new #GString, initialized with the given string.
 //
 // After this call, @init belongs to the #GString and may no longer be
 // modified by the caller. The memory of @init has to be dynamically
 // allocated and will eventually be freed with g_free().
-func NewStringTake(InitVar string) *String {
-	cret := xNewStringTake(InitVar)
+func NewStringTake(InitVar *string) *String {
+	InitVarPtr := core.GStrdupNullable(InitVar)
+	defer core.GFreeNullable(InitVarPtr)
+
+	cret := xNewStringTake(InitVarPtr)
 	if cret == 0 {
 		return nil
 	}
@@ -308,10 +314,10 @@ func (x *String) FreeToBytes() *Bytes {
 	return (*Bytes)(unsafe.Pointer(cret))
 }
 
-var xStringHash func(uintptr) uint32
+var xStringHash func(uintptr) uint
 
 // Creates a hash code for @str; for use with #GHashTable.
-func (x *String) Hash() uint32 {
+func (x *String) Hash() uint {
 	cret := xStringHash(x.GoPointer())
 	return cret
 }
@@ -460,7 +466,7 @@ func (x *String) Printf(FormatVar string, varArgs ...interface{}) {
 	xStringPrintf(x.GoPointer(), FormatVar, varArgs...)
 }
 
-var xStringReplace func(uintptr, string, string, uint32) uint32
+var xStringReplace func(uintptr, string, string, uint) uint
 
 // Replaces the string @find with the string @replace in a #GString up to
 // @limit times. If the number of instances of @find in the #GString is
@@ -475,7 +481,7 @@ var xStringReplace func(uintptr, string, string, uint32) uint32
 // If @limit is zero and more than `G_MAXUINT` instances of @find are in
 // the input string, they will all be replaced, but the return value will
 // be capped at `G_MAXUINT`.
-func (x *String) Replace(FindVar string, ReplaceVar string, LimitVar uint32) uint32 {
+func (x *String) Replace(FindVar string, ReplaceVar string, LimitVar uint) uint {
 	cret := xStringReplace(x.GoPointer(), FindVar, ReplaceVar, LimitVar)
 	return cret
 }

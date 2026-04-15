@@ -88,14 +88,14 @@ func (x *WebInspector) Detach() {
 	xWebInspectorDetach(x.GoPointer())
 }
 
-var xWebInspectorGetAttachedHeight func(uintptr) uint32
+var xWebInspectorGetAttachedHeight func(uintptr) uint
 
 // Get the height that the inspector view when attached.
 //
 // Get the height that the inspector view should have when
 // it's attached. If the inspector view is not attached this
 // returns 0.
-func (x *WebInspector) GetAttachedHeight() uint32 {
+func (x *WebInspector) GetAttachedHeight() uint {
 	cret := xWebInspectorGetAttachedHeight(x.GoPointer())
 	return cret
 }
@@ -171,10 +171,10 @@ func (c *WebInspector) SetGoPointer(ptr uintptr) {
 
 // GetPropertyAttachedHeight gets the "attached-height" property.
 // The height that the inspector view should have when it is attached.
-func (x *WebInspector) GetPropertyAttachedHeight() uint32 {
+func (x *WebInspector) GetPropertyAttachedHeight() uint {
 	var v gobject.Value
 	x.GetProperty("attached-height", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // GetPropertyCanAttach gets the "can-attach" property.
@@ -203,7 +203,7 @@ func (x *WebInspector) GetPropertyInspectedUri() string {
 //
 // To prevent the inspector view from being attached you can connect to this
 // signal and simply return %TRUE.
-func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
+func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "attach", cbRefPtr)
@@ -236,7 +236,7 @@ func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint32 {
 // In both cases, if this signal is not handled, the default implementation
 // calls gtk_window_present() on the current toplevel #GtkWindow of the
 // inspector view.
-func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
+func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "bring-to-front", cbRefPtr)
@@ -261,7 +261,7 @@ func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint32 {
 // Emitted when the inspector page is closed. If you are using your own
 // inspector window, you should connect to this signal and destroy your
 // window.
-func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
+func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -292,7 +292,7 @@ func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint32 {
 //
 // To prevent the inspector view from being detached you can connect to this
 // signal and simply return %TRUE.
-func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
+func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "detach", cbRefPtr)
@@ -323,7 +323,7 @@ func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint32 {
 //
 // To prevent the inspector from being shown you can connect to this
 // signal and simply return %TRUE
-func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint32 {
+func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "open-window", cbRefPtr)

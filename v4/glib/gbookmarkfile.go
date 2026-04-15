@@ -76,7 +76,7 @@ func NewBookmarkFile() *BookmarkFile {
 	return (*BookmarkFile)(unsafe.Pointer(cret))
 }
 
-var xBookmarkFileAddApplication func(uintptr, string, string, string)
+var xBookmarkFileAddApplication func(uintptr, string, uintptr, uintptr)
 
 // Adds the application with @name and @exec to the list of
 // applications that have registered a bookmark for @uri into
@@ -100,8 +100,14 @@ var xBookmarkFileAddApplication func(uintptr, string, string, string)
 // @uri inside @bookmark.
 //
 // If no bookmark for @uri is found, one is created.
-func (x *BookmarkFile) AddApplication(UriVar string, NameVar string, ExecVar string) {
-	xBookmarkFileAddApplication(x.GoPointer(), UriVar, NameVar, ExecVar)
+func (x *BookmarkFile) AddApplication(UriVar string, NameVar *string, ExecVar *string) {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	ExecVarPtr := core.GStrdupNullable(ExecVar)
+	defer core.GFreeNullable(ExecVarPtr)
+
+	xBookmarkFileAddApplication(x.GoPointer(), UriVar, NameVarPtr, ExecVarPtr)
 }
 
 var xBookmarkFileAddGroup func(uintptr, string, string)
@@ -167,7 +173,7 @@ func (x *BookmarkFile) GetAddedDateTime(UriVar string) (*DateTime, error) {
 	return (*DateTime)(unsafe.Pointer(cret)), nil
 }
 
-var xBookmarkFileGetAppInfo func(uintptr, string, string, *string, *uint32, *int, **Error) bool
+var xBookmarkFileGetAppInfo func(uintptr, string, string, *string, *uint, *int, **Error) bool
 
 // Gets the registration information of @app_name for the bookmark for
 // @uri.  See g_bookmark_file_set_application_info() for more information about
@@ -182,7 +188,7 @@ var xBookmarkFileGetAppInfo func(uintptr, string, string, *string, *uint32, *int
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
 // the command line fails, an error of the %G_SHELL_ERROR domain is
 // set and %FALSE is returned.
-func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar *string, CountVar *uint32, StampVar *int) (bool, error) {
+func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar *string, CountVar *uint, StampVar *int) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -192,7 +198,7 @@ func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar *string
 	return cret, cerr
 }
 
-var xBookmarkFileGetApplicationInfo func(uintptr, string, string, *string, *uint32, **DateTime, **Error) bool
+var xBookmarkFileGetApplicationInfo func(uintptr, string, string, *string, *uint, **DateTime, **Error) bool
 
 // Gets the registration information of @app_name for the bookmark for
 // @uri.  See g_bookmark_file_set_application_info() for more information about
@@ -207,7 +213,7 @@ var xBookmarkFileGetApplicationInfo func(uintptr, string, string, *string, *uint
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
 // the command line fails, an error of the %G_SHELL_ERROR domain is
 // set and %FALSE is returned.
-func (x *BookmarkFile) GetApplicationInfo(UriVar string, NameVar string, ExecVar *string, CountVar *uint32, StampVar **DateTime) (bool, error) {
+func (x *BookmarkFile) GetApplicationInfo(UriVar string, NameVar string, ExecVar *string, CountVar *uint, StampVar **DateTime) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetApplicationInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -356,15 +362,15 @@ func (x *BookmarkFile) GetModifiedDateTime(UriVar string) (*DateTime, error) {
 	return (*DateTime)(unsafe.Pointer(cret)), nil
 }
 
-var xBookmarkFileGetSize func(uintptr) int32
+var xBookmarkFileGetSize func(uintptr) int
 
 // Gets the number of bookmarks inside @bookmark.
-func (x *BookmarkFile) GetSize() int32 {
+func (x *BookmarkFile) GetSize() int {
 	cret := xBookmarkFileGetSize(x.GoPointer())
 	return cret
 }
 
-var xBookmarkFileGetTitle func(uintptr, string, **Error) string
+var xBookmarkFileGetTitle func(uintptr, uintptr, **Error) string
 
 // Returns the title of the bookmark for @uri.
 //
@@ -372,10 +378,13 @@ var xBookmarkFileGetTitle func(uintptr, string, **Error) string
 //
 // In the event the URI cannot be found, %NULL is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) GetTitle(UriVar string) (string, error) {
+func (x *BookmarkFile) GetTitle(UriVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xBookmarkFileGetTitle(x.GoPointer(), UriVar, &cerr)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
+
+	cret := xBookmarkFileGetTitle(x.GoPointer(), UriVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -516,7 +525,7 @@ func (x *BookmarkFile) LoadFromFile(FilenameVar string) (bool, error) {
 	return cret, cerr
 }
 
-var xBookmarkFileMoveItem func(uintptr, string, string, **Error) bool
+var xBookmarkFileMoveItem func(uintptr, string, uintptr, **Error) bool
 
 // Changes the URI of a bookmark item from @old_uri to @new_uri.  Any
 // existing bookmark for @new_uri will be overwritten.  If @new_uri is
@@ -524,10 +533,13 @@ var xBookmarkFileMoveItem func(uintptr, string, string, **Error) bool
 //
 // In the event the URI cannot be found, %FALSE is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar string) (bool, error) {
+func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar *string) (bool, error) {
 	var cerr *Error
 
-	cret := xBookmarkFileMoveItem(x.GoPointer(), OldUriVar, NewUriVar, &cerr)
+	NewUriVarPtr := core.GStrdupNullable(NewUriVar)
+	defer core.GFreeNullable(NewUriVarPtr)
+
+	cret := xBookmarkFileMoveItem(x.GoPointer(), OldUriVar, NewUriVarPtr, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -604,7 +616,7 @@ func (x *BookmarkFile) SetAddedDateTime(UriVar string, AddedVar *DateTime) {
 	xBookmarkFileSetAddedDateTime(x.GoPointer(), UriVar, AddedVar)
 }
 
-var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int32, int, **Error) bool
+var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int, int, **Error) bool
 
 // Sets the meta-data of application @name inside the list of
 // applications that have registered a bookmark for @uri inside
@@ -634,7 +646,7 @@ var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int32, int, **
 // for @uri,  %FALSE is returned and error is set to
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
 // for @uri is found, one is created.
-func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar int32, StampVar int) (bool, error) {
+func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar int, StampVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileSetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -644,7 +656,7 @@ func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string,
 	return cret, cerr
 }
 
-var xBookmarkFileSetApplicationInfo func(uintptr, string, string, string, int32, *DateTime, **Error) bool
+var xBookmarkFileSetApplicationInfo func(uintptr, string, string, string, int, *DateTime, **Error) bool
 
 // Sets the meta-data of application @name inside the list of
 // applications that have registered a bookmark for @uri inside
@@ -673,7 +685,7 @@ var xBookmarkFileSetApplicationInfo func(uintptr, string, string, string, int32,
 // for @uri,  %FALSE is returned and error is set to
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
 // for @uri is found, one is created.
-func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar string, CountVar int32, StampVar *DateTime) (bool, error) {
+func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar string, CountVar int, StampVar *DateTime) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileSetApplicationInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -683,15 +695,18 @@ func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar
 	return cret, cerr
 }
 
-var xBookmarkFileSetDescription func(uintptr, string, string)
+var xBookmarkFileSetDescription func(uintptr, uintptr, string)
 
 // Sets @description as the description of the bookmark for @uri.
 //
 // If @uri is %NULL, the description of @bookmark is set.
 //
 // If a bookmark for @uri cannot be found then it is created.
-func (x *BookmarkFile) SetDescription(UriVar string, DescriptionVar string) {
-	xBookmarkFileSetDescription(x.GoPointer(), UriVar, DescriptionVar)
+func (x *BookmarkFile) SetDescription(UriVar *string, DescriptionVar string) {
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
+
+	xBookmarkFileSetDescription(x.GoPointer(), UriVarPtr, DescriptionVar)
 }
 
 var xBookmarkFileSetGroups func(uintptr, string, []string, uint)
@@ -704,15 +719,18 @@ func (x *BookmarkFile) SetGroups(UriVar string, GroupsVar []string, LengthVar ui
 	xBookmarkFileSetGroups(x.GoPointer(), UriVar, GroupsVar, LengthVar)
 }
 
-var xBookmarkFileSetIcon func(uintptr, string, string, string)
+var xBookmarkFileSetIcon func(uintptr, string, uintptr, string)
 
 // Sets the icon for the bookmark for @uri. If @href is %NULL, unsets
 // the currently set icon. @href can either be a full URL for the icon
 // file or the icon name following the Icon Naming specification.
 //
 // If no bookmark for @uri is found one is created.
-func (x *BookmarkFile) SetIcon(UriVar string, HrefVar string, MimeTypeVar string) {
-	xBookmarkFileSetIcon(x.GoPointer(), UriVar, HrefVar, MimeTypeVar)
+func (x *BookmarkFile) SetIcon(UriVar string, HrefVar *string, MimeTypeVar string) {
+	HrefVarPtr := core.GStrdupNullable(HrefVar)
+	defer core.GFreeNullable(HrefVarPtr)
+
+	xBookmarkFileSetIcon(x.GoPointer(), UriVar, HrefVarPtr, MimeTypeVar)
 }
 
 var xBookmarkFileSetIsPrivate func(uintptr, string, bool)
@@ -761,7 +779,7 @@ func (x *BookmarkFile) SetModifiedDateTime(UriVar string, ModifiedVar *DateTime)
 	xBookmarkFileSetModifiedDateTime(x.GoPointer(), UriVar, ModifiedVar)
 }
 
-var xBookmarkFileSetTitle func(uintptr, string, string)
+var xBookmarkFileSetTitle func(uintptr, uintptr, string)
 
 // Sets @title as the title of the bookmark for @uri inside the
 // bookmark file @bookmark.
@@ -769,8 +787,11 @@ var xBookmarkFileSetTitle func(uintptr, string, string)
 // If @uri is %NULL, the title of @bookmark is set.
 //
 // If a bookmark for @uri cannot be found then it is created.
-func (x *BookmarkFile) SetTitle(UriVar string, TitleVar string) {
-	xBookmarkFileSetTitle(x.GoPointer(), UriVar, TitleVar)
+func (x *BookmarkFile) SetTitle(UriVar *string, TitleVar string) {
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
+
+	xBookmarkFileSetTitle(x.GoPointer(), UriVarPtr, TitleVar)
 }
 
 var xBookmarkFileSetVisited func(uintptr, string, int)

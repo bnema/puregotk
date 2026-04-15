@@ -93,7 +93,7 @@ func (c *GesturePan) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted once a panning gesture along the expected axis is detected.
-func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uint32 {
+func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)

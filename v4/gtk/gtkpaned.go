@@ -144,10 +144,10 @@ func (x *Paned) GetEndChild() *Widget {
 	return cls
 }
 
-var xPanedGetPosition func(uintptr) int32
+var xPanedGetPosition func(uintptr) int
 
 // Obtains the position of the divider between the two panes.
-func (x *Paned) GetPosition() int32 {
+func (x *Paned) GetPosition() int {
 	cret := xPanedGetPosition(x.GoPointer())
 	return cret
 }
@@ -218,10 +218,10 @@ func (x *Paned) SetEndChild(ChildVar *Widget) {
 	xPanedSetEndChild(x.GoPointer(), ChildVar.GoPointer())
 }
 
-var xPanedSetPosition func(uintptr, int32)
+var xPanedSetPosition func(uintptr, int)
 
 // Sets the position of the divider between the two panes.
-func (x *Paned) SetPosition(PositionVar int32) {
+func (x *Paned) SetPosition(PositionVar int) {
 	xPanedSetPosition(x.GoPointer(), PositionVar)
 }
 
@@ -286,10 +286,10 @@ func (c *Paned) SetGoPointer(ptr uintptr) {
 //
 // This property is derived from the size and shrinkability
 // of the widget's children.
-func (x *Paned) GetPropertyMaxPosition() int32 {
+func (x *Paned) GetPropertyMaxPosition() int {
 	var v gobject.Value
 	x.GetProperty("max-position", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyMinPosition gets the "min-position" property.
@@ -298,27 +298,27 @@ func (x *Paned) GetPropertyMaxPosition() int32 {
 //
 // This property is derived from the size and shrinkability
 // of the widget's children.
-func (x *Paned) GetPropertyMinPosition() int32 {
+func (x *Paned) GetPropertyMinPosition() int {
 	var v gobject.Value
 	x.GetProperty("min-position", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPosition sets the "position" property.
 // Position of the separator in pixels, from the left/top.
-func (x *Paned) SetPropertyPosition(value int32) {
+func (x *Paned) SetPropertyPosition(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("position", &v)
 }
 
 // GetPropertyPosition gets the "position" property.
 // Position of the separator in pixels, from the left/top.
-func (x *Paned) GetPropertyPosition() int32 {
+func (x *Paned) GetPropertyPosition() int {
 	var v gobject.Value
 	x.GetProperty("position", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPositionSet sets the "position-set" property.
@@ -444,7 +444,7 @@ func (x *Paned) GetPropertyWideHandle() bool {
 //
 // The default binding for this signal is &lt;kbd&gt;Return&lt;/kbd&gt; or
 // &lt;kbd&gt;Space&lt;/kbd&gt;.
-func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
@@ -475,7 +475,7 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Escape&lt;/kbd&gt;.
-func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
@@ -502,7 +502,7 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding is &lt;kbd&gt;F6&lt;/kbd&gt;.
-func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
+func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
@@ -530,7 +530,7 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;F8&lt;/kbd&gt;.
-func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
+func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
@@ -562,7 +562,7 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt;, &lt;kbd&gt;↑&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;, &lt;kbd&gt;↓&lt;/kbd&gt;,
 // &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt;.
-func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
+func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
@@ -590,7 +590,7 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding is &lt;kbd&gt;Tab&lt;/kbd&gt;.
-func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
@@ -678,7 +678,7 @@ func (x *Paned) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Paned) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Paned) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -794,7 +794,7 @@ func (x *Paned) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs ...i
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Paned) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Paned) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -826,7 +826,7 @@ func (x *Paned) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs ...i
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Paned) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Paned) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -859,7 +859,7 @@ func (x *Paned) UpdateState(FirstStateVar AccessibleState, varArgs ...interface{
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Paned) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Paned) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

@@ -24,7 +24,7 @@ type TreeModelForeachFunc func(uintptr, *TreePath, *TreeIter, uintptr) bool
 type TreeIter struct {
 	_ structs.HostLayout
 
-	Stamp int32
+	Stamp int
 
 	UserData uintptr
 
@@ -230,11 +230,11 @@ func (x *TreeModelIface) GetRowDeleted() func(TreeModel, *TreePath) {
 // Signal emitted when the children of a node in the
 //
 //	GtkTreeModel have been reordered.
-func (x *TreeModelIface) OverrideRowsReordered(cb func(TreeModel, *TreePath, *TreeIter, int32)) {
+func (x *TreeModelIface) OverrideRowsReordered(cb func(TreeModel, *TreePath, *TreeIter, int)) {
 	if cb == nil {
 		x.xRowsReordered = 0
 	} else {
-		x.xRowsReordered = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int32) {
+		x.xRowsReordered = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int) {
 			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp, IterVarp, NewOrderVarp)
 		})
 	}
@@ -244,13 +244,13 @@ func (x *TreeModelIface) OverrideRowsReordered(cb func(TreeModel, *TreePath, *Tr
 // Signal emitted when the children of a node in the
 //
 //	GtkTreeModel have been reordered.
-func (x *TreeModelIface) GetRowsReordered() func(TreeModel, *TreePath, *TreeIter, int32) {
+func (x *TreeModelIface) GetRowsReordered() func(TreeModel, *TreePath, *TreeIter, int) {
 	if x.xRowsReordered == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int32)
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int)
 	purego.RegisterFunc(&rawCallback, x.xRowsReordered)
-	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter, NewOrderVar int32) {
+	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter, NewOrderVar int) {
 		rawCallback(TreeModelVar.GoPointer(), PathVar, IterVar, NewOrderVar)
 	}
 }
@@ -282,11 +282,11 @@ func (x *TreeModelIface) GetGetFlags() func(TreeModel) TreeModelFlags {
 
 // OverrideGetNColumns sets the "get_n_columns" callback function.
 // Get the number of columns supported by the model.
-func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int32) {
+func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int) {
 	if cb == nil {
 		x.xGetNColumns = 0
 	} else {
-		x.xGetNColumns = purego.NewCallback(func(TreeModelVarp uintptr) int32 {
+		x.xGetNColumns = purego.NewCallback(func(TreeModelVarp uintptr) int {
 			return cb(&TreeModelBase{Ptr: TreeModelVarp})
 		})
 	}
@@ -294,24 +294,24 @@ func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int32) {
 
 // GetGetNColumns gets the "get_n_columns" callback function.
 // Get the number of columns supported by the model.
-func (x *TreeModelIface) GetGetNColumns() func(TreeModel) int32 {
+func (x *TreeModelIface) GetGetNColumns() func(TreeModel) int {
 	if x.xGetNColumns == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr) int32
+	var rawCallback func(TreeModelVarp uintptr) int
 	purego.RegisterFunc(&rawCallback, x.xGetNColumns)
-	return func(TreeModelVar TreeModel) int32 {
+	return func(TreeModelVar TreeModel) int {
 		return rawCallback(TreeModelVar.GoPointer())
 	}
 }
 
 // OverrideGetColumnType sets the "get_column_type" callback function.
 // Get the type of the column.
-func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int32) types.GType) {
+func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int) types.GType) {
 	if cb == nil {
 		x.xGetColumnType = 0
 	} else {
-		x.xGetColumnType = purego.NewCallback(func(TreeModelVarp uintptr, IndexVarp int32) types.GType {
+		x.xGetColumnType = purego.NewCallback(func(TreeModelVarp uintptr, IndexVarp int) types.GType {
 			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IndexVarp)
 		})
 	}
@@ -319,13 +319,13 @@ func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int32) types.G
 
 // GetGetColumnType gets the "get_column_type" callback function.
 // Get the type of the column.
-func (x *TreeModelIface) GetGetColumnType() func(TreeModel, int32) types.GType {
+func (x *TreeModelIface) GetGetColumnType() func(TreeModel, int) types.GType {
 	if x.xGetColumnType == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, IndexVarp int32) types.GType
+	var rawCallback func(TreeModelVarp uintptr, IndexVarp int) types.GType
 	purego.RegisterFunc(&rawCallback, x.xGetColumnType)
-	return func(TreeModelVar TreeModel, IndexVar int32) types.GType {
+	return func(TreeModelVar TreeModel, IndexVar int) types.GType {
 		return rawCallback(TreeModelVar.GoPointer(), IndexVar)
 	}
 }
@@ -390,11 +390,11 @@ func (x *TreeModelIface) GetGetPath() func(TreeModel, *TreeIter) *TreePath {
 
 // OverrideGetValue sets the "get_value" callback function.
 // Initializes and sets value to that at column.
-func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int32, *gobject.Value)) {
+func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int, *gobject.Value)) {
 	if cb == nil {
 		x.xGetValue = 0
 	} else {
-		x.xGetValue = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int32, ValueVarp *gobject.Value) {
+		x.xGetValue = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int, ValueVarp *gobject.Value) {
 			cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ColumnVarp, ValueVarp)
 		})
 	}
@@ -402,13 +402,13 @@ func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int32, *
 
 // GetGetValue gets the "get_value" callback function.
 // Initializes and sets value to that at column.
-func (x *TreeModelIface) GetGetValue() func(TreeModel, *TreeIter, int32, *gobject.Value) {
+func (x *TreeModelIface) GetGetValue() func(TreeModel, *TreeIter, int, *gobject.Value) {
 	if x.xGetValue == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int32, ValueVarp *gobject.Value)
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int, ValueVarp *gobject.Value)
 	purego.RegisterFunc(&rawCallback, x.xGetValue)
-	return func(TreeModelVar TreeModel, IterVar *TreeIter, ColumnVar int32, ValueVar *gobject.Value) {
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
 		rawCallback(TreeModelVar.GoPointer(), IterVar, ColumnVar, ValueVar)
 	}
 }
@@ -523,11 +523,11 @@ func (x *TreeModelIface) GetIterHasChild() func(TreeModel, *TreeIter) bool {
 
 // OverrideIterNChildren sets the "iter_n_children" callback function.
 // Gets the number of children that iter has.
-func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int32) {
+func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int) {
 	if cb == nil {
 		x.xIterNChildren = 0
 	} else {
-		x.xIterNChildren = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) int32 {
+		x.xIterNChildren = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) int {
 			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
 		})
 	}
@@ -535,13 +535,13 @@ func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int
 
 // GetIterNChildren gets the "iter_n_children" callback function.
 // Gets the number of children that iter has.
-func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int32 {
+func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int {
 	if x.xIterNChildren == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) int32
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) int
 	purego.RegisterFunc(&rawCallback, x.xIterNChildren)
-	return func(TreeModelVar TreeModel, IterVar *TreeIter) int32 {
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) int {
 		return rawCallback(TreeModelVar.GoPointer(), IterVar)
 	}
 }
@@ -550,11 +550,11 @@ func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int32 {
 // Sets iter to be the child of parent, using the
 //
 //	given index.
-func (x *TreeModelIface) OverrideIterNthChild(cb func(TreeModel, *TreeIter, *TreeIter, int32) bool) {
+func (x *TreeModelIface) OverrideIterNthChild(cb func(TreeModel, *TreeIter, *TreeIter, int) bool) {
 	if cb == nil {
 		x.xIterNthChild = 0
 	} else {
-		x.xIterNthChild = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int32) bool {
+		x.xIterNthChild = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int) bool {
 			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ParentVarp, NVarp)
 		})
 	}
@@ -564,13 +564,13 @@ func (x *TreeModelIface) OverrideIterNthChild(cb func(TreeModel, *TreeIter, *Tre
 // Sets iter to be the child of parent, using the
 //
 //	given index.
-func (x *TreeModelIface) GetIterNthChild() func(TreeModel, *TreeIter, *TreeIter, int32) bool {
+func (x *TreeModelIface) GetIterNthChild() func(TreeModel, *TreeIter, *TreeIter, int) bool {
 	if x.xIterNthChild == 0 {
 		return nil
 	}
-	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int32) bool
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int) bool
 	purego.RegisterFunc(&rawCallback, x.xIterNthChild)
-	return func(TreeModelVar TreeModel, IterVar *TreeIter, ParentVar *TreeIter, NVar int32) bool {
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 		return rawCallback(TreeModelVar.GoPointer(), IterVar, ParentVar, NVar)
 	}
 }
@@ -690,10 +690,10 @@ func NewTreePathFirst() *TreePath {
 	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFromIndices func(int32, ...interface{}) uintptr
+var xNewTreePathFromIndices func(int, ...interface{}) uintptr
 
 // Creates a new path with @first_index and @varargs as indices.
-func NewTreePathFromIndices(FirstIndexVar int32, varArgs ...interface{}) *TreePath {
+func NewTreePathFromIndices(FirstIndexVar int, varArgs ...interface{}) *TreePath {
 	cret := xNewTreePathFromIndices(FirstIndexVar, varArgs...)
 	if cret == 0 {
 		return nil
@@ -701,10 +701,10 @@ func NewTreePathFromIndices(FirstIndexVar int32, varArgs ...interface{}) *TreePa
 	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xNewTreePathFromIndicesv func([]int32, uint) uintptr
+var xNewTreePathFromIndicesv func([]int, uint) uintptr
 
 // Creates a new path with the given @indices array of @length.
-func NewTreePathFromIndicesv(IndicesVar []int32, LengthVar uint) *TreePath {
+func NewTreePathFromIndicesv(IndicesVar []int, LengthVar uint) *TreePath {
 	cret := xNewTreePathFromIndicesv(IndicesVar, LengthVar)
 	if cret == 0 {
 		return nil
@@ -729,23 +729,23 @@ func NewTreePathFromString(PathVar string) *TreePath {
 	return (*TreePath)(unsafe.Pointer(cret))
 }
 
-var xTreePathAppendIndex func(uintptr, int32)
+var xTreePathAppendIndex func(uintptr, int)
 
 // Appends a new index to a path.
 //
 // As a result, the depth of the path is increased.
-func (x *TreePath) AppendIndex(IndexVar int32) {
+func (x *TreePath) AppendIndex(IndexVar int) {
 	xTreePathAppendIndex(x.GoPointer(), IndexVar)
 }
 
-var xTreePathCompare func(uintptr, *TreePath) int32
+var xTreePathCompare func(uintptr, *TreePath) int
 
 // Compares two paths.
 //
 // If @a appears before @b in a tree, then -1 is returned.
 // If @b appears before @a, then 1 is returned.
 // If the two nodes are equal, then 0 is returned.
-func (x *TreePath) Compare(BVar *TreePath) int32 {
+func (x *TreePath) Compare(BVar *TreePath) int {
 	cret := xTreePathCompare(x.GoPointer(), BVar)
 	return cret
 }
@@ -775,15 +775,15 @@ func (x *TreePath) Free() {
 	xTreePathFree(x.GoPointer())
 }
 
-var xTreePathGetDepth func(uintptr) int32
+var xTreePathGetDepth func(uintptr) int
 
 // Returns the current depth of @path.
-func (x *TreePath) GetDepth() int32 {
+func (x *TreePath) GetDepth() int {
 	cret := xTreePathGetDepth(x.GoPointer())
 	return cret
 }
 
-var xTreePathGetIndices func(uintptr) int32
+var xTreePathGetIndices func(uintptr) int
 
 // Returns the current indices of @path.
 //
@@ -791,19 +791,19 @@ var xTreePathGetIndices func(uintptr) int32
 // This value should not be freed.
 //
 // The length of the array can be obtained with gtk_tree_path_get_depth().
-func (x *TreePath) GetIndices() int32 {
+func (x *TreePath) GetIndices() int {
 	cret := xTreePathGetIndices(x.GoPointer())
 	return cret
 }
 
-var xTreePathGetIndicesWithDepth func(uintptr, *int32) uintptr
+var xTreePathGetIndicesWithDepth func(uintptr, *int) uintptr
 
 // Returns the current indices of @path.
 //
 // This is an array of integers, each representing a node in a tree.
 // It also returns the number of elements in the array.
 // The array should not be freed.
-func (x *TreePath) GetIndicesWithDepth(DepthVar *int32) uintptr {
+func (x *TreePath) GetIndicesWithDepth(DepthVar *int) uintptr {
 	cret := xTreePathGetIndicesWithDepth(x.GoPointer(), DepthVar)
 	return cret
 }
@@ -831,12 +831,12 @@ func (x *TreePath) Next() {
 	xTreePathNext(x.GoPointer())
 }
 
-var xTreePathPrependIndex func(uintptr, int32)
+var xTreePathPrependIndex func(uintptr, int)
 
 // Prepends a new index to a path.
 //
 // As a result, the depth of the path is increased.
-func (x *TreePath) PrependIndex(IndexVar int32) {
+func (x *TreePath) PrependIndex(IndexVar int) {
 	xTreePathPrependIndex(x.GoPointer(), IndexVar)
 }
 
@@ -1208,21 +1208,21 @@ type TreeModel interface {
 	FilterNew(RootVar *TreePath) *TreeModelBase
 	Foreach(FuncVar *TreeModelForeachFunc, UserDataVar uintptr)
 	Get(IterVar *TreeIter, varArgs ...interface{})
-	GetColumnType(IndexVar int32) types.GType
+	GetColumnType(IndexVar int) types.GType
 	GetFlags() TreeModelFlags
 	GetIter(IterVar *TreeIter, PathVar *TreePath) bool
 	GetIterFirst(IterVar *TreeIter) bool
 	GetIterFromString(IterVar *TreeIter, PathStringVar string) bool
-	GetNColumns() int32
+	GetNColumns() int
 	GetPath(IterVar *TreeIter) *TreePath
 	GetStringFromIter(IterVar *TreeIter) string
 	GetValist(IterVar *TreeIter, VarArgsVar []interface{})
-	GetValue(IterVar *TreeIter, ColumnVar int32, ValueVar *gobject.Value)
+	GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value)
 	IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool
 	IterHasChild(IterVar *TreeIter) bool
-	IterNChildren(IterVar *TreeIter) int32
+	IterNChildren(IterVar *TreeIter) int
 	IterNext(IterVar *TreeIter) bool
-	IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int32) bool
+	IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool
 	IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool
 	IterPrevious(IterVar *TreeIter) bool
 	RefNode(IterVar *TreeIter)
@@ -1230,8 +1230,8 @@ type TreeModel interface {
 	RowDeleted(PathVar *TreePath)
 	RowHasChildToggled(PathVar *TreePath, IterVar *TreeIter)
 	RowInserted(PathVar *TreePath, IterVar *TreeIter)
-	RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int32)
-	RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32, LengthVar int32)
+	RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int)
+	RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int, LengthVar int)
 	UnrefNode(IterVar *TreeIter)
 }
 
@@ -1297,7 +1297,7 @@ func (x *TreeModelBase) Get(IterVar *TreeIter, varArgs ...interface{}) {
 }
 
 // Returns the type of the column.
-func (x *TreeModelBase) GetColumnType(IndexVar int32) types.GType {
+func (x *TreeModelBase) GetColumnType(IndexVar int) types.GType {
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
 	return cret
 }
@@ -1340,7 +1340,7 @@ func (x *TreeModelBase) GetIterFromString(IterVar *TreeIter, PathStringVar strin
 }
 
 // Returns the number of columns supported by @tree_model.
-func (x *TreeModelBase) GetNColumns() int32 {
+func (x *TreeModelBase) GetNColumns() int {
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
 	return cret
 }
@@ -1378,7 +1378,7 @@ func (x *TreeModelBase) GetValist(IterVar *TreeIter, VarArgsVar []interface{}) {
 //
 // When done with @value, g_value_unset() needs to be called
 // to free any allocated memory.
-func (x *TreeModelBase) GetValue(IterVar *TreeIter, ColumnVar int32, ValueVar *gobject.Value) {
+func (x *TreeModelBase) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
 	XGtkTreeModelGetValue(x.GoPointer(), IterVar, ColumnVar, ValueVar)
 }
 
@@ -1405,7 +1405,7 @@ func (x *TreeModelBase) IterHasChild(IterVar *TreeIter) bool {
 //
 // As a special case, if @iter is %NULL, then the number
 // of toplevel nodes is returned.
-func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int32 {
+func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int {
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
 	return cret
 }
@@ -1426,7 +1426,7 @@ func (x *TreeModelBase) IterNext(IterVar *TreeIter) bool {
 // will remain a valid node after this function has been called. As a
 // special case, if @parent is %NULL, then the @n-th root node
 // is set.
-func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int32) bool {
+func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
 	return cret
 }
@@ -1519,7 +1519,7 @@ func (x *TreeModelBase) RowInserted(PathVar *TreePath, IterVar *TreeIter) {
 //
 // This should be called by models when their rows have been
 // reordered.
-func (x *TreeModelBase) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int32) {
+func (x *TreeModelBase) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewOrderVar int) {
 	XGtkTreeModelRowsReordered(x.GoPointer(), PathVar, IterVar, NewOrderVar)
 }
 
@@ -1529,7 +1529,7 @@ func (x *TreeModelBase) RowsReordered(PathVar *TreePath, IterVar *TreeIter, NewO
 //
 // This should be called by models when their rows have been
 // reordered.
-func (x *TreeModelBase) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32, LengthVar int32) {
+func (x *TreeModelBase) RowsReorderedWithLength(PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int, LengthVar int) {
 	XGtkTreeModelRowsReorderedWithLength(x.GoPointer(), PathVar, IterVar, NewOrderVar, LengthVar)
 }
 
@@ -1549,21 +1549,21 @@ var (
 	XGtkTreeModelFilterNew               func(uintptr, *TreePath) uintptr
 	XGtkTreeModelForeach                 func(uintptr, uintptr, uintptr)
 	XGtkTreeModelGet                     func(uintptr, *TreeIter, ...interface{})
-	XGtkTreeModelGetColumnType           func(uintptr, int32) types.GType
+	XGtkTreeModelGetColumnType           func(uintptr, int) types.GType
 	XGtkTreeModelGetFlags                func(uintptr) TreeModelFlags
 	XGtkTreeModelGetIter                 func(uintptr, *TreeIter, *TreePath) bool
 	XGtkTreeModelGetIterFirst            func(uintptr, *TreeIter) bool
 	XGtkTreeModelGetIterFromString       func(uintptr, *TreeIter, string) bool
-	XGtkTreeModelGetNColumns             func(uintptr) int32
+	XGtkTreeModelGetNColumns             func(uintptr) int
 	XGtkTreeModelGetPath                 func(uintptr, *TreeIter) uintptr
 	XGtkTreeModelGetStringFromIter       func(uintptr, *TreeIter) string
 	XGtkTreeModelGetValist               func(uintptr, *TreeIter, []interface{})
-	XGtkTreeModelGetValue                func(uintptr, *TreeIter, int32, *gobject.Value)
+	XGtkTreeModelGetValue                func(uintptr, *TreeIter, int, *gobject.Value)
 	XGtkTreeModelIterChildren            func(uintptr, *TreeIter, *TreeIter) bool
 	XGtkTreeModelIterHasChild            func(uintptr, *TreeIter) bool
-	XGtkTreeModelIterNChildren           func(uintptr, *TreeIter) int32
+	XGtkTreeModelIterNChildren           func(uintptr, *TreeIter) int
 	XGtkTreeModelIterNext                func(uintptr, *TreeIter) bool
-	XGtkTreeModelIterNthChild            func(uintptr, *TreeIter, *TreeIter, int32) bool
+	XGtkTreeModelIterNthChild            func(uintptr, *TreeIter, *TreeIter, int) bool
 	XGtkTreeModelIterParent              func(uintptr, *TreeIter, *TreeIter) bool
 	XGtkTreeModelIterPrevious            func(uintptr, *TreeIter) bool
 	XGtkTreeModelRefNode                 func(uintptr, *TreeIter)
@@ -1571,8 +1571,8 @@ var (
 	XGtkTreeModelRowDeleted              func(uintptr, *TreePath)
 	XGtkTreeModelRowHasChildToggled      func(uintptr, *TreePath, *TreeIter)
 	XGtkTreeModelRowInserted             func(uintptr, *TreePath, *TreeIter)
-	XGtkTreeModelRowsReordered           func(uintptr, *TreePath, *TreeIter, int32)
-	XGtkTreeModelRowsReorderedWithLength func(uintptr, *TreePath, *TreeIter, []int32, int32)
+	XGtkTreeModelRowsReordered           func(uintptr, *TreePath, *TreeIter, int)
+	XGtkTreeModelRowsReorderedWithLength func(uintptr, *TreePath, *TreeIter, []int, int)
 	XGtkTreeModelUnrefNode               func(uintptr, *TreeIter)
 )
 
@@ -1618,12 +1618,12 @@ func TreeRowReferenceInserted(ProxyVar *gobject.Object, PathVar *TreePath) {
 	xTreeRowReferenceInserted(ProxyVar.GoPointer(), PathVar)
 }
 
-var xTreeRowReferenceReordered func(uintptr, *TreePath, *TreeIter, []int32)
+var xTreeRowReferenceReordered func(uintptr, *TreePath, *TreeIter, []int)
 
 // Lets a set of row reference created by
 // gtk_tree_row_reference_new_proxy() know that the
 // model emitted the ::rows-reordered signal.
-func TreeRowReferenceReordered(ProxyVar *gobject.Object, PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int32) {
+func TreeRowReferenceReordered(ProxyVar *gobject.Object, PathVar *TreePath, IterVar *TreeIter, NewOrderVar []int) {
 	xTreeRowReferenceReordered(ProxyVar.GoPointer(), PathVar, IterVar, NewOrderVar)
 }
 

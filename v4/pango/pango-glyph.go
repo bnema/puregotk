@@ -63,13 +63,13 @@ func (x *GlyphInfo) GoPointer() uintptr {
 type GlyphString struct {
 	_ structs.HostLayout
 
-	NumGlyphs int32
+	NumGlyphs int
 
 	Glyphs []GlyphInfo
 
-	LogClusters int32
+	LogClusters int
 
-	Space int32
+	Space int
 }
 
 var xGlyphStringGLibType func() types.GType
@@ -118,14 +118,14 @@ func (x *GlyphString) Extents(FontVar *Font, InkRectVar *Rectangle, LogicalRectV
 	xGlyphStringExtents(x.GoPointer(), FontVar.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
-var xGlyphStringExtentsRange func(uintptr, int32, int32, uintptr, *Rectangle, *Rectangle)
+var xGlyphStringExtentsRange func(uintptr, int, int, uintptr, *Rectangle, *Rectangle)
 
 // Computes the extents of a sub-portion of a glyph string.
 //
 // The extents are relative to the start of the glyph string range
 // (the origin of their coordinate system is at the start of the range,
 // not at the start of the entire glyph string).
-func (x *GlyphString) ExtentsRange(StartVar int32, EndVar int32, FontVar *Font, InkRectVar *Rectangle, LogicalRectVar *Rectangle) {
+func (x *GlyphString) ExtentsRange(StartVar int, EndVar int, FontVar *Font, InkRectVar *Rectangle, LogicalRectVar *Rectangle) {
 	xGlyphStringExtentsRange(x.GoPointer(), StartVar, EndVar, FontVar.GoPointer(), InkRectVar, LogicalRectVar)
 }
 
@@ -136,7 +136,7 @@ func (x *GlyphString) Free() {
 	xGlyphStringFree(x.GoPointer())
 }
 
-var xGlyphStringGetLogicalWidths func(uintptr, string, int32, int32, *[]int32)
+var xGlyphStringGetLogicalWidths func(uintptr, string, int, int, *[]int)
 
 // Given a `PangoGlyphString` and corresponding text, determine the width
 // corresponding to each character.
@@ -145,11 +145,11 @@ var xGlyphStringGetLogicalWidths func(uintptr, string, int32, int32, *[]int32)
 // entire cluster is divided equally among the characters.
 //
 // See also [method@Pango.GlyphItem.get_logical_widths].
-func (x *GlyphString) GetLogicalWidths(TextVar string, LengthVar int32, EmbeddingLevelVar int32, LogicalWidthsVar *[]int32) {
+func (x *GlyphString) GetLogicalWidths(TextVar string, LengthVar int, EmbeddingLevelVar int, LogicalWidthsVar *[]int) {
 	xGlyphStringGetLogicalWidths(x.GoPointer(), TextVar, LengthVar, EmbeddingLevelVar, LogicalWidthsVar)
 }
 
-var xGlyphStringGetWidth func(uintptr) int32
+var xGlyphStringGetWidth func(uintptr) int
 
 // Computes the logical width of the glyph string.
 //
@@ -157,12 +157,12 @@ var xGlyphStringGetWidth func(uintptr) int32
 // However, since this only computes the width, it's much faster. This
 // is in fact only a convenience function that computes the sum of
 // @geometry.width for each glyph in the @glyphs.
-func (x *GlyphString) GetWidth() int32 {
+func (x *GlyphString) GetWidth() int {
 	cret := xGlyphStringGetWidth(x.GoPointer())
 	return cret
 }
 
-var xGlyphStringIndexToX func(uintptr, string, int32, *Analysis, int32, bool, *int32)
+var xGlyphStringIndexToX func(uintptr, string, int, *Analysis, int, bool, *int)
 
 // Converts from character position to x position.
 //
@@ -177,11 +177,11 @@ var xGlyphStringIndexToX func(uintptr, string, int32, *Analysis, int32, bool, *i
 //	&lt;img alt="Glyph positions" src="glyphstring-positions-light.png"&gt;
 //
 // &lt;/picture&gt;
-func (x *GlyphString) IndexToX(TextVar string, LengthVar int32, AnalysisVar *Analysis, IndexVar int32, TrailingVar bool, XPosVar *int32) {
+func (x *GlyphString) IndexToX(TextVar string, LengthVar int, AnalysisVar *Analysis, IndexVar int, TrailingVar bool, XPosVar *int) {
 	xGlyphStringIndexToX(x.GoPointer(), TextVar, LengthVar, AnalysisVar, IndexVar, TrailingVar, XPosVar)
 }
 
-var xGlyphStringIndexToXFull func(uintptr, string, int32, *Analysis, *LogAttr, int32, bool, *int32)
+var xGlyphStringIndexToXFull func(uintptr, string, int, *Analysis, *LogAttr, int, bool, *int)
 
 // Converts from character position to x position.
 //
@@ -189,18 +189,18 @@ var xGlyphStringIndexToXFull func(uintptr, string, int32, *Analysis, *LogAttr, i
 // accepts a `PangoLogAttr` array. The grapheme boundary information
 // in it can be used to disambiguate positioning inside some complex
 // clusters.
-func (x *GlyphString) IndexToXFull(TextVar string, LengthVar int32, AnalysisVar *Analysis, AttrsVar *LogAttr, IndexVar int32, TrailingVar bool, XPosVar *int32) {
+func (x *GlyphString) IndexToXFull(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar *LogAttr, IndexVar int, TrailingVar bool, XPosVar *int) {
 	xGlyphStringIndexToXFull(x.GoPointer(), TextVar, LengthVar, AnalysisVar, AttrsVar, IndexVar, TrailingVar, XPosVar)
 }
 
-var xGlyphStringSetSize func(uintptr, int32)
+var xGlyphStringSetSize func(uintptr, int)
 
 // Resize a glyph string to the given length.
-func (x *GlyphString) SetSize(NewLenVar int32) {
+func (x *GlyphString) SetSize(NewLenVar int) {
 	xGlyphStringSetSize(x.GoPointer(), NewLenVar)
 }
 
-var xGlyphStringXToIndex func(uintptr, string, int32, *Analysis, int32, *int32, *int32)
+var xGlyphStringXToIndex func(uintptr, string, int, *Analysis, int, *int, *int)
 
 // Convert from x offset to character position.
 //
@@ -209,7 +209,7 @@ var xGlyphStringXToIndex func(uintptr, string, int32, *Analysis, int32, *int32, 
 // not allowed (such as Thai), the returned value may not be a valid
 // cursor position; the caller must combine the result with the logical
 // attributes for the text to compute the valid cursor position.
-func (x *GlyphString) XToIndex(TextVar string, LengthVar int32, AnalysisVar *Analysis, XPosVar int32, IndexVar *int32, TrailingVar *int32) {
+func (x *GlyphString) XToIndex(TextVar string, LengthVar int, AnalysisVar *Analysis, XPosVar int, IndexVar *int, TrailingVar *int) {
 	xGlyphStringXToIndex(x.GoPointer(), TextVar, LengthVar, AnalysisVar, XPosVar, IndexVar, TrailingVar)
 }
 
@@ -226,9 +226,9 @@ func (x *GlyphString) XToIndex(TextVar string, LengthVar int32, AnalysisVar *Ana
 type GlyphVisAttr struct {
 	_ structs.HostLayout
 
-	IsClusterStart uint32
+	IsClusterStart uint
 
-	IsColor uint32
+	IsColor uint
 }
 
 func (x *GlyphVisAttr) GoPointer() uintptr {
@@ -268,7 +268,7 @@ const (
 	ShapeRoundPositionsValue ShapeFlags = 1
 )
 
-var xShape func(string, int32, *Analysis, *GlyphString)
+var xShape func(string, int, *Analysis, *GlyphString)
 
 // Convert the characters in @text into glyphs.
 //
@@ -288,11 +288,11 @@ var xShape func(string, int32, *Analysis, *GlyphString)
 // [func@Pango.itemize] have indices that are relative to the entire paragraph,
 // so you need to subtract the item offset from their indices before
 // calling [func@Pango.shape].
-func Shape(TextVar string, LengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
+func Shape(TextVar string, LengthVar int, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
 	xShape(TextVar, LengthVar, AnalysisVar, GlyphsVar)
 }
 
-var xShapeFull func(string, int32, string, int32, *Analysis, *GlyphString)
+var xShapeFull func(string, int, uintptr, int, *Analysis, *GlyphString)
 
 // Convert the characters in @text into glyphs.
 //
@@ -315,11 +315,14 @@ var xShapeFull func(string, int32, string, int32, *Analysis, *GlyphString)
 // so you do not pass the full paragraph text as @paragraph_text, you need
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_full].
-func ShapeFull(ItemTextVar string, ItemLengthVar int32, ParagraphTextVar string, ParagraphLengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
-	xShapeFull(ItemTextVar, ItemLengthVar, ParagraphTextVar, ParagraphLengthVar, AnalysisVar, GlyphsVar)
+func ShapeFull(ItemTextVar string, ItemLengthVar int, ParagraphTextVar *string, ParagraphLengthVar int, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
+	ParagraphTextVarPtr := core.GStrdupNullable(ParagraphTextVar)
+	defer core.GFreeNullable(ParagraphTextVarPtr)
+
+	xShapeFull(ItemTextVar, ItemLengthVar, ParagraphTextVarPtr, ParagraphLengthVar, AnalysisVar, GlyphsVar)
 }
 
-var xShapeItem func(*Item, string, int32, *LogAttr, *GlyphString, ShapeFlags)
+var xShapeItem func(*Item, uintptr, int, *LogAttr, *GlyphString, ShapeFlags)
 
 // Convert the characters in @item into glyphs.
 //
@@ -334,11 +337,14 @@ var xShapeItem func(*Item, string, int32, *LogAttr, *GlyphString, ShapeFlags)
 // so you do not pass the full paragraph text as @paragraph_text, you need
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_with_flags].
-func ShapeItem(ItemVar *Item, ParagraphTextVar string, ParagraphLengthVar int32, LogAttrsVar *LogAttr, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
-	xShapeItem(ItemVar, ParagraphTextVar, ParagraphLengthVar, LogAttrsVar, GlyphsVar, FlagsVar)
+func ShapeItem(ItemVar *Item, ParagraphTextVar *string, ParagraphLengthVar int, LogAttrsVar *LogAttr, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
+	ParagraphTextVarPtr := core.GStrdupNullable(ParagraphTextVar)
+	defer core.GFreeNullable(ParagraphTextVarPtr)
+
+	xShapeItem(ItemVar, ParagraphTextVarPtr, ParagraphLengthVar, LogAttrsVar, GlyphsVar, FlagsVar)
 }
 
-var xShapeWithFlags func(string, int32, string, int32, *Analysis, *GlyphString, ShapeFlags)
+var xShapeWithFlags func(string, int, uintptr, int, *Analysis, *GlyphString, ShapeFlags)
 
 // Convert the characters in @text into glyphs.
 //
@@ -358,8 +364,11 @@ var xShapeWithFlags func(string, int32, string, int32, *Analysis, *GlyphString, 
 // so you do not pass the full paragraph text as @paragraph_text, you need
 // to subtract the item offset from their indices before calling
 // [func@Pango.shape_with_flags].
-func ShapeWithFlags(ItemTextVar string, ItemLengthVar int32, ParagraphTextVar string, ParagraphLengthVar int32, AnalysisVar *Analysis, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
-	xShapeWithFlags(ItemTextVar, ItemLengthVar, ParagraphTextVar, ParagraphLengthVar, AnalysisVar, GlyphsVar, FlagsVar)
+func ShapeWithFlags(ItemTextVar string, ItemLengthVar int, ParagraphTextVar *string, ParagraphLengthVar int, AnalysisVar *Analysis, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
+	ParagraphTextVarPtr := core.GStrdupNullable(ParagraphTextVar)
+	defer core.GFreeNullable(ParagraphTextVarPtr)
+
+	xShapeWithFlags(ItemTextVar, ItemLengthVar, ParagraphTextVarPtr, ParagraphLengthVar, AnalysisVar, GlyphsVar, FlagsVar)
 }
 
 func init() {

@@ -15,10 +15,10 @@ import (
 type ObjectFinalizeFunc func(uintptr)
 
 // The type of the @get_property function of #GObjectClass.
-type ObjectGetPropertyFunc func(uintptr, uint32, *Value, uintptr)
+type ObjectGetPropertyFunc func(uintptr, uint, *Value, uintptr)
 
 // The type of the @set_property function of #GObjectClass.
-type ObjectSetPropertyFunc func(uintptr, uint32, *Value, uintptr)
+type ObjectSetPropertyFunc func(uintptr, uint, *Value, uintptr)
 
 // A callback function used for notification when the state
 // of a toggle reference changes.
@@ -85,11 +85,11 @@ func (x *InitiallyUnownedClass) GoPointer() uintptr {
 //	set. The first thing a @constructor implementation must do is chain up to the
 //	@constructor of the parent class. Overriding @constructor should be rarely
 //	needed, e.g. to handle construct properties, or to implement singletons.
-func (x *InitiallyUnownedClass) OverrideConstructor(cb func(types.GType, uint32, *ObjectConstructParam) *Object) {
+func (x *InitiallyUnownedClass) OverrideConstructor(cb func(types.GType, uint, *ObjectConstructParam) *Object) {
 	if cb == nil {
 		x.xConstructor = 0
 	} else {
-		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint32, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
+		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
 			ret := cb(TypeVarp, NConstructPropertiesVarp, ConstructPropertiesVarp)
 			if ret == nil {
 				return 0
@@ -106,13 +106,13 @@ func (x *InitiallyUnownedClass) OverrideConstructor(cb func(types.GType, uint32,
 //	set. The first thing a @constructor implementation must do is chain up to the
 //	@constructor of the parent class. Overriding @constructor should be rarely
 //	needed, e.g. to handle construct properties, or to implement singletons.
-func (x *InitiallyUnownedClass) GetConstructor() func(types.GType, uint32, *ObjectConstructParam) *Object {
+func (x *InitiallyUnownedClass) GetConstructor() func(types.GType, uint, *ObjectConstructParam) *Object {
 	if x.xConstructor == 0 {
 		return nil
 	}
-	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint32, ConstructPropertiesVarp *ObjectConstructParam) uintptr
+	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr
 	purego.RegisterFunc(&rawCallback, x.xConstructor)
-	return func(TypeVar types.GType, NConstructPropertiesVar uint32, ConstructPropertiesVar *ObjectConstructParam) *Object {
+	return func(TypeVar types.GType, NConstructPropertiesVar uint, ConstructPropertiesVar *ObjectConstructParam) *Object {
 		rawRet := rawCallback(TypeVar, NConstructPropertiesVar, ConstructPropertiesVar)
 		if rawRet == 0 {
 			return nil
@@ -130,11 +130,11 @@ func (x *InitiallyUnownedClass) GetConstructor() func(types.GType, uint32, *Obje
 //	@set_property don't emit property change notification explicitly, this will
 //	be done implicitly by the type system. However, if the notify signal is
 //	emitted explicitly, the type system will not emit it a second time.
-func (x *InitiallyUnownedClass) OverrideSetProperty(cb func(*Object, uint32, *Value, *ParamSpec)) {
+func (x *InitiallyUnownedClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
 		x.xSetProperty = 0
 	} else {
-		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr) {
+		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
 		})
 	}
@@ -147,13 +147,13 @@ func (x *InitiallyUnownedClass) OverrideSetProperty(cb func(*Object, uint32, *Va
 //	@set_property don't emit property change notification explicitly, this will
 //	be done implicitly by the type system. However, if the notify signal is
 //	emitted explicitly, the type system will not emit it a second time.
-func (x *InitiallyUnownedClass) GetSetProperty() func(*Object, uint32, *Value, *ParamSpec) {
+func (x *InitiallyUnownedClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xSetProperty == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetProperty)
-	return func(ObjectVar *Object, PropertyIdVar uint32, ValueVar *Value, PspecVar *ParamSpec) {
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
 	}
 }
@@ -162,11 +162,11 @@ func (x *InitiallyUnownedClass) GetSetProperty() func(*Object, uint32, *Value, *
 // the generic getter for all properties of this type. Should be
 //
 //	overridden for every type with properties.
-func (x *InitiallyUnownedClass) OverrideGetProperty(cb func(*Object, uint32, *Value, *ParamSpec)) {
+func (x *InitiallyUnownedClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
 		x.xGetProperty = 0
 	} else {
-		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr) {
+		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
 		})
 	}
@@ -176,13 +176,13 @@ func (x *InitiallyUnownedClass) OverrideGetProperty(cb func(*Object, uint32, *Va
 // the generic getter for all properties of this type. Should be
 //
 //	overridden for every type with properties.
-func (x *InitiallyUnownedClass) GetGetProperty() func(*Object, uint32, *Value, *ParamSpec) {
+func (x *InitiallyUnownedClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xGetProperty == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xGetProperty)
-	return func(ObjectVar *Object, PropertyIdVar uint32, ValueVar *Value, PspecVar *ParamSpec) {
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
 	}
 }
@@ -258,11 +258,11 @@ func (x *InitiallyUnownedClass) GetFinalize() func(*Object) {
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
 //	needed.
-func (x *InitiallyUnownedClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint32, **ParamSpec)) {
+func (x *InitiallyUnownedClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint, **ParamSpec)) {
 	if cb == nil {
 		x.xDispatchPropertiesChanged = 0
 	} else {
-		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint32, PspecsVarp uintptr) {
+		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), NPspecsVarp, (**ParamSpec)(unsafe.Pointer(PspecsVarp)))
 		})
 	}
@@ -273,13 +273,13 @@ func (x *InitiallyUnownedClass) OverrideDispatchPropertiesChanged(cb func(*Objec
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
 //	needed.
-func (x *InitiallyUnownedClass) GetDispatchPropertiesChanged() func(*Object, uint32, **ParamSpec) {
+func (x *InitiallyUnownedClass) GetDispatchPropertiesChanged() func(*Object, uint, **ParamSpec) {
 	if x.xDispatchPropertiesChanged == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint32, PspecsVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xDispatchPropertiesChanged)
-	return func(ObjectVar *Object, NPspecsVar uint32, PspecsVar **ParamSpec) {
+	return func(ObjectVar *Object, NPspecsVar uint, PspecsVar **ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), NPspecsVar, *ConvertPtr(PspecsVar))
 	}
 }
@@ -432,7 +432,7 @@ func (x *ObjectClass) FindProperty(PropertyNameVar string) *ParamSpec {
 	return cls
 }
 
-var xObjectClassInstallProperties func(uintptr, uint32, uintptr)
+var xObjectClassInstallProperties func(uintptr, uint, uintptr)
 
 // Installs new properties from an array of #GParamSpecs.
 //
@@ -502,11 +502,11 @@ var xObjectClassInstallProperties func(uintptr, uint32, uintptr)
 //	 }
 //
 // ]|
-func (x *ObjectClass) InstallProperties(NPspecsVar uint32, PspecsVar uintptr) {
+func (x *ObjectClass) InstallProperties(NPspecsVar uint, PspecsVar uintptr) {
 	xObjectClassInstallProperties(x.GoPointer(), NPspecsVar, PspecsVar)
 }
 
-var xObjectClassInstallProperty func(uintptr, uint32, uintptr)
+var xObjectClassInstallProperty func(uintptr, uint, uintptr)
 
 // Installs a new property.
 //
@@ -518,19 +518,19 @@ var xObjectClassInstallProperty func(uintptr, uint32, uintptr)
 // Note that it is possible to redefine a property in a derived class,
 // by installing a property with the same name. This can be useful at times,
 // e.g. to change the range of allowed values or the default value.
-func (x *ObjectClass) InstallProperty(PropertyIdVar uint32, PspecVar *ParamSpec) {
+func (x *ObjectClass) InstallProperty(PropertyIdVar uint, PspecVar *ParamSpec) {
 	xObjectClassInstallProperty(x.GoPointer(), PropertyIdVar, PspecVar.GoPointer())
 }
 
-var xObjectClassListProperties func(uintptr, *uint32) uintptr
+var xObjectClassListProperties func(uintptr, *uint) uintptr
 
 // Get an array of #GParamSpec* for all properties of a class.
-func (x *ObjectClass) ListProperties(NPropertiesVar *uint32) uintptr {
+func (x *ObjectClass) ListProperties(NPropertiesVar *uint) uintptr {
 	cret := xObjectClassListProperties(x.GoPointer(), NPropertiesVar)
 	return cret
 }
 
-var xObjectClassOverrideProperty func(uintptr, uint32, string)
+var xObjectClassOverrideProperty func(uintptr, uint, string)
 
 // Registers @property_id as referring to a property with the name
 // @name in a parent class or in an interface implemented by @oclass.
@@ -548,7 +548,7 @@ var xObjectClassOverrideProperty func(uintptr, uint32, string)
 // correct.  For virtually all uses, this makes no difference. If you
 // need to get the overridden property, you can call
 // g_param_spec_get_redirect_target().
-func (x *ObjectClass) OverrideProperty(PropertyIdVar uint32, NameVar string) {
+func (x *ObjectClass) OverrideProperty(PropertyIdVar uint, NameVar string) {
 	xObjectClassOverrideProperty(x.GoPointer(), PropertyIdVar, NameVar)
 }
 
@@ -559,11 +559,11 @@ func (x *ObjectClass) OverrideProperty(PropertyIdVar uint32, NameVar string) {
 //	set. The first thing a @constructor implementation must do is chain up to the
 //	@constructor of the parent class. Overriding @constructor should be rarely
 //	needed, e.g. to handle construct properties, or to implement singletons.
-func (x *ObjectClass) OverrideConstructor(cb func(types.GType, uint32, *ObjectConstructParam) *Object) {
+func (x *ObjectClass) OverrideConstructor(cb func(types.GType, uint, *ObjectConstructParam) *Object) {
 	if cb == nil {
 		x.xConstructor = 0
 	} else {
-		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint32, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
+		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
 			ret := cb(TypeVarp, NConstructPropertiesVarp, ConstructPropertiesVarp)
 			if ret == nil {
 				return 0
@@ -580,13 +580,13 @@ func (x *ObjectClass) OverrideConstructor(cb func(types.GType, uint32, *ObjectCo
 //	set. The first thing a @constructor implementation must do is chain up to the
 //	@constructor of the parent class. Overriding @constructor should be rarely
 //	needed, e.g. to handle construct properties, or to implement singletons.
-func (x *ObjectClass) GetConstructor() func(types.GType, uint32, *ObjectConstructParam) *Object {
+func (x *ObjectClass) GetConstructor() func(types.GType, uint, *ObjectConstructParam) *Object {
 	if x.xConstructor == 0 {
 		return nil
 	}
-	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint32, ConstructPropertiesVarp *ObjectConstructParam) uintptr
+	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr
 	purego.RegisterFunc(&rawCallback, x.xConstructor)
-	return func(TypeVar types.GType, NConstructPropertiesVar uint32, ConstructPropertiesVar *ObjectConstructParam) *Object {
+	return func(TypeVar types.GType, NConstructPropertiesVar uint, ConstructPropertiesVar *ObjectConstructParam) *Object {
 		rawRet := rawCallback(TypeVar, NConstructPropertiesVar, ConstructPropertiesVar)
 		if rawRet == 0 {
 			return nil
@@ -599,11 +599,11 @@ func (x *ObjectClass) GetConstructor() func(types.GType, uint32, *ObjectConstruc
 
 // OverrideSetProperty sets the "set_property" callback function.
 // The type of the @set_property function of #GObjectClass.
-func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint32, *Value, *ParamSpec)) {
+func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
 		x.xSetProperty = 0
 	} else {
-		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr) {
+		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
 		})
 	}
@@ -611,24 +611,24 @@ func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint32, *Value, *Para
 
 // GetSetProperty gets the "set_property" callback function.
 // The type of the @set_property function of #GObjectClass.
-func (x *ObjectClass) GetSetProperty() func(*Object, uint32, *Value, *ParamSpec) {
+func (x *ObjectClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xSetProperty == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xSetProperty)
-	return func(ObjectVar *Object, PropertyIdVar uint32, ValueVar *Value, PspecVar *ParamSpec) {
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
 	}
 }
 
 // OverrideGetProperty sets the "get_property" callback function.
 // The type of the @get_property function of #GObjectClass.
-func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint32, *Value, *ParamSpec)) {
+func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
 		x.xGetProperty = 0
 	} else {
-		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr) {
+		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
 		})
 	}
@@ -636,13 +636,13 @@ func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint32, *Value, *Para
 
 // GetGetProperty gets the "get_property" callback function.
 // The type of the @get_property function of #GObjectClass.
-func (x *ObjectClass) GetGetProperty() func(*Object, uint32, *Value, *ParamSpec) {
+func (x *ObjectClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xGetProperty == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint32, ValueVarp *Value, PspecVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xGetProperty)
-	return func(ObjectVar *Object, PropertyIdVar uint32, ValueVar *Value, PspecVar *ParamSpec) {
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
 	}
 }
@@ -712,11 +712,11 @@ func (x *ObjectClass) GetFinalize() func(*Object) {
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
 //	needed.
-func (x *ObjectClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint32, **ParamSpec)) {
+func (x *ObjectClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint, **ParamSpec)) {
 	if cb == nil {
 		x.xDispatchPropertiesChanged = 0
 	} else {
-		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint32, PspecsVarp uintptr) {
+		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr) {
 			cb(ObjectNewFromInternalPtr(ObjectVarp), NPspecsVarp, (**ParamSpec)(unsafe.Pointer(PspecsVarp)))
 		})
 	}
@@ -727,13 +727,13 @@ func (x *ObjectClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint32,
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
 //	needed.
-func (x *ObjectClass) GetDispatchPropertiesChanged() func(*Object, uint32, **ParamSpec) {
+func (x *ObjectClass) GetDispatchPropertiesChanged() func(*Object, uint, **ParamSpec) {
 	if x.xDispatchPropertiesChanged == 0 {
 		return nil
 	}
-	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint32, PspecsVarp uintptr)
+	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xDispatchPropertiesChanged)
-	return func(ObjectVar *Object, NPspecsVar uint32, PspecsVar **ParamSpec) {
+	return func(ObjectVar *Object, NPspecsVar uint, PspecsVar **ParamSpec) {
 		rawCallback(ObjectVar.GoPointer(), NPspecsVar, *ConvertPtr(PspecsVar))
 	}
 }
@@ -955,7 +955,7 @@ func ClearObject(ObjectPtrVar **Object) {
 	xClearObject(*ConvertPtr(ObjectPtrVar))
 }
 
-var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFlags) uint32
+var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFlags) uint
 
 // This is similar to g_signal_connect_data(), but uses a closure which
 // ensures that the @gobject stays alive during the call to @c_handler
@@ -973,7 +973,7 @@ var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFl
 //
 // Refer to the [signals documentation](signals.html) for more
 // details.
-func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint32 {
+func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint {
 	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, glib.NewCallback(CHandlerVar), GobjectVar.GoPointer(), ConnectFlagsVar)
 	return cret
 }
@@ -1107,7 +1107,7 @@ func NewObjectValist(ObjectTypeVar types.GType, FirstPropertyNameVar string, Var
 	return cls
 }
 
-var xNewObjectWithProperties func(types.GType, uint32, []string, []Value) uintptr
+var xNewObjectWithProperties func(types.GType, uint, []string, []Value) uintptr
 
 // Creates a new instance of a #GObject subtype and sets its properties using
 // the provided arrays. Both arrays must have exactly @n_properties elements,
@@ -1115,7 +1115,7 @@ var xNewObjectWithProperties func(types.GType, uint32, []string, []Value) uintpt
 //
 // Construction parameters (see %G_PARAM_CONSTRUCT, %G_PARAM_CONSTRUCT_ONLY)
 // which are not explicitly specified are set to their default values.
-func NewObjectWithProperties(ObjectTypeVar types.GType, NPropertiesVar uint32, NamesVar []string, ValuesVar []Value) *Object {
+func NewObjectWithProperties(ObjectTypeVar types.GType, NPropertiesVar uint, NamesVar []string, ValuesVar []Value) *Object {
 	var cls *Object
 
 	cret := xNewObjectWithProperties(ObjectTypeVar, NPropertiesVar, NamesVar, ValuesVar)
@@ -1128,13 +1128,13 @@ func NewObjectWithProperties(ObjectTypeVar types.GType, NPropertiesVar uint32, N
 	return cls
 }
 
-var xNewObjectv func(types.GType, uint32, []Parameter) uintptr
+var xNewObjectv func(types.GType, uint, []Parameter) uintptr
 
 // Creates a new instance of a #GObject subtype and sets its properties.
 //
 // Construction parameters (see %G_PARAM_CONSTRUCT, %G_PARAM_CONSTRUCT_ONLY)
 // which are not explicitly specified are set to their default values.
-func NewObjectv(ObjectTypeVar types.GType, NParametersVar uint32, ParametersVar []Parameter) *Object {
+func NewObjectv(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar []Parameter) *Object {
 	var cls *Object
 
 	cret := xNewObjectv(ObjectTypeVar, NParametersVar, ParametersVar)
@@ -1524,13 +1524,13 @@ func (x *Object) GetValist(FirstPropertyNameVar string, VarArgsVar []interface{}
 	xObjectGetValist(x.GoPointer(), FirstPropertyNameVar, VarArgsVar)
 }
 
-var xObjectGetv func(uintptr, uint32, []string, []Value)
+var xObjectGetv func(uintptr, uint, []string, []Value)
 
 // Gets @n_properties properties for an @object.
 // Obtained properties will be set to @values. All properties must be valid.
 // Warnings will be emitted and undefined behaviour may result if invalid
 // properties are passed in.
-func (x *Object) Getv(NPropertiesVar uint32, NamesVar []string, ValuesVar []Value) {
+func (x *Object) Getv(NPropertiesVar uint, NamesVar []string, ValuesVar []Value) {
 	xObjectGetv(x.GoPointer(), NPropertiesVar, NamesVar, ValuesVar)
 }
 
@@ -1810,13 +1810,13 @@ func (x *Object) SetValist(FirstPropertyNameVar string, VarArgsVar []interface{}
 	xObjectSetValist(x.GoPointer(), FirstPropertyNameVar, VarArgsVar)
 }
 
-var xObjectSetv func(uintptr, uint32, []string, []Value)
+var xObjectSetv func(uintptr, uint, []string, []Value)
 
 // Sets @n_properties properties for an @object.
 // Properties to be set will be taken from @values. All properties must be
 // valid. Warnings will be emitted and undefined behaviour may result if invalid
 // properties are passed in.
-func (x *Object) Setv(NPropertiesVar uint32, NamesVar []string, ValuesVar []Value) {
+func (x *Object) Setv(NPropertiesVar uint, NamesVar []string, ValuesVar []Value) {
 	xObjectSetv(x.GoPointer(), NPropertiesVar, NamesVar, ValuesVar)
 }
 
@@ -2030,7 +2030,7 @@ func (c *Object) SetGoPointer(ptr uintptr) {
 // It is important to note that you must use
 // [canonical parameter names][class@GObject.ParamSpec#parameter-names] as
 // detail strings for the notify signal.
-func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
+func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
@@ -2102,13 +2102,13 @@ func ObjectInterfaceInstallProperty(GIfaceVar *TypeInterface, PspecVar *ParamSpe
 	xObjectInterfaceInstallProperty(GIfaceVar, PspecVar.GoPointer())
 }
 
-var xObjectInterfaceListProperties func(*TypeInterface, *uint32) uintptr
+var xObjectInterfaceListProperties func(*TypeInterface, *uint) uintptr
 
 // Lists the properties of an interface.Generally, the interface
 // vtable passed in as @g_iface will be the default vtable from
 // g_type_default_interface_ref(), or, if you know the interface has
 // already been loaded, g_type_default_interface_peek().
-func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar *uint32) uintptr {
+func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar *uint) uintptr {
 	cret := xObjectInterfaceListProperties(GIfaceVar, NPropertiesPVar)
 	return cret
 }

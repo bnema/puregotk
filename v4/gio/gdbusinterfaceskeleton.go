@@ -431,7 +431,7 @@ func (c *DBusInterfaceSkeleton) SetGoPointer(ptr uintptr) {
 // flags set, no dedicated thread is ever used and the call will be
 // handled in the same thread as the object that @interface belongs
 // to was exported in.
-func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, uintptr) bool) uint32 {
+func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "g-authorize-method", cbRefPtr)

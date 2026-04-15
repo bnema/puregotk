@@ -925,20 +925,26 @@ func (x *Settings) SetLoadIconsIgnoringImageLoadSetting(EnabledVar bool) {
 	xSettingsSetLoadIconsIgnoringImageLoadSetting(x.GoPointer(), EnabledVar)
 }
 
-var xSettingsSetMathFontFamily func(uintptr, string)
+var xSettingsSetMathFontFamily func(uintptr, uintptr)
 
 // Set the #WebKitSettings:math-font-family property.
 //
 // Since 2.52
-func (x *Settings) SetMathFontFamily(MathFontFamilyVar string) {
-	xSettingsSetMathFontFamily(x.GoPointer(), MathFontFamilyVar)
+func (x *Settings) SetMathFontFamily(MathFontFamilyVar *string) {
+	MathFontFamilyVarPtr := core.GStrdupNullable(MathFontFamilyVar)
+	defer core.GFreeNullable(MathFontFamilyVarPtr)
+
+	xSettingsSetMathFontFamily(x.GoPointer(), MathFontFamilyVarPtr)
 }
 
-var xSettingsSetMediaContentTypesRequiringHardwareSupport func(uintptr, string)
+var xSettingsSetMediaContentTypesRequiringHardwareSupport func(uintptr, uintptr)
 
 // Set the #WebKitSettings:media-content-types-requiring-hardware-support property.
-func (x *Settings) SetMediaContentTypesRequiringHardwareSupport(ContentTypesVar string) {
-	xSettingsSetMediaContentTypesRequiringHardwareSupport(x.GoPointer(), ContentTypesVar)
+func (x *Settings) SetMediaContentTypesRequiringHardwareSupport(ContentTypesVar *string) {
+	ContentTypesVarPtr := core.GStrdupNullable(ContentTypesVar)
+	defer core.GFreeNullable(ContentTypesVarPtr)
+
+	xSettingsSetMediaContentTypesRequiringHardwareSupport(x.GoPointer(), ContentTypesVarPtr)
 }
 
 var xSettingsSetMediaPlaybackAllowsInline func(uintptr, bool)
@@ -997,22 +1003,31 @@ func (x *Settings) SetSerifFontFamily(SerifFontFamilyVar string) {
 	xSettingsSetSerifFontFamily(x.GoPointer(), SerifFontFamilyVar)
 }
 
-var xSettingsSetUserAgent func(uintptr, string)
+var xSettingsSetUserAgent func(uintptr, uintptr)
 
 // Set the #WebKitSettings:user-agent property.
-func (x *Settings) SetUserAgent(UserAgentVar string) {
-	xSettingsSetUserAgent(x.GoPointer(), UserAgentVar)
+func (x *Settings) SetUserAgent(UserAgentVar *string) {
+	UserAgentVarPtr := core.GStrdupNullable(UserAgentVar)
+	defer core.GFreeNullable(UserAgentVarPtr)
+
+	xSettingsSetUserAgent(x.GoPointer(), UserAgentVarPtr)
 }
 
-var xSettingsSetUserAgentWithApplicationDetails func(uintptr, string, string)
+var xSettingsSetUserAgentWithApplicationDetails func(uintptr, uintptr, uintptr)
 
 // Set the #WebKitSettings:user-agent property by appending the application details.
 //
 // Set the #WebKitSettings:user-agent property by appending the application details to the default user
 // agent. If no application name or version is given, the default user agent used will be used. If only
 // the version is given, the default engine version is used with the given application name.
-func (x *Settings) SetUserAgentWithApplicationDetails(ApplicationNameVar string, ApplicationVersionVar string) {
-	xSettingsSetUserAgentWithApplicationDetails(x.GoPointer(), ApplicationNameVar, ApplicationVersionVar)
+func (x *Settings) SetUserAgentWithApplicationDetails(ApplicationNameVar *string, ApplicationVersionVar *string) {
+	ApplicationNameVarPtr := core.GStrdupNullable(ApplicationNameVar)
+	defer core.GFreeNullable(ApplicationNameVarPtr)
+
+	ApplicationVersionVarPtr := core.GStrdupNullable(ApplicationVersionVar)
+	defer core.GFreeNullable(ApplicationVersionVarPtr)
+
+	xSettingsSetUserAgentWithApplicationDetails(x.GoPointer(), ApplicationNameVarPtr, ApplicationVersionVarPtr)
 }
 
 var xSettingsSetWebrtcUdpPortsRange func(uintptr, string)
@@ -1168,7 +1183,7 @@ func (x *Settings) GetPropertyAutoLoadImages() bool {
 func (x *Settings) SetPropertyCursiveFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cursive-font-family", &v)
 }
 
@@ -1185,7 +1200,7 @@ func (x *Settings) GetPropertyCursiveFontFamily() string {
 func (x *Settings) SetPropertyDefaultCharset(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-charset", &v)
 }
 
@@ -1202,7 +1217,7 @@ func (x *Settings) GetPropertyDefaultCharset() string {
 func (x *Settings) SetPropertyDefaultFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-font-family", &v)
 }
 
@@ -1217,39 +1232,39 @@ func (x *Settings) GetPropertyDefaultFontFamily() string {
 // SetPropertyDefaultFontSize sets the "default-font-size" property.
 // The default font size in pixels to use for content displayed if
 // no font size is specified.
-func (x *Settings) SetPropertyDefaultFontSize(value uint32) {
+func (x *Settings) SetPropertyDefaultFontSize(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("default-font-size", &v)
 }
 
 // GetPropertyDefaultFontSize gets the "default-font-size" property.
 // The default font size in pixels to use for content displayed if
 // no font size is specified.
-func (x *Settings) GetPropertyDefaultFontSize() uint32 {
+func (x *Settings) GetPropertyDefaultFontSize() uint {
 	var v gobject.Value
 	x.GetProperty("default-font-size", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyDefaultMonospaceFontSize sets the "default-monospace-font-size" property.
 // The default font size in pixels to use for content displayed in
 // monospace font if no font size is specified.
-func (x *Settings) SetPropertyDefaultMonospaceFontSize(value uint32) {
+func (x *Settings) SetPropertyDefaultMonospaceFontSize(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("default-monospace-font-size", &v)
 }
 
 // GetPropertyDefaultMonospaceFontSize gets the "default-monospace-font-size" property.
 // The default font size in pixels to use for content displayed in
 // monospace font if no font size is specified.
-func (x *Settings) GetPropertyDefaultMonospaceFontSize() uint32 {
+func (x *Settings) GetPropertyDefaultMonospaceFontSize() uint {
 	var v gobject.Value
 	x.GetProperty("default-monospace-font-size", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyDisableWebSecurity sets the "disable-web-security" property.
@@ -1923,7 +1938,7 @@ func (x *Settings) GetPropertyEnableWriteConsoleMessagesToStdout() bool {
 func (x *Settings) SetPropertyFantasyFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("fantasy-font-family", &v)
 }
 
@@ -1995,7 +2010,7 @@ func (x *Settings) GetPropertyLoadIconsIgnoringImageLoadSetting() bool {
 func (x *Settings) SetPropertyMathFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("math-font-family", &v)
 }
 
@@ -2013,7 +2028,7 @@ func (x *Settings) GetPropertyMathFontFamily() string {
 func (x *Settings) SetPropertyMediaContentTypesRequiringHardwareSupport(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("media-content-types-requiring-hardware-support", &v)
 }
 
@@ -2076,10 +2091,10 @@ func (x *Settings) GetPropertyMediaPlaybackRequiresUserGesture() bool {
 // The minimum font size in pixels used to display text. This setting
 // controls the absolute smallest size. Values other than 0 can
 // potentially break page layouts.
-func (x *Settings) SetPropertyMinimumFontSize(value uint32) {
+func (x *Settings) SetPropertyMinimumFontSize(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("minimum-font-size", &v)
 }
 
@@ -2087,10 +2102,10 @@ func (x *Settings) SetPropertyMinimumFontSize(value uint32) {
 // The minimum font size in pixels used to display text. This setting
 // controls the absolute smallest size. Values other than 0 can
 // potentially break page layouts.
-func (x *Settings) GetPropertyMinimumFontSize() uint32 {
+func (x *Settings) GetPropertyMinimumFontSize() uint {
 	var v gobject.Value
 	x.GetProperty("minimum-font-size", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyMonospaceFontFamily sets the "monospace-font-family" property.
@@ -2098,7 +2113,7 @@ func (x *Settings) GetPropertyMinimumFontSize() uint32 {
 func (x *Settings) SetPropertyMonospaceFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("monospace-font-family", &v)
 }
 
@@ -2115,7 +2130,7 @@ func (x *Settings) GetPropertyMonospaceFontFamily() string {
 func (x *Settings) SetPropertyPictographFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("pictograph-font-family", &v)
 }
 
@@ -2149,7 +2164,7 @@ func (x *Settings) GetPropertyPrintBackgrounds() bool {
 func (x *Settings) SetPropertySansSerifFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("sans-serif-font-family", &v)
 }
 
@@ -2166,7 +2181,7 @@ func (x *Settings) GetPropertySansSerifFontFamily() string {
 func (x *Settings) SetPropertySerifFontFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("serif-font-family", &v)
 }
 
@@ -2190,7 +2205,7 @@ func (x *Settings) GetPropertySerifFontFamily() string {
 func (x *Settings) SetPropertyUserAgent(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("user-agent", &v)
 }
 
@@ -2220,7 +2235,7 @@ func (x *Settings) GetPropertyUserAgent() string {
 func (x *Settings) SetPropertyWebrtcUdpPortsRange(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("webrtc-udp-ports-range", &v)
 }
 

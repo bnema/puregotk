@@ -67,10 +67,10 @@ func (x *PrintJob) GetCollate() bool {
 	return cret
 }
 
-var xPrintJobGetNUp func(uintptr) uint32
+var xPrintJobGetNUp func(uintptr) uint
 
 // Gets the n-up setting for this job.
-func (x *PrintJob) GetNUp() uint32 {
+func (x *PrintJob) GetNUp() uint {
 	cret := xPrintJobGetNUp(x.GoPointer())
 	return cret
 }
@@ -83,18 +83,18 @@ func (x *PrintJob) GetNUpLayout() NumberUpLayout {
 	return cret
 }
 
-var xPrintJobGetNumCopies func(uintptr) int32
+var xPrintJobGetNumCopies func(uintptr) int
 
 // Gets the number of copies of this job.
-func (x *PrintJob) GetNumCopies() int32 {
+func (x *PrintJob) GetNumCopies() int {
 	cret := xPrintJobGetNumCopies(x.GoPointer())
 	return cret
 }
 
-var xPrintJobGetPageRanges func(uintptr, *int32) uintptr
+var xPrintJobGetPageRanges func(uintptr, *int) uintptr
 
 // Gets the page ranges for this job.
-func (x *PrintJob) GetPageRanges(NRangesVar *int32) uintptr {
+func (x *PrintJob) GetPageRanges(NRangesVar *int) uintptr {
 	cret := xPrintJobGetPageRanges(x.GoPointer(), NRangesVar)
 	return cret
 }
@@ -230,10 +230,10 @@ func (x *PrintJob) SetCollate(CollateVar bool) {
 	xPrintJobSetCollate(x.GoPointer(), CollateVar)
 }
 
-var xPrintJobSetNUp func(uintptr, uint32)
+var xPrintJobSetNUp func(uintptr, uint)
 
 // Sets the n-up setting for this job.
-func (x *PrintJob) SetNUp(NUpVar uint32) {
+func (x *PrintJob) SetNUp(NUpVar uint) {
 	xPrintJobSetNUp(x.GoPointer(), NUpVar)
 }
 
@@ -244,17 +244,17 @@ func (x *PrintJob) SetNUpLayout(LayoutVar NumberUpLayout) {
 	xPrintJobSetNUpLayout(x.GoPointer(), LayoutVar)
 }
 
-var xPrintJobSetNumCopies func(uintptr, int32)
+var xPrintJobSetNumCopies func(uintptr, int)
 
 // Sets the number of copies for this job.
-func (x *PrintJob) SetNumCopies(NumCopiesVar int32) {
+func (x *PrintJob) SetNumCopies(NumCopiesVar int) {
 	xPrintJobSetNumCopies(x.GoPointer(), NumCopiesVar)
 }
 
-var xPrintJobSetPageRanges func(uintptr, []PageRange, int32)
+var xPrintJobSetPageRanges func(uintptr, []PageRange, int)
 
 // Sets the page ranges for this job.
-func (x *PrintJob) SetPageRanges(RangesVar []PageRange, NRangesVar int32) {
+func (x *PrintJob) SetPageRanges(RangesVar []PageRange, NRangesVar int) {
 	xPrintJobSetPageRanges(x.GoPointer(), RangesVar, NRangesVar)
 }
 
@@ -295,7 +295,7 @@ func (x *PrintJob) SetScale(ScaleVar float64) {
 	xPrintJobSetScale(x.GoPointer(), ScaleVar)
 }
 
-var xPrintJobSetSourceFd func(uintptr, int32, **glib.Error) bool
+var xPrintJobSetSourceFd func(uintptr, int, **glib.Error) bool
 
 // Make the `GtkPrintJob` send an existing document to the
 // printing system.
@@ -308,7 +308,7 @@ var xPrintJobSetSourceFd func(uintptr, int32, **glib.Error) bool
 // This is similar to [method@Gtk.PrintJob.set_source_file],
 // but takes expects an open file descriptor for the file,
 // instead of a filename.
-func (x *PrintJob) SetSourceFd(FdVar int32) (bool, error) {
+func (x *PrintJob) SetSourceFd(FdVar int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintJobSetSourceFd(x.GoPointer(), FdVar, &cerr)
@@ -367,7 +367,7 @@ func (c *PrintJob) SetGoPointer(ptr uintptr) {
 func (x *PrintJob) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -402,7 +402,7 @@ func (x *PrintJob) GetPropertyTrackPrintStatus() bool {
 //
 // The signal handler can use [method@Gtk.PrintJob.get_status]
 // to obtain the new status.
-func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint32 {
+func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)

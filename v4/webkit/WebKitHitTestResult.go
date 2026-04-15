@@ -138,10 +138,10 @@ func (x *HitTestResult) ContextIsSelection() bool {
 	return cret
 }
 
-var xHitTestResultGetContext func(uintptr) uint32
+var xHitTestResultGetContext func(uintptr) uint
 
 // Gets the value of the #WebKitHitTestResult:context property.
-func (x *HitTestResult) GetContext() uint32 {
+func (x *HitTestResult) GetContext() uint {
 	cret := xHitTestResultGetContext(x.GoPointer())
 	return cret
 }
@@ -200,20 +200,20 @@ func (c *HitTestResult) SetGoPointer(ptr uintptr) {
 // SetPropertyContext sets the "context" property.
 // Bitmask of #WebKitHitTestResultContext flags representing
 // the context of the #WebKitHitTestResult.
-func (x *HitTestResult) SetPropertyContext(value uint32) {
+func (x *HitTestResult) SetPropertyContext(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("context", &v)
 }
 
 // GetPropertyContext gets the "context" property.
 // Bitmask of #WebKitHitTestResultContext flags representing
 // the context of the #WebKitHitTestResult.
-func (x *HitTestResult) GetPropertyContext() uint32 {
+func (x *HitTestResult) GetPropertyContext() uint {
 	var v gobject.Value
 	x.GetProperty("context", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyImageUri sets the "image-uri" property.
@@ -222,7 +222,7 @@ func (x *HitTestResult) GetPropertyContext() uint32 {
 func (x *HitTestResult) SetPropertyImageUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("image-uri", &v)
 }
 
@@ -241,7 +241,7 @@ func (x *HitTestResult) GetPropertyImageUri() string {
 func (x *HitTestResult) SetPropertyLinkLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("link-label", &v)
 }
 
@@ -260,7 +260,7 @@ func (x *HitTestResult) GetPropertyLinkLabel() string {
 func (x *HitTestResult) SetPropertyLinkTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("link-title", &v)
 }
 
@@ -279,7 +279,7 @@ func (x *HitTestResult) GetPropertyLinkTitle() string {
 func (x *HitTestResult) SetPropertyLinkUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("link-uri", &v)
 }
 
@@ -298,7 +298,7 @@ func (x *HitTestResult) GetPropertyLinkUri() string {
 func (x *HitTestResult) SetPropertyMediaUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("media-uri", &v)
 }
 

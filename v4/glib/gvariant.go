@@ -795,7 +795,7 @@ func NewVariantUint64(ValueVar uint64) *Variant {
 	return (*Variant)(unsafe.Pointer(cret))
 }
 
-var xNewVariantVa func(string, string, []interface{}) uintptr
+var xNewVariantVa func(string, uintptr, []interface{}) uintptr
 
 // This function is intended to be used by libraries based on
 // #GVariant that want to provide g_variant_new()-like functionality
@@ -833,8 +833,11 @@ var xNewVariantVa func(string, string, []interface{}) uintptr
 // At this point, the caller will have their own full reference to the
 // result.  This can also be done by adding the result to a container,
 // or by passing it to another g_variant_new() call.
-func NewVariantVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) *Variant {
-	cret := xNewVariantVa(FormatStringVar, EndptrVar, AppVar)
+func NewVariantVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) *Variant {
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
+
+	cret := xNewVariantVa(FormatStringVar, EndptrVarPtr, AppVar)
 	if cret == 0 {
 		return nil
 	}
@@ -912,7 +915,7 @@ func (x *Variant) Classify() VariantClass {
 	return cret
 }
 
-var xVariantCompare func(uintptr, uintptr) int32
+var xVariantCompare func(uintptr, uintptr) int
 
 // Compares @one and @two.
 //
@@ -933,7 +936,7 @@ var xVariantCompare func(uintptr, uintptr) int32
 //
 // If you only require an equality comparison, g_variant_equal() is more
 // general.
-func (x *Variant) Compare(TwoVar uintptr) int32 {
+func (x *Variant) Compare(TwoVar uintptr) int {
 	cret := xVariantCompare(x.GoPointer(), TwoVar)
 	return cret
 }
@@ -1477,7 +1480,7 @@ func (x *Variant) GetUint64() uint64 {
 	return cret
 }
 
-var xVariantGetVa func(uintptr, string, string, []interface{})
+var xVariantGetVa func(uintptr, string, uintptr, []interface{})
 
 // This function is intended to be used by libraries based on #GVariant
 // that want to provide g_variant_get()-like functionality to their
@@ -1503,8 +1506,11 @@ var xVariantGetVa func(uintptr, string, string, []interface{})
 // the values and also determines if the values are copied or borrowed,
 // see the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
-func (x *Variant) GetVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) {
-	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVar, AppVar)
+func (x *Variant) GetVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) {
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
+
+	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVarPtr, AppVar)
 }
 
 var xVariantGetVariant func(uintptr) uintptr
@@ -1519,7 +1525,7 @@ func (x *Variant) GetVariant() *Variant {
 	return (*Variant)(unsafe.Pointer(cret))
 }
 
-var xVariantHash func(uintptr) uint32
+var xVariantHash func(uintptr) uint
 
 // Generates a hash value for a #GVariant instance.
 //
@@ -1530,7 +1536,7 @@ var xVariantHash func(uintptr) uint32
 //
 // The type of @value is #gconstpointer only to allow use of this
 // function with #GHashTable.  @value must be a #GVariant.
-func (x *Variant) Hash() uint32 {
+func (x *Variant) Hash() uint {
 	cret := xVariantHash(x.GoPointer())
 	return cret
 }
@@ -2752,7 +2758,7 @@ func VariantIsSignature(StringVar string) bool {
 	return cret
 }
 
-var xVariantParse func(*VariantType, string, string, string, **Error) uintptr
+var xVariantParse func(*VariantType, string, uintptr, uintptr, **Error) uintptr
 
 // Parses a #GVariant from a text representation.
 //
@@ -2790,10 +2796,16 @@ var xVariantParse func(*VariantType, string, string, string, **Error) uintptr
 // There may be implementation specific restrictions on deeply nested values,
 // which would result in a %G_VARIANT_PARSE_ERROR_RECURSION error. #GVariant is
 // guaranteed to handle nesting up to at least 64 levels.
-func VariantParse(TypeVar *VariantType, TextVar string, LimitVar string, EndptrVar string) (*Variant, error) {
+func VariantParse(TypeVar *VariantType, TextVar string, LimitVar *string, EndptrVar *string) (*Variant, error) {
 	var cerr *Error
 
-	cret := xVariantParse(TypeVar, TextVar, LimitVar, EndptrVar, &cerr)
+	LimitVarPtr := core.GStrdupNullable(LimitVar)
+	defer core.GFreeNullable(LimitVarPtr)
+
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
+
+	cret := xVariantParse(TypeVar, TextVar, LimitVarPtr, EndptrVarPtr, &cerr)
 	if cerr != nil {
 		return nil, cerr
 	}

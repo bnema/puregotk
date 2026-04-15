@@ -443,20 +443,20 @@ func (c *Gesture) SetGoPointer(ptr uintptr) {
 // SetPropertyNPoints sets the "n-points" property.
 // The number of touch points that trigger
 // recognition on this gesture.
-func (x *Gesture) SetPropertyNPoints(value uint32) {
+func (x *Gesture) SetPropertyNPoints(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("n-points", &v)
 }
 
 // GetPropertyNPoints gets the "n-points" property.
 // The number of touch points that trigger
 // recognition on this gesture.
-func (x *Gesture) GetPropertyNPoints() uint32 {
+func (x *Gesture) GetPropertyNPoints() uint {
 	var v gobject.Value
 	x.GetProperty("n-points", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Emitted when the gesture is recognized.
@@ -468,7 +468,7 @@ func (x *Gesture) GetPropertyNPoints() uint32 {
 // (eg. a third touch on a 2-touches gesture) is lifted, in that
 // situation @sequence won't pertain to the current set of active
 // touches, so don't rely on this being true.
-func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
+func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
@@ -500,7 +500,7 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 //
 // @gesture must forget everything about @sequence as in
 // response to this signal.
-func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
+func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
@@ -531,7 +531,7 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 // pressed touch sequence that exceeds [property@Gtk.Gesture:n-points]).
 // This situation may be detected by checking through
 // [method@Gtk.Gesture.handles_sequence].
-func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
+func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
@@ -557,7 +557,7 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 //
 // See [method@Gtk.Gesture.set_sequence_state] to know
 // more about the expectable sequence lifetimes.
-func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSequenceState)) uint32 {
+func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSequenceState)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
@@ -582,7 +582,7 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 // Emitted whenever an event is handled while the gesture is recognized.
 //
 // @sequence is guaranteed to pertain to the set of active touches.
-func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
+func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)

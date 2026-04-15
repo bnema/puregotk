@@ -96,10 +96,10 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 // This property can be used to influence how the groups in this
 // section are distributed across pages and columns. The default
 // value of 15 should work in most cases.
-func (x *ShortcutsSection) SetPropertyMaxHeight(value uint32) {
+func (x *ShortcutsSection) SetPropertyMaxHeight(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("max-height", &v)
 }
 
@@ -109,10 +109,10 @@ func (x *ShortcutsSection) SetPropertyMaxHeight(value uint32) {
 // This property can be used to influence how the groups in this
 // section are distributed across pages and columns. The default
 // value of 15 should work in most cases.
-func (x *ShortcutsSection) GetPropertyMaxHeight() uint32 {
+func (x *ShortcutsSection) GetPropertyMaxHeight() uint {
 	var v gobject.Value
 	x.GetProperty("max-height", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertySectionName sets the "section-name" property.
@@ -124,7 +124,7 @@ func (x *ShortcutsSection) GetPropertyMaxHeight() uint32 {
 func (x *ShortcutsSection) SetPropertySectionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("section-name", &v)
 }
 
@@ -149,7 +149,7 @@ func (x *ShortcutsSection) GetPropertySectionName() string {
 func (x *ShortcutsSection) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -176,7 +176,7 @@ func (x *ShortcutsSection) GetPropertyTitle() string {
 func (x *ShortcutsSection) SetPropertyViewName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("view-name", &v)
 }
 
@@ -199,7 +199,7 @@ func (x *ShortcutsSection) GetPropertyViewName() string {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgUp&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;.
-func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int32) bool) uint32 {
+func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
@@ -207,7 +207,7 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, OffsetVarp int32) bool {
+	fcb := func(clsPtr uintptr, OffsetVarp int) bool {
 		fa := ShortcutsSection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -287,7 +287,7 @@ func (x *ShortcutsSection) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsSection) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ShortcutsSection) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -403,7 +403,7 @@ func (x *ShortcutsSection) UpdateProperty(FirstPropertyVar AccessibleProperty, v
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsSection) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ShortcutsSection) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -435,7 +435,7 @@ func (x *ShortcutsSection) UpdateRelation(FirstRelationVar AccessibleRelation, v
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsSection) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ShortcutsSection) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -468,7 +468,7 @@ func (x *ShortcutsSection) UpdateState(FirstStateVar AccessibleState, varArgs ..
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsSection) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ShortcutsSection) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

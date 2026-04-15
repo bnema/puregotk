@@ -203,13 +203,13 @@ func (x *Drag) GetSurface() *Surface {
 	return cls
 }
 
-var xDragSetHotspot func(uintptr, int32, int32)
+var xDragSetHotspot func(uintptr, int, int)
 
 // Sets the position of the drag surface that will be kept
 // under the cursor hotspot.
 //
 // Initially, the hotspot is at the top left corner of the drag surface.
-func (x *Drag) SetHotspot(HotXVar int32, HotYVar int32) {
+func (x *Drag) SetHotspot(HotXVar int, HotYVar int) {
 	xDragSetHotspot(x.GoPointer(), HotXVar, HotYVar)
 }
 
@@ -242,7 +242,7 @@ func (x *Drag) GetPropertyFormats() uintptr {
 }
 
 // Emitted when the drag operation is cancelled.
-func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
+func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
@@ -267,7 +267,7 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
 // Emitted when the destination side has finished reading all data.
 //
 // The drag object can now free all miscellaneous data.
-func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
+func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
@@ -290,7 +290,7 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
 }
 
 // Emitted when the drop operation is performed on an accepting client.
-func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint32 {
+func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)

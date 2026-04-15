@@ -187,19 +187,19 @@ func NewNotebook() *Notebook {
 	return cls
 }
 
-var xNotebookAppendPage func(uintptr, uintptr, uintptr) int32
+var xNotebookAppendPage func(uintptr, uintptr, uintptr) int
 
 // Appends a page to @notebook.
-func (x *Notebook) AppendPage(ChildVar *Widget, TabLabelVar *Widget) int32 {
+func (x *Notebook) AppendPage(ChildVar *Widget, TabLabelVar *Widget) int {
 	cret := xNotebookAppendPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer())
 	return cret
 }
 
-var xNotebookAppendPageMenu func(uintptr, uintptr, uintptr, uintptr) int32
+var xNotebookAppendPageMenu func(uintptr, uintptr, uintptr, uintptr) int
 
 // Appends a page to @notebook, specifying the widget to use as the
 // label in the popup menu.
-func (x *Notebook) AppendPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int32 {
+func (x *Notebook) AppendPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int {
 	cret := xNotebookAppendPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer())
 	return cret
 }
@@ -235,10 +235,10 @@ func (x *Notebook) GetActionWidget(PackTypeVar PackType) *Widget {
 	return cls
 }
 
-var xNotebookGetCurrentPage func(uintptr) int32
+var xNotebookGetCurrentPage func(uintptr) int
 
 // Returns the page number of the current page.
-func (x *Notebook) GetCurrentPage() int32 {
+func (x *Notebook) GetCurrentPage() int {
 	cret := xNotebookGetCurrentPage(x.GoPointer())
 	return cret
 }
@@ -277,18 +277,18 @@ func (x *Notebook) GetMenuLabelText(ChildVar *Widget) string {
 	return cret
 }
 
-var xNotebookGetNPages func(uintptr) int32
+var xNotebookGetNPages func(uintptr) int
 
 // Gets the number of pages in a notebook.
-func (x *Notebook) GetNPages() int32 {
+func (x *Notebook) GetNPages() int {
 	cret := xNotebookGetNPages(x.GoPointer())
 	return cret
 }
 
-var xNotebookGetNthPage func(uintptr, int32) uintptr
+var xNotebookGetNthPage func(uintptr, int) uintptr
 
 // Returns the child widget contained in page number @page_num.
-func (x *Notebook) GetNthPage(PageNumVar int32) *Widget {
+func (x *Notebook) GetNthPage(PageNumVar int) *Widget {
 	var cls *Widget
 
 	cret := xNotebookGetNthPage(x.GoPointer(), PageNumVar)
@@ -416,19 +416,19 @@ func (x *Notebook) GetTabReorderable(ChildVar *Widget) bool {
 	return cret
 }
 
-var xNotebookInsertPage func(uintptr, uintptr, uintptr, int32) int32
+var xNotebookInsertPage func(uintptr, uintptr, uintptr, int) int
 
 // Insert a page into @notebook at the given position.
-func (x *Notebook) InsertPage(ChildVar *Widget, TabLabelVar *Widget, PositionVar int32) int32 {
+func (x *Notebook) InsertPage(ChildVar *Widget, TabLabelVar *Widget, PositionVar int) int {
 	cret := xNotebookInsertPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), PositionVar)
 	return cret
 }
 
-var xNotebookInsertPageMenu func(uintptr, uintptr, uintptr, uintptr, int32) int32
+var xNotebookInsertPageMenu func(uintptr, uintptr, uintptr, uintptr, int) int
 
 // Insert a page into @notebook at the given position, specifying
 // the widget to use as the label in the popup menu.
-func (x *Notebook) InsertPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget, PositionVar int32) int32 {
+func (x *Notebook) InsertPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget, PositionVar int) int {
 	cret := xNotebookInsertPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer(), PositionVar)
 	return cret
 }
@@ -442,11 +442,11 @@ func (x *Notebook) NextPage() {
 	xNotebookNextPage(x.GoPointer())
 }
 
-var xNotebookPageNum func(uintptr, uintptr) int32
+var xNotebookPageNum func(uintptr, uintptr) int
 
 // Finds the index of the page which contains the given child
 // widget.
-func (x *Notebook) PageNum(ChildVar *Widget) int32 {
+func (x *Notebook) PageNum(ChildVar *Widget) int {
 	cret := xNotebookPageNum(x.GoPointer(), ChildVar.GoPointer())
 	return cret
 }
@@ -468,19 +468,19 @@ func (x *Notebook) PopupEnable() {
 	xNotebookPopupEnable(x.GoPointer())
 }
 
-var xNotebookPrependPage func(uintptr, uintptr, uintptr) int32
+var xNotebookPrependPage func(uintptr, uintptr, uintptr) int
 
 // Prepends a page to @notebook.
-func (x *Notebook) PrependPage(ChildVar *Widget, TabLabelVar *Widget) int32 {
+func (x *Notebook) PrependPage(ChildVar *Widget, TabLabelVar *Widget) int {
 	cret := xNotebookPrependPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer())
 	return cret
 }
 
-var xNotebookPrependPageMenu func(uintptr, uintptr, uintptr, uintptr) int32
+var xNotebookPrependPageMenu func(uintptr, uintptr, uintptr, uintptr) int
 
 // Prepends a page to @notebook, specifying the widget to use as the
 // label in the popup menu.
-func (x *Notebook) PrependPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int32 {
+func (x *Notebook) PrependPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int {
 	cret := xNotebookPrependPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer())
 	return cret
 }
@@ -494,22 +494,22 @@ func (x *Notebook) PrevPage() {
 	xNotebookPrevPage(x.GoPointer())
 }
 
-var xNotebookRemovePage func(uintptr, int32)
+var xNotebookRemovePage func(uintptr, int)
 
 // Removes a page from the notebook given its index
 // in the notebook.
-func (x *Notebook) RemovePage(PageNumVar int32) {
+func (x *Notebook) RemovePage(PageNumVar int) {
 	xNotebookRemovePage(x.GoPointer(), PageNumVar)
 }
 
-var xNotebookReorderChild func(uintptr, uintptr, int32)
+var xNotebookReorderChild func(uintptr, uintptr, int)
 
 // Reorders the page containing @child, so that it appears in position
 // @position.
 //
 // If @position is greater than or equal to the number of children in
 // the list or negative, @child will be moved to the end of the list.
-func (x *Notebook) ReorderChild(ChildVar *Widget, PositionVar int32) {
+func (x *Notebook) ReorderChild(ChildVar *Widget, PositionVar int) {
 	xNotebookReorderChild(x.GoPointer(), ChildVar.GoPointer(), PositionVar)
 }
 
@@ -524,7 +524,7 @@ func (x *Notebook) SetActionWidget(WidgetVar *Widget, PackTypeVar PackType) {
 	xNotebookSetActionWidget(x.GoPointer(), WidgetVar.GoPointer(), PackTypeVar)
 }
 
-var xNotebookSetCurrentPage func(uintptr, int32)
+var xNotebookSetCurrentPage func(uintptr, int)
 
 // Switches to the page number @page_num.
 //
@@ -532,19 +532,22 @@ var xNotebookSetCurrentPage func(uintptr, int32)
 // to switch to a page unless the child widget is visible.
 // Therefore, it is recommended to show child widgets before
 // adding them to a notebook.
-func (x *Notebook) SetCurrentPage(PageNumVar int32) {
+func (x *Notebook) SetCurrentPage(PageNumVar int) {
 	xNotebookSetCurrentPage(x.GoPointer(), PageNumVar)
 }
 
-var xNotebookSetGroupName func(uintptr, string)
+var xNotebookSetGroupName func(uintptr, uintptr)
 
 // Sets a group name for @notebook.
 //
 // Notebooks with the same name will be able to exchange tabs
 // via drag and drop. A notebook with a %NULL group name will
 // not be able to exchange tabs with any other notebook.
-func (x *Notebook) SetGroupName(GroupNameVar string) {
-	xNotebookSetGroupName(x.GoPointer(), GroupNameVar)
+func (x *Notebook) SetGroupName(GroupNameVar *string) {
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
+
+	xNotebookSetGroupName(x.GoPointer(), GroupNameVarPtr)
 }
 
 var xNotebookSetMenuLabel func(uintptr, uintptr, uintptr)
@@ -705,7 +708,7 @@ func (x *Notebook) GetPropertyEnablePopup() bool {
 func (x *Notebook) SetPropertyGroupName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("group-name", &v)
 }
 
@@ -719,19 +722,19 @@ func (x *Notebook) GetPropertyGroupName() string {
 
 // SetPropertyPage sets the "page" property.
 // The index of the current page.
-func (x *Notebook) SetPropertyPage(value int32) {
+func (x *Notebook) SetPropertyPage(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("page", &v)
 }
 
 // GetPropertyPage gets the "page" property.
 // The index of the current page.
-func (x *Notebook) GetPropertyPage() int32 {
+func (x *Notebook) GetPropertyPage() int {
 	var v gobject.Value
 	x.GetProperty("page", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyScrollable sets the "scrollable" property.
@@ -791,7 +794,7 @@ func (x *Notebook) GetPropertyShowTabs() bool {
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt; and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;.
-func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint32 {
+func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
@@ -799,7 +802,7 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PageVarp int32) bool {
+	fcb := func(clsPtr uintptr, PageVarp int) bool {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -821,7 +824,7 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int32) bool) uint
 // responsible for moving/resizing the window and adding the
 // necessary properties to the notebook (e.g. the
 // `GtkNotebook`:group-name ).
-func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uint32 {
+func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
@@ -845,7 +848,7 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 }
 
 // Emitted when a tab should be focused.
-func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 {
+func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
@@ -874,7 +877,7 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;.
-func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32 {
+func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
@@ -898,7 +901,7 @@ func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32
 
 // the ::page-added signal is emitted in the notebook
 // right after a page is added to the notebook.
-func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 {
+func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
@@ -906,7 +909,7 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
+	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint) {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -922,7 +925,7 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint32)) uint32 
 
 // the ::page-removed signal is emitted in the notebook
 // right after a page is removed from the notebook.
-func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint32 {
+func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
@@ -930,7 +933,7 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint3
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
+	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint) {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -946,7 +949,7 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint32)) uint3
 
 // the ::page-reordered signal is emitted in the notebook
 // right after a page has been reordered.
-func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uint32 {
+func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
@@ -954,7 +957,7 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uin
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint32) {
+	fcb := func(clsPtr uintptr, ChildVarp uintptr, PageNumVarp uint) {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -975,7 +978,7 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint32)) uin
 // &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;,
 // &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt;,
 // &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; and &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;.
-func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) bool) uint32 {
+func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
@@ -1000,7 +1003,7 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 // Emitted when a page should be selected.
 //
 // The default binding for this signal is &lt;kbd&gt;␣&lt;/kbd&gt;.
-func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
+func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
@@ -1023,7 +1026,7 @@ func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
 }
 
 // Emitted when the user or a function changes the current page.
-func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint32)) uint32 {
+func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
@@ -1031,7 +1034,7 @@ func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint32)) uint32
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, PageVarp uintptr, PageNumVarp uint32) {
+	fcb := func(clsPtr uintptr, PageVarp uintptr, PageNumVarp uint) {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -1111,7 +1114,7 @@ func (x *Notebook) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Notebook) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *Notebook) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -1227,7 +1230,7 @@ func (x *Notebook) UpdateProperty(FirstPropertyVar AccessibleProperty, varArgs .
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Notebook) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *Notebook) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -1259,7 +1262,7 @@ func (x *Notebook) UpdateRelation(FirstRelationVar AccessibleRelation, varArgs .
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Notebook) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *Notebook) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -1292,7 +1295,7 @@ func (x *Notebook) UpdateState(FirstStateVar AccessibleState, varArgs ...interfa
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *Notebook) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *Notebook) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -1372,7 +1375,7 @@ func (x *NotebookPage) GetPropertyDetachable() bool {
 func (x *NotebookPage) SetPropertyMenuLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-label", &v)
 }
 
@@ -1386,19 +1389,19 @@ func (x *NotebookPage) GetPropertyMenuLabel() string {
 
 // SetPropertyPosition sets the "position" property.
 // The index of the child in the parent.
-func (x *NotebookPage) SetPropertyPosition(value int32) {
+func (x *NotebookPage) SetPropertyPosition(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("position", &v)
 }
 
 // GetPropertyPosition gets the "position" property.
 // The index of the child in the parent.
-func (x *NotebookPage) GetPropertyPosition() int32 {
+func (x *NotebookPage) GetPropertyPosition() int {
 	var v gobject.Value
 	x.GetProperty("position", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyReorderable sets the "reorderable" property.
@@ -1457,7 +1460,7 @@ func (x *NotebookPage) GetPropertyTabFill() bool {
 func (x *NotebookPage) SetPropertyTabLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tab-label", &v)
 }
 

@@ -249,7 +249,7 @@ func (x *Cancellable) Cancel() {
 	xCancellableCancel(x.GoPointer())
 }
 
-var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
+var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint
 
 // Convenience function to connect to the #GCancellable::cancelled
 // signal. Also handles the race condition that may happen
@@ -286,12 +286,12 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 //   - [method@Gio.Cancellable.reset]
 //   - [method@Gio.Cancellable.make_pollfd]
 //   - [method@Gio.Cancellable.release_fd]
-func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint32 {
+func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint {
 	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DataDestroyFuncVar))
 	return cret
 }
 
-var xCancellableDisconnect func(uintptr, uint32)
+var xCancellableDisconnect func(uintptr, uint)
 
 // Disconnects a handler from a cancellable instance similar to
 // g_signal_handler_disconnect().  Additionally, in the event that a
@@ -307,11 +307,11 @@ var xCancellableDisconnect func(uintptr, uint32)
 //
 // If @cancellable is %NULL or @handler_id is `0` this function does
 // nothing.
-func (x *Cancellable) Disconnect(HandlerIdVar uint32) {
+func (x *Cancellable) Disconnect(HandlerIdVar uint) {
 	xCancellableDisconnect(x.GoPointer(), HandlerIdVar)
 }
 
-var xCancellableGetFd func(uintptr) int32
+var xCancellableGetFd func(uintptr) int
 
 // Gets the file descriptor for a cancellable job. This can be used to
 // implement cancellable operations on Unix systems. The returned fd will
@@ -326,7 +326,7 @@ var xCancellableGetFd func(uintptr) int32
 // the returned file descriptor.
 //
 // See also g_cancellable_make_pollfd().
-func (x *Cancellable) GetFd() int32 {
+func (x *Cancellable) GetFd() int {
 	cret := xCancellableGetFd(x.GoPointer())
 	return cret
 }
@@ -530,7 +530,7 @@ func (c *Cancellable) SetGoPointer(ptr uintptr) {
 // Note that the cancelled signal is emitted in the thread that
 // the user cancelled from, which may be the main thread. So, the
 // cancellable signal should not do something that can block.
-func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint32 {
+func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)

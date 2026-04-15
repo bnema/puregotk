@@ -10,18 +10,18 @@ const (
 	// Like jsc_get_major_version(), but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MAJOR_VERSION int32 = 2
+	MAJOR_VERSION int = 2
 	// Like jsc_get_micro_version(), but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int32 = 93
+	MICRO_VERSION int = 93
 	// Like jsc_get_minor_version(), but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MINOR_VERSION int32 = 51
+	MINOR_VERSION int = 51
 )
 
-var xGetMajorVersion func() uint32
+var xGetMajorVersion func() uint
 
 // Returns the major version number of the JavaScriptCore library.
 // (e.g. in JavaScriptCore version 1.8.3 this is 1.)
@@ -30,12 +30,12 @@ var xGetMajorVersion func() uint32
 // your code is running against. Contrast with the #JSC_MAJOR_VERSION
 // macro, which represents the major version of the JavaScriptCore headers you
 // have included when compiling your code.
-func GetMajorVersion() uint32 {
+func GetMajorVersion() uint {
 	cret := xGetMajorVersion()
 	return cret
 }
 
-var xGetMicroVersion func() uint32
+var xGetMicroVersion func() uint
 
 // Returns the micro version number of the JavaScriptCore library.
 // (e.g. in JavaScriptCore version 1.8.3 this is 3.)
@@ -44,12 +44,12 @@ var xGetMicroVersion func() uint32
 // your code is running against. Contrast with the #JSC_MICRO_VERSION
 // macro, which represents the micro version of the JavaScriptCore headers you
 // have included when compiling your code.
-func GetMicroVersion() uint32 {
+func GetMicroVersion() uint {
 	cret := xGetMicroVersion()
 	return cret
 }
 
-var xGetMinorVersion func() uint32
+var xGetMinorVersion func() uint
 
 // Returns the minor version number of the JavaScriptCore library.
 // (e.g. in JavaScriptCore version 1.8.3 this is 8.)
@@ -58,7 +58,7 @@ var xGetMinorVersion func() uint32
 // your code is running against. Contrast with the #JSC_MINOR_VERSION
 // macro, which represents the minor version of the JavaScriptCore headers you
 // have included when compiling your code.
-func GetMinorVersion() uint32 {
+func GetMinorVersion() uint {
 	cret := xGetMinorVersion()
 	return cret
 }

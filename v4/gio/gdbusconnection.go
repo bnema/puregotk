@@ -439,7 +439,7 @@ func NewDBusConnectionForAddressSync(AddressVar string, FlagsVar DBusConnectionF
 	return cls, cerr
 }
 
-var xNewDBusConnectionSync func(uintptr, string, DBusConnectionFlags, uintptr, uintptr, **glib.Error) uintptr
+var xNewDBusConnectionSync func(uintptr, uintptr, DBusConnectionFlags, uintptr, uintptr, **glib.Error) uintptr
 
 // Synchronously sets up a D-Bus connection for exchanging D-Bus messages
 // with the end represented by @stream.
@@ -456,11 +456,14 @@ var xNewDBusConnectionSync func(uintptr, string, DBusConnectionFlags, uintptr, u
 //
 // This is a synchronous failable constructor. See
 // g_dbus_connection_new() for the asynchronous version.
-func NewDBusConnectionSync(StreamVar *IOStream, GuidVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable) (*DBusConnection, error) {
+func NewDBusConnectionSync(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable) (*DBusConnection, error) {
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	GuidVarPtr := core.GStrdupNullable(GuidVar)
+	defer core.GFreeNullable(GuidVarPtr)
+
+	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -473,7 +476,7 @@ func NewDBusConnectionSync(StreamVar *IOStream, GuidVar string, FlagsVar DBusCon
 	return cls, cerr
 }
 
-var xDBusConnectionAddFilter func(uintptr, uintptr, uintptr, uintptr) uint32
+var xDBusConnectionAddFilter func(uintptr, uintptr, uintptr, uintptr) uint
 
 // Adds a message filter. Filters are handlers that are run on all
 // incoming and outgoing messages, prior to standard dispatch. Filters
@@ -502,12 +505,12 @@ var xDBusConnectionAddFilter func(uintptr, uintptr, uintptr, uintptr) uint32
 // needed. (It is not guaranteed to be called synchronously when the
 // filter is removed, and may be called after @connection has been
 // destroyed.)
-func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
+func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 	cret := xDBusConnectionAddFilter(x.GoPointer(), glib.NewCallback(FilterFunctionVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
 	return cret
 }
 
-var xDBusConnectionCall func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, uintptr, uintptr)
+var xDBusConnectionCall func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr)
 
 // Asynchronously invokes the @method_name method on the
 // @interface_name D-Bus interface on the remote object at
@@ -556,8 +559,11 @@ var xDBusConnectionCall func(uintptr, string, string, string, string, *glib.Vari
 //
 // If @callback is %NULL then the D-Bus method call message will be sent with
 // the %G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED flag set.
-func (x *DBusConnection) Call(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xDBusConnectionCall(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *DBusConnection) Call(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
+	defer core.GFreeNullable(BusNameVarPtr)
+
+	xDBusConnectionCall(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDBusConnectionCallFinish func(uintptr, uintptr, **glib.Error) uintptr
@@ -576,7 +582,7 @@ func (x *DBusConnection) CallFinish(ResVar AsyncResult) (*glib.Variant, error) {
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **glib.Error) uintptr
+var xDBusConnectionCallSync func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **glib.Error) uintptr
 
 // Synchronously invokes the @method_name method on the
 // @interface_name D-Bus interface on the remote object at
@@ -616,10 +622,13 @@ var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.
 // The calling thread is blocked until a reply is received. See
 // g_dbus_connection_call() for the asynchronous version of
 // this method.
-func (x *DBusConnection) CallSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int32, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusConnection) CallSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
+	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
+	defer core.GFreeNullable(BusNameVarPtr)
+
+	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
 	if cerr != nil {
 		return nil, cerr
 	}
@@ -629,7 +638,7 @@ func (x *DBusConnection) CallSync(BusNameVar string, ObjectPathVar string, Inter
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, uintptr, uintptr, uintptr)
+var xDBusConnectionCallWithUnixFdList func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr, uintptr)
 
 // Like g_dbus_connection_call() but also takes a #GUnixFDList object.
 //
@@ -646,8 +655,11 @@ var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, stri
 // value of type %G_VARIANT_TYPE_HANDLE in the body of the message.
 //
 // This method is only available on UNIX.
-func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int32, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func (x *DBusConnection) CallWithUnixFdList(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
+	defer core.GFreeNullable(BusNameVarPtr)
+
+	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDBusConnectionCallWithUnixFdListFinish func(uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
@@ -677,17 +689,20 @@ func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, Res
 	return (*glib.Variant)(unsafe.Pointer(cret)), nil
 }
 
-var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int32, uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
+var xDBusConnectionCallWithUnixFdListSync func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) uintptr
 
 // Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
 // See g_dbus_connection_call_with_unix_fd_list() and
 // g_dbus_connection_call_with_unix_fd_list_finish() for more details.
 //
 // This method is only available on UNIX.
-func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int32, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
+	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
+	defer core.GFreeNullable(BusNameVarPtr)
+
+	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVarPtr, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
 	if cerr != nil {
 		return nil, cerr
 	}
@@ -756,7 +771,7 @@ func (x *DBusConnection) CloseSync(CancellableVar *Cancellable) (bool, error) {
 	return cret, cerr
 }
 
-var xDBusConnectionEmitSignal func(uintptr, string, string, string, string, *glib.Variant, **glib.Error) bool
+var xDBusConnectionEmitSignal func(uintptr, uintptr, string, string, string, *glib.Variant, **glib.Error) bool
 
 // Emits a signal.
 //
@@ -765,17 +780,20 @@ var xDBusConnectionEmitSignal func(uintptr, string, string, string, string, *gli
 // This can only fail if @parameters is not compatible with the D-Bus protocol
 // (%G_IO_ERROR_INVALID_ARGUMENT), or if @connection has been closed
 // (%G_IO_ERROR_CLOSED).
-func (x *DBusConnection) EmitSignal(DestinationBusNameVar string, ObjectPathVar string, InterfaceNameVar string, SignalNameVar string, ParametersVar *glib.Variant) (bool, error) {
+func (x *DBusConnection) EmitSignal(DestinationBusNameVar *string, ObjectPathVar string, InterfaceNameVar string, SignalNameVar string, ParametersVar *glib.Variant) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionEmitSignal(x.GoPointer(), DestinationBusNameVar, ObjectPathVar, InterfaceNameVar, SignalNameVar, ParametersVar, &cerr)
+	DestinationBusNameVarPtr := core.GStrdupNullable(DestinationBusNameVar)
+	defer core.GFreeNullable(DestinationBusNameVarPtr)
+
+	cret := xDBusConnectionEmitSignal(x.GoPointer(), DestinationBusNameVarPtr, ObjectPathVar, InterfaceNameVar, SignalNameVar, ParametersVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
 	return cret, cerr
 }
 
-var xDBusConnectionExportActionGroup func(uintptr, string, uintptr, **glib.Error) uint32
+var xDBusConnectionExportActionGroup func(uintptr, string, uintptr, **glib.Error) uint
 
 // Exports @action_group on @connection at @object_path.
 //
@@ -798,7 +816,7 @@ var xDBusConnectionExportActionGroup func(uintptr, string, uintptr, **glib.Error
 // rather likely to cause changes on the action group, this effectively
 // limits a given action group to being exported from only one main
 // context.
-func (x *DBusConnection) ExportActionGroup(ObjectPathVar string, ActionGroupVar ActionGroup) (uint32, error) {
+func (x *DBusConnection) ExportActionGroup(ObjectPathVar string, ActionGroupVar ActionGroup) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionExportActionGroup(x.GoPointer(), ObjectPathVar, ActionGroupVar.GoPointer(), &cerr)
@@ -808,7 +826,7 @@ func (x *DBusConnection) ExportActionGroup(ObjectPathVar string, ActionGroupVar 
 	return cret, cerr
 }
 
-var xDBusConnectionExportMenuModel func(uintptr, string, uintptr, **glib.Error) uint32
+var xDBusConnectionExportMenuModel func(uintptr, string, uintptr, **glib.Error) uint
 
 // Exports @menu on @connection at @object_path.
 //
@@ -826,7 +844,7 @@ var xDBusConnectionExportMenuModel func(uintptr, string, uintptr, **glib.Error) 
 // You can unexport the menu model using
 // g_dbus_connection_unexport_menu_model() with the return value of
 // this function.
-func (x *DBusConnection) ExportMenuModel(ObjectPathVar string, MenuVar *MenuModel) (uint32, error) {
+func (x *DBusConnection) ExportMenuModel(ObjectPathVar string, MenuVar *MenuModel) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionExportMenuModel(x.GoPointer(), ObjectPathVar, MenuVar.GoPointer(), &cerr)
@@ -996,7 +1014,7 @@ func (x *DBusConnection) IsClosed() bool {
 	return cret
 }
 
-var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBusInterfaceVTable, uintptr, uintptr, **glib.Error) uint32
+var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBusInterfaceVTable, uintptr, uintptr, **glib.Error) uint
 
 // Registers callbacks for exported objects at @object_path with the
 // D-Bus interface that is described in @interface_info.
@@ -1037,7 +1055,7 @@ var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBu
 //
 // See this [server][class@Gio.DBusConnection#an-example-d-bus-server]
 // for an example of how to use this method.
-func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, VtableVar *DBusInterfaceVTable, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint32, error) {
+func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, VtableVar *DBusInterfaceVTable, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
@@ -1047,7 +1065,7 @@ func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *
 	return cret, cerr
 }
 
-var xDBusConnectionRegisterObjectWithClosures func(uintptr, string, *DBusInterfaceInfo, *gobject.Closure, *gobject.Closure, *gobject.Closure, **glib.Error) uint32
+var xDBusConnectionRegisterObjectWithClosures func(uintptr, string, *DBusInterfaceInfo, *gobject.Closure, *gobject.Closure, *gobject.Closure, **glib.Error) uint
 
 // Version of g_dbus_connection_register_object() using closures instead of a
 // #GDBusInterfaceVTable for easier binding in other languages.
@@ -1056,7 +1074,7 @@ var xDBusConnectionRegisterObjectWithClosures func(uintptr, string, *DBusInterfa
 // @method_call_closure are the same as those of
 // [callback@Gio.DBusInterfaceMethodCallFunc]: ownership of a reference to the
 // [class@Gio.DBusMethodInvocation] is transferred to the function.
-func (x *DBusConnection) RegisterObjectWithClosures(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, MethodCallClosureVar *gobject.Closure, GetPropertyClosureVar *gobject.Closure, SetPropertyClosureVar *gobject.Closure) (uint32, error) {
+func (x *DBusConnection) RegisterObjectWithClosures(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, MethodCallClosureVar *gobject.Closure, GetPropertyClosureVar *gobject.Closure, SetPropertyClosureVar *gobject.Closure) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionRegisterObjectWithClosures(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, MethodCallClosureVar, GetPropertyClosureVar, SetPropertyClosureVar, &cerr)
@@ -1066,7 +1084,7 @@ func (x *DBusConnection) RegisterObjectWithClosures(ObjectPathVar string, Interf
 	return cret, cerr
 }
 
-var xDBusConnectionRegisterObjectWithClosures2 func(uintptr, string, *DBusInterfaceInfo, *gobject.Closure, *gobject.Closure, *gobject.Closure, **glib.Error) uint32
+var xDBusConnectionRegisterObjectWithClosures2 func(uintptr, string, *DBusInterfaceInfo, *gobject.Closure, *gobject.Closure, *gobject.Closure, **glib.Error) uint
 
 // Version of [method@Gio.DBusConnection.register_object] using closures instead
 // of a [type@Gio.DBusInterfaceVTable] for easier binding in other languages.
@@ -1080,7 +1098,7 @@ var xDBusConnectionRegisterObjectWithClosures2 func(uintptr, string, *DBusInterf
 // [class@Gio.DBusMethodInvocation] before calling any
 // `g_dbus_method_invocation_return_*()` methods on it. This should be automatic
 // as a result of the introspection annotations on those methods.
-func (x *DBusConnection) RegisterObjectWithClosures2(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, MethodCallClosureVar *gobject.Closure, GetPropertyClosureVar *gobject.Closure, SetPropertyClosureVar *gobject.Closure) (uint32, error) {
+func (x *DBusConnection) RegisterObjectWithClosures2(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, MethodCallClosureVar *gobject.Closure, GetPropertyClosureVar *gobject.Closure, SetPropertyClosureVar *gobject.Closure) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionRegisterObjectWithClosures2(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, MethodCallClosureVar, GetPropertyClosureVar, SetPropertyClosureVar, &cerr)
@@ -1090,7 +1108,7 @@ func (x *DBusConnection) RegisterObjectWithClosures2(ObjectPathVar string, Inter
 	return cret, cerr
 }
 
-var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBusSubtreeFlags, uintptr, uintptr, **glib.Error) uint32
+var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBusSubtreeFlags, uintptr, uintptr, **glib.Error) uint
 
 // Registers a whole subtree of dynamic objects.
 //
@@ -1126,7 +1144,7 @@ var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBu
 //
 // See this [server][class@Gio.DBusConnection#an-example-for-exporting-a-subtree]
 // for an example of how to use this method.
-func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSubtreeVTable, FlagsVar DBusSubtreeFlags, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint32, error) {
+func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSubtreeVTable, FlagsVar DBusSubtreeFlags, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
@@ -1136,7 +1154,7 @@ func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSu
 	return cret, cerr
 }
 
-var xDBusConnectionRemoveFilter func(uintptr, uint32)
+var xDBusConnectionRemoveFilter func(uintptr, uint)
 
 // Removes a filter.
 //
@@ -1146,7 +1164,7 @@ var xDBusConnectionRemoveFilter func(uintptr, uint32)
 // free data that the filter might be using. Instead, you should pass
 // a #GDestroyNotify to g_dbus_connection_add_filter(), which will be
 // called when it is guaranteed that the data is no longer needed.
-func (x *DBusConnection) RemoveFilter(FilterIdVar uint32) {
+func (x *DBusConnection) RemoveFilter(FilterIdVar uint) {
 	xDBusConnectionRemoveFilter(x.GoPointer(), FilterIdVar)
 }
 
@@ -1184,7 +1202,7 @@ func (x *DBusConnection) SendMessage(MessageVar *DBusMessage, FlagsVar DBusSendM
 	return cret, cerr
 }
 
-var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFlags, int32, *uint32, uintptr, uintptr, uintptr)
+var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFlags, int, *uint32, uintptr, uintptr, uintptr)
 
 // Asynchronously sends @message to the peer represented by @connection.
 //
@@ -1216,7 +1234,7 @@ var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFl
 // and [client][class@Gio.DBusConnection#an-example-for-file-descriptor-passing]
 // for an example of how to use this low-level API to send and receive
 // UNIX file descriptors.
-func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int32, OutSerialVar *uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar *uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -1250,7 +1268,7 @@ func (x *DBusConnection) SendMessageWithReplyFinish(ResVar AsyncResult) (*DBusMe
 	return cls, cerr
 }
 
-var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessageFlags, int32, *uint32, uintptr, **glib.Error) uintptr
+var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessageFlags, int, *uint32, uintptr, **glib.Error) uintptr
 
 // Synchronously sends @message to the peer represented by @connection
 // and blocks the calling thread until a reply is received or the
@@ -1283,7 +1301,7 @@ var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessa
 //
 // Note that @message must be unlocked, unless @flags contain the
 // %G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
-func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int32, OutSerialVar *uint32, CancellableVar *Cancellable) (*DBusMessage, error) {
+func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar *uint32, CancellableVar *Cancellable) (*DBusMessage, error) {
 	var cls *DBusMessage
 	var cerr *glib.Error
 
@@ -1316,7 +1334,7 @@ func (x *DBusConnection) SetExitOnClose(ExitOnCloseVar bool) {
 	xDBusConnectionSetExitOnClose(x.GoPointer(), ExitOnCloseVar)
 }
 
-var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string, string, DBusSignalFlags, uintptr, uintptr, uintptr) uint32
+var xDBusConnectionSignalSubscribe func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr, DBusSignalFlags, uintptr, uintptr, uintptr) uint
 
 // Subscribes to signals on @connection and invokes @callback whenever
 // the signal is received. Note that @callback will be invoked in the
@@ -1367,12 +1385,27 @@ var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string,
 // to never be zero.
 //
 // This function can never fail.
-func (x *DBusConnection) SignalSubscribe(SenderVar string, InterfaceNameVar string, MemberVar string, ObjectPathVar string, Arg0Var string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint32 {
-	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), SenderVar, InterfaceNameVar, MemberVar, ObjectPathVar, Arg0Var, FlagsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
+func (x *DBusConnection) SignalSubscribe(SenderVar *string, InterfaceNameVar *string, MemberVar *string, ObjectPathVar *string, Arg0Var *string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
+	SenderVarPtr := core.GStrdupNullable(SenderVar)
+	defer core.GFreeNullable(SenderVarPtr)
+
+	InterfaceNameVarPtr := core.GStrdupNullable(InterfaceNameVar)
+	defer core.GFreeNullable(InterfaceNameVarPtr)
+
+	MemberVarPtr := core.GStrdupNullable(MemberVar)
+	defer core.GFreeNullable(MemberVarPtr)
+
+	ObjectPathVarPtr := core.GStrdupNullable(ObjectPathVar)
+	defer core.GFreeNullable(ObjectPathVarPtr)
+
+	Arg0VarPtr := core.GStrdupNullable(Arg0Var)
+	defer core.GFreeNullable(Arg0VarPtr)
+
+	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), SenderVarPtr, InterfaceNameVarPtr, MemberVarPtr, ObjectPathVarPtr, Arg0VarPtr, FlagsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
-var xDBusConnectionSignalUnsubscribe func(uintptr, uint32)
+var xDBusConnectionSignalUnsubscribe func(uintptr, uint)
 
 // Unsubscribes from signals.
 //
@@ -1386,7 +1419,7 @@ var xDBusConnectionSignalUnsubscribe func(uintptr, uint32)
 // Alternatively, any idle source with a priority lower than %G_PRIORITY_DEFAULT
 // that was scheduled after unsubscription, also indicates that all resources
 // of this subscription are released.
-func (x *DBusConnection) SignalUnsubscribe(SubscriptionIdVar uint32) {
+func (x *DBusConnection) SignalUnsubscribe(SubscriptionIdVar uint) {
 	xDBusConnectionSignalUnsubscribe(x.GoPointer(), SubscriptionIdVar)
 }
 
@@ -1400,7 +1433,7 @@ func (x *DBusConnection) StartMessageProcessing() {
 	xDBusConnectionStartMessageProcessing(x.GoPointer())
 }
 
-var xDBusConnectionUnexportActionGroup func(uintptr, uint32)
+var xDBusConnectionUnexportActionGroup func(uintptr, uint)
 
 // Reverses the effect of a previous call to
 // [method@Gio.DBusConnection.export_action_group].
@@ -1408,11 +1441,11 @@ var xDBusConnectionUnexportActionGroup func(uintptr, uint32)
 // It is an error to call this function with an ID that wasn’t returned from
 // [method@Gio.DBusConnection.export_action_group] or to call it with the same
 // ID more than once.
-func (x *DBusConnection) UnexportActionGroup(ExportIdVar uint32) {
+func (x *DBusConnection) UnexportActionGroup(ExportIdVar uint) {
 	xDBusConnectionUnexportActionGroup(x.GoPointer(), ExportIdVar)
 }
 
-var xDBusConnectionUnexportMenuModel func(uintptr, uint32)
+var xDBusConnectionUnexportMenuModel func(uintptr, uint)
 
 // Reverses the effect of a previous call to
 // g_dbus_connection_export_menu_model().
@@ -1420,22 +1453,22 @@ var xDBusConnectionUnexportMenuModel func(uintptr, uint32)
 // It is an error to call this function with an ID that wasn't returned
 // from g_dbus_connection_export_menu_model() or to call it with the
 // same ID more than once.
-func (x *DBusConnection) UnexportMenuModel(ExportIdVar uint32) {
+func (x *DBusConnection) UnexportMenuModel(ExportIdVar uint) {
 	xDBusConnectionUnexportMenuModel(x.GoPointer(), ExportIdVar)
 }
 
-var xDBusConnectionUnregisterObject func(uintptr, uint32) bool
+var xDBusConnectionUnregisterObject func(uintptr, uint) bool
 
 // Unregisters an object.
-func (x *DBusConnection) UnregisterObject(RegistrationIdVar uint32) bool {
+func (x *DBusConnection) UnregisterObject(RegistrationIdVar uint) bool {
 	cret := xDBusConnectionUnregisterObject(x.GoPointer(), RegistrationIdVar)
 	return cret
 }
 
-var xDBusConnectionUnregisterSubtree func(uintptr, uint32) bool
+var xDBusConnectionUnregisterSubtree func(uintptr, uint) bool
 
 // Unregisters a subtree.
-func (x *DBusConnection) UnregisterSubtree(RegistrationIdVar uint32) bool {
+func (x *DBusConnection) UnregisterSubtree(RegistrationIdVar uint) bool {
 	cret := xDBusConnectionUnregisterSubtree(x.GoPointer(), RegistrationIdVar)
 	return cret
 }
@@ -1457,7 +1490,7 @@ func (c *DBusConnection) SetGoPointer(ptr uintptr) {
 func (x *DBusConnection) SetPropertyAddress(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("address", &v)
 }
 
@@ -1522,7 +1555,7 @@ func (x *DBusConnection) GetPropertyExitOnClose() bool {
 func (x *DBusConnection) SetPropertyGuid(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("guid", &v)
 }
 
@@ -1580,7 +1613,7 @@ func (x *DBusConnection) GetPropertyUniqueName() string {
 // Upon receiving this signal, you should give up your reference to
 // @connection. You are guaranteed that this signal is emitted only
 // once.
-func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Error)) uint32 {
+func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -1638,7 +1671,7 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Erro
 // in a thread, so if you want to support asynchronous initialization via
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
-func (x *DBusConnection) InitAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusConnection) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
@@ -1721,7 +1754,7 @@ func (x *DBusConnection) Init(CancellableVar *Cancellable) (bool, error) {
 	return cret, cerr
 }
 
-var xDBusConnectionNew func(uintptr, string, DBusConnectionFlags, uintptr, uintptr, uintptr, uintptr)
+var xDBusConnectionNew func(uintptr, uintptr, DBusConnectionFlags, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously sets up a D-Bus connection for exchanging D-Bus messages
 // with the end represented by @stream.
@@ -1743,8 +1776,11 @@ var xDBusConnectionNew func(uintptr, string, DBusConnectionFlags, uintptr, uintp
 // This is an asynchronous failable constructor. See
 // g_dbus_connection_new_sync() for the synchronous
 // version.
-func DBusConnectionNew(StreamVar *IOStream, GuidVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
-	xDBusConnectionNew(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+func DBusConnectionNew(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	GuidVarPtr := core.GStrdupNullable(GuidVar)
+	defer core.GFreeNullable(GuidVarPtr)
+
+	xDBusConnectionNew(StreamVar.GoPointer(), GuidVarPtr, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 
 var xDBusConnectionNewForAddress func(string, DBusConnectionFlags, uintptr, uintptr, uintptr, uintptr)

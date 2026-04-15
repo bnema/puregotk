@@ -136,10 +136,10 @@ func (x *Printer) AcceptsPs() bool {
 	return cret
 }
 
-var xPrinterCompare func(uintptr, uintptr) int32
+var xPrinterCompare func(uintptr, uintptr) int
 
 // Compares two printers.
-func (x *Printer) Compare(BVar *Printer) int32 {
+func (x *Printer) Compare(BVar *Printer) int {
 	cret := xPrinterCompare(x.GoPointer(), BVar.GoPointer())
 	return cret
 }
@@ -233,10 +233,10 @@ func (x *Printer) GetIconName() string {
 	return cret
 }
 
-var xPrinterGetJobCount func(uintptr) int32
+var xPrinterGetJobCount func(uintptr) int
 
 // Gets the number of jobs currently queued on the printer.
-func (x *Printer) GetJobCount() int32 {
+func (x *Printer) GetJobCount() int {
 	cret := xPrinterGetJobCount(x.GoPointer())
 	return cret
 }
@@ -426,10 +426,10 @@ func (x *Printer) GetPropertyIsVirtual() bool {
 
 // GetPropertyJobCount gets the "job-count" property.
 // Number of jobs queued in the printer.
-func (x *Printer) GetPropertyJobCount() int32 {
+func (x *Printer) GetPropertyJobCount() int {
 	var v gobject.Value
 	x.GetProperty("job-count", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // GetPropertyLocation gets the "location" property.
@@ -445,7 +445,7 @@ func (x *Printer) GetPropertyLocation() string {
 func (x *Printer) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -481,7 +481,7 @@ func (x *Printer) GetPropertyStateMessage() string {
 //
 // The @success parameter indicates if the information was
 // actually obtained.
-func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
+func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)

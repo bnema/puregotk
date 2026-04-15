@@ -216,10 +216,10 @@ func (x *ComboRow) GetSearchMatchMode() gtk.StringFilterMatchMode {
 	return cret
 }
 
-var xComboRowGetSelected func(uintptr) uint32
+var xComboRowGetSelected func(uintptr) uint
 
 // Gets the position of the selected item.
-func (x *ComboRow) GetSelected() uint32 {
+func (x *ComboRow) GetSelected() uint {
 	cret := xComboRowGetSelected(x.GoPointer())
 	return cret
 }
@@ -314,10 +314,10 @@ func (x *ComboRow) SetSearchMatchMode(SearchMatchModeVar gtk.StringFilterMatchMo
 	xComboRowSetSearchMatchMode(x.GoPointer(), SearchMatchModeVar)
 }
 
-var xComboRowSetSelected func(uintptr, uint32)
+var xComboRowSetSelected func(uintptr, uint)
 
 // Selects the item at the given position.
-func (x *ComboRow) SetSelected(PositionVar uint32) {
+func (x *ComboRow) SetSelected(PositionVar uint) {
 	xComboRowSetSelected(x.GoPointer(), PositionVar)
 }
 
@@ -379,10 +379,10 @@ func (x *ComboRow) GetPropertyEnableSearch() bool {
 //
 // If no item is selected, the property has the value
 // [const@Gtk.INVALID_LIST_POSITION]
-func (x *ComboRow) SetPropertySelected(value uint32) {
+func (x *ComboRow) SetPropertySelected(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("selected", &v)
 }
 
@@ -391,10 +391,10 @@ func (x *ComboRow) SetPropertySelected(value uint32) {
 //
 // If no item is selected, the property has the value
 // [const@Gtk.INVALID_LIST_POSITION]
-func (x *ComboRow) GetPropertySelected() uint32 {
+func (x *ComboRow) GetPropertySelected() uint {
 	var v gobject.Value
 	x.GetProperty("selected", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyUseSubtitle sets the "use-subtitle" property.
@@ -496,7 +496,7 @@ func (x *ComboRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ComboRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ComboRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -612,7 +612,7 @@ func (x *ComboRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varAr
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ComboRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ComboRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -644,7 +644,7 @@ func (x *ComboRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varAr
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ComboRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ComboRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -677,7 +677,7 @@ func (x *ComboRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...int
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ComboRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ComboRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -709,8 +709,11 @@ func (x *ComboRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ComboRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *ComboRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

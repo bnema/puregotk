@@ -64,10 +64,10 @@ func TreeSelectionNewFromInternalPtr(ptr uintptr) *TreeSelection {
 	return cls
 }
 
-var xTreeSelectionCountSelectedRows func(uintptr) int32
+var xTreeSelectionCountSelectedRows func(uintptr) int
 
 // Returns the number of rows that have been selected in @tree.
-func (x *TreeSelection) CountSelectedRows() int32 {
+func (x *TreeSelection) CountSelectedRows() int {
 	cret := xTreeSelectionCountSelectedRows(x.GoPointer())
 	return cret
 }
@@ -267,7 +267,7 @@ func (c *TreeSelection) SetGoPointer(ptr uintptr) {
 // this signal is mostly a hint.  It may only be emitted once when a range
 // of rows are selected, and it may occasionally be emitted when nothing
 // has happened.
-func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint32 {
+func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

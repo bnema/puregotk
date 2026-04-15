@@ -279,7 +279,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  util.ConstructorName(c.Name, rec.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, imps),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC, imps),
 				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws, imps),
 			}
 		}
@@ -293,7 +293,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				fieldName = "x" + util.SnakeToCamel(f.Name) // Prefix callback pointer fields with `x` to make them private
 
 				callbackName := util.SnakeToCamel(f.Name)
-				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws, imps)
+				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws, types.ArgsFromCToGo, imps)
 				ret := f.Callback.ReturnValue.Template(ns.Name, "", p.Types, f.Callback.Throws, imps)
 
 				apiTypes := args.API.Types
@@ -377,7 +377,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, imps),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			})
 		}
@@ -400,7 +400,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		cbT := types.CallbackTemplate{
 			Doc:  cb.Doc.StringSafe(),
 			Name: cb.Name,
-			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws, cbImps),
+			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws, types.ArgsFromCToGo, cbImps),
 			Ret:  cb.ReturnValue.Template(ns.Name, "", p.Types, cb.Throws, cbImps),
 		}
 		for _, t := range cbT.Args.Pure.Types {
@@ -453,7 +453,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			Name:  name,
 			CName: f.CIdentifier,
 			Doc:   f.Doc.StringSafe(),
-			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, pf.imps),
+			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, pf.imps),
 			Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, pf.imps),
 		})
 	}
@@ -475,7 +475,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  util.ConstructorName(c.Name, cls.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, imps),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC, imps),
 				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws, imps),
 			}
 		}
@@ -490,7 +490,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   s.Doc.StringSafe(),
 				Name:  util.DashToCamel(s.Name),
 				CName: s.Name,
-				Args:  s.Parameters.Template(ns.Name, "", p.Types, false, imps),
+				Args:  s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo, imps),
 				Ret:   s.ReturnValue.Template(ns.Name, "", p.Types, false, imps),
 			}
 		}
@@ -502,7 +502,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, imps),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			}
 		}
@@ -513,7 +513,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  name,
 				CName: f.CIdentifier,
 				Doc:   f.Doc.StringSafe(),
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, imps),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC, imps),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws, imps),
 			}
 		}

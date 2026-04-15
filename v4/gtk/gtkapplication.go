@@ -225,7 +225,7 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 	return cls
 }
 
-var xNewApplication func(string, gio.ApplicationFlags) uintptr
+var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 
 // Creates a new application instance.
 //
@@ -245,10 +245,13 @@ var xNewApplication func(string, gio.ApplicationFlags) uintptr
 //
 // If no application ID is given then some features (most notably application
 // uniqueness) will be disabled.
-func NewApplication(ApplicationIdVar string, FlagsVar gio.ApplicationFlags) *Application {
+func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(ApplicationIdVar, FlagsVar)
+	ApplicationIdVarPtr := core.GStrdupNullable(ApplicationIdVar)
+	defer core.GFreeNullable(ApplicationIdVarPtr)
+
+	cret := xNewApplication(ApplicationIdVarPtr, FlagsVar)
 
 	if cret == 0 {
 		return nil
@@ -370,13 +373,13 @@ func (x *Application) GetMenubar() *gio.MenuModel {
 	return cls
 }
 
-var xApplicationGetWindowById func(uintptr, uint32) uintptr
+var xApplicationGetWindowById func(uintptr, uint) uintptr
 
 // Returns the window with the given ID.
 //
 // The ID of a `GtkApplicationWindow` can be retrieved with
 // [method@Gtk.ApplicationWindow.get_id].
-func (x *Application) GetWindowById(IdVar uint32) *Window {
+func (x *Application) GetWindowById(IdVar uint) *Window {
 	var cls *Window
 
 	cret := xApplicationGetWindowById(x.GoPointer(), IdVar)
@@ -409,7 +412,7 @@ func (x *Application) GetWindows() *glib.List {
 	return (*glib.List)(unsafe.Pointer(cret))
 }
 
-var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) uint32
+var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, uintptr) uint
 
 // Informs the session manager that certain types of actions should be
 // inhibited.
@@ -438,8 +441,11 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) 
 // The cookie that is returned by this function  should be used as an
 // argument to [method@Gtk.Application.uninhibit] in order to remove
 // the request.
-func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar string) uint32 {
-	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVar)
+func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar *string) uint {
+	ReasonVarPtr := core.GStrdupNullable(ReasonVar)
+	defer core.GFreeNullable(ReasonVarPtr)
+
+	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVarPtr)
 	return cret
 }
 
@@ -508,14 +514,14 @@ func (x *Application) SetMenubar(MenubarVar *gio.MenuModel) {
 	xApplicationSetMenubar(x.GoPointer(), MenubarVar.GoPointer())
 }
 
-var xApplicationUninhibit func(uintptr, uint32)
+var xApplicationUninhibit func(uintptr, uint)
 
 // Removes an inhibitor that has been previously established.
 //
 // See [method@Gtk.Application.inhibit].
 //
 // Inhibitors are also cleared when the application exits.
-func (x *Application) Uninhibit(CookieVar uint32) {
+func (x *Application) Uninhibit(CookieVar uint) {
 	xApplicationUninhibit(x.GoPointer(), CookieVar)
 }
 
@@ -570,7 +576,7 @@ func (x *Application) GetPropertyScreensaverActive() bool {
 // Applications can connect to this signal and call
 // [method@Gtk.Application.inhibit] with [flags@Gtk.ApplicationInhibitFlags.logout]
 // to delay the end of the session until state has been saved.
-func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
+func (x *Application) ConnectQueryEnd(cb *func(Application)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
@@ -595,7 +601,7 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 // Emitted when a window is added to an application.
 //
 // See [method@Gtk.Application.add_window].
-func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 {
+func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
@@ -621,7 +627,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 //
 // This can happen as a side-effect of the window being destroyed
 // or explicitly through [method@Gtk.Application.remove_window].
-func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint32 {
+func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
@@ -919,7 +925,7 @@ func (x *Application) AddAction(ActionVar gio.Action) {
 //	}
 //
 // ```
-func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
+func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 	gio.XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
 }
 
@@ -972,7 +978,7 @@ func (x *Application) RemoveAction(ActionNameVar string) {
 //	}
 //
 // ```
-func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32) {
+func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int) {
 	gio.XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
 }
 

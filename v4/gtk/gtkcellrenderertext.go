@@ -96,7 +96,7 @@ func NewCellRendererText() *CellRendererText {
 	return cls
 }
 
-var xCellRendererTextSetFixedHeightFromFont func(uintptr, int32)
+var xCellRendererTextSetFixedHeightFromFont func(uintptr, int)
 
 // Sets the height of a renderer to explicitly be determined by the “font” and
 // “y_pad” property set on it.  Further changes in these properties do not
@@ -105,7 +105,7 @@ var xCellRendererTextSetFixedHeightFromFont func(uintptr, int32)
 // if calculating the size of a cell is too slow (ie, a massive number of cells
 // displayed).  If @number_of_rows is -1, then the fixed height is unset, and
 // the height is determined by the properties again.
-func (x *CellRendererText) SetFixedHeightFromFont(NumberOfRowsVar int32) {
+func (x *CellRendererText) SetFixedHeightFromFont(NumberOfRowsVar int) {
 	xCellRendererTextSetFixedHeightFromFont(x.GoPointer(), NumberOfRowsVar)
 }
 
@@ -154,7 +154,7 @@ func (x *CellRendererText) GetPropertyAttributes() uintptr {
 func (x *CellRendererText) SetPropertyBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("background", &v)
 }
 
@@ -239,7 +239,7 @@ func (x *CellRendererText) GetPropertyEllipsizeSet() bool {
 func (x *CellRendererText) SetPropertyFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("family", &v)
 }
 
@@ -269,7 +269,7 @@ func (x *CellRendererText) GetPropertyFamilySet() bool {
 func (x *CellRendererText) SetPropertyFont(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font", &v)
 }
 
@@ -299,7 +299,7 @@ func (x *CellRendererText) GetPropertyFontDesc() uintptr {
 func (x *CellRendererText) SetPropertyForeground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("foreground", &v)
 }
 
@@ -339,7 +339,7 @@ func (x *CellRendererText) GetPropertyForegroundSet() bool {
 func (x *CellRendererText) SetPropertyLanguage(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("language", &v)
 }
 
@@ -369,7 +369,7 @@ func (x *CellRendererText) GetPropertyLanguageSet() bool {
 func (x *CellRendererText) SetPropertyMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("markup", &v)
 }
 
@@ -382,10 +382,10 @@ func (x *CellRendererText) SetPropertyMarkup(value string) {
 // cell should not receive any greater allocation unless it is
 // set to expand in its `GtkCellLayout` and all of the cell's siblings
 // have received their natural width.
-func (x *CellRendererText) SetPropertyMaxWidthChars(value int32) {
+func (x *CellRendererText) SetPropertyMaxWidthChars(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("max-width-chars", &v)
 }
 
@@ -398,10 +398,10 @@ func (x *CellRendererText) SetPropertyMaxWidthChars(value int32) {
 // cell should not receive any greater allocation unless it is
 // set to expand in its `GtkCellLayout` and all of the cell's siblings
 // have received their natural width.
-func (x *CellRendererText) GetPropertyMaxWidthChars() int32 {
+func (x *CellRendererText) GetPropertyMaxWidthChars() int {
 	var v gobject.Value
 	x.GetProperty("max-width-chars", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyPlaceholderText sets the "placeholder-text" property.
@@ -410,7 +410,7 @@ func (x *CellRendererText) GetPropertyMaxWidthChars() int32 {
 func (x *CellRendererText) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
@@ -424,18 +424,18 @@ func (x *CellRendererText) GetPropertyPlaceholderText() string {
 }
 
 // SetPropertyRise sets the "rise" property.
-func (x *CellRendererText) SetPropertyRise(value int32) {
+func (x *CellRendererText) SetPropertyRise(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("rise", &v)
 }
 
 // GetPropertyRise gets the "rise" property.
-func (x *CellRendererText) GetPropertyRise() int32 {
+func (x *CellRendererText) GetPropertyRise() int {
 	var v gobject.Value
 	x.GetProperty("rise", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyRiseSet sets the "rise-set" property.
@@ -499,18 +499,18 @@ func (x *CellRendererText) GetPropertySingleParagraphMode() bool {
 }
 
 // SetPropertySize sets the "size" property.
-func (x *CellRendererText) SetPropertySize(value int32) {
+func (x *CellRendererText) SetPropertySize(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("size", &v)
 }
 
 // GetPropertySize gets the "size" property.
-func (x *CellRendererText) GetPropertySize() int32 {
+func (x *CellRendererText) GetPropertySize() int {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertySizePoints sets the "size-points" property.
@@ -607,7 +607,7 @@ func (x *CellRendererText) GetPropertyStyleSet() bool {
 func (x *CellRendererText) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 
@@ -649,18 +649,18 @@ func (x *CellRendererText) GetPropertyVariantSet() bool {
 }
 
 // SetPropertyWeight sets the "weight" property.
-func (x *CellRendererText) SetPropertyWeight(value int32) {
+func (x *CellRendererText) SetPropertyWeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("weight", &v)
 }
 
 // GetPropertyWeight gets the "weight" property.
-func (x *CellRendererText) GetPropertyWeight() int32 {
+func (x *CellRendererText) GetPropertyWeight() int {
 	var v gobject.Value
 	x.GetProperty("weight", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWeightSet sets the "weight-set" property.
@@ -682,10 +682,10 @@ func (x *CellRendererText) GetPropertyWeightSet() bool {
 // The desired width of the cell, in characters. If this property is set to
 // -1, the width will be calculated automatically, otherwise the cell will
 // request either 3 characters or the property value, whichever is greater.
-func (x *CellRendererText) SetPropertyWidthChars(value int32) {
+func (x *CellRendererText) SetPropertyWidthChars(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("width-chars", &v)
 }
 
@@ -693,20 +693,20 @@ func (x *CellRendererText) SetPropertyWidthChars(value int32) {
 // The desired width of the cell, in characters. If this property is set to
 // -1, the width will be calculated automatically, otherwise the cell will
 // request either 3 characters or the property value, whichever is greater.
-func (x *CellRendererText) GetPropertyWidthChars() int32 {
+func (x *CellRendererText) GetPropertyWidthChars() int {
 	var v gobject.Value
 	x.GetProperty("width-chars", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWrapWidth sets the "wrap-width" property.
 // Specifies the minimum width at which the text is wrapped. The wrap-mode property can
 // be used to influence at what character positions the line breaks can be placed.
 // Setting wrap-width to -1 turns wrapping off.
-func (x *CellRendererText) SetPropertyWrapWidth(value int32) {
+func (x *CellRendererText) SetPropertyWrapWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("wrap-width", &v)
 }
 
@@ -714,17 +714,17 @@ func (x *CellRendererText) SetPropertyWrapWidth(value int32) {
 // Specifies the minimum width at which the text is wrapped. The wrap-mode property can
 // be used to influence at what character positions the line breaks can be placed.
 // Setting wrap-width to -1 turns wrapping off.
-func (x *CellRendererText) GetPropertyWrapWidth() int32 {
+func (x *CellRendererText) GetPropertyWrapWidth() int {
 	var v gobject.Value
 	x.GetProperty("wrap-width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // This signal is emitted after @renderer has been edited.
 //
 // It is the responsibility of the application to update the model
 // and store @new_text at the position indicated by @path.
-func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint32 {
+func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)

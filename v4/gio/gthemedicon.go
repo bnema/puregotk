@@ -61,10 +61,10 @@ func NewThemedIcon(IconnameVar string) *ThemedIcon {
 	return cls
 }
 
-var xNewThemedIconFromNames func([]string, int32) uintptr
+var xNewThemedIconFromNames func([]string, int) uintptr
 
 // Creates a new themed icon for @iconnames.
-func NewThemedIconFromNames(IconnamesVar []string, LenVar int32) *ThemedIcon {
+func NewThemedIconFromNames(IconnamesVar []string, LenVar int) *ThemedIcon {
 	var cls *ThemedIcon
 
 	cret := xNewThemedIconFromNames(IconnamesVar, LenVar)
@@ -152,7 +152,7 @@ func (c *ThemedIcon) SetGoPointer(ptr uintptr) {
 func (x *ThemedIcon) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -229,7 +229,7 @@ func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
 }
 
 // Gets a hash for an icon.
-func (x *ThemedIcon) Hash() uint32 {
+func (x *ThemedIcon) Hash() uint {
 	cret := XGIconHash(x.GoPointer())
 	return cret
 }

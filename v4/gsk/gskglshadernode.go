@@ -29,7 +29,7 @@ func GLShaderNodeNewFromInternalPtr(ptr uintptr) *GLShaderNode {
 	return cls
 }
 
-var xNewGLShaderNode func(uintptr, *graphene.Rect, *glib.Bytes, uintptr, uint32) uintptr
+var xNewGLShaderNode func(uintptr, *graphene.Rect, *glib.Bytes, uintptr, uint) uintptr
 
 // Creates a `GskRenderNode` that will render the given @shader into the
 // area given by @bounds.
@@ -48,7 +48,7 @@ var xNewGLShaderNode func(uintptr, *graphene.Rect, *glib.Bytes, uintptr, uint32)
 // when compiling the shader, then the node will draw pink. You should use
 // [method@Gsk.GLShader.compile] to ensure the @shader will work for the
 // renderer before using it.
-func NewGLShaderNode(ShaderVar *GLShader, BoundsVar *graphene.Rect, ArgsVar *glib.Bytes, ChildrenVar uintptr, NChildrenVar uint32) *GLShaderNode {
+func NewGLShaderNode(ShaderVar *GLShader, BoundsVar *graphene.Rect, ArgsVar *glib.Bytes, ChildrenVar uintptr, NChildrenVar uint) *GLShaderNode {
 	var cls *GLShaderNode
 
 	cret := xNewGLShaderNode(ShaderVar.GoPointer(), BoundsVar, ArgsVar, ChildrenVar, NChildrenVar)
@@ -72,10 +72,10 @@ func (x *GLShaderNode) GetArgs() *glib.Bytes {
 	return (*glib.Bytes)(unsafe.Pointer(cret))
 }
 
-var xGLShaderNodeGetChild func(uintptr, uint32) uintptr
+var xGLShaderNodeGetChild func(uintptr, uint) uintptr
 
 // Gets one of the children.
-func (x *GLShaderNode) GetChild(IdxVar uint32) *RenderNode {
+func (x *GLShaderNode) GetChild(IdxVar uint) *RenderNode {
 	var cls *RenderNode
 
 	cret := xGLShaderNodeGetChild(x.GoPointer(), IdxVar)
@@ -89,10 +89,10 @@ func (x *GLShaderNode) GetChild(IdxVar uint32) *RenderNode {
 	return cls
 }
 
-var xGLShaderNodeGetNChildren func(uintptr) uint32
+var xGLShaderNodeGetNChildren func(uintptr) uint
 
 // Returns the number of children
-func (x *GLShaderNode) GetNChildren() uint32 {
+func (x *GLShaderNode) GetNChildren() uint {
 	cret := xGLShaderNodeGetNChildren(x.GoPointer())
 	return cret
 }

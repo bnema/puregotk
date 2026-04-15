@@ -52,10 +52,10 @@ func NewRandWithSeed(SeedVar uint32) *Rand {
 	return (*Rand)(unsafe.Pointer(cret))
 }
 
-var xNewRandWithSeedArray func(uint32, uint32) uintptr
+var xNewRandWithSeedArray func(uint32, uint) uintptr
 
 // Creates a new random number generator initialized with @seed.
-func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint32) *Rand {
+func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint) *Rand {
 	cret := xNewRandWithSeedArray(SeedVar, SeedLengthVar)
 	if cret == 0 {
 		return nil
@@ -126,14 +126,14 @@ func (x *Rand) SetSeed(SeedVar uint32) {
 	xRandSetSeed(x.GoPointer(), SeedVar)
 }
 
-var xRandSetSeedArray func(uintptr, uint32, uint32)
+var xRandSetSeedArray func(uintptr, uint32, uint)
 
 // Initializes the random number generator by an array of longs.
 // Array can be of arbitrary size, though only the first 624 values
 // are taken.  This function is useful if you have many low entropy
 // seeds, or if you require more then 32 bits of actual entropy for
 // your application.
-func (x *Rand) SetSeedArray(SeedVar uint32, SeedLengthVar uint32) {
+func (x *Rand) SetSeedArray(SeedVar uint32, SeedLengthVar uint) {
 	xRandSetSeedArray(x.GoPointer(), SeedVar, SeedLengthVar)
 }
 

@@ -12,7 +12,7 @@ import (
 // A #GSequenceIterCompareFunc is a function used to compare iterators.
 // It must return zero if the iterators compare equal, a negative value
 // if @a comes before @b, and a positive value if @b comes before @a.
-type SequenceIterCompareFunc func(*SequenceIter, *SequenceIter, uintptr) int32
+type SequenceIterCompareFunc func(*SequenceIter, *SequenceIter, uintptr) int
 
 // The #GSequence struct is an opaque data type representing a
 // [sequence](data-structures.html#scalable-lists) data type.
@@ -74,11 +74,11 @@ func (x *Sequence) GetEndIter() *SequenceIter {
 	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetIterAtPos func(uintptr, int32) uintptr
+var xSequenceGetIterAtPos func(uintptr, int) uintptr
 
 // Returns the iterator at position @pos. If @pos is negative or larger
 // than the number of items in @seq, the end iterator is returned.
-func (x *Sequence) GetIterAtPos(PosVar int32) *SequenceIter {
+func (x *Sequence) GetIterAtPos(PosVar int) *SequenceIter {
 	cret := xSequenceGetIterAtPos(x.GoPointer(), PosVar)
 	if cret == 0 {
 		return nil
@@ -86,12 +86,12 @@ func (x *Sequence) GetIterAtPos(PosVar int32) *SequenceIter {
 	return (*SequenceIter)(unsafe.Pointer(cret))
 }
 
-var xSequenceGetLength func(uintptr) int32
+var xSequenceGetLength func(uintptr) int
 
 // Returns the positive length (&gt;= 0) of @seq. Note that this method is
 // O(h) where `h' is the height of the tree. It is thus more efficient
 // to use g_sequence_is_empty() when comparing the length to zero.
-func (x *Sequence) GetLength() int32 {
+func (x *Sequence) GetLength() int {
 	cret := xSequenceGetLength(x.GoPointer())
 	return cret
 }
@@ -287,21 +287,21 @@ func (x *SequenceIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xSequenceIterCompare func(uintptr, *SequenceIter) int32
+var xSequenceIterCompare func(uintptr, *SequenceIter) int
 
 // Returns a negative number if @a comes before @b, 0 if they are equal,
 // and a positive number if @a comes after @b.
 //
 // The @a and @b iterators must point into the same sequence.
-func (x *SequenceIter) Compare(BVar *SequenceIter) int32 {
+func (x *SequenceIter) Compare(BVar *SequenceIter) int {
 	cret := xSequenceIterCompare(x.GoPointer(), BVar)
 	return cret
 }
 
-var xSequenceIterGetPosition func(uintptr) int32
+var xSequenceIterGetPosition func(uintptr) int
 
 // Returns the position of @iter
-func (x *SequenceIter) GetPosition() int32 {
+func (x *SequenceIter) GetPosition() int {
 	cret := xSequenceIterGetPosition(x.GoPointer())
 	return cret
 }
@@ -333,13 +333,13 @@ func (x *SequenceIter) IsEnd() bool {
 	return cret
 }
 
-var xSequenceIterMove func(uintptr, int32) uintptr
+var xSequenceIterMove func(uintptr, int) uintptr
 
 // Returns the #GSequenceIter which is @delta positions away from @iter.
 // If @iter is closer than -@delta positions to the beginning of the sequence,
 // the begin iterator is returned. If @iter is closer than @delta positions
 // to the end of the sequence, the end iterator is returned.
-func (x *SequenceIter) Move(DeltaVar int32) *SequenceIter {
+func (x *SequenceIter) Move(DeltaVar int) *SequenceIter {
 	cret := xSequenceIterMove(x.GoPointer(), DeltaVar)
 	if cret == 0 {
 		return nil

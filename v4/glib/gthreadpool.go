@@ -69,18 +69,18 @@ func (x *ThreadPool) Free(ImmediateVar bool, WaitVar bool) {
 	xThreadPoolFree(x.GoPointer(), ImmediateVar, WaitVar)
 }
 
-var xThreadPoolGetMaxThreads func(uintptr) int32
+var xThreadPoolGetMaxThreads func(uintptr) int
 
 // Returns the maximal number of threads for @pool.
-func (x *ThreadPool) GetMaxThreads() int32 {
+func (x *ThreadPool) GetMaxThreads() int {
 	cret := xThreadPoolGetMaxThreads(x.GoPointer())
 	return cret
 }
 
-var xThreadPoolGetNumThreads func(uintptr) uint32
+var xThreadPoolGetNumThreads func(uintptr) uint
 
 // Returns the number of threads currently running in @pool.
-func (x *ThreadPool) GetNumThreads() uint32 {
+func (x *ThreadPool) GetNumThreads() uint {
 	cret := xThreadPoolGetNumThreads(x.GoPointer())
 	return cret
 }
@@ -120,7 +120,7 @@ func (x *ThreadPool) Push(DataVar uintptr) (bool, error) {
 	return cret, cerr
 }
 
-var xThreadPoolSetMaxThreads func(uintptr, int32, **Error) bool
+var xThreadPoolSetMaxThreads func(uintptr, int, **Error) bool
 
 // Sets the maximal allowed number of threads for @pool.
 // A value of -1 means that the maximal number of threads
@@ -142,7 +142,7 @@ var xThreadPoolSetMaxThreads func(uintptr, int32, **Error) bool
 // created.
 //
 // Before version 2.32, this function did not return a success status.
-func (x *ThreadPool) SetMaxThreads(MaxThreadsVar int32) (bool, error) {
+func (x *ThreadPool) SetMaxThreads(MaxThreadsVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xThreadPoolSetMaxThreads(x.GoPointer(), MaxThreadsVar, &cerr)
@@ -167,15 +167,15 @@ func (x *ThreadPool) SetSortFunction(FuncVar *CompareDataFunc, UserDataVar uintp
 	xThreadPoolSetSortFunction(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
 }
 
-var xThreadPoolUnprocessed func(uintptr) uint32
+var xThreadPoolUnprocessed func(uintptr) uint
 
 // Returns the number of tasks still unprocessed in @pool.
-func (x *ThreadPool) Unprocessed() uint32 {
+func (x *ThreadPool) Unprocessed() uint {
 	cret := xThreadPoolUnprocessed(x.GoPointer())
 	return cret
 }
 
-var xThreadPoolGetMaxIdleTime func() uint32
+var xThreadPoolGetMaxIdleTime func() uint
 
 // This function will return the maximum @interval that a
 // thread will wait in the thread pool for new tasks before
@@ -183,28 +183,28 @@ var xThreadPoolGetMaxIdleTime func() uint32
 //
 // If this function returns 0, threads waiting in the thread
 // pool for new work are not stopped.
-func ThreadPoolGetMaxIdleTime() uint32 {
+func ThreadPoolGetMaxIdleTime() uint {
 	cret := xThreadPoolGetMaxIdleTime()
 	return cret
 }
 
-var xThreadPoolGetMaxUnusedThreads func() int32
+var xThreadPoolGetMaxUnusedThreads func() int
 
 // Returns the maximal allowed number of unused threads.
-func ThreadPoolGetMaxUnusedThreads() int32 {
+func ThreadPoolGetMaxUnusedThreads() int {
 	cret := xThreadPoolGetMaxUnusedThreads()
 	return cret
 }
 
-var xThreadPoolGetNumUnusedThreads func() uint32
+var xThreadPoolGetNumUnusedThreads func() uint
 
 // Returns the number of currently unused threads.
-func ThreadPoolGetNumUnusedThreads() uint32 {
+func ThreadPoolGetNumUnusedThreads() uint {
 	cret := xThreadPoolGetNumUnusedThreads()
 	return cret
 }
 
-var xThreadPoolSetMaxIdleTime func(uint32)
+var xThreadPoolSetMaxIdleTime func(uint)
 
 // This function will set the maximum @interval that a thread
 // waiting in the pool for new tasks can be idle for before
@@ -215,18 +215,18 @@ var xThreadPoolSetMaxIdleTime func(uint32)
 // By setting @interval to 0, idle threads will not be stopped.
 //
 // The default value is 15000 (15 seconds).
-func ThreadPoolSetMaxIdleTime(IntervalVar uint32) {
+func ThreadPoolSetMaxIdleTime(IntervalVar uint) {
 	xThreadPoolSetMaxIdleTime(IntervalVar)
 }
 
-var xThreadPoolSetMaxUnusedThreads func(int32)
+var xThreadPoolSetMaxUnusedThreads func(int)
 
 // Sets the maximal number of unused threads to @max_threads.
 // If @max_threads is -1, no limit is imposed on the number
 // of unused threads.
 //
 // The default value is 8 since GLib 2.84. Previously the default value was 2.
-func ThreadPoolSetMaxUnusedThreads(MaxThreadsVar int32) {
+func ThreadPoolSetMaxUnusedThreads(MaxThreadsVar int) {
 	xThreadPoolSetMaxUnusedThreads(MaxThreadsVar)
 }
 

@@ -66,7 +66,7 @@ func EditorStateNewFromInternalPtr(ptr uintptr) *EditorState {
 	return cls
 }
 
-var xEditorStateGetTypingAttributes func(uintptr) uint32
+var xEditorStateGetTypingAttributes func(uintptr) uint
 
 // Gets the typing attributes at the current cursor position.
 //
@@ -74,7 +74,7 @@ var xEditorStateGetTypingAttributes func(uintptr) uint32
 // of the selected text. Note that in case of a selection,
 // typing attributes are considered active only when they are
 // present throughout the selection.
-func (x *EditorState) GetTypingAttributes() uint32 {
+func (x *EditorState) GetTypingAttributes() uint {
 	cret := xEditorStateGetTypingAttributes(x.GoPointer())
 	return cret
 }
@@ -133,14 +133,14 @@ func (c *EditorState) SetGoPointer(ptr uintptr) {
 // GetPropertyTypingAttributes gets the "typing-attributes" property.
 // Bitmask of #WebKitEditorTypingAttributes flags.
 // See webkit_editor_state_get_typing_attributes() for more information.
-func (x *EditorState) GetPropertyTypingAttributes() uint32 {
+func (x *EditorState) GetPropertyTypingAttributes() uint {
 	var v gobject.Value
 	x.GetProperty("typing-attributes", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Emitted when the #WebKitEdtorState is changed.
-func (x *EditorState) ConnectChanged(cb *func(EditorState)) uint32 {
+func (x *EditorState) ConnectChanged(cb *func(EditorState)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)

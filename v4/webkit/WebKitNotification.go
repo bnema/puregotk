@@ -132,7 +132,7 @@ func (x *Notification) GetPropertyTitle() string {
 }
 
 // Emitted when a notification has been clicked. See webkit_notification_clicked().
-func (x *Notification) ConnectClicked(cb *func(Notification)) uint32 {
+func (x *Notification) ConnectClicked(cb *func(Notification)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
@@ -158,7 +158,7 @@ func (x *Notification) ConnectClicked(cb *func(Notification)) uint32 {
 //
 // The default handler will close the notification using libnotify, if built with
 // support for it.
-func (x *Notification) ConnectClosed(cb *func(Notification)) uint32 {
+func (x *Notification) ConnectClosed(cb *func(Notification)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)

@@ -246,18 +246,21 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 	return cls, cerr
 }
 
-var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, uintptr, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Creates a new #GDBusObjectManagerClient object.
 //
 // This is a synchronous failable constructor - the calling thread is
 // blocked until a reply is received. See g_dbus_object_manager_client_new()
 // for the asynchronous version.
-func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
+func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar *string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVarPtr, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -384,7 +387,7 @@ func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeUserData() uintptr {
 func (x *DBusObjectManagerClient) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -411,7 +414,7 @@ func (x *DBusObjectManagerClient) GetPropertyNameOwner() string {
 func (x *DBusObjectManagerClient) SetPropertyObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("object-path", &v)
 }
 
@@ -434,7 +437,7 @@ func (x *DBusObjectManagerClient) GetPropertyObjectPath() string {
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint32 {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
@@ -464,7 +467,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint32 {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
@@ -522,7 +525,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 // in a thread, so if you want to support asynchronous initialization via
 // threads, just implement the #GAsyncInitable interface without overriding
 // any interface methods.
-func (x *DBusObjectManagerClient) InitAsync(IoPriorityVar int32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusObjectManagerClient) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 

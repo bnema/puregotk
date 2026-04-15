@@ -98,10 +98,10 @@ func (x *TestLogBuffer) Pop() *TestLogMsg {
 	return (*TestLogMsg)(unsafe.Pointer(cret))
 }
 
-var xTestLogBufferPush func(uintptr, uint32, byte)
+var xTestLogBufferPush func(uintptr, uint, byte)
 
 // Internal function for gtester to decode test log messages, no ABI guarantees provided.
-func (x *TestLogBuffer) Push(NBytesVar uint32, BytesVar byte) {
+func (x *TestLogBuffer) Push(NBytesVar uint, BytesVar byte) {
 	xTestLogBufferPush(x.GoPointer(), NBytesVar, BytesVar)
 }
 
@@ -110,11 +110,11 @@ type TestLogMsg struct {
 
 	LogType TestLogType
 
-	NStrings uint32
+	NStrings uint
 
 	Strings uintptr
 
-	NNums uint32
+	NNums uint
 
 	Nums float64
 }
@@ -322,58 +322,70 @@ const (
 	GTestRunIncompleteValue TestResult = 3
 )
 
-var xAssertionMessage func(string, string, int32, string, string)
+var xAssertionMessage func(string, string, int, string, string)
 
-func AssertionMessage(DomainVar string, FileVar string, LineVar int32, FuncVar string, MessageVar string) {
+func AssertionMessage(DomainVar string, FileVar string, LineVar int, FuncVar string, MessageVar string) {
 	xAssertionMessage(DomainVar, FileVar, LineVar, FuncVar, MessageVar)
 }
 
-var xAssertionMessageCmpint func(string, string, int32, string, string, uint64, string, uint64, byte)
+var xAssertionMessageCmpint func(string, string, int, string, string, uint64, string, uint64, byte)
 
-func AssertionMessageCmpint(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string, Arg1Var uint64, CmpVar string, Arg2Var uint64, NumtypeVar byte) {
+func AssertionMessageCmpint(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var uint64, CmpVar string, Arg2Var uint64, NumtypeVar byte) {
 	xAssertionMessageCmpint(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var, NumtypeVar)
 }
 
-var xAssertionMessageCmpnum func(string, string, int32, string, string, float64, string, float64, byte)
+var xAssertionMessageCmpnum func(string, string, int, string, string, float64, string, float64, byte)
 
-func AssertionMessageCmpnum(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string, Arg1Var float64, CmpVar string, Arg2Var float64, NumtypeVar byte) {
+func AssertionMessageCmpnum(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var float64, CmpVar string, Arg2Var float64, NumtypeVar byte) {
 	xAssertionMessageCmpnum(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var, NumtypeVar)
 }
 
-var xAssertionMessageCmpstr func(string, string, int32, string, string, string, string, string)
+var xAssertionMessageCmpstr func(string, string, int, string, string, string, string, string)
 
-func AssertionMessageCmpstr(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string, Arg1Var string, CmpVar string, Arg2Var string) {
+func AssertionMessageCmpstr(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var string, CmpVar string, Arg2Var string) {
 	xAssertionMessageCmpstr(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var)
 }
 
-var xAssertionMessageCmpstrv func(string, string, int32, string, string, string, string, uint)
+var xAssertionMessageCmpstrv func(string, string, int, string, string, string, string, uint)
 
-func AssertionMessageCmpstrv(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string, Arg1Var string, Arg2Var string, FirstWrongIdxVar uint) {
+func AssertionMessageCmpstrv(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var string, Arg2Var string, FirstWrongIdxVar uint) {
 	xAssertionMessageCmpstrv(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, Arg2Var, FirstWrongIdxVar)
 }
 
-var xAssertionMessageError func(string, string, int32, string, string, *Error, Quark, int32)
+var xAssertionMessageError func(string, string, int, string, string, *Error, Quark, int)
 
-func AssertionMessageError(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string, ErrorVar *Error, ErrorDomainVar Quark, ErrorCodeVar int32) {
+func AssertionMessageError(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, ErrorVar *Error, ErrorDomainVar Quark, ErrorCodeVar int) {
 	xAssertionMessageError(DomainVar, FileVar, LineVar, FuncVar, ExprVar, ErrorVar, ErrorDomainVar, ErrorCodeVar)
 }
 
-var xAssertionMessageExpr func(string, string, int32, string, string)
+var xAssertionMessageExpr func(uintptr, string, int, string, uintptr)
 
 // Internal function used to print messages from the public
 // g_assert() and g_assert_not_reached() macros.
-func AssertionMessageExpr(DomainVar string, FileVar string, LineVar int32, FuncVar string, ExprVar string) {
-	xAssertionMessageExpr(DomainVar, FileVar, LineVar, FuncVar, ExprVar)
+func AssertionMessageExpr(DomainVar *string, FileVar string, LineVar int, FuncVar string, ExprVar *string) {
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
+
+	ExprVarPtr := core.GStrdupNullable(ExprVar)
+	defer core.GFreeNullable(ExprVarPtr)
+
+	xAssertionMessageExpr(DomainVarPtr, FileVar, LineVar, FuncVar, ExprVarPtr)
 }
 
-var xStrcmp0 func(string, string) int32
+var xStrcmp0 func(uintptr, uintptr) int
 
 // Compares @str1 and @str2 like `strcmp()`.
 //
 // Handles `NULL` gracefully by sorting it before non-`NULL` strings.
 // Comparing two `NULL` pointers returns 0.
-func Strcmp0(Str1Var string, Str2Var string) int32 {
-	cret := xStrcmp0(Str1Var, Str2Var)
+func Strcmp0(Str1Var *string, Str2Var *string) int {
+	Str1VarPtr := core.GStrdupNullable(Str1Var)
+	defer core.GFreeNullable(Str1VarPtr)
+
+	Str2VarPtr := core.GStrdupNullable(Str2Var)
+	defer core.GFreeNullable(Str2VarPtr)
+
+	cret := xStrcmp0(Str1VarPtr, Str2VarPtr)
 	return cret
 }
 
@@ -434,9 +446,9 @@ func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, Da
 	xTestAddVtable(TestpathVar, DataSizeVar, TestDataVar, NewCallback(DataSetupVar), NewCallback(DataTestVar), NewCallback(DataTeardownVar))
 }
 
-var xTestAssertExpectedMessagesInternal func(string, string, int32, string)
+var xTestAssertExpectedMessagesInternal func(string, string, int, string)
 
-func TestAssertExpectedMessagesInternal(DomainVar string, FileVar string, LineVar int32, FuncVar string) {
+func TestAssertExpectedMessagesInternal(DomainVar string, FileVar string, LineVar int, FuncVar string) {
 	xTestAssertExpectedMessagesInternal(DomainVar, FileVar, LineVar, FuncVar)
 }
 
@@ -555,7 +567,7 @@ func TestDisableCrashReporting() {
 	xTestDisableCrashReporting()
 }
 
-var xTestExpectMessage func(string, LogLevelFlags, string)
+var xTestExpectMessage func(uintptr, LogLevelFlags, string)
 
 // Indicates that a message with the given @log_domain and @log_level,
 // with text matching @pattern, is expected to be logged.
@@ -594,8 +606,11 @@ var xTestExpectMessage func(string, LogLevelFlags, string)
 //
 // If messages at [flags@GLib.LogLevelFlags.LEVEL_DEBUG] are emitted, but not explicitly
 // expected via [func@GLib.test_expect_message] then they will be ignored.
-func TestExpectMessage(LogDomainVar string, LogLevelVar LogLevelFlags, PatternVar string) {
-	xTestExpectMessage(LogDomainVar, LogLevelVar, PatternVar)
+func TestExpectMessage(LogDomainVar *string, LogLevelVar LogLevelFlags, PatternVar string) {
+	LogDomainVarPtr := core.GStrdupNullable(LogDomainVar)
+	defer core.GFreeNullable(LogDomainVarPtr)
+
+	xTestExpectMessage(LogDomainVarPtr, LogLevelVar, PatternVar)
 }
 
 var xTestFail func()
@@ -710,7 +725,7 @@ func TestGetRoot() *TestSuite {
 	return (*TestSuite)(unsafe.Pointer(cret))
 }
 
-var xTestIncomplete func(string)
+var xTestIncomplete func(uintptr)
 
 // Indicates that a test failed because of some incomplete
 // functionality.
@@ -723,8 +738,11 @@ var xTestIncomplete func(string)
 // the test.
 //
 // If not called from inside a test, this function does nothing.
-func TestIncomplete(MsgVar string) {
-	xTestIncomplete(MsgVar)
+func TestIncomplete(MsgVar *string) {
+	MsgVarPtr := core.GStrdupNullable(MsgVar)
+	defer core.GFreeNullable(MsgVarPtr)
+
+	xTestIncomplete(MsgVarPtr)
 }
 
 var xTestIncompletePrintf func(string, ...interface{})
@@ -738,7 +756,7 @@ func TestIncompletePrintf(FormatVar string, varArgs ...interface{}) {
 	xTestIncompletePrintf(FormatVar, varArgs...)
 }
 
-var xTestInit func(int32, string, ...interface{})
+var xTestInit func(int, string, ...interface{})
 
 // Initializes the GLib testing framework.
 //
@@ -799,7 +817,7 @@ var xTestInit func(int32, string, ...interface{})
 // as [func@GLib.assert] is commonly (erroneously) used in unit tests, and is a no-op
 // when compiled with `G_DISABLE_ASSERT`. Ensure your tests are compiled without
 // `G_DISABLE_ASSERT` defined.
-func TestInit(ArgcVar int32, ArgvVar string, varArgs ...interface{}) {
+func TestInit(ArgcVar int, ArgvVar string, varArgs ...interface{}) {
 	xTestInit(ArgcVar, ArgvVar, varArgs...)
 }
 
@@ -938,7 +956,7 @@ func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 	return cret
 }
 
-var xTestRun func() int32
+var xTestRun func() int
 
 // Runs all tests under the toplevel suite.
 //
@@ -974,12 +992,12 @@ var xTestRun func() int32
 // If all tests are skipped or marked as incomplete (expected failures),
 // this function will return 0 if producing TAP output, or 77 (treated
 // as "skip test" by Automake) otherwise.
-func TestRun() int32 {
+func TestRun() int {
 	cret := xTestRun()
 	return cret
 }
 
-var xTestRunSuite func(*TestSuite) int32
+var xTestRunSuite func(*TestSuite) int
 
 // Executes the tests within @suite and all nested test suites.
 //
@@ -990,7 +1008,7 @@ var xTestRunSuite func(*TestSuite) int32
 //
 // [func@GLib.test_run_suite] or [func@GLib.test_run] may only be
 // called once in a program.
-func TestRunSuite(SuiteVar *TestSuite) int32 {
+func TestRunSuite(SuiteVar *TestSuite) int {
 	cret := xTestRunSuite(SuiteVar)
 	return cret
 }
@@ -1016,7 +1034,7 @@ func TestSetNonfatalAssertions() {
 	xTestSetNonfatalAssertions()
 }
 
-var xTestSkip func(string)
+var xTestSkip func(uintptr)
 
 // Indicates that a test was skipped.
 //
@@ -1026,8 +1044,11 @@ var xTestSkip func(string)
 // the test.
 //
 // If not called from inside a test, this function does nothing.
-func TestSkip(MsgVar string) {
-	xTestSkip(MsgVar)
+func TestSkip(MsgVar *string) {
+	MsgVarPtr := core.GStrdupNullable(MsgVar)
+	defer core.GFreeNullable(MsgVarPtr)
+
+	xTestSkip(MsgVarPtr)
 }
 
 var xTestSkipPrintf func(string, ...interface{})
@@ -1105,9 +1126,9 @@ func TestTimerStart() {
 	xTestTimerStart()
 }
 
-var xTestTrapAssertions func(string, string, int32, string, uint64, string)
+var xTestTrapAssertions func(string, string, int, string, uint64, string)
 
-func TestTrapAssertions(DomainVar string, FileVar string, LineVar int32, FuncVar string, AssertionFlagsVar uint64, PatternVar string) {
+func TestTrapAssertions(DomainVar string, FileVar string, LineVar int, FuncVar string, AssertionFlagsVar uint64, PatternVar string) {
 	xTestTrapAssertions(DomainVar, FileVar, LineVar, FuncVar, AssertionFlagsVar, PatternVar)
 }
 
@@ -1179,18 +1200,21 @@ func TestTrapReachedTimeout() bool {
 	return cret
 }
 
-var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
+var xTestTrapSubprocess func(uintptr, uint64, TestSubprocessFlags)
 
 // Respawns the test program to run only @test_path in a subprocess.
 //
 // This is equivalent to calling [func@GLib.test_trap_subprocess_with_envp]
 // with `envp` set to `NULL`. See the documentation for that function
 // for full details.
-func TestTrapSubprocess(TestPathVar string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
-	xTestTrapSubprocess(TestPathVar, UsecTimeoutVar, TestFlagsVar)
+func TestTrapSubprocess(TestPathVar *string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
+	defer core.GFreeNullable(TestPathVarPtr)
+
+	xTestTrapSubprocess(TestPathVarPtr, UsecTimeoutVar, TestFlagsVar)
 }
 
-var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFlags)
+var xTestTrapSubprocessWithEnvp func(uintptr, []string, uint64, TestSubprocessFlags)
 
 // Respawns the test program to run only @test_path in a subprocess with
 // a given environment.
@@ -1283,8 +1307,11 @@ var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFla
 //	}
 //
 // ```
-func TestTrapSubprocessWithEnvp(TestPathVar string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
-	xTestTrapSubprocessWithEnvp(TestPathVar, EnvpVar, UsecTimeoutVar, TestFlagsVar)
+func TestTrapSubprocessWithEnvp(TestPathVar *string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
+	defer core.GFreeNullable(TestPathVarPtr)
+
+	xTestTrapSubprocessWithEnvp(TestPathVarPtr, EnvpVar, UsecTimeoutVar, TestFlagsVar)
 }
 
 func init() {

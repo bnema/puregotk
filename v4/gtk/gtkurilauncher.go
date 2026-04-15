@@ -50,13 +50,16 @@ func UriLauncherNewFromInternalPtr(ptr uintptr) *UriLauncher {
 	return cls
 }
 
-var xNewUriLauncher func(string) uintptr
+var xNewUriLauncher func(uintptr) uintptr
 
 // Creates a new `GtkUriLauncher` object.
-func NewUriLauncher(UriVar string) *UriLauncher {
+func NewUriLauncher(UriVar *string) *UriLauncher {
 	var cls *UriLauncher
 
-	cret := xNewUriLauncher(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
+
+	cret := xNewUriLauncher(UriVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -109,11 +112,14 @@ func (x *UriLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 	return cret, cerr
 }
 
-var xUriLauncherSetUri func(uintptr, string)
+var xUriLauncherSetUri func(uintptr, uintptr)
 
 // Sets the uri that will be opened.
-func (x *UriLauncher) SetUri(UriVar string) {
-	xUriLauncherSetUri(x.GoPointer(), UriVar)
+func (x *UriLauncher) SetUri(UriVar *string) {
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
+
+	xUriLauncherSetUri(x.GoPointer(), UriVarPtr)
 }
 
 func (c *UriLauncher) GoPointer() uintptr {
@@ -132,7 +138,7 @@ func (c *UriLauncher) SetGoPointer(ptr uintptr) {
 func (x *UriLauncher) SetPropertyUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("uri", &v)
 }
 

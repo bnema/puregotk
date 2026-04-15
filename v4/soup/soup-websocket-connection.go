@@ -61,16 +61,22 @@ func WebsocketConnectionNewFromInternalPtr(ptr uintptr) *WebsocketConnection {
 	return cls
 }
 
-var xNewWebsocketConnection func(uintptr, *glib.Uri, WebsocketConnectionType, string, string, *glib.List) uintptr
+var xNewWebsocketConnection func(uintptr, *glib.Uri, WebsocketConnectionType, uintptr, uintptr, *glib.List) uintptr
 
 // Creates a [class@WebsocketConnection] on @stream with the given active @extensions.
 //
 // This should be called after completing the handshake to begin using the WebSocket
 // protocol.
-func NewWebsocketConnection(StreamVar *gio.IOStream, UriVar *glib.Uri, TypeVar WebsocketConnectionType, OriginVar string, ProtocolVar string, ExtensionsVar *glib.List) *WebsocketConnection {
+func NewWebsocketConnection(StreamVar *gio.IOStream, UriVar *glib.Uri, TypeVar WebsocketConnectionType, OriginVar *string, ProtocolVar *string, ExtensionsVar *glib.List) *WebsocketConnection {
 	var cls *WebsocketConnection
 
-	cret := xNewWebsocketConnection(StreamVar.GoPointer(), UriVar, TypeVar, OriginVar, ProtocolVar, ExtensionsVar)
+	OriginVarPtr := core.GStrdupNullable(OriginVar)
+	defer core.GFreeNullable(OriginVarPtr)
+
+	ProtocolVarPtr := core.GStrdupNullable(ProtocolVar)
+	defer core.GFreeNullable(ProtocolVarPtr)
+
+	cret := xNewWebsocketConnection(StreamVar.GoPointer(), UriVar, TypeVar, OriginVarPtr, ProtocolVarPtr, ExtensionsVar)
 
 	if cret == 0 {
 		return nil
@@ -80,7 +86,7 @@ func NewWebsocketConnection(StreamVar *gio.IOStream, UriVar *glib.Uri, TypeVar W
 	return cls
 }
 
-var xWebsocketConnectionClose func(uintptr, uint16, string)
+var xWebsocketConnectionClose func(uintptr, uint16, uintptr)
 
 // Close the connection in an orderly fashion.
 //
@@ -92,8 +98,11 @@ var xWebsocketConnectionClose func(uintptr, uint16, string)
 // If @code is %SOUP_WEBSOCKET_CLOSE_NO_STATUS a close message with no body
 // (without code and data) is sent.
 // Note that the @data must be UTF-8 valid.
-func (x *WebsocketConnection) Close(CodeVar uint16, DataVar string) {
-	xWebsocketConnectionClose(x.GoPointer(), CodeVar, DataVar)
+func (x *WebsocketConnection) Close(CodeVar uint16, DataVar *string) {
+	DataVarPtr := core.GStrdupNullable(DataVar)
+	defer core.GFreeNullable(DataVarPtr)
+
+	xWebsocketConnectionClose(x.GoPointer(), CodeVar, DataVarPtr)
 }
 
 var xWebsocketConnectionGetCloseCode func(uintptr) uint16
@@ -157,18 +166,18 @@ func (x *WebsocketConnection) GetIoStream() *gio.IOStream {
 	return cls
 }
 
-var xWebsocketConnectionGetKeepaliveInterval func(uintptr) uint32
+var xWebsocketConnectionGetKeepaliveInterval func(uintptr) uint
 
 // Gets the keepalive interval in seconds or 0 if disabled.
-func (x *WebsocketConnection) GetKeepaliveInterval() uint32 {
+func (x *WebsocketConnection) GetKeepaliveInterval() uint {
 	cret := xWebsocketConnectionGetKeepaliveInterval(x.GoPointer())
 	return cret
 }
 
-var xWebsocketConnectionGetKeepalivePongTimeout func(uintptr) uint32
+var xWebsocketConnectionGetKeepalivePongTimeout func(uintptr) uint
 
 // Gets the keepalive pong timeout in seconds or 0 if disabled.
-func (x *WebsocketConnection) GetKeepalivePongTimeout() uint32 {
+func (x *WebsocketConnection) GetKeepalivePongTimeout() uint {
 	cret := xWebsocketConnectionGetKeepalivePongTimeout(x.GoPointer())
 	return cret
 }
@@ -255,23 +264,23 @@ func (x *WebsocketConnection) SendText(TextVar string) {
 	xWebsocketConnectionSendText(x.GoPointer(), TextVar)
 }
 
-var xWebsocketConnectionSetKeepaliveInterval func(uintptr, uint32)
+var xWebsocketConnectionSetKeepaliveInterval func(uintptr, uint)
 
 // Sets the interval in seconds on when to send a ping message which will serve
 // as a keepalive message.
 //
 // If set to 0 the keepalive message is disabled.
-func (x *WebsocketConnection) SetKeepaliveInterval(IntervalVar uint32) {
+func (x *WebsocketConnection) SetKeepaliveInterval(IntervalVar uint) {
 	xWebsocketConnectionSetKeepaliveInterval(x.GoPointer(), IntervalVar)
 }
 
-var xWebsocketConnectionSetKeepalivePongTimeout func(uintptr, uint32)
+var xWebsocketConnectionSetKeepalivePongTimeout func(uintptr, uint)
 
 // Set the timeout in seconds for when the absence of a pong from a keepalive
 // ping is assumed to be caused by a faulty connection.
 //
 // If set to 0 then the absence of pongs from keepalive pings is ignored.
-func (x *WebsocketConnection) SetKeepalivePongTimeout(PongTimeoutVar uint32) {
+func (x *WebsocketConnection) SetKeepalivePongTimeout(PongTimeoutVar uint) {
 	xWebsocketConnectionSetKeepalivePongTimeout(x.GoPointer(), PongTimeoutVar)
 }
 
@@ -317,10 +326,10 @@ func (x *WebsocketConnection) GetPropertyExtensions() uintptr {
 // serve as a keepalive message.
 //
 // If set to 0 the keepalive message is disabled.
-func (x *WebsocketConnection) SetPropertyKeepaliveInterval(value uint32) {
+func (x *WebsocketConnection) SetPropertyKeepaliveInterval(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("keepalive-interval", &v)
 }
 
@@ -329,10 +338,10 @@ func (x *WebsocketConnection) SetPropertyKeepaliveInterval(value uint32) {
 // serve as a keepalive message.
 //
 // If set to 0 the keepalive message is disabled.
-func (x *WebsocketConnection) GetPropertyKeepaliveInterval() uint32 {
+func (x *WebsocketConnection) GetPropertyKeepaliveInterval() uint {
 	var v gobject.Value
 	x.GetProperty("keepalive-interval", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyKeepalivePongTimeout sets the "keepalive-pong-timeout" property.
@@ -342,10 +351,10 @@ func (x *WebsocketConnection) GetPropertyKeepaliveInterval() uint32 {
 //
 // If set to 0 then the absence of pongs from keepalive pings is
 // ignored.
-func (x *WebsocketConnection) SetPropertyKeepalivePongTimeout(value uint32) {
+func (x *WebsocketConnection) SetPropertyKeepalivePongTimeout(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("keepalive-pong-timeout", &v)
 }
 
@@ -356,10 +365,10 @@ func (x *WebsocketConnection) SetPropertyKeepalivePongTimeout(value uint32) {
 //
 // If set to 0 then the absence of pongs from keepalive pings is
 // ignored.
-func (x *WebsocketConnection) GetPropertyKeepalivePongTimeout() uint32 {
+func (x *WebsocketConnection) GetPropertyKeepalivePongTimeout() uint {
 	var v gobject.Value
 	x.GetProperty("keepalive-pong-timeout", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyMaxIncomingPayloadSize sets the "max-incoming-payload-size" property.
@@ -388,7 +397,7 @@ func (x *WebsocketConnection) GetPropertyMaxIncomingPayloadSize() uint64 {
 func (x *WebsocketConnection) SetPropertyOrigin(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("origin", &v)
 }
 
@@ -406,7 +415,7 @@ func (x *WebsocketConnection) GetPropertyOrigin() string {
 func (x *WebsocketConnection) SetPropertyProtocol(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("protocol", &v)
 }
 
@@ -449,7 +458,7 @@ func (x *WebsocketConnection) GetPropertyUri() uintptr {
 // condition that caused a close.
 //
 // This signal will be emitted once.
-func (x *WebsocketConnection) ConnectClosed(cb *func(WebsocketConnection)) uint32 {
+func (x *WebsocketConnection) ConnectClosed(cb *func(WebsocketConnection)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -472,7 +481,7 @@ func (x *WebsocketConnection) ConnectClosed(cb *func(WebsocketConnection)) uint3
 }
 
 // This signal will be emitted during an orderly close.
-func (x *WebsocketConnection) ConnectClosing(cb *func(WebsocketConnection)) uint32 {
+func (x *WebsocketConnection) ConnectClosing(cb *func(WebsocketConnection)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closing", cbRefPtr)
@@ -498,7 +507,7 @@ func (x *WebsocketConnection) ConnectClosing(cb *func(WebsocketConnection)) uint
 //
 // This may be fired multiple times. Fatal errors will be followed by
 // the [signal@WebsocketConnection::closed] signal being emitted.
-func (x *WebsocketConnection) ConnectError(cb *func(WebsocketConnection, *glib.Error)) uint32 {
+func (x *WebsocketConnection) ConnectError(cb *func(WebsocketConnection, *glib.Error)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
@@ -525,7 +534,7 @@ func (x *WebsocketConnection) ConnectError(cb *func(WebsocketConnection, *glib.E
 // As a convenience, the @message data will always be
 // %NULL-terminated, but the NUL byte will not be included in
 // the length count.
-func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int32, uintptr)) uint32 {
+func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "message", cbRefPtr)
@@ -533,7 +542,7 @@ func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int32
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, TypeVarp int32, MessageVarp uintptr) {
+	fcb := func(clsPtr uintptr, TypeVarp int, MessageVarp uintptr) {
 		fa := WebsocketConnection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -553,7 +562,7 @@ func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int32
 // As a convenience, the @message data will always be
 // %NULL-terminated, but the NUL byte will not be included in
 // the length count.
-func (x *WebsocketConnection) ConnectPong(cb *func(WebsocketConnection, uintptr)) uint32 {
+func (x *WebsocketConnection) ConnectPong(cb *func(WebsocketConnection, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "pong", cbRefPtr)

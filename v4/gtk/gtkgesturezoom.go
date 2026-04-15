@@ -83,7 +83,7 @@ func (c *GestureZoom) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted whenever the distance between both tracked sequences changes.
-func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32 {
+func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)

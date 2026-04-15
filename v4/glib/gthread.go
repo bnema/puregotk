@@ -86,7 +86,7 @@ type Cond struct {
 
 	P uintptr
 
-	I [2]uint32
+	I [2]uint
 }
 
 func (x *Cond) GoPointer() uintptr {
@@ -406,7 +406,7 @@ type RWLock struct {
 
 	P uintptr
 
-	I [2]uint32
+	I [2]uint
 }
 
 func (x *RWLock) GoPointer() uintptr {
@@ -548,7 +548,7 @@ type RecMutex struct {
 
 	P uintptr
 
-	I [2]uint32
+	I [2]uint
 }
 
 func (x *RecMutex) GoPointer() uintptr {
@@ -754,7 +754,7 @@ func (x *StaticMutex) Init() {
 type StaticPrivate struct {
 	_ structs.HostLayout
 
-	Index uint32
+	Index uint
 }
 
 func (x *StaticPrivate) GoPointer() uintptr {
@@ -891,13 +891,13 @@ type StaticRWLock struct {
 
 	WriteCond *Cond
 
-	ReadCounter uint32
+	ReadCounter uint
 
 	HaveWriter bool
 
-	WantToRead uint32
+	WantToRead uint
 
-	WantToWrite uint32
+	WantToWrite uint
 }
 
 func (x *StaticRWLock) GoPointer() uintptr {
@@ -1021,7 +1021,7 @@ type StaticRecMutex struct {
 
 	Mutex uintptr
 
-	Depth uint32
+	Depth uint
 }
 
 func (x *StaticRecMutex) GoPointer() uintptr {
@@ -1059,10 +1059,10 @@ func (x *StaticRecMutex) Lock() {
 	xStaticRecMutexLock(x.GoPointer())
 }
 
-var xStaticRecMutexLockFull func(uintptr, uint32)
+var xStaticRecMutexLockFull func(uintptr, uint)
 
 // Works like calling g_static_rec_mutex_lock() for @mutex @depth times.
-func (x *StaticRecMutex) LockFull(DepthVar uint32) {
+func (x *StaticRecMutex) LockFull(DepthVar uint) {
 	xStaticRecMutexLockFull(x.GoPointer(), DepthVar)
 }
 
@@ -1089,7 +1089,7 @@ func (x *StaticRecMutex) Unlock() {
 	xStaticRecMutexUnlock(x.GoPointer())
 }
 
-var xStaticRecMutexUnlockFull func(uintptr) uint32
+var xStaticRecMutexUnlockFull func(uintptr) uint
 
 // Completely unlocks @mutex. If another thread is blocked in a
 // g_static_rec_mutex_lock() call for @mutex, it will be woken and can
@@ -1098,7 +1098,7 @@ var xStaticRecMutexUnlockFull func(uintptr) uint32
 // before the call to g_static_rec_mutex_unlock_full() you can call
 // g_static_rec_mutex_lock_full() with the depth returned by this
 // function.
-func (x *StaticRecMutex) UnlockFull() uint32 {
+func (x *StaticRecMutex) UnlockFull() uint {
 	cret := xStaticRecMutexUnlockFull(x.GoPointer())
 	return cret
 }
@@ -1138,7 +1138,7 @@ func (x *Thread) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewThread func(string, uintptr, uintptr) uintptr
+var xNewThread func(uintptr, uintptr, uintptr) uintptr
 
 // This function creates a new thread. The new thread starts by invoking
 // @func with the argument data. The thread will run until @func returns
@@ -1167,25 +1167,31 @@ var xNewThread func(string, uintptr, uintptr) uintptr
 // inheriting the thread priority but were spawned with the default priority.
 // Starting with GLib 2.64 the behaviour is now consistent between Windows and
 // POSIX and all threads inherit their parent thread's priority.
-func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
-	cret := xNewThread(NameVar, NewCallback(FuncVar), DataVar)
+func NewThread(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xNewThread(NameVarPtr, NewCallback(FuncVar), DataVar)
 	if cret == 0 {
 		return nil
 	}
 	return (*Thread)(unsafe.Pointer(cret))
 }
 
-var xThreadTryNew func(string, uintptr, uintptr, **Error) uintptr
+var xThreadTryNew func(uintptr, uintptr, uintptr, **Error) uintptr
 
 // This function is the same as g_thread_new() except that
 // it allows for the possibility of failure.
 //
 // If a thread can not be created (due to resource limits),
 // @error is set and %NULL is returned.
-func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
+func ThreadTryNew(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
 	var cerr *Error
 
-	cret := xThreadTryNew(NameVar, NewCallback(FuncVar), DataVar, &cerr)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
+
+	cret := xThreadTryNew(NameVarPtr, NewCallback(FuncVar), DataVar, &cerr)
 	if cerr != nil {
 		return nil, cerr
 	}
@@ -1678,11 +1684,11 @@ func (x *ThreadFunctions) GetPrivateSet() func(*Private, uintptr) {
 
 // OverrideThreadCreate sets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
-func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr)) {
+func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uint, bool, bool, ThreadPriority, uintptr)) {
 	if cb == nil {
 		x.xThreadCreate = 0
 	} else {
-		x.xThreadCreate = purego.NewCallback(func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint32, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr) {
+		x.xThreadCreate = purego.NewCallback(func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr) {
 			cb((*ThreadFunc)(unsafe.Pointer(FuncVarp)), DataVarp, StackSizeVarp, JoinableVarp, BoundVarp, PriorityVarp, ThreadVarp)
 		})
 	}
@@ -1690,13 +1696,13 @@ func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uin
 
 // GetThreadCreate gets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
-func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr) {
+func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint, bool, bool, ThreadPriority, uintptr) {
 	if x.xThreadCreate == 0 {
 		return nil
 	}
-	var rawCallback func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint32, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr)
+	var rawCallback func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xThreadCreate)
-	return func(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority, ThreadVar uintptr) {
+	return func(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority, ThreadVar uintptr) {
 		rawCallback(NewCallback(FuncVar), DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, ThreadVar)
 	}
 }
@@ -1971,13 +1977,13 @@ func CondNew() *Cond {
 	return (*Cond)(unsafe.Pointer(cret))
 }
 
-var xGetNumProcessors func() uint32
+var xGetNumProcessors func() uint
 
 // Determine the approximate number of threads that the system will
 // schedule simultaneously for this process.  This is intended to be
 // used as a parameter to g_thread_pool_new() for CPU bound tasks and
 // similar cases.
-func GetNumProcessors() uint32 {
+func GetNumProcessors() uint {
 	cret := xGetNumProcessors()
 	return cret
 }
@@ -2121,10 +2127,10 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 	return (*Thread)(unsafe.Pointer(cret)), nil
 }
 
-var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority, **Error) uintptr
+var xThreadCreateFull func(uintptr, uintptr, uint, bool, bool, ThreadPriority, **Error) uintptr
 
 // This function creates a new thread.
-func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
+func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
 	var cerr *Error
 
 	cret := xThreadCreateFull(NewCallback(FuncVar), DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)

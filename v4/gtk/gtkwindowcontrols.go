@@ -143,7 +143,7 @@ func (x *WindowControls) GetUseNativeControls() bool {
 	return cret
 }
 
-var xWindowControlsSetDecorationLayout func(uintptr, string)
+var xWindowControlsSetDecorationLayout func(uintptr, uintptr)
 
 // Sets the decoration layout for the title buttons.
 //
@@ -160,8 +160,11 @@ var xWindowControlsSetDecorationLayout func(uintptr, string)
 //
 // If [property@Gtk.WindowControls:side] value is [enum@Gtk.PackType.start],
 // @self will display the part before the colon, otherwise after that.
-func (x *WindowControls) SetDecorationLayout(LayoutVar string) {
-	xWindowControlsSetDecorationLayout(x.GoPointer(), LayoutVar)
+func (x *WindowControls) SetDecorationLayout(LayoutVar *string) {
+	LayoutVarPtr := core.GStrdupNullable(LayoutVar)
+	defer core.GFreeNullable(LayoutVarPtr)
+
+	xWindowControlsSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
 }
 
 var xWindowControlsSetSide func(uintptr, PackType)
@@ -205,7 +208,7 @@ func (c *WindowControls) SetGoPointer(ptr uintptr) {
 func (x *WindowControls) SetPropertyDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("decoration-layout", &v)
 }
 
@@ -325,7 +328,7 @@ func (x *WindowControls) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *WindowControls) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *WindowControls) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -441,7 +444,7 @@ func (x *WindowControls) UpdateProperty(FirstPropertyVar AccessibleProperty, var
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WindowControls) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *WindowControls) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -473,7 +476,7 @@ func (x *WindowControls) UpdateRelation(FirstRelationVar AccessibleRelation, var
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WindowControls) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *WindowControls) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -506,7 +509,7 @@ func (x *WindowControls) UpdateState(FirstStateVar AccessibleState, varArgs ...i
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *WindowControls) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *WindowControls) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

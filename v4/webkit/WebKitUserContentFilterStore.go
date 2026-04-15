@@ -239,7 +239,7 @@ func (c *UserContentFilterStore) SetGoPointer(ptr uintptr) {
 func (x *UserContentFilterStore) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 

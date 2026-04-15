@@ -50,13 +50,16 @@ func ShortcutsSectionNewFromInternalPtr(ptr uintptr) *ShortcutsSection {
 	return cls
 }
 
-var xNewShortcutsSection func(string) uintptr
+var xNewShortcutsSection func(uintptr) uintptr
 
 // Creates a new `AdwShortcutsSection` with @title as its title if provided.
-func NewShortcutsSection(TitleVar string) *ShortcutsSection {
+func NewShortcutsSection(TitleVar *string) *ShortcutsSection {
 	var cls *ShortcutsSection
 
-	cret := xNewShortcutsSection(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	cret := xNewShortcutsSection(TitleVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -81,11 +84,14 @@ func (x *ShortcutsSection) GetTitle() string {
 	return cret
 }
 
-var xShortcutsSectionSetTitle func(uintptr, string)
+var xShortcutsSectionSetTitle func(uintptr, uintptr)
 
 // Sets the title of @self.
-func (x *ShortcutsSection) SetTitle(TitleVar string) {
-	xShortcutsSectionSetTitle(x.GoPointer(), TitleVar)
+func (x *ShortcutsSection) SetTitle(TitleVar *string) {
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
+
+	xShortcutsSectionSetTitle(x.GoPointer(), TitleVarPtr)
 }
 
 func (c *ShortcutsSection) GoPointer() uintptr {
@@ -101,10 +107,10 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items. See [method@Gio.ListModel.get_n_items].
-func (x *ShortcutsSection) GetPropertyNItems() uint32 {
+func (x *ShortcutsSection) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyTitle sets the "title" property.
@@ -112,7 +118,7 @@ func (x *ShortcutsSection) GetPropertyNItems() uint32 {
 func (x *ShortcutsSection) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -133,7 +139,7 @@ func (x *ShortcutsSection) GetPropertyTitle() string {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *ShortcutsSection) GetItem(PositionVar uint32) uintptr {
+func (x *ShortcutsSection) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -156,7 +162,7 @@ func (x *ShortcutsSection) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *ShortcutsSection) GetNItems() uint32 {
+func (x *ShortcutsSection) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -173,7 +179,7 @@ func (x *ShortcutsSection) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *ShortcutsSection) GetObject(PositionVar uint32) *gobject.Object {
+func (x *ShortcutsSection) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -206,7 +212,7 @@ func (x *ShortcutsSection) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *ShortcutsSection) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *ShortcutsSection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

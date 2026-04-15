@@ -306,18 +306,18 @@ func (x *Texture) GetFormat() MemoryFormat {
 	return cret
 }
 
-var xTextureGetHeight func(uintptr) int32
+var xTextureGetHeight func(uintptr) int
 
 // Returns the height of the @texture, in pixels.
-func (x *Texture) GetHeight() int32 {
+func (x *Texture) GetHeight() int {
 	cret := xTextureGetHeight(x.GoPointer())
 	return cret
 }
 
-var xTextureGetWidth func(uintptr) int32
+var xTextureGetWidth func(uintptr) int
 
 // Returns the width of @texture, in pixels.
-func (x *Texture) GetWidth() int32 {
+func (x *Texture) GetWidth() int {
 	cret := xTextureGetWidth(x.GoPointer())
 	return cret
 }
@@ -422,36 +422,36 @@ func (x *Texture) GetPropertyColorState() uintptr {
 
 // SetPropertyHeight sets the "height" property.
 // The height of the texture, in pixels.
-func (x *Texture) SetPropertyHeight(value int32) {
+func (x *Texture) SetPropertyHeight(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("height", &v)
 }
 
 // GetPropertyHeight gets the "height" property.
 // The height of the texture, in pixels.
-func (x *Texture) GetPropertyHeight() int32 {
+func (x *Texture) GetPropertyHeight() int {
 	var v gobject.Value
 	x.GetProperty("height", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertyWidth sets the "width" property.
 // The width of the texture, in pixels.
-func (x *Texture) SetPropertyWidth(value int32) {
+func (x *Texture) SetPropertyWidth(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("width", &v)
 }
 
 // GetPropertyWidth gets the "width" property.
 // The width of the texture, in pixels.
-func (x *Texture) GetPropertyWidth() int32 {
+func (x *Texture) GetPropertyWidth() int {
 	var v gobject.Value
 	x.GetProperty("width", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // Compute a concrete size for the `GdkPaintable`.
@@ -529,7 +529,7 @@ func (x *Texture) GetIntrinsicAspectRatio() float64 {
 //
 // If the @paintable does not have a preferred height, it returns 0.
 // Negative values are never returned.
-func (x *Texture) GetIntrinsicHeight() int32 {
+func (x *Texture) GetIntrinsicHeight() int {
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
 	return cret
 }
@@ -544,7 +544,7 @@ func (x *Texture) GetIntrinsicHeight() int32 {
 //
 // If the @paintable does not have a preferred width, it returns 0.
 // Negative values are never returned.
-func (x *Texture) GetIntrinsicWidth() int32 {
+func (x *Texture) GetIntrinsicWidth() int {
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
 	return cret
 }
@@ -593,7 +593,7 @@ func (x *Texture) Equal(Icon2Var gio.Icon) bool {
 }
 
 // Gets a hash for an icon.
-func (x *Texture) Hash() uint32 {
+func (x *Texture) Hash() uint {
 	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
@@ -634,7 +634,7 @@ func (x *Texture) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *Texture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
+func (x *Texture) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -654,7 +654,7 @@ func (x *Texture) Load(SizeVar int32, TypeVar *string, CancellableVar *gio.Cance
 // Loads an icon asynchronously. To finish this function, see
 // g_loadable_icon_load_finish(). For the synchronous, blocking
 // version of this function, see g_loadable_icon_load().
-func (x *Texture) LoadAsync(SizeVar int32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Texture) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 	gio.XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 }
 

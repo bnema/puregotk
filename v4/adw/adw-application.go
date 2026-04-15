@@ -88,7 +88,7 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 	return cls
 }
 
-var xNewApplication func(string, gio.ApplicationFlags) uintptr
+var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 
 // Creates a new `AdwApplication`.
 //
@@ -97,10 +97,13 @@ var xNewApplication func(string, gio.ApplicationFlags) uintptr
 //
 // If no application ID is given then some features (most notably application
 // uniqueness) will be disabled.
-func NewApplication(ApplicationIdVar string, FlagsVar gio.ApplicationFlags) *Application {
+func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(ApplicationIdVar, FlagsVar)
+	ApplicationIdVarPtr := core.GStrdupNullable(ApplicationIdVar)
+	defer core.GFreeNullable(ApplicationIdVarPtr)
+
+	cret := xNewApplication(ApplicationIdVarPtr, FlagsVar)
 
 	if cret == 0 {
 		return nil
@@ -417,7 +420,7 @@ func (x *Application) AddAction(ActionVar gio.Action) {
 //	}
 //
 // ```
-func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32, UserDataVar uintptr) {
+func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 	gio.XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
 }
 
@@ -470,7 +473,7 @@ func (x *Application) RemoveAction(ActionNameVar string) {
 //	}
 //
 // ```
-func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int32) {
+func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int) {
 	gio.XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
 }
 

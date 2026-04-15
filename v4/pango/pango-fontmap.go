@@ -81,11 +81,11 @@ func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) 
 // OverrideListFamilies sets the "list_families" callback function.
 // A function to list available font families. See
 // pango_font_map_list_families().
-func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, *uintptr, *int32)) {
+func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, *uintptr, *int)) {
 	if cb == nil {
 		x.xListFamilies = 0
 	} else {
-		x.xListFamilies = purego.NewCallback(func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int32) {
+		x.xListFamilies = purego.NewCallback(func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int) {
 			cb(FontMapNewFromInternalPtr(FontmapVarp), FamiliesVarp, NFamiliesVarp)
 		})
 	}
@@ -94,13 +94,13 @@ func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, *uintptr, *int32))
 // GetListFamilies gets the "list_families" callback function.
 // A function to list available font families. See
 // pango_font_map_list_families().
-func (x *FontMapClass) GetListFamilies() func(*FontMap, *uintptr, *int32) {
+func (x *FontMapClass) GetListFamilies() func(*FontMap, *uintptr, *int) {
 	if x.xListFamilies == 0 {
 		return nil
 	}
-	var rawCallback func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int32)
+	var rawCallback func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListFamilies)
-	return func(FontmapVar *FontMap, FamiliesVar *uintptr, NFamiliesVar *int32) {
+	return func(FontmapVar *FontMap, FamiliesVar *uintptr, NFamiliesVar *int) {
 		rawCallback(FontmapVar.GoPointer(), FamiliesVar, NFamiliesVar)
 	}
 }
@@ -145,11 +145,11 @@ func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescriptio
 // OverrideGetSerial sets the "get_serial" callback function.
 // a function to get the serial number of the fontmap.
 // See pango_font_map_get_serial().
-func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint32) {
+func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
 	if cb == nil {
 		x.xGetSerial = 0
 	} else {
-		x.xGetSerial = purego.NewCallback(func(FontmapVarp uintptr) uint32 {
+		x.xGetSerial = purego.NewCallback(func(FontmapVarp uintptr) uint {
 			return cb(FontMapNewFromInternalPtr(FontmapVarp))
 		})
 	}
@@ -158,13 +158,13 @@ func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint32) {
 // GetGetSerial gets the "get_serial" callback function.
 // a function to get the serial number of the fontmap.
 // See pango_font_map_get_serial().
-func (x *FontMapClass) GetGetSerial() func(*FontMap) uint32 {
+func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
 	if x.xGetSerial == 0 {
 		return nil
 	}
-	var rawCallback func(FontmapVarp uintptr) uint32
+	var rawCallback func(FontmapVarp uintptr) uint
 	purego.RegisterFunc(&rawCallback, x.xGetSerial)
-	return func(FontmapVar *FontMap) uint32 {
+	return func(FontmapVar *FontMap) uint {
 		return rawCallback(FontmapVar.GoPointer())
 	}
 }
@@ -351,7 +351,7 @@ func (x *FontMap) GetFamily(NameVar string) *FontFamily {
 	return cls
 }
 
-var xFontMapGetSerial func(uintptr) uint32
+var xFontMapGetSerial func(uintptr) uint
 
 // Returns the current serial number of @fontmap.
 //
@@ -365,12 +365,12 @@ var xFontMapGetSerial func(uintptr) uint32
 //
 // This can be used to automatically detect changes to a `PangoFontMap`,
 // like in `PangoContext`.
-func (x *FontMap) GetSerial() uint32 {
+func (x *FontMap) GetSerial() uint {
 	cret := xFontMapGetSerial(x.GoPointer())
 	return cret
 }
 
-var xFontMapListFamilies func(uintptr, *uintptr, *int32)
+var xFontMapListFamilies func(uintptr, *uintptr, *int)
 
 // List all families for a fontmap.
 //
@@ -378,7 +378,7 @@ var xFontMapListFamilies func(uintptr, *uintptr, *int32)
 //
 // `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
 // for enumerating families.
-func (x *FontMap) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int32) {
+func (x *FontMap) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int) {
 	xFontMapListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
 }
 
@@ -415,7 +415,7 @@ func (x *FontMap) LoadFontset(ContextVar *Context, DescVar *FontDescription, Lan
 	return cls
 }
 
-var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, string) uintptr
+var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, uintptr) uintptr
 
 // Returns a new font that is like @font, except that it is scaled
 // by @scale, its backend-dependent configuration (e.g. cairo font options)
@@ -425,10 +425,13 @@ var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, string) uintptr
 // Note that the scaling here is meant to be linear, so this
 // scaling can be used to render a font on a hi-dpi display
 // without changing its optical size.
-func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar string) *Font {
+func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar *string) *Font {
 	var cls *Font
 
-	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVar)
+	VariationsVarPtr := core.GStrdupNullable(VariationsVar)
+	defer core.GFreeNullable(VariationsVarPtr)
+
+	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVarPtr)
 
 	if cret == 0 {
 		return nil
@@ -451,10 +454,10 @@ func (c *FontMap) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items contained in this list.
-func (x *FontMap) GetPropertyNItems() uint32 {
+func (x *FontMap) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -466,7 +469,7 @@ func (x *FontMap) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *FontMap) GetItem(PositionVar uint32) uintptr {
+func (x *FontMap) GetItem(PositionVar uint) uintptr {
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -489,7 +492,7 @@ func (x *FontMap) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *FontMap) GetNItems() uint32 {
+func (x *FontMap) GetNItems() uint {
 	cret := gio.XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -506,7 +509,7 @@ func (x *FontMap) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *FontMap) GetObject(PositionVar uint32) *gobject.Object {
+func (x *FontMap) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -539,7 +542,7 @@ func (x *FontMap) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *FontMap) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *FontMap) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

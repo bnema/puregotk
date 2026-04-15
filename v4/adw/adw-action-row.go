@@ -191,11 +191,11 @@ func (x *ActionRow) GetSubtitle() string {
 	return cret
 }
 
-var xActionRowGetSubtitleLines func(uintptr) int32
+var xActionRowGetSubtitleLines func(uintptr) int
 
 // Gets the number of lines at the end of which the subtitle label will be
 // ellipsized.
-func (x *ActionRow) GetSubtitleLines() int32 {
+func (x *ActionRow) GetSubtitleLines() int {
 	cret := xActionRowGetSubtitleLines(x.GoPointer())
 	return cret
 }
@@ -208,11 +208,11 @@ func (x *ActionRow) GetSubtitleSelectable() bool {
 	return cret
 }
 
-var xActionRowGetTitleLines func(uintptr) int32
+var xActionRowGetTitleLines func(uintptr) int
 
 // Gets the number of lines at the end of which the title label will be
 // ellipsized.
-func (x *ActionRow) GetTitleLines() int32 {
+func (x *ActionRow) GetTitleLines() int {
 	cret := xActionRowGetTitleLines(x.GoPointer())
 	return cret
 }
@@ -238,11 +238,14 @@ func (x *ActionRow) SetActivatableWidget(WidgetVar *gtk.Widget) {
 	xActionRowSetActivatableWidget(x.GoPointer(), WidgetVar.GoPointer())
 }
 
-var xActionRowSetIconName func(uintptr, string)
+var xActionRowSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *ActionRow) SetIconName(IconNameVar string) {
-	xActionRowSetIconName(x.GoPointer(), IconNameVar)
+func (x *ActionRow) SetIconName(IconNameVar *string) {
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
+
+	xActionRowSetIconName(x.GoPointer(), IconNameVarPtr)
 }
 
 var xActionRowSetSubtitle func(uintptr, string)
@@ -255,13 +258,13 @@ func (x *ActionRow) SetSubtitle(SubtitleVar string) {
 	xActionRowSetSubtitle(x.GoPointer(), SubtitleVar)
 }
 
-var xActionRowSetSubtitleLines func(uintptr, int32)
+var xActionRowSetSubtitleLines func(uintptr, int)
 
 // Sets the number of lines at the end of which the subtitle label will be
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) SetSubtitleLines(SubtitleLinesVar int32) {
+func (x *ActionRow) SetSubtitleLines(SubtitleLinesVar int) {
 	xActionRowSetSubtitleLines(x.GoPointer(), SubtitleLinesVar)
 }
 
@@ -274,13 +277,13 @@ func (x *ActionRow) SetSubtitleSelectable(SubtitleSelectableVar bool) {
 	xActionRowSetSubtitleSelectable(x.GoPointer(), SubtitleSelectableVar)
 }
 
-var xActionRowSetTitleLines func(uintptr, int32)
+var xActionRowSetTitleLines func(uintptr, int)
 
 // Sets the number of lines at the end of which the title label will be
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) SetTitleLines(TitleLinesVar int32) {
+func (x *ActionRow) SetTitleLines(TitleLinesVar int) {
 	xActionRowSetTitleLines(x.GoPointer(), TitleLinesVar)
 }
 
@@ -300,7 +303,7 @@ func (c *ActionRow) SetGoPointer(ptr uintptr) {
 func (x *ActionRow) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -320,7 +323,7 @@ func (x *ActionRow) GetPropertyIconName() string {
 func (x *ActionRow) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -340,10 +343,10 @@ func (x *ActionRow) GetPropertySubtitle() string {
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) SetPropertySubtitleLines(value int32) {
+func (x *ActionRow) SetPropertySubtitleLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("subtitle-lines", &v)
 }
 
@@ -352,10 +355,10 @@ func (x *ActionRow) SetPropertySubtitleLines(value int32) {
 // ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) GetPropertySubtitleLines() int32 {
+func (x *ActionRow) GetPropertySubtitleLines() int {
 	var v gobject.Value
 	x.GetProperty("subtitle-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // SetPropertySubtitleSelectable sets the "subtitle-selectable" property.
@@ -383,10 +386,10 @@ func (x *ActionRow) GetPropertySubtitleSelectable() bool {
 // The number of lines at the end of which the title label will be ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) SetPropertyTitleLines(value int32) {
+func (x *ActionRow) SetPropertyTitleLines(value int) {
 	var v gobject.Value
-	v.Init(gobject.TypeLongVal)
-	v.SetLong(value)
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
 	x.SetProperty("title-lines", &v)
 }
 
@@ -394,14 +397,14 @@ func (x *ActionRow) SetPropertyTitleLines(value int32) {
 // The number of lines at the end of which the title label will be ellipsized.
 //
 // If the value is 0, the number of lines won't be limited.
-func (x *ActionRow) GetPropertyTitleLines() int32 {
+func (x *ActionRow) GetPropertyTitleLines() int {
 	var v gobject.Value
 	x.GetProperty("title-lines", &v)
-	return v.GetLong()
+	return v.GetInt()
 }
 
 // This signal is emitted after the row has been activated.
-func (x *ActionRow) ConnectActivated(cb *func(ActionRow)) uint32 {
+func (x *ActionRow) ConnectActivated(cb *func(ActionRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
@@ -489,7 +492,7 @@ func (x *ActionRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ActionRow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ActionRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -605,7 +608,7 @@ func (x *ActionRow) UpdateProperty(FirstPropertyVar gtk.AccessibleProperty, varA
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ActionRow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ActionRow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.AccessibleProperty, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -637,7 +640,7 @@ func (x *ActionRow) UpdateRelation(FirstRelationVar gtk.AccessibleRelation, varA
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ActionRow) UpdateRelationValue(NRelationsVar int32, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ActionRow) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.AccessibleRelation, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -670,7 +673,7 @@ func (x *ActionRow) UpdateState(FirstStateVar gtk.AccessibleState, varArgs ...in
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ActionRow) UpdateStateValue(NStatesVar int32, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
+func (x *ActionRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState, ValuesVar []gobject.Value) {
 	gtk.XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 
@@ -702,8 +705,11 @@ func (x *ActionRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ActionRow) SetActionName(ActionNameVar string) {
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+func (x *ActionRow) SetActionName(ActionNameVar *string) {
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
 }
 
 // Sets the target of an actionable widget.

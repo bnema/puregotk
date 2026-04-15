@@ -134,7 +134,7 @@ func (c *ShortcutsWindow) SetGoPointer(ptr uintptr) {
 func (x *ShortcutsWindow) SetPropertySectionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("section-name", &v)
 }
 
@@ -160,7 +160,7 @@ func (x *ShortcutsWindow) GetPropertySectionName() string {
 func (x *ShortcutsWindow) SetPropertyViewName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("view-name", &v)
 }
 
@@ -183,7 +183,7 @@ func (x *ShortcutsWindow) GetPropertyViewName() string {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is the &lt;kbd&gt;Escape&lt;/kbd&gt; key.
-func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
+func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
@@ -210,7 +210,7 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;F&lt;/kbd&gt;.
-func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
+func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
@@ -298,7 +298,7 @@ func (x *ShortcutsWindow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsWindow) GetBounds(XVar *int32, YVar *int32, WidthVar *int32, HeightVar *int32) bool {
+func (x *ShortcutsWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
 }
@@ -414,7 +414,7 @@ func (x *ShortcutsWindow) UpdateProperty(FirstPropertyVar AccessibleProperty, va
 // property change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsWindow) UpdatePropertyValue(NPropertiesVar int32, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
+func (x *ShortcutsWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []AccessibleProperty, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdatePropertyValue(x.GoPointer(), NPropertiesVar, PropertiesVar, ValuesVar)
 }
 
@@ -446,7 +446,7 @@ func (x *ShortcutsWindow) UpdateRelation(FirstRelationVar AccessibleRelation, va
 // relation change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsWindow) UpdateRelationValue(NRelationsVar int32, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
+func (x *ShortcutsWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRelation, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateRelationValue(x.GoPointer(), NRelationsVar, RelationsVar, ValuesVar)
 }
 
@@ -479,7 +479,7 @@ func (x *ShortcutsWindow) UpdateState(FirstStateVar AccessibleState, varArgs ...
 // state change must be communicated to assistive technologies.
 //
 // This function is meant to be used by language bindings.
-func (x *ShortcutsWindow) UpdateStateValue(NStatesVar int32, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
+func (x *ShortcutsWindow) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, ValuesVar []gobject.Value) {
 	XGtkAccessibleUpdateStateValue(x.GoPointer(), NStatesVar, StatesVar, ValuesVar)
 }
 

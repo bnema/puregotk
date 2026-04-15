@@ -156,11 +156,14 @@ func (x *StringFilter) SetMatchMode(ModeVar StringFilterMatchMode) {
 	xStringFilterSetMatchMode(x.GoPointer(), ModeVar)
 }
 
-var xStringFilterSetSearch func(uintptr, string)
+var xStringFilterSetSearch func(uintptr, uintptr)
 
 // Sets the string to search for.
-func (x *StringFilter) SetSearch(SearchVar string) {
-	xStringFilterSetSearch(x.GoPointer(), SearchVar)
+func (x *StringFilter) SetSearch(SearchVar *string) {
+	SearchVarPtr := core.GStrdupNullable(SearchVar)
+	defer core.GFreeNullable(SearchVarPtr)
+
+	xStringFilterSetSearch(x.GoPointer(), SearchVarPtr)
 }
 
 func (c *StringFilter) GoPointer() uintptr {
@@ -196,7 +199,7 @@ func (x *StringFilter) GetPropertyIgnoreCase() bool {
 func (x *StringFilter) SetPropertySearch(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("search", &v)
 }
 

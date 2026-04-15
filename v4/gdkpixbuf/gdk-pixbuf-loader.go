@@ -31,24 +31,24 @@ func (x *PixbufLoaderClass) GoPointer() uintptr {
 }
 
 // OverrideSizePrepared sets the "size_prepared" callback function.
-func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int32, int32)) {
+func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int, int)) {
 	if cb == nil {
 		x.xSizePrepared = 0
 	} else {
-		x.xSizePrepared = purego.NewCallback(func(LoaderVarp uintptr, WidthVarp int32, HeightVarp int32) {
+		x.xSizePrepared = purego.NewCallback(func(LoaderVarp uintptr, WidthVarp int, HeightVarp int) {
 			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp), WidthVarp, HeightVarp)
 		})
 	}
 }
 
 // GetSizePrepared gets the "size_prepared" callback function.
-func (x *PixbufLoaderClass) GetSizePrepared() func(*PixbufLoader, int32, int32) {
+func (x *PixbufLoaderClass) GetSizePrepared() func(*PixbufLoader, int, int) {
 	if x.xSizePrepared == 0 {
 		return nil
 	}
-	var rawCallback func(LoaderVarp uintptr, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(LoaderVarp uintptr, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xSizePrepared)
-	return func(LoaderVar *PixbufLoader, WidthVar int32, HeightVar int32) {
+	return func(LoaderVar *PixbufLoader, WidthVar int, HeightVar int) {
 		rawCallback(LoaderVar.GoPointer(), WidthVar, HeightVar)
 	}
 }
@@ -77,24 +77,24 @@ func (x *PixbufLoaderClass) GetAreaPrepared() func(*PixbufLoader) {
 }
 
 // OverrideAreaUpdated sets the "area_updated" callback function.
-func (x *PixbufLoaderClass) OverrideAreaUpdated(cb func(*PixbufLoader, int32, int32, int32, int32)) {
+func (x *PixbufLoaderClass) OverrideAreaUpdated(cb func(*PixbufLoader, int, int, int, int)) {
 	if cb == nil {
 		x.xAreaUpdated = 0
 	} else {
-		x.xAreaUpdated = purego.NewCallback(func(LoaderVarp uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32) {
+		x.xAreaUpdated = purego.NewCallback(func(LoaderVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
 			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp), XVarp, YVarp, WidthVarp, HeightVarp)
 		})
 	}
 }
 
 // GetAreaUpdated gets the "area_updated" callback function.
-func (x *PixbufLoaderClass) GetAreaUpdated() func(*PixbufLoader, int32, int32, int32, int32) {
+func (x *PixbufLoaderClass) GetAreaUpdated() func(*PixbufLoader, int, int, int, int) {
 	if x.xAreaUpdated == 0 {
 		return nil
 	}
-	var rawCallback func(LoaderVarp uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32)
+	var rawCallback func(LoaderVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int)
 	purego.RegisterFunc(&rawCallback, x.xAreaUpdated)
-	return func(LoaderVar *PixbufLoader, XVar int32, YVar int32, WidthVar int32, HeightVar int32) {
+	return func(LoaderVar *PixbufLoader, XVar int, YVar int, WidthVar int, HeightVar int) {
 		rawCallback(LoaderVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	}
 }
@@ -360,7 +360,7 @@ func (x *PixbufLoader) GetPixbuf() *Pixbuf {
 	return cls
 }
 
-var xPixbufLoaderSetSize func(uintptr, int32, int32)
+var xPixbufLoaderSetSize func(uintptr, int, int)
 
 // Causes the image to be scaled while it is loaded.
 //
@@ -370,7 +370,7 @@ var xPixbufLoaderSetSize func(uintptr, int32, int32)
 //
 // Attempts to set the desired image size  are ignored after the
 // emission of the ::size-prepared signal.
-func (x *PixbufLoader) SetSize(WidthVar int32, HeightVar int32) {
+func (x *PixbufLoader) SetSize(WidthVar int, HeightVar int) {
 	xPixbufLoaderSetSize(x.GoPointer(), WidthVar, HeightVar)
 }
 
@@ -417,7 +417,7 @@ func (c *PixbufLoader) SetGoPointer(ptr uintptr) {
 // After this signal is emitted, applications can call
 // gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded
 // pixbuf.
-func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
+func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
@@ -447,7 +447,7 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 //
 // Applications can use this signal to know when to repaint
 // areas of an image that is being loaded.
-func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, int32, int32)) uint32 {
+func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
@@ -455,7 +455,7 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, i
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, XVarp int32, YVarp int32, WidthVarp int32, HeightVarp int32) {
+	fcb := func(clsPtr uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -474,7 +474,7 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int32, int32, i
 // It can be used by different parts of an application to receive
 // notification when an image loader is closed by the code that
 // drives it.
-func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
+func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
@@ -503,7 +503,7 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 // Applications can call gdk_pixbuf_loader_set_size() in response
 // to this signal to set the desired size to which the image
 // should be scaled.
-func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int32, int32)) uint32 {
+func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
@@ -511,7 +511,7 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int32, int32))
 		return handlerID
 	}
 
-	fcb := func(clsPtr uintptr, WidthVarp int32, HeightVarp int32) {
+	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb

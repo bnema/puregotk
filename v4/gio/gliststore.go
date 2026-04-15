@@ -72,7 +72,7 @@ func (x *ListStore) Append(ItemVar *gobject.Object) {
 	xListStoreAppend(x.GoPointer(), ItemVar.GoPointer())
 }
 
-var xListStoreFind func(uintptr, uintptr, *uint32) bool
+var xListStoreFind func(uintptr, uintptr, *uint) bool
 
 // Looks up the given @item in the list store by looping over the items until
 // the first occurrence of @item. If @item was not found, then @position will
@@ -80,12 +80,12 @@ var xListStoreFind func(uintptr, uintptr, *uint32) bool
 //
 // If you need to compare the two items with a custom comparison function, use
 // g_list_store_find_with_equal_func() with a custom #GEqualFunc instead.
-func (x *ListStore) Find(ItemVar *gobject.Object, PositionVar *uint32) bool {
+func (x *ListStore) Find(ItemVar *gobject.Object, PositionVar *uint) bool {
 	cret := xListStoreFind(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
 	return cret
 }
 
-var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, *uint32) bool
+var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, *uint) bool
 
 // Looks up the given @item in the list store by looping over the items and
 // comparing them with @equal_func until the first occurrence of @item which
@@ -95,12 +95,12 @@ var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, *uint32) bool
 // @item is always passed as second parameter to @equal_func.
 //
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
-func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFunc, PositionVar *uint32) bool {
+func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFunc, PositionVar *uint) bool {
 	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), PositionVar)
 	return cret
 }
 
-var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, *uint32) bool
+var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, *uint) bool
 
 // Like g_list_store_find_with_equal_func() but with an additional @user_data
 // that is passed to @equal_func.
@@ -108,12 +108,12 @@ var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, *ui
 // @item is always passed as second parameter to @equal_func.
 //
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
-func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFuncFull, UserDataVar uintptr, PositionVar *uint32) bool {
+func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFuncFull, UserDataVar uintptr, PositionVar *uint) bool {
 	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), UserDataVar, PositionVar)
 	return cret
 }
 
-var xListStoreInsert func(uintptr, uint32, uintptr)
+var xListStoreInsert func(uintptr, uint, uintptr)
 
 // Inserts @item into @store at @position. @item must be of type
 // #GListStore:item-type or derived from it. @position must be smaller
@@ -123,11 +123,11 @@ var xListStoreInsert func(uintptr, uint32, uintptr)
 //
 // Use g_list_store_splice() to insert multiple items at the same time
 // efficiently.
-func (x *ListStore) Insert(PositionVar uint32, ItemVar *gobject.Object) {
+func (x *ListStore) Insert(PositionVar uint, ItemVar *gobject.Object) {
 	xListStoreInsert(x.GoPointer(), PositionVar, ItemVar.GoPointer())
 }
 
-var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint32
+var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint
 
 // Inserts @item into @store at a position to be determined by the
 // @compare_func.
@@ -137,19 +137,19 @@ var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint32
 // inserting items by way of this function.
 //
 // This function takes a ref on @item.
-func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) uint32 {
+func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) uint {
 	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 	return cret
 }
 
-var xListStoreRemove func(uintptr, uint32)
+var xListStoreRemove func(uintptr, uint)
 
 // Removes the item from @store that is at @position. @position must be
 // smaller than the current length of the list.
 //
 // Use g_list_store_splice() to remove multiple items at the same time
 // efficiently.
-func (x *ListStore) Remove(PositionVar uint32) {
+func (x *ListStore) Remove(PositionVar uint) {
 	xListStoreRemove(x.GoPointer(), PositionVar)
 }
 
@@ -167,7 +167,7 @@ func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintp
 	xListStoreSort(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
 }
 
-var xListStoreSplice func(uintptr, uint32, uint32, []gobject.Object, uint32)
+var xListStoreSplice func(uintptr, uint, uint, []gobject.Object, uint)
 
 // Changes @store by removing @n_removals items and adding @n_additions
 // items to it. @additions must contain @n_additions items of type
@@ -182,7 +182,7 @@ var xListStoreSplice func(uintptr, uint32, uint32, []gobject.Object, uint32)
 // The parameters @position and @n_removals must be correct (ie:
 // @position + @n_removals must be less than or equal to the length of
 // the list at the time this function is called).
-func (x *ListStore) Splice(PositionVar uint32, NRemovalsVar uint32, AdditionsVar []gobject.Object, NAdditionsVar uint32) {
+func (x *ListStore) Splice(PositionVar uint, NRemovalsVar uint, AdditionsVar []gobject.Object, NAdditionsVar uint) {
 	xListStoreSplice(x.GoPointer(), PositionVar, NRemovalsVar, AdditionsVar, NAdditionsVar)
 }
 
@@ -199,10 +199,10 @@ func (c *ListStore) SetGoPointer(ptr uintptr) {
 
 // GetPropertyNItems gets the "n-items" property.
 // The number of items contained in this list store.
-func (x *ListStore) GetPropertyNItems() uint32 {
+func (x *ListStore) GetPropertyNItems() uint {
 	var v gobject.Value
 	x.GetProperty("n-items", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Get the item at @position.
@@ -214,7 +214,7 @@ func (x *ListStore) GetPropertyNItems() uint32 {
 // of the list.
 //
 // See also: g_list_model_get_n_items()
-func (x *ListStore) GetItem(PositionVar uint32) uintptr {
+func (x *ListStore) GetItem(PositionVar uint) uintptr {
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
 	return cret
 }
@@ -237,7 +237,7 @@ func (x *ListStore) GetItemType() types.GType {
 // Depending on the model implementation, calling this function may be
 // less efficient than iterating the list with increasing values for
 // @position until g_list_model_get_item() returns %NULL.
-func (x *ListStore) GetNItems() uint32 {
+func (x *ListStore) GetNItems() uint {
 	cret := XGListModelGetNItems(x.GoPointer())
 	return cret
 }
@@ -254,7 +254,7 @@ func (x *ListStore) GetNItems() uint32 {
 // of g_list_model_get_item().
 //
 // See also: g_list_model_get_n_items()
-func (x *ListStore) GetObject(PositionVar uint32) *gobject.Object {
+func (x *ListStore) GetObject(PositionVar uint) *gobject.Object {
 	var cls *gobject.Object
 
 	cret := XGListModelGetObject(x.GoPointer(), PositionVar)
@@ -287,7 +287,7 @@ func (x *ListStore) GetObject(PositionVar uint32) *gobject.Object {
 // series of accesses to the model via the API, without returning to the
 // mainloop, and without calling other code, will continue to view the
 // same contents of the model.
-func (x *ListStore) ItemsChanged(PositionVar uint32, RemovedVar uint32, AddedVar uint32) {
+func (x *ListStore) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 	XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
 }
 

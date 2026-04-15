@@ -127,11 +127,11 @@ func (x *CellLayoutIface) GetClear() func(CellLayout) {
 // Adds an attribute mapping to the list in
 //
 //	cell_layout.
-func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer, string, int32)) {
+func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer, string, int)) {
 	if cb == nil {
 		x.xAddAttribute = 0
 	} else {
-		x.xAddAttribute = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int32) {
+		x.xAddAttribute = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int) {
 			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), AttributeVarp, ColumnVarp)
 		})
 	}
@@ -141,13 +141,13 @@ func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer
 // Adds an attribute mapping to the list in
 //
 //	cell_layout.
-func (x *CellLayoutIface) GetAddAttribute() func(CellLayout, *CellRenderer, string, int32) {
+func (x *CellLayoutIface) GetAddAttribute() func(CellLayout, *CellRenderer, string, int) {
 	if x.xAddAttribute == 0 {
 		return nil
 	}
-	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int32)
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int)
 	purego.RegisterFunc(&rawCallback, x.xAddAttribute)
-	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, AttributeVar string, ColumnVar int32) {
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
 		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
 	}
 }
@@ -212,11 +212,11 @@ func (x *CellLayoutIface) GetClearAttributes() func(CellLayout, *CellRenderer) {
 
 // OverrideReorder sets the "reorder" callback function.
 // Re-inserts cell at position.
-func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int32)) {
+func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int)) {
 	if cb == nil {
 		x.xReorder = 0
 	} else {
-		x.xReorder = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int32) {
+		x.xReorder = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int) {
 			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), PositionVarp)
 		})
 	}
@@ -224,13 +224,13 @@ func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int
 
 // GetReorder gets the "reorder" callback function.
 // Re-inserts cell at position.
-func (x *CellLayoutIface) GetReorder() func(CellLayout, *CellRenderer, int32) {
+func (x *CellLayoutIface) GetReorder() func(CellLayout, *CellRenderer, int) {
 	if x.xReorder == 0 {
 		return nil
 	}
-	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int32)
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int)
 	purego.RegisterFunc(&rawCallback, x.xReorder)
-	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, PositionVar int32) {
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, PositionVar int) {
 		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), PositionVar)
 	}
 }
@@ -433,14 +433,14 @@ func (x *CellLayoutIface) GetGetArea() func(CellLayout) *CellArea {
 type CellLayout interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int32)
+	AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int)
 	Clear()
 	ClearAttributes(CellVar *CellRenderer)
 	GetArea() *CellArea
 	GetCells() *glib.List
 	PackEnd(CellVar *CellRenderer, ExpandVar bool)
 	PackStart(CellVar *CellRenderer, ExpandVar bool)
-	Reorder(CellVar *CellRenderer, PositionVar int32)
+	Reorder(CellVar *CellRenderer, PositionVar int)
 	SetAttributes(CellVar *CellRenderer, varArgs ...interface{})
 	SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify)
 }
@@ -473,7 +473,7 @@ func (x *CellLayoutBase) SetGoPointer(ptr uintptr) {
 // example if column 2 of the model contains strings, you could have the
 // “text” attribute of a `GtkCellRendererText` get its values from column 2.
 // In this context "attribute" and "property" are used interchangeably.
-func (x *CellLayoutBase) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int32) {
+func (x *CellLayoutBase) AddAttribute(CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
 	XGtkCellLayoutAddAttribute(x.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
 }
 
@@ -537,7 +537,7 @@ func (x *CellLayoutBase) PackStart(CellVar *CellRenderer, ExpandVar bool) {
 //
 // Note that @cell has already to be packed into @cell_layout
 // for this to function properly.
-func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int32) {
+func (x *CellLayoutBase) Reorder(CellVar *CellRenderer, PositionVar int) {
 	XGtkCellLayoutReorder(x.GoPointer(), CellVar.GoPointer(), PositionVar)
 }
 
@@ -565,14 +565,14 @@ func (x *CellLayoutBase) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLay
 }
 
 var (
-	XGtkCellLayoutAddAttribute    func(uintptr, uintptr, string, int32)
+	XGtkCellLayoutAddAttribute    func(uintptr, uintptr, string, int)
 	XGtkCellLayoutClear           func(uintptr)
 	XGtkCellLayoutClearAttributes func(uintptr, uintptr)
 	XGtkCellLayoutGetArea         func(uintptr) uintptr
 	XGtkCellLayoutGetCells        func(uintptr) uintptr
 	XGtkCellLayoutPackEnd         func(uintptr, uintptr, bool)
 	XGtkCellLayoutPackStart       func(uintptr, uintptr, bool)
-	XGtkCellLayoutReorder         func(uintptr, uintptr, int32)
+	XGtkCellLayoutReorder         func(uintptr, uintptr, int)
 	XGtkCellLayoutSetAttributes   func(uintptr, uintptr, ...interface{})
 	XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintptr)
 )
