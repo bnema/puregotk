@@ -82,6 +82,13 @@ func main() {
 	}
 	data, err = os.ReadFile("templates/gdk_dmabuf")
 	if err == nil {
-		os.WriteFile("v4/gdk/gdkdmabuftexturebuilder_extra.go", data, 0o644)
+		if mkerr := os.MkdirAll("v4/gdk", 0o755); mkerr != nil {
+			panic(mkerr)
+		}
+		if werr := os.WriteFile("v4/gdk/gdkdmabuftexturebuilder_extra.go", data, 0o644); werr != nil {
+			panic(werr)
+		}
+	} else if !os.IsNotExist(err) {
+		panic(err)
 	}
 }

@@ -3,6 +3,7 @@
 package gdk_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/bnema/puregotk/v4/gdk"
@@ -23,9 +24,19 @@ func TestDmabufTextureBuilderSymbolsAndProperties(t *testing.T) {
 	builder.SetHeight(32)
 	builder.SetFourcc(0x34325241) // DRM_FORMAT_ARGB8888
 	builder.SetModifier(0)
+	file, err := os.Open("/dev/null")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := file.Close(); err != nil {
+			t.Errorf("close test fd: %v", err)
+		}
+	}()
+
 	builder.SetPremultiplied(true)
 	builder.SetNPlanes(1)
-	builder.SetFd(0, 0)
+	builder.SetFd(0, int(file.Fd()))
 	builder.SetStride(0, 256)
 	builder.SetOffset(0, 0)
 
@@ -44,8 +55,11 @@ func TestDmabufTextureBuilderSymbolsAndProperties(t *testing.T) {
 	if got := builder.GetNPlanes(); got != 1 {
 		t.Fatalf("GetNPlanes() = %d, want 1", got)
 	}
-	if got := builder.GetFd(0); got != 0 {
-		t.Fatalf("GetFd(0) = %d, want 0", got)
+	if got := builder.GetPremultiplied(); got != true {
+		t.Fatalf("GetPremultiplied() = %t, want true", got)
+	}
+	if got := builder.GetFd(0); got != int(file.Fd()) {
+		t.Fatalf("GetFd(0) = %d, want %d", got, file.Fd())
 	}
 	if got := builder.GetStride(0); got != 256 {
 		t.Fatalf("GetStride(0) = %d, want 256", got)
