@@ -80,4 +80,8 @@ func main() {
 	if err == nil {
 		os.WriteFile("v4/glib/more_other.go", data, 0o644)
 	}
+	data, err = os.ReadFile("templates/gdk_dmabuf")
+	if err == nil {
+		os.WriteFile("v4/gdk/gdkdmabuftexturebuilder_extra.go", data, 0o644)
+	}
 }
