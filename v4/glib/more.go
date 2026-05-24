@@ -74,6 +74,9 @@ func releaseCallback(cbPtr uintptr) {
 		callbacks.callbackRefCount[cbPtr] = count
 		return
 	}
+	if refPtr, ok := callbacks.refs[cbPtr]; ok {
+		_ = purego.UnrefCallback(refPtr)
+	}
 	delete(callbacks.callbackRefCount, cbPtr)
 	delete(callbacks.refs, cbPtr)
 	delete(callbacks.closures, cbPtr)
