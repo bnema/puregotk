@@ -22,30 +22,38 @@ var callbacks = struct {
 	callbackRefCount:  make(map[uintptr]int),
 }
 
-// GetCallback retrives a callback reference by value.
+// GetCallback retrieves and acquires a callback reference by value.
+// The acquired reference is transferred to SaveHandlerMapping, which releases
+// it when the signal handler is disconnected.
 // Users should not need to call this.
 func GetCallback(cbPtr uintptr) (uintptr, bool) {
-	callbacks.RLock()
-	defer callbacks.RUnlock()
+	callbacks.Lock()
+	defer callbacks.Unlock()
 	refPtr, ok := callbacks.refs[cbPtr]
-	return refPtr, ok
+	if !ok {
+		return 0, false
+	}
+	retainCallback(cbPtr)
+	return refPtr, true
 }
 
-// SaveCallback saves a reference to the callback value.
+// SaveCallback saves and acquires a reference to the callback value.
 // Users should not need to call this.
 func SaveCallback(cbPtr uintptr, refPtr uintptr) {
 	callbacks.Lock()
 	callbacks.refs[cbPtr] = refPtr
+	retainCallback(cbPtr)
 	callbacks.Unlock()
 }
 
-// SaveCallbackWithClosure saves a reference to the callback value and retains
-// the provided closure to prevent it from being garbage collected.
+// SaveCallbackWithClosure saves and acquires a reference to the callback value
+// and retains the provided closure to prevent it from being garbage collected.
 // Users should not need to call this.
 func SaveCallbackWithClosure(cbPtr uintptr, refPtr uintptr, closure interface{}) {
 	callbacks.Lock()
 	callbacks.refs[cbPtr] = refPtr
 	callbacks.closures[cbPtr] = closure
+	retainCallback(cbPtr)
 	callbacks.Unlock()
 }
 
@@ -74,28 +82,32 @@ func releaseCallback(cbPtr uintptr) {
 		callbacks.callbackRefCount[cbPtr] = count
 		return
 	}
+	if refPtr, ok := callbacks.refs[cbPtr]; ok {
+		_ = purego.UnrefCallback(refPtr)
+	}
 	delete(callbacks.callbackRefCount, cbPtr)
 	delete(callbacks.refs, cbPtr)
 	delete(callbacks.closures, cbPtr)
 }
 
 // SaveHandlerMapping records a signal handler ID → callback pointer mapping so
-// DisconnectSignal can clean up the callback registry.
+// DisconnectSignal can clean up the callback registry. cbPtr must already have
+// been acquired by GetCallback, SaveCallback, or SaveCallbackWithClosure.
 func SaveHandlerMapping(handlerID uint, cbPtr uintptr) {
-	if handlerID == 0 {
-		return
-	}
-
 	callbacks.Lock()
 	defer callbacks.Unlock()
+	if handlerID == 0 {
+		releaseCallback(cbPtr)
+		return
+	}
 	if prevCbPtr, ok := callbacks.handlerToCallback[handlerID]; ok {
 		if prevCbPtr == cbPtr {
+			releaseCallback(cbPtr)
 			return
 		}
 		releaseCallback(prevCbPtr)
 	}
 	callbacks.handlerToCallback[handlerID] = cbPtr
-	retainCallback(cbPtr)
 }
 
 // RemoveCallbackByHandler removes a callback from the registry using a signal handler ID.

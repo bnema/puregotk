@@ -18,7 +18,9 @@ func unrefCallback(fnPtr interface{}) error {
 		return fmt.Errorf("type must be a function pointer")
 	}
 	cbPtr := reflect.ValueOf(fnPtr).Pointer()
-	refPtr, ok := GetCallback(cbPtr)
+	callbacks.RLock()
+	refPtr, ok := callbacks.refs[cbPtr]
+	callbacks.RUnlock()
 	if !ok {
 		return purego.UnrefCallbackFnPtr(fnPtr)
 	}
