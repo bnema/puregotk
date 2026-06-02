@@ -22,6 +22,14 @@ func (x *ZlibDecompressorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ZlibDecompressorClassNewFromInternalPtr(ptr uintptr) *ZlibDecompressorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ZlibDecompressorClass)(rawPtr)
+}
+
 // `GZlibDecompressor` is an implementation of [iface@Gio.Converter] that
 // decompresses data compressed with zlib.
 type ZlibDecompressor struct {

@@ -31,6 +31,14 @@ func (x *WebExtensionMatchPattern) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebExtensionMatchPatternNewFromInternalPtr(ptr uintptr) *WebExtensionMatchPattern {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebExtensionMatchPattern)(rawPtr)
+}
+
 var xNewWebExtensionMatchPatternAllHostsAndSchemes func() uintptr
 
 // Returns a new #WebKitWebExtensionMatchPattern that has `*` for scheme, host, and path.

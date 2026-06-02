@@ -23,6 +23,14 @@ func (x *ViewStackClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewStackClassNewFromInternalPtr(ptr uintptr) *ViewStackClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewStackClass)(rawPtr)
+}
+
 type ViewStackPageClass struct {
 	_ structs.HostLayout
 
@@ -33,6 +41,14 @@ func (x *ViewStackPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewStackPageClassNewFromInternalPtr(ptr uintptr) *ViewStackPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewStackPageClass)(rawPtr)
+}
+
 type ViewStackPagesClass struct {
 	_ structs.HostLayout
 
@@ -41,6 +57,14 @@ type ViewStackPagesClass struct {
 
 func (x *ViewStackPagesClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ViewStackPagesClassNewFromInternalPtr(ptr uintptr) *ViewStackPagesClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewStackPagesClass)(rawPtr)
 }
 
 // A view container for [class@ViewSwitcher].

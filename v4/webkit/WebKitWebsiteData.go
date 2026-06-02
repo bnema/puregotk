@@ -39,6 +39,14 @@ func (x *WebsiteData) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsiteDataNewFromInternalPtr(ptr uintptr) *WebsiteData {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsiteData)(rawPtr)
+}
+
 var xWebsiteDataGetName func(uintptr) string
 
 // Gets the name of #WebKitWebsiteData.

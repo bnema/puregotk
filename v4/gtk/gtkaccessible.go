@@ -37,6 +37,14 @@ func (x *AccessibleInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AccessibleInterfaceNewFromInternalPtr(ptr uintptr) *AccessibleInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleInterface)(rawPtr)
+}
+
 // OverrideGetAtContext sets the "get_at_context" callback function.
 // retrieve the platform-specific accessibility context
 //
@@ -259,6 +267,14 @@ func AccessibleListGLibType() types.GType {
 
 func (x *AccessibleList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AccessibleListNewFromInternalPtr(ptr uintptr) *AccessibleList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleList)(rawPtr)
 }
 
 var xNewAccessibleListFromArray func(uintptr, uint) uintptr

@@ -23,6 +23,14 @@ func (x *OverlaySplitViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OverlaySplitViewClassNewFromInternalPtr(ptr uintptr) *OverlaySplitViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OverlaySplitViewClass)(rawPtr)
+}
+
 // A widget presenting sidebar and content side by side or as an overlay.
 //
 // &lt;picture&gt;

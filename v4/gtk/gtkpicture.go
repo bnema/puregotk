@@ -24,6 +24,14 @@ func (x *PictureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PictureClassNewFromInternalPtr(ptr uintptr) *PictureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PictureClass)(rawPtr)
+}
+
 // Displays a `GdkPaintable`.
 //
 // &lt;picture&gt;

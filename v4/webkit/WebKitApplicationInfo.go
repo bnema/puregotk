@@ -25,6 +25,14 @@ func (x *ApplicationInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationInfoNewFromInternalPtr(ptr uintptr) *ApplicationInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationInfo)(rawPtr)
+}
+
 var xNewApplicationInfo func() uintptr
 
 // Creates a new #WebKitApplicationInfo

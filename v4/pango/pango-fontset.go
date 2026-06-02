@@ -45,6 +45,14 @@ func (x *FontsetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontsetClassNewFromInternalPtr(ptr uintptr) *FontsetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontsetClass)(rawPtr)
+}
+
 // OverrideGetFont sets the "get_font" callback function.
 // a function to get the font in the fontset that contains the
 //

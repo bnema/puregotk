@@ -24,6 +24,14 @@ func (x *CookieManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CookieManagerClassNewFromInternalPtr(ptr uintptr) *CookieManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CookieManagerClass)(rawPtr)
+}
+
 // Enum values used to denote the cookie acceptance policies.
 type CookieAcceptPolicy int
 

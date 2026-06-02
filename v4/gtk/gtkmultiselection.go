@@ -22,6 +22,14 @@ func (x *MultiSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MultiSelectionClassNewFromInternalPtr(ptr uintptr) *MultiSelectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MultiSelectionClass)(rawPtr)
+}
+
 // A selection model that allows selecting multiple elements.
 type MultiSelection struct {
 	gobject.Object

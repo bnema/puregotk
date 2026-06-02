@@ -21,12 +21,28 @@ func (x *TcpConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TcpConnectionClassNewFromInternalPtr(ptr uintptr) *TcpConnectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TcpConnectionClass)(rawPtr)
+}
+
 type TcpConnectionPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *TcpConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TcpConnectionPrivateNewFromInternalPtr(ptr uintptr) *TcpConnectionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TcpConnectionPrivate)(rawPtr)
 }
 
 // This is the subclass of [class@Gio.SocketConnection] that is created

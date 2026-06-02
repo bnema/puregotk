@@ -62,6 +62,14 @@ func (x *OutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OutputStreamClassNewFromInternalPtr(ptr uintptr) *OutputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OutputStreamClass)(rawPtr)
+}
+
 // OverrideWriteFn sets the "write_fn" callback function.
 func (x *OutputStreamClass) OverrideWriteFn(cb func(*OutputStream, []byte, uint, *Cancellable) int) {
 	if cb == nil {
@@ -528,6 +536,14 @@ type OutputStreamPrivate struct {
 
 func (x *OutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func OutputStreamPrivateNewFromInternalPtr(ptr uintptr) *OutputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OutputStreamPrivate)(rawPtr)
 }
 
 // `GOutputStream` is a base class for implementing streaming output.

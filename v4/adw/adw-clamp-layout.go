@@ -22,6 +22,14 @@ func (x *ClampLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ClampLayoutClassNewFromInternalPtr(ptr uintptr) *ClampLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClampLayoutClass)(rawPtr)
+}
+
 // A layout manager constraining its children to a given size.
 //
 // &lt;picture&gt;

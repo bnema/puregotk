@@ -39,6 +39,14 @@ func (x *GlyphGeometry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GlyphGeometryNewFromInternalPtr(ptr uintptr) *GlyphGeometry {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphGeometry)(rawPtr)
+}
+
 // A `PangoGlyphInfo` structure represents a single glyph with
 // positioning information and visual attributes.
 type GlyphInfo struct {
@@ -53,6 +61,14 @@ type GlyphInfo struct {
 
 func (x *GlyphInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GlyphInfoNewFromInternalPtr(ptr uintptr) *GlyphInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphInfo)(rawPtr)
 }
 
 // A `PangoGlyphString` is used to store strings of glyphs with geometry
@@ -80,6 +96,14 @@ func GlyphStringGLibType() types.GType {
 
 func (x *GlyphString) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GlyphStringNewFromInternalPtr(ptr uintptr) *GlyphString {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphString)(rawPtr)
 }
 
 var xNewGlyphString func() uintptr
@@ -233,6 +257,14 @@ type GlyphVisAttr struct {
 
 func (x *GlyphVisAttr) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GlyphVisAttrNewFromInternalPtr(ptr uintptr) *GlyphVisAttr {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphVisAttr)(rawPtr)
 }
 
 // The `PangoGlyphUnit` type is used to store dimensions within

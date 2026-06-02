@@ -50,6 +50,14 @@ func (x *ActionGroupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ActionGroupInterfaceNewFromInternalPtr(ptr uintptr) *ActionGroupInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActionGroupInterface)(rawPtr)
+}
+
 // OverrideHasAction sets the "has_action" callback function.
 // the virtual function pointer for [method@Gio.ActionGroup.has_action]
 func (x *ActionGroupInterface) OverrideHasAction(cb func(ActionGroup, string) bool) {

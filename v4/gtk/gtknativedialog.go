@@ -37,6 +37,14 @@ func (x *NativeDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NativeDialogClassNewFromInternalPtr(ptr uintptr) *NativeDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NativeDialogClass)(rawPtr)
+}
+
 // OverrideResponse sets the "response" callback function.
 // class handler for the `GtkNativeDialog::response` signal
 func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int)) {

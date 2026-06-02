@@ -20,6 +20,14 @@ func (x *EventControllerFocusClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerFocusClassNewFromInternalPtr(ptr uintptr) *EventControllerFocusClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerFocusClass)(rawPtr)
+}
+
 // Tracks keyboard focus.
 //
 // The event controller offers [signal@Gtk.EventControllerFocus::enter]

@@ -34,6 +34,14 @@ func (x *PixbufAnimationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PixbufAnimationClassNewFromInternalPtr(ptr uintptr) *PixbufAnimationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufAnimationClass)(rawPtr)
+}
+
 // OverrideIsStaticImage sets the "is_static_image" callback function.
 // returns whether the given animation is just a static image.
 func (x *PixbufAnimationClass) OverrideIsStaticImage(cb func(*PixbufAnimation) bool) {
@@ -173,6 +181,14 @@ type PixbufAnimationIterClass struct {
 
 func (x *PixbufAnimationIterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PixbufAnimationIterClassNewFromInternalPtr(ptr uintptr) *PixbufAnimationIterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufAnimationIterClass)(rawPtr)
 }
 
 // OverrideGetDelayTime sets the "get_delay_time" callback function.

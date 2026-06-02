@@ -35,6 +35,14 @@ func (x *NavigationPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NavigationPageClassNewFromInternalPtr(ptr uintptr) *NavigationPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NavigationPageClass)(rawPtr)
+}
+
 // OverrideShowing sets the "showing" callback function.
 func (x *NavigationPageClass) OverrideShowing(cb func(*NavigationPage)) {
 	if cb == nil {
@@ -135,6 +143,14 @@ type NavigationViewClass struct {
 
 func (x *NavigationViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func NavigationViewClassNewFromInternalPtr(ptr uintptr) *NavigationViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NavigationViewClass)(rawPtr)
 }
 
 // A page within [class@NavigationView] or [class@NavigationSplitView].

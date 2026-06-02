@@ -21,6 +21,14 @@ func (x *AccessibleHyperlinkClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AccessibleHyperlinkClassNewFromInternalPtr(ptr uintptr) *AccessibleHyperlinkClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleHyperlinkClass)(rawPtr)
+}
+
 // The interface vtable for accessible objects containing links.
 type AccessibleHypertextInterface struct {
 	_ structs.HostLayout
@@ -36,6 +44,14 @@ type AccessibleHypertextInterface struct {
 
 func (x *AccessibleHypertextInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AccessibleHypertextInterfaceNewFromInternalPtr(ptr uintptr) *AccessibleHypertextInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleHypertextInterface)(rawPtr)
 }
 
 // OverrideGetNLinks sets the "get_n_links" callback function.

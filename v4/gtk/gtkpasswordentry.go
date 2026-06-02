@@ -21,6 +21,14 @@ func (x *PasswordEntryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PasswordEntryClassNewFromInternalPtr(ptr uintptr) *PasswordEntryClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PasswordEntryClass)(rawPtr)
+}
+
 // A single-line text entry widget for entering passwords and other secrets.
 //
 // &lt;picture&gt;

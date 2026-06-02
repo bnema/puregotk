@@ -24,6 +24,14 @@ func (x *List) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListNewFromInternalPtr(ptr uintptr) *List {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*List)(rawPtr)
+}
+
 var xClearList func(**List, uintptr)
 
 // Clears a pointer to a #GList, freeing it and, optionally, freeing its elements using @destroy.

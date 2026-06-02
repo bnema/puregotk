@@ -23,6 +23,14 @@ func (x *UserContentFilterStoreClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UserContentFilterStoreClassNewFromInternalPtr(ptr uintptr) *UserContentFilterStoreClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserContentFilterStoreClass)(rawPtr)
+}
+
 // Handles storage of user content filters on disk.
 //
 // The WebKitUserContentFilterStore provides the means to import and save

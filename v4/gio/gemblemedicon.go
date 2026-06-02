@@ -22,12 +22,28 @@ func (x *EmblemedIconClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EmblemedIconClassNewFromInternalPtr(ptr uintptr) *EmblemedIconClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EmblemedIconClass)(rawPtr)
+}
+
 type EmblemedIconPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *EmblemedIconPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func EmblemedIconPrivateNewFromInternalPtr(ptr uintptr) *EmblemedIconPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EmblemedIconPrivate)(rawPtr)
 }
 
 // `GEmblemedIcon` is an implementation of [iface@Gio.Icon] that supports

@@ -21,6 +21,14 @@ func (x *TreeExpanderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeExpanderClassNewFromInternalPtr(ptr uintptr) *TreeExpanderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeExpanderClass)(rawPtr)
+}
+
 // Provides an expander for a tree-like list.
 //
 // It is typically placed as a bottommost child into a `GtkListView`

@@ -34,6 +34,14 @@ func (x *ExpressionWatch) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ExpressionWatchNewFromInternalPtr(ptr uintptr) *ExpressionWatch {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ExpressionWatch)(rawPtr)
+}
+
 var xExpressionWatchEvaluate func(uintptr, *gobject.Value) bool
 
 // Evaluates the watched expression and on success stores the result

@@ -26,6 +26,14 @@ func (x *PreferencesGroupClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PreferencesGroupClassNewFromInternalPtr(ptr uintptr) *PreferencesGroupClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PreferencesGroupClass)(rawPtr)
+}
+
 // A group of preference rows.
 //
 // &lt;picture&gt;

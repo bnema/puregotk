@@ -21,12 +21,28 @@ func (x *CssProviderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CssProviderClassNewFromInternalPtr(ptr uintptr) *CssProviderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CssProviderClass)(rawPtr)
+}
+
 type CssProviderPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *CssProviderPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CssProviderPrivateNewFromInternalPtr(ptr uintptr) *CssProviderPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CssProviderPrivate)(rawPtr)
 }
 
 // A style provider for CSS.

@@ -25,6 +25,14 @@ func (x *InetAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InetAddressClassNewFromInternalPtr(ptr uintptr) *InetAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetAddressClass)(rawPtr)
+}
+
 // OverrideToString sets the "to_string" callback function.
 func (x *InetAddressClass) OverrideToString(cb func(*InetAddress) string) {
 	if cb == nil {
@@ -77,6 +85,14 @@ type InetAddressPrivate struct {
 
 func (x *InetAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InetAddressPrivateNewFromInternalPtr(ptr uintptr) *InetAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetAddressPrivate)(rawPtr)
 }
 
 // `GInetAddress` represents an IPv4 or IPv6 internet address. Use

@@ -22,6 +22,14 @@ func (x *StyleManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StyleManagerClassNewFromInternalPtr(ptr uintptr) *StyleManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StyleManagerClass)(rawPtr)
+}
+
 // Application color schemes for [property@StyleManager:color-scheme].
 type ColorScheme int
 

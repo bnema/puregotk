@@ -22,12 +22,28 @@ func (x *ProxyAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ProxyAddressClassNewFromInternalPtr(ptr uintptr) *ProxyAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyAddressClass)(rawPtr)
+}
+
 type ProxyAddressPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *ProxyAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ProxyAddressPrivateNewFromInternalPtr(ptr uintptr) *ProxyAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyAddressPrivate)(rawPtr)
 }
 
 // A [class@Gio.InetSocketAddress] representing a connection via a proxy server.

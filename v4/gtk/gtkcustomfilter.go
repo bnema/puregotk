@@ -27,6 +27,14 @@ func (x *CustomFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CustomFilterClassNewFromInternalPtr(ptr uintptr) *CustomFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CustomFilterClass)(rawPtr)
+}
+
 // Determines whether to include items with a callback.
 type CustomFilter struct {
 	Filter

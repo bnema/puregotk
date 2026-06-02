@@ -21,6 +21,14 @@ func (x *WindowControlsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowControlsClassNewFromInternalPtr(ptr uintptr) *WindowControlsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowControlsClass)(rawPtr)
+}
+
 // Shows window frame controls.
 //
 // Typical window frame controls are minimize, maximize and close buttons,

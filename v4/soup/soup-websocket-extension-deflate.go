@@ -18,6 +18,14 @@ func (x *WebsocketExtensionDeflateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsocketExtensionDeflateClassNewFromInternalPtr(ptr uintptr) *WebsocketExtensionDeflateClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsocketExtensionDeflateClass)(rawPtr)
+}
+
 // A SoupWebsocketExtensionDeflate is a [class@WebsocketExtension]
 // implementing permessage-deflate (RFC 7692).
 //

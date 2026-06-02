@@ -24,6 +24,14 @@ func (x *SplitButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SplitButtonClassNewFromInternalPtr(ptr uintptr) *SplitButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SplitButtonClass)(rawPtr)
+}
+
 // A combined button and dropdown widget.
 //
 // &lt;picture&gt;

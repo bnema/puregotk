@@ -76,6 +76,14 @@ func (x *Scanner) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScannerNewFromInternalPtr(ptr uintptr) *Scanner {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Scanner)(rawPtr)
+}
+
 var xScannerCurLine func(uintptr) uint
 
 // Returns the current line in the input stream (counting
@@ -324,6 +332,14 @@ type ScannerConfig struct {
 
 func (x *ScannerConfig) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ScannerConfigNewFromInternalPtr(ptr uintptr) *ScannerConfig {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScannerConfig)(rawPtr)
 }
 
 // A union holding the value of the token.

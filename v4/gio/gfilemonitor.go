@@ -36,6 +36,14 @@ func (x *FileMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileMonitorClassNewFromInternalPtr(ptr uintptr) *FileMonitorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileMonitorClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 func (x *FileMonitorClass) OverrideChanged(cb func(*FileMonitor, File, File, FileMonitorEvent)) {
 	if cb == nil {
@@ -203,6 +211,14 @@ type FileMonitorPrivate struct {
 
 func (x *FileMonitorPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileMonitorPrivateNewFromInternalPtr(ptr uintptr) *FileMonitorPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileMonitorPrivate)(rawPtr)
 }
 
 // Monitors a file or directory for changes.

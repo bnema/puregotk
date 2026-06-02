@@ -39,6 +39,14 @@ func (x *FontClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontClassNewFromInternalPtr(ptr uintptr) *FontClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontClass)(rawPtr)
+}
+
 // OverrideDescribe sets the "describe" callback function.
 func (x *FontClass) OverrideDescribe(cb func(*Font) *FontDescription) {
 	if cb == nil {
@@ -285,6 +293,14 @@ func FontDescriptionGLibType() types.GType {
 
 func (x *FontDescription) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FontDescriptionNewFromInternalPtr(ptr uintptr) *FontDescription {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontDescription)(rawPtr)
 }
 
 var xNewFontDescription func() uintptr
@@ -787,6 +803,14 @@ func (x *FontFaceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontFaceClassNewFromInternalPtr(ptr uintptr) *FontFaceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontFaceClass)(rawPtr)
+}
+
 // OverrideGetFaceName sets the "get_face_name" callback function.
 func (x *FontFaceClass) OverrideGetFaceName(cb func(*FontFace) string) {
 	if cb == nil {
@@ -988,6 +1012,14 @@ func (x *FontFamilyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontFamilyClassNewFromInternalPtr(ptr uintptr) *FontFamilyClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontFamilyClass)(rawPtr)
+}
+
 // OverrideListFaces sets the "list_faces" callback function.
 func (x *FontFamilyClass) OverrideListFaces(cb func(*FontFamily, *uintptr, *int)) {
 	if cb == nil {
@@ -1184,6 +1216,14 @@ func FontMetricsGLibType() types.GType {
 
 func (x *FontMetrics) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FontMetricsNewFromInternalPtr(ptr uintptr) *FontMetrics {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontMetrics)(rawPtr)
 }
 
 var xFontMetricsGetApproximateCharWidth func(uintptr) int

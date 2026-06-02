@@ -22,6 +22,14 @@ func (x *LayoutSlotClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LayoutSlotClassNewFromInternalPtr(ptr uintptr) *LayoutSlotClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutSlotClass)(rawPtr)
+}
+
 // A child slot within [class@Layout].
 //
 // While it contains a layout child, the [property@Gtk.Widget:visible] property

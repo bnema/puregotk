@@ -22,6 +22,14 @@ func (x *MultipartInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MultipartInputStreamClassNewFromInternalPtr(ptr uintptr) *MultipartInputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MultipartInputStreamClass)(rawPtr)
+}
+
 // Handles streams of multipart messages.
 //
 // This adds support for the multipart responses. For handling the

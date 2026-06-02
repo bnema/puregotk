@@ -19,6 +19,14 @@ func (x *ContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContextClassNewFromInternalPtr(ptr uintptr) *ContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContextClass)(rawPtr)
+}
+
 // A `PangoContext` stores global information used to control the
 // itemization process.
 //

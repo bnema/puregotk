@@ -22,6 +22,14 @@ func (x *MultiSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MultiSorterClassNewFromInternalPtr(ptr uintptr) *MultiSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MultiSorterClass)(rawPtr)
+}
+
 // Combines multiple sorters by trying them in turn.
 //
 // If the first sorter compares two items as equal,

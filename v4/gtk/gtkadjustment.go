@@ -34,6 +34,14 @@ func (x *AdjustmentClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AdjustmentClassNewFromInternalPtr(ptr uintptr) *AdjustmentClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AdjustmentClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 func (x *AdjustmentClass) OverrideChanged(cb func(*Adjustment)) {
 	if cb == nil {

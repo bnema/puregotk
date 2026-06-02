@@ -34,6 +34,14 @@ func (x *EntryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EntryClassNewFromInternalPtr(ptr uintptr) *EntryClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EntryClass)(rawPtr)
+}
+
 // OverrideActivate sets the "activate" callback function.
 // Class handler for the `GtkEntry::activate` signal. The default
 //

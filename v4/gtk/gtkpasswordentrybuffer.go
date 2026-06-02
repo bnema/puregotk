@@ -20,6 +20,14 @@ func (x *PasswordEntryBufferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PasswordEntryBufferClassNewFromInternalPtr(ptr uintptr) *PasswordEntryBufferClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PasswordEntryBufferClass)(rawPtr)
+}
+
 // A `GtkEntryBuffer` that locks the underlying memory to prevent it
 // from being swapped to disk.
 //

@@ -64,6 +64,14 @@ func (x *VolumeIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VolumeIfaceNewFromInternalPtr(ptr uintptr) *VolumeIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VolumeIface)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 // Changed signal that is emitted when the volume's state has changed.
 func (x *VolumeIface) OverrideChanged(cb func(Volume)) {

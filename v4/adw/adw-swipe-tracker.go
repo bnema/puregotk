@@ -23,6 +23,14 @@ func (x *SwipeTrackerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SwipeTrackerClassNewFromInternalPtr(ptr uintptr) *SwipeTrackerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SwipeTrackerClass)(rawPtr)
+}
+
 // A swipe tracker used in [class@Carousel], [class@NavigationView] and
 // [class@OverlaySplitView].
 //

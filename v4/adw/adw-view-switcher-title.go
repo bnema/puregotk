@@ -22,6 +22,14 @@ func (x *ViewSwitcherTitleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewSwitcherTitleClassNewFromInternalPtr(ptr uintptr) *ViewSwitcherTitleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewSwitcherTitleClass)(rawPtr)
+}
+
 // A view switcher title.
 //
 // &lt;picture&gt;

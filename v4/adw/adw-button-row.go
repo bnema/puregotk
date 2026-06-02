@@ -23,6 +23,14 @@ func (x *ButtonRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ButtonRowClassNewFromInternalPtr(ptr uintptr) *ButtonRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ButtonRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] that looks like a button.
 //
 // &lt;picture&gt;

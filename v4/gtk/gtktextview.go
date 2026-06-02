@@ -53,6 +53,14 @@ func (x *TextViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextViewClassNewFromInternalPtr(ptr uintptr) *TextViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextViewClass)(rawPtr)
+}
+
 // OverrideMoveCursor sets the "move_cursor" callback function.
 // The class handler for the `GtkTextView::move-cursor`
 //
@@ -446,6 +454,14 @@ type TextViewPrivate struct {
 
 func (x *TextViewPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TextViewPrivateNewFromInternalPtr(ptr uintptr) *TextViewPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextViewPrivate)(rawPtr)
 }
 
 const (

@@ -44,6 +44,14 @@ func (x *BuildableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BuildableIfaceNewFromInternalPtr(ptr uintptr) *BuildableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuildableIface)(rawPtr)
+}
+
 // OverrideSetId sets the "set_id" callback function.
 // Stores the id attribute given in the `GtkBuilder` UI definition.
 //
@@ -405,6 +413,14 @@ func (x *BuildableParseContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BuildableParseContextNewFromInternalPtr(ptr uintptr) *BuildableParseContext {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuildableParseContext)(rawPtr)
+}
+
 var xBuildableParseContextGetElement func(uintptr) string
 
 // Retrieves the name of the currently open element.
@@ -517,6 +533,14 @@ type BuildableParser struct {
 
 func (x *BuildableParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BuildableParserNewFromInternalPtr(ptr uintptr) *BuildableParser {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuildableParser)(rawPtr)
 }
 
 // OverrideStartElement sets the "start_element" callback function.

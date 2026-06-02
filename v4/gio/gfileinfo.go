@@ -20,6 +20,14 @@ func (x *FileInfoClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileInfoClassNewFromInternalPtr(ptr uintptr) *FileInfoClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileInfoClass)(rawPtr)
+}
+
 const (
 	// A key in the "access" namespace for checking deletion privileges.
 	//

@@ -20,6 +20,14 @@ func (x *GestureSwipeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureSwipeClassNewFromInternalPtr(ptr uintptr) *GestureSwipeClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureSwipeClass)(rawPtr)
+}
+
 // Recognizes swipe gestures.
 //
 // After a press/move/.../move/release sequence happens, the

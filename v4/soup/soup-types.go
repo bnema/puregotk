@@ -49,6 +49,14 @@ func (x *Cookie) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CookieNewFromInternalPtr(ptr uintptr) *Cookie {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Cookie)(rawPtr)
+}
+
 var xNewCookie func(string, string, string, string, int) uintptr
 
 // Creates a new [struct@Cookie] with the given attributes.
@@ -335,6 +343,14 @@ func (x *HSTSPolicy) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HSTSPolicyNewFromInternalPtr(ptr uintptr) *HSTSPolicy {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HSTSPolicy)(rawPtr)
+}
+
 var xNewHSTSPolicy func(string, uint, bool) uintptr
 
 // Creates a new [struct@HSTSPolicy] with the given attributes.
@@ -512,6 +528,14 @@ func MessageMetricsGLibType() types.GType {
 
 func (x *MessageMetrics) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MessageMetricsNewFromInternalPtr(ptr uintptr) *MessageMetrics {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageMetrics)(rawPtr)
 }
 
 var xMessageMetricsCopy func(uintptr) uintptr

@@ -31,6 +31,14 @@ func (x *OptionContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OptionContextNewFromInternalPtr(ptr uintptr) *OptionContext {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OptionContext)(rawPtr)
+}
+
 var xOptionContextAddGroup func(uintptr, *OptionGroup)
 
 // Adds a #GOptionGroup to the @context, so that parsing with @context
@@ -354,6 +362,14 @@ func (x *OptionEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OptionEntryNewFromInternalPtr(ptr uintptr) *OptionEntry {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OptionEntry)(rawPtr)
+}
+
 // A `GOptionGroup` struct defines the options in a single
 // group. The struct has only private fields and should not be directly accessed.
 //
@@ -373,6 +389,14 @@ func OptionGroupGLibType() types.GType {
 
 func (x *OptionGroup) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func OptionGroupNewFromInternalPtr(ptr uintptr) *OptionGroup {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OptionGroup)(rawPtr)
 }
 
 var xNewOptionGroup func(string, string, string, uintptr, uintptr) uintptr

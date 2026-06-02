@@ -18,6 +18,14 @@ func (x *BroadwayRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BroadwayRendererClassNewFromInternalPtr(ptr uintptr) *BroadwayRendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BroadwayRendererClass)(rawPtr)
+}
+
 // A Broadway based renderer.
 //
 // See [class@Gsk.Renderer].

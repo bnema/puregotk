@@ -30,6 +30,14 @@ func (x *PixbufLoaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PixbufLoaderClassNewFromInternalPtr(ptr uintptr) *PixbufLoaderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufLoaderClass)(rawPtr)
+}
+
 // OverrideSizePrepared sets the "size_prepared" callback function.
 func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int, int)) {
 	if cb == nil {

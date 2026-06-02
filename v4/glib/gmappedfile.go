@@ -27,6 +27,14 @@ func (x *MappedFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MappedFileNewFromInternalPtr(ptr uintptr) *MappedFile {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MappedFile)(rawPtr)
+}
+
 var xNewMappedFile func(string, bool, **Error) uintptr
 
 // Maps a file into memory. On UNIX, this is using the mmap() function.

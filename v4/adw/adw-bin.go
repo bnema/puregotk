@@ -22,6 +22,14 @@ func (x *BinClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BinClassNewFromInternalPtr(ptr uintptr) *BinClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BinClass)(rawPtr)
+}
+
 // A widget with one child.
 //
 // &lt;picture&gt;

@@ -20,6 +20,14 @@ func (x *SpringAnimationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SpringAnimationClassNewFromInternalPtr(ptr uintptr) *SpringAnimationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SpringAnimationClass)(rawPtr)
+}
+
 // A spring-based [class@Animation].
 //
 // `AdwSpringAnimation` implements an animation driven by a physical model of a

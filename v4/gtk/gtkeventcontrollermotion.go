@@ -20,6 +20,14 @@ func (x *EventControllerMotionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerMotionClassNewFromInternalPtr(ptr uintptr) *EventControllerMotionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerMotionClass)(rawPtr)
+}
+
 // Tracks the pointer position.
 //
 // The event controller offers [signal@Gtk.EventControllerMotion::enter]

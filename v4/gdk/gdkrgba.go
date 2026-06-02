@@ -41,6 +41,14 @@ func (x *RGBA) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RGBANewFromInternalPtr(ptr uintptr) *RGBA {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RGBA)(rawPtr)
+}
+
 var xRGBACopy func(uintptr) uintptr
 
 // Makes a copy of a `GdkRGBA`.

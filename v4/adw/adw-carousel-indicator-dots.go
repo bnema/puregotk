@@ -22,6 +22,14 @@ func (x *CarouselIndicatorDotsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CarouselIndicatorDotsClassNewFromInternalPtr(ptr uintptr) *CarouselIndicatorDotsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CarouselIndicatorDotsClass)(rawPtr)
+}
+
 // A dots indicator for [class@Carousel].
 //
 // &lt;picture&gt;

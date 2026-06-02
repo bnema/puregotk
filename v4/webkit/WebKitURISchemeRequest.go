@@ -24,6 +24,14 @@ func (x *URISchemeRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func URISchemeRequestClassNewFromInternalPtr(ptr uintptr) *URISchemeRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*URISchemeRequestClass)(rawPtr)
+}
+
 // Represents a URI scheme request.
 //
 // If you register a particular URI scheme in a #WebKitWebContext,

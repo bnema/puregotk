@@ -28,6 +28,14 @@ func (x *CellEditableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellEditableIfaceNewFromInternalPtr(ptr uintptr) *CellEditableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellEditableIface)(rawPtr)
+}
+
 // OverrideEditingDone sets the "editing_done" callback function.
 // Signal is a sign for the cell renderer to update its
 //

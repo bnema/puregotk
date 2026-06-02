@@ -24,6 +24,14 @@ func (x *FontDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontDialogClassNewFromInternalPtr(ptr uintptr) *FontDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontDialogClass)(rawPtr)
+}
+
 // Asynchronous API to present a font chooser dialog.
 //
 // `GtkFontDialog` collects the arguments that are needed to present

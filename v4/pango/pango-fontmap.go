@@ -41,6 +41,14 @@ func (x *FontMapClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontMapClassNewFromInternalPtr(ptr uintptr) *FontMapClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontMapClass)(rawPtr)
+}
+
 // OverrideLoadFont sets the "load_font" callback function.
 // a function to load a font with a given description. See
 // pango_font_map_load_font().

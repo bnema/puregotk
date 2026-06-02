@@ -69,6 +69,14 @@ func (x *LogField) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LogFieldNewFromInternalPtr(ptr uintptr) *LogField {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LogField)(rawPtr)
+}
+
 const (
 	// Defines the log domain. See [Log Domains](#log-domains).
 	//

@@ -23,6 +23,14 @@ func (x *AuthenticationRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthenticationRequestClassNewFromInternalPtr(ptr uintptr) *AuthenticationRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthenticationRequestClass)(rawPtr)
+}
+
 // Enum values representing the authentication scheme.
 type AuthenticationScheme int
 

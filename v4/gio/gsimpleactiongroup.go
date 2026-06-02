@@ -24,12 +24,28 @@ func (x *SimpleActionGroupClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SimpleActionGroupClassNewFromInternalPtr(ptr uintptr) *SimpleActionGroupClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SimpleActionGroupClass)(rawPtr)
+}
+
 type SimpleActionGroupPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *SimpleActionGroupPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SimpleActionGroupPrivateNewFromInternalPtr(ptr uintptr) *SimpleActionGroupPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SimpleActionGroupPrivate)(rawPtr)
 }
 
 // `GSimpleActionGroup` is a hash table filled with [iface@Gio.Action] objects,

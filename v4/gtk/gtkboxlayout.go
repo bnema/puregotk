@@ -21,6 +21,14 @@ func (x *BoxLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BoxLayoutClassNewFromInternalPtr(ptr uintptr) *BoxLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BoxLayoutClass)(rawPtr)
+}
+
 // Arranges children in a single row or column.
 //
 // Whether it is a row or column depends on the value of its

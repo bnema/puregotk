@@ -23,6 +23,14 @@ func (x *ImageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ImageClassNewFromInternalPtr(ptr uintptr) *ImageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ImageClass)(rawPtr)
+}
+
 // Represents an image as a buffer containing pixel data.
 //
 // Image objects are always created by WebKit, and considered immutable:

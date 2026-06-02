@@ -30,6 +30,14 @@ func (x *WindowGroupClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowGroupClassNewFromInternalPtr(ptr uintptr) *WindowGroupClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowGroupClass)(rawPtr)
+}
+
 // OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *WindowGroupClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {

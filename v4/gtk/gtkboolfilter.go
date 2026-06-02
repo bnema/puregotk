@@ -21,6 +21,14 @@ func (x *BoolFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BoolFilterClassNewFromInternalPtr(ptr uintptr) *BoolFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BoolFilterClass)(rawPtr)
+}
+
 // Evaluates a boolean expression to determine whether to include items.
 type BoolFilter struct {
 	Filter

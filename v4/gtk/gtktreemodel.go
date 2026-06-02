@@ -43,6 +43,14 @@ func (x *TreeIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeIterNewFromInternalPtr(ptr uintptr) *TreeIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeIter)(rawPtr)
+}
+
 var xTreeIterCopy func(uintptr) uintptr
 
 // Creates a dynamically allocated tree iterator as a copy of @iter.
@@ -116,6 +124,14 @@ type TreeModelIface struct {
 
 func (x *TreeModelIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeModelIfaceNewFromInternalPtr(ptr uintptr) *TreeModelIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeModelIface)(rawPtr)
 }
 
 // OverrideRowChanged sets the "row_changed" callback function.
@@ -665,6 +681,14 @@ func (x *TreePath) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreePathNewFromInternalPtr(ptr uintptr) *TreePath {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreePath)(rawPtr)
+}
+
 var xNewTreePath func() uintptr
 
 // Creates a new `GtkTreePath`
@@ -885,6 +909,14 @@ func TreeRowReferenceGLibType() types.GType {
 
 func (x *TreeRowReference) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeRowReferenceNewFromInternalPtr(ptr uintptr) *TreeRowReference {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeRowReference)(rawPtr)
 }
 
 var xNewTreeRowReference func(uintptr, *TreePath) uintptr

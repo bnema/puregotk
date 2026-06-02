@@ -47,6 +47,14 @@ func (x *FlowBoxChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FlowBoxChildClassNewFromInternalPtr(ptr uintptr) *FlowBoxChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FlowBoxChildClass)(rawPtr)
+}
+
 // OverrideActivate sets the "activate" callback function.
 func (x *FlowBoxChildClass) OverrideActivate(cb func(*FlowBoxChild)) {
 	if cb == nil {

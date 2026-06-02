@@ -46,6 +46,14 @@ func (x *CClosure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CClosureNewFromInternalPtr(ptr uintptr) *CClosure {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CClosure)(rawPtr)
+}
+
 // A `GClosure` represents a callback supplied by the programmer.
 //
 // It will generally comprise a function of some kind and a marshaller
@@ -128,6 +136,14 @@ func ClosureGLibType() types.GType {
 
 func (x *Closure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ClosureNewFromInternalPtr(ptr uintptr) *Closure {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Closure)(rawPtr)
 }
 
 var xNewClosureObject func(uint, uintptr) uintptr
@@ -428,6 +444,14 @@ type ClosureNotifyData struct {
 
 func (x *ClosureNotifyData) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ClosureNotifyDataNewFromInternalPtr(ptr uintptr) *ClosureNotifyData {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClosureNotifyData)(rawPtr)
 }
 
 var xCclosureMarshalGeneric func(*Closure, *Value, uint, *Value, uintptr, uintptr)

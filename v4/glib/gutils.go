@@ -28,6 +28,14 @@ func (x *DebugKey) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DebugKeyNewFromInternalPtr(ptr uintptr) *DebugKey {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DebugKey)(rawPtr)
+}
+
 // Flags to modify the format of the string returned by g_format_size_full().
 type FormatSizeFlags int
 

@@ -32,6 +32,14 @@ func (x *ScaleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScaleClassNewFromInternalPtr(ptr uintptr) *ScaleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScaleClass)(rawPtr)
+}
+
 // OverrideGetLayoutOffsets sets the "get_layout_offsets" callback function.
 func (x *ScaleClass) OverrideGetLayoutOffsets(cb func(*Scale, *int, *int)) {
 	if cb == nil {

@@ -122,6 +122,14 @@ func (x *SettingsSchema) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SettingsSchemaNewFromInternalPtr(ptr uintptr) *SettingsSchema {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsSchema)(rawPtr)
+}
+
 var xSettingsSchemaGetId func(uintptr) string
 
 // Get the ID of @schema.
@@ -223,6 +231,14 @@ func SettingsSchemaKeyGLibType() types.GType {
 
 func (x *SettingsSchemaKey) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SettingsSchemaKeyNewFromInternalPtr(ptr uintptr) *SettingsSchemaKey {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsSchemaKey)(rawPtr)
 }
 
 var xSettingsSchemaKeyGetDefaultValue func(uintptr) uintptr
@@ -388,6 +404,14 @@ func SettingsSchemaSourceGLibType() types.GType {
 
 func (x *SettingsSchemaSource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SettingsSchemaSourceNewFromInternalPtr(ptr uintptr) *SettingsSchemaSource {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsSchemaSource)(rawPtr)
 }
 
 var xNewSettingsSchemaSourceFromDirectory func(string, *SettingsSchemaSource, bool, **glib.Error) uintptr

@@ -53,6 +53,14 @@ func (x *PrintOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PrintOperationClassNewFromInternalPtr(ptr uintptr) *PrintOperationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintOperationClass)(rawPtr)
+}
+
 // OverrideDone sets the "done" callback function.
 // Signal emitted when the print operation run has finished
 //
@@ -372,6 +380,14 @@ type PrintOperationPrivate struct {
 
 func (x *PrintOperationPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PrintOperationPrivateNewFromInternalPtr(ptr uintptr) *PrintOperationPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintOperationPrivate)(rawPtr)
 }
 
 // Error codes that identify various errors that can occur while

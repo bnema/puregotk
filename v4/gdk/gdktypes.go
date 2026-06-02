@@ -35,6 +35,14 @@ func (x *ColorState) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorStateNewFromInternalPtr(ptr uintptr) *ColorState {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorState)(rawPtr)
+}
+
 var xColorStateCreateCicpParams func(uintptr) uintptr
 
 // Create a [class@Gdk.CicpParams] representing the colorstate.
@@ -142,6 +150,14 @@ func ContentFormatsGLibType() types.GType {
 
 func (x *ContentFormats) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ContentFormatsNewFromInternalPtr(ptr uintptr) *ContentFormats {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContentFormats)(rawPtr)
 }
 
 var xNewContentFormats func([]string, uint) uintptr
@@ -382,6 +398,14 @@ func (x *DmabufFormats) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DmabufFormatsNewFromInternalPtr(ptr uintptr) *DmabufFormats {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DmabufFormats)(rawPtr)
+}
+
 var xDmabufFormatsContains func(uintptr, uint32, uint64) bool
 
 // Returns whether a given format is contained in @formats.
@@ -456,6 +480,14 @@ func (x *KeymapKey) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func KeymapKeyNewFromInternalPtr(ptr uintptr) *KeymapKey {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*KeymapKey)(rawPtr)
+}
+
 // Represents a rectangle.
 //
 // `GdkRectangle` is identical to `cairo_rectangle_t`. Together with Cairo’s
@@ -491,6 +523,14 @@ func RectangleGLibType() types.GType {
 
 func (x *Rectangle) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RectangleNewFromInternalPtr(ptr uintptr) *Rectangle {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Rectangle)(rawPtr)
 }
 
 var xRectangleContainsPoint func(uintptr, int, int) bool
@@ -558,6 +598,14 @@ func TextureDownloaderGLibType() types.GType {
 
 func (x *TextureDownloader) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TextureDownloaderNewFromInternalPtr(ptr uintptr) *TextureDownloader {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextureDownloader)(rawPtr)
 }
 
 var xNewTextureDownloader func(uintptr) uintptr

@@ -28,6 +28,14 @@ func (x *Shadow) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShadowNewFromInternalPtr(ptr uintptr) *Shadow {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Shadow)(rawPtr)
+}
+
 // A render node drawing one or more shadows behind its single child node.
 type ShadowNode struct {
 	RenderNode

@@ -26,6 +26,14 @@ func (x *UnixCredentialsMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UnixCredentialsMessageClassNewFromInternalPtr(ptr uintptr) *UnixCredentialsMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixCredentialsMessageClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *UnixCredentialsMessageClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -78,6 +86,14 @@ type UnixCredentialsMessagePrivate struct {
 
 func (x *UnixCredentialsMessagePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UnixCredentialsMessagePrivateNewFromInternalPtr(ptr uintptr) *UnixCredentialsMessagePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixCredentialsMessagePrivate)(rawPtr)
 }
 
 // This [class@Gio.SocketControlMessage] contains a [class@Gio.Credentials]

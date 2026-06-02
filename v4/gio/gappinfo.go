@@ -73,6 +73,14 @@ func (x *AppInfoIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AppInfoIfaceNewFromInternalPtr(ptr uintptr) *AppInfoIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AppInfoIface)(rawPtr)
+}
+
 // OverrideDup sets the "dup" callback function.
 // Copies a [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideDup(cb func(AppInfo) *AppInfoBase) {
@@ -806,6 +814,14 @@ func (x *AppLaunchContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AppLaunchContextClassNewFromInternalPtr(ptr uintptr) *AppLaunchContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AppLaunchContextClass)(rawPtr)
+}
+
 // OverrideGetDisplay sets the "get_display" callback function.
 func (x *AppLaunchContextClass) OverrideGetDisplay(cb func(*AppLaunchContext, AppInfo, *glib.List) string) {
 	if cb == nil {
@@ -996,6 +1012,14 @@ type AppLaunchContextPrivate struct {
 
 func (x *AppLaunchContextPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AppLaunchContextPrivateNewFromInternalPtr(ptr uintptr) *AppLaunchContextPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AppLaunchContextPrivate)(rawPtr)
 }
 
 // Information about an installed application and methods to launch

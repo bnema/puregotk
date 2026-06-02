@@ -70,6 +70,14 @@ func (x *IMContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IMContextClassNewFromInternalPtr(ptr uintptr) *IMContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IMContextClass)(rawPtr)
+}
+
 // OverridePreeditStart sets the "preedit_start" callback function.
 // Default handler of the [signal@Gtk.IMContext::preedit-start] signal.
 func (x *IMContextClass) OverridePreeditStart(cb func(*IMContext)) {

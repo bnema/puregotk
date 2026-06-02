@@ -20,12 +20,28 @@ func (x *NativeSocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NativeSocketAddressClassNewFromInternalPtr(ptr uintptr) *NativeSocketAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NativeSocketAddressClass)(rawPtr)
+}
+
 type NativeSocketAddressPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *NativeSocketAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func NativeSocketAddressPrivateNewFromInternalPtr(ptr uintptr) *NativeSocketAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NativeSocketAddressPrivate)(rawPtr)
 }
 
 // A socket address of some unknown native type.

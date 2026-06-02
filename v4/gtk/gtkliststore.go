@@ -25,12 +25,28 @@ func (x *ListStoreClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListStoreClassNewFromInternalPtr(ptr uintptr) *ListStoreClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListStoreClass)(rawPtr)
+}
+
 type ListStorePrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *ListStorePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ListStorePrivateNewFromInternalPtr(ptr uintptr) *ListStorePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListStorePrivate)(rawPtr)
 }
 
 // A list-like data structure that can be used with the [class@Gtk.TreeView].

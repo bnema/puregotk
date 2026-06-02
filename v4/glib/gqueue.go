@@ -25,6 +25,14 @@ func (x *Queue) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func QueueNewFromInternalPtr(ptr uintptr) *Queue {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Queue)(rawPtr)
+}
+
 var xQueueClear func(uintptr)
 
 // Removes all the elements in @queue. If queue elements contain

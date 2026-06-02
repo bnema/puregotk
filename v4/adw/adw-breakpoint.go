@@ -23,6 +23,14 @@ func (x *BreakpointClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BreakpointClassNewFromInternalPtr(ptr uintptr) *BreakpointClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BreakpointClass)(rawPtr)
+}
+
 // Describes condition for an [class@Breakpoint].
 type BreakpointCondition struct {
 	_ structs.HostLayout
@@ -36,6 +44,14 @@ func BreakpointConditionGLibType() types.GType {
 
 func (x *BreakpointCondition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BreakpointConditionNewFromInternalPtr(ptr uintptr) *BreakpointCondition {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BreakpointCondition)(rawPtr)
 }
 
 var xNewBreakpointConditionAnd func(*BreakpointCondition, *BreakpointCondition) uintptr

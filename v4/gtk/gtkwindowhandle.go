@@ -21,6 +21,14 @@ func (x *WindowHandleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowHandleClassNewFromInternalPtr(ptr uintptr) *WindowHandleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowHandleClass)(rawPtr)
+}
+
 // Implements titlebar functionality for a window.
 //
 // When added into a window, it can be dragged to move the window,

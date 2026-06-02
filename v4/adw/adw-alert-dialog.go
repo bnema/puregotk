@@ -28,6 +28,14 @@ func (x *AlertDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AlertDialogClassNewFromInternalPtr(ptr uintptr) *AlertDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AlertDialogClass)(rawPtr)
+}
+
 // OverrideResponse sets the "response" callback function.
 func (x *AlertDialogClass) OverrideResponse(cb func(*AlertDialog, string)) {
 	if cb == nil {

@@ -28,6 +28,14 @@ func (x *ShortcutManagerInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutManagerInterfaceNewFromInternalPtr(ptr uintptr) *ShortcutManagerInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutManagerInterface)(rawPtr)
+}
+
 // OverrideAddController sets the "add_controller" callback function.
 // Add a `GtkShortcutController` to be managed.
 func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager, *ShortcutController)) {

@@ -22,6 +22,14 @@ func (x *FindControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FindControllerClassNewFromInternalPtr(ptr uintptr) *FindControllerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FindControllerClass)(rawPtr)
+}
+
 // Enum values used to specify search options.
 type FindOptions int
 

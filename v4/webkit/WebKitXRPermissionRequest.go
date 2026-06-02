@@ -21,6 +21,14 @@ func (x *XRPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func XRPermissionRequestClassNewFromInternalPtr(ptr uintptr) *XRPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*XRPermissionRequestClass)(rawPtr)
+}
+
 // Enum values representing the XR session features.
 //
 // See &lt;https://immersive-web.github.io/webxr/#xrreferencespace-interface&gt;.

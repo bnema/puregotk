@@ -22,6 +22,14 @@ func (x *InlineViewSwitcherClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InlineViewSwitcherClassNewFromInternalPtr(ptr uintptr) *InlineViewSwitcherClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InlineViewSwitcherClass)(rawPtr)
+}
+
 // Describes what [class@InlineViewSwitcher] toggles display.
 //
 // &lt;picture&gt;

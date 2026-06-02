@@ -21,6 +21,14 @@ func (x *CredentialsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CredentialsClassNewFromInternalPtr(ptr uintptr) *CredentialsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CredentialsClass)(rawPtr)
+}
+
 // The `GCredentials` type is a reference-counted wrapper for native
 // credentials.
 //

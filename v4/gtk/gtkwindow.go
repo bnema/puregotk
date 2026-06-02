@@ -37,6 +37,14 @@ func (x *WindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowClassNewFromInternalPtr(ptr uintptr) *WindowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowClass)(rawPtr)
+}
+
 // OverrideActivateFocus sets the "activate_focus" callback function.
 // Activates the current focused widget within the window.
 func (x *WindowClass) OverrideActivateFocus(cb func(*Window)) {
@@ -174,6 +182,14 @@ type WindowGroupPrivate struct {
 
 func (x *WindowGroupPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WindowGroupPrivateNewFromInternalPtr(ptr uintptr) *WindowGroupPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowGroupPrivate)(rawPtr)
 }
 
 // Determines which point or edge of a window is meant to remain fixed

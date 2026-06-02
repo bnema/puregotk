@@ -20,6 +20,14 @@ func (x *EventControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerClassNewFromInternalPtr(ptr uintptr) *EventControllerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerClass)(rawPtr)
+}
+
 // The base class for event controllers.
 //
 // These are ancillary objects associated to widgets, which react

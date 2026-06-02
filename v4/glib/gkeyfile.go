@@ -165,6 +165,14 @@ func (x *KeyFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func KeyFileNewFromInternalPtr(ptr uintptr) *KeyFile {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*KeyFile)(rawPtr)
+}
+
 var xNewKeyFile func() uintptr
 
 // Creates a new empty [struct@GLib.KeyFile] object.

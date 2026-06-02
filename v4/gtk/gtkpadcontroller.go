@@ -31,12 +31,28 @@ func (x *PadActionEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PadActionEntryNewFromInternalPtr(ptr uintptr) *PadActionEntry {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PadActionEntry)(rawPtr)
+}
+
 type PadControllerClass struct {
 	_ structs.HostLayout
 }
 
 func (x *PadControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PadControllerClassNewFromInternalPtr(ptr uintptr) *PadControllerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PadControllerClass)(rawPtr)
 }
 
 // The type of a pad action.

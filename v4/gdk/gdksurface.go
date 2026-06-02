@@ -21,6 +21,14 @@ func (x *SurfaceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SurfaceClassNewFromInternalPtr(ptr uintptr) *SurfaceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SurfaceClass)(rawPtr)
+}
+
 // Represents a rectangular region on the screen.
 //
 // It’s a low-level object, used to implement high-level objects

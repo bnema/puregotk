@@ -35,6 +35,14 @@ func (x *RangeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RangeClassNewFromInternalPtr(ptr uintptr) *RangeClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RangeClass)(rawPtr)
+}
+
 // OverrideValueChanged sets the "value_changed" callback function.
 func (x *RangeClass) OverrideValueChanged(cb func(*Range)) {
 	if cb == nil {

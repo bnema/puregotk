@@ -42,6 +42,14 @@ func (x *AuthClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthClassNewFromInternalPtr(ptr uintptr) *AuthClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthClass)(rawPtr)
+}
+
 // OverrideUpdate sets the "update" callback function.
 func (x *AuthClass) OverrideUpdate(cb func(*Auth, *Message, *glib.HashTable) bool) {
 	if cb == nil {

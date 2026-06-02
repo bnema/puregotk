@@ -47,6 +47,14 @@ func (x *TreeSortableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeSortableIfaceNewFromInternalPtr(ptr uintptr) *TreeSortableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeSortableIface)(rawPtr)
+}
+
 // OverrideSortColumnChanged sets the "sort_column_changed" callback function.
 // Signal emitted when the sort column or sort
 //

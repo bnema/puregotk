@@ -26,6 +26,14 @@ func (x *RemoteActionGroupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RemoteActionGroupInterfaceNewFromInternalPtr(ptr uintptr) *RemoteActionGroupInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RemoteActionGroupInterface)(rawPtr)
+}
+
 // OverrideActivateActionFull sets the "activate_action_full" callback function.
 // the virtual function pointer for g_remote_action_group_activate_action_full()
 func (x *RemoteActionGroupInterface) OverrideActivateActionFull(cb func(RemoteActionGroup, string, *glib.Variant, *glib.Variant)) {

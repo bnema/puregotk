@@ -31,6 +31,14 @@ func (x *NetworkMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NetworkMonitorInterfaceNewFromInternalPtr(ptr uintptr) *NetworkMonitorInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkMonitorInterface)(rawPtr)
+}
+
 // OverrideNetworkChanged sets the "network_changed" callback function.
 // the virtual function pointer for the
 //

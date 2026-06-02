@@ -410,6 +410,14 @@ func (x *InterfaceInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InterfaceInfoNewFromInternalPtr(ptr uintptr) *InterfaceInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InterfaceInfo)(rawPtr)
+}
+
 // An opaque structure used as the base of all classes.
 type TypeClass struct {
 	_ structs.HostLayout
@@ -419,6 +427,14 @@ type TypeClass struct {
 
 func (x *TypeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TypeClassNewFromInternalPtr(ptr uintptr) *TypeClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeClass)(rawPtr)
 }
 
 var xTypeClassAddPrivate func(uintptr, uint)
@@ -570,6 +586,14 @@ func (x *TypeFundamentalInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TypeFundamentalInfoNewFromInternalPtr(ptr uintptr) *TypeFundamentalInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeFundamentalInfo)(rawPtr)
+}
+
 // This structure is used to provide the type system with the information
 // required to initialize and destruct (finalize) a type's class and
 // its instances.
@@ -607,6 +631,14 @@ func (x *TypeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TypeInfoNewFromInternalPtr(ptr uintptr) *TypeInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeInfo)(rawPtr)
+}
+
 // An opaque structure used as the base of all type instances.
 type TypeInstance struct {
 	_ structs.HostLayout
@@ -616,6 +648,14 @@ type TypeInstance struct {
 
 func (x *TypeInstance) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TypeInstanceNewFromInternalPtr(ptr uintptr) *TypeInstance {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeInstance)(rawPtr)
 }
 
 var xTypeInstanceGetPrivate func(uintptr, types.GType) uintptr
@@ -636,6 +676,14 @@ type TypeInterface struct {
 
 func (x *TypeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TypeInterfaceNewFromInternalPtr(ptr uintptr) *TypeInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeInterface)(rawPtr)
 }
 
 var xTypeInterfacePeekParent func(uintptr) uintptr
@@ -670,6 +718,14 @@ type TypeQuery struct {
 
 func (x *TypeQuery) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TypeQueryNewFromInternalPtr(ptr uintptr) *TypeQuery {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeQuery)(rawPtr)
 }
 
 // - `'i'`: Integers, passed as `collect_values[].v_int`
@@ -709,6 +765,14 @@ type TypeValueTable struct {
 
 func (x *TypeValueTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TypeValueTableNewFromInternalPtr(ptr uintptr) *TypeValueTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeValueTable)(rawPtr)
 }
 
 const (

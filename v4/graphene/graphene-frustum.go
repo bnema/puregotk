@@ -30,6 +30,14 @@ func (x *Frustum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FrustumNewFromInternalPtr(ptr uintptr) *Frustum {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Frustum)(rawPtr)
+}
+
 var xFrustumAlloc func() uintptr
 
 // Allocates a new #graphene_frustum_t structure.

@@ -25,12 +25,28 @@ func (x *DBusObjectManagerServerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusObjectManagerServerClassNewFromInternalPtr(ptr uintptr) *DBusObjectManagerServerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectManagerServerClass)(rawPtr)
+}
+
 type DBusObjectManagerServerPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *DBusObjectManagerServerPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusObjectManagerServerPrivateNewFromInternalPtr(ptr uintptr) *DBusObjectManagerServerPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectManagerServerPrivate)(rawPtr)
 }
 
 // `GDBusObjectManagerServer` is used to export [iface@Gio.DBusObject] instances

@@ -30,6 +30,14 @@ func (x *StaticResource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StaticResourceNewFromInternalPtr(ptr uintptr) *StaticResource {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StaticResource)(rawPtr)
+}
+
 var xStaticResourceFini func(uintptr)
 
 // Finalizes a [struct@Gio.Resource] initialized by

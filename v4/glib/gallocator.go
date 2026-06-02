@@ -17,6 +17,14 @@ func (x *Allocator) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AllocatorNewFromInternalPtr(ptr uintptr) *Allocator {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Allocator)(rawPtr)
+}
+
 var xAllocatorFree func(uintptr)
 
 func (x *Allocator) Free() {
@@ -29,6 +37,14 @@ type MemChunk struct {
 
 func (x *MemChunk) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MemChunkNewFromInternalPtr(ptr uintptr) *MemChunk {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemChunk)(rawPtr)
 }
 
 var xMemChunkAlloc func(uintptr) uintptr

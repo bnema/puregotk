@@ -52,6 +52,14 @@ func (x *MountOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MountOperationClassNewFromInternalPtr(ptr uintptr) *MountOperationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MountOperationClass)(rawPtr)
+}
+
 // OverrideAskPassword sets the "ask_password" callback function.
 func (x *MountOperationClass) OverrideAskPassword(cb func(*MountOperation, string, string, string, AskPasswordFlags)) {
 	if cb == nil {
@@ -403,6 +411,14 @@ type MountOperationPrivate struct {
 
 func (x *MountOperationPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MountOperationPrivateNewFromInternalPtr(ptr uintptr) *MountOperationPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MountOperationPrivate)(rawPtr)
 }
 
 // `GMountOperation` provides a mechanism for interacting with the user.

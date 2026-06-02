@@ -43,6 +43,14 @@ func (x *SorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SorterClassNewFromInternalPtr(ptr uintptr) *SorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SorterClass)(rawPtr)
+}
+
 // OverrideCompare sets the "compare" callback function.
 // Compare two items. See gtk_sorter_compare() for details.
 func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject.Object) Ordering) {

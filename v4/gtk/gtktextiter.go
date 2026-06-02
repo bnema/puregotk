@@ -66,6 +66,14 @@ func (x *TextIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextIterNewFromInternalPtr(ptr uintptr) *TextIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextIter)(rawPtr)
+}
+
 var xTextIterAssign func(uintptr, *TextIter)
 
 // Assigns the value of @other to @iter.

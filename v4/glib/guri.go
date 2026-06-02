@@ -185,6 +185,14 @@ func (x *Uri) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UriNewFromInternalPtr(ptr uintptr) *Uri {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Uri)(rawPtr)
+}
+
 var xUriGetAuthParams func(uintptr) string
 
 // Gets @uri's authentication parameters, which may contain
@@ -391,6 +399,14 @@ type UriParamsIter struct {
 
 func (x *UriParamsIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UriParamsIterNewFromInternalPtr(ptr uintptr) *UriParamsIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UriParamsIter)(rawPtr)
 }
 
 var xUriParamsIterInit func(uintptr, string, int, string, UriParamsFlags)

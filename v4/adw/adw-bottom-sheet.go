@@ -24,6 +24,14 @@ func (x *BottomSheetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BottomSheetClassNewFromInternalPtr(ptr uintptr) *BottomSheetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BottomSheetClass)(rawPtr)
+}
+
 // A bottom sheet with an optional bottom bar.
 //
 // &lt;picture&gt;

@@ -40,6 +40,14 @@ func (x *LayoutManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LayoutManagerClassNewFromInternalPtr(ptr uintptr) *LayoutManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutManagerClass)(rawPtr)
+}
+
 // OverrideGetRequestMode sets the "get_request_mode" callback function.
 // a virtual function, used to return the preferred
 //

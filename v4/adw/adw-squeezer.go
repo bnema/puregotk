@@ -22,6 +22,14 @@ func (x *SqueezerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SqueezerClassNewFromInternalPtr(ptr uintptr) *SqueezerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SqueezerClass)(rawPtr)
+}
+
 type SqueezerPageClass struct {
 	_ structs.HostLayout
 
@@ -30,6 +38,14 @@ type SqueezerPageClass struct {
 
 func (x *SqueezerPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SqueezerPageClassNewFromInternalPtr(ptr uintptr) *SqueezerPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SqueezerPageClass)(rawPtr)
 }
 
 // Describes the possible transitions in a [class@Squeezer] widget.

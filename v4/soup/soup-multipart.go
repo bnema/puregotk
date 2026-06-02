@@ -37,6 +37,14 @@ func (x *Multipart) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MultipartNewFromInternalPtr(ptr uintptr) *Multipart {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Multipart)(rawPtr)
+}
+
 var xNewMultipart func(string) uintptr
 
 // Creates a new empty [struct@Multipart] with a randomly-generated

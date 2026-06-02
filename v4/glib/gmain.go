@@ -112,6 +112,14 @@ func (x *MainContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MainContextNewFromInternalPtr(ptr uintptr) *MainContext {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MainContext)(rawPtr)
+}
+
 var xNewMainContext func() uintptr
 
 // Creates a new [struct@GLib.MainContext] structure.
@@ -599,6 +607,14 @@ func (x *MainLoop) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MainLoopNewFromInternalPtr(ptr uintptr) *MainLoop {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MainLoop)(rawPtr)
+}
+
 var xNewMainLoop func(*MainContext, bool) uintptr
 
 // Creates a new [struct@GLib.MainLoop] structure.
@@ -712,6 +728,14 @@ func SourceGLibType() types.GType {
 
 func (x *Source) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SourceNewFromInternalPtr(ptr uintptr) *Source {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Source)(rawPtr)
 }
 
 var xNewSource func(*SourceFuncs, uint) uintptr
@@ -1331,6 +1355,14 @@ func (x *SourceCallbackFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SourceCallbackFuncsNewFromInternalPtr(ptr uintptr) *SourceCallbackFuncs {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SourceCallbackFuncs)(rawPtr)
+}
+
 // OverrideRef sets the "ref" callback function.
 // Called when a reference is added to the callback object
 func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
@@ -1450,12 +1482,28 @@ func (x *SourceFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SourceFuncsNewFromInternalPtr(ptr uintptr) *SourceFuncs {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SourceFuncs)(rawPtr)
+}
+
 type SourcePrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *SourcePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SourcePrivateNewFromInternalPtr(ptr uintptr) *SourcePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SourcePrivate)(rawPtr)
 }
 
 // Opaque type. See g_main_context_pusher_new() for details.

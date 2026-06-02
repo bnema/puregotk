@@ -26,6 +26,14 @@ func (x *ScriptIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScriptIterNewFromInternalPtr(ptr uintptr) *ScriptIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScriptIter)(rawPtr)
+}
+
 var xNewScriptIter func(string, int) uintptr
 
 // Create a new `PangoScriptIter`, used to break a string of

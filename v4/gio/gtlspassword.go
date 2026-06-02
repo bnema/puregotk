@@ -31,6 +31,14 @@ func (x *TlsPasswordClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsPasswordClassNewFromInternalPtr(ptr uintptr) *TlsPasswordClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsPasswordClass)(rawPtr)
+}
+
 // OverrideGetValue sets the "get_value" callback function.
 // virtual method for g_tls_password_get_value()
 func (x *TlsPasswordClass) OverrideGetValue(cb func(*TlsPassword, *uint) uintptr) {
@@ -116,6 +124,14 @@ type TlsPasswordPrivate struct {
 
 func (x *TlsPasswordPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TlsPasswordPrivateNewFromInternalPtr(ptr uintptr) *TlsPasswordPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsPasswordPrivate)(rawPtr)
 }
 
 // An abstract interface representing a password used in TLS. Often used in

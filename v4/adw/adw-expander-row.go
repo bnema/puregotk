@@ -25,6 +25,14 @@ func (x *ExpanderRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ExpanderRowClassNewFromInternalPtr(ptr uintptr) *ExpanderRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ExpanderRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] used to reveal widgets.
 //
 // &lt;picture&gt;

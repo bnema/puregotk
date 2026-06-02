@@ -21,6 +21,14 @@ func (x *GraphicsOffloadClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GraphicsOffloadClassNewFromInternalPtr(ptr uintptr) *GraphicsOffloadClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GraphicsOffloadClass)(rawPtr)
+}
+
 // Represents the state of graphics offloading.
 type GraphicsOffloadEnabled int
 

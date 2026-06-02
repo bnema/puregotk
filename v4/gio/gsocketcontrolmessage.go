@@ -42,6 +42,14 @@ func (x *SocketControlMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketControlMessageClassNewFromInternalPtr(ptr uintptr) *SocketControlMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketControlMessageClass)(rawPtr)
+}
+
 // OverrideGetSize sets the "get_size" callback function.
 // gets the size of the message.
 func (x *SocketControlMessageClass) OverrideGetSize(cb func(*SocketControlMessage) uint) {
@@ -298,6 +306,14 @@ type SocketControlMessagePrivate struct {
 
 func (x *SocketControlMessagePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketControlMessagePrivateNewFromInternalPtr(ptr uintptr) *SocketControlMessagePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketControlMessagePrivate)(rawPtr)
 }
 
 // A `GSocketControlMessage` is a special-purpose utility message that

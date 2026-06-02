@@ -29,6 +29,14 @@ func (x *DBusObjectManagerClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusObjectManagerClientClassNewFromInternalPtr(ptr uintptr) *DBusObjectManagerClientClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectManagerClientClass)(rawPtr)
+}
+
 // OverrideInterfaceProxySignal sets the "interface_proxy_signal" callback function.
 // Signal class handler for the #GDBusObjectManagerClient::interface-proxy-signal signal.
 func (x *DBusObjectManagerClientClass) OverrideInterfaceProxySignal(cb func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, *glib.Variant)) {
@@ -85,6 +93,14 @@ type DBusObjectManagerClientPrivate struct {
 
 func (x *DBusObjectManagerClientPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusObjectManagerClientPrivateNewFromInternalPtr(ptr uintptr) *DBusObjectManagerClientPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectManagerClientPrivate)(rawPtr)
 }
 
 // `GDBusObjectManagerClient` is used to create, monitor and delete object

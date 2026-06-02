@@ -23,6 +23,14 @@ func (x *GLShaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GLShaderClassNewFromInternalPtr(ptr uintptr) *GLShaderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GLShaderClass)(rawPtr)
+}
+
 // Builds the uniforms data for a `GskGLShader`.
 type ShaderArgsBuilder struct {
 	_ structs.HostLayout
@@ -36,6 +44,14 @@ func ShaderArgsBuilderGLibType() types.GType {
 
 func (x *ShaderArgsBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ShaderArgsBuilderNewFromInternalPtr(ptr uintptr) *ShaderArgsBuilder {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShaderArgsBuilder)(rawPtr)
 }
 
 var xNewShaderArgsBuilder func(uintptr, *glib.Bytes) uintptr

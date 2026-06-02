@@ -22,6 +22,14 @@ func (x *BackForwardListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BackForwardListClassNewFromInternalPtr(ptr uintptr) *BackForwardListClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BackForwardListClass)(rawPtr)
+}
+
 // List of visited pages.
 //
 // WebKitBackForwardList maintains a list of visited pages used to

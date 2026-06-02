@@ -23,6 +23,14 @@ func (x *MessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageClassNewFromInternalPtr(ptr uintptr) *MessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageClass)(rawPtr)
+}
+
 // Various flags that can be set on a [class@Message] to alter its behavior.
 type MessageFlags int
 

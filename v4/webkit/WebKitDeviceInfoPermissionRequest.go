@@ -19,6 +19,14 @@ func (x *DeviceInfoPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DeviceInfoPermissionRequestClassNewFromInternalPtr(ptr uintptr) *DeviceInfoPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DeviceInfoPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for enumerating the user's media devices
 //
 // WebKitDeviceInfoPermissionRequest represents a request for

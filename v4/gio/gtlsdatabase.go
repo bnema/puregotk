@@ -53,6 +53,14 @@ func (x *TlsDatabaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsDatabaseClassNewFromInternalPtr(ptr uintptr) *TlsDatabaseClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsDatabaseClass)(rawPtr)
+}
+
 // OverrideVerifyChain sets the "verify_chain" callback function.
 // Virtual method implementing
 //
@@ -492,6 +500,14 @@ type TlsDatabasePrivate struct {
 
 func (x *TlsDatabasePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TlsDatabasePrivateNewFromInternalPtr(ptr uintptr) *TlsDatabasePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsDatabasePrivate)(rawPtr)
 }
 
 const (

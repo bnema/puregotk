@@ -40,6 +40,14 @@ func (x *TreeModelFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeModelFilterClassNewFromInternalPtr(ptr uintptr) *TreeModelFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeModelFilterClass)(rawPtr)
+}
+
 // OverrideVisible sets the "visible" callback function.
 // A function which decides whether the row indicated by @iter is visible.
 func (x *TreeModelFilterClass) OverrideVisible(cb func(*TreeModelFilter, TreeModel, *TreeIter) bool) {
@@ -106,6 +114,14 @@ type TreeModelFilterPrivate struct {
 
 func (x *TreeModelFilterPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeModelFilterPrivateNewFromInternalPtr(ptr uintptr) *TreeModelFilterPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeModelFilterPrivate)(rawPtr)
 }
 
 // A `GtkTreeModel` which hides parts of an underlying tree model

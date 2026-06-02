@@ -34,6 +34,14 @@ func (x *SwipeableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SwipeableInterfaceNewFromInternalPtr(ptr uintptr) *SwipeableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SwipeableInterface)(rawPtr)
+}
+
 // OverrideGetDistance sets the "get_distance" callback function.
 // Gets the swipe distance.
 func (x *SwipeableInterface) OverrideGetDistance(cb func(Swipeable) float64) {

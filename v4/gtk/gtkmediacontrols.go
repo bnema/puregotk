@@ -21,6 +21,14 @@ func (x *MediaControlsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MediaControlsClassNewFromInternalPtr(ptr uintptr) *MediaControlsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MediaControlsClass)(rawPtr)
+}
+
 // Shows controls for video playback.
 //
 // &lt;picture&gt;

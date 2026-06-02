@@ -28,6 +28,14 @@ func (x *ApplicationWindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationWindowClassNewFromInternalPtr(ptr uintptr) *ApplicationWindowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationWindowClass)(rawPtr)
+}
+
 // A freeform application window.
 //
 // &lt;picture&gt;

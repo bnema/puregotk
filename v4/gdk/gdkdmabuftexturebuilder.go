@@ -21,6 +21,14 @@ func (x *DmabufTextureBuilderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DmabufTextureBuilderClassNewFromInternalPtr(ptr uintptr) *DmabufTextureBuilderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DmabufTextureBuilderClass)(rawPtr)
+}
+
 // Constructs [class@Gdk.Texture] objects from DMA buffers.
 //
 // DMA buffers are commonly called **_dma-bufs_**.

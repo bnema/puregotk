@@ -23,6 +23,14 @@ func (x *FileLauncherClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileLauncherClassNewFromInternalPtr(ptr uintptr) *FileLauncherClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileLauncherClass)(rawPtr)
+}
+
 // Asynchronous API to open a file with an application.
 //
 // `GtkFileLauncher` collects the arguments that are needed to open the file.

@@ -30,6 +30,14 @@ func (x *MessageDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageDialogClassNewFromInternalPtr(ptr uintptr) *MessageDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageDialogClass)(rawPtr)
+}
+
 // OverrideResponse sets the "response" callback function.
 func (x *MessageDialogClass) OverrideResponse(cb func(*MessageDialog, string)) {
 	if cb == nil {

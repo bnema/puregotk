@@ -22,6 +22,14 @@ func (x *ZlibCompressorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ZlibCompressorClassNewFromInternalPtr(ptr uintptr) *ZlibCompressorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ZlibCompressorClass)(rawPtr)
+}
+
 // `GZlibCompressor` is an implementation of [iface@Gio.Converter] that
 // compresses data using zlib.
 type ZlibCompressor struct {

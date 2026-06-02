@@ -18,6 +18,14 @@ func (x *CairoRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CairoRendererClassNewFromInternalPtr(ptr uintptr) *CairoRendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CairoRendererClass)(rawPtr)
+}
+
 // Renders a GSK rendernode tree with cairo.
 //
 // Since it is using cairo, this renderer cannot support

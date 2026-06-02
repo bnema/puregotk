@@ -39,6 +39,14 @@ func (x *Hmac) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HmacNewFromInternalPtr(ptr uintptr) *Hmac {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Hmac)(rawPtr)
+}
+
 var xNewHmac func(ChecksumType, []byte, uint) uintptr
 
 // Creates a new #GHmac, using the digest algorithm @digest_type.

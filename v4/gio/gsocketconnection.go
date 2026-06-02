@@ -34,6 +34,14 @@ func (x *SocketConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketConnectionClassNewFromInternalPtr(ptr uintptr) *SocketConnectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketConnectionClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SocketConnectionClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -178,6 +186,14 @@ type SocketConnectionPrivate struct {
 
 func (x *SocketConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketConnectionPrivateNewFromInternalPtr(ptr uintptr) *SocketConnectionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketConnectionPrivate)(rawPtr)
 }
 
 // `GSocketConnection` is a [class@Gio.IOStream] for a connected socket. They

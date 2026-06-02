@@ -42,6 +42,14 @@ func (x *SocketClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketClassNewFromInternalPtr(ptr uintptr) *SocketClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SocketClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -278,6 +286,14 @@ type SocketPrivate struct {
 
 func (x *SocketPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketPrivateNewFromInternalPtr(ptr uintptr) *SocketPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketPrivate)(rawPtr)
 }
 
 // A `GSocket` is a low-level networking primitive. It is a more or less

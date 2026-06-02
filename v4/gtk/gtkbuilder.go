@@ -20,6 +20,14 @@ func (x *BuilderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BuilderClassNewFromInternalPtr(ptr uintptr) *BuilderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuilderClass)(rawPtr)
+}
+
 // Error codes that identify various errors that can occur while using
 // `GtkBuilder`.
 type BuilderError int

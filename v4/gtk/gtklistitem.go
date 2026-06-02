@@ -19,6 +19,14 @@ func (x *ListItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListItemClassNewFromInternalPtr(ptr uintptr) *ListItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListItemClass)(rawPtr)
+}
+
 // Used by list widgets to represent items in a [iface@Gio.ListModel].
 //
 // `GtkListItem` objects are managed by the list widget (with its factory)

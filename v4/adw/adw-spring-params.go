@@ -54,6 +54,14 @@ func (x *SpringParams) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SpringParamsNewFromInternalPtr(ptr uintptr) *SpringParams {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SpringParams)(rawPtr)
+}
+
 var xNewSpringParams func(float64, float64, float64) uintptr
 
 // Creates a new `AdwSpringParams` from @mass, @stiffness and @damping_ratio.

@@ -19,6 +19,14 @@ func (x *PixbufSimpleAnimClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PixbufSimpleAnimClassNewFromInternalPtr(ptr uintptr) *PixbufSimpleAnimClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufSimpleAnimClass)(rawPtr)
+}
+
 // An opaque struct representing a simple animation.
 type PixbufSimpleAnim struct {
 	PixbufAnimation

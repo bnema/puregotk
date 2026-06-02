@@ -25,6 +25,14 @@ func (x *TlsFileDatabaseInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsFileDatabaseInterfaceNewFromInternalPtr(ptr uintptr) *TlsFileDatabaseInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsFileDatabaseInterface)(rawPtr)
+}
+
 // `GTlsFileDatabase` is implemented by [class@Gio.TlsDatabase] objects which
 // load their certificate information from a file. It is an interface which
 // TLS library specific subtypes implement.

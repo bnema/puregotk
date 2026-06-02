@@ -17,6 +17,14 @@ func (x *ShortcutsShortcutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutsShortcutClassNewFromInternalPtr(ptr uintptr) *ShortcutsShortcutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutsShortcutClass)(rawPtr)
+}
+
 // GtkShortcutType specifies the kind of shortcut that is being described.
 //
 // More values may be added to this enumeration over time.

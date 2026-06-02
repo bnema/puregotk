@@ -50,6 +50,14 @@ func (x *TimeZone) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TimeZoneNewFromInternalPtr(ptr uintptr) *TimeZone {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TimeZone)(rawPtr)
+}
+
 var xNewTimeZone func(uintptr) uintptr
 
 // A version of g_time_zone_new_identifier() which returns the UTC time zone

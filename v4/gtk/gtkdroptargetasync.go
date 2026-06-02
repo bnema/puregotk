@@ -21,6 +21,14 @@ func (x *DropTargetAsyncClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DropTargetAsyncClassNewFromInternalPtr(ptr uintptr) *DropTargetAsyncClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DropTargetAsyncClass)(rawPtr)
+}
+
 // An event controller to receive Drag-and-Drop operations, asynchronously.
 //
 // It is the more complete but also more complex method of handling drop

@@ -144,6 +144,14 @@ func (x *WebViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebViewClassNewFromInternalPtr(ptr uintptr) *WebViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebViewClass)(rawPtr)
+}
+
 // OverrideLoadChanged sets the "load_changed" callback function.
 func (x *WebViewClass) OverrideLoadChanged(cb func(*WebView, LoadEvent)) {
 	if cb == nil {
@@ -1517,6 +1525,14 @@ type WebViewPrivate struct {
 
 func (x *WebViewPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WebViewPrivateNewFromInternalPtr(ptr uintptr) *WebViewPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebViewPrivate)(rawPtr)
 }
 
 // Enum values used to specify options when taking a snapshot

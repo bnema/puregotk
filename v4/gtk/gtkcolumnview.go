@@ -21,6 +21,14 @@ func (x *ColumnViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColumnViewClassNewFromInternalPtr(ptr uintptr) *ColumnViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColumnViewClass)(rawPtr)
+}
+
 // Presents a large dynamic list of items using multiple columns with headers.
 //
 // `GtkColumnView` uses the factories of its columns to generate a cell widget for

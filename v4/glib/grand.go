@@ -26,6 +26,14 @@ func (x *Rand) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RandNewFromInternalPtr(ptr uintptr) *Rand {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Rand)(rawPtr)
+}
+
 var xNewRand func() uintptr
 
 // Creates a new random number generator initialized with a seed taken

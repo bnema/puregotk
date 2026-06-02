@@ -27,6 +27,14 @@ func (x *ApplicationWindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationWindowClassNewFromInternalPtr(ptr uintptr) *ApplicationWindowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationWindowClass)(rawPtr)
+}
+
 // A `GtkWindow` subclass that integrates with `GtkApplication`.
 //
 // Notably, `GtkApplicationWindow` can handle an application menubar.

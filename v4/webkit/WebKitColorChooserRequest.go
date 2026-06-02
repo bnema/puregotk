@@ -23,6 +23,14 @@ func (x *ColorChooserRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorChooserRequestClassNewFromInternalPtr(ptr uintptr) *ColorChooserRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorChooserRequestClass)(rawPtr)
+}
+
 // A request to open a color chooser.
 //
 // Whenever the user interacts with an &lt;input type='color' /&gt;

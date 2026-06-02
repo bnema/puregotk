@@ -25,6 +25,14 @@ func (x *FrameClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FrameClassNewFromInternalPtr(ptr uintptr) *FrameClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FrameClass)(rawPtr)
+}
+
 // OverrideComputeChildAllocation sets the "compute_child_allocation" callback function.
 func (x *FrameClass) OverrideComputeChildAllocation(cb func(*Frame, *Allocation)) {
 	if cb == nil {

@@ -23,6 +23,14 @@ func (x *StatusPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StatusPageClassNewFromInternalPtr(ptr uintptr) *StatusPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StatusPageClass)(rawPtr)
+}
+
 // A page used for empty/error states and similar use-cases.
 //
 // &lt;picture&gt;

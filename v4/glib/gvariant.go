@@ -268,6 +268,14 @@ func (x *Variant) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VariantNewFromInternalPtr(ptr uintptr) *Variant {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Variant)(rawPtr)
+}
+
 var xNewVariant func(string, ...interface{}) uintptr
 
 // Creates a new #GVariant instance.
@@ -1840,6 +1848,14 @@ func (x *VariantBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VariantBuilderNewFromInternalPtr(ptr uintptr) *VariantBuilder {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VariantBuilder)(rawPtr)
+}
+
 var xNewVariantBuilder func(*VariantType) uintptr
 
 // Allocates and initialises a new #GVariantBuilder.
@@ -2234,6 +2250,14 @@ func (x *VariantDict) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VariantDictNewFromInternalPtr(ptr uintptr) *VariantDict {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VariantDict)(rawPtr)
+}
+
 var xNewVariantDict func(*Variant) uintptr
 
 // Allocates and initialises a new #GVariantDict.
@@ -2424,6 +2448,14 @@ type VariantIter struct {
 
 func (x *VariantIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func VariantIterNewFromInternalPtr(ptr uintptr) *VariantIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VariantIter)(rawPtr)
 }
 
 var xVariantIterCopy func(uintptr) uintptr

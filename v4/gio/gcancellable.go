@@ -34,6 +34,14 @@ func (x *CancellableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CancellableClassNewFromInternalPtr(ptr uintptr) *CancellableClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CancellableClass)(rawPtr)
+}
+
 // OverrideCancelled sets the "cancelled" callback function.
 func (x *CancellableClass) OverrideCancelled(cb func(*Cancellable)) {
 	if cb == nil {
@@ -178,6 +186,14 @@ type CancellablePrivate struct {
 
 func (x *CancellablePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CancellablePrivateNewFromInternalPtr(ptr uintptr) *CancellablePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CancellablePrivate)(rawPtr)
 }
 
 // `GCancellable` allows operations to be cancelled.

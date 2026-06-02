@@ -21,6 +21,14 @@ func (x *StringSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StringSorterClassNewFromInternalPtr(ptr uintptr) *StringSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StringSorterClass)(rawPtr)
+}
+
 // Describes how a [class@Gtk.StringSorter] turns strings into sort keys to
 // compare them.
 //

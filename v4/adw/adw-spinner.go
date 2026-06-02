@@ -22,6 +22,14 @@ func (x *SpinnerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SpinnerClassNewFromInternalPtr(ptr uintptr) *SpinnerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SpinnerClass)(rawPtr)
+}
+
 // A widget showing a loading spinner.
 //
 // &lt;picture&gt;

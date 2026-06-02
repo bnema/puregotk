@@ -31,6 +31,14 @@ func (x *CssSection) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CssSectionNewFromInternalPtr(ptr uintptr) *CssSection {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CssSection)(rawPtr)
+}
+
 var xNewCssSection func(uintptr, *CssLocation, *CssLocation) uintptr
 
 // Creates a new `GtkCssSection` referring to the section

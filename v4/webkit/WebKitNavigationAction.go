@@ -26,6 +26,14 @@ func (x *NavigationAction) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NavigationActionNewFromInternalPtr(ptr uintptr) *NavigationAction {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NavigationAction)(rawPtr)
+}
+
 var xNavigationActionCopy func(uintptr) uintptr
 
 // Make a copy of @navigation.

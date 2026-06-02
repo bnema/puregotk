@@ -18,6 +18,14 @@ func (x *ThreadedResolverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ThreadedResolverClassNewFromInternalPtr(ptr uintptr) *ThreadedResolverClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ThreadedResolverClass)(rawPtr)
+}
+
 // #GThreadedResolver is an implementation of #GResolver which calls the libc
 // lookup functions in threads to allow them to run asynchronously.
 type ThreadedResolver struct {

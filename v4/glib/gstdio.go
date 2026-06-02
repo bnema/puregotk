@@ -21,6 +21,14 @@ func (x *StatBuf) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StatBufNewFromInternalPtr(ptr uintptr) *StatBuf {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StatBuf)(rawPtr)
+}
+
 var xAccess func(string, int) int
 
 // A wrapper for the POSIX access() function. This function is used to

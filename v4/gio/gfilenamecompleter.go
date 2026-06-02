@@ -30,6 +30,14 @@ func (x *FilenameCompleterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FilenameCompleterClassNewFromInternalPtr(ptr uintptr) *FilenameCompleterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FilenameCompleterClass)(rawPtr)
+}
+
 // OverrideGotCompletionData sets the "got_completion_data" callback function.
 func (x *FilenameCompleterClass) OverrideGotCompletionData(cb func(*FilenameCompleter)) {
 	if cb == nil {

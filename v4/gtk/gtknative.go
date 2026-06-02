@@ -21,6 +21,14 @@ func (x *NativeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NativeInterfaceNewFromInternalPtr(ptr uintptr) *NativeInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NativeInterface)(rawPtr)
+}
+
 // An interface for widgets that have their own [class@Gdk.Surface].
 //
 // The obvious example of a `GtkNative` is `GtkWindow`.

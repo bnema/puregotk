@@ -18,6 +18,14 @@ func (x *GLRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GLRendererClassNewFromInternalPtr(ptr uintptr) *GLRendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GLRendererClass)(rawPtr)
+}
+
 // Renders a GSK rendernode tree with OpenGL.
 //
 // See [class@Gsk.Renderer].

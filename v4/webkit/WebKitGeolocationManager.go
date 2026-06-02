@@ -22,6 +22,14 @@ func (x *GeolocationManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GeolocationManagerClassNewFromInternalPtr(ptr uintptr) *GeolocationManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GeolocationManagerClass)(rawPtr)
+}
+
 // An opaque struct to provide position updates to a #WebKitGeolocationManager.
 //
 // WebKitGeolocationPosition is an opaque struct used to provide position updates to a
@@ -38,6 +46,14 @@ func GeolocationPositionGLibType() types.GType {
 
 func (x *GeolocationPosition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GeolocationPositionNewFromInternalPtr(ptr uintptr) *GeolocationPosition {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GeolocationPosition)(rawPtr)
 }
 
 var xNewGeolocationPosition func(float64, float64, float64) uintptr

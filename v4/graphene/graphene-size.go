@@ -29,6 +29,14 @@ func (x *Size) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SizeNewFromInternalPtr(ptr uintptr) *Size {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Size)(rawPtr)
+}
+
 var xSizeAlloc func() uintptr
 
 // Allocates a new #graphene_size_t.

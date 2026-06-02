@@ -116,6 +116,14 @@ func (x *TimeVal) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TimeValNewFromInternalPtr(ptr uintptr) *TimeVal {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TimeVal)(rawPtr)
+}
+
 var xTimeValAdd func(uintptr, int)
 
 // Adds the given number of microseconds to @time_. @microseconds can

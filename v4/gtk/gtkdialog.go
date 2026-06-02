@@ -30,6 +30,14 @@ func (x *DialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DialogClassNewFromInternalPtr(ptr uintptr) *DialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DialogClass)(rawPtr)
+}
+
 // OverrideResponse sets the "response" callback function.
 // Signal emitted when an action widget is activated.
 func (x *DialogClass) OverrideResponse(cb func(*Dialog, int)) {

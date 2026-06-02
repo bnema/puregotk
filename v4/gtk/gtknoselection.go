@@ -22,6 +22,14 @@ func (x *NoSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NoSelectionClassNewFromInternalPtr(ptr uintptr) *NoSelectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NoSelectionClass)(rawPtr)
+}
+
 // A selection model that does not allow selecting anything.
 //
 // This model is meant to be used as a simple wrapper around a `GListModel`

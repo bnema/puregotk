@@ -21,6 +21,14 @@ func (x *UserMediaPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UserMediaPermissionRequestClassNewFromInternalPtr(ptr uintptr) *UserMediaPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserMediaPermissionRequestClass)(rawPtr)
+}
+
 var xUserMediaPermissionIsForAudioDevice func(uintptr) bool
 
 // Check whether the permission request is for an audio device.

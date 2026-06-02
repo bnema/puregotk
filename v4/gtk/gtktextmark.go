@@ -23,6 +23,14 @@ func (x *TextMarkClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextMarkClassNewFromInternalPtr(ptr uintptr) *TextMarkClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextMarkClass)(rawPtr)
+}
+
 // Marks a position in a `GtkTextbuffer` that is preserved
 // across modifications.
 //

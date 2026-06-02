@@ -57,6 +57,14 @@ func (x *PopupLayout) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PopupLayoutNewFromInternalPtr(ptr uintptr) *PopupLayout {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PopupLayout)(rawPtr)
+}
+
 var xNewPopupLayout func(*Rectangle, Gravity, Gravity) uintptr
 
 // Create a popup layout description.

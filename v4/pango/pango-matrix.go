@@ -45,6 +45,14 @@ func (x *Matrix) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MatrixNewFromInternalPtr(ptr uintptr) *Matrix {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Matrix)(rawPtr)
+}
+
 var xMatrixConcat func(uintptr, *Matrix)
 
 // Changes the transformation represented by @matrix to be the

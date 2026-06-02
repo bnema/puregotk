@@ -51,6 +51,14 @@ func (x *LogAttr) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LogAttrNewFromInternalPtr(ptr uintptr) *LogAttr {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LogAttr)(rawPtr)
+}
+
 var xAttrBreak func(string, int, *AttrList, int, *[]LogAttr, int)
 
 // Apply customization from attributes to the breaks in @attrs.

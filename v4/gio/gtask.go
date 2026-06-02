@@ -37,6 +37,14 @@ func (x *TaskClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TaskClassNewFromInternalPtr(ptr uintptr) *TaskClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TaskClass)(rawPtr)
+}
+
 // A `GTask` represents and manages a cancellable ‘task’.
 //
 // ## Asynchronous operations

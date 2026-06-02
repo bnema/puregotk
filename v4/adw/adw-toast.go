@@ -23,6 +23,14 @@ func (x *ToastClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToastClassNewFromInternalPtr(ptr uintptr) *ToastClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToastClass)(rawPtr)
+}
+
 // [class@Toast] behavior when another toast is already displayed.
 type ToastPriority int
 

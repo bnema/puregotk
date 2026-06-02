@@ -21,6 +21,14 @@ func (x *VirtualMachineClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VirtualMachineClassNewFromInternalPtr(ptr uintptr) *VirtualMachineClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VirtualMachineClass)(rawPtr)
+}
+
 // JSCVirtualMachine represents a group of JSCContext&lt;!-- --&gt;s. It allows
 // concurrent JavaScript execution by creating a different instance of
 // JSCVirtualMachine in each thread.

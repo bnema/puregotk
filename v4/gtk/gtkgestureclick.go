@@ -20,6 +20,14 @@ func (x *GestureClickClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureClickClassNewFromInternalPtr(ptr uintptr) *GestureClickClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureClickClass)(rawPtr)
+}
+
 // Recognizes click gestures.
 //
 // It is able to recognize multiple clicks on a nearby zone, which

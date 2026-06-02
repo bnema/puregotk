@@ -20,6 +20,14 @@ func (x *LayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LayoutClassNewFromInternalPtr(ptr uintptr) *LayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutClass)(rawPtr)
+}
+
 // A `PangoLayoutIter` can be used to iterate over the visual
 // extents of a `PangoLayout`.
 //
@@ -38,6 +46,14 @@ func LayoutIterGLibType() types.GType {
 
 func (x *LayoutIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func LayoutIterNewFromInternalPtr(ptr uintptr) *LayoutIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutIter)(rawPtr)
 }
 
 var xLayoutIterAtLastLine func(uintptr) bool
@@ -326,6 +342,14 @@ func LayoutLineGLibType() types.GType {
 
 func (x *LayoutLine) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func LayoutLineNewFromInternalPtr(ptr uintptr) *LayoutLine {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutLine)(rawPtr)
 }
 
 var xLayoutLineGetExtents func(uintptr, *Rectangle, *Rectangle)

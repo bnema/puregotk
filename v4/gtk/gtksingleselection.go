@@ -22,6 +22,14 @@ func (x *SingleSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SingleSelectionClassNewFromInternalPtr(ptr uintptr) *SingleSelectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SingleSelectionClass)(rawPtr)
+}
+
 // A selection model that allows selecting a single item.
 //
 // Note that the selection is *persistent* -- if the selected item is removed

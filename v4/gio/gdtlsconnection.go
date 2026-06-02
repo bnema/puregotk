@@ -43,6 +43,14 @@ func (x *DtlsConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DtlsConnectionInterfaceNewFromInternalPtr(ptr uintptr) *DtlsConnectionInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DtlsConnectionInterface)(rawPtr)
+}
+
 // OverrideAcceptCertificate sets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *DtlsConnectionInterface) OverrideAcceptCertificate(cb func(DtlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {

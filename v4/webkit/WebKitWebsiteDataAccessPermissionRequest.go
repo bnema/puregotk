@@ -21,6 +21,14 @@ func (x *WebsiteDataAccessPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsiteDataAccessPermissionRequestClassNewFromInternalPtr(ptr uintptr) *WebsiteDataAccessPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsiteDataAccessPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for accessing website data from third-party domains.
 //
 // WebKitWebsiteDataAccessPermissionRequest represents a request for

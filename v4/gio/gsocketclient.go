@@ -32,6 +32,14 @@ func (x *SocketClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketClientClassNewFromInternalPtr(ptr uintptr) *SocketClientClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketClientClass)(rawPtr)
+}
+
 // OverrideEvent sets the "event" callback function.
 func (x *SocketClientClass) OverrideEvent(cb func(*SocketClient, SocketClientEvent, SocketConnectable, *IOStream)) {
 	if cb == nil {
@@ -153,6 +161,14 @@ type SocketClientPrivate struct {
 
 func (x *SocketClientPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketClientPrivateNewFromInternalPtr(ptr uintptr) *SocketClientPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketClientPrivate)(rawPtr)
 }
 
 // `GSocketClient` is a lightweight high-level utility class for connecting to

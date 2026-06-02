@@ -20,6 +20,14 @@ func (x *BinLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BinLayoutClassNewFromInternalPtr(ptr uintptr) *BinLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BinLayoutClass)(rawPtr)
+}
+
 // A layout manager for widgets with a single child.
 //
 // `GtkBinLayout` will stack each child of a widget on top of each other,

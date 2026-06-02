@@ -36,6 +36,14 @@ func (x *PermissionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PermissionClassNewFromInternalPtr(ptr uintptr) *PermissionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PermissionClass)(rawPtr)
+}
+
 // OverrideAcquire sets the "acquire" callback function.
 func (x *PermissionClass) OverrideAcquire(cb func(*Permission, *Cancellable) bool) {
 	if cb == nil {
@@ -180,6 +188,14 @@ type PermissionPrivate struct {
 
 func (x *PermissionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PermissionPrivateNewFromInternalPtr(ptr uintptr) *PermissionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PermissionPrivate)(rawPtr)
 }
 
 // A `GPermission` represents the status of the caller’s permission to

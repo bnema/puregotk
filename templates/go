@@ -48,6 +48,14 @@ func (x *{{.Name}}) GoPointer() uintptr {
      return uintptr(unsafe.Pointer(x))
 }
 
+func {{.Name}}NewFromInternalPtr(ptr uintptr) *{{.Name}} {
+     if ptr == 0 {
+          return nil
+     }
+     rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+     return (*{{.Name}})(rawPtr)
+}
+
 {{$outer := .}}
 
 {{range .Constructors -}}

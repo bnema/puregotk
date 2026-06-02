@@ -42,6 +42,14 @@ func (x *ContentProviderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContentProviderClassNewFromInternalPtr(ptr uintptr) *ContentProviderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContentProviderClass)(rawPtr)
+}
+
 // OverrideContentChanged sets the "content_changed" callback function.
 // Signal class closure for `GdkContentProvider::content-changed`
 func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider)) {

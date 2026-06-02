@@ -50,6 +50,14 @@ func (x *InputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InputStreamClassNewFromInternalPtr(ptr uintptr) *InputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputStreamClass)(rawPtr)
+}
+
 // OverrideReadFn sets the "read_fn" callback function.
 func (x *InputStreamClass) OverrideReadFn(cb func(*InputStream, uintptr, uint, *Cancellable) int) {
 	if cb == nil {
@@ -378,6 +386,14 @@ type InputStreamPrivate struct {
 
 func (x *InputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InputStreamPrivateNewFromInternalPtr(ptr uintptr) *InputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputStreamPrivate)(rawPtr)
 }
 
 // `GInputStream` is a base class for implementing streaming input.

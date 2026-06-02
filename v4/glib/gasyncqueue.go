@@ -20,6 +20,14 @@ func (x *AsyncQueue) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AsyncQueueNewFromInternalPtr(ptr uintptr) *AsyncQueue {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AsyncQueue)(rawPtr)
+}
+
 var xAsyncQueueLength func(uintptr) int
 
 // Returns the length of the queue.

@@ -65,6 +65,14 @@ func (x *RendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RendererClassNewFromInternalPtr(ptr uintptr) *RendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RendererClass)(rawPtr)
+}
+
 // OverrideDrawGlyphs sets the "draw_glyphs" callback function.
 // draws a `PangoGlyphString`
 func (x *RendererClass) OverrideDrawGlyphs(cb func(*Renderer, *Font, *GlyphString, int, int)) {
@@ -429,6 +437,14 @@ type RendererPrivate struct {
 
 func (x *RendererPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RendererPrivateNewFromInternalPtr(ptr uintptr) *RendererPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RendererPrivate)(rawPtr)
 }
 
 // `PangoRenderPart` defines different items to render for such

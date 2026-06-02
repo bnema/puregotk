@@ -30,6 +30,14 @@ func (x *OptionMenuItem) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OptionMenuItemNewFromInternalPtr(ptr uintptr) *OptionMenuItem {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OptionMenuItem)(rawPtr)
+}
+
 var xOptionMenuItemCopy func(uintptr) uintptr
 
 // Make a copy of the #WebKitOptionMenuItem.

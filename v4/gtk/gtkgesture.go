@@ -21,6 +21,14 @@ func (x *GestureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureClassNewFromInternalPtr(ptr uintptr) *GestureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureClass)(rawPtr)
+}
+
 // The base class for gesture recognition.
 //
 // Although `GtkGesture` is quite generalized to serve as a base for

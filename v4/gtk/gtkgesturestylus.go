@@ -21,6 +21,14 @@ func (x *GestureStylusClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureStylusClassNewFromInternalPtr(ptr uintptr) *GestureStylusClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureStylusClass)(rawPtr)
+}
+
 // Recognizes tablet stylus input.
 //
 // The provided signals just relay the basic information of the

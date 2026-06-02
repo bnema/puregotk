@@ -23,6 +23,14 @@ func (x *IconPaintableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IconPaintableClassNewFromInternalPtr(ptr uintptr) *IconPaintableClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IconPaintableClass)(rawPtr)
+}
+
 // Contains information found when looking up an icon in `GtkIconTheme`
 // or loading it from a file.
 //

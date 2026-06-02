@@ -25,6 +25,14 @@ func (x *SidebarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SidebarClassNewFromInternalPtr(ptr uintptr) *SidebarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SidebarClass)(rawPtr)
+}
+
 // Determines how an [class@Sidebar] should look and behave.
 //
 // See [property@Sidebar:mode] and [property@ViewSwitcherSidebar:mode].

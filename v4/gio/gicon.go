@@ -34,6 +34,14 @@ func (x *IconIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IconIfaceNewFromInternalPtr(ptr uintptr) *IconIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IconIface)(rawPtr)
+}
+
 // OverrideHash sets the "hash" callback function.
 // A hash for a given #GIcon.
 func (x *IconIface) OverrideHash(cb func(Icon) uint) {

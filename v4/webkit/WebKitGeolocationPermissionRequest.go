@@ -19,6 +19,14 @@ func (x *GeolocationPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GeolocationPermissionRequestClassNewFromInternalPtr(ptr uintptr) *GeolocationPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GeolocationPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for sharing the user's location.
 //
 // WebKitGeolocationPermissionRequest represents a request for

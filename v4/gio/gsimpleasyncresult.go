@@ -20,6 +20,14 @@ func (x *SimpleAsyncResultClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SimpleAsyncResultClassNewFromInternalPtr(ptr uintptr) *SimpleAsyncResultClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SimpleAsyncResultClass)(rawPtr)
+}
+
 var xSimpleAsyncReportErrorInIdle func(uintptr, uintptr, uintptr, glib.Quark, int, string, ...interface{})
 
 // Reports an error in an asynchronous function in an idle function by

@@ -72,6 +72,14 @@ func (x *CellAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellAreaClassNewFromInternalPtr(ptr uintptr) *CellAreaClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellAreaClass)(rawPtr)
+}
+
 var xCellAreaClassFindCellProperty func(uintptr, string) uintptr
 
 // Finds a cell property of a cell area class by name.

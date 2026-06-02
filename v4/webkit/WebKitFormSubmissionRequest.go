@@ -21,6 +21,14 @@ func (x *FormSubmissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FormSubmissionRequestClassNewFromInternalPtr(ptr uintptr) *FormSubmissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FormSubmissionRequestClass)(rawPtr)
+}
+
 // Represents a form submission request.
 //
 // When a form is about to be submitted in a #WebKitWebView, the

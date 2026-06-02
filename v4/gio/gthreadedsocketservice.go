@@ -34,6 +34,14 @@ func (x *ThreadedSocketServiceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ThreadedSocketServiceClassNewFromInternalPtr(ptr uintptr) *ThreadedSocketServiceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ThreadedSocketServiceClass)(rawPtr)
+}
+
 // OverrideRun sets the "run" callback function.
 func (x *ThreadedSocketServiceClass) OverrideRun(cb func(*ThreadedSocketService, *SocketConnection, *gobject.Object) bool) {
 	if cb == nil {
@@ -178,6 +186,14 @@ type ThreadedSocketServicePrivate struct {
 
 func (x *ThreadedSocketServicePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ThreadedSocketServicePrivateNewFromInternalPtr(ptr uintptr) *ThreadedSocketServicePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ThreadedSocketServicePrivate)(rawPtr)
 }
 
 // A `GThreadedSocketService` is a simple subclass of [class@Gio.SocketService]

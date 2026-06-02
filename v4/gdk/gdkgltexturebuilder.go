@@ -21,6 +21,14 @@ func (x *GLTextureBuilderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GLTextureBuilderClassNewFromInternalPtr(ptr uintptr) *GLTextureBuilderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GLTextureBuilderClass)(rawPtr)
+}
+
 // Constructs [class@Gdk.Texture] objects from GL textures.
 //
 // The operation is quite simple: Create a texture builder, set all the necessary

@@ -96,6 +96,14 @@ func (x *TextBufferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextBufferClassNewFromInternalPtr(ptr uintptr) *TextBufferClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextBufferClass)(rawPtr)
+}
+
 // OverrideInsertText sets the "insert_text" callback function.
 // The class handler for the `GtkTextBuffer::insert-text` signal.
 func (x *TextBufferClass) OverrideInsertText(cb func(*TextBuffer, *TextIter, string, int)) {
@@ -569,6 +577,14 @@ type TextBufferPrivate struct {
 
 func (x *TextBufferPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TextBufferPrivateNewFromInternalPtr(ptr uintptr) *TextBufferPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextBufferPrivate)(rawPtr)
 }
 
 // Stores text and attributes for display in a `GtkTextView`.

@@ -20,12 +20,28 @@ func (x *IMContextSimpleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IMContextSimpleClassNewFromInternalPtr(ptr uintptr) *IMContextSimpleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IMContextSimpleClass)(rawPtr)
+}
+
 type IMContextSimplePrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *IMContextSimplePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IMContextSimplePrivateNewFromInternalPtr(ptr uintptr) *IMContextSimplePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IMContextSimplePrivate)(rawPtr)
 }
 
 const (

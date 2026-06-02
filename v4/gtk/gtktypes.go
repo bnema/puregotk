@@ -39,6 +39,14 @@ func (x *Bitset) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BitsetNewFromInternalPtr(ptr uintptr) *Bitset {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Bitset)(rawPtr)
+}
+
 var xNewBitsetEmpty func() uintptr
 
 // Creates a new empty bitset.
@@ -339,6 +347,14 @@ func (x *CssStyleChange) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CssStyleChangeNewFromInternalPtr(ptr uintptr) *CssStyleChange {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CssStyleChange)(rawPtr)
+}
+
 // Provides detailed information on how a scroll operation should be performed.
 //
 // Scrolling functions usually allow passing a `NULL` scroll info which will
@@ -355,6 +371,14 @@ func ScrollInfoGLibType() types.GType {
 
 func (x *ScrollInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ScrollInfoNewFromInternalPtr(ptr uintptr) *ScrollInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScrollInfo)(rawPtr)
 }
 
 var xNewScrollInfo func() uintptr

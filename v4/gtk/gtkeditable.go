@@ -39,6 +39,14 @@ func (x *EditableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EditableInterfaceNewFromInternalPtr(ptr uintptr) *EditableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EditableInterface)(rawPtr)
+}
+
 // OverrideInsertText sets the "insert_text" callback function.
 func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, *int)) {
 	if cb == nil {

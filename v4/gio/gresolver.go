@@ -54,6 +54,14 @@ func (x *ResolverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ResolverClassNewFromInternalPtr(ptr uintptr) *ResolverClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ResolverClass)(rawPtr)
+}
+
 // OverrideReload sets the "reload" callback function.
 func (x *ResolverClass) OverrideReload(cb func(*Resolver)) {
 	if cb == nil {
@@ -492,6 +500,14 @@ type ResolverPrivate struct {
 
 func (x *ResolverPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ResolverPrivateNewFromInternalPtr(ptr uintptr) *ResolverPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ResolverPrivate)(rawPtr)
 }
 
 // Flags to modify lookup behavior.

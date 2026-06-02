@@ -32,6 +32,14 @@ func (x *StyleContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StyleContextClassNewFromInternalPtr(ptr uintptr) *StyleContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StyleContextClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 func (x *StyleContextClass) OverrideChanged(cb func(*StyleContext)) {
 	if cb == nil {

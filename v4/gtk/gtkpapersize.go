@@ -36,6 +36,14 @@ func (x *PaperSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PaperSizeNewFromInternalPtr(ptr uintptr) *PaperSize {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PaperSize)(rawPtr)
+}
+
 var xNewPaperSize func(uintptr) uintptr
 
 // Creates a new `GtkPaperSize` object by parsing a

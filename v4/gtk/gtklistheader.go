@@ -19,6 +19,14 @@ func (x *ListHeaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListHeaderClassNewFromInternalPtr(ptr uintptr) *ListHeaderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListHeaderClass)(rawPtr)
+}
+
 // Used by list widgets to represent the headers they display.
 //
 // `GtkListHeader` objects are managed just like [class@Gtk.ListItem]

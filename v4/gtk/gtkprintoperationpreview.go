@@ -46,6 +46,14 @@ func (x *PrintOperationPreviewIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PrintOperationPreviewIfaceNewFromInternalPtr(ptr uintptr) *PrintOperationPreviewIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintOperationPreviewIface)(rawPtr)
+}
+
 // OverrideReady sets the "ready" callback function.
 func (x *PrintOperationPreviewIface) OverrideReady(cb func(PrintOperationPreview, *PrintContext)) {
 	if cb == nil {

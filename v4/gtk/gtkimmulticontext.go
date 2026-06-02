@@ -28,6 +28,14 @@ func (x *IMMulticontextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IMMulticontextClassNewFromInternalPtr(ptr uintptr) *IMMulticontextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IMMulticontextClass)(rawPtr)
+}
+
 // OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *IMMulticontextClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
@@ -126,6 +134,14 @@ type IMMulticontextPrivate struct {
 
 func (x *IMMulticontextPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IMMulticontextPrivateNewFromInternalPtr(ptr uintptr) *IMMulticontextPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IMMulticontextPrivate)(rawPtr)
 }
 
 // Supports switching between multiple input methods.

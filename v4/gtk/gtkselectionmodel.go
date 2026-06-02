@@ -50,6 +50,14 @@ func (x *SelectionModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SelectionModelInterfaceNewFromInternalPtr(ptr uintptr) *SelectionModelInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SelectionModelInterface)(rawPtr)
+}
+
 // OverrideIsSelected sets the "is_selected" callback function.
 // Return if the item at the given position is selected.
 func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uint) bool) {

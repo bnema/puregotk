@@ -30,6 +30,14 @@ func (x *ProxyInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ProxyInterfaceNewFromInternalPtr(ptr uintptr) *ProxyInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyInterface)(rawPtr)
+}
+
 // OverrideConnect sets the "connect" callback function.
 // Connect to proxy server and wrap (if required) the #connection
 //

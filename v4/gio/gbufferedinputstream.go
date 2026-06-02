@@ -38,6 +38,14 @@ func (x *BufferedInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BufferedInputStreamClassNewFromInternalPtr(ptr uintptr) *BufferedInputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BufferedInputStreamClass)(rawPtr)
+}
+
 // OverrideFill sets the "fill" callback function.
 func (x *BufferedInputStreamClass) OverrideFill(cb func(*BufferedInputStream, int, *Cancellable) int) {
 	if cb == nil {
@@ -228,6 +236,14 @@ type BufferedInputStreamPrivate struct {
 
 func (x *BufferedInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BufferedInputStreamPrivateNewFromInternalPtr(ptr uintptr) *BufferedInputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BufferedInputStreamPrivate)(rawPtr)
 }
 
 // Buffered input stream implements [class@Gio.FilterInputStream] and provides

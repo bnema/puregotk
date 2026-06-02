@@ -29,6 +29,14 @@ func (x *AsyncResultIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AsyncResultIfaceNewFromInternalPtr(ptr uintptr) *AsyncResultIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AsyncResultIface)(rawPtr)
+}
+
 // OverrideGetUserData sets the "get_user_data" callback function.
 // Gets the user data passed to the callback.
 func (x *AsyncResultIface) OverrideGetUserData(cb func(AsyncResult) uintptr) {

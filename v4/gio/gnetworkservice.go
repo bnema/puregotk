@@ -21,12 +21,28 @@ func (x *NetworkServiceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NetworkServiceClassNewFromInternalPtr(ptr uintptr) *NetworkServiceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkServiceClass)(rawPtr)
+}
+
 type NetworkServicePrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *NetworkServicePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func NetworkServicePrivateNewFromInternalPtr(ptr uintptr) *NetworkServicePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkServicePrivate)(rawPtr)
 }
 
 // Like [class@Gio.NetworkAddress] does with hostnames, `GNetworkService`

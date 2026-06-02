@@ -20,6 +20,14 @@ func (x *MonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MonitorClassNewFromInternalPtr(ptr uintptr) *MonitorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MonitorClass)(rawPtr)
+}
+
 // This enumeration describes how the red, green and blue components
 // of physical pixels on an output device are laid out.
 type SubpixelLayout int

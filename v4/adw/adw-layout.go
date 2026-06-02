@@ -22,6 +22,14 @@ func (x *LayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LayoutClassNewFromInternalPtr(ptr uintptr) *LayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutClass)(rawPtr)
+}
+
 // An individual layout in [class@MultiLayoutView].
 type Layout struct {
 	gobject.Object

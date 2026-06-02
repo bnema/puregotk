@@ -25,6 +25,14 @@ func (x *FileAttributeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileAttributeInfoNewFromInternalPtr(ptr uintptr) *FileAttributeInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileAttributeInfo)(rawPtr)
+}
+
 // Acts as a lightweight registry for possible valid file attributes.
 // The registry stores Key-Value pair formats as #GFileAttributeInfos.
 type FileAttributeInfoList struct {
@@ -43,6 +51,14 @@ func FileAttributeInfoListGLibType() types.GType {
 
 func (x *FileAttributeInfoList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileAttributeInfoListNewFromInternalPtr(ptr uintptr) *FileAttributeInfoList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileAttributeInfoList)(rawPtr)
 }
 
 var xNewFileAttributeInfoList func() uintptr

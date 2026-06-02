@@ -32,6 +32,14 @@ func (x *Color) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorNewFromInternalPtr(ptr uintptr) *Color {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Color)(rawPtr)
+}
+
 var xColorCopy func(uintptr) uintptr
 
 // Creates a copy of @src.

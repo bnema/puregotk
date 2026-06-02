@@ -24,6 +24,14 @@ func (x *Sequence) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SequenceNewFromInternalPtr(ptr uintptr) *Sequence {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Sequence)(rawPtr)
+}
+
 var xSequenceAppend func(uintptr, uintptr) uintptr
 
 // Adds a new item to the end of @seq.
@@ -285,6 +293,14 @@ type SequenceIter struct {
 
 func (x *SequenceIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SequenceIterNewFromInternalPtr(ptr uintptr) *SequenceIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SequenceIter)(rawPtr)
 }
 
 var xSequenceIterCompare func(uintptr, *SequenceIter) int

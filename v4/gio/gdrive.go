@@ -86,6 +86,14 @@ func (x *DriveIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DriveIfaceNewFromInternalPtr(ptr uintptr) *DriveIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DriveIface)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 // Signal emitted when the drive is changed.
 func (x *DriveIface) OverrideChanged(cb func(Drive)) {

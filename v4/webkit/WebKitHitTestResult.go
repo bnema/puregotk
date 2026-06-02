@@ -21,6 +21,14 @@ func (x *HitTestResultClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HitTestResultClassNewFromInternalPtr(ptr uintptr) *HitTestResultClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HitTestResultClass)(rawPtr)
+}
+
 // Enum values with flags representing the context of a #WebKitHitTestResult.
 type HitTestResultContext int
 

@@ -20,6 +20,14 @@ func (x *TimedAnimationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TimedAnimationClassNewFromInternalPtr(ptr uintptr) *TimedAnimationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TimedAnimationClass)(rawPtr)
+}
+
 // A time-based [class@Animation].
 //
 // `AdwTimedAnimation` implements a simple animation interpolating the given

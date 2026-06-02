@@ -23,6 +23,14 @@ func (x *UserMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UserMessageClassNewFromInternalPtr(ptr uintptr) *UserMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserMessageClass)(rawPtr)
+}
+
 // Enum values used to denote errors happening when sending user messages.
 type UserMessageError int
 

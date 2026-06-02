@@ -32,6 +32,14 @@ func (x *MatchInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MatchInfoNewFromInternalPtr(ptr uintptr) *MatchInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MatchInfo)(rawPtr)
+}
+
 var xMatchInfoExpandReferences func(uintptr, string, **Error) string
 
 // Returns a new string containing the text in @string_to_expand with
@@ -630,6 +638,14 @@ func RegexGLibType() types.GType {
 
 func (x *Regex) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RegexNewFromInternalPtr(ptr uintptr) *Regex {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Regex)(rawPtr)
 }
 
 var xNewRegex func(string, RegexCompileFlags, RegexMatchFlags, **Error) uintptr

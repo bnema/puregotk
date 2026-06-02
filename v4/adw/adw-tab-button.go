@@ -23,6 +23,14 @@ func (x *TabButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TabButtonClassNewFromInternalPtr(ptr uintptr) *TabButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabButtonClass)(rawPtr)
+}
+
 // A button that displays the number of [class@TabView] pages.
 //
 // &lt;picture&gt;

@@ -58,6 +58,14 @@ func (x *Completion) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CompletionNewFromInternalPtr(ptr uintptr) *Completion {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Completion)(rawPtr)
+}
+
 var xCompletionAddItems func(uintptr, *List)
 
 // Adds items to the #GCompletion.

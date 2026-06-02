@@ -24,6 +24,14 @@ func (x *TabPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TabPageClassNewFromInternalPtr(ptr uintptr) *TabPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabPageClass)(rawPtr)
+}
+
 type TabViewClass struct {
 	_ structs.HostLayout
 
@@ -32,6 +40,14 @@ type TabViewClass struct {
 
 func (x *TabViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TabViewClassNewFromInternalPtr(ptr uintptr) *TabViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabViewClass)(rawPtr)
 }
 
 // Describes available shortcuts in an [class@TabView].

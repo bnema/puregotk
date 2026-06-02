@@ -22,6 +22,14 @@ func (x *ClampScrollableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ClampScrollableClassNewFromInternalPtr(ptr uintptr) *ClampScrollableClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClampScrollableClass)(rawPtr)
+}
+
 // A scrollable [class@Clamp].
 //
 // `AdwClampScrollable` is a variant of [class@Clamp] that implements the

@@ -32,6 +32,14 @@ func (x *TrashStack) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TrashStackNewFromInternalPtr(ptr uintptr) *TrashStack {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TrashStack)(rawPtr)
+}
+
 var xTrashStackHeight func(**TrashStack) uint
 
 // Returns the height of a #GTrashStack.

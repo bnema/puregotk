@@ -31,6 +31,14 @@ func (x *ColorStop) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorStopNewFromInternalPtr(ptr uintptr) *ColorStop {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorStop)(rawPtr)
+}
+
 // A location in a parse buffer.
 type ParseLocation struct {
 	_ structs.HostLayout
@@ -48,6 +56,14 @@ type ParseLocation struct {
 
 func (x *ParseLocation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ParseLocationNewFromInternalPtr(ptr uintptr) *ParseLocation {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ParseLocation)(rawPtr)
 }
 
 var xSerializationErrorQuark func() glib.Quark

@@ -28,6 +28,14 @@ func (x *ListModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListModelInterfaceNewFromInternalPtr(ptr uintptr) *ListModelInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListModelInterface)(rawPtr)
+}
+
 // OverrideGetItemType sets the "get_item_type" callback function.
 // the virtual function pointer for g_list_model_get_item_type()
 func (x *ListModelInterface) OverrideGetItemType(cb func(ListModel) types.GType) {

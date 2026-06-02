@@ -27,6 +27,14 @@ func (x *RequestedSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RequestedSizeNewFromInternalPtr(ptr uintptr) *RequestedSize {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RequestedSize)(rawPtr)
+}
+
 var xDistributeNaturalAllocation func(int, uint, []RequestedSize) int
 
 // Distributes @extra_space to child @sizes by bringing smaller

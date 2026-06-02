@@ -30,6 +30,14 @@ func (x *CookieJarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CookieJarClassNewFromInternalPtr(ptr uintptr) *CookieJarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CookieJarClass)(rawPtr)
+}
+
 // OverrideSave sets the "save" callback function.
 func (x *CookieJarClass) OverrideSave(cb func(*CookieJar)) {
 	if cb == nil {

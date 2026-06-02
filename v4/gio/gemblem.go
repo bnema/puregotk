@@ -20,6 +20,14 @@ func (x *EmblemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EmblemClassNewFromInternalPtr(ptr uintptr) *EmblemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EmblemClass)(rawPtr)
+}
+
 // `GEmblem` is an implementation of [iface@Gio.Icon] that supports
 // having an emblem, which is an icon with additional properties.
 // It can than be added to a [class@Gio.EmblemedIcon].

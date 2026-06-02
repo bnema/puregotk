@@ -20,6 +20,14 @@ func (x *IOModuleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOModuleClassNewFromInternalPtr(ptr uintptr) *IOModuleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOModuleClass)(rawPtr)
+}
+
 // Represents a scope for loading IO modules. A scope can be used for blocking
 // duplicate modules, or blocking a module you don't want to load.
 //
@@ -31,6 +39,14 @@ type IOModuleScope struct {
 
 func (x *IOModuleScope) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IOModuleScopeNewFromInternalPtr(ptr uintptr) *IOModuleScope {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOModuleScope)(rawPtr)
 }
 
 var xIOModuleScopeBlock func(uintptr, string)

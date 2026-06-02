@@ -21,6 +21,14 @@ func (x *MessageDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageDialogClassNewFromInternalPtr(ptr uintptr) *MessageDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageDialogClass)(rawPtr)
+}
+
 // Prebuilt sets of buttons for `GtkDialog`.
 //
 // If none of these choices are appropriate, simply use

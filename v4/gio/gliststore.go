@@ -22,6 +22,14 @@ func (x *ListStoreClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListStoreClassNewFromInternalPtr(ptr uintptr) *ListStoreClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListStoreClass)(rawPtr)
+}
+
 // `GListStore` is a simple implementation of [iface@Gio.ListModel] that stores
 // all items in memory.
 //

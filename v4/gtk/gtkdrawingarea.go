@@ -33,6 +33,14 @@ func (x *DrawingAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DrawingAreaClassNewFromInternalPtr(ptr uintptr) *DrawingAreaClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DrawingAreaClass)(rawPtr)
+}
+
 // OverrideResize sets the "resize" callback function.
 func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int, int)) {
 	if cb == nil {

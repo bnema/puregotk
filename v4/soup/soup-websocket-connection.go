@@ -24,6 +24,14 @@ func (x *WebsocketConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsocketConnectionClassNewFromInternalPtr(ptr uintptr) *WebsocketConnectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsocketConnectionClass)(rawPtr)
+}
+
 // The WebSocket Protocol
 //
 // Provides support for the [WebSocket](http://tools.ietf.org/html/rfc6455)

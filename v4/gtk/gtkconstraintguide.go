@@ -21,6 +21,14 @@ func (x *ConstraintGuideClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ConstraintGuideClassNewFromInternalPtr(ptr uintptr) *ConstraintGuideClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConstraintGuideClass)(rawPtr)
+}
+
 // An invisible layout element in a `GtkConstraintLayout`.
 //
 // The `GtkConstraintLayout` treats guides like widgets. They

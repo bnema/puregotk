@@ -19,6 +19,14 @@ func (x *NotificationPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NotificationPermissionRequestClassNewFromInternalPtr(ptr uintptr) *NotificationPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NotificationPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for displaying web notifications.
 //
 // WebKitNotificationPermissionRequest represents a request for

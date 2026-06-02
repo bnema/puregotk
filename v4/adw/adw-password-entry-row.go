@@ -23,6 +23,14 @@ func (x *PasswordEntryRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PasswordEntryRowClassNewFromInternalPtr(ptr uintptr) *PasswordEntryRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PasswordEntryRowClass)(rawPtr)
+}
+
 // A [class@EntryRow] tailored for entering secrets.
 //
 // &lt;picture&gt;

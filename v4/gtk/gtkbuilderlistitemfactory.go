@@ -20,6 +20,14 @@ func (x *BuilderListItemFactoryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BuilderListItemFactoryClassNewFromInternalPtr(ptr uintptr) *BuilderListItemFactoryClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuilderListItemFactoryClass)(rawPtr)
+}
+
 // Creates widgets by instantiating `GtkBuilder` UI templates.
 //
 // The templates must extend the class that the parent widget expects.

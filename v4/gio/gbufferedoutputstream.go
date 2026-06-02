@@ -26,6 +26,14 @@ func (x *BufferedOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BufferedOutputStreamClassNewFromInternalPtr(ptr uintptr) *BufferedOutputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BufferedOutputStreamClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *BufferedOutputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -78,6 +86,14 @@ type BufferedOutputStreamPrivate struct {
 
 func (x *BufferedOutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BufferedOutputStreamPrivateNewFromInternalPtr(ptr uintptr) *BufferedOutputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BufferedOutputStreamPrivate)(rawPtr)
 }
 
 // Buffered output stream implements [class@Gio.FilterOutputStream] and provides

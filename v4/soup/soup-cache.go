@@ -25,6 +25,14 @@ func (x *CacheClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CacheClassNewFromInternalPtr(ptr uintptr) *CacheClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CacheClass)(rawPtr)
+}
+
 // OverrideGetCacheability sets the "get_cacheability" callback function.
 func (x *CacheClass) OverrideGetCacheability(cb func(*Cache, *Message) Cacheability) {
 	if cb == nil {

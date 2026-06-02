@@ -18,6 +18,14 @@ func (x *FontsetSimpleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontsetSimpleClassNewFromInternalPtr(ptr uintptr) *FontsetSimpleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontsetSimpleClass)(rawPtr)
+}
+
 // `PangoFontsetSimple` is a implementation of the abstract
 // `PangoFontset` base class as an array of fonts.
 //

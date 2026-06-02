@@ -41,6 +41,14 @@ func (x *GlyphItem) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GlyphItemNewFromInternalPtr(ptr uintptr) *GlyphItem {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphItem)(rawPtr)
+}
+
 var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) uintptr
 
 // Splits a shaped item (`PangoGlyphItem`) into multiple items based
@@ -199,6 +207,14 @@ func GlyphItemIterGLibType() types.GType {
 
 func (x *GlyphItemIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GlyphItemIterNewFromInternalPtr(ptr uintptr) *GlyphItemIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GlyphItemIter)(rawPtr)
 }
 
 var xGlyphItemIterCopy func(uintptr) uintptr

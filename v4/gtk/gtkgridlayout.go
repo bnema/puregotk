@@ -21,6 +21,14 @@ func (x *GridLayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GridLayoutChildClassNewFromInternalPtr(ptr uintptr) *GridLayoutChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GridLayoutChildClass)(rawPtr)
+}
+
 type GridLayoutClass struct {
 	_ structs.HostLayout
 
@@ -29,6 +37,14 @@ type GridLayoutClass struct {
 
 func (x *GridLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func GridLayoutClassNewFromInternalPtr(ptr uintptr) *GridLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GridLayoutClass)(rawPtr)
 }
 
 // Arranges child widgets in rows and columns.

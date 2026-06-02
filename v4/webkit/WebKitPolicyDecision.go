@@ -37,6 +37,14 @@ func (x *PolicyDecisionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PolicyDecisionClassNewFromInternalPtr(ptr uintptr) *PolicyDecisionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PolicyDecisionClass)(rawPtr)
+}
+
 // OverrideWebkitReserved0 sets the "_webkit_reserved0" callback function.
 func (x *PolicyDecisionClass) OverrideWebkitReserved0(cb func()) {
 	if cb == nil {
@@ -227,6 +235,14 @@ type PolicyDecisionPrivate struct {
 
 func (x *PolicyDecisionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PolicyDecisionPrivateNewFromInternalPtr(ptr uintptr) *PolicyDecisionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PolicyDecisionPrivate)(rawPtr)
 }
 
 // A pending policy decision.

@@ -38,6 +38,14 @@ func (x *PathPoint) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PathPointNewFromInternalPtr(ptr uintptr) *PathPoint {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PathPoint)(rawPtr)
+}
+
 var xPathPointCompare func(uintptr, *PathPoint) int
 
 // Returns whether @point1 is before or after @point2.

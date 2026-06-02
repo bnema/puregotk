@@ -29,6 +29,14 @@ func (x *TextChildAnchorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextChildAnchorClassNewFromInternalPtr(ptr uintptr) *TextChildAnchorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextChildAnchorClass)(rawPtr)
+}
+
 // OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *TextChildAnchorClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {

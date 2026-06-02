@@ -25,6 +25,14 @@ func (x *Dir) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DirNewFromInternalPtr(ptr uintptr) *Dir {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Dir)(rawPtr)
+}
+
 var xDirOpen func(string, uint, **Error) uintptr
 
 // Opens a directory for reading. The names of the files in the

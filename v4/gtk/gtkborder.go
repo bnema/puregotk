@@ -35,6 +35,14 @@ func (x *Border) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BorderNewFromInternalPtr(ptr uintptr) *Border {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Border)(rawPtr)
+}
+
 var xNewBorder func() uintptr
 
 // Allocates a new `GtkBorder` struct and initializes its elements to zero.

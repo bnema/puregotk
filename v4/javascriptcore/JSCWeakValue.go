@@ -22,6 +22,14 @@ func (x *WeakValueClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WeakValueClassNewFromInternalPtr(ptr uintptr) *WeakValueClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WeakValueClass)(rawPtr)
+}
+
 // JSCWeakValue represents a weak reference to a value in a #JSCContext. It can be used
 // to keep a reference to a JavaScript value without protecting it from being garbage
 // collected and without referencing the #JSCContext either.

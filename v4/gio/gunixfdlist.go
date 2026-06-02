@@ -32,6 +32,14 @@ func (x *UnixFDListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UnixFDListClassNewFromInternalPtr(ptr uintptr) *UnixFDListClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixFDListClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *UnixFDListClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -153,6 +161,14 @@ type UnixFDListPrivate struct {
 
 func (x *UnixFDListPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UnixFDListPrivateNewFromInternalPtr(ptr uintptr) *UnixFDListPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixFDListPrivate)(rawPtr)
 }
 
 // A `GUnixFDList` contains a list of file descriptors.  It owns the file

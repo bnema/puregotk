@@ -31,6 +31,14 @@ func (x *HSTSEnforcerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HSTSEnforcerClassNewFromInternalPtr(ptr uintptr) *HSTSEnforcerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HSTSEnforcerClass)(rawPtr)
+}
+
 // OverrideIsPersistent sets the "is_persistent" callback function.
 // The @is_persistent function advertises whether the enforcer is persistent or
 // whether changes made to it will be lost when the underlying [class@Session] is finished.

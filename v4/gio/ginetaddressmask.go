@@ -22,12 +22,28 @@ func (x *InetAddressMaskClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InetAddressMaskClassNewFromInternalPtr(ptr uintptr) *InetAddressMaskClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetAddressMaskClass)(rawPtr)
+}
+
 type InetAddressMaskPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *InetAddressMaskPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InetAddressMaskPrivateNewFromInternalPtr(ptr uintptr) *InetAddressMaskPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetAddressMaskPrivate)(rawPtr)
 }
 
 // `GInetAddressMask` represents a range of IPv4 or IPv6 addresses

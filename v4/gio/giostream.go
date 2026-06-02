@@ -52,6 +52,14 @@ func (x *IOStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOStreamClassNewFromInternalPtr(ptr uintptr) *IOStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOStreamClass)(rawPtr)
+}
+
 // OverrideGetInputStream sets the "get_input_stream" callback function.
 func (x *IOStreamClass) OverrideGetInputStream(cb func(*IOStream) *InputStream) {
 	if cb == nil {
@@ -423,6 +431,14 @@ type IOStreamPrivate struct {
 
 func (x *IOStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IOStreamPrivateNewFromInternalPtr(ptr uintptr) *IOStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOStreamPrivate)(rawPtr)
 }
 
 // `GIOStream` represents an object that has both read and write streams.

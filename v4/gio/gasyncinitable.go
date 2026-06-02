@@ -28,6 +28,14 @@ func (x *AsyncInitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AsyncInitableIfaceNewFromInternalPtr(ptr uintptr) *AsyncInitableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AsyncInitableIface)(rawPtr)
+}
+
 // OverrideInitAsync sets the "init_async" callback function.
 // Starts initialization of the object.
 func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr)) {

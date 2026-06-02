@@ -22,6 +22,14 @@ func (x *CharsetConverterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CharsetConverterClassNewFromInternalPtr(ptr uintptr) *CharsetConverterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CharsetConverterClass)(rawPtr)
+}
+
 // `GCharsetConverter` is an implementation of [iface@Gio.Converter] based on
 // [struct@GLib.IConv].
 type CharsetConverter struct {

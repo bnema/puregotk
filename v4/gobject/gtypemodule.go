@@ -34,6 +34,14 @@ func (x *TypeModuleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TypeModuleClassNewFromInternalPtr(ptr uintptr) *TypeModuleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypeModuleClass)(rawPtr)
+}
+
 // OverrideLoad sets the "load" callback function.
 // loads the module and registers one or more types using
 //

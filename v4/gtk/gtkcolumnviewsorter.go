@@ -21,6 +21,14 @@ func (x *ColumnViewSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColumnViewSorterClassNewFromInternalPtr(ptr uintptr) *ColumnViewSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColumnViewSorterClass)(rawPtr)
+}
+
 // Sorts [class@Gtk.ColumnView] columns.
 //
 // The sorter returned by [method@Gtk.ColumnView.get_sorter] is

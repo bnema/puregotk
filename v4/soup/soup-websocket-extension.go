@@ -37,6 +37,14 @@ func (x *WebsocketExtensionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsocketExtensionClassNewFromInternalPtr(ptr uintptr) *WebsocketExtensionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsocketExtensionClass)(rawPtr)
+}
+
 // OverrideConfigure sets the "configure" callback function.
 // called to configure the extension with the given parameters
 func (x *WebsocketExtensionClass) OverrideConfigure(cb func(*WebsocketExtension, WebsocketConnectionType, *glib.HashTable) bool) {

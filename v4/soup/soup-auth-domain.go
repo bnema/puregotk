@@ -53,6 +53,14 @@ func (x *AuthDomainClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthDomainClassNewFromInternalPtr(ptr uintptr) *AuthDomainClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthDomainClass)(rawPtr)
+}
+
 // OverrideAccepts sets the "accepts" callback function.
 func (x *AuthDomainClass) OverrideAccepts(cb func(*AuthDomain, *ServerMessage, string) string) {
 	if cb == nil {

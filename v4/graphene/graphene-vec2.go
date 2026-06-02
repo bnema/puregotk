@@ -30,6 +30,14 @@ func (x *Vec2) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func Vec2NewFromInternalPtr(ptr uintptr) *Vec2 {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Vec2)(rawPtr)
+}
+
 var xVec2Alloc func() uintptr
 
 // Allocates a new #graphene_vec2_t structure.

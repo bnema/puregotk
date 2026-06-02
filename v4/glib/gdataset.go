@@ -31,6 +31,14 @@ func (x *Data) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DataNewFromInternalPtr(ptr uintptr) *Data {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Data)(rawPtr)
+}
+
 const (
 	// A bitmask that restricts the possible flags passed to
 	// g_datalist_set_flags(). Passing a flags value where

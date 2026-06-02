@@ -22,6 +22,14 @@ func (x *FlattenListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FlattenListModelClassNewFromInternalPtr(ptr uintptr) *FlattenListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FlattenListModelClass)(rawPtr)
+}
+
 // A list model that concatenates other list models.
 //
 // `GtkFlattenListModel` takes a list model containing list models, and flattens

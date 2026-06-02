@@ -19,6 +19,14 @@ func (x *CenterBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CenterBoxClassNewFromInternalPtr(ptr uintptr) *CenterBoxClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CenterBoxClass)(rawPtr)
+}
+
 // Arranges three children in a row, keeping the middle child
 // centered as well as possible.
 //

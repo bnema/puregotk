@@ -20,6 +20,14 @@ func (x *GridViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GridViewClassNewFromInternalPtr(ptr uintptr) *GridViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GridViewClass)(rawPtr)
+}
+
 // Presents a large dynamic grid of items.
 //
 // `GtkGridView` uses its factory to generate one child widget for each

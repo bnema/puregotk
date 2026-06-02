@@ -43,6 +43,14 @@ func (x *TypePluginClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TypePluginClassNewFromInternalPtr(ptr uintptr) *TypePluginClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TypePluginClass)(rawPtr)
+}
+
 // An interface that handles the lifecycle of dynamically loaded types.
 //
 // The GObject type system supports dynamic loading of types.

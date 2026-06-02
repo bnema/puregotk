@@ -19,6 +19,14 @@ func (x *ColumnViewRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColumnViewRowClassNewFromInternalPtr(ptr uintptr) *ColumnViewRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColumnViewRowClass)(rawPtr)
+}
+
 // Configures how rows are displayed in a [class@Gtk.ColumnView].
 //
 // It is not used to set the widgets displayed in the individual cells. For that

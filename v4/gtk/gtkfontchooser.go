@@ -45,6 +45,14 @@ func (x *FontChooserIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontChooserIfaceNewFromInternalPtr(ptr uintptr) *FontChooserIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontChooserIface)(rawPtr)
+}
+
 // OverrideGetFontFamily sets the "get_font_family" callback function.
 func (x *FontChooserIface) OverrideGetFontFamily(cb func(FontChooser) *pango.FontFamily) {
 	if cb == nil {

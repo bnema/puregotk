@@ -41,6 +41,14 @@ func (x *TestCase) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TestCaseNewFromInternalPtr(ptr uintptr) *TestCase {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TestCase)(rawPtr)
+}
+
 var xTestCaseFree func(uintptr)
 
 // Free the @test_case.
@@ -68,6 +76,14 @@ func (x *TestConfig) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TestConfigNewFromInternalPtr(ptr uintptr) *TestConfig {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TestConfig)(rawPtr)
+}
+
 type TestLogBuffer struct {
 	_ structs.HostLayout
 
@@ -78,6 +94,14 @@ type TestLogBuffer struct {
 
 func (x *TestLogBuffer) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TestLogBufferNewFromInternalPtr(ptr uintptr) *TestLogBuffer {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TestLogBuffer)(rawPtr)
 }
 
 var xTestLogBufferFree func(uintptr)
@@ -123,6 +147,14 @@ func (x *TestLogMsg) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TestLogMsgNewFromInternalPtr(ptr uintptr) *TestLogMsg {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TestLogMsg)(rawPtr)
+}
+
 var xTestLogMsgFree func(uintptr)
 
 // Internal function for gtester to free test log messages, no ABI guarantees provided.
@@ -137,6 +169,14 @@ type TestSuite struct {
 
 func (x *TestSuite) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TestSuiteNewFromInternalPtr(ptr uintptr) *TestSuite {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TestSuite)(rawPtr)
 }
 
 var xTestSuiteAdd func(uintptr, *TestCase)

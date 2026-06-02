@@ -21,6 +21,14 @@ func (x *NumericSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NumericSorterClassNewFromInternalPtr(ptr uintptr) *NumericSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NumericSorterClass)(rawPtr)
+}
+
 // Sorts items numerically.
 //
 // To obtain the numbers to compare, this sorter evaluates a

@@ -23,6 +23,14 @@ func (x *ServerMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ServerMessageClassNewFromInternalPtr(ptr uintptr) *ServerMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ServerMessageClass)(rawPtr)
+}
+
 // An HTTP server request and response pair.
 //
 // A [class@ServerMessage] represents an HTTP message that is being sent or

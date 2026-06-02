@@ -27,6 +27,14 @@ func (x *PrintBackend) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PrintBackendNewFromInternalPtr(ptr uintptr) *PrintBackend {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintBackend)(rawPtr)
+}
+
 // Specifies which features the print dialog should offer.
 //
 // If neither %GTK_PRINT_CAPABILITY_GENERATE_PDF nor

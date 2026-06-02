@@ -21,6 +21,14 @@ func (x *CustomSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CustomSorterClassNewFromInternalPtr(ptr uintptr) *CustomSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CustomSorterClass)(rawPtr)
+}
+
 // Sorts items via a callback function.
 type CustomSorter struct {
 	Sorter

@@ -22,6 +22,14 @@ func (x *URIResponseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func URIResponseClassNewFromInternalPtr(ptr uintptr) *URIResponseClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*URIResponseClass)(rawPtr)
+}
+
 // Represents an URI response.
 //
 // A #WebKitURIResponse contains information such as the URI, the

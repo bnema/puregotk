@@ -31,6 +31,14 @@ func (x *PageRange) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PageRangeNewFromInternalPtr(ptr uintptr) *PageRange {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PageRange)(rawPtr)
+}
+
 const (
 	// The key used by the “Print to file” printer to store whether to collate the
 	// printed pages.

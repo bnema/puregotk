@@ -22,6 +22,14 @@ func (x *SettingsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SettingsClassNewFromInternalPtr(ptr uintptr) *SettingsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsClass)(rawPtr)
+}
+
 // Enum values used for determining the hardware acceleration policy.
 type HardwareAccelerationPolicy int
 

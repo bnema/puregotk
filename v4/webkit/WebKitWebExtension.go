@@ -23,6 +23,14 @@ func (x *WebExtensionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebExtensionClassNewFromInternalPtr(ptr uintptr) *WebExtensionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebExtensionClass)(rawPtr)
+}
+
 // Represents a [WebExtension](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions).
 //
 // A #WebKitWebExtension object encapsulates a web extension’s

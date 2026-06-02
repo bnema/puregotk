@@ -30,6 +30,14 @@ func (x *Matrix) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MatrixNewFromInternalPtr(ptr uintptr) *Matrix {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Matrix)(rawPtr)
+}
+
 var xMatrixAlloc func() uintptr
 
 // Allocates a new #graphene_matrix_t.

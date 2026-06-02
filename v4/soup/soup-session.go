@@ -43,6 +43,14 @@ func (x *SessionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SessionClassNewFromInternalPtr(ptr uintptr) *SessionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SessionClass)(rawPtr)
+}
+
 // OverrideRequestQueued sets the "request_queued" callback function.
 func (x *SessionClass) OverrideRequestQueued(cb func(*Session, *Message)) {
 	if cb == nil {

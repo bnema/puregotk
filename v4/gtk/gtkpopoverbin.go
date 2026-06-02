@@ -22,6 +22,14 @@ func (x *PopoverBinClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PopoverBinClassNewFromInternalPtr(ptr uintptr) *PopoverBinClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PopoverBinClass)(rawPtr)
+}
+
 // A single child container with a popover.
 //
 // You should use `GtkPopoverBin` whenever you need to present a [class@Gtk.Popover]

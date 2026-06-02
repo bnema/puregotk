@@ -26,6 +26,14 @@ func (x *ScaleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScaleButtonClassNewFromInternalPtr(ptr uintptr) *ScaleButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScaleButtonClass)(rawPtr)
+}
+
 // OverrideValueChanged sets the "value_changed" callback function.
 func (x *ScaleButtonClass) OverrideValueChanged(cb func(*ScaleButton, float64)) {
 	if cb == nil {

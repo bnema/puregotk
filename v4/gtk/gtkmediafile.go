@@ -35,6 +35,14 @@ func (x *MediaFileClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MediaFileClassNewFromInternalPtr(ptr uintptr) *MediaFileClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MediaFileClass)(rawPtr)
+}
+
 // OverrideOpen sets the "open" callback function.
 func (x *MediaFileClass) OverrideOpen(cb func(*MediaFile)) {
 	if cb == nil {

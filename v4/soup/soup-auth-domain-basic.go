@@ -39,6 +39,14 @@ func (x *AuthDomainBasicClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthDomainBasicClassNewFromInternalPtr(ptr uintptr) *AuthDomainBasicClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthDomainBasicClass)(rawPtr)
+}
+
 // Server-side "Basic" authentication.
 //
 // [class@AuthDomainBasic] handles the server side of HTTP "Basic" (ie,

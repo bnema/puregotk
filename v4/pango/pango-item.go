@@ -39,6 +39,14 @@ func (x *Analysis) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AnalysisNewFromInternalPtr(ptr uintptr) *Analysis {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Analysis)(rawPtr)
+}
+
 // The `PangoItem` structure stores information about a segment of text.
 //
 // You typically obtain `PangoItems` by itemizing a piece of text
@@ -63,6 +71,14 @@ func ItemGLibType() types.GType {
 
 func (x *Item) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ItemNewFromInternalPtr(ptr uintptr) *Item {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Item)(rawPtr)
 }
 
 var xNewItem func() uintptr

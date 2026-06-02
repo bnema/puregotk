@@ -29,6 +29,14 @@ func (x *DBusProxyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusProxyClassNewFromInternalPtr(ptr uintptr) *DBusProxyClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusProxyClass)(rawPtr)
+}
+
 // OverrideGPropertiesChanged sets the "g_properties_changed" callback function.
 // Signal class handler for the #GDBusProxy::g-properties-changed signal.
 func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Variant, string)) {
@@ -85,6 +93,14 @@ type DBusProxyPrivate struct {
 
 func (x *DBusProxyPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusProxyPrivateNewFromInternalPtr(ptr uintptr) *DBusProxyPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusProxyPrivate)(rawPtr)
 }
 
 // `GDBusProxy` is a base class used for proxies to access a D-Bus

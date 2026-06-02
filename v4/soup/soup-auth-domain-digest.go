@@ -29,6 +29,14 @@ func (x *AuthDomainDigestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthDomainDigestClassNewFromInternalPtr(ptr uintptr) *AuthDomainDigestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthDomainDigestClass)(rawPtr)
+}
+
 // Server-side "Digest" authentication.
 //
 // [class@AuthDomainDigest] handles the server side of HTTP "Digest"

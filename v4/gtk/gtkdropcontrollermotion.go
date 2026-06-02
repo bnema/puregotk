@@ -21,6 +21,14 @@ func (x *DropControllerMotionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DropControllerMotionClassNewFromInternalPtr(ptr uintptr) *DropControllerMotionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DropControllerMotionClass)(rawPtr)
+}
+
 // An event controller tracking the pointer during Drag-and-Drop operations.
 //
 // It is modeled after [class@Gtk.EventControllerMotion] so if you

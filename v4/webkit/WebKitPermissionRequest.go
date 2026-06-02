@@ -24,6 +24,14 @@ func (x *PermissionRequestInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PermissionRequestInterfaceNewFromInternalPtr(ptr uintptr) *PermissionRequestInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PermissionRequestInterface)(rawPtr)
+}
+
 // OverrideAllow sets the "allow" callback function.
 func (x *PermissionRequestInterface) OverrideAllow(cb func(PermissionRequest)) {
 	if cb == nil {

@@ -23,6 +23,14 @@ func (x *FileDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileDialogClassNewFromInternalPtr(ptr uintptr) *FileDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileDialogClass)(rawPtr)
+}
+
 // Asynchronous API to present a file chooser dialog.
 //
 // `GtkFileDialog` collects the arguments that are needed to present

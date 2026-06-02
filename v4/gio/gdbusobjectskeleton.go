@@ -27,6 +27,14 @@ func (x *DBusObjectSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusObjectSkeletonClassNewFromInternalPtr(ptr uintptr) *DBusObjectSkeletonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectSkeletonClass)(rawPtr)
+}
+
 // OverrideAuthorizeMethod sets the "authorize_method" callback function.
 // Signal class handler for the #GDBusObjectSkeleton::authorize-method signal.
 func (x *DBusObjectSkeletonClass) OverrideAuthorizeMethod(cb func(*DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool) {
@@ -58,6 +66,14 @@ type DBusObjectSkeletonPrivate struct {
 
 func (x *DBusObjectSkeletonPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusObjectSkeletonPrivateNewFromInternalPtr(ptr uintptr) *DBusObjectSkeletonPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectSkeletonPrivate)(rawPtr)
 }
 
 // A `GDBusObjectSkeleton` instance is essentially a group of D-Bus

@@ -27,6 +27,14 @@ func (x *FilterOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FilterOutputStreamClassNewFromInternalPtr(ptr uintptr) *FilterOutputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FilterOutputStreamClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *FilterOutputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
