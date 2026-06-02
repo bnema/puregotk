@@ -39,6 +39,14 @@ func (x *Node) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NodeNewFromInternalPtr(ptr uintptr) *Node {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Node)(rawPtr)
+}
+
 var xNodeChildIndex func(uintptr, uintptr) int
 
 // Gets the position of the first child of a #GNode

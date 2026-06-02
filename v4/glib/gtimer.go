@@ -22,6 +22,14 @@ func (x *Timer) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TimerNewFromInternalPtr(ptr uintptr) *Timer {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Timer)(rawPtr)
+}
+
 var xTimerContinue func(uintptr)
 
 // Resumes a timer that has previously been stopped with

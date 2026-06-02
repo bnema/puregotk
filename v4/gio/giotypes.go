@@ -117,6 +117,14 @@ func (x *FileAttributeMatcher) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileAttributeMatcherNewFromInternalPtr(ptr uintptr) *FileAttributeMatcher {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileAttributeMatcher)(rawPtr)
+}
+
 var xNewFileAttributeMatcher func(string) uintptr
 
 // Creates a new file attribute matcher, which matches attributes
@@ -244,6 +252,14 @@ func (x *IOExtension) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOExtensionNewFromInternalPtr(ptr uintptr) *IOExtension {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOExtension)(rawPtr)
+}
+
 var xIOExtensionGetName func(uintptr) string
 
 // Gets the name under which @extension was registered.
@@ -344,6 +360,14 @@ func (x *IOExtensionPoint) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOExtensionPointNewFromInternalPtr(ptr uintptr) *IOExtensionPoint {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOExtensionPoint)(rawPtr)
+}
+
 var xIOExtensionPointGetExtensionByName func(uintptr, string) uintptr
 
 // Finds a #GIOExtension for an extension point by name.
@@ -392,6 +416,14 @@ func (x *IOSchedulerJob) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOSchedulerJobNewFromInternalPtr(ptr uintptr) *IOSchedulerJob {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOSchedulerJob)(rawPtr)
+}
+
 var xIOSchedulerJobSendToMainloop func(uintptr, uintptr, uintptr, uintptr) bool
 
 // Used from an I/O job to send a callback to be run in the thread
@@ -423,6 +455,14 @@ type IOStreamAdapter struct {
 
 func (x *IOStreamAdapter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IOStreamAdapterNewFromInternalPtr(ptr uintptr) *IOStreamAdapter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOStreamAdapter)(rawPtr)
 }
 
 // Structure used for scatter/gather data input when receiving multiple
@@ -466,6 +506,14 @@ func (x *InputMessage) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InputMessageNewFromInternalPtr(ptr uintptr) *InputMessage {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputMessage)(rawPtr)
+}
+
 // Structure used for scatter/gather data input.
 // You generally pass in an array of #GInputVectors
 // and the operation will store the read data starting in the
@@ -480,6 +528,14 @@ type InputVector struct {
 
 func (x *InputVector) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InputVectorNewFromInternalPtr(ptr uintptr) *InputVector {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputVector)(rawPtr)
 }
 
 // Structure used for scatter/gather data output when sending multiple
@@ -509,6 +565,14 @@ func (x *OutputMessage) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OutputMessageNewFromInternalPtr(ptr uintptr) *OutputMessage {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OutputMessage)(rawPtr)
+}
+
 // Structure used for scatter/gather data output.
 // You generally pass in an array of #GOutputVectors
 // and the operation will use all the buffers as if they were
@@ -523,6 +587,14 @@ type OutputVector struct {
 
 func (x *OutputVector) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func OutputVectorNewFromInternalPtr(ptr uintptr) *OutputVector {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OutputVector)(rawPtr)
 }
 
 // Applications and libraries often contain binary or textual data that is
@@ -700,6 +772,14 @@ func ResourceGLibType() types.GType {
 
 func (x *Resource) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ResourceNewFromInternalPtr(ptr uintptr) *Resource {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Resource)(rawPtr)
 }
 
 var xNewResourceFromData func(*glib.Bytes, **glib.Error) uintptr
@@ -908,6 +988,14 @@ func SrvTargetGLibType() types.GType {
 
 func (x *SrvTarget) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SrvTargetNewFromInternalPtr(ptr uintptr) *SrvTarget {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SrvTarget)(rawPtr)
 }
 
 var xNewSrvTarget func(string, uint16, uint16, uint16) uintptr

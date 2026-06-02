@@ -22,6 +22,14 @@ func (x *WrapBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WrapBoxClassNewFromInternalPtr(ptr uintptr) *WrapBoxClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WrapBoxClass)(rawPtr)
+}
+
 // A box-like widget that can wrap into multiple lines.
 //
 // &lt;picture&gt;

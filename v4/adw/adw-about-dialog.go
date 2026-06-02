@@ -23,6 +23,14 @@ func (x *AboutDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AboutDialogClassNewFromInternalPtr(ptr uintptr) *AboutDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AboutDialogClass)(rawPtr)
+}
+
 var xShowAboutDialog func(uintptr, string, ...interface{})
 
 // A convenience function for showing an application’s about dialog.

@@ -21,12 +21,28 @@ func (x *InetSocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InetSocketAddressClassNewFromInternalPtr(ptr uintptr) *InetSocketAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetSocketAddressClass)(rawPtr)
+}
+
 type InetSocketAddressPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *InetSocketAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InetSocketAddressPrivateNewFromInternalPtr(ptr uintptr) *InetSocketAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InetSocketAddressPrivate)(rawPtr)
 }
 
 // An IPv4 or IPv6 socket address. That is, the combination of a

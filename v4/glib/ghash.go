@@ -39,6 +39,14 @@ func (x *HashTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HashTableNewFromInternalPtr(ptr uintptr) *HashTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HashTable)(rawPtr)
+}
+
 // A GHashTableIter structure represents an iterator that can be used
 // to iterate over the elements of a #GHashTable. GHashTableIter
 // structures are typically allocated on the stack and then initialized
@@ -64,6 +72,14 @@ type HashTableIter struct {
 
 func (x *HashTableIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func HashTableIterNewFromInternalPtr(ptr uintptr) *HashTableIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HashTableIter)(rawPtr)
 }
 
 var xHashTableIterGetHashTable func(uintptr) uintptr

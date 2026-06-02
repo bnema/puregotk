@@ -22,6 +22,14 @@ func (x *NavigationSplitViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NavigationSplitViewClassNewFromInternalPtr(ptr uintptr) *NavigationSplitViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NavigationSplitViewClass)(rawPtr)
+}
+
 // A widget presenting sidebar and content side by side or as a navigation view.
 //
 // &lt;picture&gt;

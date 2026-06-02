@@ -45,6 +45,14 @@ func (x *SettingsBackendClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SettingsBackendClassNewFromInternalPtr(ptr uintptr) *SettingsBackendClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsBackendClass)(rawPtr)
+}
+
 // OverrideRead sets the "read" callback function.
 // virtual method to read a key's value
 func (x *SettingsBackendClass) OverrideRead(cb func(*SettingsBackend, string, *glib.VariantType, bool) *glib.Variant) {
@@ -327,6 +335,14 @@ type SettingsBackendPrivate struct {
 
 func (x *SettingsBackendPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SettingsBackendPrivateNewFromInternalPtr(ptr uintptr) *SettingsBackendPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsBackendPrivate)(rawPtr)
 }
 
 const (

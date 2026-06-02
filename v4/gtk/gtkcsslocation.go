@@ -24,3 +24,11 @@ type CssLocation struct {
 func (x *CssLocation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
+
+func CssLocationNewFromInternalPtr(ptr uintptr) *CssLocation {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CssLocation)(rawPtr)
+}

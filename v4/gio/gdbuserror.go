@@ -23,6 +23,14 @@ func (x *DBusErrorEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusErrorEntryNewFromInternalPtr(ptr uintptr) *DBusErrorEntry {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusErrorEntry)(rawPtr)
+}
+
 var xDbusErrorEncodeGerror func(*glib.Error) string
 
 // Creates a D-Bus error name to use for @error.

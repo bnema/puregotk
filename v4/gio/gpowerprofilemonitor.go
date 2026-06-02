@@ -22,6 +22,14 @@ func (x *PowerProfileMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PowerProfileMonitorInterfaceNewFromInternalPtr(ptr uintptr) *PowerProfileMonitorInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PowerProfileMonitorInterface)(rawPtr)
+}
+
 // `GPowerProfileMonitor` makes it possible for applications as well as OS
 // components to monitor system power profiles and act upon them. It currently
 // only exports whether the system is in “Power Saver” mode (known as

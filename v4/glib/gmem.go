@@ -34,6 +34,14 @@ func (x *MemVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemVTableNewFromInternalPtr(ptr uintptr) *MemVTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemVTable)(rawPtr)
+}
+
 // OverrideMalloc sets the "malloc" callback function.
 // function to use for allocating memory.
 func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {

@@ -17,6 +17,14 @@ func (x *SnapshotClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SnapshotClassNewFromInternalPtr(ptr uintptr) *SnapshotClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SnapshotClass)(rawPtr)
+}
+
 // Base type for snapshot operations.
 //
 // The subclass of `GdkSnapshot` used by GTK is [GtkSnapshot](../gtk4/class.Snapshot.html).

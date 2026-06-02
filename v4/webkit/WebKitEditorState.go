@@ -22,6 +22,14 @@ func (x *EditorStateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EditorStateClassNewFromInternalPtr(ptr uintptr) *EditorStateClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EditorStateClass)(rawPtr)
+}
+
 // Enum values with flags representing typing attributes.
 type EditorTypingAttributes int
 

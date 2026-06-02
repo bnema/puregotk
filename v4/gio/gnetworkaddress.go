@@ -22,12 +22,28 @@ func (x *NetworkAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NetworkAddressClassNewFromInternalPtr(ptr uintptr) *NetworkAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkAddressClass)(rawPtr)
+}
+
 type NetworkAddressPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *NetworkAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func NetworkAddressPrivateNewFromInternalPtr(ptr uintptr) *NetworkAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkAddressPrivate)(rawPtr)
 }
 
 // `GNetworkAddress` provides an easy way to resolve a hostname and

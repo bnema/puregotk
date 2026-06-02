@@ -21,12 +21,28 @@ func (x *TcpWrapperConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TcpWrapperConnectionClassNewFromInternalPtr(ptr uintptr) *TcpWrapperConnectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TcpWrapperConnectionClass)(rawPtr)
+}
+
 type TcpWrapperConnectionPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *TcpWrapperConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TcpWrapperConnectionPrivateNewFromInternalPtr(ptr uintptr) *TcpWrapperConnectionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TcpWrapperConnectionPrivate)(rawPtr)
 }
 
 // A `GTcpWrapperConnection` can be used to wrap a [class@Gio.IOStream] that is

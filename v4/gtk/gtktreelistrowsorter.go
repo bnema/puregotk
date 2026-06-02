@@ -21,6 +21,14 @@ func (x *TreeListRowSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeListRowSorterClassNewFromInternalPtr(ptr uintptr) *TreeListRowSorterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeListRowSorterClass)(rawPtr)
+}
+
 // Applies a gives sorter to the levels in a tree.
 //
 // Here is an example for setting up a column view with a tree model and

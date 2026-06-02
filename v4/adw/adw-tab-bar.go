@@ -24,6 +24,14 @@ func (x *TabBarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TabBarClassNewFromInternalPtr(ptr uintptr) *TabBarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabBarClass)(rawPtr)
+}
+
 // A tab bar for [class@TabView].
 //
 // &lt;picture&gt;

@@ -32,6 +32,14 @@ func (x *ColorChooserInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorChooserInterfaceNewFromInternalPtr(ptr uintptr) *ColorChooserInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorChooserInterface)(rawPtr)
+}
+
 // OverrideGetRgba sets the "get_rgba" callback function.
 func (x *ColorChooserInterface) OverrideGetRgba(cb func(ColorChooser, *gdk.RGBA)) {
 	if cb == nil {

@@ -21,6 +21,14 @@ func (x *LayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LayoutChildClassNewFromInternalPtr(ptr uintptr) *LayoutChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LayoutChildClass)(rawPtr)
+}
+
 // The base class for objects that are meant to hold layout properties.
 //
 // If a `GtkLayoutManager` has per-child properties, like their packing type,

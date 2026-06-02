@@ -30,6 +30,14 @@ func (x *EnumClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EnumClassNewFromInternalPtr(ptr uintptr) *EnumClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EnumClass)(rawPtr)
+}
+
 // A structure which contains a single enum value, its name, and its
 // nickname.
 type EnumValue struct {
@@ -44,6 +52,14 @@ type EnumValue struct {
 
 func (x *EnumValue) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func EnumValueNewFromInternalPtr(ptr uintptr) *EnumValue {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EnumValue)(rawPtr)
 }
 
 // The class of a flags type holds information about its
@@ -64,6 +80,14 @@ func (x *FlagsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FlagsClassNewFromInternalPtr(ptr uintptr) *FlagsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FlagsClass)(rawPtr)
+}
+
 // A structure which contains a single flags value, its name, and its
 // nickname.
 type FlagsValue struct {
@@ -78,6 +102,14 @@ type FlagsValue struct {
 
 func (x *FlagsValue) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FlagsValueNewFromInternalPtr(ptr uintptr) *FlagsValue {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FlagsValue)(rawPtr)
 }
 
 var xEnumCompleteTypeInfo func(types.GType, *TypeInfo, []EnumValue)

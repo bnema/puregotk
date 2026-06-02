@@ -21,6 +21,14 @@ func (x *HSTSEnforcerDBClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HSTSEnforcerDBClassNewFromInternalPtr(ptr uintptr) *HSTSEnforcerDBClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HSTSEnforcerDBClass)(rawPtr)
+}
+
 // Persistent HTTP Strict Transport Security enforcer.
 //
 // [class@HSTSEnforcerDB] is a [class@HSTSEnforcer] that uses a SQLite

@@ -22,6 +22,14 @@ func (x *Simd4F) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func Simd4FNewFromInternalPtr(ptr uintptr) *Simd4F {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Simd4F)(rawPtr)
+}
+
 type Simd4X4F struct {
 	_ structs.HostLayout
 
@@ -36,4 +44,12 @@ type Simd4X4F struct {
 
 func (x *Simd4X4F) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func Simd4X4FNewFromInternalPtr(ptr uintptr) *Simd4X4F {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Simd4X4F)(rawPtr)
 }

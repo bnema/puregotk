@@ -27,6 +27,14 @@ func (x *ActionRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ActionRowClassNewFromInternalPtr(ptr uintptr) *ActionRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActionRowClass)(rawPtr)
+}
+
 // OverrideActivate sets the "activate" callback function.
 // Activates the row to trigger its main action.
 func (x *ActionRowClass) OverrideActivate(cb func(*ActionRow)) {

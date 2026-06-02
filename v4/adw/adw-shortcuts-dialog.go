@@ -22,6 +22,14 @@ func (x *ShortcutsDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutsDialogClassNewFromInternalPtr(ptr uintptr) *ShortcutsDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutsDialogClass)(rawPtr)
+}
+
 // A dialog that displays application's keyboard shortcuts.
 //
 // &lt;picture&gt;

@@ -22,6 +22,14 @@ func (x *BuilderCScopeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BuilderCScopeClassNewFromInternalPtr(ptr uintptr) *BuilderCScopeClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuilderCScopeClass)(rawPtr)
+}
+
 // The virtual function table to implement for `GtkBuilderScope` implementations.
 // Default implementations for each function do exist, but they usually just fail,
 // so it is suggested that implementations implement all of them.
@@ -39,6 +47,14 @@ type BuilderScopeInterface struct {
 
 func (x *BuilderScopeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BuilderScopeInterfaceNewFromInternalPtr(ptr uintptr) *BuilderScopeInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BuilderScopeInterface)(rawPtr)
 }
 
 // OverrideGetTypeFromName sets the "get_type_from_name" callback function.

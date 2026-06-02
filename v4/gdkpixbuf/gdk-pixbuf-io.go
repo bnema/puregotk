@@ -137,6 +137,14 @@ func (x *PixbufFormat) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PixbufFormatNewFromInternalPtr(ptr uintptr) *PixbufFormat {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufFormat)(rawPtr)
+}
+
 var xPixbufFormatCopy func(uintptr) uintptr
 
 // Creates a copy of `format`.
@@ -341,6 +349,14 @@ func (x *PixbufModule) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PixbufModuleNewFromInternalPtr(ptr uintptr) *PixbufModule {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufModule)(rawPtr)
+}
+
 // OverrideReserved1 sets the "_reserved1" callback function.
 func (x *PixbufModule) OverrideReserved1(cb func()) {
 	if cb == nil {
@@ -477,6 +493,14 @@ type PixbufModulePattern struct {
 
 func (x *PixbufModulePattern) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PixbufModulePatternNewFromInternalPtr(ptr uintptr) *PixbufModulePattern {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PixbufModulePattern)(rawPtr)
 }
 
 // Flags which allow a module to specify further details about the supported

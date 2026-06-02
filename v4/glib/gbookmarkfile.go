@@ -61,6 +61,14 @@ func (x *BookmarkFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BookmarkFileNewFromInternalPtr(ptr uintptr) *BookmarkFile {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BookmarkFile)(rawPtr)
+}
+
 var xNewBookmarkFile func() uintptr
 
 // Creates a new empty #GBookmarkFile object.

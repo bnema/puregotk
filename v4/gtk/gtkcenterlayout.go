@@ -21,6 +21,14 @@ func (x *CenterLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CenterLayoutClassNewFromInternalPtr(ptr uintptr) *CenterLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CenterLayoutClass)(rawPtr)
+}
+
 // Manages up to three children.
 //
 // The start widget is allocated at the start of the layout (left in

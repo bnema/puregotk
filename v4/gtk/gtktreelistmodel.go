@@ -32,6 +32,14 @@ func (x *TreeListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeListModelClassNewFromInternalPtr(ptr uintptr) *TreeListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeListModelClass)(rawPtr)
+}
+
 type TreeListRowClass struct {
 	_ structs.HostLayout
 
@@ -40,6 +48,14 @@ type TreeListRowClass struct {
 
 func (x *TreeListRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeListRowClassNewFromInternalPtr(ptr uintptr) *TreeListRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeListRowClass)(rawPtr)
 }
 
 // A list model that can create child models on demand.

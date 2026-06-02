@@ -20,6 +20,14 @@ func (x *GestureSingleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureSingleClassNewFromInternalPtr(ptr uintptr) *GestureSingleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureSingleClass)(rawPtr)
+}
+
 // A `GtkGesture` subclass optimized for singe-touch and mouse gestures.
 //
 // Under interaction, these gestures stick to the first interacting sequence,

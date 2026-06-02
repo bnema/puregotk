@@ -25,6 +25,14 @@ func (x *TlsClientConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsClientConnectionInterfaceNewFromInternalPtr(ptr uintptr) *TlsClientConnectionInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsClientConnectionInterface)(rawPtr)
+}
+
 // OverrideCopySessionState sets the "copy_session_state" callback function.
 // Copies session state from one #GTlsClientConnection to another.
 func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClientConnection, TlsClientConnection)) {

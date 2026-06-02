@@ -26,6 +26,14 @@ func (x *WebContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebContextClassNewFromInternalPtr(ptr uintptr) *WebContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebContextClass)(rawPtr)
+}
+
 // Enum values used for determining the #WebKitWebContext cache model.
 type CacheModel int
 

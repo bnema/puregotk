@@ -23,6 +23,14 @@ func (x *FlapClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FlapClassNewFromInternalPtr(ptr uintptr) *FlapClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FlapClass)(rawPtr)
+}
+
 // Describes the possible folding behavior of a [class@Flap] widget.
 type FlapFoldPolicy int
 

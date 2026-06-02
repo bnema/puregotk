@@ -20,6 +20,14 @@ func (x *CicpParamsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CicpParamsClassNewFromInternalPtr(ptr uintptr) *CicpParamsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CicpParamsClass)(rawPtr)
+}
+
 // The values of this enumeration describe whether image data uses
 // the full range of 8-bit values.
 //

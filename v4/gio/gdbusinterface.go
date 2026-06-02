@@ -30,6 +30,14 @@ func (x *DBusInterfaceIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusInterfaceIfaceNewFromInternalPtr(ptr uintptr) *DBusInterfaceIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusInterfaceIface)(rawPtr)
+}
+
 // OverrideGetInfo sets the "get_info" callback function.
 // Returns a #GDBusInterfaceInfo. See g_dbus_interface_get_info().
 func (x *DBusInterfaceIface) OverrideGetInfo(cb func(DBusInterface) *DBusInterfaceInfo) {

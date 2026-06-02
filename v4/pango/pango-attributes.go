@@ -38,6 +38,14 @@ func (x *AttrClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrClassNewFromInternalPtr(ptr uintptr) *AttrClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrClass)(rawPtr)
+}
+
 // OverrideCopy sets the "copy" callback function.
 // function to duplicate an attribute of this type
 //
@@ -147,6 +155,14 @@ func (x *AttrColor) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrColorNewFromInternalPtr(ptr uintptr) *AttrColor {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrColor)(rawPtr)
+}
+
 // The `PangoAttrFloat` structure is used to represent attributes with
 // a float or double value.
 type AttrFloat struct {
@@ -159,6 +175,14 @@ type AttrFloat struct {
 
 func (x *AttrFloat) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttrFloatNewFromInternalPtr(ptr uintptr) *AttrFloat {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrFloat)(rawPtr)
 }
 
 // The `PangoAttrFontDesc` structure is used to store an attribute that
@@ -175,6 +199,14 @@ func (x *AttrFontDesc) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrFontDescNewFromInternalPtr(ptr uintptr) *AttrFontDesc {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrFontDesc)(rawPtr)
+}
+
 // The `PangoAttrFontFeatures` structure is used to represent OpenType
 // font features as an attribute.
 type AttrFontFeatures struct {
@@ -189,6 +221,14 @@ func (x *AttrFontFeatures) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrFontFeaturesNewFromInternalPtr(ptr uintptr) *AttrFontFeatures {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrFontFeatures)(rawPtr)
+}
+
 // The `PangoAttrInt` structure is used to represent attributes with
 // an integer or enumeration value.
 type AttrInt struct {
@@ -201,6 +241,14 @@ type AttrInt struct {
 
 func (x *AttrInt) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttrIntNewFromInternalPtr(ptr uintptr) *AttrInt {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrInt)(rawPtr)
 }
 
 // A `PangoAttrIterator` is used to iterate through a `PangoAttrList`.
@@ -222,6 +270,14 @@ func AttrIteratorGLibType() types.GType {
 
 func (x *AttrIterator) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttrIteratorNewFromInternalPtr(ptr uintptr) *AttrIterator {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrIterator)(rawPtr)
 }
 
 var xAttrIteratorCopy func(uintptr) uintptr
@@ -312,6 +368,14 @@ func (x *AttrLanguage) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrLanguageNewFromInternalPtr(ptr uintptr) *AttrLanguage {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrLanguage)(rawPtr)
+}
+
 // A `PangoAttrList` represents a list of attributes that apply to a section
 // of text.
 //
@@ -335,6 +399,14 @@ func AttrListGLibType() types.GType {
 
 func (x *AttrList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttrListNewFromInternalPtr(ptr uintptr) *AttrList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrList)(rawPtr)
 }
 
 var xNewAttrList func() uintptr
@@ -578,6 +650,14 @@ func (x *AttrShape) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrShapeNewFromInternalPtr(ptr uintptr) *AttrShape {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrShape)(rawPtr)
+}
+
 // The `PangoAttrSize` structure is used to represent attributes which
 // set font size.
 type AttrSize struct {
@@ -594,6 +674,14 @@ func (x *AttrSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AttrSizeNewFromInternalPtr(ptr uintptr) *AttrSize {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrSize)(rawPtr)
+}
+
 // The `PangoAttrString` structure is used to represent attributes with
 // a string value.
 type AttrString struct {
@@ -606,6 +694,14 @@ type AttrString struct {
 
 func (x *AttrString) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttrStringNewFromInternalPtr(ptr uintptr) *AttrString {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AttrString)(rawPtr)
 }
 
 // The `PangoAttribute` structure represents the common portions of all
@@ -634,6 +730,14 @@ func AttributeGLibType() types.GType {
 
 func (x *Attribute) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AttributeNewFromInternalPtr(ptr uintptr) *Attribute {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Attribute)(rawPtr)
 }
 
 var xAttributeAsColor func(uintptr) uintptr

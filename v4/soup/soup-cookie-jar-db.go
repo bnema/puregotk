@@ -21,6 +21,14 @@ func (x *CookieJarDBClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CookieJarDBClassNewFromInternalPtr(ptr uintptr) *CookieJarDBClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CookieJarDBClass)(rawPtr)
+}
+
 // Database-based Cookie Jar.
 //
 // [class@CookieJarDB] is a [class@CookieJar] that reads cookies from and writes

@@ -49,6 +49,14 @@ func (x *DateTime) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DateTimeNewFromInternalPtr(ptr uintptr) *DateTime {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DateTime)(rawPtr)
+}
+
 var xNewDateTime func(*TimeZone, int, int, int, int, int, float64) uintptr
 
 // Creates a new #GDateTime corresponding to the given date and time in

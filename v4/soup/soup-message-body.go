@@ -42,6 +42,14 @@ func (x *MessageBody) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageBodyNewFromInternalPtr(ptr uintptr) *MessageBody {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageBody)(rawPtr)
+}
+
 var xNewMessageBody func() uintptr
 
 // Creates a new [struct@MessageBody]

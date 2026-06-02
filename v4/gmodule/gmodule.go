@@ -37,6 +37,14 @@ func (x *Module) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ModuleNewFromInternalPtr(ptr uintptr) *Module {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Module)(rawPtr)
+}
+
 var xModuleClose func(uintptr) bool
 
 // Closes a module.

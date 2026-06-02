@@ -80,6 +80,14 @@ func main() {
 	if err == nil {
 		os.WriteFile("v4/glib/more_other.go", data, 0o644)
 	}
+	data, err = os.ReadFile("templates/glib_callbacks_test")
+	if err == nil {
+		os.WriteFile("v4/glib/callbacks_test.go", data, 0o644)
+	}
+	data, err = os.ReadFile("templates/webkit")
+	if err == nil {
+		os.WriteFile("v4/webkit/more.go", data, 0o644)
+	}
 	data, err = os.ReadFile("templates/gdk_dmabuf")
 	if err == nil {
 		if mkerr := os.MkdirAll("v4/gdk", 0o755); mkerr != nil {

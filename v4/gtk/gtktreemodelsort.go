@@ -25,12 +25,28 @@ func (x *TreeModelSortClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeModelSortClassNewFromInternalPtr(ptr uintptr) *TreeModelSortClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeModelSortClass)(rawPtr)
+}
+
 type TreeModelSortPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *TreeModelSortPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeModelSortPrivateNewFromInternalPtr(ptr uintptr) *TreeModelSortPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeModelSortPrivate)(rawPtr)
 }
 
 // A GtkTreeModel which makes an underlying tree model sortable

@@ -44,6 +44,14 @@ func (x *MemoryPressureSettings) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemoryPressureSettingsNewFromInternalPtr(ptr uintptr) *MemoryPressureSettings {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryPressureSettings)(rawPtr)
+}
+
 var xNewMemoryPressureSettings func() uintptr
 
 // Create a new #WebKitMemoryPressureSettings with the default values.

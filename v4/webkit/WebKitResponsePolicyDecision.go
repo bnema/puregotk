@@ -21,6 +21,14 @@ func (x *ResponsePolicyDecisionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ResponsePolicyDecisionClassNewFromInternalPtr(ptr uintptr) *ResponsePolicyDecisionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ResponsePolicyDecisionClass)(rawPtr)
+}
+
 // A policy decision for resource responses.
 //
 // WebKitResponsePolicyDecision represents a policy decision for a

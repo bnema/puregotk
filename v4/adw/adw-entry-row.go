@@ -24,6 +24,14 @@ func (x *EntryRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EntryRowClassNewFromInternalPtr(ptr uintptr) *EntryRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EntryRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] with an embedded text entry.
 //
 // &lt;picture&gt;

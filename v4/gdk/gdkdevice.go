@@ -33,6 +33,14 @@ func (x *TimeCoord) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TimeCoordNewFromInternalPtr(ptr uintptr) *TimeCoord {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TimeCoord)(rawPtr)
+}
+
 // An enumeration describing the type of an input device in general terms.
 type InputSource int
 

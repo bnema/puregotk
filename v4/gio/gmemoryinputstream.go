@@ -31,6 +31,14 @@ func (x *MemoryInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemoryInputStreamClassNewFromInternalPtr(ptr uintptr) *MemoryInputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryInputStreamClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *MemoryInputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -152,6 +160,14 @@ type MemoryInputStreamPrivate struct {
 
 func (x *MemoryInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MemoryInputStreamPrivateNewFromInternalPtr(ptr uintptr) *MemoryInputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryInputStreamPrivate)(rawPtr)
 }
 
 // `GMemoryInputStream` is a class for using arbitrary

@@ -43,6 +43,14 @@ func (x *AccessibleTextInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AccessibleTextInterfaceNewFromInternalPtr(ptr uintptr) *AccessibleTextInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleTextInterface)(rawPtr)
+}
+
 // OverrideGetContents sets the "get_contents" callback function.
 func (x *AccessibleTextInterface) OverrideGetContents(cb func(AccessibleText, uint, uint) *glib.Bytes) {
 	if cb == nil {
@@ -300,6 +308,14 @@ type AccessibleTextRange struct {
 
 func (x *AccessibleTextRange) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func AccessibleTextRangeNewFromInternalPtr(ptr uintptr) *AccessibleTextRange {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleTextRange)(rawPtr)
 }
 
 // An interface for accessible objects containing formatted text.

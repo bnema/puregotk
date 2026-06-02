@@ -24,6 +24,14 @@ func (x *Context) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContextNewFromInternalPtr(ptr uintptr) *Context {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Context)(rawPtr)
+}
+
 type Device struct {
 	_ structs.HostLayout
 }
@@ -36,6 +44,14 @@ func DeviceGLibType() types.GType {
 
 func (x *Device) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DeviceNewFromInternalPtr(ptr uintptr) *Device {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Device)(rawPtr)
 }
 
 type Surface struct {
@@ -52,12 +68,28 @@ func (x *Surface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SurfaceNewFromInternalPtr(ptr uintptr) *Surface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Surface)(rawPtr)
+}
+
 type Matrix struct {
 	_ structs.HostLayout
 }
 
 func (x *Matrix) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MatrixNewFromInternalPtr(ptr uintptr) *Matrix {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Matrix)(rawPtr)
 }
 
 type Pattern struct {
@@ -74,6 +106,14 @@ func (x *Pattern) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PatternNewFromInternalPtr(ptr uintptr) *Pattern {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Pattern)(rawPtr)
+}
+
 type Region struct {
 	_ structs.HostLayout
 }
@@ -86,6 +126,14 @@ func RegionGLibType() types.GType {
 
 func (x *Region) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RegionNewFromInternalPtr(ptr uintptr) *Region {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Region)(rawPtr)
 }
 
 type FontOptions struct {
@@ -102,6 +150,14 @@ func (x *FontOptions) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontOptionsNewFromInternalPtr(ptr uintptr) *FontOptions {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontOptions)(rawPtr)
+}
+
 type FontFace struct {
 	_ structs.HostLayout
 }
@@ -114,6 +170,14 @@ func FontFaceGLibType() types.GType {
 
 func (x *FontFace) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FontFaceNewFromInternalPtr(ptr uintptr) *FontFace {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontFace)(rawPtr)
 }
 
 type ScaledFont struct {
@@ -130,12 +194,28 @@ func (x *ScaledFont) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScaledFontNewFromInternalPtr(ptr uintptr) *ScaledFont {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScaledFont)(rawPtr)
+}
+
 type Path struct {
 	_ structs.HostLayout
 }
 
 func (x *Path) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PathNewFromInternalPtr(ptr uintptr) *Path {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Path)(rawPtr)
 }
 
 type Rectangle struct {
@@ -160,6 +240,14 @@ func (x *Rectangle) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RectangleNewFromInternalPtr(ptr uintptr) *Rectangle {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Rectangle)(rawPtr)
+}
+
 type RectangleInt struct {
 	_ structs.HostLayout
 
@@ -182,6 +270,14 @@ func (x *RectangleInt) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RectangleIntNewFromInternalPtr(ptr uintptr) *RectangleInt {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RectangleInt)(rawPtr)
+}
+
 type Glyph struct {
 	_ structs.HostLayout
 
@@ -202,6 +298,14 @@ func (x *Glyph) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GlyphNewFromInternalPtr(ptr uintptr) *Glyph {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Glyph)(rawPtr)
+}
+
 type TextCluster struct {
 	_ structs.HostLayout
 
@@ -218,6 +322,14 @@ func TextClusterGLibType() types.GType {
 
 func (x *TextCluster) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TextClusterNewFromInternalPtr(ptr uintptr) *TextCluster {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextCluster)(rawPtr)
 }
 
 type Status int

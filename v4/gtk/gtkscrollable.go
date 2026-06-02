@@ -23,6 +23,14 @@ func (x *ScrollableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScrollableInterfaceNewFromInternalPtr(ptr uintptr) *ScrollableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScrollableInterface)(rawPtr)
+}
+
 // OverrideGetBorder sets the "get_border" callback function.
 func (x *ScrollableInterface) OverrideGetBorder(cb func(Scrollable, *Border) bool) {
 	if cb == nil {

@@ -37,6 +37,14 @@ func (x *SocketListenerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketListenerClassNewFromInternalPtr(ptr uintptr) *SocketListenerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketListenerClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 // virtual method called when the set of socket listened to changes
 func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
@@ -206,6 +214,14 @@ type SocketListenerPrivate struct {
 
 func (x *SocketListenerPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketListenerPrivateNewFromInternalPtr(ptr uintptr) *SocketListenerPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketListenerPrivate)(rawPtr)
 }
 
 // A `GSocketListener` is an object that keeps track of a set

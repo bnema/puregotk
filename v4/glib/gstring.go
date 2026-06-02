@@ -40,6 +40,14 @@ func (x *String) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StringNewFromInternalPtr(ptr uintptr) *String {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*String)(rawPtr)
+}
+
 var xNewString func(uintptr) uintptr
 
 // Creates a new #GString, initialized with the given string.

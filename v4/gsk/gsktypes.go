@@ -37,6 +37,14 @@ func (x *ComponentTransfer) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ComponentTransferNewFromInternalPtr(ptr uintptr) *ComponentTransfer {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ComponentTransfer)(rawPtr)
+}
+
 var xNewComponentTransferDiscrete func(uint, []float32) uintptr
 
 // Creates a new component transfer that applies
@@ -241,6 +249,14 @@ func PathGLibType() types.GType {
 
 func (x *Path) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PathNewFromInternalPtr(ptr uintptr) *Path {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Path)(rawPtr)
 }
 
 var xPathEqual func(uintptr, *Path) bool
@@ -535,6 +551,14 @@ func PathBuilderGLibType() types.GType {
 
 func (x *PathBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PathBuilderNewFromInternalPtr(ptr uintptr) *PathBuilder {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PathBuilder)(rawPtr)
 }
 
 var xNewPathBuilder func() uintptr
@@ -962,6 +986,14 @@ func (x *PathMeasure) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PathMeasureNewFromInternalPtr(ptr uintptr) *PathMeasure {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PathMeasure)(rawPtr)
+}
+
 var xNewPathMeasure func(*Path) uintptr
 
 // Creates a measure object for the given @path with the
@@ -1144,6 +1176,14 @@ func (x *RenderReplay) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RenderReplayNewFromInternalPtr(ptr uintptr) *RenderReplay {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RenderReplay)(rawPtr)
+}
+
 var xNewRenderReplay func() uintptr
 
 // Creates a new replay object to replay nodes.
@@ -1296,6 +1336,14 @@ func StrokeGLibType() types.GType {
 
 func (x *Stroke) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func StrokeNewFromInternalPtr(ptr uintptr) *Stroke {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Stroke)(rawPtr)
 }
 
 var xNewStroke func(float32) uintptr
@@ -1491,6 +1539,14 @@ func TransformGLibType() types.GType {
 
 func (x *Transform) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TransformNewFromInternalPtr(ptr uintptr) *Transform {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Transform)(rawPtr)
 }
 
 var xNewTransform func() uintptr

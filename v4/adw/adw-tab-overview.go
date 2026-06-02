@@ -25,6 +25,14 @@ func (x *TabOverviewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TabOverviewClassNewFromInternalPtr(ptr uintptr) *TabOverviewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabOverviewClass)(rawPtr)
+}
+
 // A tab overview for [class@TabView].
 //
 // &lt;picture&gt;

@@ -51,6 +51,14 @@ func (x *MediaStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MediaStreamClassNewFromInternalPtr(ptr uintptr) *MediaStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MediaStreamClass)(rawPtr)
+}
+
 // OverridePlay sets the "play" callback function.
 func (x *MediaStreamClass) OverridePlay(cb func(*MediaStream) bool) {
 	if cb == nil {

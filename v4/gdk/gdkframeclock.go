@@ -20,12 +20,28 @@ func (x *FrameClockClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FrameClockClassNewFromInternalPtr(ptr uintptr) *FrameClockClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FrameClockClass)(rawPtr)
+}
+
 type FrameClockPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *FrameClockPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FrameClockPrivateNewFromInternalPtr(ptr uintptr) *FrameClockPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FrameClockPrivate)(rawPtr)
 }
 
 // Used to represent the different paint clock phases that can be requested.

@@ -21,6 +21,14 @@ func (x *AccessibleRangeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AccessibleRangeInterfaceNewFromInternalPtr(ptr uintptr) *AccessibleRangeInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AccessibleRangeInterface)(rawPtr)
+}
+
 // OverrideSetCurrentValue sets the "set_current_value" callback function.
 func (x *AccessibleRangeInterface) OverrideSetCurrentValue(cb func(AccessibleRange, float64) bool) {
 	if cb == nil {

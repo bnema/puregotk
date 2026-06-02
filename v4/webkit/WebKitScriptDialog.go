@@ -25,6 +25,14 @@ func (x *ScriptDialog) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScriptDialogNewFromInternalPtr(ptr uintptr) *ScriptDialog {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScriptDialog)(rawPtr)
+}
+
 var xScriptDialogClose func(uintptr)
 
 // Close @dialog.

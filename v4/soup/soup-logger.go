@@ -44,6 +44,14 @@ func (x *LoggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LoggerClassNewFromInternalPtr(ptr uintptr) *LoggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LoggerClass)(rawPtr)
+}
+
 // Describes the level of logging output to provide.
 type LoggerLogLevel int
 

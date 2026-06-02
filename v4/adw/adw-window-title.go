@@ -22,6 +22,14 @@ func (x *WindowTitleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowTitleClassNewFromInternalPtr(ptr uintptr) *WindowTitleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowTitleClass)(rawPtr)
+}
+
 // A helper widget for setting a window's title and subtitle.
 //
 // &lt;picture&gt;

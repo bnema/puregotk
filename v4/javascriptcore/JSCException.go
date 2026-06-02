@@ -21,6 +21,14 @@ func (x *ExceptionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ExceptionClassNewFromInternalPtr(ptr uintptr) *ExceptionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ExceptionClass)(rawPtr)
+}
+
 // JSCException represents a JavaScript exception.
 type Exception struct {
 	gobject.Object

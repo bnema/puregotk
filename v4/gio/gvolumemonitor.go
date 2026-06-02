@@ -72,6 +72,14 @@ func (x *VolumeMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VolumeMonitorClassNewFromInternalPtr(ptr uintptr) *VolumeMonitorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VolumeMonitorClass)(rawPtr)
+}
+
 // OverrideVolumeAdded sets the "volume_added" callback function.
 func (x *VolumeMonitorClass) OverrideVolumeAdded(cb func(*VolumeMonitor, Volume)) {
 	if cb == nil {

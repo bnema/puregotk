@@ -30,6 +30,14 @@ func (x *ScriptMessageReply) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ScriptMessageReplyNewFromInternalPtr(ptr uintptr) *ScriptMessageReply {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ScriptMessageReply)(rawPtr)
+}
+
 var xScriptMessageReplyRef func(uintptr) uintptr
 
 // Atomically increments the reference count of @script_message_reply by one.
@@ -76,6 +84,14 @@ type UserContentManagerClass struct {
 
 func (x *UserContentManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UserContentManagerClassNewFromInternalPtr(ptr uintptr) *UserContentManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserContentManagerClass)(rawPtr)
 }
 
 // Manages user-defined content which affects web pages.

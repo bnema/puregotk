@@ -22,6 +22,14 @@ func (x *WindowPropertiesClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WindowPropertiesClassNewFromInternalPtr(ptr uintptr) *WindowPropertiesClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WindowPropertiesClass)(rawPtr)
+}
+
 // Window properties of a #WebKitWebView.
 //
 // The content of a #WebKitWebView can request to change certain

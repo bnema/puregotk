@@ -17,6 +17,14 @@ func (x *ListItemFactoryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListItemFactoryClassNewFromInternalPtr(ptr uintptr) *ListItemFactoryClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListItemFactoryClass)(rawPtr)
+}
+
 // Creates widgets for the items taken from a `GListModel`.
 //
 // This is one of the core concepts of handling list widgets such

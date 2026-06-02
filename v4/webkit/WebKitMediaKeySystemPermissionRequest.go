@@ -21,6 +21,14 @@ func (x *MediaKeySystemPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MediaKeySystemPermissionRequestClassNewFromInternalPtr(ptr uintptr) *MediaKeySystemPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MediaKeySystemPermissionRequestClass)(rawPtr)
+}
+
 var xMediaKeySystemPermissionGetName func(uintptr) string
 
 // Get the key system for which access permission is being requested.

@@ -21,6 +21,14 @@ func (x *NavigationPolicyDecisionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NavigationPolicyDecisionClassNewFromInternalPtr(ptr uintptr) *NavigationPolicyDecisionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NavigationPolicyDecisionClass)(rawPtr)
+}
+
 // A policy decision for navigation actions.
 //
 // WebKitNavigationPolicyDecision represents a policy decision for events associated with

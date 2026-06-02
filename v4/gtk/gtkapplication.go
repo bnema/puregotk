@@ -29,6 +29,14 @@ func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationClassNewFromInternalPtr(ptr uintptr) *ApplicationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationClass)(rawPtr)
+}
+
 // OverrideWindowAdded sets the "window_added" callback function.
 // Signal emitted when a `GtkWindow` is added to
 //

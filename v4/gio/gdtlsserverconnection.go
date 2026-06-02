@@ -22,6 +22,14 @@ func (x *DtlsServerConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DtlsServerConnectionInterfaceNewFromInternalPtr(ptr uintptr) *DtlsServerConnectionInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DtlsServerConnectionInterface)(rawPtr)
+}
+
 // `GDtlsServerConnection` is the server-side subclass of
 // [iface@Gio.DtlsConnection], representing a server-side DTLS connection.
 type DtlsServerConnection interface {

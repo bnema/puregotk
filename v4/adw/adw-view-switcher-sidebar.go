@@ -23,6 +23,14 @@ func (x *ViewSwitcherSidebarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewSwitcherSidebarClassNewFromInternalPtr(ptr uintptr) *ViewSwitcherSidebarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewSwitcherSidebarClass)(rawPtr)
+}
+
 // An adaptive sidebar that controls an [class@ViewStack].
 //
 // &lt;picture&gt;

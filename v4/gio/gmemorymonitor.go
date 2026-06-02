@@ -23,6 +23,14 @@ func (x *MemoryMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemoryMonitorInterfaceNewFromInternalPtr(ptr uintptr) *MemoryMonitorInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryMonitorInterface)(rawPtr)
+}
+
 // OverrideLowMemoryWarning sets the "low_memory_warning" callback function.
 // the virtual function pointer for the
 //

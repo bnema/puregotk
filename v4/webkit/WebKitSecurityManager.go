@@ -21,6 +21,14 @@ func (x *SecurityManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SecurityManagerClassNewFromInternalPtr(ptr uintptr) *SecurityManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SecurityManagerClass)(rawPtr)
+}
+
 // Controls security settings in a #WebKitWebContext.
 //
 // The #WebKitSecurityManager defines security settings for URI

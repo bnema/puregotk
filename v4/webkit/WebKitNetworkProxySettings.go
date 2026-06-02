@@ -29,6 +29,14 @@ func (x *NetworkProxySettings) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NetworkProxySettingsNewFromInternalPtr(ptr uintptr) *NetworkProxySettings {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkProxySettings)(rawPtr)
+}
+
 var xNewNetworkProxySettings func(uintptr, []string) uintptr
 
 // Create a new #WebKitNetworkProxySettings with the given @default_proxy_uri and @ignore_hosts.

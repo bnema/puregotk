@@ -20,6 +20,14 @@ func (x *AnyFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AnyFilterClassNewFromInternalPtr(ptr uintptr) *AnyFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AnyFilterClass)(rawPtr)
+}
+
 type EveryFilterClass struct {
 	_ structs.HostLayout
 }
@@ -28,12 +36,28 @@ func (x *EveryFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EveryFilterClassNewFromInternalPtr(ptr uintptr) *EveryFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EveryFilterClass)(rawPtr)
+}
+
 type MultiFilterClass struct {
 	_ structs.HostLayout
 }
 
 func (x *MultiFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MultiFilterClassNewFromInternalPtr(ptr uintptr) *MultiFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MultiFilterClass)(rawPtr)
 }
 
 // Matches an item when at least one of its filters matches.

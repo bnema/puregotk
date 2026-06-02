@@ -41,6 +41,14 @@ func (x *PaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PaintableInterfaceNewFromInternalPtr(ptr uintptr) *PaintableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PaintableInterface)(rawPtr)
+}
+
 // OverrideSnapshot sets the "snapshot" callback function.
 // Snapshot the paintable. The given @width and @height are
 //

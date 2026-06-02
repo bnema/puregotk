@@ -26,6 +26,14 @@ func (x *WebViewSessionState) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebViewSessionStateNewFromInternalPtr(ptr uintptr) *WebViewSessionState {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebViewSessionState)(rawPtr)
+}
+
 var xNewWebViewSessionState func(*glib.Bytes) uintptr
 
 // Creates a new #WebKitWebViewSessionState from serialized data.

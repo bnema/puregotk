@@ -49,6 +49,14 @@ func (x *FileOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileOutputStreamClassNewFromInternalPtr(ptr uintptr) *FileOutputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileOutputStreamClass)(rawPtr)
+}
+
 // OverrideTell sets the "tell" callback function.
 func (x *FileOutputStreamClass) OverrideTell(cb func(*FileOutputStream) int64) {
 	if cb == nil {
@@ -397,6 +405,14 @@ type FileOutputStreamPrivate struct {
 
 func (x *FileOutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileOutputStreamPrivateNewFromInternalPtr(ptr uintptr) *FileOutputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileOutputStreamPrivate)(rawPtr)
 }
 
 // `GFileOutputStream` provides output streams that write their

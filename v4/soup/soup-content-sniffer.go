@@ -22,6 +22,14 @@ func (x *ContentSnifferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContentSnifferClassNewFromInternalPtr(ptr uintptr) *ContentSnifferClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContentSnifferClass)(rawPtr)
+}
+
 // Sniffs the mime type of messages.
 //
 // A [class@ContentSniffer] tries to detect the actual content type of

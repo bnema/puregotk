@@ -30,6 +30,14 @@ func (x *CustomLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CustomLayoutClassNewFromInternalPtr(ptr uintptr) *CustomLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CustomLayoutClass)(rawPtr)
+}
+
 // Uses closures for size negotiation.
 //
 // A `GtkCustomLayout` uses closures matching to the old `GtkWidget`

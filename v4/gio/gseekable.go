@@ -32,6 +32,14 @@ func (x *SeekableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SeekableIfaceNewFromInternalPtr(ptr uintptr) *SeekableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SeekableIface)(rawPtr)
+}
+
 // OverrideTell sets the "tell" callback function.
 // Tells the current location within a stream.
 func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {

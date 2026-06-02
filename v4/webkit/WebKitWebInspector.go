@@ -22,6 +22,14 @@ func (x *WebInspectorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebInspectorClassNewFromInternalPtr(ptr uintptr) *WebInspectorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebInspectorClass)(rawPtr)
+}
+
 // Access to the WebKit inspector.
 //
 // The WebKit Inspector is a graphical tool to inspect and change the

@@ -22,6 +22,14 @@ func (x *URIRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func URIRequestClassNewFromInternalPtr(ptr uintptr) *URIRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*URIRequestClass)(rawPtr)
+}
+
 // Represents a URI request.
 //
 // A #WebKitURIRequest can be created with a URI using the

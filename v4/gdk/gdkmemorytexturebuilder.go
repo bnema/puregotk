@@ -21,6 +21,14 @@ func (x *MemoryTextureBuilderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemoryTextureBuilderClassNewFromInternalPtr(ptr uintptr) *MemoryTextureBuilderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryTextureBuilderClass)(rawPtr)
+}
+
 // Constructs [class@Gdk.Texture] objects from system memory provided
 // via [struct@GLib.Bytes].
 //

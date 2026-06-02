@@ -49,6 +49,14 @@ func (x *PathBuf) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PathBufNewFromInternalPtr(ptr uintptr) *PathBuf {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PathBuf)(rawPtr)
+}
+
 var xPathBufClear func(uintptr)
 
 // Clears the contents of the path buffer.

@@ -22,6 +22,14 @@ func (x *SortListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SortListModelClassNewFromInternalPtr(ptr uintptr) *SortListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SortListModelClass)(rawPtr)
+}
+
 // A list model that sorts the elements of another model.
 //
 // The elements are sorted according to a `GtkSorter`.

@@ -81,6 +81,14 @@ func (x *InputMethodContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InputMethodContextClassNewFromInternalPtr(ptr uintptr) *InputMethodContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputMethodContextClass)(rawPtr)
+}
+
 // OverridePreeditStarted sets the "preedit_started" callback function.
 func (x *InputMethodContextClass) OverridePreeditStarted(cb func(*InputMethodContext)) {
 	if cb == nil {
@@ -828,6 +836,14 @@ func (x *InputMethodContextPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InputMethodContextPrivateNewFromInternalPtr(ptr uintptr) *InputMethodContextPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputMethodContextPrivate)(rawPtr)
+}
+
 // Range of text in an preedit string to be shown underlined.
 type InputMethodUnderline struct {
 	_ structs.HostLayout
@@ -841,6 +857,14 @@ func InputMethodUnderlineGLibType() types.GType {
 
 func (x *InputMethodUnderline) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func InputMethodUnderlineNewFromInternalPtr(ptr uintptr) *InputMethodUnderline {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InputMethodUnderline)(rawPtr)
 }
 
 var xNewInputMethodUnderline func(uint, uint) uintptr

@@ -37,6 +37,14 @@ func (x *RecentData) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RecentDataNewFromInternalPtr(ptr uintptr) *RecentData {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RecentData)(rawPtr)
+}
+
 // Contains the metadata associated with an item in the
 // recently used files list.
 type RecentInfo struct {
@@ -51,6 +59,14 @@ func RecentInfoGLibType() types.GType {
 
 func (x *RecentInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RecentInfoNewFromInternalPtr(ptr uintptr) *RecentInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RecentInfo)(rawPtr)
 }
 
 var xRecentInfoCreateAppInfo func(uintptr, uintptr, **glib.Error) uintptr
@@ -337,6 +353,14 @@ func (x *RecentManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RecentManagerClassNewFromInternalPtr(ptr uintptr) *RecentManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RecentManagerClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 func (x *RecentManagerClass) OverrideChanged(cb func(*RecentManager)) {
 	if cb == nil {
@@ -458,6 +482,14 @@ type RecentManagerPrivate struct {
 
 func (x *RecentManagerPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RecentManagerPrivateNewFromInternalPtr(ptr uintptr) *RecentManagerPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RecentManagerPrivate)(rawPtr)
 }
 
 // Error codes for `GtkRecentManager` operations

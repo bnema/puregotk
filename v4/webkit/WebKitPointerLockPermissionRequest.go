@@ -19,6 +19,14 @@ func (x *PointerLockPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PointerLockPermissionRequestClassNewFromInternalPtr(ptr uintptr) *PointerLockPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PointerLockPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for locking the pointer.
 //
 // WebKitPointerLockPermissionRequest represents a request for

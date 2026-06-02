@@ -26,6 +26,14 @@ func (x *EventSequence) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventSequenceNewFromInternalPtr(ptr uintptr) *EventSequence {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventSequence)(rawPtr)
+}
+
 const (
 	// The middle button.
 	BUTTON_MIDDLE int = 2

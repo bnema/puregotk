@@ -19,6 +19,14 @@ func (x *ShortcutLabelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutLabelClassNewFromInternalPtr(ptr uintptr) *ShortcutLabelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutLabelClass)(rawPtr)
+}
+
 // `GtkShortcutLabel` displays a single keyboard shortcut or gesture.
 //
 // The main use case for `GtkShortcutLabel` is inside a [class@Gtk.ShortcutsWindow].

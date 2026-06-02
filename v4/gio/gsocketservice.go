@@ -37,6 +37,14 @@ func (x *SocketServiceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketServiceClassNewFromInternalPtr(ptr uintptr) *SocketServiceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketServiceClass)(rawPtr)
+}
+
 // OverrideIncoming sets the "incoming" callback function.
 // signal emitted when new connections are accepted
 func (x *SocketServiceClass) OverrideIncoming(cb func(*SocketService, *SocketConnection, *gobject.Object) bool) {
@@ -206,6 +214,14 @@ type SocketServicePrivate struct {
 
 func (x *SocketServicePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SocketServicePrivateNewFromInternalPtr(ptr uintptr) *SocketServicePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketServicePrivate)(rawPtr)
 }
 
 // A `GSocketService` is an object that represents a service that

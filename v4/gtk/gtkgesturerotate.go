@@ -20,6 +20,14 @@ func (x *GestureRotateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureRotateClassNewFromInternalPtr(ptr uintptr) *GestureRotateClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureRotateClass)(rawPtr)
+}
+
 // Recognizes 2-finger rotation gestures.
 //
 // Whenever the angle between both handled sequences changes, the

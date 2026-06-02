@@ -29,6 +29,14 @@ func (x *Sphere) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SphereNewFromInternalPtr(ptr uintptr) *Sphere {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Sphere)(rawPtr)
+}
+
 var xSphereAlloc func() uintptr
 
 // Allocates a new #graphene_sphere_t.

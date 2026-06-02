@@ -21,6 +21,14 @@ func (x *ATContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ATContextClassNewFromInternalPtr(ptr uintptr) *ATContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ATContextClass)(rawPtr)
+}
+
 // Communicates with platform-specific assistive technologies API.
 //
 // Each platform supported by GTK implements a `GtkATContext` subclass, and

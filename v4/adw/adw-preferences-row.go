@@ -25,6 +25,14 @@ func (x *PreferencesRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PreferencesRowClassNewFromInternalPtr(ptr uintptr) *PreferencesRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PreferencesRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] used to present preferences.
 //
 // The `AdwPreferencesRow` widget has a title that [class@PreferencesDialog]

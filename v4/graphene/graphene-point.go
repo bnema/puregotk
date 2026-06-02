@@ -29,6 +29,14 @@ func (x *Point) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PointNewFromInternalPtr(ptr uintptr) *Point {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Point)(rawPtr)
+}
+
 var xPointAlloc func() uintptr
 
 // Allocates a new #graphene_point_t structure.

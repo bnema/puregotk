@@ -28,6 +28,14 @@ func (x *ITPFirstParty) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ITPFirstPartyNewFromInternalPtr(ptr uintptr) *ITPFirstParty {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ITPFirstParty)(rawPtr)
+}
+
 var xITPFirstPartyGetDomain func(uintptr) string
 
 // Get the domain name of @itp_first_party.
@@ -100,6 +108,14 @@ func (x *ITPThirdParty) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ITPThirdPartyNewFromInternalPtr(ptr uintptr) *ITPThirdParty {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ITPThirdParty)(rawPtr)
+}
+
 var xITPThirdPartyGetDomain func(uintptr) string
 
 // Get the domain name of @itp_third_party.
@@ -151,6 +167,14 @@ type WebsiteDataManagerClass struct {
 
 func (x *WebsiteDataManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WebsiteDataManagerClassNewFromInternalPtr(ptr uintptr) *WebsiteDataManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsiteDataManagerClass)(rawPtr)
 }
 
 // Enum values used to denote the TLS errors policy.

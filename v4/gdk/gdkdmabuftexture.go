@@ -20,6 +20,14 @@ func (x *DmabufTextureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DmabufTextureClassNewFromInternalPtr(ptr uintptr) *DmabufTextureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DmabufTextureClass)(rawPtr)
+}
+
 var xDmabufErrorQuark func() glib.Quark
 
 // Registers an error quark for [class@Gdk.DmabufTexture] errors.

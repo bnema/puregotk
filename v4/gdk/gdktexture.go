@@ -22,6 +22,14 @@ func (x *TextureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextureClassNewFromInternalPtr(ptr uintptr) *TextureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextureClass)(rawPtr)
+}
+
 // Possible errors that can be returned by `GdkTexture` constructors.
 type TextureError int
 

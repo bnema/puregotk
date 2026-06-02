@@ -22,6 +22,14 @@ func (x *MultiLayoutViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MultiLayoutViewClassNewFromInternalPtr(ptr uintptr) *MultiLayoutViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MultiLayoutViewClass)(rawPtr)
+}
+
 // A widget for switching between different layouts.
 //
 // `AdwMultiLayoutView` contains layouts and children. Each child has

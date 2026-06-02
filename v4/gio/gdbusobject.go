@@ -32,6 +32,14 @@ func (x *DBusObjectIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusObjectIfaceNewFromInternalPtr(ptr uintptr) *DBusObjectIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectIface)(rawPtr)
+}
+
 // OverrideGetObjectPath sets the "get_object_path" callback function.
 // Returns the object path. See g_dbus_object_get_object_path().
 func (x *DBusObjectIface) OverrideGetObjectPath(cb func(DBusObject) string) {

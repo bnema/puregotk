@@ -25,6 +25,14 @@ func (x *SectionModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SectionModelInterfaceNewFromInternalPtr(ptr uintptr) *SectionModelInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SectionModelInterface)(rawPtr)
+}
+
 // OverrideGetSection sets the "get_section" callback function.
 // Return the section that covers the given position. If
 //

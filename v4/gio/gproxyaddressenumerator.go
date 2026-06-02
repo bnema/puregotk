@@ -35,6 +35,14 @@ func (x *ProxyAddressEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ProxyAddressEnumeratorClassNewFromInternalPtr(ptr uintptr) *ProxyAddressEnumeratorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyAddressEnumeratorClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -202,6 +210,14 @@ type ProxyAddressEnumeratorPrivate struct {
 
 func (x *ProxyAddressEnumeratorPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ProxyAddressEnumeratorPrivateNewFromInternalPtr(ptr uintptr) *ProxyAddressEnumeratorPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyAddressEnumeratorPrivate)(rawPtr)
 }
 
 // `GProxyAddressEnumerator` is a wrapper around

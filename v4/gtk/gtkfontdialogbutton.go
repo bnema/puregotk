@@ -23,6 +23,14 @@ func (x *FontDialogButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FontDialogButtonClassNewFromInternalPtr(ptr uintptr) *FontDialogButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FontDialogButtonClass)(rawPtr)
+}
+
 // The level of granularity for the font selection.
 //
 // Depending on this value, the `PangoFontDescription` that

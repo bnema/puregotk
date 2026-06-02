@@ -23,12 +23,28 @@ func (x *TextTagClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TextTagClassNewFromInternalPtr(ptr uintptr) *TextTagClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextTagClass)(rawPtr)
+}
+
 type TextTagPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *TextTagPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TextTagPrivateNewFromInternalPtr(ptr uintptr) *TextTagPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TextTagPrivate)(rawPtr)
 }
 
 // Can be applied to text contained in a `GtkTextBuffer`.

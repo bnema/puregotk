@@ -22,6 +22,14 @@ func (x *ViewSwitcherClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewSwitcherClassNewFromInternalPtr(ptr uintptr) *ViewSwitcherClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewSwitcherClass)(rawPtr)
+}
+
 // Describes the adaptive modes of [class@ViewSwitcher].
 type ViewSwitcherPolicy int
 

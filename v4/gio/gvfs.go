@@ -64,6 +64,14 @@ func (x *VfsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VfsClassNewFromInternalPtr(ptr uintptr) *VfsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VfsClass)(rawPtr)
+}
+
 // OverrideIsActive sets the "is_active" callback function.
 func (x *VfsClass) OverrideIsActive(cb func(*Vfs) bool) {
 	if cb == nil {

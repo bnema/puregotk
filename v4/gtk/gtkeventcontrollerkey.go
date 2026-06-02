@@ -21,6 +21,14 @@ func (x *EventControllerKeyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerKeyClassNewFromInternalPtr(ptr uintptr) *EventControllerKeyClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerKeyClass)(rawPtr)
+}
+
 // Provides access to key events.
 type EventControllerKey struct {
 	EventController

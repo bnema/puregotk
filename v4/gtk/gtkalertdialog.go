@@ -23,6 +23,14 @@ func (x *AlertDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AlertDialogClassNewFromInternalPtr(ptr uintptr) *AlertDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AlertDialogClass)(rawPtr)
+}
+
 // Collects the arguments that are needed to present a message to the user.
 //
 // The message is shown with the [method@Gtk.AlertDialog.choose]

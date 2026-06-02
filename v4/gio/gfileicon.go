@@ -20,6 +20,14 @@ func (x *FileIconClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileIconClassNewFromInternalPtr(ptr uintptr) *FileIconClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileIconClass)(rawPtr)
+}
+
 // `GFileIcon` specifies an icon by pointing to an image file
 // to be used as icon.
 //

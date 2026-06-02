@@ -25,6 +25,14 @@ func (x *AboutWindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AboutWindowClassNewFromInternalPtr(ptr uintptr) *AboutWindowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AboutWindowClass)(rawPtr)
+}
+
 var xShowAboutWindow func(uintptr, string, ...interface{})
 
 // A convenience function for showing an application’s about window.

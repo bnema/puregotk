@@ -21,6 +21,14 @@ func (x *BackForwardListItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BackForwardListItemClassNewFromInternalPtr(ptr uintptr) *BackForwardListItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BackForwardListItemClass)(rawPtr)
+}
+
 // One item of the #WebKitBackForwardList.
 //
 // A history item is part of the #WebKitBackForwardList and consists

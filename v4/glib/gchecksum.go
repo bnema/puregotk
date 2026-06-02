@@ -40,6 +40,14 @@ func (x *Checksum) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ChecksumNewFromInternalPtr(ptr uintptr) *Checksum {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Checksum)(rawPtr)
+}
+
 var xNewChecksum func(ChecksumType) uintptr
 
 // Creates a new #GChecksum, using the checksum algorithm @checksum_type.

@@ -21,6 +21,14 @@ func (x *DropTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DropTargetClassNewFromInternalPtr(ptr uintptr) *DropTargetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DropTargetClass)(rawPtr)
+}
+
 // An event controller to receive Drag-and-Drop operations.
 //
 // The most basic way to use a `GtkDropTarget` to receive drops on a

@@ -21,6 +21,14 @@ func (x *ShortcutControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutControllerClassNewFromInternalPtr(ptr uintptr) *ShortcutControllerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutControllerClass)(rawPtr)
+}
+
 // Manages keyboard shortcuts and their activation.
 //
 // Most common shortcuts are using this controller implicitly, e.g. by

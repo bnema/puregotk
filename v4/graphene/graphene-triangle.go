@@ -31,6 +31,14 @@ func (x *Triangle) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TriangleNewFromInternalPtr(ptr uintptr) *Triangle {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Triangle)(rawPtr)
+}
+
 var xTriangleAlloc func() uintptr
 
 // Allocates a new #graphene_triangle_t.

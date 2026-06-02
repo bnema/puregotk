@@ -26,6 +26,14 @@ func (x *PreferencesWindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PreferencesWindowClassNewFromInternalPtr(ptr uintptr) *PreferencesWindowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PreferencesWindowClass)(rawPtr)
+}
+
 // A window to present an application's preferences.
 //
 // &lt;picture&gt;

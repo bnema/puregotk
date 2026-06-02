@@ -32,6 +32,14 @@ func (x *Euler) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EulerNewFromInternalPtr(ptr uintptr) *Euler {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Euler)(rawPtr)
+}
+
 var xEulerAlloc func() uintptr
 
 // Allocates a new #graphene_euler_t.

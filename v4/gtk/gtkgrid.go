@@ -23,6 +23,14 @@ func (x *GridClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GridClassNewFromInternalPtr(ptr uintptr) *GridClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GridClass)(rawPtr)
+}
+
 // Arranges its child widgets in rows and columns.
 //
 // &lt;picture&gt;

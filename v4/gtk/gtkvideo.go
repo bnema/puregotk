@@ -22,6 +22,14 @@ func (x *VideoClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VideoClassNewFromInternalPtr(ptr uintptr) *VideoClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VideoClass)(rawPtr)
+}
+
 // Shows a `GtkMediaStream` with media controls.
 //
 // &lt;picture&gt;

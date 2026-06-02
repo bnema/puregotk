@@ -23,6 +23,14 @@ func (x *BoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BoxClassNewFromInternalPtr(ptr uintptr) *BoxClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BoxClass)(rawPtr)
+}
+
 // Arranges child widgets into a single row or column.
 //
 // &lt;picture&gt;

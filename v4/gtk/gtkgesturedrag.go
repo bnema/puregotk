@@ -20,6 +20,14 @@ func (x *GestureDragClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureDragClassNewFromInternalPtr(ptr uintptr) *GestureDragClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureDragClass)(rawPtr)
+}
+
 // Recognizes drag gestures.
 //
 // The drag operation itself can be tracked throughout the

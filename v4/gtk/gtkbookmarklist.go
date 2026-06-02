@@ -22,6 +22,14 @@ func (x *BookmarkListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BookmarkListClassNewFromInternalPtr(ptr uintptr) *BookmarkListClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BookmarkListClass)(rawPtr)
+}
+
 // A list model that wraps `GBookmarkFile`.
 //
 // It presents a `GListModel` and fills it asynchronously with the

@@ -42,6 +42,14 @@ func (x *FilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FilterClassNewFromInternalPtr(ptr uintptr) *FilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FilterClass)(rawPtr)
+}
+
 // OverrideMatch sets the "match" callback function.
 func (x *FilterClass) OverrideMatch(cb func(*Filter, *gobject.Object) bool) {
 	if cb == nil {

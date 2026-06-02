@@ -50,6 +50,14 @@ func (x *EntryBufferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EntryBufferClassNewFromInternalPtr(ptr uintptr) *EntryBufferClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EntryBufferClass)(rawPtr)
+}
+
 // OverrideInsertedText sets the "inserted_text" callback function.
 func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint, string, uint)) {
 	if cb == nil {

@@ -22,6 +22,14 @@ func (x *AutomationSessionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AutomationSessionClassNewFromInternalPtr(ptr uintptr) *AutomationSessionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AutomationSessionClass)(rawPtr)
+}
+
 // Enum values used for determining the automation browsing context presentation.
 type AutomationBrowsingContextPresentation int
 

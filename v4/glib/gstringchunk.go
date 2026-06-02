@@ -40,6 +40,14 @@ func (x *StringChunk) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StringChunkNewFromInternalPtr(ptr uintptr) *StringChunk {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StringChunk)(rawPtr)
+}
+
 var xStringChunkClear func(uintptr)
 
 // Frees all strings contained within the #GStringChunk.

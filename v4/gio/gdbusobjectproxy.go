@@ -25,12 +25,28 @@ func (x *DBusObjectProxyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusObjectProxyClassNewFromInternalPtr(ptr uintptr) *DBusObjectProxyClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectProxyClass)(rawPtr)
+}
+
 type DBusObjectProxyPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *DBusObjectProxyPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusObjectProxyPrivateNewFromInternalPtr(ptr uintptr) *DBusObjectProxyPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusObjectProxyPrivate)(rawPtr)
 }
 
 // A `GDBusObjectProxy` is an object used to represent a remote object

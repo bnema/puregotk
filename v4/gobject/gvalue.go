@@ -54,6 +54,14 @@ func (x *Value) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ValueNewFromInternalPtr(ptr uintptr) *Value {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Value)(rawPtr)
+}
+
 var xValueCopy func(uintptr, *Value)
 
 // Copies the value of @src_value into @dest_value.

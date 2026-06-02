@@ -20,6 +20,14 @@ func (x *ColumnViewColumnClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColumnViewColumnClassNewFromInternalPtr(ptr uintptr) *ColumnViewColumnClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColumnViewColumnClass)(rawPtr)
+}
+
 // Represents the columns in a `GtkColumnView`.
 //
 // The main ingredient for a `GtkColumnViewColumn` is the `GtkListItemFactory`

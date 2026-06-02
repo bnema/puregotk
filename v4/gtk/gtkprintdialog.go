@@ -23,6 +23,14 @@ func (x *PrintDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PrintDialogClassNewFromInternalPtr(ptr uintptr) *PrintDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintDialogClass)(rawPtr)
+}
+
 // An auxiliary object for printing that allows decoupling the setup from the printing.
 //
 // A print setup is obtained by calling [method@Gtk.PrintDialog.setup],
@@ -44,6 +52,14 @@ func PrintSetupGLibType() types.GType {
 
 func (x *PrintSetup) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PrintSetupNewFromInternalPtr(ptr uintptr) *PrintSetup {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PrintSetup)(rawPtr)
 }
 
 var xPrintSetupGetPageSetup func(uintptr) uintptr

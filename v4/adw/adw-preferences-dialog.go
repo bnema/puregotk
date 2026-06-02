@@ -24,6 +24,14 @@ func (x *PreferencesDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PreferencesDialogClassNewFromInternalPtr(ptr uintptr) *PreferencesDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PreferencesDialogClass)(rawPtr)
+}
+
 // A dialog showing application's preferences.
 //
 // &lt;picture&gt;

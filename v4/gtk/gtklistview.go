@@ -20,6 +20,14 @@ func (x *ListViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListViewClassNewFromInternalPtr(ptr uintptr) *ListViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListViewClass)(rawPtr)
+}
+
 // Presents a large dynamic list of items.
 //
 // `GtkListView` uses its factory to generate one row widget for each visible

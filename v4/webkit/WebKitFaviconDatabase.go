@@ -24,6 +24,14 @@ func (x *FaviconDatabaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FaviconDatabaseClassNewFromInternalPtr(ptr uintptr) *FaviconDatabaseClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FaviconDatabaseClass)(rawPtr)
+}
+
 // Enum values used to denote the various errors related to the #WebKitFaviconDatabase.
 type FaviconDatabaseError int
 

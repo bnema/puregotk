@@ -59,6 +59,14 @@ func (x *Hook) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HookNewFromInternalPtr(ptr uintptr) *Hook {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Hook)(rawPtr)
+}
+
 var xHookCompareIds func(uintptr, *Hook) int
 
 // Compares the ids of two #GHook elements, returning a negative value
@@ -89,6 +97,14 @@ type HookList struct {
 
 func (x *HookList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func HookListNewFromInternalPtr(ptr uintptr) *HookList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HookList)(rawPtr)
 }
 
 var xHookListClear func(uintptr)

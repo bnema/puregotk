@@ -24,6 +24,14 @@ func (x *MenuAttributeIterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MenuAttributeIterClassNewFromInternalPtr(ptr uintptr) *MenuAttributeIterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuAttributeIterClass)(rawPtr)
+}
+
 // OverrideGetNext sets the "get_next" callback function.
 func (x *MenuAttributeIterClass) OverrideGetNext(cb func(*MenuAttributeIter, *string, **glib.Variant) bool) {
 	if cb == nil {
@@ -55,6 +63,14 @@ func (x *MenuAttributeIterPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MenuAttributeIterPrivateNewFromInternalPtr(ptr uintptr) *MenuAttributeIterPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuAttributeIterPrivate)(rawPtr)
+}
+
 type MenuLinkIterClass struct {
 	_ structs.HostLayout
 
@@ -65,6 +81,14 @@ type MenuLinkIterClass struct {
 
 func (x *MenuLinkIterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MenuLinkIterClassNewFromInternalPtr(ptr uintptr) *MenuLinkIterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuLinkIterClass)(rawPtr)
 }
 
 // OverrideGetNext sets the "get_next" callback function.
@@ -98,6 +122,14 @@ func (x *MenuLinkIterPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MenuLinkIterPrivateNewFromInternalPtr(ptr uintptr) *MenuLinkIterPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuLinkIterPrivate)(rawPtr)
+}
+
 type MenuModelClass struct {
 	_ structs.HostLayout
 
@@ -122,6 +154,14 @@ type MenuModelClass struct {
 
 func (x *MenuModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MenuModelClassNewFromInternalPtr(ptr uintptr) *MenuModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuModelClass)(rawPtr)
 }
 
 // OverrideIsMutable sets the "is_mutable" callback function.
@@ -352,6 +392,14 @@ type MenuModelPrivate struct {
 
 func (x *MenuModelPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MenuModelPrivateNewFromInternalPtr(ptr uintptr) *MenuModelPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MenuModelPrivate)(rawPtr)
 }
 
 const (

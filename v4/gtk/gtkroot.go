@@ -20,6 +20,14 @@ func (x *RootInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RootInterfaceNewFromInternalPtr(ptr uintptr) *RootInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RootInterface)(rawPtr)
+}
+
 // An interface for widgets that can act as the root of a widget hierarchy.
 //
 // The root widget takes care of providing the connection to the windowing

@@ -23,6 +23,14 @@ func (x *UriLauncherClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UriLauncherClassNewFromInternalPtr(ptr uintptr) *UriLauncherClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UriLauncherClass)(rawPtr)
+}
+
 // Asynchronous API to open a uri with an application.
 //
 // `GtkUriLauncher` collects the arguments that are needed to open the uri.

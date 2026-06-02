@@ -28,6 +28,14 @@ func (x *SocketConnectableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketConnectableIfaceNewFromInternalPtr(ptr uintptr) *SocketConnectableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketConnectableIface)(rawPtr)
+}
+
 // OverrideEnumerate sets the "enumerate" callback function.
 // Creates a #GSocketAddressEnumerator
 func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {

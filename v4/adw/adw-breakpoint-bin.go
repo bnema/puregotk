@@ -24,6 +24,14 @@ func (x *BreakpointBinClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BreakpointBinClassNewFromInternalPtr(ptr uintptr) *BreakpointBinClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BreakpointBinClass)(rawPtr)
+}
+
 // A widget that changes layout based on available size.
 //
 // &lt;picture&gt;

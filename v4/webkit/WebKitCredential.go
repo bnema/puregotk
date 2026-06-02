@@ -27,6 +27,14 @@ func (x *Credential) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CredentialNewFromInternalPtr(ptr uintptr) *Credential {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Credential)(rawPtr)
+}
+
 var xNewCredential func(string, string, CredentialPersistence) uintptr
 
 // Create a new credential from the provided username, password and persistence mode.

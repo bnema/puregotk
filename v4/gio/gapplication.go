@@ -55,6 +55,14 @@ func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationClassNewFromInternalPtr(ptr uintptr) *ApplicationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationClass)(rawPtr)
+}
+
 // OverrideStartup sets the "startup" callback function.
 // invoked on the primary instance immediately after registration
 func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
@@ -508,6 +516,14 @@ type ApplicationPrivate struct {
 
 func (x *ApplicationPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ApplicationPrivateNewFromInternalPtr(ptr uintptr) *ApplicationPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationPrivate)(rawPtr)
 }
 
 // `GApplication` is the core class for application support.

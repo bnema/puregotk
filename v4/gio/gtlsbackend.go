@@ -40,6 +40,14 @@ func (x *TlsBackendInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsBackendInterfaceNewFromInternalPtr(ptr uintptr) *TlsBackendInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsBackendInterface)(rawPtr)
+}
+
 // OverrideSupportsTls sets the "supports_tls" callback function.
 // returns whether the backend supports TLS.
 func (x *TlsBackendInterface) OverrideSupportsTls(cb func(TlsBackend) bool) {

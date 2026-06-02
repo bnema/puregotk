@@ -29,6 +29,14 @@ func (x *Array) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ArrayNewFromInternalPtr(ptr uintptr) *Array {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Array)(rawPtr)
+}
+
 // Contains the public fields of a `GByteArray`.
 type ByteArray struct {
 	_ structs.HostLayout
@@ -46,6 +54,14 @@ func ByteArrayGLibType() types.GType {
 
 func (x *ByteArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ByteArrayNewFromInternalPtr(ptr uintptr) *ByteArray {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ByteArray)(rawPtr)
 }
 
 // A simple reference counted data type representing an immutable sequence of
@@ -87,6 +103,14 @@ func BytesGLibType() types.GType {
 
 func (x *Bytes) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func BytesNewFromInternalPtr(ptr uintptr) *Bytes {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Bytes)(rawPtr)
 }
 
 var xNewBytes func([]byte, uint) uintptr
@@ -350,6 +374,14 @@ func PtrArrayGLibType() types.GType {
 
 func (x *PtrArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PtrArrayNewFromInternalPtr(ptr uintptr) *PtrArray {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PtrArray)(rawPtr)
 }
 
 var xArrayNewTake func(uintptr, uint, bool, uint) uintptr

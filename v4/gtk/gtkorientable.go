@@ -20,6 +20,14 @@ func (x *OrientableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OrientableIfaceNewFromInternalPtr(ptr uintptr) *OrientableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OrientableIface)(rawPtr)
+}
+
 // An interface for widgets that can be oriented horizontally or vertically.
 //
 // `GtkOrientable` is more flexible in that it allows the orientation to be

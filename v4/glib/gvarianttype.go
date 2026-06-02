@@ -208,6 +208,14 @@ func (x *VariantType) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func VariantTypeNewFromInternalPtr(ptr uintptr) *VariantType {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*VariantType)(rawPtr)
+}
+
 var xNewVariantType func(string) uintptr
 
 // Creates a new [type@GLib.VariantType] corresponding to the type string given

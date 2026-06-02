@@ -29,6 +29,14 @@ func (x *TabArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TabArrayNewFromInternalPtr(ptr uintptr) *TabArray {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TabArray)(rawPtr)
+}
+
 var xNewTabArray func(int, bool) uintptr
 
 // Creates an array of @initial_size tab stops.

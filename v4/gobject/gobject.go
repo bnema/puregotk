@@ -78,6 +78,14 @@ func (x *InitiallyUnownedClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InitiallyUnownedClassNewFromInternalPtr(ptr uintptr) *InitiallyUnownedClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InitiallyUnownedClass)(rawPtr)
+}
+
 // OverrideConstructor sets the "constructor" callback function.
 // the @constructor function is called by g_object_new () to
 //
@@ -413,6 +421,14 @@ type ObjectClass struct {
 
 func (x *ObjectClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ObjectClassNewFromInternalPtr(ptr uintptr) *ObjectClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ObjectClass)(rawPtr)
 }
 
 var xObjectClassFindProperty func(uintptr, string) uintptr
@@ -816,6 +832,14 @@ func (x *ObjectConstructParam) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ObjectConstructParamNewFromInternalPtr(ptr uintptr) *ObjectConstructParam {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ObjectConstructParam)(rawPtr)
+}
+
 // A structure containing a weak reference to a #GObject.
 //
 // A `GWeakRef` can either be empty (i.e. point to %NULL), or point to an
@@ -846,6 +870,14 @@ type WeakRef struct {
 
 func (x *WeakRef) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WeakRefNewFromInternalPtr(ptr uintptr) *WeakRef {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WeakRef)(rawPtr)
 }
 
 var xWeakRefClear func(uintptr)

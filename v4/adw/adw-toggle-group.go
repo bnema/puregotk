@@ -22,6 +22,14 @@ func (x *ToggleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToggleClassNewFromInternalPtr(ptr uintptr) *ToggleClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToggleClass)(rawPtr)
+}
+
 type ToggleGroupClass struct {
 	_ structs.HostLayout
 
@@ -30,6 +38,14 @@ type ToggleGroupClass struct {
 
 func (x *ToggleGroupClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ToggleGroupClassNewFromInternalPtr(ptr uintptr) *ToggleGroupClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToggleGroupClass)(rawPtr)
 }
 
 // A toggle within [class@ToggleGroup].

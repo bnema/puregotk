@@ -26,6 +26,14 @@ func (x *InitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InitableIfaceNewFromInternalPtr(ptr uintptr) *InitableIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InitableIface)(rawPtr)
+}
+
 // OverrideInit sets the "init" callback function.
 // Initializes the object.
 func (x *InitableIface) OverrideInit(cb func(Initable, *Cancellable) bool) {

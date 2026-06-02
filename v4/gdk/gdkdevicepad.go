@@ -18,6 +18,14 @@ func (x *DevicePadInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DevicePadInterfaceNewFromInternalPtr(ptr uintptr) *DevicePadInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DevicePadInterface)(rawPtr)
+}
+
 // An interface for tablet pad devices.
 //
 // It allows querying the features provided by the pad device.

@@ -56,6 +56,14 @@ func (x *Relation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RelationNewFromInternalPtr(ptr uintptr) *Relation {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Relation)(rawPtr)
+}
+
 var xRelationCount func(uintptr, uintptr, int) int
 
 // Returns the number of tuples in a #GRelation that have the given
@@ -141,6 +149,14 @@ type Tuples struct {
 
 func (x *Tuples) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TuplesNewFromInternalPtr(ptr uintptr) *Tuples {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Tuples)(rawPtr)
 }
 
 var xTuplesDestroy func(uintptr)

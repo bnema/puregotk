@@ -23,6 +23,14 @@ func (x *ContextMenuClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContextMenuClassNewFromInternalPtr(ptr uintptr) *ContextMenuClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContextMenuClass)(rawPtr)
+}
+
 // Represents the context menu in a #WebKitWebView.
 //
 // #WebKitContextMenu represents a context menu containing

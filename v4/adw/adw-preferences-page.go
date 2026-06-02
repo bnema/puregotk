@@ -24,6 +24,14 @@ func (x *PreferencesPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PreferencesPageClassNewFromInternalPtr(ptr uintptr) *PreferencesPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PreferencesPageClass)(rawPtr)
+}
+
 // A page from [class@PreferencesDialog].
 //
 // &lt;picture&gt;

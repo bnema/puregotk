@@ -26,6 +26,14 @@ func (x *TreeDragDestIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeDragDestIfaceNewFromInternalPtr(ptr uintptr) *TreeDragDestIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeDragDestIface)(rawPtr)
+}
+
 // OverrideDragDataReceived sets the "drag_data_received" callback function.
 // Asks the `GtkTreeDragDest` to insert a row
 //
@@ -100,6 +108,14 @@ type TreeDragSourceIface struct {
 
 func (x *TreeDragSourceIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeDragSourceIfaceNewFromInternalPtr(ptr uintptr) *TreeDragSourceIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeDragSourceIface)(rawPtr)
 }
 
 // OverrideRowDraggable sets the "row_draggable" callback function.

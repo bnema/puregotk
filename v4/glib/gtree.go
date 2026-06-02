@@ -39,6 +39,14 @@ func (x *Tree) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeNewFromInternalPtr(ptr uintptr) *Tree {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Tree)(rawPtr)
+}
+
 var xNewTree func(uintptr) uintptr
 
 // Creates a new #GTree.
@@ -395,6 +403,14 @@ type TreeNode struct {
 
 func (x *TreeNode) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TreeNodeNewFromInternalPtr(ptr uintptr) *TreeNode {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeNode)(rawPtr)
 }
 
 var xTreeNodeKey func(uintptr) uintptr

@@ -22,6 +22,14 @@ func (x *ToolbarViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToolbarViewClassNewFromInternalPtr(ptr uintptr) *ToolbarViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToolbarViewClass)(rawPtr)
+}
+
 // Describes the possible top or bottom bar styles in an [class@ToolbarView]
 // widget.
 //

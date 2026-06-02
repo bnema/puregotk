@@ -31,6 +31,14 @@ func (x *ComboBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ComboBoxClassNewFromInternalPtr(ptr uintptr) *ComboBoxClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ComboBoxClass)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 // Signal is emitted when the active item is changed.
 func (x *ComboBoxClass) OverrideChanged(cb func(*ComboBox)) {

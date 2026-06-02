@@ -34,6 +34,14 @@ func (x *DBusAnnotationInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusAnnotationInfoNewFromInternalPtr(ptr uintptr) *DBusAnnotationInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusAnnotationInfo)(rawPtr)
+}
+
 var xDBusAnnotationInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
@@ -76,6 +84,14 @@ func DBusArgInfoGLibType() types.GType {
 
 func (x *DBusArgInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusArgInfoNewFromInternalPtr(ptr uintptr) *DBusArgInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusArgInfo)(rawPtr)
 }
 
 var xDBusArgInfoRef func(uintptr) uintptr
@@ -124,6 +140,14 @@ func DBusInterfaceInfoGLibType() types.GType {
 
 func (x *DBusInterfaceInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusInterfaceInfoNewFromInternalPtr(ptr uintptr) *DBusInterfaceInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusInterfaceInfo)(rawPtr)
 }
 
 var xDBusInterfaceInfoCacheBuild func(uintptr)
@@ -251,6 +275,14 @@ func (x *DBusMethodInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusMethodInfoNewFromInternalPtr(ptr uintptr) *DBusMethodInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusMethodInfo)(rawPtr)
+}
+
 var xDBusMethodInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
@@ -295,6 +327,14 @@ func DBusNodeInfoGLibType() types.GType {
 
 func (x *DBusNodeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusNodeInfoNewFromInternalPtr(ptr uintptr) *DBusNodeInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusNodeInfo)(rawPtr)
 }
 
 var xNewDBusNodeInfoForXml func(string, **glib.Error) uintptr
@@ -389,6 +429,14 @@ func (x *DBusPropertyInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusPropertyInfoNewFromInternalPtr(ptr uintptr) *DBusPropertyInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusPropertyInfo)(rawPtr)
+}
+
 var xDBusPropertyInfoRef func(uintptr) uintptr
 
 // If @info is statically allocated does nothing. Otherwise increases
@@ -431,6 +479,14 @@ func DBusSignalInfoGLibType() types.GType {
 
 func (x *DBusSignalInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusSignalInfoNewFromInternalPtr(ptr uintptr) *DBusSignalInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusSignalInfo)(rawPtr)
 }
 
 var xDBusSignalInfoRef func(uintptr) uintptr

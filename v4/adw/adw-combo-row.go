@@ -26,6 +26,14 @@ func (x *ComboRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ComboRowClassNewFromInternalPtr(ptr uintptr) *ComboRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ComboRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] used to choose from a list of items.
 //
 // &lt;picture&gt;

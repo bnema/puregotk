@@ -26,6 +26,14 @@ func (x *CellRendererTextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellRendererTextClassNewFromInternalPtr(ptr uintptr) *CellRendererTextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellRendererTextClass)(rawPtr)
+}
+
 // OverrideEdited sets the "edited" callback function.
 func (x *CellRendererTextClass) OverrideEdited(cb func(*CellRendererText, string, string)) {
 	if cb == nil {

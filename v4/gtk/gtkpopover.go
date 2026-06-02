@@ -30,6 +30,14 @@ func (x *PopoverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PopoverClassNewFromInternalPtr(ptr uintptr) *PopoverClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PopoverClass)(rawPtr)
+}
+
 // OverrideClosed sets the "closed" callback function.
 func (x *PopoverClass) OverrideClosed(cb func(*Popover)) {
 	if cb == nil {

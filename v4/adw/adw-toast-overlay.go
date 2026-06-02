@@ -22,6 +22,14 @@ func (x *ToastOverlayClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToastOverlayClassNewFromInternalPtr(ptr uintptr) *ToastOverlayClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToastOverlayClass)(rawPtr)
+}
+
 // A widget showing toasts above its content.
 //
 // &lt;picture&gt;

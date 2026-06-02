@@ -21,12 +21,28 @@ func (x *ConstraintClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ConstraintClassNewFromInternalPtr(ptr uintptr) *ConstraintClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConstraintClass)(rawPtr)
+}
+
 type ConstraintTargetInterface struct {
 	_ structs.HostLayout
 }
 
 func (x *ConstraintTargetInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ConstraintTargetInterfaceNewFromInternalPtr(ptr uintptr) *ConstraintTargetInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConstraintTargetInterface)(rawPtr)
 }
 
 // Makes it possible to use an object as source or target in a

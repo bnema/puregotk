@@ -22,6 +22,14 @@ func (x *ShortcutsItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutsItemClassNewFromInternalPtr(ptr uintptr) *ShortcutsItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutsItemClass)(rawPtr)
+}
+
 // An object representing an individual shortcut in [class@ShortcutsSection].
 //
 // A shortcut has a title, an optional subtitle, and an accelerator.

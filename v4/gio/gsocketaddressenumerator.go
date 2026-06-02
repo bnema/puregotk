@@ -29,6 +29,14 @@ func (x *SocketAddressEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketAddressEnumeratorClassNewFromInternalPtr(ptr uintptr) *SocketAddressEnumeratorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketAddressEnumeratorClass)(rawPtr)
+}
+
 // OverrideNext sets the "next" callback function.
 // Virtual method for g_socket_address_enumerator_next().
 func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumerator, *Cancellable) *SocketAddress) {

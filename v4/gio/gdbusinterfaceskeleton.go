@@ -39,6 +39,14 @@ func (x *DBusInterfaceSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusInterfaceSkeletonClassNewFromInternalPtr(ptr uintptr) *DBusInterfaceSkeletonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusInterfaceSkeletonClass)(rawPtr)
+}
+
 // OverrideGetInfo sets the "get_info" callback function.
 // Returns a #GDBusInterfaceInfo. See g_dbus_interface_skeleton_get_info() for details.
 func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkeleton) *DBusInterfaceInfo) {
@@ -219,6 +227,14 @@ type DBusInterfaceSkeletonPrivate struct {
 
 func (x *DBusInterfaceSkeletonPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusInterfaceSkeletonPrivateNewFromInternalPtr(ptr uintptr) *DBusInterfaceSkeletonPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusInterfaceSkeletonPrivate)(rawPtr)
 }
 
 // Abstract base class for D-Bus interfaces on the service side.

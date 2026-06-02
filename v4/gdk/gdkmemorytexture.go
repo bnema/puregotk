@@ -20,6 +20,14 @@ func (x *MemoryTextureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MemoryTextureClassNewFromInternalPtr(ptr uintptr) *MemoryTextureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MemoryTextureClass)(rawPtr)
+}
+
 // A `GdkTexture` representing image data in memory.
 type MemoryTexture struct {
 	Texture

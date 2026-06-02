@@ -40,6 +40,14 @@ func (x *PatternSpec) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PatternSpecNewFromInternalPtr(ptr uintptr) *PatternSpec {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PatternSpec)(rawPtr)
+}
+
 var xNewPatternSpec func(string) uintptr
 
 // Compiles a pattern to a [type@GLib.PatternSpec].

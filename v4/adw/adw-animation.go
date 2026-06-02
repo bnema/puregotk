@@ -21,6 +21,14 @@ func (x *AnimationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AnimationClassNewFromInternalPtr(ptr uintptr) *AnimationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AnimationClass)(rawPtr)
+}
+
 const (
 	// Indicates an [class@Animation] with an infinite duration.
 	//

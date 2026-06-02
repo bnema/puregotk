@@ -20,6 +20,14 @@ func (x *GestureZoomClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GestureZoomClassNewFromInternalPtr(ptr uintptr) *GestureZoomClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GestureZoomClass)(rawPtr)
+}
+
 // Recognizes 2-finger pinch/zoom gestures.
 //
 // Whenever the distance between both tracked sequences changes, the

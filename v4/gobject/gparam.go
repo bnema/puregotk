@@ -38,6 +38,14 @@ func (x *ParamSpecClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ParamSpecClassNewFromInternalPtr(ptr uintptr) *ParamSpecClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ParamSpecClass)(rawPtr)
+}
+
 // OverrideFinalize sets the "finalize" callback function.
 // The instance finalization function (optional), should chain
 //
@@ -202,6 +210,14 @@ func (x *ParamSpecPool) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ParamSpecPoolNewFromInternalPtr(ptr uintptr) *ParamSpecPool {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ParamSpecPool)(rawPtr)
+}
+
 var xParamSpecPoolFree func(uintptr)
 
 // Frees the resources allocated by a #GParamSpecPool.
@@ -291,6 +307,14 @@ type ParamSpecTypeInfo struct {
 
 func (x *ParamSpecTypeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ParamSpecTypeInfoNewFromInternalPtr(ptr uintptr) *ParamSpecTypeInfo {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ParamSpecTypeInfo)(rawPtr)
 }
 
 // OverrideInstanceInit sets the "instance_init" callback function.
@@ -446,6 +470,14 @@ type Parameter struct {
 
 func (x *Parameter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ParameterNewFromInternalPtr(ptr uintptr) *Parameter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Parameter)(rawPtr)
 }
 
 const (

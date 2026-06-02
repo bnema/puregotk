@@ -21,6 +21,14 @@ func (x *NativeVolumeMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NativeVolumeMonitorClassNewFromInternalPtr(ptr uintptr) *NativeVolumeMonitorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NativeVolumeMonitorClass)(rawPtr)
+}
+
 // OverrideGetMountForMountPath sets the "get_mount_for_mount_path" callback function.
 func (x *NativeVolumeMonitorClass) OverrideGetMountForMountPath(cb func(string, *Cancellable) *MountBase) {
 	if cb == nil {

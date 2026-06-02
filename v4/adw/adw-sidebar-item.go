@@ -25,6 +25,14 @@ func (x *SidebarItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SidebarItemClassNewFromInternalPtr(ptr uintptr) *SidebarItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SidebarItemClass)(rawPtr)
+}
+
 // An item within [class@SidebarSection].
 //
 // Sidebar items must have a title, set via [property@SidebarItem:title].

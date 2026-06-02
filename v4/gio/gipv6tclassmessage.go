@@ -20,6 +20,14 @@ func (x *IPv6TclassMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IPv6TclassMessageClassNewFromInternalPtr(ptr uintptr) *IPv6TclassMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IPv6TclassMessageClass)(rawPtr)
+}
+
 // Contains the Traffic Class byte of an IPv6 header.
 //
 // This consists of the DSCP field as per

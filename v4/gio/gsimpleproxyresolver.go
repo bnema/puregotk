@@ -32,6 +32,14 @@ func (x *SimpleProxyResolverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SimpleProxyResolverClassNewFromInternalPtr(ptr uintptr) *SimpleProxyResolverClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SimpleProxyResolverClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -153,6 +161,14 @@ type SimpleProxyResolverPrivate struct {
 
 func (x *SimpleProxyResolverPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SimpleProxyResolverPrivateNewFromInternalPtr(ptr uintptr) *SimpleProxyResolverPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SimpleProxyResolverPrivate)(rawPtr)
 }
 
 // `GSimpleProxyResolver` is a simple [iface@Gio.ProxyResolver] implementation

@@ -23,6 +23,14 @@ func (x *StringListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StringListClassNewFromInternalPtr(ptr uintptr) *StringListClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StringListClass)(rawPtr)
+}
+
 type StringObjectClass struct {
 	_ structs.HostLayout
 
@@ -31,6 +39,14 @@ type StringObjectClass struct {
 
 func (x *StringObjectClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func StringObjectClassNewFromInternalPtr(ptr uintptr) *StringObjectClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StringObjectClass)(rawPtr)
 }
 
 // A list model that wraps an array of strings.

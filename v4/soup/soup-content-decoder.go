@@ -19,6 +19,14 @@ func (x *ContentDecoderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContentDecoderClassNewFromInternalPtr(ptr uintptr) *ContentDecoderClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContentDecoderClass)(rawPtr)
+}
+
 // Handles decoding of HTTP messages.
 //
 // [class@ContentDecoder] handles adding the "Accept-Encoding" header on

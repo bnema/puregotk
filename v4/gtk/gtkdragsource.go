@@ -21,6 +21,14 @@ func (x *DragSourceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DragSourceClassNewFromInternalPtr(ptr uintptr) *DragSourceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DragSourceClass)(rawPtr)
+}
+
 // An event controller to initiate Drag-And-Drop operations.
 //
 // `GtkDragSource` can be set up with the necessary

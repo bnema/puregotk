@@ -36,6 +36,14 @@ func (x *PollFD) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PollFDNewFromInternalPtr(ptr uintptr) *PollFD {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PollFD)(rawPtr)
+}
+
 var xPoll func(*PollFD, uint, int) int
 
 // Polls @fds, as with the poll() system call, but portably. (On

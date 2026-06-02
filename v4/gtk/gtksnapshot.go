@@ -24,6 +24,14 @@ func (x *SnapshotClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SnapshotClassNewFromInternalPtr(ptr uintptr) *SnapshotClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SnapshotClass)(rawPtr)
+}
+
 // Assists in creating [class@Gsk.RenderNode]s for widgets.
 //
 // It functions in a similar way to a cairo context, and maintains a stack

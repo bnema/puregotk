@@ -17,6 +17,14 @@ func (x *SessionFeatureInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SessionFeatureInterfaceNewFromInternalPtr(ptr uintptr) *SessionFeatureInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SessionFeatureInterface)(rawPtr)
+}
+
 // Interface for miscellaneous [class@Session] features.
 //
 // [iface@SessionFeature] is the interface used by classes that extend

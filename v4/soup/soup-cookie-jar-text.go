@@ -21,6 +21,14 @@ func (x *CookieJarTextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CookieJarTextClassNewFromInternalPtr(ptr uintptr) *CookieJarTextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CookieJarTextClass)(rawPtr)
+}
+
 // Text-file-based ("cookies.txt") Cookie Jar
 //
 // [class@CookieJarText] is a [class@CookieJar] that reads cookies from and writes

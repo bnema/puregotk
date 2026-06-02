@@ -25,6 +25,14 @@ func (x *UserContentFilter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UserContentFilterNewFromInternalPtr(ptr uintptr) *UserContentFilter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserContentFilter)(rawPtr)
+}
+
 var xUserContentFilterGetIdentifier func(uintptr) string
 
 // Obtain the identifier previously used to save the @user_content_filter.
@@ -73,6 +81,14 @@ func UserScriptGLibType() types.GType {
 
 func (x *UserScript) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UserScriptNewFromInternalPtr(ptr uintptr) *UserScript {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserScript)(rawPtr)
 }
 
 var xNewUserScript func(string, UserContentInjectedFrames, UserScriptInjectionTime, []string, []string) uintptr
@@ -144,6 +160,14 @@ func UserStyleSheetGLibType() types.GType {
 
 func (x *UserStyleSheet) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UserStyleSheetNewFromInternalPtr(ptr uintptr) *UserStyleSheet {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UserStyleSheet)(rawPtr)
 }
 
 var xNewUserStyleSheet func(string, UserContentInjectedFrames, UserStyleLevel, []string, []string) uintptr

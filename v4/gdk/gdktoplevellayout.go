@@ -34,6 +34,14 @@ func (x *ToplevelLayout) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToplevelLayoutNewFromInternalPtr(ptr uintptr) *ToplevelLayout {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToplevelLayout)(rawPtr)
+}
+
 var xNewToplevelLayout func() uintptr
 
 // Create a toplevel layout description.

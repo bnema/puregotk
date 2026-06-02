@@ -37,6 +37,14 @@ func (x *TlsConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsConnectionClassNewFromInternalPtr(ptr uintptr) *TlsConnectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsConnectionClass)(rawPtr)
+}
+
 // OverrideAcceptCertificate sets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
@@ -193,6 +201,14 @@ type TlsConnectionPrivate struct {
 
 func (x *TlsConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TlsConnectionPrivateNewFromInternalPtr(ptr uintptr) *TlsConnectionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsConnectionPrivate)(rawPtr)
 }
 
 var xTlsChannelBindingErrorQuark func() glib.Quark

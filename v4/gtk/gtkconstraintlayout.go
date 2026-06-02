@@ -22,6 +22,14 @@ func (x *ConstraintLayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ConstraintLayoutChildClassNewFromInternalPtr(ptr uintptr) *ConstraintLayoutChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConstraintLayoutChildClass)(rawPtr)
+}
+
 type ConstraintLayoutClass struct {
 	_ structs.HostLayout
 
@@ -30,6 +38,14 @@ type ConstraintLayoutClass struct {
 
 func (x *ConstraintLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ConstraintLayoutClassNewFromInternalPtr(ptr uintptr) *ConstraintLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConstraintLayoutClass)(rawPtr)
 }
 
 var xConstraintVflParserErrorQuark func() glib.Quark

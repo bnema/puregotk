@@ -231,6 +231,14 @@ func (x *FileIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileIfaceNewFromInternalPtr(ptr uintptr) *FileIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileIface)(rawPtr)
+}
+
 // OverrideDup sets the "dup" callback function.
 // Duplicates a #GFile.
 func (x *FileIface) OverrideDup(cb func(File) *FileBase) {

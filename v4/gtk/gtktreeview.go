@@ -80,6 +80,14 @@ func (x *TreeViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TreeViewClassNewFromInternalPtr(ptr uintptr) *TreeViewClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TreeViewClass)(rawPtr)
+}
+
 // OverrideRowActivated sets the "row_activated" callback function.
 func (x *TreeViewClass) OverrideRowActivated(cb func(*TreeView, *TreePath, *TreeViewColumn)) {
 	if cb == nil {

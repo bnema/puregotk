@@ -29,6 +29,14 @@ func (x *MarkupParseContext) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MarkupParseContextNewFromInternalPtr(ptr uintptr) *MarkupParseContext {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MarkupParseContext)(rawPtr)
+}
+
 var xNewMarkupParseContext func(*MarkupParser, MarkupParseFlags, uintptr, uintptr) uintptr
 
 // Creates a new parse context. A parse context is used to parse
@@ -379,6 +387,14 @@ type MarkupParser struct {
 
 func (x *MarkupParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MarkupParserNewFromInternalPtr(ptr uintptr) *MarkupParser {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MarkupParser)(rawPtr)
 }
 
 // OverrideStartElement sets the "start_element" callback function.

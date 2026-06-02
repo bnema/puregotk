@@ -23,6 +23,14 @@ func (x *WebResourceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebResourceClassNewFromInternalPtr(ptr uintptr) *WebResourceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebResourceClass)(rawPtr)
+}
+
 // Represents a resource at the end of a URI.
 //
 // A #WebKitWebResource encapsulates content for each resource at the

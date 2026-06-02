@@ -28,6 +28,14 @@ func (x *SocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SocketAddressClassNewFromInternalPtr(ptr uintptr) *SocketAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SocketAddressClass)(rawPtr)
+}
+
 // OverrideGetFamily sets the "get_family" callback function.
 func (x *SocketAddressClass) OverrideGetFamily(cb func(*SocketAddress) SocketFamily) {
 	if cb == nil {

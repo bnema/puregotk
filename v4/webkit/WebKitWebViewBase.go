@@ -29,6 +29,14 @@ func (x *WebViewBaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebViewBaseClassNewFromInternalPtr(ptr uintptr) *WebViewBaseClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebViewBaseClass)(rawPtr)
+}
+
 // OverrideWebkitReserved0 sets the "_webkit_reserved0" callback function.
 func (x *WebViewBaseClass) OverrideWebkitReserved0(cb func()) {
 	if cb == nil {
@@ -127,6 +135,14 @@ type WebViewBasePrivate struct {
 
 func (x *WebViewBasePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WebViewBasePrivateNewFromInternalPtr(ptr uintptr) *WebViewBasePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebViewBasePrivate)(rawPtr)
 }
 
 type WebViewBase struct {

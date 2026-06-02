@@ -22,6 +22,14 @@ func (x *WrapLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WrapLayoutClassNewFromInternalPtr(ptr uintptr) *WrapLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WrapLayoutClass)(rawPtr)
+}
+
 // Describes line justify behaviors in a [class@WrapLayout] or [class@WrapBox].
 //
 // See [property@WrapLayout:justify] and [property@WrapBox:justify].

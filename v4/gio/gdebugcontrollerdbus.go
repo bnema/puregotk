@@ -27,6 +27,14 @@ func (x *DebugControllerDBusClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DebugControllerDBusClassNewFromInternalPtr(ptr uintptr) *DebugControllerDBusClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DebugControllerDBusClass)(rawPtr)
+}
+
 // OverrideAuthorize sets the "authorize" callback function.
 // Default handler for the #GDebugControllerDBus::authorize signal.
 func (x *DebugControllerDBusClass) OverrideAuthorize(cb func(*DebugControllerDBus, *DBusMethodInvocation) bool) {

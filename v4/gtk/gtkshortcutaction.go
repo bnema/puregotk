@@ -23,12 +23,28 @@ func (x *ActivateActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ActivateActionClassNewFromInternalPtr(ptr uintptr) *ActivateActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActivateActionClass)(rawPtr)
+}
+
 type CallbackActionClass struct {
 	_ structs.HostLayout
 }
 
 func (x *CallbackActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CallbackActionClassNewFromInternalPtr(ptr uintptr) *CallbackActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CallbackActionClass)(rawPtr)
 }
 
 type MnemonicActionClass struct {
@@ -39,12 +55,28 @@ func (x *MnemonicActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MnemonicActionClassNewFromInternalPtr(ptr uintptr) *MnemonicActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MnemonicActionClass)(rawPtr)
+}
+
 type NamedActionClass struct {
 	_ structs.HostLayout
 }
 
 func (x *NamedActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func NamedActionClassNewFromInternalPtr(ptr uintptr) *NamedActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NamedActionClass)(rawPtr)
 }
 
 type NothingActionClass struct {
@@ -55,6 +87,14 @@ func (x *NothingActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NothingActionClassNewFromInternalPtr(ptr uintptr) *NothingActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NothingActionClass)(rawPtr)
+}
+
 type ShortcutActionClass struct {
 	_ structs.HostLayout
 }
@@ -63,12 +103,28 @@ func (x *ShortcutActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutActionClassNewFromInternalPtr(ptr uintptr) *ShortcutActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutActionClass)(rawPtr)
+}
+
 type SignalActionClass struct {
 	_ structs.HostLayout
 }
 
 func (x *SignalActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SignalActionClassNewFromInternalPtr(ptr uintptr) *SignalActionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SignalActionClass)(rawPtr)
 }
 
 // Flags that can be passed to action activation.

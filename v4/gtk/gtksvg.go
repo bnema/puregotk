@@ -23,6 +23,14 @@ func (x *SvgClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SvgClassNewFromInternalPtr(ptr uintptr) *SvgClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SvgClass)(rawPtr)
+}
+
 // Provides information about a location in an SVG document.
 //
 // The information should be considered approximate; it is
@@ -39,6 +47,14 @@ type SvgLocation struct {
 
 func (x *SvgLocation) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SvgLocationNewFromInternalPtr(ptr uintptr) *SvgLocation {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SvgLocation)(rawPtr)
 }
 
 const (

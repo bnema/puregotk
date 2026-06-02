@@ -44,6 +44,14 @@ func (x *CellLayoutIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellLayoutIfaceNewFromInternalPtr(ptr uintptr) *CellLayoutIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellLayoutIface)(rawPtr)
+}
+
 // OverridePackStart sets the "pack_start" callback function.
 // Packs the cell into the beginning of cell_layout.
 func (x *CellLayoutIface) OverridePackStart(cb func(CellLayout, *CellRenderer, bool)) {

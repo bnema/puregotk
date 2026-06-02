@@ -24,6 +24,14 @@ func (x *FixedClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FixedClassNewFromInternalPtr(ptr uintptr) *FixedClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FixedClass)(rawPtr)
+}
+
 // Places its child widgets at fixed positions and with fixed sizes.
 //
 // `GtkFixed` performs no automatic layout management.

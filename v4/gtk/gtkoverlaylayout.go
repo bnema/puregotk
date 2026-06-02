@@ -21,6 +21,14 @@ func (x *OverlayLayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OverlayLayoutChildClassNewFromInternalPtr(ptr uintptr) *OverlayLayoutChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OverlayLayoutChildClass)(rawPtr)
+}
+
 type OverlayLayoutClass struct {
 	_ structs.HostLayout
 
@@ -29,6 +37,14 @@ type OverlayLayoutClass struct {
 
 func (x *OverlayLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func OverlayLayoutClassNewFromInternalPtr(ptr uintptr) *OverlayLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OverlayLayoutClass)(rawPtr)
 }
 
 // The layout manager used by [class@Gtk.Overlay].

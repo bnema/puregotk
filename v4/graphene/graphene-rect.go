@@ -40,6 +40,14 @@ func (x *Rect) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RectNewFromInternalPtr(ptr uintptr) *Rect {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Rect)(rawPtr)
+}
+
 var xRectContainsPoint func(uintptr, *Point) bool
 
 // Checks whether a #graphene_rect_t contains the given coordinates.

@@ -22,6 +22,14 @@ func (x *FilterListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FilterListModelClassNewFromInternalPtr(ptr uintptr) *FilterListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FilterListModelClass)(rawPtr)
+}
+
 // A list model that filters the elements of another model.
 //
 // It hides some elements from the underlying model according to

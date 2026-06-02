@@ -49,6 +49,14 @@ func (x *ThreadPool) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ThreadPoolNewFromInternalPtr(ptr uintptr) *ThreadPool {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ThreadPool)(rawPtr)
+}
+
 var xThreadPoolFree func(uintptr, bool, bool)
 
 // Frees all resources allocated for @pool.

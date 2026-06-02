@@ -21,12 +21,28 @@ func (x *AlternativeTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AlternativeTriggerClassNewFromInternalPtr(ptr uintptr) *AlternativeTriggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AlternativeTriggerClass)(rawPtr)
+}
+
 type KeyvalTriggerClass struct {
 	_ structs.HostLayout
 }
 
 func (x *KeyvalTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func KeyvalTriggerClassNewFromInternalPtr(ptr uintptr) *KeyvalTriggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*KeyvalTriggerClass)(rawPtr)
 }
 
 type MnemonicTriggerClass struct {
@@ -37,6 +53,14 @@ func (x *MnemonicTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MnemonicTriggerClassNewFromInternalPtr(ptr uintptr) *MnemonicTriggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MnemonicTriggerClass)(rawPtr)
+}
+
 type NeverTriggerClass struct {
 	_ structs.HostLayout
 }
@@ -45,12 +69,28 @@ func (x *NeverTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NeverTriggerClassNewFromInternalPtr(ptr uintptr) *NeverTriggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NeverTriggerClass)(rawPtr)
+}
+
 type ShortcutTriggerClass struct {
 	_ structs.HostLayout
 }
 
 func (x *ShortcutTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ShortcutTriggerClassNewFromInternalPtr(ptr uintptr) *ShortcutTriggerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutTriggerClass)(rawPtr)
 }
 
 // Combines two shortcut triggers.

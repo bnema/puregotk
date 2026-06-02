@@ -42,6 +42,14 @@ func (x *ActionEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ActionEntryNewFromInternalPtr(ptr uintptr) *ActionEntry {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActionEntry)(rawPtr)
+}
+
 // OverrideActivate sets the "activate" callback function.
 // the callback to connect to the "activate" signal of the action.
 //
@@ -125,6 +133,14 @@ type ActionMapInterface struct {
 
 func (x *ActionMapInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ActionMapInterfaceNewFromInternalPtr(ptr uintptr) *ActionMapInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActionMapInterface)(rawPtr)
 }
 
 // OverrideLookupAction sets the "lookup_action" callback function.

@@ -21,6 +21,14 @@ func (x *EventControllerScrollClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerScrollClassNewFromInternalPtr(ptr uintptr) *EventControllerScrollClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerScrollClass)(rawPtr)
+}
+
 // Describes the behavior of a `GtkEventControllerScroll`.
 type EventControllerScrollFlags int
 

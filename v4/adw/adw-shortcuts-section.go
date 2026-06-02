@@ -23,6 +23,14 @@ func (x *ShortcutsSectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutsSectionClassNewFromInternalPtr(ptr uintptr) *ShortcutsSectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutsSectionClass)(rawPtr)
+}
+
 // An object representing a section in [class@ShortcutsDialog].
 //
 // It contains [class@ShortcutsItem] objects, use [method@ShortcutsSection.add] to

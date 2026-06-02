@@ -32,6 +32,14 @@ func (x *ConverterOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ConverterOutputStreamClassNewFromInternalPtr(ptr uintptr) *ConverterOutputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConverterOutputStreamClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *ConverterOutputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -153,6 +161,14 @@ type ConverterOutputStreamPrivate struct {
 
 func (x *ConverterOutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ConverterOutputStreamPrivateNewFromInternalPtr(ptr uintptr) *ConverterOutputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConverterOutputStreamPrivate)(rawPtr)
 }
 
 // Converter output stream implements [class@Gio.OutputStream] and allows

@@ -48,6 +48,14 @@ func (x *FileEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileEnumeratorClassNewFromInternalPtr(ptr uintptr) *FileEnumeratorClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileEnumeratorClass)(rawPtr)
+}
+
 // OverrideNextFile sets the "next_file" callback function.
 func (x *FileEnumeratorClass) OverrideNextFile(cb func(*FileEnumerator, *Cancellable) *FileInfo) {
 	if cb == nil {
@@ -371,6 +379,14 @@ type FileEnumeratorPrivate struct {
 
 func (x *FileEnumeratorPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileEnumeratorPrivateNewFromInternalPtr(ptr uintptr) *FileEnumeratorPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileEnumeratorPrivate)(rawPtr)
 }
 
 // `GFileEnumerator` allows you to operate on a set of [iface@Gio.File] objects,

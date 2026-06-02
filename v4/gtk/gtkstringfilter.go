@@ -21,6 +21,14 @@ func (x *StringFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StringFilterClassNewFromInternalPtr(ptr uintptr) *StringFilterClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StringFilterClass)(rawPtr)
+}
+
 // Specifies how search strings are matched inside text.
 type StringFilterMatchMode int
 

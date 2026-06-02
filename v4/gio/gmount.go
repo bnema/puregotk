@@ -76,6 +76,14 @@ func (x *MountIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MountIfaceNewFromInternalPtr(ptr uintptr) *MountIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MountIface)(rawPtr)
+}
+
 // OverrideChanged sets the "changed" callback function.
 // Changed signal that is emitted when the mount's state has changed.
 func (x *MountIface) OverrideChanged(cb func(Mount)) {

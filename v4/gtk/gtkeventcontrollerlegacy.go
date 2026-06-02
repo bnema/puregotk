@@ -20,6 +20,14 @@ func (x *EventControllerLegacyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EventControllerLegacyClassNewFromInternalPtr(ptr uintptr) *EventControllerLegacyClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EventControllerLegacyClass)(rawPtr)
+}
+
 // Provides raw access to the event stream.
 //
 // It should only be used as a last resort if none of the other event

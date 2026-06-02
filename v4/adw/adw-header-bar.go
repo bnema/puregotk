@@ -22,6 +22,14 @@ func (x *HeaderBarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func HeaderBarClassNewFromInternalPtr(ptr uintptr) *HeaderBarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*HeaderBarClass)(rawPtr)
+}
+
 // Describes title centering behavior of a [class@HeaderBar] widget.
 type CenteringPolicy int
 

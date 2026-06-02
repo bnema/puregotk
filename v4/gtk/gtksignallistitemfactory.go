@@ -20,6 +20,14 @@ func (x *SignalListItemFactoryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SignalListItemFactoryClassNewFromInternalPtr(ptr uintptr) *SignalListItemFactoryClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SignalListItemFactoryClass)(rawPtr)
+}
+
 // Emits signals to manage listitems.
 //
 // Signals are emitted for every listitem in the same order:

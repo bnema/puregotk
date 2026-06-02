@@ -19,6 +19,14 @@ func (x *ClipboardPermissionRequestClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ClipboardPermissionRequestClassNewFromInternalPtr(ptr uintptr) *ClipboardPermissionRequestClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClipboardPermissionRequestClass)(rawPtr)
+}
+
 // A permission request for reading clipboard contents.
 //
 // WebKitClipboardPermissionRequest represents a request for

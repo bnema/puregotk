@@ -30,6 +30,14 @@ func (x *Quad) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func QuadNewFromInternalPtr(ptr uintptr) *Quad {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Quad)(rawPtr)
+}
+
 var xQuadAlloc func() uintptr
 
 // Allocates a new #graphene_quad_t instance.

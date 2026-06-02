@@ -33,6 +33,14 @@ func (x *BitsetIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BitsetIterNewFromInternalPtr(ptr uintptr) *BitsetIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BitsetIter)(rawPtr)
+}
+
 var xBitsetIterGetValue func(uintptr) uint
 
 // Gets the current value that @iter points to.

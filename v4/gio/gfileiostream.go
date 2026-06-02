@@ -49,6 +49,14 @@ func (x *FileIOStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileIOStreamClassNewFromInternalPtr(ptr uintptr) *FileIOStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileIOStreamClass)(rawPtr)
+}
+
 // OverrideTell sets the "tell" callback function.
 func (x *FileIOStreamClass) OverrideTell(cb func(*FileIOStream) int64) {
 	if cb == nil {
@@ -397,6 +405,14 @@ type FileIOStreamPrivate struct {
 
 func (x *FileIOStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileIOStreamPrivateNewFromInternalPtr(ptr uintptr) *FileIOStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileIOStreamPrivate)(rawPtr)
 }
 
 // `GFileIOStream` provides I/O streams that both read and write to the same

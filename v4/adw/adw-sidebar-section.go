@@ -29,6 +29,14 @@ func (x *SidebarSectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SidebarSectionClassNewFromInternalPtr(ptr uintptr) *SidebarSectionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SidebarSectionClass)(rawPtr)
+}
+
 // A section within [class@Sidebar].
 //
 // `AdwSidebarSection` contains [class@SidebarItem] objects.

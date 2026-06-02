@@ -59,6 +59,14 @@ func (x *Error) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ErrorNewFromInternalPtr(ptr uintptr) *Error {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Error)(rawPtr)
+}
+
 var xNewError func(Quark, int, string, ...interface{}) uintptr
 
 // Creates a new #GError with the given @domain and @code,

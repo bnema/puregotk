@@ -26,6 +26,14 @@ func (x *ToggleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToggleButtonClassNewFromInternalPtr(ptr uintptr) *ToggleButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToggleButtonClass)(rawPtr)
+}
+
 // OverrideToggled sets the "toggled" callback function.
 func (x *ToggleButtonClass) OverrideToggled(cb func(*ToggleButton)) {
 	if cb == nil {

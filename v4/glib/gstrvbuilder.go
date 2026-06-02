@@ -39,6 +39,14 @@ func (x *StrvBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StrvBuilderNewFromInternalPtr(ptr uintptr) *StrvBuilder {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StrvBuilder)(rawPtr)
+}
+
 var xNewStrvBuilder func() uintptr
 
 // Creates a new #GStrvBuilder with a reference count of 1.

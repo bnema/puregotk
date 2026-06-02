@@ -23,6 +23,14 @@ func (x *RendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RendererClassNewFromInternalPtr(ptr uintptr) *RendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RendererClass)(rawPtr)
+}
+
 // Renders a scene graph defined via a tree of [class@Gsk.RenderNode] instances.
 //
 // Typically you will use a `GskRenderer` instance to repeatedly call

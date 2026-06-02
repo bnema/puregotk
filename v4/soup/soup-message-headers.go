@@ -29,6 +29,14 @@ func (x *MessageHeaders) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageHeadersNewFromInternalPtr(ptr uintptr) *MessageHeaders {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageHeaders)(rawPtr)
+}
+
 var xNewMessageHeaders func(MessageHeadersType) uintptr
 
 // Creates a [struct@MessageHeaders].
@@ -434,6 +442,14 @@ func (x *MessageHeadersIter) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MessageHeadersIterNewFromInternalPtr(ptr uintptr) *MessageHeadersIter {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MessageHeadersIter)(rawPtr)
+}
+
 // Represents a byte range as used in the Range header.
 //
 // If @end is non-negative, then @start and @end represent the bounds
@@ -458,6 +474,14 @@ type Range struct {
 
 func (x *Range) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RangeNewFromInternalPtr(ptr uintptr) *Range {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Range)(rawPtr)
 }
 
 // Represents the parsed value of the "Expect" header.

@@ -36,6 +36,14 @@ func (x *DatagramBasedInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DatagramBasedInterfaceNewFromInternalPtr(ptr uintptr) *DatagramBasedInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DatagramBasedInterface)(rawPtr)
+}
+
 // OverrideReceiveMessages sets the "receive_messages" callback function.
 // Virtual method for g_datagram_based_receive_messages().
 func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int) {

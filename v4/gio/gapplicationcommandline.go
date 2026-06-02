@@ -34,6 +34,14 @@ func (x *ApplicationCommandLineClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationCommandLineClassNewFromInternalPtr(ptr uintptr) *ApplicationCommandLineClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationCommandLineClass)(rawPtr)
+}
+
 // OverridePrintLiteral sets the "print_literal" callback function.
 func (x *ApplicationCommandLineClass) OverridePrintLiteral(cb func(*ApplicationCommandLine, string)) {
 	if cb == nil {
@@ -142,6 +150,14 @@ type ApplicationCommandLinePrivate struct {
 
 func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ApplicationCommandLinePrivateNewFromInternalPtr(ptr uintptr) *ApplicationCommandLinePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationCommandLinePrivate)(rawPtr)
 }
 
 // `GApplicationCommandLine` represents a command-line invocation of

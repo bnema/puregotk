@@ -23,6 +23,14 @@ func (x *LeafletClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LeafletClassNewFromInternalPtr(ptr uintptr) *LeafletClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LeafletClass)(rawPtr)
+}
+
 type LeafletPageClass struct {
 	_ structs.HostLayout
 
@@ -31,6 +39,14 @@ type LeafletPageClass struct {
 
 func (x *LeafletPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func LeafletPageClassNewFromInternalPtr(ptr uintptr) *LeafletPageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LeafletPageClass)(rawPtr)
 }
 
 // Describes the possible transitions in a [class@Leaflet] widget.

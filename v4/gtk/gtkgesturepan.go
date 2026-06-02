@@ -20,6 +20,14 @@ func (x *GesturePanClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GesturePanClassNewFromInternalPtr(ptr uintptr) *GesturePanClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GesturePanClass)(rawPtr)
+}
+
 // Recognizes pan gestures.
 //
 // These are drags that are locked to happen along one axis. The axis

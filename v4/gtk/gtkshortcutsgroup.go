@@ -19,6 +19,14 @@ func (x *ShortcutsGroupClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutsGroupClassNewFromInternalPtr(ptr uintptr) *ShortcutsGroupClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutsGroupClass)(rawPtr)
+}
+
 // A `GtkShortcutsGroup` represents a group of related keyboard shortcuts
 // or gestures.
 //

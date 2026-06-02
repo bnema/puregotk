@@ -32,6 +32,14 @@ func (x *Plane) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PlaneNewFromInternalPtr(ptr uintptr) *Plane {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Plane)(rawPtr)
+}
+
 var xPlaneAlloc func() uintptr
 
 // Allocates a new #graphene_plane_t structure.

@@ -23,6 +23,14 @@ func (x *OptionMenuClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OptionMenuClassNewFromInternalPtr(ptr uintptr) *OptionMenuClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*OptionMenuClass)(rawPtr)
+}
+
 // Represents the dropdown menu of a `select` element in a #WebKitWebView.
 //
 // When a select element in a #WebKitWebView needs to display a dropdown menu, the signal

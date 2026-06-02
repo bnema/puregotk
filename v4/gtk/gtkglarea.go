@@ -32,6 +32,14 @@ func (x *GLAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GLAreaClassNewFromInternalPtr(ptr uintptr) *GLAreaClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GLAreaClass)(rawPtr)
+}
+
 // OverrideRender sets the "render" callback function.
 // class closure for the `GtkGLArea::render` signal
 func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {

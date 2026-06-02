@@ -23,6 +23,14 @@ func (x *FileChooserNativeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileChooserNativeClassNewFromInternalPtr(ptr uintptr) *FileChooserNativeClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileChooserNativeClass)(rawPtr)
+}
+
 // `GtkFileChooserNative` is an abstraction of a dialog suitable
 // for use with “File Open” or “File Save as” commands.
 //

@@ -53,6 +53,14 @@ func (x *ListBoxRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListBoxRowClassNewFromInternalPtr(ptr uintptr) *ListBoxRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListBoxRowClass)(rawPtr)
+}
+
 // OverrideActivate sets the "activate" callback function.
 func (x *ListBoxRowClass) OverrideActivate(cb func(*ListBoxRow)) {
 	if cb == nil {

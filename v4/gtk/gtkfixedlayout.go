@@ -22,6 +22,14 @@ func (x *FixedLayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FixedLayoutChildClassNewFromInternalPtr(ptr uintptr) *FixedLayoutChildClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FixedLayoutChildClass)(rawPtr)
+}
+
 type FixedLayoutClass struct {
 	_ structs.HostLayout
 
@@ -30,6 +38,14 @@ type FixedLayoutClass struct {
 
 func (x *FixedLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FixedLayoutClassNewFromInternalPtr(ptr uintptr) *FixedLayoutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FixedLayoutClass)(rawPtr)
 }
 
 // Places child widgets at fixed positions.

@@ -31,6 +31,14 @@ func (x *ProxyResolverInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ProxyResolverInterfaceNewFromInternalPtr(ptr uintptr) *ProxyResolverInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ProxyResolverInterface)(rawPtr)
+}
+
 // OverrideIsSupported sets the "is_supported" callback function.
 // the virtual function pointer for g_proxy_resolver_is_supported()
 func (x *ProxyResolverInterface) OverrideIsSupported(cb func(ProxyResolver) bool) {

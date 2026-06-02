@@ -25,6 +25,14 @@ func (x *ToplevelSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToplevelSizeNewFromInternalPtr(ptr uintptr) *ToplevelSize {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToplevelSize)(rawPtr)
+}
+
 var xToplevelSizeGetBounds func(uintptr, *int, *int)
 
 // Retrieves the bounds the toplevel is placed within.

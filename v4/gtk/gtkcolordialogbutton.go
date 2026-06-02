@@ -23,6 +23,14 @@ func (x *ColorDialogButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorDialogButtonClassNewFromInternalPtr(ptr uintptr) *ColorDialogButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorDialogButtonClass)(rawPtr)
+}
+
 // Opens a color chooser dialog to select a color.
 //
 // &lt;picture&gt;

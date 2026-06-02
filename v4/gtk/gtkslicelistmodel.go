@@ -22,6 +22,14 @@ func (x *SliceListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SliceListModelClassNewFromInternalPtr(ptr uintptr) *SliceListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SliceListModelClass)(rawPtr)
+}
+
 // A list model that presents a slice of another model.
 //
 // This is useful when implementing paging by setting the size to the number

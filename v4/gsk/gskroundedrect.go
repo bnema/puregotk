@@ -35,6 +35,14 @@ func (x *RoundedRect) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RoundedRectNewFromInternalPtr(ptr uintptr) *RoundedRect {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RoundedRect)(rawPtr)
+}
+
 var xRoundedRectContainsPoint func(uintptr, *graphene.Point) bool
 
 // Checks if the given point is inside the rounded rectangle.

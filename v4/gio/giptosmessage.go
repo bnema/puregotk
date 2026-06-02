@@ -20,6 +20,14 @@ func (x *IPTosMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IPTosMessageClassNewFromInternalPtr(ptr uintptr) *IPTosMessageClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IPTosMessageClass)(rawPtr)
+}
+
 // Contains the type of service (ToS) byte of an IPv4 header.
 //
 // This consists of the DSCP field as per

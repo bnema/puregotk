@@ -29,6 +29,14 @@ func (x *Language) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LanguageNewFromInternalPtr(ptr uintptr) *Language {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Language)(rawPtr)
+}
+
 var xLanguageGetSampleString func(uintptr) string
 
 // Get a string that is representative of the characters needed to
@@ -147,6 +155,14 @@ type Rectangle struct {
 
 func (x *Rectangle) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RectangleNewFromInternalPtr(ptr uintptr) *Rectangle {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Rectangle)(rawPtr)
 }
 
 // A `PangoGlyph` represents a single glyph in the output form of a string.

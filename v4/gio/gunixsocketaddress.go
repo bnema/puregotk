@@ -22,12 +22,28 @@ func (x *UnixSocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func UnixSocketAddressClassNewFromInternalPtr(ptr uintptr) *UnixSocketAddressClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixSocketAddressClass)(rawPtr)
+}
+
 type UnixSocketAddressPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *UnixSocketAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func UnixSocketAddressPrivateNewFromInternalPtr(ptr uintptr) *UnixSocketAddressPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*UnixSocketAddressPrivate)(rawPtr)
 }
 
 // Support for UNIX-domain (also known as local) sockets, corresponding to

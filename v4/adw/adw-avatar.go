@@ -23,6 +23,14 @@ func (x *AvatarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AvatarClassNewFromInternalPtr(ptr uintptr) *AvatarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AvatarClass)(rawPtr)
+}
+
 // A widget displaying an image, with a generated fallback.
 //
 // &lt;picture&gt;

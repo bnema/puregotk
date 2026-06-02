@@ -22,6 +22,14 @@ func (x *ButtonContentClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ButtonContentClassNewFromInternalPtr(ptr uintptr) *ButtonContentClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ButtonContentClass)(rawPtr)
+}
+
 // A helper widget for creating buttons.
 //
 // &lt;picture&gt;

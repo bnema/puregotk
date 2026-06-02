@@ -47,6 +47,14 @@ func (x *PollableOutputStreamInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PollableOutputStreamInterfaceNewFromInternalPtr(ptr uintptr) *PollableOutputStreamInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PollableOutputStreamInterface)(rawPtr)
+}
+
 // OverrideCanPoll sets the "can_poll" callback function.
 // Checks if the #GPollableOutputStream instance is actually pollable
 func (x *PollableOutputStreamInterface) OverrideCanPoll(cb func(PollableOutputStream) bool) {

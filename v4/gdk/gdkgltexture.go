@@ -20,6 +20,14 @@ func (x *GLTextureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func GLTextureClassNewFromInternalPtr(ptr uintptr) *GLTextureClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*GLTextureClass)(rawPtr)
+}
+
 // A `GdkTexture` representing a GL texture object.
 type GLTexture struct {
 	Texture

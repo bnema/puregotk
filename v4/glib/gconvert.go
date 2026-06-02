@@ -19,6 +19,14 @@ func (x *IConv) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IConvNewFromInternalPtr(ptr uintptr) *IConv {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IConv)(rawPtr)
+}
+
 var xIConvGIconv func(uintptr, string, *uint, string, *uint) uint
 
 // Same as the standard UNIX routine iconv(), but

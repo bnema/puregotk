@@ -23,6 +23,14 @@ func (x *NetworkSessionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NetworkSessionClassNewFromInternalPtr(ptr uintptr) *NetworkSessionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NetworkSessionClass)(rawPtr)
+}
+
 // Manages network configuration.
 type NetworkSession struct {
 	gobject.Object

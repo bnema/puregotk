@@ -29,6 +29,14 @@ func (x *ValueClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ValueClassNewFromInternalPtr(ptr uintptr) *ValueClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ValueClass)(rawPtr)
+}
+
 // Flags used when defining properties with jsc_value_object_define_property_data() and
 // jsc_value_object_define_property_accessor().
 type ValuePropertyFlags int

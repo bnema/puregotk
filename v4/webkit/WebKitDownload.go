@@ -22,6 +22,14 @@ func (x *DownloadClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DownloadClassNewFromInternalPtr(ptr uintptr) *DownloadClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DownloadClass)(rawPtr)
+}
+
 // Object used to communicate with the application when downloading.
 //
 // #WebKitDownload carries information about a download request and

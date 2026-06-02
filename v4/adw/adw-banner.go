@@ -23,6 +23,14 @@ func (x *BannerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BannerClassNewFromInternalPtr(ptr uintptr) *BannerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*BannerClass)(rawPtr)
+}
+
 // Describes the available button styles for [class@Banner].
 //
 // New values may be added to this enumeration over time.

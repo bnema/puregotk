@@ -22,6 +22,14 @@ func (x *ShortcutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutClassNewFromInternalPtr(ptr uintptr) *ShortcutClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutClass)(rawPtr)
+}
+
 // Describes a keyboard shortcut.
 //
 // It contains a description of how to trigger the shortcut via a

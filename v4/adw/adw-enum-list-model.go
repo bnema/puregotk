@@ -22,6 +22,14 @@ func (x *EnumListItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EnumListItemClassNewFromInternalPtr(ptr uintptr) *EnumListItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EnumListItemClass)(rawPtr)
+}
+
 type EnumListModelClass struct {
 	_ structs.HostLayout
 
@@ -30,6 +38,14 @@ type EnumListModelClass struct {
 
 func (x *EnumListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func EnumListModelClassNewFromInternalPtr(ptr uintptr) *EnumListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EnumListModelClass)(rawPtr)
 }
 
 // `AdwEnumListItem` is the type of items in a [class@EnumListModel].

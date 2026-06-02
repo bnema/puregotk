@@ -64,6 +64,14 @@ func (x *ServerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ServerClassNewFromInternalPtr(ptr uintptr) *ServerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ServerClass)(rawPtr)
+}
+
 // OverrideRequestStarted sets the "request_started" callback function.
 func (x *ServerClass) OverrideRequestStarted(cb func(*Server, *ServerMessage)) {
 	if cb == nil {

@@ -28,6 +28,14 @@ func (x *LoadableIconIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func LoadableIconIfaceNewFromInternalPtr(ptr uintptr) *LoadableIconIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*LoadableIconIface)(rawPtr)
+}
+
 // OverrideLoad sets the "load" callback function.
 // Loads an icon.
 func (x *LoadableIconIface) OverrideLoad(cb func(LoadableIcon, int, *string, *Cancellable) *InputStream) {

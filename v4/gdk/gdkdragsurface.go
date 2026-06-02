@@ -19,6 +19,14 @@ func (x *DragSurfaceInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DragSurfaceInterfaceNewFromInternalPtr(ptr uintptr) *DragSurfaceInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DragSurfaceInterface)(rawPtr)
+}
+
 // A surface that is used during DND.
 type DragSurface interface {
 	GoPointer() uintptr

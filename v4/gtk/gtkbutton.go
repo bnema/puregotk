@@ -28,6 +28,14 @@ func (x *ButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ButtonClassNewFromInternalPtr(ptr uintptr) *ButtonClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ButtonClass)(rawPtr)
+}
+
 // OverrideClicked sets the "clicked" callback function.
 // Signal emitted when the button has been activated (pressed and released).
 func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
@@ -90,6 +98,14 @@ type ButtonPrivate struct {
 
 func (x *ButtonPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ButtonPrivateNewFromInternalPtr(ptr uintptr) *ButtonPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ButtonPrivate)(rawPtr)
 }
 
 // Calls a callback function when the button is clicked.

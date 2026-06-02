@@ -24,6 +24,14 @@ func (x *CarouselClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CarouselClassNewFromInternalPtr(ptr uintptr) *CarouselClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CarouselClass)(rawPtr)
+}
+
 // A paginated scrolling widget.
 //
 // &lt;picture&gt;

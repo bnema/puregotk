@@ -30,6 +30,14 @@ func (x *Box) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func BoxNewFromInternalPtr(ptr uintptr) *Box {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Box)(rawPtr)
+}
+
 var xBoxAlloc func() uintptr
 
 // Allocates a new #graphene_box_t.

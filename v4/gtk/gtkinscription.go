@@ -22,6 +22,14 @@ func (x *InscriptionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InscriptionClassNewFromInternalPtr(ptr uintptr) *InscriptionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InscriptionClass)(rawPtr)
+}
+
 // The different methods to handle text in #GtkInscription when it doesn't
 // fit the available space.
 type InscriptionOverflow int

@@ -23,6 +23,14 @@ func (x *ContextMenuItemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContextMenuItemClassNewFromInternalPtr(ptr uintptr) *ContextMenuItemClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContextMenuItemClass)(rawPtr)
+}
+
 // One item of a #WebKitContextMenu.
 //
 // The #WebKitContextMenu is composed of #WebKitContextMenuItem&lt;!--

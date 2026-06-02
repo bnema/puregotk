@@ -22,6 +22,14 @@ func (x *AuthManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AuthManagerClassNewFromInternalPtr(ptr uintptr) *AuthManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AuthManagerClass)(rawPtr)
+}
+
 // HTTP client-side authentication handler.
 //
 // [class@AuthManager] is the [iface@SessionFeature] that handles HTTP

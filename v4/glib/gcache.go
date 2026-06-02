@@ -42,6 +42,14 @@ func (x *Cache) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CacheNewFromInternalPtr(ptr uintptr) *Cache {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Cache)(rawPtr)
+}
+
 var xCacheDestroy func(uintptr)
 
 // Frees the memory allocated for the #GCache.

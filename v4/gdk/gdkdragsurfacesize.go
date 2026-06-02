@@ -25,6 +25,14 @@ func (x *DragSurfaceSize) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DragSurfaceSizeNewFromInternalPtr(ptr uintptr) *DragSurfaceSize {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DragSurfaceSize)(rawPtr)
+}
+
 var xDragSurfaceSizeSetSize func(uintptr, int, int)
 
 // Sets the size the drag surface prefers to be resized to.

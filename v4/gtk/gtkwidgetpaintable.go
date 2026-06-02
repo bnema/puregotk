@@ -22,6 +22,14 @@ func (x *WidgetPaintableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WidgetPaintableClassNewFromInternalPtr(ptr uintptr) *WidgetPaintableClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WidgetPaintableClass)(rawPtr)
+}
+
 // A `GdkPaintable` that displays the contents of a widget.
 //
 // `GtkWidgetPaintable` will also take care of the widget not being in a

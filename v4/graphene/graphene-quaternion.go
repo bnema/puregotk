@@ -36,6 +36,14 @@ func (x *Quaternion) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func QuaternionNewFromInternalPtr(ptr uintptr) *Quaternion {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Quaternion)(rawPtr)
+}
+
 var xQuaternionAlloc func() uintptr
 
 // Allocates a new #graphene_quaternion_t.

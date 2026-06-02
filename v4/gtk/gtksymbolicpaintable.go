@@ -27,6 +27,14 @@ func (x *SymbolicPaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SymbolicPaintableInterfaceNewFromInternalPtr(ptr uintptr) *SymbolicPaintableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SymbolicPaintableInterface)(rawPtr)
+}
+
 // OverrideSnapshotSymbolic sets the "snapshot_symbolic" callback function.
 // Snapshot the paintable using the given colors.
 //

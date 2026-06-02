@@ -43,6 +43,14 @@ func (x *FileInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FileInputStreamClassNewFromInternalPtr(ptr uintptr) *FileInputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileInputStreamClass)(rawPtr)
+}
+
 // OverrideTell sets the "tell" callback function.
 func (x *FileInputStreamClass) OverrideTell(cb func(*FileInputStream) int64) {
 	if cb == nil {
@@ -322,6 +330,14 @@ type FileInputStreamPrivate struct {
 
 func (x *FileInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileInputStreamPrivateNewFromInternalPtr(ptr uintptr) *FileInputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileInputStreamPrivate)(rawPtr)
 }
 
 // `GFileInputStream` provides input streams that take their

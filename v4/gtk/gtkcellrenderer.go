@@ -47,6 +47,14 @@ func (x *CellRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellRendererClassNewFromInternalPtr(ptr uintptr) *CellRendererClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellRendererClass)(rawPtr)
+}
+
 // OverrideGetRequestMode sets the "get_request_mode" callback function.
 // Called to gets whether the cell renderer prefers
 //
@@ -344,12 +352,28 @@ func (x *CellRendererClassPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellRendererClassPrivateNewFromInternalPtr(ptr uintptr) *CellRendererClassPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellRendererClassPrivate)(rawPtr)
+}
+
 type CellRendererPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *CellRendererPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CellRendererPrivateNewFromInternalPtr(ptr uintptr) *CellRendererPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellRendererPrivate)(rawPtr)
 }
 
 // Tells how a cell is to be rendered.

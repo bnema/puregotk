@@ -23,6 +23,14 @@ func (x *SpinRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SpinRowClassNewFromInternalPtr(ptr uintptr) *SpinRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SpinRowClass)(rawPtr)
+}
+
 // An [class@ActionRow] with an embedded spin button.
 //
 // &lt;picture&gt;

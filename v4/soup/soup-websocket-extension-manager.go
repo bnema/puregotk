@@ -19,6 +19,14 @@ func (x *WebsocketExtensionManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsocketExtensionManagerClassNewFromInternalPtr(ptr uintptr) *WebsocketExtensionManagerClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsocketExtensionManagerClass)(rawPtr)
+}
+
 // SoupWebsocketExtensionManager is the [iface@SessionFeature] that handles WebSockets
 // extensions for a [class@Session].
 //

@@ -23,6 +23,14 @@ func (x *DirectoryListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DirectoryListClassNewFromInternalPtr(ptr uintptr) *DirectoryListClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DirectoryListClass)(rawPtr)
+}
+
 // A list model that wraps [method@Gio.File.enumerate_children_async].
 //
 // It presents a `GListModel` and fills it asynchronously with the `GFileInfo`s

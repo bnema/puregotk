@@ -19,6 +19,14 @@ func (x *PopupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PopupInterfaceNewFromInternalPtr(ptr uintptr) *PopupInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PopupInterface)(rawPtr)
+}
+
 // A surface that is attached to another surface.
 //
 // The `GdkPopup` is positioned relative to its parent surface.

@@ -51,6 +51,14 @@ func (x *Requisition) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RequisitionNewFromInternalPtr(ptr uintptr) *Requisition {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Requisition)(rawPtr)
+}
+
 var xNewRequisition func() uintptr
 
 // Allocates a new `GtkRequisition`.
@@ -144,6 +152,14 @@ type WidgetClass struct {
 
 func (x *WidgetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WidgetClassNewFromInternalPtr(ptr uintptr) *WidgetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WidgetClass)(rawPtr)
 }
 
 var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, uintptr, ...interface{})
@@ -1210,12 +1226,28 @@ func (x *WidgetClassPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WidgetClassPrivateNewFromInternalPtr(ptr uintptr) *WidgetClassPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WidgetClassPrivate)(rawPtr)
+}
+
 type WidgetPrivate struct {
 	_ structs.HostLayout
 }
 
 func (x *WidgetPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func WidgetPrivateNewFromInternalPtr(ptr uintptr) *WidgetPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WidgetPrivate)(rawPtr)
 }
 
 // The rectangle representing the area allocated for a widget by its parent.

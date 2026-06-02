@@ -34,6 +34,14 @@ func (x *SecurityOrigin) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SecurityOriginNewFromInternalPtr(ptr uintptr) *SecurityOrigin {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SecurityOrigin)(rawPtr)
+}
+
 var xNewSecurityOrigin func(string, string, uint16) uintptr
 
 // Create a new security origin from the provided protocol, host and

@@ -75,6 +75,14 @@ func (x *Date) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DateNewFromInternalPtr(ptr uintptr) *Date {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Date)(rawPtr)
+}
+
 var xNewDate func() uintptr
 
 // Allocates a #GDate and initializes

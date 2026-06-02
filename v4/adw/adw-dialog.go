@@ -29,6 +29,14 @@ func (x *DialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DialogClassNewFromInternalPtr(ptr uintptr) *DialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DialogClass)(rawPtr)
+}
+
 // OverrideCloseAttempt sets the "close_attempt" callback function.
 func (x *DialogClass) OverrideCloseAttempt(cb func(*Dialog)) {
 	if cb == nil {

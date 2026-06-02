@@ -30,6 +30,14 @@ func (x *MapListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MapListModelClassNewFromInternalPtr(ptr uintptr) *MapListModelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MapListModelClass)(rawPtr)
+}
+
 // A list model that maps the items in another model to different items.
 //
 // `GtkMapListModel` uses a [callback@Gtk.MapListModelMapFunc].

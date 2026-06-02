@@ -31,6 +31,14 @@ func (x *CellAreaContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CellAreaContextClassNewFromInternalPtr(ptr uintptr) *CellAreaContextClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellAreaContextClass)(rawPtr)
+}
+
 // OverrideAllocate sets the "allocate" callback function.
 // This tells the context that an allocation width or height
 //
@@ -157,6 +165,14 @@ type CellAreaContextPrivate struct {
 
 func (x *CellAreaContextPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CellAreaContextPrivateNewFromInternalPtr(ptr uintptr) *CellAreaContextPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CellAreaContextPrivate)(rawPtr)
 }
 
 // Stores geometrical information for a series of rows in a GtkCellArea

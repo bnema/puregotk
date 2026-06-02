@@ -31,6 +31,14 @@ func (x *FrameTimings) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FrameTimingsNewFromInternalPtr(ptr uintptr) *FrameTimings {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FrameTimings)(rawPtr)
+}
+
 var xFrameTimingsGetComplete func(uintptr) bool
 
 // Returns whether @timings are complete.

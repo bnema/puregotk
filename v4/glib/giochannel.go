@@ -105,6 +105,14 @@ func (x *IOChannel) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func IOChannelNewFromInternalPtr(ptr uintptr) *IOChannel {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOChannel)(rawPtr)
+}
+
 var xNewIOChannelFile func(string, string, **Error) uintptr
 
 // Open a file @filename as a #GIOChannel using mode @mode. This
@@ -588,6 +596,14 @@ type IOFuncs struct {
 
 func (x *IOFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func IOFuncsNewFromInternalPtr(ptr uintptr) *IOFuncs {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*IOFuncs)(rawPtr)
 }
 
 // OverrideIoRead sets the "io_read" callback function.

@@ -197,6 +197,14 @@ func (x *DBusInterfaceVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DBusInterfaceVTableNewFromInternalPtr(ptr uintptr) *DBusInterfaceVTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusInterfaceVTable)(rawPtr)
+}
+
 // Virtual table for handling subtrees registered with g_dbus_connection_register_subtree().
 type DBusSubtreeVTable struct {
 	_ structs.HostLayout
@@ -212,6 +220,14 @@ type DBusSubtreeVTable struct {
 
 func (x *DBusSubtreeVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DBusSubtreeVTableNewFromInternalPtr(ptr uintptr) *DBusSubtreeVTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DBusSubtreeVTable)(rawPtr)
 }
 
 var xBusGet func(BusType, uintptr, uintptr, uintptr)

@@ -23,6 +23,14 @@ func (x *SpinnerPaintableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SpinnerPaintableClassNewFromInternalPtr(ptr uintptr) *SpinnerPaintableClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SpinnerPaintableClass)(rawPtr)
+}
+
 // A paintable showing a loading spinner.
 //
 // &lt;picture&gt;

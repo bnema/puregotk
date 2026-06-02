@@ -50,6 +50,14 @@ func (x *TlsInteractionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsInteractionClassNewFromInternalPtr(ptr uintptr) *TlsInteractionClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsInteractionClass)(rawPtr)
+}
+
 // OverrideAskPassword sets the "ask_password" callback function.
 // ask for a password synchronously. If the implementation
 //
@@ -238,6 +246,14 @@ type TlsInteractionPrivate struct {
 
 func (x *TlsInteractionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TlsInteractionPrivateNewFromInternalPtr(ptr uintptr) *TlsInteractionPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsInteractionPrivate)(rawPtr)
 }
 
 // `GTlsInteraction` provides a mechanism for the TLS connection and database

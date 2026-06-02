@@ -42,6 +42,14 @@ func (x *ClassClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ClassClassNewFromInternalPtr(ptr uintptr) *ClassClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClassClass)(rawPtr)
+}
+
 // Virtual table for a JSCClass. This can be optionally used when registering a #JSCClass in a #JSCContext
 // to provide a custom implementation for the class. All virtual functions are optional and can be set to
 // %NULL to fallback to the default implementation.
@@ -77,6 +85,14 @@ type ClassVTable struct {
 
 func (x *ClassVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ClassVTableNewFromInternalPtr(ptr uintptr) *ClassVTable {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClassVTable)(rawPtr)
 }
 
 // OverrideJscReserved0 sets the "_jsc_reserved0" callback function.

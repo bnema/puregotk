@@ -23,6 +23,14 @@ func (x *SwitchRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SwitchRowClassNewFromInternalPtr(ptr uintptr) *SwitchRowClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SwitchRowClass)(rawPtr)
+}
+
 // A [class@Gtk.ListBoxRow] used to represent two states.
 //
 // &lt;picture&gt;

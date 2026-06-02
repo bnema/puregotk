@@ -17,6 +17,14 @@ func (x *ListBaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ListBaseClassNewFromInternalPtr(ptr uintptr) *ListBaseClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ListBaseClass)(rawPtr)
+}
+
 // The abstract base class for GTK's list widgets.
 //
 // # Shortcuts and Gestures

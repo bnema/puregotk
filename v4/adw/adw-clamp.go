@@ -22,6 +22,14 @@ func (x *ClampClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ClampClassNewFromInternalPtr(ptr uintptr) *ClampClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ClampClass)(rawPtr)
+}
+
 // A widget constraining its child to a given size.
 //
 // &lt;picture&gt;

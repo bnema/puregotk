@@ -34,6 +34,14 @@ func (x *PermissionStateQuery) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func PermissionStateQueryNewFromInternalPtr(ptr uintptr) *PermissionStateQuery {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PermissionStateQuery)(rawPtr)
+}
+
 var xPermissionStateQueryFinish func(uintptr, PermissionState)
 
 // Notify the web-engine of the selected permission state for the given query. This function should

@@ -45,6 +45,14 @@ func (x *SignalInvocationHint) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SignalInvocationHintNewFromInternalPtr(ptr uintptr) *SignalInvocationHint {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SignalInvocationHint)(rawPtr)
+}
+
 // A structure holding in-depth information for a specific signal.
 //
 // See also: g_signal_query()
@@ -68,6 +76,14 @@ type SignalQuery struct {
 
 func (x *SignalQuery) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SignalQueryNewFromInternalPtr(ptr uintptr) *SignalQuery {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SignalQuery)(rawPtr)
 }
 
 // This is the signature of marshaller functions, required to marshall

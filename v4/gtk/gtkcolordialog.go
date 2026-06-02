@@ -24,6 +24,14 @@ func (x *ColorDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ColorDialogClassNewFromInternalPtr(ptr uintptr) *ColorDialogClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ColorDialogClass)(rawPtr)
+}
+
 // Asynchronous API to present a color chooser dialog.
 //
 // `GtkColorDialog` collects the arguments that are needed to present

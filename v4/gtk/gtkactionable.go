@@ -31,6 +31,14 @@ func (x *ActionableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ActionableInterfaceNewFromInternalPtr(ptr uintptr) *ActionableInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ActionableInterface)(rawPtr)
+}
+
 // OverrideGetActionName sets the "get_action_name" callback function.
 // virtual function for [method@Actionable.get_action_name]
 func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) {

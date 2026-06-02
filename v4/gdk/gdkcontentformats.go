@@ -26,6 +26,14 @@ func (x *ContentFormatsBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ContentFormatsBuilderNewFromInternalPtr(ptr uintptr) *ContentFormatsBuilder {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ContentFormatsBuilder)(rawPtr)
+}
+
 var xNewContentFormatsBuilder func() uintptr
 
 // Create a new `GdkContentFormatsBuilder` object.
@@ -125,6 +133,14 @@ func FileListGLibType() types.GType {
 
 func (x *FileList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FileListNewFromInternalPtr(ptr uintptr) *FileList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FileList)(rawPtr)
 }
 
 var xNewFileListFromArray func(uintptr, uint) uintptr

@@ -31,6 +31,14 @@ func (x *Point3D) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func Point3DNewFromInternalPtr(ptr uintptr) *Point3D {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Point3D)(rawPtr)
+}
+
 var xPoint3DAlloc func() uintptr
 
 // Allocates a #graphene_point3d_t structure.

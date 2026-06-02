@@ -26,6 +26,14 @@ func (x *InstanceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func InstanceClassNewFromInternalPtr(ptr uintptr) *InstanceClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*InstanceClass)(rawPtr)
+}
+
 var xIsSupported func() bool
 
 // May block for a Wayland roundtrip the first time it's called.

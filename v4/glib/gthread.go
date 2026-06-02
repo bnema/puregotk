@@ -93,6 +93,14 @@ func (x *Cond) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func CondNewFromInternalPtr(ptr uintptr) *Cond {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Cond)(rawPtr)
+}
+
 var xCondBroadcast func(uintptr)
 
 // If threads are waiting for @cond, all of them are unblocked.
@@ -263,6 +271,14 @@ func (x *Once) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func OnceNewFromInternalPtr(ptr uintptr) *Once {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Once)(rawPtr)
+}
+
 var xOnceImpl func(uintptr, uintptr, uintptr) uintptr
 
 func (x *Once) Impl(FuncVar *ThreadFunc, ArgVar uintptr) uintptr {
@@ -299,6 +315,14 @@ type Private struct {
 
 func (x *Private) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PrivateNewFromInternalPtr(ptr uintptr) *Private {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Private)(rawPtr)
 }
 
 var xPrivateGet func(uintptr) uintptr
@@ -411,6 +435,14 @@ type RWLock struct {
 
 func (x *RWLock) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func RWLockNewFromInternalPtr(ptr uintptr) *RWLock {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RWLock)(rawPtr)
 }
 
 var xRWLockClear func(uintptr)
@@ -555,6 +587,14 @@ func (x *RecMutex) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func RecMutexNewFromInternalPtr(ptr uintptr) *RecMutex {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*RecMutex)(rawPtr)
+}
+
 var xRecMutexClear func(uintptr)
 
 // Frees the resources allocated to a recursive mutex with
@@ -694,6 +734,14 @@ func (x *StaticMutex) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StaticMutexNewFromInternalPtr(ptr uintptr) *StaticMutex {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StaticMutex)(rawPtr)
+}
+
 var xStaticMutexFree func(uintptr)
 
 // Releases all resources allocated to @mutex.
@@ -759,6 +807,14 @@ type StaticPrivate struct {
 
 func (x *StaticPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func StaticPrivateNewFromInternalPtr(ptr uintptr) *StaticPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StaticPrivate)(rawPtr)
 }
 
 var xStaticPrivateFree func(uintptr)
@@ -904,6 +960,14 @@ func (x *StaticRWLock) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StaticRWLockNewFromInternalPtr(ptr uintptr) *StaticRWLock {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StaticRWLock)(rawPtr)
+}
+
 var xStaticRWLockFree func(uintptr)
 
 // Releases all resources allocated to @lock.
@@ -1028,6 +1092,14 @@ func (x *StaticRecMutex) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func StaticRecMutexNewFromInternalPtr(ptr uintptr) *StaticRecMutex {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*StaticRecMutex)(rawPtr)
+}
+
 var xStaticRecMutexFree func(uintptr)
 
 // Releases all resources allocated to a #GStaticRecMutex.
@@ -1136,6 +1208,14 @@ func ThreadGLibType() types.GType {
 
 func (x *Thread) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ThreadNewFromInternalPtr(ptr uintptr) *Thread {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Thread)(rawPtr)
 }
 
 var xNewThread func(uintptr, uintptr, uintptr) uintptr
@@ -1314,6 +1394,14 @@ type ThreadFunctions struct {
 
 func (x *ThreadFunctions) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func ThreadFunctionsNewFromInternalPtr(ptr uintptr) *ThreadFunctions {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ThreadFunctions)(rawPtr)
 }
 
 // OverrideMutexNew sets the "mutex_new" callback function.

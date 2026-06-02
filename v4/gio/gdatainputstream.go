@@ -31,6 +31,14 @@ func (x *DataInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DataInputStreamClassNewFromInternalPtr(ptr uintptr) *DataInputStreamClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DataInputStreamClass)(rawPtr)
+}
+
 // OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *DataInputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
@@ -152,6 +160,14 @@ type DataInputStreamPrivate struct {
 
 func (x *DataInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func DataInputStreamPrivateNewFromInternalPtr(ptr uintptr) *DataInputStreamPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DataInputStreamPrivate)(rawPtr)
 }
 
 // Data input stream implements [class@Gio.InputStream] and includes functions

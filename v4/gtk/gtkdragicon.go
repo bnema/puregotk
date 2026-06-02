@@ -23,6 +23,14 @@ func (x *DragIconClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DragIconClassNewFromInternalPtr(ptr uintptr) *DragIconClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DragIconClass)(rawPtr)
+}
+
 // A `GtkRoot` implementation for drag icons.
 //
 // A drag icon moves with the pointer during a Drag-and-Drop operation

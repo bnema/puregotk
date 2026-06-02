@@ -21,6 +21,14 @@ func (x *EditableLabelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EditableLabelClassNewFromInternalPtr(ptr uintptr) *EditableLabelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EditableLabelClass)(rawPtr)
+}
+
 // Allows users to edit the displayed text by switching to an “edit mode”.
 //
 // &lt;picture&gt;

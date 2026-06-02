@@ -21,6 +21,14 @@ func (x *WebsitePoliciesClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func WebsitePoliciesClassNewFromInternalPtr(ptr uintptr) *WebsitePoliciesClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*WebsitePoliciesClass)(rawPtr)
+}
+
 // Enum values used to specify autoplay policies.
 type AutoplayPolicy int
 

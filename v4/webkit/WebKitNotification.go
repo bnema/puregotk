@@ -22,6 +22,14 @@ func (x *NotificationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NotificationClassNewFromInternalPtr(ptr uintptr) *NotificationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NotificationClass)(rawPtr)
+}
+
 // Holds information about a notification that should be shown to the user.
 type Notification struct {
 	gobject.Object

@@ -22,6 +22,14 @@ func (x *EmojiChooserClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func EmojiChooserClassNewFromInternalPtr(ptr uintptr) *EmojiChooserClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*EmojiChooserClass)(rawPtr)
+}
+
 // Used by text widgets to let users insert Emoji characters.
 //
 // &lt;picture&gt;

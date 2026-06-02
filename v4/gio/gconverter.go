@@ -28,6 +28,14 @@ func (x *ConverterIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ConverterIfaceNewFromInternalPtr(ptr uintptr) *ConverterIface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ConverterIface)(rawPtr)
+}
+
 // OverrideConvert sets the "convert" callback function.
 // Converts data.
 func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint) ConverterResult) {

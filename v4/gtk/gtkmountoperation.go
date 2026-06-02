@@ -31,6 +31,14 @@ func (x *MountOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func MountOperationClassNewFromInternalPtr(ptr uintptr) *MountOperationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MountOperationClass)(rawPtr)
+}
+
 // OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *MountOperationClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
@@ -129,6 +137,14 @@ type MountOperationPrivate struct {
 
 func (x *MountOperationPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func MountOperationPrivateNewFromInternalPtr(ptr uintptr) *MountOperationPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*MountOperationPrivate)(rawPtr)
 }
 
 // Asks the user for passwords and other information required to

@@ -57,6 +57,14 @@ func (x *Feature) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func FeatureNewFromInternalPtr(ptr uintptr) *Feature {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*Feature)(rawPtr)
+}
+
 var xFeatureGetCategory func(uintptr) string
 
 // Gets the category of the feature.
@@ -183,6 +191,14 @@ func FeatureListGLibType() types.GType {
 
 func (x *FeatureList) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func FeatureListNewFromInternalPtr(ptr uintptr) *FeatureList {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*FeatureList)(rawPtr)
 }
 
 var xFeatureListGet func(uintptr, uint) uintptr

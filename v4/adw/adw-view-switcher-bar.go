@@ -22,6 +22,14 @@ func (x *ViewSwitcherBarClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ViewSwitcherBarClassNewFromInternalPtr(ptr uintptr) *ViewSwitcherBarClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ViewSwitcherBarClass)(rawPtr)
+}
+
 // A view switcher action bar.
 //
 // &lt;picture&gt;

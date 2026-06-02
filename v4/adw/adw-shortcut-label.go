@@ -22,6 +22,14 @@ func (x *ShortcutLabelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ShortcutLabelClassNewFromInternalPtr(ptr uintptr) *ShortcutLabelClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ShortcutLabelClass)(rawPtr)
+}
+
 // A widget that displays a keyboard shortcut.
 //
 // &lt;picture&gt;

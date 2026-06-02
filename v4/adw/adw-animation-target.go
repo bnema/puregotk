@@ -23,12 +23,28 @@ func (x *AnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func AnimationTargetClassNewFromInternalPtr(ptr uintptr) *AnimationTargetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*AnimationTargetClass)(rawPtr)
+}
+
 type CallbackAnimationTargetClass struct {
 	_ structs.HostLayout
 }
 
 func (x *CallbackAnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func CallbackAnimationTargetClassNewFromInternalPtr(ptr uintptr) *CallbackAnimationTargetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*CallbackAnimationTargetClass)(rawPtr)
 }
 
 type NoneAnimationTargetClass struct {
@@ -39,12 +55,28 @@ func (x *NoneAnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func NoneAnimationTargetClassNewFromInternalPtr(ptr uintptr) *NoneAnimationTargetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*NoneAnimationTargetClass)(rawPtr)
+}
+
 type PropertyAnimationTargetClass struct {
 	_ structs.HostLayout
 }
 
 func (x *PropertyAnimationTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func PropertyAnimationTargetClassNewFromInternalPtr(ptr uintptr) *PropertyAnimationTargetClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*PropertyAnimationTargetClass)(rawPtr)
 }
 
 // Represents a value [class@Animation] can animate.

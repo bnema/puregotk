@@ -23,6 +23,14 @@ func (x *DropDownClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func DropDownClassNewFromInternalPtr(ptr uintptr) *DropDownClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*DropDownClass)(rawPtr)
+}
+
 // Allows the user to choose an item from a list of options.
 //
 // &lt;picture&gt;

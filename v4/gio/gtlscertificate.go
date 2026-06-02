@@ -26,6 +26,14 @@ func (x *TlsCertificateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func TlsCertificateClassNewFromInternalPtr(ptr uintptr) *TlsCertificateClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsCertificateClass)(rawPtr)
+}
+
 // OverrideVerify sets the "verify" callback function.
 func (x *TlsCertificateClass) OverrideVerify(cb func(*TlsCertificate, SocketConnectable, *TlsCertificate) TlsCertificateFlags) {
 	if cb == nil {
@@ -55,6 +63,14 @@ type TlsCertificatePrivate struct {
 
 func (x *TlsCertificatePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func TlsCertificatePrivateNewFromInternalPtr(ptr uintptr) *TlsCertificatePrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*TlsCertificatePrivate)(rawPtr)
 }
 
 // A certificate used for TLS authentication and encryption.

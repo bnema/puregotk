@@ -54,6 +54,14 @@ func (x *SettingsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func SettingsClassNewFromInternalPtr(ptr uintptr) *SettingsClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsClass)(rawPtr)
+}
+
 // OverrideWritableChanged sets the "writable_changed" callback function.
 func (x *SettingsClass) OverrideWritableChanged(cb func(*Settings, string)) {
 	if cb == nil {
@@ -152,6 +160,14 @@ type SettingsPrivate struct {
 
 func (x *SettingsPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+func SettingsPrivateNewFromInternalPtr(ptr uintptr) *SettingsPrivate {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*SettingsPrivate)(rawPtr)
 }
 
 // Flags used when creating a binding.

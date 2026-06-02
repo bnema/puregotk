@@ -20,6 +20,14 @@ func (x *ToplevelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ToplevelInterfaceNewFromInternalPtr(ptr uintptr) *ToplevelInterface {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ToplevelInterface)(rawPtr)
+}
+
 // A freestanding toplevel surface.
 //
 // The `GdkToplevel` interface provides useful APIs for interacting with

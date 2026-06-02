@@ -26,6 +26,14 @@ func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+func ApplicationClassNewFromInternalPtr(ptr uintptr) *ApplicationClass {
+	if ptr == 0 {
+		return nil
+	}
+	rawPtr := *(*unsafe.Pointer)(unsafe.Pointer(&ptr))
+	return (*ApplicationClass)(rawPtr)
+}
+
 // A base class for Adwaita applications.
 //
 // `AdwApplication` handles library initialization by calling [func@init] in the
