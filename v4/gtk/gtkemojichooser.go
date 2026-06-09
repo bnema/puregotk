@@ -130,7 +130,7 @@ func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(EmojiChooser, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EmojiChooser{}

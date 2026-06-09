@@ -807,7 +807,7 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint {
 			return
 		}
 		cb, ok := handler.(*func(MountOperation))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}
@@ -834,7 +834,7 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 			return
 		}
 		cb, ok := handler.(*func(MountOperation, string, string, string, AskPasswordFlags))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}
@@ -862,7 +862,7 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 			return
 		}
 		cb, ok := handler.(*func(MountOperation, string, []string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}
@@ -885,7 +885,7 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 			return
 		}
 		cb, ok := handler.(*func(MountOperation, MountOperationResult))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}
@@ -919,7 +919,7 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 			return
 		}
 		cb, ok := handler.(*func(MountOperation, string, []glib.Pid, []string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}
@@ -957,7 +957,7 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 			return
 		}
 		cb, ok := handler.(*func(MountOperation, string, int64, int64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MountOperation{}

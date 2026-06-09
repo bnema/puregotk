@@ -377,7 +377,7 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr
 			return zero
 		}
 		cb, ok := handler.(*func(SocketService, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -213,7 +213,7 @@ func (x *PrintOperation) ConnectFailed(cb *func(PrintOperation, *glib.Error)) ui
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -237,7 +237,7 @@ func (x *PrintOperation) ConnectFinished(cb *func(PrintOperation)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}

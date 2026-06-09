@@ -226,7 +226,7 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.E
 			return
 		}
 		cb, ok := handler.(*func(CssProvider, uintptr, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CssProvider{}

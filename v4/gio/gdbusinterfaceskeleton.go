@@ -456,7 +456,7 @@ func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSk
 			return zero
 		}
 		cb, ok := handler.(*func(DBusInterfaceSkeleton, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

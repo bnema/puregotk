@@ -336,7 +336,7 @@ func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Monitor))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Monitor{}

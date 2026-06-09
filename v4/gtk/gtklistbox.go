@@ -666,7 +666,7 @@ func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -699,7 +699,7 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int, bool, b
 			return
 		}
 		cb, ok := handler.(*func(ListBox, MovementStep, int, bool, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -722,7 +722,7 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -750,7 +750,7 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -778,7 +778,7 @@ func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -801,7 +801,7 @@ func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -826,7 +826,7 @@ func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -855,7 +855,7 @@ func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBox{}
@@ -1355,7 +1355,7 @@ func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListBoxRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListBoxRow{}

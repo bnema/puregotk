@@ -371,7 +371,7 @@ func (x *ServerMessage) ConnectAcceptCertificate(cb *func(ServerMessage, uintptr
 			return zero
 		}
 		cb, ok := handler.(*func(ServerMessage, uintptr, gio.TlsCertificateFlags) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -395,7 +395,7 @@ func (x *ServerMessage) ConnectConnected(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -418,7 +418,7 @@ func (x *ServerMessage) ConnectDisconnected(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -442,7 +442,7 @@ func (x *ServerMessage) ConnectFinished(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -465,7 +465,7 @@ func (x *ServerMessage) ConnectGotBody(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -491,7 +491,7 @@ func (x *ServerMessage) ConnectGotChunk(cb *func(ServerMessage, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -514,7 +514,7 @@ func (x *ServerMessage) ConnectGotHeaders(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -538,7 +538,7 @@ func (x *ServerMessage) ConnectWroteBody(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -562,7 +562,7 @@ func (x *ServerMessage) ConnectWroteBodyData(cb *func(ServerMessage, uint)) uint
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -592,7 +592,7 @@ func (x *ServerMessage) ConnectWroteChunk(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -616,7 +616,7 @@ func (x *ServerMessage) ConnectWroteHeaders(cb *func(ServerMessage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}
@@ -639,7 +639,7 @@ func (x *ServerMessage) ConnectWroteInformational(cb *func(ServerMessage)) uint 
 			return
 		}
 		cb, ok := handler.(*func(ServerMessage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ServerMessage{}

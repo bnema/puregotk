@@ -149,7 +149,7 @@ func (x *OptionMenu) ConnectClose(cb *func(OptionMenu)) uint {
 			return
 		}
 		cb, ok := handler.(*func(OptionMenu))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := OptionMenu{}

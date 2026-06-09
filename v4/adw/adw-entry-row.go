@@ -408,7 +408,7 @@ func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(EntryRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EntryRow{}
@@ -431,7 +431,7 @@ func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(EntryRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EntryRow{}

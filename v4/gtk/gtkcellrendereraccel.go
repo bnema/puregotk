@@ -123,7 +123,7 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 			return
 		}
 		cb, ok := handler.(*func(CellRendererAccel, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRendererAccel{}
@@ -146,7 +146,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 			return
 		}
 		cb, ok := handler.(*func(CellRendererAccel, string, uint, gdk.ModifierType, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRendererAccel{}

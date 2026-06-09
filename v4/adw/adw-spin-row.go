@@ -419,7 +419,7 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(SpinRow, *float64) int)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero int
 			return zero
 		}
@@ -446,7 +446,7 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(SpinRow) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -472,7 +472,7 @@ func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SpinRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SpinRow{}

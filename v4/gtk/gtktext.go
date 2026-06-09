@@ -823,7 +823,7 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -851,7 +851,7 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -880,7 +880,7 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -909,7 +909,7 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -942,7 +942,7 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text, DeleteType, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -970,7 +970,7 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -999,7 +999,7 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -1041,7 +1041,7 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text, MovementStep, int, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -1069,7 +1069,7 @@ func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -1096,7 +1096,7 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}
@@ -1123,7 +1123,7 @@ func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Text))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Text{}

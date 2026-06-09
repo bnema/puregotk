@@ -776,7 +776,7 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(MessageDialog, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MessageDialog{}

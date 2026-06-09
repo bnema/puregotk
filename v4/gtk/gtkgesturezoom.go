@@ -99,7 +99,7 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GestureZoom, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureZoom{}

@@ -198,7 +198,7 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SignalGroup, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalGroup{}
@@ -225,7 +225,7 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SignalGroup))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalGroup{}

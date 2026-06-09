@@ -541,7 +541,7 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Device))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Device{}
@@ -564,7 +564,7 @@ func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Device, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Device{}

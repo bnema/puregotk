@@ -395,7 +395,7 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(LevelBar, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := LevelBar{}

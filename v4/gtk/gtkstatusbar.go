@@ -150,7 +150,7 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Statusbar, uint, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Statusbar{}
@@ -173,7 +173,7 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Statusbar, uint, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Statusbar{}

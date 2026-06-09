@@ -195,7 +195,7 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Switch))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Switch{}
@@ -229,7 +229,7 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Switch, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -1450,7 +1450,7 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) ui
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1484,7 +1484,7 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobj
 			return zero
 		}
 		cb, ok := handler.(*func(PrintOperation) gobject.Object)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -1514,7 +1514,7 @@ func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintp
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1546,7 +1546,7 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, PrintOperationResult))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1622,7 +1622,7 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int))
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1648,7 +1648,7 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1685,7 +1685,7 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool)
 			return zero
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1726,7 +1726,7 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintpt
 			return zero
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1754,7 +1754,7 @@ func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintpt
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr, int, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1781,7 +1781,7 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}
@@ -1807,7 +1807,7 @@ func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, uint
 			return
 		}
 		cb, ok := handler.(*func(PrintOperation, uintptr, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintOperation{}

@@ -255,7 +255,7 @@ func (x *FindController) ConnectCountedMatches(cb *func(FindController, uint)) u
 			return
 		}
 		cb, ok := handler.(*func(FindController, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FindController{}
@@ -282,7 +282,7 @@ func (x *FindController) ConnectFailedToFindText(cb *func(FindController)) uint 
 			return
 		}
 		cb, ok := handler.(*func(FindController))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FindController{}
@@ -309,7 +309,7 @@ func (x *FindController) ConnectFoundText(cb *func(FindController, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FindController, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FindController{}

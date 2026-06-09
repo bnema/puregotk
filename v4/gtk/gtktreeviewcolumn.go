@@ -864,7 +864,7 @@ func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TreeViewColumn))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeViewColumn{}

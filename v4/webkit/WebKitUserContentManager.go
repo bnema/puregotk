@@ -336,7 +336,7 @@ func (x *UserContentManager) ConnectScriptMessageReceived(cb *func(UserContentMa
 			return
 		}
 		cb, ok := handler.(*func(UserContentManager, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := UserContentManager{}
@@ -371,7 +371,7 @@ func (x *UserContentManager) ConnectScriptMessageWithReplyReceived(cb *func(User
 			return zero
 		}
 		cb, ok := handler.(*func(UserContentManager, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -278,7 +278,7 @@ func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(AppChooserButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppChooserButton{}
@@ -301,7 +301,7 @@ func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(AppChooserButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppChooserButton{}
@@ -327,7 +327,7 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 			return
 		}
 		cb, ok := handler.(*func(AppChooserButton, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppChooserButton{}

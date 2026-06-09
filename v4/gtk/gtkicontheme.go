@@ -458,7 +458,7 @@ func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconTheme))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconTheme{}

@@ -669,7 +669,7 @@ func (x *Svg) ConnectError(cb *func(Svg, *glib.Error)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Svg, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Svg{}

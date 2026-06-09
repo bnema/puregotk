@@ -143,7 +143,7 @@ func (x *TabButton) ConnectActivate(cb *func(TabButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabButton{}
@@ -166,7 +166,7 @@ func (x *TabButton) ConnectClicked(cb *func(TabButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabButton{}

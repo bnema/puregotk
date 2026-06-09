@@ -213,7 +213,7 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(LinkButton) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

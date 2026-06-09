@@ -554,7 +554,7 @@ func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Cancellable))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Cancellable{}

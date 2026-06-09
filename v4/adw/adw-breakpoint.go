@@ -476,7 +476,7 @@ func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Breakpoint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Breakpoint{}
@@ -501,7 +501,7 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Breakpoint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Breakpoint{}

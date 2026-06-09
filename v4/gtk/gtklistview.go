@@ -417,7 +417,7 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ListView, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ListView{}

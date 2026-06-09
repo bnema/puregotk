@@ -113,7 +113,7 @@ func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) 
 			return
 		}
 		cb, ok := handler.(*func(GestureDrag, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureDrag{}
@@ -136,7 +136,7 @@ func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) ui
 			return
 		}
 		cb, ok := handler.(*func(GestureDrag, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureDrag{}
@@ -159,7 +159,7 @@ func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64))
 			return
 		}
 		cb, ok := handler.(*func(GestureDrag, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureDrag{}

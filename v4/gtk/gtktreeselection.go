@@ -275,7 +275,7 @@ func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TreeSelection))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeSelection{}

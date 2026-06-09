@@ -1505,7 +1505,7 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Window))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Window{}
@@ -1533,7 +1533,7 @@ func (x *Window) ConnectActivateFocus(cb *func(Window)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Window))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Window{}
@@ -1557,7 +1557,7 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Window) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1592,7 +1592,7 @@ func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Window, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1617,7 +1617,7 @@ func (x *Window) ConnectKeysChanged(cb *func(Window)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Window))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Window{}

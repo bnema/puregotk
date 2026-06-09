@@ -274,7 +274,7 @@ func (x *Download) ConnectCreatedDestination(cb *func(Download, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Download, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Download{}
@@ -308,7 +308,7 @@ func (x *Download) ConnectDecideDestination(cb *func(Download, string) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Download, string) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -337,7 +337,7 @@ func (x *Download) ConnectFailed(cb *func(Download, *glib.Error)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Download, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Download{}
@@ -361,7 +361,7 @@ func (x *Download) ConnectFinished(cb *func(Download)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Download))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Download{}
@@ -386,7 +386,7 @@ func (x *Download) ConnectReceivedData(cb *func(Download, uint64)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Download, uint64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Download{}

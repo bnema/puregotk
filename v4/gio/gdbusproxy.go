@@ -794,7 +794,7 @@ func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []str
 			return
 		}
 		cb, ok := handler.(*func(DBusProxy, uintptr, []string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DBusProxy{}
@@ -821,7 +821,7 @@ func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr))
 			return
 		}
 		cb, ok := handler.(*func(DBusProxy, string, string, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DBusProxy{}

@@ -192,7 +192,7 @@ func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) b
 			return zero
 		}
 		cb, ok := handler.(*func(Overlay, uintptr, *uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -192,7 +192,7 @@ func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool)
 			return zero
 		}
 		cb, ok := handler.(*func(DropTargetAsync, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -219,7 +219,7 @@ func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, fl
 			return zero
 		}
 		cb, ok := handler.(*func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}
@@ -246,7 +246,7 @@ func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) u
 			return
 		}
 		cb, ok := handler.(*func(DropTargetAsync, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DropTargetAsync{}
@@ -270,7 +270,7 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, f
 			return zero
 		}
 		cb, ok := handler.(*func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}
@@ -308,7 +308,7 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64
 			return zero
 		}
 		cb, ok := handler.(*func(DropTargetAsync, uintptr, float64, float64) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

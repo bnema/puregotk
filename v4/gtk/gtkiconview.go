@@ -1023,7 +1023,7 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(IconView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1053,7 +1053,7 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}
@@ -1090,7 +1090,7 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool,
 			return zero
 		}
 		cb, ok := handler.(*func(IconView, MovementStep, int, bool, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1121,7 +1121,7 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}
@@ -1152,7 +1152,7 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}
@@ -1176,7 +1176,7 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}
@@ -1208,7 +1208,7 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}
@@ -1238,7 +1238,7 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IconView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IconView{}

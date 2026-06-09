@@ -271,7 +271,7 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -296,7 +296,7 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -322,7 +322,7 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -349,7 +349,7 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -378,7 +378,7 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -404,7 +404,7 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}
@@ -433,7 +433,7 @@ func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FrameClock))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FrameClock{}

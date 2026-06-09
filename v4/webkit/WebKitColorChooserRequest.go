@@ -148,7 +148,7 @@ func (x *ColorChooserRequest) ConnectFinished(cb *func(ColorChooserRequest)) uin
 			return
 		}
 		cb, ok := handler.(*func(ColorChooserRequest))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ColorChooserRequest{}

@@ -801,7 +801,7 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Notebook, int) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -833,7 +833,7 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Notebook, uintptr) Notebook)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -859,7 +859,7 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Notebook, NotebookTab) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -889,7 +889,7 @@ func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notebook, DirectionType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notebook{}
@@ -913,7 +913,7 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notebook, uintptr, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notebook{}
@@ -937,7 +937,7 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notebook, uintptr, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notebook{}
@@ -961,7 +961,7 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint)) uint 
 			return
 		}
 		cb, ok := handler.(*func(Notebook, uintptr, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notebook{}
@@ -991,7 +991,7 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 			return zero
 		}
 		cb, ok := handler.(*func(Notebook, DirectionType, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1018,7 +1018,7 @@ func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Notebook, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1042,7 +1042,7 @@ func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notebook, uintptr, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notebook{}

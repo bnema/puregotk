@@ -281,7 +281,7 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}
@@ -312,7 +312,7 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}
@@ -344,7 +344,7 @@ func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}
@@ -369,7 +369,7 @@ func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}
@@ -392,7 +392,7 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}
@@ -422,7 +422,7 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SearchEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SearchEntry{}

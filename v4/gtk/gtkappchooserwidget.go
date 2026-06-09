@@ -327,7 +327,7 @@ func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget
 			return
 		}
 		cb, ok := handler.(*func(AppChooserWidget, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppChooserWidget{}
@@ -350,7 +350,7 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 			return
 		}
 		cb, ok := handler.(*func(AppChooserWidget, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppChooserWidget{}

@@ -161,7 +161,7 @@ func (x *FaviconDatabase) ConnectFaviconChanged(cb *func(FaviconDatabase, string
 			return
 		}
 		cb, ok := handler.(*func(FaviconDatabase, string, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FaviconDatabase{}

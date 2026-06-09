@@ -592,7 +592,7 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Application))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}
@@ -617,7 +617,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Application, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}
@@ -643,7 +643,7 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint 
 			return
 		}
 		cb, ok := handler.(*func(Application, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}

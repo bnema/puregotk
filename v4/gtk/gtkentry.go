@@ -1592,7 +1592,7 @@ func (x *Entry) ConnectActivate(cb *func(Entry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Entry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Entry{}
@@ -1615,7 +1615,7 @@ func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Entry, EntryIconPosition))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Entry{}
@@ -1639,7 +1639,7 @@ func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Entry, EntryIconPosition))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Entry{}

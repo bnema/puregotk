@@ -215,7 +215,7 @@ func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)
 			return
 		}
 		cb, ok := handler.(*func(FilenameCompleter))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FilenameCompleter{}

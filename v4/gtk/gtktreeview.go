@@ -1841,7 +1841,7 @@ func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TreeView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeView{}
@@ -1864,7 +1864,7 @@ func (x *TreeView) ConnectCursorChanged(cb *func(TreeView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TreeView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeView{}
@@ -1887,7 +1887,7 @@ func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool,
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView, bool, bool, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1920,7 +1920,7 @@ func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool,
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView, MovementStep, int, bool, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1957,7 +1957,7 @@ func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uin
 			return
 		}
 		cb, ok := handler.(*func(TreeView, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeView{}
@@ -1980,7 +1980,7 @@ func (x *TreeView) ConnectRowCollapsed(cb *func(TreeView, uintptr, uintptr)) uin
 			return
 		}
 		cb, ok := handler.(*func(TreeView, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeView{}
@@ -2003,7 +2003,7 @@ func (x *TreeView) ConnectRowExpanded(cb *func(TreeView, uintptr, uintptr)) uint
 			return
 		}
 		cb, ok := handler.(*func(TreeView, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TreeView{}
@@ -2026,7 +2026,7 @@ func (x *TreeView) ConnectSelectAll(cb *func(TreeView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2050,7 +2050,7 @@ func (x *TreeView) ConnectSelectCursorParent(cb *func(TreeView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2074,7 +2074,7 @@ func (x *TreeView) ConnectSelectCursorRow(cb *func(TreeView, bool) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2098,7 +2098,7 @@ func (x *TreeView) ConnectStartInteractiveSearch(cb *func(TreeView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2124,7 +2124,7 @@ func (x *TreeView) ConnectTestCollapseRow(cb *func(TreeView, uintptr, uintptr) b
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2150,7 +2150,7 @@ func (x *TreeView) ConnectTestExpandRow(cb *func(TreeView, uintptr, uintptr) boo
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2174,7 +2174,7 @@ func (x *TreeView) ConnectToggleCursorRow(cb *func(TreeView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2198,7 +2198,7 @@ func (x *TreeView) ConnectUnselectAll(cb *func(TreeView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TreeView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -881,7 +881,7 @@ func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, ui
 			return
 		}
 		cb, ok := handler.(*func(SocketClient, SocketClientEvent, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SocketClient{}

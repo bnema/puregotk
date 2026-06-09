@@ -216,7 +216,7 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 			return zero
 		}
 		cb, ok := handler.(*func(ShortcutsSection, int) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

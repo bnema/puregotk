@@ -345,7 +345,7 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Animation))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Animation{}

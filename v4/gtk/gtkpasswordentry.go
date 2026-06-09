@@ -220,7 +220,7 @@ func (x *PasswordEntry) ConnectActivate(cb *func(PasswordEntry)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PasswordEntry))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PasswordEntry{}

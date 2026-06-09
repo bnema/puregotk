@@ -174,7 +174,7 @@ func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebResource, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebResource{}
@@ -197,7 +197,7 @@ func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, 
 			return
 		}
 		cb, ok := handler.(*func(WebResource, uintptr, gio.TlsCertificateFlags))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebResource{}
@@ -222,7 +222,7 @@ func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebResource))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebResource{}
@@ -250,7 +250,7 @@ func (x *WebResource) ConnectSentRequest(cb *func(WebResource, uintptr, uintptr)
 			return
 		}
 		cb, ok := handler.(*func(WebResource, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebResource{}

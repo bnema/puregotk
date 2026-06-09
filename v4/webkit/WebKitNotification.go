@@ -148,7 +148,7 @@ func (x *Notification) ConnectClicked(cb *func(Notification)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notification))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notification{}
@@ -174,7 +174,7 @@ func (x *Notification) ConnectClosed(cb *func(Notification)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Notification))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Notification{}

@@ -606,7 +606,7 @@ func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Dialog))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Dialog{}
@@ -629,7 +629,7 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Dialog))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Dialog{}

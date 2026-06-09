@@ -437,7 +437,7 @@ func (x *Assistant) ConnectApply(cb *func(Assistant)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Assistant))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Assistant{}
@@ -460,7 +460,7 @@ func (x *Assistant) ConnectCancel(cb *func(Assistant)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Assistant))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Assistant{}
@@ -485,7 +485,7 @@ func (x *Assistant) ConnectClose(cb *func(Assistant)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Assistant))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Assistant{}
@@ -508,7 +508,7 @@ func (x *Assistant) ConnectEscape(cb *func(Assistant)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Assistant))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Assistant{}
@@ -535,7 +535,7 @@ func (x *Assistant) ConnectPrepare(cb *func(Assistant, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Assistant, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Assistant{}

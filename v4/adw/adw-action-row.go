@@ -420,7 +420,7 @@ func (x *ActionRow) ConnectActivated(cb *func(ActionRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ActionRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ActionRow{}

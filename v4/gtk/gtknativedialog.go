@@ -434,7 +434,7 @@ func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NativeDialog, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NativeDialog{}

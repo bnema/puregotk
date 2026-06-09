@@ -454,7 +454,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 			return zero
 		}
 		cb, ok := handler.(*func(TabBar, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -487,7 +487,7 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.Dr
 			return zero
 		}
 		cb, ok := handler.(*func(TabBar, uintptr, uintptr) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}

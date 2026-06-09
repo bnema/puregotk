@@ -88,7 +88,7 @@ func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int, float64, float
 			return
 		}
 		cb, ok := handler.(*func(GestureClick, int, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureClick{}
@@ -116,7 +116,7 @@ func (x *GestureClick) ConnectReleased(cb *func(GestureClick, int, float64, floa
 			return
 		}
 		cb, ok := handler.(*func(GestureClick, int, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureClick{}
@@ -139,7 +139,7 @@ func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GestureClick))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureClick{}
@@ -167,7 +167,7 @@ func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, fl
 			return
 		}
 		cb, ok := handler.(*func(GestureClick, float64, float64, uint, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureClick{}

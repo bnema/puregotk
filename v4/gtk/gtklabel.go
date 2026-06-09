@@ -1255,7 +1255,7 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Label))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Label{}
@@ -1282,7 +1282,7 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Label, string) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1310,7 +1310,7 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Label))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Label{}
@@ -1351,7 +1351,7 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int, bool)) uint
 			return
 		}
 		cb, ok := handler.(*func(Label, MovementStep, int, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Label{}

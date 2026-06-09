@@ -364,7 +364,7 @@ func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ScaleButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScaleButton{}
@@ -392,7 +392,7 @@ func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ScaleButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScaleButton{}
@@ -415,7 +415,7 @@ func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ScaleButton, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScaleButton{}

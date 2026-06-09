@@ -1759,7 +1759,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TabView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1789,7 +1789,7 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TabView) TabView)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -1817,7 +1817,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabView, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabView{}
@@ -1843,7 +1843,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabView, uintptr, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabView{}
@@ -1874,7 +1874,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabView, uintptr, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabView{}
@@ -1897,7 +1897,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabView, uintptr, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabView{}
@@ -1925,7 +1925,7 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TabView, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TabView{}

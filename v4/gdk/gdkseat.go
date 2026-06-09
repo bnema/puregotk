@@ -158,7 +158,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Seat, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Seat{}
@@ -181,7 +181,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Seat, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Seat{}
@@ -210,7 +210,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Seat, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Seat{}
@@ -233,7 +233,7 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Seat, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Seat{}

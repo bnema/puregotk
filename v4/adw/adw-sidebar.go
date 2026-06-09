@@ -703,7 +703,7 @@ func (x *Sidebar) ConnectActivated(cb *func(Sidebar, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Sidebar, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Sidebar{}
@@ -732,7 +732,7 @@ func (x *Sidebar) ConnectDrop(cb *func(Sidebar, uint, uintptr, gdk.DragAction) b
 			return zero
 		}
 		cb, ok := handler.(*func(Sidebar, uint, uintptr, gdk.DragAction) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -762,7 +762,7 @@ func (x *Sidebar) ConnectDropEnter(cb *func(Sidebar, uint) gdk.DragAction) uint 
 			return zero
 		}
 		cb, ok := handler.(*func(Sidebar, uint) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}
@@ -795,7 +795,7 @@ func (x *Sidebar) ConnectDropValueLoaded(cb *func(Sidebar, uint, uintptr) gdk.Dr
 			return zero
 		}
 		cb, ok := handler.(*func(Sidebar, uint, uintptr) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}
@@ -824,7 +824,7 @@ func (x *Sidebar) ConnectSetupMenu(cb *func(Sidebar, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Sidebar, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Sidebar{}

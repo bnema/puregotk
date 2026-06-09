@@ -1744,7 +1744,7 @@ func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uint
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1776,7 +1776,7 @@ func (x *TextBuffer) ConnectBeginUserAction(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1799,7 +1799,7 @@ func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1832,7 +1832,7 @@ func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) 
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1865,7 +1865,7 @@ func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1897,7 +1897,7 @@ func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uint
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1929,7 +1929,7 @@ func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintpt
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1962,7 +1962,7 @@ func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, string, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -1987,7 +1987,7 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2014,7 +2014,7 @@ func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2039,7 +2039,7 @@ func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2066,7 +2066,7 @@ func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2090,7 +2090,7 @@ func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2122,7 +2122,7 @@ func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uin
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer, uintptr, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}
@@ -2147,7 +2147,7 @@ func (x *TextBuffer) ConnectUndo(cb *func(TextBuffer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextBuffer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextBuffer{}

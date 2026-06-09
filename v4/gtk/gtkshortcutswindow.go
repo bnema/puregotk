@@ -189,7 +189,7 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ShortcutsWindow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ShortcutsWindow{}
@@ -216,7 +216,7 @@ func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ShortcutsWindow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ShortcutsWindow{}

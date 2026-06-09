@@ -1276,7 +1276,7 @@ func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Session, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Session{}
@@ -1303,7 +1303,7 @@ func (x *Session) ConnectRequestUnqueued(cb *func(Session, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Session, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Session{}

@@ -4795,7 +4795,7 @@ func (x *Widget) ConnectDestroy(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -4818,7 +4818,7 @@ func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget, TextDirection))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -4841,7 +4841,7 @@ func (x *Widget) ConnectHide(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -4867,7 +4867,7 @@ func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint 
 			return zero
 		}
 		cb, ok := handler.(*func(Widget, DirectionType) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4899,7 +4899,7 @@ func (x *Widget) ConnectMap(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -4926,7 +4926,7 @@ func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Widget, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4955,7 +4955,7 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget, DirectionType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -4991,7 +4991,7 @@ func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) b
 			return zero
 		}
 		cb, ok := handler.(*func(Widget, int, int, bool, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -5018,7 +5018,7 @@ func (x *Widget) ConnectRealize(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -5041,7 +5041,7 @@ func (x *Widget) ConnectShow(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -5066,7 +5066,7 @@ func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget, StateFlags))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -5095,7 +5095,7 @@ func (x *Widget) ConnectUnmap(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}
@@ -5121,7 +5121,7 @@ func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Widget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Widget{}

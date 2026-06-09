@@ -836,7 +836,7 @@ func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) ui
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -859,7 +859,7 @@ func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) 
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -882,7 +882,7 @@ func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -905,7 +905,7 @@ func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -928,7 +928,7 @@ func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr))
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -951,7 +951,7 @@ func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -974,7 +974,7 @@ func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) ui
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -1000,7 +1000,7 @@ func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr))
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -1023,7 +1023,7 @@ func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) ui
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -1046,7 +1046,7 @@ func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uin
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -1069,7 +1069,7 @@ func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) u
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}
@@ -1092,7 +1092,7 @@ func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) u
 			return
 		}
 		cb, ok := handler.(*func(VolumeMonitor, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VolumeMonitor{}

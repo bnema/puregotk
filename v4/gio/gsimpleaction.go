@@ -228,7 +228,7 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SimpleAction, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SimpleAction{}
@@ -286,7 +286,7 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint 
 			return
 		}
 		cb, ok := handler.(*func(SimpleAction, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SimpleAction{}

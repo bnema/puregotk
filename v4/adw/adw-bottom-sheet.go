@@ -651,7 +651,7 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint {
 			return
 		}
 		cb, ok := handler.(*func(BottomSheet))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := BottomSheet{}

@@ -719,7 +719,7 @@ func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ComboBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ComboBox{}
@@ -746,7 +746,7 @@ func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ComboBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ComboBox{}
@@ -803,7 +803,7 @@ func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uin
 			return zero
 		}
 		cb, ok := handler.(*func(ComboBox, string) string)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero string
 			return zero
 		}
@@ -829,7 +829,7 @@ func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ComboBox, ScrollType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ComboBox{}
@@ -857,7 +857,7 @@ func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(ComboBox) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -885,7 +885,7 @@ func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ComboBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ComboBox{}

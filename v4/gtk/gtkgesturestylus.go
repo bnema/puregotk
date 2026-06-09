@@ -191,7 +191,7 @@ func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) u
 			return
 		}
 		cb, ok := handler.(*func(GestureStylus, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureStylus{}
@@ -214,7 +214,7 @@ func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64))
 			return
 		}
 		cb, ok := handler.(*func(GestureStylus, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureStylus{}
@@ -237,7 +237,7 @@ func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float6
 			return
 		}
 		cb, ok := handler.(*func(GestureStylus, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureStylus{}
@@ -260,7 +260,7 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 			return
 		}
 		cb, ok := handler.(*func(GestureStylus, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureStylus{}

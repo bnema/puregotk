@@ -509,7 +509,7 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 			return zero
 		}
 		cb, ok := handler.(*func(EntryCompletion, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -542,7 +542,7 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 			return zero
 		}
 		cb, ok := handler.(*func(EntryCompletion, string) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -574,7 +574,7 @@ func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr
 			return zero
 		}
 		cb, ok := handler.(*func(EntryCompletion, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -601,7 +601,7 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 			return
 		}
 		cb, ok := handler.(*func(EntryCompletion))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EntryCompletion{}

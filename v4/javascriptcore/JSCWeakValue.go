@@ -101,7 +101,7 @@ func (x *WeakValue) ConnectCleared(cb *func(WeakValue)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WeakValue))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WeakValue{}

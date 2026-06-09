@@ -433,7 +433,7 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PixbufLoader))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PixbufLoader{}
@@ -463,7 +463,7 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, 
 			return
 		}
 		cb, ok := handler.(*func(PixbufLoader, int, int, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PixbufLoader{}
@@ -490,7 +490,7 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PixbufLoader))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PixbufLoader{}
@@ -519,7 +519,7 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uin
 			return
 		}
 		cb, ok := handler.(*func(PixbufLoader, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PixbufLoader{}

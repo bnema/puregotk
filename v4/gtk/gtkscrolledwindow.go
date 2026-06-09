@@ -738,7 +738,7 @@ func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionTy
 			return
 		}
 		cb, ok := handler.(*func(ScrolledWindow, PositionType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScrolledWindow{}
@@ -769,7 +769,7 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 			return
 		}
 		cb, ok := handler.(*func(ScrolledWindow, PositionType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScrolledWindow{}
@@ -799,7 +799,7 @@ func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionT
 			return
 		}
 		cb, ok := handler.(*func(ScrolledWindow, DirectionType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ScrolledWindow{}
@@ -828,7 +828,7 @@ func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType,
 			return zero
 		}
 		cb, ok := handler.(*func(ScrolledWindow, ScrollType, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

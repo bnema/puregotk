@@ -1601,7 +1601,7 @@ func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintp
 			return
 		}
 		cb, ok := handler.(*func(CellArea, uintptr, uintptr, uintptr, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellArea{}
@@ -1624,7 +1624,7 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 			return
 		}
 		cb, ok := handler.(*func(CellArea, uintptr, uintptr, bool, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellArea{}
@@ -1654,7 +1654,7 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 			return
 		}
 		cb, ok := handler.(*func(CellArea, uintptr, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellArea{}
@@ -1678,7 +1678,7 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 			return
 		}
 		cb, ok := handler.(*func(CellArea, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellArea{}

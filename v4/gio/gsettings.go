@@ -1593,7 +1593,7 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Settings, uintptr, int) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1627,7 +1627,7 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Settings, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Settings{}
@@ -1669,7 +1669,7 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Settings, uint) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1700,7 +1700,7 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Settings, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Settings{}

@@ -535,7 +535,7 @@ func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Popover))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Popover{}
@@ -558,7 +558,7 @@ func (x *Popover) ConnectClosed(cb *func(Popover)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Popover))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Popover{}

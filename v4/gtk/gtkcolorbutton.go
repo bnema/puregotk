@@ -203,7 +203,7 @@ func (x *ColorButton) ConnectActivate(cb *func(ColorButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ColorButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ColorButton{}
@@ -233,7 +233,7 @@ func (x *ColorButton) ConnectColorSet(cb *func(ColorButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ColorButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ColorButton{}

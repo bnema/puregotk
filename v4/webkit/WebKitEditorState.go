@@ -156,7 +156,7 @@ func (x *EditorState) ConnectChanged(cb *func(EditorState)) uint {
 			return
 		}
 		cb, ok := handler.(*func(EditorState))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EditorState{}

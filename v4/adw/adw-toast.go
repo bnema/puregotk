@@ -634,7 +634,7 @@ func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Toast))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Toast{}
@@ -657,7 +657,7 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Toast))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Toast{}

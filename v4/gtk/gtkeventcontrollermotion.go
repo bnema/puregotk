@@ -133,7 +133,7 @@ func (x *EventControllerMotion) ConnectEnter(cb *func(EventControllerMotion, flo
 			return
 		}
 		cb, ok := handler.(*func(EventControllerMotion, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerMotion{}
@@ -156,7 +156,7 @@ func (x *EventControllerMotion) ConnectLeave(cb *func(EventControllerMotion)) ui
 			return
 		}
 		cb, ok := handler.(*func(EventControllerMotion))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerMotion{}
@@ -179,7 +179,7 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 			return
 		}
 		cb, ok := handler.(*func(EventControllerMotion, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerMotion{}

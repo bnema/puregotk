@@ -545,7 +545,7 @@ func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Surface, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Surface{}
@@ -569,7 +569,7 @@ func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Surface, *Event) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -597,7 +597,7 @@ func (x *Surface) ConnectLayout(cb *func(Surface, int, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Surface, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Surface{}
@@ -620,7 +620,7 @@ func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Surface, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Surface{}
@@ -644,7 +644,7 @@ func (x *Surface) ConnectRender(cb *func(Surface, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Surface, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

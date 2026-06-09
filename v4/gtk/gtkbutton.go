@@ -500,7 +500,7 @@ func (x *Button) ConnectActivate(cb *func(Button)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Button))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Button{}
@@ -523,7 +523,7 @@ func (x *Button) ConnectClicked(cb *func(Button)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Button))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Button{}

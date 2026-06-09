@@ -220,7 +220,7 @@ func (x *WebInspector) ConnectAttach(cb *func(WebInspector) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebInspector) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -255,7 +255,7 @@ func (x *WebInspector) ConnectBringToFront(cb *func(WebInspector) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebInspector) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -281,7 +281,7 @@ func (x *WebInspector) ConnectClosed(cb *func(WebInspector)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebInspector))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebInspector{}
@@ -313,7 +313,7 @@ func (x *WebInspector) ConnectDetach(cb *func(WebInspector) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebInspector) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -346,7 +346,7 @@ func (x *WebInspector) ConnectOpenWindow(cb *func(WebInspector) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebInspector) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

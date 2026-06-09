@@ -359,7 +359,7 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 			return
 		}
 		cb, ok := handler.(*func(FileMonitor, uintptr, uintptr, FileMonitorEvent))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileMonitor{}

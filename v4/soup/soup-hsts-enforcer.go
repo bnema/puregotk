@@ -274,7 +274,7 @@ func (x *HSTSEnforcer) ConnectChanged(cb *func(HSTSEnforcer, uintptr, uintptr)) 
 			return
 		}
 		cb, ok := handler.(*func(HSTSEnforcer, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := HSTSEnforcer{}

@@ -204,7 +204,7 @@ func (x *ButtonRow) ConnectActivated(cb *func(ButtonRow)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ButtonRow))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ButtonRow{}

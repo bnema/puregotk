@@ -453,7 +453,7 @@ func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Sorter, SorterChange))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Sorter{}

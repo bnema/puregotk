@@ -379,7 +379,7 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SwipeTracker))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SwipeTracker{}
@@ -407,7 +407,7 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 			return
 		}
 		cb, ok := handler.(*func(SwipeTracker, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SwipeTracker{}
@@ -433,7 +433,7 @@ func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection
 			return
 		}
 		cb, ok := handler.(*func(SwipeTracker, NavigationDirection))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SwipeTracker{}
@@ -456,7 +456,7 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint 
 			return
 		}
 		cb, ok := handler.(*func(SwipeTracker, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SwipeTracker{}

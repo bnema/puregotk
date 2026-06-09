@@ -194,7 +194,7 @@ func (x *ColorDialogButton) ConnectActivate(cb *func(ColorDialogButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ColorDialogButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ColorDialogButton{}

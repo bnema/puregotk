@@ -464,7 +464,7 @@ func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(CheckButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CheckButton{}
@@ -488,7 +488,7 @@ func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(CheckButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CheckButton{}

@@ -1637,7 +1637,7 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Erro
 			return
 		}
 		cb, ok := handler.(*func(DBusConnection, bool, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DBusConnection{}

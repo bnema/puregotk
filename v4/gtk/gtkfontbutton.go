@@ -239,7 +239,7 @@ func (x *FontButton) ConnectActivate(cb *func(FontButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FontButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FontButton{}
@@ -269,7 +269,7 @@ func (x *FontButton) ConnectFontSet(cb *func(FontButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FontButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FontButton{}

@@ -177,6 +177,9 @@ func SaveSignalHandlerMapping(handlerID uint, data uintptr) {
 		delete(callbacks.signalHandlers, data)
 		return
 	}
+	if prevData := callbacks.handlerToSignalData[handlerID]; prevData != 0 && prevData != data {
+		delete(callbacks.signalHandlers, prevData)
+	}
 	callbacks.handlerToSignalData[handlerID] = data
 }
 
@@ -196,7 +199,7 @@ func ReleaseSignalHandler(data uintptr) {
 var signalDestroyNotifyCallback uintptr
 
 func initSignalDestroyNotify() {
-	signalDestroyNotifyCallback = purego.NewCallback(func(data uintptr) {
+	signalDestroyNotifyCallback = purego.NewCallback(func(data uintptr, _ uintptr) {
 		ReleaseSignalHandler(data)
 	})
 }

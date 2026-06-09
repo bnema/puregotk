@@ -600,7 +600,7 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint
 			return
 		}
 		cb, ok := handler.(*func(EntryBuffer, uint, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EntryBuffer{}
@@ -623,7 +623,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 			return
 		}
 		cb, ok := handler.(*func(EntryBuffer, uint, string, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EntryBuffer{}

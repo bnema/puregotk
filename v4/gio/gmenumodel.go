@@ -942,7 +942,7 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint
 			return
 		}
 		cb, ok := handler.(*func(MenuModel, int, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MenuModel{}

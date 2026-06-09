@@ -190,7 +190,7 @@ func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr))
 			return
 		}
 		cb, ok := handler.(*func(DisplayManager, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DisplayManager{}

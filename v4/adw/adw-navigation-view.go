@@ -439,7 +439,7 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationPage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationPage{}
@@ -466,7 +466,7 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationPage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationPage{}
@@ -493,7 +493,7 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationPage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationPage{}
@@ -520,7 +520,7 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationPage))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationPage{}
@@ -1443,7 +1443,7 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 			return zero
 		}
 		cb, ok := handler.(*func(NavigationView) NavigationPage)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -1474,7 +1474,7 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationView, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationView{}
@@ -1499,7 +1499,7 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationView{}
@@ -1524,7 +1524,7 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(NavigationView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NavigationView{}

@@ -306,7 +306,7 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(DrawingArea, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DrawingArea{}

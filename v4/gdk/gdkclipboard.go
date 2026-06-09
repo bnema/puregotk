@@ -361,7 +361,7 @@ func (x *Clipboard) ConnectChanged(cb *func(Clipboard)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Clipboard))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Clipboard{}

@@ -581,7 +581,7 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(TabOverview) TabPage)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -612,7 +612,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 			return zero
 		}
 		cb, ok := handler.(*func(TabOverview, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -645,7 +645,7 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintp
 			return zero
 		}
 		cb, ok := handler.(*func(TabOverview, uintptr, uintptr) gdk.DragAction)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero gdk.DragAction
 			return zero
 		}

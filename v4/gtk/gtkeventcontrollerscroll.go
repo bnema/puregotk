@@ -174,7 +174,7 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 			return
 		}
 		cb, ok := handler.(*func(EventControllerScroll, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerScroll{}
@@ -202,7 +202,7 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 			return zero
 		}
 		cb, ok := handler.(*func(EventControllerScroll, float64, float64) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -228,7 +228,7 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 			return
 		}
 		cb, ok := handler.(*func(EventControllerScroll))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerScroll{}
@@ -253,7 +253,7 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 			return
 		}
 		cb, ok := handler.(*func(EventControllerScroll))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerScroll{}

@@ -461,7 +461,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 			return
 		}
 		cb, ok := handler.(*func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DBusObjectManagerClient{}
@@ -491,7 +491,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 			return
 		}
 		cb, ok := handler.(*func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DBusObjectManagerClient{}

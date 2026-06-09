@@ -64,7 +64,7 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint {
 			return
 		}
 		cb, ok := handler.(*func(VulkanContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := VulkanContext{}

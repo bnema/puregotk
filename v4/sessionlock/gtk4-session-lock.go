@@ -131,7 +131,7 @@ func (x *Instance) ConnectFailed(cb *func(Instance)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Instance))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Instance{}
@@ -154,7 +154,7 @@ func (x *Instance) ConnectLocked(cb *func(Instance)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Instance))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Instance{}
@@ -183,7 +183,7 @@ func (x *Instance) ConnectMonitor(cb *func(Instance, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Instance, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Instance{}
@@ -207,7 +207,7 @@ func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Instance))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Instance{}

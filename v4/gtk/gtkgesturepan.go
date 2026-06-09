@@ -109,7 +109,7 @@ func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uin
 			return
 		}
 		cb, ok := handler.(*func(GesturePan, PanDirection, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GesturePan{}

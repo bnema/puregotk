@@ -530,7 +530,7 @@ func (x *ColumnView) ConnectActivate(cb *func(ColumnView, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ColumnView, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ColumnView{}

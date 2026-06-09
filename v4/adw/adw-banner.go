@@ -323,7 +323,7 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Banner))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Banner{}

@@ -209,7 +209,7 @@ func (x *GeolocationManager) ConnectStart(cb *func(GeolocationManager) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(GeolocationManager) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -234,7 +234,7 @@ func (x *GeolocationManager) ConnectStop(cb *func(GeolocationManager)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GeolocationManager))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GeolocationManager{}

@@ -492,7 +492,7 @@ func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Carousel, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Carousel{}

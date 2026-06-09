@@ -150,7 +150,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextTagTable, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextTagTable{}
@@ -173,7 +173,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 			return
 		}
 		cb, ok := handler.(*func(TextTagTable, uintptr, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextTagTable{}
@@ -199,7 +199,7 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextTagTable, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextTagTable{}

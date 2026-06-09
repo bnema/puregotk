@@ -253,7 +253,7 @@ func (x *ViewSwitcherSidebar) ConnectActivated(cb *func(ViewSwitcherSidebar)) ui
 			return
 		}
 		cb, ok := handler.(*func(ViewSwitcherSidebar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ViewSwitcherSidebar{}

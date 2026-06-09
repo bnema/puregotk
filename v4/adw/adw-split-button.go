@@ -469,7 +469,7 @@ func (x *SplitButton) ConnectActivate(cb *func(SplitButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SplitButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SplitButton{}
@@ -492,7 +492,7 @@ func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SplitButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SplitButton{}

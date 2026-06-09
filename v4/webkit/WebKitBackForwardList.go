@@ -205,7 +205,7 @@ func (x *BackForwardList) ConnectChanged(cb *func(BackForwardList, uintptr, uint
 			return
 		}
 		cb, ok := handler.(*func(BackForwardList, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := BackForwardList{}

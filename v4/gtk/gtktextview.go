@@ -1896,7 +1896,7 @@ func (x *TextView) ConnectBackspace(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -1925,7 +1925,7 @@ func (x *TextView) ConnectCopyClipboard(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -1954,7 +1954,7 @@ func (x *TextView) ConnectCutClipboard(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -1988,7 +1988,7 @@ func (x *TextView) ConnectDeleteFromCursor(cb *func(TextView, DeleteType, int)) 
 			return
 		}
 		cb, ok := handler.(*func(TextView, DeleteType, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2012,7 +2012,7 @@ func (x *TextView) ConnectExtendSelection(cb *func(TextView, TextExtendSelection
 			return zero
 		}
 		cb, ok := handler.(*func(TextView, TextExtendSelection, uintptr, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -2041,7 +2041,7 @@ func (x *TextView) ConnectInsertAtCursor(cb *func(TextView, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2070,7 +2070,7 @@ func (x *TextView) ConnectInsertEmoji(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2114,7 +2114,7 @@ func (x *TextView) ConnectMoveCursor(cb *func(TextView, MovementStep, int, bool)
 			return
 		}
 		cb, ok := handler.(*func(TextView, MovementStep, int, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2144,7 +2144,7 @@ func (x *TextView) ConnectMoveViewport(cb *func(TextView, ScrollStep, int)) uint
 			return
 		}
 		cb, ok := handler.(*func(TextView, ScrollStep, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2174,7 +2174,7 @@ func (x *TextView) ConnectPasteClipboard(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2204,7 +2204,7 @@ func (x *TextView) ConnectPreeditChanged(cb *func(TextView, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2235,7 +2235,7 @@ func (x *TextView) ConnectSelectAll(cb *func(TextView, bool)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2265,7 +2265,7 @@ func (x *TextView) ConnectSetAnchor(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2293,7 +2293,7 @@ func (x *TextView) ConnectToggleCursorVisible(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}
@@ -2320,7 +2320,7 @@ func (x *TextView) ConnectToggleOverwrite(cb *func(TextView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(TextView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := TextView{}

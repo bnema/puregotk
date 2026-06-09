@@ -848,7 +848,7 @@ func (x *Server) ConnectRequestAborted(cb *func(Server, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Server, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Server{}
@@ -872,7 +872,7 @@ func (x *Server) ConnectRequestFinished(cb *func(Server, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Server, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Server{}
@@ -902,7 +902,7 @@ func (x *Server) ConnectRequestRead(cb *func(Server, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Server, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Server{}
@@ -936,7 +936,7 @@ func (x *Server) ConnectRequestStarted(cb *func(Server, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Server, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Server{}

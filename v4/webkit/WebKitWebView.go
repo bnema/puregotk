@@ -3316,7 +3316,7 @@ func (x *WebView) ConnectAuthenticate(cb *func(WebView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3344,7 +3344,7 @@ func (x *WebView) ConnectClose(cb *func(WebView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3408,7 +3408,7 @@ func (x *WebView) ConnectContextMenu(cb *func(WebView, uintptr, uintptr) bool) u
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3433,7 +3433,7 @@ func (x *WebView) ConnectContextMenuDismissed(cb *func(WebView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3471,7 +3471,7 @@ func (x *WebView) ConnectCreate(cb *func(WebView, uintptr) gtk.Widget) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) gtk.Widget)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -3540,7 +3540,7 @@ func (x *WebView) ConnectDecidePolicy(cb *func(WebView, uintptr, PolicyDecisionT
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr, PolicyDecisionType) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3572,7 +3572,7 @@ func (x *WebView) ConnectEnterFullscreen(cb *func(WebView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3598,7 +3598,7 @@ func (x *WebView) ConnectInsecureContentDetected(cb *func(WebView, InsecureConte
 			return
 		}
 		cb, ok := handler.(*func(WebView, InsecureContentEvent))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3625,7 +3625,7 @@ func (x *WebView) ConnectLeaveFullscreen(cb *func(WebView) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3695,7 +3695,7 @@ func (x *WebView) ConnectLoadChanged(cb *func(WebView, LoadEvent)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView, LoadEvent))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3728,7 +3728,7 @@ func (x *WebView) ConnectLoadFailed(cb *func(WebView, LoadEvent, string, *glib.E
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, LoadEvent, string, *glib.Error) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3761,7 +3761,7 @@ func (x *WebView) ConnectLoadFailedWithTlsErrors(cb *func(WebView, string, uintp
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, string, uintptr, gio.TlsCertificateFlags) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3792,7 +3792,7 @@ func (x *WebView) ConnectMouseTargetChanged(cb *func(WebView, uintptr, uint)) ui
 			return
 		}
 		cb, ok := handler.(*func(WebView, uintptr, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3864,7 +3864,7 @@ func (x *WebView) ConnectPermissionRequest(cb *func(WebView, uintptr) bool) uint
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3897,7 +3897,7 @@ func (x *WebView) ConnectPrint(cb *func(WebView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3928,7 +3928,7 @@ func (x *WebView) ConnectQueryPermissionState(cb *func(WebView, uintptr) bool) u
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -3957,7 +3957,7 @@ func (x *WebView) ConnectReadyToShow(cb *func(WebView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -3983,7 +3983,7 @@ func (x *WebView) ConnectResourceLoadStarted(cb *func(WebView, uintptr, uintptr)
 			return
 		}
 		cb, ok := handler.(*func(WebView, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -4012,7 +4012,7 @@ func (x *WebView) ConnectRunAsModal(cb *func(WebView)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -4048,7 +4048,7 @@ func (x *WebView) ConnectRunColorChooser(cb *func(WebView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4083,7 +4083,7 @@ func (x *WebView) ConnectRunFileChooser(cb *func(WebView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4142,7 +4142,7 @@ func (x *WebView) ConnectScriptDialog(cb *func(WebView, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4172,7 +4172,7 @@ func (x *WebView) ConnectShowNotification(cb *func(WebView, uintptr) bool) uint 
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4204,7 +4204,7 @@ func (x *WebView) ConnectShowOptionMenu(cb *func(WebView, uintptr, uintptr) bool
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4238,7 +4238,7 @@ func (x *WebView) ConnectSubmitForm(cb *func(WebView, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(WebView, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}
@@ -4269,7 +4269,7 @@ func (x *WebView) ConnectUserMessageReceived(cb *func(WebView, uintptr) bool) ui
 			return zero
 		}
 		cb, ok := handler.(*func(WebView, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -4294,7 +4294,7 @@ func (x *WebView) ConnectWebProcessTerminated(cb *func(WebView, WebProcessTermin
 			return
 		}
 		cb, ok := handler.(*func(WebView, WebProcessTerminationReason))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebView{}

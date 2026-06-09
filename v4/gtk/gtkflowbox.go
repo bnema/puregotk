@@ -699,7 +699,7 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -722,7 +722,7 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -761,7 +761,7 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, b
 			return zero
 		}
 		cb, ok := handler.(*func(FlowBox, MovementStep, int, bool, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -790,7 +790,7 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -817,7 +817,7 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -844,7 +844,7 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -872,7 +872,7 @@ func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBox))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBox{}
@@ -1290,7 +1290,7 @@ func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FlowBoxChild))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FlowBoxChild{}

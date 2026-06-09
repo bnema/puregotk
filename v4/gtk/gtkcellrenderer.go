@@ -929,7 +929,7 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint {
 			return
 		}
 		cb, ok := handler.(*func(CellRenderer))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRenderer{}
@@ -984,7 +984,7 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 			return
 		}
 		cb, ok := handler.(*func(CellRenderer, uintptr, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRenderer{}

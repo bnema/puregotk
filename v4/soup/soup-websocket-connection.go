@@ -474,7 +474,7 @@ func (x *WebsocketConnection) ConnectClosed(cb *func(WebsocketConnection)) uint 
 			return
 		}
 		cb, ok := handler.(*func(WebsocketConnection))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebsocketConnection{}
@@ -497,7 +497,7 @@ func (x *WebsocketConnection) ConnectClosing(cb *func(WebsocketConnection)) uint
 			return
 		}
 		cb, ok := handler.(*func(WebsocketConnection))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebsocketConnection{}
@@ -523,7 +523,7 @@ func (x *WebsocketConnection) ConnectError(cb *func(WebsocketConnection, *glib.E
 			return
 		}
 		cb, ok := handler.(*func(WebsocketConnection, *glib.Error))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebsocketConnection{}
@@ -550,7 +550,7 @@ func (x *WebsocketConnection) ConnectMessage(cb *func(WebsocketConnection, int, 
 			return
 		}
 		cb, ok := handler.(*func(WebsocketConnection, int, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebsocketConnection{}
@@ -578,7 +578,7 @@ func (x *WebsocketConnection) ConnectPong(cb *func(WebsocketConnection, uintptr)
 			return
 		}
 		cb, ok := handler.(*func(WebsocketConnection, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebsocketConnection{}

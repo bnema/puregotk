@@ -585,7 +585,7 @@ func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(MenuButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := MenuButton{}

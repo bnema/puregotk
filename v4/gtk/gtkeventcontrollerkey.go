@@ -133,7 +133,7 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint 
 			return
 		}
 		cb, ok := handler.(*func(EventControllerKey))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerKey{}
@@ -157,7 +157,7 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 			return zero
 		}
 		cb, ok := handler.(*func(EventControllerKey, uint, uint, gdk.ModifierType) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -181,7 +181,7 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 			return
 		}
 		cb, ok := handler.(*func(EventControllerKey, uint, uint, gdk.ModifierType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerKey{}
@@ -205,7 +205,7 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 			return zero
 		}
 		cb, ok := handler.(*func(EventControllerKey, gdk.ModifierType) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

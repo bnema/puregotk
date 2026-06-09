@@ -422,7 +422,7 @@ func (x *Expander) ConnectActivate(cb *func(Expander)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Expander))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Expander{}

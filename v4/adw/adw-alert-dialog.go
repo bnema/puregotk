@@ -868,7 +868,7 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(AlertDialog, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AlertDialog{}

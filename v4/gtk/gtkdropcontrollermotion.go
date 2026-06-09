@@ -155,7 +155,7 @@ func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float
 			return
 		}
 		cb, ok := handler.(*func(DropControllerMotion, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DropControllerMotion{}
@@ -178,7 +178,7 @@ func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint
 			return
 		}
 		cb, ok := handler.(*func(DropControllerMotion))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DropControllerMotion{}
@@ -201,7 +201,7 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 			return
 		}
 		cb, ok := handler.(*func(DropControllerMotion, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DropControllerMotion{}

@@ -97,7 +97,7 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 			return
 		}
 		cb, ok := handler.(*func(GestureRotate, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureRotate{}

@@ -250,7 +250,7 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Drag, DragCancelReason))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Drag{}
@@ -275,7 +275,7 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Drag))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Drag{}
@@ -298,7 +298,7 @@ func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Drag))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Drag{}

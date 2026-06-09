@@ -367,7 +367,7 @@ func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(InfoBar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InfoBar{}
@@ -394,7 +394,7 @@ func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(InfoBar, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InfoBar{}

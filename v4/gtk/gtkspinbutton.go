@@ -645,7 +645,7 @@ func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SpinButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SpinButton{}
@@ -676,7 +676,7 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SpinButton, ScrollType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SpinButton{}
@@ -706,7 +706,7 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(SpinButton, *float64) int)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero int
 			return zero
 		}
@@ -752,7 +752,7 @@ func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(SpinButton) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -778,7 +778,7 @@ func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SpinButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SpinButton{}
@@ -802,7 +802,7 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(SpinButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SpinButton{}

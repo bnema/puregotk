@@ -143,7 +143,7 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 			return
 		}
 		cb, ok := handler.(*func(EventControllerFocus))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerFocus{}
@@ -174,7 +174,7 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 			return
 		}
 		cb, ok := handler.(*func(EventControllerFocus))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := EventControllerFocus{}

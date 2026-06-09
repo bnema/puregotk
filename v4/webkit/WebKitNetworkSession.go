@@ -331,7 +331,7 @@ func (x *NetworkSession) ConnectDownloadStarted(cb *func(NetworkSession, uintptr
 			return
 		}
 		cb, ok := handler.(*func(NetworkSession, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := NetworkSession{}

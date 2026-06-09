@@ -810,7 +810,7 @@ func (x *RecentManager) ConnectChanged(cb *func(RecentManager)) uint {
 			return
 		}
 		cb, ok := handler.(*func(RecentManager))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := RecentManager{}

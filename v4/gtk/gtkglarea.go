@@ -625,7 +625,7 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(GLArea) gdk.GLContext)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -654,7 +654,7 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(GLArea, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -688,7 +688,7 @@ func (x *GLArea) ConnectResize(cb *func(GLArea, int, int)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GLArea, int, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GLArea{}

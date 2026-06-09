@@ -191,7 +191,7 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 			return
 		}
 		cb, ok := handler.(*func(CellRendererToggle, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRendererToggle{}

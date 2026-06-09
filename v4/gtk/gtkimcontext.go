@@ -1050,7 +1050,7 @@ func (x *IMContext) ConnectCommit(cb *func(IMContext, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IMContext, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IMContext{}
@@ -1075,7 +1075,7 @@ func (x *IMContext) ConnectDeleteSurrounding(cb *func(IMContext, int, int) bool)
 			return zero
 		}
 		cb, ok := handler.(*func(IMContext, int, int) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1100,7 +1100,7 @@ func (x *IMContext) ConnectInvalidComposition(cb *func(IMContext, string) bool) 
 			return zero
 		}
 		cb, ok := handler.(*func(IMContext, string) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1128,7 +1128,7 @@ func (x *IMContext) ConnectPreeditChanged(cb *func(IMContext)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IMContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IMContext{}
@@ -1152,7 +1152,7 @@ func (x *IMContext) ConnectPreeditEnd(cb *func(IMContext)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IMContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IMContext{}
@@ -1176,7 +1176,7 @@ func (x *IMContext) ConnectPreeditStart(cb *func(IMContext)) uint {
 			return
 		}
 		cb, ok := handler.(*func(IMContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := IMContext{}
@@ -1204,7 +1204,7 @@ func (x *IMContext) ConnectRetrieveSurrounding(cb *func(IMContext) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(IMContext) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -529,7 +529,7 @@ func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Adjustment))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Adjustment{}
@@ -552,7 +552,7 @@ func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Adjustment))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Adjustment{}

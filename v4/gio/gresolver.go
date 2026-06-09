@@ -950,7 +950,7 @@ func (x *Resolver) ConnectReload(cb *func(Resolver)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Resolver))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Resolver{}

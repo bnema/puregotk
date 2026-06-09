@@ -403,7 +403,7 @@ func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FontDialogButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FontDialogButton{}

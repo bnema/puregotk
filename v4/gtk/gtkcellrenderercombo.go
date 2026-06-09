@@ -142,7 +142,7 @@ func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, u
 			return
 		}
 		cb, ok := handler.(*func(CellRendererCombo, string, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRendererCombo{}

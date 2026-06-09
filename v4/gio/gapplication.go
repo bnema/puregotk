@@ -1516,7 +1516,7 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Application))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}
@@ -1542,7 +1542,7 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Application, uintptr) int)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero int
 			return zero
 		}
@@ -1607,7 +1607,7 @@ func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) i
 			return zero
 		}
 		cb, ok := handler.(*func(Application, uintptr) int)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero int
 			return zero
 		}
@@ -1636,7 +1636,7 @@ func (x *Application) ConnectNameLost(cb *func(Application) bool) uint {
 			return zero
 		}
 		cb, ok := handler.(*func(Application) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1661,7 +1661,7 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int, string)) u
 			return
 		}
 		cb, ok := handler.(*func(Application, uintptr, int, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}
@@ -1685,7 +1685,7 @@ func (x *Application) ConnectShutdown(cb *func(Application)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Application))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}
@@ -1709,7 +1709,7 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Application))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Application{}

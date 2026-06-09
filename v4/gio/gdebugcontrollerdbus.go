@@ -277,7 +277,7 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 			return zero
 		}
 		cb, ok := handler.(*func(DebugControllerDBus, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

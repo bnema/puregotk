@@ -264,7 +264,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(DragSource, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DragSource{}
@@ -292,7 +292,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 			return zero
 		}
 		cb, ok := handler.(*func(DragSource, uintptr, gdk.DragCancelReason) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -320,7 +320,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 			return
 		}
 		cb, ok := handler.(*func(DragSource, uintptr, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DragSource{}
@@ -349,7 +349,7 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.C
 			return zero
 		}
 		cb, ok := handler.(*func(DragSource, float64, float64) gdk.ContentProvider)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}

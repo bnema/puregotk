@@ -106,7 +106,7 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 			return
 		}
 		cb, ok := handler.(*func(GestureSwipe, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureSwipe{}

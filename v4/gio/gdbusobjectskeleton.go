@@ -204,7 +204,7 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 			return zero
 		}
 		cb, ok := handler.(*func(DBusObjectSkeleton, uintptr, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -497,7 +497,7 @@ func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Printer, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Printer{}

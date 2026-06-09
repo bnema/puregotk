@@ -86,7 +86,11 @@ func main() {
 	}
 	data, err = os.ReadFile("templates/gobject_signal_lifecycle_test")
 	if err == nil {
-		os.WriteFile("v4/gobject/signal_lifecycle_test.go", data, 0o644)
+		if werr := os.WriteFile("v4/gobject/signal_lifecycle_test.go", data, 0o644); werr != nil {
+			panic(werr)
+		}
+	} else if !os.IsNotExist(err) {
+		panic(err)
 	}
 	data, err = os.ReadFile("templates/webkit")
 	if err == nil {

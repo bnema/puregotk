@@ -425,7 +425,7 @@ func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Calendar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Calendar{}
@@ -448,7 +448,7 @@ func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Calendar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Calendar{}
@@ -471,7 +471,7 @@ func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Calendar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Calendar{}
@@ -494,7 +494,7 @@ func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Calendar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Calendar{}
@@ -517,7 +517,7 @@ func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Calendar))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Calendar{}

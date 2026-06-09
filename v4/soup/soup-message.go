@@ -875,7 +875,7 @@ func (x *Message) ConnectAcceptCertificate(cb *func(Message, uintptr, gio.TlsCer
 			return zero
 		}
 		cb, ok := handler.(*func(Message, uintptr, gio.TlsCertificateFlags) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -913,7 +913,7 @@ func (x *Message) ConnectAuthenticate(cb *func(Message, uintptr, bool) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Message, uintptr, bool) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -943,7 +943,7 @@ func (x *Message) ConnectContentSniffed(cb *func(Message, string, uintptr)) uint
 			return
 		}
 		cb, ok := handler.(*func(Message, string, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -968,7 +968,7 @@ func (x *Message) ConnectFinished(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -991,7 +991,7 @@ func (x *Message) ConnectGotBody(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1015,7 +1015,7 @@ func (x *Message) ConnectGotBodyData(cb *func(Message, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1051,7 +1051,7 @@ func (x *Message) ConnectGotHeaders(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1083,7 +1083,7 @@ func (x *Message) ConnectGotInformational(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1108,7 +1108,7 @@ func (x *Message) ConnectHstsEnforced(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1142,7 +1142,7 @@ func (x *Message) ConnectNetworkEvent(cb *func(Message, gio.SocketClientEvent, u
 			return
 		}
 		cb, ok := handler.(*func(Message, gio.SocketClientEvent, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1176,7 +1176,7 @@ func (x *Message) ConnectRequestCertificate(cb *func(Message, uintptr) bool) uin
 			return zero
 		}
 		cb, ok := handler.(*func(Message, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1212,7 +1212,7 @@ func (x *Message) ConnectRequestCertificatePassword(cb *func(Message, uintptr) b
 			return zero
 		}
 		cb, ok := handler.(*func(Message, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -1241,7 +1241,7 @@ func (x *Message) ConnectRestarted(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1264,7 +1264,7 @@ func (x *Message) ConnectStarting(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1288,7 +1288,7 @@ func (x *Message) ConnectWroteBody(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1312,7 +1312,7 @@ func (x *Message) ConnectWroteBodyData(cb *func(Message, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}
@@ -1336,7 +1336,7 @@ func (x *Message) ConnectWroteHeaders(cb *func(Message)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Message))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Message{}

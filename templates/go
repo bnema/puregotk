@@ -444,7 +444,7 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
                return zero{{else}}return{{end}}
           }
           cb, ok := handler.(*func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}})
-          if !ok || cb == nil {
+          if !ok || cb == nil || *cb == nil {
                {{if .Ret.Value}}var zero {{.Ret.Raw}}
                return zero{{else}}return{{end}}
           }

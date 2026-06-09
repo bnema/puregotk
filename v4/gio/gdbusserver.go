@@ -229,7 +229,7 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 			return zero
 		}
 		cb, ok := handler.(*func(DBusServer, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

@@ -443,7 +443,7 @@ func (x *DropDown) ConnectActivate(cb *func(DropDown)) uint {
 			return
 		}
 		cb, ok := handler.(*func(DropDown))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := DropDown{}

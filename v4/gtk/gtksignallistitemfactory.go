@@ -131,7 +131,7 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 			return
 		}
 		cb, ok := handler.(*func(SignalListItemFactory, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalListItemFactory{}
@@ -162,7 +162,7 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 			return
 		}
 		cb, ok := handler.(*func(SignalListItemFactory, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalListItemFactory{}
@@ -190,7 +190,7 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 			return
 		}
 		cb, ok := handler.(*func(SignalListItemFactory, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalListItemFactory{}
@@ -220,7 +220,7 @@ func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, ui
 			return
 		}
 		cb, ok := handler.(*func(SignalListItemFactory, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := SignalListItemFactory{}

@@ -485,7 +485,7 @@ func (x *WebContext) ConnectAutomationStarted(cb *func(WebContext, uintptr)) uin
 			return
 		}
 		cb, ok := handler.(*func(WebContext, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebContext{}
@@ -515,7 +515,7 @@ func (x *WebContext) ConnectInitializeNotificationPermissions(cb *func(WebContex
 			return
 		}
 		cb, ok := handler.(*func(WebContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebContext{}
@@ -541,7 +541,7 @@ func (x *WebContext) ConnectInitializeWebProcessExtensions(cb *func(WebContext))
 			return
 		}
 		cb, ok := handler.(*func(WebContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := WebContext{}
@@ -570,7 +570,7 @@ func (x *WebContext) ConnectUserMessageReceived(cb *func(WebContext, uintptr) bo
 			return zero
 		}
 		cb, ok := handler.(*func(WebContext, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

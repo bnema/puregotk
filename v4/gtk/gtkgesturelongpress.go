@@ -131,7 +131,7 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GestureLongPress))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureLongPress{}
@@ -155,7 +155,7 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 			return
 		}
 		cb, ok := handler.(*func(GestureLongPress, float64, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GestureLongPress{}

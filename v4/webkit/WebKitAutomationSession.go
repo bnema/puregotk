@@ -155,7 +155,7 @@ func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) Web
 			return zero
 		}
 		cb, ok := handler.(*func(AutomationSession) WebView)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero uintptr
 			return zero
 		}
@@ -181,7 +181,7 @@ func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint {
 			return
 		}
 		cb, ok := handler.(*func(AutomationSession))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AutomationSession{}

@@ -85,7 +85,7 @@ func (x *EventControllerLegacy) ConnectEvent(cb *func(EventControllerLegacy, uin
 			return zero
 		}
 		cb, ok := handler.(*func(EventControllerLegacy, uintptr) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}

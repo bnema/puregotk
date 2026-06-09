@@ -418,7 +418,7 @@ func (x *CookieJar) ConnectChanged(cb *func(CookieJar, uintptr, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(CookieJar, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CookieJar{}

@@ -299,7 +299,7 @@ func (x *CookieManager) ConnectChanged(cb *func(CookieManager)) uint {
 			return
 		}
 		cb, ok := handler.(*func(CookieManager))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CookieManager{}

@@ -536,7 +536,7 @@ func (x *Display) ConnectClosed(cb *func(Display, bool)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Display, bool))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Display{}
@@ -559,7 +559,7 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Display))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Display{}
@@ -582,7 +582,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Display, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Display{}
@@ -605,7 +605,7 @@ func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Display, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Display{}
@@ -628,7 +628,7 @@ func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Display, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Display{}

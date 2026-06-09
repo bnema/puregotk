@@ -296,7 +296,7 @@ func (x *ToggleButton) ConnectToggled(cb *func(ToggleButton)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ToggleButton))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ToggleButton{}

@@ -549,7 +549,7 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Range, float64))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Range{}
@@ -584,7 +584,7 @@ func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) ui
 			return zero
 		}
 		cb, ok := handler.(*func(Range, ScrollType, float64) bool)
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			var zero bool
 			return zero
 		}
@@ -610,7 +610,7 @@ func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Range, ScrollType))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Range{}
@@ -633,7 +633,7 @@ func (x *Range) ConnectValueChanged(cb *func(Range)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Range))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Range{}

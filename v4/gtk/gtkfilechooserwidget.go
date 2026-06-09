@@ -137,7 +137,7 @@ func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) ui
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -171,7 +171,7 @@ func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint 
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -201,7 +201,7 @@ func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint 
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -236,7 +236,7 @@ func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, str
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -266,7 +266,7 @@ func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidg
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -297,7 +297,7 @@ func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidge
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -326,7 +326,7 @@ func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) u
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -362,7 +362,7 @@ func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget, int))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -391,7 +391,7 @@ func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) u
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -420,7 +420,7 @@ func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) u
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -449,7 +449,7 @@ func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint 
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}
@@ -479,7 +479,7 @@ func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint {
 			return
 		}
 		cb, ok := handler.(*func(FileChooserWidget))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := FileChooserWidget{}

@@ -410,7 +410,7 @@ func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint {
 			return
 		}
 		cb, ok := handler.(*func(PrintJob))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := PrintJob{}

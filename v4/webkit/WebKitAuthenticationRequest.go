@@ -265,7 +265,7 @@ func (x *AuthenticationRequest) ConnectAuthenticated(cb *func(AuthenticationRequ
 			return
 		}
 		cb, ok := handler.(*func(AuthenticationRequest, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AuthenticationRequest{}
@@ -290,7 +290,7 @@ func (x *AuthenticationRequest) ConnectCancelled(cb *func(AuthenticationRequest)
 			return
 		}
 		cb, ok := handler.(*func(AuthenticationRequest))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AuthenticationRequest{}

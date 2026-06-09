@@ -116,7 +116,7 @@ func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint {
 			return
 		}
 		cb, ok := handler.(*func(ATContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ATContext{}

@@ -480,7 +480,7 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint 
 			return
 		}
 		cb, ok := handler.(*func(ContentProvider))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := ContentProvider{}

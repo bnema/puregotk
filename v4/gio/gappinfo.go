@@ -1770,7 +1770,7 @@ func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint {
 			return
 		}
 		cb, ok := handler.(*func(AppInfoMonitor))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppInfoMonitor{}
@@ -1943,7 +1943,7 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 			return
 		}
 		cb, ok := handler.(*func(AppLaunchContext, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppLaunchContext{}
@@ -1984,7 +1984,7 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 			return
 		}
 		cb, ok := handler.(*func(AppLaunchContext, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppLaunchContext{}
@@ -2027,7 +2027,7 @@ func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, u
 			return
 		}
 		cb, ok := handler.(*func(AppLaunchContext, uintptr, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := AppLaunchContext{}

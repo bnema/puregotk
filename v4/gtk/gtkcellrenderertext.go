@@ -740,7 +740,7 @@ func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, stri
 			return
 		}
 		cb, ok := handler.(*func(CellRendererText, string, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := CellRendererText{}

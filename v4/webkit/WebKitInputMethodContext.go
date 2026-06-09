@@ -1105,7 +1105,7 @@ func (x *InputMethodContext) ConnectCommitted(cb *func(InputMethodContext, strin
 			return
 		}
 		cb, ok := handler.(*func(InputMethodContext, string))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InputMethodContext{}
@@ -1129,7 +1129,7 @@ func (x *InputMethodContext) ConnectDeleteSurrounding(cb *func(InputMethodContex
 			return
 		}
 		cb, ok := handler.(*func(InputMethodContext, int, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InputMethodContext{}
@@ -1154,7 +1154,7 @@ func (x *InputMethodContext) ConnectPreeditChanged(cb *func(InputMethodContext))
 			return
 		}
 		cb, ok := handler.(*func(InputMethodContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InputMethodContext{}
@@ -1177,7 +1177,7 @@ func (x *InputMethodContext) ConnectPreeditFinished(cb *func(InputMethodContext)
 			return
 		}
 		cb, ok := handler.(*func(InputMethodContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InputMethodContext{}
@@ -1200,7 +1200,7 @@ func (x *InputMethodContext) ConnectPreeditStarted(cb *func(InputMethodContext))
 			return
 		}
 		cb, ok := handler.(*func(InputMethodContext))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := InputMethodContext{}

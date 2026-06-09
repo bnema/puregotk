@@ -2070,7 +2070,7 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Object, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Object{}

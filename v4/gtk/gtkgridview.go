@@ -360,7 +360,7 @@ func (x *GridView) ConnectActivate(cb *func(GridView, uint)) uint {
 			return
 		}
 		cb, ok := handler.(*func(GridView, uint))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := GridView{}

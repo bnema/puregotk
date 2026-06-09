@@ -484,7 +484,7 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Gesture, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Gesture{}
@@ -516,7 +516,7 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Gesture, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Gesture{}
@@ -547,7 +547,7 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Gesture, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Gesture{}
@@ -573,7 +573,7 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 			return
 		}
 		cb, ok := handler.(*func(Gesture, uintptr, EventSequenceState))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Gesture{}
@@ -598,7 +598,7 @@ func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint {
 			return
 		}
 		cb, ok := handler.(*func(Gesture, uintptr))
-		if !ok || cb == nil {
+		if !ok || cb == nil || *cb == nil {
 			return
 		}
 		fa := Gesture{}
