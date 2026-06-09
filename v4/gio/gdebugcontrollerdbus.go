@@ -269,24 +269,26 @@ func (c *DebugControllerDBus) SetGoPointer(ptr uintptr) {
 //
 // The default class handler just returns %TRUE.
 func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, InvocationVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DebugControllerDBus.Authorize", func(clsPtr uintptr, InvocationVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DebugControllerDBus, uintptr) bool)
+		if !ok || cb == nil || *cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DebugControllerDBus{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, InvocationVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "authorize", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

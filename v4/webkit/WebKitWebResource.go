@@ -167,47 +167,47 @@ func (x *WebResource) GetPropertyUri() string {
 // This signal is emitted when an error occurs during the resource
 // load operation.
 func (x *WebResource) ConnectFailed(cb *func(WebResource, *glib.Error)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ErrorVarp unsafe.Pointer) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.WebResource.Failed", func(clsPtr uintptr, ErrorVarp unsafe.Pointer, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(WebResource, *glib.Error))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := WebResource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, (*glib.Error)(ErrorVarp))
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "failed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "failed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // This signal is emitted when a TLS error occurs during the resource load operation.
 func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, gio.TlsCertificateFlags)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "failed-with-tls-errors", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, CertificateVarp uintptr, ErrorsVarp gio.TlsCertificateFlags) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.WebResource.FailedWithTlsErrors", func(clsPtr uintptr, CertificateVarp uintptr, ErrorsVarp gio.TlsCertificateFlags, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(WebResource, uintptr, gio.TlsCertificateFlags))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := WebResource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, CertificateVarp, ErrorsVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "failed-with-tls-errors", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "failed-with-tls-errors", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -215,24 +215,24 @@ func (x *WebResource) ConnectFailedWithTlsErrors(cb *func(WebResource, uintptr, 
 // or due to an error. In case of errors #WebKitWebResource::failed signal
 // is emitted before this one.
 func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.WebResource.Finished", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(WebResource))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := WebResource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "finished", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "finished", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -243,24 +243,24 @@ func (x *WebResource) ConnectFinished(cb *func(WebResource)) uint {
 // @redirected_response parameter containing the response
 // received by the server for the initial request.
 func (x *WebResource) ConnectSentRequest(cb *func(WebResource, uintptr, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "sent-request", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, RequestVarp uintptr, RedirectedResponseVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.WebResource.SentRequest", func(clsPtr uintptr, RequestVarp uintptr, RedirectedResponseVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(WebResource, uintptr, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := WebResource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, RequestVarp, RedirectedResponseVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "sent-request", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "sent-request", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

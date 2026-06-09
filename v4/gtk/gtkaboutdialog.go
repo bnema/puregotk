@@ -846,24 +846,26 @@ func (x *AboutDialog) GetPropertyWrapLicense() bool {
 // Applications may connect to it to override the default behaviour,
 // which is to call [method@Gtk.FileLauncher.launch].
 func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, UriVarp string) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.AboutDialog.ActivateLink", func(clsPtr uintptr, UriVarp string, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(AboutDialog, string) bool)
+		if !ok || cb == nil || *cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := AboutDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, UriVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "activate-link", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

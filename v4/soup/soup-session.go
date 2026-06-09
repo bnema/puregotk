@@ -1269,24 +1269,24 @@ func (x *Session) GetPropertyUserAgent() string {
 // [class@Message] signals) may be invoked multiple times for a given
 // message.
 func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MsgVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("soup.Session.RequestQueued", func(clsPtr uintptr, MsgVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Session, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := Session{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MsgVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "request-queued", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "request-queued", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -1296,24 +1296,24 @@ func (x *Session) ConnectRequestQueued(cb *func(Session, uintptr)) uint {
 // See [signal@Session::request-queued] for a detailed description of
 // the message lifecycle within a session.
 func (x *Session) ConnectRequestUnqueued(cb *func(Session, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MsgVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("soup.Session.RequestUnqueued", func(clsPtr uintptr, MsgVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Session, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := Session{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MsgVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "request-unqueued", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "request-unqueued", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

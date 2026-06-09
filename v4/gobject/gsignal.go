@@ -400,6 +400,7 @@ var xSignalHandlerDisconnect func(uintptr, uint)
 // signal of @instance.
 func SignalHandlerDisconnect(InstanceVar *Object, HandlerIdVar uint) {
 	xSignalHandlerDisconnect(InstanceVar.GoPointer(), HandlerIdVar)
+	glib.RemoveCallbackByHandler(HandlerIdVar)
 }
 
 var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint

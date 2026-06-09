@@ -37,11 +37,23 @@ func SignalConnect(a uintptr, b string, c uintptr) uint {
 	return xSignalConnectData(a, b, c, 0, 0, 0)
 }
 
+// SignalConnectDataRaw connects a raw C callback pointer with user data and an
+// optional raw destroy notify callback. Generated signal bindings use this with
+// shared process-lifetime trampolines to avoid one purego callback allocation per
+// signal connection.
+func SignalConnectDataRaw(instance uintptr, detailedSignal string, handler uintptr, data uintptr, destroyData uintptr, flags ConnectFlags) uint {
+	return xSignalConnectData(instance, detailedSignal, handler, data, destroyData, flags)
+}
+
 func (o Object) Cast(v Ptr) {
 	v.SetGoPointer(o.GoPointer())
 }
 
 func (o Object) ConnectSignal(signal string, cb *func()) uint {
+	// Generic ConnectSignal intentionally uses a zero-argument callback so callers
+	// can ignore any signal parameters. Because the signal arity is unknown, there
+	// is no safe shared trampoline signature that can recover user_data for every
+	// signal; typed generated Connect* methods use shared trampolines instead.
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		handlerID := SignalConnect(o.GoPointer(), signal, cbRefPtr)
@@ -58,29 +70,28 @@ func (o Object) ConnectSignal(signal string, cb *func()) uint {
 
 func (o Object) DisconnectSignal(handler uint) {
 	SignalHandlerDisconnect(&o, handler)
-	glib.RemoveCallbackByHandler(handler)
 }
 
 // ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
 func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, *ParamSpec)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("notify::%s", detail)
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
+	data := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gobject.Object.ConnectNotifyWithDetail", func(clsPtr uintptr, PspecVarp uintptr, data uintptr) {
+		handler, ok := glib.GetSignalHandler(data)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Object, *ParamSpec))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Object{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 		cbFn(fa, func() *ParamSpec { cls := &ParamSpec{}; cls.Ptr = PspecVarp; return cls }())
-	}
-	cbRefPtr := glib.NewCallback(&fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := SignalConnectDataRaw(x.GoPointer(), signalName, cbRefPtr, data, glib.SignalDestroyNotify(), GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, data)
 	return handlerID
 }
 

@@ -406,7 +406,7 @@ func (x *BufferedInputStream) PeekBuffer(CountVar *uint) uintptr {
 	return cret
 }
 
-var xBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
+var xBufferedInputStreamBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
 
 // Tries to read a single byte from the stream or the buffer. Will block
 // during this read.
@@ -421,10 +421,10 @@ var xBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
 // partial result will be returned, without an error.
 //
 // On error `-1` is returned and @error is set accordingly.
-func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int, error) {
+func (x *BufferedInputStream) BufferedInputStreamReadByte(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	cret := xBufferedInputStreamBufferedInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -495,7 +495,7 @@ func (x *BufferedInputStream) CanTruncate() bool {
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
+func (x *BufferedInputStream) SeekableSeek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
@@ -554,6 +554,6 @@ func init() {
 	core.PuregoSafeRegister(&xBufferedInputStreamGetBufferSize, libs, "g_buffered_input_stream_get_buffer_size")
 	core.PuregoSafeRegister(&xBufferedInputStreamPeek, libs, "g_buffered_input_stream_peek")
 	core.PuregoSafeRegister(&xBufferedInputStreamPeekBuffer, libs, "g_buffered_input_stream_peek_buffer")
-	core.PuregoSafeRegister(&xBufferedInputStreamReadByte, libs, "g_buffered_input_stream_read_byte")
+	core.PuregoSafeRegister(&xBufferedInputStreamBufferedInputStreamReadByte, libs, "g_buffered_input_stream_read_byte")
 	core.PuregoSafeRegister(&xBufferedInputStreamSetBufferSize, libs, "g_buffered_input_stream_set_buffer_size")
 }

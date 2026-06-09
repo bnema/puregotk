@@ -649,7 +649,7 @@ func (x *MediaStream) Realize(SurfaceVar *gdk.Surface) {
 	xMediaStreamRealize(x.GoPointer(), SurfaceVar.GoPointer())
 }
 
-var xMediaStreamSeek func(uintptr, int64)
+var xMediaStreamMediaStreamSeek func(uintptr, int64)
 
 // Start a seek operation on @self to @timestamp.
 //
@@ -662,8 +662,8 @@ var xMediaStreamSeek func(uintptr, int64)
 // When calling gtk_media_stream_seek() during an
 // ongoing seek operation, the new seek will override
 // any pending seek.
-func (x *MediaStream) Seek(TimestampVar int64) {
-	xMediaStreamSeek(x.GoPointer(), TimestampVar)
+func (x *MediaStream) MediaStreamSeek(TimestampVar int64) {
+	xMediaStreamMediaStreamSeek(x.GoPointer(), TimestampVar)
 }
 
 var xMediaStreamSeekFailed func(uintptr)
@@ -1133,7 +1133,7 @@ func init() {
 	core.PuregoSafeRegister(&xMediaStreamPlay, libs, "gtk_media_stream_play")
 	core.PuregoSafeRegister(&xMediaStreamPrepared, libs, "gtk_media_stream_prepared")
 	core.PuregoSafeRegister(&xMediaStreamRealize, libs, "gtk_media_stream_realize")
-	core.PuregoSafeRegister(&xMediaStreamSeek, libs, "gtk_media_stream_seek")
+	core.PuregoSafeRegister(&xMediaStreamMediaStreamSeek, libs, "gtk_media_stream_seek")
 	core.PuregoSafeRegister(&xMediaStreamSeekFailed, libs, "gtk_media_stream_seek_failed")
 	core.PuregoSafeRegister(&xMediaStreamSeekSuccess, libs, "gtk_media_stream_seek_success")
 	core.PuregoSafeRegister(&xMediaStreamSetLoop, libs, "gtk_media_stream_set_loop")

@@ -874,24 +874,24 @@ func (x *SocketClient) GetPropertyTls() bool {
 // Note that there may be additional #GSocketClientEvent values in
 // the future; unrecognized @event values should be ignored.
 func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, EventVarp SocketClientEvent, ConnectableVarp uintptr, ConnectionVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.SocketClient.Event", func(clsPtr uintptr, EventVarp SocketClientEvent, ConnectableVarp uintptr, ConnectionVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SocketClient, SocketClientEvent, uintptr, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SocketClient{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, EventVarp, ConnectableVarp, ConnectionVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "event", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

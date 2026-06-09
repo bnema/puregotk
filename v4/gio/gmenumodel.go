@@ -935,24 +935,24 @@ func (c *MenuModel) SetGoPointer(ptr uintptr) {
 // and expect to see the results of the modification that is being
 // reported.  The signal is emitted after the modification.
 func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PositionVarp int, RemovedVarp int, AddedVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MenuModel.ItemsChanged", func(clsPtr uintptr, PositionVarp int, RemovedVarp int, AddedVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MenuModel, int, int, int))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := MenuModel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PositionVarp, RemovedVarp, AddedVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "items-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

@@ -787,24 +787,24 @@ func (x *DBusProxy) GetPropertyGObjectPath() string {
 // `PropertiesChanged` D-Bus signal on the
 // `org.freedesktop.DBus.Properties` interface.
 func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusProxy.GPropertiesChanged", func(clsPtr uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DBusProxy, uintptr, []string))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := DBusProxy{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ChangedPropertiesVarp, InvalidatedPropertiesVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "g-properties-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "g-properties-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -814,24 +814,24 @@ func (x *DBusProxy) ConnectGPropertiesChanged(cb *func(DBusProxy, uintptr, []str
 // the detailed signal `g-signal::x` in order to receive callbacks only when
 // signal `x` is received from the remote object.
 func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusProxy.GSignal", func(clsPtr uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DBusProxy, string, string, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := DBusProxy{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SenderNameVarp, SignalNameVarp, ParametersVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "g-signal", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

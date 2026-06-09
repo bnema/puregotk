@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
@@ -118,47 +116,47 @@ func (x *CellRendererAccel) GetPropertyKeycode() uint {
 
 // Gets emitted when the user has removed the accelerator.
 func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PathStringVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellRendererAccel.AccelCleared", func(clsPtr uintptr, PathStringVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellRendererAccel, string))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := CellRendererAccel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PathStringVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "accel-cleared", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Gets emitted when the user has selected a new accelerator.
 func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, string, uint, gdk.ModifierType, uint)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellRendererAccel.AccelEdited", func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellRendererAccel, string, uint, gdk.ModifierType, uint))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := CellRendererAccel{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PathStringVarp, AccelKeyVarp, AccelModsVarp, HardwareKeycodeVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "accel-edited", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

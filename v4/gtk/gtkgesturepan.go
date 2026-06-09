@@ -102,24 +102,24 @@ func (c *GesturePan) SetGoPointer(ptr uintptr) {
 
 // Emitted once a panning gesture along the expected axis is detected.
 func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DirectionVarp PanDirection, OffsetVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GesturePan.Pan", func(clsPtr uintptr, DirectionVarp PanDirection, OffsetVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GesturePan, PanDirection, float64))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := GesturePan{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DirectionVarp, OffsetVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "pan", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

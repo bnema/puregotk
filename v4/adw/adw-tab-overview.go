@@ -573,25 +573,27 @@ func (x *TabOverview) GetPropertyShowStartTitleButtons() bool {
 // The signal handler is expected to create a new page in the corresponding
 // [class@TabView] and return it.
 func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) uintptr {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.TabOverview.CreateTab", func(clsPtr uintptr, signalData uintptr) uintptr {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero uintptr
+			return zero
+		}
+		cb, ok := handler.(*func(TabOverview) TabPage)
+		if !ok || cb == nil || *cb == nil {
+			var zero uintptr
+			return zero
+		}
 		fa := TabOverview{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		CreateTabCls := cbFn(fa)
 		return CreateTabCls.Ptr
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "create-tab", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -602,24 +604,26 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint {
 //
 // See [signal@Gtk.DropTarget::drop].
 func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.TabOverview.ExtraDragDrop", func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(TabOverview, uintptr, uintptr) bool)
+		if !ok || cb == nil || *cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := TabOverview{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, PageVarp, ValueVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "extra-drag-drop", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -633,24 +637,26 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 //
 // See [property@Gtk.DropTarget:value].
 func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintptr) gdk.DragAction) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) gdk.DragAction {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.TabOverview.ExtraDragValue", func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr, signalData uintptr) gdk.DragAction {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero gdk.DragAction
+			return zero
+		}
+		cb, ok := handler.(*func(TabOverview, uintptr, uintptr) gdk.DragAction)
+		if !ok || cb == nil || *cb == nil {
+			var zero gdk.DragAction
+			return zero
+		}
 		fa := TabOverview{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, PageVarp, ValueVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "extra-drag-value", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

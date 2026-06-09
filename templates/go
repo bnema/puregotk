@@ -329,6 +329,9 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           removeTrackedSource(trackedSourceID)
      }
      return cret
+     {{- else if and (eq $.PkgName "gobject") (eq .Name "SignalHandlerDisconnect")}}
+     x{{.Name}}({{convd .Args.API.Call}})
+     glib.RemoveCallbackByHandler(HandlerIdVar)
      {{- else}}
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
@@ -433,14 +436,18 @@ func (c *{{.Name}}) SetGoPointer(ptr uintptr) {
 
 {{.Doc}}
 func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}}) uint {
-     cbPtr := uintptr(unsafe.Pointer(cb))
-     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback(cbPtr); ok {
-          handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
-          {{if $NotGLib}}glib.{{end}}SaveHandlerMapping(handlerID, cbPtr)
-          return handlerID
-     }
-
-     fcb := func(clsPtr uintptr {{convc .Args.PuregoSignalFull}}) {{.Ret.Raw}} {
+     signalData := {{if $NotGLib}}glib.{{end}}SaveSignalHandler(cb)
+     cbRefPtr := {{if $NotGLib}}glib.{{end}}SharedCallback("{{$.PkgName}}.{{$outer.Name}}.{{.Name}}", func(clsPtr uintptr {{convc .Args.PuregoSignalFull}}, signalData uintptr) {{.Ret.Raw}} {
+          handler, ok := {{if $NotGLib}}glib.{{end}}GetSignalHandler(signalData)
+          if !ok {
+               {{if .Ret.Value}}var zero {{.Ret.Raw}}
+               return zero{{else}}return{{end}}
+          }
+          cb, ok := handler.(*func({{$outer.Name}} {{convc .Args.API.Types}}) {{.Ret.Value}})
+          if !ok || cb == nil || *cb == nil {
+               {{if .Ret.Value}}var zero {{.Ret.Raw}}
+               return zero{{else}}return{{end}}
+          }
           fa := {{$outer.Name}}{}
           fa.Ptr = clsPtr
           cbFn := *cb
@@ -452,11 +459,9 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
           {{else}}
           cbFn(fa {{convc .Args.PuregoSignalCall}})
           {{end}}
-     }
-     cbRefPtr := purego.NewCallback(fcb)
-     {{if $NotGLib}}glib.{{end}}SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-     handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnect(x.GoPointer(), "{{.CName}}", cbRefPtr)
-     {{if $NotGLib}}glib.{{end}}SaveHandlerMapping(handlerID, cbPtr)
+     })
+     handlerID := {{if $NotGObject}}gobject.{{end}}SignalConnectDataRaw(x.GoPointer(), "{{.CName}}", cbRefPtr, signalData, {{if $NotGLib}}glib.{{end}}SignalDestroyNotify(), {{if $NotGObject}}gobject.{{end}}GConnectDefaultValue)
+     {{if $NotGLib}}glib.{{end}}SaveSignalHandlerMapping(handlerID, signalData)
      return handlerID
 }
 {{end}}

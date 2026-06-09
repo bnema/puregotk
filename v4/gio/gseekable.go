@@ -184,7 +184,7 @@ type Seekable interface {
 	SetGoPointer(uintptr)
 	CanSeek() bool
 	CanTruncate() bool
-	Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error)
+	SeekableSeek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error)
 	Tell() int64
 	Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error)
 }
@@ -237,7 +237,7 @@ func (x *SeekableBase) CanTruncate() bool {
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *SeekableBase) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
+func (x *SeekableBase) SeekableSeek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)

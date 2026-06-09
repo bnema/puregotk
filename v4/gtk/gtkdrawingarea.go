@@ -299,24 +299,24 @@ func (x *DrawingArea) GetPropertyContentWidth() int {
 // This is useful in order to keep state up to date with the widget size,
 // like for instance a backing surface.
 func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.DrawingArea.Resize", func(clsPtr uintptr, WidthVarp int, HeightVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DrawingArea, int, int))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := DrawingArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "resize", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

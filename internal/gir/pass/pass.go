@@ -363,7 +363,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			})
 		}
 		for _, f := range rec.Methods {
-			name := util.SnakeToCamel(f.Name)
+			name := types.SafeReceiverMethodName(util.SnakeToCamel(rec.Name), util.SnakeToCamel(f.Name))
 			if name == "" {
 				name = util.SnakeToCamel(f.CIdentifier)
 			}
@@ -481,8 +481,6 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		}
 		signals := make([]types.SignalsTemplate, len(cls.Signals))
 		for i, s := range cls.Signals {
-			imps.AddPurego()
-			imps.AddUnsafe()
 			imps.AddPkg("glib")
 			imps.AddPkg("gobject")
 
@@ -496,7 +494,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		}
 		receivers := make([]types.FuncTemplate, len(cls.Methods))
 		for i, f := range cls.Methods {
-			name := util.SnakeToCamel(f.Name)
+			name := types.SafeReceiverMethodName(util.SnakeToCamel(cls.Name), util.SnakeToCamel(f.Name))
 			implemented[name] = true
 			receivers[i] = types.FuncTemplate{
 				Doc:   f.Doc.StringSafe(),
@@ -554,7 +552,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 
 	var sharedLibraries []string
 	if ns.SharedLibrary != "" {
-		for _, lib := range strings.Split(ns.SharedLibrary, ",") {
+		for lib := range strings.SplitSeq(ns.SharedLibrary, ",") {
 			if trimmed := strings.TrimSpace(lib); trimmed != "" {
 				sharedLibraries = append(sharedLibraries, trimmed)
 			}

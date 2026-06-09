@@ -183,24 +183,24 @@ func (c *DisplayManager) SetGoPointer(ptr uintptr) {
 
 // Emitted when a display is opened.
 func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DisplayVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gdk.DisplayManager.DisplayOpened", func(clsPtr uintptr, DisplayVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DisplayManager, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := DisplayManager{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DisplayVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "display-opened", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

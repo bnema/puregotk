@@ -372,24 +372,24 @@ func (x *SwipeTracker) GetPropertyUpperOvershoot() bool {
 // This signal is emitted right before a swipe will be started, after the
 // drag threshold has been passed.
 func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.SwipeTracker.BeginSwipe", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SwipeTracker))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SwipeTracker{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "begin-swipe", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -400,24 +400,24 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint {
 // provided in pixels per second. [class@SpringAnimation] is usually a good
 // fit for this.
 func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, VelocityVarp float64, ToVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.SwipeTracker.EndSwipe", func(clsPtr uintptr, VelocityVarp float64, ToVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SwipeTracker, float64, float64))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SwipeTracker{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, VelocityVarp, ToVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "end-swipe", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -426,47 +426,47 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 // The @direction value can be used to restrict the swipe to a certain
 // direction.
 func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DirectionVarp NavigationDirection) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.SwipeTracker.Prepare", func(clsPtr uintptr, DirectionVarp NavigationDirection, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SwipeTracker, NavigationDirection))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SwipeTracker{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DirectionVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "prepare", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // This signal is emitted every time the progress value changes.
 func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ProgressVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.SwipeTracker.UpdateSwipe", func(clsPtr uintptr, ProgressVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SwipeTracker, float64))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SwipeTracker{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ProgressVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "update-swipe", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

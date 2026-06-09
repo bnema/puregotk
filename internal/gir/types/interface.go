@@ -14,7 +14,7 @@ func ConvertInterface(currns string, ins string, inter Interface, implemented ma
 	}
 
 	for _, m := range inter.Methods {
-		name := util.SnakeToCamel(m.Name)
+		name := SafeReceiverMethodName(util.SnakeToCamel(inter.Name), util.SnakeToCamel(m.Name))
 		if implemented != nil {
 			v, ok := implemented[name]
 			if v && ok {

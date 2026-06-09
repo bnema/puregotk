@@ -1630,24 +1630,24 @@ func (x *DBusConnection) GetPropertyUniqueName() string {
 // @connection. You are guaranteed that this signal is emitted only
 // once.
 func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, *glib.Error)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, RemotePeerVanishedVarp bool, ErrorVarp unsafe.Pointer) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusConnection.Closed", func(clsPtr uintptr, RemotePeerVanishedVarp bool, ErrorVarp unsafe.Pointer, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DBusConnection, bool, *glib.Error))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := DBusConnection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, RemotePeerVanishedVarp, (*glib.Error)(ErrorVarp))
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "closed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

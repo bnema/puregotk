@@ -219,24 +219,24 @@ func (c *CssProvider) SetGoPointer(ptr uintptr) {
 // may opt to defer parsing parts or all of the input to a later time
 // than when a loading function was called.
 func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, *glib.Error)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SectionVarp uintptr, ErrorVarp unsafe.Pointer) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CssProvider.ParsingError", func(clsPtr uintptr, SectionVarp uintptr, ErrorVarp unsafe.Pointer, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CssProvider, uintptr, *glib.Error))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := CssProvider{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SectionVarp, (*glib.Error)(ErrorVarp))
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "parsing-error", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

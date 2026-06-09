@@ -733,24 +733,24 @@ func (x *CellRendererText) GetPropertyWrapWidth() int {
 // It is the responsibility of the application to update the model
 // and store @new_text at the position indicated by @path.
 func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PathVarp string, NewTextVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellRendererText.Edited", func(clsPtr uintptr, PathVarp string, NewTextVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellRendererText, string, string))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := CellRendererText{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PathVarp, NewTextVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "edited", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

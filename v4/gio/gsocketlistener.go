@@ -574,24 +574,24 @@ func (x *SocketListener) GetPropertyListenBacklog() int {
 // IPv6, a separate set of signals will be emitted for each, and
 // the order they happen in is undefined.
 func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, EventVarp SocketListenerEvent, SocketVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.SocketListener.Event", func(clsPtr uintptr, EventVarp SocketListenerEvent, SocketVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SocketListener, SocketListenerEvent, uintptr))
+		if !ok || cb == nil || *cb == nil {
+			return
+		}
 		fa := SocketListener{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, EventVarp, SocketVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "event", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
