@@ -800,24 +800,24 @@ func (x *MountOperation) GetPropertyUsername() string {
 // Implementations of GMountOperation should handle this signal
 // by dismissing open password dialogs.
 func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.Aborted", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "aborted", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -827,24 +827,24 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint {
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
 func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.AskPassword", func(clsPtr uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation, string, string, string, AskPasswordFlags))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, DefaultUserVarp, DefaultDomainVarp, FlagsVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "ask-password", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -855,47 +855,47 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
 func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MessageVarp string, ChoicesVarp []string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.AskQuestion", func(clsPtr uintptr, MessageVarp string, ChoicesVarp []string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation, string, []string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, ChoicesVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "ask-question", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted when the user has replied to the mount operation.
 func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ResultVarp MountOperationResult) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.Reply", func(clsPtr uintptr, ResultVarp MountOperationResult, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation, MountOperationResult))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ResultVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "reply", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -912,24 +912,24 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
 func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.ShowProcesses", func(clsPtr uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation, string, []glib.Pid, []string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, ProcessesVarp, ChoicesVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "show-processes", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -950,24 +950,24 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
 func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.MountOperation.ShowUnmountProgress", func(clsPtr uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MountOperation, string, int64, int64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MountOperation{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, MessageVarp, TimeLeftVarp, BytesLeftVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "show-unmount-progress", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

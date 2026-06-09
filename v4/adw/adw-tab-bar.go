@@ -446,24 +446,26 @@ func (x *TabBar) GetPropertyTabsRevealed() bool {
 //
 // See [signal@Gtk.DropTarget::drop].
 func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.TabBar.ExtraDragDrop", func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(TabBar, uintptr, uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := TabBar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, PageVarp, ValueVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "extra-drag-drop", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -477,24 +479,26 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 //
 // See [property@Gtk.DropTarget:value].
 func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.DragAction) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) gdk.DragAction {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.TabBar.ExtraDragValue", func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr, signalData uintptr) gdk.DragAction {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero gdk.DragAction
+			return zero
+		}
+		cb, ok := handler.(*func(TabBar, uintptr, uintptr) gdk.DragAction)
+		if !ok || cb == nil {
+			var zero gdk.DragAction
+			return zero
+		}
 		fa := TabBar{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, PageVarp, ValueVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "extra-drag-value", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

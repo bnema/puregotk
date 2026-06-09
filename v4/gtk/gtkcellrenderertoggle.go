@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -186,24 +184,24 @@ func (x *CellRendererToggle) GetPropertyRadio() bool {
 // with the correct value to store at @path.  Often this is simply the
 // opposite of the value currently stored at @path.
 func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PathVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellRendererToggle.Toggled", func(clsPtr uintptr, PathVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellRendererToggle, string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := CellRendererToggle{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PathVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "toggled", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

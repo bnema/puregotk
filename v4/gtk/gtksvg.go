@@ -662,24 +662,24 @@ func (x *Svg) GetPropertyWeight() float64 {
 //
 //	If in doubt, defer to an idle.
 func (x *Svg) ConnectError(cb *func(Svg, *glib.Error)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ErrorVarp unsafe.Pointer) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Svg.Error", func(clsPtr uintptr, ErrorVarp unsafe.Pointer, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Svg, *glib.Error))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Svg{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, (*glib.Error)(ErrorVarp))
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "error", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "error", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

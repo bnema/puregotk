@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -186,24 +184,26 @@ func (c *Overlay) SetGoPointer(ptr uintptr) {
 // `GtkScrolledWindow`, the overlays are placed relative
 // to its contents.
 func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp *uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Overlay.GetChildPosition", func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp *uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(Overlay, uintptr, *uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := Overlay{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, WidgetVarp, AllocationVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "get-child-position", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

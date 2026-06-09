@@ -490,24 +490,24 @@ func (x *Printer) GetPropertyStateMessage() string {
 // The @success parameter indicates if the information was
 // actually obtained.
 func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SuccessVarp bool) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Printer.DetailsAcquired", func(clsPtr uintptr, SuccessVarp bool, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Printer, bool))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Printer{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SuccessVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "details-acquired", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

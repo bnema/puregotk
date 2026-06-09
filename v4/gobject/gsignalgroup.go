@@ -2,8 +2,6 @@
 package gobject
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -193,24 +191,24 @@ func (c *SignalGroup) SetGoPointer(ptr uintptr) {
 // will not emit when #GSignalGroup:target is %NULL and also allows for
 // receiving the #GObject without a data-race.
 func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, InstanceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gobject.SignalGroup.Bind", func(clsPtr uintptr, InstanceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SignalGroup, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := SignalGroup{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, InstanceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := SignalConnectDataRaw(x.GoPointer(), "bind", cbRefPtr, signalData, glib.SignalDestroyNotify(), GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -220,24 +218,24 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
 // This signal will only be emitted if the previous target of @self is
 // non-%NULL.
 func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gobject.SignalGroup.Unbind", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SignalGroup))
+		if !ok || cb == nil {
+			return
+		}
 		fa := SignalGroup{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := SignalConnectDataRaw(x.GoPointer(), "unbind", cbRefPtr, signalData, glib.SignalDestroyNotify(), GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

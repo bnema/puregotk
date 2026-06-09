@@ -2,8 +2,6 @@
 package gio
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -141,48 +139,52 @@ func (c *DBusAuthObserver) SetGoPointer(ptr uintptr) {
 
 // Emitted to check if @mechanism is allowed to be used.
 func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, string) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, MechanismVarp string) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusAuthObserver.AllowMechanism", func(clsPtr uintptr, MechanismVarp string, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DBusAuthObserver, string) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DBusAuthObserver{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, MechanismVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "allow-mechanism", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted to check if a peer that is successfully authenticated
 // is authorized.
 func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, StreamVarp uintptr, CredentialsVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusAuthObserver.AuthorizeAuthenticatedPeer", func(clsPtr uintptr, StreamVarp uintptr, CredentialsVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DBusAuthObserver, uintptr, uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DBusAuthObserver{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, StreamVarp, CredentialsVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

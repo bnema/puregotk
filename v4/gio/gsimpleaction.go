@@ -221,24 +221,24 @@ func (x *SimpleAction) GetPropertyStateType() uintptr {
 // #GSimpleAction::change-state.  This should allow almost all users
 // of #GSimpleAction to connect only one handler or the other.
 func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ParameterVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.SimpleAction.Activate", func(clsPtr uintptr, ParameterVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SimpleAction, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := SimpleAction{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ParameterVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "activate", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -279,24 +279,24 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint {
 // The handler need not set the state to the requested value.
 // It could set it to any value at all, or take some other action.
 func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ValueVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.SimpleAction.ChangeState", func(clsPtr uintptr, ValueVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(SimpleAction, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := SimpleAction{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ValueVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "change-state", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

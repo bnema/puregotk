@@ -769,24 +769,24 @@ func (x *MessageDialog) GetPropertyHeadingUseMarkup() bool {
 // action, @response will be set to the value of
 // [property@MessageDialog:close-response].
 func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ResponseVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("adw.MessageDialog.Response", func(clsPtr uintptr, ResponseVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(MessageDialog, string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := MessageDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ResponseVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "response", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

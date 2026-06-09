@@ -477,24 +477,24 @@ func (x *Gesture) GetPropertyNPoints() uint {
 // situation @sequence won't pertain to the current set of active
 // touches, so don't rely on this being true.
 func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Gesture.Begin", func(clsPtr uintptr, SequenceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Gesture, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Gesture{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "begin", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -509,24 +509,24 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint {
 // @gesture must forget everything about @sequence as in
 // response to this signal.
 func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Gesture.Cancel", func(clsPtr uintptr, SequenceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Gesture, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Gesture{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "cancel", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -540,24 +540,24 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint {
 // This situation may be detected by checking through
 // [method@Gtk.Gesture.handles_sequence].
 func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Gesture.End", func(clsPtr uintptr, SequenceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Gesture, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Gesture{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "end", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -566,24 +566,24 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint {
 // See [method@Gtk.Gesture.set_sequence_state] to know
 // more about the expectable sequence lifetimes.
 func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSequenceState)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SequenceVarp uintptr, StateVarp EventSequenceState) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Gesture.SequenceStateChanged", func(clsPtr uintptr, SequenceVarp uintptr, StateVarp EventSequenceState, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Gesture, uintptr, EventSequenceState))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Gesture{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp, StateVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "sequence-state-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -591,24 +591,24 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 //
 // @sequence is guaranteed to pertain to the set of active touches.
 func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, SequenceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Gesture.Update", func(clsPtr uintptr, SequenceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Gesture, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Gesture{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, SequenceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "update", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

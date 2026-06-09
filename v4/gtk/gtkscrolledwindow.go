@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -733,24 +731,24 @@ func (x *ScrolledWindow) GetPropertyPropagateNaturalWidth() bool {
 // Note: The @pos argument is LTR/RTL aware, so callers should be
 // aware too if intending to provide behavior on horizontal edges.
 func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionType)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "edge-overshot", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PosVarp PositionType) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.ScrolledWindow.EdgeOvershot", func(clsPtr uintptr, PosVarp PositionType, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(ScrolledWindow, PositionType))
+		if !ok || cb == nil {
+			return
+		}
 		fa := ScrolledWindow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PosVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "edge-overshot", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "edge-overshot", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -764,24 +762,24 @@ func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionTy
 // Note: The @pos argument is LTR/RTL aware, so callers should be
 // aware too if intending to provide behavior on horizontal edges.
 func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionType)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "edge-reached", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PosVarp PositionType) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.ScrolledWindow.EdgeReached", func(clsPtr uintptr, PosVarp PositionType, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(ScrolledWindow, PositionType))
+		if !ok || cb == nil {
+			return
+		}
 		fa := ScrolledWindow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, PosVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "edge-reached", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "edge-reached", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -794,24 +792,24 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; to move forward and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;` to move backward.
 func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionType)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DirectionTypeVarp DirectionType) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.ScrolledWindow.MoveFocusOut", func(clsPtr uintptr, DirectionTypeVarp DirectionType, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(ScrolledWindow, DirectionType))
+		if !ok || cb == nil {
+			return
+		}
 		fa := ScrolledWindow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DirectionTypeVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "move-focus-out", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -822,24 +820,26 @@ func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionT
 // The horizontal or vertical adjustment is updated which triggers a
 // signal that the scrolled window’s child may listen to and scroll itself.
 func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType, bool) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-child", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ScrollVarp ScrollType, HorizontalVarp bool) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.ScrolledWindow.ScrollChild", func(clsPtr uintptr, ScrollVarp ScrollType, HorizontalVarp bool, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(ScrolledWindow, ScrollType, bool) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := ScrolledWindow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, ScrollVarp, HorizontalVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-child", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "scroll-child", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

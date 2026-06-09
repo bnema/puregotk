@@ -257,24 +257,24 @@ func (c *DragSource) SetGoPointer(ptr uintptr) {
 // It can be used to e.g. set a custom drag icon with
 // [method@Gtk.DragSource.set_icon].
 func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DragVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.DragSource.DragBegin", func(clsPtr uintptr, DragVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DragSource, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := DragSource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DragVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-begin", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -284,24 +284,26 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint {
 // the type of error. It should return %TRUE if the failure has been handled
 // and the default "drag operation failed" animation should not be shown.
 func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCancelReason) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DragVarp uintptr, ReasonVarp gdk.DragCancelReason) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.DragSource.DragCancel", func(clsPtr uintptr, DragVarp uintptr, ReasonVarp gdk.DragCancelReason, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DragSource, uintptr, gdk.DragCancelReason) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DragSource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, DragVarp, ReasonVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-cancel", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -311,24 +313,24 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 // things done in [signal@Gtk.DragSource::prepare] or
 // [signal@Gtk.DragSource::drag-begin] handlers.
 func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, DragVarp uintptr, DeleteDataVarp bool) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.DragSource.DragEnd", func(clsPtr uintptr, DragVarp uintptr, DeleteDataVarp bool, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DragSource, uintptr, bool))
+		if !ok || cb == nil {
+			return
+		}
 		fa := DragSource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, DragVarp, DeleteDataVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-end", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -339,25 +341,27 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint {
 // the [property@Gtk.DragSource:content] property, so if you set up that
 // property ahead of time, you don't need to connect to this signal.
 func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.ContentProvider) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) uintptr {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.DragSource.Prepare", func(clsPtr uintptr, XVarp float64, YVarp float64, signalData uintptr) uintptr {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero uintptr
+			return zero
+		}
+		cb, ok := handler.(*func(DragSource, float64, float64) gdk.ContentProvider)
+		if !ok || cb == nil {
+			var zero uintptr
+			return zero
+		}
 		fa := DragSource{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		PrepareCls := cbFn(fa, XVarp, YVarp)
 		return PrepareCls.Ptr
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "prepare", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

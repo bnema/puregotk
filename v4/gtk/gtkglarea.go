@@ -617,25 +617,27 @@ func (x *GLArea) GetPropertyUseEs() bool {
 // [method@Gtk.GLArea.set_error] to register a more detailed error
 // of how the construction failed.
 func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) uintptr {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GLArea.CreateContext", func(clsPtr uintptr, signalData uintptr) uintptr {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero uintptr
+			return zero
+		}
+		cb, ok := handler.(*func(GLArea) gdk.GLContext)
+		if !ok || cb == nil {
+			var zero uintptr
+			return zero
+		}
 		fa := GLArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		CreateContextCls := cbFn(fa)
 		return CreateContextCls.Ptr
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "create-context", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -644,24 +646,26 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint {
 // The @context is bound to the @area prior to emitting this function,
 // and the buffers are painted to the window once the emission terminates.
 func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ContextVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GLArea.Render", func(clsPtr uintptr, ContextVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(GLArea, uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := GLArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, ContextVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "render", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -677,24 +681,24 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint {
 //
 // The default handler sets up the GL viewport.
 func (x *GLArea) ConnectResize(cb *func(GLArea, int, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GLArea.Resize", func(clsPtr uintptr, WidthVarp int, HeightVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GLArea, int, int))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GLArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "resize", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

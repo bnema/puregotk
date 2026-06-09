@@ -99,24 +99,24 @@ func (c *GestureSwipe) SetGoPointer(ptr uintptr) {
 //
 // Velocity and direction are a product of previously recorded events.
 func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, VelocityXVarp float64, VelocityYVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureSwipe.Swipe", func(clsPtr uintptr, VelocityXVarp float64, VelocityYVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureSwipe, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureSwipe{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, VelocityXVarp, VelocityYVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "swipe", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

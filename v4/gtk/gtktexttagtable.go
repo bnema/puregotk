@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"unsafe"
-
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
@@ -145,47 +143,47 @@ func (c *TextTagTable) SetGoPointer(ptr uintptr) {
 
 // Emitted every time a new tag is added in the `GtkTextTagTable`.
 func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, TagVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.TextTagTable.TagAdded", func(clsPtr uintptr, TagVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(TextTagTable, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := TextTagTable{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, TagVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "tag-added", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted every time a tag in the `GtkTextTagTable` changes.
 func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, TagVarp uintptr, SizeChangedVarp bool) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.TextTagTable.TagChanged", func(clsPtr uintptr, TagVarp uintptr, SizeChangedVarp bool, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(TextTagTable, uintptr, bool))
+		if !ok || cb == nil {
+			return
+		}
 		fa := TextTagTable{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, TagVarp, SizeChangedVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "tag-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -194,24 +192,24 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 // The @tag is still valid by the time the signal is emitted, but
 // it is not associated with a tag table any more.
 func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, TagVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.TextTagTable.TagRemoved", func(clsPtr uintptr, TagVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(TextTagTable, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := TextTagTable{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, TagVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "tag-removed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

@@ -106,70 +106,70 @@ func (c *GestureDrag) SetGoPointer(ptr uintptr) {
 
 // Emitted whenever dragging starts.
 func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, StartXVarp float64, StartYVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureDrag.DragBegin", func(clsPtr uintptr, StartXVarp float64, StartYVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureDrag, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureDrag{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, StartXVarp, StartYVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-begin", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted whenever the dragging is finished.
 func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, OffsetXVarp float64, OffsetYVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureDrag.DragEnd", func(clsPtr uintptr, OffsetXVarp float64, OffsetYVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureDrag, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureDrag{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-end", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted whenever the dragging point moves.
 func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-update", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, OffsetXVarp float64, OffsetYVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureDrag.DragUpdate", func(clsPtr uintptr, OffsetXVarp float64, OffsetYVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureDrag, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureDrag{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, OffsetXVarp, OffsetYVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-update", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "drag-update", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

@@ -427,24 +427,24 @@ func (x *NativeDialog) GetPropertyVisible() bool {
 // If you call [method@Gtk.NativeDialog.hide] before the user
 // responds to the dialog this signal will not be emitted.
 func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ResponseIdVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.NativeDialog.Response", func(clsPtr uintptr, ResponseIdVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(NativeDialog, int))
+		if !ok || cb == nil {
+			return
+		}
 		fa := NativeDialog{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ResponseIdVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "response", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

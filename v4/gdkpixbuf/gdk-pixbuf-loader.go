@@ -426,24 +426,24 @@ func (c *PixbufLoader) SetGoPointer(ptr uintptr) {
 // gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded
 // pixbuf.
 func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gdkpixbuf.PixbufLoader.AreaPrepared", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(PixbufLoader))
+		if !ok || cb == nil {
+			return
+		}
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "area-prepared", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -456,24 +456,24 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint {
 // Applications can use this signal to know when to repaint
 // areas of an image that is being loaded.
 func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gdkpixbuf.PixbufLoader.AreaUpdated", func(clsPtr uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(PixbufLoader, int, int, int, int))
+		if !ok || cb == nil {
+			return
+		}
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, WidthVarp, HeightVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "area-updated", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -483,24 +483,24 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, 
 // notification when an image loader is closed by the code that
 // drives it.
 func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gdkpixbuf.PixbufLoader.Closed", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(PixbufLoader))
+		if !ok || cb == nil {
+			return
+		}
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "closed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -512,24 +512,24 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint {
 // to this signal to set the desired size to which the image
 // should be scaled.
 func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, WidthVarp int, HeightVarp int) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gdkpixbuf.PixbufLoader.SizePrepared", func(clsPtr uintptr, WidthVarp int, HeightVarp int, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(PixbufLoader, int, int))
+		if !ok || cb == nil {
+			return
+		}
 		fa := PixbufLoader{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, WidthVarp, HeightVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "size-prepared", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

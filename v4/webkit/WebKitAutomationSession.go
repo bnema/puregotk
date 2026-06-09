@@ -147,49 +147,51 @@ func (x *AutomationSession) GetPropertyId() string {
 // When creating a new web view and there's an active browsing context, the new window
 // or tab shouldn't be focused.
 func (x *AutomationSession) ConnectCreateWebView(cb *func(AutomationSession) WebView) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) uintptr {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.AutomationSession.CreateWebView", func(clsPtr uintptr, signalData uintptr) uintptr {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero uintptr
+			return zero
+		}
+		cb, ok := handler.(*func(AutomationSession) WebView)
+		if !ok || cb == nil {
+			var zero uintptr
+			return zero
+		}
 		fa := AutomationSession{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		CreateWebViewCls := cbFn(fa)
 		return CreateWebViewCls.Ptr
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "create-web-view", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "create-web-view", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // This signal is emitted when the given automation session is about to finish.
 // It allows clients to perform any cleanup tasks before the session is destroyed.
 func (x *AutomationSession) ConnectWillClose(cb *func(AutomationSession)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("webkit.AutomationSession.WillClose", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(AutomationSession))
+		if !ok || cb == nil {
+			return
+		}
 		fa := AutomationSession{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "will-close", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "will-close", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

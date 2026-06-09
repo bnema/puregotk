@@ -454,24 +454,24 @@ func (x *DBusObjectManagerClient) GetPropertyObjectPath() string {
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
 func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusObjectManagerClient.InterfaceProxyPropertiesChanged", func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := DBusObjectManagerClient{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, ChangedPropertiesVarp, InvalidatedPropertiesVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -484,24 +484,24 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
 func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusObjectManagerClient.InterfaceProxySignal", func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := DBusObjectManagerClient{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ObjectProxyVarp, InterfaceProxyVarp, SenderNameVarp, SignalNameVarp, ParametersVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "interface-proxy-signal", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

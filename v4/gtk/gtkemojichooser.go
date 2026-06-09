@@ -123,24 +123,24 @@ func (c *EmojiChooser) SetGoPointer(ptr uintptr) {
 
 // Emitted when the user selects an Emoji.
 func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, TextVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.EmojiChooser.EmojiPicked", func(clsPtr uintptr, TextVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(EmojiChooser, string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := EmojiChooser{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, TextVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "emoji-picked", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

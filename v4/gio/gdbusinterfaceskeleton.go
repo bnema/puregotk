@@ -448,24 +448,26 @@ func (c *DBusInterfaceSkeleton) SetGoPointer(ptr uintptr) {
 // handled in the same thread as the object that @interface belongs
 // to was exported in.
 func (x *DBusInterfaceSkeleton) ConnectGAuthorizeMethod(cb *func(DBusInterfaceSkeleton, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "g-authorize-method", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, InvocationVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusInterfaceSkeleton.GAuthorizeMethod", func(clsPtr uintptr, InvocationVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DBusInterfaceSkeleton, uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DBusInterfaceSkeleton{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, InvocationVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "g-authorize-method", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "g-authorize-method", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

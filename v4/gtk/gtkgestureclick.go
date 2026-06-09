@@ -81,24 +81,24 @@ func (c *GestureClick) SetGoPointer(ptr uintptr) {
 
 // Emitted whenever a button or touch press happens.
 func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, NPressVarp int, XVarp float64, YVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureClick.Pressed", func(clsPtr uintptr, NPressVarp int, XVarp float64, YVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureClick, int, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureClick{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "pressed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -109,47 +109,47 @@ func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int, float64, float
 // have been emitted between the press and its release, @n_press
 // will only start over at the next press.
 func (x *GestureClick) ConnectReleased(cb *func(GestureClick, int, float64, float64)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "released", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, NPressVarp int, XVarp float64, YVarp float64) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureClick.Released", func(clsPtr uintptr, NPressVarp int, XVarp float64, YVarp float64, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureClick, int, float64, float64))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureClick{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, NPressVarp, XVarp, YVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "released", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "released", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Emitted whenever any time/distance threshold has been exceeded.
 func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "stopped", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureClick.Stopped", func(clsPtr uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureClick))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureClick{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "stopped", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "stopped", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -160,24 +160,24 @@ func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint {
 // where input is grabbed elsewhere mid-press or the pressed
 // widget voluntarily relinquishes its implicit grab.
 func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, float64, uint, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "unpaired-release", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64, ButtonVarp uint, SequenceVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.GestureClick.UnpairedRelease", func(clsPtr uintptr, XVarp float64, YVarp float64, ButtonVarp uint, SequenceVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(GestureClick, float64, float64, uint, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := GestureClick{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, XVarp, YVarp, ButtonVarp, SequenceVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "unpaired-release", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "unpaired-release", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

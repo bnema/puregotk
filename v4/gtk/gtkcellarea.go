@@ -1594,47 +1594,47 @@ func (c *CellArea) SetGoPointer(ptr uintptr) {
 // Indicates that editing has started on @renderer and that @editable
 // should be added to the owning cell-layouting widget at @cell_area.
 func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintptr, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, CellAreaVarp uintptr, PathVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellArea.AddEditable", func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, CellAreaVarp uintptr, PathVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellArea, uintptr, uintptr, uintptr, string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, RendererVarp, EditableVarp, CellAreaVarp, PathVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "add-editable", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // This signal is emitted whenever applying attributes to @area from @model
 func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, bool, bool)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ModelVarp uintptr, IterVarp uintptr, IsExpanderVarp bool, IsExpandedVarp bool) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellArea.ApplyAttributes", func(clsPtr uintptr, ModelVarp uintptr, IterVarp uintptr, IsExpanderVarp bool, IsExpandedVarp bool, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellArea, uintptr, uintptr, bool, bool))
+		if !ok || cb == nil {
+			return
+		}
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ModelVarp, IterVarp, IsExpanderVarp, IsExpandedVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "apply-attributes", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
@@ -1647,48 +1647,48 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 // because focus may change to the same renderer in the
 // same cell area for a different row of data.
 func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, RendererVarp uintptr, PathVarp string) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellArea.FocusChanged", func(clsPtr uintptr, RendererVarp uintptr, PathVarp string, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellArea, uintptr, string))
+		if !ok || cb == nil {
+			return
+		}
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, RendererVarp, PathVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "focus-changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
 // Indicates that editing finished on @renderer and that @editable
 // should be removed from the owning cell-layouting widget.
 func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.CellArea.RemoveEditable", func(clsPtr uintptr, RendererVarp uintptr, EditableVarp uintptr, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(CellArea, uintptr, uintptr))
+		if !ok || cb == nil {
+			return
+		}
 		fa := CellArea{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, RendererVarp, EditableVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "remove-editable", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

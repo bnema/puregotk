@@ -352,24 +352,24 @@ func (x *FileMonitor) GetPropertyRateLimit() int {
 //
 // In all the other cases, @other_file will be set to #NULL.
 func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, FileMonitorEvent)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, FileVarp uintptr, OtherFileVarp uintptr, EventTypeVarp FileMonitorEvent) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.FileMonitor.Changed", func(clsPtr uintptr, FileVarp uintptr, OtherFileVarp uintptr, EventTypeVarp FileMonitorEvent, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(FileMonitor, uintptr, uintptr, FileMonitorEvent))
+		if !ok || cb == nil {
+			return
+		}
 		fa := FileMonitor{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, FileVarp, OtherFileVarp, EventTypeVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

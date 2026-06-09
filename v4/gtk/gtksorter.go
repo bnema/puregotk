@@ -446,24 +446,24 @@ func (c *Sorter) SetGoPointer(ptr uintptr) {
 // the sort order without a full resorting. Refer to the
 // [enum@Gtk.SorterChange] documentation for details.
 func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ChangeVarp SorterChange) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Sorter.Changed", func(clsPtr uintptr, ChangeVarp SorterChange, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Sorter, SorterChange))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Sorter{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ChangeVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

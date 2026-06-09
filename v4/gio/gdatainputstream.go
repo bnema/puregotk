@@ -220,13 +220,13 @@ func (x *DataInputStream) GetNewlineType() DataStreamNewlineType {
 	return cret
 }
 
-var xDataInputStreamReadByte func(uintptr, uintptr, **glib.Error) byte
+var xDataInputStreamDataInputStreamReadByte func(uintptr, uintptr, **glib.Error) byte
 
 // Reads an unsigned 8-bit/1-byte value from @stream.
-func (x *DataInputStream) ReadByte(CancellableVar *Cancellable) (byte, error) {
+func (x *DataInputStream) DataInputStreamReadByte(CancellableVar *Cancellable) (byte, error) {
 	var cerr *glib.Error
 
-	cret := xDataInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	cret := xDataInputStreamDataInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -602,7 +602,7 @@ func (x *DataInputStream) CanTruncate() bool {
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *DataInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
+func (x *DataInputStream) SeekableSeek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
@@ -655,7 +655,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xDataInputStreamGetByteOrder, libs, "g_data_input_stream_get_byte_order")
 	core.PuregoSafeRegister(&xDataInputStreamGetNewlineType, libs, "g_data_input_stream_get_newline_type")
-	core.PuregoSafeRegister(&xDataInputStreamReadByte, libs, "g_data_input_stream_read_byte")
+	core.PuregoSafeRegister(&xDataInputStreamDataInputStreamReadByte, libs, "g_data_input_stream_read_byte")
 	core.PuregoSafeRegister(&xDataInputStreamReadInt16, libs, "g_data_input_stream_read_int16")
 	core.PuregoSafeRegister(&xDataInputStreamReadInt32, libs, "g_data_input_stream_read_int32")
 	core.PuregoSafeRegister(&xDataInputStreamReadInt64, libs, "g_data_input_stream_read_int64")

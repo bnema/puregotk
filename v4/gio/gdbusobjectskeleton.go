@@ -196,24 +196,26 @@ func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
 //
 // The default class handler just returns %TRUE.
 func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, InterfaceVarp uintptr, InvocationVarp uintptr) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.DBusObjectSkeleton.AuthorizeMethod", func(clsPtr uintptr, InterfaceVarp uintptr, InvocationVarp uintptr, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(DBusObjectSkeleton, uintptr, uintptr) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := DBusObjectSkeleton{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, InterfaceVarp, InvocationVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "authorize-method", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

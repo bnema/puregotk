@@ -760,24 +760,26 @@ func (x *TlsConnection) GetPropertyUseSystemCertdb() bool {
 // need to worry about this, and can simply block in the signal
 // handler until the UI thread returns an answer.
 func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr, TlsCertificateFlags) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gio.TlsConnection.AcceptCertificate", func(clsPtr uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(TlsConnection, uintptr, TlsCertificateFlags) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := TlsConnection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, PeerCertVarp, ErrorsVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "accept-certificate", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

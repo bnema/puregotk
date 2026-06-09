@@ -449,24 +449,24 @@ func (c *Filter) SetGoPointer(ptr uintptr) {
 // to be checked, but only some. Refer to the [enum@Gtk.FilterChange]
 // documentation for details.
 func (x *Filter) ConnectChanged(cb *func(Filter, FilterChange)) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, ChangeVarp FilterChange) {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.Filter.Changed", func(clsPtr uintptr, ChangeVarp FilterChange, signalData uintptr) {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			return
+		}
+		cb, ok := handler.(*func(Filter, FilterChange))
+		if !ok || cb == nil {
+			return
+		}
 		fa := Filter{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		cbFn(fa, ChangeVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "changed", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 

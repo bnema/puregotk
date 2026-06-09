@@ -13,3 +13,5 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
 )
+
+replace github.com/bnema/purego => ../purego

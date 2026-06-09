@@ -360,12 +360,12 @@ func (x *IOChannel) Ref() *IOChannel {
 	return (*IOChannel)(unsafe.Pointer(cret))
 }
 
-var xIOChannelSeek func(uintptr, int64, SeekType) IOError
+var xIOChannelIOChannelSeek func(uintptr, int64, SeekType) IOError
 
 // Sets the current position in the #GIOChannel, similar to the standard
 // library function fseek().
-func (x *IOChannel) Seek(OffsetVar int64, TypeVar SeekType) IOError {
-	cret := xIOChannelSeek(x.GoPointer(), OffsetVar, TypeVar)
+func (x *IOChannel) IOChannelSeek(OffsetVar int64, TypeVar SeekType) IOError {
+	cret := xIOChannelIOChannelSeek(x.GoPointer(), OffsetVar, TypeVar)
 	return cret
 }
 
@@ -1106,7 +1106,7 @@ func init() {
 	core.PuregoSafeRegister(&xIOChannelReadToEnd, libs, "g_io_channel_read_to_end")
 	core.PuregoSafeRegister(&xIOChannelReadUnichar, libs, "g_io_channel_read_unichar")
 	core.PuregoSafeRegister(&xIOChannelRef, libs, "g_io_channel_ref")
-	core.PuregoSafeRegister(&xIOChannelSeek, libs, "g_io_channel_seek")
+	core.PuregoSafeRegister(&xIOChannelIOChannelSeek, libs, "g_io_channel_seek")
 	core.PuregoSafeRegister(&xIOChannelSeekPosition, libs, "g_io_channel_seek_position")
 	core.PuregoSafeRegister(&xIOChannelSetBufferSize, libs, "g_io_channel_set_buffer_size")
 	core.PuregoSafeRegister(&xIOChannelSetBuffered, libs, "g_io_channel_set_buffered")

@@ -208,24 +208,26 @@ func (x *ShortcutsSection) GetPropertyViewName() string {
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgUp&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;.
 func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int) bool) uint {
-	cbPtr := uintptr(unsafe.Pointer(cb))
-	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
-		glib.SaveHandlerMapping(handlerID, cbPtr)
-		return handlerID
-	}
-
-	fcb := func(clsPtr uintptr, OffsetVarp int) bool {
+	signalData := glib.SaveSignalHandler(cb)
+	cbRefPtr := glib.SharedCallback("gtk.ShortcutsSection.ChangeCurrentPage", func(clsPtr uintptr, OffsetVarp int, signalData uintptr) bool {
+		handler, ok := glib.GetSignalHandler(signalData)
+		if !ok {
+			var zero bool
+			return zero
+		}
+		cb, ok := handler.(*func(ShortcutsSection, int) bool)
+		if !ok || cb == nil {
+			var zero bool
+			return zero
+		}
 		fa := ShortcutsSection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
 		return cbFn(fa, OffsetVarp)
-	}
-	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
-	glib.SaveHandlerMapping(handlerID, cbPtr)
+	})
+	handlerID := gobject.SignalConnectDataRaw(x.GoPointer(), "change-current-page", cbRefPtr, signalData, glib.SignalDestroyNotify(), gobject.GConnectDefaultValue)
+	glib.SaveSignalHandlerMapping(handlerID, signalData)
 	return handlerID
 }
 
