@@ -90,6 +90,42 @@ func TestManualNativeTemplateCallsAreLazyGuarded(t *testing.T) {
 	}
 }
 
+func TestDisplayGetDefaultRetainsGeneratedBorrowedResult(t *testing.T) {
+	source, err := os.ReadFile("../../../v4/gdk/gdkdisplay.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	start := strings.Index(string(source), "func DisplayGetDefault() *Display {")
+	if start < 0 {
+		t.Fatal("generated DisplayGetDefault wrapper not found")
+	}
+	body := string(source[start:])
+	end := strings.Index(body, "\n}\n")
+	if end < 0 {
+		t.Fatal("generated DisplayGetDefault wrapper is not terminated")
+	}
+	body = body[:end+3]
+
+	ordered := []string{
+		`core.LazyRegister(&xDisplayGetDefault, "GDK", "gdk_display_get_default", false)`,
+		"cret := xDisplayGetDefault()",
+		"if cret == 0",
+		"gobject.IncreaseRef(cret)",
+		"cls.Ptr = cret",
+	}
+	previous := -1
+	for _, want := range ordered {
+		if strings.Count(body, want) != 1 {
+			t.Fatalf("DisplayGetDefault generated body has %d occurrences of %q, want 1:\n%s", strings.Count(body, want), want, body)
+		}
+		position := strings.Index(body, want)
+		if position <= previous {
+			t.Fatalf("DisplayGetDefault generated operations are out of order at %q:\n%s", want, body)
+		}
+		previous = position
+	}
+}
+
 func TestLazyGuardValidationRejectsMisleadingGuards(t *testing.T) {
 	tests := []struct {
 		name   string
