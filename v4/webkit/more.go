@@ -193,12 +193,16 @@ func NewWebViewWithNetworkSession(session *NetworkSession) *WebView {
 	return NewWebViewWithOptions(&WebViewOptions{NetworkSession: session})
 }
 
+var lazyRegisterNavigationActionCopy = func() {
+	core.LazyRegister(&xNavigationActionCopy, "WEBKIT", "webkit_navigation_action_copy", false)
+}
+
 // NavigationActionFromPointer wraps a raw pointer from the "create" signal into a copied NavigationAction.
 func NavigationActionFromPointer(ptr uintptr) *NavigationAction {
 	if ptr == 0 {
 		return nil
 	}
-	core.LazyRegister(&xNavigationActionCopy, "WEBKIT", "webkit_navigation_action_copy", false)
+	lazyRegisterNavigationActionCopy()
 	cret := xNavigationActionCopy(ptr)
 	if cret == 0 {
 		return nil

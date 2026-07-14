@@ -9,6 +9,10 @@ import (
 
 var errDmabufTextureBuildFailed = errors.New("gdk dmabuf texture build failed")
 
+var lazyRegisterDmabufTextureBuilderBuild = func() {
+	core.LazyRegister(&xDmabufTextureBuilderBuild, "GDK", "gdk_dmabuf_texture_builder_build", false)
+}
+
 // BuildWithDestroyNotifyPointer builds a DMABUF texture using a raw native
 // GDestroyNotify function pointer.
 //
@@ -26,7 +30,7 @@ func (x *DmabufTextureBuilder) BuildWithDestroyNotifyPointer(destroy uintptr, da
 	var cls *Texture
 	var cerr *glib.Error
 
-	core.LazyRegister(&xDmabufTextureBuilderBuild, "GDK", "gdk_dmabuf_texture_builder_build", false)
+	lazyRegisterDmabufTextureBuilderBuild()
 	cret := xDmabufTextureBuilderBuild(x.GoPointer(), destroy, data, &cerr)
 	if cret == 0 {
 		if cerr == nil {
