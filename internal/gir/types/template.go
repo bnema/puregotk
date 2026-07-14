@@ -46,6 +46,29 @@ type funcArgsTemplate struct {
 
 	// NullableStrings tracks Go->C nullable string params that need temporary C strings.
 	NullableStrings []NullableStringParam
+
+	// Throws records that the raw ABI has a trailing GError** that is not part
+	// of the public callback signature.
+	Throws bool
+
+	// ErrorType is the Go type used by a raw throwing callback's GError**.
+	ErrorType string
+}
+
+// CallbackCall converts raw callback arguments to the public callback shape.
+// Throwing callbacks receive a final GError** only at the C ABI boundary.
+func (f funcArgsTemplate) CallbackCall() []string {
+	args := append([]string(nil), f.Pure.Call...)
+	if f.Throws {
+		args = args[:len(args)-1]
+	}
+	return args
+}
+
+// RawCallbackCall converts public callback arguments to the raw ABI shape.
+// Throwing callbacks need a local GError** even though the public API omits it.
+func (f funcArgsTemplate) RawCallbackCall() []string {
+	return append([]string(nil), f.API.Call...)
 }
 
 // ArgContext indicates whether arguments are flowing from Go->C or C->Go.
@@ -290,14 +313,17 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 }
 
 func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {
+	f.Throws = true
 	f.API.Call = append(f.API.Call, "&cerr")
 	f.Pure.Names = append(f.Pure.Names, "cerrp")
 	f.Pure.Call = append(f.Pure.Call, "cerrp")
 	if strings.ToLower(ns) != "glib" {
+		f.ErrorType = "glib.Error"
 		f.Pure.Types = append(f.Pure.Types, "**glib.Error")
 		f.Pure.Full = append(f.Pure.Full, "cerrp **glib.Error")
 		imps.AddPkg("glib")
 	} else {
+		f.ErrorType = "Error"
 		f.Pure.Types = append(f.Pure.Types, "**Error")
 		f.Pure.Full = append(f.Pure.Full, "cerrp **Error")
 	}

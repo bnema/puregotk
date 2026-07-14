@@ -85,6 +85,14 @@ func (r *LazyResolver) Register(target any, library, symbol string) error {
 	r.mu.Lock()
 	state := r.symbols[key]
 	if state == nil {
+		// Generated binding tests and embedders may provide a function before
+		// the first call. Do not replace that explicit implementation with a
+		// symbol. Once a resolution has started, use its sync.Once rather than
+		// inspecting a function that the resolver may be publishing.
+		if value.Elem().Kind() == reflect.Func && !value.Elem().IsNil() {
+			r.mu.Unlock()
+			return nil
+		}
 		state = &lazySymbol{}
 		r.symbols[key] = state
 	}

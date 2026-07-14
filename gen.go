@@ -39,6 +39,7 @@ func main() {
 		"convcd":   util.ConvertArgsCommaDeref,
 		"convd":    util.ConvertArgsDeref,
 		"convcbne": util.ConvertCallbackArgsNoErr,
+		"convcbe":  util.ConvertCallbackArgsWithErr,
 		"propsset": util.PropertyScalarSet,
 		"propsget": util.PropertyScalarGet,
 		"propvset": util.PropertyVectorSet,

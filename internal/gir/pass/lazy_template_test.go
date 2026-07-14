@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"go/format"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"text/template"
@@ -21,6 +22,54 @@ func TestFileHasBindingsIncludesTypeGetters(t *testing.T) {
 	}
 }
 
+func TestThrowingCallbackAccessorsAdaptHiddenError(t *testing.T) {
+	data, err := os.ReadFile("../../../templates/go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	gotemp, err := template.New("go").Funcs(template.FuncMap{
+		"conv":     util.ConvertArgs,
+		"convc":    util.ConvertArgsComma,
+		"convcb":   util.ConvertCallbackArgs,
+		"convcd":   util.ConvertArgsCommaDeref,
+		"convd":    util.ConvertArgsDeref,
+		"convcbne": util.ConvertCallbackArgsNoErr,
+		"convcbe":  util.ConvertCallbackArgsWithErr,
+		"propsset": util.PropertyScalarSet,
+		"propsget": util.PropertyScalarGet,
+		"propvset": util.PropertyVectorSet,
+		"propvget": util.PropertyVectorGet,
+	}).Parse(string(data))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	p, err := New([]string{"../../../internal/gir/spec/GLib-2.0.gir"}, "github.com/bnema/puregotk/v4")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.First()
+	out := t.TempDir()
+	p.Second(out, gotemp)
+	generated, err := os.ReadFile(filepath.Join(out, "glib", "giochannel.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := string(generated)
+	for _, want := range []string{
+		"func (x *IOFuncs) OverrideIoRead(cb func(*IOChannel, string, uint, uint) IOStatus)",
+		"purego.NewCallback(func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesReadVarp uint, cerrp **Error) IOStatus",
+		"return cb(ChannelVarp, BufVarp, CountVarp, BytesReadVarp)",
+		"var rawCallback func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesReadVarp uint, cerrp **Error) IOStatus",
+		"var cerr *Error",
+		"return rawCallback(ChannelVar, BufVar, CountVar, BytesReadVar, &cerr)",
+	} {
+		if !strings.Contains(source, want) {
+			t.Fatalf("throwing IOFuncs callback did not adapt its hidden GError parameter; missing %q\\n%s", want, source)
+		}
+	}
+}
+
 func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 	data, err := os.ReadFile("../../../templates/go")
 	if err != nil {
@@ -33,6 +82,7 @@ func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 		"convcd":   util.ConvertArgsCommaDeref,
 		"convd":    util.ConvertArgsDeref,
 		"convcbne": util.ConvertCallbackArgsNoErr,
+		"convcbe":  util.ConvertCallbackArgsWithErr,
 		"propsset": util.PropertyScalarSet,
 		"propsget": util.PropertyScalarGet,
 		"propvset": util.PropertyVectorSet,

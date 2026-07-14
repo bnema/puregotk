@@ -101,15 +101,15 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           x.x{{.Name}} = 0
      } else {
           x.x{{.Name}} = purego.NewCallback(func({{conv .Args.Pure.Full}}) {{.Ret.Raw}} {
-               {{if .Ret.Value}}{{if .Ret.Class}}ret := cb({{convcb .Args.Pure.Call}})
+               {{if .Ret.Value}}{{if .Ret.Class}}ret := cb({{convcb .Args.CallbackCall}})
                if ret == nil {
                     return 0
                }
-               return ret.GoPointer(){{else if .Ret.Record}}ret := cb({{convcb .Args.Pure.Call}})
+               return ret.GoPointer(){{else if .Ret.Record}}ret := cb({{convcb .Args.CallbackCall}})
                if ret == nil {
                     return 0
                }
-               return uintptr(unsafe.Pointer(ret)){{else}}return cb({{convcb .Args.Pure.Call}}){{end}}{{else}}cb({{convcb .Args.Pure.Call}}){{end}}
+               return uintptr(unsafe.Pointer(ret)){{else}}return cb({{convcb .Args.CallbackCall}}){{end}}{{else}}cb({{convcb .Args.CallbackCall}}){{end}}
           })
      }
 }
@@ -123,17 +123,18 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      var rawCallback func({{conv .Args.Pure.Full}}) {{.Ret.Raw}}
      purego.RegisterFunc(&rawCallback, x.x{{.Name}})
      return func({{conv .Args.API.Full}}) {{.Ret.Value}} {
-          {{if .Ret.Value}}{{if .Ret.Class}}rawRet := rawCallback({{convcbne .Args.API.Call}})
+          {{if .Args.Throws}}var cerr *{{.Args.ErrorType}}
+          {{end}}{{if .Ret.Value}}{{if .Ret.Class}}rawRet := rawCallback({{convcbe .Args.RawCallbackCall}})
           if rawRet == 0 {
                return nil
           }
           ret := {{.Ret.Instance}}
           ret.Ptr = rawRet
-          return ret{{else if .Ret.Record}}rawRet := rawCallback({{convcbne .Args.API.Call}})
+          return ret{{else if .Ret.Record}}rawRet := rawCallback({{convcbe .Args.RawCallbackCall}})
           if rawRet == 0 {
                return nil
           }
-          return ({{.Ret.Value}})(unsafe.Pointer(rawRet)){{else}}return rawCallback({{convcbne .Args.API.Call}}){{end}}{{else}}rawCallback({{convcbne .Args.API.Call}}){{end}}
+          return ({{.Ret.Value}})(unsafe.Pointer(rawRet)){{else}}return rawCallback({{convcbe .Args.RawCallbackCall}}){{end}}{{else}}rawCallback({{convcbe .Args.RawCallbackCall}}){{end}}
      }
 }
 {{end}}

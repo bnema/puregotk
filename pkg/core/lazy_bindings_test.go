@@ -35,6 +35,27 @@ func TestLazyResolverCachesLibraryAndSymbol(t *testing.T) {
 	}
 }
 
+func TestLazyResolverPreservesPreRegisteredTarget(t *testing.T) {
+	called := false
+	target := func() { called = true }
+	resolver := core.NewLazyResolver(
+		func(string) ([]string, error) {
+			t.Fatal("opened a library for a pre-registered target")
+			return nil, nil
+		},
+		func(string) (uintptr, error) { t.Fatal("opened a library for a pre-registered target"); return 0, nil },
+		func(any, []uintptr, string) error { t.Fatal("resolved a pre-registered target"); return nil },
+	)
+
+	if err := resolver.Register(&target, "DEMO", "demo_symbol"); err != nil {
+		t.Fatal(err)
+	}
+	target()
+	if !called {
+		t.Fatal("pre-registered target was replaced")
+	}
+}
+
 func TestLazyResolverCachesRequiredAndOptionalFailures(t *testing.T) {
 	want := errors.New("library unavailable")
 	var opens int
