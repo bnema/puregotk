@@ -126,6 +126,76 @@ func TestGeneratedConnectSignalReleasesSignalHandler(t *testing.T) {
 	assertSignalHandlerReleased(t, handlerID, signalData)
 }
 
+func TestSignalConnectDataRawRegistersLazyTarget(t *testing.T) {
+	oldTarget := xSignalConnectData
+	oldRegister := lazyRegisterSignalConnectData
+	xSignalConnectData = nil
+	defer func() {
+		xSignalConnectData = oldTarget
+		lazyRegisterSignalConnectData = oldRegister
+	}()
+
+	var registrations int
+	var gotInstance, gotHandler, gotData, gotDestroy uintptr
+	var gotSignal string
+	var gotFlags ConnectFlags
+	lazyRegisterSignalConnectData = func() {
+		registrations++
+		if xSignalConnectData != nil {
+			t.Fatal("lazy registration target was already populated")
+		}
+		xSignalConnectData = func(instance uintptr, detailedSignal string, handler uintptr, data uintptr, destroyData uintptr, flags ConnectFlags) uint {
+			gotInstance, gotSignal, gotHandler = instance, detailedSignal, handler
+			gotData, gotDestroy, gotFlags = data, destroyData, flags
+			return 73
+		}
+	}
+
+	const (
+		instance = uintptr(0x10)
+		handler  = uintptr(0x20)
+		data     = uintptr(0x30)
+		destroy  = uintptr(0x40)
+	)
+	if got := SignalConnectDataRaw(instance, "pressed", handler, data, destroy, GConnectAfterValue); got != 73 {
+		t.Fatalf("handler ID = %d, want 73", got)
+	}
+	if registrations != 1 {
+		t.Fatalf("lazy registrations = %d, want 1", registrations)
+	}
+	if gotInstance != instance || gotSignal != "pressed" || gotHandler != handler || gotData != data || gotDestroy != destroy || gotFlags != GConnectAfterValue {
+		t.Fatalf("native arguments = (%#x, %q, %#x, %#x, %#x, %#x), want (%#x, %q, %#x, %#x, %#x, %#x)", gotInstance, gotSignal, gotHandler, gotData, gotDestroy, gotFlags, instance, "pressed", handler, data, destroy, GConnectAfterValue)
+	}
+}
+
+func TestSignalConnectUsesLazyRawPath(t *testing.T) {
+	oldTarget := xSignalConnectData
+	oldRegister := lazyRegisterSignalConnectData
+	xSignalConnectData = nil
+	defer func() {
+		xSignalConnectData = oldTarget
+		lazyRegisterSignalConnectData = oldRegister
+	}()
+
+	var registrations int
+	lazyRegisterSignalConnectData = func() {
+		registrations++
+		xSignalConnectData = func(instance uintptr, detailedSignal string, handler uintptr, data uintptr, destroyData uintptr, flags ConnectFlags) uint {
+			if instance != 1 || detailedSignal != "legacy" || handler != 2 || data != 0 || destroyData != 0 || flags != GConnectDefaultValue {
+				t.Fatalf("legacy SignalConnect arguments changed")
+			}
+			return 74
+		}
+	}
+
+	if got := SignalConnect(1, "legacy", 2); got != 74 {
+		t.Fatalf("handler ID = %d, want 74", got)
+	}
+	if registrations != 1 {
+		t.Fatalf("lazy registrations = %d, want 1", registrations)
+	}
+}
+
 func assertCallbackReleased(t *testing.T, handlerID uint, cbPtr uintptr) {
 	t.Helper()
 	if refPtr, ok := glib.GetCallback(cbPtr); ok {
