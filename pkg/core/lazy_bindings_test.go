@@ -4,6 +4,7 @@ import (
 	"errors"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/bnema/puregotk/pkg/core"
 )
@@ -80,8 +81,10 @@ func TestLazyResolverCachesMissingSymbol(t *testing.T) {
 }
 
 func TestLazyResolverPublishesConcurrentFirstResolutionOnce(t *testing.T) {
+	const callers = 3
 	started := make(chan struct{})
 	release := make(chan struct{})
+	invoked := make(chan struct{}, callers)
 	var mu sync.Mutex
 	opens, resolves := 0, 0
 	resolver := core.NewLazyResolver(
@@ -94,19 +97,35 @@ func TestLazyResolverPublishesConcurrentFirstResolutionOnce(t *testing.T) {
 			<-release
 			return 99, nil
 		},
-		func(any, []uintptr, string) error {
+		func(target any, libraries []uintptr, symbol string) error {
 			mu.Lock()
 			resolves++
 			mu.Unlock()
+			*(target.(*func())) = func() { invoked <- struct{}{} }
 			return nil
 		},
 	)
 	var target func()
-	errs := make(chan error, 3)
-	for range 3 {
-		go func() { errs <- resolver.Register(&target, "DEMO", "demo_symbol") }()
+	errs := make(chan error, callers)
+	for range callers {
+		go func() {
+			if err := resolver.Register(&target, "DEMO", "demo_symbol"); err != nil {
+				errs <- err
+				return
+			}
+			target()
+			errs <- nil
+		}()
 	}
-	<-started
+	wait := func(name string, ch <-chan struct{}) {
+		t.Helper()
+		select {
+		case <-ch:
+		case <-time.After(time.Second):
+			t.Fatalf("timed out waiting for %s", name)
+		}
+	}
+	wait("first open", started)
 	mu.Lock()
 	gotOpens := opens
 	mu.Unlock()
@@ -114,10 +133,18 @@ func TestLazyResolverPublishesConcurrentFirstResolutionOnce(t *testing.T) {
 		t.Fatalf("opens while blocked=%d, want one", gotOpens)
 	}
 	close(release)
-	for range 3 {
-		if err := <-errs; err != nil {
-			t.Fatal(err)
+	for range callers {
+		select {
+		case err := <-errs:
+			if err != nil {
+				t.Fatal(err)
+			}
+		case <-time.After(time.Second):
+			t.Fatal("timed out waiting for resolver caller")
 		}
+	}
+	for range callers {
+		wait("published target invocation", invoked)
 	}
 	mu.Lock()
 	defer mu.Unlock()

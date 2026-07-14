@@ -291,11 +291,15 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 func (f *funcArgsTemplate) AddThrows(ns string, imps *ImportSet) {
 	f.API.Call = append(f.API.Call, "&cerr")
+	f.Pure.Names = append(f.Pure.Names, "cerrp")
+	f.Pure.Call = append(f.Pure.Call, "cerrp")
 	if strings.ToLower(ns) != "glib" {
 		f.Pure.Types = append(f.Pure.Types, "**glib.Error")
+		f.Pure.Full = append(f.Pure.Full, "cerrp **glib.Error")
 		imps.AddPkg("glib")
 	} else {
 		f.Pure.Types = append(f.Pure.Types, "**Error")
+		f.Pure.Full = append(f.Pure.Full, "cerrp **Error")
 	}
 }
 

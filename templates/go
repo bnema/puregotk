@@ -177,7 +177,6 @@ func (x *{{.Name}}Base) SetGoPointer(ptr uintptr) {
 {{range .Methods -}}
 {{.Doc}}
 func (x *{{$outer.Name}}Base) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
-     core.LazyRegister(&{{.Namespace}}X{{.FullName}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -215,7 +214,11 @@ func (x *{{$outer.Name}}Base) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}}
 {{end}}
 
 {{range .Methods -}}
-var {{.Namespace}}X{{.FullName}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Raw}}
+var {{.Namespace}}X{{.FullName}} func(uintptr{{convc .Args.Pure.Types}}) {{.Ret.Raw}} = func(instance uintptr{{convc .Args.Pure.Full}}) {{.Ret.Raw}} {
+     core.LazyRegister(&x{{.Namespace}}X{{.FullName}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
+     {{if .Ret.Value}}return {{end}}x{{.Namespace}}X{{.FullName}}(instance{{convc .Args.Pure.Names}})
+}
+var x{{.Namespace}}X{{.FullName}} func(uintptr{{convc .Args.Pure.Types}}) {{.Ret.Raw}}
 {{end}}
 {{end}}
 
@@ -481,7 +484,6 @@ func (x *{{$outer.Name}}) Connect{{.Name}}(cb *func({{$outer.Name}} {{convc .Arg
 {{range .Methods -}}
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
-     core.LazyRegister(&{{.Namespace}}X{{.FullName}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -600,6 +602,20 @@ func init() {
     {{end -}}
     {{if .SharedLibraries -}}
     core.SetSharedLibraries("{{.PkgEnv}}", []string{ {{range .SharedLibraries}}"{{.}}", {{end}} })
+    {{end -}}
+    {{if .RegisterTypes}}
+    // Manually register types since they aren't automatically registered when
+    // WebKit is loaded. See https://bugs.webkit.org/show_bug.cgi?id=175937.
+    {{range .Classes -}}
+    {{if .TypeGetter -}}
+    {{.Name}}GLibType()
+    {{end -}}
+    {{end -}}
+    {{range .Interfaces -}}
+    {{if .TypeGetter -}}
+    {{.Name}}GLibType()
+    {{end -}}
+    {{end -}}
     {{end -}}
 }
 {{end}}

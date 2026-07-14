@@ -2,6 +2,7 @@ package pass
 
 import (
 	"bytes"
+	"go/format"
 	"os"
 	"strings"
 	"testing"
@@ -61,6 +62,78 @@ func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 	}
 	if strings.Contains(generated, "purego.Dlopen") || strings.Contains(generated, "core.PuregoSafeRegister") {
 		t.Fatalf("generated init still eagerly opens or registers symbols:\n%s", generated)
+	}
+
+	throwingImports := types.NewImportSet("gio", "example.test", nil)
+	throwingArgs := (&types.Parameters{}).Template("glib", "", types.KindMap{}, true, types.ArgsFromGoToC, throwingImports)
+	throwingRet := (&types.ReturnValue{}).Template("glib", "", types.KindMap{}, true, throwingImports)
+
+	output.Reset()
+	err = gotemp.Execute(&output, types.TemplateArg{
+		PkgName:   "gio",
+		PkgEnv:    "GIO",
+		NeedsInit: true,
+		Interfaces: []types.InterfaceTemplate{{
+			Name: "Action",
+			Methods: []types.InterfaceFuncTemplate{
+				{
+					FullName: "GActionActivate",
+					FuncTemplate: types.FuncTemplate{
+						Name:  "Activate",
+						CName: "g_action_activate",
+					},
+				},
+				{
+					FullName: "GActionFail",
+					FuncTemplate: types.FuncTemplate{
+						Name:  "Fail",
+						CName: "g_action_fail",
+						Args:  throwingArgs,
+						Ret:   throwingRet,
+					},
+				},
+			},
+		}},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	generated = output.String()
+	if !strings.Contains(generated, "var XGActionActivate func(uintptr)") ||
+		!strings.Contains(generated, "= func(instance uintptr)") ||
+		!strings.Contains(generated, `core.LazyRegister(&xXGActionActivate, "GIO", "g_action_activate", false)`) ||
+		!strings.Contains(generated, "xXGActionActivate(instance)") ||
+		!strings.Contains(generated, "func(instance uintptr, cerrp **Error)") ||
+		!strings.Contains(generated, "xXGActionFail(instance, cerrp)") {
+		t.Fatalf("exported interface binding is not a direct-callable lazy thunk:\n%s", generated)
+	}
+	if _, err := format.Source([]byte(generated)); err != nil {
+		t.Fatalf("direct-callable interface thunk is not valid Go: %v\n%s", err, generated)
+	}
+
+	output.Reset()
+	err = gotemp.Execute(&output, types.TemplateArg{
+		PkgName:       "webkit",
+		PkgEnv:        "WEBKIT",
+		NeedsInit:     true,
+		RegisterTypes: true,
+		Classes: []types.ClassTemplate{{
+			Name:       "WebView",
+			TypeGetter: "webkit_web_view_get_type",
+		}},
+		Interfaces: []types.InterfaceTemplate{{
+			Name:       "NavigationPolicyDecision",
+			TypeGetter: "webkit_navigation_policy_decision_get_type",
+		}},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	generated = output.String()
+	if !strings.Contains(generated, "Manually register types") ||
+		!strings.Contains(generated, "WebViewGLibType()") ||
+		!strings.Contains(generated, "NavigationPolicyDecisionGLibType()") {
+		t.Fatalf("WebKit type-registration workaround was omitted:\n%s", generated)
 	}
 
 	output.Reset()
