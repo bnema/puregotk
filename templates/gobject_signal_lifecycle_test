@@ -196,6 +196,38 @@ func TestSignalConnectUsesLazyRawPath(t *testing.T) {
 	}
 }
 
+func TestIncreaseRefRegistersLazyTarget(t *testing.T) {
+	oldTarget := xObjectRefSink
+	oldRegister := lazyRegisterObjectRefSink
+	xObjectRefSink = nil
+	defer func() {
+		xObjectRefSink = oldTarget
+		lazyRegisterObjectRefSink = oldRegister
+	}()
+
+	var registrations int
+	var got uintptr
+	lazyRegisterObjectRefSink = func() {
+		registrations++
+		if xObjectRefSink != nil {
+			t.Fatal("lazy registration target was already populated")
+		}
+		xObjectRefSink = func(arg uintptr) uintptr {
+			got = arg
+			return arg
+		}
+	}
+
+	const arg = uintptr(0xfeed)
+	IncreaseRef(arg)
+	if registrations != 1 {
+		t.Fatalf("lazy registrations = %d, want 1", registrations)
+	}
+	if got != arg {
+		t.Fatalf("native argument = %#x, want %#x", got, arg)
+	}
+}
+
 func assertCallbackReleased(t *testing.T, handlerID uint, cbPtr uintptr) {
 	t.Helper()
 	if refPtr, ok := glib.GetCallback(cbPtr); ok {

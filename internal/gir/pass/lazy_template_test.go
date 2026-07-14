@@ -2,7 +2,10 @@ package pass
 
 import (
 	"bytes"
+	"go/ast"
 	"go/format"
+	"go/parser"
+	"go/token"
 	"os"
 	"path/filepath"
 	"strings"
@@ -66,6 +69,100 @@ func TestThrowingCallbackAccessorsAdaptHiddenError(t *testing.T) {
 	} {
 		if !strings.Contains(source, want) {
 			t.Fatalf("throwing IOFuncs callback did not adapt its hidden GError parameter; missing %q\\n%s", want, source)
+		}
+	}
+}
+
+func TestManualNativeTemplateCallsAreLazyGuarded(t *testing.T) {
+	paths := []string{
+		"../../../templates/gobject",
+		"../../../templates/gdk_dmabuf",
+		"../../../templates/webkit",
+	}
+	for _, path := range paths {
+		source, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fset := token.NewFileSet()
+		file, err := parser.ParseFile(fset, path, source, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		functionSource := func(fn *ast.FuncDecl) string {
+			return string(source[fset.Position(fn.Body.Pos()).Offset:fset.Position(fn.Body.End()).Offset])
+		}
+		var functions []*ast.FuncDecl
+		var targets = make(map[string]bool)
+		for _, decl := range file.Decls {
+			fn, ok := decl.(*ast.FuncDecl)
+			if !ok || fn.Body == nil {
+				continue
+			}
+			functions = append(functions, fn)
+			ast.Inspect(fn.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				name, ok := call.Fun.(*ast.Ident)
+				if ok && len(name.Name) > 1 && name.Name[0] == 'x' && name.Name[1] >= 'A' && name.Name[1] <= 'Z' {
+					targets[name.Name] = true
+				}
+				return true
+			})
+		}
+		lazyHelper := make(map[string]string)
+		for _, fn := range functions {
+			body := functionSource(fn)
+			for target := range targets {
+				if strings.Contains(body, "core.LazyRegister(&"+target+",") {
+					lazyHelper[fn.Name.Name] = target
+				}
+			}
+		}
+		for _, decl := range file.Decls {
+			gen, ok := decl.(*ast.GenDecl)
+			if !ok || gen.Tok != token.VAR {
+				continue
+			}
+			for _, spec := range gen.Specs {
+				value, ok := spec.(*ast.ValueSpec)
+				if !ok || len(value.Names) != 1 || len(value.Values) != 1 {
+					continue
+				}
+				fn, ok := value.Values[0].(*ast.FuncLit)
+				if !ok {
+					continue
+				}
+				body := string(source[fset.Position(fn.Body.Pos()).Offset:fset.Position(fn.Body.End()).Offset])
+				for target := range targets {
+					if strings.Contains(body, "core.LazyRegister(&"+target+",") {
+						lazyHelper[value.Names[0].Name] = target
+					}
+				}
+			}
+		}
+		for _, fn := range functions {
+			body := functionSource(fn)
+			ast.Inspect(fn.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				name, ok := call.Fun.(*ast.Ident)
+				if !ok || !targets[name.Name] {
+					return true
+				}
+				guarded := strings.Contains(body, "core.LazyRegister(&"+name.Name+",")
+				for helper, target := range lazyHelper {
+					guarded = guarded || (target == name.Name && strings.Contains(body, helper+"("))
+				}
+				if !guarded {
+					t.Errorf("manual native target %s in %s:%s is not guarded by lazy registration", name.Name, path, fn.Name.Name)
+				}
+				return true
+			})
 		}
 	}
 }

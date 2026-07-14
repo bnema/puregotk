@@ -3,6 +3,7 @@ package gdk
 import (
 	"errors"
 
+	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 )
 
@@ -25,6 +26,7 @@ func (x *DmabufTextureBuilder) BuildWithDestroyNotifyPointer(destroy uintptr, da
 	var cls *Texture
 	var cerr *glib.Error
 
+	core.LazyRegister(&xDmabufTextureBuilderBuild, "GDK", "gdk_dmabuf_texture_builder_build", false)
 	cret := xDmabufTextureBuilderBuild(x.GoPointer(), destroy, data, &cerr)
 	if cret == 0 {
 		if cerr == nil {

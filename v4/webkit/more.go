@@ -5,6 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/bnema/purego"
+	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/glib"
 	"github.com/bnema/puregotk/v4/gobject"
 )
@@ -197,6 +198,7 @@ func NavigationActionFromPointer(ptr uintptr) *NavigationAction {
 	if ptr == 0 {
 		return nil
 	}
+	core.LazyRegister(&xNavigationActionCopy, "WEBKIT", "webkit_navigation_action_copy", false)
 	cret := xNavigationActionCopy(ptr)
 	if cret == 0 {
 		return nil
