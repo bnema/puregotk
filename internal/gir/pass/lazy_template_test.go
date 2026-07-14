@@ -11,6 +11,15 @@ import (
 	"github.com/bnema/puregotk/internal/gir/util"
 )
 
+func TestFileHasBindingsIncludesTypeGetters(t *testing.T) {
+	if !(&file{aliases: []types.AliasTemplate{{TypeGetter: "demo_type_get"}}}).hasBindings() {
+		t.Fatal("type getter was omitted from lazy binding setup")
+	}
+	if (&file{}).hasBindings() {
+		t.Fatal("empty generated file unexpectedly needs lazy binding setup")
+	}
+}
+
 func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 	data, err := os.ReadFile("../../../templates/go")
 	if err != nil {
@@ -52,5 +61,20 @@ func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 	}
 	if strings.Contains(generated, "purego.Dlopen") || strings.Contains(generated, "core.PuregoSafeRegister") {
 		t.Fatalf("generated init still eagerly opens or registers symbols:\n%s", generated)
+	}
+
+	output.Reset()
+	err = gotemp.Execute(&output, types.TemplateArg{
+		PkgName:         "optional",
+		PkgEnv:          "OPTIONAL",
+		NeedsInit:       true,
+		OptionalLibrary: true,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(output.String(), `func Available() bool`) ||
+		!strings.Contains(output.String(), `core.LibraryAvailable("OPTIONAL")`) {
+		t.Fatalf("optional package no longer preserves Available:\n%s", output.String())
 	}
 }

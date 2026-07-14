@@ -164,6 +164,39 @@ type file struct {
 	classes    []types.ClassTemplate
 }
 
+// hasBindings reports whether this generated file needs lazy binding setup.
+func (f *file) hasBindings() bool {
+	if len(f.functions) > 0 {
+		return true
+	}
+	for _, alias := range f.aliases {
+		if alias.TypeGetter != "" {
+			return true
+		}
+	}
+	for _, enum := range f.enums {
+		if enum.TypeGetter != "" {
+			return true
+		}
+	}
+	for _, record := range f.records {
+		if record.TypeGetter != "" || len(record.Constructors) > 0 || len(record.Receivers) > 0 {
+			return true
+		}
+	}
+	for _, class := range f.classes {
+		if class.TypeGetter != "" || len(class.Constructors) > 0 || len(class.Receivers) > 0 || len(class.Functions) > 0 {
+			return true
+		}
+	}
+	for _, iface := range f.interfaces {
+		if iface.TypeGetter != "" || len(iface.Methods) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
 func (f *file) allFuncs() iter.Seq[types.FuncTemplate] {
 	return func(yield func(types.FuncTemplate) bool) {
 		for _, fn := range f.functions {
@@ -569,24 +602,10 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	sharedLibraries = append(sharedLibraries, dylibNames...)
 
 	for fn, pf := range files {
-		methods := 0
-		for _, i := range pf.interfaces {
-			methods += len(i.Methods)
-		}
-		for _, i := range pf.records {
-			methods += len(i.Constructors)
-			methods += len(i.Receivers)
-		}
-		for _, i := range pf.classes {
-			methods += len(i.Constructors)
-			methods += len(i.Receivers)
-			methods += len(i.Functions)
-		}
-		// we do not need to add the length of interfaces in here
-		// as they should only be loaded when there are classes
-		needsInit := (len(pf.functions) + methods) > 0
+		// Type getters are bindings too, so they get the same lazy setup as
+		// ordinary generated functions.
+		needsInit := pf.hasBindings()
 		if needsInit {
-			pf.imps.AddPurego()
 			pf.imps.AddCore()
 		}
 
