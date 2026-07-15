@@ -40,6 +40,7 @@ type {{.Name}} struct {
 {{if .TypeGetter}}
 var x{{.Name}}GLibType func() types.GType
 func {{.Name}}GLibType() types.GType {
+     core.LazyRegister(&x{{.Name}}GLibType, "{{$.PkgEnv}}", "{{.TypeGetter}}", {{$.OptionalLibrary}})
 	return x{{.Name}}GLibType()
 }
 {{end}}
@@ -64,6 +65,7 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -80,6 +82,7 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{$outer.Name}}{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -98,15 +101,15 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
           x.x{{.Name}} = 0
      } else {
           x.x{{.Name}} = purego.NewCallback(func({{conv .Args.Pure.Full}}) {{.Ret.Raw}} {
-               {{if .Ret.Value}}{{if .Ret.Class}}ret := cb({{convcb .Args.Pure.Call}})
+               {{if .Ret.Value}}{{if .Ret.Class}}ret := cb({{convcb .Args.CallbackCall}})
                if ret == nil {
                     return 0
                }
-               return ret.GoPointer(){{else if .Ret.Record}}ret := cb({{convcb .Args.Pure.Call}})
+               return ret.GoPointer(){{else if .Ret.Record}}ret := cb({{convcb .Args.CallbackCall}})
                if ret == nil {
                     return 0
                }
-               return uintptr(unsafe.Pointer(ret)){{else}}return cb({{convcb .Args.Pure.Call}}){{end}}{{else}}cb({{convcb .Args.Pure.Call}}){{end}}
+               return uintptr(unsafe.Pointer(ret)){{else}}return cb({{convcb .Args.CallbackCall}}){{end}}{{else}}cb({{convcb .Args.CallbackCall}}){{end}}
           })
      }
 }
@@ -120,17 +123,18 @@ func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      var rawCallback func({{conv .Args.Pure.Full}}) {{.Ret.Raw}}
      purego.RegisterFunc(&rawCallback, x.x{{.Name}})
      return func({{conv .Args.API.Full}}) {{.Ret.Value}} {
-          {{if .Ret.Value}}{{if .Ret.Class}}rawRet := rawCallback({{convcbne .Args.API.Call}})
+          {{if .Args.Throws}}var cerr *{{.Args.ErrorType}}
+          {{end}}{{if .Ret.Value}}{{if .Ret.Class}}rawRet := rawCallback({{convcbe .Args.RawCallbackCall}})
           if rawRet == 0 {
                return nil
           }
           ret := {{.Ret.Instance}}
           ret.Ptr = rawRet
-          return ret{{else if .Ret.Record}}rawRet := rawCallback({{convcbne .Args.API.Call}})
+          return ret{{else if .Ret.Record}}rawRet := rawCallback({{convcbe .Args.RawCallbackCall}})
           if rawRet == 0 {
                return nil
           }
-          return ({{.Ret.Value}})(unsafe.Pointer(rawRet)){{else}}return rawCallback({{convcbne .Args.API.Call}}){{end}}{{else}}rawCallback({{convcbne .Args.API.Call}}){{end}}
+          return ({{.Ret.Value}})(unsafe.Pointer(rawRet)){{else}}return rawCallback({{convcbe .Args.RawCallbackCall}}){{end}}{{else}}rawCallback({{convcbe .Args.RawCallbackCall}}){{end}}
      }
 }
 {{end}}
@@ -150,6 +154,7 @@ type {{.Name}} interface {
 {{if .TypeGetter}}
 var x{{.Name}}GLibType func() types.GType
 func {{.Name}}GLibType() types.GType {
+     core.LazyRegister(&x{{.Name}}GLibType, "{{$.PkgEnv}}", "{{.TypeGetter}}", {{$.OptionalLibrary}})
 	return x{{.Name}}GLibType()
 }
 {{end}}
@@ -210,7 +215,11 @@ func (x *{{$outer.Name}}Base) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}}
 {{end}}
 
 {{range .Methods -}}
-var {{.Namespace}}X{{.FullName}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Raw}}
+var {{.Namespace}}X{{.FullName}} func(uintptr{{convc .Args.Pure.Types}}) {{.Ret.Raw}} = func(instance uintptr{{convc .Args.Pure.Full}}) {{.Ret.Raw}} {
+     core.LazyRegister(&x{{.Namespace}}X{{.FullName}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
+     {{if .Ret.Value}}return {{end}}x{{.Namespace}}X{{.FullName}}(instance{{convc .Args.Pure.Names}})
+}
+var x{{.Namespace}}X{{.FullName}} func(uintptr{{convc .Args.Pure.Types}}) {{.Ret.Raw}}
 {{end}}
 {{end}}
 
@@ -220,6 +229,7 @@ type {{.Name}} = {{.Value}}
 {{if .TypeGetter}}
 var x{{.Name}}GLibType func() types.GType
 func {{.Name}}GLibType() types.GType {
+     core.LazyRegister(&x{{.Name}}GLibType, "{{$.PkgEnv}}", "{{.TypeGetter}}", {{$.OptionalLibrary}})
 	return x{{.Name}}GLibType()
 }
 {{end}}
@@ -240,6 +250,7 @@ type {{.Name}} int
 {{if .TypeGetter}}
 var x{{.Name}}GLibType func() types.GType
 func {{.Name}}GLibType() types.GType {
+     core.LazyRegister(&x{{.Name}}GLibType, "{{$.PkgEnv}}", "{{.TypeGetter}}", {{$.OptionalLibrary}})
 	return x{{.Name}}GLibType()
 }
 {{end}}
@@ -257,6 +268,7 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{- if and (eq $.PkgName "glib") (eq .Name "ChildWatchAdd")}}
      var functionRef uintptr
      if FunctionVar != nil {
@@ -356,6 +368,7 @@ type {{.Name}} struct {
 {{if .TypeGetter -}}
 var x{{.Name}}GLibType func() types.GType
 func {{.Name}}GLibType() types.GType {
+     core.LazyRegister(&x{{.Name}}GLibType, "{{$.PkgEnv}}", "{{.TypeGetter}}", {{$.OptionalLibrary}})
 	return x{{.Name}}GLibType()
 }
 {{end}}
@@ -373,6 +386,7 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -389,6 +403,7 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{$outer.Name}}{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{.Ret.Preamble $NotGLib}}
      {{range .Args.NullableStrings}}
      {{.Name}}Ptr := core.GStrdupNullable({{.Name}})
@@ -486,6 +501,7 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
+     core.LazyRegister(&x{{.Name}}, "{{$.PkgEnv}}", "{{.CName}}", {{$.OptionalLibrary}})
      {{- if and (eq $.PkgName "glib") (eq .Name "ChildWatchAdd")}}
      var functionRef uintptr
      if FunctionVar != nil {
@@ -575,11 +591,9 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
 
 {{if .NeedsInit}}
 {{if .OptionalLibrary}}
-var libs []uintptr
-
 // Available reports whether the shared library was loaded successfully.
 func Available() bool {
-    return len(libs) > 0
+    return core.LibraryAvailable("{{.PkgEnv}}")
 }
 {{end}}
 
@@ -590,98 +604,19 @@ func init() {
     {{if .SharedLibraries -}}
     core.SetSharedLibraries("{{.PkgEnv}}", []string{ {{range .SharedLibraries}}"{{.}}", {{end}} })
     {{end -}}
-
-    {{if .OptionalLibrary -}}
-    for _, libPath := range core.TryGetPaths("{{.PkgEnv}}") {
-        lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
-        if err != nil {
-            continue
-        }
-        libs = append(libs, lib)
-    }
-    {{- else -}}
-    var libs []uintptr
-    for _, libPath := range core.GetPaths("{{.PkgEnv}}") {
-        lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
-        if err != nil {
-            panic(err)
-        }
-        libs = append(libs, lib)
-    }
-    {{- end}}
-
-    {{range .Aliases -}}
-    {{if .TypeGetter -}}
-    core.PuregoSafeRegister(&x{{.Name}}GLibType, libs, "{{.TypeGetter}}")
-    {{end}}
-    {{end}}
-    {{range .Enums -}}
-    {{if .TypeGetter -}}
-    core.PuregoSafeRegister(&x{{.Name}}GLibType, libs, "{{.TypeGetter}}")
-    {{end}}
-    {{end}}
-    {{range .Functions -}}
-    core.PuregoSafeRegister(&x{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-
-    {{range .Records -}}
-    {{$rec := .}}
-    {{if .TypeGetter -}}
-    core.PuregoSafeRegister(&x{{.Name}}GLibType, libs, "{{.TypeGetter}}")
-    {{end}}
-    {{range .Constructors -}}
-    core.PuregoSafeRegister(&x{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-    {{range .Receivers -}}
-    core.PuregoSafeRegister(&x{{$rec.Name}}{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-    {{end}}
-
+    {{if .RegisterTypes}}
+    // Manually register types since they aren't automatically registered when
+    // WebKit is loaded. See https://bugs.webkit.org/show_bug.cgi?id=175937.
     {{range .Classes -}}
-    {{$cls := .}}
     {{if .TypeGetter -}}
-    core.PuregoSafeRegister(&x{{.Name}}GLibType, libs, "{{.TypeGetter}}")
-    {{end}}
-    {{range .Constructors -}}
-    core.PuregoSafeRegister(&x{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-    {{range .Receivers -}}
-    core.PuregoSafeRegister(&x{{$cls.Name}}{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-    {{range .Functions -}}
-    core.PuregoSafeRegister(&x{{.Name}}, libs, "{{.CName}}")
-    {{end}}
-    {{end}}
-
+    {{.Name}}GLibType()
+    {{end -}}
+    {{end -}}
     {{range .Interfaces -}}
     {{if .TypeGetter -}}
-    core.PuregoSafeRegister(&x{{.Name}}GLibType, libs, "{{.TypeGetter}}")
-    {{end}}
-    {{range .Methods -}}
-    core.PuregoSafeRegister(&{{.Namespace}}X{{.FullName}}, libs, "{{.CName}}")
-    {{end}}
-    {{end}}
-
-{{- if .RegisterTypes}}
-     {{- $hasTypes := false}}
-     {{- range .Classes}}{{if .TypeGetter}}{{$hasTypes = true}}{{end}}{{end}}
-     {{- range .Interfaces}}{{if .TypeGetter}}{{$hasTypes = true}}{{end}}{{end}}
-     {{- if $hasTypes}}
-
-     // Manually register types since they aren't being automatically registered when
-     // the library is loaded
-     // See https://bugs.webkit.org/show_bug.cgi?id=175937
-     {{- range .Classes}}
-     {{- if .TypeGetter}}
-         {{.Name}}GLibType()
-     {{- end}}
-     {{- end}}
-     {{- range .Interfaces}}
-     {{- if .TypeGetter}}
-         {{.Name}}GLibType()
-     {{- end}}
-     {{- end}}
-     {{- end}}
-{{- end}}
+    {{.Name}}GLibType()
+    {{end -}}
+    {{end -}}
+    {{end -}}
 }
 {{end}}

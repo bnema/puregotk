@@ -4,7 +4,6 @@ package pangocairo
 import (
 	"unsafe"
 
-	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/cairo"
 	"github.com/bnema/puregotk/v4/glib"
@@ -31,6 +30,7 @@ type Font interface {
 var xFontGLibType func() types.GType
 
 func FontGLibType() types.GType {
+	core.LazyRegister(&xFontGLibType, "PANGOCAIRO", "pango_cairo_font_get_type", false)
 	return xFontGLibType()
 }
 
@@ -60,7 +60,11 @@ func (x *FontBase) GetScaledFont() *cairo.ScaledFont {
 	return (*cairo.ScaledFont)(unsafe.Pointer(cret))
 }
 
-var XPangoCairoFontGetScaledFont func(uintptr) uintptr
+var XPangoCairoFontGetScaledFont func(uintptr) uintptr = func(instance uintptr) uintptr {
+	core.LazyRegister(&xXPangoCairoFontGetScaledFont, "PANGOCAIRO", "pango_cairo_font_get_scaled_font", false)
+	return xXPangoCairoFontGetScaledFont(instance)
+}
+var xXPangoCairoFontGetScaledFont func(uintptr) uintptr
 
 // `PangoCairoFontMap` is an interface exported by font maps for
 // use with Cairo.
@@ -80,6 +84,7 @@ type FontMap interface {
 var xFontMapGLibType func() types.GType
 
 func FontMapGLibType() types.GType {
+	core.LazyRegister(&xFontMapGLibType, "PANGOCAIRO", "pango_cairo_font_map_get_type", false)
 	return xFontMapGLibType()
 }
 
@@ -155,13 +160,40 @@ func (x *FontMapBase) SetResolution(DpiVar float64) {
 	XPangoCairoFontMapSetResolution(x.GoPointer(), DpiVar)
 }
 
+var XPangoCairoFontMapCreateContext func(uintptr) uintptr = func(instance uintptr) uintptr {
+	core.LazyRegister(&xXPangoCairoFontMapCreateContext, "PANGOCAIRO", "pango_cairo_font_map_create_context", false)
+	return xXPangoCairoFontMapCreateContext(instance)
+}
+
 var (
-	XPangoCairoFontMapCreateContext func(uintptr) uintptr
-	XPangoCairoFontMapGetFontType   func(uintptr) cairo.FontType
-	XPangoCairoFontMapGetResolution func(uintptr) float64
-	XPangoCairoFontMapSetDefault    func(uintptr)
-	XPangoCairoFontMapSetResolution func(uintptr, float64)
+	xXPangoCairoFontMapCreateContext func(uintptr) uintptr
+	XPangoCairoFontMapGetFontType    func(uintptr) cairo.FontType = func(instance uintptr) cairo.FontType {
+		core.LazyRegister(&xXPangoCairoFontMapGetFontType, "PANGOCAIRO", "pango_cairo_font_map_get_font_type", false)
+		return xXPangoCairoFontMapGetFontType(instance)
+	}
 )
+var (
+	xXPangoCairoFontMapGetFontType  func(uintptr) cairo.FontType
+	XPangoCairoFontMapGetResolution func(uintptr) float64 = func(instance uintptr) float64 {
+		core.LazyRegister(&xXPangoCairoFontMapGetResolution, "PANGOCAIRO", "pango_cairo_font_map_get_resolution", false)
+		return xXPangoCairoFontMapGetResolution(instance)
+	}
+)
+var (
+	xXPangoCairoFontMapGetResolution func(uintptr) float64
+	XPangoCairoFontMapSetDefault     func(uintptr) = func(instance uintptr) {
+		core.LazyRegister(&xXPangoCairoFontMapSetDefault, "PANGOCAIRO", "pango_cairo_font_map_set_default", false)
+		xXPangoCairoFontMapSetDefault(instance)
+	}
+)
+var (
+	xXPangoCairoFontMapSetDefault   func(uintptr)
+	XPangoCairoFontMapSetResolution func(uintptr, float64) = func(instance uintptr, DpiVarp float64) {
+		core.LazyRegister(&xXPangoCairoFontMapSetResolution, "PANGOCAIRO", "pango_cairo_font_map_set_resolution", false)
+		xXPangoCairoFontMapSetResolution(instance, DpiVarp)
+	}
+)
+var xXPangoCairoFontMapSetResolution func(uintptr, float64)
 
 var xContextGetFontOptions func(uintptr) uintptr
 
@@ -171,6 +203,8 @@ var xContextGetFontOptions func(uintptr) uintptr
 // This function does not report options that are derived from
 // the target surface by [func@update_context].
 func ContextGetFontOptions(ContextVar *pango.Context) *cairo.FontOptions {
+	core.LazyRegister(&xContextGetFontOptions, "PANGOCAIRO", "pango_cairo_context_get_font_options", false)
+
 	cret := xContextGetFontOptions(ContextVar.GoPointer())
 	if cret == 0 {
 		return nil
@@ -184,6 +218,8 @@ var xContextGetResolution func(uintptr) float64
 //
 // See [func@PangoCairo.context_set_resolution]
 func ContextGetResolution(ContextVar *pango.Context) float64 {
+	core.LazyRegister(&xContextGetResolution, "PANGOCAIRO", "pango_cairo_context_get_resolution", false)
+
 	cret := xContextGetResolution(ContextVar.GoPointer())
 	return cret
 }
@@ -199,6 +235,8 @@ var xContextGetShapeRenderer func(uintptr, uintptr) uintptr
 // attributes of type %PANGO_ATTR_SHAPE as set by
 // [func@PangoCairo.context_set_shape_renderer], if any.
 func ContextGetShapeRenderer(ContextVar *pango.Context, DataVar uintptr) uintptr {
+	core.LazyRegister(&xContextGetShapeRenderer, "PANGOCAIRO", "pango_cairo_context_get_shape_renderer", false)
+
 	cret := xContextGetShapeRenderer(ContextVar.GoPointer(), DataVar)
 	return cret
 }
@@ -210,6 +248,8 @@ var xContextSetFontOptions func(uintptr, *cairo.FontOptions)
 // These options override any options that [func@update_context]
 // derives from the target surface.
 func ContextSetFontOptions(ContextVar *pango.Context, OptionsVar *cairo.FontOptions) {
+	core.LazyRegister(&xContextSetFontOptions, "PANGOCAIRO", "pango_cairo_context_set_font_options", false)
+
 	xContextSetFontOptions(ContextVar.GoPointer(), OptionsVar)
 }
 
@@ -221,6 +261,8 @@ var xContextSetResolution func(uintptr, float64)
 // and Cairo units. The default value is 96, meaning that a 10 point font will
 // be 13 units high. (10 * 96. / 72. = 13.3).
 func ContextSetResolution(ContextVar *pango.Context, DpiVar float64) {
+	core.LazyRegister(&xContextSetResolution, "PANGOCAIRO", "pango_cairo_context_set_resolution", false)
+
 	xContextSetResolution(ContextVar.GoPointer(), DpiVar)
 }
 
@@ -231,6 +273,8 @@ var xContextSetShapeRenderer func(uintptr, uintptr, uintptr, uintptr)
 //
 // See `PangoCairoShapeRendererFunc` for details.
 func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) {
+	core.LazyRegister(&xContextSetShapeRenderer, "PANGOCAIRO", "pango_cairo_context_set_shape_renderer", false)
+
 	xContextSetShapeRenderer(ContextVar.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DnotifyVar))
 }
 
@@ -247,6 +291,7 @@ var xCreateContext func(*cairo.Context) uintptr
 // create a layout for use with @cr and do not need to access `PangoContext`
 // directly, you can use [func@create_layout] instead.
 func CreateContext(CrVar *cairo.Context) *pango.Context {
+	core.LazyRegister(&xCreateContext, "PANGOCAIRO", "pango_cairo_create_context", false)
 	var cls *pango.Context
 
 	cret := xCreateContext(CrVar)
@@ -274,6 +319,7 @@ var xCreateLayout func(*cairo.Context) uintptr
 // `PangoContext` object for each layout. This might matter in an
 // application that was laying out large amounts of text.
 func CreateLayout(CrVar *cairo.Context) *pango.Layout {
+	core.LazyRegister(&xCreateLayout, "PANGOCAIRO", "pango_cairo_create_layout", false)
 	var cls *pango.Layout
 
 	cret := xCreateLayout(CrVar)
@@ -295,6 +341,8 @@ var xErrorUnderlinePath func(*cairo.Context, float64, float64, float64, float64)
 // The width of the underline is rounded to an integer number of up/down
 // segments and the resulting rectangle is centered in the original rectangle.
 func ErrorUnderlinePath(CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
+	core.LazyRegister(&xErrorUnderlinePath, "PANGOCAIRO", "pango_cairo_error_underline_path", false)
+
 	xErrorUnderlinePath(CrVar, XVar, YVar, WidthVar, HeightVar)
 }
 
@@ -316,6 +364,7 @@ var xFontMapGetDefault func() uintptr
 // Each thread gets its own default fontmap. In this way, PangoCairo
 // can be used safely from multiple threads.
 func FontMapGetDefault() *pango.FontMap {
+	core.LazyRegister(&xFontMapGetDefault, "PANGOCAIRO", "pango_cairo_font_map_get_default", false)
 	var cls *pango.FontMap
 
 	cret := xFontMapGetDefault()
@@ -350,6 +399,7 @@ var xFontMapNew func() uintptr
 // this is only useful for testing, when at least two backends
 // are compiled in.
 func FontMapNew() *pango.FontMap {
+	core.LazyRegister(&xFontMapNew, "PANGOCAIRO", "pango_cairo_font_map_new", false)
 	var cls *pango.FontMap
 
 	cret := xFontMapNew()
@@ -370,6 +420,7 @@ var xFontMapNewForFontType func(cairo.FontType) uintptr
 // In most cases one should simply use [func@PangoCairo.FontMap.new], or
 // in fact in most of those cases, just use [func@PangoCairo.FontMap.get_default].
 func FontMapNewForFontType(FonttypeVar cairo.FontType) *pango.FontMap {
+	core.LazyRegister(&xFontMapNewForFontType, "PANGOCAIRO", "pango_cairo_font_map_new_for_font_type", false)
 	var cls *pango.FontMap
 
 	cret := xFontMapNewForFontType(FonttypeVar)
@@ -390,6 +441,8 @@ var xGlyphStringPath func(*cairo.Context, uintptr, *pango.GlyphString)
 // The origin of the glyphs (the left edge of the baseline)
 // will be at the current point of the cairo context.
 func GlyphStringPath(CrVar *cairo.Context, FontVar *pango.Font, GlyphsVar *pango.GlyphString) {
+	core.LazyRegister(&xGlyphStringPath, "PANGOCAIRO", "pango_cairo_glyph_string_path", false)
+
 	xGlyphStringPath(CrVar, FontVar.GoPointer(), GlyphsVar)
 }
 
@@ -401,6 +454,8 @@ var xLayoutLinePath func(*cairo.Context, *pango.LayoutLine)
 // The origin of the glyphs (the left edge of the line) will be
 // at the current point of the cairo context.
 func LayoutLinePath(CrVar *cairo.Context, LineVar *pango.LayoutLine) {
+	core.LazyRegister(&xLayoutLinePath, "PANGOCAIRO", "pango_cairo_layout_line_path", false)
+
 	xLayoutLinePath(CrVar, LineVar)
 }
 
@@ -412,6 +467,8 @@ var xLayoutPath func(*cairo.Context, uintptr)
 // The top-left corner of the `PangoLayout` will be at the
 // current point of the cairo context.
 func LayoutPath(CrVar *cairo.Context, LayoutVar *pango.Layout) {
+	core.LazyRegister(&xLayoutPath, "PANGOCAIRO", "pango_cairo_layout_path", false)
+
 	xLayoutPath(CrVar, LayoutVar.GoPointer())
 }
 
@@ -425,6 +482,8 @@ var xShowErrorUnderline func(*cairo.Context, float64, float64, float64, float64)
 // number of up/down segments and the resulting rectangle is centered in the
 // original rectangle.
 func ShowErrorUnderline(CrVar *cairo.Context, XVar float64, YVar float64, WidthVar float64, HeightVar float64) {
+	core.LazyRegister(&xShowErrorUnderline, "PANGOCAIRO", "pango_cairo_show_error_underline", false)
+
 	xShowErrorUnderline(CrVar, XVar, YVar, WidthVar, HeightVar)
 }
 
@@ -442,6 +501,8 @@ var xShowGlyphItem func(*cairo.Context, string, *pango.GlyphItem)
 // Note that @text is the start of the text for layout, which is then
 // indexed by `glyph_item-&gt;item-&gt;offset`.
 func ShowGlyphItem(CrVar *cairo.Context, TextVar string, GlyphItemVar *pango.GlyphItem) {
+	core.LazyRegister(&xShowGlyphItem, "PANGOCAIRO", "pango_cairo_show_glyph_item", false)
+
 	xShowGlyphItem(CrVar, TextVar, GlyphItemVar)
 }
 
@@ -452,6 +513,8 @@ var xShowGlyphString func(*cairo.Context, uintptr, *pango.GlyphString)
 // The origin of the glyphs (the left edge of the baseline) will
 // be drawn at the current point of the cairo context.
 func ShowGlyphString(CrVar *cairo.Context, FontVar *pango.Font, GlyphsVar *pango.GlyphString) {
+	core.LazyRegister(&xShowGlyphString, "PANGOCAIRO", "pango_cairo_show_glyph_string", false)
+
 	xShowGlyphString(CrVar, FontVar.GoPointer(), GlyphsVar)
 }
 
@@ -462,6 +525,8 @@ var xShowLayout func(*cairo.Context, uintptr)
 // The top-left corner of the `PangoLayout` will be drawn
 // at the current point of the cairo context.
 func ShowLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
+	core.LazyRegister(&xShowLayout, "PANGOCAIRO", "pango_cairo_show_layout", false)
+
 	xShowLayout(CrVar, LayoutVar.GoPointer())
 }
 
@@ -472,6 +537,8 @@ var xShowLayoutLine func(*cairo.Context, *pango.LayoutLine)
 // The origin of the glyphs (the left edge of the line) will
 // be drawn at the current point of the cairo context.
 func ShowLayoutLine(CrVar *cairo.Context, LineVar *pango.LayoutLine) {
+	core.LazyRegister(&xShowLayoutLine, "PANGOCAIRO", "pango_cairo_show_layout_line", false)
+
 	xShowLayoutLine(CrVar, LineVar)
 }
 
@@ -484,6 +551,8 @@ var xUpdateContext func(*cairo.Context, uintptr)
 // If any layouts have been created for the context, it's necessary
 // to call [method@Pango.Layout.context_changed] on those layouts.
 func UpdateContext(CrVar *cairo.Context, ContextVar *pango.Context) {
+	core.LazyRegister(&xUpdateContext, "PANGOCAIRO", "pango_cairo_update_context", false)
+
 	xUpdateContext(CrVar, ContextVar.GoPointer())
 }
 
@@ -493,53 +562,12 @@ var xUpdateLayout func(*cairo.Context, uintptr)
 // [func@create_layout] to match the current transformation and target
 // surface of a Cairo context.
 func UpdateLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
+	core.LazyRegister(&xUpdateLayout, "PANGOCAIRO", "pango_cairo_update_layout", false)
+
 	xUpdateLayout(CrVar, LayoutVar.GoPointer())
 }
 
 func init() {
 	core.SetPackageName("PANGOCAIRO", "pangocairo")
 	core.SetSharedLibraries("PANGOCAIRO", []string{"libpangocairo-1.0.so.0", "libpangocairo-1.0.0.dylib"})
-	var libs []uintptr
-	for _, libPath := range core.GetPaths("PANGOCAIRO") {
-		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
-		if err != nil {
-			panic(err)
-		}
-		libs = append(libs, lib)
-	}
-
-	core.PuregoSafeRegister(&xContextGetFontOptions, libs, "pango_cairo_context_get_font_options")
-	core.PuregoSafeRegister(&xContextGetResolution, libs, "pango_cairo_context_get_resolution")
-	core.PuregoSafeRegister(&xContextGetShapeRenderer, libs, "pango_cairo_context_get_shape_renderer")
-	core.PuregoSafeRegister(&xContextSetFontOptions, libs, "pango_cairo_context_set_font_options")
-	core.PuregoSafeRegister(&xContextSetResolution, libs, "pango_cairo_context_set_resolution")
-	core.PuregoSafeRegister(&xContextSetShapeRenderer, libs, "pango_cairo_context_set_shape_renderer")
-	core.PuregoSafeRegister(&xCreateContext, libs, "pango_cairo_create_context")
-	core.PuregoSafeRegister(&xCreateLayout, libs, "pango_cairo_create_layout")
-	core.PuregoSafeRegister(&xErrorUnderlinePath, libs, "pango_cairo_error_underline_path")
-	core.PuregoSafeRegister(&xFontMapGetDefault, libs, "pango_cairo_font_map_get_default")
-	core.PuregoSafeRegister(&xFontMapNew, libs, "pango_cairo_font_map_new")
-	core.PuregoSafeRegister(&xFontMapNewForFontType, libs, "pango_cairo_font_map_new_for_font_type")
-	core.PuregoSafeRegister(&xGlyphStringPath, libs, "pango_cairo_glyph_string_path")
-	core.PuregoSafeRegister(&xLayoutLinePath, libs, "pango_cairo_layout_line_path")
-	core.PuregoSafeRegister(&xLayoutPath, libs, "pango_cairo_layout_path")
-	core.PuregoSafeRegister(&xShowErrorUnderline, libs, "pango_cairo_show_error_underline")
-	core.PuregoSafeRegister(&xShowGlyphItem, libs, "pango_cairo_show_glyph_item")
-	core.PuregoSafeRegister(&xShowGlyphString, libs, "pango_cairo_show_glyph_string")
-	core.PuregoSafeRegister(&xShowLayout, libs, "pango_cairo_show_layout")
-	core.PuregoSafeRegister(&xShowLayoutLine, libs, "pango_cairo_show_layout_line")
-	core.PuregoSafeRegister(&xUpdateContext, libs, "pango_cairo_update_context")
-	core.PuregoSafeRegister(&xUpdateLayout, libs, "pango_cairo_update_layout")
-
-	core.PuregoSafeRegister(&xFontGLibType, libs, "pango_cairo_font_get_type")
-
-	core.PuregoSafeRegister(&XPangoCairoFontGetScaledFont, libs, "pango_cairo_font_get_scaled_font")
-
-	core.PuregoSafeRegister(&xFontMapGLibType, libs, "pango_cairo_font_map_get_type")
-
-	core.PuregoSafeRegister(&XPangoCairoFontMapCreateContext, libs, "pango_cairo_font_map_create_context")
-	core.PuregoSafeRegister(&XPangoCairoFontMapGetFontType, libs, "pango_cairo_font_map_get_font_type")
-	core.PuregoSafeRegister(&XPangoCairoFontMapGetResolution, libs, "pango_cairo_font_map_get_resolution")
-	core.PuregoSafeRegister(&XPangoCairoFontMapSetDefault, libs, "pango_cairo_font_map_set_default")
-	core.PuregoSafeRegister(&XPangoCairoFontMapSetResolution, libs, "pango_cairo_font_map_set_resolution")
 }

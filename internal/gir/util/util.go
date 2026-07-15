@@ -236,6 +236,12 @@ func ConvertCallbackArgsNoErr(a []string) string {
 	return convertCallbackArgs(a, false, true, true, true)
 }
 
+// ConvertCallbackArgsWithErr converts callback wrapper arguments while retaining
+// the trailing GError** required by a throwing callback's raw ABI.
+func ConvertCallbackArgsWithErr(a []string) string {
+	return convertCallbackArgs(a, false, true, false, true)
+}
+
 // ConstructorName returns a Go friendly constructor name given the raw constructor name `name` and the class/record name `outer`
 func ConstructorName(name string, outer string) string {
 	cname := SnakeToCamel(name)

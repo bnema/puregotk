@@ -7,7 +7,6 @@ import (
 	"structs"
 	"unsafe"
 
-	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
 	"github.com/bnema/puregotk/v4/gdk"
 	"github.com/bnema/puregotk/v4/glib"
@@ -38,6 +37,8 @@ var xIsSupported func() bool
 
 // May block for a Wayland roundtrip the first time it's called.
 func IsSupported() bool {
+	core.LazyRegister(&xIsSupported, "SESSIONLOCK", "gtk_session_lock_is_supported", true)
+
 	cret := xIsSupported()
 	return cret
 }
@@ -51,6 +52,7 @@ type Instance struct {
 var xInstanceGLibType func() types.GType
 
 func InstanceGLibType() types.GType {
+	core.LazyRegister(&xInstanceGLibType, "SESSIONLOCK", "gtk_session_lock_instance_get_type", true)
 	return xInstanceGLibType()
 }
 
@@ -63,6 +65,7 @@ func InstanceNewFromInternalPtr(ptr uintptr) *Instance {
 var xNewInstance func() uintptr
 
 func NewInstance() *Instance {
+	core.LazyRegister(&xNewInstance, "SESSIONLOCK", "gtk_session_lock_instance_new", true)
 	var cls *Instance
 
 	cret := xNewInstance()
@@ -82,6 +85,8 @@ var xInstanceAssignWindowToMonitor func(uintptr, uintptr, uintptr)
 // library is not allowed (may result in a Wayland protocol error). The window will be unmapped and gtk_window_destroy()
 // called on it when the current lock ends.
 func (x *Instance) AssignWindowToMonitor(WindowVar *gtk.Window, MonitorVar *gdk.Monitor) {
+	core.LazyRegister(&xInstanceAssignWindowToMonitor, "SESSIONLOCK", "gtk_session_lock_instance_assign_window_to_monitor", true)
+
 	xInstanceAssignWindowToMonitor(x.GoPointer(), WindowVar.GoPointer(), MonitorVar.GoPointer())
 }
 
@@ -89,6 +94,8 @@ var xInstanceIsLocked func(uintptr) bool
 
 // Returns if this instance currently holds a lock.
 func (x *Instance) IsLocked() bool {
+	core.LazyRegister(&xInstanceIsLocked, "SESSIONLOCK", "gtk_session_lock_instance_is_locked", true)
+
 	cret := xInstanceIsLocked(x.GoPointer())
 	return cret
 }
@@ -100,6 +107,8 @@ var xInstanceLock func(uintptr) bool
 // function returns (for example, if another #GtkSessionLockInstance holds a lock) or later (if another process holds a
 // lock). The only case where neither signal is triggered is if the instance is already locked.
 func (x *Instance) Lock() bool {
+	core.LazyRegister(&xInstanceLock, "SESSIONLOCK", "gtk_session_lock_instance_lock", true)
+
 	cret := xInstanceLock(x.GoPointer())
 	return cret
 }
@@ -108,6 +117,8 @@ var xInstanceUnlock func(uintptr)
 
 // If the screen is locked by this instance unlocks it and fires ::unlocked. Otherwise has no effect
 func (x *Instance) Unlock() {
+	core.LazyRegister(&xInstanceUnlock, "SESSIONLOCK", "gtk_session_lock_instance_unlock", true)
+
 	xInstanceUnlock(x.GoPointer())
 }
 
@@ -221,32 +232,12 @@ func (x *Instance) ConnectUnlocked(cb *func(Instance)) uint {
 	return handlerID
 }
 
-var libs []uintptr
-
 // Available reports whether the shared library was loaded successfully.
 func Available() bool {
-	return len(libs) > 0
+	return core.LibraryAvailable("SESSIONLOCK")
 }
 
 func init() {
 	core.SetPackageName("SESSIONLOCK", "gtk4-layer-shell-0")
 	core.SetSharedLibraries("SESSIONLOCK", []string{"libgtk4-layer-shell.so.0", "libgtk4-layer-shell.0.dylib"})
-	for _, libPath := range core.TryGetPaths("SESSIONLOCK") {
-		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
-		if err != nil {
-			continue
-		}
-		libs = append(libs, lib)
-	}
-
-	core.PuregoSafeRegister(&xIsSupported, libs, "gtk_session_lock_is_supported")
-
-	core.PuregoSafeRegister(&xInstanceGLibType, libs, "gtk_session_lock_instance_get_type")
-
-	core.PuregoSafeRegister(&xNewInstance, libs, "gtk_session_lock_instance_new")
-
-	core.PuregoSafeRegister(&xInstanceAssignWindowToMonitor, libs, "gtk_session_lock_instance_assign_window_to_monitor")
-	core.PuregoSafeRegister(&xInstanceIsLocked, libs, "gtk_session_lock_instance_is_locked")
-	core.PuregoSafeRegister(&xInstanceLock, libs, "gtk_session_lock_instance_lock")
-	core.PuregoSafeRegister(&xInstanceUnlock, libs, "gtk_session_lock_instance_unlock")
 }

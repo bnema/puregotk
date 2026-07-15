@@ -39,6 +39,7 @@ func main() {
 		"convcd":   util.ConvertArgsCommaDeref,
 		"convd":    util.ConvertArgsDeref,
 		"convcbne": util.ConvertCallbackArgsNoErr,
+		"convcbe":  util.ConvertCallbackArgsWithErr,
 		"propsset": util.PropertyScalarSet,
 		"propsget": util.PropertyScalarGet,
 		"propvset": util.PropertyVectorSet,
@@ -96,12 +97,28 @@ func main() {
 	if err == nil {
 		os.WriteFile("v4/webkit/more.go", data, 0o644)
 	}
+	data, err = os.ReadFile("templates/webkit_test")
+	if err == nil {
+		if werr := os.WriteFile("v4/webkit/more_test.go", data, 0o644); werr != nil {
+			panic(werr)
+		}
+	} else if !os.IsNotExist(err) {
+		panic(err)
+	}
 	data, err = os.ReadFile("templates/gdk_dmabuf")
 	if err == nil {
 		if mkerr := os.MkdirAll("v4/gdk", 0o755); mkerr != nil {
 			panic(mkerr)
 		}
 		if werr := os.WriteFile("v4/gdk/gdkdmabuftexturebuilder_extra.go", data, 0o644); werr != nil {
+			panic(werr)
+		}
+	} else if !os.IsNotExist(err) {
+		panic(err)
+	}
+	data, err = os.ReadFile("templates/gdk_dmabuf_test")
+	if err == nil {
+		if werr := os.WriteFile("v4/gdk/gdkdmabuftexturebuilder_extra_test.go", data, 0o644); werr != nil {
 			panic(werr)
 		}
 	} else if !os.IsNotExist(err) {
