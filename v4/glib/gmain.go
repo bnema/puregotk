@@ -1719,13 +1719,10 @@ var xChildWatchAdd func(Pid, uintptr, uintptr) uint
 // need greater control.
 func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xChildWatchAdd, "GLIB", "g_child_watch_add", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = childWatchFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xChildWatchAdd(PidVar, functionRef, DataVar)
-	trackChildWatchFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachChildWatchFunc(ChildWatchSourceNew(PidVar), nil, FunctionVar, DataVar, nil)
 }
 
 var xChildWatchAddFull func(int, Pid, uintptr, uintptr, uintptr) uint
@@ -1757,13 +1754,10 @@ var xChildWatchAddFull func(int, Pid, uintptr, uintptr, uintptr) uint
 // need greater control.
 func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 	core.LazyRegister(&xChildWatchAddFull, "GLIB", "g_child_watch_add_full", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = childWatchFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xChildWatchAddFull(PriorityVar, PidVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
-	trackChildWatchFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachChildWatchFunc(ChildWatchSourceNew(PidVar), &PriorityVar, FunctionVar, DataVar, NotifyVar)
 }
 
 var xChildWatchSourceNew func(Pid) uintptr
@@ -1934,13 +1928,10 @@ var xIdleAdd func(uintptr, uintptr) uint
 // need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xIdleAdd, "GLIB", "g_idle_add", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xIdleAdd(functionRef, DataVar)
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(IdleSourceNew(), nil, FunctionVar, DataVar, nil)
 }
 
 var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
@@ -1961,13 +1952,10 @@ var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
 // need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 	core.LazyRegister(&xIdleAddFull, "GLIB", "g_idle_add_full", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xIdleAddFull(PriorityVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(IdleSourceNew(), &PriorityVar, FunctionVar, DataVar, NotifyVar)
 }
 
 var xIdleAddOnce func(uintptr, uintptr) uint
@@ -1984,13 +1972,10 @@ var xIdleAddOnce func(uintptr, uintptr) uint
 // This function otherwise behaves like [func@GLib.idle_add].
 func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xIdleAddOnce, "GLIB", "g_idle_add_once", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceOnceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xIdleAddOnce(functionRef, DataVar)
-	trackSourceOnceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceOnceFunc(IdleSourceNew(), FunctionVar, DataVar)
 }
 
 var xIdleRemoveByData func(uintptr) bool
@@ -1998,11 +1983,8 @@ var xIdleRemoveByData func(uintptr) bool
 // Removes the idle function with the given data.
 func IdleRemoveByData(DataVar uintptr) bool {
 	core.LazyRegister(&xIdleRemoveByData, "GLIB", "g_idle_remove_by_data", false)
-	trackedSourceID := trackedSourceIDByUserData(DataVar)
+
 	cret := xIdleRemoveByData(DataVar)
-	if cret {
-		removeTrackedSource(trackedSourceID)
-	}
 	return cret
 }
 
@@ -2247,10 +2229,8 @@ var xSourceRemove func(uint) bool
 // wrong source.
 func SourceRemove(TagVar uint) bool {
 	core.LazyRegister(&xSourceRemove, "GLIB", "g_source_remove", false)
+
 	cret := xSourceRemove(TagVar)
-	if cret {
-		removeTrackedSource(TagVar)
-	}
 	return cret
 }
 
@@ -2276,11 +2256,8 @@ var xSourceRemoveByUserData func(uintptr) bool
 // If multiple sources exist with the same user data, only one will be destroyed.
 func SourceRemoveByUserData(UserDataVar uintptr) bool {
 	core.LazyRegister(&xSourceRemoveByUserData, "GLIB", "g_source_remove_by_user_data", false)
-	trackedSourceID := trackedSourceIDByUserData(UserDataVar)
+
 	cret := xSourceRemoveByUserData(UserDataVar)
-	if cret {
-		removeTrackedSource(trackedSourceID)
-	}
 	return cret
 }
 
@@ -2345,13 +2322,10 @@ var xTimeoutAdd func(uint, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xTimeoutAdd, "GLIB", "g_timeout_add", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAdd(IntervalVar, functionRef, DataVar)
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(TimeoutSourceNew(IntervalVar), nil, FunctionVar, DataVar, nil)
 }
 
 var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
@@ -2386,13 +2360,10 @@ var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
 // See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 	core.LazyRegister(&xTimeoutAddFull, "GLIB", "g_timeout_add_full", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAddFull(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(TimeoutSourceNew(IntervalVar), &PriorityVar, FunctionVar, DataVar, NotifyVar)
 }
 
 var xTimeoutAddOnce func(uint, uintptr, uintptr) uint
@@ -2406,13 +2377,10 @@ var xTimeoutAddOnce func(uint, uintptr, uintptr) uint
 // This function otherwise behaves like [func@GLib.timeout_add].
 func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xTimeoutAddOnce, "GLIB", "g_timeout_add_once", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceOnceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAddOnce(IntervalVar, functionRef, DataVar)
-	trackSourceOnceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceOnceFunc(TimeoutSourceNew(IntervalVar), FunctionVar, DataVar)
 }
 
 var xTimeoutAddSeconds func(uint, uintptr, uintptr) uint
@@ -2442,13 +2410,10 @@ var xTimeoutAddSeconds func(uint, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xTimeoutAddSeconds, "GLIB", "g_timeout_add_seconds", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAddSeconds(IntervalVar, functionRef, DataVar)
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(TimeoutSourceNewSeconds(IntervalVar), nil, FunctionVar, DataVar, nil)
 }
 
 var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
@@ -2495,13 +2460,10 @@ var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 	core.LazyRegister(&xTimeoutAddSecondsFull, "GLIB", "g_timeout_add_seconds_full", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, functionRef, DataVar, NewCallbackNullable(NotifyVar))
-	trackSourceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceFunc(TimeoutSourceNewSeconds(IntervalVar), &PriorityVar, FunctionVar, DataVar, NotifyVar)
 }
 
 var xTimeoutAddSecondsOnce func(uint, uintptr, uintptr) uint
@@ -2510,13 +2472,10 @@ var xTimeoutAddSecondsOnce func(uint, uintptr, uintptr) uint
 // seconds.
 func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 	core.LazyRegister(&xTimeoutAddSecondsOnce, "GLIB", "g_timeout_add_seconds_once", false)
-	var functionRef uintptr
-	if FunctionVar != nil {
-		functionRef = sourceOnceFuncTrampolineCb
+	if FunctionVar == nil {
+		return 0
 	}
-	cret := xTimeoutAddSecondsOnce(IntervalVar, functionRef, DataVar)
-	trackSourceOnceFunc(cret, FunctionVar, DataVar)
-	return cret
+	return attachSourceOnceFunc(TimeoutSourceNewSeconds(IntervalVar), FunctionVar, DataVar)
 }
 
 var xTimeoutSourceNew func(uint) uintptr

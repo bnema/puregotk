@@ -20,13 +20,13 @@ var callbacks = struct {
 	signalHandlers        map[uintptr]interface{}
 	handlerToSignalData   map[uint]uintptr
 }{
-	refs:                  make(map[uintptr]uintptr),
-	closures:              make(map[uintptr]interface{}),
-	handlerToCallback:     make(map[uint]uintptr),
-	callbackRefCount:      make(map[uintptr]int),
-	sharedCallbacks:       make(map[string]uintptr),
-	signalHandlers:        make(map[uintptr]interface{}),
-	handlerToSignalData:   make(map[uint]uintptr),
+	refs:                make(map[uintptr]uintptr),
+	closures:            make(map[uintptr]interface{}),
+	handlerToCallback:   make(map[uint]uintptr),
+	callbackRefCount:    make(map[uintptr]int),
+	sharedCallbacks:     make(map[string]uintptr),
+	signalHandlers:      make(map[uintptr]interface{}),
+	handlerToSignalData: make(map[uint]uintptr),
 }
 
 // GetCallback retrieves and acquires a callback reference by value.
@@ -209,127 +209,246 @@ func SignalDestroyNotify() uintptr {
 	return signalDestroyNotifyCallback
 }
 
-type trackedSourceEntry struct {
+type sourceCallbackEntry struct {
+	source         uintptr
 	data           uintptr
+	refs           uint
+	callback       uintptr
 	sourceFunc     SourceFunc
 	sourceOnceFunc SourceOnceFunc
 	childWatchFunc ChildWatchFunc
+	notify         DestroyNotify
 }
 
-var trackedSources = struct {
+var sourceCallbacks = struct {
 	sync.RWMutex
-	entries map[uint]trackedSourceEntry
+	nextToken uintptr
+	byToken   map[uintptr]*sourceCallbackEntry
+	bySource  map[uintptr]uintptr
 }{
-	entries: make(map[uint]trackedSourceEntry),
+	byToken:  make(map[uintptr]*sourceCallbackEntry),
+	bySource: make(map[uintptr]uintptr),
 }
 
 var (
-	sourceFuncTrampolineCb     uintptr
-	sourceOnceFuncTrampolineCb uintptr
-	childWatchFuncTrampolineCb uintptr
+	sourceDispatchCb             uintptr
+	sourceOnceDispatchCb         uintptr
+	childWatchDispatchCb         uintptr
+	sourceCallbackLifecycleFuncs SourceCallbackFuncs
 )
 
-func currentTrackedSourceID() uint {
-	src := MainCurrentSource()
-	if src == nil {
+func registerSourceCallback(source uintptr, entry sourceCallbackEntry) uintptr {
+	if source == 0 {
 		return 0
 	}
-	return src.GetId()
-}
+	entry.source = source
+	entry.refs = 1
 
-func getTrackedSourceEntry() (uint, trackedSourceEntry, bool) {
-	sourceID := currentTrackedSourceID()
-	if sourceID == 0 {
-		return 0, trackedSourceEntry{}, false
+	sourceCallbacks.Lock()
+	for {
+		sourceCallbacks.nextToken++
+		if sourceCallbacks.nextToken != 0 {
+			break
+		}
 	}
-	trackedSources.RLock()
-	entry, ok := trackedSources.entries[sourceID]
-	trackedSources.RUnlock()
-	return sourceID, entry, ok
+	token := sourceCallbacks.nextToken
+	sourceCallbacks.byToken[token] = &entry
+	sourceCallbacks.bySource[source] = token
+	sourceCallbacks.Unlock()
+	return token
 }
 
-func trackSourceFunc(sourceID uint, fn *SourceFunc, data uintptr) {
-	if sourceID == 0 || fn == nil {
+func refSourceCallback(token uintptr) {
+	sourceCallbacks.Lock()
+	if entry := sourceCallbacks.byToken[token]; entry != nil {
+		entry.refs++
+	}
+	sourceCallbacks.Unlock()
+}
+
+func unrefSourceCallback(token uintptr) {
+	var notify DestroyNotify
+	var data uintptr
+
+	sourceCallbacks.Lock()
+	entry := sourceCallbacks.byToken[token]
+	if entry == nil {
+		sourceCallbacks.Unlock()
 		return
 	}
-	trackedSources.Lock()
-	trackedSources.entries[sourceID] = trackedSourceEntry{data: data, sourceFunc: *fn}
-	trackedSources.Unlock()
-}
-
-func trackSourceOnceFunc(sourceID uint, fn *SourceOnceFunc, data uintptr) {
-	if sourceID == 0 || fn == nil {
+	if entry.refs > 1 {
+		entry.refs--
+		sourceCallbacks.Unlock()
 		return
 	}
-	trackedSources.Lock()
-	trackedSources.entries[sourceID] = trackedSourceEntry{data: data, sourceOnceFunc: *fn}
-	trackedSources.Unlock()
+	delete(sourceCallbacks.byToken, token)
+	if sourceCallbacks.bySource[entry.source] == token {
+		delete(sourceCallbacks.bySource, entry.source)
+	}
+	notify = entry.notify
+	data = entry.data
+	sourceCallbacks.Unlock()
+
+	if notify != nil {
+		notify(data)
+	}
 }
 
-func trackChildWatchFunc(sourceID uint, fn *ChildWatchFunc, data uintptr) {
-	if sourceID == 0 || fn == nil {
+func getSourceCallback(token, source uintptr, callbackOut, dataOut *uintptr) {
+	if callbackOut == nil || dataOut == nil {
 		return
 	}
-	trackedSources.Lock()
-	trackedSources.entries[sourceID] = trackedSourceEntry{data: data, childWatchFunc: *fn}
-	trackedSources.Unlock()
-}
+	*callbackOut = 0
+	*dataOut = 0
 
-func removeTrackedSource(sourceID uint) {
-	if sourceID == 0 {
-		return
+	sourceCallbacks.RLock()
+	entry := sourceCallbacks.byToken[token]
+	if entry != nil && entry.source == source {
+		*callbackOut = entry.callback
+		*dataOut = entry.data
 	}
-	trackedSources.Lock()
-	delete(trackedSources.entries, sourceID)
-	trackedSources.Unlock()
+	sourceCallbacks.RUnlock()
 }
 
-func trackedSourceIDByUserData(data uintptr) uint {
-	ctx := MainContextDefault()
-	if ctx == nil {
+func dispatchSource(source, data uintptr) bool {
+	sourceCallbacks.RLock()
+	token := sourceCallbacks.bySource[source]
+	entry := sourceCallbacks.byToken[token]
+	var fn SourceFunc
+	if entry != nil {
+		fn = entry.sourceFunc
+	}
+	sourceCallbacks.RUnlock()
+	if fn == nil {
+		return false
+	}
+	return fn(data)
+}
+
+func dispatchSourceOnce(source, data uintptr) bool {
+	sourceCallbacks.RLock()
+	token := sourceCallbacks.bySource[source]
+	entry := sourceCallbacks.byToken[token]
+	var fn SourceOnceFunc
+	if entry != nil {
+		fn = entry.sourceOnceFunc
+	}
+	sourceCallbacks.RUnlock()
+	if fn != nil {
+		fn(data)
+	}
+	return false
+}
+
+func dispatchChildWatch(source uintptr, pid Pid, waitStatus int32, data uintptr) {
+	sourceCallbacks.RLock()
+	token := sourceCallbacks.bySource[source]
+	entry := sourceCallbacks.byToken[token]
+	var fn ChildWatchFunc
+	if entry != nil {
+		fn = entry.childWatchFunc
+	}
+	sourceCallbacks.RUnlock()
+	if fn != nil {
+		fn(pid, int(waitStatus), data)
+	}
+}
+
+func attachSourceCallback(source *Source, priority *int, entry sourceCallbackEntry) uint {
+	if source == nil {
 		return 0
 	}
-	src := ctx.FindSourceByUserData(data)
-	if src == nil {
-		return 0
+	token := registerSourceCallback(source.GoPointer(), entry)
+	source.SetCallbackIndirect(token, &sourceCallbackLifecycleFuncs)
+	if priority != nil {
+		source.SetPriority(*priority)
 	}
-	return src.GetId()
+	sourceID := source.Attach(nil)
+	source.Unref()
+	return sourceID
 }
 
-func initSourceTrampolines() {
-	sourceFuncTrampolineCb = purego.NewCallback(func(data uintptr) bool {
-		sourceID, entry, ok := getTrackedSourceEntry()
-		if !ok || entry.sourceFunc == nil {
+func attachSourceFunc(source *Source, priority *int, fn *SourceFunc, data uintptr, notify *DestroyNotify) uint {
+	if fn == nil {
+		if source != nil {
+			source.Unref()
+		}
+		return 0
+	}
+	entry := sourceCallbackEntry{data: data, callback: sourceDispatchCb}
+	entry.sourceFunc = *fn
+	if notify != nil {
+		entry.notify = *notify
+	}
+	return attachSourceCallback(source, priority, entry)
+}
+
+func attachSourceOnceFunc(source *Source, fn *SourceOnceFunc, data uintptr) uint {
+	if fn == nil {
+		if source != nil {
+			source.Unref()
+		}
+		return 0
+	}
+	entry := sourceCallbackEntry{
+		data:           data,
+		callback:       sourceOnceDispatchCb,
+		sourceOnceFunc: *fn,
+	}
+	return attachSourceCallback(source, nil, entry)
+}
+
+func attachChildWatchFunc(source *Source, priority *int, fn *ChildWatchFunc, data uintptr, notify *DestroyNotify) uint {
+	if fn == nil {
+		if source != nil {
+			source.Unref()
+		}
+		return 0
+	}
+	entry := sourceCallbackEntry{data: data, callback: childWatchDispatchCb, childWatchFunc: *fn}
+	if notify != nil {
+		entry.notify = *notify
+	}
+	return attachSourceCallback(source, priority, entry)
+}
+
+func initSourceCallbackLifecycle() {
+	sourceDispatchCb = purego.NewCallback(func(data uintptr) bool {
+		source := MainCurrentSource()
+		if source == nil {
 			return false
 		}
-		keep := entry.sourceFunc(data)
-		if !keep {
-			removeTrackedSource(sourceID)
-		}
-		return keep
+		return dispatchSource(source.GoPointer(), data)
 	})
-
-	sourceOnceFuncTrampolineCb = purego.NewCallback(func(data uintptr) {
-		sourceID, entry, ok := getTrackedSourceEntry()
-		if !ok || entry.sourceOnceFunc == nil {
+	sourceOnceDispatchCb = purego.NewCallback(func(data uintptr) bool {
+		source := MainCurrentSource()
+		if source == nil {
+			return false
+		}
+		return dispatchSourceOnce(source.GoPointer(), data)
+	})
+	childWatchDispatchCb = purego.NewCallback(func(pid Pid, waitStatus int32, data uintptr) {
+		source := MainCurrentSource()
+		if source == nil {
 			return
 		}
-		removeTrackedSource(sourceID)
-		entry.sourceOnceFunc(data)
+		dispatchChildWatch(source.GoPointer(), pid, waitStatus, data)
 	})
-
-	childWatchFuncTrampolineCb = purego.NewCallback(func(pid Pid, waitStatus int32, data uintptr) {
-		sourceID, entry, ok := getTrackedSourceEntry()
-		if !ok || entry.childWatchFunc == nil {
-			return
-		}
-		removeTrackedSource(sourceID)
-		entry.childWatchFunc(pid, int(waitStatus), data)
-	})
+	sourceCallbackLifecycleFuncs = SourceCallbackFuncs{
+		xRef: purego.NewCallback(func(token uintptr) {
+			refSourceCallback(token)
+		}),
+		xUnref: purego.NewCallback(func(token uintptr) {
+			unrefSourceCallback(token)
+		}),
+		xGet: purego.NewCallback(func(token, source uintptr, callbackOut, dataOut *uintptr) {
+			getSourceCallback(token, source, callbackOut, dataOut)
+		}),
+	}
 }
 
 func init() {
-	initSourceTrampolines()
+	initSourceCallbackLifecycle()
 	initSignalDestroyNotify()
 }
 
