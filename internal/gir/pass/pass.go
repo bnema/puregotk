@@ -8,7 +8,9 @@ import (
 	"encoding/xml"
 	"fmt"
 	"iter"
+	"maps"
 	"os"
+	"slices"
 	"strings"
 	"text/template"
 
@@ -32,6 +34,7 @@ type NamespaceConfig struct {
 var namespaceConfigs = map[string]NamespaceConfig{
 	"Gtk4LayerShell":  {PackageName: "layershell", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
 	"Gtk4SessionLock": {PackageName: "sessionlock", OptionalLibrary: true, BuildConstraint: "//go:build linux"},
+	"GtkSource":       {PackageName: "gtksource", OptionalLibrary: true},
 }
 
 func packageNameForNamespace(namespace string) string {
@@ -601,6 +604,17 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 	}
 	sharedLibraries = append(sharedLibraries, dylibNames...)
 
+	// Pick one deterministic file (first by name with bindings) to host Available().
+	availableFile := ""
+	if nsCfg.OptionalLibrary {
+		for _, fn := range slices.Sorted(maps.Keys(files)) {
+			if files[fn].hasBindings() {
+				availableFile = fn
+				break
+			}
+		}
+	}
+
 	for fn, pf := range files {
 		// Type getters are bindings too, so they get the same lazy setup as
 		// ordinary generated functions.
@@ -627,23 +641,24 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		registerTypes := pkgName == "webkit"
 
 		args := types.TemplateArg{
-			PkgName:         pkgName,
-			PkgEnv:          strings.ToUpper(pkgName),
-			PkgConfigName:   pkgConfigName,
-			SharedLibraries: sharedLibraries,
-			NeedsInit:       needsInit,
-			OptionalLibrary: nsCfg.OptionalLibrary,
-			BuildConstraint: nsCfg.BuildConstraint,
-			RegisterTypes:   registerTypes,
-			Imports:         pf.imps.Ordered(),
-			Aliases:         pf.aliases,
-			Callbacks:       pf.callbacks,
-			Records:         pf.records,
-			Enums:           pf.enums,
-			Constants:       pf.constants,
-			Functions:       pf.functions,
-			Interfaces:      pf.interfaces,
-			Classes:         pf.classes,
+			PkgName:          pkgName,
+			PkgEnv:           strings.ToUpper(pkgName),
+			PkgConfigName:    pkgConfigName,
+			SharedLibraries:  sharedLibraries,
+			NeedsInit:        needsInit,
+			OptionalLibrary:  nsCfg.OptionalLibrary,
+			DeclareAvailable: fn == availableFile,
+			BuildConstraint:  nsCfg.BuildConstraint,
+			RegisterTypes:    registerTypes,
+			Imports:          pf.imps.Ordered(),
+			Aliases:          pf.aliases,
+			Callbacks:        pf.callbacks,
+			Records:          pf.records,
+			Enums:            pf.enums,
+			Constants:        pf.constants,
+			Functions:        pf.functions,
+			Interfaces:       pf.interfaces,
+			Classes:          pf.classes,
 		}
 
 		var uf bytes.Buffer

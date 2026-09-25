@@ -653,6 +653,9 @@ type TemplateArg struct {
 	NeedsInit bool
 	// OptionalLibrary declares whether init should tolerate a missing shared library.
 	OptionalLibrary bool
+	// DeclareAvailable emits the package-level Available() helper. Set on
+	// exactly one file per optional package to avoid duplicate declarations.
+	DeclareAvailable bool
 	// BuildConstraint is an optional file-level build tag like //go:build linux.
 	BuildConstraint string
 	// RegisterTypes declares whether the types in the GIR file need to be manually registered
