@@ -479,7 +479,7 @@ func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
 
 
 {{if .NeedsInit}}
-{{if .OptionalLibrary}}
+{{if .DeclareAvailable}}
 // Available reports whether the shared library was loaded successfully.
 func Available() bool {
     return core.LibraryAvailable("{{.PkgEnv}}")

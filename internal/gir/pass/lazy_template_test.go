@@ -439,10 +439,11 @@ func TestGoTemplateEmitsLazySymbolRegistration(t *testing.T) {
 
 	output.Reset()
 	err = gotemp.Execute(&output, types.TemplateArg{
-		PkgName:         "optional",
-		PkgEnv:          "OPTIONAL",
-		NeedsInit:       true,
-		OptionalLibrary: true,
+		PkgName:          "optional",
+		PkgEnv:           "OPTIONAL",
+		NeedsInit:        true,
+		OptionalLibrary:  true,
+		DeclareAvailable: true,
 	})
 	if err != nil {
 		t.Fatal(err)
