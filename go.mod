@@ -1,11 +1,9 @@
 module github.com/bnema/puregotk
 
-go 1.24.0
-
-toolchain go1.24.5
+go 1.25.0
 
 require (
-	github.com/bnema/purego v0.11.0-bnema.4
+	github.com/bnema/purego v0.12.0-bnema.1
 	mvdan.cc/gofumpt v0.9.2
 )
 
