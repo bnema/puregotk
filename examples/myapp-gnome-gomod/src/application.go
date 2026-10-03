@@ -83,9 +83,9 @@ func init() {
 	gTypeApplication = gobject.TypeRegisterStaticSimple(
 		appParentQuery.Type,
 		"MyAppGnomeGomodApplication",
-		appParentQuery.ClassSize,
+		uint(appParentQuery.ClassSize),
 		&appClassInit,
-		appParentQuery.InstanceSize,
+		uint(appParentQuery.InstanceSize),
 		&appInstanceInit,
 		0,
 	)
