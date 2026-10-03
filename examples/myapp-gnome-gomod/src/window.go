@@ -117,9 +117,9 @@ func init() {
 	gTypeWindow = gobject.TypeRegisterStaticSimple(
 		windowParentQuery.Type,
 		"MyAppGnomeGomodWindow",
-		windowParentQuery.ClassSize,
+		uint(windowParentQuery.ClassSize),
 		&windowClassInit,
-		windowParentQuery.InstanceSize,
+		uint(windowParentQuery.InstanceSize),
 		&windowInstanceInit,
 		0,
 	)

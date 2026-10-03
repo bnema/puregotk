@@ -136,9 +136,9 @@ func init() {
 	gTypeMyLibGtkMesonMainApplicationWindow = gobject.TypeRegisterStaticSimple(
 		parentQuery.Type,
 		"MyLibGtkMesonMainApplicationWindow",
-		parentQuery.ClassSize,
+		uint(parentQuery.ClassSize),
 		&classInit,
-		parentQuery.InstanceSize,
+		uint(parentQuery.InstanceSize),
 		&instanceInit,
 		0,
 	)
