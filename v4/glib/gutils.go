@@ -20,7 +20,7 @@ type DebugKey struct {
 
 	Key uintptr
 
-	Value uint
+	Value uint32
 }
 
 func (x *DebugKey) GoPointer() uintptr {

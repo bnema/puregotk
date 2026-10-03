@@ -78,13 +78,13 @@ func GlyphInfoNewFromInternalPtr(ptr uintptr) *GlyphInfo {
 type GlyphString struct {
 	_ structs.HostLayout
 
-	NumGlyphs int
+	NumGlyphs int32
 
 	Glyphs []GlyphInfo
 
 	LogClusters int
 
-	Space int
+	Space int32
 }
 
 var xGlyphStringGLibType func() types.GType

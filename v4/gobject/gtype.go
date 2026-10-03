@@ -726,9 +726,9 @@ type TypeQuery struct {
 
 	TypeName uintptr
 
-	ClassSize uint
+	ClassSize uint32
 
-	InstanceSize uint
+	InstanceSize uint32
 }
 
 func (x *TypeQuery) GoPointer() uintptr {

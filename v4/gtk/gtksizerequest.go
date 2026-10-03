@@ -17,9 +17,9 @@ type RequestedSize struct {
 
 	Data uintptr
 
-	MinimumSize int
+	MinimumSize int32
 
-	NaturalSize int
+	NaturalSize int32
 }
 
 func (x *RequestedSize) GoPointer() uintptr {

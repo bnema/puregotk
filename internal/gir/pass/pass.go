@@ -364,11 +364,17 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				if _type == "" {
 					continue
 				}
-				// HACK: Handle the specific case where a gint is converted to an int
-				// But for structs this needs to be an int32 as purego just gets the pointer to the struct
-				// Instead of converting each field separately
-				if f.AnyType.Type != nil && f.AnyType.Type.CType == "gint" {
-					_type = "int32"
+				// Record fields must keep the C layout: purego passes a pointer to
+				// the struct instead of converting each field. gint and guint map to
+				// Go int and uint elsewhere, which are 64-bit while C int is 32-bit.
+				// Match on the GIR type name because the c:type is often "int".
+				if t := f.AnyType.Type; t != nil && f.Bits == 0 && !strings.Contains(t.CType, "*") {
+					switch t.Name {
+					case "gint":
+						_type = "int32"
+					case "guint":
+						_type = "uint32"
+					}
 				}
 
 				// HACK: in structs the strings should be uintptr as we convert it ourselves

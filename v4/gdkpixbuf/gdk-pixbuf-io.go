@@ -513,7 +513,7 @@ type PixbufModulePattern struct {
 
 	Mask uintptr
 
-	Relevance int
+	Relevance int32
 }
 
 func (x *PixbufModulePattern) GoPointer() uintptr {

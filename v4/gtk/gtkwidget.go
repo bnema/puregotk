@@ -36,9 +36,9 @@ type WidgetActionActivateFunc func(uintptr, string, *glib.Variant)
 type Requisition struct {
 	_ structs.HostLayout
 
-	Width int
+	Width int32
 
-	Height int
+	Height int32
 }
 
 var xRequisitionGLibType func() types.GType

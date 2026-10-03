@@ -66,7 +66,7 @@ type IOChannel struct {
 
 	LineTerm uintptr
 
-	LineTermLen uint
+	LineTermLen uint32
 
 	BufSize uint
 

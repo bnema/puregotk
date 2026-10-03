@@ -236,7 +236,7 @@ type AttrInt struct {
 
 	Attr uintptr
 
-	Value int
+	Value int32
 }
 
 func (x *AttrInt) GoPointer() uintptr {
@@ -709,7 +709,7 @@ type AttrSize struct {
 
 	Attr uintptr
 
-	Size int
+	Size int32
 
 	Absolute uint
 }
@@ -761,9 +761,9 @@ type Attribute struct {
 
 	Klass *AttrClass
 
-	StartIndex uint
+	StartIndex uint32
 
-	EndIndex uint
+	EndIndex uint32
 }
 
 var xAttributeGLibType func() types.GType

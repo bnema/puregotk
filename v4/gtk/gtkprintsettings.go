@@ -21,9 +21,9 @@ type PrintSettingsFunc func(string, string, uintptr)
 type PageRange struct {
 	_ structs.HostLayout
 
-	Start int
+	Start int32
 
-	End int
+	End int32
 }
 
 func (x *PageRange) GoPointer() uintptr {

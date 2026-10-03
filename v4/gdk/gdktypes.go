@@ -530,11 +530,11 @@ func (x *DmabufFormats) Unref() {
 type KeymapKey struct {
 	_ structs.HostLayout
 
-	Keycode uint
+	Keycode uint32
 
-	Group int
+	Group int32
 
-	Level int
+	Level int32
 }
 
 func (x *KeymapKey) GoPointer() uintptr {
@@ -567,13 +567,13 @@ func KeymapKeyNewFromInternalPtr(ptr uintptr) *KeymapKey {
 type Rectangle struct {
 	_ structs.HostLayout
 
-	X int
+	X int32
 
-	Y int
+	Y int32
 
-	Width int
+	Width int32
 
-	Height int
+	Height int32
 }
 
 var xRectangleGLibType func() types.GType

@@ -529,7 +529,7 @@ type InputMessage struct {
 
 	Vectors []InputVector
 
-	NumVectors uint
+	NumVectors uint32
 
 	BytesReceived uint
 
@@ -590,13 +590,13 @@ type OutputMessage struct {
 
 	Vectors *OutputVector
 
-	NumVectors uint
+	NumVectors uint32
 
-	BytesSent uint
+	BytesSent uint32
 
 	ControlMessages uintptr
 
-	NumControlMessages uint
+	NumControlMessages uint32
 }
 
 func (x *OutputMessage) GoPointer() uintptr {

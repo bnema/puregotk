@@ -30,27 +30,27 @@ type TextIter struct {
 
 	Dummy2 uintptr
 
-	Dummy3 int
+	Dummy3 int32
 
-	Dummy4 int
+	Dummy4 int32
 
-	Dummy5 int
+	Dummy5 int32
 
-	Dummy6 int
+	Dummy6 int32
 
-	Dummy7 int
+	Dummy7 int32
 
-	Dummy8 int
+	Dummy8 int32
 
 	Dummy9 uintptr
 
 	Dummy10 uintptr
 
-	Dummy11 int
+	Dummy11 int32
 
-	Dummy12 int
+	Dummy12 int32
 
-	Dummy13 int
+	Dummy13 int32
 
 	Dummy14 uintptr
 }

@@ -154,13 +154,13 @@ func (x *Language) ToString() string {
 type Rectangle struct {
 	_ structs.HostLayout
 
-	X int
+	X int32
 
-	Y int
+	Y int32
 
-	Width int
+	Width int32
 
-	Height int
+	Height int32
 }
 
 func (x *Rectangle) GoPointer() uintptr {
