@@ -53,11 +53,11 @@ func AnalysisNewFromInternalPtr(ptr uintptr) *Analysis {
 type Item struct {
 	_ structs.HostLayout
 
-	Offset int
+	Offset int32
 
-	Length int
+	Length int32
 
-	NumChars int
+	NumChars int32
 
 	Analysis uintptr
 }

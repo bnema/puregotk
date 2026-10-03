@@ -24,7 +24,7 @@ type TreeModelForeachFunc func(uintptr, *TreePath, *TreeIter, uintptr) bool
 type TreeIter struct {
 	_ structs.HostLayout
 
-	Stamp int
+	Stamp int32
 
 	UserData uintptr
 

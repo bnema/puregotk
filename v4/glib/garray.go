@@ -15,7 +15,7 @@ type Array struct {
 
 	Data uintptr
 
-	Len uint
+	Len uint32
 }
 
 var xArrayGLibType func() types.GType
@@ -43,7 +43,7 @@ type ByteArray struct {
 
 	Data byte
 
-	Len uint
+	Len uint32
 }
 
 var xByteArrayGLibType func() types.GType
@@ -395,7 +395,7 @@ type PtrArray struct {
 
 	Pdata uintptr
 
-	Len uint
+	Len uint32
 }
 
 var xPtrArrayGLibType func() types.GType

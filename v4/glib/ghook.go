@@ -43,11 +43,11 @@ type Hook struct {
 
 	Prev *Hook
 
-	RefCount uint
+	RefCount uint32
 
 	HookId uint
 
-	Flags uint
+	Flags uint32
 
 	Func uintptr
 

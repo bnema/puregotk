@@ -33,7 +33,7 @@ type SignalEmissionHook func(*SignalInvocationHint, uint, []Value, uintptr) bool
 type SignalInvocationHint struct {
 	_ structs.HostLayout
 
-	SignalId uint
+	SignalId uint32
 
 	Detail glib.Quark
 
@@ -58,7 +58,7 @@ func SignalInvocationHintNewFromInternalPtr(ptr uintptr) *SignalInvocationHint {
 type SignalQuery struct {
 	_ structs.HostLayout
 
-	SignalId uint
+	SignalId uint32
 
 	SignalName uintptr
 
@@ -68,7 +68,7 @@ type SignalQuery struct {
 
 	ReturnType types.GType
 
-	NParams uint
+	NParams uint32
 
 	ParamTypes []types.GType
 }

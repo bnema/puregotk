@@ -30,9 +30,9 @@ type Scanner struct {
 
 	UserData uintptr
 
-	MaxParseErrors uint
+	MaxParseErrors uint32
 
-	ParseErrors uint
+	ParseErrors uint32
 
 	InputName uintptr
 
@@ -44,17 +44,17 @@ type Scanner struct {
 
 	Value TokenValue
 
-	Line uint
+	Line uint32
 
-	Position uint
+	Position uint32
 
 	NextToken TokenType
 
 	NextValue TokenValue
 
-	NextLine uint
+	NextLine uint32
 
-	NextPosition uint
+	NextPosition uint32
 
 	SymbolTable *HashTable
 
@@ -66,7 +66,7 @@ type Scanner struct {
 
 	Buffer uintptr
 
-	ScopeId uint
+	ScopeId uint32
 
 	MsgHandler ScannerMsgFunc
 }
@@ -366,7 +366,7 @@ type ScannerConfig struct {
 
 	StoreInt64 uint
 
-	PaddingDummy uint
+	PaddingDummy uint32
 }
 
 func (x *ScannerConfig) GoPointer() uintptr {

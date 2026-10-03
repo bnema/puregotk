@@ -1264,25 +1264,25 @@ func (x *FontFamilyClass) GetPangoReserved2() func() {
 type FontMetrics struct {
 	_ structs.HostLayout
 
-	RefCount uint
+	RefCount uint32
 
-	Ascent int
+	Ascent int32
 
-	Descent int
+	Descent int32
 
-	Height int
+	Height int32
 
-	ApproximateCharWidth int
+	ApproximateCharWidth int32
 
-	ApproximateDigitWidth int
+	ApproximateDigitWidth int32
 
-	UnderlinePosition int
+	UnderlinePosition int32
 
-	UnderlineThickness int
+	UnderlineThickness int32
 
-	StrikethroughPosition int
+	StrikethroughPosition int32
 
-	StrikethroughThickness int
+	StrikethroughThickness int32
 }
 
 var xFontMetricsGLibType func() types.GType

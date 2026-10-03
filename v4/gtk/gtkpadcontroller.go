@@ -17,9 +17,9 @@ type PadActionEntry struct {
 
 	Type PadActionType
 
-	Index int
+	Index int32
 
-	Mode int
+	Mode int32
 
 	Label uintptr
 

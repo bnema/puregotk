@@ -63,7 +63,7 @@ type HashTableIter struct {
 
 	Dummy3 uintptr
 
-	Dummy4 int
+	Dummy4 int32
 
 	Dummy5 bool
 

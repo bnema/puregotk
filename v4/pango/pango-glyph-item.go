@@ -23,11 +23,11 @@ type GlyphItem struct {
 
 	Glyphs *GlyphString
 
-	YOffset int
+	YOffset int32
 
-	StartXOffset int
+	StartXOffset int32
 
-	EndXOffset int
+	EndXOffset int32
 }
 
 var xGlyphItemGLibType func() types.GType
@@ -198,17 +198,17 @@ type GlyphItemIter struct {
 
 	Text uintptr
 
-	StartGlyph int
+	StartGlyph int32
 
-	StartIndex int
+	StartIndex int32
 
-	StartChar int
+	StartChar int32
 
-	EndGlyph int
+	EndGlyph int32
 
-	EndIndex int
+	EndIndex int32
 
-	EndChar int
+	EndChar int32
 }
 
 var xGlyphItemIterGLibType func() types.GType
