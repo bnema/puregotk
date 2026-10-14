@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+	"unsafe"
 
 	"github.com/bnema/purego"
 	"github.com/bnema/puregotk/pkg/core"
@@ -412,37 +413,61 @@ func attachChildWatchFunc(source *Source, priority *int, fn *ChildWatchFunc, dat
 	return attachSourceCallback(source, priority, entry)
 }
 
+// cBool converts a Go bool to a C gboolean in the integer return register.
+func cBool(v bool) uintptr {
+	if v {
+		return 1
+	}
+	return 0
+}
+
+// cOutPtr reinterprets a C out-parameter address as *uintptr. The memory is
+// owned by GLib for the duration of the callback; copying the pointer bits
+// avoids a uintptr-to-unsafe.Pointer conversion that go vet rejects.
+func cOutPtr(addr uintptr) *uintptr {
+	return *(**uintptr)(unsafe.Pointer(&addr))
+}
+
+// The source lifecycle callbacks run for every GLib source dispatch and
+// attach (IdleAdd, TimeoutAdd, ...). They only take integer-class arguments,
+// so they use purego's reflection-free, allocation-free callback path.
 func initSourceCallbackLifecycle() {
-	sourceDispatchCb = purego.NewCallback(func(data uintptr) bool {
+	sourceDispatchCb = purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
 		source := MainCurrentSource()
 		if source == nil {
-			return false
+			return 0
 		}
-		return dispatchSource(source.GoPointer(), data)
+		return cBool(dispatchSource(source.GoPointer(), a.Int(0)))
 	})
-	sourceOnceDispatchCb = purego.NewCallback(func(data uintptr) bool {
+	sourceOnceDispatchCb = purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
 		source := MainCurrentSource()
 		if source == nil {
-			return false
+			return 0
 		}
-		return dispatchSourceOnce(source.GoPointer(), data)
+		return cBool(dispatchSourceOnce(source.GoPointer(), a.Int(0)))
 	})
-	childWatchDispatchCb = purego.NewCallback(func(pid Pid, waitStatus int32, data uintptr) {
+	// GChildWatchFunc(GPid pid, gint wait_status, gpointer data): both ints are
+	// 32-bit C ints, so truncate to int32 to recover their sign.
+	childWatchDispatchCb = purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
 		source := MainCurrentSource()
 		if source == nil {
-			return
+			return 0
 		}
-		dispatchChildWatch(source.GoPointer(), pid, waitStatus, data)
+		dispatchChildWatch(source.GoPointer(), Pid(int32(a.Int(0))), int32(a.Int(1)), a.Int(2))
+		return 0
 	})
 	sourceCallbackLifecycleFuncs = SourceCallbackFuncs{
-		xRef: purego.NewCallback(func(token uintptr) {
-			refSourceCallback(token)
+		xRef: purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
+			refSourceCallback(a.Int(0))
+			return 0
 		}),
-		xUnref: purego.NewCallback(func(token uintptr) {
-			unrefSourceCallback(token)
+		xUnref: purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
+			unrefSourceCallback(a.Int(0))
+			return 0
 		}),
-		xGet: purego.NewCallback(func(token, source uintptr, callbackOut, dataOut *uintptr) {
-			getSourceCallback(token, source, callbackOut, dataOut)
+		xGet: purego.NewCallbackInts(func(a *purego.CallbackArgs) uintptr {
+			getSourceCallback(a.Int(0), a.Int(1), cOutPtr(a.Int(2)), cOutPtr(a.Int(3)))
+			return 0
 		}),
 	}
 }
