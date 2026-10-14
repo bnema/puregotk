@@ -209,6 +209,9 @@ func PuregoSafeRegister(fptr interface{}, libs []uintptr, name string) {
 // that exceed purego's current ABI support. The function pointer stays nil and
 // only fails if the unsupported function is actually called.
 func registerFuncSafe(fptr interface{}, sym uintptr) {
+	if bindFast(fptr, sym) {
+		return
+	}
 	defer func() { recover() }()
 	purego.RegisterFunc(fptr, sym)
 }
